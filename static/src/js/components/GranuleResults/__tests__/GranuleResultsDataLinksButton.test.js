@@ -96,7 +96,7 @@ describe('GranuleResultsDataLinksButton component', () => {
   describe('with multiple granule links', () => {
     test('renders the correct element', () => {
       // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-      ReactDOM.createPortal = jest.fn(dropdown => dropdown)
+      ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
 
       const { enzymeWrapper } = setup({
         dataLinks: [
@@ -118,7 +118,7 @@ describe('GranuleResultsDataLinksButton component', () => {
       test('stops event propagation', () => {
         const stopPropagationMock = jest.fn()
         // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-        ReactDOM.createPortal = jest.fn(dropdown => dropdown)
+        ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
 
         const { enzymeWrapper } = setup({
           dataLinks: [
@@ -142,7 +142,7 @@ describe('GranuleResultsDataLinksButton component', () => {
       test('stops propagation of events', () => {
         const stopPropagationMock = jest.fn()
         // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-        ReactDOM.createPortal = jest.fn(dropdown => dropdown)
+        ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
 
         const { enzymeWrapper } = setup({
           dataLinks: [
@@ -166,7 +166,7 @@ describe('GranuleResultsDataLinksButton component', () => {
 
       test('calls the metrics event', () => {
         // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-        ReactDOM.createPortal = jest.fn(dropdown => dropdown)
+        ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
 
         const { enzymeWrapper, props } = setup({
           dataLinks: [
@@ -196,7 +196,7 @@ describe('GranuleResultsDataLinksButton component', () => {
 
       test('displays a success toast', () => {
         // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-        ReactDOM.createPortal = jest.fn(dropdown => dropdown)
+        ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
         const addToastMock = jest.spyOn(addToast, 'addToast')
 
         const { enzymeWrapper } = setup({
@@ -228,7 +228,7 @@ describe('GranuleResultsDataLinksButton component', () => {
   describe('when s3 links are provided', () => {
     test('renders the correct element', () => {
       // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-      ReactDOM.createPortal = jest.fn(dropdown => dropdown)
+      ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
 
       const { enzymeWrapper } = setup({
         s3Links: [
@@ -248,7 +248,7 @@ describe('GranuleResultsDataLinksButton component', () => {
 
     test('renders s3 links as buttons', () => {
       // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-      ReactDOM.createPortal = jest.fn(dropdown => dropdown)
+      ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
 
       const { enzymeWrapper } = setup({
         dataLinks: [],
@@ -276,7 +276,7 @@ describe('GranuleResultsDataLinksButton component', () => {
     describe('when clicking an s3 link', () => {
       test('calls the metrics event', async () => {
         // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
-        ReactDOM.createPortal = jest.fn(dropdown => dropdown)
+        ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
         const { enzymeWrapper, props } = setup({
           dataLinks: [],
           directDistributionInformation: {
@@ -308,7 +308,7 @@ describe('GranuleResultsDataLinksButton component', () => {
 
     describe('when direct distribution information is provided', () => {
       test('displays the region as a button', () => {
-        ReactDOM.createPortal = jest.fn(dropdown => dropdown)
+        ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
 
         const { enzymeWrapper } = setup({
           dataLinks: [],
@@ -332,7 +332,7 @@ describe('GranuleResultsDataLinksButton component', () => {
       })
 
       test('displays the s3 bucket and object prefix as a button', () => {
-        ReactDOM.createPortal = jest.fn(dropdown => dropdown)
+        ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
 
         const { enzymeWrapper } = setup({
           dataLinks: [],
@@ -360,7 +360,7 @@ describe('GranuleResultsDataLinksButton component', () => {
 
       describe('when multiple bucket object prefixes are provided', () => {
         test('displays the s3 bucket and object prefixes as buttons', () => {
-          ReactDOM.createPortal = jest.fn(dropdown => dropdown)
+          ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
 
           const { enzymeWrapper } = setup({
             dataLinks: [],

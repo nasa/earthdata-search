@@ -70,7 +70,6 @@ export const PanelGroup = ({
     childProps.isActive = isPanelActive
     childProps.footer = childProps.footer ? childProps.footer : footer
 
-    // eslint-disable-next-line react/jsx-props-no-spreading
     return <PanelItem {...childProps} />
   }
 

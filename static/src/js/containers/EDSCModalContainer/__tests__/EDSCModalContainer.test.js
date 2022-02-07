@@ -130,7 +130,6 @@ describe('EDSCModalContainer component', () => {
     })
   })
 
-
   describe('primary action', () => {
     test('should not render a primary action by default', () => {
       const { enzymeWrapper } = setup()

@@ -364,7 +364,6 @@ describe('GranuleResultsItem component', () => {
       } = setup('hovered-granule')
 
       expect(enzymeWrapper.props().className).toContain('granule-results-item--active')
-
     })
   })
 

@@ -59,7 +59,6 @@ function setup(propsOverride = {}) {
 
   const enzymeWrapper = mount(
     <Provider store={store}>
-      {/* eslint-disable react/jsx-props-no-spreading */}
       <CollectionResultsList {...props} />
     </Provider>
   )

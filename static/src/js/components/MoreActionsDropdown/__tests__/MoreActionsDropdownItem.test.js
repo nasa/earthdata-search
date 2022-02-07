@@ -2,7 +2,6 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Dropdown } from 'react-bootstrap'
-import { FaGlobal } from 'react-icons'
 
 import { MoreActionsDropdownItem } from '../MoreActionsDropdownItem'
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'

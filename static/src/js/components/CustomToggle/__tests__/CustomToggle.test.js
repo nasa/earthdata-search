@@ -18,7 +18,6 @@ function setup(type) {
     props.icon = FaGlobe
   }
 
-  // eslint-disable-next-line react/jsx-props-no-spreading
   const enzymeWrapper = shallow(<CustomToggle {...props}>Test</CustomToggle>)
 
   return {

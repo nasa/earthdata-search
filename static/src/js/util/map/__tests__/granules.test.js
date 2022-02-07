@@ -10,8 +10,6 @@ import {
   getRectangles
 } from '../layers'
 
-import projections from '../projections'
-
 describe('granules#isClockwise', () => {
   test('doin stuff here', () => {
     const clockwiseInput = [

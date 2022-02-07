@@ -131,5 +131,4 @@ describe('UPDATE_GRANULE_LINKS', () => {
       expect(updateGranuleDownloadParamsReducer(initial, action)).toEqual(expectedState)
     })
   })
-
 })

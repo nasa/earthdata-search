@@ -42,7 +42,6 @@ class TextField extends Component {
           className={`${classNames.input}`}
           value={value}
           onBlur={this.handleBlur}
-          // onKeyPress={this.handleKeypress}
           onChange={this.handleChange}
         />
       </label>
@@ -62,7 +61,11 @@ TextField.defaultProps = {
 }
 
 TextField.propTypes = {
-  classNames: PropTypes.shape({}),
+  classNames: PropTypes.shape({
+    input: PropTypes.string,
+    label: PropTypes.string,
+    labelSpan: PropTypes.string
+  }),
   dataTestId: PropTypes.string,
   name: PropTypes.string.isRequired,
   onBlur: PropTypes.func.isRequired,

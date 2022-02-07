@@ -75,7 +75,11 @@
     ],
 
     // Allowing cyclic dependancies
-    "import/no-cycle": "off"
+    "import/no-cycle": "off",
+
+    "react/jsx-props-no-spreading": ["error", {
+      "custom": "ignore"
+    }]
   },
 
   "overrides": [

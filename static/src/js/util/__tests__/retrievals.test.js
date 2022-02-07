@@ -1,4 +1,3 @@
-
 import { prepareRetrievalParams } from '../retrievals'
 
 describe('retrievals', () => {

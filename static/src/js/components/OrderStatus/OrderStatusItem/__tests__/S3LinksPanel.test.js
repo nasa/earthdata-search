@@ -52,7 +52,6 @@ describe('S3LinksPanel', () => {
       expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toContain('Direct cloud access for this collection is available in the aws-region region in AWS S3.')
       expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toContain('Retrieved 2 objects for 100 granule')
 
-
       const windowActions = enzymeWrapper.find(TextWindowActions)
       expect(windowActions.props().id).toEqual('links-1')
       expect(windowActions.props().fileContents).toEqual('s3://search.earthdata.nasa.gov\ns3://cmr.earthdata.nasa.gov')
@@ -62,4 +61,3 @@ describe('S3LinksPanel', () => {
     })
   })
 })
-

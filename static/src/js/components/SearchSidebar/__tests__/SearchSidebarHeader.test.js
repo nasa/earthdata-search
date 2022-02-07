@@ -4,7 +4,6 @@ import Adapter from 'enzyme-adapter-react-16'
 
 import SearchSidebarHeader from '../SearchSidebarHeader'
 import SearchFormContainer from '../../../containers/SearchFormContainer/SearchFormContainer'
-import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 

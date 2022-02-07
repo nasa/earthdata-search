@@ -2,7 +2,7 @@ import L from 'leaflet'
 import { calculateArea, getShape, splitListOfPoints } from '../geo'
 
 describe('geo#calculateArea', () => {
-  const lls = latlngs => Array.from(latlngs).map(ll => L.latLng(ll))
+  const lls = (latlngs) => Array.from(latlngs).map((ll) => L.latLng(ll))
 
   test('returns 0 for strings of fewer than 3 lat lngs', () => {
     expect(calculateArea(lls([]))).toEqual(0)

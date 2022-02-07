@@ -72,7 +72,6 @@ describe('CollectionDownloadDisplay component', () => {
         expect(enzymeWrapper.find(Button).length).toEqual(0)
       })
 
-
       test('should render self with links when they are done loading', () => {
         const { enzymeWrapper } = setup({
           granuleDownload: {

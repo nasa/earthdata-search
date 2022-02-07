@@ -35,14 +35,15 @@ function setup(overrideProps, shouldMount) {
     ...overrideProps
   }
 
-  const enzymeWrapper = shouldMount ? mount(<TextWindowActions {...props} />) : shallow(<TextWindowActions {...props} />)
+  const enzymeWrapper = shouldMount
+    ? mount(<TextWindowActions {...props} />)
+    : shallow(<TextWindowActions {...props} />)
 
   return {
     enzymeWrapper,
     props
   }
 }
-
 
 describe('TextWindowActions component', () => {
   const { enzymeWrapper } = setup()

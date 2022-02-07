@@ -23,7 +23,6 @@ describe('getHandoffs selector', () => {
   })
 })
 
-
 describe('getSotoLayers', () => {
   test('returns the sotoLayers', () => {
     const state = {
