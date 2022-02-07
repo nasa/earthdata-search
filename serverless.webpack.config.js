@@ -34,13 +34,12 @@ const ServerlessWebpackConfig = {
   mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
   entry: slsw.lib.entries,
   target: 'node',
-  // output: {
-  //   path: path.resolve(__dirname, 'serverless/dist'),
-  //   filename: '[name].js',
-  //   libraryTarget: 'commonjs',
-  //   library: '[name]',
-  //   clean: true // Replaces CleanWebpackPlugin in Webpack 5
-  // },
+  output: {
+    path: path.resolve(__dirname, 'serverless/dist'),
+    filename: '[name].js',
+    libraryTarget: 'commonjs',
+    clean: true // Replaces CleanWebpackPlugin in Webpack 5
+  },
   externalsPresets: {
     node: true
   },
