@@ -1,4 +1,4 @@
-import singleCollection from './single_collection'
+import singleCollection from './single_collection.json'
 
 describe('Panel Behavior', () => {
   beforeEach(() => {
@@ -25,14 +25,14 @@ describe('Panel Behavior', () => {
 
   it('opens and closes when clicking the handle', () => {
     // Click the handle
-    cy.get('.panels__handle').click().wait(600)
+    cy.get('.panels__handle').click()
 
     // Panel is minimized
     cy.get('.panels--is-open').should('have.length', 0)
     cy.get('.panels--is-minimized').should('have.length', 1)
 
     // Click the handle
-    cy.get('.panels__handle').click().wait(600)
+    cy.get('.panels__handle').click()
 
     // Panel is minimized
     cy.get('.panels--is-open').should('have.length', 1)
@@ -41,14 +41,14 @@ describe('Panel Behavior', () => {
 
   it('opens and closes when using keyboard shortcuts', () => {
     // Press the key
-    cy.window().trigger('keyup', { key: ']' }).wait(600)
+    cy.window().trigger('keyup', { key: ']' })
 
     // Panel is minimized
     cy.get('.panels--is-open').should('have.length', 0)
     cy.get('.panels--is-minimized').should('have.length', 1)
 
     // Press the key
-    cy.window().trigger('keyup', { key: ']' }).wait(600)
+    cy.window().trigger('keyup', { key: ']' })
 
     // Panel is visible
     cy.get('.panels--is-open').should('have.length', 1)

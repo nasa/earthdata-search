@@ -29,7 +29,6 @@ let Config = mergeWithCustomize({
         warnings: false
       }
     },
-    open: true,
     compress: true,
     hot: true
   },
