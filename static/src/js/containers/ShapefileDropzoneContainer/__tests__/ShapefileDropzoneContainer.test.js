@@ -175,7 +175,6 @@ describe('ShapefileDropzoneContainer component', () => {
         size: '200KB'
       })
 
-
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
         'shapefile.success',

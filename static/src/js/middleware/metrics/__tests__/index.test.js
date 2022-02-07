@@ -21,7 +21,7 @@ const createStore = () => {
 
   const next = jest.fn()
 
-  const invoke = action => metricsMiddleware(store)(next)(action)
+  const invoke = (action) => metricsMiddleware(store)(next)(action)
 
   return { store, next, invoke }
 }

@@ -37,7 +37,6 @@ describe('getProviders selector', () => {
     ])
   })
 
-
   test('returns an empty array when there are no providers', () => {
     const state = {}
 

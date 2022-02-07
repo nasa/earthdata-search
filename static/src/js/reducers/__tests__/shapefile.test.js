@@ -71,7 +71,6 @@ describe('UPDATE_SHAPEFILE', () => {
   })
 })
 
-
 describe('LOADING_SHAPEFILE', () => {
   test('returns the correct state', () => {
     const payload = {

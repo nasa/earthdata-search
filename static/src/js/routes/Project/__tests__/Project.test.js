@@ -6,7 +6,6 @@ import SavedProjectsContainer
   from '../../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import ProjectCollectionsContainer
   from '../../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
-import AppLogoContainer from '../../../containers/AppLogoContainer/AppLogoContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 

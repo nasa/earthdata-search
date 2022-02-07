@@ -109,7 +109,6 @@ describe('EDSCModal component', () => {
     })
   })
 
-
   describe('primary action', () => {
     test('should not render a primary action by default', () => {
       const { enzymeWrapper } = setup()
@@ -182,7 +181,6 @@ describe('EDSCModal component', () => {
         secondaryAction: 'Test',
         onSecondaryAction: onSecondaryActionMock
       })
-
 
       enzymeWrapper.find(Button).at(0).simulate('click')
 

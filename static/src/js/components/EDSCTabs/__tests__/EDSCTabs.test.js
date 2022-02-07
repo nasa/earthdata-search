@@ -58,7 +58,6 @@ describe('EDSCTabs component', () => {
     })
   })
 
-
   describe('when no children are provided', () => {
     const { enzymeWrapper } = setup({
       children: []

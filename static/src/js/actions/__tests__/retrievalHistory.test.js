@@ -9,8 +9,6 @@ import {
 
 import { fetchRetrievalHistory } from '../retrievalHistory'
 
-import * as earthdataEnvironmentSelector from '../../selectors/earthdataEnvironment'
-
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {

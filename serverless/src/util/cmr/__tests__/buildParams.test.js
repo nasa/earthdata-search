@@ -1,7 +1,6 @@
 import { buildParams } from '../buildParams'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
-
 describe('util#buildParams', () => {
   test('correctly builds a search URL as a string', () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'http://example.com' }))

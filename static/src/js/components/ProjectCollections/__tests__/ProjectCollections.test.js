@@ -90,7 +90,8 @@ describe('ProjectCollectionsList component', () => {
     const { enzymeWrapper, props } = setup()
 
     expect(enzymeWrapper.find(ProjectHeader).length).toBe(1)
-    expect(enzymeWrapper.find(ProjectHeader).props().collectionsQuery).toEqual(props.collectionsQuery)
+    expect(enzymeWrapper.find(ProjectHeader).props().collectionsQuery)
+      .toEqual(props.collectionsQuery)
     expect(enzymeWrapper.find(ProjectHeader).props().project).toEqual({
       collections: {
         allIds: ['collectionId1', 'collectionId2'],

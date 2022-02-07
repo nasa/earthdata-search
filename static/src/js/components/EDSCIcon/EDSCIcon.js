@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { IconContext } from 'react-icons'
@@ -30,6 +29,7 @@ export const EDSCIcon = ({
       <i
         className={iconClassNames}
         title={title}
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
       />
     )

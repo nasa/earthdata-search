@@ -71,7 +71,6 @@ describe('addError', () => {
   })
 })
 
-
 describe('removeError', () => {
   test('should create an action to update the authToken', () => {
     const payload = 1

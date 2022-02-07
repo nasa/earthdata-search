@@ -85,10 +85,8 @@ function setup(options = {
   let enzymeWrapper
 
   if (options.mount) {
-    // eslint-disable-next-line react/jsx-props-no-spreading
     enzymeWrapper = mount(<GranuleResultsBody {...props} />)
   } else {
-    // eslint-disable-next-line react/jsx-props-no-spreading
     enzymeWrapper = shallow(<GranuleResultsBody {...props} />)
   }
 

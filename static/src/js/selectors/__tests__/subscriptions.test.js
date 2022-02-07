@@ -48,7 +48,6 @@ describe('getSubscriptions selector', () => {
     })
   })
 
-
   test('returns an empty object when there are no subscriptions', () => {
     const state = {}
 

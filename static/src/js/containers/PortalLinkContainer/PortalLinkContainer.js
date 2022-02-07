@@ -61,7 +61,6 @@ export const PortalLinkContainer = (props) => {
     return (
       <Button
         type="button"
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...rest}
         onClick={(event) => {
           if (onClick) onClick(event)

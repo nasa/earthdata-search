@@ -18,7 +18,6 @@ export const OrderDropdownItem = ({
   } = orderInformation
   const { downloadUrl: orderDownloadUrls = [] } = currentDownloadUrlsObject
 
-
   return (
     <li
       key={orderId}
@@ -31,7 +30,7 @@ export const OrderDropdownItem = ({
       </h4>
       <ul className="order-dropdown-item__list">
         {
-          orderDownloadUrls.map(href => (
+          orderDownloadUrls.map((href) => (
             <li
               key={href}
               className="order-dropdown-item__list-item"
@@ -47,7 +46,10 @@ export const OrderDropdownItem = ({
 
 OrderDropdownItem.propTypes = {
   i: PropTypes.number.isRequired,
-  order: PropTypes.shape({}).isRequired,
+  order: PropTypes.shape({
+    order_number: PropTypes.string,
+    order_information: PropTypes.shape({})
+  }).isRequired,
   totalOrders: PropTypes.number.isRequired
 }
 

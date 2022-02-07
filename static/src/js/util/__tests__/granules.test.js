@@ -444,7 +444,6 @@ describe('#getS3Urls', () => {
   })
 })
 
-
 describe('getDownloadUrls', () => {
   test('returns multiple links', () => {
     const cmrGranuleResponse = [{

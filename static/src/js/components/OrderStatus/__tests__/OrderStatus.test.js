@@ -90,7 +90,8 @@ describe('OrderStatus component', () => {
 
     test('status link has correct href', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find(Well.Introduction).find(PortalLinkContainer).at(0).props().to).toEqual({
+      expect(enzymeWrapper.find(Well.Introduction)
+        .find(PortalLinkContainer).at(0).props().to).toEqual({
         pathname: '/downloads',
         search: ''
       })
@@ -103,7 +104,8 @@ describe('OrderStatus component', () => {
       }))
 
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find(Well.Introduction).find(PortalLinkContainer).at(0).props().to).toEqual({
+      expect(enzymeWrapper.find(Well.Introduction)
+        .find(PortalLinkContainer).at(0).props().to).toEqual({
         pathname: '/downloads',
         search: '?ee=prod'
       })
