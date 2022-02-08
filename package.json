@@ -29,7 +29,7 @@
     "start:ci": "webpack-dev-server --config static.webpack.config.dev.js",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run -c video=false",
-    "cypress:ci": "NODE_ENV=test_cypress start-server-and-test start:ci http-get://localhost:8080 cypress:run",
+    "cypress:ci": "start-server-and-test start:ci http-get://localhost:8080 cypress:run",
     "cypress:prepare-ci": "bin/cypress-prepare-ci"
   },
   "devDependencies": {
@@ -40,7 +40,7 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "cookies": "^0.7.3",
-    "cypress": "^7.6.0",
+    "cypress": "^9.4.1",
     "cypress-file-upload": "^5.0.7",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
