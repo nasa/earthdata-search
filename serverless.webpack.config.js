@@ -1,6 +1,6 @@
 const path = require('path')
 const slsw = require('serverless-webpack')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+// const CleanWebpackPlugin = require('clean-webpack-plugin')
 const nodeExternals = require('webpack-node-externals')
 const CopyPlugin = require('copy-webpack-plugin')
 // const ESLintPlugin = require('eslint-webpack-plugin')
@@ -65,7 +65,7 @@ const ServerlessWebpackConfig = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin([path.resolve(__dirname, 'serverless/dist')]),
+    // new CleanWebpackPlugin([path.resolve(__dirname, 'serverless/dist')]),
     ConditionalPlugin(
       ((config) => config.webpack.includeMigrations),
       new CopyPlugin({
