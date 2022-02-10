@@ -198,7 +198,7 @@ const StaticCommonConfig = {
           showTophat: ui.showTophat
         }
       }]),
-    new webpack.ids.HashedModuleIdsPlugin({}),
+    // new webpack.ids.HashedModuleIdsPlugin(),
     new CopyWebpackPlugin({
       patterns: [
         { from: './static/src/public', to: './' }

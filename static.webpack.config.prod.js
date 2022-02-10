@@ -6,16 +6,16 @@ const {
   mergeWithCustomize
 } = require('webpack-merge')
 
+// const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const TerserJsPlugin = require('terser-webpack-plugin')
+
 const {
   BundleAnalyzerPlugin
 } = require('webpack-bundle-analyzer')
-
-const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const TerserJsPlugin = require('terser-webpack-plugin')
 
 const StaticCommonConfig = require('./static.webpack.config.common')
 
@@ -24,7 +24,7 @@ const defaultPlugins = [
   new webpack.ids.HashedModuleIdsPlugin({}),
 
   // Remove/clean your build folder(s).
-  new CleanWebpackPlugin(),
+  // new CleanWebpackPlugin(),
 
   // Creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
   new MiniCssExtractPlugin({
@@ -58,7 +58,8 @@ const Config = mergeWithCustomize({
     filename: '[name].[contenthash].bundle.js',
     chunkFilename: '[name].[contenthash].bundle.js',
     path: path.resolve(__dirname, 'static/dist'),
-    publicPath: '/'
+    publicPath: '/',
+    clean: true
   },
   optimization: {
     nodeEnv: 'production',
@@ -75,13 +76,14 @@ const Config = mergeWithCustomize({
       // Use cssnano to optimize and minify your CSS
       new CssMinimizerPlugin()
     ],
+    moduleIds: 'deterministic',
     runtimeChunk: true,
     splitChunks: {
       maxInitialRequests: Infinity,
       maxSize: 300000,
       minSize: 150000,
       cacheGroups: {
-        vendor: {
+        defaultVendors: {
           name(module) {
             // Get the name. E.g. node_modules/packageName/not/this/part.js
             // or node_modules/packageName
