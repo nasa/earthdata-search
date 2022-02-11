@@ -111,6 +111,17 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         points
         polygons
         relatedUrls
+        relatedCollections {
+          count
+          items {
+            id
+            doi
+            title
+            relationships {
+              relationshipType
+            }
+          }
+        }
         scienceKeywords
         shortName
         spatialExtent
@@ -203,6 +214,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           granules,
           hasGranules,
           nativeDataFormats,
+          relatedCollections,
           services,
           shortName,
           subscriptions,
@@ -235,6 +247,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           isCSDA: isCSDACollection(dataCenters),
           isOpenSearch: !!getOpenSearchOsddLink(collection),
           nativeDataFormats,
+          relatedCollections,
           services,
           shortName,
           subscriptions,

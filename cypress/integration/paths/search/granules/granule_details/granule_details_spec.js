@@ -11,7 +11,7 @@ import formattedGranuleMetadata from './__mocks__/formattedGranuleMetadata.json'
 
 describe('Path /search/granules/granule-details', () => {
   describe('When loading a granule', () => {
-    it('loads correctly', () => {
+    it.only('loads correctly', () => {
       const collectionId = 'C1214470488-ASF'
       const granuleId = 'G1287941210-ASF'
       const cmrHits = 8180

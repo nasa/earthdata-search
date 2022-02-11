@@ -2,6 +2,7 @@ import {
   METRICS_CLICK,
   METRICS_DATA_ACCESS,
   METRICS_MAP,
+  METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
   METRICS_TIMELINE,
   METRICS_TIMING,
@@ -13,6 +14,7 @@ import {
   metricsClick,
   metricsTimeline,
   metricsMap,
+  metricsRelatedCollection,
   metricsSpatialEdit,
   metricsTiming,
   metricsCollectionSortChange
@@ -137,6 +139,24 @@ describe('actions', () => {
       } = action
 
       expect(type).toEqual(METRICS_COLLECTION_SORT_CHANGE)
+      expect(payload).toEqual(data)
+    })
+  })
+
+  describe('metricsRelatedCollection', () => {
+    test('returns the correct action', () => {
+      const data = {
+        test: 'test payload'
+      }
+
+      const action = metricsRelatedCollection(data)
+
+      const {
+        type,
+        payload
+      } = action
+
+      expect(type).toEqual(METRICS_RELATED_COLLECTION)
       expect(payload).toEqual(data)
     })
   })

@@ -2,6 +2,7 @@ import {
   METRICS_CLICK,
   METRICS_DATA_ACCESS,
   METRICS_MAP,
+  METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
   METRICS_TIMELINE,
   METRICS_TIMING,
@@ -44,5 +45,10 @@ export const metricsTiming = payload => ({
 
 export const metricsCollectionSortChange = payload => ({
   type: METRICS_COLLECTION_SORT_CHANGE,
+  payload
+})
+
+export const metricsRelatedCollection = payload => ({
+  type: METRICS_RELATED_COLLECTION,
   payload
 })

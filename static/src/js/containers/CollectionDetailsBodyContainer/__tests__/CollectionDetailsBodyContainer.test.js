@@ -14,7 +14,12 @@ function setup() {
       test: 'metadata'
     },
     isActive: true,
-    onToggleRelatedUrlsModal: jest.fn()
+    location: {
+      pathname: '/search/granules/collection-details'
+    },
+    onToggleRelatedUrlsModal: jest.fn(),
+    onMetricsRelatedCollection: jest.fn(),
+    onFocusedCollectionChange: jest.fn()
   }
 
   const enzymeWrapper = shallow(<CollectionDetailsBodyContainer {...props} />)

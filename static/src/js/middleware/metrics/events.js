@@ -230,3 +230,19 @@ export const collectionSortChange = (action) => {
     collectionSortChangeLabel: value
   })
 }
+
+/**
+* Pushes a relatedCollection event on the dataLayer.
+* @param {Object} action - The action.
+*/
+export const relatedCollection = (action) => {
+  const { payload } = action
+  const { collectionId = '', type = '' } = payload
+
+  dataLayer.push({
+    event: 'relatedCollection',
+    relatedCollectionCategory: 'related collection',
+    relatedCollectionAction: type,
+    relatedCollectionLabel: collectionId
+  })
+}
