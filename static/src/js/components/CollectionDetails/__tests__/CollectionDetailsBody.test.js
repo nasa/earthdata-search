@@ -62,6 +62,11 @@ function setup(overrides) {
       },
       ...overrideMetadata
     },
+    location: {
+      pathname: '/search'
+    },
+    onFocusedCollectionChange: jest.fn(),
+    onMetricsRelatedCollection: jest.fn(),
     onToggleRelatedUrlsModal: jest.fn(),
     ...overrideProps
   }
@@ -660,6 +665,318 @@ describe('CollectionDetails component', () => {
         expect(enzymeWrapper.find(CollapsePanel).props().panelClassName).toEqual('')
         expect(enzymeWrapper.find(CollapsePanel).props().scrollToBottom).toEqual(true)
         expect(children.find('.collection-details-body__dev-list a').length).toEqual(7)
+      })
+    })
+
+    describe('Related Collections', () => {
+      test('renders the links', () => {
+        const { enzymeWrapper } = setup({
+          overrideMetadata: {
+            relatedCollections: {
+              count: 5,
+              items: [
+                {
+                  doi: '1.TEST.DOI',
+                  id: 'TEST_COLLECTION_1',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 1'
+                },
+                {
+                  doi: '2.TEST.DOI',
+                  id: 'TEST_COLLECTION_2',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 2'
+                },
+                {
+                  doi: '3.TEST.DOI',
+                  id: 'TEST_COLLECTION_3',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 3'
+                },
+                {
+                  doi: '4.TEST.DOI',
+                  id: 'TEST_COLLECTION_4',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 4'
+                },
+                {
+                  doi: '5.TEST.DOI',
+                  id: 'TEST_COLLECTION_5',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 5'
+                }
+              ]
+            }
+          },
+          overrideProps: {
+            location: {
+              pathname: '/search/granules/collection-details',
+              search: '?p=TEST_COLLECTION_0',
+              hash: '',
+              key: '1234'
+            }
+          }
+        })
+
+        expect(enzymeWrapper.find('.collection-details-body__related-collections-list')).toBeDefined()
+      })
+
+      test('renders a maximum of 3 links', () => {
+        const { enzymeWrapper } = setup({
+          overrideMetadata: {
+            relatedCollections: {
+              count: 5,
+              items: [
+                {
+                  doi: '1.TEST.DOI',
+                  id: 'TEST_COLLECTION_1',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 1'
+                },
+                {
+                  doi: '2.TEST.DOI',
+                  id: 'TEST_COLLECTION_2',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 2'
+                },
+                {
+                  doi: '3.TEST.DOI',
+                  id: 'TEST_COLLECTION_3',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 3'
+                },
+                {
+                  doi: '4.TEST.DOI',
+                  id: 'TEST_COLLECTION_4',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 4'
+                },
+                {
+                  doi: '5.TEST.DOI',
+                  id: 'TEST_COLLECTION_5',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 5'
+                }
+              ]
+            }
+          },
+          overrideProps: {
+            location: {
+              pathname: '/search/granules/collection-details',
+              search: '?p=TEST_COLLECTION_0',
+              hash: '',
+              key: '1234'
+            }
+          }
+        })
+
+        expect(enzymeWrapper.find('.collection-details-body__related-collections-list').children().length).toEqual(3)
+      })
+
+      describe('when clicking a related collection', () => {
+        test('navigates to the correct collection', () => {
+          const { enzymeWrapper, props } = setup({
+            overrideMetadata: {
+              relatedCollections: {
+                count: 5,
+                items: [
+                  {
+                    doi: '1.TEST.DOI',
+                    id: 'TEST_COLLECTION_1',
+                    relationships: [
+                      {
+                        relationshipType: 'relatedUrl'
+                      }
+                    ],
+                    title: 'Test Title 1'
+                  },
+                  {
+                    doi: '2.TEST.DOI',
+                    id: 'TEST_COLLECTION_2',
+                    relationships: [
+                      {
+                        relationshipType: 'relatedUrl'
+                      }
+                    ],
+                    title: 'Test Title 2'
+                  },
+                  {
+                    doi: '3.TEST.DOI',
+                    id: 'TEST_COLLECTION_3',
+                    relationships: [
+                      {
+                        relationshipType: 'relatedUrl'
+                      }
+                    ],
+                    title: 'Test Title 3'
+                  },
+                  {
+                    doi: '4.TEST.DOI',
+                    id: 'TEST_COLLECTION_4',
+                    relationships: [
+                      {
+                        relationshipType: 'relatedUrl'
+                      }
+                    ],
+                    title: 'Test Title 4'
+                  },
+                  {
+                    doi: '5.TEST.DOI',
+                    id: 'TEST_COLLECTION_5',
+                    relationships: [
+                      {
+                        relationshipType: 'relatedUrl'
+                      }
+                    ],
+                    title: 'Test Title 5'
+                  }
+                ]
+              }
+            },
+            overrideProps: {
+              location: {
+                pathname: '/search/granules/collection-details',
+                search: '?p=TEST_COLLECTION_0',
+                hash: '',
+                key: '1234'
+              }
+            }
+          })
+
+          const relatedCollectionItem = enzymeWrapper.find('.collection-details-body__related-collections-list').childAt(0)
+          const relatedCollectionLink = relatedCollectionItem.find('.collection-details-body__related-collection-link')
+          const relatedCollectionLinkProps = relatedCollectionLink.props()
+
+          relatedCollectionLink.simulate('click')
+
+          expect(props.onFocusedCollectionChange).toHaveBeenCalledTimes(1)
+          expect(props.onFocusedCollectionChange).toHaveBeenCalledWith('TEST_COLLECTION_1')
+          expect(relatedCollectionLinkProps.to).toEqual({
+            pathname: '/search/granules/',
+            search: '?p=TEST_COLLECTION_1'
+          })
+        })
+
+        test('fires a metrics event', () => {
+          const { enzymeWrapper, props } = setup({
+            overrideMetadata: {
+              relatedCollections: {
+                count: 5,
+                items: [
+                  {
+                    doi: '1.TEST.DOI',
+                    id: 'TEST_COLLECTION_1',
+                    relationships: [
+                      {
+                        relationshipType: 'relatedUrl'
+                      }
+                    ],
+                    title: 'Test Title 1'
+                  },
+                  {
+                    doi: '2.TEST.DOI',
+                    id: 'TEST_COLLECTION_2',
+                    relationships: [
+                      {
+                        relationshipType: 'relatedUrl'
+                      }
+                    ],
+                    title: 'Test Title 2'
+                  },
+                  {
+                    doi: '3.TEST.DOI',
+                    id: 'TEST_COLLECTION_3',
+                    relationships: [
+                      {
+                        relationshipType: 'relatedUrl'
+                      }
+                    ],
+                    title: 'Test Title 3'
+                  },
+                  {
+                    doi: '4.TEST.DOI',
+                    id: 'TEST_COLLECTION_4',
+                    relationships: [
+                      {
+                        relationshipType: 'relatedUrl'
+                      }
+                    ],
+                    title: 'Test Title 4'
+                  },
+                  {
+                    doi: '5.TEST.DOI',
+                    id: 'TEST_COLLECTION_5',
+                    relationships: [
+                      {
+                        relationshipType: 'relatedUrl'
+                      }
+                    ],
+                    title: 'Test Title 5'
+                  }
+                ]
+              }
+            },
+            overrideProps: {
+              location: {
+                pathname: '/search/granules/collection-details',
+                search: '?p=TEST_COLLECTION_0',
+                hash: '',
+                key: '1234'
+              }
+            }
+          })
+
+          const relatedCollectionItem = enzymeWrapper.find('.collection-details-body__related-collections-list').childAt(0)
+          const relatedCollectionLink = relatedCollectionItem.find('.collection-details-body__related-collection-link')
+
+          relatedCollectionLink.simulate('click')
+
+          expect(props.onMetricsRelatedCollection).toHaveBeenCalledTimes(1)
+          expect(props.onMetricsRelatedCollection).toHaveBeenCalledWith({
+            type: 'view',
+            collectionId: 'TEST_COLLECTION_1'
+          })
+        })
       })
     })
   })

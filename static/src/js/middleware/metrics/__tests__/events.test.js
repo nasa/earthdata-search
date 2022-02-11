@@ -7,6 +7,7 @@ import {
   defaultClick,
   timeline,
   map,
+  relatedCollection,
   spatialEdit,
   timing,
   collectionSortChange
@@ -14,8 +15,10 @@ import {
 import {
   METRICS_DATA_ACCESS,
   METRICS_CLICK,
+  METRICS_COLLECTION_SORT_CHANGE,
   METRICS_TIMELINE,
   METRICS_MAP,
+  METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
   METRICS_TIMING
 } from '../constants'
@@ -377,7 +380,7 @@ describe('events', () => {
   describe('collectionsSortChange', () => {
     test('pushes to the dataLayer', () => {
       const action = {
-        type: METRICS_TIMING,
+        type: METRICS_COLLECTION_SORT_CHANGE,
         payload: {
           value: '-test_value'
         }
@@ -391,6 +394,28 @@ describe('events', () => {
         collectionSortChangeCategory: 'search result sort',
         collectionSortChangeAction: 'change',
         collectionSortChangeLabel: '-test_value'
+      })
+    })
+  })
+
+  describe('relatedCollection', () => {
+    test('pushes to the dataLayer', () => {
+      const action = {
+        type: METRICS_RELATED_COLLECTION,
+        payload: {
+          type: 'view',
+          collectionId: 'TEST_ID'
+        }
+      }
+
+      relatedCollection(action)
+
+      expect(dataLayerMock).toHaveBeenCalledTimes(1)
+      expect(dataLayerMock).toHaveBeenCalledWith({
+        event: 'relatedCollection',
+        relatedCollectionCategory: 'related collection',
+        relatedCollectionAction: 'view',
+        relatedCollectionLabel: 'TEST_ID'
       })
     })
   })

@@ -75,10 +75,10 @@
     display: block;
     padding: 0;
     white-space: nowrap;
-    text-decoration: underline;
     font-weight: 700;
     font-size: .925rem;
     line-height: 1.5rem;
+    text-decoration: none;
 
     &:hover {
       text-decoration: underline !important;
@@ -148,6 +148,7 @@
   &__provider-list {
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 0;
   }
 
   &__for-devs {
@@ -188,14 +189,32 @@
     padding: 0;
   }
 
-  &__cloud-access {
-    padding-top: 1rem;
+  &__feature-title {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    padding-top: 1.25rem;
     border-top: 1px solid $color__black--200;
+  }
 
-    &__heading {
-      h4 {
-        font-size: 1rem;
-      }
+  &__related-collections-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__related-collection-item {
+    margin-bottom: 0.5rem;
+  }
+
+  &__related-collection-link {
+    font-size: 0.925rem;
+    line-height: 0.925rem;
+    color: $color__blue--dark;
+
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: underline;
     }
   }
 }

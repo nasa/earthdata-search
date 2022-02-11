@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { uniq } from 'lodash'
+import { parse } from 'qs'
 
 import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import SimpleBar from 'simplebar-react'
@@ -14,8 +15,10 @@ import CollectionDetailsMinimap from './CollectionDetailsMinimap'
 import SplitBadge from '../SplitBadge/SplitBadge'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Skeleton from '../Skeleton/Skeleton'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import { collectionDetailsSkeleton } from './skeleton'
 
+import { stringify } from '../../util/url/url'
 import { pluralize } from '../../util/pluralize'
 
 import './CollectionDetailsBody.scss'
@@ -112,6 +115,9 @@ const buildForDeveloperLink = (linkData, token) => {
 export const CollectionDetailsBody = ({
   collectionMetadata,
   isActive,
+  location,
+  onFocusedCollectionChange,
+  onMetricsRelatedCollection,
   onToggleRelatedUrlsModal
 }) => {
   const {
@@ -123,6 +129,7 @@ export const CollectionDetailsBody = ({
     hasAllMetadata,
     gibsLayers,
     nativeDataFormats,
+    relatedCollections = {},
     relatedUrls,
     services,
     scienceKeywords,
@@ -201,6 +208,10 @@ export const CollectionDetailsBody = ({
     doiLink,
     doiText
   } = doi
+
+  const {
+    items: relatedCollectionsList = []
+  } = relatedCollections || {}
 
   return (
     <div className="collection-details-body">
@@ -447,10 +458,10 @@ export const CollectionDetailsBody = ({
           </div>
           {
             region && (
-              <div className="row collection-details-body__row collection-details-body__cloud-access">
+              <div className="row collection-details-body__row collection-details-body__feature">
                 <div className="col col-12">
-                  <div className="collection-details-body__cloud-access__heading">
-                    <h4>Cloud Access</h4>
+                  <div className="collection-details-body__feature-heading">
+                    <h4 className="collection-details-body__feature-title">Cloud Access</h4>
                     <p>Available for access in-region with AWS Cloud</p>
                   </div>
                   <dl className="collection-details-body__info">
@@ -507,6 +518,61 @@ export const CollectionDetailsBody = ({
               </div>
             )
           }
+          {
+            !!(relatedCollectionsList.length && relatedCollectionsList.length > 0) && (
+              <div className="row collection-details-body__row collection-details-body__feature">
+                <div className="col col-12">
+                  <div className="collection-details-body__feature-heading">
+                    <h4 className="collection-details-body__feature-title">You might also be interested in...</h4>
+                    <ul className="collection-details-body__related-collections-list">
+                      {
+                        relatedCollectionsList.slice(0, 3).map((relatedCollection) => {
+                          const { id, title } = relatedCollection
+                          const params = parse(
+                            location.search,
+                            {
+                              ignoreQueryPrefix: true,
+                              parseArrays: false
+                            }
+                          )
+                          let { p = '' } = params
+                          p = p.replace(/^[^!]*/, id)
+
+                          return (
+                            <li
+                              key={`related-collection--${id}`}
+                              className="collection-details-body__related-collection-item"
+                            >
+                              <PortalLinkContainer
+                                className="collection-details-body__related-collection-link"
+                                type="link"
+                                onClick={() => {
+                                  onMetricsRelatedCollection({
+                                    collectionId: id,
+                                    type: 'view'
+                                  })
+                                  onFocusedCollectionChange(id)
+                                }}
+                                to={{
+                                  pathname: '/search/granules/',
+                                  search: stringify({
+                                    ...params,
+                                    p
+                                  })
+                                }}
+                              >
+                                {title}
+                              </PortalLinkContainer>
+                            </li>
+                          )
+                        })
+                      }
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )
+           }
         </div>
       </SimpleBar>
       <CollapsePanel
@@ -542,6 +608,9 @@ export const CollectionDetailsBody = ({
 CollectionDetailsBody.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   isActive: PropTypes.bool.isRequired,
+  location: PropTypes.shape({}).isRequired,
+  onFocusedCollectionChange: PropTypes.func.isRequired,
+  onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }
 

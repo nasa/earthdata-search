@@ -5,6 +5,7 @@ import {
   dataAccess,
   defaultClick,
   map,
+  relatedCollection,
   spatialEdit,
   timeline,
   timing,
@@ -16,6 +17,7 @@ import {
   METRICS_COLLECTION_SORT_CHANGE,
   METRICS_DATA_ACCESS,
   METRICS_MAP,
+  METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
   METRICS_TIMELINE,
   METRICS_TIMING
@@ -41,6 +43,10 @@ const createMetricsMiddleware = () => ({ getState }) => next => (action) => {
 
   if (action.type === METRICS_MAP) {
     map(action)
+  }
+
+  if (action.type === METRICS_RELATED_COLLECTION) {
+    relatedCollection(action)
   }
 
   if (action.type === METRICS_SPATIAL_EDIT) {

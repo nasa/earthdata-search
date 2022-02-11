@@ -5,6 +5,7 @@ import {
   METRICS_COLLECTION_SORT_CHANGE,
   METRICS_DATA_ACCESS,
   METRICS_MAP,
+  METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
   METRICS_TIMELINE,
   METRICS_TIMING
@@ -106,7 +107,7 @@ describe('metrics middleware', () => {
     expect(events.map).toHaveBeenCalledWith(action)
   })
 
-  test('calls timeline event', () => {
+  test('calls spatialEdit event', () => {
     events.spatialEdit = jest.fn()
     const { invoke } = createStore()
 
@@ -149,5 +150,21 @@ describe('metrics middleware', () => {
     invoke(action)
     expect(events.collectionSortChange).toHaveBeenCalledTimes(1)
     expect(events.collectionSortChange).toHaveBeenCalledWith(action)
+  })
+
+  test('calls relatedCollection event', () => {
+    events.relatedCollection = jest.fn()
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_RELATED_COLLECTION,
+      payload: {
+        type: 'view',
+        collectionId: 'TEST_ID'
+      }
+    }
+    invoke(action)
+    expect(events.relatedCollection).toHaveBeenCalledTimes(1)
+    expect(events.relatedCollection).toHaveBeenCalledWith(action)
   })
 })
