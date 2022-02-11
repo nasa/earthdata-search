@@ -776,26 +776,6 @@ describe('CollectionDetails component', () => {
                     }
                   ],
                   title: 'Test Title 3'
-                },
-                {
-                  doi: '4.TEST.DOI',
-                  id: 'TEST_COLLECTION_4',
-                  relationships: [
-                    {
-                      relationshipType: 'relatedUrl'
-                    }
-                  ],
-                  title: 'Test Title 4'
-                },
-                {
-                  doi: '5.TEST.DOI',
-                  id: 'TEST_COLLECTION_5',
-                  relationships: [
-                    {
-                      relationshipType: 'relatedUrl'
-                    }
-                  ],
-                  title: 'Test Title 5'
                 }
               ]
             }
@@ -849,26 +829,6 @@ describe('CollectionDetails component', () => {
                       }
                     ],
                     title: 'Test Title 3'
-                  },
-                  {
-                    doi: '4.TEST.DOI',
-                    id: 'TEST_COLLECTION_4',
-                    relationships: [
-                      {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 4'
-                  },
-                  {
-                    doi: '5.TEST.DOI',
-                    id: 'TEST_COLLECTION_5',
-                    relationships: [
-                      {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 5'
                   }
                 ]
               }
@@ -912,46 +872,6 @@ describe('CollectionDetails component', () => {
                       }
                     ],
                     title: 'Test Title 1'
-                  },
-                  {
-                    doi: '2.TEST.DOI',
-                    id: 'TEST_COLLECTION_2',
-                    relationships: [
-                      {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 2'
-                  },
-                  {
-                    doi: '3.TEST.DOI',
-                    id: 'TEST_COLLECTION_3',
-                    relationships: [
-                      {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 3'
-                  },
-                  {
-                    doi: '4.TEST.DOI',
-                    id: 'TEST_COLLECTION_4',
-                    relationships: [
-                      {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 4'
-                  },
-                  {
-                    doi: '5.TEST.DOI',
-                    id: 'TEST_COLLECTION_5',
-                    relationships: [
-                      {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 5'
                   }
                 ]
               }
