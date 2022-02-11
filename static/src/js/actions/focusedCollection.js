@@ -111,15 +111,13 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         points
         polygons
         relatedUrls
-        relatedCollections {
-          count
-          items {
+        relatedCollections (
+          limit: 3
+        ) {
+        count
+        items {
             id
-            doi
             title
-            relationships {
-              relationshipType
-            }
           }
         }
         scienceKeywords

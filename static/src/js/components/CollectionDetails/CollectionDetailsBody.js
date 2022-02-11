@@ -526,7 +526,7 @@ export const CollectionDetailsBody = ({
                     <h4 className="collection-details-body__feature-title">You might also be interested in...</h4>
                     <ul className="collection-details-body__related-collections-list">
                       {
-                        relatedCollectionsList.slice(0, 3).map((relatedCollection) => {
+                        relatedCollectionsList.map((relatedCollection) => {
                           const { id, title } = relatedCollection
                           const params = parse(
                             location.search,

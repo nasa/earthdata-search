@@ -209,6 +209,15 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           lines
           points
           polygons
+          relatedCollections (
+            limit: 3
+          ) {
+            count
+            items {
+              id
+              title
+            }
+          }
           relatedUrls
           scienceKeywords
           shortName

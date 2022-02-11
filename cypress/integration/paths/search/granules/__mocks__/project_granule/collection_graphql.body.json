@@ -161,6 +161,23 @@
       "nativeDataFormats": ["HDF-EOS2"],
       "points": null,
       "polygons": null,
+      "relatedCollections": {
+        "count": 243,
+        "items": [
+          {
+            "id": "C1240524032-SCIOPSTEST",
+            "title": "SENTINEL-1A_SINGLE_POL_METADATA_GRD_HIGH_RES"
+          },
+          {
+            "id": "C1212209075-ASF",
+            "title": "SENTINEL-1A_DUAL_POL_METADATA_GRD_FULL_RES"
+          },
+          {
+            "id": "C1240524082-SCIOPSTEST",
+            "title": "SENTINEL-1A_DUAL_POL_GRD_MEDIUM_RES"
+          }
+        ]
+      },
       "relatedUrls": [
         {
           "description": "The LP DAAC product page provides information on Science Data Set layers and links for user guides, ATBDs, data access, tools, customer support, etc.",
