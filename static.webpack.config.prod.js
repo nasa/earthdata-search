@@ -2,8 +2,9 @@ const path = require('path')
 const webpack = require('webpack')
 
 const {
-  customizeObject,
-  mergeWithCustomize
+  // customizeObject,
+  // mergeWithCustomize,
+  mergeWithRules
 } = require('webpack-merge')
 
 // const CleanWebpackPlugin = require('clean-webpack-plugin')
@@ -46,12 +47,15 @@ const debugPlugins = [
   new DuplicatePackageCheckerPlugin()
 ]
 
-const Config = mergeWithCustomize({
-  customizeObject: customizeObject({
-    devtool: 'replace',
-    'module.rules.use': 'prepend'
-  })
-})({
+const Config = mergeWithRules({
+  devtool: 'replace',
+  module: {
+    rules: {
+      test: 'match',
+      use: 'prepend'
+    }
+  }
+})(StaticCommonConfig, {
   mode: 'production',
   devtool: 'cheap-module-source-map',
   output: {
@@ -63,7 +67,7 @@ const Config = mergeWithCustomize({
   },
   optimization: {
     nodeEnv: 'production',
-    concatenateModules: true,
+    // concatenateModules: true,
     minimize: true,
     minimizer: [
       // Use terser to minify/minimize your JavaScript
@@ -76,12 +80,14 @@ const Config = mergeWithCustomize({
       // Use cssnano to optimize and minify your CSS
       new CssMinimizerPlugin()
     ],
+    // chunkIds: 'deterministic',
     moduleIds: 'deterministic',
     runtimeChunk: true,
     splitChunks: {
+      chunks: 'all',
       maxInitialRequests: Infinity,
-      maxSize: 300000,
-      minSize: 150000,
+      maxSize: 200000,
+      // minSize: 150000,
       cacheGroups: {
         defaultVendors: {
           name(module) {
@@ -101,7 +107,7 @@ const Config = mergeWithCustomize({
   module: {
     rules: [
       {
-        test: /\.(css)$/,
+        test: /\.(css|scss)$/,
         exclude: /portals/i,
         use: [
           MiniCssExtractPlugin.loader
@@ -113,6 +119,6 @@ const Config = mergeWithCustomize({
     ...defaultPlugins,
     ...(debug ? debugPlugins : [])
   ]
-}, StaticCommonConfig)
+})
 
 module.exports = Config

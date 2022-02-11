@@ -54,7 +54,7 @@ Config = mergeWithRules({
       use: 'prepend'
     }
   }
-})(Config, {
+})({
   module: {
     rules: [
       {
@@ -68,6 +68,6 @@ Config = mergeWithRules({
       }
     ]
   }
-})
+}, Config)
 
 module.exports = Config

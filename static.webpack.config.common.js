@@ -71,16 +71,9 @@ const StaticCommonConfig = {
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true,
-              importLoaders: 1
+              sourceMap: true
             }
           },
-          // {
-          //   loader: 'resolve-url-loader',
-          //   options: {
-          //     sourceMap: true
-          //   }
-          // },
           {
             loader: 'resolve-url-loader',
             options: {
