@@ -23,7 +23,7 @@ It builds upon several public-facing services provided by EOSDIS, including the 
 
 ## Application Installation and Usage
 
-The Earthdata Search application uses Node v12.16.3 and Webpack 4.39.3 to generate static assets. The serverless application utilizes the following AWS services (important to note if deploying to an AWS environment):
+The Earthdata Search application uses Node v14 and Webpack 5 to generate static assets. The serverless application utilizes the following AWS services (important to note if deploying to an AWS environment):
 - S3
   - We highly recommend using CloudFront in front of S3.
 - SQS
