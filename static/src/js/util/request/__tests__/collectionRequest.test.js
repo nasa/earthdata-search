@@ -42,7 +42,6 @@ describe('CollectionRequest#permittedCmrKeys', () => {
       'data_center_h',
       'data_center',
       'echo_collection_id',
-      'format',
       'facets_size',
       'granule_data_format',
       'granule_data_format_h',
