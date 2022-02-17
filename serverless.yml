@@ -42,6 +42,8 @@ provider:
     geocodingService: ${self:custom.variables.geocodingService}
     geocodingIncludePolygons: ${self:custom.variables.geocodingIncludePolygons}
 
+    NODE_OPTIONS: '--enable-source-maps'
+
   vpc:
     securityGroupIds:
       - Fn::ImportValue: ${self:provider.stage}-LambdaSecurityGroup
