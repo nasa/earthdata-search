@@ -34,7 +34,6 @@ const collectionSearch = async (event) => {
     'data_center',
     'echo_collection_id',
     'facets_size',
-    'format',
     'granule_data_format',
     'granule_data_format_h',
     'has_granules_or_cwic',

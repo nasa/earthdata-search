@@ -418,10 +418,6 @@
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: collections
-          request:
-            parameters:
-              paths:
-                format: true
           authorizer:
             name: edlAuthorizer
             type: request
