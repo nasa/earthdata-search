@@ -1,19 +1,20 @@
 const {
-  mergeWithCustomize,
-  mergeWithRules,
-  customizeObject
+  mergeWithRules
 } = require('webpack-merge')
 
 const WebpackBar = require('webpackbar')
 
 const StaticCommonConfig = require('./static.webpack.config.common')
 
-let Config = mergeWithCustomize({
-  customizeObject: customizeObject({
-    devtool: 'replace',
-    'module.rules.use': 'prepend'
-  })
-})({
+const Config = mergeWithRules({
+  devtool: 'replace',
+  module: {
+    rules: {
+      test: 'match',
+      use: 'prepend'
+    }
+  }
+})(StaticCommonConfig, {
   mode: 'development',
   devtool: 'inline-cheap-module-source-map',
   resolve: {
@@ -45,29 +46,6 @@ let Config = mergeWithCustomize({
   plugins: [
     new WebpackBar()
   ]
-}, StaticCommonConfig)
-
-Config = mergeWithRules({
-  module: {
-    rules: {
-      test: 'match',
-      use: 'prepend'
-    }
-  }
-})({
-  module: {
-    rules: [
-      {
-        test: /\.(css|scss)$/,
-        exclude: /portals/i,
-        use: [
-          {
-            loader: 'style-loader'
-          }
-        ]
-      }
-    ]
-  }
-}, Config)
+})
 
 module.exports = Config
