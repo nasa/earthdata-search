@@ -12,7 +12,7 @@ import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata
 
 import CollectionDetailsBody from '../../components/CollectionDetails/CollectionDetailsBody'
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   onFocusedCollectionChange:
     (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onToggleRelatedUrlsModal:
