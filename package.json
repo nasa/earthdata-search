@@ -90,7 +90,6 @@
     "circular-dependency-plugin": "^5.2.2",
     "classnames": "^2.2.6",
     "clean-deep": "^3.0.2",
-    "clean-webpack-plugin": "^1.0.1",
     "compression-webpack-plugin": "^4.0.1",
     "connected-react-router": "^6.4.0",
     "copy-webpack-plugin": "^6.0.3",

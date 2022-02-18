@@ -119,15 +119,6 @@ const StaticCommonConfig = {
         test: /\.(?:ico|gif|png|jpe?g)$/i,
         type: 'asset/resource'
       },
-      // {
-      //   test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
-      //   use: {
-      //     loader: 'file-loader',
-      //     options: {
-      //       name: 'assets/[path][name].[hash].[ext]'
-      //     }
-      //   }
-      // },
       {
         test: /portals.*styles\.s?css$/i,
         use: [
@@ -191,7 +182,6 @@ const StaticCommonConfig = {
           showTophat: ui.showTophat
         }
       }]),
-    // new webpack.ids.HashedModuleIdsPlugin(),
     new CopyWebpackPlugin({
       patterns: [
         { from: './static/src/public', to: './' }
