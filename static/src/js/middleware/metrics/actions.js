@@ -48,7 +48,7 @@ export const metricsCollectionSortChange = (payload) => ({
   payload
 })
 
-export const metricsRelatedCollection = payload => ({
+export const metricsRelatedCollection = (payload) => ({
   type: METRICS_RELATED_COLLECTION,
   payload
 })

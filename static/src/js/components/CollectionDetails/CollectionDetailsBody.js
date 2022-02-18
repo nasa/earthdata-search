@@ -609,7 +609,9 @@ export const CollectionDetailsBody = ({
 CollectionDetailsBody.propTypes = {
   collectionMetadata: collectionMetadataPropType.isRequired,
   isActive: PropTypes.bool.isRequired,
-  location: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string
+  }).isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
