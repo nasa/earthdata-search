@@ -44,6 +44,7 @@
     "cypress-file-upload": "^5.0.7",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "jest": "^27.3.1",
     "jsdom": "^15.1.1",
     "mock-knex": "^0.4.10",
