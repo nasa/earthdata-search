@@ -2,12 +2,9 @@ const path = require('path')
 const webpack = require('webpack')
 
 const {
-  // customizeObject,
-  // mergeWithCustomize,
   mergeWithRules
 } = require('webpack-merge')
 
-// const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserJsPlugin = require('terser-webpack-plugin')
@@ -23,9 +20,6 @@ const StaticCommonConfig = require('./static.webpack.config.common')
 const defaultPlugins = [
   // This plugin will cause hashes to be based on the relative path of the module, generating a four character string as the module id.
   new webpack.ids.HashedModuleIdsPlugin({}),
-
-  // Remove/clean your build folder(s).
-  // new CleanWebpackPlugin(),
 
   // Creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
   new MiniCssExtractPlugin({
@@ -67,7 +61,6 @@ const Config = mergeWithRules({
   },
   optimization: {
     nodeEnv: 'production',
-    // concatenateModules: true,
     minimize: true,
     minimizer: [
       // Use terser to minify/minimize your JavaScript
@@ -80,14 +73,12 @@ const Config = mergeWithRules({
       // Use cssnano to optimize and minify your CSS
       new CssMinimizerPlugin()
     ],
-    // chunkIds: 'deterministic',
     moduleIds: 'deterministic',
     runtimeChunk: true,
     splitChunks: {
       chunks: 'all',
       maxInitialRequests: Infinity,
       maxSize: 200000,
-      // minSize: 150000,
       cacheGroups: {
         defaultVendors: {
           name(module) {

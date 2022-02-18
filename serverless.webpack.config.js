@@ -1,9 +1,7 @@
 const path = require('path')
 const slsw = require('serverless-webpack')
-// const CleanWebpackPlugin = require('clean-webpack-plugin')
 const nodeExternals = require('webpack-node-externals')
 const CopyPlugin = require('copy-webpack-plugin')
-// const ESLintPlugin = require('eslint-webpack-plugin')
 
 // Allow for conditionally copying files into the output for a defined entry
 const ConditionalPlugin = (condition, plugin) => ({
@@ -46,13 +44,6 @@ const ServerlessWebpackConfig = {
   externals: [
     nodeExternals()
   ],
-  // optimization: {
-  //   minimize: false
-  // },
-  // performance: {
-  //   // Turn off size warnings for entry points
-  //   hints: false
-  // },
   module: {
     rules: [
       {
