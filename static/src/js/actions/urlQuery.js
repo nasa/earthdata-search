@@ -181,9 +181,9 @@ export const changePath = (path = '') => async (dispatch, getState) => {
     // Project collection metadata needs to exist before calling retrieving access methods
     await dispatch(actions.getProjectCollections())
 
-    dispatch(actions.fetchAccessMethods(allIds))
+    await dispatch(actions.getProjectGranules())
 
-    dispatch(actions.getProjectGranules())
+    dispatch(actions.fetchAccessMethods(allIds))
   }
 
   dispatch(actions.getTimeline())

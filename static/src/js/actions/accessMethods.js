@@ -7,15 +7,20 @@ import { parseError } from '../../../../sharedUtils/parseError'
 import { getCollectionMetadata } from '../util/focusedCollection'
 import { getCollectionsMetadata } from '../selectors/collectionMetadata'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getProjectCollections } from '../selectors/project'
 import { isDownloadable } from '../../../../sharedUtils/isDownloadable'
 
 import AccessMethodsRequest from '../util/request/accessMethodsRequest'
+import { getGranulesMetadata } from '../selectors/granuleMetadata'
 
 /**
  * Fetch available access methods
  * @param {Object} collectionIds Collections to retrieve access methods for
  */
-export const fetchAccessMethods = (collectionIds) => async (dispatch, getState) => {
+export const fetchAccessMethods = (collectionIds = []) => async (dispatch, getState) => {
+  // If there are no collections, do not continue
+  if (collectionIds.length === 0) return buildPromise(null)
+
   const state = getState()
 
   // Get the selected Access Method
@@ -26,12 +31,11 @@ export const fetchAccessMethods = (collectionIds) => async (dispatch, getState) 
   // Retrieve data from Redux using selectors
   const earthdataEnvironment = getEarthdataEnvironment(state)
   const collectionsMetadata = getCollectionsMetadata(state)
+  const projectCollectionsMetadata = getProjectCollections(state)
+  const granulesMetadata = getGranulesMetadata(state)
 
   // If the user is not logged in, don't fetch any methods
   if (authToken === '') return buildPromise(null)
-
-  // If there are no collections, do not continue
-  if (collectionIds.length === 0) return buildPromise(null)
 
   // The process of fetching access methods requires that we have providers retrieved
   // in order to look up provider guids
@@ -51,6 +55,27 @@ export const fetchAccessMethods = (collectionIds) => async (dispatch, getState) 
         variables
       } = collectionMetadata
 
+      const projectCollection = projectCollectionsMetadata[collectionId]
+
+      const { granules: projectCollectionGranules } = projectCollection
+      const { addedGranuleIds = [] } = projectCollectionGranules
+
+      let projectGranules = granules
+      // If addedGranuleIds exist, only use the metadata from those added granules to determine access methods
+      if (addedGranuleIds.length > 0) {
+        projectGranules = {
+          items: addedGranuleIds.map((conceptId) => {
+            const granule = granulesMetadata[conceptId]
+            const { onlineAccessFlag } = granule
+
+            return {
+              conceptId,
+              onlineAccessFlag
+            }
+          })
+        }
+      }
+
       const collectionProvider = findProvider(getState(), dataCenter)
 
       const { count: servicesCount } = services
@@ -61,7 +86,7 @@ export const fetchAccessMethods = (collectionIds) => async (dispatch, getState) 
         const response = requestObject.search({
           collectionId,
           collectionProvider,
-          granules,
+          granules: projectGranules,
           services,
           tags,
           variables
@@ -95,10 +120,10 @@ export const fetchAccessMethods = (collectionIds) => async (dispatch, getState) 
 
       let onlineAccessFlag = false
 
-      if (granules) {
+      if (projectGranules) {
         // If the collection has granules, check their online access flags to
         // determine if this collection is downloadable
-        const { items: granuleItems } = granules
+        const { items: granuleItems } = projectGranules
 
         if (granuleItems) {
           onlineAccessFlag = isDownloadable(granuleItems)
