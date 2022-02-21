@@ -25,7 +25,7 @@ describe('fetchAccessMethods', () => {
 
   test('does not fetch access methods if no collections were provided', () => {
     const store = mockStore({
-      authToken: ''
+      authToken: '123'
     })
 
     // call the dispatch
@@ -360,6 +360,112 @@ describe('fetchAccessMethods', () => {
     })
   })
 
+  test('fetches access methods from api with a selectedAccessMethod', async () => {
+    const download = {
+      isValid: true,
+      type: 'download'
+    }
+
+    const echoOrder0 = {
+      id: 'service_id',
+      type: 'ECHO ORDERS',
+      url: 'mock url',
+      option_definition: {
+        id: 'option_definition_guid',
+        name: 'Delivery Option'
+      },
+      form: 'mock form here'
+    }
+
+    nock(/localhost/)
+      .post(/access_methods/)
+      .reply(200, {
+        accessMethods: {
+          download,
+          echoOrder0
+        },
+        selectedAccessMethod: 'download'
+      })
+
+    const collectionId = 'collectionId'
+    const store = mockStore({
+      authToken: '123',
+      metadata: {
+        collections: {
+          collectionId: {
+            services: {
+              count: 1,
+              items: [{
+                conceptId: 'umm-s-record-1',
+                type: 'ECHO ORDERS',
+                url: {
+                  description: 'EOSDIS ECHO ORDERS Service Implementation',
+                  urlValue: 'http://echo-order-endpoint.com'
+                }
+              }]
+            },
+            tags: {
+              'edsc.extra.serverless.subset_service.echo_orders': {
+                data: {
+                  id: 'umm-s-record-1',
+                  option_definitions: [
+                    {
+                      id: 'option_definition_guid',
+                      name: 'Delivery Option'
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      project: {
+        collections: {
+          allIds: [collectionId],
+          byId: {
+            collectionId: {
+              granules: {
+                hits: 100
+              }
+            }
+          }
+        }
+      },
+      providers: [
+        {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'EDSC-TEST',
+            provider_id: 'EDSC-TEST'
+          }
+        }, {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'NON-EDSC-TEST',
+            provider_id: 'NON-EDSC-TEST'
+          }
+        }
+      ]
+    })
+
+    // call the dispatch
+    await store.dispatch(fetchAccessMethods([collectionId])).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: ADD_ACCESS_METHODS,
+        payload: {
+          collectionId,
+          methods: {
+            download,
+            echoOrder0
+          },
+          selectedAccessMethod: 'download'
+        }
+      })
+    })
+  })
+
   test('returns download method if it is an open search collection', async () => {
     const collectionId = 'collectionId'
 
@@ -386,6 +492,82 @@ describe('fetchAccessMethods', () => {
           byId: {
             collectionId: {
               granules: {
+                hits: 100
+              }
+            }
+          }
+        }
+      },
+      providers: [
+        {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'EDSC-TEST',
+            provider_id: 'EDSC-TEST'
+          }
+        }, {
+          provider: {
+            id: 'abcd-1234-efgh-5678',
+            organization_name: 'NON-EDSC-TEST',
+            provider_id: 'NON-EDSC-TEST'
+          }
+        }
+      ]
+    })
+
+    // call the dispatch
+    await store.dispatch(fetchAccessMethods([collectionId])).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: ADD_ACCESS_METHODS,
+        payload: {
+          collectionId,
+          methods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            }
+          },
+          selectedAccessMethod: 'download'
+        }
+      })
+    })
+  })
+
+  test('uses granule metadata from addedGranules', async () => {
+    const collectionId = 'collectionId'
+
+    const store = mockStore({
+      authToken: '123',
+      metadata: {
+        collections: {
+          collectionId: {
+            services: {
+              count: 0,
+              items: null
+            },
+            granules: {
+              count: 1,
+              items: [{
+                id: 'G1000123-EDSC',
+                onlineAccessFlag: false
+              }]
+            }
+          }
+        },
+        granules: {
+          'G100000-EDSC': {
+            onlineAccessFlag: true
+          }
+        }
+      },
+      project: {
+        collections: {
+          allIds: [collectionId],
+          byId: {
+            collectionId: {
+              granules: {
+                addedGranuleIds: ['G100000-EDSC'],
                 hits: 100
               }
             }
