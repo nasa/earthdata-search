@@ -56,6 +56,7 @@ export const EDSCModal = ({
   <Modal
     dialogClassName={modalClassNames}
     show={isOpen}
+    animation={false}
     onHide={onModalHide}
     onExit={onModalExit}
     centered
