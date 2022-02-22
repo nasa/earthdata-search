@@ -344,6 +344,15 @@
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: error_logger
 
+  alertLogger:
+    handler: serverless/src/alertLogger/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT}
+    events:
+      - http:
+          method: post
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: alert_logger
+
   relevancyLogger:
     handler: serverless/src/relevancyLogger/handler.default
     timeout: ${env:LAMBDA_TIMEOUT}

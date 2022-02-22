@@ -643,6 +643,8 @@ const projectGranuleCancelTokens = {}
  * Perform a granules request based on the current redux state.
  */
 export const getProjectGranules = () => (dispatch, getState) => {
+  const { defaultCmrPageSize, maxCmrPageSize } = getApplicationConfig()
+
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -721,6 +723,22 @@ export const getProjectGranules = () => (dispatch, getState) => {
     } else {
       requestObject = new GranuleRequest(authToken, earthdataEnvironment)
     }
+
+    const { conceptId: granuleConceptIds = [] } = searchParams
+    let pageSize = defaultCmrPageSize
+    if (granuleConceptIds.length > 0) {
+      if (granuleConceptIds.length > maxCmrPageSize) {
+        dispatch(actions.handleAlert({
+          action: 'getProjectGranules',
+          message: `User requested more than ${maxCmrPageSize} granules. Requested ${granuleConceptIds.length} granules`,
+          resource: 'granules',
+          requestObject
+        }))
+      }
+
+      pageSize = Math.min(maxCmrPageSize, granuleConceptIds.length)
+    }
+    searchParams.pageSize = pageSize
 
     projectGranuleCancelTokens[collectionId] = requestObject.getCancelToken()
 

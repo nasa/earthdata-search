@@ -890,6 +890,128 @@ describe('getProjectGranules', () => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
+
+  test('logs alert if the user adds more granules than the maxCmrPageSize', async () => {
+    jest.spyOn(applicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      maxCmrPageSize: '1',
+      thumbnailSize: {
+        height: 85,
+        width: 85
+      }
+    }))
+
+    nock(/localhost/)
+      .post(/granules/)
+      .reply(200, {
+        feed: {
+          updated: '2019-03-27T20:21:14.705Z',
+          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+          title: 'ECHO granule metadata',
+          entry: [{
+            mockGranuleData: 'goes here'
+          }]
+        }
+      },
+      {
+        'cmr-hits': 1,
+        'jwt-token': 'token'
+      })
+
+    nock(/localhost/)
+      .post(/alert_logger/)
+      .reply(200)
+
+    const store = mockStore({
+      authToken: 'token',
+      earthdataEnvironment: 'prod',
+      metadata: {
+        collections: {
+          'C10000000000-EDSC': {
+            mock: 'data'
+          }
+        },
+        granules: {
+          'G100000-EDSC': {},
+          'G100002-EDSC': {}
+        }
+      },
+      project: {
+        collections: {
+          allIds: ['C10000000000-EDSC'],
+          byId: {
+            'C10000000000-EDSC': {
+              granules: {
+                addedGranuleIds: ['G100000-EDSC', 'G100002-EDSC'],
+                removedGranuleIds: []
+              }
+            }
+          }
+        }
+      },
+      query: {
+        collection: {
+          temporal: {},
+          spatial: {}
+        }
+      },
+      timeline: {
+        query: {}
+      }
+    })
+
+    await store.dispatch(getProjectGranules()).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: STARTED_PROJECT_GRANULES_TIMER,
+        payload: 'C10000000000-EDSC'
+      })
+      expect(storeActions[1]).toEqual({
+        type: PROJECT_GRANULES_LOADING,
+        payload: 'C10000000000-EDSC'
+      })
+      expect(storeActions[2]).toEqual({
+        type: TOGGLE_SPATIAL_POLYGON_WARNING,
+        payload: false
+      })
+      expect(storeActions[3]).toEqual({
+        type: FINISHED_PROJECT_GRANULES_TIMER,
+        payload: 'C10000000000-EDSC'
+      })
+      expect(storeActions[4]).toEqual({
+        type: PROJECT_GRANULES_LOADED,
+        payload: {
+          collectionId: 'C10000000000-EDSC',
+          loaded: true
+        }
+      })
+      expect(storeActions[5]).toEqual({
+        type: ADD_GRANULE_METADATA,
+        payload: [
+          {
+            mockGranuleData: 'goes here',
+            isOpenSearch: false
+          }
+        ]
+      })
+      expect(storeActions[6]).toEqual({
+        type: UPDATE_PROJECT_GRANULE_RESULTS,
+        payload: {
+          collectionId: 'C10000000000-EDSC',
+          results: [{
+            mockGranuleData: 'goes here',
+            isOpenSearch: false
+          }],
+          isOpenSearch: false,
+          hits: 1,
+          singleGranuleSize: 0,
+          totalSize: {
+            size: '0.0',
+            unit: 'MB'
+          }
+        }
+      })
+    })
+  })
 })
 
 describe('excludeGranule', () => {

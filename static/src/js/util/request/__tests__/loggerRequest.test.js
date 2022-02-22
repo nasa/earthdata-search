@@ -29,6 +29,20 @@ describe('LoggerRequest#log', () => {
   })
 })
 
+describe('LoggerRequest#alert', () => {
+  test('calls Request#post', () => {
+    const request = new LoggerRequest()
+
+    const postMock = jest.spyOn(Request.prototype, 'post').mockImplementation()
+
+    const params = { error: { mock: 'error' } }
+    request.alert(params)
+
+    expect(postMock).toBeCalledTimes(1)
+    expect(postMock).toBeCalledWith('alert_logger', params)
+  })
+})
+
 describe('LoggerRequest#logRelevancy', () => {
   test('calls Request#post', () => {
     const request = new LoggerRequest()

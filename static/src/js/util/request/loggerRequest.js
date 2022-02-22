@@ -15,6 +15,10 @@ export default class LoggerRequest extends Request {
     return this.post('error_logger', params)
   }
 
+  alert(params) {
+    return this.post('alert_logger', params)
+  }
+
   logRelevancy(params) {
     return this.post('relevancy_logger', params)
   }
