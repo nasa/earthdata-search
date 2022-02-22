@@ -143,7 +143,6 @@ describe('retrievals', () => {
           },
           orbitNumber: undefined,
           pageNum: 1,
-          pageSize: 20,
           point: [
             '-77, 34'
           ],

@@ -1,24 +1,24 @@
-import errorLogger from '../handler'
+import alertLogger from '../handler'
 
 beforeEach(() => {
   jest.clearAllMocks()
 })
 
-describe('errorLogger', () => {
+describe('alertLogger', () => {
   test('logs the event body', async () => {
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+    const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
     const event = {
       body: JSON.stringify({
         params: {
-          error: {
-            mock: 'error'
+          alert: {
+            mock: 'alert'
           }
         }
       })
     }
 
-    const response = await errorLogger(event)
+    const response = await alertLogger(event)
 
     expect(response.statusCode).toBe(200)
     expect(consoleMock).toBeCalledTimes(1)

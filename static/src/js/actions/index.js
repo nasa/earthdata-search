@@ -148,6 +148,7 @@ import { loadPortalConfig } from './portals'
 import { fetchDataQualitySummaries } from './dataQualitySummaries'
 import { deleteSavedProject, updateProjectName, updateSavedProject } from './savedProject'
 import { fetchSavedProjects, setSavedProjects } from './savedProjects'
+import { handleAlert } from './alerts'
 import { handleError, removeError } from './errors'
 import { updateBrowserVersion } from './browser'
 import { collectionRelevancyMetrics } from './relevancy'
@@ -249,6 +250,7 @@ const actions = {
   getSubscriptions,
   getTimeline,
   getViewAllFacets,
+  handleAlert,
   handleError,
   initializeCollectionGranulesQuery,
   initializeCollectionGranulesResults,

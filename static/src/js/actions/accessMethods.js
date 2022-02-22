@@ -66,7 +66,12 @@ export const fetchAccessMethods = (collectionIds = []) => async (dispatch, getSt
         projectGranules = {
           items: addedGranuleIds.map((conceptId) => {
             const granule = granulesMetadata[conceptId]
-            const { onlineAccessFlag } = granule
+
+            let onlineAccessFlag = false
+
+            if (granule) {
+              ({ onlineAccessFlag = false } = granule)
+            }
 
             return {
               conceptId,
