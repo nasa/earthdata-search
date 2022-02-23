@@ -43,8 +43,6 @@ export const handleError = ({
   requestObject,
   errorAction
 }) => (dispatch, getState) => {
-  console.log('🚀 ~ file: errors.js ~ line 46 ~ requestObject', requestObject)
-  console.log('🚀 ~ file: errors.js ~ line 46 ~ error', error)
   const { router = {} } = getState()
   const { location } = router
 
