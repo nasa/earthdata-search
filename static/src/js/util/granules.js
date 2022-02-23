@@ -1,7 +1,7 @@
 import { convertSize } from './project'
 import { encodeGridCoords } from './url/gridEncoders'
 import { encodeTemporal } from './url/temporalEncoders'
-import { getEarthdataConfig } from '../../../../sharedUtils/config'
+import { getApplicationConfig, getEarthdataConfig } from '../../../../sharedUtils/config'
 import { withAdvancedSearch } from './withAdvancedSearch'
 import { getOpenSearchOsddLink } from './getOpenSearchLink'
 
@@ -284,6 +284,8 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
  * @returns {Object} Parameters to be provided to the Granules request with camel cased keys
  */
 export const buildGranuleSearchParams = (params) => {
+  const { defaultCmrPageSize } = getApplicationConfig()
+
   const {
     boundingBox,
     browseOnly,
@@ -336,6 +338,7 @@ export const buildGranuleSearchParams = (params) => {
     options,
     orbitNumber,
     pageNum,
+    pageSize: defaultCmrPageSize,
     point,
     polygon,
     readableGranuleName,

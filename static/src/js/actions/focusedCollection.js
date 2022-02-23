@@ -266,7 +266,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         dispatch(actions.getSearchGranules())
 
         // If any tools are SOTO, call fetchSotoLayers
-        const { items } = tools
+        const { items } = tools || {}
         if (items && items.some((item) => item.name.toLowerCase() === 'soto')) {
           dispatch(actions.fetchSotoLayers())
         }

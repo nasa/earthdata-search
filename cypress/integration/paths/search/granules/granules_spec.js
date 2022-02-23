@@ -1080,7 +1080,7 @@ describe('Path /search/granules', () => {
             }
           })
         }
-        if (req.body === 'echo_collection_id=C194001210-LPDAAC_ECS&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20&concept_id%5B%5D=G2058417402-LPDAAC_ECS') {
+        if (req.body === 'echo_collection_id=C194001210-LPDAAC_ECS&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=1&concept_id%5B%5D=G2058417402-LPDAAC_ECS') {
           req.alias = 'projectGranulesQuery'
           req.reply({
             body: projectGranuleProjectGranuleBody,

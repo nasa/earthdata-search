@@ -1459,15 +1459,6 @@ describe('Map interactions', () => {
           commonBody,
           commonHeaders,
           [{
-            alias: 'keywordAlias',
-            body: cmrGranulesCollectionBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': '1'
-            },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&keyword=C1214470488-ASF%2A&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
-          },
-          {
             alias: 'cmrGranulesCollectionAlias',
             body: cmrGranulesCollectionBody,
             headers: {
@@ -1475,7 +1466,8 @@ describe('Map interactions', () => {
               'cmr-hits': '1'
             },
             params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&keyword=C1214470488-ASF%2A&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&polygon%5B%5D=42.1875%2C-2.40647%2C42.1875%2C-9.43582%2C49.21875%2C-9.43582%2C42.1875%2C-2.40647&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
-          }]
+          }],
+          false
         )
 
         cy.intercept({
@@ -1525,24 +1517,7 @@ describe('Map interactions', () => {
           body: { feed: { entry: [] } }
         })
 
-        cy.visit('/search')
-
-        getByTestId('keyword-search-input').type(`${conceptId}{enter}`)
-
-        // Select the polygon spatial type
-        getByTestId('spatial-selection-dropdown').click()
-        getByTestId('spatial-selection-dropdown').within(() => {
-          cy.contains('Polygon').click()
-        })
-
-        // Add the polygon to the map
-        cy.get('.map')
-          .click(1000, 450)
-          .click(1050, 500)
-          .click(1000, 500)
-          .click(1000, 450)
-
-        getByTestId('collection-results-item').click()
+        cy.visit(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875%2C-2.40647%2C42.1875%2C-9.43582%2C49.21875%2C-9.43582%2C42.1875%2C-2.40647&tl=1622520000!3!!`)
 
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
@@ -1602,15 +1577,6 @@ describe('Map interactions', () => {
           commonBody,
           commonHeaders,
           [{
-            alias: 'keywordAlias',
-            body: opensearchGranulesCollectionBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': '1'
-            },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&keyword=C1972468359-SCIOPS%2A&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
-          },
-          {
             alias: 'opensearchGranulesCollectionAlias',
             body: opensearchGranulesCollectionBody,
             headers: {
@@ -1618,7 +1584,8 @@ describe('Map interactions', () => {
               'cmr-hits': '1'
             },
             params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&keyword=C1972468359-SCIOPS%2A&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&polygon%5B%5D=42.1875%2C-2.40647%2C42.1875%2C-9.43582%2C49.21875%2C-9.43582%2C42.1875%2C-2.40647&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
-          }]
+          }],
+          false
         )
 
         cy.intercept({
@@ -1683,24 +1650,7 @@ describe('Map interactions', () => {
           body: { feed: { entry: [] } }
         })
 
-        cy.visit('/search')
-
-        getByTestId('keyword-search-input').type(`${conceptId}{enter}`)
-
-        // Select the polygon spatial type
-        getByTestId('spatial-selection-dropdown').click()
-        getByTestId('spatial-selection-dropdown').within(() => {
-          cy.contains('Polygon').click()
-        })
-
-        // Add the polygon to the map
-        cy.get('.map')
-          .click(1000, 450)
-          .click(1050, 500)
-          .click(1000, 500)
-          .click(1000, 450)
-
-        getByTestId('collection-results-item').click()
+        cy.visit(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875%2C-2.40647%2C42.1875%2C-9.43582%2C49.21875%2C-9.43582%2C42.1875%2C-2.40647&tl=1622520000!3!!`)
 
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
@@ -1709,7 +1659,7 @@ describe('Map interactions', () => {
       })
 
       it('displays an outline of the minimum bounding rectangle', () => {
-        cy.get('.leaflet-interactive').first().should('have.attr', 'd', 'M1000 450L1050 500L1000 500L1000 450z')
+        cy.get('.leaflet-interactive').first().should('have.attr', 'd', 'M1000 450L1000 500L1050 500L1000 450z')
         cy.get('.leaflet-interactive').last().should('have.attr', 'd', 'M1000 500L1000 450L1050 450L1050 500L1000 500z')
       })
 

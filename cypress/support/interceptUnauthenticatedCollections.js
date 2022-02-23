@@ -3,7 +3,12 @@
  * @param {Object} body Response body to provide during the intercept
  * @param {Object} headers Response headers to provide during the intercept
  */
-export const interceptUnauthenticatedCollections = (body, headers, additionalRequests = []) => {
+export const interceptUnauthenticatedCollections = (
+  body,
+  headers,
+  additionalRequests = [],
+  includeDefault = true
+) => {
   const defaultAlias = 'defaultCollectionAlias'
 
   // Intercept collections call before every test, its generic and doesn't change between tests
@@ -15,7 +20,7 @@ export const interceptUnauthenticatedCollections = (body, headers, additionalReq
     // This log can be useful for debugging failed tests
     // console.log('interceptUnauthenticatedCollections ~ req.body', req.body)
 
-    if (req.body === 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score') {
+    if (includeDefault && req.body === 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score') {
       req.alias = defaultAlias
       req.reply({
         body,
@@ -41,5 +46,13 @@ export const interceptUnauthenticatedCollections = (body, headers, additionalReq
     })
   })
 
-  return [defaultAlias, ...additionalRequests.map((additionalRequest) => additionalRequest.alias)]
+  const defaultIncluded = []
+  if (includeDefault) {
+    defaultIncluded.push(defaultAlias)
+  }
+
+  return [
+    ...defaultIncluded,
+    ...additionalRequests.map((additionalRequest) => additionalRequest.alias)
+  ]
 }
