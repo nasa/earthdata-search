@@ -1,10 +1,11 @@
 import {
-  createEcho10MetadataUrls,
-  isDataLink,
   createDataLinks,
+  createEcho10MetadataUrls,
   createS3Links,
   getDownloadUrls,
-  getS3Urls
+  getS3Urls,
+  isDataLink,
+  prepareGranuleParams
 } from '../granules'
 
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
@@ -536,5 +537,50 @@ describe('getDownloadUrls', () => {
         href: 'https://n5eil01u.ecs.nsidc.org/DP4/ICEBRIDGE/IRACC1B.002/2017.11.25/IRACC1B_20171125_04_014.nc'
       }
     ])
+  })
+})
+
+describe('#prepareGranuleParams', () => {
+  describe('options parameter', () => {
+    test('adds correct options when multiple spatial exists', () => {
+      const params = prepareGranuleParams({}, {
+        point: [
+          38.8048355,
+          -77.0469214
+        ],
+        bounding_box: [
+          -77.0372879,
+          -77.144359,
+          38.845011,
+          38.785216
+        ],
+        granuleTemporal: {},
+        overrideTemporal: {}
+      })
+
+      expect(params).toEqual(expect.objectContaining({
+        options: {
+          spatial: {
+            or: true
+          }
+        }
+      }))
+    })
+
+    test('adds correct options when temporal exists', () => {
+      const params = prepareGranuleParams({}, {
+        readableGranuleName: 'mockId',
+        granuleTemporal: {},
+        overrideTemporal: {}
+      })
+
+      expect(params).toEqual(expect.objectContaining({
+        options: {
+          readableGranuleName: {
+            pattern: true
+          }
+        }
+      }))
+    })
   })
 })

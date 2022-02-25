@@ -115,7 +115,7 @@ FacetsItem.propTypes = {
   changeHandler: PropTypes.func.isRequired,
   facet: PropTypes.shape({
     applied: PropTypes.bool,
-    children: PropTypes.arrayOf(PropTypes.node),
+    children: PropTypes.arrayOf(PropTypes.shape({})),
     count: PropTypes.number,
     title: PropTypes.string
   }).isRequired,
