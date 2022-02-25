@@ -154,7 +154,7 @@ const mapPlatforms = (value) => {
  * Map an autocomplete suggestion into a CMR Facet
  * @param {Object} autocomplete autocomplete suggestion
  */
-const mapAutocompleteToFacets = (autocomplete) => {
+export const mapAutocompleteToFacets = (autocomplete) => {
   const { suggestion } = autocomplete
   const { fields, type } = suggestion
 
