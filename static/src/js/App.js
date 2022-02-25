@@ -23,6 +23,7 @@ import AuthCallbackContainer from './containers/AuthCallbackContainer/AuthCallba
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
 import AuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
 import ChunkedOrderModalContainer from './containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer'
+import DeprecatedParameterModalContainer from './containers/DeprecatedParameterModalContainer/DeprecatedParameterModalContainer'
 import EdscMapContainer from './containers/MapContainer/MapContainer'
 import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
 import ErrorBoundary from './components/Errors/ErrorBoundary'
@@ -144,13 +145,14 @@ class App extends Component {
                   <FooterContainer />
                   <Switch>
                     <Route path={this.portalPaths('/')}>
-                      <KeyboardShortcutsModalContainer />
-                      <ShapefileUploadModalContainer />
-                      <ShapefileDropzoneContainer />
-                      <TooManyPointsModalContainer />
-                      <ChunkedOrderModalContainer />
                       <AboutCSDAModalContainer />
                       <AboutCwicModalContainer />
+                      <ChunkedOrderModalContainer />
+                      <DeprecatedParameterModalContainer />
+                      <KeyboardShortcutsModalContainer />
+                      <ShapefileDropzoneContainer />
+                      <ShapefileUploadModalContainer />
+                      <TooManyPointsModalContainer />
                     </Route>
                     <Route path={this.portalPaths('/projects')}>
                       <AboutCSDAModalContainer />

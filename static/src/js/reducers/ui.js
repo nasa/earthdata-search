@@ -5,6 +5,7 @@ import {
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
+  TOGGLE_DEPRECATED_PARAMETER_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
   TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
@@ -69,6 +70,9 @@ const initialState = {
       csv: false,
       json: false
     }
+  },
+  deprecatedParameterModal: {
+    isOpen: false
   }
 }
 
@@ -207,6 +211,14 @@ const uiReducer = (state = initialState, action) => {
             ...state.export.isExportRunning,
             [action.payload]: false
           }
+        }
+      }
+    }
+    case TOGGLE_DEPRECATED_PARAMETER_MODAL: {
+      return {
+        ...state,
+        deprecatedParameterModal: {
+          isOpen: action.payload
         }
       }
     }

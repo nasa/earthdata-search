@@ -6,6 +6,7 @@ import {
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
+  TOGGLE_DEPRECATED_PARAMETER_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
   TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
@@ -19,12 +20,36 @@ import {
 } from '../../constants/actionTypes'
 
 const initialState = {
+  aboutCSDAModal: {
+    isOpen: false
+  },
+  aboutCwicModal: {
+    isOpen: false
+  },
+  advancedSearchModal: {
+    isOpen: false
+  },
+  chunkedOrderModal: {
+    isOpen: false
+  },
+  deprecatedParameterModal: {
+    isOpen: false
+  },
+  export: {
+    isExportRunning: {
+      csv: false,
+      json: false
+    }
+  },
   facetsModal: {
     isOpen: false
   },
   granuleResultsPanel: {
-    sortOrder: '-start_date',
-    searchValue: ''
+    searchValue: '',
+    sortOrder: '-start_date'
+  },
+  keyboardShortcutsModal: {
+    isOpen: false
   },
   map: {
     drawingNewLayer: false
@@ -38,38 +63,17 @@ const initialState = {
   secondaryOverlayPanel: {
     isOpen: false
   },
-  advancedSearchModal: {
-    isOpen: false
-  },
   shapefileUploadModal: {
-    isOpen: false
-  },
-  tooManyPointsModal: {
-    isOpen: false
-  },
-  chunkedOrderModal: {
-    isOpen: false
-  },
-  aboutCSDAModal: {
-    isOpen: false
-  },
-  aboutCwicModal: {
     isOpen: false
   },
   spatialPolygonWarning: {
     isDisplayed: false
   },
-  keyboardShortcutsModal: {
-    isOpen: false
-  },
   timeline: {
     isOpen: true
   },
-  export: {
-    isExportRunning: {
-      csv: false,
-      json: false
-    }
+  tooManyPointsModal: {
+    isOpen: false
   }
 }
 
@@ -299,6 +303,22 @@ describe('TOGGLE_TIMELINE', () => {
     const expectedState = {
       ...initialState,
       timeline: { isOpen: false }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_DEPRECATED_PARAMETER_MODAL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_DEPRECATED_PARAMETER_MODAL,
+      payload: true
+    }
+
+    const expectedState = {
+      ...initialState,
+      deprecatedParameterModal: { isOpen: true }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
