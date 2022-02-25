@@ -81,12 +81,12 @@ export const toggleKeyboardShortcutsModal = (state) => ({
   payload: state
 })
 
-export const toggleDeprecatedParameterModal = state => ({
+export const toggleDeprecatedParameterModal = (state) => ({
   type: TOGGLE_DEPRECATED_PARAMETER_MODAL,
   payload: state
 })
 
-export const toggleTimeline = state => ({
+export const toggleTimeline = (state) => ({
   type: TOGGLE_TIMELINE,
   payload: state
 })
