@@ -3,6 +3,7 @@ import {
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
+  TOGGLE_DEPRECATED_PARAMETER_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
   TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
@@ -80,7 +81,12 @@ export const toggleKeyboardShortcutsModal = (state) => ({
   payload: state
 })
 
-export const toggleTimeline = (state) => ({
+export const toggleDeprecatedParameterModal = state => ({
+  type: TOGGLE_DEPRECATED_PARAMETER_MODAL,
+  payload: state
+})
+
+export const toggleTimeline = state => ({
   type: TOGGLE_TIMELINE,
   payload: state
 })

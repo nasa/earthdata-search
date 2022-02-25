@@ -1,0 +1,31 @@
+.deprecated-parameter-modal {
+    .modal-content {
+        overflow: hidden;
+    }
+
+    .edsc-modal__header {
+        height: 14rem;
+        background: $color__blue url('../../../assets/images/browser.svg');
+        background-repeat: no-repeat;
+        background-position: bottom center;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0;
+    }
+
+    .edsc-modal__title {
+        display: block;
+        margin-bottom: 2rem;
+        color: #fff;
+        font-size: 1.5rem;
+    }
+
+    .close {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        color: rgba(#fff, 0.75);
+        text-shadow: none;
+        opacity: 1;
+    }
+}

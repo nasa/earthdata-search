@@ -4,25 +4,29 @@ import thunk from 'redux-thunk'
 import {
   toggleAboutCwicModal,
   toggleAdvancedSearchModal,
+  toggleChunkedOrderModal,
+  toggleDeprecatedParameterModal,
   toggleFacetsModal,
+  toggleKeyboardShortcutsModal,
   toggleOverrideTemporalModal,
   toggleRelatedUrlsModal,
   toggleShapefileUploadModal,
-  toggleTooManyPointsModal,
-  toggleKeyboardShortcutsModal,
-  toggleTimeline
+  toggleTimeline,
+  toggleTooManyPointsModal
 } from '../ui'
 
 import {
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
+  TOGGLE_CHUNKED_ORDER_MODAL,
+  TOGGLE_DEPRECATED_PARAMETER_MODAL,
+  TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
+  TOGGLE_TIMELINE,
   TOGGLE_TOO_MANY_POINTS_MODAL,
-  TOGGLE_VIEW_ALL_FACETS_MODAL,
-  TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
-  TOGGLE_TIMELINE
+  TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -194,6 +198,48 @@ describe('toggleKeyboardShortcutsModal', () => {
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
+      payload: true
+    })
+  })
+})
+
+describe('deprecatedParameterModal', () => {
+  test('should create an action to update the state', () => {
+    const store = mockStore({
+      ui: {
+        deprecatedParameterModal: {
+          isOpen: false
+        }
+      }
+    })
+
+    const payload = true
+    store.dispatch(toggleDeprecatedParameterModal(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: TOGGLE_DEPRECATED_PARAMETER_MODAL,
+      payload: true
+    })
+  })
+})
+
+describe('chunkedOrderModal', () => {
+  test('should create an action to update the state', () => {
+    const store = mockStore({
+      ui: {
+        chunkedOrderModal: {
+          isOpen: false
+        }
+      }
+    })
+
+    const payload = true
+    store.dispatch(toggleChunkedOrderModal(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: TOGGLE_CHUNKED_ORDER_MODAL,
       payload: true
     })
   })
