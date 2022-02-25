@@ -29,7 +29,6 @@ export const encodePlatforms = (platforms) => {
   return encoded
 }
 
-
 /**
  * Decodes a parameter object into a Platform object
  * @param {object} params URL parameter object from parsing the URL parameter string
