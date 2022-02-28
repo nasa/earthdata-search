@@ -40,7 +40,7 @@ describe('DeprecatedParameterModal component', () => {
     const intro = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[0].props.children
     const message = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1].props.children
 
-    expect(intro).toContain("Occasionally, we need to make changes to our supported URL parameters. We've updated the URL in your browser, so you don't need to do anything. If you've used a bookmark to navigate here, consider updating the bookmark to use the new URL.")
+    expect(intro).toContain('Occasionally, we need to make changes to our supported URL parameters.')
 
     expect(message[0]).toEqual('Please visit the ')
     expect(shallow(message[1]).props().children).toEqual('Earthdata Search URL Parameters')
