@@ -30,13 +30,12 @@ export const constructOrderPayload = async (
   const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
 
   const granuleResponse = await axios({
+    method: 'post',
     url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/granules.json`,
-    params: preparedGranuleParams,
-    paramsSerializer: (params) => stringify(params,
-      {
-        indices: false,
-        arrayFormat: 'brackets'
-      }),
+    data: stringify(preparedGranuleParams, {
+      indices: false,
+      arrayFormat: 'brackets'
+    }),
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Client-Id': getClientId().background

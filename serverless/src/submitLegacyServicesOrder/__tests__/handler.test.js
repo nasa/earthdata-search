@@ -92,7 +92,7 @@ describe('submitLegacyServicesOrder', () => {
 
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
-      .get(/granules/)
+      .post(/granules/)
       .reply(200, {
         feed: {
           entry: [{
