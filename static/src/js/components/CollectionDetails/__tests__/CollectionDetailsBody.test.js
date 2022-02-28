@@ -7,8 +7,9 @@ import Button from '../../Button/Button'
 import CollapsePanel from '../../CollapsePanel/CollapsePanel'
 import CollectionDetailsBody from '../CollectionDetailsBody'
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
-import SplitBadge from '../../SplitBadge/SplitBadge'
+import RelatedCollection from '../../RelatedCollection/RelatedCollection'
 import Skeleton from '../../Skeleton/Skeleton'
+import SplitBadge from '../../SplitBadge/SplitBadge'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -79,7 +80,7 @@ function setup(overrides) {
   }
 }
 
-describe('CollectionDetails component', () => {
+describe('CollectionDetailsBody component', () => {
   describe('when the details are not loaded', () => {
     test('displays a skeleton loader', () => {
       const { enzymeWrapper } = setup({
@@ -788,113 +789,7 @@ describe('CollectionDetails component', () => {
           }
         })
 
-        expect(enzymeWrapper.find('.collection-details-body__related-collections-list').children().length).toEqual(3)
-      })
-
-      describe('when clicking a related collection', () => {
-        test('navigates to the correct collection', () => {
-          const { enzymeWrapper, props } = setup({
-            overrideMetadata: {
-              relatedCollections: {
-                count: 5,
-                items: [
-                  {
-                    doi: '1.TEST.DOI',
-                    id: 'TEST_COLLECTION_1',
-                    relationships: [
-                      {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 1'
-                  },
-                  {
-                    doi: '2.TEST.DOI',
-                    id: 'TEST_COLLECTION_2',
-                    relationships: [
-                      {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 2'
-                  },
-                  {
-                    doi: '3.TEST.DOI',
-                    id: 'TEST_COLLECTION_3',
-                    relationships: [
-                      {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 3'
-                  }
-                ]
-              }
-            },
-            overrideProps: {
-              location: {
-                pathname: '/search/granules/collection-details',
-                search: '?p=TEST_COLLECTION_0',
-                hash: '',
-                key: '1234'
-              }
-            }
-          })
-
-          const relatedCollectionItem = enzymeWrapper.find('.collection-details-body__related-collections-list').childAt(0)
-          const relatedCollectionLink = relatedCollectionItem.find('.collection-details-body__related-collection-link')
-          const relatedCollectionLinkProps = relatedCollectionLink.props()
-
-          relatedCollectionLink.simulate('click')
-
-          expect(props.onFocusedCollectionChange).toHaveBeenCalledTimes(1)
-          expect(props.onFocusedCollectionChange).toHaveBeenCalledWith('TEST_COLLECTION_1')
-          expect(relatedCollectionLinkProps.to).toEqual({
-            pathname: '/search/granules/',
-            search: '?p=TEST_COLLECTION_1'
-          })
-        })
-
-        test('fires a metrics event', () => {
-          const { enzymeWrapper, props } = setup({
-            overrideMetadata: {
-              relatedCollections: {
-                count: 5,
-                items: [
-                  {
-                    doi: '1.TEST.DOI',
-                    id: 'TEST_COLLECTION_1',
-                    relationships: [
-                      {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 1'
-                  }
-                ]
-              }
-            },
-            overrideProps: {
-              location: {
-                pathname: '/search/granules/collection-details',
-                search: '?p=TEST_COLLECTION_0',
-                hash: '',
-                key: '1234'
-              }
-            }
-          })
-
-          const relatedCollectionItem = enzymeWrapper.find('.collection-details-body__related-collections-list').childAt(0)
-          const relatedCollectionLink = relatedCollectionItem.find('.collection-details-body__related-collection-link')
-
-          relatedCollectionLink.simulate('click')
-
-          expect(props.onMetricsRelatedCollection).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsRelatedCollection).toHaveBeenCalledWith({
-            type: 'view',
-            collectionId: 'TEST_COLLECTION_1'
-          })
-        })
+        expect(enzymeWrapper.find(RelatedCollection).length).toEqual(3)
       })
     })
   })

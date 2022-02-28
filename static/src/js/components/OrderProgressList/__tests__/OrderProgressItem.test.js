@@ -14,7 +14,7 @@ beforeEach(() => {
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
-  const order = retrievalStatusPropsEsi.retrieval.collections.esi[1].orders[0]
+  const order = retrievalStatusPropsEsi.retrieval.collections.byId[1].orders[0]
 
   const props = {
     order,
@@ -47,7 +47,7 @@ describe('OrderProgressItem component', () => {
     test('displays the correct progress', () => {
       const { enzymeWrapper } = setup({
         order: {
-          ...retrievalStatusPropsEsi.retrieval.collections.esi[1].orders[0],
+          ...retrievalStatusPropsEsi.retrieval.collections.byId[1].orders[0],
           state: 'creating',
           order_information: {}
         }

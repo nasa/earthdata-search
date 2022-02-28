@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { min } from 'lodash'
 
-import { getFocusedCollectionGranuleMetadata } from '../../selectors/collectionResults'
+import { getCollectionsQuery } from '../../selectors/query'
+import { getFocusedCollectionGranuleMetadata, getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 import { getGranuleIds } from '../../util/getGranuleIds'
@@ -13,16 +14,16 @@ import { locationPropType } from '../../util/propTypes/location'
 import GranuleResultsHighlights from '../../components/GranuleResultsHighlights/GranuleResultsHighlights'
 
 export const mapStateToProps = (state) => ({
-  collectionsQuery: state.query.collection,
-  collectionsSearch: state.searchResults.collections,
+  collectionsQuery: getCollectionsQuery(state),
   focusedCollectionGranuleMetadata: getFocusedCollectionGranuleMetadata(state),
+  focusedCollectionGranuleSearch: getFocusedCollectionGranuleResults(state),
   focusedCollectionId: getFocusedCollectionId(state),
   focusedCollectionMetadata: getFocusedCollectionMetadata(state)
 })
 
 export const GranuleResultsHighlightsContainer = ({
   collectionsQuery,
-  collectionsSearch,
+  focusedCollectionGranuleSearch,
   focusedCollectionGranuleMetadata,
   focusedCollectionId,
   focusedCollectionMetadata,
@@ -32,22 +33,16 @@ export const GranuleResultsHighlightsContainer = ({
     isOpenSearch
   } = focusedCollectionMetadata
 
-  const { byId: collectionSearchById = {} } = collectionsSearch
-  const { [focusedCollectionId]: collectionSearchResults = {} } = collectionSearchById
-  const { granules: collectionGranuleSearch = {} } = collectionSearchResults
-
-  console.log('collectionGranuleSearch', collectionGranuleSearch)
-
   const { [focusedCollectionId]: collectionQueryResults = {} } = collectionsQuery
   const { granules: collectionGranuleQuery = {} } = collectionQueryResults
   const { excludedGranuleIds = [] } = collectionGranuleQuery
 
   const {
-    allIds,
+    allIds = [],
     hits,
-    isLoading,
-    isLoaded
-  } = collectionGranuleSearch
+    isLoading = false,
+    isLoaded = false
+  } = focusedCollectionGranuleSearch
 
   // Limit the number of granules shown
   const limit = min([5, hits])
@@ -80,10 +75,13 @@ export const GranuleResultsHighlightsContainer = ({
 
 GranuleResultsHighlightsContainer.propTypes = {
   collectionsQuery: PropTypes.shape({}).isRequired,
-  collectionsSearch: PropTypes.shape({
-    byId: PropTypes.shape({})
-  }).isRequired,
   focusedCollectionGranuleMetadata: PropTypes.shape({}).isRequired,
+  focusedCollectionGranuleSearch: PropTypes.shape({
+    allIds: PropTypes.arrayOf(PropTypes.string),
+    hits: PropTypes.number,
+    isLoading: PropTypes.bool,
+    isLoaded: PropTypes.bool
+  }).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedCollectionMetadata: PropTypes.shape({
     isOpenSearch: PropTypes.bool

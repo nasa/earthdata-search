@@ -112,6 +112,8 @@ describe('OrderStatusContainer component', () => {
         onFetchRetrieval: jest.fn(),
         onFetchRetrievalCollection: jest.fn(),
         onFetchRetrievalCollectionGranuleLinks: jest.fn(),
+        onFocusedCollectionChange: jest.fn(),
+        onMetricsRelatedCollection: jest.fn(),
         onToggleAboutCSDAModal: jest.fn(),
         retrieval: {
           id: 7,
@@ -124,6 +126,9 @@ describe('OrderStatusContainer component', () => {
             echoOrder: [],
             order: []
           }
+        },
+        location: {
+          search: ''
         }
       })
 

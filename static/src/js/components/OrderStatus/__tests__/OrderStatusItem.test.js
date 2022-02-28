@@ -27,7 +27,7 @@ function setup(overrideProps, mockRefresh) {
   OrderStatusItem.prototype.shouldRefresh = mockRefresh ? shouldRefreshMock : shouldRefreshCopy
 
   const props = {
-    collection: retrievalStatusProps.retrieval.collections.download[1],
+    collection: retrievalStatusProps.retrieval.collections.byId[1],
     defaultOpen: false,
     earthdataEnvironment: 'prod',
     granuleDownload: {

@@ -15,7 +15,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    collections: Object.values(retrievalStatusPropsEchoOrder.retrieval.collections.echo_orders),
+    collections: Object.values(retrievalStatusPropsEchoOrder.retrieval.collections.byId),
     earthdataEnvironment: 'prod',
     granuleDownload: {},
     heading: 'Stage For Delivery',

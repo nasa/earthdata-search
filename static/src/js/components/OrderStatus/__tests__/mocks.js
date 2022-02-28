@@ -5,6 +5,8 @@ export const retrievalStatusProps = {
   onFetchRetrieval: jest.fn(),
   onFetchRetrievalCollection: jest.fn(),
   onFetchRetrievalCollectionGranuleLinks: jest.fn(),
+  onFocusedCollectionChange: jest.fn(),
+  onMetricsRelatedCollection: jest.fn(),
   onToggleAboutCSDAModal: jest.fn(),
   match: {
     search: {
@@ -23,12 +25,83 @@ export const retrievalStatusProps = {
     isLoading: false,
     isLoaded: true,
     collections: {
-      download: {
+      byId: {
         1: {
           collection_id: 'TEST_COLLECTION_111',
           collection_metadata: {
             id: 'TEST_COLLECTION_111',
-            dataset_id: 'Test Dataset ID'
+            dataset_id: 'Test Dataset ID',
+            relatedCollections: {
+              count: 3,
+              items: [
+                {
+                  doi: '1.TEST.DOI',
+                  id: 'TEST_COLLECTION_1_111',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 1'
+                },
+                {
+                  doi: '2.TEST.DOI',
+                  id: 'TEST_COLLECTION_2_111',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 2'
+                },
+                {
+                  doi: '3.TEST.DOI',
+                  id: 'TEST_COLLECTION_3_111',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 3'
+                }
+              ]
+            }
+          },
+          access_method: {
+            type: 'download'
+          },
+          isLoaded: true
+        },
+        2: {
+          collection_id: 'TEST_COLLECTION_222',
+          collection_metadata: {
+            id: 'TEST_COLLECTION_222',
+            dataset_id: 'Test Dataset ID',
+            relatedCollections: {
+              count: 2,
+              items: [
+                {
+                  doi: '1.TEST.DOI',
+                  id: 'TEST_COLLECTION_1_222',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 1'
+                },
+                {
+                  doi: '2.TEST.DOI',
+                  id: 'TEST_COLLECTION_2_222',
+                  relationships: [
+                    {
+                      relationshipType: 'relatedUrl'
+                    }
+                  ],
+                  title: 'Test Title 2'
+                }
+              ]
+            }
           },
           access_method: {
             type: 'download'
@@ -50,6 +123,9 @@ export const retrievalStatusProps = {
         ]
       }
     ]
+  },
+  location: {
+    search: ''
   }
 }
 
@@ -58,7 +134,7 @@ export const retrievalStatusPropsTwo = {
   retrieval: {
     id: 7,
     collections: {
-      download: {
+      byId: {
         1: {
           collection_id: 'TEST_COLLECTION_111',
           collection_metadata: {
@@ -81,6 +157,9 @@ export const retrievalStatusPropsTwo = {
         ]
       }
     ]
+  },
+  location: {
+    search: ''
   }
 }
 
@@ -89,7 +168,7 @@ export const retrievalStatusPropsEsi = {
   retrieval: {
     id: 7,
     collections: {
-      esi: {
+      byId: {
         1: {
           collection_id: 'TEST_COLLECTION_123',
           collection_metadata: {
@@ -160,6 +239,9 @@ export const retrievalStatusPropsEsi = {
         ]
       }
     ]
+  },
+  location: {
+    search: ''
   }
 }
 
@@ -168,7 +250,7 @@ export const retrievalStatusPropsEchoOrder = {
   retrieval: {
     id: 7,
     collections: {
-      echo_orders: {
+      byId: {
         1: {
           collection_id: 'TEST_COLLECTION_111',
           collection_metadata: {
@@ -223,5 +305,8 @@ export const retrievalStatusPropsEchoOrder = {
         ]
       }
     ]
+  },
+  location: {
+    search: ''
   }
 }

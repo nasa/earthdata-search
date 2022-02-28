@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { uniq } from 'lodash'
-import { parse } from 'qs'
 
 import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import SimpleBar from 'simplebar-react'
 import { FaQuestionCircle, FaArrowRight } from 'react-icons/fa'
+import SimpleBar from 'simplebar-react'
 
 import ArrowTags from '../ArrowTags/ArrowTags'
 import Button from '../Button/Button'
@@ -13,14 +12,13 @@ import CollapsePanel from '../CollapsePanel/CollapsePanel'
 import CollectionDetailsDataCenter from './CollectionDetailsDataCenter'
 import CollectionDetailsMinimap from './CollectionDetailsMinimap'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import RelatedCollection from '../RelatedCollection/RelatedCollection'
 import Skeleton from '../Skeleton/Skeleton'
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import { collectionDetailsSkeleton } from './skeleton'
 import SplitBadge from '../SplitBadge/SplitBadge'
 
+import { collectionDetailsSkeleton } from './skeleton'
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { pluralize } from '../../util/pluralize'
-import { stringify } from '../../util/url/url'
 
 import './CollectionDetailsBody.scss'
 
@@ -528,42 +526,21 @@ export const CollectionDetailsBody = ({
                     <ul className="collection-details-body__related-collections-list">
                       {
                         relatedCollectionsList.map((relatedCollection) => {
-                          const { id, title } = relatedCollection
-                          const params = parse(
-                            location.search,
-                            {
-                              ignoreQueryPrefix: true,
-                              parseArrays: false
-                            }
-                          )
-                          let { p = '' } = params
-                          p = p.replace(/^[^!]*/, id)
+                          const { id } = relatedCollection
 
                           return (
                             <li
                               key={`related-collection--${id}`}
                               className="collection-details-body__related-collection-item"
                             >
-                              <PortalLinkContainer
-                                className="collection-details-body__related-collection-link"
-                                type="link"
-                                onClick={() => {
-                                  onMetricsRelatedCollection({
-                                    collectionId: id,
-                                    type: 'view'
-                                  })
-                                  onFocusedCollectionChange(id)
-                                }}
-                                to={{
-                                  pathname: '/search/granules/',
-                                  search: stringify({
-                                    ...params,
-                                    p
-                                  })
-                                }}
-                              >
-                                {title}
-                              </PortalLinkContainer>
+                              <RelatedCollection
+                                key={`related-collection-${id}`}
+                                className="collection-body__related-collection-link"
+                                relatedCollection={relatedCollection}
+                                location={location}
+                                onFocusedCollectionChange={onFocusedCollectionChange}
+                                onMetricsRelatedCollection={onMetricsRelatedCollection}
+                              />
                             </li>
                           )
                         })

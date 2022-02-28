@@ -5,10 +5,14 @@ import Adapter from 'enzyme-adapter-react-16'
 import { StaticRouter } from 'react-router'
 
 import { retrievalStatusProps, retrievalStatusPropsTwo } from './mocks'
+
 import { Well } from '../../Well/Well'
+import { RelatedCollection } from '../../RelatedCollection/RelatedCollection'
 import { OrderStatus } from '../OrderStatus'
+
 import configureStore from '../../../store/configureStore'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
+
 import * as config from '../../../../../../sharedUtils/config'
 
 const store = configureStore()
@@ -118,6 +122,14 @@ describe('OrderStatus component', () => {
       const orderStatus = enzymeWrapper.find(OrderStatus)
       expect(orderStatus.find('.order-status__collection-links-item').length).toEqual(1)
       expect(orderStatus.find('.order-status__collection-link').at(0).props().href).toEqual('http://linkurl.com/test')
+    })
+  })
+
+  describe('related collection links', () => {
+    test('renders related collections', () => {
+      const { enzymeWrapper } = setup()
+      const orderStatus = enzymeWrapper.find(OrderStatus)
+      expect(orderStatus.find(RelatedCollection).length).toEqual(3)
     })
   })
 
