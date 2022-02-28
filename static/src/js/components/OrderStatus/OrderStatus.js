@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { FaChevronCircleRight } from 'react-icons/fa'
@@ -19,222 +19,211 @@ import { stringify } from '../../util/url/url'
 
 import './OrderStatus.scss'
 
-export class OrderStatus extends Component {
-  componentDidMount() {
-    const { onFetchRetrieval, match, authToken } = this.props
+export const OrderStatus = ({
+  authToken,
+  earthdataEnvironment,
+  granuleDownload,
+  location,
+  match,
+  onChangePath,
+  onFetchRetrieval,
+  onFetchRetrievalCollection,
+  onFetchRetrievalCollectionGranuleLinks,
+  onFocusedCollectionChange,
+  onMetricsRelatedCollection,
+  onToggleAboutCSDAModal,
+  portal,
+  retrieval = {}
+}) => {
+  useEffect(() => {
     if (authToken !== '') {
       const { params } = match
       const { id: retrievalId } = params
-      // TODO: There is probably a better way to kick off this call in a container
+
       onFetchRetrieval(retrievalId, authToken)
     }
-  }
+  }, [authToken])
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { onFetchRetrieval, match, authToken } = this.props
-    if (authToken !== nextProps.authToken && nextProps.authToken !== '') {
-      const { params } = match
-      const { id: retrievalId } = params
-      onFetchRetrieval(retrievalId, nextProps.authToken)
-    }
-  }
+  const {
+    collections,
+    id,
+    isLoaded,
+    isLoading,
+    jsondata = {},
+    links = []
+  } = retrieval
 
-  render() {
-    const {
-      earthdataEnvironment,
-      granuleDownload,
-      location,
-      match,
-      onChangePath,
-      onFetchRetrieval,
-      onFetchRetrievalCollection,
-      onFetchRetrievalCollectionGranuleLinks,
-      onFocusedCollectionChange,
-      onMetricsRelatedCollection,
-      onToggleAboutCSDAModal,
-      portal,
-      retrieval = {}
-    } = this.props
+  const { byId = {} } = collections
 
-    const {
-      collections,
-      id,
-      isLoaded,
-      isLoading,
-      jsondata = {},
-      links = []
-    } = retrieval
+  const [filteredRelatedCollectionItems, setFilteredRelatedCollections] = useState([])
 
-    const { source } = jsondata
-
+  // Add all the related collections to an array and select a
+  // random three to display in the ui
+  useEffect(() => {
     const relatedCollectionItems = []
 
-    const { byId = {} } = collections
-    Object.values(byId).forEach((retrievalCollection) => {
-      const { collection_metadata: metadata } = retrievalCollection
-      const { relatedCollections = {} } = metadata
+    if (!isLoading && isLoaded) {
+      Object.values(byId).forEach((retrievalCollection) => {
+        const { collection_metadata: metadata } = retrievalCollection
+        const { relatedCollections = {} } = metadata
 
-      const { items = [] } = relatedCollections
+        const { items = [] } = relatedCollections
 
-      relatedCollectionItems.push(...items)
-    })
+        relatedCollectionItems.push(...items)
+      })
 
-    const filteredRelatedCollectionItems = relatedCollectionItems
-      .sort(() => 0.5 - Math.random()).slice(0, 3)
+      setFilteredRelatedCollections(relatedCollectionItems
+        .sort(() => 0.5 - Math.random()).slice(0, 3))
+    }
+  }, [isLoading, isLoaded])
 
-    let {
-      download: downloads = [],
-      opendap: opendapOrders = [],
-      echo_orders: echoOrders = [],
-      esi: esiOrders = [],
-      harmony: harmonyOrders = []
-    } = collections
+  const { source } = jsondata
 
-    const collectionsById = Object.values(byId)
+  let {
+    download: downloads = [],
+    opendap: opendapOrders = [],
+    echo_orders: echoOrders = [],
+    esi: esiOrders = [],
+    harmony: harmonyOrders = []
+  } = collections
 
-    downloads = collectionsById.filter(({ id }) => downloads.includes(id))
-    opendapOrders = collectionsById.filter(({ id }) => opendapOrders.includes(id))
-    echoOrders = collectionsById.filter(({ id }) => echoOrders.includes(id))
-    esiOrders = collectionsById.filter(({ id }) => esiOrders.includes(id))
-    harmonyOrders = collectionsById.filter(({ id }) => harmonyOrders.includes(id))
+  const collectionsById = Object.values(byId)
 
-    const { edscHost } = getEnvironmentConfig()
+  downloads = collectionsById.filter(({ id }) => downloads.includes(id))
+  opendapOrders = collectionsById.filter(({ id }) => opendapOrders.includes(id))
+  echoOrders = collectionsById.filter(({ id }) => echoOrders.includes(id))
+  esiOrders = collectionsById.filter(({ id }) => esiOrders.includes(id))
+  harmonyOrders = collectionsById.filter(({ id }) => harmonyOrders.includes(id))
 
-    const eeLink = earthdataEnvironment === deployedEnvironment() ? '' : `?ee=${earthdataEnvironment}`
+  const { edscHost } = getEnvironmentConfig()
 
-    const introduction = (
-      <p>
-        {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
-        <a href={`${edscHost}${portalPath(portal)}/downloads/${id}${eeLink}`}>
-          {`${edscHost}${portalPath(portal)}/downloads/${id}${eeLink}`}
-        </a>
-        {' or the '}
-        <PortalLinkContainer
-          to={{
-            pathname: '/downloads',
-            search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-          }}
-        >
-          Download Status and History
-        </PortalLinkContainer>
-        {' page.'}
-      </p>
-    )
+  const eeLink = earthdataEnvironment === deployedEnvironment() ? '' : `?ee=${earthdataEnvironment}`
 
-    const allCollections = [
-      ...downloads,
-      ...opendapOrders,
-      ...echoOrders,
-      ...esiOrders,
-      ...harmonyOrders
-    ]
+  const introduction = (
+    <p>
+      {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
+      <a href={`${edscHost}${portalPath(portal)}/downloads/${id}${eeLink}`}>
+        {`${edscHost}${portalPath(portal)}/downloads/${id}${eeLink}`}
+      </a>
+      {' or the '}
+      <PortalLinkContainer
+        to={{
+          pathname: '/downloads',
+          search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+        }}
+      >
+        Download Status and History
+      </PortalLinkContainer>
+      {' page.'}
+    </p>
+  )
 
-    return (
-      <div className="order-status">
-        <Well className="order-status">
-          <Well.Main>
-            <Well.Heading>Download Status</Well.Heading>
-            <Well.Introduction>{introduction}</Well.Introduction>
+  const allCollections = [
+    ...downloads,
+    ...opendapOrders,
+    ...echoOrders,
+    ...esiOrders,
+    ...harmonyOrders
+  ]
+
+  return (
+    <div className="order-status">
+      <Well className="order-status">
+        <Well.Main>
+          <Well.Heading>Download Status</Well.Heading>
+          <Well.Introduction>{introduction}</Well.Introduction>
+          {
+            (isLoading && !isLoaded) && (
+              <Skeleton
+                className="order-status__item-skeleton"
+                containerStyle={{ display: 'inline-block', height: '175px', width: '100%' }}
+                shapes={orderStatusSkeleton}
+              />
+            )
+          }
+          {
+            isLoaded && (
+              <OrderStatusList
+                collections={allCollections}
+                earthdataEnvironment={earthdataEnvironment}
+                granuleDownload={granuleDownload}
+                match={match}
+                onChangePath={onChangePath}
+                onFetchRetrieval={onFetchRetrieval}
+                onFetchRetrievalCollection={onFetchRetrievalCollection}
+                onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
+                onToggleAboutCSDAModal={onToggleAboutCSDAModal}
+              />
+            )
+          }
+          <Well.Heading>Additional Resources and Documentation</Well.Heading>
+          <Well.Section>
             {
-              (isLoading && !isLoaded) && (
+              isLoading && (
                 <Skeleton
                   className="order-status__item-skeleton"
                   containerStyle={{ display: 'inline-block', height: '175px', width: '100%' }}
-                  shapes={orderStatusSkeleton}
+                  shapes={orderStatusLinksSkeleton}
                 />
               )
             }
             {
               isLoaded && (
-                <OrderStatusList
-                  collections={allCollections}
-                  earthdataEnvironment={earthdataEnvironment}
-                  granuleDownload={granuleDownload}
-                  match={match}
-                  onChangePath={onChangePath}
-                  onFetchRetrieval={onFetchRetrieval}
-                  onFetchRetrievalCollection={onFetchRetrievalCollection}
-                  onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
-                  onToggleAboutCSDAModal={onToggleAboutCSDAModal}
-                />
+                <ul className="order-status__links">
+                  {
+                    (links && links.length > 0) && (
+                      links.map((link, i) => {
+                        const { dataset_id: datasetId, links } = link
+                        return (
+                          <li
+                            // eslint-disable-next-line react/no-array-index-key
+                            key={`${datasetId}_${i}`}
+                            className="order-status__links-item"
+                          >
+                            <h3 className="order-status__links-title">{datasetId}</h3>
+                            <ul className="order-status__collection-links">
+                              {
+                                links.map((link) => {
+                                  const { href } = link
+                                  return (
+                                    <li
+                                      key={href}
+                                      className="order-status__collection-links-item"
+                                    >
+                                      <a
+                                        href={href}
+                                        className="order-status__collection-link"
+                                      >
+                                        {href}
+                                      </a>
+                                    </li>
+                                  )
+                                })
+                              }
+                            </ul>
+                          </li>
+                        )
+                      })
+                    )
+                  }
+                  {
+                    (links && links.length === 0) && (
+                      <li className="order-status__links-item">
+                        No additional resources provided
+                      </li>
+                    )
+                  }
+                </ul>
               )
             }
-            <Well.Heading>Additional Resources and Documentation</Well.Heading>
-            <Well.Section>
-              {
-                isLoading && (
-                  <Skeleton
-                    className="order-status__item-skeleton"
-                    containerStyle={{ display: 'inline-block', height: '175px', width: '100%' }}
-                    shapes={orderStatusLinksSkeleton}
-                  />
-                )
-              }
-              {
-                isLoaded && (
-                  <ul className="order-status__links">
-                    {
-                      (links && links.length > 0) && (
-                        links.map((link, i) => {
-                          const { dataset_id: datasetId, links } = link
-                          return (
-                            <li
-                              // eslint-disable-next-line react/no-array-index-key
-                              key={`${datasetId}_${i}`}
-                              className="order-status__links-item"
-                            >
-                              <h3 className="order-status__links-title">{datasetId}</h3>
-                              <ul className="order-status__collection-links">
-                                {
-                                  links.map((link) => {
-                                    const { href } = link
-                                    return (
-                                      <li
-                                        key={href}
-                                        className="order-status__collection-links-item"
-                                      >
-                                        <a
-                                          href={href}
-                                          className="order-status__collection-link"
-                                        >
-                                          {href}
-                                        </a>
-                                      </li>
-                                    )
-                                  })
-                                }
-                              </ul>
-                            </li>
-                          )
-                        })
-                      )
-                    }
-                    {
-                      (links && links.length === 0) && (
-                        <li className="order-status__links-item">
-                          No additional resources provided
-                        </li>
-                      )
-                    }
-                  </ul>
-                )
-              }
-            </Well.Section>
-            <Well.Heading>You might also be interested in...</Well.Heading>
-            <Well.Section>
-              {
-                isLoading && (
-                  <Skeleton
-                    className="order-status__item-skeleton"
-                    containerStyle={{ display: 'inline-block', height: '175px', width: '100%' }}
-                    shapes={orderStatusLinksSkeleton}
-                  />
-                )
-              }
-              {
-                (isLoaded && (
-                  filteredRelatedCollectionItems && filteredRelatedCollectionItems.length > 0
-                )) && (
+          </Well.Section>
+          {
+            (isLoaded && (
+              filteredRelatedCollectionItems && filteredRelatedCollectionItems.length > 0
+            )) && (
+              <>
+                <Well.Heading>You might also be interested in...</Well.Heading>
+                <Well.Section>
                   <ul className="order-status__links">
                     {
                       (
@@ -250,10 +239,10 @@ export class OrderStatus extends Component {
                               <RelatedCollection
                                 key={`related-collection-${id}`}
                                 className="collection-body__related-collection-link"
-                                relatedCollection={relatedCollection}
                                 location={location}
                                 onFocusedCollectionChange={onFocusedCollectionChange}
                                 onMetricsRelatedCollection={onMetricsRelatedCollection}
+                                relatedCollection={relatedCollection}
                               />
                             </li>
                           )
@@ -261,57 +250,57 @@ export class OrderStatus extends Component {
                       )
                     }
                   </ul>
-                )
-              }
-            </Well.Section>
-          </Well.Main>
-          <Well.Footer>
-            <Well.Heading>Next Steps</Well.Heading>
-            <ul className="order-status__footer-link-list">
-              <li className="order-status__footer-link-item">
-                <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
-                <PortalLinkContainer
-                  className="order-status__footer-link"
-                  to={{
-                    pathname: '/search',
-                    search: source
-                  }}
-                  onClick={() => { onChangePath(`/search${source}`) }}
-                >
-                  Back to Earthdata Search Results
-                </PortalLinkContainer>
-              </li>
-              <li className="order-status__footer-link-item">
-                <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
-                <PortalLinkContainer
-                  className="order-status__footer-link"
-                  to={{
-                    pathname: '/search',
-                    search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-                  }}
-                  onClick={() => { onChangePath('/search') }}
-                >
-                  Start a New Earthdata Search Session
-                </PortalLinkContainer>
-              </li>
-              <li className="order-status__footer-link-item">
-                <EDSCIcon library="fa" icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
-                <PortalLinkContainer
-                  className="order-status__footer-link"
-                  to={{
-                    pathname: '/downloads',
-                    search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-                  }}
-                >
-                  View Your Download Status & History
-                </PortalLinkContainer>
-              </li>
-            </ul>
-          </Well.Footer>
-        </Well>
-      </div>
-    )
-  }
+                </Well.Section>
+              </>
+            )
+        }
+        </Well.Main>
+        <Well.Footer>
+          <Well.Heading>Next Steps</Well.Heading>
+          <ul className="order-status__footer-link-list">
+            <li className="order-status__footer-link-item">
+              <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
+              <PortalLinkContainer
+                className="order-status__footer-link"
+                to={{
+                  pathname: '/search',
+                  search: source
+                }}
+                onClick={() => { onChangePath(`/search${source}`) }}
+              >
+                Back to Earthdata Search Results
+              </PortalLinkContainer>
+            </li>
+            <li className="order-status__footer-link-item">
+              <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
+              <PortalLinkContainer
+                className="order-status__footer-link"
+                to={{
+                  pathname: '/search',
+                  search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+                }}
+                onClick={() => { onChangePath('/search') }}
+              >
+                Start a New Earthdata Search Session
+              </PortalLinkContainer>
+            </li>
+            <li className="order-status__footer-link-item">
+              <EDSCIcon library="fa" icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
+              <PortalLinkContainer
+                className="order-status__footer-link"
+                to={{
+                  pathname: '/downloads',
+                  search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+                }}
+              >
+                View Your Download Status & History
+              </PortalLinkContainer>
+            </li>
+          </ul>
+        </Well.Footer>
+      </Well>
+    </div>
+  )
 }
 
 OrderStatus.propTypes = {

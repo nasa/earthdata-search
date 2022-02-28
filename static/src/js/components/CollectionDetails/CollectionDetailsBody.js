@@ -536,10 +536,10 @@ export const CollectionDetailsBody = ({
                               <RelatedCollection
                                 key={`related-collection-${id}`}
                                 className="collection-body__related-collection-link"
-                                relatedCollection={relatedCollection}
                                 location={location}
                                 onFocusedCollectionChange={onFocusedCollectionChange}
                                 onMetricsRelatedCollection={onMetricsRelatedCollection}
+                                relatedCollection={relatedCollection}
                               />
                             </li>
                           )
