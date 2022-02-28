@@ -113,8 +113,8 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         relatedCollections (
           limit: 3
         ) {
-        count
-        items {
+          count
+          items {
             id
             title
           }

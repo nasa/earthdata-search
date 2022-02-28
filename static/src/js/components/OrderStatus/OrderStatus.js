@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import { FaChevronCircleRight } from 'react-icons/fa'
 
-import OrderStatusList from './OrderStatusList'
-import Well from '../Well/Well'
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import Skeleton from '../Skeleton/Skeleton'
-
-import { orderStatusSkeleton, orderStatusLinksSkeleton } from './skeleton'
-import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
-import { portalPath } from '../../../../../sharedUtils/portalPath'
-import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import { stringify } from '../../util/url/url'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import OrderStatusList from './OrderStatusList'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import RelatedCollection from '../RelatedCollection/RelatedCollection'
+import Skeleton from '../Skeleton/Skeleton'
+import Well from '../Well/Well'
+
+import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import { locationPropType } from '../../util/propTypes/location'
+import { orderStatusSkeleton, orderStatusLinksSkeleton } from './skeleton'
+import { portalPath } from '../../../../../sharedUtils/portalPath'
+import { stringify } from '../../util/url/url'
 
 import './OrderStatus.scss'
 
@@ -40,28 +43,44 @@ export class OrderStatus extends Component {
     const {
       earthdataEnvironment,
       granuleDownload,
+      location,
       match,
-      portal,
-      retrieval = {},
       onChangePath,
       onFetchRetrieval,
       onFetchRetrievalCollection,
       onFetchRetrievalCollectionGranuleLinks,
-      onToggleAboutCSDAModal
+      onFocusedCollectionChange,
+      onMetricsRelatedCollection,
+      onToggleAboutCSDAModal,
+      portal,
+      retrieval = {}
     } = this.props
 
-    const { jsondata = {}, links = [] } = retrieval
-    const { source } = jsondata
-
     const {
-      id,
       collections,
+      id,
+      isLoaded,
       isLoading,
-      isLoaded
+      jsondata = {},
+      links = []
     } = retrieval
 
+    const { source } = jsondata
+
+    const relatedCollectionItems = []
+
     const { byId = {} } = collections
-    const { [id]: retrievalCollection = {} } = byId
+    Object.values(byId).forEach((retrievalCollection) => {
+      const { collection_metadata: metadata } = retrievalCollection
+      const { relatedCollections = {} } = metadata
+
+      const { items = [] } = relatedCollections
+
+      relatedCollectionItems.push(...items)
+    })
+
+    const filteredRelatedCollectionItems = relatedCollectionItems
+      .sort(() => 0.5 - Math.random()).slice(0, 3)
 
     let {
       download: downloads = [],
@@ -137,7 +156,6 @@ export class OrderStatus extends Component {
                   onFetchRetrievalCollection={onFetchRetrievalCollection}
                   onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
                   onToggleAboutCSDAModal={onToggleAboutCSDAModal}
-                  retrievalCollection={retrievalCollection}
                 />
               )
             }
@@ -202,6 +220,50 @@ export class OrderStatus extends Component {
                 )
               }
             </Well.Section>
+            <Well.Heading>You might also be interested in...</Well.Heading>
+            <Well.Section>
+              {
+                isLoading && (
+                  <Skeleton
+                    className="order-status__item-skeleton"
+                    containerStyle={{ display: 'inline-block', height: '175px', width: '100%' }}
+                    shapes={orderStatusLinksSkeleton}
+                  />
+                )
+              }
+              {
+                (isLoaded && (
+                  filteredRelatedCollectionItems && filteredRelatedCollectionItems.length > 0
+                )) && (
+                  <ul className="order-status__links">
+                    {
+                      (
+                        filteredRelatedCollectionItems.map((relatedCollection, i) => {
+                          const { id } = relatedCollection
+
+                          return (
+                            <li
+                              // eslint-disable-next-line react/no-array-index-key
+                              key={`${id}_${i}`}
+                              className="order-status__links-item"
+                            >
+                              <RelatedCollection
+                                key={`related-collection-${id}`}
+                                className="collection-body__related-collection-link"
+                                relatedCollection={relatedCollection}
+                                location={location}
+                                onFocusedCollectionChange={onFocusedCollectionChange}
+                                onMetricsRelatedCollection={onMetricsRelatedCollection}
+                              />
+                            </li>
+                          )
+                        })
+                      )
+                    }
+                  </ul>
+                )
+              }
+            </Well.Section>
           </Well.Main>
           <Well.Footer>
             <Well.Heading>Next Steps</Well.Heading>
@@ -256,6 +318,7 @@ OrderStatus.propTypes = {
   authToken: PropTypes.string.isRequired,
   earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string
@@ -265,6 +328,8 @@ OrderStatus.propTypes = {
   onFetchRetrieval: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
+  onFocusedCollectionChange: PropTypes.func.isRequired,
+  onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   portal: PropTypes.shape({}).isRequired,
   retrieval: PropTypes.shape({}).isRequired

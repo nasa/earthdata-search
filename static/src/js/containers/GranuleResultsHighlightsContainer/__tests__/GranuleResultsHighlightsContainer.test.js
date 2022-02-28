@@ -10,8 +10,8 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     collectionsQuery: {},
-    collectionsSearch: {
-      allIds: ['focusedCollection'],
+    focusedCollectionGranuleSearch: {
+      allIds: ['id1'],
       hits: 1,
       isLoaded: true,
       isLoading: false,
@@ -64,7 +64,7 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       collectionsQuery: {},
-      collectionsSearch: {},
+      focusedCollectionGranuleSearch: {},
       focusedCollectionGranuleMetadata: {},
       focusedCollectionId: 'collectionId',
       focusedCollectionMetadata: {}
