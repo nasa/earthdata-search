@@ -129,7 +129,9 @@ const mapScienceKeywords = (value) => {
   const returnValue = {}
 
   values.forEach((keywordValue, index) => {
-    returnValue[scienceKeywordTypes[index]] = keywordValue
+    if (keywordValue) {
+      returnValue[scienceKeywordTypes[index]] = keywordValue
+    }
   })
 
   return returnValue
@@ -144,7 +146,9 @@ const mapPlatforms = (value) => {
   const returnValue = {}
 
   values.forEach((keywordValue, index) => {
-    returnValue[platformTypes[index]] = keywordValue
+    if (keywordValue) {
+      returnValue[platformTypes[index]] = keywordValue
+    }
   })
 
   return returnValue
