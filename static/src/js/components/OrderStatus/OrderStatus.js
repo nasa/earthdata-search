@@ -19,6 +19,23 @@ import { stringify } from '../../util/url/url'
 
 import './OrderStatus.scss'
 
+/**
+ * Renders a RelatedCollection.
+ * @param {Object} props - The props passed into the component.
+ * @param {String} props.authToken - The accessMethods of the current collection.
+ * @param {String} props.earthdataEnvironment - The accessMethods of the current collection.
+ * @param {Object} props.granuleDownload - Data pertaining to the status of the granule download for a retrieval collection.
+ * @param {Object} props.location - Location passed from react router.
+ * @param {Object} props.match - Router match state.
+ * @param {Function} props.onChangePath - Selects an access method.
+ * @param {Function} props.onFetchRetrieval - Fetches a retrieval from the database.
+ * @param {Function} props.onFetchRetrievalCollection - Fetches a retrieval collection from the database.
+ * @param {Function} props.onFetchRetrievalCollectionGranuleLinks - Passed down to child components, method to fetch granules for a given retrieval collection.
+ * @param {Function} props.onFocusedCollectionChange - Callback to change the focused collection.
+ * @param {Function} props.onMetricsRelatedCollection -  Callback to capture related collection metrics.
+ * @param {Function} props.onToggleAboutCSDAModal - Callback to toggle the About CSDA Modal.
+
+ */
 export const OrderStatus = ({
   authToken,
   earthdataEnvironment,
