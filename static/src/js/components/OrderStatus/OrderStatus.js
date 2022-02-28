@@ -65,11 +65,14 @@ export const OrderStatus = ({
     if (!isLoading && isLoaded) {
       Object.values(byId).forEach((retrievalCollection) => {
         const { collection_metadata: metadata } = retrievalCollection
-        const { relatedCollections = {} } = metadata
 
-        const { items = [] } = relatedCollections
+        const { relatedCollections } = metadata
 
-        relatedCollectionItems.push(...items)
+        if (relatedCollections) {
+          const { items = [] } = relatedCollections
+
+          relatedCollectionItems.push(...items)
+        }
       })
 
       setFilteredRelatedCollections(relatedCollectionItems

@@ -53,16 +53,6 @@ describe('OrderStatus component', () => {
     expect(props.onFetchRetrieval).toHaveBeenCalledWith('7', 'testToken')
   })
 
-  test('calls onFetchRetrieval when new props are received', () => {
-    const { enzymeWrapper, props } = setup()
-    enzymeWrapper.find(OrderStatus).instance().UNSAFE_componentWillReceiveProps({
-      ...retrievalStatusProps,
-      ...retrievalStatusPropsTwo
-    })
-    expect(props.onFetchRetrieval).toHaveBeenCalledTimes(2)
-    expect(props.onFetchRetrieval).toHaveBeenCalledWith('7', 'testToken')
-  })
-
   describe('introduction', () => {
     beforeEach(() => {
       jest.spyOn(config, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'http://localhost' }))
