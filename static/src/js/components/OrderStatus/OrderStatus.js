@@ -75,6 +75,11 @@ export const OrderStatus = ({
         }
       })
 
+      // When using sort, the function passed is ran for every
+      // element in the array. If the result of this operation is < 0,
+      // the element a is put to an index lower than b, and the
+      // opposite if the result is > 0.
+      // https://flaviocopes.com/how-to-shuffle-array-javascript/
       setFilteredRelatedCollections(relatedCollectionItems
         .sort(() => 0.5 - Math.random()).slice(0, 3))
     }
