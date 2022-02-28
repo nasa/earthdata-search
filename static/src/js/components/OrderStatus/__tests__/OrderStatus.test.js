@@ -4,7 +4,7 @@ import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { StaticRouter } from 'react-router'
 
-import { retrievalStatusProps, retrievalStatusPropsTwo } from './mocks'
+import { retrievalStatusProps } from './mocks'
 
 import { Well } from '../../Well/Well'
 import { RelatedCollection } from '../../RelatedCollection/RelatedCollection'
