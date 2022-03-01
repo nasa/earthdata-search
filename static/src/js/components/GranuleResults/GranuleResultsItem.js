@@ -85,6 +85,7 @@ const GranuleResultsItem = forwardRef(({
     id,
     isHoveredGranule,
     isFocusedGranule,
+    isOpenSearch,
     onlineAccessFlag,
     s3Links,
     timeEnd,
@@ -236,6 +237,7 @@ const GranuleResultsItem = forwardRef(({
                           className="button granule-results-item__button granule-results-item__button--add"
                           label="Add granule"
                           title="Add granule"
+                          disabled={isOpenSearch}
                           onClick={(e) => {
                             onAddGranuleToProjectCollection({
                               collectionId,

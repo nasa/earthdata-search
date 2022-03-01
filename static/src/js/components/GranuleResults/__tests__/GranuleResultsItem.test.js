@@ -232,7 +232,7 @@ function setup(type, overrideProps) {
     }
   }
 
-  if (type === 'cwic') {
+  if (type === 'opensearch') {
     props = {
       ...defaultProps,
       granule: {
@@ -414,26 +414,32 @@ describe('GranuleResultsItem component', () => {
     })
   })
 
-  describe('when passed a CWIC granule', () => {
+  describe('when passed an OpenSearch granule', () => {
     test('renders the title', () => {
-      const { enzymeWrapper } = setup('cwic')
+      const { enzymeWrapper } = setup('opensearch')
 
       expect(enzymeWrapper.find('.granule-results-item__title').text()).toEqual('Granule title')
     })
 
     test('renders the image', () => {
-      const { enzymeWrapper } = setup('cwic')
+      const { enzymeWrapper } = setup('opensearch')
 
       expect(enzymeWrapper.find('.granule-results-item__thumb').find('img').prop('src')).toEqual('/fake/path/image.jpg')
     })
 
     test('renders the start and end date', () => {
-      const { enzymeWrapper } = setup('cwic')
+      const { enzymeWrapper } = setup('opensearch')
 
       expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('h5').text()).toEqual('Start')
       expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('p').text()).toEqual('2019-04-28 00:00:00')
       expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('h5').text()).toEqual('End')
       expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('p').text()).toEqual('2019-04-29 23:59:59')
+    })
+
+    test('disables the Add granule button', () => {
+      const { enzymeWrapper } = setup('opensearch')
+
+      expect(enzymeWrapper.find('.granule-results-item__button--add').props().disabled).toBeTruthy()
     })
   })
 
@@ -451,9 +457,9 @@ describe('GranuleResultsItem component', () => {
       })
     })
 
-    describe('with CWIC granules', () => {
+    describe('with OpenSearch granules', () => {
       test('it excludes the granule from results with a hashed granule id', () => {
-        const { enzymeWrapper, props } = setup('cwic')
+        const { enzymeWrapper, props } = setup('opensearch')
         const removeButton = enzymeWrapper.find(MoreActionsDropdownItem).at(1)
 
         removeButton.simulate('click')
