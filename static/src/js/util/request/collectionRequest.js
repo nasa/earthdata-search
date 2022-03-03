@@ -155,7 +155,6 @@ export default class CollectionRequest extends CmrRequest {
           'LOW_LATENCY',
           'EXPEDITED'
         ].includes(collection.collection_data_type)
-        console.log('collection.collection_data_type', collection.collection_data_type)
       }
 
       if (collection && collection.organizations) {
