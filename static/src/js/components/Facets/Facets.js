@@ -30,7 +30,6 @@ const Facets = (props) => {
   const { featureFacets: portalFeatureFacets = {} } = features
   const {
     showMapImagery,
-    showNearRealTime,
     showCustomizable,
     showAvailableFromAwsCloud
   } = portalFeatureFacets
@@ -62,13 +61,6 @@ const Facets = (props) => {
     featuresFacet.children.push({
       applied: featureFacets.mapImagery,
       title: 'Map Imagery',
-      type: 'feature'
-    })
-  }
-  if (showNearRealTime) {
-    featuresFacet.children.push({
-      applied: featureFacets.nearRealTime,
-      title: 'Near Real Time',
       type: 'feature'
     })
   }
@@ -138,6 +130,12 @@ const Facets = (props) => {
     autocompleteType: 'horizontal_data_resolution'
   }
 
+  const latencyResolution = {
+    ...cmrFacetDefaults,
+    title: 'Latency',
+    autocompleteType: 'latency'
+  }
+
   const facetsTemplate = [
     featuresFacet,
     keywordsFacet,
@@ -148,7 +146,8 @@ const Facets = (props) => {
     processingLevels,
     formats,
     tilingSystem,
-    horizontalDataResolution
+    horizontalDataResolution,
+    latencyResolution
   ]
 
   // If all feature facets were disabled, don't show the featuresFacet group

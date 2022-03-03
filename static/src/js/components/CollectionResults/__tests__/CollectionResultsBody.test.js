@@ -20,6 +20,7 @@ function setup(overrideProps) {
     },
     collectionsMetadata: {
       collectionId: {
+        collectionDataType: 'SCIENCE_QUALITY',
         consortiums: [],
         summary: 'test summary',
         datasetId: 'test dataset id',

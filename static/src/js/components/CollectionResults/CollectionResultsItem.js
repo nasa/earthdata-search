@@ -43,23 +43,24 @@ export const CollectionResultsItem = forwardRef(({
   onViewCollectionGranules
 }, ref) => {
   const {
-    consortiums = [],
+    collectionDataType,
     collectionId,
+    consortiums = [],
     datasetId,
-    summary,
     displayOrganization,
     granuleCount,
     hasFormats,
+    hasMapImagery,
     hasSpatialSubsetting,
     hasTemporalSubsetting,
     hasTransforms,
     hasVariables,
-    hasMapImagery,
-    isCSDA,
-    isOpenSearch,
     isCollectionInProject,
+    isCSDA,
     isNrt,
+    isOpenSearch,
     shortName,
+    summary,
     temporalRange,
     thumbnail,
     versionId
@@ -79,6 +80,24 @@ export const CollectionResultsItem = forwardRef(({
     FEDEO: 'Federated EO Gateway',
     CEOS: 'Committee on Earth Observation Satellites'
   }
+
+  const nrtTypes = {
+    NEAR_REAL_TIME: {
+      label: '1 to 3 hours',
+      description: 'Data is available 1-3 hours after the instrument on the satellite has acquired the data.'
+    },
+    LOW_LATENCY: {
+      label: '3 to 24 hours',
+      description: 'Data is available 3 to 24 hours after the instrument on the satellite has acquired the data.'
+    },
+    EXPEDITED: {
+      label: '1 to 4 days',
+      description: 'Data is available 1 to 4 days after the instrument on the satellite has acquired the data.'
+    }
+  }
+
+  const { [collectionDataType]: nrtMapping = '' } = nrtTypes
+  const { description: nrtDescription, label: nrtLabel } = nrtMapping
 
   const getConsortiumTooltipText = (consortium) => {
     let tooltip = ''
@@ -448,14 +467,14 @@ export const CollectionResultsItem = forwardRef(({
                       id="tooltip__near-real-time-badge"
                       className="collection-results-item__badge-tooltip"
                     >
-                      Near Real Time (NRT) Data
+                      {nrtDescription}
                     </Tooltip>
                   )}
                 >
                   <Badge
                     className="collection-results-item__badge collection-results-item__badge--near-real-time"
                   >
-                    NRT
+                    {nrtLabel}
                   </Badge>
                 </OverlayTrigger>
               )

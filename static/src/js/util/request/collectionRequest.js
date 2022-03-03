@@ -32,7 +32,6 @@ export default class CollectionRequest extends CmrRequest {
 
   permittedCmrKeys() {
     return [
-      'params',
       'bounding_box',
       'circle',
       'cloud_hosted',
@@ -42,23 +41,25 @@ export default class CollectionRequest extends CmrRequest {
       'data_center',
       'echo_collection_id',
       'facets_size',
-      'granule_data_format',
       'granule_data_format_h',
-      'has_granules',
+      'granule_data_format',
       'has_granules_or_cwic',
+      'has_granules',
       'horizontal_data_resolution_range',
       'include_facets',
       'include_granule_counts',
       'include_has_granules',
       'include_tags',
       'include_tags',
-      'instrument',
       'instrument_h',
+      'instrument',
       'keyword',
+      'latency',
       'line',
       'options',
       'page_num',
       'page_size',
+      'params',
       'platform',
       'platforms_h',
       'point',
@@ -89,6 +90,7 @@ export default class CollectionRequest extends CmrRequest {
       'horizontal_data_resolution_range',
       'instrument_h',
       'instrument',
+      'latency',
       'line',
       'platform',
       'point',
@@ -96,8 +98,8 @@ export default class CollectionRequest extends CmrRequest {
       'processing_level_id_h',
       'project_h',
       'provider',
-      'sort_key',
       'service_type',
+      'sort_key',
       'spatial_keyword',
       'tag_key',
       'two_d_coordinate_system_name'
@@ -148,7 +150,12 @@ export default class CollectionRequest extends CmrRequest {
       }
 
       if (collection && collection.collection_data_type) {
-        transformedCollection.is_nrt = !!(collection.collection_data_type === 'NEAR_REAL_TIME')
+        transformedCollection.is_nrt = [
+          'NEAR_REAL_TIME',
+          'LOW_LATENCY',
+          'EXPEDITED'
+        ].includes(collection.collection_data_type)
+        console.log('collection.collection_data_type', collection.collection_data_type)
       }
 
       if (collection && collection.organizations) {

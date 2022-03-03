@@ -57,6 +57,7 @@ const urlDefs = {
   organizationFacets: { shortKey: 'fdc', encode: encodeFacets, decode: decodeFacets },
   projectFacets: { shortKey: 'fpj', encode: encodeFacets, decode: decodeFacets },
   processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets },
+  latency: { shortKey: 'lf', encode: encodeFacets, decode: decodeFacets },
   granuleDataFormatFacets: { shortKey: 'gdf', encode: encodeFacets, decode: decodeFacets },
   shapefileId: { shortKey: 'sf', encode: encodeString, decode: encodeString },
   selectedFeatures: { shortKey: 'sfs', encode: encodeArray, decode: decodeArray },
@@ -152,6 +153,7 @@ export const decodeUrlParams = (paramString) => {
   const horizontalDataResolutionRange = decodeHelp(params, 'horizontalDataResolutionRangeFacets')
   const scienceKeywords = decodeScienceKeywords(params)
   const platforms = decodePlatforms(params)
+  const latency = decodeHelp(params, 'latency')
 
   const cmrFacets = {
     data_center_h: organizations,
@@ -162,7 +164,8 @@ export const decodeUrlParams = (paramString) => {
     project_h: projects,
     science_keywords_h: scienceKeywords,
     two_d_coordinate_system_name: twoDCoordinateSystemName,
-    horizontal_data_resolution_range: horizontalDataResolutionRange
+    horizontal_data_resolution_range: horizontalDataResolutionRange,
+    latency
   }
 
   const shapefile = {

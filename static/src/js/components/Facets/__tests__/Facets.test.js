@@ -163,6 +163,23 @@ function setup(overrideProps = {}) {
         title: 'Horizontal Data Resolution',
         totalSelected: 0,
         type: 'group'
+      },
+      Latency: {
+        applied: false,
+        children: [{
+          applied: false,
+          count: 1,
+          has_children: false,
+          links: {
+            apply: 'http://example.com/apply_latency_link'
+          },
+          title: 'Mock Latency Facet',
+          type: 'filter'
+        }],
+        hasChildren: true,
+        title: 'Latency',
+        totalSelected: 0,
+        type: 'group'
       }
     },
     featureFacets: {
@@ -176,8 +193,7 @@ function setup(overrideProps = {}) {
         featureFacets: {
           showAvailableFromAwsCloud: true,
           showCustomizable: true,
-          showMapImagery: true,
-          showNearRealTime: true
+          showMapImagery: true
         }
       }
     },
@@ -201,8 +217,7 @@ describe('Facets component', () => {
       portal: {
         features: {
           featureFacets: {
-            showMapImagery: false,
-            showNearRealTime: true,
+            showMapImagery: true,
             showCustomizable: false
           }
         }
@@ -215,7 +230,7 @@ describe('Facets component', () => {
     expect(featuresGroup.props().facet.children.length).toEqual(1)
     expect(featuresGroup.props().facet.children[0]).toEqual({
       applied: false,
-      title: 'Near Real Time',
+      title: 'Map Imagery',
       type: 'feature'
     })
   })
@@ -226,7 +241,6 @@ describe('Facets component', () => {
         features: {
           featureFacets: {
             showMapImagery: false,
-            showNearRealTime: false,
             showCustomizable: false
           }
         }

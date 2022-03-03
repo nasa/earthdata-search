@@ -33,6 +33,7 @@ export const mapStateToProps = (state) => ({
   granuleDataFormatFacets: state.facetsParams.cmr.granule_data_format_h,
   hasGranulesOrCwic: state.query.collection.hasGranulesOrCwic,
   horizontalDataResolutionRangeFacets: state.facetsParams.cmr.horizontal_data_resolution_range,
+  latency: state.facetsParams.cmr.latency,
   instrumentFacets: state.facetsParams.cmr.instrument_h,
   keywordSearch: state.query.collection.keyword,
   lineSearch: state.query.collection.spatial.line,

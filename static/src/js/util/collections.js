@@ -229,6 +229,7 @@ export const buildCollectionSearchParams = (params) => {
     instrument,
     instrumentH: facetsToSend.instrument_h,
     keyword: keywordWithWildcard,
+    latency: facetsToSend.latency,
     line,
     pageNum,
     platform,
