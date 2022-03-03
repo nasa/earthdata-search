@@ -14,8 +14,8 @@ import horizontalDataResolutionBody from './__mocks__/horizontal_data_resolution
 import instrumentsBody from './__mocks__/instruments.body.json'
 import keywordBody from './__mocks__/keyword.body.json'
 import keywordsBody from './__mocks__/keywords.body.json'
+import latencyBody from './__mocks__/latency.body.json'
 import mapImageryBody from './__mocks__/map_imagery.body.json'
-import nearRealTimeBody from './__mocks__/near_real_time.body.json'
 import noGranulesBody from './__mocks__/no_granules.body.json'
 import nonEosdisBody from './__mocks__/non_eosdis.body.json'
 import organizationsBody from './__mocks__/organizations.body.json'
@@ -466,7 +466,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('be.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -485,7 +484,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&service_type%5B%5D=esi&service_type%5B%5D=opendap&service_type%5B%5D=harmony')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&service_type%5B%5D=esi&service_type%5B%5D=opendap&service_type%5B%5D=harmony&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
 
           req.reply({
             body: customizableBody,
@@ -505,7 +504,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('not.be.checked')
         getByTestId('facet_item-customizable').should('be.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -544,46 +542,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('not.be.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
-
-        // Keyword input is empty
-        getByTestId('keyword-search-input').should('have.value', '')
-
-        // Ensure facet group bodies are shown correctly
-        testFacetGroupExistence('features')
-      })
-    })
-
-    describe('When the path is loaded with the `Near Real Time` feature facet param', () => {
-      it('loads with the feature facet applied', () => {
-        const cmrHits = 228
-
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&collection_data_type%5B%5D=NEAR_REAL_TIME&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
-
-          req.reply({
-            body: nearRealTimeBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
-
-        cy.visit('/search?ff=Near%20Real%20Time')
-
-        // Ensure the correct number of results were loaded
-        testResultsSize(cmrHits)
-
-        // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('not.be.checked')
-        getByTestId('facet_item-customizable').should('be.not.checked')
-        getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -627,7 +585,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -675,7 +632,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -723,7 +679,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -771,7 +726,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -819,7 +773,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -867,7 +820,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -915,7 +867,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -963,7 +914,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -1011,7 +961,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -1022,6 +971,53 @@ describe('Path /search', () => {
         // Ensure the facet is selected
         getByTestId('facet_group-horizontal-data-resolution').click()
         cy.contains('0 to 1 meter').get('[type="checkbox"]').should('be.checked')
+      })
+    })
+  })
+
+  describe('Latency Facets Group', () => {
+    describe('When the path is loaded with the `1 to 3 hours` latency param', () => {
+      it('loads with the facet applied', () => {
+        const cmrHits = 11
+
+        cy.intercept({
+          method: 'POST',
+          url: '**/search/collections.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&latency%5B%5D=1%20to%203%20hours&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+
+          req.reply({
+            body: latencyBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        })
+
+        cy.visit('/search?lf=1%20to%203%20hours')
+
+        // Ensure the correct number of results were loaded
+        testResultsSize(cmrHits)
+
+        // Ensure the number of selected elements is displayed correctly
+        testFacetGroupSelectedCount('latency', 1)
+
+        // Ensure that the correct feature facets are selected
+        getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
+        getByTestId('facet_item-customizable').should('be.not.checked')
+        getByTestId('facet_item-map-imagery').should('be.not.checked')
+
+        // Keyword input is empty
+        getByTestId('keyword-search-input').should('have.value', '')
+
+        // Ensure facet group bodies are shown correctly
+        testFacetGroupExistence('features')
+
+        // Ensure the facet is selected
+        getByTestId('facet_group-latency').click()
+        cy.contains('1 to 3 hours').get('[type="checkbox"]').should('be.checked')
       })
     })
   })
@@ -1056,7 +1052,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
@@ -1100,7 +1095,6 @@ describe('Path /search', () => {
         getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
-        getByTestId('facet_item-near-real-time').should('be.not.checked')
 
         // Keyword input is empty
         getByTestId('keyword-search-input').should('have.value', '')
