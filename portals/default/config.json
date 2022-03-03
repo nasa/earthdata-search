@@ -5,8 +5,7 @@
     "featureFacets": {
       "showAvailableFromAwsCloud": false,
       "showCustomizable": false,
-      "showMapImagery": false,
-      "showNearRealTime": true
+      "showMapImagery": false
     }
   },
   "footer": {

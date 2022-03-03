@@ -41,8 +41,7 @@ describe('loadPortalConfig', () => {
         featureFacets: {
           showAvailableFromAwsCloud: true,
           showCustomizable: true,
-          showMapImagery: true,
-          showNearRealTime: true
+          showMapImagery: true
         }
       },
       footer: {

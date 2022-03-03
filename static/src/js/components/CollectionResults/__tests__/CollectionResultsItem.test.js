@@ -1,11 +1,14 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+
 import { OverlayTrigger, Overlay, Tooltip } from 'react-bootstrap'
 
 import CollectionResultsItem from '../CollectionResultsItem'
 import SplitBadge from '../../SplitBadge/SplitBadge'
+
 import { collectionListItemProps } from './mocks'
+
 import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -494,11 +497,12 @@ describe('CollectionResultsList component', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
               ...collectionListItemProps.collectionMetadata,
+              collectionDataType: 'EXPEDITED',
               isNrt: true
             }
           })
           expect(enzymeWrapper.find('.collection-results-item__badge--near-real-time').length).toEqual(1)
-          expect(enzymeWrapper.find('.collection-results-item__badge--near-real-time').text()).toEqual('NRT')
+          expect(enzymeWrapper.find('.collection-results-item__badge--near-real-time').text()).toEqual('1 to 4 days')
         })
       })
 
@@ -506,13 +510,14 @@ describe('CollectionResultsList component', () => {
         const { enzymeWrapper } = setup({
           collectionMetadata: {
             ...collectionListItemProps.collectionMetadata,
+            collectionDataType: 'EXPEDITED',
             isNrt: true
           }
         })
 
         const tooltipProps = enzymeWrapper.find(OverlayTrigger).props().overlay.props
         expect(enzymeWrapper.find(OverlayTrigger).length).toEqual(1)
-        expect(tooltipProps.children).toEqual('Near Real Time (NRT) Data')
+        expect(tooltipProps.children).toEqual('Data is available 1 to 4 days after the instrument on the satellite has acquired the data.')
       })
     })
 

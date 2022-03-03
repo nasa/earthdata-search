@@ -13,6 +13,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
     const { [collectionId]: collectionMetadata = {} } = metadata
 
     const {
+      collectionDataType,
       consortiums = [],
       datasetId = null,
       granuleCount = 0,
@@ -113,8 +114,9 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
     })
 
     return {
-      consortiums,
+      collectionDataType,
       collectionId,
+      consortiums,
       datasetId,
       displayOrganization,
       granuleCount,

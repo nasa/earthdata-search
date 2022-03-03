@@ -83,14 +83,15 @@ export const changeCmrFacet = (e, facetLinkInfo, onChangeHandler, facet, applied
 
   const paramsToSend = {
     data_center_h: newParams.data_center_h,
-    instrument_h: newParams.instrument_h,
     granule_data_format_h: newParams.granule_data_format_h,
+    horizontal_data_resolution_range: newParams.horizontal_data_resolution_range,
+    instrument_h: newParams.instrument_h,
+    latency: newParams.latency,
     platforms_h: newParams.platforms_h,
     processing_level_id_h: newParams.processing_level_id_h,
     project_h: newParams.project_h,
     science_keywords_h: newParams.science_keywords_h,
-    two_d_coordinate_system_name: newParams.two_d_coordinate_system_name,
-    horizontal_data_resolution_range: newParams.horizontal_data_resolution_range
+    two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
   }
 
   onChangeHandler(paramsToSend, facet, applied)
@@ -108,13 +109,14 @@ export const changeViewAllFacet = (e, facetLinkInfo, onChangeHandler) => {
 
   const paramsToSend = {
     data_center_h: newParams.data_center_h,
+    horizontal_data_resolution_range: newParams.horizontal_data_resolution_range,
     instrument_h: newParams.instrument_h,
+    latency: newParams.latency,
     platforms_h: newParams.platforms_h,
     processing_level_id_h: newParams.processing_level_id_h,
     project_h: newParams.project_h,
     science_keywords_h: newParams.science_keywords_h,
-    two_d_coordinate_system_name: newParams.two_d_coordinate_system_name,
-    horizontal_data_resolution_range: newParams.horizontal_data_resolution_range
+    two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
   }
 
   onChangeHandler({
@@ -136,7 +138,8 @@ export const categoryNameToCMRParam = (name) => {
     Organizations: 'data-center',
     Projects: 'project',
     'Processing levels': 'processing-level-id',
-    'Tiling System': 'two-d-coordinate-system-name'
+    'Tiling System': 'two-d-coordinate-system-name',
+    Latency: 'latency'
   }
   return categoryMap[name]
 }
@@ -173,6 +176,9 @@ export const prepareCMRFacetPayload = (newParams) => ({
     : undefined,
   horizontal_data_resolution_range: newParams.horizontal_data_resolution_range
     ? newParams.horizontal_data_resolution_range
+    : undefined,
+  latency: newParams.latency
+    ? newParams.latency
     : undefined
 })
 
