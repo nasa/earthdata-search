@@ -568,6 +568,7 @@ describe('fetchAccessMethods', () => {
             collectionId: {
               granules: {
                 addedGranuleIds: ['G100000-EDSC'],
+                allIds: ['G100000-EDSC'],
                 hits: 100
               }
             }
