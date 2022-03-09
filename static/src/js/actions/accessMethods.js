@@ -58,13 +58,13 @@ export const fetchAccessMethods = (collectionIds = []) => async (dispatch, getSt
       const projectCollection = projectCollectionsMetadata[collectionId]
 
       const { granules: projectCollectionGranules } = projectCollection
-      const { addedGranuleIds = [] } = projectCollectionGranules
+      const { allIds = [] } = projectCollectionGranules
 
       let projectGranules = granules
-      // If addedGranuleIds exist, only use the metadata from those added granules to determine access methods
-      if (addedGranuleIds.length > 0) {
+      // If allIds exist, only use the metadata from those granules to determine access methods
+      if (allIds.length > 0) {
         projectGranules = {
-          items: addedGranuleIds.map((conceptId) => {
+          items: allIds.map((conceptId) => {
             const granule = granulesMetadata[conceptId]
 
             let onlineAccessFlag = false
