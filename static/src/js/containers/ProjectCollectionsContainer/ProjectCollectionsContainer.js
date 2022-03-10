@@ -37,7 +37,7 @@ export const mapDispatchToProps = (dispatch) => ({
 export const mapStateToProps = (state) => ({
   collectionsQuery: state.query.collection,
   handoffs: getHandoffs(state),
-  mapProjection: state.map.projection,
+  map: state.map,
   panels: state.panels,
   project: state.project,
   projectCollectionsIds: getProjectCollectionsIds(state),
@@ -49,7 +49,7 @@ export const ProjectCollectionsContainer = (props) => {
   const {
     collectionsQuery,
     handoffs,
-    mapProjection,
+    map,
     onMetricsDataAccess,
     onRemoveCollectionFromProject,
     onSetActivePanel,
@@ -71,7 +71,7 @@ export const ProjectCollectionsContainer = (props) => {
     <ProjectCollections
       collectionsQuery={collectionsQuery}
       handoffs={handoffs}
-      mapProjection={mapProjection}
+      map={map}
       onMetricsDataAccess={onMetricsDataAccess}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onSetActivePanel={onSetActivePanel}
@@ -91,14 +91,10 @@ export const ProjectCollectionsContainer = (props) => {
   )
 }
 
-ProjectCollectionsContainer.defaultProps = {
-  mapProjection: 'epsg4326'
-}
-
 ProjectCollectionsContainer.propTypes = {
   collectionsQuery: PropTypes.shape({}).isRequired,
   handoffs: PropTypes.shape({}).isRequired,
-  mapProjection: PropTypes.string,
+  map: PropTypes.shape({}).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,

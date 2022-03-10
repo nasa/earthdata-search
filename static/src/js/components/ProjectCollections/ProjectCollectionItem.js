@@ -55,7 +55,7 @@ const ProjectCollectionItem = ({
   handoffs,
   index,
   isPanelActive,
-  mapProjection,
+  map,
   onRemoveCollectionFromProject,
   onSetActivePanel,
   onSetActivePanelSection,
@@ -102,7 +102,7 @@ const ProjectCollectionItem = ({
     collectionMetadata,
     collectionQuery: collectionsQuery,
     handoffs,
-    mapProjection
+    map
   })
 
   return (
@@ -246,7 +246,7 @@ ProjectCollectionItem.propTypes = {
   handoffs: PropTypes.shape({}).isRequired,
   index: PropTypes.number.isRequired,
   isPanelActive: PropTypes.bool.isRequired,
-  mapProjection: PropTypes.string.isRequired,
+  map: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,

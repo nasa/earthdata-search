@@ -29,7 +29,9 @@ function setup(overrideProps) {
     },
     color: 'color',
     handoffs: {},
-    mapProjection: projections.geographic,
+    map: {
+      projection: projections.geographic
+    },
     index: 0,
     isPanelActive: false,
     onRemoveCollectionFromProject: jest.fn(),

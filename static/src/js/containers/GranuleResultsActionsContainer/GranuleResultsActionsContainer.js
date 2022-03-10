@@ -40,7 +40,7 @@ export const mapStateToProps = (state) => ({
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   handoffs: getHandoffs(state),
-  mapProjection: state.map.projection,
+  map: state.map,
   project: state.project,
   subscriptions: getFocusedCollectionSubscriptions(state)
 })
@@ -59,7 +59,7 @@ export const GranuleResultsActionsContainer = (props) => {
     onChangePath,
     onRemoveCollectionFromProject,
     onSetActivePanelSection,
-    mapProjection,
+    map,
     project,
     subscriptions
   } = props
@@ -100,7 +100,7 @@ export const GranuleResultsActionsContainer = (props) => {
     collectionMetadata,
     collectionQuery,
     handoffs,
-    mapProjection
+    map
   })
 
   return (
@@ -128,10 +128,6 @@ export const GranuleResultsActionsContainer = (props) => {
   )
 }
 
-GranuleResultsActionsContainer.defaultProps = {
-  mapProjection: undefined
-}
-
 GranuleResultsActionsContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
@@ -149,7 +145,7 @@ GranuleResultsActionsContainer.propTypes = {
   }).isRequired,
   handoffs: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
-  mapProjection: PropTypes.string,
+  map: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

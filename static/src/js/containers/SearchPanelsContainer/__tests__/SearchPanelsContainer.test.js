@@ -27,7 +27,7 @@ function setup() {
     match: {
       url: '/search'
     },
-    mapProjection: '',
+    map: {},
     onApplyGranuleFilters: jest.fn(),
     onChangeQuery: jest.fn(),
     onFocusedCollectionChange: jest.fn(),
@@ -203,7 +203,9 @@ describe('mapStateToProps', () => {
         csv: false,
         json: false
       },
-      mapProjection: '',
+      map: {
+        projection: ''
+      },
       panels: {},
       preferences: {},
       portal: {},

@@ -1,6 +1,37 @@
 import { getHandoffValue } from '../getHandoffValue'
 
 describe('getHandoffValue', () => {
+  describe('When the value is a conceptId', () => {
+    test('returns the value', () => {
+      const collectionMetadata = {
+        conceptId: 'testId'
+      }
+      const collectionQuery = {}
+
+      const handoffInput = {
+        valueType: 'conceptId'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata,
+        collectionQuery,
+        handoffInput
+      })).toEqual('testId')
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'conceptId'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
+    })
+  })
+
   describe('When the value is a bounding box', () => {
     test('returns the value', () => {
       const collectionQuery = {
@@ -412,7 +443,7 @@ describe('getHandoffValue', () => {
   })
 
   describe('When the value is a mapProjection', () => {
-    test('returns antarctic when the project is epsg4326', () => {
+    test('returns geographic when the project is epsg4326', () => {
       const handoffInput = {
         valueType: 'mapProjection'
       }
@@ -421,11 +452,13 @@ describe('getHandoffValue', () => {
         collectionMetadata: {},
         collectionQuery: {},
         handoffInput,
-        mapProjection: 'epsg4326'
+        map: {
+          projection: 'epsg4326'
+        }
       })).toEqual('geographic')
     })
 
-    test('returns antarctic when the project is epsg3413', () => {
+    test('returns arctic when the project is epsg3413', () => {
       const handoffInput = {
         valueType: 'mapProjection'
       }
@@ -434,7 +467,9 @@ describe('getHandoffValue', () => {
         collectionMetadata: {},
         collectionQuery: {},
         handoffInput,
-        mapProjection: 'epsg3413'
+        map: {
+          projection: 'epsg3413'
+        }
       })).toEqual('arctic')
     })
 
@@ -447,7 +482,9 @@ describe('getHandoffValue', () => {
         collectionMetadata: {},
         collectionQuery: {},
         handoffInput,
-        mapProjection: 'epsg3031'
+        map: {
+          projection: 'epsg3031'
+        }
       })).toEqual('antarctic')
     })
 
@@ -461,6 +498,330 @@ describe('getHandoffValue', () => {
         collectionQuery: {},
         handoffInput
       })).toEqual('geographic')
+    })
+  })
+
+  describe('When the value is a mapProjection using epsg codes', () => {
+    test('returns EPSG:4326 when the project is epsg4326', () => {
+      const handoffInput = {
+        valueType: 'https://spatialreference.org/ref/epsg/'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        map: {
+          projection: 'epsg4326'
+        }
+      })).toEqual('EPSG:4326')
+    })
+
+    test('returns EPSG:3413 when the project is epsg3413', () => {
+      const handoffInput = {
+        valueType: 'https://spatialreference.org/ref/epsg/'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        map: {
+          projection: 'epsg3413'
+        }
+      })).toEqual('EPSG:3413')
+    })
+
+    test('returns EPSG:3031 when the project is epsg3031', () => {
+      const handoffInput = {
+        valueType: 'https://spatialreference.org/ref/epsg/'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        map: {
+          projection: 'epsg3031'
+        }
+      })).toEqual('EPSG:3031')
+    })
+
+    test('returns EPSG:4326 when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'https://spatialreference.org/ref/epsg/'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual('EPSG:4326')
+    })
+  })
+
+  describe('When the value is a latitude', () => {
+    test('returns the value', () => {
+      const handoffInput = {
+        valueType: 'https://schema.org/latitude'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        map: {
+          latitude: 0
+        }
+      })).toEqual(0)
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'https://schema.org/latitude'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
+    })
+  })
+
+  describe('When the value is a longitude', () => {
+    test('returns the value', () => {
+      const handoffInput = {
+        valueType: 'https://schema.org/longitude'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        map: {
+          longitude: 0
+        }
+      })).toEqual(0)
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'https://schema.org/longitude'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
+    })
+  })
+
+  describe('When the value is a zoom', () => {
+    test('returns the value', () => {
+      const handoffInput = {
+        valueType: 'zoom'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        map: {
+          zoom: 0
+        }
+      })).toEqual(0)
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'zoom'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
+    })
+  })
+
+  describe('When the value is a edscBaseLayer', () => {
+    test('returns blueMarble', () => {
+      const handoffInput = {
+        valueType: 'edscBaseLayer'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        map: {
+          base: {
+            blueMarble: true
+          }
+        }
+      })).toEqual('blueMarble')
+    })
+
+    test('returns trueColor', () => {
+      const handoffInput = {
+        valueType: 'edscBaseLayer'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        map: {
+          base: {
+            trueColor: true
+          }
+        }
+      })).toEqual('trueColor')
+    })
+
+    test('returns landWaterMap', () => {
+      const handoffInput = {
+        valueType: 'edscBaseLayer'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        map: {
+          base: {
+            landWaterMap: true
+          }
+        }
+      })).toEqual('landWaterMap')
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'edscBaseLayer'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
+    })
+  })
+
+  describe('When the value is a edscOverlayLayers', () => {
+    test('returns coastlines', () => {
+      const handoffInput = {
+        valueType: 'edscOverlayLayers'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        map: {
+          overlays: {
+            coastlines: true
+          }
+        }
+      })).toEqual('coastlines')
+    })
+
+    test('returns referenceFeatures', () => {
+      const handoffInput = {
+        valueType: 'edscOverlayLayers'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        map: {
+          overlays: {
+            referenceFeatures: true
+          }
+        }
+      })).toEqual('referenceFeatures')
+    })
+
+    test('returns referenceLabels', () => {
+      const handoffInput = {
+        valueType: 'edscOverlayLayers'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        map: {
+          overlays: {
+            referenceLabels: true
+          }
+        }
+      })).toEqual('referenceLabels')
+    })
+
+    test('returns multiple layers', () => {
+      const handoffInput = {
+        valueType: 'edscOverlayLayers'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput,
+        map: {
+          overlays: {
+            coastlines: true,
+            referenceFeatures: true,
+            referenceLabels: true
+          }
+        }
+      })).toEqual('coastlines,referenceFeatures,referenceLabels')
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'edscOverlayLayers'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
+    })
+  })
+
+  describe('When the value is a edscTextQuery', () => {
+    test('returns the value', () => {
+      const handoffInput = {
+        valueType: 'edscTextQuery'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {
+          keyword: 'mock keyword'
+        },
+        handoffInput,
+        map: {}
+      })).toEqual('mock keyword')
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'edscTextQuery'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
     })
   })
 })

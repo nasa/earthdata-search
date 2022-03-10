@@ -15,7 +15,9 @@ function setup() {
   const props = {
     collectionsQuery: {},
     handoffs: {},
-    mapProjection: projections.geographic,
+    map: {
+      projection: projections.geographic
+    },
     project: {
       collections: {
         allIds: ['collectionId'],
@@ -181,7 +183,9 @@ describe('mapStateToProps', () => {
     const expectedState = {
       collectionsQuery: {},
       handoffs: {},
-      mapProjection: '',
+      map: {
+        projection: ''
+      },
       panels: {},
       project: {},
       projectCollectionsIds: [],

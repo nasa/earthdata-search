@@ -150,7 +150,7 @@ class SearchPanels extends PureComponent {
       handoffs,
       isExportRunning,
       location,
-      mapProjection,
+      map,
       match,
       onApplyGranuleFilters,
       onChangeQuery,
@@ -203,7 +203,7 @@ class SearchPanels extends PureComponent {
       collectionMetadata,
       collectionQuery,
       handoffs,
-      mapProjection
+      map
     })
     const {
       allIds: allGranuleIds = [],
@@ -710,10 +710,6 @@ class SearchPanels extends PureComponent {
   }
 }
 
-SearchPanels.defaultProps = {
-  mapProjection: undefined
-}
-
 SearchPanels.propTypes = {
   authToken: PropTypes.string.isRequired,
   collectionMetadata: PropTypes.shape({
@@ -756,7 +752,7 @@ SearchPanels.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string
   }).isRequired,
-  mapProjection: PropTypes.string,
+  map: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({
     url: PropTypes.string,
     params: PropTypes.shape({})
