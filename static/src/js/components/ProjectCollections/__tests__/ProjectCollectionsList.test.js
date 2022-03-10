@@ -21,7 +21,9 @@ function setup() {
     collectionsQuery: {},
     handoffs: {},
     location: {},
-    mapProjection: projections.geographic,
+    map: {
+      projection: projections.geographic
+    },
     onRemoveCollectionFromProject: jest.fn(),
     onToggleCollectionVisibility: jest.fn(),
     onTogglePanels: jest.fn(),

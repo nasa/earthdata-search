@@ -9,13 +9,13 @@ import { getHandoffValue } from './getHandoffValue'
  * @param {Object} params.collectionMetadata Collection metadata from CMR
  * @param {Object} params.collectionQuery Collection Search data from Redux
  * @param {Object} params.handoffs Handoffs data from from Redux
- * @param {Object} params.mapProjection Current map projection from Redux
+ * @param {Object} params.map Current map configuration from Redux
  */
 export const generateHandoffs = ({
   collectionMetadata,
   collectionQuery,
   handoffs,
-  mapProjection
+  map
 }) => {
   const { tools = {} } = collectionMetadata
   let { items: toolItems } = tools
@@ -59,7 +59,7 @@ export const generateHandoffs = ({
         collectionQuery,
         handoffInput: input,
         handoffs,
-        mapProjection
+        map
       })
 
       if (valueRequired && isEmpty(value)) {

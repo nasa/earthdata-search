@@ -85,7 +85,9 @@ function setup(overrideProps, location = '/search') {
     match: {
       url: '/search'
     },
-    mapProjection: 'epsg4326',
+    map: {
+      projection: 'epsg4326'
+    },
     onApplyGranuleFilters: jest.fn(),
     onChangeQuery: jest.fn(),
     onFocusedCollectionChange: jest.fn(),

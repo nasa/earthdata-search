@@ -22,7 +22,7 @@ export const mapStateToProps = (state) => ({
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   handoffs: getHandoffs(state),
-  mapProjection: state.map.projection,
+  map: state.map,
   panels: state.panels,
   preferences: state.preferences.preferences,
   portal: state.portal,
@@ -61,7 +61,7 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} props.granuleSearchResults - Granule search results state
  * @param {Object} props.granuleQuery - Granule query state
  * @param {Object} props.location - Browser location state
- * @param {String} props.mapProjection - Map projection state
+ * @param {String} props.map - Map projection state
  * @param {Function} props.onApplyGranuleFilters - Callback to apply granule filters
  * @param {Function} props.onChangeQuery - Callback to change the query
  * @param {Function} props.onFocusedCollectionChange - Callback to change the focused collection
@@ -85,7 +85,7 @@ export const SearchPanelsContainer = ({
   handoffs,
   isExportRunning,
   location,
-  mapProjection,
+  map,
   onApplyGranuleFilters,
   onFocusedCollectionChange,
   onChangeQuery,
@@ -111,7 +111,7 @@ export const SearchPanelsContainer = ({
     handoffs={handoffs}
     isExportRunning={isExportRunning}
     location={location}
-    mapProjection={mapProjection}
+    map={map}
     onApplyGranuleFilters={onApplyGranuleFilters}
     onFocusedCollectionChange={onFocusedCollectionChange}
     onChangeQuery={onChangeQuery}
@@ -128,10 +128,6 @@ export const SearchPanelsContainer = ({
   />
 )
 
-SearchPanelsContainer.defaultProps = {
-  mapProjection: undefined
-}
-
 SearchPanelsContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
@@ -144,7 +140,7 @@ SearchPanelsContainer.propTypes = {
   isExportRunning: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
-  mapProjection: PropTypes.string,
+  map: PropTypes.shape({}).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,

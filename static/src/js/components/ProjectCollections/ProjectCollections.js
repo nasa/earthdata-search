@@ -15,7 +15,7 @@ import './ProjectCollections.scss'
  * Renders ProjectCollections.
  * @param {Object} collections - List of collections passed from redux store.
  * @param {String} collectionsQuery - The collection search.
- * @param {String} mapProjection - The current map projection.
+ * @param {String} map - The current map configuration.
  * @param {Function} onMetricsDataAccess - Callback to log metrics events.
  * @param {Function} onRemoveCollectionFromProject - Callback to remove the current collection from the project.
  * @param {Function} onSetActivePanel - Callback to set the active panel.
@@ -74,7 +74,7 @@ export class ProjectCollections extends Component {
     const {
       collectionsQuery,
       handoffs,
-      mapProjection,
+      map,
       onMetricsDataAccess,
       onRemoveCollectionFromProject,
       onSetActivePanel,
@@ -122,7 +122,7 @@ export class ProjectCollections extends Component {
           collectionsMetadata={projectCollectionsMetadata}
           collectionsQuery={collectionsQuery}
           handoffs={handoffs}
-          mapProjection={mapProjection}
+          map={map}
           onMetricsDataAccess={onMetricsDataAccess}
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
           onSetActivePanel={onSetActivePanel}
@@ -193,7 +193,7 @@ ProjectCollections.propTypes = {
     byId: PropTypes.shape({})
   }).isRequired,
   handoffs: PropTypes.shape({}).isRequired,
-  mapProjection: PropTypes.string.isRequired,
+  map: PropTypes.shape({}).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
