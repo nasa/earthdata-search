@@ -128,6 +128,10 @@ export const GranuleResultsActionsContainer = (props) => {
   )
 }
 
+GranuleResultsActionsContainer.defaultProps = {
+  mapProjection: undefined
+}
+
 GranuleResultsActionsContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
@@ -145,7 +149,7 @@ GranuleResultsActionsContainer.propTypes = {
   }).isRequired,
   handoffs: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
-  mapProjection: PropTypes.string.isRequired,
+  mapProjection: PropTypes.string,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

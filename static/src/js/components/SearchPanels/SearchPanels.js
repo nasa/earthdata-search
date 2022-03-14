@@ -710,6 +710,10 @@ class SearchPanels extends PureComponent {
   }
 }
 
+SearchPanels.defaultProps = {
+  mapProjection: undefined
+}
+
 SearchPanels.propTypes = {
   authToken: PropTypes.string.isRequired,
   collectionMetadata: PropTypes.shape({
@@ -752,7 +756,7 @@ SearchPanels.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string
   }).isRequired,
-  mapProjection: PropTypes.string.isRequired,
+  mapProjection: PropTypes.string,
   match: PropTypes.shape({
     url: PropTypes.string,
     params: PropTypes.shape({})

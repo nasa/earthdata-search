@@ -2,6 +2,7 @@ import uiReducer from '../ui'
 import {
   EXPORT_FINISHED,
   EXPORT_STARTED,
+  RESTORE_FROM_URL,
   TOGGLE_ABOUT_CSDA_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
@@ -16,7 +17,7 @@ import {
   TOGGLE_SPATIAL_POLYGON_WARNING,
   TOGGLE_TIMELINE,
   TOGGLE_TOO_MANY_POINTS_MODAL,
-  TOGGLE_VIEW_ALL_FACETS_MODAL
+  TOGGLE_VIEW_ALL_FACETS_MODAL,
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -33,6 +34,7 @@ const initialState = {
     isOpen: false
   },
   deprecatedParameterModal: {
+    deprecatedUrlParams: [],
     isOpen: false
   },
   export: {
@@ -318,7 +320,10 @@ describe('TOGGLE_DEPRECATED_PARAMETER_MODAL', () => {
 
     const expectedState = {
       ...initialState,
-      deprecatedParameterModal: { isOpen: true }
+      deprecatedParameterModal: {
+        deprecatedUrlParams: [],
+        isOpen: true
+      }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
@@ -374,5 +379,26 @@ describe('EXPORT_FINISHED', () => {
     }
 
     expect(uiReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('RESTORE_FROM_URL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: RESTORE_FROM_URL,
+      payload: {
+        deprecatedUrlParams: ['m']
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      deprecatedParameterModal: {
+        deprecatedUrlParams: ['m'],
+        isOpen: true
+      }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
   })
 })

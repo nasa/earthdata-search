@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import arrayToSentence from 'array-to-sentence'
+import { Alert } from 'react-bootstrap'
 
+import pluralize from '../../util/pluralize'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 
 import './DeprecatedParameterModal.scss'
@@ -19,6 +22,7 @@ export class DeprecatedParameterModal extends Component {
 
   render() {
     const {
+      deprecatedUrlParams,
       isOpen
     } = this.props
 
@@ -30,6 +34,19 @@ export class DeprecatedParameterModal extends Component {
           If you've used a bookmark to navigate here, consider updating the bookmark 
           to use the new URL.`}
         </p>
+        {
+          deprecatedUrlParams.length !== 0 && (
+            <>
+              <Alert
+                className="text-center"
+                variant="warning"
+              >
+                {`The following URL ${pluralize('parameter', deprecatedUrlParams.length)} ${deprecatedUrlParams.length > 1 ? 'have' : 'has'} been deprecated: `}
+                <span className="font-weight-bold">{arrayToSentence(deprecatedUrlParams)}</span>
+              </Alert>
+            </>
+          )
+        }
         <p className="mb-0">
           {'Please visit the '}
           <a
@@ -60,6 +77,7 @@ export class DeprecatedParameterModal extends Component {
 }
 
 DeprecatedParameterModal.propTypes = {
+  deprecatedUrlParams: PropTypes.arrayOf(PropTypes.string).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onToggleDeprecatedParameterModal: PropTypes.func.isRequired
 }

@@ -183,6 +183,7 @@ describe('changePath', () => {
             mapImagery: false,
             nearRealTime: false
           },
+          deprecatedUrlParams: [],
           focusedCollection: 'C00001-EDSC',
           map: {},
           project: {

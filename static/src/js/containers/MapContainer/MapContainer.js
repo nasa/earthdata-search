@@ -11,9 +11,8 @@ import {
   LayersControl,
   ScaleControl
 } from 'react-leaflet'
-import { difference, isEmpty } from 'lodash'
+import { difference, merge } from 'lodash'
 import LRUCache from 'lrucache'
-import { parse } from 'qs'
 
 import actions from '../../actions/index'
 
@@ -150,7 +149,7 @@ export class MapContainer extends Component {
 
   handleOverlayChange(event) {
     const { map, onChangeMap } = this.props
-    const { overlays } = map
+    const { overlays = {} } = map
 
     const enabled = event.type === 'overlayadd'
     switch (event.name) {
@@ -254,49 +253,49 @@ export class MapContainer extends Component {
     } = this.props
 
     const { location } = router
-    const { pathname, search } = location
+    const { pathname } = location
     const isProjectPage = isPath(pathname, '/projects')
 
-    let base
-    let latitude
-    let longitude
-    let overlays
-    let projection
-    let zoom
-    const { m } = parse(search, { ignoreQueryPrefix: true })
+    const {
+      latitude: latitudePreference,
+      longitude: longitudePreference,
+      projection: projectionPreference,
+      zoom: zoomPreference
+    } = mapPreferences
 
-    // If the `m` parameter is in the URL or mapPreferences are empty
-    // use the map values from the store
-    if (!isEmpty(m) || isEmpty(mapPreferences)) {
-      ({
-        base,
-        latitude,
-        longitude,
-        overlays,
-        projection,
-        zoom
-      } = map)
-    } else {
-      ({
-        latitude,
-        longitude,
-        projection,
-        zoom
-      } = mapPreferences)
+    // Format base and overlay layer preferences to before merging with the defaults
+    const {
+      baseLayer: baseLayerFromPreference,
+      overlayLayers: overlayLayersFromPreference = []
+    } = mapPreferences
 
-      const {
-        baseLayer,
-        overlayLayers = []
-      } = mapPreferences
+    const baseLayerPreference = { [baseLayerFromPreference]: true }
+    const overlayLayersPreference = {}
+    overlayLayersFromPreference.forEach((layer) => {
+      overlayLayersPreference[layer] = true
+    })
 
-      base = {
-        [baseLayer]: true
-      }
-      overlays = {}
-      overlayLayers.forEach((layer) => {
-        overlays[layer] = true
-      })
-    }
+    // Merge the current map settings with the preferences, using preferences in a parameter is not set
+    const mapWithDefaults = merge(
+      {
+        base: baseLayerPreference,
+        latitude: latitudePreference,
+        longitude: longitudePreference,
+        overlays: overlayLayersPreference,
+        projection: projectionPreference,
+        zoom: zoomPreference
+      },
+      map
+    )
+
+    const {
+      base,
+      latitude,
+      longitude,
+      overlays,
+      projection,
+      zoom
+    } = mapWithDefaults
 
     const center = [latitude, longitude]
 
@@ -477,6 +476,15 @@ MapContainer.propTypes = {
   }).isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   map: PropTypes.shape({
+    latitude: PropTypes.number,
+    longitude: PropTypes.number,
+    projection: PropTypes.string,
+    zoom: PropTypes.number,
+    base: PropTypes.shape({
+      blueMarble: PropTypes.bool,
+      trueColor: PropTypes.bool,
+      landWaterMap: PropTypes.bool
+    }),
     overlays: PropTypes.shape({
       coastlines: PropTypes.bool,
       referenceFeatures: PropTypes.bool,
@@ -484,6 +492,10 @@ MapContainer.propTypes = {
     })
   }),
   mapPreferences: PropTypes.shape({
+    latitude: PropTypes.number,
+    longitude: PropTypes.number,
+    projection: PropTypes.string,
+    zoom: PropTypes.number,
     baseLayer: PropTypes.string,
     overlayLayers: PropTypes.arrayOf(
       PropTypes.string

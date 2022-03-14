@@ -85,6 +85,12 @@ export const decodeUrlParams = (paramString) => {
   // Decode the paramString
   const params = qs.parse(paramString, { ignoreQueryPrefix: true, parseArrays: false })
 
+  const invalidParamKeys = ['m']
+  const deprecatedUrlParams = Object.entries(params)
+    .filter(([key]) => invalidParamKeys.includes(key))
+    .map(([key]) => key)
+
+  // util that checks for deprecated params
   const {
     metadata,
     focusedCollection,
@@ -188,6 +194,7 @@ export const decodeUrlParams = (paramString) => {
     featureFacets,
     focusedCollection,
     focusedGranule,
+    deprecatedUrlParams,
     map,
     project,
     query: {

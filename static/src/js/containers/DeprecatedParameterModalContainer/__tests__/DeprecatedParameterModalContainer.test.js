@@ -10,6 +10,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    deprecatedUrlParams: [],
     isOpen: true,
     onToggleDeprecatedParameterModal: jest.fn()
   }

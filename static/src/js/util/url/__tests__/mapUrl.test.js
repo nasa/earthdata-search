@@ -10,10 +10,219 @@ beforeEach(() => {
   jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 })
 
-describe('url#decodeUrlParams', () => {
-  test('decodes map correctly', () => {
+describe('decodes base correctly', () => {
+  test('when the result is valid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
+      map: {
+        base: {
+          blueMarble: false,
+          trueColor: true,
+          landWaterMap: false
+        },
+        latitude: undefined,
+        longitude: undefined,
+        overlays: undefined,
+        projection: undefined,
+        zoom: undefined
+      }
+    }
+    expect(decodeUrlParams('?base=trueColor')).toEqual(expectedResult)
+  })
+
+  test('when the result is invalid', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      map: {
+        base: {
+          blueMarble: true,
+          trueColor: false,
+          landWaterMap: false
+        },
+        latitude: undefined,
+        longitude: undefined,
+        overlays: undefined,
+        projection: undefined,
+        zoom: undefined
+      }
+    }
+    expect(decodeUrlParams('?base=somethingElse')).toEqual(expectedResult)
+  })
+})
+
+describe('decodes latitude correctly', () => {
+  test('when the result is valid', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      map: {
+        base: undefined,
+        latitude: 1,
+        longitude: undefined,
+        overlays: undefined,
+        projection: undefined,
+        zoom: undefined
+      }
+    }
+    expect(decodeUrlParams('?lat=1')).toEqual(expectedResult)
+  })
+
+  test('when the result is invalid', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      map: {
+        base: undefined,
+        latitude: undefined,
+        longitude: undefined,
+        overlays: undefined,
+        projection: undefined,
+        zoom: undefined
+      }
+    }
+    expect(decodeUrlParams('?lat=test')).toEqual(expectedResult)
+  })
+})
+
+describe('decodes longitude correctly', () => {
+  test('when the result is valid', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      map: {
+        base: undefined,
+        latitude: undefined,
+        longitude: 1,
+        overlays: undefined,
+        projection: undefined,
+        zoom: undefined
+      }
+    }
+    expect(decodeUrlParams('?long=1')).toEqual(expectedResult)
+  })
+
+  test('when the result is invalid', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      map: {
+        base: undefined,
+        latitude: undefined,
+        longitude: undefined,
+        overlays: undefined,
+        projection: undefined,
+        zoom: undefined
+      }
+    }
+    expect(decodeUrlParams('?long=test')).toEqual(expectedResult)
+  })
+})
+
+describe('decodes overlays correctly', () => {
+  test('when the result is valid', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      map: {
+        base: undefined,
+        latitude: undefined,
+        longitude: undefined,
+        overlays: {
+          coastlines: true,
+          referenceFeatures: true,
+          referenceLabels: false
+        },
+        projection: undefined,
+        zoom: undefined
+      }
+    }
+    expect(decodeUrlParams('?overlays=referenceFeatures%2Ccoastlines')).toEqual(expectedResult)
+  })
+
+  test('when the result is invalid', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      map: {
+        base: undefined,
+        latitude: undefined,
+        longitude: undefined,
+        overlays: {
+          coastlines: false,
+          referenceFeatures: false,
+          referenceLabels: false
+        },
+        projection: undefined,
+        zoom: undefined
+      }
+    }
+    expect(decodeUrlParams('?overlays=test')).toEqual(expectedResult)
+  })
+})
+
+describe('decodes projection correctly', () => {
+  test('when the result is valid', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      map: {
+        base: undefined,
+        latitude: undefined,
+        longitude: undefined,
+        overlays: undefined,
+        projection: undefined,
+        zoom: undefined
+      }
+    }
+    expect(decodeUrlParams('?projection=EPSG%3A3031')).toEqual(expectedResult)
+  })
+
+  test('when the result is invalid', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      map: {
+        base: undefined,
+        latitude: undefined,
+        longitude: undefined,
+        overlays: undefined,
+        projection: undefined,
+        zoom: undefined
+      }
+    }
+    expect(decodeUrlParams('?projection=test')).toEqual(expectedResult)
+  })
+})
+
+describe('decodes zoom correctly', () => {
+  test('when the result is valid', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      map: {
+        base: undefined,
+        latitude: undefined,
+        longitude: undefined,
+        overlays: undefined,
+        projection: undefined,
+        zoom: 1
+      }
+    }
+    expect(decodeUrlParams('?zoom=1')).toEqual(expectedResult)
+  })
+
+  test('when the result is invalid', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      map: {
+        base: undefined,
+        latitude: undefined,
+        longitude: undefined,
+        overlays: undefined,
+        projection: undefined,
+        zoom: undefined
+      }
+    }
+    expect(decodeUrlParams('?zoom=test')).toEqual(expectedResult)
+  })
+})
+
+describe('url#encodeUrlQuery', () => {
+  describe('map', () => {
+    const defaultProps = {
+      hasGranulesOrCwic: true,
+      pathname: '/path/here',
       map: {
         base: {
           blueMarble: true,
@@ -29,32 +238,6 @@ describe('url#decodeUrlParams', () => {
         },
         projection: projections.geographic,
         zoom: 2
-      }
-    }
-    expect(decodeUrlParams('?m=0!0!2!1!0!0%2C2')).toEqual(expectedResult)
-  })
-})
-
-describe('url#encodeUrlQuery', () => {
-  describe('map', () => {
-    const defaultProps = {
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      map: {
-        base: {
-          blueMarble: true,
-          trueColor: false,
-          landWaterMap: false
-        },
-        latitude: '0',
-        longitude: '0',
-        overlays: {
-          referenceFeatures: true,
-          coastlines: false,
-          referenceLabels: true
-        },
-        projection: projections.geographic,
-        zoom: '2'
       }
     }
 
@@ -82,7 +265,7 @@ describe('url#encodeUrlQuery', () => {
           zoom: 0
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?m=10!15!0!1!2!0')
+      expect(encodeUrlQuery(props)).toEqual('/path/here?base=landWaterMap&lat=10&long=15&overlays=referenceFeatures&zoom=0')
     })
 
     test('encodes map correctly when map preferences exist', () => {
@@ -116,7 +299,7 @@ describe('url#encodeUrlQuery', () => {
           zoom: 4
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?m=10!15!0!1!2!0')
+      expect(encodeUrlQuery(props)).toEqual('/path/here?base=landWaterMap&lat=10&long=15&overlays=referenceFeatures&zoom=0')
     })
 
     test('does not encode the map when it matches the map preferences', () => {
