@@ -72,7 +72,7 @@ describe('Related Collections', () => {
       expect(props.onFocusedCollectionChange).toHaveBeenCalledTimes(1)
       expect(props.onFocusedCollectionChange).toHaveBeenCalledWith('TEST_COLLECTION_1')
       expect(relatedCollectionLinkProps.to).toEqual({
-        pathname: '/search/granules/',
+        pathname: '/search/granules',
         search: '?p=TEST_COLLECTION_1'
       })
     })

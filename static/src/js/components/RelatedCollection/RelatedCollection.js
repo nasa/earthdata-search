@@ -38,7 +38,7 @@ export const RelatedCollection = ({
         onFocusedCollectionChange(id)
       }}
       to={{
-        pathname: '/search/granules/',
+        pathname: '/search/granules',
         search: stringify({
           ...params,
           p
