@@ -313,7 +313,9 @@ describe('MapContainer component', () => {
     })
 
     test('loads the map preferences instead of default values', () => {
-      const { enzymeWrapper } = setup()
+      const { enzymeWrapper } = setup({
+        map: {}
+      })
 
       expect(enzymeWrapper.find(Map).props().center).toEqual([39, -95])
       expect(enzymeWrapper.find(Map).props().zoom).toEqual(4)

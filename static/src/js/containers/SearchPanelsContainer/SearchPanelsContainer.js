@@ -128,6 +128,10 @@ export const SearchPanelsContainer = ({
   />
 )
 
+SearchPanelsContainer.defaultProps = {
+  mapProjection: undefined
+}
+
 SearchPanelsContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
@@ -140,7 +144,7 @@ SearchPanelsContainer.propTypes = {
   isExportRunning: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
-  mapProjection: PropTypes.string.isRequired,
+  mapProjection: PropTypes.string,
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,

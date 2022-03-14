@@ -1,12 +1,21 @@
 import { isEmpty } from 'lodash'
 
 import projections from '../map/projections'
+import { decodeDeprecatedMapParam } from './deprecatedEncoders'
 
-const projectionList = [
-  projections.arctic,
-  projections.geographic,
-  projections.antarctic
-]
+const projectionList = {
+  [projections.arctic]: 'EPSG:3413',
+  [projections.geographic]: 'EPSG:4326',
+  [projections.antarctic]: 'EPSG:3031'
+}
+
+/**
+ * Validates the projection parameter. Handles both the "EPSG:XXXX" and "epsgXXXX" formats
+ * @param {String} param The value of the projection parameter
+ */
+const validateProjection = (param) => Object.keys(projectionList).some(
+  (projection) => projection === param.replace(':', '').toLowerCase()
+).length > 0
 
 /**
  * Encodes a Map object into a string
@@ -25,31 +34,38 @@ export const encodeMap = (map, mapPreferences) => {
     zoom
   } = map
 
-  const encodedProjection = projectionList.indexOf(projection)
+  const encodedProjection = projectionList[projection]
 
   let encodedBase
-  if (base.blueMarble) encodedBase = 0
-  if (base.trueColor) encodedBase = 1
-  if (base.landWaterMap) encodedBase = 2
+  if (base?.blueMarble) encodedBase = 'blueMarble'
+  if (base?.trueColor) encodedBase = 'trueColor'
+  if (base?.landWaterMap) encodedBase = 'landWaterMap'
 
   const encodedOverlays = []
-  if (overlays.referenceFeatures) encodedOverlays.push(0)
-  if (overlays.coastlines) encodedOverlays.push(1)
-  if (overlays.referenceLabels) encodedOverlays.push(2)
+  if (overlays?.referenceFeatures) encodedOverlays.push('referenceFeatures')
+  if (overlays?.coastlines) encodedOverlays.push('coastlines')
+  if (overlays?.referenceLabels) encodedOverlays.push('referenceLabels')
 
-  const encodedString = [
-    latitude,
-    longitude,
-    zoom,
-    encodedProjection,
-    encodedBase,
-    encodedOverlays.join(',')
-  ].join('!')
+  const encodedObj = {
+    base: encodedBase,
+    lat: latitude,
+    long: longitude,
+    overlays: encodedOverlays.join(','),
+    projection: encodedProjection,
+    zoom
+  }
 
   // home is used to determine if the map values need to be present in the URL
-  let home = '0!0!2!1!0!0,2'
+  let defaultValues = {
+    base: 'blueMarble',
+    lat: 0,
+    long: 0,
+    overlays: 'referenceFeatures,referenceLabels',
+    projection: 'EPSG:4326',
+    zoom: 2
+  }
 
-  // If map preferences exist, encode them to use as the `home` location
+  // If map preferences exist, encode them to use as the `defaultValues` location
   if (!isEmpty(mapPreferences)) {
     const {
       baseLayer,
@@ -60,35 +76,34 @@ export const encodeMap = (map, mapPreferences) => {
       zoom: zoomPreference
     } = mapPreferences
 
-    const encodedProjectionPreference = projectionList.indexOf(projection)
+    const encodedProjectionPreference = projectionList[projection]
 
     let encodedBasePreference
-    if (baseLayer === 'blueMarble') encodedBasePreference = 0
-    if (baseLayer === 'trueColor') encodedBasePreference = 1
-    if (baseLayer === 'landWaterMap') encodedBasePreference = 2
+    if (baseLayer === 'blueMarble') encodedBasePreference = 'blueMarble'
+    if (baseLayer === 'trueColor') encodedBasePreference = 'trueColor'
+    if (baseLayer === 'landWaterMap') encodedBasePreference = 'landWaterMap'
 
     const encodedOverlaysPreference = []
-    if (overlayLayers.includes('referenceFeatures')) encodedOverlaysPreference.push(0)
-    if (overlayLayers.includes('coastlines')) encodedOverlaysPreference.push(1)
-    if (overlayLayers.includes('referenceLabels')) encodedOverlaysPreference.push(2)
+    if (overlayLayers.indexOf('referenceFeatures') > -1) encodedOverlaysPreference.push('referenceFeatures')
+    if (overlayLayers.indexOf('coastlines') > -1) encodedOverlaysPreference.push('coastlines')
+    if (overlayLayers.indexOf('referenceLabels') > -1) encodedOverlaysPreference.push('referenceLabels')
 
-    home = [
-      latitudePreference,
-      longitudePreference,
-      zoomPreference,
-      encodedProjectionPreference,
-      encodedBasePreference,
-      encodedOverlaysPreference.join(',')
-    ].join('!')
+    defaultValues = {
+      base: encodedBasePreference,
+      lat: latitudePreference,
+      long: longitudePreference,
+      overlays: encodedOverlaysPreference.join(','),
+      projection: encodedProjectionPreference,
+      zoom: zoomPreference
+    }
   }
 
-  // If the encoded map values match the `home` location, return an empty object
-  // to prevent the values being written to the url
-  if (encodedString === home) return {}
-
-  return {
-    m: encodedString
-  }
+  // Return an object containing only the keys that do not match the default values
+  return Object.fromEntries(
+    Object.entries(encodedObj).filter(
+      ([key, value]) => value !== defaultValues[key]
+    )
+  )
 }
 
 /**
@@ -97,41 +112,79 @@ export const encodeMap = (map, mapPreferences) => {
  * @return {Object} Map object with query and state
  */
 export const decodeMap = (params) => {
-  const { m: mParam } = params
-  if (!mParam) {
+  const {
+    m: mParam,
+    base: baseParam,
+    lat: latParam,
+    long: longParam,
+    overlays: overlaysParam,
+    projection: projectionParam,
+    zoom: zoomParam
+  } = params
+
+  if (
+    !mParam
+    && !baseParam
+    && !latParam
+    && !longParam
+    && !overlaysParam
+    && !projectionParam
+    && !zoomParam
+  ) {
+    // If no values are defined return an empty object, typically causing the preferences to be used.
     return {}
   }
 
-  const [latitude, longitude, zoom, projection, base, overlays] = mParam.split('!')
+  // Decode the deprecated 'm' parameter if it exists
+  if (mParam) return decodeDeprecatedMapParam(mParam)
 
-  const decodedLatitude = parseFloat(latitude)
-  const decodedLongitude = parseFloat(longitude)
-  const decodedZoom = parseFloat(zoom)
+  let decodedLatitude
+  let decodedLongitude
+  let decodedZoom
+  let decodedProjection
+  let decodedBase
+  let decodedOverlays
 
-  const decodedProjection = projectionList[projection]
+  // If a value for lat, long, or zoom is not a valid float, NaN will be returned
+  // and a default value will be used
+  if (latParam && !Number.isNaN(parseFloat(latParam))) decodedLatitude = parseFloat(latParam)
+  if (longParam && !Number.isNaN(parseFloat(longParam))) decodedLongitude = parseFloat(longParam)
+  if (zoomParam && !Number.isNaN(parseFloat(zoomParam))) decodedZoom = parseFloat(zoomParam)
 
-  const decodedBase = {
-    blueMarble: base === '0',
-    trueColor: base === '1',
-    landWaterMap: base === '2'
+  // If a valid projection is used, convert the value to the format the state expects
+  if (projectionParam && validateProjection(projectionParam)) {
+    decodedProjection = projectionParam.replace(':', '').toLowerCase()
   }
 
-  const decodedOverlays = {
-    referenceFeatures: overlays.split(',').indexOf('0') !== -1,
-    coastlines: overlays.split(',').indexOf('1') !== -1,
-    referenceLabels: overlays.split(',').indexOf('2') !== -1
+  // If a base layer is set, convert the value to the format the state expects
+  if (baseParam) {
+    decodedBase = {
+      blueMarble: baseParam === 'blueMarble',
+      trueColor: baseParam === 'trueColor',
+      landWaterMap: baseParam === 'landWaterMap'
+    }
+
+    const { trueColor, landWaterMap } = decodedBase
+
+    if (!trueColor && !landWaterMap) decodedBase.blueMarble = true
   }
 
-  const map = {
+  // If a overlay layers are set, convert the value to the format the state expects
+  if (overlaysParam) {
+    decodedOverlays = {
+      referenceFeatures: overlaysParam.split(',').indexOf('referenceFeatures') !== -1,
+      coastlines: overlaysParam.split(',').indexOf('coastlines') !== -1,
+      referenceLabels: overlaysParam.split(',').indexOf('referenceLabels') !== -1
+    }
+  }
+
+  // Values that are not set will return undefined and will not be set in the state
+  return {
     base: decodedBase,
     latitude: decodedLatitude,
     longitude: decodedLongitude,
     overlays: decodedOverlays,
     projection: decodedProjection,
     zoom: decodedZoom
-  }
-
-  return {
-    ...map
   }
 }

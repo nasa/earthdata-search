@@ -1,6 +1,7 @@
 import {
   EXPORT_FINISHED,
   EXPORT_STARTED,
+  RESTORE_FROM_URL,
   TOGGLE_ABOUT_CSDA_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
@@ -72,7 +73,8 @@ const initialState = {
     }
   },
   deprecatedParameterModal: {
-    isOpen: false
+    isOpen: false,
+    deprecatedUrlParams: []
   }
 }
 
@@ -215,10 +217,36 @@ const uiReducer = (state = initialState, action) => {
       }
     }
     case TOGGLE_DEPRECATED_PARAMETER_MODAL: {
+      const { payload: displayModal } = action
+      const { deprecatedParameterModal } = state
+      let { deprecatedUrlParams } = deprecatedParameterModal
+
+      // If the modal is closing, reset the deprecated url params
+      if (!displayModal) deprecatedUrlParams = []
+
       return {
         ...state,
         deprecatedParameterModal: {
+          ...deprecatedParameterModal,
+          deprecatedUrlParams,
           isOpen: action.payload
+        }
+      }
+    }
+    case RESTORE_FROM_URL: {
+      const { payload } = action
+      const { deprecatedUrlParams } = payload
+      const { deprecatedParameterModal } = state
+
+      if (deprecatedUrlParams.length === 0) return state
+
+      // If any deprecated URL params are defined, display the modal
+      return {
+        ...state,
+        deprecatedParameterModal: {
+          ...deprecatedParameterModal,
+          deprecatedUrlParams,
+          isOpen: true
         }
       }
     }

@@ -143,7 +143,7 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?sp[0]=42.1875%2C-2.40647&m=-2.406005859375!42.1875!7!1!0!0%2C2')
+        cy.url().should('include', '?sp[0]=42.1875%2C-2.40647&lat=-2.406005859375&long=42.1875&zoom=7')
 
         // draws a point on the map
         cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(700px, 434px, 0px); z-index: 434;')
@@ -373,7 +373,7 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?circle[0]=42.1875%2C2.2329%2C156326&m=2.23681640625!42.1875!6!1!0!0%2C2')
+        cy.url().should('include', '?circle[0]=42.1875%2C2.2329%2C156326&lat=2.23681640625&long=42.1875&zoom=6')
 
         // draws a circle on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M540,433.9455999999991a160,160 0 1,0 320,0 a160,160 0 1,0 -320,0 ')
@@ -508,7 +508,7 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?sb[0]=42.1875%2C-16.46517%2C56.25%2C-2.40647&m=-9.439453125!49.21875!4!1!0!0%2C2')
+        cy.url().should('include', '?sb[0]=42.1875%2C-16.46517%2C56.25%2C-2.40647&lat=-9.439453125&long=49.21875&zoom=4')
 
         // draws a bounding box on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M500 633L500 233L900 233L900 633L500 633z')
@@ -677,7 +677,7 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?polygon[0]=42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647%2C42.1875%2C-16.46517&sf=1&sfs[0]=0&m=-9.4306640625!49.21875!5!1!0!0%2C2')
+        cy.url().should('include', '?polygon[0]=42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647%2C42.1875%2C-16.46517&sf=1&sfs[0]=0&lat=-9.435819999999993&long=49.21875&zoom=5')
 
         // draws a polygon on the map
         cy.get('.leaflet-interactive').first().should('have.attr', 'd', 'M300 34L300 834L600 840L900 839L1100 834L996 736L792 538L692 438L300 34z')
@@ -752,7 +752,8 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?line[0]=31%2C-15%2C36%2C-17%2C41%2C-15&sf=1&sfs[0]=2&m=-8.279296875!44.61328125!4!1!0!0%2C2')
+        console.log(cy.url())
+        cy.url().should('include', '?line[0]=31%2C-15%2C36%2C-17%2C41%2C-15&sf=1&sfs[0]=2&lat=-8.296765000000008&long=44.625&zoom=4')
 
         // draws the shapes on the map
         // Line
@@ -830,7 +831,7 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?circle[0]=35%2C-5%2C50000&sf=1&sfs[0]=3&m=-8.279296875!44.61328125!4!1!0!0%2C2')
+        cy.url().should('include', '?circle[0]=35%2C-5%2C50000&sf=1&sfs[0]=3&lat=-8.296765000000008&long=44.625&zoom=4')
 
         // draws the shapes on the map
         // Circle
@@ -908,7 +909,7 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?sp[0]=35%2C0&sf=1&sfs[0]=4&m=-8.279296875!44.61328125!4!1!0!0%2C2')
+        cy.url().should('include', '?sp[0]=35%2C0&sf=1&sfs[0]=4&lat=-8.296765000000008&long=44.625&zoom=4')
 
         // draws the shapes on the map
         // Point
@@ -987,7 +988,7 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?polygon[0]=42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647%2C42.1875%2C-16.46517&polygon[1]=58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647%2C58.25%2C-14.46517&sf=1&sfs[0]=0&sfs[1]=1&m=-8.279296875!44.61328125!4!1!0!0%2C2')
+        cy.url().should('include', '?polygon[0]=42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647%2C42.1875%2C-16.46517&polygon[1]=58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647%2C58.25%2C-14.46517&sf=1&sfs[0]=0&sfs[1]=1&lat=-8.296765000000008&long=44.625&zoom=4')
 
         // draws the shapes on the map
         // First polygon
@@ -1068,7 +1069,7 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?polygon[0]=-114.04999%2C36.95777%2C-114.0506%2C37.0004%2C-114.04826%2C41.99381%2C-119.99917%2C41.99454%2C-120.00101%2C38.99957%2C-118.71431%2C38.10218%2C-117.50012%2C37.22038%2C-116.0936%2C36.15581%2C-114.63667%2C35.00881%2C-114.63689%2C35.02837%2C-114.60362%2C35.06423%2C-114.64435%2C35.1059%2C-114.57852%2C35.12875%2C-114.56924%2C35.18348%2C-114.60431%2C35.35358%2C-114.67764%2C35.48974%2C-114.65431%2C35.59759%2C-114.68941%2C35.65141%2C-114.68321%2C35.68939%2C-114.70531%2C35.71159%2C-114.69571%2C35.75599%2C-114.71211%2C35.80618%2C-114.67742%2C35.87473%2C-114.73116%2C35.94392%2C-114.74376%2C35.9851%2C-114.73043%2C36.03132%2C-114.75562%2C36.08717%2C-114.57203%2C36.15161%2C-114.51172%2C36.15096%2C-114.50217%2C36.1288%2C-114.45837%2C36.13859%2C-114.44661%2C36.12597%2C-114.40547%2C36.14737%2C-114.37211%2C36.14311%2C-114.30843%2C36.08244%2C-114.31403%2C36.05817%2C-114.25265%2C36.02019%2C-114.14819%2C36.02801%2C-114.11416%2C36.09698%2C-114.12086%2C36.1146%2C-114.09987%2C36.12165%2C-114.04684%2C36.19407%2C-114.04999%2C36.95777&sf=1&sfs[0]=0&m=38.50048828125!-117.02636718749999!6!1!0!0%2C2')
+        cy.url().should('include', '?polygon[0]=-114.04999%2C36.95777%2C-114.0506%2C37.0004%2C-114.04826%2C41.99381%2C-119.99917%2C41.99454%2C-120.00101%2C38.99957%2C-118.71431%2C38.10218%2C-117.50012%2C37.22038%2C-116.0936%2C36.15581%2C-114.63667%2C35.00881%2C-114.63689%2C35.02837%2C-114.60362%2C35.06423%2C-114.64435%2C35.1059%2C-114.57852%2C35.12875%2C-114.56924%2C35.18348%2C-114.60431%2C35.35358%2C-114.67764%2C35.48974%2C-114.65431%2C35.59759%2C-114.68941%2C35.65141%2C-114.68321%2C35.68939%2C-114.70531%2C35.71159%2C-114.69571%2C35.75599%2C-114.71211%2C35.80618%2C-114.67742%2C35.87473%2C-114.73116%2C35.94392%2C-114.74376%2C35.9851%2C-114.73043%2C36.03132%2C-114.75562%2C36.08717%2C-114.57203%2C36.15161%2C-114.51172%2C36.15096%2C-114.50217%2C36.1288%2C-114.45837%2C36.13859%2C-114.44661%2C36.12597%2C-114.40547%2C36.14737%2C-114.37211%2C36.14311%2C-114.30843%2C36.08244%2C-114.31403%2C36.05817%2C-114.25265%2C36.02019%2C-114.14819%2C36.02801%2C-114.11416%2C36.09698%2C-114.12086%2C36.1146%2C-114.09987%2C36.12165%2C-114.04684%2C36.19407%2C-114.04999%2C36.95777&sf=1&sfs[0]=0&lat=38.502146&long=-117.02269700000001&zoom=6')
 
         // displays the too many points modal
         cy.get('.edsc-modal__too-many-points-modal').within(() => {
@@ -1107,7 +1108,7 @@ describe('Map interactions', () => {
           cy.wait(`@${alias}`)
         })
 
-        cy.url().should('include', '?m=14.410148015647792!0!2!1!0!0%2C2')
+        cy.url().should('include', '?lat=14.410148015647792')
       })
     })
 
@@ -1125,7 +1126,7 @@ describe('Map interactions', () => {
         })
 
         // Ignoring the lat!lon in this param, because it doesn't always end up at 0,0
-        cy.url().should('include', '!3!1!0!0%2C2')
+        cy.url().should('include', 'zoom=3')
       })
     })
   })
@@ -1146,7 +1147,7 @@ describe('Map interactions', () => {
       })
 
       it('updates the URL with the new map parameter', () => {
-        cy.url().should('include', '?m=90!0!0!0!0!0%2C2')
+        cy.url().should('include', '?lat=90&projection=EPSG%3A3413&zoom=0')
       })
 
       it('updates the src of tile images', () => {
@@ -1213,7 +1214,7 @@ describe('Map interactions', () => {
       })
 
       it('updates the URL with the new map parameter', () => {
-        cy.url().should('include', '?m=-90!0!0!2!0!0%2C2')
+        cy.url().should('include', '?lat=-90&projection=EPSG%3A3031&zoom=0')
       })
 
       it('updates the src of tile images', () => {
@@ -1287,7 +1288,7 @@ describe('Map interactions', () => {
       })
 
       it('updates the URL with the new map parameter', () => {
-        cy.url().should('include', '?m=0!0!2!1!1!0%2C2')
+        cy.url().should('include', '?base=trueColor')
       })
 
       it('updates the src of tile images', () => {
@@ -1322,7 +1323,7 @@ describe('Map interactions', () => {
       })
 
       it('updates the URL with the new map parameter', () => {
-        cy.url().should('include', '?m=0!0!2!1!2!0%2C2')
+        cy.url().should('include', '?base=landWaterMap')
       })
 
       it('updates the src of tile images', () => {
@@ -1344,7 +1345,7 @@ describe('Map interactions', () => {
         const aliases = interceptUnauthenticatedCollections(commonBody, commonHeaders)
 
         // Visit with no overlays loaded
-        cy.visit('/search?m=0!0!2!1!0!')
+        cy.visit('/search?overlays=false')
 
         // Add the overlay layer
         cy.get('.leaflet-control-layers').rightclick()
@@ -1358,7 +1359,8 @@ describe('Map interactions', () => {
       })
 
       it('updates the URL with the new map parameter', () => {
-        cy.url().should('include', '?m=0!0!2!1!0!0')
+        // Why is this happening different than my browser?
+        cy.url().should('include', '?overlays=referenceFeatures')
       })
 
       it('updates the src of tile images', () => {
@@ -1380,7 +1382,7 @@ describe('Map interactions', () => {
         const aliases = interceptUnauthenticatedCollections(commonBody, commonHeaders)
 
         // Visit with no overlays loaded
-        cy.visit('/search?m=0!0!2!1!0!')
+        cy.visit('/search?overlays=false')
 
         // Add the overlay layer
         cy.get('.leaflet-control-layers').rightclick()
@@ -1394,7 +1396,7 @@ describe('Map interactions', () => {
       })
 
       it('updates the URL with the new map parameter', () => {
-        cy.url().should('include', '?m=0!0!2!1!0!1')
+        cy.url().should('include', '?overlays=coastlines')
       })
 
       it('updates the src of tile images', () => {
@@ -1416,7 +1418,7 @@ describe('Map interactions', () => {
         const aliases = interceptUnauthenticatedCollections(commonBody, commonHeaders)
 
         // Visit with no overlays loaded
-        cy.visit('/search?m=0!0!2!1!0!')
+        cy.visit('/search?overlays=false')
 
         // Add the overlay layer
         cy.get('.leaflet-control-layers').rightclick()
@@ -1430,7 +1432,7 @@ describe('Map interactions', () => {
       })
 
       it('updates the URL with the new map parameter', () => {
-        cy.url().should('include', '?m=0!0!2!1!0!2')
+        cy.url().should('include', '?overlays=referenceLabels')
       })
 
       it('updates the src of tile images', () => {

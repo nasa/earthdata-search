@@ -11,6 +11,7 @@ export const emptyDecodedResult = {
     science_keywords_h: undefined,
     two_d_coordinate_system_name: undefined
   },
+  deprecatedUrlParams: [],
   earthdataEnvironment: 'prod',
   featureFacets: {
     availableFromAwsCloud: false,

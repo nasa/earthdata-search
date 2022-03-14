@@ -91,10 +91,14 @@ export const ProjectCollectionsContainer = (props) => {
   )
 }
 
+ProjectCollectionsContainer.defaultProps = {
+  mapProjection: 'epsg4326'
+}
+
 ProjectCollectionsContainer.propTypes = {
   collectionsQuery: PropTypes.shape({}).isRequired,
   handoffs: PropTypes.shape({}).isRequired,
-  mapProjection: PropTypes.string.isRequired,
+  mapProjection: PropTypes.string,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,

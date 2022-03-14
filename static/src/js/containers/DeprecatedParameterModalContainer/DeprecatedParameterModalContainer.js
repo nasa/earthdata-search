@@ -7,7 +7,8 @@ import actions from '../../actions'
 import DeprecatedParameterModal from '../../components/DeprecatedParameterModal/DeprecatedParameterModal'
 
 export const mapStateToProps = (state) => ({
-  isOpen: state.ui.deprecatedParameterModal.isOpen
+  isOpen: state.ui.deprecatedParameterModal.isOpen,
+  deprecatedUrlParams: state.ui.deprecatedParameterModal.deprecatedUrlParams
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -16,16 +17,19 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const DeprecatedParameterModalContainer = ({
+  deprecatedUrlParams,
   isOpen,
   onToggleDeprecatedParameterModal
 }) => (
   <DeprecatedParameterModal
+    deprecatedUrlParams={deprecatedUrlParams}
     isOpen={isOpen}
     onToggleDeprecatedParameterModal={onToggleDeprecatedParameterModal}
   />
 )
 
 DeprecatedParameterModalContainer.propTypes = {
+  deprecatedUrlParams: PropTypes.arrayOf(PropTypes.string).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onToggleDeprecatedParameterModal: PropTypes.func.isRequired
 }
