@@ -15,7 +15,9 @@ import { encodeAdvancedSearch, decodeAdvancedSearch } from './advancedSearchEnco
 import { encodeArray, decodeArray } from './arrayEncoders'
 import { encodeAutocomplete, decodeAutocomplete } from './autocompleteEncoders'
 import { encodeEarthdataEnvironment, decodeEarthdataEnvironment } from './environmentEncoders'
+
 import { isPath } from '../isPath'
+import { deprecatedURLParameters } from '../../constants/deprecatedURLParameters'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
@@ -85,12 +87,11 @@ export const decodeUrlParams = (paramString) => {
   // Decode the paramString
   const params = qs.parse(paramString, { ignoreQueryPrefix: true, parseArrays: false })
 
-  const invalidParamKeys = ['m']
+  // Create an array of any deprectated parameters that appear in the params
   const deprecatedUrlParams = Object.entries(params)
-    .filter(([key]) => invalidParamKeys.includes(key))
+    .filter(([key]) => deprecatedURLParameters.includes(key))
     .map(([key]) => key)
 
-  // util that checks for deprecated params
   const {
     metadata,
     focusedCollection,

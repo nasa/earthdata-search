@@ -752,7 +752,6 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        console.log(cy.url())
         cy.url().should('include', '?line[0]=31%2C-15%2C36%2C-17%2C41%2C-15&sf=1&sfs[0]=2&lat=-8.296765000000008&long=44.625&zoom=4')
 
         // draws the shapes on the map
@@ -1359,7 +1358,6 @@ describe('Map interactions', () => {
       })
 
       it('updates the URL with the new map parameter', () => {
-        // Why is this happening different than my browser?
         cy.url().should('include', '?overlays=referenceFeatures')
       })
 
