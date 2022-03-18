@@ -124,7 +124,10 @@ const StaticCommonConfig = {
         use: [
           {
             loader: 'style-loader',
-            options: { injectType: 'lazyStyleTag' }
+            options: {
+              injectType: 'lazyStyleTag',
+              esModule: false
+            }
           },
           {
             loader: 'css-loader'
