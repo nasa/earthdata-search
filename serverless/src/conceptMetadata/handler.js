@@ -1,5 +1,4 @@
 import { parse, stringify } from 'qs'
-import { getEdlConfig } from '../util/getEdlConfig'
 import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 
 /**
@@ -22,12 +21,8 @@ const conceptMetadata = async (event) => {
     access_token: accessToken
   } = await getAccessTokenFromJwtToken(jwtToken, earthdataEnvironment)
 
-  const edlConfig = await getEdlConfig(earthdataEnvironment)
-  const { client } = edlConfig
-  const { id: clientId } = client
-
   // Access tokens used in the URL still require the client id
-  const conceptUrl = `${desiredPath}?${stringify({ ...parsedQueryParams, token: `${accessToken}:${clientId}` }, { encode: false })}`
+  const conceptUrl = `${desiredPath}?${stringify({ ...parsedQueryParams, token: `${accessToken}` }, { encode: false })}`
 
   return {
     statusCode: 307,

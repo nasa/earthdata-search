@@ -1,16 +1,9 @@
 import conceptMetadata from '../handler'
 
 import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
-import * as getEdlConfig from '../../util/getEdlConfig'
 
 beforeEach(() => {
   jest.clearAllMocks()
-
-  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
-    client: {
-      id: 'clientId'
-    }
-  }))
 })
 
 describe('conceptMetadata', () => {
@@ -26,7 +19,7 @@ describe('conceptMetadata', () => {
 
     const result = await conceptMetadata(event)
 
-    expect(result.headers).toEqual({ Location: 'http://example.com/concepts?token=access_token:clientId' })
+    expect(result.headers).toEqual({ Location: 'http://example.com/concepts?token=access_token' })
     expect(result.statusCode).toBe(307)
   })
 
@@ -42,7 +35,7 @@ describe('conceptMetadata', () => {
 
     const result = await conceptMetadata(event)
 
-    expect(result.headers).toEqual({ Location: 'http://example.com/concepts?id=42&token=access_token:clientId' })
+    expect(result.headers).toEqual({ Location: 'http://example.com/concepts?id=42&token=access_token' })
     expect(result.statusCode).toBe(307)
   })
 })
