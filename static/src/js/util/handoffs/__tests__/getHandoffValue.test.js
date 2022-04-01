@@ -311,6 +311,38 @@ describe('getHandoffValue', () => {
     })
   })
 
+  describe('When the value is a temporalRange', () => {
+    test('returns the value', () => {
+      const collectionQuery = {
+        temporal: {
+          endDate: '2021-07-25T00:55:39.384Z',
+          startDate: '2021-07-22T00:00:00.000Z'
+        }
+      }
+
+      const handoffInput = {
+        valueType: 'temporalRange'
+      }
+
+      expect(getHandoffValue({
+        collectionQuery,
+        handoffInput
+      })).toEqual('2021-07-22T00:00:00.000Z,2021-07-25T00:55:39.384Z')
+    })
+
+    test('returns undefined when the value doesn\t exist', () => {
+      const handoffInput = {
+        valueType: 'temporalRange'
+      }
+
+      expect(getHandoffValue({
+        collectionMetadata: {},
+        collectionQuery: {},
+        handoffInput
+      })).toEqual(undefined)
+    })
+  })
+
   describe('When the value is a layer', () => {
     test('returns the value', () => {
       const collectionMetadata = {
