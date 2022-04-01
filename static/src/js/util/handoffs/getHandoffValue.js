@@ -108,6 +108,13 @@ export const getHandoffValue = ({
     value = moment.utc(endDate).format('YYYY-MM-DD')
   }
 
+  if (valueType === 'temporalRange' && (startDate || endDate)) {
+    value = [
+      moment.utc(startDate).toISOString(),
+      moment.utc(endDate).toISOString()
+    ].join(',')
+  }
+
   // Layers value
   if (valueType === 'https://wiki.earthdata.nasa.gov/display/GIBS/GIBS+API+for+Developers#GIBSAPIforDevelopers-LayerNaming') {
     // There is SOTO specific logic here. In the future this might need to be more generic, or the name
