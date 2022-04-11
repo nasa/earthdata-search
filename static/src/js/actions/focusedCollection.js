@@ -98,6 +98,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         archiveAndDistributionInformation
         associatedDois
         boxes
+        browseFlag
         conceptId
         coordinateSystem
         dataCenter

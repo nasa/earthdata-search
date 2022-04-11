@@ -46,6 +46,7 @@ export const OrderStatus = ({
   onFetchRetrieval,
   onFetchRetrievalCollection,
   onFetchRetrievalCollectionGranuleLinks,
+  onFetchRetrievalCollectionGranuleBrowseLinks,
   onFocusedCollectionChange,
   onMetricsRelatedCollection,
   onToggleAboutCSDAModal,
@@ -177,6 +178,9 @@ export const OrderStatus = ({
                 onFetchRetrieval={onFetchRetrieval}
                 onFetchRetrievalCollection={onFetchRetrievalCollection}
                 onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
+                onFetchRetrievalCollectionGranuleBrowseLinks={
+                  onFetchRetrievalCollectionGranuleBrowseLinks
+                }
                 onToggleAboutCSDAModal={onToggleAboutCSDAModal}
               />
             )
@@ -342,6 +346,7 @@ OrderStatus.propTypes = {
   onFetchRetrieval: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
+  onFetchRetrievalCollectionGranuleBrowseLinks: PropTypes.func.isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,

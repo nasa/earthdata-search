@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import actions from '../../../actions'
 import { mapDispatchToProps, mapStateToProps, OrderStatusContainer } from '../OrderStatusContainer'
 import OrderStatus from '../../../components/OrderStatus/OrderStatus'
+import * as metricsActions from '../../../middleware/metrics/actions'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -43,6 +44,36 @@ describe('mapDispatchToProps', () => {
     const spy = jest.spyOn(actions, 'fetchRetrievalCollectionGranuleLinks')
 
     mapDispatchToProps(dispatch).onFetchRetrievalCollectionGranuleLinks({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onFetchRetrievalCollectionGranuleBrowseLinks calls actions.fetchRetrievalCollectionGranuleBrowseLinks', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'fetchRetrievalCollectionGranuleBrowseLinks')
+
+    mapDispatchToProps(dispatch).onFetchRetrievalCollectionGranuleBrowseLinks({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onFocusedCollectionChange calls actions.changeFocusedCollection', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeFocusedCollection')
+
+    mapDispatchToProps(dispatch).onFocusedCollectionChange('mock-id')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('mock-id')
+  })
+
+  test('onMetricsRelatedCollection calls metricsRelatedCollection', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metricsActions, 'metricsRelatedCollection')
+
+    mapDispatchToProps(dispatch).onMetricsRelatedCollection({ mock: 'data' })
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith({ mock: 'data' })
@@ -112,6 +143,7 @@ describe('OrderStatusContainer component', () => {
         onFetchRetrieval: jest.fn(),
         onFetchRetrievalCollection: jest.fn(),
         onFetchRetrievalCollectionGranuleLinks: jest.fn(),
+        onFetchRetrievalCollectionGranuleBrowseLinks: jest.fn(),
         onFocusedCollectionChange: jest.fn(),
         onMetricsRelatedCollection: jest.fn(),
         onToggleAboutCSDAModal: jest.fn(),

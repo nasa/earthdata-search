@@ -30,7 +30,7 @@ describe('S3LinksPanel', () => {
       )
 
       expect(enzymeWrapper.hasClass('order-status-item__tab-intro')).toEqual(true)
-      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('The AWS S3 objects will become available once the order has finished processing')
+      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('The AWS S3 objects will become available once the order has finished processing.')
     })
   })
 

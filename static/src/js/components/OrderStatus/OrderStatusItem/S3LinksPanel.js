@@ -136,7 +136,7 @@ export const S3LinksPanel = ({
   )
     : (
       <div className="order-status-item__tab-intro">
-        The AWS S3 objects will become available once the order has finished processing
+        The AWS S3 objects will become available once the order has finished processing.
       </div>
     )
 }

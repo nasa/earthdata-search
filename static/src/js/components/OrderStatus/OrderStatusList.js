@@ -14,6 +14,7 @@ export const OrderStatusList = ({
   onFetchRetrieval,
   onFetchRetrievalCollection,
   onFetchRetrievalCollectionGranuleLinks,
+  onFetchRetrievalCollectionGranuleBrowseLinks,
   onToggleAboutCSDAModal
 }) => (
   <div className="order-status-list">
@@ -37,6 +38,9 @@ export const OrderStatusList = ({
               onFetchRetrieval={onFetchRetrieval}
               onFetchRetrievalCollection={onFetchRetrievalCollection}
               onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
+              onFetchRetrievalCollectionGranuleBrowseLinks={
+                onFetchRetrievalCollectionGranuleBrowseLinks
+              }
               onToggleAboutCSDAModal={onToggleAboutCSDAModal}
             />
           )
@@ -59,6 +63,7 @@ OrderStatusList.propTypes = {
   onFetchRetrieval: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
+  onFetchRetrievalCollectionGranuleBrowseLinks: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired
 }
 

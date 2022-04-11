@@ -11,12 +11,14 @@ const updateGranuleDownloadParamsReducer = (state = initialState, action) => {
       const { [action.payload.id]: asdf = {} } = state
       const { links: currentLinks = {} } = asdf
       const {
+        browse: currentBrowseLinks = [],
         download: currentDownloadLinks = [],
         s3: currentS3Links = []
       } = currentLinks
 
       const { links = {}, percentDone } = action.payload
       const {
+        browse: newBrowseLinks = [],
         download: newDownloadLinks = [],
         s3: newS3Links = []
       } = links
@@ -26,6 +28,10 @@ const updateGranuleDownloadParamsReducer = (state = initialState, action) => {
         [action.payload.id]: {
           percentDone,
           links: {
+            browse: [
+              ...currentBrowseLinks,
+              ...newBrowseLinks
+            ],
             download: [
               ...currentDownloadLinks,
               ...newDownloadLinks

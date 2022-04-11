@@ -46,6 +46,7 @@ function setup(overrideProps, mockRefresh) {
     onFetchRetrieval: jest.fn(),
     onFetchRetrievalCollection: jest.fn(),
     onFetchRetrievalCollectionGranuleLinks: jest.fn(),
+    onFetchRetrievalCollectionGranuleBrowseLinks: jest.fn(),
     onToggleAboutCSDAModal: jest.fn(),
     orders: [{
       type: 'download'
@@ -338,6 +339,91 @@ describe('OrderStatusItem', () => {
       expect(scriptTab.props().title).toEqual('Download Script')
       expect(scriptTab.childAt(0).props().granuleCount).toEqual(100)
       expect(scriptTab.childAt(0).props().downloadLinks).toEqual([])
+    })
+  })
+
+  describe('browse imagery', () => {
+    test('renders correct status classname', () => {
+      const { enzymeWrapper } = setup({
+        type: 'download',
+        collection: {
+          id: 1,
+          collection_id: 'TEST_COLLECTION_111',
+          retrieval_id: '54',
+          collection_metadata: {
+            id: 'TEST_COLLECTION_111',
+            title: 'Test Dataset ID',
+            browseFlag: true
+          },
+          access_method: {
+            type: 'download'
+          },
+          granule_count: 100,
+          orders: [],
+          isLoaded: true
+        },
+        granuleDownload: {
+          1: {
+            percentDone: '50',
+            links: []
+          },
+          isLoading: true
+        }
+      })
+
+      // Download orders are defaulted to complete
+      expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(true)
+
+      expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
+      expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+
+      const header = enzymeWrapper.find('.order-status-item__header')
+      expect(header.find(ProgressRing).props().progress).toEqual(100)
+      expect(header.find('.order-status-item__status').text()).toEqual('Complete')
+      expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
+      expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Download')
+
+      let body = enzymeWrapper.find('.order-status-item__body')
+      expect(body.length).toBe(0)
+
+      // Expand the body
+      enzymeWrapper.find('.order-status-item__button').simulate('click')
+
+      expect(header.find(ProgressRing).props().progress).toEqual(100)
+      expect(header.find('.order-status-item__status').text()).toEqual('Complete')
+      expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
+      expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Download')
+
+      body = enzymeWrapper.find('.order-status-item__body')
+      expect(body.find(ProgressRing).props().progress).toEqual(100)
+      expect(body.find('.order-status-item__status').text()).toEqual('Complete')
+      expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+
+      expect(body.find('.order-status-item__orders-processed').length).toEqual(0)
+      expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Download')
+      expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+
+      expect(body.find('.order-status-item__order-info').text()).toEqual('Download your data directly from the links below, or use the provided download script.')
+      expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+
+      const tabs = body.find('EDSCTabs')
+      expect(tabs.children().length).toEqual(3)
+
+      const linksTab = tabs.childAt(0)
+      expect(linksTab.props().title).toEqual('Download Files')
+      expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
+      expect(linksTab.childAt(0).props().percentDoneDownloadLinks).toEqual('50')
+      expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
+
+      const scriptTab = tabs.childAt(1)
+      expect(scriptTab.props().title).toEqual('Download Script')
+      expect(scriptTab.childAt(0).props().granuleCount).toEqual(100)
+      expect(scriptTab.childAt(0).props().downloadLinks).toEqual([])
+
+      const browseTab = tabs.childAt(2)
+      expect(browseTab.props().title).toEqual('Imagery')
+      expect(browseTab.childAt(0).props().granuleCount).toEqual(100)
+      expect(browseTab.childAt(0).props().browseUrls).toEqual([])
     })
   })
 
