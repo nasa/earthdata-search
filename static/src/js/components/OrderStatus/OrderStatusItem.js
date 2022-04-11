@@ -14,7 +14,6 @@ import { getStateFromOrderStatus, aggregatedOrderStatus, formatOrderStatus } fro
 import { pluralize } from '../../util/pluralize'
 import { commafy } from '../../util/commafy'
 
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
 import EDSCTabs from '../EDSCTabs/EDSCTabs'
 import OrderProgressList from '../OrderProgressList/OrderProgressList'
@@ -22,6 +21,7 @@ import STACJsonPanel from './OrderStatusItem/STACJsonPanel'
 import DownloadFilesPanel from './OrderStatusItem/DownloadFilesPanel'
 import S3LinksPanel from './OrderStatusItem/S3LinksPanel'
 import DownloadScriptPanel from './OrderStatusItem/DownloadScriptPanel'
+import BrowseLinksPanel from './OrderStatusItem/BrowseLinksPanel'
 
 import ProgressRing from '../ProgressRing/ProgressRing'
 
@@ -59,6 +59,7 @@ export class OrderStatusItem extends PureComponent {
       granuleDownload,
       onFetchRetrievalCollection,
       onFetchRetrievalCollectionGranuleLinks,
+      onFetchRetrievalCollectionGranuleBrowseLinks,
       collection
     } = this.props
 
@@ -94,6 +95,9 @@ export class OrderStatusItem extends PureComponent {
         onFetchRetrievalCollectionGranuleLinks(collection)
       }
     }
+
+    // Fetch the granule browse links recardless of accessMethodType
+    onFetchRetrievalCollectionGranuleBrowseLinks(collection)
   }
 
   componentWillUnmount() {
@@ -139,7 +143,6 @@ export class OrderStatusItem extends PureComponent {
       collection,
       earthdataEnvironment,
       granuleDownload,
-      onChangePath,
       onToggleAboutCSDAModal
     } = this.props
 
@@ -196,6 +199,7 @@ export class OrderStatusItem extends PureComponent {
       let messageIsError = false
       let orderInfo = null
 
+      let browseUrls = []
       let downloadUrls = []
       let s3Urls = []
       let totalOrders = 0
@@ -206,6 +210,14 @@ export class OrderStatusItem extends PureComponent {
       let contactEmail = null
       let stacLinksIsLoading = false
       let stacLinks = []
+
+      if (browseFlag) {
+        const { links: granuleDownloadLinks = {} } = granuleLinks
+        const {
+          browse: browseLinks = []
+        } = granuleDownloadLinks
+        if (browseLinks.length > 0) browseUrls = [...browseLinks]
+      }
 
       if (isDownload) {
         progressPercentage = 100
@@ -643,33 +655,20 @@ export class OrderStatusItem extends PureComponent {
                     )
                   }
                   {
-                    (
-                      (isEchoOrders && browseFlag)
-                      || (isEsi && browseFlag)
-                    ) && (
+                    browseFlag && (
                       <Tab
                         title="Imagery"
                         eventKey="browse-imagery"
                       >
-                        <PortalLinkContainer
-                          className="order-status-item__button order-status-item__button--browse-links"
-                          to={{
-                            pathname: `/granules/download/${id}`,
-                            search: '?browse=true'
-                          }}
-                          onClick={() => onChangePath(`/granules/download/${id}?browse=true`)}
-                        >
-                          <Button
-                            bootstrapVariant="primary"
-                            bootstrapSize="sm"
-                            label="View Browse Image Links"
-                            tooltip="View clickable browse image links in the browser"
-                            tooltipPlacement="bottom"
-                            tooltipId="tooltip__download-links"
-                          >
-                            View Browse Image Links
-                          </Button>
-                        </PortalLinkContainer>
+                        <BrowseLinksPanel
+                          accessMethodType={accessMethodType}
+                          earthdataEnvironment={earthdataEnvironment}
+                          browseUrls={browseUrls}
+                          retrievalCollection={collection}
+                          retrievalId={retrievalId}
+                          granuleCount={granuleCount}
+                          granuleLinksIsLoading={granuleLinksIsLoading}
+                        />
                       </Tab>
                     )
                   }
@@ -736,6 +735,7 @@ OrderStatusItem.propTypes = {
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
+  onFetchRetrievalCollectionGranuleBrowseLinks: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired
 }
 

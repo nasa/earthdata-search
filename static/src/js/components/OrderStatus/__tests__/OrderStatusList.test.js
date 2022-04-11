@@ -32,6 +32,7 @@ function setup() {
     onFetchRetrieval: jest.fn(),
     onFetchRetrievalCollection: jest.fn(),
     onFetchRetrievalCollectionGranuleLinks: jest.fn(),
+    onFetchRetrievalCollectionGranuleBrowseLinks: jest.fn(),
     onToggleAboutCSDAModal: jest.fn()
   }
 
@@ -109,6 +110,7 @@ describe('OrderStatus component', () => {
         onFetchRetrieval: props.onFetchRetrieval,
         onFetchRetrievalCollection: props.onFetchRetrievalCollection,
         onFetchRetrievalCollectionGranuleLinks: props.onFetchRetrievalCollectionGranuleLinks,
+        onFetchRetrievalCollectionGranuleBrowseLinks: props.onFetchRetrievalCollectionGranuleBrowseLinks,
         onToggleAboutCSDAModal: props.onToggleAboutCSDAModal
       })
     })

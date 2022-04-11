@@ -59,7 +59,7 @@ export const STACJsonPanel = ({
   )
     : (
       <div className="order-status-item__tab-intro">
-        STAC links will become available once the order has finished processing
+        STAC links will become available once the order has finished processing.
       </div>
     )
 }

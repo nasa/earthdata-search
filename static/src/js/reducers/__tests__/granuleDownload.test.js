@@ -1,5 +1,7 @@
 import updateGranuleDownloadParamsReducer from '../granuleDownload'
 import {
+  SET_GRANULE_LINKS_LOADING,
+  SET_GRANULE_LINKS_LOADED,
   UPDATE_GRANULE_LINKS
 } from '../../constants/actionTypes'
 
@@ -33,6 +35,7 @@ describe('UPDATE_GRANULE_LINKS', () => {
       1: {
         percentDone: '100',
         links: {
+          browse: [],
           download: ['http://google.jp'],
           s3: []
         }
@@ -60,6 +63,7 @@ describe('UPDATE_GRANULE_LINKS', () => {
       1: {
         percentDone: '50',
         links: {
+          browse: [],
           download: [
             'http://google.com'
           ],
@@ -72,6 +76,7 @@ describe('UPDATE_GRANULE_LINKS', () => {
       1: {
         percentDone: '100',
         links: {
+          browse: [],
           download: [
             'http://google.com',
             'http://google.jp'
@@ -116,6 +121,7 @@ describe('UPDATE_GRANULE_LINKS', () => {
         1: {
           percentDone: '100',
           links: {
+            browse: [],
             download: [
               'http://google.com',
               'http://google.jp'
@@ -130,5 +136,31 @@ describe('UPDATE_GRANULE_LINKS', () => {
 
       expect(updateGranuleDownloadParamsReducer(initial, action)).toEqual(expectedState)
     })
+  })
+})
+
+describe('SET_GRANULE_LINKS_LOADING', () => {
+  test('is correct', () => {
+    const action = { type: SET_GRANULE_LINKS_LOADING }
+
+    const expectedState = {
+      isLoading: true,
+      isLoaded: false
+    }
+
+    expect(updateGranuleDownloadParamsReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('SET_GRANULE_LINKS_LOADED', () => {
+  test('is correct', () => {
+    const action = { type: SET_GRANULE_LINKS_LOADED }
+
+    const expectedState = {
+      isLoading: false,
+      isLoaded: true
+    }
+
+    expect(updateGranuleDownloadParamsReducer(undefined, action)).toEqual(expectedState)
   })
 })

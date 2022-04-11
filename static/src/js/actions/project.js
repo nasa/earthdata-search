@@ -199,6 +199,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           archiveAndDistributionInformation
           associatedDois
           boxes
+          browseFlag
           conceptId
           coordinateSystem
           dataCenter
@@ -306,6 +307,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           archiveAndDistributionInformation,
           associatedDois,
           boxes,
+          browseFlag,
           conceptId,
           coordinateSystem,
           dataCenter,
@@ -335,6 +337,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           archiveAndDistributionInformation,
           associatedDois,
           boxes,
+          browseFlag,
           coordinateSystem,
           dataCenter,
           granules,

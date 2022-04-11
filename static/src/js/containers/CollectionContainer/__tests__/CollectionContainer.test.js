@@ -19,6 +19,7 @@ function setup(overrideProps) {
     },
     onFetchRetrieval: jest.fn(),
     onFetchRetrievalCollectionGranuleLinks: jest.fn(),
+    onFetchRetrievalCollectionGranuleBrowseLinks: jest.fn(),
     ...overrideProps
   }
 
@@ -50,6 +51,16 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('retrievalCollection')
   })
+
+  test('onFetchRetrievalCollectionGranuleBrowseLinks calls actions.fetchRetrievalCollectionGranuleBrowseLinks', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'fetchRetrievalCollectionGranuleBrowseLinks')
+
+    mapDispatchToProps(dispatch).onFetchRetrievalCollectionGranuleBrowseLinks('retrievalCollection')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('retrievalCollection')
+  })
 })
 
 describe('mapStateToProps', () => {
@@ -75,6 +86,7 @@ describe('CollectionContainer component', () => {
     expect(enzymeWrapper.find(CollectionDownloadDisplay).length).toBe(1)
     expect(enzymeWrapper.find(CollectionDownloadDisplay).props().retrievalCollection).toEqual({})
     expect(typeof enzymeWrapper.find(CollectionDownloadDisplay).props().onFetchRetrievalCollectionGranuleLinks).toEqual('function')
+    expect(typeof enzymeWrapper.find(CollectionDownloadDisplay).props().onFetchRetrievalCollectionGranuleBrowseLinks).toEqual('function')
   })
 
   test('comopnentDidMount calls onFetchRetrieval', () => {

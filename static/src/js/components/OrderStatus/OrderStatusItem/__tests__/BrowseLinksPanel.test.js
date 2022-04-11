@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { ProgressBar } from 'react-bootstrap'
 
-import { DownloadFilesPanel } from '../DownloadFilesPanel'
+import { BrowseLinksPanel } from '../BrowseLinksPanel'
 import { TextWindowActions } from '../../../TextWindowActions/TextWindowActions'
 
 jest.useFakeTimers('legacy')
@@ -14,14 +14,14 @@ beforeEach(() => {
 
 Enzyme.configure({ adapter: new Adapter() })
 
-describe('DownloadFilesPanel', () => {
+describe('BrowseLinksPanel', () => {
   describe('when panel is not provided granule links', () => {
     test('renders placeholder message', () => {
       const enzymeWrapper = shallow(
-        <DownloadFilesPanel
+        <BrowseLinksPanel
           accessMethodType="download"
           earthdataEnvironment="prod"
-          downloadLinks={[]}
+          browseUrls={[]}
           retrievalId="1"
           granuleCount={100}
           granuleLinksIsLoading={false}
@@ -29,17 +29,17 @@ describe('DownloadFilesPanel', () => {
       )
 
       expect(enzymeWrapper.hasClass('order-status-item__tab-intro')).toEqual(true)
-      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('The download files will become available once the order has finished processing.')
+      expect(enzymeWrapper.find('.order-status-item__tab-intro').text()).toEqual('The browse imagery links will become available once the order has finished processing.')
     })
   })
 
   describe('when panel is provided granule links', () => {
     test('renders a TextWindowActions component', () => {
       const enzymeWrapper = shallow(
-        <DownloadFilesPanel
+        <BrowseLinksPanel
           accessMethodType="download"
           earthdataEnvironment="prod"
-          downloadLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
+          browseUrls={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
           retrievalId="1"
           granuleCount={10}
           granuleLinksIsLoading
@@ -56,18 +56,17 @@ describe('DownloadFilesPanel', () => {
       expect(windowActions.props().fileContents).toEqual('http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov')
       expect(windowActions.props().fileName).toEqual('1-download.txt')
       expect(windowActions.props().clipboardContents).toEqual('http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov')
-      expect(windowActions.props().modalTitle).toEqual('Download Files')
+      expect(windowActions.props().modalTitle).toEqual('Browse Imagery Links')
     })
   })
 
   describe('when the text window actions are disabled', () => {
     test('hides the copy and save buttons', () => {
       const enzymeWrapper = shallow(
-        <DownloadFilesPanel
+        <BrowseLinksPanel
           accessMethodType="ESI"
           earthdataEnvironment="prod"
-          downloadLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
-          retrievalCollection={{}}
+          browseUrls={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
           retrievalId="1"
           granuleCount={10}
           granuleLinksIsLoading

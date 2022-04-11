@@ -11,7 +11,8 @@ import {
   getDownloadUrls,
   getS3Urls,
   extractProjectCollectionGranuleParams,
-  extractGranuleSearchParams
+  extractGranuleSearchParams,
+  getBrowseUrls
 } from '../util/granules'
 import GranuleRequest from '../util/request/granuleRequest'
 import OusGranuleRequest from '../util/request/ousGranuleRequest'
@@ -144,12 +145,69 @@ export const initializeCollectionGranulesQuery = (payload) => ({
   payload
 })
 
+const granulesGraphQlQuery = `
+  query GetGranuleLinks(
+    $boundingBox: [String]
+    $browseOnly: Boolean
+    $circle: [String]
+    $cloudCover: JSON
+    $collectionConceptId: String
+    $conceptId: [String]
+    $cursor: String
+    $dayNightFlag: String
+    $equatorCrossingDate: JSON
+    $equatorCrossingLongitude: JSON
+    $exclude: JSON
+    $limit: Int
+    $line: [String]
+    $linkTypes: [String]
+    $offset: Int
+    $onlineOnly: Boolean
+    $options: JSON
+    $orbitNumber: JSON
+    $point: [String]
+    $polygon: [String]
+    $readableGranuleName: [String]
+    $sortKey: [String]
+    $temporal: String
+    $twoDCoordinateSystem: JSON
+  ) {
+    granules(
+      boundingBox: $boundingBox
+      browseOnly: $browseOnly
+      circle: $circle
+      cloudCover: $cloudCover
+      collectionConceptId: $collectionConceptId
+      conceptId: $conceptId
+      cursor: $cursor
+      dayNightFlag: $dayNightFlag
+      equatorCrossingDate: $equatorCrossingDate
+      equatorCrossingLongitude: $equatorCrossingLongitude
+      exclude: $exclude
+      limit: $limit
+      line: $line
+      linkTypes: $linkTypes
+      offset: $offset
+      onlineOnly: $onlineOnly
+      options: $options
+      orbitNumber: $orbitNumber
+      point: $point
+      polygon: $polygon
+      readableGranuleName: $readableGranuleName
+      sortKey: $sortKey
+      temporal: $temporal
+      twoDCoordinateSystem: $twoDCoordinateSystem
+    ) {
+      cursor
+      items {
+        links
+      }
+    }
+  }`
+
 /**
  * Fetch all relevant links to the granules that are part of the provided collection
- * @param {Integer} retrievalId Database id of the retrieval object
- * @param {String} collectionId CMR collection id to get granules for from a retrieval
  * @param {Object} retrievalCollectionData Retrieval Collection response from the database
- * @param {String} authToken The authenticated users' JWT token
  */
 export const fetchLinks = (retrievalCollectionData) => async (dispatch, getState) => {
   const state = getState()
@@ -176,66 +234,6 @@ export const fetchLinks = (retrievalCollectionData) => async (dispatch, getState
 
   const preparedGranuleParams = camelcaseKeys(prepareGranuleAccessParams(granuleParams))
 
-  const graphQlQuery = `
-    query GetGranuleLinks(
-      $boundingBox: [String]
-      $browseOnly: Boolean
-      $circle: [String]
-      $cloudCover: JSON
-      $collectionConceptId: String
-      $conceptId: [String]
-      $cursor: String
-      $dayNightFlag: String
-      $equatorCrossingDate: JSON
-      $equatorCrossingLongitude: JSON
-      $exclude: JSON
-      $limit: Int
-      $line: [String]
-      $linkTypes: [String]
-      $offset: Int
-      $onlineOnly: Boolean
-      $options: JSON
-      $orbitNumber: JSON
-      $point: [String]
-      $polygon: [String]
-      $readableGranuleName: [String]
-      $sortKey: [String]
-      $temporal: String
-      $twoDCoordinateSystem: JSON
-    ) {
-      granules(
-        boundingBox: $boundingBox
-        browseOnly: $browseOnly
-        circle: $circle
-        cloudCover: $cloudCover
-        collectionConceptId: $collectionConceptId
-        conceptId: $conceptId
-        cursor: $cursor
-        dayNightFlag: $dayNightFlag
-        equatorCrossingDate: $equatorCrossingDate
-        equatorCrossingLongitude: $equatorCrossingLongitude
-        exclude: $exclude
-        limit: $limit
-        line: $line
-        linkTypes: $linkTypes
-        offset: $offset
-        onlineOnly: $onlineOnly
-        options: $options
-        orbitNumber: $orbitNumber
-        point: $point
-        polygon: $polygon
-        readableGranuleName: $readableGranuleName
-        sortKey: $sortKey
-        temporal: $temporal
-        twoDCoordinateSystem: $twoDCoordinateSystem
-      ) {
-        cursor
-        items {
-          links
-        }
-      }
-    }`
-
   let cursor
   let response
   let finished = false
@@ -244,7 +242,7 @@ export const fetchLinks = (retrievalCollectionData) => async (dispatch, getState
   try {
     while (!finished) {
       // eslint-disable-next-line no-await-in-loop
-      response = await graphQlRequestObject.search(graphQlQuery, {
+      response = await graphQlRequestObject.search(granulesGraphQlQuery, {
         ...preparedGranuleParams,
         limit: pageSize,
         linkTypes: ['data', 's3'],
@@ -286,6 +284,91 @@ export const fetchLinks = (retrievalCollectionData) => async (dispatch, getState
     dispatch(actions.handleError({
       error,
       action: 'fetchLinks',
+      resource: 'granule links',
+      requestObject: graphQlRequestObject
+    }))
+  }
+
+  return response
+}
+
+/**
+ * Fetch all browse links for the granules that are part of the provided collection
+ * @param {Object} retrievalCollectionData Retrieval Collection response from the database
+ */
+export const fetchBrowseLinks = (retrievalCollectionData) => async (dispatch, getState) => {
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
+
+  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+
+  const {
+    id,
+    collection_id: collectionId,
+    granule_count: granuleCount,
+    granule_params: granuleParams
+  } = retrievalCollectionData
+
+  // The number of granules to request per page from CMR
+  const pageSize = parseInt(granuleLinksPageSize, 10)
+
+  // Determine how many pages we will need to load to display all granules
+  const totalPages = Math.ceil(granuleCount / pageSize)
+
+  const preparedGranuleParams = camelcaseKeys(prepareGranuleAccessParams(granuleParams))
+
+  let cursor
+  let response
+  let finished = false
+  let currentPage = 0
+
+  try {
+    while (!finished) {
+      // eslint-disable-next-line no-await-in-loop
+      response = await graphQlRequestObject.search(granulesGraphQlQuery, {
+        ...preparedGranuleParams,
+        limit: pageSize,
+        linkTypes: ['browse'],
+        collectionConceptId: collectionId,
+        cursor
+      })
+
+      const { data } = response
+      const { data: granulesData } = data
+      const { granules } = granulesData
+      const { cursor: responseCursor, items } = granules
+
+      // Set the cursor returned from GraphQl so the next loop will use it
+      cursor = responseCursor
+
+      if (!items || !items.length) {
+        finished = true
+        break
+      }
+
+      const percentDone = (((currentPage + 1) / totalPages) * 100).toFixed()
+
+      // Fetch the download links from the granule metadata
+      const granuleBrowseLinks = getBrowseUrls(items)
+
+      dispatch(updateGranuleLinks({
+        id,
+        percentDone,
+        links: {
+          browse: granuleBrowseLinks.map((lnk) => lnk.href)
+        }
+      }))
+
+      currentPage += 1
+    }
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'fetchBrowseLinks',
       resource: 'granule links',
       requestObject: graphQlRequestObject
     }))
@@ -439,15 +522,23 @@ export const fetchOpenSearchLinks = (retrievalCollectionData) => async (dispatch
       const { feed } = data
       const { entry } = feed
 
-      const items = []
+      const downloadLinks = []
+      const browseLinks = []
 
       entry.forEach((granule) => {
-        const { link: links = [] } = granule
+        const {
+          browse_url: browseUrl,
+          link: links = []
+        } = granule
 
         const [downloadLink] = links.filter((link) => link.rel === 'enclosure')
 
         const { href } = downloadLink
-        items.push(href)
+        downloadLinks.push(href)
+
+        if (browseUrl) {
+          browseLinks.push(browseUrl)
+        }
       })
 
       const percentDone = (((currentPage) / totalPages) * 100).toFixed()
@@ -456,7 +547,8 @@ export const fetchOpenSearchLinks = (retrievalCollectionData) => async (dispatch
         id,
         percentDone,
         links: {
-          download: items
+          browse: browseLinks,
+          download: downloadLinks
         }
       }))
 
@@ -498,6 +590,19 @@ export const fetchRetrievalCollectionGranuleLinks = (data) => (dispatch) => {
   } else if (type === 'OPeNDAP') {
     dispatch(setGranuleLinksLoading())
     dispatch(fetchOpendapLinks(data)).then(() => {
+      dispatch(setGranuleLinksLoaded())
+    })
+  }
+}
+
+export const fetchRetrievalCollectionGranuleBrowseLinks = (data) => (dispatch) => {
+  const {
+    collection_metadata: collectionMetadata
+  } = data
+  const { browseFlag } = collectionMetadata
+
+  if (browseFlag) {
+    dispatch(fetchBrowseLinks(data)).then(() => {
       dispatch(setGranuleLinksLoaded())
     })
   }

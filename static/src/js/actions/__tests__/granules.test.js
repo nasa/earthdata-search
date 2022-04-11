@@ -7,6 +7,7 @@ import actions from '../index'
 import {
   excludeGranule,
   fetchLinks,
+  fetchBrowseLinks,
   fetchOpendapLinks,
   fetchOpenSearchLinks,
   getProjectGranules,
@@ -1388,6 +1389,164 @@ describe('fetchLinks', () => {
   })
 })
 
+describe('fetchBrowseLinks', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  test('calls lambda to get the granules from cmr', async () => {
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        data: {
+          granules: {
+            cursor: 'mock-cursor',
+            items: [
+              {
+                links: [
+                  {
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+                    type: 'application/x-hdfeos',
+                    title: 'This file may be downloaded directly from this link',
+                    hreflang: 'en-US',
+                    href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+                  },
+                  {
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+                    type: 'text/html',
+                    title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
+                    hreflang: 'en-US',
+                    href: 'https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+                  },
+                  {
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+                    type: 'image/jpeg',
+                    title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+                    hreflang: 'en-US',
+                    href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2015.03.10/BROWSE.MOD11A1.A2000055.h20v06.006.2015057071544.1.jpg'
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      })
+
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        data: {
+          granules: {
+            cursor: 'mock-cursor',
+            items: [
+              {
+                links: [
+                  {
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+                    type: 'application/x-hdfeos',
+                    title: 'This file may be downloaded directly from this link',
+                    hreflang: 'en-US',
+                    href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      })
+
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        data: {
+          granules: {
+            cursor: 'mock-cursor',
+            items: []
+          }
+        }
+      })
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'download'
+      },
+      collection_id: 'C10000005-EDSC',
+      collection_metadata: {},
+      granule_params: {
+        echo_collection_id: 'C10000005-EDSC',
+        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
+      },
+      granule_count: 588
+    }
+
+    await store.dispatch(fetchBrowseLinks(params))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      payload: {
+        id: 3,
+        percentDone: '50',
+        links: {
+          browse: [
+            'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2015.03.10/BROWSE.MOD11A1.A2000055.h20v06.006.2015057071544.1.jpg'
+          ]
+        }
+      },
+      type: UPDATE_GRANULE_LINKS
+    })
+    expect(storeActions[1]).toEqual({
+      payload: {
+        id: 3,
+        percentDone: '100',
+        links: {
+          browse: []
+        }
+      },
+      type: UPDATE_GRANULE_LINKS
+    })
+  })
+
+  test('does not update granule links if no links exist', async () => {
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        data: {
+          granules: {
+            cursor: 'mock-cursor',
+            items: []
+          }
+        }
+      })
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'download'
+      },
+      collection_id: 'C10000005-EDSC',
+      collection_metadata: {},
+      granule_params: {
+        echo_collection_id: 'C10000005-EDSC',
+        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
+      },
+      granule_count: 1
+    }
+
+    await store.dispatch(fetchBrowseLinks(params))
+    const storeActions = store.getActions()
+    expect(storeActions.length).toEqual(0)
+  })
+})
+
 describe('fetchOpendapLinks', () => {
   const mbrSpy = jest.spyOn(mbr, 'mbr')
 
@@ -1665,14 +1824,17 @@ describe('fetchOpenSearchLinks', () => {
           <entry>
             <link href="https://example.com/granule1.zip" rel="enclosure" />
             <link href="https://example.com" rel="alternate" />
+            <link href="https://example.com/browse1.png" rel="browse" />
           </entry>
           <entry>
             <link href="https://example.com/granule2.zip" rel="enclosure" />
             <link href="https://example.com" rel="alternate" />
+            <link href="https://example.com/browse2.png" rel="browse" />
           </entry>
           <entry>
             <link href="https://example.com/granule3.zip" rel="enclosure" />
             <link href="https://example.com" rel="alternate" />
+            <link href="https://example.com/browse3.png" rel="browse" />
           </entry>
         </feed>
       `)
@@ -1684,10 +1846,12 @@ describe('fetchOpenSearchLinks', () => {
           <entry>
             <link href="https://example.com/granule4.zip" rel="enclosure" />
             <link href="https://example.com" rel="alternate" />
-          </entry>
+            <link href="https://example.com/browse4.png" rel="browse" />
+            </entry>
           <entry>
             <link href="https://example.com/granule5.zip" rel="enclosure" />
             <link href="https://example.com" rel="alternate" />
+            <link href="https://example.com/browse5.png" rel="browse" />
           </entry>
         </feed>
       `)
@@ -1724,6 +1888,11 @@ describe('fetchOpenSearchLinks', () => {
         id: 3,
         percentDone: '50',
         links: {
+          browse: [
+            'https://example.com/browse1.png',
+            'https://example.com/browse2.png',
+            'https://example.com/browse3.png'
+          ],
           download: [
             'https://example.com/granule1.zip',
             'https://example.com/granule2.zip',
@@ -1738,6 +1907,10 @@ describe('fetchOpenSearchLinks', () => {
         id: 3,
         percentDone: '100',
         links: {
+          browse: [
+            'https://example.com/browse4.png',
+            'https://example.com/browse5.png'
+          ],
           download: [
             'https://example.com/granule4.zip',
             'https://example.com/granule5.zip'

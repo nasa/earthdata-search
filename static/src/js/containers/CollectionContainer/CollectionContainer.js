@@ -20,6 +20,10 @@ export const mapDispatchToProps = (dispatch) => ({
   onFetchRetrievalCollectionGranuleLinks:
     (retrievalCollection) => dispatch(
       actions.fetchRetrievalCollectionGranuleLinks(retrievalCollection)
+    ),
+  onFetchRetrievalCollectionGranuleBrowseLinks:
+    (retrievalCollection) => dispatch(
+      actions.fetchRetrievalCollectionGranuleBrowseLinks(retrievalCollection)
     )
 })
 
@@ -63,6 +67,7 @@ export class CollectionContainer extends Component {
     const {
       match,
       onFetchRetrievalCollectionGranuleLinks,
+      onFetchRetrievalCollectionGranuleBrowseLinks,
       retrieval
     } = this.props
 
@@ -80,6 +85,9 @@ export class CollectionContainer extends Component {
         <Route exact path={[`${path}/links`, `${path}/script`]}>
           <CollectionDownloadDisplay
             onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
+            onFetchRetrievalCollectionGranuleBrowseLinks={
+              onFetchRetrievalCollectionGranuleBrowseLinks
+            }
             retrievalCollection={retrievalCollection}
           />
         </Route>
@@ -99,7 +107,8 @@ CollectionContainer.propTypes = {
     path: PropTypes.string
   }).isRequired,
   onFetchRetrieval: PropTypes.func.isRequired,
-  onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired
+  onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
+  onFetchRetrievalCollectionGranuleBrowseLinks: PropTypes.func.isRequired
 }
 
 export default withRouter(
