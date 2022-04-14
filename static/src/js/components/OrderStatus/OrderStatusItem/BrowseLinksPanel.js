@@ -27,7 +27,7 @@ export const BrowseLinksPanel = ({
   retrievalId,
   showTextWindowActions
 }) => {
-  const downloadFileName = `${retrievalId}-${accessMethodType}.txt`
+  const downloadFileName = `${retrievalId}-${accessMethodType}-browse-imagery.txt`
 
   return browseUrls.length > 0 ? (
     <>

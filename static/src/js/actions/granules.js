@@ -369,7 +369,7 @@ export const fetchBrowseLinks = (retrievalCollectionData) => async (dispatch, ge
     dispatch(actions.handleError({
       error,
       action: 'fetchBrowseLinks',
-      resource: 'granule links',
+      resource: 'browse links',
       requestObject: graphQlRequestObject
     }))
   }

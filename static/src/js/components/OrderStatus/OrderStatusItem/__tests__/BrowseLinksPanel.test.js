@@ -54,7 +54,7 @@ describe('BrowseLinksPanel', () => {
       const windowActions = enzymeWrapper.find(TextWindowActions)
       expect(windowActions.props().id).toEqual('links-1')
       expect(windowActions.props().fileContents).toEqual('http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov')
-      expect(windowActions.props().fileName).toEqual('1-download.txt')
+      expect(windowActions.props().fileName).toEqual('1-download-browse-imagery.txt')
       expect(windowActions.props().clipboardContents).toEqual('http://search.earthdata.nasa.gov\nhttp://cmr.earthdata.nasa.gov')
       expect(windowActions.props().modalTitle).toEqual('Browse Imagery Links')
     })
