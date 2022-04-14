@@ -657,7 +657,7 @@ export class OrderStatusItem extends PureComponent {
                   {
                     browseFlag && (
                       <Tab
-                        title="Imagery"
+                        title="Browse Imagery"
                         eventKey="browse-imagery"
                       >
                         <BrowseLinksPanel

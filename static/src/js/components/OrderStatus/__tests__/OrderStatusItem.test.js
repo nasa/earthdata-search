@@ -421,7 +421,7 @@ describe('OrderStatusItem', () => {
       expect(scriptTab.childAt(0).props().downloadLinks).toEqual([])
 
       const browseTab = tabs.childAt(2)
-      expect(browseTab.props().title).toEqual('Imagery')
+      expect(browseTab.props().title).toEqual('Browse Imagery')
       expect(browseTab.childAt(0).props().granuleCount).toEqual(100)
       expect(browseTab.childAt(0).props().browseUrls).toEqual([])
     })
