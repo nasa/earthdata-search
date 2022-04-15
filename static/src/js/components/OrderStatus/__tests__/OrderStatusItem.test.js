@@ -353,7 +353,11 @@ describe('OrderStatusItem', () => {
           collection_metadata: {
             id: 'TEST_COLLECTION_111',
             title: 'Test Dataset ID',
-            browseFlag: true
+            granules: {
+              items: [{
+                browse_flag: true
+              }]
+            }
           },
           access_method: {
             type: 'download'
@@ -365,7 +369,9 @@ describe('OrderStatusItem', () => {
         granuleDownload: {
           1: {
             percentDone: '50',
-            links: []
+            links: {
+              browse: ['http://example.com']
+            }
           },
           isLoading: true
         }
@@ -423,7 +429,7 @@ describe('OrderStatusItem', () => {
       const browseTab = tabs.childAt(2)
       expect(browseTab.props().title).toEqual('Browse Imagery')
       expect(browseTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(browseTab.childAt(0).props().browseUrls).toEqual([])
+      expect(browseTab.childAt(0).props().browseUrls).toEqual(['http://example.com'])
     })
   })
 

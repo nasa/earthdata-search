@@ -165,7 +165,6 @@ export class OrderStatusItem extends PureComponent {
 
     if (isLoaded) {
       const {
-        browseFlag,
         directDistributionInformation = {},
         title,
         isCSDA: collectionIsCSDA
@@ -211,37 +210,26 @@ export class OrderStatusItem extends PureComponent {
       let stacLinksIsLoading = false
       let stacLinks = []
 
-      if (browseFlag) {
-        const { links: granuleDownloadLinks = {} } = granuleLinks
-        const {
-          browse: browseLinks = []
-        } = granuleDownloadLinks
-        if (browseLinks.length > 0) browseUrls = [...browseLinks]
-      }
+      const { links: granuleDownloadLinks = {} } = granuleLinks
+      const {
+        browse: browseLinks = [],
+        download: downloadLinks = [],
+        s3: s3Links = []
+      } = granuleDownloadLinks
+      if (browseLinks.length > 0) browseUrls = [...browseLinks]
+      if (downloadLinks.length > 0) downloadUrls = [...downloadLinks]
+      if (s3Links.length > 0) s3Urls = [...s3Links]
 
       if (isDownload) {
         progressPercentage = 100
-        orderInfo = 'Download your data directly from the links below, or use the provided download script.'
-        const { links: granuleDownloadLinks = {} } = granuleLinks
-        const {
-          download: downloadLinks = [],
-          s3: s3Links = []
-        } = granuleDownloadLinks;
+        orderInfo = 'Download your data directly from the links below, or use the provided download script.';
+
         ({ percentDone: percentDoneDownloadLinks } = granuleLinks)
-        if (downloadLinks.length > 0) downloadUrls = [...downloadLinks]
-        if (s3Links.length > 0) s3Urls = [...s3Links]
       }
 
       if (isOpendap) {
         progressPercentage = 100
         orderInfo = 'Download your data directly from the links below, or use the provided download script.'
-        const { links: granuleDownloadLinks = {} } = granuleLinks
-        const {
-          download: downloadLinks = [],
-          s3: s3Links = []
-        } = granuleDownloadLinks
-        if (downloadLinks.length > 0) downloadUrls = [...downloadLinks]
-        if (s3Links.length > 0) s3Urls = [...s3Links]
       }
 
       if (isEchoOrders) {
@@ -655,7 +643,7 @@ export class OrderStatusItem extends PureComponent {
                     )
                   }
                   {
-                    browseFlag && (
+                    browseLinks.length > 0 && (
                       <Tab
                         title="Browse Imagery"
                         eventKey="browse-imagery"
