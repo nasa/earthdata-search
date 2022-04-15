@@ -6,10 +6,11 @@ import React, {
 } from 'react'
 import ReactDOM from 'react-dom'
 import { PropTypes } from 'prop-types'
-import { Dropdown } from 'react-bootstrap'
+import { Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import classNames from 'classnames'
 import { snakeCase } from 'lodash'
 
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import RadioSettingDropdownItem from './RadioSettingDropdownItem'
 import RadioSettingToggle from '../CustomToggle/RadioSettingToggle'
 
@@ -19,16 +20,20 @@ import './RadioSettingDropdown.scss'
  * Renders RadioSettingDropdown.
  * @param {Object} props - The props passed into the component
  * @param {String} props.className - String to use as the classname
+ * @param {Boolean} props.disabled - Disables the tooltip
  * @param {Node} props.id - A unique id
  * @param {String} props.label - String to use as the classname
  * @param {Array} props.settings - An array of objects to configure the settings.
+ * @param {String} props.tooltip - Sets the text to display in a tooltip on hover
  */
 export const RadioSettingDropdown = ({
   activeIcon,
   className,
+  disabled,
   id,
   label,
-  settings
+  settings,
+  tooltip
 }) => {
   if (!settings.length) return null
 
@@ -42,7 +47,10 @@ export const RadioSettingDropdown = ({
   const radioSettingClasses = classNames(
     className,
     'condensed',
-    'radio-setting-dropdown'
+    'radio-setting-dropdown',
+    {
+      'radio-setting-dropdown--disabled': disabled
+    }
   )
 
   const menuClasses = classNames(
@@ -93,7 +101,7 @@ export const RadioSettingDropdown = ({
     } else {
       setDropdownActive(false)
     }
-  }, [dropdownActive])
+  }, [dropdownActive, disabled])
 
   useEffect(() => {
     window.addEventListener('mousemove', onWindowMouseMove)
@@ -116,7 +124,7 @@ export const RadioSettingDropdown = ({
     }
   }, [dropdownActive, toggleRef.current, menuRef.current, settings])
 
-  return (
+  let component = (
     <div
       ref={wrapperRef}
       className={radioSettingClasses}
@@ -124,17 +132,39 @@ export const RadioSettingDropdown = ({
       <Dropdown
         key={`${menuOffsetX}_${snakeCase(label)}`}
         className="radio-setting-dropdown__dropdown"
-        show={dropdownActive}
+        show={dropdownActive && !disabled}
       >
-        <Dropdown.Toggle
-          ref={toggleRef}
-          id={id}
-          data-test-id={id}
-          className="radio-setting-dropdown__toggle"
-          activeIcon={activeIcon}
-          as={RadioSettingToggle}
-          label={label}
-        />
+        {
+          !disabled && (
+            <Dropdown.Toggle
+              ref={toggleRef}
+              id={id}
+              data-test-id={id}
+              className="radio-setting-dropdown__toggle"
+              activeIcon={activeIcon}
+              as={RadioSettingToggle}
+              label={label}
+            />
+          )
+        }
+        {
+          // The react-bootstrap Dropdown.Toggle swallows the mouse out events and causes some unintended issues
+          // with bootstrap tooltips that wrap the component. To get around this, render a disabled button in its place.
+          disabled && (
+            <button
+              className="custom-toggle custom-toggle--icon radio-setting-dropdown__toggle dropdown-toggle radio-setting-toggle"
+              type="button"
+              disabled
+            >
+              <EDSCIcon
+                size="0.875rem"
+                icon={activeIcon}
+                className="custom-toggle__icon"
+              />
+              <span className="radio-setting-toggle__label">{label}</span>
+            </button>
+          )
+        }
         {
           ReactDOM.createPortal(
             <Dropdown.Menu
@@ -183,19 +213,40 @@ export const RadioSettingDropdown = ({
       </Dropdown>
     </div>
   )
+
+  if (tooltip) {
+    component = (
+      <OverlayTrigger
+        key={`${menuOffsetX}_${snakeCase(label)}--tooltip`}
+        overlay={(
+          <Tooltip id={`${menuOffsetX}_${snakeCase(label)}--tooltip`}>
+            {tooltip}
+          </Tooltip>
+        )}
+      >
+        {component}
+      </OverlayTrigger>
+    )
+  }
+
+  return component
 }
 
 RadioSettingDropdown.defaultProps = {
   className: null,
-  settings: []
+  disabled: false,
+  settings: [],
+  tooltip: null
 }
 
 RadioSettingDropdown.propTypes = {
   activeIcon: PropTypes.func.isRequired,
   className: PropTypes.string,
+  disabled: PropTypes.bool,
   settings: PropTypes.arrayOf(PropTypes.shape({})),
   id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  tooltip: PropTypes.string
 }
 
 export default RadioSettingDropdown

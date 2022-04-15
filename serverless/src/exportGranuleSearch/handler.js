@@ -1,17 +1,17 @@
 import { pick } from 'lodash'
 
-import { buildParams } from '../util/cmr/buildParams'
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
-import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
+import { buildParams } from '../util/cmr/buildParams'
+import { doSearchRequest } from '../util/cmr/doSearchRequest'
 
 /**
- * Perform an authenticated CMR Granule search
+ * Returns the a granule search as stac
  * @param {Object} event Details about the HTTP request that it received
  */
-const cmrGranuleSearch = async (event) => {
+const exportGranuleSearch = async (event) => {
   const { body, headers } = event
 
   const { defaultResponseHeaders } = getApplicationConfig()
@@ -25,50 +25,83 @@ const cmrGranuleSearch = async (event) => {
 
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
-    'concept_id',
     'bounding_box',
     'circle',
-    'browse_only',
-    'cloud_cover',
-    'day_night_flag',
+    'cloud_hosted',
+    'collection_data_type',
     'collection_concept_id',
-    'equator_crossing_date',
-    'equator_crossing_longitude',
-    'exclude',
+    'concept_id',
+    'data_center_h',
+    'data_center',
+    'facets_size',
+    'granule_data_format_h',
+    'granule_data_format',
+    'has_granules_or_cwic',
+    'has_granules',
+    'horizontal_data_resolution_range',
+    'include_facets',
+    'include_granule_counts',
+    'include_has_granules',
+    'include_tags',
+    'instrument_h',
+    'instrument',
+    'keyword',
+    'latency',
     'line',
-    'online_only',
     'options',
-    'orbit_number',
     'page_num',
     'page_size',
+    'platform',
+    'platforms_h',
     'point',
     'polygon',
-    'readable_granule_name',
+    'processing_level_id_h',
+    'project_h',
+    'project',
+    'provider',
+    'science_keywords_h',
+    'service_type',
     'sort_key',
+    'spatial_keyword',
+    'tag_key',
     'temporal',
-    'two_d_coordinate_system'
+    'two_d_coordinate_system_name'
   ]
 
   const nonIndexedKeys = [
     'bounding_box',
     'circle',
+    'collection_data_type',
     'concept_id',
-    'exclude',
+    'data_center_h',
+    'granule_data_format_h',
+    'granule_data_format',
+    'horizontal_data_resolution_range',
+    'instrument_h',
+    'instrument',
+    'latency',
     'line',
+    'platform',
     'point',
     'polygon',
-    'readable_granule_name',
-    'sort_key'
+    'processing_level_id_h',
+    'project_h',
+    'provider',
+    'service_type',
+    'sort_key',
+    'spatial_keyword',
+    'tag_key',
+    'two_d_coordinate_system_name'
   ]
 
   try {
     return doSearchRequest({
       jwtToken: getJwtToken(event),
-      path: '/search/granules.json',
+      path: '/search/granules.stac',
       params: buildParams({
         body,
-        permittedCmrKeys,
-        nonIndexedKeys
+        nonIndexedKeys,
+        permittedCmrKeys
       }),
       providedHeaders,
       requestId,
@@ -83,4 +116,4 @@ const cmrGranuleSearch = async (event) => {
   }
 }
 
-export default cmrGranuleSearch
+export default exportGranuleSearch

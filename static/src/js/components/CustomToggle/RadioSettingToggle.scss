@@ -17,6 +17,10 @@
     margin-left: $spacer/4;
     text-indent: -10000px;
 
+    .radio-setting-dropdown--disabled & {
+      color: $color__black--400;
+    }
+
     .panels--sm & {
       position: relative;
       top: 0;

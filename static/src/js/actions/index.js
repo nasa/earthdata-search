@@ -182,7 +182,7 @@ import {
   updateCollectionSubscription
 } from './subscriptions'
 import { setUserFromJwt } from './user'
-import { exportSearch } from './exportSearch'
+import { exportCollectionSearch, exportGranuleSearch } from './exportSearch'
 import { fetchSotoLayers } from './handoffs'
 
 const actions = {
@@ -225,7 +225,8 @@ const actions = {
   deleteSavedProject,
   deleteSubscription,
   excludeGranule,
-  exportSearch,
+  exportCollectionSearch,
+  exportGranuleSearch,
   fetchAccessMethods,
   fetchAdminRetrieval,
   fetchAdminRetrievals,

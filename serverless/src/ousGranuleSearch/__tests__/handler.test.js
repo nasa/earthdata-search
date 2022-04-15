@@ -23,7 +23,7 @@ describe('ousGranuleSearch', () => {
       body: JSON.stringify({
         requestId: 'asdf-1234-qwer-5678',
         params: {
-          echo_collection_id: 'C100000-EDSC'
+          collection_concept_id: 'C100000-EDSC'
         }
       })
     }

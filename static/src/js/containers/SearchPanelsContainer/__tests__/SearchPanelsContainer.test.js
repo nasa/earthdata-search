@@ -30,13 +30,14 @@ function setup() {
     map: {},
     onApplyGranuleFilters: jest.fn(),
     onChangeQuery: jest.fn(),
+    onCollectionExport: jest.fn(),
     onFocusedCollectionChange: jest.fn(),
+    onGranuleExport: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
     onToggleAboutCSDAModal: jest.fn(),
     onToggleAboutCwicModal: jest.fn(),
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
-    onExport: jest.fn(),
     panels: {
       activePanel: '0.0.0',
       isOpen: false
@@ -140,14 +141,24 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith('value')
   })
 
-  test('onExport calls actions.exportSearch', () => {
+  test('onCollectionExport calls actions.exportCollectionSearch', () => {
     const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'exportSearch')
+    const spy = jest.spyOn(actions, 'exportCollectionSearch')
 
-    mapDispatchToProps(dispatch).onExport('json')
+    mapDispatchToProps(dispatch).onCollectionExport('json')
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('json')
+  })
+
+  test('onGranuleExport calls actions.exportGranuleSearch', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'exportGranuleSearch')
+
+    mapDispatchToProps(dispatch).onGranuleExport('stac')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('stac')
   })
 })
 
@@ -181,8 +192,13 @@ describe('mapStateToProps', () => {
       ui: {
         export: {
           isExportRunning: {
-            csv: false,
-            json: false
+            collection: {
+              csv: false,
+              json: false
+            },
+            granule: {
+              stac: false
+            }
           }
         }
       }
@@ -200,8 +216,13 @@ describe('mapStateToProps', () => {
       granuleQuery: {},
       handoffs: {},
       isExportRunning: {
-        csv: false,
-        json: false
+        collection: {
+          csv: false,
+          json: false
+        },
+        granule: {
+          stac: false
+        }
       },
       map: {
         projection: ''

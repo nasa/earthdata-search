@@ -338,7 +338,7 @@ export const buildGranuleSearchParams = (params) => {
     browseOnly,
     cloudCover,
     dayNightFlag,
-    echoCollectionId: collectionId,
+    collectionConceptId: collectionId,
     equatorCrossingDate,
     equatorCrossingLongitude,
     exclude,

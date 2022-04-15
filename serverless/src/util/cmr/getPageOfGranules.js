@@ -22,7 +22,7 @@ axiosRetry(axios, { retries: 4 })
  */
 export const getPageOfGranules = async (cmrToken, collectionId, pageSize = 20) => {
   const cmrParams = {
-    echo_collection_id: collectionId,
+    collection_concept_id: collectionId,
     page_num: 1,
     page_size: pageSize
   }

@@ -63,7 +63,7 @@ export const buildUrls = (json, authToken, earthdataEnvironment) => {
     //   href: 'example.com'
     // }
   } else if (json.hasGranules) {
-    let cmrGranulesUrl = `${cmrHost}/search/granules.json?echo_collection_id=${collectionId}`
+    let cmrGranulesUrl = `${cmrHost}/search/granules.json?collection_concept_id=${collectionId}`
 
     if (authToken !== '') {
       // If an auth token is provided route the request through Lambda

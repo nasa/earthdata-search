@@ -68,8 +68,13 @@ const initialState = {
   },
   export: {
     isExportRunning: {
-      csv: false,
-      json: false
+      collection: {
+        csv: false,
+        json: false
+      },
+      granule: {
+        stac: false
+      }
     }
   },
   deprecatedParameterModal: {
@@ -195,26 +200,74 @@ const uiReducer = (state = initialState, action) => {
       }
     }
     case EXPORT_STARTED: {
-      return {
-        ...state,
-        export: {
-          isExportRunning: {
-            ...state.export.isExportRunning,
-            [action.payload]: true
+      const { type, format } = action.payload
+
+      if (type === 'collection') {
+        return {
+          ...state,
+          export: {
+            isExportRunning: {
+              ...state.export.isExportRunning,
+              collection: {
+                ...state.export.isExportRunning.collection,
+                [format]: true
+              }
+            }
           }
         }
       }
+
+      if (type === 'granule') {
+        return {
+          ...state,
+          export: {
+            isExportRunning: {
+              ...state.export.isExportRunning,
+              granule: {
+                ...state.export.isExportRunning.granule,
+                [format]: true
+              }
+            }
+          }
+        }
+      }
+
+      return state
     }
     case EXPORT_FINISHED: {
-      return {
-        ...state,
-        export: {
-          isExportRunning: {
-            ...state.export.isExportRunning,
-            [action.payload]: false
+      const { type, format } = action.payload
+
+      if (type === 'collection') {
+        return {
+          ...state,
+          export: {
+            isExportRunning: {
+              ...state.export.isExportRunning,
+              collection: {
+                ...state.export.isExportRunning.collection,
+                [format]: false
+              }
+            }
           }
         }
       }
+
+      if (type === 'granule') {
+        return {
+          ...state,
+          export: {
+            isExportRunning: {
+              ...state.export.isExportRunning,
+              granule: {
+                ...state.export.isExportRunning.granule,
+                [format]: false
+              }
+            }
+          }
+        }
+      }
+
+      return state
     }
     case TOGGLE_DEPRECATED_PARAMETER_MODAL: {
       const { payload: displayModal } = action

@@ -1475,7 +1475,7 @@ describe('Map interactions', () => {
           url: '**/search/granules.json'
         },
         (req) => {
-          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&polygon%5B%5D=42.1875%2C-2.40647%2C42.1875%2C-9.43582%2C49.21875%2C-9.43582%2C42.1875%2C-2.40647&sort_key=-start_date')
+          expect(req.body).to.eq('collection_concept_id=C1214470488-ASF&page_num=1&page_size=20&polygon%5B%5D=42.1875%2C-2.40647%2C42.1875%2C-9.43582%2C49.21875%2C-9.43582%2C42.1875%2C-2.40647&sort_key=-start_date')
 
           req.alias = 'granulesRequest'
           req.reply({
@@ -1596,7 +1596,7 @@ describe('Map interactions', () => {
           expect(JSON.parse(req.body).params).to.eql({
             boundingBox: '42.18750000000001,-9.453289809825428,49.218749999999986,-2.4064699999999886',
             conceptId: [],
-            echoCollectionId: 'C1972468359-SCIOPS',
+            collectionConceptId: 'C1972468359-SCIOPS',
             exclude: {},
             openSearchOsdd: 'http://47.90.244.40/glass/osdd/fapar_modis_0.05d.xml',
             options: {},

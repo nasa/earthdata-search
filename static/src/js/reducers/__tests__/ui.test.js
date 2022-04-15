@@ -17,7 +17,7 @@ import {
   TOGGLE_SPATIAL_POLYGON_WARNING,
   TOGGLE_TIMELINE,
   TOGGLE_TOO_MANY_POINTS_MODAL,
-  TOGGLE_VIEW_ALL_FACETS_MODAL,
+  TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -39,8 +39,13 @@ const initialState = {
   },
   export: {
     isExportRunning: {
-      csv: false,
-      json: false
+      collection: {
+        csv: false,
+        json: false
+      },
+      granule: {
+        stac: false
+      }
     }
   },
   facetsModal: {
@@ -331,54 +336,152 @@ describe('TOGGLE_DEPRECATED_PARAMETER_MODAL', () => {
 })
 
 describe('EXPORT_STARTED', () => {
-  test('returns the correct state', () => {
-    const action = {
-      type: EXPORT_STARTED,
-      payload: 'json'
-    }
-
-    const expectedState = {
-      ...initialState,
-      export: {
-        isExportRunning: {
-          csv: false,
-          json: true
+  describe('when starting a collection export', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: EXPORT_STARTED,
+        payload: {
+          type: 'collection',
+          format: 'json'
         }
       }
-    }
 
-    expect(uiReducer(undefined, action)).toEqual(expectedState)
+      const expectedState = {
+        ...initialState,
+        export: {
+          isExportRunning: {
+            collection: {
+              csv: false,
+              json: true
+            },
+            granule: {
+              stac: false
+            }
+          }
+        }
+      }
+
+      expect(uiReducer(undefined, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('when starting a collection export', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: EXPORT_STARTED,
+        payload: {
+          type: 'granule',
+          format: 'stac'
+        }
+      }
+
+      const expectedState = {
+        ...initialState,
+        export: {
+          isExportRunning: {
+            collection: {
+              csv: false,
+              json: false
+            },
+            granule: {
+              stac: true
+            }
+          }
+        }
+      }
+
+      expect(uiReducer(undefined, action)).toEqual(expectedState)
+    })
   })
 })
 
 describe('EXPORT_FINISHED', () => {
-  test('returns the correct state', () => {
-    const action = {
-      type: EXPORT_FINISHED,
-      payload: 'json'
-    }
-
-    const initial = {
-      ...initialState,
-      export: {
-        isExportRunning: {
-          csv: false,
-          json: true
+  describe('when finishing a collection export', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: EXPORT_FINISHED,
+        payload: {
+          type: 'collection',
+          format: 'json'
         }
       }
-    }
 
-    const expectedState = {
-      ...initialState,
-      export: {
-        isExportRunning: {
-          csv: false,
-          json: false
+      const initial = {
+        ...initialState,
+        export: {
+          isExportRunning: {
+            collection: {
+              csv: false,
+              json: true
+            },
+            granule: {
+              stac: false
+            }
+          }
         }
       }
-    }
 
-    expect(uiReducer(initial, action)).toEqual(expectedState)
+      const expectedState = {
+        ...initialState,
+        export: {
+          isExportRunning: {
+            collection: {
+              csv: false,
+              json: false
+            },
+            granule: {
+              stac: false
+            }
+          }
+        }
+      }
+
+      expect(uiReducer(initial, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('when finishing a granule export', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: EXPORT_FINISHED,
+        payload: {
+          type: 'granule',
+          format: 'stac'
+        }
+      }
+
+      const initial = {
+        ...initialState,
+        export: {
+          isExportRunning: {
+            collection: {
+              csv: false,
+              json: false
+            },
+            granule: {
+              stac: true
+            }
+          }
+        }
+      }
+
+      const expectedState = {
+        ...initialState,
+        export: {
+          isExportRunning: {
+            collection: {
+              csv: false,
+              json: false
+            },
+            granule: {
+              stac: false
+            }
+          }
+        }
+      }
+
+      expect(uiReducer(initial, action)).toEqual(expectedState)
+    })
   })
 })
 

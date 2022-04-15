@@ -47,7 +47,10 @@ export const mapDispatchToProps = (dispatch) => ({
     (state) => dispatch(actions.toggleAboutCwicModal(state)),
   onTogglePanels:
     (value) => dispatch(actions.togglePanels(value)),
-  onExport: (format) => dispatch(actions.exportSearch(format))
+  onCollectionExport:
+    (format) => dispatch(actions.exportCollectionSearch(format)),
+  onGranuleExport:
+    (format) => dispatch(actions.exportGranuleSearch(format))
 })
 
 /**
@@ -94,7 +97,8 @@ export const SearchPanelsContainer = ({
   onToggleAboutCSDAModal,
   onToggleAboutCwicModal,
   onTogglePanels,
-  onExport,
+  onCollectionExport,
+  onGranuleExport,
   panels,
   preferences,
   match,
@@ -120,7 +124,8 @@ export const SearchPanelsContainer = ({
     onToggleAboutCSDAModal={onToggleAboutCSDAModal}
     onToggleAboutCwicModal={onToggleAboutCwicModal}
     onTogglePanels={onTogglePanels}
-    onExport={onExport}
+    onCollectionExport={onCollectionExport}
+    onGranuleExport={onGranuleExport}
     panels={panels}
     preferences={preferences}
     match={match}
@@ -148,7 +153,8 @@ SearchPanelsContainer.propTypes = {
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
-  onExport: PropTypes.func.isRequired,
+  onCollectionExport: PropTypes.func.isRequired,
+  onGranuleExport: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   preferences: PropTypes.shape({}).isRequired,

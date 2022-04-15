@@ -38,8 +38,8 @@ describe('GranuleRequest#permittedCmrKeys', () => {
       'circle',
       'cloud_cover',
       'concept_id',
+      'collection_concept_id',
       'day_night_flag',
-      'echo_collection_id',
       'equator_crossing_date',
       'equator_crossing_longitude',
       'exclude',
@@ -89,7 +89,7 @@ describe('GranuleRequest#transformResponse', () => {
 
     const data = {
       feed: {
-        id: 'https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C123456-MOCK&page_num=2&page_size=20&sort_key=-start_date',
+        id: 'https://cmr.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=C123456-MOCK&page_num=2&page_size=20&sort_key=-start_date',
         title: 'ECHO granule metadata',
         updated: '2019-05-21T01:08:02.143Z',
         entry: [{
@@ -128,7 +128,7 @@ describe('GranuleRequest#transformResponse', () => {
 
       const data = {
         feed: {
-          id: 'https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C123456-MOCK&page_num=2&page_size=20&sort_key=-start_date',
+          id: 'https://cmr.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=C123456-MOCK&page_num=2&page_size=20&sort_key=-start_date',
           title: 'ECHO granule metadata',
           updated: '2019-05-21T01:08:02.143Z',
           entry: [{
@@ -167,7 +167,7 @@ describe('GranuleRequest#transformResponse', () => {
 
       const data = {
         feed: {
-          id: 'https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C123456-MOCK&page_num=2&page_size=20&sort_key=-start_date',
+          id: 'https://cmr.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=C123456-MOCK&page_num=2&page_size=20&sort_key=-start_date',
           title: 'ECHO granule metadata',
           updated: '2019-05-21T01:08:02.143Z',
           entry: [{
@@ -218,7 +218,7 @@ describe('GranuleRequest#transformResponse', () => {
 
       const data = {
         feed: {
-          id: 'https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C123456-MOCK&page_num=2&page_size=20&sort_key=-start_date',
+          id: 'https://cmr.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=C123456-MOCK&page_num=2&page_size=20&sort_key=-start_date',
           title: 'ECHO granule metadata',
           updated: '2019-05-21T01:08:02.143Z',
           entry: [{

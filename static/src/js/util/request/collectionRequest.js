@@ -39,7 +39,7 @@ export default class CollectionRequest extends CmrRequest {
       'concept_id',
       'data_center_h',
       'data_center',
-      'echo_collection_id',
+      'collection_concept_id',
       'facets_size',
       'granule_data_format_h',
       'granule_data_format',

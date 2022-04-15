@@ -16,6 +16,7 @@ import {
   FaLock
 } from 'react-icons/fa'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
@@ -43,6 +44,8 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import { isDefaultPortal } from '../../util/portals'
 
 import './SearchPanels.scss'
+
+const { maxGranuleCountForExport } = getApplicationConfig()
 
 /**
  * Renders SearchPanels.
@@ -154,7 +157,8 @@ class SearchPanels extends PureComponent {
       match,
       onApplyGranuleFilters,
       onChangeQuery,
-      onExport,
+      onCollectionExport,
+      onGranuleExport,
       onFocusedCollectionChange,
       onMetricsCollectionSortChange,
       onToggleAboutCSDAModal,
@@ -207,7 +211,7 @@ class SearchPanels extends PureComponent {
     })
     const {
       allIds: allGranuleIds = [],
-      hits: granuleHits = '0',
+      hits: granuleHits = 0,
       isLoading: granulesIsLoading,
       isLoaded: granulesIsLoaded
     } = granuleSearchResults
@@ -226,6 +230,17 @@ class SearchPanels extends PureComponent {
     const granuleResultsHeaderMetaPrimaryText = `Showing ${commafy(allGranuleIds.length)} of ${commafy(
       granuleHits
     )} matching ${pluralize('granule', granuleHits)}`
+
+    const granuleExportDisabledProps = {}
+
+    if (!granuleHits) {
+      granuleExportDisabledProps.exportDisabled = true
+    }
+
+    if (granuleHits > maxGranuleCountForExport) {
+      granuleExportDisabledProps.exportDisabled = true
+      granuleExportDisabledProps.exportDisabledMessage = `Exports are not supported for searches that return greater than ${commafy(maxGranuleCountForExport)} results`
+    }
 
     let collectionResultsHeaderMetaPrimaryText = ''
     let collectionResultsPrimaryHeading = ''
@@ -332,19 +347,37 @@ class SearchPanels extends PureComponent {
     ]
 
     const {
-      csv: csvExportRunning,
-      json: jsonExportRunning
+      collection: isCollectionExportRunning,
+      granule: isGranuleExportRunning
     } = isExportRunning
-    const exportsArray = [
+
+    const {
+      csv: collectionCsvExportRunning,
+      json: collectionJsonExportRunning
+    } = isCollectionExportRunning
+
+    const {
+      stac: granuleStacExportRunning
+    } = isGranuleExportRunning
+
+    const collectionExportsArray = [
       {
         label: 'CSV',
-        onClick: () => onExport('csv'),
-        inProgress: csvExportRunning
+        onClick: () => onCollectionExport('csv'),
+        inProgress: collectionCsvExportRunning
       },
       {
         label: 'JSON',
-        onClick: () => onExport('json'),
-        inProgress: jsonExportRunning
+        onClick: () => onCollectionExport('json'),
+        inProgress: collectionJsonExportRunning
+      }
+    ]
+
+    const granuleExportsArray = [
+      {
+        label: 'STAC',
+        onClick: () => onGranuleExport('stac'),
+        inProgress: granuleStacExportRunning
       }
     ]
 
@@ -394,7 +427,7 @@ class SearchPanels extends PureComponent {
         headerMetaPrimaryLoading={initialCollectionsLoading}
         headerMetaPrimaryText={collectionResultsHeaderMetaPrimaryText}
         headerLoading={initialCollectionsLoading}
-        exportsArray={exportsArray}
+        exportsArray={collectionExportsArray}
         viewsArray={collectionsViewsArray}
         activeView={collectionPanelView}
         sortsArray={collectionsSortsArray}
@@ -508,6 +541,8 @@ class SearchPanels extends PureComponent {
           ...subscriptionsMoreActionsItem
         ]}
         onPanelClose={this.onPanelClose}
+        exportsArray={granuleExportsArray}
+        {...granuleExportDisabledProps}
       >
         <PanelItem scrollable={false}>
           <GranuleResultsBodyContainer panelView={granulePanelView} />
@@ -746,8 +781,13 @@ SearchPanels.propTypes = {
   }).isRequired,
   handoffs: PropTypes.shape({}).isRequired,
   isExportRunning: PropTypes.shape({
-    csv: PropTypes.bool,
-    json: PropTypes.bool
+    collection: PropTypes.shape({
+      csv: PropTypes.bool,
+      json: PropTypes.bool
+    }),
+    granule: PropTypes.shape({
+      stac: PropTypes.bool
+    })
   }).isRequired,
   location: PropTypes.shape({
     search: PropTypes.string
@@ -759,7 +799,8 @@ SearchPanels.propTypes = {
   }).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
-  onExport: PropTypes.func.isRequired,
+  onCollectionExport: PropTypes.func.isRequired,
+  onGranuleExport: PropTypes.func.isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,

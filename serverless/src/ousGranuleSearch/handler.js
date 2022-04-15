@@ -28,9 +28,9 @@ const ousGranuleSearch = async (event) => {
 
   const { params = {}, requestId } = JSON.parse(body)
 
-  // We need echo_collection_id to construct the URL but it is not listed
+  // We need collection_concept_id to construct the URL but it is not listed
   // as a permitted key so it will be ignored when the request is made
-  const { echo_collection_id: echoCollectionId } = params
+  const { collection_concept_id: collectionId } = params
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
@@ -39,7 +39,7 @@ const ousGranuleSearch = async (event) => {
   try {
     return doSearchRequest({
       jwtToken: getJwtToken(event),
-      path: `/service-bridge/ous/collection/${echoCollectionId}`,
+      path: `/service-bridge/ous/collection/${collectionId}`,
       params: buildParams({
         body,
         permittedCmrKeys,

@@ -14,11 +14,11 @@ export default class OusGranuleRequest extends CmrRequest {
   }
 
   permittedCmrKeys() {
-    // We need echo_collection_id to construct the URL for the request to CMR
+    // We need collection_concept_id to construct the URL for the request to CMR
     // so its permitted here but it is not permitted in the lambda function
     return [
       'bounding_box',
-      'echo_collection_id',
+      'collection_concept_id',
       'exclude_granules',
       'granules',
       'format',

@@ -1,7 +1,7 @@
 {
   "feed": {
     "updated": "2021-06-02T20:36:14.940Z",
-    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?cloud_cover=&echo_collection_id=C1214470488-ASF&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20&temporal=2000-01-20T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z%2C1%2C31",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?cloud_cover=&collection_concept_id=C1214470488-ASF&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20&temporal=2000-01-20T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z%2C1%2C31",
     "title": "ECHO granule metadata",
     "entry": [
       {

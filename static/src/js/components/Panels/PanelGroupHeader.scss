@@ -106,7 +106,13 @@
     border-left: 1px solid $color__black--300;
     transition: 0.2s ease-in-out;
 
-    &:hover {
+    &.radio-setting-dropdown--disabled {
+      .custom-toggle__icon {
+        color: $color__black--300;
+      }
+    }
+
+    &:hover:not(.radio-setting-dropdown--disabled) {
       background-color: darken($color__black--200, 5);
 
       .custom-toggle__icon {

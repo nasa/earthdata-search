@@ -12,7 +12,7 @@ describe('getPageOfGranules', () => {
 
     nock(/cmr/)
       .matchHeader('Echo-Token', 'token')
-      .post(/granules/, 'echo_collection_id=C100000-EDSC&page_num=1&page_size=20')
+      .post(/granules/, 'collection_concept_id=C100000-EDSC&page_num=1&page_size=20')
       .reply(200, {
         feed: {
           entry: [{
@@ -49,7 +49,7 @@ describe('getPageOfGranules', () => {
 
     nock(/cmr/)
       .matchHeader('Echo-Token', 'token')
-      .post(/granules/, 'echo_collection_id=C100000-EDSC&page_num=1&page_size=30')
+      .post(/granules/, 'collection_concept_id=C100000-EDSC&page_num=1&page_size=30')
       .reply(200, {
         feed: {
           entry: [{

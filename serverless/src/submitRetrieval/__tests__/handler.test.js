@@ -79,7 +79,7 @@ describe('submitRetrieval', () => {
         query.response({
           id: 19,
           granule_params: {
-            echo_collection_id: 'C10000005-EDSC',
+            collection_concept_id: 'C10000005-EDSC',
             bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
           }
         })
@@ -98,7 +98,7 @@ describe('submitRetrieval', () => {
     // granule_params should be snaked cased before inserting into db
     expect(queries[2].bindings[4]).toEqual({
       bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
-      echo_collection_id: 'C10000005-EDSC'
+      collection_concept_id: 'C10000005-EDSC'
     })
     // retrieve saved access configuration
     expect(queries[3].method).toEqual('select')
@@ -162,7 +162,7 @@ describe('submitRetrieval', () => {
     // granule_params should be snaked cased before inserting into db
     expect(queries[2].bindings[4]).toEqual({
       bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
-      echo_collection_id: 'C10000005-EDSC'
+      collection_concept_id: 'C10000005-EDSC'
     })
     // retrieve saved access configuration
     expect(queries[3].method).toEqual('select')

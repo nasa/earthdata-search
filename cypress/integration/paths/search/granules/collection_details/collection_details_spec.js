@@ -199,7 +199,7 @@ describe('Path /search/granules/collection-details', () => {
       (req) => {
         expect(JSON.parse(req.body).params).to.eql({
           concept_id: [],
-          echo_collection_id: 'C1240222820-ECHO_REST',
+          collection_concept_id: 'C1240222820-ECHO_REST',
           exclude: {},
           options: {},
           page_num: 1,
@@ -281,7 +281,7 @@ describe('Path /search/granules/collection-details', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+        expect(req.body).to.eq('collection_concept_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
 
         req.reply({
           body: reformattingsGranulesBody,

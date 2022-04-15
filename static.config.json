@@ -29,6 +29,7 @@
     ],
     "defaultMaxOrderSize": 1000000,
     "defaultGranulesPerOrder": 2000,
+    "maxGranuleCountForExport": 1000000,
     "defaultSpatialDecimalSize": 5,
     "ummGranuleVersion": "1.6.4",
     "ummServiceVersion": "1.4",

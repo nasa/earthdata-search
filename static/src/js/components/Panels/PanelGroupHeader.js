@@ -26,6 +26,9 @@ import './PanelGroupHeader.scss'
  * @param {String} props.activeSort - The active sort option
  * @param {String} props.activeView - The active view option
  * @param {Array} props.breadcrumbs - An array of objects used to configure the breadcrumbs
+ * @param {Array} props.exportsArray -An array of export options
+ * @param {Boolean} props.exportDisabled - Flag to disable the exports button
+ * @param {String} props.exportDisabledMessage - Optional message to show in a tooltip when the exports are disabled
  * @param {Array} props.handoffLinks - An array of objects used to configure the handoff links
  * @param {Boolean} props.headerLoading - A flag designating the header loading state
  * @param {Node} props.headerMessage - The element to be used as the header message
@@ -44,6 +47,9 @@ export const PanelGroupHeader = ({
   activeSort,
   activeView,
   breadcrumbs,
+  exportsArray,
+  exportDisabled,
+  exportDisabledMessage,
   handoffLinks,
   headerMessage,
   headerMetaPrimaryLoading,
@@ -52,7 +58,6 @@ export const PanelGroupHeader = ({
   primaryHeading,
   headerLoading,
   moreActionsDropdownItems,
-  exportsArray,
   secondaryHeading,
   sortsArray,
   viewsArray
@@ -290,6 +295,8 @@ export const PanelGroupHeader = ({
                         activeIcon={FaFileExport}
                         label="Export"
                         settings={exportsArray}
+                        disabled={exportDisabled}
+                        tooltip={exportDisabledMessage}
                       />
                     )
                   }
@@ -330,6 +337,9 @@ PanelGroupHeader.defaultProps = {
   activeView: '',
   activeSort: '',
   breadcrumbs: [],
+  exportsArray: [],
+  exportDisabled: false,
+  exportDisabledMessage: '',
   handoffLinks: [],
   headingLink: null,
   headerMessage: null,
@@ -339,7 +349,6 @@ PanelGroupHeader.defaultProps = {
   panelGroupId: null,
   primaryHeading: null,
   headerLoading: false,
-  exportsArray: [],
   viewsArray: [],
   secondaryHeading: null,
   sortsArray: []
@@ -349,6 +358,9 @@ PanelGroupHeader.propTypes = {
   activeSort: PropTypes.string,
   activeView: PropTypes.string,
   breadcrumbs: PropTypes.arrayOf(PropTypes.shape({})),
+  exportsArray: PropTypes.arrayOf(PropTypes.shape({})),
+  exportDisabled: PropTypes.bool,
+  exportDisabledMessage: PropTypes.string,
   handoffLinks: PropTypes.arrayOf(PropTypes.shape({})),
   headingLink: PropTypes.shape({}),
   headerMessage: PropTypes.node,
@@ -367,7 +379,6 @@ PanelGroupHeader.propTypes = {
   panelGroupId: PropTypes.string,
   primaryHeading: PropTypes.string,
   headerLoading: PropTypes.bool,
-  exportsArray: PropTypes.arrayOf(PropTypes.shape({})),
   viewsArray: PropTypes.arrayOf(PropTypes.shape({})),
   secondaryHeading: PropTypes.node,
   sortsArray: PropTypes.arrayOf(PropTypes.shape({}))

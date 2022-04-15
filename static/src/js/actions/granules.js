@@ -333,7 +333,7 @@ export const fetchOpendapLinks = (retrievalCollectionData) => (dispatch, getStat
   const ousPayload = {
     format,
     variables,
-    echo_collection_id: collectionId
+    collection_concept_id: collectionId
   }
 
   // If conceptId is truthy, send those granules explictly.

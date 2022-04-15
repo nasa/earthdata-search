@@ -58,7 +58,7 @@ function setup(overrides) {
         },
         granuleDatasource: {
           title: 'CMR',
-          href: 'https://cmr.earthdata.nasa.gov/search/granules.json?echo_collection_id=C179003620-ORNL_DAAC'
+          href: 'https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C179003620-ORNL_DAAC'
         }
       },
       ...overrideMetadata
@@ -190,7 +190,7 @@ describe('CollectionDetailsBody component', () => {
             },
             granuleDatasource: {
               title: 'CMR',
-              href: 'https://cmr.earthdata.nasa.gov/search/granules.json?echo_collection_id=C179003620-ORNL_DAAC'
+              href: 'https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C179003620-ORNL_DAAC'
             }
           }
         })

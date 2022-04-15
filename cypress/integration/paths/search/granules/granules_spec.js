@@ -136,7 +136,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
+        expect(req.body).to.eq('collection_concept_id=C1214470488-ASF&page_num=1&page_size=20')
 
         req.reply({
           body: noParamsGranulesBody,
@@ -195,7 +195,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&options%5Breadable_granule_name%5D%5Bpattern%5D=true&page_num=1&page_size=20&readable_granule_name%5B%5D=S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1')
+        expect(req.body).to.eq('collection_concept_id=C1214470488-ASF&options%5Breadable_granule_name%5D%5Bpattern%5D=true&page_num=1&page_size=20&readable_granule_name%5B%5D=S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1')
 
         req.reply({
           body: readableGranuleNameGranulesBody,
@@ -255,7 +255,7 @@ describe('Path /search/granules', () => {
           url: '**/search/granules.json'
         },
         (req) => {
-          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2020-01-01T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z')
+          expect(req.body).to.eq('collection_concept_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2020-01-01T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z')
 
           req.reply({
             body: temporalGranulesBody,
@@ -318,7 +318,7 @@ describe('Path /search/granules', () => {
           url: '**/search/granules.json'
         },
         (req) => {
-          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2000-01-20T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z%2C1%2C31')
+          expect(req.body).to.eq('collection_concept_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2000-01-20T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z%2C1%2C31')
 
           req.reply({
             body: recurringTemporalGranulesBody,
@@ -384,7 +384,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('browse_only=true&echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
+        expect(req.body).to.eq('browse_only=true&collection_concept_id=C1214470488-ASF&page_num=1&page_size=20')
 
         req.reply({
           body: browseOnlyGranulesBody,
@@ -444,7 +444,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&online_only=true&page_num=1&page_size=20')
+        expect(req.body).to.eq('collection_concept_id=C1214470488-ASF&online_only=true&page_num=1&page_size=20')
 
         req.reply({
           body: onlineOnlyGranulesBody,
@@ -504,7 +504,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&orbit_number%5Bmin%5D=30000&orbit_number%5Bmax%5D=30005&page_num=1&page_size=20')
+        expect(req.body).to.eq('collection_concept_id=C1214470488-ASF&orbit_number%5Bmin%5D=30000&orbit_number%5Bmax%5D=30005&page_num=1&page_size=20')
 
         req.reply({
           body: orbitNumberGranulesBody,
@@ -564,7 +564,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1251101828-GES_DISC&equator_crossing_longitude%5Bmin%5D=-5&equator_crossing_longitude%5Bmax%5D=5&page_num=1&page_size=20')
+        expect(req.body).to.eq('collection_concept_id=C1251101828-GES_DISC&equator_crossing_longitude%5Bmin%5D=-5&equator_crossing_longitude%5Bmax%5D=5&page_num=1&page_size=20')
 
         req.reply({
           body: equatorialCrossingLongitudeGranulesBody,
@@ -624,7 +624,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1251101828-GES_DISC&equator_crossing_date=2021-01-01T00%3A00%3A00.000Z%2C2021-01-31T23%3A59%3A59.999Z&page_num=1&page_size=20')
+        expect(req.body).to.eq('collection_concept_id=C1251101828-GES_DISC&equator_crossing_date=2021-01-01T00%3A00%3A00.000Z%2C2021-01-31T23%3A59%3A59.999Z&page_num=1&page_size=20')
 
         req.reply({
           body: equatorialCrossingDateGranulesBody,
@@ -684,7 +684,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-end_date')
+        expect(req.body).to.eq('collection_concept_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-end_date')
 
         req.reply({
           body: sortKeyGranulesBody,
@@ -744,7 +744,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('cloud_cover=10%2C15&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
+        expect(req.body).to.eq('cloud_cover=10%2C15&collection_concept_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
 
         req.reply({
           body: cloudCoverGranulesBody,
@@ -804,7 +804,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('day_night_flag=BOTH&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
+        expect(req.body).to.eq('collection_concept_id=C194001210-LPDAAC_ECS&day_night_flag=BOTH&page_num=1&page_size=20')
 
         req.reply({
           body: dayNightGranulesBody,
@@ -863,7 +863,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&two_d_coordinate_system%5Bname%5D=MODIS%20Tile%20SIN&two_d_coordinate_system%5Bcoordinates%5D=0-0%3A0-0%2C15-15%3A15-15')
+        expect(req.body).to.eq('collection_concept_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&two_d_coordinate_system%5Bname%5D=MODIS%20Tile%20SIN&two_d_coordinate_system%5Bcoordinates%5D=0-0%3A0-0%2C15-15%3A15-15')
 
         req.reply({
           body: gridCoordsGranulesBody,
@@ -934,7 +934,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&temporal=2015-01-03T00%3A00%3A00.000Z%2C2015-01-03T23%3A59%3A59.999Z')
+        expect(req.body).to.eq('collection_concept_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&temporal=2015-01-03T00%3A00%3A00.000Z%2C2015-01-03T23%3A59%3A59.999Z')
 
         req.reply({
           body: timelineGranulesBody,
@@ -998,7 +998,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&sort_key=-start_date')
+        expect(req.body).to.eq('collection_concept_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&sort_key=-start_date')
 
         req.reply({
           body: focusedGranuleGranulesBody,
@@ -1070,7 +1070,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        if (req.body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20') {
+        if (req.body === 'collection_concept_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20') {
           req.alias = 'granulesQuery'
           req.reply({
             body: projectGranuleGranulesBody,
@@ -1080,7 +1080,7 @@ describe('Path /search/granules', () => {
             }
           })
         }
-        if (req.body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=1&concept_id%5B%5D=G2058417402-LPDAAC_ECS') {
+        if (req.body === 'collection_concept_id=C194001210-LPDAAC_ECS&page_num=1&page_size=1&concept_id%5B%5D=G2058417402-LPDAAC_ECS') {
           req.alias = 'projectGranulesQuery'
           req.reply({
             body: projectGranuleProjectGranuleBody,
@@ -1154,7 +1154,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
+        expect(req.body).to.eq('collection_concept_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
 
         req.reply({
           body: projectCollectionGranulesBody,
@@ -1254,7 +1254,7 @@ describe('Path /search/granules', () => {
       },
       (req) => {
         expect(JSON.parse(req.body).params).to.eql({
-          echo_collection_id: 'C1214470488-ASF',
+          collection_concept_id: 'C1214470488-ASF',
           options: {},
           page_num: 1,
           page_size: 20,

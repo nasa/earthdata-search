@@ -1018,7 +1018,7 @@ export const updateProps = {
       },
       granuleDatasource: {
         title: 'CMR',
-        href: 'https://cmr.earthdata.nasa.gov/search/granules.json?echo_collection_id=C194001241-LPDAAC_ECS'
+        href: 'https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C194001241-LPDAAC_ECS'
       }
     },
     dataCenters: [

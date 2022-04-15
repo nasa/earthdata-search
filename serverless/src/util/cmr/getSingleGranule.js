@@ -21,7 +21,7 @@ axiosRetry(axios, { retries: 4 })
  */
 export const getSingleGranule = async (cmrToken, collectionId) => {
   const cmrParams = {
-    echo_collection_id: collectionId,
+    collection_concept_id: collectionId,
     page_num: 1,
     page_size: 1
   }

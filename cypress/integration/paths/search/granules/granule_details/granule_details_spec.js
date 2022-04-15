@@ -38,7 +38,7 @@ describe('Path /search/granules/granule-details', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
+        expect(req.body).to.eq('collection_concept_id=C1214470488-ASF&page_num=1&page_size=20')
 
         req.reply({
           body: granulesBody,

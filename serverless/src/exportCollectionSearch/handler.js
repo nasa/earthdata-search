@@ -15,7 +15,7 @@ const wrappedAxios = wrapAxios(axios)
  * Perform a loop through collection results and return the full results in the requested format.
  * @param {Object} event Details about the HTTP request that it received
  */
-const exportSearch = async (event, context) => {
+const exportCollectionSearch = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
@@ -82,7 +82,7 @@ const exportSearch = async (event, context) => {
       const { collections = {} } = responseData.data
       const { cursor: responseCursor, items = [] } = collections
 
-      console.log(`Request for ${items.length} exportSearch collections successfully completed in ${elapsedTime} ms`)
+      console.log(`Request for ${items.length} exportCollectionSearch collections successfully completed in ${elapsedTime} ms`)
 
       // Set the cursor returned from GraphQl so the next loop will use it
       cursor = responseCursor
@@ -122,4 +122,4 @@ const exportSearch = async (event, context) => {
   }
 }
 
-export default exportSearch
+export default exportCollectionSearch

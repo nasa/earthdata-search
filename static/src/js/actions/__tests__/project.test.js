@@ -267,7 +267,7 @@ describe('getProjectCollections', () => {
       .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=collectionId',
           title: 'ECHO granule metadata',
           entry: [{
             id: 'G1000001-EDSC'
@@ -450,7 +450,7 @@ describe('getProjectCollections', () => {
         .reply(200, {
           feed: {
             updated: '2019-03-27T20:21:14.705Z',
-            id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+            id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=collectionId',
             title: 'ECHO granule metadata',
             entry: [{
               id: 'G1000001-EDSC'

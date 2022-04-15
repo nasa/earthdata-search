@@ -1,8 +1,16 @@
 import { EXPORT_FINISHED, EXPORT_STARTED } from '../constants/actionTypes'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
-import ExportSearchRequest from '../util/request/exportSearchRequest'
+import {
+  prepareGranuleParams,
+  buildGranuleSearchParams,
+  extractGranuleSearchParams
+} from '../util/granules'
+import ExportCollectionSearchRequest from '../util/request/exportCollectionSearchRequest'
+import ExportGranuleSearchRequest from '../util/request/exportGranuleSearchRequest'
 import { handleError } from './errors'
+import { getFocusedCollectionId } from '../selectors/focusedCollection'
+import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
 
 export const onExportStarted = (payload) => ({
   type: EXPORT_STARTED,
@@ -18,8 +26,11 @@ export const onExportFinished = (payload) => ({
  * Fetch the collection search export in the given format
  * @param {String} format Format for the export (JSON, CSV)
  */
-export const exportSearch = (format) => (dispatch, getState) => {
-  dispatch(onExportStarted(format))
+export const exportCollectionSearch = (format) => (dispatch, getState) => {
+  dispatch(onExportStarted({
+    type: 'collection',
+    format
+  }))
 
   const state = getState()
 
@@ -32,7 +43,7 @@ export const exportSearch = (format) => (dispatch, getState) => {
     authToken
   } = collectionParams
 
-  const graphQlRequestObject = new ExportSearchRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new ExportCollectionSearchRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     query SearchCollections(
@@ -149,10 +160,16 @@ export const exportSearch = (format) => (dispatch, getState) => {
       // Remove the link from the page
       link.parentNode.removeChild(link)
 
-      dispatch(onExportFinished(format))
+      dispatch(onExportFinished({
+        type: 'collection',
+        format
+      }))
     })
     .catch((error) => {
-      dispatch(onExportFinished(format))
+      dispatch(onExportFinished({
+        type: 'collection',
+        format
+      }))
 
       dispatch(handleError({
         error,
@@ -169,8 +186,11 @@ export const exportSearch = (format) => (dispatch, getState) => {
  * Fetch the collection search export in the given format
  * @param {String} format Format for the export (JSON, CSV)
  */
-export const exportSearchAsStac = (format) => (dispatch, getState) => {
-  dispatch(onExportStarted(format))
+export const exportCollectionSearchAsStac = (format) => (dispatch, getState) => {
+  dispatch(onExportStarted({
+    type: 'collection',
+    format
+  }))
 
   const state = getState()
 
@@ -183,7 +203,7 @@ export const exportSearchAsStac = (format) => (dispatch, getState) => {
     authToken
   } = collectionParams
 
-  const graphQlRequestObject = new ExportSearchRequest(authToken, earthdataEnvironment)
+  const graphQlRequestObject = new ExportCollectionSearchRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
     query SearchCollections(
@@ -300,16 +320,99 @@ export const exportSearchAsStac = (format) => (dispatch, getState) => {
       // Remove the link from the page
       link.parentNode.removeChild(link)
 
-      dispatch(onExportFinished(format))
+      dispatch(onExportFinished({
+        type: 'collection',
+        format
+      }))
     })
     .catch((error) => {
-      dispatch(onExportFinished(format))
+      dispatch(onExportFinished({
+        type: 'collection',
+        format
+      }))
 
       dispatch(handleError({
         error,
         action: 'exportSearch',
         resource: 'collections',
         graphQlRequestObject
+      }))
+    })
+
+  return response
+}
+
+/**
+ * Fetch the granule search export in the given format
+ * @param {String} format Format for the export (stac)
+ */
+export const exportGranuleSearch = (format) => (dispatch, getState) => {
+  dispatch(onExportStarted({
+    type: 'granule',
+    format
+  }))
+
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const collectionId = getFocusedCollectionId(state)
+  const collectionMetadata = getFocusedCollectionMetadata(state)
+  const extractedGranuleParams = extractGranuleSearchParams(state, collectionId)
+
+  const granuleParams = prepareGranuleParams(
+    collectionMetadata,
+    extractedGranuleParams
+  )
+
+  const searchParams = buildGranuleSearchParams(granuleParams)
+
+  const { authToken } = state
+
+  const requestObject = new ExportGranuleSearchRequest(authToken, earthdataEnvironment)
+
+  const response = requestObject.search({
+    ...searchParams
+  })
+    .then((response) => {
+      const { data } = response
+
+      // Create a blob with the text data from the export
+      const blob = new Blob([JSON.stringify(data, null, 2)])
+
+      const url = window.URL.createObjectURL(blob)
+
+      // Create a hyperlink to the blob and give it a filename
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'edsc_granule_results_export.json')
+
+      // Add the link to the page
+      document.body.appendChild(link)
+
+      // Click on the link to download the export file to the user's computer
+      link.click()
+
+      // Remove the link from the page
+      link.parentNode.removeChild(link)
+
+      dispatch(onExportFinished({
+        type: 'granule',
+        format
+      }))
+    })
+    .catch((error) => {
+      dispatch(onExportFinished({
+        type: 'granule',
+        format
+      }))
+
+      dispatch(handleError({
+        error,
+        action: 'exportSearch',
+        resource: 'granules',
+        requestObject
       }))
     })
 

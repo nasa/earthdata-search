@@ -267,8 +267,8 @@
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: concepts/metadata
 
-  exportSearch:
-    handler: serverless/src/exportSearch/handler.default
+  exportCollectionSearch:
+    handler: serverless/src/exportCollectionSearch/handler.default
     timeout: 300
     memorySize: 192
     events:
@@ -276,6 +276,20 @@
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: collections/export
+          authorizer:
+            name: edlOptionalAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
+  exportGranuleSearch:
+    handler: serverless/src/exportGranuleSearch/handler.default
+    timeout: 300
+    memorySize: 192
+    events:
+      - http:
+          method: post
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: granules/export
           authorizer:
             name: edlOptionalAuthorizer
             type: request

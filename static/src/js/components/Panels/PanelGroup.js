@@ -16,6 +16,9 @@ import './PanelGroup.scss'
  * @param {Array} props.breadcrumbs - An array of objects used to configure the breadcrumbs
  * @param {Node} props.children - The panel group children, should consist only of PanelItem components
  * @param {String} props.dataTestId - Test ID to add to the dom element
+ * @param {Array} props.exportsArray -An array of export options
+ * @param {Boolean} props.exportDisabled - Flag to disable the exports button
+ * @param {String} props.exportDisabledMessage - Optional message to show in a tooltip when the exports are disabled
  * @param {Node} props.footer - The element to be used as the footer
  * @param {Array} props.handoffLinks - An array of objects used to configure the handoff links
  * @param {Boolean} props.headerLoading - A flag designating the header loading state
@@ -40,6 +43,8 @@ export const PanelGroup = ({
   children,
   dataTestId,
   exportsArray,
+  exportDisabled,
+  exportDisabledMessage,
   footer,
   handoffLinks,
   headerLoading,
@@ -94,6 +99,8 @@ export const PanelGroup = ({
         activeView={activeView}
         breadcrumbs={breadcrumbs}
         exportsArray={exportsArray}
+        exportDisabled={exportDisabled}
+        exportDisabledMessage={exportDisabledMessage}
         handoffLinks={handoffLinks}
         headerLoading={headerLoading}
         headerMessage={headerMessage}
@@ -120,6 +127,8 @@ PanelGroup.defaultProps = {
   breadcrumbs: [],
   dataTestId: undefined,
   exportsArray: [],
+  exportDisabled: false,
+  exportDisabledMessage: '',
   footer: null,
   handoffLinks: [],
   headerMessage: null,
@@ -150,6 +159,8 @@ PanelGroup.propTypes = {
   ]).isRequired,
   dataTestId: PropTypes.string,
   exportsArray: PropTypes.arrayOf(PropTypes.shape({})),
+  exportDisabled: PropTypes.bool,
+  exportDisabledMessage: PropTypes.string,
   footer: PropTypes.node,
   handoffLinks: PropTypes.arrayOf(PropTypes.shape({})),
   headerMessage: PropTypes.node,

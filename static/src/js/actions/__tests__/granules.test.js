@@ -64,7 +64,7 @@ describe('getSearchGranules', () => {
       .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=collectionId',
           title: 'ECHO granule metadata',
           entry: [{
             mockGranuleData: 'goes here'
@@ -163,7 +163,7 @@ describe('getSearchGranules', () => {
       .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=collectionId',
           title: 'ECHO granule metadata',
           entry: [{
             mockGranuleData: 'goes here'
@@ -530,7 +530,7 @@ describe('getProjectGranules', () => {
       .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=collectionId',
           title: 'ECHO granule metadata',
           entry: [{
             mockGranuleData: 'goes here'
@@ -634,7 +634,7 @@ describe('getProjectGranules', () => {
       .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=collectionId',
           title: 'ECHO granule metadata',
           entry: [{
             mockGranuleData: 'goes here'
@@ -905,7 +905,7 @@ describe('getProjectGranules', () => {
       .reply(200, {
         feed: {
           updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?collection_concept_id=collectionId',
           title: 'ECHO granule metadata',
           entry: [{
             mockGranuleData: 'goes here'
@@ -1174,7 +1174,7 @@ describe('fetchLinks', () => {
       collection_id: 'C10000005-EDSC',
       collection_metadata: {},
       granule_params: {
-        echo_collection_id: 'C10000005-EDSC',
+        collection_concept_id: 'C10000005-EDSC',
         bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
       },
       granule_count: 588
@@ -1235,7 +1235,7 @@ describe('fetchLinks', () => {
       collection_id: 'C10000005-EDSC',
       collection_metadata: {},
       granule_params: {
-        echo_collection_id: 'C10000005-EDSC',
+        collection_concept_id: 'C10000005-EDSC',
         bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
       },
       granule_count: 1
@@ -1346,7 +1346,7 @@ describe('fetchLinks', () => {
         collection_id: 'C10000005-EDSC',
         collection_metadata: {},
         granule_params: {
-          echo_collection_id: 'C10000005-EDSC',
+          collection_concept_id: 'C10000005-EDSC',
           bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
         },
         granule_count: 588
@@ -1405,7 +1405,7 @@ describe('fetchOpendapLinks', () => {
         // Ensure that the payload we're sending OUS is correct
         return JSON.stringify(params) === JSON.stringify({
           bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
-          echo_collection_id: 'C10000005-EDSC',
+          collection_concept_id: 'C10000005-EDSC',
           format: 'nc4',
           variables: ['V1000004-EDSC']
         })
@@ -1433,7 +1433,7 @@ describe('fetchOpendapLinks', () => {
       collection_id: 'C10000005-EDSC',
       collection_metadata: {},
       granule_params: {
-        echo_collection_id: 'C10000005-EDSC',
+        collection_concept_id: 'C10000005-EDSC',
         bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
       },
       granule_count: 3
@@ -1468,7 +1468,7 @@ describe('fetchOpendapLinks', () => {
         // Ensure that the payload we're sending OUS is correct
         return JSON.stringify(params) === JSON.stringify({
           bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
-          echo_collection_id: 'C10000005-EDSC',
+          collection_concept_id: 'C10000005-EDSC',
           exclude_granules: true,
           granules: ['G10000404-EDSC'],
           format: 'nc4',
@@ -1498,7 +1498,7 @@ describe('fetchOpendapLinks', () => {
       collection_id: 'C10000005-EDSC',
       collection_metadata: {},
       granule_params: {
-        echo_collection_id: 'C10000005-EDSC',
+        collection_concept_id: 'C10000005-EDSC',
         bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'],
         exclude: {
           concept_id: ['G10000404-EDSC']
@@ -1536,7 +1536,7 @@ describe('fetchOpendapLinks', () => {
         // Ensure that the payload we're sending OUS is correct
         return JSON.stringify(params) === JSON.stringify({
           bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
-          echo_collection_id: 'C10000005-EDSC',
+          collection_concept_id: 'C10000005-EDSC',
           granules: ['G10000003-EDSC'],
           format: 'nc4',
           variables: ['V1000004-EDSC']
@@ -1564,7 +1564,7 @@ describe('fetchOpendapLinks', () => {
       collection_metadata: {},
       granule_params: {
         concept_id: ['G10000003-EDSC'],
-        echo_collection_id: 'C10000005-EDSC',
+        collection_concept_id: 'C10000005-EDSC',
         bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
       },
       granule_count: 1
@@ -1596,7 +1596,7 @@ describe('fetchOpendapLinks', () => {
 
         // Ensure that the payload we're sending OUS is correct
         return JSON.stringify(params) === JSON.stringify({
-          echo_collection_id: 'C10000005-EDSC',
+          collection_concept_id: 'C10000005-EDSC',
           format: 'nc4',
           variables: ['V1000004-EDSC']
         })
@@ -1624,7 +1624,7 @@ describe('fetchOpendapLinks', () => {
       collection_id: 'C10000005-EDSC',
       collection_metadata: {},
       granule_params: {
-        echo_collection_id: 'C10000005-EDSC'
+        collection_concept_id: 'C10000005-EDSC'
       },
       granule_count: 3
     }
@@ -1712,7 +1712,7 @@ describe('fetchOpenSearchLinks', () => {
         ]
       },
       granule_params: {
-        echo_collection_id: 'C10000005-EDSC'
+        collection_concept_id: 'C10000005-EDSC'
       },
       granule_count: 5
     }
@@ -1773,7 +1773,7 @@ describe('fetchOpenSearchLinks', () => {
         ]
       },
       granule_params: {
-        echo_collection_id: 'C10000005-EDSC'
+        collection_concept_id: 'C10000005-EDSC'
       },
       granule_count: 5
     }
