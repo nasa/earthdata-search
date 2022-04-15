@@ -599,13 +599,9 @@ export const fetchRetrievalCollectionGranuleBrowseLinks = (data) => (dispatch) =
   const {
     collection_metadata: collectionMetadata
   } = data
-  // TODO can't use this collection browseFlag to determine if the granules have browse, need to look at some of the granules to determine if browse exists
-  // Can I just use fetchBrowseLinks, look at the first page and if no browse links exist, stop requesting more?
-  // Or is there already a util somewhere I can use that looks at the first page?
-  // Maybe look at the granules on the project page, and save that information in the retrieval collection, and check that info here
 
   // Check for any granules retrieved in the project collection metadata for browseFlag = true
-  const { granules } = collectionMetadata
+  const { granules = {} } = collectionMetadata
   const { items: granuleItems = [] } = granules
 
   // let hasBrowse = false
