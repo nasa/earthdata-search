@@ -604,14 +604,10 @@ export const fetchRetrievalCollectionGranuleBrowseLinks = (data) => (dispatch) =
   const { granules = {} } = collectionMetadata
   const { items: granuleItems = [] } = granules
 
-  // let hasBrowse = false
   const hasBrowse = granuleItems.some((granule) => {
     const { browseFlag } = granule
 
     return browseFlag
-    // if (browseFlag) {
-    //   hasBrowse = true
-    // }
   })
 
   if (hasBrowse) {
