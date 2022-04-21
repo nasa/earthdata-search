@@ -73,7 +73,7 @@
     "@babel/register": "^7.16.0",
     "@babel/runtime": "^7.16.0",
     "@edsc/echoforms": "^1.1.11",
-    "@edsc/geo-utils": "^1.0.0",
+    "@edsc/geo-utils": "^1.0.1",
     "@edsc/timeline": "^1.1.3",
     "@googlemaps/google-maps-services-js": "^3.1.15",
     "acorn": "^8.7.0",
