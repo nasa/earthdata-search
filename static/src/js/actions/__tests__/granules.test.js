@@ -38,7 +38,6 @@ import {
 
 import OpenSearchGranuleRequest from '../../util/request/openSearchGranuleRequest'
 import * as EventEmitter from '../../events/events'
-import * as mbr from '../../util/map/mbr'
 import * as applicationConfig from '../../../../../sharedUtils/config'
 
 const mockStore = configureMockStore([thunk])
@@ -1548,8 +1547,6 @@ describe('fetchBrowseLinks', () => {
 })
 
 describe('fetchOpendapLinks', () => {
-  const mbrSpy = jest.spyOn(mbr, 'mbr')
-
   beforeEach(() => {
     jest.clearAllMocks()
   })
@@ -1613,8 +1610,6 @@ describe('fetchOpendapLinks', () => {
       },
       type: UPDATE_GRANULE_LINKS
     })
-
-    expect(mbrSpy).toBeCalledTimes(1)
   })
 
   test('calls lambda to get links from opendap with excluded granules', async () => {
@@ -1681,8 +1676,6 @@ describe('fetchOpendapLinks', () => {
       },
       type: UPDATE_GRANULE_LINKS
     })
-
-    expect(mbrSpy).toBeCalledTimes(1)
   })
 
   test('calls lambda to get links from opendap when using additive model', async () => {
@@ -1742,8 +1735,6 @@ describe('fetchOpendapLinks', () => {
       },
       type: UPDATE_GRANULE_LINKS
     })
-
-    expect(mbrSpy).toBeCalledTimes(1)
   })
 
   test('calls lambda to get links from opendap without spatial params added', async () => {

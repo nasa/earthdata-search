@@ -10,6 +10,12 @@ import {
 import { FeatureGroup } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
 import L from 'leaflet'
+import {
+  makeCounterClockwise,
+  getShape,
+  splitListOfPoints,
+  mbr
+} from '@edsc/geo-utils'
 
 import 'leaflet-draw/dist/leaflet.draw.css'
 import icon from 'leaflet-draw/dist/images/marker-icon.png'
@@ -18,8 +24,6 @@ import iconShadow from 'leaflet-draw/dist/images/marker-shadow.png'
 import { eventEmitter } from '../../events/events'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { limitLatLngDecimalPoints } from '../../util/limitDecimalPoints'
-import { makeCounterClockwise, getShape, splitListOfPoints } from '../../util/map/geo'
-import { mbr } from '../../util/map/mbr'
 import { panFeatureGroupToCenter } from '../../util/map/actions/panFeatureGroupToCenter'
 
 const { defaultSpatialDecimalSize } = getApplicationConfig()

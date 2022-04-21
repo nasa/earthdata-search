@@ -4,7 +4,7 @@ import 'leaflet-draw'
 import {
   dividePolygon,
   makeCounterClockwise
-} from './geo'
+} from '@edsc/geo-utils'
 
 L.SphericalPolygon = L.Polygon.extend({
   includes: [L.LayerGroup.prototype, L.FeatureGroup.prototype],

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import EDSCEchoform from '@edsc/echoforms'
 import moment from 'moment'
 import { isEqual } from 'lodash'
-
-import { mbr } from '../../util/map/mbr'
+import { mbr } from '@edsc/geo-utils'
 
 import './EchoForm.scss'
 

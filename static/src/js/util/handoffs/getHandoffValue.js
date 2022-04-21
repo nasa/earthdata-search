@@ -1,7 +1,7 @@
 import moment from 'moment'
+import { mbr } from '@edsc/geo-utils'
 
 import { getValueForTag } from '../../../../../sharedUtils/tags'
-import { mbr } from '../map/mbr'
 import projections from '../map/projections'
 
 /**
