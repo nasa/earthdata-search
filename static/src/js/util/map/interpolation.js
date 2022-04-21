@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import L from 'leaflet'
-import { gcInterpolate } from './geo'
+import { gcInterpolate } from '@edsc/geo-utils'
 
 // Cartesian interpolation.  Averages lat and lng
 const interpolateCartesian = (ll0, ll1) => L.latLng(

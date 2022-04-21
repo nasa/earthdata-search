@@ -8,6 +8,7 @@ import {
   isEqual
 } from 'lodash'
 import { FaTimes } from 'react-icons/fa'
+import { dividePolygon } from '@edsc/geo-utils'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -25,7 +26,6 @@ import {
   getRectangles
 } from '../../util/map/layers'
 
-import { dividePolygon } from '../../util/map/geo'
 import { eventEmitter } from '../../events/events'
 import { getTemporal } from '../../util/edscDate'
 import { panBoundsToCenter } from '../../util/map/actions/panBoundsToCenter'

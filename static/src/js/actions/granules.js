@@ -1,6 +1,7 @@
 import { isCancel } from 'axios'
 import { isEmpty } from 'lodash'
 import camelcaseKeys from 'camelcase-keys'
+import { mbr } from '@edsc/geo-utils'
 import 'array-foreach-async'
 
 import actions from './index'
@@ -37,7 +38,6 @@ import {
   UPDATE_GRANULE_RESULTS,
   INITIALIZE_COLLECTION_GRANULES_QUERY
 } from '../constants/actionTypes'
-import { mbr } from '../util/map/mbr'
 import { prepareGranuleAccessParams } from '../../../../sharedUtils/prepareGranuleAccessParams'
 import { toggleSpatialPolygonWarning } from './ui'
 import {

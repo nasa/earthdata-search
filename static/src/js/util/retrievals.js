@@ -1,3 +1,5 @@
+import { mbr } from '@edsc/geo-utils'
+
 import {
   prepareGranuleParams,
   buildGranuleSearchParams,
@@ -10,7 +12,6 @@ import {
   getProjectCollectionsMetadata
 } from '../selectors/project'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
-import { mbr } from './map/mbr'
 
 /**
  * Prepare parameters used in submitRetrieval() based on current Redux State
