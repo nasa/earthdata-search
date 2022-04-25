@@ -48,11 +48,12 @@ provider:
     securityGroupIds:
       - Fn::ImportValue: ${self:provider.stage}-LambdaSecurityGroup
     subnetIds:
-      - ${env:SUBNET_ID_A}
-      - ${env:SUBNET_ID_B}
+      - ${env:SUBNET_ID_A, 'subnetIdA'}
+      - ${env:SUBNET_ID_B, 'subnetIdB'}
 
-  role:
-    Fn::ImportValue: ${self:provider.stage}-EDSCServerlessAppRole
+  iam:
+    role:
+      Fn::ImportValue: ${self:provider.stage}-EDSCServerlessAppRole
 
   # Prevent Serverless from attempting to modify the deployment bucket policy as NGAP does not allow it
   deploymentBucket:
@@ -71,6 +72,7 @@ plugins:
   - serverless-plugin-split-stacks
   - serverless-plugin-log-subscription
   - serverless-offline
+  - ./serverless-plugins/serverless-webpack-include-migrations.js
 
 #
 # Lambda Functions
@@ -92,6 +94,8 @@ stepFunctions: ${file(./serverless-configs/${self:provider.name}-step-functions.
 package:
   individually: true
 
+configValidationMode: error
+
 custom:
   siteName: earthdata-search-${self:provider.stage}
 
@@ -103,6 +107,27 @@ custom:
     obfuscationSpinShapefiles: ${env:OBFUSCATION_SPIN_SHAPEFILES, ''}
     geocodingService: ${env:GEOCODING_SERVICE, 'nominatim'}
     geocodingIncludePolygons: ${env:GEOCODING_INCLUDE_POLYGONS, 'false'}
+
+    cloudfrontToCloudwatchBucketPrefixApi: "Fn::Join [
+      '/', [
+        'cloudfront/AWSLogs',
+        {
+          Ref: 'AWS::AccountId'
+        },
+        '${self:provider.region}',
+        'search_${self:provider.stage}_api/'
+      ]
+    ]"
+    cloudfrontToCloudwatchBucketPrefixS3: "Fn::Join: [
+      '/', [
+        'cloudfront/AWSLogs',
+        {
+          Ref: 'AWS::AccountId'
+        },
+        '${self:provider.region}',
+        'search_${self:provider.stage}_s3/'
+      ]
+    ]"
 
   # Finch (S3 sync plugin)
   client:
@@ -145,4 +170,4 @@ custom:
 
   logSubscription:
     enabled: true
-    destinationArn: ${env:LOG_DESTINATION_ARN}
+    destinationArn: ${env:LOG_DESTINATION_ARN, ''}
