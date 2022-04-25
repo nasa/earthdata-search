@@ -4,31 +4,20 @@
     role: IamRoleCustomResourcesLambdaExecution
     events:
       - s3:
-          bucket: ${env:CLOUDFRONT_BUCKET_NAME}
+          bucket: ${env:CLOUDFRONT_BUCKET_NAME, ''}
           event: s3:ObjectCreated:*
           existing: true
           rules:
             - suffix: .gz
-            - prefix:
-                'Fn::Join':
-                  - '/'
-                  - - 'cloudfront/AWSLogs'
-                    - Ref: 'AWS::AccountId'
-                    - ${self:provider.region}
-                    - 'search_${self:provider.stage}_api/'
+            - prefix: ${self:custom.variables.cloudfrontToCloudwatchBucketPrefixApi}
       - s3:
-          bucket: ${env:CLOUDFRONT_BUCKET_NAME}
+          bucket: ${env:CLOUDFRONT_BUCKET_NAME, ''}
           event: s3:ObjectCreated:*
           existing: true
           rules:
             - suffix: .gz
-            - prefix:
-                'Fn::Join':
-                  - '/'
-                  - - 'cloudfront/AWSLogs'
-                    - Ref: 'AWS::AccountId'
-                    - ${self:provider.region}
-                    - 'search_${self:provider.stage}_s3/'
+            - prefix: ${self:custom.variables.cloudfrontToCloudwatchBucketPrefixS3}
+
   #
   # Standalone functions
   #
@@ -143,15 +132,15 @@
 
   fetchCatalogRestOrder:
     handler: serverless/src/fetchCatalogRestOrder/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
 
   fetchLegacyServicesOrder:
     handler: serverless/src/fetchLegacyServicesOrder/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
 
   fetchHarmonyOrder:
     handler: serverless/src/fetchHarmonyOrder/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
 
   #
   # Scheduled Lambdas
@@ -165,22 +154,22 @@
           rate: cron(0 12 ? * MON-FRI *)
           input:
             projection: 'epsg4326'
-          enabled: ${env:COLORMAP_JOB_ENABLED}
+          enabled: ${env:COLORMAP_JOB_ENABLED, false}
       - schedule:
           rate: cron(5 12 ? * MON-FRI *)
           input:
             projection: 'epsg3857'
-          enabled: ${env:COLORMAP_JOB_ENABLED}
+          enabled: ${env:COLORMAP_JOB_ENABLED, false}
       - schedule:
           rate: cron(10 12 ? * MON-FRI *)
           input:
             projection: 'epsg3413'
-          enabled: ${env:COLORMAP_JOB_ENABLED}
+          enabled: ${env:COLORMAP_JOB_ENABLED, false}
       - schedule:
           rate: cron(15 12 ? * MON-FRI *)
           input:
             projection: 'epsg3031'
-          enabled: ${env:COLORMAP_JOB_ENABLED}
+          enabled: ${env:COLORMAP_JOB_ENABLED, false}
 
   generateGibsTags:
     handler: serverless/src/generateGibsTags/handler.default
@@ -189,7 +178,7 @@
     events:
       - schedule:
           rate: cron(0 12 ? * MON-FRI *)
-          enabled: ${env:GIBS_JOB_ENABLED}
+          enabled: ${env:GIBS_JOB_ENABLED, false}
 
   generateSubsettingTags:
     handler: serverless/src/generateSubsettingTags/handler.default
@@ -199,13 +188,13 @@
     events:
       - schedule:
           rate: cron(0 12-23/4 ? * MON-FRI *)
-          enabled: ${env:SUBSETTING_JOB_ENABLED}
+          enabled: ${env:SUBSETTING_JOB_ENABLED, true}
   #
   # API Gateway Endpoints
   #
   autocomplete:
     handler: serverless/src/autocomplete/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -218,7 +207,7 @@
 
   regionSearch:
     handler: serverless/src/regionSearch/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -227,7 +216,7 @@
 
   decodeId:
     handler: serverless/src/decodeId/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -236,7 +225,7 @@
 
   getColorMap:
     handler: serverless/src/getColorMap/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -260,7 +249,7 @@
 
   conceptMetadata:
     handler: serverless/src/conceptMetadata/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -283,7 +272,7 @@
 
   saveShapefile:
     handler: serverless/src/saveShapefile/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -292,7 +281,7 @@
 
   getShapefile:
     handler: serverless/src/getShapefile/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -301,7 +290,7 @@
 
   saveProject:
     handler: serverless/src/saveProject/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -310,7 +299,7 @@
 
   getProject:
     handler: serverless/src/getProject/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -319,7 +308,7 @@
 
   edlLogin:
     handler: serverless/src/edlLogin/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -328,7 +317,7 @@
 
   edlCallback:
     handler: serverless/src/edlCallback/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -337,7 +326,7 @@
 
   errorLogger:
     handler: serverless/src/errorLogger/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -346,7 +335,7 @@
 
   alertLogger:
     handler: serverless/src/alertLogger/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -355,7 +344,7 @@
 
   relevancyLogger:
     handler: serverless/src/relevancyLogger/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -364,7 +353,7 @@
 
   fetchSotoLayers:
     handler: serverless/src/fetchSotoLayers/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -373,22 +362,22 @@
 
   edlOptionalAuthorizer:
     handler: serverless/src/edlOptionalAuthorizer/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
 
   edlAuthorizer:
     handler: serverless/src/edlAuthorizer/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
 
   edlAdminAuthorizer:
     handler: serverless/src/edlAdminAuthorizer/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
 
   #
   # EDL Authenticated API Gateway Endpoints
   #
   graphQl:
     handler: serverless/src/graphQl/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -402,7 +391,7 @@
 
   retrieveConcept:
     handler: serverless/src/retrieveConcept/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -420,7 +409,7 @@
 
   collectionSearch:
     handler: serverless/src/collectionSearch/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     memorySize: 192
     events:
       - http:
@@ -434,7 +423,7 @@
 
   cmrGranuleSearch:
     handler: serverless/src/cmrGranuleSearch/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     memorySize: 256
     events:
       - http:
@@ -448,7 +437,7 @@
 
   timelineSearch:
     handler: serverless/src/timelineSearch/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -462,7 +451,7 @@
 
   submitRetrieval:
     handler: serverless/src/submitRetrieval/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -476,7 +465,7 @@
 
   getRetrieval:
     handler: serverless/src/getRetrieval/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -490,7 +479,7 @@
 
   deleteRetrieval:
     handler: serverless/src/deleteRetrieval/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: delete
@@ -504,7 +493,7 @@
 
   getRetrievals:
     handler: serverless/src/getRetrievals/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -518,7 +507,7 @@
 
   getRetrievalCollection:
     handler: serverless/src/getRetrievalCollection/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -532,7 +521,7 @@
 
   getAccessMethods:
     handler: serverless/src/getAccessMethods/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -546,7 +535,7 @@
 
   ousGranuleSearch:
     handler: serverless/src/ousGranuleSearch/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -560,7 +549,7 @@
 
   getProjects:
     handler: serverless/src/getProjects/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -574,7 +563,7 @@
 
   deleteProject:
     handler: serverless/src/deleteProject/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: delete
@@ -588,7 +577,7 @@
 
   logout:
     handler: serverless/src/logout/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: delete
@@ -602,7 +591,7 @@
 
   getDataQualitySummaries:
     handler: serverless/src/getDataQualitySummaries/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -616,7 +605,7 @@
 
   getProviders:
     handler: serverless/src/getProviders/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -630,7 +619,7 @@
 
   getContactInfo:
     handler: serverless/src/getContactInfo/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -644,7 +633,7 @@
 
   saveContactInfo:
     handler: serverless/src/saveContactInfo/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -658,7 +647,7 @@
 
   updatePreferences:
     handler: serverless/src/updatePreferences/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
@@ -673,7 +662,7 @@
   # Admin
   adminIsAuthorized:
     handler: serverless/src/adminIsAuthorized/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -686,7 +675,7 @@
 
   adminGetRetrievals:
     handler: serverless/src/adminGetRetrievals/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
@@ -699,7 +688,7 @@
 
   adminGetRetrieval:
     handler: serverless/src/adminGetRetrieval/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT}
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: get
