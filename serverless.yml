@@ -108,26 +108,20 @@ custom:
     geocodingService: ${env:GEOCODING_SERVICE, 'nominatim'}
     geocodingIncludePolygons: ${env:GEOCODING_INCLUDE_POLYGONS, 'false'}
 
-    cloudfrontToCloudwatchBucketPrefixApi: "Fn::Join [
-      '/', [
-        'cloudfront/AWSLogs',
-        {
-          Ref: 'AWS::AccountId'
-        },
-        '${self:provider.region}',
-        'search_${self:provider.stage}_api/'
-      ]
-    ]"
-    cloudfrontToCloudwatchBucketPrefixS3: "Fn::Join: [
-      '/', [
-        'cloudfront/AWSLogs',
-        {
-          Ref: 'AWS::AccountId'
-        },
-        '${self:provider.region}',
-        'search_${self:provider.stage}_s3/'
-      ]
-    ]"
+    cloudfrontToCloudwatchBucketPrefixApi:
+      Fn::Join:
+        - '/'
+        - - 'cloudfront/AWSLogs'
+          - !Ref 'AWS::AccountId'
+          - ${self:provider.region}
+          - 'search_${self:provider.stage}_api/'
+    cloudfrontToCloudwatchBucketPrefixS3:
+      Fn::Join:
+        - '/'
+        - - 'cloudfront/AWSLogs'
+          - !Ref 'AWS::AccountId'
+          - ${self:provider.region}
+          - 'search_${self:provider.stage}_s3/'
 
   # Finch (S3 sync plugin)
   client:

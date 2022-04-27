@@ -180,7 +180,7 @@
     "sanitize-html": "^2.3.2",
     "sass-loader": "^12.4.0",
     "scatter-swap": "^0.1.0",
-    "serverless": "^3.15.1",
+    "serverless": "github:macrouch/serverless#11013",
     "serverless-finch": "^4.0.0",
     "serverless-offline": "^8.7.0",
     "serverless-plugin-log-subscription": "^2.1.1",
