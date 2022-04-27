@@ -1,7 +1,6 @@
 import AWS from 'aws-sdk'
 import knex from 'knex'
 import mockKnex from 'mock-knex'
-import simpleOAuth2 from 'simple-oauth2'
 import jwt from 'jsonwebtoken'
 
 import * as getDbConnection from '../../util/database/getDbConnection'
@@ -13,38 +12,24 @@ import edlCallback from '../handler'
 let dbConnectionToMock
 let dbTracker
 
-beforeEach(() => {
-  jest.clearAllMocks()
-
-  jest.spyOn(simpleOAuth2, 'create').mockImplementation(() => ({
-    accessToken: {
-      create: jest.fn().mockImplementation(() => ({
-        token: {
-          access_token: 'accessToken',
-          token_type: 'Bearer',
-          expires_in: 3600,
-          refresh_token:
-            'refreshToken',
-          endpoint: '/api/users/edsc',
-          expires_at: '2019-09-10T20:00:23.313Z'
-        }
-      }))
-    },
-    ownerPassword: { getToken: jest.fn() },
-    authorizationCode: {
-      authorizeURL: jest.fn(),
-      getToken: jest.fn().mockImplementation(() => (Promise.resolve({
+jest.mock('simple-oauth2', () => ({
+  AuthorizationCode: jest.fn().mockImplementation(() => ({
+    getToken: jest.fn().mockImplementation(() => (Promise.resolve({
+      token: {
         access_token: 'accessToken',
         token_type: 'Bearer',
         expires_in: 3600,
         refresh_token:
-          'refreshToken',
+              'refreshToken',
         endpoint: '/api/users/edsc',
         expires_at: '2019-09-10T20:00:23.313Z'
-      })))
-    },
-    clientCredentials: { getToken: jest.fn() }
+      }
+    })))
   }))
+}))
+
+beforeEach(() => {
+  jest.clearAllMocks()
 
   jest.spyOn(getSecretEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'secret' }))
   jest.spyOn(jwt, 'sign').mockImplementation(() => 'mockToken')

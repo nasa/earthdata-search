@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import simpleOAuth2 from 'simple-oauth2'
+import { AuthorizationCode } from 'simple-oauth2'
 
 import { getDbConnection } from '../database/getDbConnection'
 import { getEdlConfig } from '../getEdlConfig'
@@ -71,9 +71,9 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
         expires_at: expiresAt
       } = mostRecentToken
 
-      const oauth2 = simpleOAuth2.create(edlConfig)
+      const client = new AuthorizationCode(edlConfig)
 
-      const oauthToken = oauth2.accessToken.create({
+      const oauthToken = client.createToken({
         access_token: accessToken,
         refresh_token: refreshToken,
         expires_at: expiresAt
