@@ -1,4 +1,4 @@
-import uuidv4 from 'uuid/v4'
+import { v4 as uuidv4 } from 'uuid'
 
 import { REMOVE_ERROR, ADD_ERROR } from '../constants/actionTypes'
 

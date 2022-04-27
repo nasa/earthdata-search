@@ -1,5 +1,5 @@
 import AWS from 'aws-sdk'
-import simpleOAuth2 from 'simple-oauth2'
+import { AuthorizationCode } from 'simple-oauth2'
 
 import { parse, stringify } from 'qs'
 
@@ -50,7 +50,7 @@ const edlCallback = async (event, context) => {
 
   const redirectUri = `${apiHost}${redirectUriPath}`
 
-  const oauth2 = simpleOAuth2.create(edlConfig)
+  const client = new AuthorizationCode(edlConfig)
 
   const tokenConfig = {
     code,
@@ -61,11 +61,9 @@ const edlCallback = async (event, context) => {
 
   try {
     // Retrieve the Earthdata Login token
-    const oauthToken = await oauth2.authorizationCode.getToken(tokenConfig)
+    const oauthToken = await client.getToken(tokenConfig)
 
-    const oauthTokenResponse = oauth2.accessToken.create(oauthToken)
-
-    const { token } = oauthTokenResponse
+    const { token } = oauthToken
 
     const {
       access_token: accessToken,

@@ -110,7 +110,8 @@ describe('OrderStatus component', () => {
         onFetchRetrieval: props.onFetchRetrieval,
         onFetchRetrievalCollection: props.onFetchRetrievalCollection,
         onFetchRetrievalCollectionGranuleLinks: props.onFetchRetrievalCollectionGranuleLinks,
-        onFetchRetrievalCollectionGranuleBrowseLinks: props.onFetchRetrievalCollectionGranuleBrowseLinks,
+        onFetchRetrievalCollectionGranuleBrowseLinks:
+          props.onFetchRetrievalCollectionGranuleBrowseLinks,
         onToggleAboutCSDAModal: props.onToggleAboutCSDAModal
       })
     })

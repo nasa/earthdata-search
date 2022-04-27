@@ -1,6 +1,6 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
-import simpleOAuth2 from 'simple-oauth2'
+import { AuthorizationCode } from 'simple-oauth2'
 
 import * as getDbConnection from '../../database/getDbConnection'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
@@ -9,6 +9,8 @@ import * as getEdlConfig from '../../getEdlConfig'
 import { validateToken } from '../validateToken'
 
 let dbTracker
+
+jest.mock('simple-oauth2')
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -44,33 +46,18 @@ describe('validateToken', () => {
     test('returns false', async () => {
       jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'JWT_SIGNING_SECRET_KEY' }))
 
-      jest.spyOn(simpleOAuth2, 'create').mockImplementation(() => ({
-        accessToken: {
-          create: jest.fn().mockImplementation(() => ({
-            token: {
-              access_token: 'accessToken',
-              token_type: 'Bearer',
-              expires_in: 3600,
-              refresh_token: 'refreshToken',
-              endpoint: '/api/users/testuser',
-              expires_at: '2019-09-10T20:00:23.313Z'
-            },
-            expired: jest.fn(() => false)
-          }))
-        },
-        ownerPassword: { getToken: jest.fn() },
-        authorizationCode: {
-          authorizeURL: jest.fn(),
-          getToken: jest.fn().mockImplementation(() => Promise.resolve({
+      AuthorizationCode.mockImplementationOnce(() => ({
+        createToken: jest.fn().mockImplementation(() => ({
+          token: {
             access_token: 'accessToken',
             token_type: 'Bearer',
             expires_in: 3600,
             refresh_token: 'refreshToken',
-            endpoint: '/api/users/testuser',
+            endpoint: '/api/users/edsc',
             expires_at: '2019-09-10T20:00:23.313Z'
-          }))
-        },
-        clientCredentials: { getToken: jest.fn() }
+          },
+          expired: jest.fn(() => false)
+        }))
       }))
 
       const consoleMock = jest.spyOn(console, 'log')
@@ -101,33 +88,18 @@ describe('validateToken', () => {
     test('returns the username associated with the token', async () => {
       jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'JWT_SIGNING_SECRET_KEY' }))
 
-      jest.spyOn(simpleOAuth2, 'create').mockImplementation(() => ({
-        accessToken: {
-          create: jest.fn().mockImplementation(() => ({
-            token: {
-              access_token: 'accessToken',
-              token_type: 'Bearer',
-              expires_in: 3600,
-              refresh_token: 'refreshToken',
-              endpoint: '/api/users/testuser',
-              expires_at: '2019-09-10T20:00:23.313Z'
-            },
-            expired: jest.fn(() => false)
-          }))
-        },
-        ownerPassword: { getToken: jest.fn() },
-        authorizationCode: {
-          authorizeURL: jest.fn(),
-          getToken: jest.fn().mockImplementation(() => Promise.resolve({
+      AuthorizationCode.mockImplementation(() => ({
+        createToken: jest.fn().mockImplementation(() => ({
+          token: {
             access_token: 'accessToken',
             token_type: 'Bearer',
             expires_in: 3600,
             refresh_token: 'refreshToken',
-            endpoint: '/api/users/testuser',
+            endpoint: '/api/users/edsc',
             expires_at: '2019-09-10T20:00:23.313Z'
-          }))
-        },
-        clientCredentials: { getToken: jest.fn() }
+          },
+          expired: jest.fn(() => false)
+        }))
       }))
 
       dbTracker.on('query', (query, step) => {
@@ -155,43 +127,28 @@ describe('validateToken', () => {
     test('returns the username associated with the token', async () => {
       jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'JWT_SIGNING_SECRET_KEY' }))
 
-      jest.spyOn(simpleOAuth2, 'create').mockImplementation(() => ({
-        accessToken: {
-          create: jest.fn().mockImplementation(() => ({
-            token: {
-              access_token: 'accessToken',
-              token_type: 'Bearer',
-              expires_in: 3600,
-              refresh_token: 'refreshToken',
-              endpoint: '/api/users/testuser',
-              expires_at: '2019-09-10T20:00:23.313Z'
-            },
-            expired: jest.fn(() => true),
-            refresh: jest.fn().mockImplementation(() => ({
-              token: {
-                access_token: 'accessToken',
-                token_type: 'Bearer',
-                expires_in: 3600,
-                refresh_token: 'refreshedToken',
-                endpoint: '/api/users/testuser',
-                expires_at: '2019-09-10T20:00:23.313Z'
-              }
-            }))
-          }))
-        },
-        ownerPassword: { getToken: jest.fn() },
-        authorizationCode: {
-          authorizeURL: jest.fn(),
-          getToken: jest.fn().mockImplementation(() => Promise.resolve({
+      AuthorizationCode.mockImplementation(() => ({
+        createToken: jest.fn().mockImplementation(() => ({
+          token: {
             access_token: 'accessToken',
             token_type: 'Bearer',
             expires_in: 3600,
             refresh_token: 'refreshToken',
-            endpoint: '/api/users/testuser',
+            endpoint: '/api/users/edsc',
             expires_at: '2019-09-10T20:00:23.313Z'
+          },
+          expired: jest.fn(() => true),
+          refresh: jest.fn().mockImplementation(() => ({
+            token: {
+              access_token: 'accessToken',
+              token_type: 'Bearer',
+              expires_in: 3600,
+              refresh_token: 'refreshedToken',
+              endpoint: '/api/users/testuser',
+              expires_at: '2019-09-10T20:00:23.313Z'
+            }
           }))
-        },
-        clientCredentials: { getToken: jest.fn() }
+        }))
       }))
 
       dbTracker.on('query', (query, step) => {
