@@ -38,45 +38,44 @@ const regionSearch = async (event) => {
     const {
       hits,
       time,
-      results
+      results = []
     } = data
 
     console.log(`Request for '${endpoint}' (exact: ${exact}) successfully completed in [reported: ${time}, observed: ${elapsedTime} ms]`)
 
     const filteredResponse = []
 
-    Object.keys(results).forEach((id) => {
-      const { [id]: responseObject } = results
+    results.forEach((result) => {
+      let formattedResponseObject = {}
 
-      let formattedResponseObject = {
-        ...responseObject
-      }
+      const {
+        HUC: huc,
+        reach_id: reachId,
+        'Region Name': name,
+        river_name: riverName,
+        'Visvalingam Polygon': visvalingamPolygon
+      } = result
 
-      if (endpoint === 'region') {
+      let id = huc
+
+      if (endpoint === 'region' || endpoint === 'huc') {
         formattedResponseObject = {
-          id: formattedResponseObject.HUC,
-          name: id,
-          spatial: formattedResponseObject['Visvalingam Polygon'],
-          type: 'huc'
-        }
-      }
-
-      if (endpoint === 'huc') {
-        formattedResponseObject = {
-          id,
-          name: formattedResponseObject['Region Name'],
-          spatial: formattedResponseObject['Visvalingam Polygon'],
+          id: huc,
+          name,
+          spatial: visvalingamPolygon,
           type: 'huc'
         }
       }
 
       if (endpoint === 'rivers/reach') {
-        const { geojson = {} } = formattedResponseObject
+        id = reachId
+
+        const { geojson = {} } = result
         const { coordinates } = geojson
 
         formattedResponseObject = {
           id,
-          name: id,
+          name: riverName === 'NODATA' ? reachId : riverName,
           spatial: uniq(coordinates.map((point) => point.join(','))).join(','),
           type: 'reach'
         }
