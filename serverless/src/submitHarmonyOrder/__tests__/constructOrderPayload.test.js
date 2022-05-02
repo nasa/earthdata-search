@@ -13,6 +13,37 @@ describe('constructOrderPayload', () => {
     }))
   })
 
+  describe('preview', () => {
+    test('returns preview=false', async () => {
+      nock(/cmr/)
+        .matchHeader('Authorization', 'Bearer access-token')
+        .get('/search/granules.json')
+        .reply(200, {
+          feed: {
+            entry: [{
+              id: 'G10000001-EDSC'
+            }, {
+              id: 'G10000005-EDSC'
+            }]
+          }
+        })
+
+      const accessMethod = {
+        selectedOutputFormat: 'image/png'
+      }
+      const granuleParams = {}
+      const accessToken = 'access-token'
+
+      const response = await constructOrderPayload({
+        accessMethod,
+        granuleParams,
+        accessToken
+      })
+
+      expect(response.get('preview')).toEqual('false')
+    })
+  })
+
   describe('format', () => {
     describe('with a known format', () => {
       test('constructs a payload with a format', async () => {
