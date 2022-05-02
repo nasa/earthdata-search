@@ -82,7 +82,7 @@
       "edlHost": "https://sit.urs.earthdata.nasa.gov",
       "csdaHost": "https://auth.csdap.uat.earthdatacloud.nasa.gov",
       "graphQlHost": "https://graphql.sit.earthdata.nasa.gov",
-      "regionHost": "https://d2dwjhzkooeayk.cloudfront.net/v1",
+      "regionHost": "https://fts.podaac.earthdata.nasa.gov/v1",
       "opensearchRoot": "https://cmr.sit.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
@@ -92,7 +92,7 @@
       "edlHost": "https://uat.urs.earthdata.nasa.gov",
       "csdaHost": "https://auth.csdap.uat.earthdatacloud.nasa.gov",
       "graphQlHost": "https://graphql.uat.earthdata.nasa.gov",
-      "regionHost": "https://fts.podaac.uat.earthdata.nasa.gov/v1",
+      "regionHost": "https://fts.podaac.earthdata.nasa.gov/v1",
       "opensearchRoot": "https://cmr.uat.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     },
