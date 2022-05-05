@@ -212,8 +212,8 @@ export const constructOrderPayload = async ({
     orderPayload.append('outputCrs', selectedOutputProjection)
   }
 
-  // EDSC-3440: Add preview=false to all Harmony orders
-  orderPayload.append('preview', false)
+  // EDSC-3440: Add skipPreview=true to all Harmony orders
+  orderPayload.append('skipPreview', true)
 
   return orderPayload
 }

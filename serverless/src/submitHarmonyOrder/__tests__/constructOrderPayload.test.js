@@ -13,8 +13,8 @@ describe('constructOrderPayload', () => {
     }))
   })
 
-  describe('preview', () => {
-    test('returns preview=false', async () => {
+  describe('skipPreview', () => {
+    test('returns skipPreview=true', async () => {
       nock(/cmr/)
         .matchHeader('Authorization', 'Bearer access-token')
         .get('/search/granules.json')
@@ -40,7 +40,7 @@ describe('constructOrderPayload', () => {
         accessToken
       })
 
-      expect(response.get('preview')).toEqual('false')
+      expect(response.get('skipPreview')).toEqual('true')
     })
   })
 
