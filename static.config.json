@@ -106,5 +106,8 @@
       "opensearchRoot": "https://cmr.earthdata.nasa.gov/opensearch",
       "redirectUriPath": "/urs_callback"
     }
+  },
+  "experiments": {
+    "collectionSearchResultsLayout": ""
   }
 }

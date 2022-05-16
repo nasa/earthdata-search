@@ -13,6 +13,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
     const { [collectionId]: collectionMetadata = {} } = metadata
 
     const {
+      cloudHosted = false,
       collectionDataType,
       consortiums = [],
       datasetId = null,
@@ -113,7 +114,25 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
       if (serviceHasVariables) hasVariables = true
     })
 
+    const nrtTypes = {
+      NEAR_REAL_TIME: {
+        label: '1 to 3 hours',
+        description: 'Data is available 1 to 3 hours after being acquired by the instrument on the satellite'
+      },
+      LOW_LATENCY: {
+        label: '3 to 24 hours',
+        description: 'Data is available 3 to 24 hours after being acquired by the instrument on the satellite'
+      },
+      EXPEDITED: {
+        label: '1 to 4 days',
+        description: 'Data is available 1 to 4 days after being acquired by the instrument on the satellite'
+      }
+    }
+
+    const { [collectionDataType]: nrt = {} } = nrtTypes
+
     return {
+      cloudHosted,
       collectionDataType,
       collectionId,
       consortiums,
@@ -131,6 +150,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
       isLast,
       isNrt,
       isOpenSearch,
+      nrt,
       organizations,
       shortName,
       summary: truncatedAbstract,

@@ -1,5 +1,6 @@
 export const collectionListItemProps = {
   collectionMetadata: {
+    cloudHosted: false,
     collectionDataType: 'SCIENCE_QUALITY',
     collectionId: 'collectionId1',
     consortiums: [],
@@ -15,6 +16,7 @@ export const collectionListItemProps = {
     isLast: false,
     isNrt: false,
     isOpenSearch: false,
+    nrt: {},
     shortName: 'cId1',
     summary: 'This is a short summary.',
     temporalRange: '2010-10-10 to 2011-10-10',
@@ -30,6 +32,7 @@ export const collectionListItemProps = {
 export const longSummary = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
 
 export const collectionResultsBodyData = {
+  cloudHosted: true,
   collectionDataType: 'SCIENCE_QUALITY',
   collectionId: 'collectionId',
   consortiums: [],
@@ -47,6 +50,7 @@ export const collectionResultsBodyData = {
   isLast: true,
   isNrt: false,
   isOpenSearch: false,
+  nrt: {},
   organizations: ['test/org'],
   shortName: 'test_short_name',
   summary: 'test summary',
