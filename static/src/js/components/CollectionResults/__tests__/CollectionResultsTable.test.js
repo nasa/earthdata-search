@@ -70,6 +70,35 @@ describe('CollectionResultsTable component', () => {
       Header: 'Short Name',
       accessor: 'shortName'
     }))
+    expect(columns[7]).toEqual(expect.objectContaining({
+      accessor: 'cloudHosted'
+    }))
+    expect(columns[8]).toEqual(expect.objectContaining({
+      accessor: 'hasMapImagery'
+    }))
+    expect(columns[9]).toEqual(expect.objectContaining({
+      accessor: 'isNrt'
+    }))
+    expect(columns[10]).toEqual(expect.objectContaining({
+      Header: 'Spatial Subsetting',
+      accessor: 'hasSpatialSubsetting'
+    }))
+    expect(columns[11]).toEqual(expect.objectContaining({
+      Header: 'Temporal Subsetting',
+      accessor: 'hasTemporalSubsetting'
+    }))
+    expect(columns[12]).toEqual(expect.objectContaining({
+      Header: 'Variable Subsetting',
+      accessor: 'hasVariables'
+    }))
+    expect(columns[13]).toEqual(expect.objectContaining({
+      Header: 'Transformation',
+      accessor: 'hasTransforms'
+    }))
+    expect(columns[14]).toEqual(expect.objectContaining({
+      Header: 'Reformatting',
+      accessor: 'hasFormats'
+    }))
 
     expect(table.props().data).toEqual(collectionData)
     expect(table.props().itemCount).toEqual(props.itemCount)

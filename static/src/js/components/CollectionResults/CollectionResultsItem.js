@@ -1,13 +1,16 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip, Popover } from 'react-bootstrap'
 import {
   FaClock,
+  FaCloud,
+  FaCogs,
   FaFileAlt,
   FaGlobe,
   FaInfoCircle,
   FaLock,
+  FaMap,
   FaMinus,
   FaPlus,
   FaSlidersH,
@@ -21,8 +24,9 @@ import { pluralize } from '../../util/pluralize'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import MetaIcon from '../MetaIcon/MetaIcon'
+import Spinner from '../Spinner/Spinner'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
-import SplitBadge from '../SplitBadge/SplitBadge'
 
 import './CollectionResultsItem.scss'
 
@@ -37,15 +41,16 @@ import './CollectionResultsItem.scss'
  */
 export const CollectionResultsItem = forwardRef(({
   collectionMetadata,
+  variant,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
   onViewCollectionGranules
 }, ref) => {
   const {
-    collectionDataType,
     collectionId,
     consortiums = [],
+    cloudHosted,
     datasetId,
     displayOrganization,
     granuleCount,
@@ -59,6 +64,7 @@ export const CollectionResultsItem = forwardRef(({
     isCSDA,
     isNrt,
     isOpenSearch,
+    nrt = {},
     shortName,
     summary,
     temporalRange,
@@ -66,13 +72,13 @@ export const CollectionResultsItem = forwardRef(({
     versionId
   } = collectionMetadata
 
+  const [popoverOverride, setPopoverOverride] = useState()
+  const [loadingThumbnail, setLoadingThumbnail] = useState(true)
   const { thumbnailSize } = getApplicationConfig()
   const {
     height: thumbnailHeight,
     width: thumbnailWidth
   } = thumbnailSize
-
-  const customizeBadges = []
 
   const consortiumMeta = {
     GEOSS: 'Global Earth Observation System of Systems',
@@ -81,23 +87,11 @@ export const CollectionResultsItem = forwardRef(({
     CEOS: 'Committee on Earth Observation Satellites'
   }
 
-  const nrtTypes = {
-    NEAR_REAL_TIME: {
-      label: '1 to 3 hours',
-      description: 'Data is available 1-3 hours after the instrument on the satellite has acquired the data.'
-    },
-    LOW_LATENCY: {
-      label: '3 to 24 hours',
-      description: 'Data is available 3 to 24 hours after the instrument on the satellite has acquired the data.'
-    },
-    EXPEDITED: {
-      label: '1 to 4 days',
-      description: 'Data is available 1 to 4 days after the instrument on the satellite has acquired the data.'
-    }
-  }
+  const { description: nrtDescription, label: nrtLabel } = nrt
 
-  const { [collectionDataType]: nrtMapping = '' } = nrtTypes
-  const { description: nrtDescription, label: nrtLabel } = nrtMapping
+  const onThumbnailLoaded = () => {
+    setLoadingThumbnail(false)
+  }
 
   const getConsortiumTooltipText = (consortium) => {
     let tooltip = ''
@@ -106,135 +100,6 @@ export const CollectionResultsItem = forwardRef(({
   }
 
   const filteredConsortiums = consortiums.filter((consortium) => consortium !== 'EOSDIS')
-
-  const popperOffset = {
-    modifiers: [{
-      name: 'offset',
-      options: {
-        offset: [0, 6]
-      }
-    }]
-  }
-
-  if (hasSpatialSubsetting) {
-    customizeBadges.push((
-      <OverlayTrigger
-        key="badge-icon__spatial-subsetting"
-        placement="top"
-        popperConfig={popperOffset}
-        overlay={(
-          <Tooltip
-            id="tooltip_customize-spatial-subsetting"
-            className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
-          >
-            Spatial customizable options available
-          </Tooltip>
-        )}
-      >
-        <EDSCIcon
-          className="collection-results-item__badge-icon svg fa-globe-svg"
-          icon={FaGlobe}
-          size="0.625rem"
-        />
-      </OverlayTrigger>
-    ))
-  }
-
-  if (hasVariables) {
-    customizeBadges.push((
-      <OverlayTrigger
-        key="badge-icon__variables"
-        placement="top"
-        popperConfig={popperOffset}
-        overlay={(
-          <Tooltip
-            id="tooltip_customize-variables"
-            className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
-          >
-            Variable customizable options available
-          </Tooltip>
-        )}
-      >
-        <EDSCIcon
-          className="collection-results-item__badge-icon svg fa-tags-svg"
-          icon={FaTags}
-          size="0.625rem"
-        />
-      </OverlayTrigger>
-    ))
-  }
-
-  if (hasTransforms) {
-    customizeBadges.push((
-      <OverlayTrigger
-        key="badge-icon__transforms"
-        placement="top"
-        popperConfig={popperOffset}
-        overlay={(
-          <Tooltip
-            id="tooltip_customize-transforms"
-            className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
-          >
-            Data transformation options available
-          </Tooltip>
-        )}
-      >
-        <EDSCIcon
-          className="collection-results-item__badge-icon svg fa-sliders-svg"
-          icon={FaSlidersH}
-          size="0.625rem"
-        />
-      </OverlayTrigger>
-    ))
-  }
-
-  if (hasFormats) {
-    customizeBadges.push((
-      <OverlayTrigger
-        key="badge-icon__formats"
-        placement="top"
-        popperConfig={popperOffset}
-        overlay={(
-          <Tooltip
-            id="tooltip_customize-formats"
-            className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
-          >
-            Reformatting options available
-          </Tooltip>
-        )}
-      >
-        <EDSCIcon
-          className="collection-results-item__badge-icon svg fa-file-svg"
-          icon={FaFileAlt}
-          size="0.625rem"
-        />
-      </OverlayTrigger>
-    ))
-  }
-
-  if (hasTemporalSubsetting) {
-    customizeBadges.push((
-      <OverlayTrigger
-        key="badge-icon__temporal-subsetting"
-        placement="top"
-        popperConfig={popperOffset}
-        overlay={(
-          <Tooltip
-            id="tooltip_customize-temporal-subsetting"
-            className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--icon"
-          >
-            Temporal subsetting options available
-          </Tooltip>
-        )}
-      >
-        <EDSCIcon
-          className="collection-results-item__badge-icon svg fa-clock-svg"
-          icon={FaClock}
-          size="0.625rem"
-        />
-      </OverlayTrigger>
-    ))
-  }
 
   const addToProjectButton = (
     <Button
@@ -245,6 +110,7 @@ export const CollectionResultsItem = forwardRef(({
       }}
       variant="light"
       bootstrapVariant="light"
+      bootstrapSize="sm"
       icon={FaPlus}
       label="Add collection to the current project"
       title="Add collection to the current project"
@@ -260,13 +126,14 @@ export const CollectionResultsItem = forwardRef(({
       }}
       variant="light"
       bootstrapVariant="light"
+      bootstrapSize="sm"
       icon={FaMinus}
       label="Remove collection from the current project"
       title="Remove collection from the current project"
     />
   )
 
-  return (
+  const component = (
     <div
       className="collection-results-item"
       data-test-id="collection-results-item"
@@ -276,7 +143,7 @@ export const CollectionResultsItem = forwardRef(({
       <div
         role="button"
         tabIndex="0"
-        className="collection-results-item__link"
+        className={`collection-results-item__link ${popoverOverride && 'collection-results-item__link--active'}`}
         onKeyPress={(e) => {
           if (e.key === 'Enter') {
             onViewCollectionGranules(collectionId)
@@ -289,226 +156,461 @@ export const CollectionResultsItem = forwardRef(({
         }}
         data-test-id={`collection-result-item_${collectionId}`}
       >
-        <div className="collection-results-item__thumb">
-          {
-            thumbnail && (
-              <img
-                className="collection-results-item__thumb-image"
-                src={thumbnail}
-                alt={`Thumbnail for ${datasetId}`}
-                height={thumbnailHeight}
-                width={thumbnailWidth}
-              />
-            )
-          }
-        </div>
         <div className="collection-results-item__body">
           <div className="collection-results-item__body-primary">
             <div className="collection-results-item__info">
               <h3 className="collection-results-item__title">
                 {datasetId}
               </h3>
-              <p className="collection-results-item__desc">
+              <div className="collection-results-item__meta">
                 {
                   isOpenSearch && (
-                    <strong>Int&apos;l / Interagency</strong>
+                    <span className="collection-results-item__meta-item">Int&apos;l / Interagency</span>
                   )
                 }
                 {
                   !isOpenSearch && (
-                    <strong>{`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}</strong>
+                    <span className="collection-results-item__meta-item">{`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}</span>
                   )
                 }
-                <strong> &bull; </strong>
                 {
                   temporalRange && (
-                    <>
-                      <strong>{temporalRange}</strong>
-                      <strong> &bull; </strong>
-                    </>
+                    <span className="collection-results-item__meta-item">{temporalRange}</span>
                   )
                 }
-                {summary}
-              </p>
-            </div>
-            <div className="collection-results-item__actions">
-              <Button
-                className="collection-results-item__action collection-results-item__action--collection-details"
-                onClick={(e) => {
-                  onViewCollectionDetails(collectionId)
-                  e.stopPropagation()
-                }}
-                label="View collection details"
-                title="View collection details"
-                bootstrapVariant="light"
-                icon={FaInfoCircle}
-              />
-              <PortalFeatureContainer authentication>
-                <>
-                  {
-                    isCollectionInProject && removeFromProjectButton
-                  }
-                  {
-                    !isCollectionInProject && addToProjectButton
-                  }
-                </>
-              </PortalFeatureContainer>
-            </div>
-          </div>
-          <div className="collection-results-item__body-secondary">
-            {
-              filteredConsortiums && filteredConsortiums.length > 0 && (
-                <Badge
-                  className="collection-results-item__badge collection-results-item__badge--external-broker"
-                  variant="secondary"
-                >
-                  <ul className="collection-results-item__badge-list">
-                    {
-                      filteredConsortiums.map((consortium) => {
-                        let consortiumDisplay = consortium
-                        const consortiumTooltip = getConsortiumTooltipText(consortium)
-
-                        if (consortiumTooltip) {
-                          consortiumDisplay = (
-                            <OverlayTrigger
-                              placement="top"
-                              overlay={(
-                                <Tooltip
-                                  className={`collection-results-item__badge-tooltip collection-results-item__badge-tooltip--${consortium}`}
-                                >
-                                  {consortiumTooltip}
-                                </Tooltip>
-                              )}
-                            >
-                              <span className="collection-results-item__badge-list-text">{consortiumDisplay}</span>
-                            </OverlayTrigger>
-                          )
-                        }
-
-                        return (
-                          <li
-                            key={`${collectionId}__consortium--${consortium}`}
-                            className="collection-results-item__badge-list-item"
-                          >
-                            {consortiumDisplay}
-                          </li>
-                        )
-                      })
-                    }
-                  </ul>
-                </Badge>
-              )
-            }
-            {
-              isCSDA && (
-                <OverlayTrigger
-                  placement="top"
-                  overlay={(
-                    <Tooltip
-                      id="tooltip__csda-badge"
-                      className="collection-results-item__badge-tooltip collection-results-item__badge-tooltip--csda"
-                    >
-                      Commercial Smallsat Data Acquisition Program
-                      <span className="collection-results-item__badge-tooltip-secondary">
-                        (Additional authentication required)
-                      </span>
-                    </Tooltip>
-                  )}
-                >
-                  <Badge
-                    className="collection-results-item__badge collection-results-item__badge--csda badge--purple"
-                  >
-                    <EDSCIcon
-                      className="collection-results-item__badge-icon collection-results-item__badge-icon--csda d-inline-block mr-1"
-                      icon={FaLock}
-                      size="0.55rem"
+                {
+                  hasMapImagery && (
+                    <MetaIcon
+                      id="feature-icon-list-view__map-imagery"
+                      icon={FaMap}
+                      iconProps={{ size: '0.975rem' }}
+                      label="Map Imagery"
+                      tooltipClassName="collection-results-item__tooltip"
+                      tooltipContent="Supports advanced map visualizations using the GIBS tile service"
                     />
-                    <span className="d-inline-block">CSDA</span>
-                  </Badge>
-                </OverlayTrigger>
-              )
-            }
+                  )
+                }
+                {
+                  (
+                    hasSpatialSubsetting
+                    || hasVariables
+                    || hasTransforms
+                    || hasFormats
+                    || hasTemporalSubsetting
+                  ) && (
+                    <MetaIcon
+                      className="collection-results-item__meta-icon collection-results-item__meta-icon--customizable"
+                      id="feature-icon-list-view__customize"
+                      icon={FaCogs}
+                      label="Customize"
+                      tooltipClassName="collection-results-item__tooltip text-align-left"
+                      metadata={(
+                        <>
+                          {
+                            hasSpatialSubsetting && (
+                              <EDSCIcon
+                                className="collection-results-item__icon svg fa-globe-svg"
+                                icon={FaGlobe}
+                                size="0.675rem"
+                              />
+                            )
+                          }
+                          {
+                            hasTemporalSubsetting && (
+                              <EDSCIcon
+                                className="collection-results-item__icon svg fa-clock-svg"
+                                icon={FaClock}
+                                size="0.675rem"
+                              />
+                            )
+                          }
+                          {
+                            hasVariables && (
+                              <EDSCIcon
+                                className="collection-results-item__icon svg fa-tags-svg"
+                                icon={FaTags}
+                                size="0.675rem"
+                              />
+                            )
+                          }
+                          {
+                            hasTransforms && (
+                              <EDSCIcon
+                                className="collection-results-item__icon svg fa-sliders-svg"
+                                icon={FaSlidersH}
+                                size="0.675rem"
+                              />
+                            )
+                          }
+                          {
+                            hasFormats && (
+                              <EDSCIcon
+                                className="collection-results-item__icon svg fa-file-svg"
+                                icon={FaFileAlt}
+                                size="0.675rem"
+                              />
+                            )
+                          }
+                        </>
+                      )}
+                      tooltipContent={(
+                        <>
+                          <div>
+                            Supports customization:
+                          </div>
+                          <ul className="collection-results-item__tooltip-feature-list">
+                            {
+                              hasSpatialSubsetting && (
+                                <li>
+                                  <EDSCIcon
+                                    className="collection-results-item__tooltip-feature-icon"
+                                    size="0.725rem"
+                                    icon={FaGlobe}
+                                  />
+                                  Spatial subsetting
+                                </li>
+                              )
+                            }
+                            {
+                              hasTemporalSubsetting && (
+                                <li>
+                                  <EDSCIcon
+                                    className="collection-results-item__tooltip-feature-icon"
+                                    size="0.725rem"
+                                    icon={FaClock}
+                                  />
+                                  Temporal subsetting
+                                </li>
+                              )
+                            }
+                            {
+                              hasVariables && (
+                                <li>
+                                  <EDSCIcon
+                                    className="collection-results-item__tooltip-feature-icon"
+                                    size="0.725rem"
+                                    icon={FaTags}
+                                  />
+                                  Variable subsetting
+                                </li>
+                              )
+                            }
+                            {
+                              hasTransforms && (
+                                <li>
+                                  <EDSCIcon
+                                    className="collection-results-item__tooltip-feature-icon"
+                                    size="0.725rem"
+                                    icon={FaSlidersH}
+                                  />
+                                  Transformation
+                                </li>
+                              )
+                            }
+                            {
+                              hasFormats && (
+                                <li>
+                                  <EDSCIcon
+                                    className="collection-results-item__tooltip-feature-icon"
+                                    size="0.725rem"
+                                    icon={FaFileAlt}
+                                  />
+                                  Reformatting
+                                </li>
+                              )
+                            }
+                          </ul>
+                        </>
+                      )}
+                    />
+                  )
+                }
+                {
+                  cloudHosted && (
+                    <MetaIcon
+                      id="feature-icon-list-view__earthdata-cloud"
+                      icon={FaCloud}
+                      iconProps={{ size: '1rem' }}
+                      label="Earthdata Cloud"
+                      metadata="Earthdata Cloud"
+                      tooltipClassName="collection-results-item__tooltip"
+                      tooltipContent="Dataset is available the Earthdata Cloud"
+                    />
+                  )
+                }
+                {
+                  isNrt && (
+                    <MetaIcon
+                      id="feature-icon-list-view__near-real-time"
+                      icon={FaClock}
+                      iconProps={{ size: '0.825rem' }}
+                      label="Near Real Time"
+                      metadata={nrtLabel}
+                      tooltipClassName="collection-results-item__tooltip"
+                      tooltipContent={nrtDescription}
+                    />
+                  )
+                }
+              </div>
+              {
+                (variant !== 'minimal' && variant !== 'thumb-only') && (
+                  <p className="collection-results-item__desc">
+                    {summary}
+                  </p>
+                )
+              }
+            </div>
             {
-              hasMapImagery && (
-                <OverlayTrigger
-                  placement="top"
-                  overlay={(
-                    <Tooltip
-                      id="tooltip__map-imagery-badge"
-                      className="collection-results-item__badge-tooltip"
-                    >
-                      Supports advanced map visualizations using the GIBS tile service
-                    </Tooltip>
-                  )}
-                >
-                  <Badge
-                    className="collection-results-item__badge collection-results-item__badge--map-imagery"
-                  >
-                    Map Imagery
-                  </Badge>
-                </OverlayTrigger>
-              )
-            }
-            {
-              customizeBadges.length > 0 && (
-                <SplitBadge
-                  className="collection-results-item__badge  collection-results-item__badge--customizable"
-                  primary="Customizable"
-                  secondary={customizeBadges}
-                />
-              )
-            }
-            {
-              isNrt && (
-                <OverlayTrigger
-                  placement="top"
-                  overlay={(
-                    <Tooltip
-                      id="tooltip__near-real-time-badge"
-                      className="collection-results-item__badge-tooltip"
-                    >
-                      {nrtDescription}
-                    </Tooltip>
-                  )}
-                >
-                  <Badge
-                    className="collection-results-item__badge collection-results-item__badge--near-real-time"
-                  >
-                    {nrtLabel}
-                  </Badge>
-                </OverlayTrigger>
-              )
-            }
-            {
-              (
-                shortName
-                && versionId
-                && displayOrganization
-              ) && (
-                <Badge
-                  className="badge collection-results-item__badge collection-results-item__badge--attribution"
-                >
+              (variant !== 'minimal' && variant !== 'description-only') && (
+                <div className={`collection-results-item__thumb ${loadingThumbnail ? 'collection-results-item__thumb--is-loading' : 'collection-results-item__thumb--is-loaded'}`}>
                   {
-                    `${shortName} v${versionId} - ${displayOrganization}`
+                    loadingThumbnail && (
+                      <Spinner
+                        type="dots"
+                        className="collection-results-item__thumb-spinner"
+                        color="white"
+                        size="tiny"
+                      />
+                    )
                   }
-                </Badge>
+                  {
+                    thumbnail && (
+                      <img
+                        className={`collection-results-item__thumb-image ${loadingThumbnail ? 'collection-results-item__thumb-image--is-loading' : 'collection-results-item__thumb-image--is-loaded'}`}
+                        src={thumbnail}
+                        alt={`Thumbnail for ${datasetId}`}
+                        height={thumbnailHeight}
+                        width={thumbnailWidth}
+                        onLoad={onThumbnailLoaded}
+                      />
+                    )
+                  }
+                </div>
               )
             }
+          </div>
+          <div className="collection-results-item__attribution">
+            {
+              ((filteredConsortiums && filteredConsortiums.length > 0) || isCSDA) && (
+                <ul className="collection-results-item__attribution-list">
+                  {
+                    isCSDA && (
+                      <OverlayTrigger
+                        className="collection-results-item__tooltip-container"
+                        placement="top"
+                        overlay={(
+                          <Tooltip
+                            id="tooltip__csda-badge"
+                            className="collection-results-item__tooltip collection-results-item__tooltip--csda"
+                          >
+                            Commercial Smallsat Data Acquisition Program
+                            <span className="collection-results-item__tooltip-secondary">
+                              (Additional authentication required)
+                            </span>
+                          </Tooltip>
+                            )}
+                      >
+                        <li className="collection-results-item__attribution-list-item">
+                          <span className="collection-results-item__list-text collection-results-item__list-text--tooltip">
+                            <EDSCIcon
+                              className="collection-results-item__icon collection-results-item__icon--csda d-inline-block mr-1"
+                              icon={FaLock}
+                              size="0.55rem"
+                            />
+                            CSDA
+                          </span>
+                        </li>
+                      </OverlayTrigger>
+                    )
+                  }
+                  {
+                    filteredConsortiums.map((consortium) => {
+                      let consortiumDisplay = consortium
+                      const consortiumTooltip = getConsortiumTooltipText(consortium)
+
+                      if (consortiumTooltip) {
+                        consortiumDisplay = (
+                          <OverlayTrigger
+                            className="collection-results-item__tooltip-container"
+                            placement="top"
+                            overlay={(
+                              <Tooltip
+                                className={`collection-results-item__tooltip collection-results-item__tooltip--${consortium}`}
+                              >
+                                {consortiumTooltip}
+                              </Tooltip>
+                            )}
+                          >
+                            <span className="collection-results-item__list-text collection-results-item__list-text--tooltip">{consortiumDisplay}</span>
+                          </OverlayTrigger>
+                        )
+                      }
+
+                      return (
+                        <li
+                          key={`${collectionId}__consortium--${consortium}`}
+                          className="collection-results-item__attribution-list-item"
+                        >
+                          {consortiumDisplay}
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+              )
+            }
+            <div className="collection-results-item__attribution-secondary">
+              {
+                (
+                  shortName
+                  && versionId
+                  && displayOrganization
+                ) && (
+                  <div className="collection-results-item__attribution-wrap">
+                    <div className="collection-results-item__attribution-string">
+                      {`${shortName} v${versionId} - ${displayOrganization}`}
+                    </div>
+                  </div>
+                )
+              }
+              <div className="collection-results-item__actions">
+                <Button
+                  className="collection-results-item__action collection-results-item__action--collection-details"
+                  onClick={(e) => {
+                    onViewCollectionDetails(collectionId)
+                    e.stopPropagation()
+                  }}
+                  label="View collection details"
+                  title="View collection details"
+                  bootstrapSize="sm"
+                  bootstrapVariant="light"
+                  icon={FaInfoCircle}
+                />
+                <PortalFeatureContainer authentication>
+                  <>
+                    {
+                      isCollectionInProject && removeFromProjectButton
+                    }
+                    {
+                      !isCollectionInProject && addToProjectButton
+                    }
+                  </>
+                </PortalFeatureContainer>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   )
+
+  // If displaying the minimal variant, wrap the component in a popover
+  if (variant === 'minimal') {
+    return (
+      <OverlayTrigger
+        placement="right"
+        delay={{ show: 400, hide: 0 }}
+        flip
+        show={popoverOverride}
+        popperConfig={{
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [0, 25]
+              }
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                padding: 8
+              }
+            },
+            {
+              name: 'flip',
+              options: {
+                fallbackPlacements: ['top', 'bottom']
+              }
+            }
+          ]
+        }}
+        overlay={(props) => (
+          <Popover
+            className="collection-results-item__popover"
+            {...props}
+            content
+            onMouseEnter={() => setPopoverOverride(true)}
+            onMouseLeave={() => setPopoverOverride()}
+          >
+            <section className="collection-results-item__popover-primary">
+              {
+                thumbnail && (
+                  <div className={`collection-results-item__popover-thumb ${loadingThumbnail ? 'collection-results-item__popover-thumb--is-loading' : 'collection-results-item__popover-thumb--is-loaded'}`}>
+                    {
+                      loadingThumbnail && (
+                        <Spinner
+                          className="collection-results-item__thumb-spinner"
+                          type="dots"
+                          color="white"
+                          size="tiny"
+                        />
+                      )
+                    }
+                    <img
+                      style={{ display: loadingThumbnail ? 'none' : 'block' }}
+                      className={`collection-results-item__popover-thumb-image ${loadingThumbnail ? 'collection-results-item__popover-thumb-image--is-loading' : 'collection-results-item__popover-thumb-image--is-loaded'}`}
+                      src={thumbnail.replace(`h=${thumbnailHeight}&w=${thumbnailWidth}`, 'h=500&w=500')}
+                      alt={`Thumbnail for ${datasetId}`}
+                      height="250"
+                      width="250"
+                      onLoad={onThumbnailLoaded}
+                    />
+                  </div>
+                )
+              }
+              <p className="collection-results-item__popover-desc">
+                {summary}
+              </p>
+            </section>
+            <section className="collection-results-item__popover-secondary">
+              <Button
+                onClick={(e) => {
+                  setPopoverOverride()
+                  onViewCollectionDetails(collectionId)
+                  e.stopPropagation()
+                }}
+                label="View collection details"
+                title="View collection details"
+                bootstrapVariant="link"
+                icon={FaInfoCircle}
+              >
+                View Collection Details
+              </Button>
+            </section>
+          </Popover>
+        )}
+      >
+        {component}
+      </OverlayTrigger>
+    )
+  }
+
+  return component
 })
 
 CollectionResultsItem.displayName = 'CollectionResultsItem'
+
+CollectionResultsItem.defaultProps = {
+  variant: ''
+}
 
 CollectionResultsItem.propTypes = {
   collectionMetadata: collectionMetadataPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired
+  onViewCollectionGranules: PropTypes.func.isRequired,
+  variant: PropTypes.string
 }
 
 export default CollectionResultsItem

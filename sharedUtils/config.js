@@ -16,6 +16,7 @@ const getConfig = () => {
 export const getApplicationConfig = () => getConfig().application
 export const getEarthdataConfig = (env) => getConfig().earthdata[env]
 export const getEnvironmentConfig = (env) => getConfig().environment[env || process.env.NODE_ENV]
+export const getExperimentsConfig = () => getConfig().experiments
 
 export const getSecretEarthdataConfig = (env) => secretConfig.earthdata[env]
 export const getSecretEnvironmentConfig = () => secretConfig.environment[process.env.NODE_ENV]

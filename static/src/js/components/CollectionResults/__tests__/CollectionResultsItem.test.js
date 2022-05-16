@@ -1,24 +1,22 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-
-import { OverlayTrigger, Overlay, Tooltip } from 'react-bootstrap'
-
-import CollectionResultsItem from '../CollectionResultsItem'
-import SplitBadge from '../../SplitBadge/SplitBadge'
+import {
+  FaClock,
+  FaFileAlt,
+  FaGlobe,
+  FaSlidersH,
+  FaTags
+} from 'react-icons/fa'
 
 import { collectionListItemProps } from './mocks'
 
+import CollectionResultsItem from '../CollectionResultsItem'
 import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import EDSCIcon from '../../EDSCIcon/EDSCIcon'
+import MetaIcon from '../../MetaIcon/MetaIcon'
 
 Enzyme.configure({ adapter: new Adapter() })
-
-const popperOffset = {
-  name: 'offset',
-  options: {
-    offset: [0, 6]
-  }
-}
 
 function setup(propsOverride) {
   const props = {
@@ -111,7 +109,7 @@ describe('CollectionResultsList component', () => {
       .toEqual('Test Collection')
   })
 
-  describe('collection description', () => {
+  describe('collection metadata', () => {
     test('renders a cwic collection correctly', () => {
       const { enzymeWrapper } = setup({
         collectionMetadata: {
@@ -119,7 +117,7 @@ describe('CollectionResultsList component', () => {
           isOpenSearch: true
         }
       })
-      expect(enzymeWrapper.find('.collection-results-item__desc').text())
+      expect(enzymeWrapper.find('.collection-results-item__meta').text())
         .toContain('Int\'l / Interagency')
     })
 
@@ -130,7 +128,7 @@ describe('CollectionResultsList component', () => {
           granuleCount: 1
         }
       })
-      expect(enzymeWrapper.find('.collection-results-item__desc').text())
+      expect(enzymeWrapper.find('.collection-results-item__meta').text())
         .toContain('1 Granule')
     })
 
@@ -141,14 +139,14 @@ describe('CollectionResultsList component', () => {
           granuleCount: 0
         }
       })
-      expect(enzymeWrapper.find('.collection-results-item__desc').text())
+      expect(enzymeWrapper.find('.collection-results-item__meta').text())
         .toContain('0 Granules')
     })
 
     describe('date range', () => {
       test('with a range', () => {
         const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.collection-results-item__desc').text())
+        expect(enzymeWrapper.find('.collection-results-item__meta').text())
           .toContain('2010-10-10 to 2011-10-10')
       })
 
@@ -159,7 +157,7 @@ describe('CollectionResultsList component', () => {
             temporalRange: '2010-10-10 ongoing'
           }
         })
-        expect(enzymeWrapper.find('.collection-results-item__desc').text())
+        expect(enzymeWrapper.find('.collection-results-item__meta').text())
           .toContain('2010-10-10 ongoing')
       })
 
@@ -170,8 +168,256 @@ describe('CollectionResultsList component', () => {
             temporalRange: 'Up to 2011-10-10'
           }
         })
-        expect(enzymeWrapper.find('.collection-results-item__desc').text())
+        expect(enzymeWrapper.find('.collection-results-item__meta').text())
           .toContain('Up to 2011-10-10')
+      })
+    })
+
+    describe('map imagery', () => {
+      test('does not render when hasMapImagery not set', () => {
+        const { enzymeWrapper } = setup()
+        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+        const featureItem = metaContainer.find('#feature-icon-list-view__map-imagery')
+        expect(featureItem.length).toEqual(0)
+      })
+
+      describe('renders correctly when set', () => {
+        test('renders the badge correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              hasMapImagery: true
+            }
+          })
+          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+          const featureItem = metaContainer.find('#feature-icon-list-view__map-imagery')
+          const metaIcon = featureItem.find(MetaIcon)
+          expect(featureItem.length).toEqual(1)
+          expect(metaIcon.props().label).toEqual('Map Imagery')
+        })
+
+        test('renders a tooltip correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              hasMapImagery: true
+            }
+          })
+
+          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+          const featureItem = metaContainer.find('#feature-icon-list-view__map-imagery')
+          const metaIcon = featureItem.find(MetaIcon)
+          expect(metaIcon.props().tooltipContent).toEqual('Supports advanced map visualizations using the GIBS tile service')
+        })
+      })
+    })
+
+    describe('near real time', () => {
+      test('does not render when hasMapImagery not set', () => {
+        const { enzymeWrapper } = setup()
+        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+        const featureItem = metaContainer.find('#feature-icon-list-view__near-real-time')
+        expect(featureItem.length).toEqual(0)
+      })
+
+      describe('renders correctly when set', () => {
+        test('renders the label correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              collectionDataType: 'EXPEDITED',
+              isNrt: true
+            }
+          })
+          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+          const featureItem = metaContainer.find('#feature-icon-list-view__near-real-time')
+          const metaIcon = featureItem.find(MetaIcon)
+          expect(featureItem.length).toEqual(1)
+          expect(metaIcon.props().label).toEqual('Near Real Time')
+        })
+
+        test('renders the metadata correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              collectionDataType: 'EXPEDITED',
+              isNrt: true,
+              nrt: {
+                label: '1 to 4 days',
+                description: 'Data is available 1 to 4 days after being acquired by the instrument on the satellite'
+              }
+            }
+          })
+          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+          const featureItem = metaContainer.find('#feature-icon-list-view__near-real-time')
+          const metaIcon = featureItem.find(MetaIcon)
+          expect(featureItem.length).toEqual(1)
+          expect(metaIcon.props().metadata).toEqual('1 to 4 days')
+        })
+      })
+
+      test('renders a tooltip correctly', () => {
+        const { enzymeWrapper } = setup({
+          collectionMetadata: {
+            ...collectionListItemProps.collectionMetadata,
+            collectionDataType: 'EXPEDITED',
+            isNrt: true,
+            nrt: {
+              label: '1 to 4 days',
+              description: 'Data is available 1 to 4 days after being acquired by the instrument on the satellite'
+            }
+          }
+        })
+
+        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+        const featureItem = metaContainer.find('#feature-icon-list-view__near-real-time')
+        const metaIcon = featureItem.find(MetaIcon)
+        expect(metaIcon.props().tooltipContent).toEqual('Data is available 1 to 4 days after being acquired by the instrument on the satellite')
+      })
+    })
+
+    describe('customize', () => {
+      test('does not render when no customization flags are true', () => {
+        const { enzymeWrapper } = setup({
+          collection: collectionListItemProps.collectionMetadata
+        })
+        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+        const featureItem = metaContainer.find('#feature-icon-list-view__customize')
+        expect(featureItem.length).toEqual(0)
+      })
+
+      describe('spatial subsetting icon', () => {
+        const { enzymeWrapper } = setup({
+          collectionMetadata: {
+            ...collectionListItemProps.collectionMetadata,
+            hasSpatialSubsetting: true
+          }
+        })
+        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+        const featureItem = metaContainer.find('#feature-icon-list-view__customize')
+        expect(featureItem).toBeDefined()
+
+        test('renders the metadata correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              hasSpatialSubsetting: true
+            }
+          })
+          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+          const featureItem = metaContainer.find('#feature-icon-list-view__customize')
+          const metaIcon = featureItem.find(MetaIcon)
+          expect(featureItem.length).toEqual(1)
+          expect(metaIcon.props().metadata.props.children[0].props.icon).toEqual(FaGlobe)
+        })
+      })
+
+      describe('variables icon', () => {
+        const { enzymeWrapper } = setup({
+          collectionMetadata: {
+            ...collectionListItemProps.collectionMetadata,
+            hasVariables: true
+          }
+        })
+        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+        const featureItem = metaContainer.find('#feature-icon-list-view__customize')
+        expect(featureItem).toBeDefined()
+
+        test('renders the metadata correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              hasVariables: true
+            }
+          })
+          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+          const featureItem = metaContainer.find('#feature-icon-list-view__customize')
+          const metaIcon = featureItem.find(MetaIcon)
+
+          expect(featureItem.length).toEqual(1)
+          expect(metaIcon.props().metadata.props.children[2].props.icon).toEqual(FaTags)
+        })
+      })
+
+      describe('transforms icon', () => {
+        const { enzymeWrapper } = setup({
+          collectionMetadata: {
+            ...collectionListItemProps.collectionMetadata,
+            hasTransforms: true
+          }
+        })
+        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+        const featureItem = metaContainer.find('#feature-icon-list-view__customize')
+        expect(featureItem).toBeDefined()
+
+        test('renders the metadata correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              hasTransforms: true
+            }
+          })
+          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+          const featureItem = metaContainer.find('#feature-icon-list-view__customize')
+          const metaIcon = featureItem.find(MetaIcon)
+
+          expect(featureItem.length).toEqual(1)
+          expect(metaIcon.props().metadata.props.children[3].props.icon).toEqual(FaSlidersH)
+        })
+      })
+
+      describe('formats icon', () => {
+        const { enzymeWrapper } = setup({
+          collectionMetadata: {
+            ...collectionListItemProps.collectionMetadata,
+            hasFormats: true
+          }
+        })
+        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+        const featureItem = metaContainer.find('#feature-icon-list-view__customize')
+        expect(featureItem).toBeDefined()
+
+        test('renders the metadata correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              hasFormats: true
+            }
+          })
+          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+          const featureItem = metaContainer.find('#feature-icon-list-view__customize')
+          const metaIcon = featureItem.find(MetaIcon)
+
+          expect(featureItem.length).toEqual(1)
+          expect(metaIcon.props().metadata.props.children[4].props.icon).toEqual(FaFileAlt)
+        })
+      })
+
+      describe('temporal subsetting icon', () => {
+        const { enzymeWrapper } = setup({
+          collectionMetadata: {
+            ...collectionListItemProps.collectionMetadata,
+            hasTemporalSubsetting: true
+          }
+        })
+        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+        const featureItem = metaContainer.find('#feature-icon-list-view__customize')
+        expect(featureItem).toBeDefined()
+
+        test('renders the metadata correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              hasTemporalSubsetting: true
+            }
+          })
+          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+          const featureItem = metaContainer.find('#feature-icon-list-view__customize')
+          const metaIcon = featureItem.find(MetaIcon)
+
+          expect(featureItem.length).toEqual(1)
+          expect(metaIcon.props().metadata.props.children[1].props.icon).toEqual(FaClock)
+        })
       })
     })
   })
@@ -189,28 +435,75 @@ describe('CollectionResultsList component', () => {
     })
   })
 
-  describe('badges', () => {
+  describe('attribution information', () => {
     test('renders only the version information by default', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('.collection-results-item__badge--attribution').length).toEqual(1)
+      expect(enzymeWrapper.find('.collection-results-item__attribution-list-item').length).toEqual(0)
+      expect(enzymeWrapper.find('.collection-results-item__attribution-string').length).toEqual(1)
     })
 
-    describe('version information', () => {
+    describe('short name and version information', () => {
       test('renders correctly', () => {
         const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.collection-results-item__badge--attribution').text()).toEqual('cId1 v2 - TESTORG')
+        expect(enzymeWrapper.find('.collection-results-item__attribution-string').text()).toEqual('cId1 v2 - TESTORG')
       })
     })
 
-    describe('consortium badge', () => {
+    describe('CSDA', () => {
+      test('does not render when isCSDA is not set', () => {
+        const { enzymeWrapper } = setup()
+        const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+
+        expect(attributionList.children().length).toEqual(0)
+      })
+
+      describe('renders correctly when set', () => {
+        test('renders the metadata correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              isCSDA: true
+            }
+          })
+
+          console.log('enzymeWrapper', enzymeWrapper.debug())
+
+          const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+          const attributionItem = attributionList.childAt(0)
+          const attributionText = attributionItem.find('.collection-results-item__list-text')
+
+          expect(attributionList.children().length).toEqual(1)
+          expect(attributionText.find(EDSCIcon).length).toEqual(1)
+          expect(attributionText.text()).toContain('CSDA')
+        })
+
+        test('renders a tooltip correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              isCSDA: true
+            }
+          })
+
+          const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+          const attributionItem = attributionList.childAt(0)
+          const attributionTootip = attributionItem.find('.collection-results-item__tooltip-container')
+          const attributionTooltipOverlay = shallow(attributionTootip.props().overlay)
+
+          expect(attributionTooltipOverlay.text()).toEqual('Commercial Smallsat Data Acquisition Program(Additional authentication required)')
+        })
+      })
+    })
+
+    describe('consortium metadata', () => {
       test('does not render when the consortium is not set', () => {
         const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.collection-results-item__badge--cwic').length).toEqual(0)
+        expect(enzymeWrapper.find('.collection-results-item__attribution-list').children().length).toEqual(0)
       })
 
       describe('with a single consortium', () => {
         describe('renders correctly when set', () => {
-          test('renders the badge correctly', () => {
+          test('renders the metadata correctly', () => {
             const { enzymeWrapper } = setup({
               collectionMetadata: {
                 ...collectionListItemProps.collectionMetadata,
@@ -218,12 +511,12 @@ describe('CollectionResultsList component', () => {
               }
             })
 
-            const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-            expect(overlayWrapper.length).toEqual(1)
-            const overlay = shallow(
-              shallow(overlayWrapper.props().children.props.children[0]).props().children
-            ).childAt(0).childAt(0)
-            expect(overlay.text()).toEqual('CWIC')
+            const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+            const attributionItem = attributionList.childAt(0)
+            const attributionText = attributionItem.find('.collection-results-item__list-text')
+
+            expect(attributionList.children().length).toEqual(1)
+            expect(attributionText.text()).toEqual('CWIC')
           })
 
           test('renders a tooltip correctly', () => {
@@ -234,18 +527,19 @@ describe('CollectionResultsList component', () => {
               }
             })
 
-            const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-            const overlayText = shallow(
-              shallow(overlay.props().children.props.children[0]).props().children
-            ).childAt(1).childAt(0).text()
-            expect(overlayText).toEqual('CEOS WGISS Integrated Catalog')
+            const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+            const attributionItem = attributionList.childAt(0)
+            const attributionTootip = attributionItem.find('.collection-results-item__tooltip-container')
+            const attributionTooltipOverlay = shallow(attributionTootip.props().overlay)
+
+            expect(attributionTooltipOverlay.text()).toEqual('CEOS WGISS Integrated Catalog')
           })
         })
       })
 
       describe('with a multiple consortiums', () => {
         describe('renders correctly when set', () => {
-          test('renders the badge correctly', () => {
+          test('renders the metadata correctly', () => {
             const { enzymeWrapper } = setup({
               collectionMetadata: {
                 ...collectionListItemProps.collectionMetadata,
@@ -253,16 +547,15 @@ describe('CollectionResultsList component', () => {
               }
             })
 
-            const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-            expect(overlayWrapper.length).toEqual(1)
-            const consortiumOne = shallow(
-              shallow(overlayWrapper.props().children.props.children[0]).props().children
-            ).childAt(0).childAt(0)
-            const consortiumTwo = shallow(
-              shallow(overlayWrapper.props().children.props.children[1]).props().children
-            ).childAt(0).childAt(0)
-            expect(consortiumOne.text()).toEqual('CWIC')
-            expect(consortiumTwo.text()).toEqual('GEOSS')
+            const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+            const attributionItemOne = attributionList.childAt(0)
+            const attributionTextOne = attributionItemOne.find('.collection-results-item__list-text')
+            const attributionItemTwo = attributionList.childAt(1)
+            const attributionTextTwo = attributionItemTwo.find('.collection-results-item__list-text')
+
+            expect(attributionList.children().length).toEqual(2)
+            expect(attributionTextOne.text()).toEqual('CWIC')
+            expect(attributionTextTwo.text()).toEqual('GEOSS')
           })
 
           test('renders a tooltips correctly', () => {
@@ -273,21 +566,22 @@ describe('CollectionResultsList component', () => {
               }
             })
 
-            const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-            const overlayOneText = shallow(
-              shallow(overlay.props().children.props.children[0]).props().children
-            ).childAt(1).childAt(0).text()
-            const overlayTwoText = shallow(
-              shallow(overlay.props().children.props.children[1]).props().children
-            ).childAt(1).childAt(0).text()
-            expect(overlayOneText).toEqual('CEOS WGISS Integrated Catalog')
-            expect(overlayTwoText).toEqual('Global Earth Observation System of Systems')
+            const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+            const attributionItemOne = attributionList.childAt(0)
+            const attributionTootipOne = attributionItemOne.find('.collection-results-item__tooltip-container')
+            const attributionTooltipOverlayOne = shallow(attributionTootipOne.props().overlay)
+            const attributionItemTwo = attributionList.childAt(1)
+            const attributionTootipTwo = attributionItemTwo.find('.collection-results-item__tooltip-container')
+            const attributionTooltipOverlayTwo = shallow(attributionTootipTwo.props().overlay)
+
+            expect(attributionTooltipOverlayOne.text()).toEqual('CEOS WGISS Integrated Catalog')
+            expect(attributionTooltipOverlayTwo.text()).toEqual('Global Earth Observation System of Systems')
           })
         })
       })
 
       describe('when CWIC is defined', () => {
-        test('renders the badge correctly', () => {
+        test('renders the metadata correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
               ...collectionListItemProps.collectionMetadata,
@@ -295,12 +589,12 @@ describe('CollectionResultsList component', () => {
             }
           })
 
-          const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-          expect(overlayWrapper.length).toEqual(1)
-          const overlay = shallow(
-            shallow(overlayWrapper.props().children.props.children[0]).props().children
-          ).childAt(0).childAt(0)
-          expect(overlay.text()).toEqual('CWIC')
+          const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+          const attributionItem = attributionList.childAt(0)
+          const attributionText = attributionItem.find('.collection-results-item__list-text')
+
+          expect(attributionList.children().length).toEqual(1)
+          expect(attributionText.text()).toEqual('CWIC')
         })
 
         test('renders a tooltip correctly', () => {
@@ -311,16 +605,17 @@ describe('CollectionResultsList component', () => {
             }
           })
 
-          const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-          const overlayText = shallow(
-            shallow(overlay.props().children.props.children[0]).props().children
-          ).childAt(1).childAt(0).text()
-          expect(overlayText).toEqual('CEOS WGISS Integrated Catalog')
+          const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+          const attributionItem = attributionList.childAt(0)
+          const attributionTootip = attributionItem.find('.collection-results-item__tooltip-container')
+          const attributionTooltipOverlay = shallow(attributionTootip.props().overlay)
+
+          expect(attributionTooltipOverlay.text()).toEqual('CEOS WGISS Integrated Catalog')
         })
       })
 
       describe('when GEOSS is defined', () => {
-        test('renders the badge correctly', () => {
+        test('renders the metadata correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
               ...collectionListItemProps.collectionMetadata,
@@ -328,12 +623,12 @@ describe('CollectionResultsList component', () => {
             }
           })
 
-          const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-          expect(overlayWrapper.length).toEqual(1)
-          const overlay = shallow(
-            shallow(overlayWrapper.props().children.props.children[0]).props().children
-          ).childAt(0).childAt(0)
-          expect(overlay.text()).toEqual('GEOSS')
+          const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+          const attributionItem = attributionList.childAt(0)
+          const attributionText = attributionItem.find('.collection-results-item__list-text')
+
+          expect(attributionList.children().length).toEqual(1)
+          expect(attributionText.text()).toEqual('GEOSS')
         })
 
         test('renders a tooltip correctly', () => {
@@ -344,16 +639,17 @@ describe('CollectionResultsList component', () => {
             }
           })
 
-          const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-          const overlayText = shallow(
-            shallow(overlay.props().children.props.children[0]).props().children
-          ).childAt(1).childAt(0).text()
-          expect(overlayText).toEqual('Global Earth Observation System of Systems')
+          const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+          const attributionItem = attributionList.childAt(0)
+          const attributionTootip = attributionItem.find('.collection-results-item__tooltip-container')
+          const attributionTooltipOverlay = shallow(attributionTootip.props().overlay)
+
+          expect(attributionTooltipOverlay.text()).toEqual('Global Earth Observation System of Systems')
         })
       })
 
       describe('when FEDEO is defined', () => {
-        test('renders the badge correctly', () => {
+        test('renders the metadata correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
               ...collectionListItemProps.collectionMetadata,
@@ -361,12 +657,12 @@ describe('CollectionResultsList component', () => {
             }
           })
 
-          const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-          expect(overlayWrapper.length).toEqual(1)
-          const overlay = shallow(
-            shallow(overlayWrapper.props().children.props.children[0]).props().children
-          ).childAt(0).childAt(0)
-          expect(overlay.text()).toEqual('FEDEO')
+          const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+          const attributionItem = attributionList.childAt(0)
+          const attributionText = attributionItem.find('.collection-results-item__list-text')
+
+          expect(attributionList.children().length).toEqual(1)
+          expect(attributionText.text()).toEqual('FEDEO')
         })
 
         test('renders a tooltip correctly', () => {
@@ -377,16 +673,17 @@ describe('CollectionResultsList component', () => {
             }
           })
 
-          const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-          const overlayText = shallow(
-            shallow(overlay.props().children.props.children[0]).props().children
-          ).childAt(1).childAt(0).text()
-          expect(overlayText).toEqual('Federated EO Gateway')
+          const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+          const attributionItem = attributionList.childAt(0)
+          const attributionTootip = attributionItem.find('.collection-results-item__tooltip-container')
+          const attributionTooltipOverlay = shallow(attributionTootip.props().overlay)
+
+          expect(attributionTooltipOverlay.text()).toEqual('Federated EO Gateway')
         })
       })
 
       describe('when CEOS is defined', () => {
-        test('renders the badge correctly', () => {
+        test('renders the metadata correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
               ...collectionListItemProps.collectionMetadata,
@@ -394,12 +691,12 @@ describe('CollectionResultsList component', () => {
             }
           })
 
-          const overlayWrapper = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-          expect(overlayWrapper.length).toEqual(1)
-          const overlay = shallow(
-            shallow(overlayWrapper.props().children.props.children[0]).props().children
-          ).childAt(0).childAt(0)
-          expect(overlay.text()).toEqual('CEOS')
+          const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+          const attributionItem = attributionList.childAt(0)
+          const attributionText = attributionItem.find('.collection-results-item__list-text')
+
+          expect(attributionList.children().length).toEqual(1)
+          expect(attributionText.text()).toEqual('CEOS')
         })
 
         test('renders a tooltip correctly', () => {
@@ -410,257 +707,12 @@ describe('CollectionResultsList component', () => {
             }
           })
 
-          const overlay = enzymeWrapper.find('.collection-results-item__badge--external-broker')
-          const overlayText = shallow(
-            shallow(overlay.props().children.props.children[0]).props().children
-          ).childAt(1).childAt(0).text()
-          expect(overlayText).toEqual('Committee on Earth Observation Satellites')
-        })
-      })
-    })
+          const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
+          const attributionItem = attributionList.childAt(0)
+          const attributionTootip = attributionItem.find('.collection-results-item__tooltip-container')
+          const attributionTooltipOverlay = shallow(attributionTootip.props().overlay)
 
-    describe('CSDA badge', () => {
-      test('does not render when isCSDA is not set', () => {
-        const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.collection-results-item__badge--cwic').length).toEqual(0)
-      })
-
-      describe('renders correctly when set', () => {
-        test('renders the badge correctly', () => {
-          const { enzymeWrapper } = setup({
-            collectionMetadata: {
-              ...collectionListItemProps.collectionMetadata,
-              isCSDA: true
-            }
-          })
-          expect(enzymeWrapper.find('.collection-results-item__badge--csda').length).toEqual(1)
-          expect(enzymeWrapper.find('.collection-results-item__badge--csda').text()).toContain('CSDA')
-        })
-
-        test('renders a tooltip correctly', () => {
-          const { enzymeWrapper } = setup({
-            collectionMetadata: {
-              ...collectionListItemProps.collectionMetadata,
-              isCSDA: true
-            }
-          })
-
-          const tooltipProps = enzymeWrapper.find(OverlayTrigger).props().overlay.props
-          expect(enzymeWrapper.find(OverlayTrigger).length).toEqual(1)
-          expect(tooltipProps.children[0]).toEqual('Commercial Smallsat Data Acquisition Program')
-          expect(shallow(tooltipProps.children[1]).text()).toEqual('(Additional authentication required)')
-        })
-      })
-    })
-
-    describe('map imagery badge', () => {
-      test('does not render when hasMapImagery not set', () => {
-        const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.collection-results-item__badge--map-imagery').length).toEqual(0)
-      })
-
-      describe('renders correctly when set', () => {
-        test('renders the badge correctly', () => {
-          const { enzymeWrapper } = setup({
-            collectionMetadata: {
-              ...collectionListItemProps.collectionMetadata,
-              hasMapImagery: true
-            }
-          })
-          expect(enzymeWrapper.find('.collection-results-item__badge--map-imagery').length).toEqual(1)
-          expect(enzymeWrapper.find('.collection-results-item__badge--map-imagery').text()).toEqual('Map Imagery')
-        })
-
-        test('renders a tooltip correctly', () => {
-          const { enzymeWrapper } = setup({
-            collectionMetadata: {
-              ...collectionListItemProps.collectionMetadata,
-              hasMapImagery: true
-            }
-          })
-
-          const tooltipProps = enzymeWrapper.find(OverlayTrigger).props().overlay.props
-          expect(enzymeWrapper.find(OverlayTrigger).length).toEqual(1)
-          expect(tooltipProps.children).toEqual('Supports advanced map visualizations using the GIBS tile service')
-        })
-      })
-    })
-
-    describe('near real time badge', () => {
-      test('does not render when hasMapImagery not set', () => {
-        const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.collection-results-item__badge--near-real-time').length).toEqual(0)
-      })
-
-      describe('renders correctly when set', () => {
-        test('renders the badge correctly', () => {
-          const { enzymeWrapper } = setup({
-            collectionMetadata: {
-              ...collectionListItemProps.collectionMetadata,
-              collectionDataType: 'EXPEDITED',
-              isNrt: true
-            }
-          })
-          expect(enzymeWrapper.find('.collection-results-item__badge--near-real-time').length).toEqual(1)
-          expect(enzymeWrapper.find('.collection-results-item__badge--near-real-time').text()).toEqual('1 to 4 days')
-        })
-      })
-
-      test('renders a tooltip correctly', () => {
-        const { enzymeWrapper } = setup({
-          collectionMetadata: {
-            ...collectionListItemProps.collectionMetadata,
-            collectionDataType: 'EXPEDITED',
-            isNrt: true
-          }
-        })
-
-        const tooltipProps = enzymeWrapper.find(OverlayTrigger).props().overlay.props
-        expect(enzymeWrapper.find(OverlayTrigger).length).toEqual(1)
-        expect(tooltipProps.children).toEqual('Data is available 1 to 4 days after the instrument on the satellite has acquired the data.')
-      })
-    })
-
-    describe('customize badge', () => {
-      test('does not render when no customization flags are true', () => {
-        const { enzymeWrapper } = setup({
-          collection: collectionListItemProps.collectionMetadata
-        })
-        expect(enzymeWrapper.find('.collection-results-item__badge--customizable').length).toEqual(0)
-      })
-
-      describe('spatial subsetting icon', () => {
-        const { enzymeWrapper } = setup({
-          collectionMetadata: {
-            ...collectionListItemProps.collectionMetadata,
-            hasSpatialSubsetting: true
-          }
-        })
-        const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
-        const tooltip = shallow(customizeBadge.props().secondary[0])
-
-        test('renders the correct component', () => {
-          expect(enzymeWrapper.find('.collection-results-item__badge--customizable').type()).toEqual(SplitBadge)
-        })
-
-        test('renders correctly when set', () => {
-          expect(tooltip.find('.fa-globe-svg').length).toEqual(1)
-        })
-
-        test('renders a tooltip with the correct text', () => {
-          expect(tooltip.find(Tooltip).text()).toEqual('Spatial customizable options available')
-        })
-
-        test('renders a tooltip with the correct popperConfig', () => {
-          expect(tooltip.find(Overlay).props().popperConfig.modifiers[0]).toEqual(popperOffset)
-        })
-      })
-
-      describe('variables icon', () => {
-        const { enzymeWrapper } = setup({
-          collectionMetadata: {
-            ...collectionListItemProps.collectionMetadata,
-            hasVariables: true
-          }
-        })
-        const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
-        const tooltip = shallow(customizeBadge.props().secondary[0])
-
-        test('renders the correct component', () => {
-          expect(enzymeWrapper.find('.collection-results-item__badge--customizable').type()).toEqual(SplitBadge)
-        })
-
-        test('renders correctly when set', () => {
-          expect(tooltip.find('.fa-tags-svg').length).toEqual(1)
-        })
-
-        test('renders a tooltip with the correct text', () => {
-          expect(tooltip.find(Tooltip).text()).toEqual('Variable customizable options available')
-        })
-
-        test('renders a tooltip with the correct popperConfig', () => {
-          expect(tooltip.find(Overlay).props().popperConfig.modifiers[0]).toEqual(popperOffset)
-        })
-      })
-
-      describe('transforms icon', () => {
-        const { enzymeWrapper } = setup({
-          collectionMetadata: {
-            ...collectionListItemProps.collectionMetadata,
-            hasTransforms: true
-          }
-        })
-        const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
-        const tooltip = shallow(customizeBadge.props().secondary[0])
-
-        test('renders the correct component', () => {
-          expect(enzymeWrapper.find('.collection-results-item__badge--customizable').type()).toEqual(SplitBadge)
-        })
-
-        test('renders correctly when set', () => {
-          expect(tooltip.find('.fa-sliders-svg').length).toEqual(1)
-        })
-
-        test('renders a tooltip with the correct text', () => {
-          expect(tooltip.find(Tooltip).text()).toEqual('Data transformation options available')
-        })
-
-        test('renders a tooltip with the correct popperConfig', () => {
-          expect(tooltip.find(Overlay).props().popperConfig.modifiers[0]).toEqual(popperOffset)
-        })
-      })
-
-      describe('formats icon', () => {
-        const { enzymeWrapper } = setup({
-          collectionMetadata: {
-            ...collectionListItemProps.collectionMetadata,
-            hasFormats: true
-          }
-        })
-        const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
-        const tooltip = shallow(customizeBadge.props().secondary[0])
-
-        test('renders the correct component', () => {
-          expect(enzymeWrapper.find('.collection-results-item__badge--customizable').type()).toEqual(SplitBadge)
-        })
-
-        test('renders correctly when set', () => {
-          expect(tooltip.find('.fa-file-svg').length).toEqual(1)
-        })
-
-        test('renders a tooltip with the correct text', () => {
-          expect(tooltip.find(Tooltip).text()).toEqual('Reformatting options available')
-        })
-
-        test('renders a tooltip with the correct popperConfig', () => {
-          expect(tooltip.find(Overlay).props().popperConfig.modifiers[0]).toEqual(popperOffset)
-        })
-      })
-
-      describe('temporal subsetting icon', () => {
-        const { enzymeWrapper } = setup({
-          collectionMetadata: {
-            ...collectionListItemProps.collectionMetadata,
-            hasTemporalSubsetting: true
-          }
-        })
-        const customizeBadge = enzymeWrapper.find('.collection-results-item__badge--customizable')
-        const tooltip = shallow(customizeBadge.props().secondary[0])
-
-        test('renders the correct component', () => {
-          expect(enzymeWrapper.find('.collection-results-item__badge--customizable').type()).toEqual(SplitBadge)
-        })
-
-        test('renders correctly when set', () => {
-          expect(tooltip.find('.fa-clock-svg').length).toEqual(1)
-        })
-
-        test('renders a tooltip with the correct text', () => {
-          expect(tooltip.find(Tooltip).text()).toEqual('Temporal subsetting options available')
-        })
-
-        test('renders a tooltip with the correct popperConfig', () => {
-          expect(tooltip.find(Overlay).props().popperConfig.modifiers[0]).toEqual(popperOffset)
+          expect(attributionTooltipOverlay.text()).toEqual('Committee on Earth Observation Satellites')
         })
       })
     })
