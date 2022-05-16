@@ -9,7 +9,7 @@
   "pageTitle": "CWIC",
   "parentConfig": "edsc",
   "query": {
-    "tagKey": "org.ceos.wgiss.cwic.granules.prod",
+    "consortium": ["EOSDIS", "CWIC"],
     "hasGranulesOrCwic": null
   },
   "ui": {
