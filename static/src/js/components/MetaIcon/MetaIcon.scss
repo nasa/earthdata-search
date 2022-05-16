@@ -9,11 +9,11 @@
   letter-spacing: 0.01em;
 
   &__icon {
-    color: $color__green;
+    color: $color__black--500;
     font-size: 0.75rem;
 
     .meta-icon:hover & {
-      color: $color__green--dark;
+      color: $color__black--600;
     }
   }
 
