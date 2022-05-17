@@ -26,7 +26,6 @@ function setup(overrideProps = {}) {
       },
       pageNum: 1
     },
-    handoffs: {},
     map: {
       projection: projections.geographic
     },

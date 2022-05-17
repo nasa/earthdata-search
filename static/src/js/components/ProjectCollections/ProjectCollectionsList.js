@@ -22,7 +22,6 @@ export const ProjectCollectionsList = (props) => {
   const {
     collectionsMetadata,
     collectionsQuery,
-    handoffs,
     location,
     map,
     onRemoveCollectionFromProject,
@@ -66,7 +65,6 @@ export const ProjectCollectionsList = (props) => {
         collectionId={collectionId}
         collectionsQuery={collectionsQuery}
         color={color}
-        handoffs={handoffs}
         index={index}
         isPanelActive={isPanelActive}
         key={collectionId}
@@ -114,7 +112,6 @@ export const ProjectCollectionsList = (props) => {
 ProjectCollectionsList.propTypes = {
   collectionsMetadata: PropTypes.shape({}).isRequired,
   collectionsQuery: PropTypes.shape({}).isRequired,
-  handoffs: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   map: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

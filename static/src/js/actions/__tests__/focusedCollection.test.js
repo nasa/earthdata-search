@@ -97,7 +97,7 @@ describe('getFocusedCollection', () => {
 
   describe('when no metadata exists in the store for the collection from graphql', () => {
     describe('when graphql returns metadata for the requested collection', () => {
-      test('should update the focusedCollection, fetch metadata from graphql, call getSearchGranules and call fetchSotoLayers', async () => {
+      test('should update the focusedCollection, fetch metadata from graphql and calls getSearchGranules', async () => {
         jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
           cmrHost: 'https://cmr.example.com',
           graphQlHost: 'https://graphql.example.com',
@@ -126,9 +126,6 @@ describe('getFocusedCollection', () => {
 
         const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
         getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
-
-        const fetchSotoLayersMock = jest.spyOn(actions, 'fetchSotoLayers')
-        fetchSotoLayersMock.mockImplementationOnce(() => jest.fn())
 
         const store = mockStore({
           authToken: '',
@@ -162,7 +159,6 @@ describe('getFocusedCollection', () => {
 
         expect(relevancyMock).toHaveBeenCalledTimes(1)
         expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
-        expect(fetchSotoLayersMock).toHaveBeenCalledTimes(1)
       })
 
       describe('when the requested collection is cwic and a polygon search is active', () => {
