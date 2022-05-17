@@ -73,7 +73,6 @@ export class ProjectCollections extends Component {
   render() {
     const {
       collectionsQuery,
-      handoffs,
       map,
       onMetricsDataAccess,
       onRemoveCollectionFromProject,
@@ -121,7 +120,6 @@ export class ProjectCollections extends Component {
         <ProjectCollectionsList
           collectionsMetadata={projectCollectionsMetadata}
           collectionsQuery={collectionsQuery}
-          handoffs={handoffs}
           map={map}
           onMetricsDataAccess={onMetricsDataAccess}
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
@@ -192,7 +190,6 @@ ProjectCollections.propTypes = {
   collectionsQuery: PropTypes.shape({
     byId: PropTypes.shape({})
   }).isRequired,
-  handoffs: PropTypes.shape({}).isRequired,
   map: PropTypes.shape({}).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

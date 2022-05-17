@@ -7,7 +7,6 @@ import actions from '../../actions/index'
 import { metricsDataAccess } from '../../middleware/metrics/actions'
 
 import { getProjectCollectionsMetadata, getProjectCollectionsIds } from '../../selectors/project'
-import { getHandoffs } from '../../selectors/handoffs'
 
 import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
 
@@ -36,7 +35,6 @@ export const mapDispatchToProps = (dispatch) => ({
 
 export const mapStateToProps = (state) => ({
   collectionsQuery: state.query.collection,
-  handoffs: getHandoffs(state),
   map: state.map,
   panels: state.panels,
   project: state.project,
@@ -48,7 +46,6 @@ export const mapStateToProps = (state) => ({
 export const ProjectCollectionsContainer = (props) => {
   const {
     collectionsQuery,
-    handoffs,
     map,
     onMetricsDataAccess,
     onRemoveCollectionFromProject,
@@ -70,7 +67,6 @@ export const ProjectCollectionsContainer = (props) => {
   return (
     <ProjectCollections
       collectionsQuery={collectionsQuery}
-      handoffs={handoffs}
       map={map}
       onMetricsDataAccess={onMetricsDataAccess}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
@@ -93,7 +89,6 @@ export const ProjectCollectionsContainer = (props) => {
 
 ProjectCollectionsContainer.propTypes = {
   collectionsQuery: PropTypes.shape({}).isRequired,
-  handoffs: PropTypes.shape({}).isRequired,
   map: PropTypes.shape({}).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

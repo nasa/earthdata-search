@@ -19,9 +19,9 @@ import {
 
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { convertSize } from '../../util/project'
-import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import { isAccessMethodValid } from '../../util/accessMethods'
 import { pluralize } from '../../util/pluralize'
+import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -52,7 +52,6 @@ const ProjectCollectionItem = ({
   collectionId,
   collectionsQuery,
   color,
-  handoffs,
   index,
   isPanelActive,
   map,
@@ -98,10 +97,9 @@ const ProjectCollectionItem = ({
     }
   ])
 
-  const handoffLinks = generateHandoffs({
+  const handoffLinks = getHandoffLinks({
     collectionMetadata,
     collectionQuery: collectionsQuery,
-    handoffs,
     map
   })
 
@@ -243,7 +241,6 @@ ProjectCollectionItem.propTypes = {
   collectionMetadata: collectionMetadataPropType.isRequired,
   collectionsQuery: PropTypes.shape({}).isRequired,
   color: PropTypes.string.isRequired,
-  handoffs: PropTypes.shape({}).isRequired,
   index: PropTypes.number.isRequired,
   isPanelActive: PropTypes.bool.isRequired,
   map: PropTypes.shape({}).isRequired,

@@ -310,9 +310,6 @@ describe('getProjectCollections', () => {
       }
     })
 
-    const fetchSotoLayersMock = jest.spyOn(actions, 'fetchSotoLayers')
-    fetchSotoLayersMock.mockImplementationOnce(() => jest.fn())
-
     await store.dispatch(actions.getProjectCollections())
 
     const storeActions = store.getActions()
@@ -327,7 +324,6 @@ describe('getProjectCollections', () => {
         })
       ]
     })
-    expect(fetchSotoLayersMock).toHaveBeenCalledTimes(1)
   })
 
   test('does not call updateCollectionMetadata if no projectIds exist', () => {

@@ -44,7 +44,6 @@ function setup() {
       allIds: [],
       excludledGranuleIds: []
     },
-    handoffs: {},
     map: {},
     project: {
       collections: {
@@ -148,7 +147,6 @@ describe('mapStateToProps', () => {
       },
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleId',
-      handoffs: {},
       query: {
         collection: {}
       },
@@ -168,7 +166,6 @@ describe('mapStateToProps', () => {
       focusedProjectCollection: {},
       granuleQuery: {},
       granuleSearchResults: {},
-      handoffs: {},
       map: {
         projection: 'TestProjection'
       },

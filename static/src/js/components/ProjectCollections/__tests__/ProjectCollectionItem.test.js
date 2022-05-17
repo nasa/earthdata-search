@@ -28,7 +28,6 @@ function setup(overrideProps) {
       pageNum: 1
     },
     color: 'color',
-    handoffs: {},
     map: {
       projection: projections.geographic
     },

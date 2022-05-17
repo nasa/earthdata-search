@@ -19,7 +19,6 @@ function setup() {
       }
     },
     collectionsQuery: {},
-    handoffs: {},
     location: {},
     map: {
       projection: projections.geographic

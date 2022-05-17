@@ -73,7 +73,6 @@ function setup(overrideProps, location = '/search') {
       pageNum: 1,
       sortKey: '-start_date'
     },
-    handoffs: {},
     isExportRunning: {
       csv: false,
       json: false

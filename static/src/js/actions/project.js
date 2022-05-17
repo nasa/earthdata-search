@@ -358,12 +358,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         })
 
         dispatch(actions.fetchDataQualitySummaries(conceptId))
-
-        // If any tools are SOTO, call fetchSotoLayers
-        const { items } = tools
-        if (items && items.some((item) => item.name.toLowerCase() === 'soto')) {
-          dispatch(actions.fetchSotoLayers())
-        }
       })
 
       // Update metadata in the store

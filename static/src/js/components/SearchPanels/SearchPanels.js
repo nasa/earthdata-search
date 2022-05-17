@@ -16,9 +16,9 @@ import {
   FaLock
 } from 'react-icons/fa'
 
-import { generateHandoffs } from '../../util/handoffs/generateHandoffs'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
+import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import CollectionResultsBodyContainer
@@ -147,7 +147,6 @@ class SearchPanels extends PureComponent {
       granuleMetadata,
       granuleQuery,
       granuleSearchResults,
-      handoffs,
       isExportRunning,
       location,
       map,
@@ -199,10 +198,9 @@ class SearchPanels extends PureComponent {
 
     const { title: granuleTitle = '' } = granuleMetadata
 
-    const handoffLinks = generateHandoffs({
+    const handoffLinks = getHandoffLinks({
       collectionMetadata,
       collectionQuery,
-      handoffs,
       map
     })
     const {
@@ -744,7 +742,6 @@ SearchPanels.propTypes = {
     isLoaded: PropTypes.bool,
     isLoading: PropTypes.bool
   }).isRequired,
-  handoffs: PropTypes.shape({}).isRequired,
   isExportRunning: PropTypes.shape({
     csv: PropTypes.bool,
     json: PropTypes.bool
