@@ -21,7 +21,6 @@ export const getHandoffLinks = ({
 
   // Loop through each associated Tool to build a handoff link for each
   toolItems.forEach((tool) => {
-    console.log('🚀 ~ file: getHandoffs.js ~ line 92 ~ toolItems.forEach ~ tool', tool)
     const handoffUrls = generateHandoffs({
       collectionMetadata,
       searchContext: {
@@ -30,7 +29,6 @@ export const getHandoffLinks = ({
       },
       ummT: tool
     })
-    console.log('🚀 ~ file: getHandoffs.js ~ line 37 ~ toolItems.forEach ~ handoffUrls', handoffUrls)
 
     handoffLinks.push(...handoffUrls)
   })
