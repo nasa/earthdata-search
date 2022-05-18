@@ -84,13 +84,11 @@ export const CollectionResultsTable = ({
     },
     {
       Header: 'Granules',
-      /* eslint-disable react/display-name,react/prop-types */
       Cell: ({ cell }) => (
         <div className="edsc-table-cell" title={commafy(cell.value)}>
           {commafy(cell.value)}
         </div>
       ),
-      /* eslint-enable */
       accessor: 'granuleCount',
       customProps: {
         centerContent: true
@@ -133,7 +131,6 @@ export const CollectionResultsTable = ({
           </OverlayTrigger>
         </>
       ),
-      // eslint-disable-next-line react/prop-types
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
           {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
@@ -164,7 +161,6 @@ export const CollectionResultsTable = ({
           </OverlayTrigger>
         </>
       ),
-      // eslint-disable-next-line react/prop-types
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
           {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
@@ -197,9 +193,7 @@ export const CollectionResultsTable = ({
           </OverlayTrigger>
         </>
       ),
-      // eslint-disable-next-line react/prop-types
       Cell: ({ value, row }) => {
-        // eslint-disable-next-line react/prop-types
         const { original = {} } = row
         const { nrt = {} } = original
         const { label: nrtLabel } = nrt
@@ -224,7 +218,6 @@ export const CollectionResultsTable = ({
     },
     {
       Header: 'Spatial Subsetting',
-      // eslint-disable-next-line react/prop-types
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
           {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
@@ -238,7 +231,6 @@ export const CollectionResultsTable = ({
     },
     {
       Header: 'Temporal Subsetting',
-      // eslint-disable-next-line react/prop-types
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
           {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
@@ -252,7 +244,6 @@ export const CollectionResultsTable = ({
     },
     {
       Header: 'Variable Subsetting',
-      // eslint-disable-next-line react/prop-types
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
           {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
@@ -266,7 +257,6 @@ export const CollectionResultsTable = ({
     },
     {
       Header: 'Transformation',
-      // eslint-disable-next-line react/prop-types
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
           {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
@@ -280,7 +270,6 @@ export const CollectionResultsTable = ({
     },
     {
       Header: 'Reformatting',
-      // eslint-disable-next-line react/prop-types
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
           {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}

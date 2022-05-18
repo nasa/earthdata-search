@@ -8,7 +8,6 @@ import Skeleton from '../Skeleton/Skeleton'
 
 import { collectionResultsItemSkeleton } from './skeleton'
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
-// import useExperiment from '../../hooks/useExperiment'
 
 import CollectionResultsItem from './CollectionResultsItem'
 

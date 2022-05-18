@@ -37,11 +37,7 @@ ABExperiment.defaultProps = {
 }
 
 ABExperiment.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-    PropTypes.func
-  ]),
+  children: PropTypes.func.isRequired,
   experimentId: PropTypes.string.isRequired,
   variants: PropTypes.shape({})
 }

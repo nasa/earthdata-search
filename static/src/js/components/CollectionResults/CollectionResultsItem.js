@@ -210,6 +210,7 @@ export const CollectionResultsItem = forwardRef(({
                             hasSpatialSubsetting && (
                               <EDSCIcon
                                 className="collection-results-item__icon svg fa-globe-svg"
+                                title="A white globe icon"
                                 icon={FaGlobe}
                                 size="0.675rem"
                               />
@@ -219,6 +220,7 @@ export const CollectionResultsItem = forwardRef(({
                             hasTemporalSubsetting && (
                               <EDSCIcon
                                 className="collection-results-item__icon svg fa-clock-svg"
+                                title="A white clock icon"
                                 icon={FaClock}
                                 size="0.675rem"
                               />
@@ -228,6 +230,7 @@ export const CollectionResultsItem = forwardRef(({
                             hasVariables && (
                               <EDSCIcon
                                 className="collection-results-item__icon svg fa-tags-svg"
+                                title="A white tags icon"
                                 icon={FaTags}
                                 size="0.675rem"
                               />
@@ -237,6 +240,7 @@ export const CollectionResultsItem = forwardRef(({
                             hasTransforms && (
                               <EDSCIcon
                                 className="collection-results-item__icon svg fa-sliders-svg"
+                                title="A white horizontal sliders icon"
                                 icon={FaSlidersH}
                                 size="0.675rem"
                               />
@@ -246,6 +250,7 @@ export const CollectionResultsItem = forwardRef(({
                             hasFormats && (
                               <EDSCIcon
                                 className="collection-results-item__icon svg fa-file-svg"
+                                title="A white file icon"
                                 icon={FaFileAlt}
                                 size="0.675rem"
                               />
@@ -264,6 +269,7 @@ export const CollectionResultsItem = forwardRef(({
                                 <li>
                                   <EDSCIcon
                                     className="collection-results-item__tooltip-feature-icon"
+                                    title="A white globe icon"
                                     size="0.725rem"
                                     icon={FaGlobe}
                                   />
@@ -276,6 +282,7 @@ export const CollectionResultsItem = forwardRef(({
                                 <li>
                                   <EDSCIcon
                                     className="collection-results-item__tooltip-feature-icon"
+                                    title="A white clock icon"
                                     size="0.725rem"
                                     icon={FaClock}
                                   />
@@ -288,6 +295,7 @@ export const CollectionResultsItem = forwardRef(({
                                 <li>
                                   <EDSCIcon
                                     className="collection-results-item__tooltip-feature-icon"
+                                    title="A white tags icon"
                                     size="0.725rem"
                                     icon={FaTags}
                                   />
@@ -300,6 +308,7 @@ export const CollectionResultsItem = forwardRef(({
                                 <li>
                                   <EDSCIcon
                                     className="collection-results-item__tooltip-feature-icon"
+                                    title="A white horizontal sliders icon"
                                     size="0.725rem"
                                     icon={FaSlidersH}
                                   />
@@ -312,6 +321,7 @@ export const CollectionResultsItem = forwardRef(({
                                 <li>
                                   <EDSCIcon
                                     className="collection-results-item__tooltip-feature-icon"
+                                    title="A white file icon"
                                     size="0.725rem"
                                     icon={FaFileAlt}
                                   />
@@ -361,7 +371,7 @@ export const CollectionResultsItem = forwardRef(({
               }
             </div>
             {
-              (variant !== 'minimal' && variant !== 'description-only') && (
+              (variant !== 'minimal' && variant !== 'description-only') && thumbnail && (
                 <div className={`collection-results-item__thumb ${loadingThumbnail ? 'collection-results-item__thumb--is-loading' : 'collection-results-item__thumb--is-loaded'}`}>
                   {
                     loadingThumbnail && (
@@ -373,18 +383,14 @@ export const CollectionResultsItem = forwardRef(({
                       />
                     )
                   }
-                  {
-                    thumbnail && (
-                      <img
-                        className={`collection-results-item__thumb-image ${loadingThumbnail ? 'collection-results-item__thumb-image--is-loading' : 'collection-results-item__thumb-image--is-loaded'}`}
-                        src={thumbnail}
-                        alt={`Thumbnail for ${datasetId}`}
-                        height={thumbnailHeight}
-                        width={thumbnailWidth}
-                        onLoad={onThumbnailLoaded}
-                      />
-                    )
-                  }
+                  <img
+                    className={`collection-results-item__thumb-image ${loadingThumbnail ? 'collection-results-item__thumb-image--is-loading' : 'collection-results-item__thumb-image--is-loaded'}`}
+                    src={thumbnail}
+                    alt={`Thumbnail for ${datasetId}`}
+                    height={thumbnailHeight}
+                    width={thumbnailWidth}
+                    onLoad={onThumbnailLoaded}
+                  />
                 </div>
               )
             }
