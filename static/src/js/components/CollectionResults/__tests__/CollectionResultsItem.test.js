@@ -466,8 +466,6 @@ describe('CollectionResultsList component', () => {
             }
           })
 
-          console.log('enzymeWrapper', enzymeWrapper.debug())
-
           const attributionList = enzymeWrapper.find('.collection-results-item__attribution-list')
           const attributionItem = attributionList.childAt(0)
           const attributionText = attributionItem.find('.collection-results-item__list-text')
