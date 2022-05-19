@@ -580,6 +580,7 @@ export const CollectionResultsItem = forwardRef(({
             </section>
             <section className="collection-results-item__popover-secondary">
               <Button
+                className="collection-results-item__popover-secondary-button"
                 onClick={(e) => {
                   setPopoverOverride()
                   onViewCollectionDetails(collectionId)
