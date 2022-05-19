@@ -40,6 +40,10 @@
         .edsc-table__td {
           background-color: darken($color__black--100, 1);
         }
+
+        .badge-light {
+          background-color: $color__black--200;
+        }
       }
     }
   }
