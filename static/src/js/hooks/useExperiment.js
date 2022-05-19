@@ -9,6 +9,9 @@ const useExperiment = (experimentId) => {
   const [variant, setVariant] = useState()
 
   useEffect(() => {
+    // If the variant has already been defined, do not attempt to get the value again
+    if (variant) return
+
     (async () => {
       // If the data layer is available, attempt to activate Google Optimize.
       if (window.dataLayer) {
@@ -20,6 +23,7 @@ const useExperiment = (experimentId) => {
       const intervalId = setInterval(() => {
         if (window.google_optimize !== undefined) {
           const variant = window.google_optimize.get(experimentId)
+
           if (!variant) {
             console.warn('No Google Optimize variant found. Make sure you are using a valid Experiment ID.')
           }
