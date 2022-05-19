@@ -120,7 +120,7 @@ export const CollectionResultsTable = ({
             placement="top"
             overlay={(
               <Tooltip id="collection-results-table-header-tooltip--earthdata-cloud">
-                Available the Earthdata Cloud
+                Available in the Earthdata Cloud
               </Tooltip>
             )}
           >
