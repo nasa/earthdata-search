@@ -74,6 +74,7 @@ describe('CollectionRequest#permittedCmrKeys', () => {
       'service_type',
       'sort_key',
       'spatial_keyword',
+      'standard_product',
       'tag_key',
       'temporal',
       'two_d_coordinate_system_name'
