@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
+import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { FaCheck, FaInfoCircle } from 'react-icons/fa'
 import { commafy } from '../../util/commafy'
 
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
@@ -8,9 +10,9 @@ import { collectionMetadataPropType } from '../../util/propTypes/collectionMetad
 import Cell from '../EDSCTable/EDSCTableCell'
 import CollectionResultsTableHeaderCell from './CollectionResultsTableHeaderCell'
 import EDSCTable from '../EDSCTable/EDSCTable'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './CollectionResultsTable.scss'
-
 /**
  * Renders CollectionResultsTable.
  * @param {Object} props - The props passed into the component.
@@ -82,15 +84,12 @@ export const CollectionResultsTable = ({
     },
     {
       Header: 'Granules',
-      /* eslint-disable react/display-name,react/prop-types */
       Cell: ({ cell }) => (
         <div className="edsc-table-cell" title={commafy(cell.value)}>
           {commafy(cell.value)}
         </div>
       ),
-      /* eslint-enable */
       accessor: 'granuleCount',
-      width: '100',
       customProps: {
         centerContent: true
       }
@@ -109,6 +108,175 @@ export const CollectionResultsTable = ({
       Cell,
       accessor: 'shortName',
       width: '150',
+      customProps: {
+        centerContent: true
+      }
+    },
+    {
+      Header: () => (
+        <>
+          <OverlayTrigger
+            id="collection-results-table-header--map-imagery"
+            placement="top"
+            overlay={(
+              <Tooltip id="collection-results-table-header-tooltip--earthdata-cloud">
+                Available in the Earthdata Cloud
+              </Tooltip>
+            )}
+          >
+            <span>
+              <span className="mr-1">Earthdata Cloud</span>
+              <EDSCIcon icon={FaInfoCircle} size="0.625rem" />
+            </span>
+          </OverlayTrigger>
+        </>
+      ),
+      Cell: ({ value }) => (
+        <div className="edsc-table-cell">
+          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+        </div>
+      ),
+      accessor: 'cloudHosted',
+      width: '130',
+      customProps: {
+        centerContent: true
+      }
+    },
+    {
+      Header: () => (
+        <>
+          <OverlayTrigger
+            id="collection-results-table-header--map-imagery"
+            placement="top"
+            overlay={(
+              <Tooltip id="collection-results-table-header-tooltip--map-imagery">
+                Supports advanced map visualizations using the GIBS tile service
+              </Tooltip>
+            )}
+          >
+            <span>
+              <span className="mr-1">Map Imagery</span>
+              <EDSCIcon icon={FaInfoCircle} size="0.625rem" />
+            </span>
+          </OverlayTrigger>
+        </>
+      ),
+      Cell: ({ value }) => (
+        <div className="edsc-table-cell">
+          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+        </div>
+      ),
+      accessor: 'hasMapImagery',
+      width: '110',
+      customProps: {
+        centerContent: true
+      }
+    },
+    {
+      Header: () => (
+        <>
+          <OverlayTrigger
+            id="collection-results-table-header--map-imagery"
+            placement="top"
+            overlay={(
+              <Tooltip id="collection-results-table-header-tooltip--map-imagery">
+                Data is available soon after being
+                {' '}
+                acquired by the instrument on the satellite
+              </Tooltip>
+            )}
+          >
+            <span>
+              <span className="mr-1">Near Real Time</span>
+              <EDSCIcon icon={FaInfoCircle} size="0.625rem" />
+            </span>
+          </OverlayTrigger>
+        </>
+      ),
+      Cell: ({ value, row }) => {
+        const { original = {} } = row
+        const { nrt = {} } = original
+        const { label: nrtLabel } = nrt
+
+        return (
+          <div className="edsc-table-cell">
+            {
+              value
+                ? (
+                  <Badge variant="light">{nrtLabel}</Badge>
+                )
+                : '-'
+            }
+          </div>
+        )
+      },
+      accessor: 'isNrt',
+      width: '120',
+      customProps: {
+        centerContent: true
+      }
+    },
+    {
+      Header: 'Spatial Subsetting',
+      Cell: ({ value }) => (
+        <div className="edsc-table-cell">
+          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+        </div>
+      ),
+      accessor: 'hasSpatialSubsetting',
+      width: '130',
+      customProps: {
+        centerContent: true
+      }
+    },
+    {
+      Header: 'Temporal Subsetting',
+      Cell: ({ value }) => (
+        <div className="edsc-table-cell">
+          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+        </div>
+      ),
+      accessor: 'hasTemporalSubsetting',
+      width: '140',
+      customProps: {
+        centerContent: true
+      }
+    },
+    {
+      Header: 'Variable Subsetting',
+      Cell: ({ value }) => (
+        <div className="edsc-table-cell">
+          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+        </div>
+      ),
+      accessor: 'hasVariables',
+      width: '130',
+      customProps: {
+        centerContent: true
+      }
+    },
+    {
+      Header: 'Transformation',
+      Cell: ({ value }) => (
+        <div className="edsc-table-cell">
+          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+        </div>
+      ),
+      accessor: 'hasTransforms',
+      width: '120',
+      customProps: {
+        centerContent: true
+      }
+    },
+    {
+      Header: 'Reformatting',
+      Cell: ({ value }) => (
+        <div className="edsc-table-cell">
+          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+        </div>
+      ),
+      accessor: 'hasFormats',
+      width: '120',
       customProps: {
         centerContent: true
       }

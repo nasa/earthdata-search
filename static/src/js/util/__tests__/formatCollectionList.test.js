@@ -7,6 +7,7 @@ describe('formatCollectionList', () => {
     }
     const metadata = {
       collectionId: {
+        cloudHosted: true,
         summary: 'test summary',
         consortiums: [],
         datasetId: 'test dataset id',
@@ -51,6 +52,7 @@ describe('formatCollectionList', () => {
     const browser = { name: 'chrome' }
 
     const expectedResult = {
+      cloudHosted: true,
       summary: 'test summary',
       collectionId: 'collectionId',
       consortiums: [],
@@ -68,6 +70,7 @@ describe('formatCollectionList', () => {
       isOpenSearch: false,
       isLast: true,
       isNrt: false,
+      nrt: {},
       organizations: ['test/org'],
       shortName: 'test_short_name',
       temporalEnd: '2019-01-15',
@@ -94,6 +97,7 @@ describe('formatCollectionList', () => {
     const browser = { name: 'chrome' }
 
     const expectedResult = {
+      cloudHosted: false,
       summary: '',
       collectionId: 'collectionId',
       consortiums: [],
@@ -111,6 +115,7 @@ describe('formatCollectionList', () => {
       isOpenSearch: false,
       isLast: true,
       isNrt: false,
+      nrt: {},
       organizations: [],
       shortName: undefined,
       temporalEnd: '',
@@ -221,6 +226,7 @@ describe('formatCollectionList', () => {
     const browser = { name: 'chrome' }
 
     const expectedResult = {
+      cloudHosted: false,
       summary: 'test summary',
       collectionId: 'collectionId',
       consortiums: [],
@@ -238,6 +244,7 @@ describe('formatCollectionList', () => {
       isOpenSearch: false,
       isLast: true,
       isNrt: false,
+      nrt: {},
       organizations: ['test/org'],
       shortName: 'test_short_name',
       temporalEnd: '2019-01-15',

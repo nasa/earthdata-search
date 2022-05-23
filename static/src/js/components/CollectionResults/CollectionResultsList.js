@@ -9,9 +9,15 @@ import { VariableSizeList as List } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import InfiniteLoader from 'react-window-infinite-loader'
 
+import { getExperimentsConfig } from '../../../../../sharedUtils/config'
+
+import ABExperiment from '../ABExperiment/ABExperiment'
 import CollectionResultsListItem from './CollectionResultsListItem'
 
 import './CollectionResultsList.scss'
+
+const collectionSearchResultsLayoutExperimentId = getExperimentsConfig()
+  .collectionSearchResultsLayout
 
 /**
  * Renders innerElementType to override the default react window behavior so sticky columns can be used.
@@ -95,63 +101,78 @@ export const CollectionResultsList = ({
   const getSize = useCallback((index) => sizeMap.current[index] || 162, [])
 
   return (
-    <div className="collection-results-list">
-      <AutoSizer style={{ position: 'relative', height: '100%', width: '100%' }}>
-        {
-          ({ height, width }) => (
-            <InfiniteLoader
-              ref={infiniteLoaderRef}
-              isItemLoaded={isItemLoaded}
-              itemCount={itemCount}
-              loadMoreItems={loadMoreItems}
-              threshold={4}
-            >
-              {
-                ({ onItemsRendered, ref }) => (
-                  <List
-                    ref={(list) => {
-                      ref(list)
-                      listRef.current = list
-                    }}
-                    height={height}
-                    width={width}
-                    innerElementType={innerElementType}
-                    itemCount={itemCount}
-                    itemSize={getSize}
-                    itemData={{
-                      windowHeight: height,
-                      windowWidth: width,
-                      collectionsMetadata,
-                      onAddProjectCollection,
-                      onRemoveCollectionFromProject,
-                      onViewCollectionGranules,
-                      onViewCollectionDetails,
-                      isItemLoaded,
-                      setSize
-                    }}
-                    onItemsRendered={
-                      (data) => {
-                        const {
-                          visibleStartIndex,
-                          visibleStopIndex
-                        } = data
+    <ABExperiment
+      experimentId={collectionSearchResultsLayoutExperimentId}
+      variants={{
+        0: 'default',
+        1: 'minimal',
+        2: 'thumb-only',
+        3: 'description-only'
+      }}
+    >
+      {({ variant: itemVariant }) => (
+        <div className="collection-results-list">
+          <AutoSizer style={{ position: 'relative', height: '100%', width: '100%' }}>
+            {
+              ({ height, width }) => (
+                <InfiniteLoader
+                  ref={infiniteLoaderRef}
+                  isItemLoaded={isItemLoaded}
+                  itemCount={itemCount}
+                  loadMoreItems={loadMoreItems}
+                  threshold={4}
+                >
+                  {
+                    ({ onItemsRendered, ref }) => (
+                      <List
+                        ref={(list) => {
+                          ref(list)
+                          listRef.current = list
+                        }}
+                        height={height}
+                        width={width}
+                        innerElementType={innerElementType}
+                        itemCount={itemCount}
+                        itemSize={getSize}
+                        itemData={{
+                          windowHeight: height,
+                          windowWidth: width,
+                          collectionsMetadata,
+                          onAddProjectCollection,
+                          onRemoveCollectionFromProject,
+                          onViewCollectionGranules,
+                          onViewCollectionDetails,
+                          isItemLoaded,
+                          itemVariant,
+                          setSize
+                        }}
+                        onItemsRendered={
+                          (data) => {
+                            const {
+                              visibleStartIndex,
+                              visibleStopIndex
+                            } = data
 
-                        const middleIndex = Math.round((visibleStartIndex + visibleStopIndex) / 2)
+                            const middleIndex = Math.round(
+                              (visibleStartIndex + visibleStopIndex) / 2
+                            )
 
-                        if (middleIndex) setVisibleMiddleIndex(middleIndex)
-                        onItemsRendered(data)
-                      }
-                    }
-                  >
-                    {CollectionResultsListItem}
-                  </List>
-                )
-              }
-            </InfiniteLoader>
-          )
-        }
-      </AutoSizer>
-    </div>
+                            if (middleIndex) setVisibleMiddleIndex(middleIndex)
+                            onItemsRendered(data)
+                          }
+                        }
+                      >
+                        {CollectionResultsListItem}
+                      </List>
+                    )
+                  }
+                </InfiniteLoader>
+              )
+            }
+          </AutoSizer>
+        </div>
+      )}
+    </ABExperiment>
   )
 }
 

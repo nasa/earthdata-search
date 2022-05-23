@@ -1,0 +1,34 @@
+.meta-icon {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: $color__black--700;
+  letter-spacing: 0.01em;
+
+  &__icon {
+    color: $color__black--500;
+    font-size: 0.75rem;
+
+    .meta-icon:hover & {
+      color: $color__black--600;
+    }
+  }
+
+  &__metadata{
+    margin-left: 0.25rem;
+    padding: 0.075rem 0.5rem;
+    border-radius: 1rem;
+    background-color: $color__black--200;
+    color: $color__black--600;
+    font-size: 0.625rem;
+    font-weight: 700;
+
+    .meta-icon:hover & {
+      background-color: $color__black--300;
+      color: $color__black--900;
+    }
+  }
+}

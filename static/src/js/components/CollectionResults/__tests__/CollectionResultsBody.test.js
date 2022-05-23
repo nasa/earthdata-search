@@ -20,6 +20,7 @@ function setup(overrideProps) {
     },
     collectionsMetadata: {
       collectionId: {
+        cloudHosted: true,
         collectionDataType: 'SCIENCE_QUALITY',
         consortiums: [],
         summary: 'test summary',
