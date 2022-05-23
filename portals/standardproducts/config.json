@@ -3,8 +3,8 @@
   "pageTitle": "Standard Products",
   "parentConfig": "edsc",
   "query": {
-    "tagKey": "gov.nasa.eosdis.standardproduct",
-    "hasGranulesOrCwic": null
+    "hasGranulesOrCwic": null,
+    "standardProduct": true
   },
   "ui": {
     "showOnlyGranulesCheckbox": false,
