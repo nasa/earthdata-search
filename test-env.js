@@ -3,8 +3,8 @@
  */
 // jQuery
 import $ from 'jquery'
-
 import nock from 'nock'
+import enableHooks from 'jest-react-hooks-shallow'
 
 global.$ = $
 global.jQuery = $
@@ -39,3 +39,5 @@ window.reactToastProvider = {
     add: jest.fn()
   }
 }
+
+enableHooks(jest, { dontMockByDefault: true })

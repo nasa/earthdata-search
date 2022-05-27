@@ -15,6 +15,7 @@ function setup() {
     collectionMetadata: {},
     collectionQuery: {},
     collectionsSearch: {},
+    collectionSubscriptions: [],
     granuleMetadata: {},
     granuleSearchResults: {},
     granuleQuery: {},
@@ -155,11 +156,7 @@ describe('mapStateToProps', () => {
     const store = {
       authToken: 'mock-token',
       metadata: {
-        collections: {
-          collectionId: {
-            subscriptions: []
-          }
-        }
+        collections: {}
       },
       focusedCollection: 'collectionId',
       map: {
@@ -188,11 +185,10 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       authToken: 'mock-token',
-      collectionMetadata: {
-        subscriptions: []
-      },
+      collectionMetadata: {},
       collectionQuery: {},
       collectionsSearch: {},
+      collectionSubscriptions: [],
       granuleMetadata: {},
       granuleSearchResults: {},
       granuleQuery: {},
@@ -205,8 +201,7 @@ describe('mapStateToProps', () => {
       },
       panels: {},
       preferences: {},
-      portal: {},
-      subscriptions: []
+      portal: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)

@@ -1,11 +1,13 @@
 import subscriptionsReducer from '../subscriptions'
 
 import {
+  ERRORED_SUBSCRIPTIONS,
   FINISHED_SUBSCRIPTIONS_TIMER,
   LOADED_SUBSCRIPTIONS,
   LOADING_SUBSCRIPTIONS,
   REMOVE_SUBSCRIPTION,
   STARTED_SUBSCRIPTIONS_TIMER,
+  UPDATE_COLLECTION_SUBSCRIPTION,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../../constants/actionTypes'
 
@@ -67,6 +69,43 @@ describe('FINISHED_SUBSCRIPTIONS_TIMER', () => {
   })
 })
 
+describe('UPDATE_COLLECTION_SUBSCRIPTION', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UPDATE_COLLECTION_SUBSCRIPTION,
+      payload: {
+        conceptId: 'SUB100000-EDSC',
+        query: 'point=0,0'
+      }
+    }
+
+    const initial = {
+      ...initialState,
+      byId: {
+        'SUB100000-EDSC': {
+          conceptId: 'SUB100000-EDSC',
+          name: 'Test Subscription',
+          query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initial,
+      error: null,
+      byId: {
+        'SUB100000-EDSC': {
+          conceptId: 'SUB100000-EDSC',
+          name: 'Test Subscription',
+          query: 'point=0,0'
+        }
+      }
+    }
+
+    expect(subscriptionsReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
 describe('UPDATE_SUBSCRIPTION_RESULTS', () => {
   test('returns the correct state', () => {
     const action = {
@@ -97,6 +136,25 @@ describe('UPDATE_SUBSCRIPTION_RESULTS', () => {
           query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
         }
       }
+    }
+
+    expect(subscriptionsReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('ERRORED_SUBSCRIPTIONS', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: ERRORED_SUBSCRIPTIONS,
+      payload: [{
+        message: 'mock error'
+      }]
+    }
+
+    const expectedState = {
+      ...initialState,
+      byId: {},
+      error: 'mock error'
     }
 
     expect(subscriptionsReducer(undefined, action)).toEqual(expectedState)

@@ -6,7 +6,7 @@ import actions from '../index'
 
 import {
   getFocusedCollection,
-  getCollectionSubscriptions,
+  getGranuleSubscriptions,
   updateFocusedCollection,
   viewCollectionDetails,
   viewCollectionGranules
@@ -17,7 +17,7 @@ import {
   INITIALIZE_COLLECTION_GRANULES_RESULTS,
   TOGGLE_SPATIAL_POLYGON_WARNING,
   UPDATE_COLLECTION_METADATA,
-  UPDATE_COLLECTION_SUBSCRIPTIONS,
+  UPDATE_GRANULE_SUBSCRIPTIONS,
   UPDATE_FOCUSED_COLLECTION,
   UPDATE_FOCUSED_GRANULE
 } from '../../constants/actionTypes'
@@ -412,7 +412,7 @@ describe('getFocusedCollection', () => {
   })
 })
 
-describe('getCollectionSubscriptions', () => {
+describe('getGranuleSubscriptions', () => {
   beforeEach(() => {
     jest.spyOn(getClientId, 'getClientId').mockImplementationOnce(() => ({ client: 'eed-edsc-test-serverless-client' }))
   })
@@ -460,10 +460,10 @@ describe('getCollectionSubscriptions', () => {
         searchResults: {}
       })
 
-      await store.dispatch(getCollectionSubscriptions()).then(() => {
+      await store.dispatch(getGranuleSubscriptions()).then(() => {
         const storeActions = store.getActions()
         expect(storeActions[0]).toEqual({
-          type: UPDATE_COLLECTION_SUBSCRIPTIONS,
+          type: UPDATE_GRANULE_SUBSCRIPTIONS,
           payload: {
             collectionId: 'C10000000000-EDSC',
             subscriptions: {
@@ -519,10 +519,10 @@ describe('getCollectionSubscriptions', () => {
         searchResults: {}
       })
 
-      await store.dispatch(getCollectionSubscriptions('C10000000000-EDSC')).then(() => {
+      await store.dispatch(getGranuleSubscriptions('C10000000000-EDSC')).then(() => {
         const storeActions = store.getActions()
         expect(storeActions[0]).toEqual({
-          type: UPDATE_COLLECTION_SUBSCRIPTIONS,
+          type: UPDATE_GRANULE_SUBSCRIPTIONS,
           payload: {
             collectionId: 'C10000000000-EDSC',
             subscriptions: {
@@ -562,10 +562,10 @@ describe('getCollectionSubscriptions', () => {
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
-    await store.dispatch(getCollectionSubscriptions()).then(() => {
+    await store.dispatch(getGranuleSubscriptions()).then(() => {
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
       expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
-        action: 'getCollectionSubscriptions',
+        action: 'getGranuleSubscriptions',
         resource: 'subscription'
       }))
 

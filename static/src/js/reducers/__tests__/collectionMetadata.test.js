@@ -3,8 +3,8 @@ import {
   DELETE_COLLECTION_SUBSCRIPTION,
   RESTORE_FROM_URL,
   UPDATE_COLLECTION_METADATA,
-  UPDATE_COLLECTION_SUBSCRIPTION,
-  UPDATE_COLLECTION_SUBSCRIPTIONS
+  UPDATE_GRANULE_SUBSCRIPTION,
+  UPDATE_GRANULE_SUBSCRIPTIONS
 } from '../../constants/actionTypes'
 
 const initialState = {}
@@ -17,10 +17,10 @@ describe('INITIAL_STATE', () => {
   })
 })
 
-describe('UPDATE_COLLECTION_SUBSCRIPTIONS', () => {
+describe('UPDATE_GRANULE_SUBSCRIPTIONS', () => {
   test('returns the correct state', () => {
     const action = {
-      type: UPDATE_COLLECTION_SUBSCRIPTIONS,
+      type: UPDATE_GRANULE_SUBSCRIPTIONS,
       payload: {
         collectionId: 'collectionId',
         subscriptions: {
@@ -106,10 +106,10 @@ describe('DELETE_COLLECTION_SUBSCRIPTION', () => {
   })
 })
 
-describe('UPDATE_COLLECTION_SUBSCRIPTION', () => {
+describe('UPDATE_GRANULE_SUBSCRIPTION', () => {
   test('returns the correct state', () => {
     const action = {
-      type: UPDATE_COLLECTION_SUBSCRIPTION,
+      type: UPDATE_GRANULE_SUBSCRIPTION,
       payload: {
         collectionConceptId: 'collectionId',
         conceptId: 'SUB-1',

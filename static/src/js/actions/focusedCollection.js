@@ -2,7 +2,7 @@ import actions from './index'
 
 import {
   UPDATE_FOCUSED_COLLECTION,
-  UPDATE_COLLECTION_SUBSCRIPTIONS
+  UPDATE_GRANULE_SUBSCRIPTIONS
 } from '../constants/actionTypes'
 
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
@@ -292,7 +292,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 /**
  * Request subscriptions for the focused collection
  */
-export const getCollectionSubscriptions = (collectionId) => async (dispatch, getState) => {
+export const getGranuleSubscriptions = (collectionId) => async (dispatch, getState) => {
   const state = getState()
 
   const {
@@ -311,14 +311,8 @@ export const getCollectionSubscriptions = (collectionId) => async (dispatch, get
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
-    query GetCollectionSubscriptions(
-      $collectionConceptId: String
-      $subscriberId: String
-    ) {
-      subscriptions(
-        collectionConceptId: $collectionConceptId
-        subscriberId: $subscriberId
-      ) {
+    query GetGranuleSubscriptions($params: SubscriptionsInput) {
+      subscriptions(params: $params) {
         count
         items {
           collectionConceptId
@@ -331,8 +325,11 @@ export const getCollectionSubscriptions = (collectionId) => async (dispatch, get
     }`
 
   const response = graphQlRequestObject.search(graphQuery, {
-    collectionConceptId,
-    subscriberId: username
+    params: {
+      collectionConceptId,
+      subscriberId: username,
+      type: 'granule'
+    }
   })
     .then((response) => {
       parseGraphQLError(response)
@@ -344,7 +341,7 @@ export const getCollectionSubscriptions = (collectionId) => async (dispatch, get
       const { subscriptions } = responseData
 
       dispatch({
-        type: UPDATE_COLLECTION_SUBSCRIPTIONS,
+        type: UPDATE_GRANULE_SUBSCRIPTIONS,
         payload: {
           collectionId: collectionConceptId,
           subscriptions
@@ -354,7 +351,7 @@ export const getCollectionSubscriptions = (collectionId) => async (dispatch, get
     .catch((error) => {
       dispatch(actions.handleError({
         error,
-        action: 'getCollectionSubscriptions',
+        action: 'getGranuleSubscriptions',
         resource: 'subscription',
         requestObject: graphQlRequestObject
       }))

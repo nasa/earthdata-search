@@ -11,14 +11,14 @@ export const getSubscriptions = (state) => {
 }
 
 /**
- * Retrieve metadata from Redux pertaining to subscriptions
+ * Retrieve metadata from Redux pertaining to granule subscriptions
  */
 export const getSubscriptionsByCollectionId = createSelector(
   [getSubscriptions],
   (subscriptionsMetadata) => {
     const byCollectionConceptId = {}
 
-    const { byId } = subscriptionsMetadata
+    const { byId = {} } = subscriptionsMetadata
 
     Object.values(byId).forEach((subscription) => {
       const { collectionConceptId } = subscription
@@ -32,5 +32,18 @@ export const getSubscriptionsByCollectionId = createSelector(
     })
 
     return byCollectionConceptId
+  }
+)
+
+/**
+ * Retrieve metadata from Redux pertaining to collection subscriptions
+ * @param {Object} state Current state of Redux
+ */
+export const getCollectionSubscriptions = createSelector(
+  [getSubscriptions],
+  (subscriptionsMetadata) => {
+    const { byId = {} } = subscriptionsMetadata
+
+    return Object.values(byId).map((subscription) => subscription)
   }
 )

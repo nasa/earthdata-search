@@ -15,11 +15,12 @@ beforeAll(() => {
 
 function setup(overrideProps) {
   const props = {
-    granuleQueryString: 'options[spatial][or]=true',
+    queryString: 'options[spatial][or]=true',
     onCreateSubscription: jest.fn(),
     onDeleteSubscription: jest.fn(),
     onUpdateSubscription: jest.fn(),
     subscriptions: [],
+    subscriptionType: 'granule',
     ...overrideProps
   }
 
@@ -40,7 +41,7 @@ describe('SubscriptionsBody component', () => {
   test('should render intro text', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.find('.subscriptions-body__intro-text').text())
-      .toEqual('Subscribe to be notified by email when new data matching your search query becomes available for this collection.')
+      .toEqual('Subscribe to be notified by email when new data matching your search query becomes available.')
   })
 
   describe('create button', () => {
@@ -124,7 +125,7 @@ describe('SubscriptionsBody component', () => {
         }
 
         const { enzymeWrapper } = setup({
-          granuleQueryString: 'query=one',
+          queryString: 'query=one',
           subscriptions: [
             subOne,
             subTwo
@@ -148,7 +149,7 @@ describe('SubscriptionsBody component', () => {
         }
 
         const { enzymeWrapper } = setup({
-          granuleQueryString: 'query=one',
+          queryString: 'query=one',
           subscriptions: [
             subOne,
             subTwo
@@ -178,7 +179,7 @@ describe('SubscriptionsBody component', () => {
         }
 
         const { enzymeWrapper } = setup({
-          granuleQueryString: 'query=unique',
+          queryString: 'query=unique',
           subscriptions: [
             subOne,
             subTwo

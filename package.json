@@ -46,6 +46,7 @@
     "enzyme-adapter-react-16": "^1.15.6",
     "istanbul-instrumenter-loader": "^3.0.1",
     "jest": "^27.5.1",
+    "jest-react-hooks-shallow": "^1.5.1",
     "jsdom": "^15.2.1",
     "mock-knex": "^0.4.10",
     "mockdate": "^2.0.5",

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 
-import { extractGranuleSearchParams, prepareGranuleParams } from '../util/granules'
+import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
+import { buildGranuleSearchParams, extractGranuleSearchParams, prepareGranuleParams } from '../util/granules'
 import { prepareSubscriptionQuery } from '../util/subscriptions'
 
 import { getFocusedCollectionId } from './focusedCollection'
@@ -31,7 +32,11 @@ export const getFocusedCollectionGranuleQuery = createSelector(
   }
 )
 
-export const getFocusedGranuleQueryString = createSelector(
+/**
+ * Retrieve the granule subscription query string
+ * @param {Object} state Current state of Redux
+ */
+export const getGranuleSubscriptionQueryString = createSelector(
   [(state) => state, getFocusedCollectionMetadata],
   (state, collectionMetadata) => {
     const { id: collectionId } = collectionMetadata
@@ -43,8 +48,22 @@ export const getFocusedGranuleQueryString = createSelector(
       extractedGranuleParams
     )
 
-    const subscriptionQuery = prepareSubscriptionQuery(granuleParams)
+    const searchParams = buildGranuleSearchParams(granuleParams)
+
+    const subscriptionQuery = prepareSubscriptionQuery(searchParams)
 
     return subscriptionQuery
   }
 )
+
+/**
+ * Retrieve the collection subscription query string
+ * @param {Object} state Current state of Redux
+ */
+export const getCollectionSubscriptionQueryString = (state) => {
+  const collectionParams = prepareCollectionParams(state)
+  const searchParams = buildCollectionSearchParams(collectionParams)
+  const subscriptionQuery = prepareSubscriptionQuery(searchParams)
+
+  return subscriptionQuery
+}

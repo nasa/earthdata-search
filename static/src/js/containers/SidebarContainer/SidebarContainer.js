@@ -16,6 +16,7 @@ export const SidebarContainer = ({
   const sidebarVisible = isPath(location.pathname, [
     '/search',
     '/search/granules',
+    '/search/subscriptions',
     '/projects',
     '/search/granules/collection-details',
     '/search/granules/granule-details',

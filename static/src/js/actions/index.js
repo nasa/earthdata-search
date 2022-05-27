@@ -19,7 +19,7 @@ import {
 import {
   changeFocusedCollection,
   getFocusedCollection,
-  getCollectionSubscriptions,
+  getGranuleSubscriptions,
   updateFocusedCollection,
   viewCollectionGranules,
   viewCollectionDetails
@@ -180,7 +180,7 @@ import {
   deleteSubscription,
   deleteCollectionSubscription,
   updateSubscription,
-  updateCollectionSubscription
+  updateGranuleSubscription
 } from './subscriptions'
 import { setUserFromJwt } from './user'
 import { exportSearch } from './exportSearch'
@@ -242,7 +242,7 @@ const actions = {
   fetchShapefile,
   getCollections,
   getFocusedCollection,
-  getCollectionSubscriptions,
+  getGranuleSubscriptions,
   getFocusedGranule,
   getProjectCollections,
   getProjectGranules,
@@ -308,7 +308,7 @@ const actions = {
   updateBrowserVersion,
   updateCmrFacet,
   updateCollectionMetadata,
-  updateCollectionSubscription,
+  updateGranuleSubscription,
   updateFeatureFacet,
   updateFocusedCollection,
   updateFocusedCollectionGranuleFilters,

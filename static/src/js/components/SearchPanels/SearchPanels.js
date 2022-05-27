@@ -15,6 +15,7 @@ import {
   FaTable,
   FaLock
 } from 'react-icons/fa'
+import classNames from 'classnames'
 
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
@@ -33,6 +34,10 @@ import GranuleResultsActionsContainer
   from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
 import SubscriptionsBodyContainer
   from '../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer'
+import PortalFeatureContainer
+  from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import PortalLinkContainer
+  from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import Button from '../Button/Button'
 import Panels from '../Panels/Panels'
@@ -144,6 +149,7 @@ class SearchPanels extends PureComponent {
       collectionMetadata,
       collectionQuery,
       collectionsSearch,
+      collectionSubscriptions,
       granuleMetadata,
       granuleQuery,
       granuleSearchResults,
@@ -346,8 +352,43 @@ class SearchPanels extends PureComponent {
       }
     ]
 
+    const subscriptionFooter = () => {
+      if (!isLoggedIn) return null
+
+      const subscriptionButtonClassnames = classNames([
+        'search-panels-actions__action',
+        'search-panels-actions__action--subscriptions',
+        {
+          'search-panels-actions__action--is-active': collectionSubscriptions.length > 0
+        }
+      ])
+
+      return (
+        <PortalFeatureContainer authentication>
+          <AuthRequiredContainer noRedirect>
+            <PortalLinkContainer
+              type="button"
+              icon={FaBell}
+              className={subscriptionButtonClassnames}
+              dataTestId="search-panels-actions__subscriptions-button"
+              label={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
+              title={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
+              badge={collectionSubscriptions.length ? `${collectionSubscriptions.length}` : false}
+              naked
+              to={{
+                pathname: '/search/subscriptions',
+                search: location.search
+              }}
+            >
+              Subscriptions
+            </PortalLinkContainer>
+          </AuthRequiredContainer>
+        </PortalFeatureContainer>
+      )
+    }
+
     const buildCollectionResultsBodyFooter = () => {
-      if (isDefaultPortal(portalId)) return null
+      if (isDefaultPortal(portalId)) return subscriptionFooter()
 
       return (
         <div className="search-panels__portal-escape">
@@ -603,8 +644,8 @@ class SearchPanels extends PureComponent {
 
     panelSection.push(
       <PanelGroup
-        key="subscriptions-panel"
-        primaryHeading="Subscriptions"
+        key="granule-subscriptions-panel"
+        primaryHeading="Granule Subscriptions"
         breadcrumbs={[
           {
             title: 'Search Results',
@@ -647,7 +688,31 @@ class SearchPanels extends PureComponent {
       >
         <PanelItem scrollable={false}>
           <AuthRequiredContainer noRedirect>
-            <SubscriptionsBodyContainer />
+            <SubscriptionsBodyContainer subscriptionType="granule" />
+          </AuthRequiredContainer>
+        </PanelItem>
+      </PanelGroup>
+    )
+
+    panelSection.push(
+      <PanelGroup
+        key="collection-subscriptions-panel"
+        primaryHeading="Collection Subscriptions"
+        breadcrumbs={[
+          {
+            title: 'Search Results',
+            link: {
+              pathname: '/search',
+              search: location.search
+            },
+            onClick: () => onFocusedCollectionChange('')
+          }
+        ]}
+        onPanelClose={this.onPanelClose}
+      >
+        <PanelItem scrollable={false}>
+          <AuthRequiredContainer noRedirect>
+            <SubscriptionsBodyContainer subscriptionType="collection" />
           </AuthRequiredContainer>
         </PanelItem>
       </PanelGroup>
@@ -671,6 +736,9 @@ class SearchPanels extends PureComponent {
               let activePanel = '0.0.0'
 
               switch (activePanelFromProps) {
+                case 'subscriptions':
+                  activePanel = '0.5.0'
+                  break
                 case 'granules/subscriptions':
                   activePanel = '0.4.0'
                   break
@@ -729,6 +797,7 @@ SearchPanels.propTypes = {
     isLoaded: PropTypes.bool,
     isLoading: PropTypes.bool
   }).isRequired,
+  collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   granuleMetadata: PropTypes.shape({
     title: PropTypes.string
   }).isRequired,
