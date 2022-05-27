@@ -1,11 +1,12 @@
 import {
   ERRORED_SUBSCRIPTIONS,
-  UPDATE_SUBSCRIPTION_RESULTS,
-  LOADING_SUBSCRIPTIONS,
-  LOADED_SUBSCRIPTIONS,
-  STARTED_SUBSCRIPTIONS_TIMER,
   FINISHED_SUBSCRIPTIONS_TIMER,
-  REMOVE_SUBSCRIPTION
+  LOADED_SUBSCRIPTIONS,
+  LOADING_SUBSCRIPTIONS,
+  REMOVE_SUBSCRIPTION,
+  STARTED_SUBSCRIPTIONS_TIMER,
+  UPDATE_COLLECTION_SUBSCRIPTION,
+  UPDATE_SUBSCRIPTION_RESULTS
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -57,6 +58,24 @@ const subscriptionsReducer = (state = initialState, action) => {
         ...state,
         timerStart: null,
         loadTime: Date.now() - timerStart
+      }
+    }
+    case UPDATE_COLLECTION_SUBSCRIPTION: {
+      const { payload } = action
+      const { conceptId } = payload
+
+      const { byId } = state
+
+      return {
+        ...state,
+        error: null,
+        byId: {
+          ...byId,
+          [conceptId]: {
+            ...byId[conceptId],
+            ...payload
+          }
+        }
       }
     }
     case UPDATE_SUBSCRIPTION_RESULTS: {

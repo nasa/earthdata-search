@@ -12,6 +12,7 @@ import './SubscriptionsListItem.scss'
 export const SubscriptionsListItem = ({
   hasExactlyMatchingGranuleQuery,
   subscription,
+  subscriptionType,
   onDeleteSubscription,
   onUpdateSubscription
 }) => {
@@ -37,7 +38,7 @@ export const SubscriptionsListItem = ({
     const confirmUpdate = window.confirm('Are you sure you want to update this subscription with your current search parameters?')
 
     if (confirmUpdate) {
-      onUpdateSubscription(conceptId, nativeId, name)
+      onUpdateSubscription(conceptId, nativeId, name, subscriptionType)
     }
   }
 
@@ -142,7 +143,8 @@ SubscriptionsListItem.propTypes = {
     name: PropTypes.string,
     nativeId: PropTypes.string,
     query: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  subscriptionType: PropTypes.string.isRequired
 }
 
 export default SubscriptionsListItem

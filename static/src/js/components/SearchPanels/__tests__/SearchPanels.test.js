@@ -60,6 +60,7 @@ function setup(overrideProps, location = '/search') {
       isLoading: false,
       isLoaded: true
     },
+    collectionSubscriptions: [],
     granuleMetadata: {
       title: 'Granule Title'
     },
@@ -961,7 +962,40 @@ describe('SearchPanels component', () => {
       const subscriptionsPanel = panels.find(PanelGroup).at(4)
       const subscriptionsPanelProps = subscriptionsPanel.props()
 
-      expect(subscriptionsPanelProps.primaryHeading).toBe('Subscriptions')
+      expect(subscriptionsPanelProps.primaryHeading).toBe('Granule Subscriptions')
+      expect(subscriptionsPanelProps.headerLoading).toBe(false)
+    })
+  })
+
+  describe('while on the /subscriptions route', () => {
+    test('sets the correct breadcrumbs', () => {
+      const { enzymeWrapper } = setup({}, '/search/subscriptions')
+      const panels = enzymeWrapper.find(Panels)
+      const subscriptionsPanel = panels.find(PanelGroup).at(4)
+      const subscriptionsPanelProps = subscriptionsPanel.props()
+
+      expect(subscriptionsPanelProps.breadcrumbs[0].link.pathname).toEqual('/search')
+      expect(subscriptionsPanelProps.breadcrumbs[0].link.search).toEqual('')
+      expect(typeof subscriptionsPanelProps.breadcrumbs[0].onClick).toEqual('function')
+      expect(subscriptionsPanelProps.breadcrumbs[0].title).toEqual('Search Results')
+    })
+
+    test('sets the correct more action dropdown items', () => {
+      const { enzymeWrapper } = setup({}, '/search/subscriptions')
+      const panels = enzymeWrapper.find(Panels)
+      const subscriptionsPanel = panels.find(PanelGroup).at(5)
+      const subscriptionsPanelProps = subscriptionsPanel.props()
+
+      expect(subscriptionsPanelProps.moreActionsDropdownItems).toEqual([])
+    })
+
+    test('sets the correct primary heading', () => {
+      const { enzymeWrapper } = setup({}, '/search/subscriptions')
+      const panels = enzymeWrapper.find(Panels)
+      const subscriptionsPanel = panels.find(PanelGroup).at(5)
+      const subscriptionsPanelProps = subscriptionsPanel.props()
+
+      expect(subscriptionsPanelProps.primaryHeading).toBe('Collection Subscriptions')
       expect(subscriptionsPanelProps.headerLoading).toBe(false)
     })
   })

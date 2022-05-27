@@ -29,4 +29,25 @@
       color: $color__purple;
     }
   }
+
+  &-actions {
+    &__action {
+      display: flex;
+      align-items: center;
+      color: $color__black--500;
+      // margin-right: 1rem;
+      // padding: 0;
+
+      &:hover,
+      &:active {
+        color: $color__black--600;
+      }
+
+      &--subscriptions {
+        .badge {
+          background-color: $color__yellow;
+        }
+      }
+    }
+  }
 }

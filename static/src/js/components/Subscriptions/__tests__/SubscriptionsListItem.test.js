@@ -20,6 +20,7 @@ function setup(overrideProps) {
       name: 'Subscription 1',
       query: 'options[spatial][or]=true'
     },
+    subscriptionType: 'granule',
     onDeleteSubscription: jest.fn(),
     onUpdateSubscription: jest.fn(),
     ...overrideProps
@@ -80,7 +81,7 @@ describe('SubscriptionsBody component', () => {
           enzymeWrapper.find('.subscriptions-list-item__action').at(0).simulate('click')
 
           expect(props.onUpdateSubscription).toHaveBeenCalledTimes(1)
-          expect(props.onUpdateSubscription).toHaveBeenCalledWith('SUB1', 'SUB1-NATIVE-ID', 'Subscription 1')
+          expect(props.onUpdateSubscription).toHaveBeenCalledWith('SUB1', 'SUB1-NATIVE-ID', 'Subscription 1', 'granule')
         })
       })
     })

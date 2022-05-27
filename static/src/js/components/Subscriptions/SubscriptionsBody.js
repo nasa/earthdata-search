@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { isEqual } from 'lodash'
 import { FaBell, FaPlus } from 'react-icons/fa'
+import { Col, Form, Row } from 'react-bootstrap'
 
 import Button from '../Button/Button'
 import SubscriptionsListItem from './SubscriptionsListItem'
@@ -15,22 +16,32 @@ import './SubscriptionsBody.scss'
 
 /**
  * Renders SubscriptionsBody.
- * @param {Node} granuleQueryString - String representing the current granule query string.
+ * @param {Node} queryString - String representing the current query string.
  * @param {String} onCreateSubscription - Callback to create a subscription.
  * @param {String} onDeleteSubscription - Callback to delete a subscription.
  * @param {String} onUpdateSubscription - Callback to update a subscription.
  * @param {Array} subscriptions - An array of subscriptions.
+ * @param {String} subscriptionType - The type of subscriptions to display, collection or granule.
  */
 export const SubscriptionsBody = ({
-  granuleQueryString,
+  queryString,
+  subscriptions,
+  subscriptionType,
   onCreateSubscription,
   onDeleteSubscription,
-  onUpdateSubscription,
-  subscriptions
+  onUpdateSubscription
 }) => {
-  const currentQuery = parse(granuleQueryString)
+  const currentQuery = parse(queryString)
 
   const [submittingNewSubscription, setSubmittingNewSubscription] = useState(false)
+  const [name, setName] = useState(null)
+
+  const onChangeName = (event) => {
+    const { target } = event
+    const { value = '' } = target
+
+    setName(value)
+  }
 
   // TODO: Needs tests - EDSC-2923
   const exactlyMatchingGranuleQueries = subscriptions.filter((subscription) => {
@@ -49,8 +60,31 @@ export const SubscriptionsBody = ({
           <div className="col col-12">
             <p className="subscriptions-body__intro-text">
               { /* eslint-disable-next-line max-len */}
-              Subscribe to be notified by email when new data matching your search query becomes available for this collection.
+              Subscribe to be notified by email when new data matching your search query becomes available.
             </p>
+            <div>
+              <Form.Row className="subscriptions-body__form-row">
+                <Form.Group as={Row} className="subscriptions-body__form-group subscriptions-body__form-group--coords">
+                  <Form.Label srOnly>
+                    Coordinates:
+                  </Form.Label>
+                  <Col
+                    className="subscriptions-body__form-column"
+                  >
+                    <Form.Control
+                      className="subscriptions-body__text-input"
+                      data-test-id="subscriptions-body_point"
+                      type="text"
+                      placeholder="Subscription Name"
+                      value={name}
+                      onChange={onChangeName}
+                      onBlur={onChangeName}
+                      onKeyUp={onChangeName}
+                    />
+                  </Col>
+                </Form.Group>
+              </Form.Row>
+            </div>
             <div className="subscriptions-body__query">
               <div className="subscriptions-body__query-primary">
                 <h4 className="subscriptions-body__query-list-heading">Current Query Parameters</h4>
@@ -95,7 +129,7 @@ export const SubscriptionsBody = ({
               spinner={submittingNewSubscription}
               onClick={async () => {
                 setSubmittingNewSubscription(true)
-                await onCreateSubscription()
+                await onCreateSubscription(name, subscriptionType)
                 setSubmittingNewSubscription(false)
               }}
             >
@@ -115,6 +149,7 @@ export const SubscriptionsBody = ({
                   <SubscriptionsListItem
                     key={conceptId}
                     subscription={subscription}
+                    subscriptionType={subscriptionType}
                     onUpdateSubscription={onUpdateSubscription}
                     onDeleteSubscription={onDeleteSubscription}
                     hasExactlyMatchingGranuleQuery={hasExactlyMatchingGranuleQuery}
@@ -131,7 +166,7 @@ export const SubscriptionsBody = ({
                     bootstrapVariant="link"
                     label="Create New Subscription"
                     variant="link"
-                    onClick={() => onCreateSubscription()}
+                    onClick={() => onCreateSubscription(name, subscriptionType)}
                   >
                     create a new subscription
                   </Button>
@@ -146,11 +181,12 @@ export const SubscriptionsBody = ({
   )
 }
 SubscriptionsBody.propTypes = {
-  granuleQueryString: PropTypes.string.isRequired,
+  queryString: PropTypes.string.isRequired,
+  subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  subscriptionType: PropTypes.string.isRequired,
   onCreateSubscription: PropTypes.func.isRequired,
   onDeleteSubscription: PropTypes.func.isRequired,
-  onUpdateSubscription: PropTypes.func.isRequired,
-  subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+  onUpdateSubscription: PropTypes.func.isRequired
 }
 
 export default SubscriptionsBody

@@ -1,4 +1,5 @@
 import {
+  getCollectionSubscriptions,
   getSubscriptions,
   getSubscriptionsByCollectionId
 } from '../subscriptions'
@@ -91,5 +92,32 @@ describe('getSubscriptionsByCollectionId', () => {
         query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
       }]
     })
+  })
+})
+
+describe('getCollectionSubscriptions', () => {
+  test('returns the subscriptions', () => {
+    const state = {
+      subscriptions: {
+        byId: {
+          'SUB100000-EDSC': {
+            conceptId: 'SUB100000-EDSC',
+            name: 'Test Subscription',
+            query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
+          }
+        },
+        isLoading: false,
+        isLoaded: true,
+        error: null,
+        timerStart: null,
+        loadTime: 1265
+      }
+    }
+
+    expect(getCollectionSubscriptions(state)).toEqual([{
+      conceptId: 'SUB100000-EDSC',
+      name: 'Test Subscription',
+      query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
+    }])
   })
 })
