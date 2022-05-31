@@ -38,6 +38,7 @@ export const exportSearch = (format) => (dispatch, getState) => {
     query SearchCollections(
       $boundingBox: [String]
       $circle: [String]
+      $cloudHosted: Boolean
       $collectionDataType: [String]
       $dataCenter: String
       $dataCenterH: [String]
@@ -74,6 +75,7 @@ export const exportSearch = (format) => (dispatch, getState) => {
         boundingBox: $boundingBox
         circle: $circle
         collectionDataType: $collectionDataType
+        cloudHosted: $cloudHosted
         dataCenter: $dataCenter
         dataCenterH: $dataCenterH
         facetsSize: $facetsSize
@@ -121,6 +123,11 @@ export const exportSearch = (format) => (dispatch, getState) => {
 
   const response = graphQlRequestObject.search(graphQuery, {
     ...buildCollectionSearchParams(collectionParams),
+    includeFacets: undefined,
+    includeGranuleCounts: undefined,
+    includeTags: undefined,
+    pageNum: undefined,
+    pageSize: undefined,
     limit: 1000
   }, format)
     .then((response) => {
@@ -189,6 +196,7 @@ export const exportSearchAsStac = (format) => (dispatch, getState) => {
     query SearchCollections(
       $boundingBox: [String]
       $circle: [String]
+      $cloudHosted: Boolean
       $collectionDataType: [String]
       $dataCenter: String
       $dataCenterH: [String]
@@ -224,6 +232,7 @@ export const exportSearchAsStac = (format) => (dispatch, getState) => {
       collections (
         boundingBox: $boundingBox
         circle: $circle
+        cloudHosted: $cloudHosted
         collectionDataType: $collectionDataType
         dataCenter: $dataCenter
         dataCenterH: $dataCenterH
@@ -272,6 +281,11 @@ export const exportSearchAsStac = (format) => (dispatch, getState) => {
 
   const response = graphQlRequestObject.search(graphQuery, {
     ...buildCollectionSearchParams(collectionParams),
+    includeFacets: undefined,
+    includeGranuleCounts: undefined,
+    includeTags: undefined,
+    pageNum: undefined,
+    pageSize: undefined,
     limit: 1000
   }, format)
     .then((response) => {
