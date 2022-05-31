@@ -8,7 +8,7 @@ describe('jsonToCsv', () => {
       versionId: 'test versionId',
       title: 'test title',
       processingLevelId: 'test processingLevelId',
-      platforms: ['test platforms'],
+      platforms: [{ shortName: 'test platforms' }],
       timeStart: 'test timeStart',
       timeEnd: 'test timeEnd'
     }]
@@ -25,7 +25,11 @@ describe('jsonToCsv', () => {
       versionId: 'test versionId',
       title: 'test title',
       processingLevelId: 'test processingLevelId',
-      platforms: ['test platform 1', 'test platform 2'],
+      platforms: [{
+        shortName: 'test platform 1'
+      }, {
+        shortName: 'test platform 2'
+      }],
       timeStart: 'test timeStart',
       timeEnd: null
     }]
@@ -42,7 +46,7 @@ describe('jsonToCsv', () => {
       versionId: 'test versionId',
       title: 'test title',
       processingLevelId: 'test processingLevelId',
-      platforms: ['test platforms'],
+      platforms: [{ shortName: 'test platforms' }],
       timeStart: 'test timeStart',
       timeEnd: null
     }]

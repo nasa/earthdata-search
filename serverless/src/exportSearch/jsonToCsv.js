@@ -43,7 +43,9 @@ export const jsonToCsv = (jsonArray) => {
     keysToMap.forEach((key) => {
       // If the key is platforms, join the array of shortnames
       if (key === 'platforms') {
-        collectionValues.push(JSON.stringify(collection[key].join(', '), replacer))
+        const shortNames = collection[key].map((platform) => platform.shortName)
+
+        collectionValues.push(JSON.stringify(shortNames.join(', '), replacer))
       } else {
         collectionValues.push(JSON.stringify(collection[key], replacer))
       }
