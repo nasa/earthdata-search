@@ -31,11 +31,11 @@ describe('exportSearch', () => {
             items: [{
               conceptId: 'C100000-EDSC',
               title: 'Test collection',
-              platforms: ['platform']
+              platforms: [{ shortName: 'platform' }]
             }, {
               conceptId: 'C100001-EDSC',
               title: 'Test collection 1',
-              platforms: ['platform']
+              platforms: [{ shortName: 'platform' }]
             }]
           }
         }
@@ -82,11 +82,11 @@ describe('exportSearch', () => {
             items: [{
               conceptId: 'C100000-EDSC',
               title: 'Test collection',
-              platforms: ['platform']
+              platforms: [{ shortName: 'platform' }]
             }, {
               conceptId: 'C100001-EDSC',
               title: 'Test collection 1',
-              platforms: ['platform']
+              platforms: [{ shortName: 'platform' }]
             }]
           }
         }
@@ -115,7 +115,7 @@ describe('exportSearch', () => {
 
     const result = await exportSearch(event, {})
 
-    expect(result.body).toEqual('[{"conceptId":"C100000-EDSC","title":"Test collection","platforms":["platform"]},{"conceptId":"C100001-EDSC","title":"Test collection 1","platforms":["platform"]}]')
+    expect(result.body).toEqual('[{"conceptId":"C100000-EDSC","title":"Test collection","platforms":[{"shortName":"platform"}]},{"conceptId":"C100001-EDSC","title":"Test collection 1","platforms":[{"shortName":"platform"}]}]')
   })
 
   test('responds correctly on http error', async () => {
