@@ -123,12 +123,13 @@ export const exportSearch = (format) => (dispatch, getState) => {
 
   const response = graphQlRequestObject.search(graphQuery, {
     ...buildCollectionSearchParams(collectionParams),
+    limit: 1000,
+    // These params include data that is not used in exporting collections. Setting them to undefined to remove the params
     includeFacets: undefined,
     includeGranuleCounts: undefined,
     includeTags: undefined,
     pageNum: undefined,
-    pageSize: undefined,
-    limit: 1000
+    pageSize: undefined
   }, format)
     .then((response) => {
       const { data } = response
@@ -281,12 +282,13 @@ export const exportSearchAsStac = (format) => (dispatch, getState) => {
 
   const response = graphQlRequestObject.search(graphQuery, {
     ...buildCollectionSearchParams(collectionParams),
+    limit: 1000,
+    // These params include data that is not used in exporting collections. Setting them to undefined to remove the params
     includeFacets: undefined,
     includeGranuleCounts: undefined,
     includeTags: undefined,
     pageNum: undefined,
-    pageSize: undefined,
-    limit: 1000
+    pageSize: undefined
   }, format)
     .then((response) => {
       const { data } = response
