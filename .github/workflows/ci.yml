@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
         matrix:
-          node-version: [14.19.0]
+          node-version: ['lts/gallium']
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
     - name: Cache node modules
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       env:
         cache-name: cache-node-modules
       with:
@@ -38,21 +38,21 @@ jobs:
     - name: Run Jest tests
       run: npm run silent-test
     - name: Upload coverage to codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v2
   cypress:
     runs-on: ubuntu-latest
     strategy:
         matrix:
-          node-version: [14.19.0]
+          node-version: ['lts/gallium']
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
     - name: Cache node modules
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       env:
         cache-name: cache-node-modules
       with:
@@ -73,7 +73,7 @@ jobs:
     - name: Run Cypress tests
       run: npm run cypress:ci
     - name: Upload coverage to codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v2
       with:
         directory: 'cypress-coverage'
   deploy:
@@ -82,7 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Install SSH key
       uses: shimataro/ssh-key-action@v2
       with:

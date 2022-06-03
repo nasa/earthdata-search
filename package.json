@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.12",
-    "@cypress/webpack-preprocessor": "^5.11.1",
+    "@cypress/webpack-preprocessor": "^5.12.0",
     "@welldone-software/why-did-you-render": "^7.0.1",
     "babel-jest": "^26.6.3",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -72,10 +72,10 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/register": "^7.17.7",
     "@babel/runtime": "^7.17.9",
-    "@edsc/echoforms": "^1.1.12",
-    "@edsc/geo-utils": "^1.0.2",
-    "@edsc/smart-handoffs": "^1.0.2",
-    "@edsc/timeline": "^1.1.4",
+    "@edsc/echoforms": "^1.1.13",
+    "@edsc/geo-utils": "^1.0.3",
+    "@edsc/smart-handoffs": "^1.0.3",
+    "@edsc/timeline": "^1.1.5",
     "@googlemaps/google-maps-services-js": "^3.3.13",
     "@redux-devtools/extension": "^3.2.2",
     "acorn": "^8.7.1",
@@ -105,7 +105,7 @@
     "dropzone": "^5.9.3",
     "duplicate-package-checker-webpack-plugin": "^3.0.0",
     "eslint": "^8.14.0",
-    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
@@ -113,7 +113,6 @@
     "eslint-webpack-plugin": "^3.1.1",
     "events": "^3.3.0",
     "fast-xml-parser": "^3.21.1",
-    "file-loader": "^3.0.1",
     "formdata-node": "^2.5.0",
     "formik": "^2.2.9",
     "geojson": "^0.5.0",
@@ -181,13 +180,13 @@
     "sanitize-html": "^2.7.0",
     "sass-loader": "^12.6.0",
     "scatter-swap": "^0.1.0",
-    "serverless": "^3.16.0",
+    "serverless": "^3.19.0",
     "serverless-finch": "^4.0.0",
-    "serverless-offline": "^8.7.0",
+    "serverless-offline": "^8.8.0",
     "serverless-plugin-log-subscription": "^2.1.1",
     "serverless-plugin-split-stacks": "^1.11.3",
     "serverless-step-functions": "^3.7.0",
-    "serverless-webpack": "^5.7.0",
+    "serverless-webpack": "^5.7.1",
     "simple-oauth2": "^4.3.0",
     "simplebar": "^4.2.3",
     "simplebar-react": "^1.2.3",
@@ -220,5 +219,13 @@
       "static/src/js/**/*.js"
     ],
     "excludeAfterRemap": true
+  },
+  "overrides": {
+    "istanbul-instrumenter-loader": {
+      "webpack": "$webpack"
+    },
+    "react-sanitized-html": {
+      "sanitize-html": "$sanitize-html"
+    }
   }
 }
