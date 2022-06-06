@@ -109,6 +109,12 @@ describe('changeProjectQuery', () => {
           keyword: 'old stuff'
         }
       },
+      project: {
+        collections: {
+          allIds: [],
+          byId: {}
+        }
+      },
       router: {
         location: {
           pathname: ''
