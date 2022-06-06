@@ -145,7 +145,7 @@ describe('GranuleGridLayerExtended class', () => {
 
   describe('drawTile', () => {
     test('calls the draw methods', () => {
-      jest.useFakeTimers('legacy')
+      jest.useFakeTimers({ legacyFakeTimers: true })
 
       const element = document.createElement('div')
       element.id = 'map'

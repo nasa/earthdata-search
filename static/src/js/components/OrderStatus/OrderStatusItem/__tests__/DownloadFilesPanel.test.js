@@ -6,7 +6,7 @@ import { ProgressBar } from 'react-bootstrap'
 import { DownloadFilesPanel } from '../DownloadFilesPanel'
 import { TextWindowActions } from '../../../TextWindowActions/TextWindowActions'
 
-jest.useFakeTimers('legacy')
+jest.useFakeTimers({ legacyFakeTimers: true })
 
 beforeEach(() => {
   jest.clearAllMocks()

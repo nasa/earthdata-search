@@ -7,7 +7,7 @@ import { mapDispatchToProps, mapStateToProps, GranuleFiltersContainer } from '..
 
 Enzyme.configure({ adapter: new Adapter() })
 
-jest.useFakeTimers('legacy')
+jest.useFakeTimers({ legacyFakeTimers: true })
 
 beforeEach(() => {
   jest.clearAllMocks()
