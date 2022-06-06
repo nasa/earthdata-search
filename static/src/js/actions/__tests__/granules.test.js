@@ -1912,6 +1912,10 @@ describe('fetchOpenSearchLinks', () => {
       .post(/opensearch/)
       .reply(500)
 
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
     const store = mockStore({
       authToken: 'token'
     })
