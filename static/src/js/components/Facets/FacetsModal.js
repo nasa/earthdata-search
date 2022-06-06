@@ -14,7 +14,6 @@ export class FacetsModal extends Component {
     super(props)
     this.onApplyClick = this.onApplyClick.bind(this)
     this.onModalClose = this.onModalClose.bind(this)
-    this.modalInner = React.createRef()
   }
 
   onModalClose() {
@@ -70,14 +69,8 @@ export class FacetsModal extends Component {
       />
     )
 
-    const footerMeta = (
-      <>
-        {
-          !isFirstLoad && (
-            <span className="facets-modal__hits">{`${collectionHits} Matching Collections`}</span>
-          )
-        }
-      </>
+    const footerMeta = !isFirstLoad && (
+      <span className="facets-modal__hits">{`${collectionHits} Matching Collections`}</span>
     )
 
     return (

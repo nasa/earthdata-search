@@ -12,7 +12,7 @@ const initialState = {
   isLoaded: false
 }
 
-const retrievalReducer = (state = initialState, action) => {
+const retrievalReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case SET_RETRIEVAL_LOADING: {
       return {

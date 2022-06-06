@@ -74,6 +74,7 @@ describe('cloudfrontToCloudwatch', () => {
     const consoleMock = jest.spyOn(console, 'log')
 
     const s3GetObjectPromise = jest.fn().mockReturnValue({
+      // eslint-disable-next-line no-promise-executor-return
       promise: jest.fn().mockImplementation(() => new Promise((resolve, reject) => reject(new Error('Object not found.'))))
     })
 

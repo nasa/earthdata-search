@@ -33,12 +33,14 @@ describe('events', () => {
   describe('virtualPageview', () => {
     describe('on a PUSH event', () => {
       test('pushes to the dataLayer', () => {
+        /* eslint-disable no-import-assign */
         helpers.computeKeyword = jest.fn(() => 'Keyword')
         helpers.computeSpatialType = jest.fn(() => 'Spatial Type')
         helpers.computeTemporalType = jest.fn(() => 'Temporal Type')
         helpers.computeCollectionsViewed = jest.fn(() => 'Collections Viewed')
         helpers.computeCollectionsAdded = jest.fn(() => 'Collections Added')
         helpers.computeFacets = jest.fn(() => 'Facets')
+        /* eslint-enable */
 
         const action = {
           type: LOCATION_CHANGE,
@@ -68,12 +70,14 @@ describe('events', () => {
 
     describe('on a non-PUSH event', () => {
       test('does not push to the dataLayer', () => {
+        /* eslint-disable no-import-assign */
         helpers.computeKeyword = jest.fn(() => 'Keyword')
         helpers.computeSpatialType = jest.fn(() => 'Spatial Type')
         helpers.computeTemporalType = jest.fn(() => 'Temporal Type')
         helpers.computeCollectionsViewed = jest.fn(() => 'Collections Viewed')
         helpers.computeCollectionsAdded = jest.fn(() => 'Collections Added')
         helpers.computeFacets = jest.fn(() => 'Facets')
+        /* eslint-enable */
 
         const action = {
           type: LOCATION_CHANGE,

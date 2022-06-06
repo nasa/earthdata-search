@@ -485,11 +485,9 @@ export class OrderStatusItem extends PureComponent {
                             </div>
                             {
                               totalOrders > 0 && (
-                                <>
-                                  <span className="order-status-item__orders-processed">
-                                    {`${totalCompleteOrders}/${totalOrders} orders complete`}
-                                  </span>
-                                </>
+                                <span className="order-status-item__orders-processed">
+                                  {`${totalCompleteOrders}/${totalOrders} orders complete`}
+                                </span>
                               )
                             }
                           </div>
@@ -707,8 +705,14 @@ OrderStatusItem.defaultProps = {
 
 OrderStatusItem.propTypes = {
   collection: PropTypes.shape({
-    access_method: PropTypes.shape({}),
-    collection_metadata: PropTypes.shape({}),
+    access_method: PropTypes.shape({
+      type: PropTypes.string
+    }),
+    collection_metadata: PropTypes.shape({
+      directDistributionInformation: PropTypes.shape({}),
+      title: PropTypes.string,
+      isCSDA: PropTypes.bool
+    }),
     collection: PropTypes.shape({}),
     granule_count: PropTypes.number,
     id: PropTypes.number,

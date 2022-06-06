@@ -41,7 +41,7 @@ const processResults = (results) => {
   return { byId, allIds }
 }
 
-const adminRetrievalsReducer = (state = initialState, action) => {
+const adminRetrievalsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case SET_ADMIN_RETRIEVALS_LOADED: {
       return {

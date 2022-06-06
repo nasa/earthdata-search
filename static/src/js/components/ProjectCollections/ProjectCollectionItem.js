@@ -181,22 +181,20 @@ const ProjectCollectionItem = ({
         isLoaded ? (
           <>
             <ul className="project-collections-item__stats-list">
-              <>
-                <li
-                  className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
-                >
-                  {`${abbreviate(granuleCount, 1)} ${pluralize('Granule', granuleCount)}`}
-                </li>
-                {
-                  !isOpenSearch && (granuleCount > 0 && size && unit) && (
-                    <li
-                      className="project-collections-item__stats-item project-collections-item__stats-item--total-size"
-                    >
-                      {`Est. Size ${size} ${unit}`}
-                    </li>
-                  )
-                }
-              </>
+              <li
+                className="project-collections-item__stats-item project-collections-item__stats-item--granule-count"
+              >
+                {`${abbreviate(granuleCount, 1)} ${pluralize('Granule', granuleCount)}`}
+              </li>
+              {
+                !isOpenSearch && (granuleCount > 0 && size && unit) && (
+                  <li
+                    className="project-collections-item__stats-item project-collections-item__stats-item--total-size"
+                  >
+                    {`Est. Size ${size} ${unit}`}
+                  </li>
+                )
+              }
             </ul>
             <div className="project-collections-item__footer">
               {

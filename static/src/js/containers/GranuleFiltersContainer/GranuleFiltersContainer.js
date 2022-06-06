@@ -57,7 +57,6 @@ export const mapDispatchToProps = (dispatch) => ({
 export class GranuleFiltersContainer extends Component {
   constructor(props) {
     super(props)
-    this.form = null
     this.onClearGranuleFilters = this.onClearGranuleFilters.bind(this)
     this.onHandleSubmit = this.onHandleSubmit.bind(this)
   }

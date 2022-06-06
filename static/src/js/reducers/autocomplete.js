@@ -20,7 +20,7 @@ const initialState = {
   selected: []
 }
 
-const autocompleteReducer = (state = initialState, action) => {
+const autocompleteReducer = (state = initialState, action = {}) => {
   const { payload, type } = action
 
   switch (type) {

@@ -206,43 +206,41 @@ const EDSCTable = ({
   }
 
   const buildSkeletonRow = (style) => (
-    <>
-      <div
-        className="edsc-table__tr"
-        role="row"
-        style={{
-          ...style,
-          display: 'flex'
-        }}
-      >
-        {
-          columns.map((column, i) => {
-            const tdClasses = classNames([
-              'edsc-table__td',
-              'edsc-table__td--skeleton'
-            ])
+    <div
+      className="edsc-table__tr"
+      role="row"
+      style={{
+        ...style,
+        display: 'flex'
+      }}
+    >
+      {
+        columns.map((column, i) => {
+          const tdClasses = classNames([
+            'edsc-table__td',
+            'edsc-table__td--skeleton'
+          ])
 
-            const key = `edsc-table-${id}-${i}`
+          const key = `edsc-table-${id}-${i}`
 
-            return (
-              <div
-                key={key}
-                className={tdClasses}
-                role="cell"
-                style={{
-                  width: `${column.width}px`
-                }}
-              >
-                <Skeleton
-                  containerStyle={{ height: '18px', width: `${column.width * 0.8}px` }}
-                  shapes={rowContentLarge}
-                />
-              </div>
-            )
-          })
-        }
-      </div>
-    </>
+          return (
+            <div
+              key={key}
+              className={tdClasses}
+              role="cell"
+              style={{
+                width: `${column.width}px`
+              }}
+            >
+              <Skeleton
+                containerStyle={{ height: '18px', width: `${column.width * 0.8}px` }}
+                shapes={rowContentLarge}
+              />
+            </div>
+          )
+        })
+      }
+    </div>
   )
 
   const Row = useCallback(
@@ -365,6 +363,7 @@ const EDSCTable = ({
       <AutoSizer style={{ position: 'relative', height: '100%', width: '100%' }}>
         {
           ({ height, width }) => (
+            // eslint-disable-next-line react/jsx-no-constructed-context-values
             <EDSCTableContext.Provider value={{
               headerGroups,
               height,

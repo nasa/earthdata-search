@@ -1,4 +1,3 @@
-import React from 'react'
 import { pure } from 'recompose'
 import PropTypes from 'prop-types'
 import { getTemporalDateFormat } from '../../util/edscDate'
@@ -26,11 +25,7 @@ const TemporalDisplayEntry = pure((props) => {
     valueToDisplay = `${startDate.year()} - ${endDate.year()}`
   }
 
-  return (
-    <>
-      { valueToDisplay }
-    </>
-  )
+  return valueToDisplay
 })
 
 TemporalDisplayEntry.defaultProps = {

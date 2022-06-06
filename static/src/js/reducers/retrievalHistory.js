@@ -11,7 +11,7 @@ const initialState = {
   history: []
 }
 
-const retrievalHistoryReducer = (state = initialState, action) => {
+const retrievalHistoryReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case SET_RETRIEVAL_HISTORY_LOADING: {
       return {

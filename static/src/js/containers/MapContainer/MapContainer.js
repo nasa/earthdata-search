@@ -344,6 +344,7 @@ export class MapContainer extends Component {
         <LayersControl
           position="bottomright"
           ref={(r) => {
+            // eslint-disable-next-line react/no-unused-class-component-methods
             this.controls = r
           }}
         >

@@ -54,7 +54,7 @@ describe('DeprecatedParameterModal component', () => {
     test('when only one param is provided', () => {
       const { enzymeWrapper } = setup()
 
-      let deprecatedParamSection = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1].props.children
+      let deprecatedParamSection = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1]
       deprecatedParamSection = shallow(deprecatedParamSection)
 
       expect(deprecatedParamSection.text()).toEqual('The following URL parameter has been deprecated: test')
@@ -65,7 +65,7 @@ describe('DeprecatedParameterModal component', () => {
         deprecatedUrlParams: ['test', 'another test']
       })
 
-      let deprecatedParamSection = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1].props.children
+      let deprecatedParamSection = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1]
       deprecatedParamSection = shallow(deprecatedParamSection)
 
       expect(deprecatedParamSection.text()).toEqual('The following URL parameters have been deprecated: test and another test')
@@ -76,7 +76,7 @@ describe('DeprecatedParameterModal component', () => {
         deprecatedUrlParams: ['test', 'another test', 'another another test']
       })
 
-      let deprecatedParamSection = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1].props.children
+      let deprecatedParamSection = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1]
       deprecatedParamSection = shallow(deprecatedParamSection)
 
       expect(deprecatedParamSection.text()).toEqual('The following URL parameters have been deprecated: test, another test and another another test')

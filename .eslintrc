@@ -83,7 +83,20 @@
 
     "react/prop-types": ["error", {
       "skipUndeclared": true
-    }]
+    }],
+
+    // Allow parentheses parameters on new lines, with 'consistent' config
+    "function-paren-newline": ["error", "consistent"],
+
+    // Named components should be arrow functions
+    "react/function-component-definition": "off",
+
+    "react/display-name": "off",
+
+    "react/no-unstable-nested-components": [
+      "warn",
+      { "allowAsProps": true }
+    ]
   },
 
   "overrides": [

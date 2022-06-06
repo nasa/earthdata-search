@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -117,11 +117,7 @@ export class UrlQueryContainer extends PureComponent {
 
   render() {
     const { children } = this.props
-    return (
-      <>
-        { children }
-      </>
-    )
+    return children
   }
 }
 

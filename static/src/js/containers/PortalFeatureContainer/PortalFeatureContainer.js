@@ -68,7 +68,10 @@ PortalFeatureContainer.propTypes = {
   children: PropTypes.node.isRequired,
   nonEosdisCheckbox: PropTypes.bool,
   onlyGranulesCheckbox: PropTypes.bool,
-  portal: PropTypes.shape({}).isRequired
+  portal: PropTypes.shape({
+    features: PropTypes.shape({}),
+    ui: PropTypes.shape({})
+  }).isRequired
 }
 
 export default connect(mapStateToProps)(PortalFeatureContainer)

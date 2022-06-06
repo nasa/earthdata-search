@@ -10,7 +10,7 @@ const initialState = {
   activePanel: '0.0.0'
 }
 
-const panelsReducer = (state = initialState, action) => {
+const panelsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case PANELS_TOGGLE: {
       return {

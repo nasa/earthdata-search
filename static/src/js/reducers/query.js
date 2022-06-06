@@ -32,7 +32,7 @@ export const initialGranuleState = {
   sortKey: '-start_date'
 }
 
-const queryReducer = (state = initialState, action) => {
+const queryReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_COLLECTION_QUERY: {
       return {

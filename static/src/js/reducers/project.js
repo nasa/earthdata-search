@@ -54,7 +54,7 @@ const processResults = (results) => {
   return allIds
 }
 
-const projectReducer = (state = initialState, action) => {
+const projectReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case STARTED_PROJECT_GRANULES_TIMER: {
       const collectionId = action.payload

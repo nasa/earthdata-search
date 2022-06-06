@@ -4,7 +4,7 @@
  * @return {boolean}
  */
 export const isDownloadPathWithId = (pathname) => {
-  const regex = new RegExp(/\/downloads\/\d+/)
+  const regex = /\/downloads\/\d+/
 
   return !!pathname.match(regex)
 }

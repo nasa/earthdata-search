@@ -466,8 +466,7 @@ describe('ProjectPanels component', () => {
         })
 
         const accessMethodPanelGroup = enzymeWrapper.find(PanelSection).at(1).find(PanelGroup).at(0)
-        const moreInfoButton = accessMethodPanelGroup.props()
-          .headerMessage.props.children.props.children[3]
+        const moreInfoButton = accessMethodPanelGroup.props().headerMessage.props.children[3]
 
         moreInfoButton.props.onClick()
 
@@ -489,8 +488,7 @@ describe('ProjectPanels component', () => {
         })
 
         const infoPanelGroup = enzymeWrapper.find(PanelSection).at(1).find(PanelGroup).at(0)
-        const moreInfoButton = infoPanelGroup.props()
-          .headerMessage.props.children.props.children[3]
+        const moreInfoButton = infoPanelGroup.props().headerMessage.props.children[3]
 
         moreInfoButton.props.onClick()
 

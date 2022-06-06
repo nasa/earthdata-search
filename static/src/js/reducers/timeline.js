@@ -9,7 +9,7 @@ const initialState = {
   query: {}
 }
 
-const timelineReducer = (state = initialState, action) => {
+const timelineReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_TIMELINE_INTERVALS: {
       const newIntervals = {}

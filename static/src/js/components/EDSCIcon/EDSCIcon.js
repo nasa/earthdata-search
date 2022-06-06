@@ -37,31 +37,31 @@ export const EDSCIcon = ({
 
   const Icon = icon
 
+  if (context) {
+    return (
+      <IconContext.Provider
+        value={context}
+      >
+        <Icon
+          className={iconClassNames}
+          title={title}
+          size={size}
+          {...props}
+        />
+        {children}
+      </IconContext.Provider>
+    )
+  }
+
   return (
     <>
-      {context ? (
-        <IconContext.Provider
-          value={context}
-        >
-          <Icon
-            className={iconClassNames}
-            title={title}
-            size={size}
-            {...props}
-          />
-          {children}
-        </IconContext.Provider>
-      ) : (
-        <>
-          <Icon
-            className={iconClassNames}
-            title={title}
-            size={size}
-            {...props}
-          />
-          {children}
-        </>
-      )}
+      <Icon
+        className={iconClassNames}
+        title={title}
+        size={size}
+        {...props}
+      />
+      {children}
     </>
   )
 }

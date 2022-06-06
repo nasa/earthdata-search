@@ -47,7 +47,7 @@ const processResults = (results) => {
   return allIds
 }
 
-const collectionsResultsReducer = (state = initialState, action) => {
+const collectionsResultsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case LOADING_COLLECTIONS: {
       return {

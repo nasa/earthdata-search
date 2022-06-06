@@ -14,7 +14,8 @@ const ScaledLonLatProjection = (scale) => ({
 const crsProjections = {
   epsg4326: new L.Proj.CRS(
     'EPSG:4326',
-    '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs', {
+    '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs',
+    {
       origin: [-180, 90],
       resolutions: [
         0.5625,
@@ -41,7 +42,8 @@ const crsProjections = {
   epsg3413: new L.Proj.CRS(
     'EPSG:3413',
     '+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0'
-    + '+y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs', {
+    + '+y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs',
+    {
       origin: [-4194304, 4194304],
       resolutions: [
         8192.0,
@@ -60,7 +62,8 @@ const crsProjections = {
   epsg3031: new L.Proj.CRS(
     'EPSG:3031',
     '+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0'
-    + '+y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs', {
+    + '+y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs',
+    {
       origin: [-4194304, 4194304],
       resolutions: [
         8192.0,
