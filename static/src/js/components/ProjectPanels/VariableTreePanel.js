@@ -64,23 +64,21 @@ export const VariableTreePanel = (props) => {
   if (!keywordMappings.length && hierarchyMappings.length) items = hierarchyMappings
 
   return (
-    <>
-      <ProjectPanelSection heading="Variable Selection">
-        {
-          keywordMappings.length > 0 && hierarchyMappings.length > 0 && browseBy
-        }
-        <Tree
-          key={treeView}
-          collectionId={collectionId}
-          index={index}
-          items={items}
-          selectedVariables={selectedVariables}
-          variables={variables}
-          onUpdateSelectedVariables={onUpdateSelectedVariables}
-          onViewDetails={onViewDetails}
-        />
-      </ProjectPanelSection>
-    </>
+    <ProjectPanelSection heading="Variable Selection">
+      {
+        keywordMappings.length > 0 && hierarchyMappings.length > 0 && browseBy
+      }
+      <Tree
+        key={treeView}
+        collectionId={collectionId}
+        index={index}
+        items={items}
+        selectedVariables={selectedVariables}
+        variables={variables}
+        onUpdateSelectedVariables={onUpdateSelectedVariables}
+        onViewDetails={onViewDetails}
+      />
+    </ProjectPanelSection>
   )
 }
 

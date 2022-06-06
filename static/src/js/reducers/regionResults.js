@@ -33,7 +33,7 @@ const processResults = (results) => {
   return { byId, allIds }
 }
 
-const regionResultsReducer = (state = initialState, action) => {
+const regionResultsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case LOADING_REGIONS: {
       return {

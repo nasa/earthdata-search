@@ -125,14 +125,12 @@ export const Button = React.forwardRef(({
         />
       )}
       {badge && (
-        <>
-          <Badge
-            className={badgeClasses}
-            variant={badgeVariant === null ? 'secondary' : badgeVariant}
-          >
-            {badge}
-          </Badge>
-        </>
+        <Badge
+          className={badgeClasses}
+          variant={badgeVariant === null ? 'secondary' : badgeVariant}
+        >
+          {badge}
+        </Badge>
       )}
     </Btn>
   )

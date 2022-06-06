@@ -206,7 +206,9 @@ CollectionDownloadDisplay.propTypes = {
   }).isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
   retrievalCollection: PropTypes.shape({
-    access_method: PropTypes.shape({}),
+    access_method: PropTypes.shape({
+      type: PropTypes.string
+    }),
     granule_count: PropTypes.number,
     id: PropTypes.number,
     retrieval_id: PropTypes.number

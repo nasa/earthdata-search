@@ -30,7 +30,7 @@ const processResults = (results) => {
   return byId
 }
 
-const subscriptionsReducer = (state = initialState, action) => {
+const subscriptionsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case LOADING_SUBSCRIPTIONS: {
       return {

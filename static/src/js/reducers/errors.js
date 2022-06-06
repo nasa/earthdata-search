@@ -2,7 +2,7 @@ import { ADD_ERROR, REMOVE_ERROR } from '../constants/actionTypes'
 
 const initialState = []
 
-const errorsReducer = (state = initialState, action) => {
+const errorsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case ADD_ERROR: {
       return [

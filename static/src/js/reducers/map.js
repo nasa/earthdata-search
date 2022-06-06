@@ -18,7 +18,7 @@ const initialState = {
   zoom: 2
 }
 
-const mapReducer = (state = initialState, action) => {
+const mapReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_MAP: {
       return {

@@ -1,10 +1,10 @@
 /**
  * Select only desired keys from a provided object.
- * @param {object} providedObj - An object containing any keys.
- * @param {array} keys - An array of strings that represent the keys to be picked.
- * @return {obj} An object containing only the desired keys.
+ * @param {Object} providedObj - An object containing any keys.
+ * @param {Array} keys - An array of strings that represent the keys to be picked.
+ * @return {Object} An object containing only the desired keys.
  */
-export const pick = (providedObj = {}, keys) => {
+export const pick = (providedObj = {}, keys = []) => {
   let obj = null
 
   // if `null` is provided the default parameter will not be

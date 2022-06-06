@@ -78,7 +78,7 @@ const initialState = {
   }
 }
 
-const uiReducer = (state = initialState, action) => {
+const uiReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case TOGGLE_VIEW_ALL_FACETS_MODAL: {
       return {

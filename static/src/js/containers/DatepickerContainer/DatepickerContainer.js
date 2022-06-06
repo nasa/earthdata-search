@@ -30,8 +30,6 @@ class DatepickerContainer extends Component {
     this.onTodayClick = this.onTodayClick.bind(this)
     this.isValidDate = this.isValidDate.bind(this)
 
-    this.today = moment()
-
     this.picker = React.createRef()
   }
 

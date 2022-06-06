@@ -22,7 +22,7 @@ const initialState = {
   isSubmitted: false
 }
 
-const preferencesReducer = (state = initialState, action) => {
+const preferencesReducer = (state = initialState, action = {}) => {
   const { payload, type } = action
 
   switch (type) {

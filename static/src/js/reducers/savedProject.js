@@ -15,7 +15,7 @@ const initialState = {
   path: null
 }
 
-const savedProjectReducer = (state = initialState, action) => {
+const savedProjectReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_SAVED_PROJECT: {
       const {

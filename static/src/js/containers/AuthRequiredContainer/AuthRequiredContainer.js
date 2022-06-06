@@ -46,11 +46,7 @@ export class AuthRequiredContainer extends Component {
         children
       } = this.props
 
-      return (
-        <>
-          { children }
-        </>
-      )
+      return children
     }
 
     return (

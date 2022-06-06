@@ -35,6 +35,7 @@ describe('metrics middleware', () => {
   })
 
   test('calls virtualPageview on react-router location change', () => {
+    // eslint-disable-next-line no-import-assign
     events.virtualPageview = jest.fn()
     const { store, invoke } = createStore()
 
@@ -47,6 +48,7 @@ describe('metrics middleware', () => {
   })
 
   test('calls dataAccess event', () => {
+    // eslint-disable-next-line no-import-assign
     events.dataAccess = jest.fn()
     const { store, invoke } = createStore()
 
@@ -63,6 +65,7 @@ describe('metrics middleware', () => {
   })
 
   test('calls defaultClick event', () => {
+    // eslint-disable-next-line no-import-assign
     events.defaultClick = jest.fn()
     const { invoke } = createStore()
 
@@ -78,6 +81,7 @@ describe('metrics middleware', () => {
   })
 
   test('calls timeline event', () => {
+    // eslint-disable-next-line no-import-assign
     events.timeline = jest.fn()
     const { invoke } = createStore()
 
@@ -93,6 +97,7 @@ describe('metrics middleware', () => {
   })
 
   test('calls timeline event', () => {
+    // eslint-disable-next-line no-import-assign
     events.map = jest.fn()
     const { invoke } = createStore()
 
@@ -108,6 +113,7 @@ describe('metrics middleware', () => {
   })
 
   test('calls spatialEdit event', () => {
+    // eslint-disable-next-line no-import-assign
     events.spatialEdit = jest.fn()
     const { invoke } = createStore()
 
@@ -123,6 +129,7 @@ describe('metrics middleware', () => {
   })
 
   test('calls timing event', () => {
+    // eslint-disable-next-line no-import-assign
     events.timing = jest.fn()
     const { invoke } = createStore()
 
@@ -138,6 +145,7 @@ describe('metrics middleware', () => {
   })
 
   test('calls collectionSortChange event', () => {
+    // eslint-disable-next-line no-import-assign
     events.collectionSortChange = jest.fn()
     const { invoke } = createStore()
 
@@ -153,6 +161,7 @@ describe('metrics middleware', () => {
   })
 
   test('calls relatedCollection event', () => {
+    // eslint-disable-next-line no-import-assign
     events.relatedCollection = jest.fn()
     const { invoke } = createStore()
 

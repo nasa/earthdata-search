@@ -15,7 +15,7 @@ function setup(overrideProps) {
     size: 'lg',
     identifier: 'test-identifier',
     isOpen: false,
-    modalInner: <></>,
+    modalInner: <div />,
     ...overrideProps
   }
 

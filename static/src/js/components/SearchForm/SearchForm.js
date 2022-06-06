@@ -340,33 +340,29 @@ class SearchForm extends Component {
           />
           {
             showFilterStackToggle && (
-              <>
-                {
-                  showFilterStack
-                    ? (
-                      <Button
-                        bootstrapVariant="inline-block"
-                        className="search-form__button search-form__button--dark search-form__button--toggle"
-                        onClick={this.onToggleFilterStack}
-                        title="Close filter stack"
-                        label="Close filter stack"
-                        icon={FaChevronUp}
-                        iconSize="0.825rem"
-                      />
-                    )
-                    : (
-                      <Button
-                        bootstrapVariant="inline-block"
-                        className="search-form__button search-form__button--dark search-form__button--toggle"
-                        onClick={this.onToggleFilterStack}
-                        title="Open filter stack"
-                        label="Open filter stack"
-                        icon={FaBars}
-                        iconSize="0.825rem"
-                      />
-                    )
-                }
-              </>
+              showFilterStack
+                ? (
+                  <Button
+                    bootstrapVariant="inline-block"
+                    className="search-form__button search-form__button--dark search-form__button--toggle"
+                    onClick={this.onToggleFilterStack}
+                    title="Close filter stack"
+                    label="Close filter stack"
+                    icon={FaChevronUp}
+                    iconSize="0.825rem"
+                  />
+                )
+                : (
+                  <Button
+                    bootstrapVariant="inline-block"
+                    className="search-form__button search-form__button--dark search-form__button--toggle"
+                    onClick={this.onToggleFilterStack}
+                    title="Open filter stack"
+                    label="Open filter stack"
+                    icon={FaBars}
+                    iconSize="0.825rem"
+                  />
+                )
             )
           }
         </div>

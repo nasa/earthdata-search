@@ -4,7 +4,7 @@ const initialState = {
   portalId: ''
 }
 
-const portalsReducer = (state = initialState, action) => {
+const portalsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case ADD_PORTAL: {
       return action.payload

@@ -119,8 +119,7 @@ describe('getTimeline', () => {
             3
           ]
         ]
-      }],
-      {
+      }], {
         'jwt-token': 'token'
       })
 

@@ -70,7 +70,12 @@ export const GranuleResultsBrowseImageCell = ({ row }) => {
 
 GranuleResultsBrowseImageCell.propTypes = {
   row: PropTypes.shape({
-    original: PropTypes.shape({})
+    original: PropTypes.shape({
+      browseFlag: PropTypes.bool,
+      browseUrl: PropTypes.string,
+      granuleThumbnail: PropTypes.string,
+      title: PropTypes.string
+    })
   }).isRequired
 }
 

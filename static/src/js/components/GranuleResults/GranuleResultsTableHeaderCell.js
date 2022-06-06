@@ -67,49 +67,47 @@ const GranuleResultsTableHeaderCell = (props) => {
       </h4>
       <div className="granule-results-table__granule-actions">
         <PortalFeatureContainer authentication>
-          <>
-            {
-              !isInProject
-                ? (
-                  <Button
-                    className="button granule-results-table__granule-action granule-results-table__granule-action--add"
-                    type="button"
-                    label="Add granule"
-                    title="Add granule"
-                    icon={FaPlus}
-                    iconSize="0.75rem"
-                    onClick={(e) => {
-                      onAddGranuleToProjectCollection({
-                        collectionId,
-                        granuleId: id
-                      })
+          {
+            !isInProject
+              ? (
+                <Button
+                  className="button granule-results-table__granule-action granule-results-table__granule-action--add"
+                  type="button"
+                  label="Add granule"
+                  title="Add granule"
+                  icon={FaPlus}
+                  iconSize="0.75rem"
+                  onClick={(e) => {
+                    onAddGranuleToProjectCollection({
+                      collectionId,
+                      granuleId: id
+                    })
 
-                      // Prevent event bubbling up to the granule focus event.
-                      e.stopPropagation()
-                    }}
-                  />
-                )
-                : (
-                  <Button
-                    className="button granule-results-table__granule-action granule-results-table__granule-action--remove"
-                    type="button"
-                    label="Remove granule"
-                    title="Remove granule"
-                    icon={FaMinus}
-                    iconSize="0.75rem"
-                    onClick={(e) => {
-                      onRemoveGranuleFromProjectCollection({
-                        collectionId,
-                        granuleId: id
-                      })
+                    // Prevent event bubbling up to the granule focus event.
+                    e.stopPropagation()
+                  }}
+                />
+              )
+              : (
+                <Button
+                  className="button granule-results-table__granule-action granule-results-table__granule-action--remove"
+                  type="button"
+                  label="Remove granule"
+                  title="Remove granule"
+                  icon={FaMinus}
+                  iconSize="0.75rem"
+                  onClick={(e) => {
+                    onRemoveGranuleFromProjectCollection({
+                      collectionId,
+                      granuleId: id
+                    })
 
-                      // Prevent event bubbling up to the granule focus event.
-                      e.stopPropagation()
-                    }}
-                  />
-                )
-            }
-          </>
+                    // Prevent event bubbling up to the granule focus event.
+                    e.stopPropagation()
+                  }}
+                />
+              )
+          }
         </PortalFeatureContainer>
         {
           onlineAccessFlag && (
@@ -175,7 +173,13 @@ GranuleResultsTableHeaderCell.propTypes = {
     })
   }).isRequired,
   row: PropTypes.shape({
-    original: PropTypes.shape({})
+    original: PropTypes.shape({
+      s3Links: PropTypes.arrayOf(PropTypes.shape({})),
+      dataLinks: PropTypes.arrayOf(PropTypes.shape({})),
+      id: PropTypes.string,
+      isOpenSearch: PropTypes.bool,
+      onlineAccessFlag: PropTypes.bool
+    })
   }).isRequired
 }
 

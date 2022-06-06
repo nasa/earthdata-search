@@ -33,7 +33,7 @@ const processResults = (results) => {
   return byId
 }
 
-const collectionMetadataReducer = (state = initialState, action) => {
+const collectionMetadataReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_COLLECTION_METADATA: {
       const newState = {}

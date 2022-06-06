@@ -19,6 +19,7 @@ describe('fetchAccessMethods', () => {
 
     // call the dispatch
     expect(store.dispatch(fetchAccessMethods(['collectionId']))).toEqual(
+      // eslint-disable-next-line no-promise-executor-return
       new Promise((resolve) => resolve(null))
     )
   })
@@ -30,6 +31,7 @@ describe('fetchAccessMethods', () => {
 
     // call the dispatch
     expect(store.dispatch(fetchAccessMethods())).toEqual(
+      // eslint-disable-next-line no-promise-executor-return
       new Promise((resolve) => resolve(null))
     )
   })
@@ -41,8 +43,7 @@ describe('fetchAccessMethods', () => {
       .get(/providers/)
       .reply(500, {
         errors: ['HTTP Request Error']
-      },
-      {
+      }, {
         'jwt-token': 'token'
       })
 
@@ -104,8 +105,7 @@ describe('fetchAccessMethods', () => {
       .post(/access_methods/)
       .reply(500, {
         errors: ['HTTP Request Error']
-      },
-      {
+      }, {
         'jwt-token': 'token'
       })
 

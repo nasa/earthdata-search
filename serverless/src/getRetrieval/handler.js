@@ -75,7 +75,7 @@ export default async function getRetrieval(event, context) {
         const { collection_metadata: collectionMetadata = {} } = collection
         const { dataset_id: datasetId, links = [] } = collectionMetadata
 
-        const metadataLinks = links.filter((link = {}) => isLinkType(link.rel, 'metadata'))
+        const metadataLinks = links.filter((link = {}) => isLinkType('metadata', link.rel))
 
         // Prevent redundant links
         const uniqueMetadataLinks = metadataLinks.filter(

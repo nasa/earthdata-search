@@ -28,7 +28,7 @@ import './ProjectHeader.scss'
 export class ProjectHeader extends Component {
   constructor(props) {
     super(props)
-    this.component = this
+    // this.component = this
 
     const { savedProject } = props
     const { name = '' } = savedProject
@@ -243,48 +243,46 @@ export class ProjectHeader extends Component {
         {
           granuleLoadingStates.every((isLoaded) => isLoaded === true) ? (
             <ul className="project-header__stats-list">
-              <>
-                <li
-                  className="project-header__stats-item project-header__stats-item--granules"
-                >
-                  <span className="project-header__stats-val">
-                    {`${abbreviate(totalGranules, 1)} `}
-                  </span>
-                  {pluralize('Granule', totalGranules)}
-                </li>
-                <li
-                  className="project-header__stats-item project-header__stats-item--collections"
-                >
-                  <span className="project-header__stats-val">
-                    {`${commafy(projectCollectionIds.length)} `}
-                  </span>
-                  {pluralize('Collection', projectCollectionIds.length)}
-                </li>
-                <li
-                  className="project-header__stats-item project-header__stats-item--size"
-                >
-                  <span className="project-header__stats-val">
-                    {`${totalProjectSize} `}
-                  </span>
-                  {totalUnit}
+              <li
+                className="project-header__stats-item project-header__stats-item--granules"
+              >
+                <span className="project-header__stats-val">
+                  {`${abbreviate(totalGranules, 1)} `}
+                </span>
+                {pluralize('Granule', totalGranules)}
+              </li>
+              <li
+                className="project-header__stats-item project-header__stats-item--collections"
+              >
+                <span className="project-header__stats-val">
+                  {`${commafy(projectCollectionIds.length)} `}
+                </span>
+                {pluralize('Collection', projectCollectionIds.length)}
+              </li>
+              <li
+                className="project-header__stats-item project-header__stats-item--size"
+              >
+                <span className="project-header__stats-val">
+                  {`${totalProjectSize} `}
+                </span>
+                {totalUnit}
 
-                  <OverlayTrigger
-                    placement="right"
-                    overlay={(
-                      <Tooltip
-                        className="tooltip--large tooltip--ta-left tooltip--wide"
-                      >
-                        This is the estimated overall size of your project. If no size
-                        information exists in a granule&apos;s metadata, it will not be
-                        included in this number. The size is estimated based upon the
-                        first 20 granules added to your project from each collection.
-                      </Tooltip>
-                    )}
-                  >
-                    <EDSCIcon icon={FaInfoCircle} className="project-header__stats-icon" />
-                  </OverlayTrigger>
-                </li>
-              </>
+                <OverlayTrigger
+                  placement="right"
+                  overlay={(
+                    <Tooltip
+                      className="tooltip--large tooltip--ta-left tooltip--wide"
+                    >
+                      This is the estimated overall size of your project. If no size
+                      information exists in a granule&apos;s metadata, it will not be
+                      included in this number. The size is estimated based upon the
+                      first 20 granules added to your project from each collection.
+                    </Tooltip>
+                  )}
+                >
+                  <EDSCIcon icon={FaInfoCircle} className="project-header__stats-icon" />
+                </OverlayTrigger>
+              </li>
             </ul>
           ) : (
             <Skeleton
@@ -306,7 +304,10 @@ ProjectHeader.propTypes = {
   collectionsQuery: PropTypes.shape({}).isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
   project: PropTypes.shape({
-    collections: PropTypes.shape({})
+    collections: PropTypes.shape({
+      allIds: PropTypes.arrayOf(PropTypes.string),
+      byId: PropTypes.shape({})
+    })
   }).isRequired,
   savedProject: PropTypes.shape({
     name: PropTypes.string

@@ -1,14 +1,9 @@
-import React from 'react'
 import { pure } from 'recompose'
 import PropTypes from 'prop-types'
 
 const AdvancedSearchDisplayEntry = pure(({
   children
-}) => (
-  <>
-    { children }
-  </>
-))
+}) => children)
 
 AdvancedSearchDisplayEntry.defaultProps = {
   children: null

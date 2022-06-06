@@ -229,48 +229,46 @@ const GranuleResultsItem = forwardRef(({
           <div className="granule-results-item__actions">
             <div className="granule-results-item__buttons">
               <PortalFeatureContainer authentication>
-                <>
-                  {
-                    !isInProject
-                      ? (
-                        <Button
-                          className="button granule-results-item__button granule-results-item__button--add"
-                          label="Add granule"
-                          title="Add granule"
-                          disabled={isOpenSearch}
-                          onClick={(e) => {
-                            onAddGranuleToProjectCollection({
-                              collectionId,
-                              granuleId: id
-                            })
+                {
+                  !isInProject
+                    ? (
+                      <Button
+                        className="button granule-results-item__button granule-results-item__button--add"
+                        label="Add granule"
+                        title="Add granule"
+                        disabled={isOpenSearch}
+                        onClick={(e) => {
+                          onAddGranuleToProjectCollection({
+                            collectionId,
+                            granuleId: id
+                          })
 
-                            // Prevent clicks from bubbling up to other granule item events.
-                            e.stopPropagation()
-                          }}
-                        >
-                          <EDSCIcon icon={FaPlus} />
-                        </Button>
-                      )
-                      : (
-                        <Button
-                          className="button granule-results-item__button granule-results-item__button--remove"
-                          label="Remove granule"
-                          title="Remove granule"
-                          onClick={(e) => {
-                            onRemoveGranuleFromProjectCollection({
-                              collectionId,
-                              granuleId: id
-                            })
+                          // Prevent clicks from bubbling up to other granule item events.
+                          e.stopPropagation()
+                        }}
+                      >
+                        <EDSCIcon icon={FaPlus} />
+                      </Button>
+                    )
+                    : (
+                      <Button
+                        className="button granule-results-item__button granule-results-item__button--remove"
+                        label="Remove granule"
+                        title="Remove granule"
+                        onClick={(e) => {
+                          onRemoveGranuleFromProjectCollection({
+                            collectionId,
+                            granuleId: id
+                          })
 
-                            // Prevent clicks from bubbling up to other granule item events.
-                            e.stopPropagation()
-                          }}
-                        >
-                          <EDSCIcon icon={FaMinus} />
-                        </Button>
-                      )
-                  }
-                </>
+                          // Prevent clicks from bubbling up to other granule item events.
+                          e.stopPropagation()
+                        }}
+                      >
+                        <EDSCIcon icon={FaMinus} />
+                      </Button>
+                    )
+                }
               </PortalFeatureContainer>
               {
                 onlineAccessFlag && (

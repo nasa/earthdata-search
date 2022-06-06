@@ -14,7 +14,7 @@ beforeEach(() => {
 
 function setup(options = {
   mount: false
-}, overrideProps) {
+}, overrideProps = {}) {
   const props = {
     collectionId: 'collectionId',
     directDistributionInformation: {},

@@ -9,7 +9,7 @@ const initialState = {
   regionSearch: {}
 }
 
-const advancedSearchReducer = (state = initialState, action) => {
+const advancedSearchReducer = (state = initialState, action = {}) => {
   const {
     payload,
     type

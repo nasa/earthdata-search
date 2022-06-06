@@ -65,9 +65,7 @@ export const MetaIcon = ({
             id={id}
             className={`meta-icon__tooltip ${tooltipClassName}`}
           >
-            <>
-              {tooltipContent}
-            </>
+            {tooltipContent}
           </Tooltip>
         )}
       >

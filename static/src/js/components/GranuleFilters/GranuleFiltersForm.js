@@ -341,11 +341,9 @@ export const GranuleFiltersForm = (props) => {
                       />
                       {
                         gridCoordsTouched && (
-                          <>
-                            <Form.Control.Feedback type="invalid">
-                              {gridCoordsError}
-                            </Form.Control.Feedback>
-                          </>
+                          <Form.Control.Feedback type="invalid">
+                            {gridCoordsError}
+                          </Form.Control.Feedback>
                         )
                       }
                       <Form.Text muted>
@@ -446,20 +444,16 @@ export const GranuleFiltersForm = (props) => {
             </Form.Control>
             {
               temporalTouched.startDate && (
-                <>
-                  <Form.Control.Feedback type="invalid">
-                    {temporalError.startDate}
-                  </Form.Control.Feedback>
-                </>
+                <Form.Control.Feedback type="invalid">
+                  {temporalError.startDate}
+                </Form.Control.Feedback>
               )
             }
             {
               temporalTouched.endDate && (
-                <>
-                  <Form.Control.Feedback type="invalid">
-                    {temporalError.endDate}
-                  </Form.Control.Feedback>
-                </>
+                <Form.Control.Feedback type="invalid">
+                  {temporalError.endDate}
+                </Form.Control.Feedback>
               )
             }
           </Form.Group>
@@ -765,20 +759,16 @@ export const GranuleFiltersForm = (props) => {
                         </Form.Control>
                         {
                           equatorCrossingDateTouched.startDate && (
-                            <>
-                              <Form.Control.Feedback type="invalid">
-                                {equatorCrossingDateError.startDate}
-                              </Form.Control.Feedback>
-                            </>
+                            <Form.Control.Feedback type="invalid">
+                              {equatorCrossingDateError.startDate}
+                            </Form.Control.Feedback>
                           )
                         }
                         {
                           equatorCrossingDateTouched.endDate && (
-                            <>
-                              <Form.Control.Feedback type="invalid">
-                                {equatorCrossingDateError.endDate}
-                              </Form.Control.Feedback>
-                            </>
+                            <Form.Control.Feedback type="invalid">
+                              {equatorCrossingDateError.endDate}
+                            </Form.Control.Feedback>
                           )
                         }
                       </Form.Group>

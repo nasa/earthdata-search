@@ -441,28 +441,24 @@ class ProjectPanels extends PureComponent {
           key={`${collectionId}_edit-options`}
           primaryHeading="Edit Options"
           headerMessage={(
-            <>
-              {
-                collectionIsCSDA && (
-                  <Col className="search-panels__note">
-                    {'This collection is made available through the '}
-                    <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
-                    {' for NASA funded researchers. Access to the data will require additional authentication. '}
-                    <Button
-                      className="search-panels__header-message-link"
-                      dataTestId="search-panels__csda-modal-button"
-                      onClick={() => onToggleAboutCSDAModal(true)}
-                      variant="link"
-                      bootstrapVariant="link"
-                      icon={FaQuestionCircle}
-                      label="More details"
-                    >
-                      More Details
-                    </Button>
-                  </Col>
-                )
-              }
-            </>
+            collectionIsCSDA && (
+              <Col className="search-panels__note">
+                {'This collection is made available through the '}
+                <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                <Button
+                  className="search-panels__header-message-link"
+                  dataTestId="search-panels__csda-modal-button"
+                  onClick={() => onToggleAboutCSDAModal(true)}
+                  variant="link"
+                  bootstrapVariant="link"
+                  icon={FaQuestionCircle}
+                  label="More details"
+                >
+                  More Details
+                </Button>
+              </Col>
+            )
           )}
           breadcrumbs={[
             {
@@ -535,28 +531,24 @@ class ProjectPanels extends PureComponent {
           primaryHeading={title}
           headerMetaPrimaryText={projectGranulesHeaderMetaPrimaryText}
           headerMessage={(
-            <>
-              {
-                collectionIsCSDA && (
-                  <Col className="search-panels__note">
-                    {'This collection is made available through the '}
-                    <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
-                    {' for NASA funded researchers. Access to the data will require additional authentication. '}
-                    <Button
-                      className="search-panels__header-message-link"
-                      dataTestId="search-panels__csda-modal-button"
-                      onClick={() => onToggleAboutCSDAModal(true)}
-                      variant="link"
-                      bootstrapVariant="link"
-                      icon={FaQuestionCircle}
-                      label="More details"
-                    >
-                      More Details
-                    </Button>
-                  </Col>
-                )
-              }
-            </>
+            collectionIsCSDA && (
+              <Col className="search-panels__note">
+                {'This collection is made available through the '}
+                <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                <Button
+                  className="search-panels__header-message-link"
+                  dataTestId="search-panels__csda-modal-button"
+                  onClick={() => onToggleAboutCSDAModal(true)}
+                  variant="link"
+                  bootstrapVariant="link"
+                  icon={FaQuestionCircle}
+                  label="More details"
+                >
+                  More Details
+                </Button>
+              </Col>
+            )
           )}
         >
           <PanelItem scrollable={false}>
@@ -626,7 +618,10 @@ ProjectPanels.propTypes = {
   }).isRequired,
   portal: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({
-    collections: PropTypes.shape({})
+    collections: PropTypes.shape({
+      allIds: PropTypes.arrayOf(PropTypes.string),
+      byId: PropTypes.shape({})
+    })
   }).isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,

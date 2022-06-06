@@ -70,8 +70,7 @@ describe('getSearchGranules', () => {
             mockGranuleData: 'goes here'
           }]
         }
-      },
-      {
+      }, {
         'cmr-hits': 1
       })
 
@@ -169,8 +168,7 @@ describe('getSearchGranules', () => {
             mockGranuleData: 'goes here'
           }]
         }
-      },
-      {
+      }, {
         'cmr-hits': 1,
         'jwt-token': 'token'
       })
@@ -536,8 +534,7 @@ describe('getProjectGranules', () => {
             mockGranuleData: 'goes here'
           }]
         }
-      },
-      {
+      }, {
         'cmr-hits': 1
       })
 
@@ -640,8 +637,7 @@ describe('getProjectGranules', () => {
             mockGranuleData: 'goes here'
           }]
         }
-      },
-      {
+      }, {
         'cmr-hits': 1,
         'jwt-token': 'token'
       })
@@ -911,8 +907,7 @@ describe('getProjectGranules', () => {
             mockGranuleData: 'goes here'
           }]
         }
-      },
-      {
+      }, {
         'cmr-hits': 1,
         'jwt-token': 'token'
       })

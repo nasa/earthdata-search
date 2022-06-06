@@ -126,7 +126,10 @@ ProjectCollectionsList.propTypes = {
     activePanel: PropTypes.string
   }).isRequired,
   project: PropTypes.shape({
-    collections: PropTypes.shape({})
+    collections: PropTypes.shape({
+      allIds: PropTypes.arrayOf(PropTypes.string),
+      byId: PropTypes.shape({})
+    })
   }).isRequired
 }
 
