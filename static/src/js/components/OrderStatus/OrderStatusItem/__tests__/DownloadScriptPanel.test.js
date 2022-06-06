@@ -7,7 +7,7 @@ import * as generateDownloadScript from '../../../../util/files/generateDownload
 import { DownloadScriptPanel } from '../DownloadScriptPanel'
 import { TextWindowActions } from '../../../TextWindowActions/TextWindowActions'
 
-jest.useFakeTimers('legacy')
+jest.useFakeTimers({ legacyFakeTimers: true })
 
 beforeEach(() => {
   jest.clearAllMocks()
