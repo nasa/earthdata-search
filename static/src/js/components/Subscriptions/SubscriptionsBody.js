@@ -6,6 +6,7 @@ import { FaBell } from 'react-icons/fa'
 import { Form } from 'react-bootstrap'
 import snakecaseKeys from 'snakecase-keys'
 
+import { collectionRequestNonIndexedCmrKeys, granuleRequestNonIndexedCmrKeys } from '../../../../../sharedConstants/nonIndexedCmrKeys'
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
 import { humanizedQueryKeysMap } from '../../util/humanizedQueryKeysMap'
 import { humanizedQueryValueFormattingMap } from '../../util/humanizedQueryValueFormattingMap'
@@ -47,22 +48,25 @@ export const SubscriptionsBody = ({
 
   // Compare the subscriptions returned for the user to the current query to prevent submission
   // of duplicate subscriptions
-  const exactlyMatchingGranuleQueries = subscriptions.filter((subscription) => {
+  const exactlyMatchingSubscriptionQueries = subscriptions.filter((subscription) => {
+    let nonIndexedKeys
     const { query: subscriptionQuery } = subscription
     // The query returned for each subscription is returned as a string. To make a reliable comparison,
     // it is parsed into an object. Unneeded keys are trimmed from the current query with prepKeysForCmr,
     // which returns a string and is then parsed and snakecased to match the values returned by the CMR.
+
+    if (subscriptionType === 'collection') nonIndexedKeys = collectionRequestNonIndexedCmrKeys
+    if (subscriptionType === 'granule') nonIndexedKeys = granuleRequestNonIndexedCmrKeys
+
     return isEqual(
-      snakecaseKeys(
-        parse(
-          prepKeysForCmr(query)
-        )
+      parse(
+        prepKeysForCmr(snakecaseKeys(query), nonIndexedKeys)
       ),
       parse(subscriptionQuery)
     )
   })
 
-  const hasExactlyMatchingGranuleQuery = exactlyMatchingGranuleQueries.length > 0
+  const hasExactlyMatchingGranuleQuery = exactlyMatchingSubscriptionQueries.length > 0
 
   const humanReadableQueryList = queryToHumanizedList(query, subscriptionType)
 
@@ -224,11 +228,11 @@ export const SubscriptionsBody = ({
                     }
                   </ul>
                   {
-                    exactlyMatchingGranuleQueries.length > 0 && (
+                    exactlyMatchingSubscriptionQueries.length > 0 && (
                       <p className="subscriptions-body__query-exists-warning">
                         <EDSCIcon className="subscriptions-body__query-exists-warning-icon" icon={FaBell} />
                         {
-                          exactlyMatchingGranuleQueries.map((exactlyMatchingQuery) => {
+                          exactlyMatchingSubscriptionQueries.map((exactlyMatchingQuery) => {
                             const { conceptId, name } = exactlyMatchingQuery
                             return (
                               <div key={conceptId}>
@@ -248,7 +252,7 @@ export const SubscriptionsBody = ({
                   }
                   <Button
                     className="subscriptions-body__create-button"
-                    disabled={exactlyMatchingGranuleQueries.length > 0}
+                    disabled={exactlyMatchingSubscriptionQueries.length > 0}
                     bootstrapVariant="primary"
                     label="Subscribe"
                     spinner={submittingNewSubscription}

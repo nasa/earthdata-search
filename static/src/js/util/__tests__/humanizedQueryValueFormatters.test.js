@@ -2,6 +2,7 @@ import {
   formatBoolean,
   formatCircle,
   formatFacetHierarchy,
+  formatPoint,
   formatPoints,
   formatTemporal
 } from '../humanizedQueryValueFormatters'
@@ -29,12 +30,23 @@ describe(('formatBoolean'), () => {
   })
 })
 
+describe(('formatPoint'), () => {
+  describe('when formatting an array of points', () => {
+    test('returns the points in the desired format', () => {
+      const result = formatPoint('2,1,4,3,6,5')
+      expect(result).toEqual([
+        ['1', '2'], ['3', '4'], ['5', '6']
+      ])
+    })
+  })
+})
+
 describe(('formatPoints'), () => {
   describe('when formatting an array of points', () => {
     test('returns the points in the desired format', () => {
       const result = formatPoints([
-        '1,2,3,4,5,6',
-        '5,6,7,8,9,10'
+        '2,1,4,3,6,5',
+        '6,5,8,7,10,9'
       ])
       expect(result).toEqual([
         [['1', '2'], ['3', '4'], ['5', '6']],
@@ -48,8 +60,8 @@ describe(('formatCircle'), () => {
   describe('when formatting an array of circles', () => {
     test('returns the circles in the desired format', () => {
       const result = formatCircle([
-        '1,2,3',
-        '4,5,6'
+        '2,1,3',
+        '5,4,6'
       ])
       expect(result).toEqual([
         ['1', '2', '3'],
@@ -125,7 +137,6 @@ describe(('formatFacetHierarchy'), () => {
   describe('when formatting a non-hierarchical facet', () => {
     test('returns the facet in the desired format', () => {
       const result = formatFacetHierarchy(['item one', 'item two'])
-      // Double check why these come back as arrays
       expect(result).toEqual([['item one'], ['item two']])
     })
   })
@@ -142,7 +153,6 @@ describe(('formatFacetHierarchy'), () => {
           'topic',
           'variable_level_one'
         ])
-        // Double check why these come back as arrays
         expect(result).toEqual([['term', 'topic', 'variable_level_one']])
       })
     })
@@ -164,8 +174,6 @@ describe(('formatFacetHierarchy'), () => {
           'variable_level_one'
         ])
 
-        console.log('result', result)
-        // Double check why these come back as arrays
         expect(result).toEqual([
           ['term one', 'topic one', 'variable_level_one one'],
           ['term two', 'topic two', 'variable_level_one two']
@@ -189,8 +197,6 @@ describe(('formatFacetHierarchy'), () => {
           'variable_level_one'
         ])
 
-        console.log('result', result)
-        // Double check why these come back as arrays
         expect(result).toEqual([
           ['term', 'topic'],
           ['term', 'topic', 'variable_level_one']

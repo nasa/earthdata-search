@@ -45,3 +45,28 @@ export const collectionRequestPermittedCmrKeys = [
   'temporal',
   'two_d_coordinate_system_name'
 ]
+
+export const granuleRequestPermittedCmrKeys = [
+  'bounding_box',
+  'browse_only',
+  'circle',
+  'cloud_cover',
+  'concept_id',
+  'day_night_flag',
+  'echo_collection_id',
+  'equator_crossing_date',
+  'equator_crossing_longitude',
+  'exclude',
+  'line',
+  'online_only',
+  'options',
+  'orbit_number',
+  'page_num',
+  'page_size',
+  'point',
+  'polygon',
+  'readable_granule_name',
+  'sort_key',
+  'temporal',
+  'two_d_coordinate_system'
+]

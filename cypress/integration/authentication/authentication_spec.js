@@ -1,10 +1,12 @@
 import { getByTestId } from '../../support/getByTestId'
 import { getJwtToken } from '../../support/getJwtToken'
+import graphQlHeaders from './__mocks__/graphql.headers.json'
+import getSubscriptionsGraphQlBody from './__mocks__/getSubscriptions.graphql.body.json'
 
-import collectionFixture from './authenticated_collections.json'
+import collectionFixture from './__mocks__/authenticated_collections.json'
 
-// At the default size, react-window will render 7 items
-const expectedCollectionCount = 7
+// At the default size, react-window will render 6 items
+const expectedCollectionCount = 6
 
 describe('Authentication', () => {
   it('logs the user in with the auth_callback endpoint and redirects the user', () => {
@@ -16,6 +18,18 @@ describe('Authentication', () => {
         headers: collectionFixture.headers
       }
     )
+
+    cy.intercept({
+      method: 'POST',
+      url: '**/graphql'
+    },
+    (req) => {
+      expect(JSON.parse(req.body).data.query).to.eql('\n    query GetSubscriptions ($params: SubscriptionsInput) {\n      subscriptions (params: $params) {\n          items {\n            collection {\n              conceptId\n              title\n            }\n            collectionConceptId\n            conceptId\n            name\n            nativeId\n            query\n          }\n        }\n      }')
+      req.reply({
+        body: getSubscriptionsGraphQlBody,
+        headers: graphQlHeaders
+      })
+    })
 
     cy.visit(`/auth_callback?jwt=${getJwtToken('prod')}&redirect=http://localhost:8080/`)
 
@@ -34,6 +48,18 @@ describe('Authentication', () => {
         headers: collectionFixture.headers
       }
     )
+
+    cy.intercept({
+      method: 'POST',
+      url: '**/graphql'
+    },
+    (req) => {
+      expect(JSON.parse(req.body).data.query).to.eql('\n    query GetSubscriptions ($params: SubscriptionsInput) {\n      subscriptions (params: $params) {\n          items {\n            collection {\n              conceptId\n              title\n            }\n            collectionConceptId\n            conceptId\n            name\n            nativeId\n            query\n          }\n        }\n      }')
+      req.reply({
+        body: getSubscriptionsGraphQlBody,
+        headers: graphQlHeaders
+      })
+    })
 
     cy.getCookies().should('be.empty')
     // See cypress/support/commands.js for cy.login command

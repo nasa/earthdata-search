@@ -81,7 +81,7 @@ describe('onSubscriptionsErrored', () => {
 })
 
 describe('createSubscription', () => {
-  test.skip('calls graphql to create a granule subscription', async () => {
+  test('calls graphql to create a granule subscription', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       cmrHost: 'https://cmr.example.com',
       graphQlHost: 'https://graphql.example.com'
@@ -103,7 +103,7 @@ describe('createSubscription', () => {
         } = params
 
         const expectedQuery = `${stringify({
-          browseOnly: true,
+          browse_only: true,
           options: {},
           temporal: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
         }, { encode: false })
@@ -266,7 +266,7 @@ describe('createSubscription', () => {
   })
 
   describe('when other subscriptions exist for the same collection', () => {
-    test.skip('calls graphql to create a subscription', async () => {
+    test('calls graphql to create a subscription', async () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
         cmrHost: 'https://cmr.example.com',
         graphQlHost: 'https://graphql.example.com'
@@ -288,7 +288,7 @@ describe('createSubscription', () => {
 
           const expectedQuery = `${
             stringify({
-              browseOnly: true,
+              browse_only: true,
               options: {},
               temporal: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
             }, { encode: false })
@@ -790,7 +790,7 @@ describe('deleteSubscription', () => {
 })
 
 describe('updateSubscription', () => {
-  test.skip('should call graphql and update the granule subscription', async () => {
+  test('should call graphql and update the granule subscription', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
       cmrHost: 'https://cmr.example.com',
       graphQlHost: 'https://graphql.example.com'
@@ -860,7 +860,7 @@ describe('updateSubscription', () => {
         payload: {
           collectionConceptId: 'collectionId',
           conceptId: 'SUB1000-EDSC',
-          query: 'browseOnly=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
+          query: 'browse_only=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
         }
       })
 

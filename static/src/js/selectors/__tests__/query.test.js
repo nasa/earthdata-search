@@ -59,7 +59,7 @@ describe('getGranuleSubscriptionQueryString selector', () => {
       }
     }
 
-    expect(getGranuleSubscriptionQueryString(state)).toEqual('browseOnly=true&point=0,0')
+    expect(getGranuleSubscriptionQueryString(state)).toEqual('browse_only=true&point=0,0')
   })
 })
 
@@ -91,6 +91,6 @@ describe('getCollectionSubscriptionQueryString selector', () => {
       }
     }
 
-    expect(getCollectionSubscriptionQueryString(state)).toEqual('cloudHosted=true&dataCenterH[0]=National Snow and Ice Data Center (NSIDC)&hasGranulesOrCwic=true&keyword=modis*&point=0,0')
+    expect(getCollectionSubscriptionQueryString(state)).toEqual('cloud_hosted=true&has_granules_or_cwic=true&keyword=modis*&data_center_h[]=National Snow and Ice Data Center (NSIDC)&point=0,0')
   })
 })

@@ -11,25 +11,36 @@ export const formatBoolean = (value) => {
 }
 
 /**
+ * Formats a set of point string
+ * @param {String} value - The points string from a query object
+ * @returns {Array} An array in the following format: [x, y]
+ */
+export const formatPoint = (coordinateString) => coordinateString
+  // Split the string into coordinate pairs
+  .match(/[^,]+,[^,]+/g)
+  .map(
+    // Reverse the points
+    (coordinates) => coordinates.split(',').reverse()
+  )
+
+/**
  * Formats a set of points from a query object
- * @param {Node} value - The points string from a query object
+ * @param {Array} value - The points string from a query object
  * @returns {Array} An array in the following format: [[x1, y1], [x2, y2], ...]
  */
-export const formatPoints = (value) => value.map((coordinateString) => {
-  const points = []
-  const coordinates = coordinateString.split(',')
-  coordinates.forEach((coordinate, i) => {
-    if (i % 2 === 0) points.push([coordinate, coordinates[i + 1]])
-  })
-  return points
-})
+export const formatPoints = (value) => value.map(
+  (coordinateString) => formatPoint(coordinateString)
+)
 
 /**
  * Formats a circle from a query object
  * @param {Node} value - The circle param from a query object
  * @returns {Array} An array in the following format: [x, y, radius]
  */
-export const formatCircle = (value) => value.map((circle) => circle.split(','))
+export const formatCircle = (value) => value.map((circle) => {
+  const [y, x, radius] = circle.split(',')
+  return [x, y, radius]
+})
 
 /**
  * Formats a temporal query string from a query object
@@ -57,7 +68,6 @@ export const formatFacetHierarchy = (value, order) => value.map(
     if (typeof variable === 'string') return [variable]
     const hierarchy = []
     order.forEach((level) => {
-      console.log('!variable[level]', !variable[level])
       if (!variable[level]) return
       hierarchy.push(variable[level])
     })

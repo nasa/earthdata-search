@@ -103,6 +103,7 @@ import timelineGraphQlBody from './__mocks__/timeline/graphql.body.json'
 import timelineGraphQlHeaders from './__mocks__/timeline/graphql.headers.json'
 import timelineTimelineBody from './__mocks__/timeline/timeline.body.json'
 import timelineTimelineHeaders from './__mocks__/timeline/timeline.headers.json'
+import graphQlHeaders from './__mocks__/common/graphql.headers.json'
 
 const { defaultCmrPageSize } = getApplicationConfig()
 
@@ -152,7 +153,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C1214470488-ASF')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
         req.reply({
           body: noParamsTimelineBody,
@@ -195,7 +196,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&options%5Breadable_granule_name%5D%5Bpattern%5D=true&page_num=1&page_size=20&readable_granule_name%5B%5D=S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1')
+        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1')
 
         req.reply({
           body: readableGranuleNameGranulesBody,
@@ -211,7 +212,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C1214470488-ASF')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
         req.reply({
           body: readableGranuleNameTimelineBody,
@@ -255,7 +256,7 @@ describe('Path /search/granules', () => {
           url: '**/search/granules.json'
         },
         (req) => {
-          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2020-01-01T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z')
+          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z')
 
           req.reply({
             body: temporalGranulesBody,
@@ -271,7 +272,7 @@ describe('Path /search/granules', () => {
           url: '**/search/granules/timeline'
         },
         (req) => {
-          expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C1214470488-ASF')
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
           req.reply({
             body: temporalTimelineBody,
@@ -292,7 +293,7 @@ describe('Path /search/granules', () => {
           })
         })
 
-        cy.visit('/search/granules?p=C1214470488-ASF&pg[0][qt]=2020-01-01T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z')
+        cy.visit('/search/granules?p=C1214470488-ASF&pg[0][qt]=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z')
 
         // Ensure the correct number of results were loaded
         testResultsSize(cmrHits)
@@ -318,7 +319,7 @@ describe('Path /search/granules', () => {
           url: '**/search/granules.json'
         },
         (req) => {
-          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2000-01-20T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z%2C1%2C31')
+          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2000-01-20T00:00:00.000Z,2020-01-31T23:59:59.999Z,1,31')
 
           req.reply({
             body: recurringTemporalGranulesBody,
@@ -334,7 +335,7 @@ describe('Path /search/granules', () => {
           url: '**/search/granules/timeline'
         },
         (req) => {
-          expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C1214470488-ASF')
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
           req.reply({
             body: temporalTimelineBody,
@@ -355,7 +356,7 @@ describe('Path /search/granules', () => {
           })
         })
 
-        cy.visit('/search/granules?p=C1214470488-ASF&pg[0][qt]=2000-01-20T00%3A00%3A00.000Z%2C2020-01-31T23%3A59%3A59.999Z%2C1%2C31')
+        cy.visit('/search/granules?p=C1214470488-ASF&pg[0][qt]=2000-01-20T00:00:00.000Z,2020-01-31T23:59:59.999Z,1,31')
 
         // Ensure the correct number of results were loaded
         testResultsSize(cmrHits)
@@ -400,7 +401,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C1214470488-ASF')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
         req.reply({
           body: browseOnlyTimelineBody,
@@ -460,7 +461,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C1214470488-ASF')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
         req.reply({
           body: onlineOnlyTimelineBody,
@@ -504,7 +505,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&orbit_number%5Bmin%5D=30000&orbit_number%5Bmax%5D=30005&page_num=1&page_size=20')
+        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&orbit_number[min]=30000&orbit_number[max]=30005&page_num=1&page_size=20')
 
         req.reply({
           body: orbitNumberGranulesBody,
@@ -520,7 +521,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C1214470488-ASF')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
         req.reply({
           body: orbitNumberTimelineBody,
@@ -564,7 +565,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1251101828-GES_DISC&equator_crossing_longitude%5Bmin%5D=-5&equator_crossing_longitude%5Bmax%5D=5&page_num=1&page_size=20')
+        expect(req.body).to.eq('echo_collection_id=C1251101828-GES_DISC&equator_crossing_longitude[min]=-5&equator_crossing_longitude[max]=5&page_num=1&page_size=20')
 
         req.reply({
           body: equatorialCrossingLongitudeGranulesBody,
@@ -580,7 +581,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C1251101828-GES_DISC')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1251101828-GES_DISC')
 
         req.reply({
           body: equatorialCrossingLongitudeTimelineBody,
@@ -624,7 +625,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1251101828-GES_DISC&equator_crossing_date=2021-01-01T00%3A00%3A00.000Z%2C2021-01-31T23%3A59%3A59.999Z&page_num=1&page_size=20')
+        expect(req.body).to.eq('echo_collection_id=C1251101828-GES_DISC&equator_crossing_date=2021-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z&page_num=1&page_size=20')
 
         req.reply({
           body: equatorialCrossingDateGranulesBody,
@@ -640,7 +641,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C1251101828-GES_DISC')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1251101828-GES_DISC')
 
         req.reply({
           body: equatorialCrossingDateTimelineBody,
@@ -661,7 +662,7 @@ describe('Path /search/granules', () => {
         })
       })
 
-      cy.visit('/search/granules?p=C1251101828-GES_DISC&pg[0][ecd]=2021-01-01T00%3A00%3A00.000Z%2C2021-01-31T23%3A59%3A59.999Z')
+      cy.visit('/search/granules?p=C1251101828-GES_DISC&pg[0][ecd]=2021-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z')
 
       // Ensure the correct number of results were loaded
       testResultsSize(cmrHits)
@@ -700,7 +701,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C1214470488-ASF')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
         req.reply({
           body: sortKeyTimelineBody,
@@ -744,7 +745,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('cloud_cover=10%2C15&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
+        expect(req.body).to.eq('cloud_cover=10,15&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
 
         req.reply({
           body: cloudCoverGranulesBody,
@@ -760,7 +761,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C194001210-LPDAAC_ECS')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
 
         req.reply({
           body: cloudCoverTimelineBody,
@@ -820,7 +821,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C194001210-LPDAAC_ECS')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
 
         req.reply({
           body: dayNightTimelineBody,
@@ -863,7 +864,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&two_d_coordinate_system%5Bname%5D=MODIS%20Tile%20SIN&two_d_coordinate_system%5Bcoordinates%5D=0-0%3A0-0%2C15-15%3A15-15')
+        expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&two_d_coordinate_system[name]=MODIS Tile SIN&two_d_coordinate_system[coordinates]=0-0:0-0,15-15:15-15')
 
         req.reply({
           body: gridCoordsGranulesBody,
@@ -879,7 +880,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C194001210-LPDAAC_ECS')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
 
         req.reply({
           body: gridCoordsTimelineBody,
@@ -900,7 +901,7 @@ describe('Path /search/granules', () => {
         })
       })
 
-      cy.visit('/search/granules?p=C194001210-LPDAAC_ECS&pg[0][ts]=MODIS%20Tile%20SIN&pg[0][gc]=0-0%3A0-0%2C15-15%3A15-15')
+      cy.visit('/search/granules?p=C194001210-LPDAAC_ECS&pg[0][ts]=MODIS Tile SIN&pg[0][gc]=0-0:0-0,15-15:15-15')
 
       // Ensure the correct number of results were loaded
       testResultsSize(cmrHits)
@@ -921,7 +922,7 @@ describe('Path /search/granules', () => {
         url: '**/search/collections.json'
       },
       (req) => {
-        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&temporal=2015-01-03T00%3A00%3A00.000Z%2C2015-01-03T23%3A59%3A59.999Z&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
         req.reply({
           body: timelineCollectionsBody,
@@ -934,7 +935,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules.json'
       },
       (req) => {
-        expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&temporal=2015-01-03T00%3A00%3A00.000Z%2C2015-01-03T23%3A59%3A59.999Z')
+        expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z')
 
         req.reply({
           body: timelineGranulesBody,
@@ -950,7 +951,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2015-02-02T00%3A00%3A00.000Z&interval=hour&start_date=2014-12-04T00%3A00%3A00.000Z&concept_id%5B%5D=C194001210-LPDAAC_ECS')
+        expect(req.body).to.eq('end_date=2015-02-02T00:00:00.000Z&interval=hour&start_date=2014-12-04T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
 
         req.reply({
           body: timelineTimelineBody,
@@ -971,7 +972,7 @@ describe('Path /search/granules', () => {
         })
       })
 
-      cy.visit('/search/granules?p=C194001210-LPDAAC_ECS&ot=2015-01-03T00%3A00%3A00.000Z%2C2015-01-03T23%3A59%3A59.999Z&tl=1420268129.401!2!1420243200!1420329599.999')
+      cy.visit('/search/granules?p=C194001210-LPDAAC_ECS&ot=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z&tl=1420268129.401!2!1420243200!1420329599.999')
 
       // Ensure the correct number of results were loaded
       testResultsSize(cmrHits)
@@ -1014,7 +1015,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C194001210-LPDAAC_ECS')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
 
         req.reply({
           body: focusedGranuleTimelineBody,
@@ -1080,7 +1081,7 @@ describe('Path /search/granules', () => {
             }
           })
         }
-        if (req.body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=1&concept_id%5B%5D=G2058417402-LPDAAC_ECS') {
+        if (req.body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=1&concept_id[]=G2058417402-LPDAAC_ECS') {
           req.alias = 'projectGranulesQuery'
           req.reply({
             body: projectGranuleProjectGranuleBody,
@@ -1097,7 +1098,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C194001210-LPDAAC_ECS')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
 
         req.reply({
           body: projectGranuleTimelineBody,
@@ -1170,7 +1171,7 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C194001210-LPDAAC_ECS')
+        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
 
         req.reply({
           body: projectCollectionTimelineBody,
@@ -1297,15 +1298,26 @@ describe('Path /search/granules', () => {
         url: '**/graphql'
       },
       (req) => {
-        expect(JSON.parse(req.body).data).to.eql(JSON.parse(graphQlGetCollection(conceptId)))
+        if (JSON.parse(req.body).data.query === '\n    query GetSubscriptions ($params: SubscriptionsInput) {\n      subscriptions (params: $params) {\n          items {\n            collection {\n              conceptId\n              title\n            }\n            collectionConceptId\n            conceptId\n            name\n            nativeId\n            query\n          }\n        }\n      }') {
+          req.alias = 'graphQlPageLoadSubscriptionsQuery'
+          req.reply({
+            body: subscriptionGraphQlBody,
+            headers: subscriptionGraphQlHeaders
+          })
+        }
 
-        req.reply({
-          body: subscriptionGraphQlBody,
-          headers: subscriptionGraphQlHeaders
-        })
+        if (JSON.parse(req.body).data.query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+          req.alias = 'graphQlCollectionQuery'
+          req.reply({
+            body: subscriptionGraphQlBody,
+            headers: graphQlHeaders
+          })
+        }
       })
 
-      cy.visit('/search/granules?p=C1214470488-ASF&pg[0][gsk]=-start_date&sp[0]=-77.04119%2C38.80585')
+      cy.visit('/search/granules?p=C1214470488-ASF&pg[0][gsk]=-start_date&sp[0]=-77.04119,38.80585')
+      cy.wait('@graphQlPageLoadSubscriptionsQuery')
+      cy.wait('@graphQlCollectionQuery')
 
       // Ensure the correct number of results were loaded
       testResultsSize(cmrHits)
