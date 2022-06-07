@@ -7,7 +7,7 @@ import {
 
 import actions from '../../actions/index'
 
-import { getCollectionSubscriptionQueryString, getGranuleSubscriptionQueryString } from '../../selectors/query'
+import { getCollectionSubscriptionQueryObj, getGranuleSubscriptionQueryObj } from '../../selectors/query'
 import { getFocusedCollectionSubscriptions } from '../../selectors/collectionMetadata'
 import { getCollectionSubscriptions } from '../../selectors/subscriptions'
 
@@ -31,18 +31,18 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const mapStateToProps = (state) => ({
-  collectionQueryString: getCollectionSubscriptionQueryString(state),
+  collectionQueryObj: getCollectionSubscriptionQueryObj(state),
   collectionSubscriptions: getCollectionSubscriptions(state),
-  granuleQueryString: getGranuleSubscriptionQueryString(state),
+  granuleQueryObj: getGranuleSubscriptionQueryObj(state),
   granuleSubscriptions: getFocusedCollectionSubscriptions(state)
 })
 
 // TODO: Needs tests for onCreateSubscription - EDSC-2923
 /**
  * Renders SubscriptionsBodyContainer.
- * @param {String} collectionQueryString - String representing the current collection query string.
+ * @param {String} collectionQueryObj - String representing the current collection query string.
  * @param {Array} collectionSubscriptions - An array of collection subscriptions.
- * @param {String} granuleQueryString - String representing the current granule query string.
+ * @param {String} granuleQueryObj - String representing the current granule query string.
  * @param {Array} granuleSubscriptions - An array of granule subscriptions.
  * @param {Function} onCreateSubscription - Callback to create a subscription.
  * @param {Function} onUpdateSubscription - Callback to update a subscription.
@@ -51,9 +51,9 @@ export const mapStateToProps = (state) => ({
  * @param {String} subscriptionType - The type of subscriptions to display, collection or granule.
  */
 export const SubscriptionsBodyContainer = ({
-  collectionQueryString,
+  collectionQueryObj,
   collectionSubscriptions,
-  granuleQueryString,
+  granuleQueryObj,
   granuleSubscriptions,
   onCreateSubscription,
   onDeleteSubscription,
@@ -62,14 +62,14 @@ export const SubscriptionsBodyContainer = ({
   subscriptionType
 }) => {
   let loadedSubscriptions
-  let queryString
+  let query
 
   if (subscriptionType === 'collection') {
     loadedSubscriptions = collectionSubscriptions
-    queryString = collectionQueryString
+    query = collectionQueryObj
   } else {
     loadedSubscriptions = granuleSubscriptions
-    queryString = granuleQueryString
+    query = granuleQueryObj
   }
 
   useEffect(() => {
@@ -80,7 +80,7 @@ export const SubscriptionsBodyContainer = ({
 
   return (
     <SubscriptionsBody
-      queryString={queryString}
+      query={query}
       subscriptions={loadedSubscriptions}
       subscriptionType={subscriptionType}
       onCreateSubscription={onCreateSubscription}
@@ -91,9 +91,9 @@ export const SubscriptionsBodyContainer = ({
 }
 
 SubscriptionsBodyContainer.propTypes = {
-  collectionQueryString: PropTypes.string.isRequired,
+  collectionQueryObj: PropTypes.shape({}).isRequired,
   collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  granuleQueryString: PropTypes.string.isRequired,
+  granuleQueryObj: PropTypes.shape({}).isRequired,
   granuleSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   subscriptionType: PropTypes.string.isRequired,
   onCreateSubscription: PropTypes.func.isRequired,

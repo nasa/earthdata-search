@@ -11,9 +11,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    collectionQueryString: 'collection-mock-string',
+    collectionQueryObj: {},
     collectionSubscriptions: [],
-    granuleQueryString: 'granule-mock-string',
+    granuleQueryObj: {},
     granuleSubscriptions: [],
     subscriptionType: 'granule',
     onCreateSubscription: jest.fn(),
@@ -79,9 +79,12 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      collectionQueryString: '',
+      collectionQueryObj: {
+        serviceType: [],
+        tagKey: []
+      },
       collectionSubscriptions: [],
-      granuleQueryString: '',
+      granuleQueryObj: {},
       granuleSubscriptions: []
     }
 

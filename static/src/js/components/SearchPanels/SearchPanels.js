@@ -352,59 +352,62 @@ class SearchPanels extends PureComponent {
       }
     ]
 
-    const subscriptionFooter = () => {
-      if (!isLoggedIn) return null
-
+    const buildCollectionResultsBodyFooter = () => {
       const subscriptionButtonClassnames = classNames([
-        'search-panels-actions__action',
-        'search-panels-actions__action--subscriptions',
+        'search-panels__action',
+        'search-panels__action--subscriptions',
         {
-          'search-panels-actions__action--is-active': collectionSubscriptions.length > 0
+          'search-panels__action--is-active': collectionSubscriptions.length > 0
         }
       ])
 
       return (
-        <PortalFeatureContainer authentication>
-          <AuthRequiredContainer noRedirect>
-            <PortalLinkContainer
-              type="button"
-              icon={FaBell}
-              className={subscriptionButtonClassnames}
-              dataTestId="search-panels-actions__subscriptions-button"
-              label={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
-              title={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
-              badge={collectionSubscriptions.length ? `${collectionSubscriptions.length}` : false}
-              naked
-              to={{
-                pathname: '/search/subscriptions',
-                search: location.search
-              }}
-            >
-              Subscriptions
-            </PortalLinkContainer>
-          </AuthRequiredContainer>
-        </PortalFeatureContainer>
-      )
-    }
-
-    const buildCollectionResultsBodyFooter = () => {
-      if (isDefaultPortal(portalId)) return subscriptionFooter()
-
-      return (
-        <div className="search-panels__portal-escape">
-          Looking for more collections?
-          {' '}
-          <a href="/" className="search-panels__portal-escape-link">
-            Leave
-            {' '}
-            {startCase(org)}
-            &#39;s
-            {' '}
-            {startCase(title)}
-            {' '}
-            Portal
-          </a>
-        </div>
+        <>
+          {
+            isLoggedIn && (
+              <div className="search-panels__actions">
+                <PortalFeatureContainer authentication>
+                  <AuthRequiredContainer noRedirect>
+                    <PortalLinkContainer
+                      type="button"
+                      icon={FaBell}
+                      className={subscriptionButtonClassnames}
+                      dataTestId="search-panels-actions__subscriptions-button"
+                      label={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
+                      title={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
+                      badge={collectionSubscriptions.length ? `${collectionSubscriptions.length}` : false}
+                      naked
+                      to={{
+                        pathname: '/search/subscriptions',
+                        search: location.search
+                      }}
+                    >
+                      Subscriptions
+                    </PortalLinkContainer>
+                  </AuthRequiredContainer>
+                </PortalFeatureContainer>
+              </div>
+            )
+          }
+          {
+            !isDefaultPortal(portalId) && (
+              <div className="search-panels__portal-escape">
+                Looking for more collections?
+                {' '}
+                <a href="/" className="search-panels__portal-escape-link">
+                  Leave
+                  {' '}
+                  {startCase(org)}
+                  &#39;s
+                  {' '}
+                  {startCase(title)}
+                  {' '}
+                  Portal
+                </a>
+              </div>
+            )
+          }
+        </>
       )
     }
 

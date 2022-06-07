@@ -85,7 +85,6 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
   const username = getUsername(state)
 
   let subscriptionQuery
-  // let subscriptionName
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
@@ -107,21 +106,14 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
   // If collection type get collection params, spatial, temporal, keyword, facets, feature facets, and checkboxes
   if (subscriptionType === 'collection') {
     subscriptionQuery = getCollectionSubscriptionQueryString(state)
-    // subscriptionName = `Collection Subscription - ${new Date().toISOString()}`
   } else {
     // If granule type, pull out the granule specific params
     subscriptionQuery = getGranuleSubscriptionQueryString(state)
 
     // Retrieve data from Redux using selectors
     const collectionId = getFocusedCollectionId(state)
-
-    // Format the subscription name
-    // subscriptionName = `${collectionId} Subscription - ${new Date().toISOString()}`
-
     params.collectionConceptId = collectionId
   }
-
-  // params.name = subscriptionName
   params.query = subscriptionQuery
 
   try {

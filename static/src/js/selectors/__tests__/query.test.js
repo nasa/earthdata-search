@@ -91,6 +91,6 @@ describe('getCollectionSubscriptionQueryString selector', () => {
       }
     }
 
-    expect(getCollectionSubscriptionQueryString(state)).toEqual('cloudHosted=true&dataCenterH[]=National Snow and Ice Data Center (NSIDC)&hasGranulesOrCwic=true&keyword=modis*&point=0,0')
+    expect(getCollectionSubscriptionQueryString(state)).toEqual('cloudHosted=true&dataCenterH[0]=National Snow and Ice Data Center (NSIDC)&hasGranulesOrCwic=true&keyword=modis*&point=0,0')
   })
 })

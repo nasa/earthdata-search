@@ -1,8 +1,11 @@
+import snakecaseKeys from 'snakecase-keys'
 import { createSelector } from 'reselect'
 
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { buildGranuleSearchParams, extractGranuleSearchParams, prepareGranuleParams } from '../util/granules'
 import { prepareSubscriptionQuery } from '../util/subscriptions'
+import { prepKeysForCmr } from '../../../../sharedUtils/prepKeysForCmr'
+import { collectionRequestNonIndexedCmrKeys } from '../../../../sharedConstants/nonIndexedCmrKeys'
 
 import { getFocusedCollectionId } from './focusedCollection'
 import { getFocusedCollectionMetadata } from './collectionMetadata'
@@ -33,10 +36,10 @@ export const getFocusedCollectionGranuleQuery = createSelector(
 )
 
 /**
- * Retrieve the granule subscription query string
+ * Retrieve the granule subscription query object
  * @param {Object} state Current state of Redux
  */
-export const getGranuleSubscriptionQueryString = createSelector(
+export const getGranuleSubscriptionQueryObj = createSelector(
   [(state) => state, getFocusedCollectionMetadata],
   (state, collectionMetadata) => {
     const { id: collectionId } = collectionMetadata
@@ -57,13 +60,33 @@ export const getGranuleSubscriptionQueryString = createSelector(
 )
 
 /**
- * Retrieve the collection subscription query string
+ * Retrieve the granule subscription query string
  * @param {Object} state Current state of Redux
  */
-export const getCollectionSubscriptionQueryString = (state) => {
+export const getGranuleSubscriptionQueryString = (state) => prepKeysForCmr(
+  snakecaseKeys(getGranuleSubscriptionQueryObj(state)),
+  collectionRequestNonIndexedCmrKeys
+)
+
+/**
+ * Retrieve the collection subscription query object
+ * @param {Object} state Current state of Redux
+ */
+export const getCollectionSubscriptionQueryObj = (state) => {
   const collectionParams = prepareCollectionParams(state)
   const searchParams = buildCollectionSearchParams(collectionParams)
   const subscriptionQuery = prepareSubscriptionQuery(searchParams)
 
   return subscriptionQuery
 }
+
+/**
+ * Retrieve the collection subscription query string
+ * @param {Object} state Current state of Redux
+ */
+export const getCollectionSubscriptionQueryString = (state) => prepKeysForCmr(
+  // Double check on this. Why are non-snake cased keys causing errors?
+  snakecaseKeys(getCollectionSubscriptionQueryObj(state)),
+  // getCollectionSubscriptionQueryObj(state),
+  collectionRequestNonIndexedCmrKeys
+)

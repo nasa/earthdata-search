@@ -15,7 +15,7 @@ import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Spinner from '../Spinner/Spinner'
 
-import { humanizedGranuleQueryMap } from '../../util/humanizedGranuleQueryMap'
+import { humanizedQueryValueFormattingMap } from '../../util/humanizedQueryValueFormattingMap'
 
 import './SubscriptionsList.scss'
 
@@ -111,7 +111,7 @@ export const SubscriptionsList = ({
                                   <ul className="subscriptions-list-table__tooltip-query-list">
                                     {
                                       Object.keys(parsedQuery).map((key) => {
-                                        const humanizedKey = humanizedGranuleQueryMap[key]
+                                        const humanizedKey = humanizedQueryValueFormattingMap[key]
 
                                         return (
                                           <li key={key} className="subscriptions-list-table__tooltip-query-list-item">
