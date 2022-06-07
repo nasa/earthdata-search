@@ -300,7 +300,7 @@ describe('SubscriptionsBody component', () => {
         const { enzymeWrapper } = setup({
           subscriptionType: 'collection',
           query: {
-            boundingBox: ['1,2,3,4']
+            boundingBox: ['2,1,4,3']
           }
         })
 
@@ -316,7 +316,7 @@ describe('SubscriptionsBody component', () => {
         const { enzymeWrapper } = setup({
           subscriptionType: 'collection',
           query: {
-            circle: ['1,2,3']
+            circle: ['2,1,3']
           }
         })
 

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import snakecaseKeys from 'snakecase-keys'
 
 import Button from '../Button/Button'
 
@@ -61,7 +62,7 @@ export const SubscriptionsListItem = ({
                 <ul className="subscriptions-list-item__tooltip-query-list">
                   {
                     Object.keys(parsedQuery).map((key) => {
-                      const humanizedKey = humanizedQueryKeysMap[key]
+                      const humanizedKey = snakecaseKeys(humanizedQueryKeysMap)[key]
 
                       return (
                         <li key={key} className="subscriptions-list-item__tooltip-query-list-item">
@@ -86,7 +87,7 @@ export const SubscriptionsListItem = ({
             <span className="subscriptions-list-item__query-text">
               {
                 Object.keys(parsedQuery).map((key, i) => {
-                  const humanizedKey = humanizedQueryKeysMap[key]
+                  const humanizedKey = snakecaseKeys(humanizedQueryKeysMap)[key]
 
                   return (
                     <span key={key}>
