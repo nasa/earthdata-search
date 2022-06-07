@@ -21,7 +21,7 @@ describe('util#buildParams', () => {
       path: '/search/path',
       permittedCmrKeys
     }
-    expect(buildParams(params)).toEqual('param1=123&param2=abc&param3%5B%5D=987')
+    expect(buildParams(params)).toEqual('param1=123&param2=abc&param3[]=987')
   })
 
   test('correctly builds a search URL as an object', () => {

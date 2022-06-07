@@ -1,4 +1,3 @@
-import { stringify } from 'qs'
 import { prepareSubscriptionQuery } from '../subscriptions'
 
 describe('prepareSubscriptionQuery', () => {
@@ -29,12 +28,12 @@ describe('prepareSubscriptionQuery', () => {
       tilingSystem: undefined
     }
 
-    const result = stringify({
+    const result = {
       browseOnly: true,
       options: { spatial: { or: true } },
       polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78',
       temporalString: '2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z'
-    }, { encode: false })
+    }
 
     expect(prepareSubscriptionQuery(inputParams)).toEqual(result)
   })

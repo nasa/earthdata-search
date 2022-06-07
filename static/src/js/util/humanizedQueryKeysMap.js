@@ -1,4 +1,4 @@
-export const humanizedGranuleQueryMap = {
+export const humanizedQueryKeysMap = {
   boundingBox: 'Bounding Box',
   browseOnly: 'Browse Only',
   circle: 'Circle',
@@ -33,8 +33,8 @@ export const humanizedGranuleQueryMap = {
   serviceType: 'Service Types',
   sortKey: 'Sort Key',
   tagKey: 'Tag Keys',
-  temporal: 'Temporal String',
-  temporalString: 'Temporal String',
+  temporal: 'Temporal',
+  temporalString: 'Temporal',
   tilingSystem: 'Tiling System',
   twoDCoordinateSystemName: 'Tiling System'
 }

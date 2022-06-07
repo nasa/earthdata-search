@@ -1,4 +1,3 @@
-import { stringify } from 'qs'
 import { pruneFilters } from './pruneFilters'
 
 /**
@@ -21,6 +20,6 @@ export const prepareSubscriptionQuery = (params) => {
   delete prunedParams.pageSize
   delete prunedParams.sortKey
 
-  // Return the remaining parameters stringified, don't encode the values because CMR won't accept them
-  return stringify(prunedParams, { encode: false, indices: false, arrayFormat: 'brackets' })
+  // Return the remaining parameters, don't encode the values because CMR won't accept them
+  return prunedParams
 }

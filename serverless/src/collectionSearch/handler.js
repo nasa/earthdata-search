@@ -6,6 +6,8 @@ import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
+import { collectionRequestPermittedCmrKeys } from '../../../sharedConstants/permittedCmrKeys'
+import { collectionRequestNonIndexedCmrKeys } from '../../../sharedConstants/nonIndexedCmrKeys'
 
 /**
  * Perform an authenticated CMR Collection search
@@ -23,88 +25,16 @@ const collectionSearch = async (event) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  // Whitelist parameters supplied by the request
-  const permittedCmrKeys = [
-    'bounding_box',
-    'circle',
-    'cloud_hosted',
-    'collection_data_type',
-    'concept_id',
-    'consortium',
-    'data_center_h',
-    'data_center',
-    'echo_collection_id',
-    'facets_size',
-    'granule_data_format_h',
-    'granule_data_format',
-    'has_granules_or_cwic',
-    'has_granules',
-    'horizontal_data_resolution_range',
-    'include_facets',
-    'include_granule_counts',
-    'include_has_granules',
-    'include_tags',
-    'instrument_h',
-    'instrument',
-    'keyword',
-    'latency',
-    'line',
-    'options',
-    'page_num',
-    'page_size',
-    'platform',
-    'platforms_h',
-    'point',
-    'polygon',
-    'processing_level_id_h',
-    'project_h',
-    'project',
-    'provider',
-    'science_keywords_h',
-    'service_type',
-    'sort_key',
-    'spatial_keyword',
-    'standard_product',
-    'tag_key',
-    'temporal',
-    'two_d_coordinate_system_name'
-  ]
-
-  const nonIndexedKeys = [
-    'bounding_box',
-    'circle',
-    'collection_data_type',
-    'concept_id',
-    'consortium',
-    'data_center_h',
-    'granule_data_format_h',
-    'granule_data_format',
-    'horizontal_data_resolution_range',
-    'instrument_h',
-    'instrument',
-    'latency',
-    'line',
-    'platform',
-    'point',
-    'polygon',
-    'processing_level_id_h',
-    'project_h',
-    'provider',
-    'service_type',
-    'sort_key',
-    'spatial_keyword',
-    'tag_key',
-    'two_d_coordinate_system_name'
-  ]
-
   try {
     return doSearchRequest({
       jwtToken: getJwtToken(event),
       path: '/search/collections.json',
       params: buildParams({
         body,
-        nonIndexedKeys,
-        permittedCmrKeys
+        // Certain CMR keys will cause errors if indexes are provided
+        nonIndexedKeys: collectionRequestNonIndexedCmrKeys,
+        // Whitelist keys allowed in the collecitons request
+        permittedCmrKeys: collectionRequestPermittedCmrKeys
       }),
       providedHeaders,
       requestId,

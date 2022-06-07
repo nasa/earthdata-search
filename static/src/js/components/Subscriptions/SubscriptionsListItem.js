@@ -5,7 +5,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import Button from '../Button/Button'
 
-import { humanizedGranuleQueryMap } from '../../util/humanizedGranuleQueryMap'
+import { humanizedQueryKeysMap } from '../../util/humanizedQueryKeysMap'
 
 import './SubscriptionsListItem.scss'
 
@@ -61,7 +61,7 @@ export const SubscriptionsListItem = ({
                 <ul className="subscriptions-list-item__tooltip-query-list">
                   {
                     Object.keys(parsedQuery).map((key) => {
-                      const humanizedKey = humanizedGranuleQueryMap[key]
+                      const humanizedKey = humanizedQueryKeysMap[key]
 
                       return (
                         <li key={key} className="subscriptions-list-item__tooltip-query-list-item">
@@ -86,7 +86,7 @@ export const SubscriptionsListItem = ({
             <span className="subscriptions-list-item__query-text">
               {
                 Object.keys(parsedQuery).map((key, i) => {
-                  const humanizedKey = humanizedGranuleQueryMap[key]
+                  const humanizedKey = humanizedQueryKeysMap[key]
 
                   return (
                     <span key={key}>
