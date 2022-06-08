@@ -100,6 +100,24 @@ export const Search = ({
     })
   }
 
+  const granuleFiltersSidebar = (
+    <SidebarSection
+      sectionTitle="Filter Granules"
+      titleIcon={FaFilter}
+      headerAction={{
+        title: 'Clear Filters',
+        onClick: () => {
+          setGranuleFiltersNeedReset(true)
+        }
+      }}
+    >
+      <GranuleFiltersContainer
+        granuleFiltersNeedsReset={granuleFiltersNeedsReset}
+        setGranuleFiltersNeedReset={setGranuleFiltersNeedReset}
+      />
+    </SidebarSection>
+  )
+
   return (
     <div className="route-wrapper route-wrapper--search search">
       <SidebarContainer
@@ -118,21 +136,7 @@ export const Search = ({
             </SidebarSection>
           </Route>
           <Route exact path={`${path}/granules`}>
-            <SidebarSection
-              sectionTitle="Filter Granules"
-              titleIcon={FaFilter}
-              headerAction={{
-                title: 'Clear Filters',
-                onClick: () => {
-                  setGranuleFiltersNeedReset(true)
-                }
-              }}
-            >
-              <GranuleFiltersContainer
-                granuleFiltersNeedsReset={granuleFiltersNeedsReset}
-                setGranuleFiltersNeedReset={setGranuleFiltersNeedReset}
-              />
-            </SidebarSection>
+            {granuleFiltersSidebar}
           </Route>
           <Route exact path={`${path}/granules/granule-details`}>
             <SidebarSection
@@ -143,12 +147,7 @@ export const Search = ({
             </SidebarSection>
           </Route>
           <Route exact path={`${path}/granules/subscriptions`}>
-            <SidebarSection
-              sectionTitle="Collection Details"
-              titleIcon={FaInfoCircle}
-            >
-              <CollectionDetailsHighlightsContainer />
-            </SidebarSection>
+            {granuleFiltersSidebar}
           </Route>
           <Route path={path}>
             <SidebarSection

@@ -689,7 +689,7 @@ class SearchPanels extends PureComponent {
         ]}
         onPanelClose={this.onPanelClose}
       >
-        <PanelItem scrollable={false}>
+        <PanelItem>
           <AuthRequiredContainer noRedirect>
             <SubscriptionsBodyContainer subscriptionType="granule" />
           </AuthRequiredContainer>
@@ -713,7 +713,7 @@ class SearchPanels extends PureComponent {
         ]}
         onPanelClose={this.onPanelClose}
       >
-        <PanelItem scrollable={false}>
+        <PanelItem>
           <AuthRequiredContainer noRedirect>
             <SubscriptionsBodyContainer subscriptionType="collection" />
           </AuthRequiredContainer>

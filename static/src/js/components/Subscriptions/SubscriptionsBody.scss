@@ -19,7 +19,7 @@
     &--list {
       flex-shrink: 1;
       flex-grow: 1;
-      overflow-y: scroll;
+      overflow-x: hidden;
     }
   }
 
@@ -89,7 +89,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    overflow-y: scroll
+    overflow-x: hidden;
   }
 
   &__empty-list-item  {

@@ -91,8 +91,14 @@ export const SubscriptionsBody = ({
       'temporalString'
     ].includes(key)) {
       const [start, end] = value
+      const startValue = `Start: ${start}`
+      const endValue = `End: ${end}`
+      const tooltipText = `${startValue}\n${endValue}`
       return (
-        <div>
+        <div
+          className="subscriptions-body__query-list-item-value"
+          title={tooltipText}
+        >
           {start && <div>{`Start: ${start}`}</div>}
           {end && <div>{`End: ${end}`}</div>}
         </div>
@@ -105,18 +111,22 @@ export const SubscriptionsBody = ({
       'polygon'
     ].includes(key)) {
       return (
-        <div>
+        <div className="subscriptions-body__query-list-item-value">
           {
             value.map(
               // Display the coordinates like [[1, 1], [2, 2], ...]
-              (coordinates) => (
-                coordinates.map(
+              (coordinates) => {
+                const value = coordinates.map(
                   (coordinate) => (
                     `[${coordinate.join(', ')}]`
                   )
                 ).join(', ')
-              )
-            ).join(', ')
+
+                return (
+                  <div key={value} title={value}>{value}</div>
+                )
+              }
+            )
           }
         </div>
       )
@@ -128,11 +138,14 @@ export const SubscriptionsBody = ({
           {value.map(
             (boundingBox) => {
               const [sw, ne] = boundingBox
+              const swValue = `SW: ${sw.join(', ')}`
+              const neValue = `NE: ${ne.join(', ')}`
+              const tooltipText = `${swValue}\n${neValue}`
               return (
-                <React.Fragment key={boundingBox}>
-                  <div>{`SW: ${sw.join(', ')}`}</div>
-                  <div>{`NE: ${ne.join(', ')}`}</div>
-                </React.Fragment>
+                <div key={boundingBox} title={tooltipText}>
+                  <div>{swValue}</div>
+                  <div>{neValue}</div>
+                </div>
               )
             }
           )}
@@ -142,15 +155,18 @@ export const SubscriptionsBody = ({
     // Display circle
     if (key === 'circle') {
       return (
-        <div>
+        <div className="subscriptions-body__query-list-item-value">
           {value.map(
             (circle) => {
               const [x, y, radius] = circle
+              const centerValue = `Center: ${x}, ${y}`
+              const radValue = `Radius (m): ${radius}`
+              const tooltipValue = `${centerValue}\n${radValue}`
               return (
-                <React.Fragment key={circle}>
-                  <div>{`Center: ${x}, ${y}`}</div>
-                  <div>{`Radius (m): ${radius}`}</div>
-                </React.Fragment>
+                <div key={circle} title={tooltipValue}>
+                  <div>{centerValue}</div>
+                  <div>{radValue}</div>
+                </div>
               )
             }
           )}
@@ -160,12 +176,15 @@ export const SubscriptionsBody = ({
     // Display hierarchical facets
     if (hierarcicalKeys.includes(key)) {
       return (
-        <div>
-          {value.map((hierarchy) => (
-            <div key={hierarchy}>
-              {hierarchy.join(' > ')}
-            </div>
-          ))}
+        <div className="subscriptions-body__query-list-item-value">
+          {value.map((hierarchy) => {
+            const hierarchyValue = hierarchy.join(' > ')
+            return (
+              <div key={hierarchy} title={hierarchyValue}>
+                {hierarchy.join(' > ')}
+              </div>
+            )
+          })}
         </div>
       )
     }
@@ -228,7 +247,7 @@ export const SubscriptionsBody = ({
                     }
                   </ul>
                   {
-                    exactlyMatchingSubscriptionQueries.length > 0 && (
+                    hasExactlyMatchingGranuleQuery && (
                       <p className="subscriptions-body__query-exists-warning">
                         <EDSCIcon className="subscriptions-body__query-exists-warning-icon" icon={FaBell} />
                         {
@@ -252,7 +271,7 @@ export const SubscriptionsBody = ({
                   }
                   <Button
                     className="subscriptions-body__create-button"
-                    disabled={exactlyMatchingSubscriptionQueries.length > 0}
+                    disabled={hasExactlyMatchingGranuleQuery}
                     bootstrapVariant="primary"
                     label="Subscribe"
                     spinner={submittingNewSubscription}

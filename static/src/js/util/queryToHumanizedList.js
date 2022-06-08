@@ -17,19 +17,19 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
 
     // If only displaying EOSDIS collections, add a key of "EOSDIS collections"
     if (subscriptionsQuery.tagKey && subscriptionsQuery.tagKey.includes('gov.nasa.eosdis')) {
-      values.push(['Include EOSDIS datasets only'])
+      values.push(['Include only EOSDIS datasets'])
       subscriptionsQueryTemp.tagKey = subscriptionsQueryTemp.tagKey.filter((tagKey) => tagKey !== 'gov.nasa.eosdis')
     }
 
     // If only displaying collections with Map Imagery, add a key of "Map Imagery"
     if (subscriptionsQuery.tagKey && subscriptionsQuery.tagKey.includes('edsc.extra.serverless.gibs')) {
-      values.push(['Include datasets with map imagery only'])
+      values.push(['Include only datasets with map imagery'])
       subscriptionsQueryTemp.tagKey = subscriptionsQueryTemp.tagKey.filter((tagKey) => tagKey !== 'edsc.extra.serverless.gibs')
     }
 
     // If only displaying customizable collections with Map Imagery, add a key of "Customizable"
     if (subscriptionsQuery.serviceType && ['esi', 'opendap', 'harmony'].every((type) => subscriptionsQuery.serviceType.includes(type))) {
-      values.push(['Include datasets with map imagery only'])
+      values.push(['Include only datasets that support customization'])
       subscriptionsQueryTemp.serviceType = []
     }
   }
