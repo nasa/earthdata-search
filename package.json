@@ -227,6 +227,9 @@
     },
     "react-sanitized-html": {
       "sanitize-html": "$sanitize-html"
+    },
+    "enzyme": {
+      "cheerio": "1.0.0-rc.3"
     }
   }
 }
