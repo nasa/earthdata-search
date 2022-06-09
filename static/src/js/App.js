@@ -56,10 +56,6 @@ class App extends Component {
     this.store = configureStore()
   }
 
-  // componentDidMount() {
-  //   this.shapefileDropzoneRef = React.createRef()
-  // }
-
   portalPaths(path) {
     return [`/portal/:portalId${path}`, path]
   }

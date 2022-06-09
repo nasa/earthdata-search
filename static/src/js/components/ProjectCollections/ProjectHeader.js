@@ -28,7 +28,6 @@ import './ProjectHeader.scss'
 export class ProjectHeader extends Component {
   constructor(props) {
     super(props)
-    // this.component = this
 
     const { savedProject } = props
     const { name = '' } = savedProject

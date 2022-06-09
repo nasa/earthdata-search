@@ -19,7 +19,6 @@ export class Panels extends PureComponent {
     this.width = 600 // The default width the panel is displayed when open
     this.clickStartWidth = undefined
     this.clickStartX = undefined
-    // this.minimizedWidth = 20 // The width the panel is displayed when closed
     this.minimizeThreshold = 200 // The threshold which prevents a panel from being closed when dragged passed the min width
     this.unminimizeWidth = 200 // Distance the user needs to drag to drag open the closed panel
     this.handleClickIsValid = true // Flag to check if a click on the handle should be treated as a click
