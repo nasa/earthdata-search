@@ -21,10 +21,16 @@ beforeEach(() => {
 
 describe('humanizedQueryValueFormattingMap', () => {
   describe('when formatting boundingBox', () => {
-    test('calls the correct formatter with the correct arguments', () => {
+    test('calls the correct formatter with the correct arguments for a string', () => {
       humanizedQueryValueFormattingMap.boundingBox('1,2,3,4')
       expect(formatPointsMock).toHaveBeenCalledTimes(1)
-      expect(formatPointsMock).toHaveBeenCalledWith('1,2,3,4')
+      expect(formatPointsMock).toHaveBeenCalledWith(['1,2,3,4'])
+    })
+
+    test('calls the correct formatter with the correct arguments for an array', () => {
+      humanizedQueryValueFormattingMap.boundingBox(['1,2,3,4'])
+      expect(formatPointsMock).toHaveBeenCalledTimes(1)
+      expect(formatPointsMock).toHaveBeenCalledWith(['1,2,3,4'])
     })
   })
 
@@ -37,10 +43,16 @@ describe('humanizedQueryValueFormattingMap', () => {
   })
 
   describe('when formatting circle', () => {
-    test('calls the correct formatter with the correct arguments', () => {
+    test('calls the correct formatter with the correct arguments for a string', () => {
       humanizedQueryValueFormattingMap.circle('1,2,3')
       expect(formatCircleMock).toHaveBeenCalledTimes(1)
-      expect(formatCircleMock).toHaveBeenCalledWith('1,2,3')
+      expect(formatCircleMock).toHaveBeenCalledWith(['1,2,3'])
+    })
+
+    test('calls the correct formatter with the correct arguments for aan array', () => {
+      humanizedQueryValueFormattingMap.circle(['1,2,3'])
+      expect(formatCircleMock).toHaveBeenCalledTimes(1)
+      expect(formatCircleMock).toHaveBeenCalledWith(['1,2,3'])
     })
   })
 
@@ -93,10 +105,16 @@ describe('humanizedQueryValueFormattingMap', () => {
   })
 
   describe('when formatting line', () => {
-    test('calls the correct formatter with the correct arguments', () => {
+    test('calls the correct formatter with the correct arguments for a string', () => {
       humanizedQueryValueFormattingMap.line('1,2,3,4,5,6')
       expect(formatPointsMock).toHaveBeenCalledTimes(1)
-      expect(formatPointsMock).toHaveBeenCalledWith('1,2,3,4,5,6')
+      expect(formatPointsMock).toHaveBeenCalledWith(['1,2,3,4,5,6'])
+    })
+
+    test('calls the correct formatter with the correct arguments for an array', () => {
+      humanizedQueryValueFormattingMap.line(['1,2,3,4,5,6'])
+      expect(formatPointsMock).toHaveBeenCalledTimes(1)
+      expect(formatPointsMock).toHaveBeenCalledWith(['1,2,3,4,5,6'])
     })
   })
 
@@ -133,15 +151,27 @@ describe('humanizedQueryValueFormattingMap', () => {
   })
 
   describe('when formatting point', () => {
-    test('calls the correct formatter with the correct arguments', () => {
+    test('calls the correct formatter with the correct arguments for a string', () => {
       humanizedQueryValueFormattingMap.point('1,2')
       expect(formatPointsMock).toHaveBeenCalledTimes(1)
-      expect(formatPointsMock).toHaveBeenCalledWith('1,2')
+      expect(formatPointsMock).toHaveBeenCalledWith(['1,2'])
+    })
+
+    test('calls the correct formatter with the correct arguments for an array', () => {
+      humanizedQueryValueFormattingMap.point(['1,2'])
+      expect(formatPointsMock).toHaveBeenCalledTimes(1)
+      expect(formatPointsMock).toHaveBeenCalledWith(['1,2'])
     })
   })
 
   describe('when formatting polygon', () => {
-    test('calls the correct formatter with the correct arguments', () => {
+    test('calls the correct formatter with the correct arguments for a string', () => {
+      humanizedQueryValueFormattingMap.polygon('1,2,3,4,5,6,1,2')
+      expect(formatPointsMock).toHaveBeenCalledTimes(1)
+      expect(formatPointsMock).toHaveBeenCalledWith(['1,2,3,4,5,6,1,2'])
+    })
+
+    test('calls the correct formatter with the correct arguments for an array', () => {
       humanizedQueryValueFormattingMap.polygon(['1,2,3,4,5,6,1,2'])
       expect(formatPointsMock).toHaveBeenCalledTimes(1)
       expect(formatPointsMock).toHaveBeenCalledWith(['1,2,3,4,5,6,1,2'])

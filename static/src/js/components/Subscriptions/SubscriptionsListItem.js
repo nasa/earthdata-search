@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import snakecaseKeys from 'snakecase-keys'
+import camelcaseKeys from 'camelcase-keys'
 
 import Button from '../Button/Button'
+import { SubscriptionsQueryList } from '../SubscriptionsList/SubscriptionsQueryList'
 
 import { humanizedQueryKeysMap } from '../../util/humanizedQueryKeysMap'
 
@@ -43,7 +45,6 @@ export const SubscriptionsListItem = ({
     }
   }
 
-  // TODO: Needs tests - EDSC-2923
   const parsedQuery = parse(query)
 
   return (
@@ -59,28 +60,10 @@ export const SubscriptionsListItem = ({
                 className="subscriptions-list-item__tooltip tooltip--wide"
               >
                 <p className="subscriptions-list-item__tooltip-query-heading">Query Parameters</p>
-                <ul className="subscriptions-list-item__tooltip-query-list">
-                  {
-                    Object.keys(parsedQuery).map((key) => {
-                      const humanizedKey = snakecaseKeys(humanizedQueryKeysMap)[key]
-
-                      return (
-                        <li key={key} className="subscriptions-list-item__tooltip-query-list-item">
-                          <span className="subscriptions-list-item__tooltip-query-list-item-heading">
-                            {humanizedKey}
-                            {': '}
-                          </span>
-                          <span
-                            title={JSON.stringify(parsedQuery[key])}
-                            className="subscriptions-list-item__tooltip-query-list-item-value"
-                          >
-                            {JSON.stringify(parsedQuery[key])}
-                          </span>
-                        </li>
-                      )
-                    })
-                  }
-                </ul>
+                <SubscriptionsQueryList
+                  query={camelcaseKeys(parsedQuery)}
+                  subscriptionType={subscriptionType}
+                />
               </Tooltip>
             )}
           >

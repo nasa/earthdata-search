@@ -45,31 +45,6 @@
     font-size: 1rem;
   }
 
-  &__query-list {
-    margin-bottom: 1rem;
-    padding: 0;
-    list-style: none;
-  }
-
-  &__query-list-item {
-    margin-bottom: 0.5rem;
-  }
-
-  &__query-list-item-heading {
-    flex-shrink: 0;
-    flex-grow: 0;
-    margin-right: 0.125rem;
-    font-weight: 500;
-  }
-
-  &__query-list-item-value {
-    display: block;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    letter-spacing: 0.03rem;
-  }
-
   &__query-exists-warning {
     display: flex;
     padding: 0.5rem 1rem 0.5rem 0.75rem;
