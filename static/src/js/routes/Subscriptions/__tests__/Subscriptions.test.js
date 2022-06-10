@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import Subscriptions from '../Subscriptions'
-import SubscriptionsContainer from '../../../containers/SubscriptionsContainer/SubscriptionsContainer'
+import SubscriptionsListContainer from '../../../containers/SubscriptionsListContainer/SubscriptionsListContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -24,6 +24,6 @@ describe('Subscriptions component', () => {
   test('displays the subscription list', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(SubscriptionsContainer).length).toBe(1)
+    expect(enzymeWrapper.find(SubscriptionsListContainer).length).toBe(1)
   })
 })

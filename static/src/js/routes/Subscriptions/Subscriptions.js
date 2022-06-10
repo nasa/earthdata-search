@@ -1,13 +1,13 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 
-import SubscriptionsContainer from '../../containers/SubscriptionsContainer/SubscriptionsContainer'
+import SubscriptionsListContainer from '../../containers/SubscriptionsListContainer/SubscriptionsListContainer'
 
 export const Subscriptions = () => (
   <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
     <div className="route-wrapper__content">
       <div className="route-wrapper__content-inner">
-        <SubscriptionsContainer />
+        <SubscriptionsListContainer />
       </div>
     </div>
   </div>

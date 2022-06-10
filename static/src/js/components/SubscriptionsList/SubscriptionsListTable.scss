@@ -1,0 +1,78 @@
+.subscriptions-list-table {
+  &__actions {
+    text-align: center;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__name,
+  &__collection {
+    @include media-breakpoint-up(md) {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
+  &__name {
+    max-width: 8rem;
+
+    @include media-breakpoint-up(md) {
+      max-width: 16rem;
+    }
+  }
+
+  &__collection {
+    max-width: 8rem;
+
+    @include media-breakpoint-up(md) {
+      max-width: 16rem;
+    }
+  }
+
+  &__created, &__updated {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &__tooltip {
+    width: 22rem;
+  }
+
+  &__tooltip-query-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__tooltip-query-heading {
+    text-align: left;
+    margin-bottom: 0.325rem;
+    padding-bottom: 0.325rem;
+    border-bottom: 1px solid rgba($color__white, 0.15);
+  }
+
+  &__tooltip-query-list-item {
+    display: flex;
+    margin-bottom: 0.125rem;
+    text-align: left;
+  }
+
+  &__tooltip-query-list-item-heading {
+    flex-shrink: 0;
+    flex-grow: 0;
+    margin-right: 0.125rem;
+    font-size: 0.75rem;
+  }
+
+  &__tooltip-query-list-item-value {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}

@@ -1,13 +1,13 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Table } from 'react-bootstrap'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 
 import Spinner from '../../Spinner/Spinner'
 
 import { SubscriptionsList } from '../SubscriptionsList'
+import { SubscriptionsListTable } from '../SubscriptionsListTable'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -43,10 +43,32 @@ describe('SubscriptionsList component', () => {
       expect(enzymeWrapper.find(Spinner).length).toBe(1)
     })
 
-    test('renders a message when no retrievals exist', () => {
+    test('renders a SubscriptionsListTable when subscriptions exist', () => {
+      const subscriptionsById = {
+        'SUB100000-EDSC': {
+          collection: {
+            conceptId: 'C100000-EDSC',
+            title: 'Mattis Justo Vulputate Ullamcorper Amet.'
+          },
+          collectionConceptId: 'C100000-EDSC',
+          conceptId: 'SUB100000-EDSC',
+          name: 'Test Granule Subscription',
+          query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78',
+          type: 'granule'
+        },
+        'SUB100001-EDSC': {
+          collection: null,
+          collectionConceptId: null,
+          conceptId: 'SUB100001-EDSC',
+          name: 'Test Collection Subscription',
+          query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78',
+          type: 'collection'
+        }
+      }
+
       const { enzymeWrapper } = setup({
         subscriptions: {
-          byId: {},
+          byId: subscriptionsById,
           isLoading: false,
           isLoaded: true,
           error: null,
@@ -57,116 +79,14 @@ describe('SubscriptionsList component', () => {
         onFocusedCollectionChange: jest.fn()
       })
 
-      expect(enzymeWrapper.find(Table).length).toBe(0)
-      expect(enzymeWrapper.find(Spinner).length).toBe(0)
-      expect(enzymeWrapper.find('p').text()).toBe('No subscriptions to display.')
-    })
+      const tables = enzymeWrapper.find(SubscriptionsListTable)
+      expect(tables.length).toBe(2)
 
-    test('renders a table when subscriptions exist', () => {
-      const { enzymeWrapper } = setup({
-        subscriptions: {
-          byId: {
-            'SUB100000-EDSC': {
-              collection: {
-                conceptId: 'C100000-EDSC',
-                title: 'Mattis Justo Vulputate Ullamcorper Amet.'
-              },
-              collectionConceptId: 'C100000-EDSC',
-              conceptId: 'SUB100000-EDSC',
-              name: 'Test Subscription',
-              query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
-            }
-          },
-          isLoading: false,
-          isLoaded: true,
-          error: null,
-          timerStart: null,
-          loadTime: 1265
-        },
-        onDeleteSubscription: jest.fn(),
-        onFocusedCollectionChange: jest.fn()
-      })
-      expect(enzymeWrapper.find(Table).length).toBe(1)
-      expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-    })
+      expect(tables.at(0).props().subscriptionType).toEqual('collection')
+      expect(tables.at(0).props().subscriptionsMetadata).toEqual([subscriptionsById['SUB100001-EDSC']])
 
-    test('onHandleRemove calls onDeleteSubscription', () => {
-      const { enzymeWrapper, props } = setup({
-        subscriptions: {
-          byId: {
-            'SUB100000-EDSC': {
-              collection: {
-                conceptId: 'C100000-EDSC',
-                title: 'Mattis Justo Vulputate Ullamcorper Amet.'
-              },
-              collectionConceptId: 'C100000-EDSC',
-              conceptId: 'SUB100000-EDSC',
-              name: 'Test Subscription',
-              nativeId: 'mock-guid',
-              query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
-            }
-          },
-          isLoading: false,
-          isLoaded: true,
-          error: null,
-          timerStart: null,
-          loadTime: 1265
-        },
-        onDeleteSubscription: jest.fn(),
-        onFocusedCollectionChange: jest.fn()
-      })
-
-      window.confirm = jest.fn().mockImplementation(() => true)
-
-      const removeButton = enzymeWrapper.find('.subscriptions-list__button--remove')
-
-      removeButton.simulate('click')
-
-      expect(props.onDeleteSubscription).toHaveBeenCalledTimes(1)
-      expect(props.onDeleteSubscription).toHaveBeenCalledWith('SUB100000-EDSC', 'mock-guid', 'C100000-EDSC')
-    })
-  })
-
-  describe('edit subscriptions button', () => {
-    const { enzymeWrapper, props } = setup({
-      subscriptions: {
-        byId: {
-          'SUB100000-EDSC': {
-            collection: {
-              conceptId: 'C100000-EDSC',
-              title: 'Mattis Justo Vulputate Ullamcorper Amet.'
-            },
-            collectionConceptId: 'C100000-EDSC',
-            conceptId: 'SUB100000-EDSC',
-            name: 'Test Subscription',
-            nativeId: 'mock-guid',
-            query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
-          }
-        },
-        isLoading: false,
-        isLoaded: true,
-        error: null,
-        timerStart: null,
-        loadTime: 1265
-      },
-      onDeleteSubscription: jest.fn(),
-      onFocusedCollectionChange: jest.fn()
-    })
-
-    window.confirm = jest.fn().mockImplementation(() => true)
-
-    const editButton = enzymeWrapper.find('.subscriptions-list__button--edit')
-
-    test('redirects to the focused collection subscriptions', () => {
-      expect(editButton.props().to).toEqual({
-        pathname: '/search/granules/subscriptions',
-        search: '?p=C100000-EDSC'
-      })
-    })
-
-    test('calls onFocusedCollectionChange', () => {
-      editButton.props().onClick()
-      expect(props.onFocusedCollectionChange).toHaveBeenCalledTimes(1)
+      expect(tables.at(1).props().subscriptionType).toEqual('granule')
+      expect(tables.at(1).props().subscriptionsMetadata).toEqual([subscriptionsById['SUB100000-EDSC']])
     })
   })
 })
