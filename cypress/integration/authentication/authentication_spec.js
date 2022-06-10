@@ -1,8 +1,9 @@
 import { getByTestId } from '../../support/getByTestId'
 import { getJwtToken } from '../../support/getJwtToken'
+import { graphQlGetSubscriptionsQuery } from '../../support/graphQlGetSubscriptionsQuery'
+
 import graphQlHeaders from './__mocks__/graphql.headers.json'
 import getSubscriptionsGraphQlBody from './__mocks__/getSubscriptions.graphql.body.json'
-
 import collectionFixture from './__mocks__/authenticated_collections.json'
 
 // At the default size, react-window will render 6 items
@@ -24,7 +25,7 @@ describe('Authentication', () => {
       url: '**/graphql'
     },
     (req) => {
-      expect(JSON.parse(req.body).data.query).to.eql('\n    query GetSubscriptions ($params: SubscriptionsInput) {\n      subscriptions (params: $params) {\n          items {\n            collection {\n              conceptId\n              title\n            }\n            collectionConceptId\n            conceptId\n            name\n            nativeId\n            query\n          }\n        }\n      }')
+      expect(JSON.parse(req.body).data.query).to.eql(graphQlGetSubscriptionsQuery)
       req.reply({
         body: getSubscriptionsGraphQlBody,
         headers: graphQlHeaders
@@ -54,7 +55,7 @@ describe('Authentication', () => {
       url: '**/graphql'
     },
     (req) => {
-      expect(JSON.parse(req.body).data.query).to.eql('\n    query GetSubscriptions ($params: SubscriptionsInput) {\n      subscriptions (params: $params) {\n          items {\n            collection {\n              conceptId\n              title\n            }\n            collectionConceptId\n            conceptId\n            name\n            nativeId\n            query\n          }\n        }\n      }')
+      expect(JSON.parse(req.body).data.query).to.eql(graphQlGetSubscriptionsQuery)
       req.reply({
         body: getSubscriptionsGraphQlBody,
         headers: graphQlHeaders

@@ -1,5 +1,6 @@
 import { getByTestId } from '../../../../../support/getByTestId'
 import { graphQlGetCollection } from '../../../../../support/graphQlGetCollection'
+import { graphQlGetSubscriptionsQuery } from '../../../../../support/graphQlGetSubscriptionsQuery'
 
 import { commafy } from '../../../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../../../static/src/js/util/pluralize'
@@ -222,7 +223,7 @@ describe('Path /search/granules/collection-details', () => {
         url: '**/graphql'
       },
       (req) => {
-        if (JSON.parse(req.body).data.query === '\n    query GetSubscriptions ($params: SubscriptionsInput) {\n      subscriptions (params: $params) {\n          items {\n            collection {\n              conceptId\n              title\n            }\n            collectionConceptId\n            conceptId\n            name\n            nativeId\n            query\n          }\n        }\n      }') {
+        if (JSON.parse(req.body).data.query === graphQlGetSubscriptionsQuery) {
           req.alias = 'graphQlSubscriptionsQuery'
           req.reply({
             body: getSubscriptionsGraphQlBody,
@@ -322,8 +323,7 @@ describe('Path /search/granules/collection-details', () => {
         url: '**/graphql'
       },
       (req) => {
-        console.log('JSON.parse(req.body).data.query', JSON.parse(req.body).data.query)
-        expect(JSON.parse(req.body).data.query).to.eql('\n    query GetSubscriptions ($params: SubscriptionsInput) {\n      subscriptions (params: $params) {\n          items {\n            collection {\n              conceptId\n              title\n            }\n            collectionConceptId\n            conceptId\n            name\n            nativeId\n            query\n          }\n        }\n      }')
+        expect(JSON.parse(req.body).data.query).to.eql(graphQlGetSubscriptionsQuery)
         req.reply({
           body: getSubscriptionsGraphQlBody,
           headers: graphQlHeaders
