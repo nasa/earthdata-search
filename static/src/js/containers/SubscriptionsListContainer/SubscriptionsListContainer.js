@@ -21,7 +21,7 @@ export const mapDispatchToProps = (dispatch) => ({
     (collectionId) => dispatch(actions.changeFocusedCollection(collectionId))
 })
 
-export class SubscriptionsContainer extends Component {
+export class SubscriptionsListContainer extends Component {
   componentDidMount() {
     const {
       onFetchSubscriptions
@@ -47,7 +47,7 @@ export class SubscriptionsContainer extends Component {
   }
 }
 
-SubscriptionsContainer.propTypes = {
+SubscriptionsListContainer.propTypes = {
   subscriptions: PropTypes.shape({}).isRequired,
   onDeleteSubscription: PropTypes.func.isRequired,
   onFetchSubscriptions: PropTypes.func.isRequired,
@@ -55,5 +55,5 @@ SubscriptionsContainer.propTypes = {
 }
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SubscriptionsContainer)
+  connect(mapStateToProps, mapDispatchToProps)(SubscriptionsListContainer)
 )

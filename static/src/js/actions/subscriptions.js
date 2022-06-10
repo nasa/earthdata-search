@@ -181,9 +181,12 @@ export const getSubscriptions = (
             }
             collectionConceptId
             conceptId
+            creationDate
             name
             nativeId
             query
+            revisionDate
+            type
           }
         }
       }`
