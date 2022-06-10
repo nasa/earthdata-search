@@ -16,10 +16,9 @@ import moment from 'moment'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import { SubscriptionsQueryList } from './SubscriptionsQueryList'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-
-import { humanizedQueryKeysMap } from '../../util/humanizedQueryKeysMap'
 
 import './SubscriptionsListTable.scss'
 
@@ -106,28 +105,10 @@ export const SubscriptionsListTable = ({
                         >
                           <>
                             <p className="subscriptions-list-table__tooltip-query-heading">Query Parameters</p>
-                            <ul className="subscriptions-list-table__tooltip-query-list">
-                              {
-                                Object.keys(parsedQuery).map((key) => {
-                                  const humanizedKey = humanizedQueryKeysMap[key]
-
-                                  return (
-                                    <li key={key} className="subscriptions-list-table__tooltip-query-list-item">
-                                      <span>
-                                        {humanizedKey}
-                                        {': '}
-                                      </span>
-                                      <span
-                                        title={JSON.stringify(parsedQuery[key])}
-                                        className="subscriptions-list-table__tooltip-query-list-item-value"
-                                      >
-                                        {JSON.stringify(parsedQuery[key])}
-                                      </span>
-                                    </li>
-                                  )
-                                })
-                              }
-                            </ul>
+                            <SubscriptionsQueryList
+                              query={parsedQuery}
+                              subscriptionType={subscriptionType}
+                            />
                           </>
                         </Tooltip>
                       )}
