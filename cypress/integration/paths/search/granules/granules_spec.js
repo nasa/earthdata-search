@@ -1,6 +1,7 @@
 import { getByTestId } from '../../../../support/getByTestId'
 import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
 import { graphQlGetCollections } from '../../../../support/graphQlGetCollections'
+import { graphQlGetSubscriptionsQuery } from '../../../../support/graphQlGetSubscriptionsQuery'
 import { interceptUnauthenticatedCollections }
   from '../../../../support/interceptUnauthenticatedCollections'
 
@@ -1298,7 +1299,7 @@ describe('Path /search/granules', () => {
         url: '**/graphql'
       },
       (req) => {
-        if (JSON.parse(req.body).data.query === '\n    query GetSubscriptions ($params: SubscriptionsInput) {\n      subscriptions (params: $params) {\n          items {\n            collection {\n              conceptId\n              title\n            }\n            collectionConceptId\n            conceptId\n            name\n            nativeId\n            query\n          }\n        }\n      }') {
+        if (JSON.parse(req.body).data.query === graphQlGetSubscriptionsQuery) {
           req.alias = 'graphQlPageLoadSubscriptionsQuery'
           req.reply({
             body: subscriptionGraphQlBody,
