@@ -18,11 +18,13 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getCollectionsMetadata } from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
-import { getCollectionSubscriptionQueryString, getGranuleSubscriptionQueryString } from '../selectors/query'
+import { getCollectionSubscriptionQueryObj, getCollectionSubscriptionQueryString, getGranuleSubscriptionQueryString } from '../selectors/query'
 
+import { pluralize } from '../util/pluralize'
 import { addToast } from '../util/addToast'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import GraphQlRequest from '../util/request/graphQlRequest'
+import { queryToHumanizedList } from '../util/queryToHumanizedList'
 
 export const updateSubscriptionResults = (payload) => ({
   type: UPDATE_SUBSCRIPTION_RESULTS,
@@ -115,6 +117,29 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
     params.collectionConceptId = collectionId
   }
   params.query = subscriptionQuery
+
+  if (!name) {
+    const humanizedQueryList = queryToHumanizedList(
+      getCollectionSubscriptionQueryObj(state),
+      subscriptionType
+    )
+
+    // Format the end of the default string first. Formats the string to look like 'Bounding Box',
+    // 'Bounding Box & 1 other filter', or 'Bounding Box & 2 other filters'
+    const firstFilter = humanizedQueryList[0][0]
+    const abbriviatedFilters = humanizedQueryList.length > 1 && ` & ${humanizedQueryList.length - 1} more ${pluralize('filter', humanizedQueryList.length - 1)}`
+    let defaultSubscriptionName = `${firstFilter}${abbriviatedFilters}`
+
+    // Add a contextual prefix to the filter string depending on subscription type
+    if (subscriptionType === 'collection') {
+      defaultSubscriptionName = `Dataset Search Subscription (${defaultSubscriptionName})`
+    }
+    if (subscriptionType === 'granule') {
+      defaultSubscriptionName = `Granule Search Subscription (${defaultSubscriptionName})`
+    }
+
+    params.name = defaultSubscriptionName
+  }
 
   try {
     response = await graphQlRequestObject.search(graphQuery, {

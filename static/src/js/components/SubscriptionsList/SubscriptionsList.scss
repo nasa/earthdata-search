@@ -1,4 +1,8 @@
 .subscriptions-list {
+  &__subscription-group {
+    margin-bottom: 3rem;
+  }
+
   &__spinner {
     margin: 0 auto;
   }

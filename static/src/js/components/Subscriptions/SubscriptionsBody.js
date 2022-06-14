@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { isEqual } from 'lodash'
-import { FaBell } from 'react-icons/fa'
+import { FaBell, FaPlus } from 'react-icons/fa'
 import { Form } from 'react-bootstrap'
 import snakecaseKeys from 'snakecase-keys'
 
@@ -15,6 +15,7 @@ import SubscriptionsListItem from './SubscriptionsListItem'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import EmptyListItem from '../EmptyListItem/EmptyListItem'
 import SubscriptionsQueryList from '../SubscriptionsList/SubscriptionsQueryList'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './SubscriptionsBody.scss'
 
@@ -36,7 +37,7 @@ export const SubscriptionsBody = ({
   onUpdateSubscription
 }) => {
   const [submittingNewSubscription, setSubmittingNewSubscription] = useState(false)
-  const [name, setName] = useState('New Subscription')
+  const [name, setName] = useState('')
 
   const onChangeName = (event) => {
     const { target } = event
@@ -65,6 +66,7 @@ export const SubscriptionsBody = ({
     )
   })
 
+  const hasNullCmrQuery = !query.hasGranulesOrCwic
   const hasExactlyMatchingGranuleQuery = exactlyMatchingSubscriptionQueries.length > 0
 
   const humanReadableQueryList = queryToHumanizedList(query, subscriptionType)
@@ -81,9 +83,9 @@ export const SubscriptionsBody = ({
             <div className="subscriptions-body__query">
               <Form>
                 <div className="subscriptions-body__query-primary">
-                  <h4 className="h5">Create a new subscription</h4>
+                  <h4 className="subscriptions-body__query-primary-heading h6">Create a new subscription</h4>
                   <Form.Group className="subscriptions-body__form-group subscriptions-body__form-group--coords">
-                    <Form.Label>
+                    <Form.Label className="mb-1">
                       Name
                     </Form.Label>
                     <Form.Control
@@ -99,45 +101,59 @@ export const SubscriptionsBody = ({
                   </Form.Group>
                   <h4 className="subscriptions-body__query-list-heading">{`${humanReadableQueryList.length} filters applied`}</h4>
                   <SubscriptionsQueryList
+                    displayEmptyMessage={false}
                     query={query}
                     subscriptionType={subscriptionType}
                   />
-                  {
-                    hasExactlyMatchingGranuleQuery && (
-                      <p className="subscriptions-body__query-exists-warning">
-                        <EDSCIcon className="subscriptions-body__query-exists-warning-icon" icon={FaBell} />
-                        {
-                          exactlyMatchingSubscriptionQueries.map((exactlyMatchingQuery) => {
-                            const { conceptId, name } = exactlyMatchingQuery
-                            return (
-                              <div key={conceptId}>
-                                The subscription named
+                  <div className="subscriptions-body__query-secondary">
+                    {
+                      (hasExactlyMatchingGranuleQuery || hasNullCmrQuery) && (
+                        <p className="subscriptions-body__warning">
+                          <EDSCIcon className="subscriptions-body__warning-icon" icon={FaBell} />
+                          {
+                            hasExactlyMatchingGranuleQuery
+                            && exactlyMatchingSubscriptionQueries.map((exactlyMatchingQuery) => {
+                              const { conceptId, name } = exactlyMatchingQuery
+                              return (
+                                <div key={conceptId}>
+                                  The subscription
+                                  {' '}
+                                  <strong>{name}</strong>
+                                  {' '}
+                                  matches the current search query.
+                                  {' '}
+                                  Choose a different search query to create a new subscription.
+                                </div>
+                              )
+                            })
+                          }
+                          {
+                            hasNullCmrQuery && (
+                              <div>
+                                The current query is not currently supported.
                                 {' '}
-                                <strong>{name}</strong>
-                                {' '}
-                                matches the current search query.
-                                {' '}
-                                Change the current search query to create a new subscription.
+                                Add additional filters to create a new subscription.
                               </div>
                             )
-                          })
-                        }
-                      </p>
-                    )
-                  }
+                          }
+                        </p>
+                      )
+                    }
+                  </div>
                   <Button
                     className="subscriptions-body__create-button"
-                    disabled={hasExactlyMatchingGranuleQuery}
+                    disabled={hasExactlyMatchingGranuleQuery || hasNullCmrQuery}
                     bootstrapVariant="primary"
                     label="Subscribe"
                     spinner={submittingNewSubscription}
+                    icon={FaPlus}
                     onClick={async () => {
                       setSubmittingNewSubscription(true)
                       await onCreateSubscription(name, subscriptionType)
                       setSubmittingNewSubscription(false)
                     }}
                   >
-                    Subscribe
+                    Create Subscription
                   </Button>
                 </div>
               </Form>
@@ -160,9 +176,25 @@ export const SubscriptionsBody = ({
                     onUpdateSubscription={onUpdateSubscription}
                     onDeleteSubscription={onDeleteSubscription}
                     hasExactlyMatchingGranuleQuery={hasExactlyMatchingGranuleQuery}
+                    hasNullCmrQuery={hasNullCmrQuery}
                   />
                 )
               })
+            }
+            {
+              subscriptions.length > 0 && (
+                <li className="subscriptions-body__list-item">
+                  <PortalLinkContainer
+                    className="subscriptions-body__empty-list-item"
+                    to="/subscriptions"
+                    type="button"
+                    bootstrapVariant="light"
+                    label="View All Subscriptions"
+                  >
+                    View All Subscriptions
+                  </PortalLinkContainer>
+                </li>
+              )
             }
             {
               subscriptions.length === 0 && (
@@ -170,6 +202,7 @@ export const SubscriptionsBody = ({
                   {'No subscriptions exist for this collection. Use filters to define your query and '}
                   <Button
                     className="subscriptions-body__empty-list-item"
+                    disabled={hasExactlyMatchingGranuleQuery || hasNullCmrQuery}
                     bootstrapVariant="link"
                     label="Create New Subscription"
                     variant="link"
@@ -188,7 +221,9 @@ export const SubscriptionsBody = ({
   )
 }
 SubscriptionsBody.propTypes = {
-  query: PropTypes.shape({}).isRequired,
+  query: PropTypes.shape({
+    hasGranulesOrCwic: PropTypes.bool
+  }).isRequired,
   subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   subscriptionType: PropTypes.string.isRequired,
   onCreateSubscription: PropTypes.func.isRequired,

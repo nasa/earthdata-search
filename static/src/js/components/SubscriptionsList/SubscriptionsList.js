@@ -41,8 +41,8 @@ export const SubscriptionsList = ({
       {
         isLoaded && (
           <>
-            <div>
-              <h3>Dataset Search Subscription</h3>
+            <div className="subscriptions-list__subscription-group">
+              <h3 className="h4">Dataset Search Subscription</h3>
               <p>Receive notifications when new datasets are added that match your search query.</p>
               <SubscriptionsListTable
                 subscriptionsMetadata={collectionSubsciptions}
@@ -51,9 +51,8 @@ export const SubscriptionsList = ({
                 onFocusedCollectionChange={onFocusedCollectionChange}
               />
             </div>
-
-            <div>
-              <h3>Granule Subscription</h3>
+            <div className="subscriptions-list__subscription-group">
+              <h3 className="h4">Granule Subscription</h3>
               <p>Receive notifications when new data are added to a dataset.</p>
               <SubscriptionsListTable
                 subscriptionsMetadata={granuleSubscriptions}

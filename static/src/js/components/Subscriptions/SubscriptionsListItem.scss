@@ -20,7 +20,7 @@
     overflow: hidden;
   }
 
-  &__query {
+  &__meta {
     display: block;
     font-size: 0.75rem;
     color: $color__black--500;
@@ -39,13 +39,6 @@
   }
 
   &__tooltip {
-    width: 20rem;
-  }
-
-  &__tooltip-query-heading {
-    text-align: left;
-    margin-bottom: 0.325rem;
-    padding-bottom: 0.325rem;
-    border-bottom: 1px solid rgba($color__white, 0.15);
+    width: 15rem;
   }
 }
