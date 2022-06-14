@@ -53,6 +53,7 @@ export const SubscriptionsListTable = ({
             }
             <th className="subscriptions-list-table__created-heading">Created</th>
             <th className="subscriptions-list-table__updated-heading">Updated</th>
+            <th className="subscriptions-list-table__actions-heading"><span className="visually-hidden">Actions</span></th>
           </tr>
         </thead>
         <tbody>
@@ -101,10 +102,10 @@ export const SubscriptionsListTable = ({
                       overlay={(
                         <Tooltip
                           id={`tooltip__subscription-info__${conceptId}`}
-                          className="subscriptions-list-table__tooltip tooltip--wide"
+                          className="subscriptions-list-table__tooltip tooltip--wide tooltip--ta-left"
                         >
                           <>
-                            <p className="subscriptions-list-table__tooltip-query-heading">Query Parameters</p>
+                            <h5 className="tooltip__tooltip-heading">Filters</h5>
                             <SubscriptionsQueryList
                               query={parsedQuery}
                               subscriptionType={subscriptionType}
@@ -119,10 +120,12 @@ export const SubscriptionsListTable = ({
                       className="subscriptions-list__button subscriptions-list__button--edit"
                       type="button"
                       to={{
-                        pathname: '/search/granules/subscriptions',
-                        search: `?p=${collectionConceptId}`
+                        pathname: subscriptionType === 'granule' ? '/search/granules/subscriptions' : '/search/subscriptions',
+                        search: subscriptionType === 'granule' ? `?p=${collectionConceptId}` : ''
                       }}
-                      onClick={() => onFocusedCollectionChange(collectionConceptId)}
+                      onClick={() => {
+                        if (subscriptionType === 'granule') onFocusedCollectionChange(collectionConceptId)
+                      }}
                       variant="naked"
                       icon={FaEdit}
                       label="Edit Subscription"

@@ -1,19 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import snakecaseKeys from 'snakecase-keys'
+import { FaTrash, FaInfoCircle, FaEdit } from 'react-icons/fa'
 import camelcaseKeys from 'camelcase-keys'
+import moment from 'moment'
 
 import Button from '../Button/Button'
 import { SubscriptionsQueryList } from '../SubscriptionsList/SubscriptionsQueryList'
 
-import { humanizedQueryKeysMap } from '../../util/humanizedQueryKeysMap'
-
 import './SubscriptionsListItem.scss'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
+const dateFormat = getApplicationConfig().temporalDateFormatFull
 
 export const SubscriptionsListItem = ({
   hasExactlyMatchingGranuleQuery,
+  hasNullCmrQuery,
   subscription,
   subscriptionType,
   onDeleteSubscription,
@@ -21,11 +23,17 @@ export const SubscriptionsListItem = ({
 }) => {
   const {
     collectionConceptId,
+    creationDate,
     name,
     nativeId,
     query,
-    conceptId
+    conceptId,
+    revisionDate
   } = subscription
+
+  const isRevised = creationDate !== revisionDate
+  const dateToDisplay = isRevised ? revisionDate : creationDate
+  console.log('name', name)
 
   const onHandleRemove = () => {
     // eslint-disable-next-line no-alert
@@ -41,6 +49,7 @@ export const SubscriptionsListItem = ({
     const confirmUpdate = window.confirm('Are you sure you want to update this subscription with your current search parameters?')
 
     if (confirmUpdate) {
+      console.log('name', name)
       onUpdateSubscription(conceptId, nativeId, name, subscriptionType)
     }
   }
@@ -51,53 +60,40 @@ export const SubscriptionsListItem = ({
     <li className="subscriptions-list-item">
       <div className="subscriptions-list-item__primary">
         <h4 className="subscriptions-list-item__name" title={name}>{name}</h4>
-        <span className="subscriptions-list-item__query">
-          <OverlayTrigger
-            placement="top"
-            overlay={(
-              <Tooltip
-                id={`tooltip__subscription-info__${conceptId}`}
-                className="subscriptions-list-item__tooltip tooltip--wide"
-              >
-                <p className="subscriptions-list-item__tooltip-query-heading">Query Parameters</p>
-                <SubscriptionsQueryList
-                  query={camelcaseKeys(parsedQuery)}
-                  subscriptionType={subscriptionType}
-                />
-              </Tooltip>
-            )}
-          >
-            <span className="subscriptions-list-item__query-text">
-              {
-                Object.keys(parsedQuery).map((key, i) => {
-                  const humanizedKey = snakecaseKeys(humanizedQueryKeysMap)[key]
-
-                  return (
-                    <span key={key}>
-                      <span>
-                        {humanizedKey}
-                        {': '}
-                      </span>
-                      <span>
-                        {JSON.stringify(parsedQuery[key])}
-                      </span>
-                      {
-                        i < Object.keys(parsedQuery).length - 1 && ', '
-                      }
-                    </span>
-                  )
-                })
-              }
-            </span>
-          </OverlayTrigger>
+        <span className="subscriptions-list-item__meta">
+          <span className="subscriptions-list-item__meta-item">
+            {`${isRevised ? 'Updated' : 'Created'}: ${moment.utc(dateToDisplay).format(dateFormat)}`}
+          </span>
         </span>
       </div>
       <div className="subscriptions-list-item__actions">
         <Button
           className="subscriptions-list-item__action"
+          icon={FaInfoCircle}
           bootstrapVariant="light"
           bootstrapSize="sm"
-          disabled={hasExactlyMatchingGranuleQuery}
+          label="Hover to view subscription details"
+          onClick={(e) => e.preventDefault()}
+          tooltipId={`subscription-list-item--${conceptId}`}
+          overlayClass="subscriptions-list-item__tooltip tooltip--wide"
+          tooltip={(
+            <>
+              <h5 className="tooltip__tooltip-heading">Filters</h5>
+              <SubscriptionsQueryList
+                query={camelcaseKeys(parsedQuery)}
+                subscriptionType={subscriptionType}
+              />
+            </>
+          )}
+        >
+          Details
+        </Button>
+        <Button
+          className="subscriptions-list-item__action"
+          icon={FaEdit}
+          bootstrapVariant="light"
+          bootstrapSize="sm"
+          disabled={hasExactlyMatchingGranuleQuery || hasNullCmrQuery}
           label="Update Subscription"
           onClick={() => onHandleUpdate()}
         >
@@ -105,6 +101,7 @@ export const SubscriptionsListItem = ({
         </Button>
         <Button
           className="subscriptions-list-item__action"
+          icon={FaTrash}
           bootstrapVariant="danger"
           bootstrapSize="sm"
           label="Delete Subscription"
@@ -119,14 +116,17 @@ export const SubscriptionsListItem = ({
 
 SubscriptionsListItem.propTypes = {
   hasExactlyMatchingGranuleQuery: PropTypes.bool.isRequired,
+  hasNullCmrQuery: PropTypes.bool.isRequired,
   onDeleteSubscription: PropTypes.func.isRequired,
   onUpdateSubscription: PropTypes.func.isRequired,
   subscription: PropTypes.shape({
     collectionConceptId: PropTypes.string,
+    creationDate: PropTypes.string,
     conceptId: PropTypes.string,
     name: PropTypes.string,
     nativeId: PropTypes.string,
-    query: PropTypes.string
+    query: PropTypes.string,
+    revisionDate: PropTypes.string
   }).isRequired,
   subscriptionType: PropTypes.string.isRequired
 }

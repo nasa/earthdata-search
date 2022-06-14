@@ -1,4 +1,13 @@
 .subscriptions-list-table {
+  &__created-heading,
+  &__updated-heading {
+    width: 10rem;
+  }
+  
+  &__actions-heading {
+    width: 8rem;
+  }
+
   &__actions {
     text-align: center;
   }
@@ -41,6 +50,6 @@
   }
 
   &__tooltip {
-    width: 20rem;
+    width: 15rem;
   }
 }

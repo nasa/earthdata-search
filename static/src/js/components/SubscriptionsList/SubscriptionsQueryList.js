@@ -136,10 +136,12 @@ const buildHumanizedQueryDisplay = (key, value) => {
 /**
  * Renders the humanized subscription query list
  * @param {Object} params
+ * @param {Boolean} params.displayEmptyMessage Displays an empty state if the query is empty. Defaults to true.
  * @param {Object} params.query Subscription query object, with camelCased keys
  * @param {String} params.subscriptionType Subscription type, collection or granule
  */
 export const SubscriptionsQueryList = ({
+  displayEmptyMessage,
   query,
   subscriptionType
 }) => {
@@ -171,11 +173,23 @@ export const SubscriptionsQueryList = ({
           </li>
         ))
       }
+      {
+        (humanReadableQueryList.length === 0 && displayEmptyMessage) && (
+          <li className="subscriptions-query-list__query-list-item">
+            This subscription has no search filters applied.
+          </li>
+        )
+      }
     </ul>
   )
 }
 
+SubscriptionsQueryList.defaultProps = {
+  displayEmptyMessage: true
+}
+
 SubscriptionsQueryList.propTypes = {
+  displayEmptyMessage: PropTypes.bool,
   query: PropTypes.shape({}).isRequired,
   subscriptionType: PropTypes.string.isRequired
 }

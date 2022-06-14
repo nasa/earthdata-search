@@ -16,4 +16,13 @@
       max-width: 400px;
     }
   }
+
+  &__tooltip-heading {
+    font-size: 0.825rem;
+    font-weight: 500;
+    text-align: left;
+    margin-bottom: 0.325rem;
+    padding-bottom: 0.325rem;
+    border-bottom: 1px solid rgba($color__white, 0.15);
+  }
 }
