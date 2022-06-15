@@ -92,7 +92,6 @@ export const SubscriptionsBody = ({
                       className="subscriptions-body__text-input"
                       data-test-id="subscriptions-body_point"
                       type="text"
-                      placeholder="Subscription Name"
                       value={name}
                       onChange={onChangeName}
                       onBlur={onChangeName}
@@ -182,21 +181,6 @@ export const SubscriptionsBody = ({
               })
             }
             {
-              subscriptions.length > 0 && (
-                <li className="subscriptions-body__list-item">
-                  <PortalLinkContainer
-                    className="subscriptions-body__empty-list-item"
-                    to="/subscriptions"
-                    type="button"
-                    bootstrapVariant="light"
-                    label="View All Subscriptions"
-                  >
-                    View All Subscriptions
-                  </PortalLinkContainer>
-                </li>
-              )
-            }
-            {
               subscriptions.length === 0 && (
                 <EmptyListItem>
                   {'No subscriptions exist for this collection. Use filters to define your query and '}
@@ -215,6 +199,21 @@ export const SubscriptionsBody = ({
               )
             }
           </ul>
+          {
+              subscriptions.length > 0 && (
+                <div className="subscriptions-body__list-footer">
+                  <PortalLinkContainer
+                    className="subscriptions-body__view-all-subscriptions"
+                    to="/subscriptions"
+                    type="button"
+                    bootstrapVariant="light"
+                    label="View All Subscriptions"
+                  >
+                    View All Subscriptions
+                  </PortalLinkContainer>
+                </div>
+              )
+            }
         </div>
       </div>
     </div>

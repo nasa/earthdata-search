@@ -33,7 +33,6 @@ export const SubscriptionsListItem = ({
 
   const isRevised = creationDate !== revisionDate
   const dateToDisplay = isRevised ? revisionDate : creationDate
-  console.log('name', name)
 
   const onHandleRemove = () => {
     // eslint-disable-next-line no-alert

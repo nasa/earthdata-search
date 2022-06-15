@@ -25,7 +25,7 @@
   }
 
   &__form-group {
-    max-width: 20rem;
+    max-width: 28rem;
   }
 
   &__query {
@@ -66,6 +66,7 @@
   }
 
   &__warning-icon {
+    min-width: 0.675rem;
     margin-right: 0.5rem;
   }
 
@@ -77,7 +78,7 @@
     overflow-x: hidden;
   }
 
-  &__list-item {
+  &__list-footer {
     padding: 1rem;
     display: flex;
     align-items: center;
