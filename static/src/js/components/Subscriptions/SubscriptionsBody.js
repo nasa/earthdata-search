@@ -76,9 +76,6 @@ export const SubscriptionsBody = ({
     }
   }
 
-  console.log('query', query)
-  console.log('hasNullCmrQuery', nullCmrQuery)
-
   const hasNullCmrQuery = isEqual(query, nullCmrQuery)
   const hasExactlyMatchingGranuleQuery = exactlyMatchingSubscriptionQueries.length > 0
 
