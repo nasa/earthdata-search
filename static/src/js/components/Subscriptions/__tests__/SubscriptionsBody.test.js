@@ -92,7 +92,7 @@ describe('SubscriptionsBody component', () => {
           ]
         })
 
-        expect(enzymeWrapper.find('.subscriptions-body__query-exists-warning').length).toEqual(1)
+        expect(enzymeWrapper.find('.subscriptions-body__warning').length).toEqual(1)
       })
 
       test('should render the update button as disabled', () => {
@@ -201,6 +201,28 @@ describe('SubscriptionsBody component', () => {
           expect(enzymeWrapper.find(SubscriptionsListItem).at(1).props().subscription)
             .toEqual(subTwo)
         })
+
+        test('should render a view all link', () => {
+          const subOne = {
+            name: 'Subscription 1',
+            conceptId: 'SUB-1'
+          }
+
+          const subTwo = {
+            name: 'Subscription 2',
+            conceptId: 'SUB-2'
+          }
+
+          const { enzymeWrapper } = setup({
+            subscriptions: [
+              subOne,
+              subTwo
+            ]
+          })
+
+          expect(enzymeWrapper.find('.subscriptions-body__view-all-subscriptions').length)
+            .toEqual(1)
+        })
       })
     })
   })
@@ -255,7 +277,7 @@ describe('SubscriptionsBody component', () => {
   })
 
   describe('when a subscription name is not set', () => {
-    test('uses a default name', () => {
+    test('does not set a default name in the input', () => {
       const { enzymeWrapper } = setup({
         subscriptionType: 'collection',
         query: {}
@@ -264,7 +286,7 @@ describe('SubscriptionsBody component', () => {
       const input = enzymeWrapper.find('.subscriptions-body__text-input')
 
       expect(input.props().value)
-        .toEqual('New Subscription')
+        .toEqual('')
     })
   })
 

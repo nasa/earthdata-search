@@ -3,6 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import SubscriptionsListItem from '../SubscriptionsListItem'
+import SubscriptionsQueryList from '../../SubscriptionsList/SubscriptionsQueryList'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -10,16 +11,21 @@ beforeAll(() => {
   jest.clearAllMocks()
 })
 
+const defaultSubscription = {
+  collectionConceptId: 'COLL-ID-1',
+  conceptId: 'SUB1',
+  nativeId: 'SUB1-NATIVE-ID',
+  name: 'Subscription 1',
+  query: 'options[spatial][or]=true',
+  creationDate: '2022-06-14 12:00:00',
+  revisionDate: '2022-06-14 12:00:00'
+}
+
 function setup(overrideProps) {
   const props = {
     hasExactlyMatchingGranuleQuery: false,
-    subscription: {
-      collectionConceptId: 'COLL-ID-1',
-      conceptId: 'SUB1',
-      nativeId: 'SUB1-NATIVE-ID',
-      name: 'Subscription 1',
-      query: 'options[spatial][or]=true'
-    },
+    hasNullCmrQuery: false,
+    subscription: defaultSubscription,
     subscriptionType: 'granule',
     onDeleteSubscription: jest.fn(),
     onUpdateSubscription: jest.fn(),
@@ -46,16 +52,37 @@ describe('SubscriptionsBody component', () => {
       .toEqual('Subscription 1')
   })
 
+  test('should render the created date', () => {
+    const { enzymeWrapper } = setup()
+    expect(enzymeWrapper.find('.subscriptions-list-item__meta-item').at(0).text())
+      .toEqual('Created: 2022-06-14 12:00:00')
+  })
+
+  describe('when the collection has been revised', () => {
+    test('displays the revision date', () => {
+      const { enzymeWrapper } = setup({
+        subscription: {
+          ...defaultSubscription,
+          revisionDate: '2022-06-15 12:00:00'
+        }
+      })
+      expect(enzymeWrapper.find('.subscriptions-list-item__meta-item').at(0).text())
+        .toEqual('Updated: 2022-06-15 12:00:00')
+    })
+  })
+
   test('should render the query', () => {
     const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find('.subscriptions-list-item__query-text').text())
-      .toEqual('Options: {"spatial":{"or":"true"}}')
+    const { tooltip } = enzymeWrapper.find('.subscriptions-list-item__actions').childAt(0).props()
+    expect(tooltip.props.children[1].type)
+      .toEqual(SubscriptionsQueryList)
   })
 
   describe('update button', () => {
     test('should render', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('.subscriptions-list-item__action').at(0).props().label)
+      console.log(enzymeWrapper.find('.subscriptions-list-item__action').debug())
+      expect(enzymeWrapper.find('.subscriptions-list-item__action').at(1).props().label)
         .toEqual('Update Subscription')
     })
 
@@ -66,7 +93,7 @@ describe('SubscriptionsBody component', () => {
           window.confirm = confirmMock
 
           const { enzymeWrapper, props } = setup()
-          enzymeWrapper.find('.subscriptions-list-item__action').at(0).simulate('click')
+          enzymeWrapper.find('.subscriptions-list-item__action').at(1).simulate('click')
 
           expect(props.onUpdateSubscription).toHaveBeenCalledTimes(0)
         })
@@ -78,7 +105,7 @@ describe('SubscriptionsBody component', () => {
           window.confirm = confirmMock
 
           const { enzymeWrapper, props } = setup()
-          enzymeWrapper.find('.subscriptions-list-item__action').at(0).simulate('click')
+          enzymeWrapper.find('.subscriptions-list-item__action').at(1).simulate('click')
 
           expect(props.onUpdateSubscription).toHaveBeenCalledTimes(1)
           expect(props.onUpdateSubscription).toHaveBeenCalledWith('SUB1', 'SUB1-NATIVE-ID', 'Subscription 1', 'granule')
@@ -90,7 +117,7 @@ describe('SubscriptionsBody component', () => {
   describe('delete button', () => {
     test('should render', () => {
       const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('.subscriptions-list-item__action').at(1).props().label)
+      expect(enzymeWrapper.find('.subscriptions-list-item__action').at(2).props().label)
         .toEqual('Delete Subscription')
     })
 
@@ -101,7 +128,7 @@ describe('SubscriptionsBody component', () => {
           window.confirm = confirmMock
 
           const { enzymeWrapper, props } = setup()
-          enzymeWrapper.find('.subscriptions-list-item__action').at(1).simulate('click')
+          enzymeWrapper.find('.subscriptions-list-item__action').at(2).simulate('click')
 
           expect(props.onDeleteSubscription).toHaveBeenCalledTimes(0)
         })
@@ -113,7 +140,7 @@ describe('SubscriptionsBody component', () => {
           window.confirm = confirmMock
 
           const { enzymeWrapper, props } = setup()
-          enzymeWrapper.find('.subscriptions-list-item__action').at(1).simulate('click')
+          enzymeWrapper.find('.subscriptions-list-item__action').at(2).simulate('click')
 
           expect(props.onDeleteSubscription).toHaveBeenCalledTimes(1)
           expect(props.onDeleteSubscription).toHaveBeenCalledWith('SUB1', 'SUB1-NATIVE-ID', 'COLL-ID-1')
