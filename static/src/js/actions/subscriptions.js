@@ -117,12 +117,10 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
   }
   params.query = subscriptionQuery
 
-  if (!name) {
-    params.name = formatDefaultSubscriptionName(
-      getCollectionSubscriptionQueryObj(state),
-      subscriptionType
-    )
-  }
+  params.name ??= formatDefaultSubscriptionName(
+    getCollectionSubscriptionQueryObj(state),
+    subscriptionType
+  )
 
   try {
     response = await graphQlRequestObject.search(graphQuery, {

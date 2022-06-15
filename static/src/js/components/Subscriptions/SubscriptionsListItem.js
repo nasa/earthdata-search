@@ -70,7 +70,7 @@ export const SubscriptionsListItem = ({
           icon={FaInfoCircle}
           bootstrapVariant="light"
           bootstrapSize="sm"
-          label="Hover to view subscription details"
+          label="Details"
           onClick={(e) => e.preventDefault()}
           tooltipId={`subscription-list-item--${conceptId}`}
           overlayClass="subscriptions-list-item__tooltip tooltip--wide"
