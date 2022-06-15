@@ -4,6 +4,7 @@ import { humanizedQueryValueFormattingMap } from './humanizedQueryValueFormattin
  * Takes the query object from the state and formats the keys to be displayed in the UI
  * @param {Object} subscriptionsQuery - The granule/collection query object from the state
  * @param {String} subscriptionQueryType - The subscription type. Either 'collection' or 'granule'
+ * @return {Array} [key, humanizedKey, humanizedValue]
  */
 export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) => {
   const values = []
@@ -12,24 +13,24 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
   if (subscriptionQueryType === 'collection') {
     // If the query will return collections wihout granules, add a key of "Collections without granules"
     if (!subscriptionsQuery.hasGranulesOrCwic) {
-      values.push(['Include datasets without granules'])
+      values.push(['hasGranulesOrCwic', 'Include datasets without granules'])
     }
 
     // If only displaying EOSDIS collections, add a key of "EOSDIS collections"
     if (subscriptionsQuery.tagKey && subscriptionsQuery.tagKey.includes('gov.nasa.eosdis')) {
-      values.push(['Include only EOSDIS datasets'])
+      values.push(['tagKey-gov.nasa.eosdis', 'Include only EOSDIS datasets'])
       subscriptionsQueryTemp.tagKey = subscriptionsQueryTemp.tagKey.filter((tagKey) => tagKey !== 'gov.nasa.eosdis')
     }
 
     // If only displaying collections with Map Imagery, add a key of "Map Imagery"
     if (subscriptionsQuery.tagKey && subscriptionsQuery.tagKey.includes('edsc.extra.serverless.gibs')) {
-      values.push(['Include only datasets with map imagery'])
+      values.push(['tagKey-edsc.extra.serverless.gibs', 'Include only datasets with map imagery'])
       subscriptionsQueryTemp.tagKey = subscriptionsQueryTemp.tagKey.filter((tagKey) => tagKey !== 'edsc.extra.serverless.gibs')
     }
 
-    // If only displaying customizable collections with Map Imagery, add a key of "Customizable"
+    // If only displaying customizable collections, add a key of "Customizable"
     if (subscriptionsQuery.serviceType && ['esi', 'opendap', 'harmony'].every((type) => subscriptionsQuery.serviceType.includes(type))) {
-      values.push(['Include only datasets that support customization'])
+      values.push(['serviceType', 'Include only datasets that support customization'])
       subscriptionsQueryTemp.serviceType = []
     }
   }
@@ -51,6 +52,7 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
       // and the index is the humanzed value
       values.push(
         [
+          key,
           key,
           humanizedQueryValueFormattingMap[key]
             ? humanizedQueryValueFormattingMap[key](subscriptionsQueryTemp[key])

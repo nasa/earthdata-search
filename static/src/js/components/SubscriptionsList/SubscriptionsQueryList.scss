@@ -8,6 +8,10 @@
   &__query-list-item {
     margin-bottom: 0.5rem;
     text-align: left;
+
+    &__checkbox {
+      margin-right: 0.7rem;
+    }
   }
 
   &__query-list-item-heading {

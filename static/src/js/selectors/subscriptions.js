@@ -47,3 +47,29 @@ export const getCollectionSubscriptions = createSelector(
     return Object.values(byId).map((subscription) => subscription)
   }
 )
+
+/**
+ * Retrieve metadata from Redux pertaining to collection subscription enabled fields
+ */
+export const getCollectionSubscriptionDisabledFields = createSelector(
+  [getSubscriptions],
+  (subscriptionMetadata) => {
+    const { disabledFields } = subscriptionMetadata
+    const { collection } = disabledFields
+
+    return collection
+  }
+)
+
+/**
+ * Retrieve metadata from Redux pertaining to granule subscription enabled fields
+ */
+export const getGranuleSubscriptionDisabledFields = createSelector(
+  [getSubscriptions],
+  (subscriptionMetadata) => {
+    const { disabledFields } = subscriptionMetadata
+    const { granule } = disabledFields
+
+    return granule
+  }
+)

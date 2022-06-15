@@ -15,6 +15,7 @@ beforeAll(() => {
 
 function setup(overrideProps) {
   const props = {
+    disabledFields: {},
     query: {
       options: {
         spatial: {
@@ -25,6 +26,7 @@ function setup(overrideProps) {
     onCreateSubscription: jest.fn(),
     onDeleteSubscription: jest.fn(),
     onUpdateSubscription: jest.fn(),
+    onUpdateSubscriptionDisabledFields: jest.fn(),
     subscriptions: [],
     subscriptionType: 'granule',
     ...overrideProps
@@ -324,6 +326,44 @@ describe('SubscriptionsBody component', () => {
         expect(props.onCreateSubscription)
           .toHaveBeenCalledTimes(1)
       })
+    })
+  })
+
+  describe('filters applied count', () => {
+    describe('when the user has not excluded a query parameter', () => {
+      test('displays the correct filter count', () => {
+        const { enzymeWrapper } = setup({
+          subscriptionType: 'collection',
+          query: {
+            hasGranulesOrCwic: true,
+            keyword: 'modis',
+            point: ['0,0']
+          },
+          disabledFields: {}
+        })
+
+        expect(enzymeWrapper.find('.subscriptions-body__query-list-heading').text())
+          .toEqual('2 filters applied')
+      })
+    })
+  })
+
+  describe('when the user excludes a query parameter', () => {
+    test('displays the correct filter count', () => {
+      const { enzymeWrapper } = setup({
+        subscriptionType: 'collection',
+        query: {
+          hasGranulesOrCwic: true,
+          keyword: 'modis',
+          point: ['0,0']
+        },
+        disabledFields: {
+          keyword: true
+        }
+      })
+
+      expect(enzymeWrapper.find('.subscriptions-body__query-list-heading').text())
+        .toEqual('1 filter applied')
     })
   })
 })

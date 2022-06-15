@@ -48,5 +48,15 @@ describe('formatDefaultSubscriptionName', () => {
         expect(result).toEqual('Dataset Search Subscription (Include datasets without granules)')
       })
     })
+
+    describe('when a facet query parameter is used', () => {
+      test('returns the correct value', () => {
+        const result = formatDefaultSubscriptionName({
+          scienceKeywordsH: [{ term: 'Ocean Temperature', topic: 'Oceans' }],
+          hasGranulesOrCwic: true
+        }, 'collection')
+        expect(result).toEqual('Dataset Search Subscription (Science Keywords)')
+      })
+    })
   })
 })

@@ -3,12 +3,13 @@ import { createSelector } from 'reselect'
 
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { buildGranuleSearchParams, extractGranuleSearchParams, prepareGranuleParams } from '../util/granules'
-import { prepareSubscriptionQuery } from '../util/subscriptions'
+import { prepareSubscriptionQuery, removeDisabledFieldsFromQuery } from '../util/subscriptions'
 import { prepKeysForCmr } from '../../../../sharedUtils/prepKeysForCmr'
 import { collectionRequestNonIndexedCmrKeys, granuleRequestNonIndexedCmrKeys } from '../../../../sharedConstants/nonIndexedCmrKeys'
 
 import { getFocusedCollectionId } from './focusedCollection'
 import { getFocusedCollectionMetadata } from './collectionMetadata'
+import { getCollectionSubscriptionDisabledFields, getGranuleSubscriptionDisabledFields } from './subscriptions'
 
 /**
  * Retrieve current collection query information from Redux
@@ -63,10 +64,19 @@ export const getGranuleSubscriptionQueryObj = createSelector(
  * Retrieve the granule subscription query string
  * @param {Object} state Current state of Redux
  */
-export const getGranuleSubscriptionQueryString = (state) => prepKeysForCmr(
-  snakecaseKeys(getGranuleSubscriptionQueryObj(state)),
-  granuleRequestNonIndexedCmrKeys
-)
+export const getGranuleSubscriptionQueryString = (state) => {
+  const queryObj = getGranuleSubscriptionQueryObj(state)
+  const disabledFields = getGranuleSubscriptionDisabledFields(state)
+
+  const queryWithDisabledRemoved = removeDisabledFieldsFromQuery(queryObj, disabledFields)
+
+  const params = prepKeysForCmr(
+    snakecaseKeys(queryWithDisabledRemoved),
+    granuleRequestNonIndexedCmrKeys
+  )
+
+  return params
+}
 
 /**
  * Retrieve the collection subscription query object
@@ -84,7 +94,15 @@ export const getCollectionSubscriptionQueryObj = (state) => {
  * Retrieve the collection subscription query string
  * @param {Object} state Current state of Redux
  */
-export const getCollectionSubscriptionQueryString = (state) => prepKeysForCmr(
-  snakecaseKeys(getCollectionSubscriptionQueryObj(state)),
-  collectionRequestNonIndexedCmrKeys
-)
+export const getCollectionSubscriptionQueryString = (state) => {
+  const queryObj = getCollectionSubscriptionQueryObj(state)
+  const disabledFields = getCollectionSubscriptionDisabledFields(state)
+
+  const queryWithDisabledRemoved = removeDisabledFieldsFromQuery(queryObj, disabledFields)
+  const params = prepKeysForCmr(
+    snakecaseKeys(queryWithDisabledRemoved),
+    collectionRequestNonIndexedCmrKeys
+  )
+
+  return params
+}

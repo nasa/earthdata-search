@@ -9,6 +9,8 @@ import snakecaseKeys from 'snakecase-keys'
 import { collectionRequestNonIndexedCmrKeys, granuleRequestNonIndexedCmrKeys } from '../../../../../sharedConstants/nonIndexedCmrKeys'
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
 import { queryToHumanizedList } from '../../util/queryToHumanizedList'
+import pluralize from '../../util/pluralize'
+import { removeDisabledFieldsFromQuery } from '../../util/subscriptions'
 
 import Button from '../Button/Button'
 import SubscriptionsListItem from './SubscriptionsListItem'
@@ -18,7 +20,7 @@ import SubscriptionsQueryList from '../SubscriptionsList/SubscriptionsQueryList'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './SubscriptionsBody.scss'
-import pluralize from '../../util/pluralize'
+import { formatDefaultSubscriptionName } from '../../util/formatDefaultSubscriptionName'
 
 /**
  * Renders SubscriptionsBody.
@@ -30,12 +32,14 @@ import pluralize from '../../util/pluralize'
  * @param {String} subscriptionType - The type of subscriptions to display, collection or granule.
  */
 export const SubscriptionsBody = ({
+  disabledFields,
   query,
   subscriptions,
   subscriptionType,
   onCreateSubscription,
   onDeleteSubscription,
-  onUpdateSubscription
+  onUpdateSubscription,
+  onUpdateSubscriptionDisabledFields
 }) => {
   const [submittingNewSubscription, setSubmittingNewSubscription] = useState(false)
   const [name, setName] = useState()
@@ -46,6 +50,13 @@ export const SubscriptionsBody = ({
 
     setName(value)
   }
+
+  const parsedQueryWithRemovedFields = removeDisabledFieldsFromQuery(query, disabledFields)
+
+  const placeholderName = formatDefaultSubscriptionName(
+    parsedQueryWithRemovedFields,
+    subscriptionType
+  )
 
   // Compare the subscriptions returned for the user to the current query to prevent submission
   // of duplicate subscriptions
@@ -61,7 +72,7 @@ export const SubscriptionsBody = ({
 
     return isEqual(
       parse(
-        prepKeysForCmr(snakecaseKeys(query), nonIndexedKeys)
+        prepKeysForCmr(snakecaseKeys(parsedQueryWithRemovedFields), nonIndexedKeys)
       ),
       parse(subscriptionQuery)
     )
@@ -79,7 +90,10 @@ export const SubscriptionsBody = ({
   const hasNullCmrQuery = isEqual(query, nullCmrQuery)
   const hasExactlyMatchingGranuleQuery = exactlyMatchingSubscriptionQueries.length > 0
 
-  const humanReadableQueryList = queryToHumanizedList(query, subscriptionType)
+  const appliedFilterCount = queryToHumanizedList(
+    parsedQueryWithRemovedFields,
+    subscriptionType
+  ).length
 
   return (
     <div className="subscriptions-body">
@@ -103,21 +117,25 @@ export const SubscriptionsBody = ({
                       data-test-id="subscriptions-body_point"
                       type="text"
                       value={name}
+                      placeholder={placeholderName}
                       onChange={onChangeName}
                       onBlur={onChangeName}
                       onKeyUp={onChangeName}
                     />
                   </Form.Group>
-                  <h4 className="subscriptions-body__query-list-heading">{`${humanReadableQueryList.length} ${pluralize('filter', humanReadableQueryList.length)} applied`}</h4>
+                  <h4 className="subscriptions-body__query-list-heading">{`${appliedFilterCount} ${pluralize('filter', appliedFilterCount)} applied`}</h4>
                   <SubscriptionsQueryList
                     displayEmptyMessage={false}
+                    showCheckboxes
+                    disabledFields={disabledFields}
                     query={query}
                     subscriptionType={subscriptionType}
+                    onUpdateSubscriptionDisabledFields={onUpdateSubscriptionDisabledFields}
                   />
                   <div className="subscriptions-body__query-secondary">
                     {
                       (hasExactlyMatchingGranuleQuery || hasNullCmrQuery) && (
-                        <p className="subscriptions-body__warning">
+                        <div className="subscriptions-body__warning">
                           <EDSCIcon className="subscriptions-body__warning-icon" icon={FaBell} />
                           {
                             hasExactlyMatchingGranuleQuery
@@ -145,7 +163,7 @@ export const SubscriptionsBody = ({
                               </div>
                             )
                           }
-                        </p>
+                        </div>
                       )
                     }
                   </div>
@@ -158,7 +176,12 @@ export const SubscriptionsBody = ({
                     icon={FaPlus}
                     onClick={async () => {
                       setSubmittingNewSubscription(true)
-                      await onCreateSubscription(name, subscriptionType)
+
+                      // If the user hasn't provided a name, use the default name from the placeholder
+                      let subscriptionName = name
+                      subscriptionName ??= placeholderName
+
+                      await onCreateSubscription(subscriptionName, subscriptionType)
                       setSubmittingNewSubscription(false)
                     }}
                   >
@@ -233,11 +256,13 @@ SubscriptionsBody.propTypes = {
   query: PropTypes.shape({
     hasGranulesOrCwic: PropTypes.bool
   }).isRequired,
+  disabledFields: PropTypes.shape({}).isRequired,
   subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   subscriptionType: PropTypes.string.isRequired,
   onCreateSubscription: PropTypes.func.isRequired,
   onDeleteSubscription: PropTypes.func.isRequired,
-  onUpdateSubscription: PropTypes.func.isRequired
+  onUpdateSubscription: PropTypes.func.isRequired,
+  onUpdateSubscriptionDisabledFields: PropTypes.func.isRequired
 }
 
 export default SubscriptionsBody

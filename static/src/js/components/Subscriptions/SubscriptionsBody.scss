@@ -63,6 +63,8 @@
     color: darken($color__yellow, 7);
     background-color: lighten($color__yellow, 46);
     border-radius: 0.125rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
   }
 
   &__warning-icon {

@@ -1,4 +1,4 @@
-import { prepareSubscriptionQuery } from '../subscriptions'
+import { prepareSubscriptionQuery, removeDisabledFieldsFromQuery } from '../subscriptions'
 
 describe('prepareSubscriptionQuery', () => {
   test('returns the correct parameters', () => {
@@ -36,5 +36,53 @@ describe('prepareSubscriptionQuery', () => {
     }
 
     expect(prepareSubscriptionQuery(inputParams)).toEqual(result)
+  })
+})
+
+describe('removeDisabledFieldsFromQuery', () => {
+  test('removes disabled field from query', () => {
+    const query = {
+      keyword: 'modis',
+      tagKey: ['mocktag']
+    }
+
+    const disabledFields = {
+      keyword: true
+    }
+
+    const result = removeDisabledFieldsFromQuery(query, disabledFields)
+
+    expect(result).toEqual({ tagKey: ['mocktag'] })
+  })
+
+  test('removes disabled tag field from query', () => {
+    const query = {
+      keyword: 'modis',
+      tagKey: ['mocktag']
+    }
+
+    const disabledFields = {
+      'tagKey-mocktag': true
+    }
+
+    const result = removeDisabledFieldsFromQuery(query, disabledFields)
+
+    expect(result).toEqual({ keyword: 'modis' })
+  })
+
+  test('does not remove a disabled field from the query if it is false in the disabledFields', () => {
+    // This can happen when the user disables and field, and reenables it
+    const query = {
+      keyword: 'modis',
+      tagKey: ['mocktag']
+    }
+
+    const disabledFields = {
+      keyword: false
+    }
+
+    const result = removeDisabledFieldsFromQuery(query, disabledFields)
+
+    expect(result).toEqual({ keyword: 'modis', tagKey: ['mocktag'] })
   })
 })

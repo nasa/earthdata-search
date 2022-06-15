@@ -9,7 +9,11 @@ import actions from '../../actions/index'
 
 import { getCollectionSubscriptionQueryObj, getGranuleSubscriptionQueryObj } from '../../selectors/query'
 import { getFocusedCollectionSubscriptions } from '../../selectors/collectionMetadata'
-import { getCollectionSubscriptions } from '../../selectors/subscriptions'
+import {
+  getCollectionSubscriptionDisabledFields,
+  getCollectionSubscriptions,
+  getGranuleSubscriptionDisabledFields
+} from '../../selectors/subscriptions'
 
 import SubscriptionsBody from '../../components/Subscriptions/SubscriptionsBody'
 
@@ -22,6 +26,8 @@ export const mapDispatchToProps = (dispatch) => ({
     (conceptId, nativeId, subscriptionName, subscriptionType) => dispatch(
       actions.updateSubscription(conceptId, nativeId, subscriptionName, subscriptionType)
     ),
+  onUpdateSubscriptionDisabledFields:
+    (data) => dispatch(actions.updateSubscriptionDisabledFields(data)),
   onFetchCollectionSubscriptions:
     () => dispatch(actions.getSubscriptions('collection')),
   onDeleteSubscription:
@@ -33,8 +39,10 @@ export const mapDispatchToProps = (dispatch) => ({
 export const mapStateToProps = (state) => ({
   collectionQueryObj: getCollectionSubscriptionQueryObj(state),
   collectionSubscriptions: getCollectionSubscriptions(state),
+  collectionSubscriptionDisabledFields: getCollectionSubscriptionDisabledFields(state),
   granuleQueryObj: getGranuleSubscriptionQueryObj(state),
-  granuleSubscriptions: getFocusedCollectionSubscriptions(state)
+  granuleSubscriptions: getFocusedCollectionSubscriptions(state),
+  granuleSubscriptionDisabledFields: getGranuleSubscriptionDisabledFields(state)
 })
 
 // TODO: Needs tests for onCreateSubscription - EDSC-2923
@@ -53,23 +61,29 @@ export const mapStateToProps = (state) => ({
 export const SubscriptionsBodyContainer = ({
   collectionQueryObj,
   collectionSubscriptions,
+  collectionSubscriptionDisabledFields,
   granuleQueryObj,
   granuleSubscriptions,
+  granuleSubscriptionDisabledFields,
   onCreateSubscription,
   onDeleteSubscription,
   onFetchCollectionSubscriptions,
   onUpdateSubscription,
+  onUpdateSubscriptionDisabledFields,
   subscriptionType
 }) => {
   let loadedSubscriptions
   let query
+  let disabledFields
 
   if (subscriptionType === 'collection') {
     loadedSubscriptions = collectionSubscriptions
     query = collectionQueryObj
+    disabledFields = collectionSubscriptionDisabledFields
   } else {
     loadedSubscriptions = granuleSubscriptions
     query = granuleQueryObj
+    disabledFields = granuleSubscriptionDisabledFields
   }
 
   useEffect(() => {
@@ -80,12 +94,14 @@ export const SubscriptionsBodyContainer = ({
 
   return (
     <SubscriptionsBody
+      disabledFields={disabledFields}
       query={query}
       subscriptions={loadedSubscriptions}
       subscriptionType={subscriptionType}
       onCreateSubscription={onCreateSubscription}
       onDeleteSubscription={onDeleteSubscription}
       onUpdateSubscription={onUpdateSubscription}
+      onUpdateSubscriptionDisabledFields={onUpdateSubscriptionDisabledFields}
     />
   )
 }
@@ -93,13 +109,16 @@ export const SubscriptionsBodyContainer = ({
 SubscriptionsBodyContainer.propTypes = {
   collectionQueryObj: PropTypes.shape({}).isRequired,
   collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  collectionSubscriptionDisabledFields: PropTypes.shape({}).isRequired,
   granuleQueryObj: PropTypes.shape({}).isRequired,
   granuleSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  granuleSubscriptionDisabledFields: PropTypes.shape({}).isRequired,
   subscriptionType: PropTypes.string.isRequired,
   onCreateSubscription: PropTypes.func.isRequired,
   onDeleteSubscription: PropTypes.func.isRequired,
   onFetchCollectionSubscriptions: PropTypes.func.isRequired,
-  onUpdateSubscription: PropTypes.func.isRequired
+  onUpdateSubscription: PropTypes.func.isRequired,
+  onUpdateSubscriptionDisabledFields: PropTypes.func.isRequired
 }
 
 export default withRouter(
