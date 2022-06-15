@@ -54,6 +54,15 @@ describe(('formatPoints'), () => {
       ])
     })
   })
+
+  describe('when formatting a string of points', () => {
+    test('returns the points in the desired format', () => {
+      const result = formatPoints('2,1,4,3,6,5')
+      expect(result).toEqual([
+        [['1', '2'], ['3', '4'], ['5', '6']]
+      ])
+    })
+  })
 })
 
 describe(('formatCircle'), () => {
@@ -66,6 +75,15 @@ describe(('formatCircle'), () => {
       expect(result).toEqual([
         ['1', '2', '3'],
         ['4', '5', '6']
+      ])
+    })
+  })
+
+  describe('when formatting a string of a circle', () => {
+    test('returns the circles in the desired format', () => {
+      const result = formatCircle('2,1,3')
+      expect(result).toEqual([
+        ['1', '2', '3']
       ])
     })
   })

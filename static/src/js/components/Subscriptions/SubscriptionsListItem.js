@@ -48,7 +48,6 @@ export const SubscriptionsListItem = ({
     const confirmUpdate = window.confirm('Are you sure you want to update this subscription with your current search parameters?')
 
     if (confirmUpdate) {
-      console.log('name', name)
       onUpdateSubscription(conceptId, nativeId, name, subscriptionType)
     }
   }

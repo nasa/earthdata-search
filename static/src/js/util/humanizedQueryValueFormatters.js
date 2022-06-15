@@ -1,3 +1,4 @@
+import { castArray } from 'lodash'
 import moment from 'moment'
 
 /**
@@ -28,7 +29,7 @@ export const formatPoint = (coordinateString) => coordinateString
  * @param {Array} value - The points string from a query object
  * @returns {Array} An array in the following format: [[x1, y1], [x2, y2], ...]
  */
-export const formatPoints = (value) => value.map(
+export const formatPoints = (value) => castArray(value).map(
   (coordinateString) => formatPoint(coordinateString)
 )
 
@@ -37,7 +38,7 @@ export const formatPoints = (value) => value.map(
  * @param {Node} value - The circle param from a query object
  * @returns {Array} An array in the following format: [x, y, radius]
  */
-export const formatCircle = (value) => value.map((circle) => {
+export const formatCircle = (value) => castArray(value).map((circle) => {
   const [y, x, radius] = circle.split(',')
   return [x, y, radius]
 })
