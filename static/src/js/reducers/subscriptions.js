@@ -6,6 +6,7 @@ import {
   REMOVE_SUBSCRIPTION,
   STARTED_SUBSCRIPTIONS_TIMER,
   UPDATE_COLLECTION_SUBSCRIPTION,
+  UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../constants/actionTypes'
 
@@ -15,7 +16,11 @@ const initialState = {
   isLoaded: false,
   error: null,
   timerStart: null,
-  loadTime: 0
+  loadTime: 0,
+  disabledFields: {
+    collection: {},
+    granule: {}
+  }
 }
 
 const processResults = (results) => {
@@ -108,6 +113,21 @@ const subscriptionsReducer = (state = initialState, action = {}) => {
         ...state,
         byId: {
           ...byId
+        }
+      }
+    }
+    case UPDATE_SUBSCRIPTION_DISABLED_FIELDS: {
+      return {
+        ...state,
+        disabledFields: {
+          collection: {
+            ...state.disabledFields.collection,
+            ...action.payload.collection
+          },
+          granule: {
+            ...state.disabledFields.granule,
+            ...action.payload.granule
+          }
         }
       }
     }

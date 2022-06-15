@@ -10,6 +10,7 @@ import {
   STARTED_SUBSCRIPTIONS_TIMER,
   UPDATE_COLLECTION_SUBSCRIPTION,
   UPDATE_GRANULE_SUBSCRIPTION,
+  UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../constants/actionTypes'
 
@@ -18,12 +19,11 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getCollectionsMetadata } from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
-import { getCollectionSubscriptionQueryObj, getCollectionSubscriptionQueryString, getGranuleSubscriptionQueryString } from '../selectors/query'
+import { getCollectionSubscriptionQueryString, getGranuleSubscriptionQueryString } from '../selectors/query'
 
 import { addToast } from '../util/addToast'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import GraphQlRequest from '../util/request/graphQlRequest'
-import { formatDefaultSubscriptionName } from '../util/formatDefaultSubscriptionName'
 
 export const updateSubscriptionResults = (payload) => ({
   type: UPDATE_SUBSCRIPTION_RESULTS,
@@ -72,6 +72,11 @@ export const updateCollectionSubscription = (payload) => ({
   payload
 })
 
+export const updateSubscriptionDisabledFields = (payload) => ({
+  type: UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
+  payload
+})
+
 /**
  * Perform a subscriptions request.
  */
@@ -116,11 +121,6 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
     params.collectionConceptId = collectionId
   }
   params.query = subscriptionQuery
-
-  params.name ??= formatDefaultSubscriptionName(
-    getCollectionSubscriptionQueryObj(state),
-    subscriptionType
-  )
 
   try {
     response = await graphQlRequestObject.search(graphQuery, {

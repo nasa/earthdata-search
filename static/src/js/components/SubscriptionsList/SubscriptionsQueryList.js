@@ -142,33 +142,82 @@ const buildHumanizedQueryDisplay = (key, value) => {
  */
 export const SubscriptionsQueryList = ({
   displayEmptyMessage,
+  disabledFields,
+  showCheckboxes,
   query,
-  subscriptionType
+  subscriptionType,
+  onUpdateSubscriptionDisabledFields
 }) => {
   const humanReadableQueryList = queryToHumanizedList(query, subscriptionType)
+
+  const handleCheckboxChange = (e) => {
+    const { id } = e.target
+
+    const [, idWithoutType] = id.split(`${subscriptionType}-`)
+    onUpdateSubscriptionDisabledFields({
+      [subscriptionType]: {
+        [idWithoutType]: !e.target.checked
+      }
+    })
+  }
+
+  // If showCheckboxes is true, wrap the query list item in a label
+  const buildName = (key, humanizedKey, value) => {
+    const queryListItem = (
+      <>
+        {
+          showCheckboxes && (
+            <input
+              id={`${subscriptionType}-${key}`}
+              className="subscriptions-query-list__query-list-item__checkbox"
+              type="checkbox"
+              value={value}
+              onChange={handleCheckboxChange}
+              checked={!disabledFields[key]}
+            />
+          )
+        }
+        <span className="subscriptions-query-list__query-list-item-heading">
+          {humanizedQueryKeysMap[humanizedKey] || humanizedKey}
+        </span>
+        {
+          // If the values have been humanized, the will exist in this array
+          Object.keys(humanizedQueryValueFormattingMap).includes(humanizedKey)
+            ? buildHumanizedQueryDisplay(humanizedKey, value)
+            : (
+              // If the vaules do not exist in the humanized map, the will be displayed here. As a fallback
+              // JSON stringify non-string values
+              <span
+                className="subscriptions-query-list__query-list-item-value"
+                title={typeof value === 'string' ? value : JSON.stringify(value)}
+              >
+                {typeof value === 'string' ? value : JSON.stringify(value)}
+              </span>
+            )
+        }
+      </>
+    )
+
+    if (showCheckboxes) {
+      return (
+        <label htmlFor={`${subscriptionType}-${key}`}>
+          {
+            queryListItem
+          }
+        </label>
+      )
+    }
+
+    return queryListItem
+  }
 
   return (
     <ul className="subscriptions-query-list__query-list">
       {
-        humanReadableQueryList.map(([key, value]) => (
+        humanReadableQueryList.map(([key, humanizedKey, value]) => (
           <li key={key} className="subscriptions-query-list__query-list-item">
-            <span className="subscriptions-query-list__query-list-item-heading">
-              {humanizedQueryKeysMap[key] || key}
-            </span>
             {
-              // If the values have been humanized, the will exist in this array
-              Object.keys(humanizedQueryValueFormattingMap).includes(key)
-                ? buildHumanizedQueryDisplay(key, value)
-                : (
-                  // If the vaules do not exist in the humanized map, the will be displayed here. As a fallback
-                  // JSON stringify non-string values
-                  <span
-                    className="subscriptions-query-list__query-list-item-value"
-                    title={typeof value === 'string' ? value : JSON.stringify(value)}
-                  >
-                    {typeof value === 'string' ? value : JSON.stringify(value)}
-                  </span>
-                )
+              buildName(key, humanizedKey, value)
             }
           </li>
         ))
@@ -185,13 +234,19 @@ export const SubscriptionsQueryList = ({
 }
 
 SubscriptionsQueryList.defaultProps = {
-  displayEmptyMessage: true
+  displayEmptyMessage: true,
+  showCheckboxes: false,
+  disabledFields: null,
+  onUpdateSubscriptionDisabledFields: null
 }
 
 SubscriptionsQueryList.propTypes = {
   displayEmptyMessage: PropTypes.bool,
+  disabledFields: PropTypes.shape({}),
+  showCheckboxes: PropTypes.bool,
   query: PropTypes.shape({}).isRequired,
-  subscriptionType: PropTypes.string.isRequired
+  subscriptionType: PropTypes.string.isRequired,
+  onUpdateSubscriptionDisabledFields: PropTypes.func
 }
 
 export default SubscriptionsQueryList

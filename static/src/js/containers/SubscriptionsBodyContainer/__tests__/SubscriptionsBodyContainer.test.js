@@ -13,13 +13,16 @@ function setup(overrideProps) {
   const props = {
     collectionQueryObj: {},
     collectionSubscriptions: [],
+    collectionSubscriptionDisabledFields: {},
     granuleQueryObj: {},
     granuleSubscriptions: [],
+    granuleSubscriptionDisabledFields: {},
     subscriptionType: 'granule',
     onCreateSubscription: jest.fn(),
     onDeleteSubscription: jest.fn(),
     onFetchCollectionSubscriptions: jest.fn(),
     onUpdateSubscription: jest.fn(),
+    onUpdateSubscriptionDisabledFields: jest.fn(),
     ...overrideProps
   }
 
@@ -41,7 +44,7 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledTimes(1)
   })
 
-  test('onCreateSubscription calls actions.updateSubscription', () => {
+  test('onUpdateSubscription calls actions.updateSubscription', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateSubscription')
 
@@ -50,7 +53,7 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledTimes(1)
   })
 
-  test('onCreateSubscription calls actions.deleteSubscription', () => {
+  test('onDeleteSubscription calls actions.deleteSubscription', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'deleteSubscription')
 
@@ -67,6 +70,15 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toBeCalledTimes(1)
   })
+
+  test('onUpdateSubscriptionDisabledFields calls actions.updateSubscriptionDisabledFields', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'updateSubscriptionDisabledFields')
+
+    mapDispatchToProps(dispatch).onUpdateSubscriptionDisabledFields()
+
+    expect(spy).toBeCalledTimes(1)
+  })
 })
 
 describe('mapStateToProps', () => {
@@ -75,7 +87,12 @@ describe('mapStateToProps', () => {
       query: {
         collection: {}
       },
-      subscriptions: {}
+      subscriptions: {
+        disabledFields: {
+          collection: {},
+          granule: {}
+        }
+      }
     }
 
     const expectedState = {
@@ -84,8 +101,10 @@ describe('mapStateToProps', () => {
         tagKey: []
       },
       collectionSubscriptions: [],
+      collectionSubscriptionDisabledFields: {},
       granuleQueryObj: {},
-      granuleSubscriptions: []
+      granuleSubscriptions: [],
+      granuleSubscriptionDisabledFields: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)

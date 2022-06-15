@@ -14,6 +14,7 @@ import {
   onSubscriptionsLoaded,
   onSubscriptionsLoading,
   updateSubscription,
+  updateSubscriptionDisabledFields,
   updateSubscriptionResults
 } from '../subscriptions'
 
@@ -28,6 +29,7 @@ import {
   STARTED_SUBSCRIPTIONS_TIMER,
   UPDATE_COLLECTION_SUBSCRIPTION,
   UPDATE_GRANULE_SUBSCRIPTION,
+  UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../../constants/actionTypes'
 
@@ -77,6 +79,17 @@ describe('onSubscriptionsErrored', () => {
       type: ERRORED_SUBSCRIPTIONS
     }
     expect(onSubscriptionsErrored()).toEqual(expectedAction)
+  })
+})
+
+describe('updateSubscriptionDisabledFields', () => {
+  test('should create an action to update the search query', () => {
+    const payload = { mock: 'data' }
+    const expectedAction = {
+      type: UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
+      payload
+    }
+    expect(updateSubscriptionDisabledFields(payload)).toEqual(expectedAction)
   })
 })
 
@@ -163,6 +176,12 @@ describe('createSubscription', () => {
           }
         }
       },
+      subscriptions: {
+        disabledFields: {
+          collection: {},
+          granule: {}
+        }
+      },
       timeline: {
         query: {}
       },
@@ -246,6 +265,12 @@ describe('createSubscription', () => {
           spatial: {
             polygon: ['-18,-78,-13,-74,-16,-73,-22,-77,-18,-78']
           }
+        }
+      },
+      subscriptions: {
+        disabledFields: {
+          collection: {},
+          granule: {}
         }
       },
       timeline: {
@@ -356,6 +381,12 @@ describe('createSubscription', () => {
             }
           }
         },
+        subscriptions: {
+          disabledFields: {
+            collection: {},
+            granule: {}
+          }
+        },
         timeline: {
           query: {}
         },
@@ -435,6 +466,12 @@ describe('createSubscription', () => {
             spatial: {
               polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
             }
+          }
+        },
+        subscriptions: {
+          disabledFields: {
+            collection: {},
+            granule: {}
           }
         },
         timeline: {
@@ -845,6 +882,12 @@ describe('updateSubscription', () => {
           spatial: {}
         }
       },
+      subscriptions: {
+        disabledFields: {
+          collection: {},
+          granule: {}
+        }
+      },
       timeline: {
         query: {}
       },
@@ -904,6 +947,12 @@ describe('updateSubscription', () => {
             isRecurring: false
           },
           spatial: {}
+        }
+      },
+      subscriptions: {
+        disabledFields: {
+          collection: {},
+          granule: {}
         }
       },
       timeline: {
@@ -986,6 +1035,12 @@ describe('updateSubscription', () => {
             isRecurring: false
           },
           spatial: {}
+        }
+      },
+      subscriptions: {
+        disabledFields: {
+          collection: {},
+          granule: {}
         }
       },
       timeline: {

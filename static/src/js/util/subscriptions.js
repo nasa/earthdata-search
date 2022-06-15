@@ -23,3 +23,41 @@ export const prepareSubscriptionQuery = (params) => {
   // Return the remaining parameters, don't encode the values because CMR won't accept them
   return prunedParams
 }
+
+/**
+ * Removes the provided disabledFields from the subscription query object
+ * @param {Object} query Subscription query object
+ * @param {Object} disabledFields Subscription query disabled fields object
+ */
+export const removeDisabledFieldsFromQuery = (query, disabledFields) => {
+  const newQuery = { ...query }
+  let tags = query.tagKey
+
+  Object.keys(disabledFields).forEach((key) => {
+    // If the disabledField is false, the user has re-enabled the field, don't remove it
+    if (!disabledFields[key]) return
+
+    // If the key starts with `tagKey`, remove the correct tag from the tags array
+    if (key.startsWith('tagKey')) {
+      const [, tagValue] = key.split('-')
+
+      tags = tags.filter((value) => value !== tagValue)
+      return
+    }
+
+    // Remove the field from the newQuery
+    delete newQuery[key]
+  })
+
+  // If some tags still exist, set the new tagKey to the updates tags array
+  if (tags && tags.length > 0) {
+    newQuery.tagKey = tags
+  }
+
+  // If no tags remain, delete the tagKey from the newQuery
+  if (tags && tags.length === 0) {
+    delete newQuery.tagKey
+  }
+
+  return newQuery
+}

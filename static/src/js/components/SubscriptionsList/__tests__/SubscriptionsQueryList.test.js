@@ -12,8 +12,11 @@ beforeAll(() => {
 
 function setup(overrideProps) {
   const props = {
+    disabledFields: {},
     query: {},
     subscriptionType: 'granule',
+    showCheckboxes: false,
+    onUpdateSubscriptionDisabledFields: jest.fn(),
     ...overrideProps
   }
 
@@ -120,32 +123,91 @@ describe('SubscriptionsQueryList component', () => {
         .toContain('topic > term > variable_level_1 > variable_level_2 > variable_level_3 > detailed_variable')
     })
   })
-})
 
-describe('when rendering a query property that does not exist in the mapping', () => {
-  test('renders the key', () => {
-    const { enzymeWrapper } = setup({
-      subscriptionType: 'collection',
-      query: {
-        something: 'test'
-      }
+  describe('when rendering a query property that does not exist in the mapping', () => {
+    test('renders the key', () => {
+      const { enzymeWrapper } = setup({
+        subscriptionType: 'collection',
+        query: {
+          something: 'test'
+        }
+      })
+
+      expect(enzymeWrapper.find('.subscriptions-query-list__query-list').text())
+        .toContain('something')
     })
-
-    expect(enzymeWrapper.find('.subscriptions-query-list__query-list').text())
-      .toContain('something')
   })
-})
 
-describe('when rendering a query property that does exist in the mapping', () => {
-  test('renders the humanized vaules', () => {
-    const { enzymeWrapper } = setup({
-      subscriptionType: 'collection',
-      query: {
-        polygon: ['1,1,1,0,0,0,0,1']
-      }
+  describe('when rendering a query property that does exist in the mapping', () => {
+    test('renders the humanized vaules', () => {
+      const { enzymeWrapper } = setup({
+        subscriptionType: 'collection',
+        query: {
+          polygon: ['1,1,1,0,0,0,0,1']
+        }
+      })
+
+      expect(enzymeWrapper.find('.subscriptions-query-list__query-list').text())
+        .toContain('Polygon')
+    })
+  })
+
+  describe('when showCheckboxes is true', () => {
+    test('displays the checkbox', () => {
+      const { enzymeWrapper } = setup({
+        subscriptionType: 'collection',
+        query: {
+          hasGranulesOrCwic: true,
+          keyword: 'modis*'
+        },
+        showCheckboxes: true
+      })
+
+      expect(enzymeWrapper.find('.subscriptions-query-list__query-list-item__checkbox').exists())
+        .toBeTruthy()
+      expect(enzymeWrapper.find('.subscriptions-query-list__query-list-item__checkbox').props().checked)
+        .toBeTruthy()
     })
 
-    expect(enzymeWrapper.find('.subscriptions-query-list__query-list').text())
-      .toContain('Polygon')
+    test('displays the checkbox unchecked when the field is disabled', () => {
+      const { enzymeWrapper } = setup({
+        subscriptionType: 'collection',
+        query: {
+          hasGranulesOrCwic: true,
+          keyword: 'modis*'
+        },
+        showCheckboxes: true,
+        disabledFields: {
+          keyword: true
+        }
+      })
+
+      expect(enzymeWrapper.find('.subscriptions-query-list__query-list-item__checkbox').exists())
+        .toBeTruthy()
+      expect(enzymeWrapper.find('.subscriptions-query-list__query-list-item__checkbox').props().checked)
+        .toBeFalsy()
+    })
+
+    test('handleCheckboxChange calls onUpdateSubscriptionDisabledFields', () => {
+      const { enzymeWrapper, props } = setup({
+        subscriptionType: 'collection',
+        query: {
+          hasGranulesOrCwic: true,
+          keyword: 'modis*'
+        },
+        showCheckboxes: true
+      })
+
+      const checkbox = enzymeWrapper.find('.subscriptions-query-list__query-list-item__checkbox')
+
+      checkbox.simulate('change', { target: { id: 'collection-keyword', checked: false } })
+
+      expect(props.onUpdateSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+      expect(props.onUpdateSubscriptionDisabledFields).toHaveBeenCalledWith({
+        collection: {
+          keyword: true
+        }
+      })
+    })
   })
 })

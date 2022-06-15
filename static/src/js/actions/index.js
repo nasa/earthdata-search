@@ -180,6 +180,7 @@ import {
   deleteSubscription,
   deleteCollectionSubscription,
   updateSubscription,
+  updateSubscriptionDisabledFields,
   updateGranuleSubscription
 } from './subscriptions'
 import { setUserFromJwt } from './user'
@@ -308,7 +309,6 @@ const actions = {
   updateBrowserVersion,
   updateCmrFacet,
   updateCollectionMetadata,
-  updateGranuleSubscription,
   updateFeatureFacet,
   updateFocusedCollection,
   updateFocusedCollectionGranuleFilters,
@@ -316,6 +316,7 @@ const actions = {
   updateGranuleMetadata,
   updateGranuleResults,
   updateGranuleSearchQuery,
+  updateGranuleSubscription,
   updateNotificationLevel,
   updatePreferences,
   updateProjectGranuleParams,
@@ -325,6 +326,7 @@ const actions = {
   updateShapefile,
   updateStore,
   updateSubscription,
+  updateSubscriptionDisabledFields,
   viewCollectionDetails,
   viewCollectionGranules
 }

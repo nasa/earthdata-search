@@ -13,7 +13,7 @@ export const formatDefaultSubscriptionName = (queryObj, subscriptionType) => {
 
   // Format the end of the default string first. Formats the string to look like 'Bounding Box',
   // 'Bounding Box & 1 other filter', or 'Bounding Box & 2 other filters'
-  const firstFilter = humanizedQueryList[0] ? (humanizedQueryKeysMap[humanizedQueryList[0][0]] || humanizedQueryList[0][0]) : '0 filters'
+  const firstFilter = humanizedQueryList[0] ? (humanizedQueryKeysMap[humanizedQueryList[0][1]] || humanizedQueryList[0][1]) : '0 filters'
   const abbriviatedFilters = humanizedQueryList.length > 1 && ` & ${humanizedQueryList.length - 1} more ${pluralize('filter', humanizedQueryList.length - 1)}`
   let defaultSubscriptionName = `${firstFilter}`
 

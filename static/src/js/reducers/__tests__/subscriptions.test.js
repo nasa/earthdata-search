@@ -8,6 +8,7 @@ import {
   REMOVE_SUBSCRIPTION,
   STARTED_SUBSCRIPTIONS_TIMER,
   UPDATE_COLLECTION_SUBSCRIPTION,
+  UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../../constants/actionTypes'
 
@@ -17,7 +18,11 @@ const initialState = {
   isLoaded: false,
   error: null,
   timerStart: null,
-  loadTime: 0
+  loadTime: 0,
+  disabledFields: {
+    collection: {},
+    granule: {}
+  }
 }
 
 describe('INITIAL_STATE', () => {
@@ -220,6 +225,46 @@ describe('REMOVE_SUBSCRIPTION', () => {
       byId: {
         'SUB1001-EDSC': {
           mock: 'data'
+        }
+      }
+    }
+
+    expect(subscriptionsReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('UPDATE_SUBSCRIPTION_DISABLED_FIELDS', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
+      payload: {
+        collection: {
+          'mock-field-3': true
+        }
+      }
+    }
+
+    const initial = {
+      ...initialState,
+      disabledFields: {
+        collection: {
+          'mock-field-1': true
+        },
+        granule: {
+          'mock-field-2': true
+        }
+      }
+    }
+
+    const expectedState = {
+      ...initial,
+      disabledFields: {
+        collection: {
+          'mock-field-1': true,
+          'mock-field-3': true
+        },
+        granule: {
+          'mock-field-2': true
         }
       }
     }
