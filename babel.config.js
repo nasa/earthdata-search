@@ -5,7 +5,7 @@ module.exports = {
         targets: {
           node: '16',
           esmodules: true,
-          ie: '10'
+          ie: '11'
         }
       }
     ],

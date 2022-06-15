@@ -286,7 +286,7 @@ describe('SubscriptionsBody component', () => {
       const input = enzymeWrapper.find('.subscriptions-body__text-input')
 
       expect(input.props().value)
-        .toEqual('')
+        .toEqual()
     })
   })
 

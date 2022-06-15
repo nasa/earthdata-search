@@ -18,6 +18,7 @@ import SubscriptionsQueryList from '../SubscriptionsList/SubscriptionsQueryList'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './SubscriptionsBody.scss'
+import pluralize from '../../util/pluralize'
 
 /**
  * Renders SubscriptionsBody.
@@ -37,7 +38,7 @@ export const SubscriptionsBody = ({
   onUpdateSubscription
 }) => {
   const [submittingNewSubscription, setSubmittingNewSubscription] = useState(false)
-  const [name, setName] = useState('')
+  const [name, setName] = useState()
 
   const onChangeName = (event) => {
     const { target } = event
@@ -66,7 +67,19 @@ export const SubscriptionsBody = ({
     )
   })
 
-  const hasNullCmrQuery = !query.hasGranulesOrCwic
+  let nullCmrQuery = {}
+
+  if (subscriptionType === 'collection') {
+    nullCmrQuery = {
+      serviceType: [],
+      tagKey: []
+    }
+  }
+
+  console.log('query', query)
+  console.log('hasNullCmrQuery', nullCmrQuery)
+
+  const hasNullCmrQuery = isEqual(query, nullCmrQuery)
   const hasExactlyMatchingGranuleQuery = exactlyMatchingSubscriptionQueries.length > 0
 
   const humanReadableQueryList = queryToHumanizedList(query, subscriptionType)
@@ -98,7 +111,7 @@ export const SubscriptionsBody = ({
                       onKeyUp={onChangeName}
                     />
                   </Form.Group>
-                  <h4 className="subscriptions-body__query-list-heading">{`${humanReadableQueryList.length} filters applied`}</h4>
+                  <h4 className="subscriptions-body__query-list-heading">{`${humanReadableQueryList.length} ${pluralize('filter', humanReadableQueryList.length)} applied`}</h4>
                   <SubscriptionsQueryList
                     displayEmptyMessage={false}
                     query={query}
