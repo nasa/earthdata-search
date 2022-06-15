@@ -10,7 +10,6 @@ import { humanizedQueryKeysMap } from './humanizedQueryKeysMap'
  */
 export const formatDefaultSubscriptionName = (queryObj, subscriptionType) => {
   const humanizedQueryList = queryToHumanizedList(queryObj, subscriptionType)
-  console.log('humanizedQueryList', humanizedQueryList)
 
   // Format the end of the default string first. Formats the string to look like 'Bounding Box',
   // 'Bounding Box & 1 other filter', or 'Bounding Box & 2 other filters'
