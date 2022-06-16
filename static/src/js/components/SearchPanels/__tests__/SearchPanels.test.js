@@ -995,7 +995,7 @@ describe('SearchPanels component', () => {
       const subscriptionsPanel = panels.find(PanelGroup).at(5)
       const subscriptionsPanelProps = subscriptionsPanel.props()
 
-      expect(subscriptionsPanelProps.primaryHeading).toBe('Collection Subscriptions')
+      expect(subscriptionsPanelProps.primaryHeading).toBe('Dataset Search Subscriptions')
       expect(subscriptionsPanelProps.headerLoading).toBe(false)
     })
   })

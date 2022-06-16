@@ -57,14 +57,22 @@
 
   &__warning {
     display: flex;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
     padding: 0.5rem 1rem 0.5rem 0.75rem;
     align-items: center;
     font-size: 0.825rem;
     color: darken($color__yellow, 7);
     background-color: lighten($color__yellow, 46);
     border-radius: 0.125rem;
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
+  }
+
+  &__warning-item {
+    margin-bottom: 1em;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   &__warning-icon {

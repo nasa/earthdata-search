@@ -279,7 +279,7 @@ describe('SubscriptionsBody component', () => {
   })
 
   describe('when a subscription name is not set', () => {
-    test('does not set a default name in the input', () => {
+    test('sets a placeholder name', () => {
       const { enzymeWrapper } = setup({
         subscriptionType: 'collection',
         query: {}
@@ -287,8 +287,22 @@ describe('SubscriptionsBody component', () => {
 
       const input = enzymeWrapper.find('.subscriptions-body__text-input')
 
-      expect(input.props().value)
-        .toEqual()
+      expect(input.props().placeholder)
+        .toEqual('Dataset Search Subscription (Include datasets without granules)')
+    })
+
+    test('does not set a placeholder that is too long', () => {
+      const { enzymeWrapper } = setup({
+        subscriptionType: 'collection',
+        query: {
+          point: ['0,0']
+        }
+      })
+
+      const input = enzymeWrapper.find('.subscriptions-body__text-input')
+
+      expect(input.props().placeholder)
+        .toEqual('Dataset Search Subscription (Include datasets without granules & 1 more filte...')
     })
   })
 
@@ -305,6 +319,22 @@ describe('SubscriptionsBody component', () => {
 
       expect(input.props().value)
         .toEqual('Test Name')
+    })
+  })
+
+  describe('when the user sets a new name that is too long', () => {
+    test('displays a warning', () => {
+      const { enzymeWrapper } = setup({
+        subscriptionType: 'collection',
+        query: {
+          point: ['0,0']
+        }
+      })
+
+      enzymeWrapper.find('.subscriptions-body__text-input').simulate('change', { target: { value: '........................................................................................ Test Name' } })
+      enzymeWrapper.update()
+
+      expect(enzymeWrapper.find('.subscriptions-body__warning').length).toEqual(1)
     })
   })
 

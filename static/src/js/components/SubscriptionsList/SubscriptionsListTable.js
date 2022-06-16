@@ -48,7 +48,7 @@ export const SubscriptionsListTable = ({
             <th className="subscriptions-list-table__name-heading">Name</th>
             {
               subscriptionType === 'granule' && (
-                <th className="subscriptions-list-table__collection-heading">Collection</th>
+                <th className="subscriptions-list-table__collection-heading">Dataset</th>
               )
             }
             <th className="subscriptions-list-table__created-heading">Created</th>
