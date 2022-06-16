@@ -214,10 +214,10 @@ export const SubscriptionsQueryList = ({
   return (
     <ul className="subscriptions-query-list__query-list">
       {
-        humanReadableQueryList.map(([key, humanizedKey, value]) => (
+        humanReadableQueryList.map(({ key, humanizedKey, humanizedValue }) => (
           <li key={key} className="subscriptions-query-list__query-list-item">
             {
-              buildName(key, humanizedKey, value)
+              buildName(key, humanizedKey, humanizedValue)
             }
           </li>
         ))

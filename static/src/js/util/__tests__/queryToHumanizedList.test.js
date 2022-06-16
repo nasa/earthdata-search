@@ -10,7 +10,10 @@ describe('queryToHumanizedList', () => {
 
     const result = queryToHumanizedList(query, subscriptionType)
 
-    expect(result).toEqual([['hasGranulesOrCwic', 'Include datasets without granules']])
+    expect(result).toEqual([{
+      key: 'hasGranulesOrCwic',
+      humanizedKey: 'Include datasets without granules'
+    }])
   })
 
   test('returns a humanized param for EOSDIS collections tag', () => {
@@ -23,7 +26,10 @@ describe('queryToHumanizedList', () => {
 
     const result = queryToHumanizedList(query, subscriptionType)
 
-    expect(result).toEqual([['tagKey-gov.nasa.eosdis', 'Include only EOSDIS datasets']])
+    expect(result).toEqual([{
+      key: 'tagKey-gov.nasa.eosdis',
+      humanizedKey: 'Include only EOSDIS datasets'
+    }])
   })
 
   test('returns a humanized param for Map Imagery tag', () => {
@@ -36,10 +42,13 @@ describe('queryToHumanizedList', () => {
 
     const result = queryToHumanizedList(query, subscriptionType)
 
-    expect(result).toEqual([['tagKey-edsc.extra.serverless.gibs', 'Include only datasets with map imagery']])
+    expect(result).toEqual([{
+      key: 'tagKey-edsc.extra.serverless.gibs',
+      humanizedKey: 'Include only datasets with map imagery'
+    }])
   })
 
-  test('returns a humanized param for Map Imagery tag', () => {
+  test('returns a humanized param for Customizable', () => {
     const query = {
       hasGranulesOrCwic: true,
       serviceType: ['esi', 'opendap', 'harmony']
@@ -49,7 +58,10 @@ describe('queryToHumanizedList', () => {
 
     const result = queryToHumanizedList(query, subscriptionType)
 
-    expect(result).toEqual([['serviceType', 'Include only datasets that support customization']])
+    expect(result).toEqual([{
+      key: 'serviceType',
+      humanizedKey: 'Include only datasets that support customization'
+    }])
   })
 
   test('returns a humanized param for facets', () => {
@@ -62,7 +74,11 @@ describe('queryToHumanizedList', () => {
 
     const result = queryToHumanizedList(query, subscriptionType)
 
-    expect(result).toEqual([['scienceKeywordsH', 'scienceKeywordsH', [['Oceans', 'Ocean Temperature']]]])
+    expect(result).toEqual([{
+      key: 'scienceKeywordsH',
+      humanizedKey: 'scienceKeywordsH',
+      humanizedValue: [['Oceans', 'Ocean Temperature']]
+    }])
   })
 
   test('returns a humanized param for keyword', () => {
@@ -75,6 +91,10 @@ describe('queryToHumanizedList', () => {
 
     const result = queryToHumanizedList(query, subscriptionType)
 
-    expect(result).toEqual([['keyword', 'keyword', 'modis']])
+    expect(result).toEqual([{
+      key: 'keyword',
+      humanizedKey: 'keyword',
+      humanizedValue: 'modis'
+    }])
   })
 })

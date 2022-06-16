@@ -927,6 +927,9 @@ export const applyGranuleFilters = (granuleFilters) => (dispatch, getState) => {
   }
 
   dispatch(actions.getSearchGranules())
+
+  // Clear any subscription disabledFields
+  dispatch(actions.removeSubscriptionDisabledFields())
 }
 
 /**

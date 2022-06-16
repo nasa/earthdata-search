@@ -1,3 +1,4 @@
+import { isArray, isEmpty } from 'lodash'
 import { pruneFilters } from './pruneFilters'
 
 /**
@@ -57,6 +58,18 @@ export const removeDisabledFieldsFromQuery = (query, disabledFields) => {
   // If no tags remain, delete the tagKey from the newQuery
   if (tags && tags.length === 0) {
     delete newQuery.tagKey
+  }
+
+  // Remove any existing query fields that are empty
+  Object.keys(newQuery).forEach((key) => {
+    if (isArray(newQuery[key]) && isEmpty(newQuery[key])) {
+      delete newQuery[key]
+    }
+  })
+
+  // If hasGranulesOrCwic is undefined in the query but true in disabledFields, set the newQuery value to true
+  if (query.hasGranulesOrCwic === undefined && disabledFields.hasGranulesOrCwic === true) {
+    newQuery.hasGranulesOrCwic = true
   }
 
   return newQuery

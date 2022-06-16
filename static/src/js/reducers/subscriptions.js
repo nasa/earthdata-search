@@ -4,6 +4,7 @@ import {
   LOADED_SUBSCRIPTIONS,
   LOADING_SUBSCRIPTIONS,
   REMOVE_SUBSCRIPTION,
+  REMOVE_SUBSCRIPTION_DISABLED_FIELDS,
   STARTED_SUBSCRIPTIONS_TIMER,
   UPDATE_COLLECTION_SUBSCRIPTION,
   UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
@@ -128,6 +129,14 @@ const subscriptionsReducer = (state = initialState, action = {}) => {
             ...state.disabledFields.granule,
             ...action.payload.granule
           }
+        }
+      }
+    }
+    case REMOVE_SUBSCRIPTION_DISABLED_FIELDS: {
+      return {
+        ...state,
+        disabledFields: {
+          ...initialState.disabledFields
         }
       }
     }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
-import { isEqual } from 'lodash'
+import { isEmpty, isEqual } from 'lodash'
 import { FaBell, FaPlus } from 'react-icons/fa'
 import { Form } from 'react-bootstrap'
 import snakecaseKeys from 'snakecase-keys'
@@ -78,16 +78,7 @@ export const SubscriptionsBody = ({
     )
   })
 
-  let nullCmrQuery = {}
-
-  if (subscriptionType === 'collection') {
-    nullCmrQuery = {
-      serviceType: [],
-      tagKey: []
-    }
-  }
-
-  const hasNullCmrQuery = isEqual(query, nullCmrQuery)
+  const hasNullCmrQuery = isEmpty(parsedQueryWithRemovedFields)
   const hasExactlyMatchingGranuleQuery = exactlyMatchingSubscriptionQueries.length > 0
 
   const appliedFilterCount = queryToHumanizedList(
@@ -171,7 +162,7 @@ export const SubscriptionsBody = ({
                     className="subscriptions-body__create-button"
                     disabled={hasExactlyMatchingGranuleQuery || hasNullCmrQuery}
                     bootstrapVariant="primary"
-                    label="Subscribe"
+                    label="Create Subscription"
                     spinner={submittingNewSubscription}
                     icon={FaPlus}
                     onClick={async () => {
