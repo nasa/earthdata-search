@@ -85,4 +85,29 @@ describe('removeDisabledFieldsFromQuery', () => {
 
     expect(result).toEqual({ keyword: 'modis', tagKey: ['mocktag'] })
   })
+
+  test('removes any remaining fields that are empty arrays', () => {
+    const query = {
+      serviceType: []
+    }
+
+    const disabledFields = {}
+
+    const result = removeDisabledFieldsFromQuery(query, disabledFields)
+
+    expect(result).toEqual({})
+  })
+
+  test('sets hasGranulesOrCwic correctly if the field has been disabled', () => {
+    // hasGranulesOrCwic undefined in the query, but true in disabledFields
+    const query = {}
+
+    const disabledFields = {
+      hasGranulesOrCwic: true
+    }
+
+    const result = removeDisabledFieldsFromQuery(query, disabledFields)
+
+    expect(result).toEqual({ hasGranulesOrCwic: true })
+  })
 })
