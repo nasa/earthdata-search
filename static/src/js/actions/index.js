@@ -179,6 +179,7 @@ import {
   getSubscriptions,
   deleteSubscription,
   deleteCollectionSubscription,
+  removeSubscriptionDisabledFields,
   updateSubscription,
   updateSubscriptionDisabledFields,
   updateGranuleSubscription
@@ -265,6 +266,7 @@ const actions = {
   removeError,
   removeGranuleFromProjectCollection,
   removeSpatialFilter,
+  removeSubscriptionDisabledFields,
   removeTemporalFilter,
   restoreProject,
   saveShapefile,

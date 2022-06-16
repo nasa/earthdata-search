@@ -7,6 +7,7 @@ import {
   LOADED_SUBSCRIPTIONS,
   LOADING_SUBSCRIPTIONS,
   REMOVE_SUBSCRIPTION,
+  REMOVE_SUBSCRIPTION_DISABLED_FIELDS,
   STARTED_SUBSCRIPTIONS_TIMER,
   UPDATE_COLLECTION_SUBSCRIPTION,
   UPDATE_GRANULE_SUBSCRIPTION,
@@ -75,6 +76,10 @@ export const updateCollectionSubscription = (payload) => ({
 export const updateSubscriptionDisabledFields = (payload) => ({
   type: UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
   payload
+})
+
+export const removeSubscriptionDisabledFields = () => ({
+  type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
 })
 
 /**

@@ -26,6 +26,7 @@ import {
   LOADING_GRANULES,
   PROJECT_GRANULES_LOADED,
   PROJECT_GRANULES_LOADING,
+  REMOVE_SUBSCRIPTION_DISABLED_FIELDS,
   STARTED_GRANULES_TIMER,
   STARTED_PROJECT_GRANULES_TIMER,
   TOGGLE_SPATIAL_POLYGON_WARNING,
@@ -1981,6 +1982,9 @@ describe('applyGranuleFilters', () => {
         type: UPDATE_GRANULE_FILTERS,
         payload: { collectionId: 'C100000-EDSC', pageNum: 2 }
       })
+      expect(storeActions[1]).toEqual({
+        type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
+      })
 
       expect(getSearchGranulesMock).toBeCalledTimes(1)
       expect(getProjectGranulesMock).toBeCalledTimes(0)
@@ -2037,6 +2041,9 @@ describe('applyGranuleFilters', () => {
       expect(storeActions[0]).toEqual({
         type: UPDATE_GRANULE_FILTERS,
         payload: { collectionId: 'C100000-EDSC', pageNum: 2 }
+      })
+      expect(storeActions[1]).toEqual({
+        type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
       })
 
       expect(getSearchGranulesMock).toBeCalledTimes(1)

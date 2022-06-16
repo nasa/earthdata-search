@@ -62,6 +62,9 @@ export const changeQuery = (queryOptions = {}) => async (dispatch, getState) => 
       dispatch(actions.getProjectGranules())
     }
   }
+
+  // Clear any subscription disabledFields
+  dispatch(actions.removeSubscriptionDisabledFields())
 }
 
 export const changeProjectQuery = (query) => async (dispatch) => {

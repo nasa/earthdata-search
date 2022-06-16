@@ -28,6 +28,9 @@ export const changeFeatureFacet = (facetInfo) => (dispatch) => {
   dispatch(updateCollectionQuery({ pageNum: 1 }))
   dispatch(updateFeatureFacet(facetInfo))
   dispatch(actions.getCollections())
+
+  // Clear any subscription disabledFields
+  dispatch(actions.removeSubscriptionDisabledFields())
 }
 
 export const updateCmrFacet = (newParams) => ({
@@ -92,6 +95,9 @@ export const changeCmrFacet = (newParams, facet, applied) => (dispatch, getState
   dispatch(updateCollectionQuery({ pageNum: 1 }))
   dispatch(updateCmrFacet(newParams))
   dispatch(actions.getCollections())
+
+  // Clear any subscription disabledFields
+  dispatch(actions.removeSubscriptionDisabledFields())
 }
 
 /**

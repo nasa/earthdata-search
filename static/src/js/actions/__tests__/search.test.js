@@ -6,6 +6,7 @@ import { updateCollectionQuery } from '../search'
 import {
   CLEAR_FILTERS,
   CLEAR_SHAPEFILE,
+  REMOVE_SUBSCRIPTION_DISABLED_FIELDS,
   TOGGLE_DRAWING_NEW_LAYER,
   UPDATE_COLLECTION_QUERY,
   UPDATE_GRANULE_SEARCH_QUERY,
@@ -83,9 +84,149 @@ describe('changeQuery', () => {
         temporal: {}
       }
     })
+    expect(storeActions[1]).toEqual({
+      type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
+    })
 
     // was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+  })
+
+  test('should update the updateGranuleSearchQuery when a collection is focused', () => {
+    const newQuery = {
+      collection: {
+        keyword: 'new keyword',
+        spatial: {
+          point: '0,0'
+        },
+        temporal: {}
+      }
+    }
+
+    // mock getCollections
+    const getCollectionsMock = jest.spyOn(actions, 'getCollections')
+    getCollectionsMock.mockImplementation(() => jest.fn())
+    const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+    getSearchGranulesMock.mockImplementation(() => jest.fn())
+
+    // mockStore with initialState
+    const store = mockStore({
+      focusedCollection: 'C10000-EDSC',
+      query: {
+        collection: {
+          keyword: 'old stuff',
+          spatial: {}
+        }
+      },
+      project: {},
+      router: {
+        location: {
+          pathname: ''
+        }
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.changeQuery({ ...newQuery }))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_COLLECTION_QUERY,
+      payload: {
+        keyword: 'new keyword',
+        pageNum: 1,
+        spatial: {
+          point: '0,0'
+        },
+        temporal: {}
+      }
+    })
+    expect(storeActions[1]).toEqual({
+      type: UPDATE_GRANULE_SEARCH_QUERY,
+      payload: {
+        collectionId: 'C10000-EDSC',
+        pageNum: 1
+      }
+    })
+    expect(storeActions[2]).toEqual({
+      type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
+    })
+
+    // was getCollections called
+    expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+    expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
+  })
+
+  test('should call getProjectGranules', () => {
+    const newQuery = {
+      collection: {
+        keyword: 'new keyword',
+        spatial: {
+          point: '0,0'
+        },
+        temporal: {}
+      }
+    }
+
+    // mock getCollections
+    const getCollectionsMock = jest.spyOn(actions, 'getCollections')
+    getCollectionsMock.mockImplementation(() => jest.fn())
+    const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+    getSearchGranulesMock.mockImplementation(() => jest.fn())
+    const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
+    getProjectGranulesMock.mockImplementation(() => jest.fn())
+
+    // mockStore with initialState
+    const store = mockStore({
+      focusedCollection: 'C10000-EDSC',
+      query: {
+        collection: {
+          keyword: 'old stuff',
+          spatial: {}
+        }
+      },
+      project: {
+        collections: {
+          allIds: ['C10000-EDSC']
+        }
+      },
+      router: {
+        location: {
+          pathname: ''
+        }
+      }
+    })
+
+    // call the dispatch
+    store.dispatch(actions.changeQuery({ ...newQuery }))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_COLLECTION_QUERY,
+      payload: {
+        keyword: 'new keyword',
+        pageNum: 1,
+        spatial: {
+          point: '0,0'
+        },
+        temporal: {}
+      }
+    })
+    expect(storeActions[1]).toEqual({
+      type: UPDATE_GRANULE_SEARCH_QUERY,
+      payload: {
+        collectionId: 'C10000-EDSC',
+        pageNum: 1
+      }
+    })
+    expect(storeActions[2]).toEqual({
+      type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
+    })
+
+    // was getCollections called
+    expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+    expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
+    expect(getProjectGranulesMock).toHaveBeenCalledTimes(1)
   })
 })
 
@@ -303,10 +444,13 @@ describe('removeSpatialFilter', () => {
       }
     })
     expect(storeActions[1]).toEqual({
+      type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
+    })
+    expect(storeActions[2]).toEqual({
       type: TOGGLE_DRAWING_NEW_LAYER,
       payload: false
     })
-    expect(storeActions[2]).toEqual({
+    expect(storeActions[3]).toEqual({
       type: CLEAR_SHAPEFILE
     })
   })
