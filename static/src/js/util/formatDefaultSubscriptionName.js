@@ -28,5 +28,9 @@ export const formatDefaultSubscriptionName = (queryObj, subscriptionType) => {
     defaultSubscriptionName = `Granule Search Subscription (${defaultSubscriptionName})`
   }
 
+  if (defaultSubscriptionName.length > 77) {
+    defaultSubscriptionName = `${defaultSubscriptionName.slice(0, 77)}...`
+  }
+
   return defaultSubscriptionName
 }

@@ -700,7 +700,7 @@ class SearchPanels extends PureComponent {
     panelSection.push(
       <PanelGroup
         key="collection-subscriptions-panel"
-        primaryHeading="Collection Subscriptions"
+        primaryHeading="Dataset Search Subscriptions"
         breadcrumbs={[
           {
             title: 'Search Results',

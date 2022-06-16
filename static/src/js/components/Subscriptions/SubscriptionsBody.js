@@ -80,6 +80,8 @@ export const SubscriptionsBody = ({
 
   const hasNullCmrQuery = isEmpty(parsedQueryWithRemovedFields)
   const hasExactlyMatchingGranuleQuery = exactlyMatchingSubscriptionQueries.length > 0
+  const hasTooLongName = name && name.length > 80
+  const displayWarning = hasExactlyMatchingGranuleQuery || hasNullCmrQuery || hasTooLongName
 
   const appliedFilterCount = queryToHumanizedList(
     parsedQueryWithRemovedFields,
@@ -125,35 +127,44 @@ export const SubscriptionsBody = ({
                   />
                   <div className="subscriptions-body__query-secondary">
                     {
-                      (hasExactlyMatchingGranuleQuery || hasNullCmrQuery) && (
+                      displayWarning && (
                         <div className="subscriptions-body__warning">
                           <EDSCIcon className="subscriptions-body__warning-icon" icon={FaBell} />
-                          {
-                            hasExactlyMatchingGranuleQuery
-                            && exactlyMatchingSubscriptionQueries.map((exactlyMatchingQuery) => {
-                              const { conceptId, name } = exactlyMatchingQuery
-                              return (
-                                <div key={conceptId}>
-                                  The subscription
+                          <div>
+                            {
+                              hasExactlyMatchingGranuleQuery
+                              && exactlyMatchingSubscriptionQueries.map((exactlyMatchingQuery) => {
+                                const { conceptId, name } = exactlyMatchingQuery
+                                return (
+                                  <div key={conceptId} className="subscriptions-body__warning-item">
+                                    The subscription
+                                    {' '}
+                                    <strong>{name}</strong>
+                                    {' '}
+                                    matches the current search query.
+                                    {' '}
+                                    Choose a different search query to create a new subscription.
+                                  </div>
+                                )
+                              })
+                            }
+                            {
+                              hasNullCmrQuery && (
+                                <div className="subscriptions-body__warning-item">
+                                  The current query is not currently supported.
                                   {' '}
-                                  <strong>{name}</strong>
-                                  {' '}
-                                  matches the current search query.
-                                  {' '}
-                                  Choose a different search query to create a new subscription.
+                                  Add additional filters to create a new subscription.
                                 </div>
                               )
-                            })
-                          }
-                          {
-                            hasNullCmrQuery && (
-                              <div>
-                                The current query is not currently supported.
-                                {' '}
-                                Add additional filters to create a new subscription.
-                              </div>
-                            )
-                          }
+                            }
+                            {
+                              hasTooLongName && (
+                                <div className="subscriptions-body__warning-item">
+                                  The subscription name must be less than 80 characters long.
+                                </div>
+                              )
+                            }
+                          </div>
                         </div>
                       )
                     }
@@ -170,7 +181,10 @@ export const SubscriptionsBody = ({
 
                       // If the user hasn't provided a name, use the default name from the placeholder
                       let subscriptionName = name
-                      subscriptionName ??= placeholderName
+
+                      if (!subscriptionName) {
+                        subscriptionName = placeholderName
+                      }
 
                       await onCreateSubscription(subscriptionName, subscriptionType)
                       setSubmittingNewSubscription(false)

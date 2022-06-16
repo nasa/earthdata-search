@@ -36,6 +36,17 @@ describe('formatDefaultSubscriptionName', () => {
     })
   })
 
+  describe('when the generated name is too long', () => {
+    test('returns the correct value', () => {
+      const result = formatDefaultSubscriptionName({
+        hasGranulesOrCwic: true,
+        point: ['81.98438,-1.14119'],
+        tagKey: ['edsc.extra.serverless.gibs']
+      }, 'collection')
+      expect(result).toEqual('Dataset Search Subscription (Include only datasets with map imagery & 1 more ...')
+    })
+  })
+
   describe('when a collection is passed', () => {
     test('returns the correct value', () => {
       const result = formatDefaultSubscriptionName({ boundingBox: '1,1,-1,-1', hasGranulesOrCwic: true }, 'collection')
