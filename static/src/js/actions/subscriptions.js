@@ -377,18 +377,9 @@ export const updateSubscription = (
     })
 
     if (subscriptionType === 'collection') {
-      dispatch(updateCollectionSubscription({
-        conceptId,
-        query: subscriptionQuery
-      }))
+      dispatch(actions.getSubscriptions(subscriptionType, false))
     } else {
-      dispatch(
-        actions.updateGranuleSubscription({
-          collectionConceptId: collectionId,
-          conceptId,
-          query: subscriptionQuery
-        })
-      )
+      dispatch(actions.getGranuleSubscriptions())
     }
   } catch (error) {
     dispatch(actions.handleError({

@@ -21,6 +21,7 @@ function setup(overrideProps) {
     onCreateSubscription: jest.fn(),
     onDeleteSubscription: jest.fn(),
     onFetchCollectionSubscriptions: jest.fn(),
+    onToggleEditSubscriptionModal: jest.fn(),
     onUpdateSubscription: jest.fn(),
     onUpdateSubscriptionDisabledFields: jest.fn(),
     ...overrideProps
@@ -76,6 +77,15 @@ describe('mapDispatchToProps', () => {
     const spy = jest.spyOn(actions, 'updateSubscriptionDisabledFields')
 
     mapDispatchToProps(dispatch).onUpdateSubscriptionDisabledFields()
+
+    expect(spy).toBeCalledTimes(1)
+  })
+
+  test('onToggleEditSubscriptionModal calls actions.updateSubscriptionDisabledFields', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleEditSubscriptionModal')
+
+    mapDispatchToProps(dispatch).onToggleEditSubscriptionModal()
 
     expect(spy).toBeCalledTimes(1)
   })

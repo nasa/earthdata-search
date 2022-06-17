@@ -38,6 +38,7 @@ export const SubscriptionsBody = ({
   subscriptionType,
   onCreateSubscription,
   onDeleteSubscription,
+  onToggleEditSubscriptionModal,
   onUpdateSubscription,
   onUpdateSubscriptionDisabledFields
 }) => {
@@ -60,7 +61,7 @@ export const SubscriptionsBody = ({
 
   // Compare the subscriptions returned for the user to the current query to prevent submission
   // of duplicate subscriptions
-  const exactlyMatchingSubscriptionQueries = subscriptions.filter((subscription) => {
+  const exactlyMatchingSubscriptions = subscriptions.filter((subscription) => {
     let nonIndexedKeys
     const { query: subscriptionQuery } = subscription
     // The query returned for each subscription is returned as a string. To make a reliable comparison,
@@ -79,7 +80,7 @@ export const SubscriptionsBody = ({
   })
 
   const hasNullCmrQuery = isEmpty(parsedQueryWithRemovedFields)
-  const hasExactlyMatchingGranuleQuery = exactlyMatchingSubscriptionQueries.length > 0
+  const hasExactlyMatchingGranuleQuery = exactlyMatchingSubscriptions.length > 0
   const hasTooLongName = name && name.length > 80
   const displayWarning = hasExactlyMatchingGranuleQuery || hasNullCmrQuery || hasTooLongName
 
@@ -107,7 +108,7 @@ export const SubscriptionsBody = ({
                     </Form.Label>
                     <Form.Control
                       className="subscriptions-body__text-input"
-                      data-test-id="subscriptions-body_point"
+                      data-test-id="subscriptions-body_name-input"
                       type="text"
                       value={name}
                       placeholder={placeholderName}
@@ -133,7 +134,7 @@ export const SubscriptionsBody = ({
                           <div>
                             {
                               hasExactlyMatchingGranuleQuery
-                              && exactlyMatchingSubscriptionQueries.map((exactlyMatchingQuery) => {
+                              && exactlyMatchingSubscriptions.map((exactlyMatchingQuery) => {
                                 const { conceptId, name } = exactlyMatchingQuery
                                 return (
                                   <div key={conceptId} className="subscriptions-body__warning-item">
@@ -212,7 +213,8 @@ export const SubscriptionsBody = ({
                     subscriptionType={subscriptionType}
                     onUpdateSubscription={onUpdateSubscription}
                     onDeleteSubscription={onDeleteSubscription}
-                    hasExactlyMatchingGranuleQuery={hasExactlyMatchingGranuleQuery}
+                    onToggleEditSubscriptionModal={onToggleEditSubscriptionModal}
+                    exactlyMatchingSubscriptions={exactlyMatchingSubscriptions}
                     hasNullCmrQuery={hasNullCmrQuery}
                   />
                 )
@@ -266,6 +268,7 @@ SubscriptionsBody.propTypes = {
   subscriptionType: PropTypes.string.isRequired,
   onCreateSubscription: PropTypes.func.isRequired,
   onDeleteSubscription: PropTypes.func.isRequired,
+  onToggleEditSubscriptionModal: PropTypes.func.isRequired,
   onUpdateSubscription: PropTypes.func.isRequired,
   onUpdateSubscriptionDisabledFields: PropTypes.func.isRequired
 }

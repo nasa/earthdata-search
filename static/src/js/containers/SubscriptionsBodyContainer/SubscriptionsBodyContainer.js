@@ -33,7 +33,9 @@ export const mapDispatchToProps = (dispatch) => ({
   onDeleteSubscription:
     (conceptId, nativeId, collectionConceptId) => dispatch(
       actions.deleteSubscription(conceptId, nativeId, collectionConceptId)
-    )
+    ),
+  onToggleEditSubscriptionModal:
+    (state) => dispatch(actions.toggleEditSubscriptionModal(state))
 })
 
 export const mapStateToProps = (state) => ({
@@ -68,6 +70,7 @@ export const SubscriptionsBodyContainer = ({
   onCreateSubscription,
   onDeleteSubscription,
   onFetchCollectionSubscriptions,
+  onToggleEditSubscriptionModal,
   onUpdateSubscription,
   onUpdateSubscriptionDisabledFields,
   subscriptionType
@@ -102,6 +105,7 @@ export const SubscriptionsBodyContainer = ({
       onDeleteSubscription={onDeleteSubscription}
       onUpdateSubscription={onUpdateSubscription}
       onUpdateSubscriptionDisabledFields={onUpdateSubscriptionDisabledFields}
+      onToggleEditSubscriptionModal={onToggleEditSubscriptionModal}
     />
   )
 }
@@ -117,6 +121,7 @@ SubscriptionsBodyContainer.propTypes = {
   onCreateSubscription: PropTypes.func.isRequired,
   onDeleteSubscription: PropTypes.func.isRequired,
   onFetchCollectionSubscriptions: PropTypes.func.isRequired,
+  onToggleEditSubscriptionModal: PropTypes.func.isRequired,
   onUpdateSubscription: PropTypes.func.isRequired,
   onUpdateSubscriptionDisabledFields: PropTypes.func.isRequired
 }

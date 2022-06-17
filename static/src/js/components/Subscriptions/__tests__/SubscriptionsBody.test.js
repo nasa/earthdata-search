@@ -25,6 +25,7 @@ function setup(overrideProps) {
     },
     onCreateSubscription: jest.fn(),
     onDeleteSubscription: jest.fn(),
+    onToggleEditSubscriptionModal: jest.fn(),
     onUpdateSubscription: jest.fn(),
     onUpdateSubscriptionDisabledFields: jest.fn(),
     subscriptions: [],
@@ -97,7 +98,7 @@ describe('SubscriptionsBody component', () => {
         expect(enzymeWrapper.find('.subscriptions-body__warning').length).toEqual(1)
       })
 
-      test('should render the update button as disabled', () => {
+      test('should pass the matching subscriptions', () => {
         const subOne = {
           name: 'Subscription 1',
           conceptId: 'SUB-1',
@@ -119,14 +120,15 @@ describe('SubscriptionsBody component', () => {
         })
 
         const subscriptionItemOne = enzymeWrapper.find(SubscriptionsListItem).at(0)
-        const subscriptionItemTwo = enzymeWrapper.find(SubscriptionsListItem).at(0)
+        const subscriptionItemTwo = enzymeWrapper.find(SubscriptionsListItem).at(1)
 
-        expect(subscriptionItemOne.props().hasExactlyMatchingGranuleQuery).toEqual(true)
-        expect(subscriptionItemTwo.props().hasExactlyMatchingGranuleQuery).toEqual(true)
+        expect(subscriptionItemOne.props().exactlyMatchingSubscriptions[0].conceptId).toEqual('SUB-1')
+        expect(subscriptionItemTwo.props().exactlyMatchingSubscriptions[0].conceptId).toEqual('SUB-1')
+        expect(subscriptionItemOne.props().exactlyMatchingSubscriptions[1]).toEqual(undefined)
       })
 
       describe('when a subscription can be updated', () => {
-        test('should render the update button as disabled', () => {
+        test('should pass no matching subscriptions', () => {
           const subOne = {
             name: 'Subscription 1',
             conceptId: 'SUB-1',
@@ -150,10 +152,10 @@ describe('SubscriptionsBody component', () => {
           })
 
           const subscriptionItemOne = enzymeWrapper.find(SubscriptionsListItem).at(0)
-          const subscriptionItemTwo = enzymeWrapper.find(SubscriptionsListItem).at(0)
+          const subscriptionItemTwo = enzymeWrapper.find(SubscriptionsListItem).at(1)
 
-          expect(subscriptionItemOne.props().hasExactlyMatchingGranuleQuery).toEqual(false)
-          expect(subscriptionItemTwo.props().hasExactlyMatchingGranuleQuery).toEqual(false)
+          expect(subscriptionItemOne.props().exactlyMatchingSubscriptions[0]).toEqual(undefined)
+          expect(subscriptionItemTwo.props().exactlyMatchingSubscriptions[0]).toEqual(undefined)
         })
       })
     })

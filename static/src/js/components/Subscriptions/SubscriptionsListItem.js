@@ -14,12 +14,12 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 const dateFormat = getApplicationConfig().temporalDateFormatFull
 
 export const SubscriptionsListItem = ({
-  hasExactlyMatchingGranuleQuery,
+  exactlyMatchingSubscriptions,
   hasNullCmrQuery,
   subscription,
   subscriptionType,
   onDeleteSubscription,
-  onUpdateSubscription
+  onToggleEditSubscriptionModal
 }) => {
   const {
     collectionConceptId,
@@ -34,21 +34,15 @@ export const SubscriptionsListItem = ({
   const isRevised = creationDate !== revisionDate
   const dateToDisplay = isRevised ? revisionDate : creationDate
 
+  const isMatchingSubscription = exactlyMatchingSubscriptions
+    .some(({ conceptId: matchingConceptId }) => conceptId === matchingConceptId)
+
   const onHandleRemove = () => {
     // eslint-disable-next-line no-alert
     const confirmDeletion = window.confirm('Are you sure you want to remove this subscription? This action cannot be undone.')
 
     if (confirmDeletion) {
       onDeleteSubscription(conceptId, nativeId, collectionConceptId)
-    }
-  }
-
-  const onHandleUpdate = () => {
-    // eslint-disable-next-line no-alert
-    const confirmUpdate = window.confirm('Are you sure you want to update this subscription with your current search parameters?')
-
-    if (confirmUpdate) {
-      onUpdateSubscription(conceptId, nativeId, name, subscriptionType)
     }
   }
 
@@ -91,11 +85,19 @@ export const SubscriptionsListItem = ({
           icon={FaEdit}
           bootstrapVariant="light"
           bootstrapSize="sm"
-          disabled={hasExactlyMatchingGranuleQuery || hasNullCmrQuery}
-          label="Update Subscription"
-          onClick={() => onHandleUpdate()}
+          disabled={
+            hasNullCmrQuery
+            || (exactlyMatchingSubscriptions.length > 0 && !isMatchingSubscription)
+          }
+          label="Edit Subscription"
+          onClick={() => {
+            onToggleEditSubscriptionModal({
+              isOpen: true,
+              subscriptionConceptId: conceptId
+            })
+          }}
         >
-          Update
+          Edit
         </Button>
         <Button
           className="subscriptions-list-item__action"
@@ -113,10 +115,14 @@ export const SubscriptionsListItem = ({
 }
 
 SubscriptionsListItem.propTypes = {
-  hasExactlyMatchingGranuleQuery: PropTypes.bool.isRequired,
   hasNullCmrQuery: PropTypes.bool.isRequired,
   onDeleteSubscription: PropTypes.func.isRequired,
-  onUpdateSubscription: PropTypes.func.isRequired,
+  onToggleEditSubscriptionModal: PropTypes.func.isRequired,
+  exactlyMatchingSubscriptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      conceptId: PropTypes.string
+    })
+  ).isRequired,
   subscription: PropTypes.shape({
     collectionConceptId: PropTypes.string,
     creationDate: PropTypes.string,

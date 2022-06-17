@@ -9,6 +9,7 @@ import {
   TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_DEPRECATED_PARAMETER_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
+  TOGGLE_EDIT_SUBSCRIPTION_MODAL,
   TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
@@ -36,6 +37,10 @@ const initialState = {
   deprecatedParameterModal: {
     deprecatedUrlParams: [],
     isOpen: false
+  },
+  editSubscriptionModal: {
+    isOpen: false,
+    subscriptionConceptId: ''
   },
   export: {
     isExportRunning: {
@@ -323,6 +328,28 @@ describe('TOGGLE_DEPRECATED_PARAMETER_MODAL', () => {
       deprecatedParameterModal: {
         deprecatedUrlParams: [],
         isOpen: true
+      }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_EDIT_SUBSCRIPTION_MODAL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_EDIT_SUBSCRIPTION_MODAL,
+      payload: {
+        isOpen: true,
+        subscriptionConceptId: 'SUB1'
+      }
+    }
+
+    const expectedState = {
+      ...initialState,
+      editSubscriptionModal: {
+        isOpen: true,
+        subscriptionConceptId: 'SUB1'
       }
     }
 

@@ -157,6 +157,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             name
             nativeId
             query
+            type
           }
         }
         tools {
@@ -320,6 +321,7 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
           name
           nativeId
           query
+          type
         }
       }
     }`
