@@ -3,6 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import ProjectPanels from '../ProjectPanels'
+import PanelItem from '../../Panels/PanelItem'
 import PanelGroup from '../../Panels/PanelGroup'
 import PanelSection from '../../Panels/PanelSection'
 
@@ -495,6 +496,56 @@ describe('ProjectPanels component', () => {
         expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
         expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
       })
+    })
+  })
+
+  describe('when viewing a duplicate collection', () => {
+    test('duplicate collection notice appears', () => {
+      const { enzymeWrapper, props } = setup({
+        project: {
+          collections: {
+            allIds: ['C2208418228-POCLOUD'],
+            byId: {
+              'C2208418228-POCLOUD': {
+                accessMethods: {
+                  download: {
+                    isValid: true,
+                    type: 'download'
+                  }
+                },
+                granules: {},
+                isVisible: true
+              }
+            }
+          }
+        },
+        projectCollectionsMetadata: {
+          'C2208418228-POCLOUD': {
+            duplicateCollections: ['C1972954180-PODAAC'],
+            id: 'C2208418228-POCLOUD'
+          }
+        }
+      })
+
+      const panelItems = enzymeWrapper.find(PanelItem)
+
+      const panelItem = panelItems.findWhere((node) => (
+        node.props().header?.type.name === 'DataQualitySummary'
+      )).first()
+
+      const { header } = panelItem.props()
+      expect(header.props.dataQualityHeader).toBe('Important data availability information')
+      expect(header.props.dataQualitySummaries).toHaveLength(1)
+      const { id, summary } = header.props.dataQualitySummaries[0]
+      expect(id).toBe('duplicate-collection')
+
+      const link = summary.props.children[1]
+      expect(link.props.to.pathname).toBe('/search/granules')
+      expect(link.props.to.search).toBe('?p=C1972954180-PODAAC!C2208418228-POCLOUD')
+
+      link.props.onClick()
+      expect(props.onChangePath).toBeCalledTimes(1)
+      expect(props.onChangePath).toBeCalledWith('/search/granules?p=C1972954180-PODAAC!C2208418228-POCLOUD')
     })
   })
 })
