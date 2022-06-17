@@ -130,7 +130,6 @@ export class EditSubscriptionModal extends Component {
             type="text"
             value={name}
             onChange={(e) => {
-              console.log('change is firing')
               this.onSubscriptionNameChange(e)
             }}
             onBlur={this.onSubscriptionNameChange}
