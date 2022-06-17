@@ -23,11 +23,13 @@ const defaultSubscription = {
 
 function setup(overrideProps) {
   const props = {
+    exactlyMatchingSubscriptions: [],
     hasExactlyMatchingGranuleQuery: false,
     hasNullCmrQuery: false,
     subscription: defaultSubscription,
     subscriptionType: 'granule',
     onDeleteSubscription: jest.fn(),
+    onToggleEditSubscriptionModal: jest.fn(),
     onUpdateSubscription: jest.fn(),
     ...overrideProps
   }
@@ -78,38 +80,42 @@ describe('SubscriptionsBody component', () => {
       .toEqual(SubscriptionsQueryList)
   })
 
-  describe('update button', () => {
+  describe('edit button', () => {
     test('should render', () => {
       const { enzymeWrapper } = setup()
-      console.log(enzymeWrapper.find('.subscriptions-list-item__action').debug())
       expect(enzymeWrapper.find('.subscriptions-list-item__action').at(1).props().label)
-        .toEqual('Update Subscription')
+        .toEqual('Edit Subscription')
     })
 
     describe('when clicked', () => {
-      describe('if the user denies the action', () => {
-        test('should do nothing', () => {
-          const confirmMock = jest.fn(() => false)
-          window.confirm = confirmMock
+      test('should call onUpdateSubscription', () => {
+        const { enzymeWrapper, props } = setup()
+        enzymeWrapper.find('.subscriptions-list-item__action').at(1).simulate('click')
 
-          const { enzymeWrapper, props } = setup()
-          enzymeWrapper.find('.subscriptions-list-item__action').at(1).simulate('click')
-
-          expect(props.onUpdateSubscription).toHaveBeenCalledTimes(0)
-        })
+        expect(props.onToggleEditSubscriptionModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleEditSubscriptionModal).toHaveBeenCalledWith({ isOpen: true, subscriptionConceptId: 'SUB1' })
       })
+    })
 
-      describe('if the user allows the action', () => {
-        test('should call onUpdateSubscription', () => {
-          const confirmMock = jest.fn(() => true)
-          window.confirm = confirmMock
-
-          const { enzymeWrapper, props } = setup()
-          enzymeWrapper.find('.subscriptions-list-item__action').at(1).simulate('click')
-
-          expect(props.onUpdateSubscription).toHaveBeenCalledTimes(1)
-          expect(props.onUpdateSubscription).toHaveBeenCalledWith('SUB1', 'SUB1-NATIVE-ID', 'Subscription 1', 'granule')
+    describe('when viewing a matching subscription', () => {
+      test('allows editing', () => {
+        const { enzymeWrapper } = setup({
+          exactlyMatchingSubscriptions: [{
+            conceptId: 'SUB1'
+          }]
         })
+        expect(enzymeWrapper.find('.subscriptions-list-item__action').at(1).props().disabled).toEqual(false)
+      })
+    })
+
+    describe('when viewing a matching subscription', () => {
+      test('disabled editing', () => {
+        const { enzymeWrapper } = setup({
+          exactlyMatchingSubscriptions: [{
+            conceptId: 'SUB2'
+          }]
+        })
+        expect(enzymeWrapper.find('.subscriptions-list-item__action').at(1).props().disabled).toEqual(true)
       })
     })
   })

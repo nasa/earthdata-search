@@ -35,6 +35,7 @@ import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
 import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
+import EditSubscriptionModalContainer from './containers/EditSubscriptionModalContainer/EditSubscriptionModalContainer'
 
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
@@ -143,6 +144,7 @@ class App extends Component {
                     <Route path={this.portalPaths('/')}>
                       <AboutCSDAModalContainer />
                       <AboutCwicModalContainer />
+                      <EditSubscriptionModalContainer />
                       <ChunkedOrderModalContainer />
                       <DeprecatedParameterModalContainer />
                       <KeyboardShortcutsModalContainer />

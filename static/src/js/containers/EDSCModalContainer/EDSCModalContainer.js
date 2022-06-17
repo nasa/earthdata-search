@@ -21,6 +21,7 @@ import EDSCModal from '../../components/EDSCModal/EDSCModal'
  * @param {Boolean} spinner Shows a loading spinner.
  * @param {String} primaryAction The text content for the primary action.
  * @param {Boolean} primaryActionDisabled Disables the primary action.
+ * @param {Boolean} primaryActionLoading Displays a spinner.
  * @param {String} secondaryAction The text content for the secondary action.
  * @param {Function} onPrimaryAction A callback function for the primary action.
  * @param {Function} onSecondaryAction A callback function for the secondary action.
@@ -72,6 +73,7 @@ export class EDSCModalContainer extends Component {
       title,
       primaryAction,
       primaryActionDisabled,
+      primaryActionLoading,
       secondaryAction,
       spinner,
       onPrimaryAction,
@@ -154,6 +156,7 @@ export class EDSCModalContainer extends Component {
         onSecondaryAction={onSecondaryAction}
         primaryAction={primaryAction}
         primaryActionDisabled={primaryActionDisabled}
+        primaryActionLoading={primaryActionLoading}
         secondaryAction={secondaryAction}
         size={size}
         spinner={spinner}
@@ -179,6 +182,7 @@ EDSCModalContainer.defaultProps = {
   modalOverlays: {},
   primaryAction: null,
   primaryActionDisabled: false,
+  primaryActionLoading: false,
   secondaryAction: null,
   onPrimaryAction: null,
   onSecondaryAction: null
@@ -204,6 +208,7 @@ EDSCModalContainer.propTypes = {
   spinner: PropTypes.bool,
   primaryAction: PropTypes.string,
   primaryActionDisabled: PropTypes.bool,
+  primaryActionLoading: PropTypes.bool,
   secondaryAction: PropTypes.string,
   onPrimaryAction: PropTypes.func,
   onSecondaryAction: PropTypes.func
