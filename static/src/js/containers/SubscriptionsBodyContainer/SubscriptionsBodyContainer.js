@@ -14,7 +14,6 @@ import {
   getCollectionSubscriptions,
   getGranuleSubscriptionDisabledFields
 } from '../../selectors/subscriptions'
-
 import SubscriptionsBody from '../../components/Subscriptions/SubscriptionsBody'
 
 export const mapDispatchToProps = (dispatch) => ({

@@ -93,7 +93,11 @@ describe('SubscriptionsBody component', () => {
         enzymeWrapper.find('.subscriptions-list-item__action').at(1).simulate('click')
 
         expect(props.onToggleEditSubscriptionModal).toHaveBeenCalledTimes(1)
-        expect(props.onToggleEditSubscriptionModal).toHaveBeenCalledWith({ isOpen: true, subscriptionConceptId: 'SUB1' })
+        expect(props.onToggleEditSubscriptionModal).toHaveBeenCalledWith({
+          isOpen: true,
+          subscriptionConceptId: 'SUB1',
+          type: 'granule'
+        })
       })
     })
 

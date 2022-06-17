@@ -40,7 +40,8 @@ const initialState = {
   },
   editSubscriptionModal: {
     isOpen: false,
-    subscriptionConceptId: ''
+    subscriptionConceptId: '',
+    type: ''
   },
   export: {
     isExportRunning: {

@@ -898,13 +898,10 @@ describe('updateSubscription', () => {
     })
 
     await store.dispatch(updateSubscription('SUB1000-EDSC', 'mock-guid', 'Collection Name', 'granule')).then(() => {
-
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][0]).toEqual('Subscription updated')
       expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
       expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
-
-      console.log('getGranuleSubscriptionsMock.mock.calls', getGranuleSubscriptionsMock.mock.calls)
 
       expect(getGranuleSubscriptionsMock.mock.calls.length).toBe(1)
       expect(getGranuleSubscriptionsMock.mock.calls[0][1]).toBe()

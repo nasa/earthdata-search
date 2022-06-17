@@ -11,6 +11,7 @@ import EditSubscriptionModal from '../../components/EditSubscriptionModal/EditSu
 export const mapStateToProps = (state) => ({
   isOpen: state.ui.editSubscriptionModal.isOpen,
   subscriptionConceptId: state.ui.editSubscriptionModal.subscriptionConceptId,
+  subscriptionType: state.ui.editSubscriptionModal.type,
   subscriptions: getSubscriptions(state),
   granuleSubscriptions: getFocusedCollectionSubscriptions(state)
 })
@@ -30,7 +31,8 @@ export const EditSubscriptionModalContainer = ({
   onUpdateSubscription,
   granuleSubscriptions,
   subscriptions,
-  subscriptionConceptId
+  subscriptionConceptId,
+  subscriptionType
 }) => (
   <EditSubscriptionModal
     isOpen={isOpen}
@@ -39,6 +41,7 @@ export const EditSubscriptionModalContainer = ({
     granuleSubscriptions={granuleSubscriptions}
     subscriptions={subscriptions}
     subscriptionConceptId={subscriptionConceptId}
+    subscriptionType={subscriptionType}
   />
 )
 
@@ -50,7 +53,8 @@ EditSubscriptionModalContainer.propTypes = {
     PropTypes.shape({})
   ).isRequired,
   subscriptions: PropTypes.shape({}).isRequired,
-  subscriptionConceptId: PropTypes.string.isRequired
+  subscriptionConceptId: PropTypes.string.isRequired,
+  subscriptionType: PropTypes.string.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditSubscriptionModalContainer)

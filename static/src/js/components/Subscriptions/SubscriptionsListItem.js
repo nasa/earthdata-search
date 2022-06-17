@@ -93,7 +93,8 @@ export const SubscriptionsListItem = ({
           onClick={() => {
             onToggleEditSubscriptionModal({
               isOpen: true,
-              subscriptionConceptId: conceptId
+              subscriptionConceptId: conceptId,
+              type: subscriptionType
             })
           }}
         >
