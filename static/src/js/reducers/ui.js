@@ -79,7 +79,8 @@ const initialState = {
   },
   editSubscriptionModal: {
     isOpen: false,
-    subscriptionConceptId: ''
+    subscriptionConceptId: '',
+    type: ''
   }
 }
 
@@ -176,12 +177,13 @@ const uiReducer = (state = initialState, action = {}) => {
       }
     }
     case TOGGLE_EDIT_SUBSCRIPTION_MODAL: {
-      const { isOpen, subscriptionConceptId } = action.payload
+      const { isOpen, subscriptionConceptId, type } = action.payload
       return {
         ...state,
         editSubscriptionModal: {
           isOpen,
-          subscriptionConceptId
+          subscriptionConceptId,
+          type
         }
       }
     }

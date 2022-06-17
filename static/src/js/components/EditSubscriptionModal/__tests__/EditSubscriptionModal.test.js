@@ -15,7 +15,8 @@ function setup() {
     onUpdateSubscription: jest.fn(),
     granuleSubscriptions: [],
     subscriptions: {},
-    subscriptionConceptId: ''
+    subscriptionConceptId: '',
+    subscriptionType: 'collection'
   }
 
   const enzymeWrapper = shallow(<EditSubscriptionModal {...props} />)
@@ -84,7 +85,8 @@ describe('EditSubscriptionModal component', () => {
           conceptId: 'SUB1',
           name: 'Original Name (Granule)'
         }],
-        subscriptionConceptId: 'SUB1'
+        subscriptionConceptId: 'SUB1',
+        subscriptionType: 'granule'
       })
       const modalBody = mount(enzymeWrapper.props().body)
       expect(modalBody.find(Form.Control).props().value).toEqual('Original Name (Granule)')
@@ -96,9 +98,10 @@ describe('EditSubscriptionModal component', () => {
       enzymeWrapper.setProps({
         granuleSubscriptions: [{
           conceptId: 'SUB1',
-          name: 'Original Name (Granule)'
+          name: 'Original Name (Granule)',
         }],
-        subscriptionConceptId: 'SUB1'
+        subscriptionConceptId: 'SUB1',
+        subscriptionType: 'granule'
       })
       const modalBody = mount(enzymeWrapper.props().body)
       expect(modalBody.find(Form.Check).props().checked).toEqual(false)

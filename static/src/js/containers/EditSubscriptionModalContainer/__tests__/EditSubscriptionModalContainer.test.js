@@ -10,12 +10,13 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    granuleSubscriptions: [],
     isOpen: true,
     onUpdateSubscription: jest.fn(),
     onToggleEditSubscriptionModal: jest.fn(),
     subscriptionConceptId: 'SUB1',
     subscriptions: {},
-    granuleSubscriptions: []
+    subscriptionType: ''
   }
 
   const enzymeWrapper = shallow(<EditSubscriptionModalContainer {...props} />)
@@ -35,6 +36,16 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith(false)
+  })
+
+  test('onUpdateSubscription calls actions.toggleEditSubscriptionModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'updateSubscription')
+
+    mapDispatchToProps(dispatch).onUpdateSubscription('conceptId', 'nativeId', 'subscriptionName', 'subscriptionType')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('conceptId', 'nativeId', 'subscriptionName', 'subscriptionType')
   })
 })
 

@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Form } from 'react-bootstrap'
@@ -28,7 +27,8 @@ export class EditSubscriptionModal extends Component {
     const {
       granuleSubscriptions,
       subscriptions,
-      subscriptionConceptId: subscriptionConceptIdFromProps
+      subscriptionConceptId: subscriptionConceptIdFromProps,
+      subscriptionType
     } = props
 
     const { subscription: subscriptionFromState = {} } = state
@@ -37,13 +37,12 @@ export class EditSubscriptionModal extends Component {
     // Check to see if a new subscription has been loaded
     if (subscriptionConceptIdFromState === subscriptionConceptIdFromProps) return null
 
-    // TODO: is this the best way to handle this?
-    const isGranuleSubscription = granuleSubscriptions && granuleSubscriptions.length
-
     let subscription = {}
 
-    if (isGranuleSubscription) {
-      subscription = granuleSubscriptions.find((subscription) => subscription.conceptId === subscriptionConceptIdFromProps)
+    if (subscriptionType === 'granule') {
+      subscription = granuleSubscriptions.find(
+        (subscription) => subscription.conceptId === subscriptionConceptIdFromProps
+      )
     } else {
       const { byId: subscriptionsById } = subscriptions
       subscription = subscriptionsById[subscriptionConceptIdFromProps] || {}
@@ -102,7 +101,8 @@ export class EditSubscriptionModal extends Component {
     const { onToggleEditSubscriptionModal } = this.props
     onToggleEditSubscriptionModal({
       isOpen: false,
-      subscriptionConceptId: ''
+      subscriptionConceptId: '',
+      type: ''
     })
   }
 
@@ -129,7 +129,10 @@ export class EditSubscriptionModal extends Component {
             id="update-subscription-name"
             type="text"
             value={name}
-            onChange={this.onSubscriptionNameChange}
+            onChange={(e) => {
+              console.log('change is firing')
+              this.onSubscriptionNameChange(e)
+            }}
             onBlur={this.onSubscriptionNameChange}
             onKeyUp={this.onSubscriptionNameChange}
           />
@@ -160,7 +163,7 @@ export class EditSubscriptionModal extends Component {
         size="lg"
         title="Edit Subscription"
         body={body}
-        primaryAction="Edit Subscription"
+        primaryAction="Save"
         onPrimaryAction={this.onSubscriptionEditSubmit}
         primaryActionLoading={isSubmitting}
         secondaryAction="Cancel"
@@ -182,7 +185,8 @@ EditSubscriptionModal.propTypes = {
   subscriptions: PropTypes.shape({
     byId: PropTypes.shape({})
   }).isRequired,
-  subscriptionConceptId: PropTypes.string.isRequired
+  subscriptionConceptId: PropTypes.string.isRequired,
+  subscriptionType: PropTypes.string.isRequired
 }
 
 export default EditSubscriptionModal
