@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { parse } from 'qs'
 import { uniq } from 'lodash'
 import {
   FaCheckCircle,
@@ -22,10 +23,12 @@ import VariableDetailsPanel from './VariableDetailsPanel'
 import DataQualitySummary from '../DataQualitySummary/DataQualitySummary'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import { isAccessMethodValid } from '../../util/accessMethods'
 import { locationPropType } from '../../util/propTypes/location'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
+import { stringify } from '../../util/url/url'
 
 import './ProjectPanels.scss'
 
@@ -43,6 +46,7 @@ import './ProjectPanels.scss'
  * @param {Object} spatial - The spatial from the store.
  * @param {Object} shapefileId - The shapefileId from the store.
  * @param {Object} projectCollection - The project collection.
+ * @param {Function} onChangePath - Callback to change the path.
  * @param {Function} onSetActivePanelGroup - Callback to set the page number.
  * @param {Function} onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.
@@ -273,6 +277,7 @@ class ProjectPanels extends PureComponent {
       focusedGranuleId,
       granulesMetadata,
       location,
+      onChangePath,
       onChangeProjectGranulePageNum,
       onFocusedGranuleChange,
       onRemoveGranuleFromProjectCollection,
@@ -332,10 +337,74 @@ class ProjectPanels extends PureComponent {
 
       const {
         title,
-        isCSDA: collectionIsCSDA
+        isCSDA: collectionIsCSDA,
+        cloudHosted,
+        duplicateCollections = []
       } = collectionMetadata
 
-      const { [collectionId]: collectionDataQualitySummaries = [] } = dataQualitySummaries
+      let { [collectionId]: collectionDataQualitySummaries = [] } = dataQualitySummaries
+
+      const hasDataQualitySummary = collectionDataQualitySummaries.length > 0
+      const hasDuplicateCollection = duplicateCollections.length > 0
+
+      const dataQualityHeader = (() => {
+        if (hasDataQualitySummary && hasDuplicateCollection) {
+          return 'Important data quality and availability information'
+        }
+        if (hasDataQualitySummary) {
+          return 'Important data quality information'
+        }
+        if (hasDuplicateCollection) {
+          return 'Important data availability information'
+        }
+        return ''
+      })()
+
+      if (hasDuplicateCollection) {
+        const duplicateCollectionId = duplicateCollections[0]
+
+        const params = parse(location.search, { parseArrays: false, ignoreQueryPrefix: true })
+
+        // adding duplicateCollectionId to the front makes it the focused collection
+        const p = [duplicateCollectionId, ...projectIds].join('!')
+
+        const newSearch = stringify({ ...params, p })
+
+        collectionDataQualitySummaries = [...collectionDataQualitySummaries, {
+          id: 'duplicate-collection',
+          summary: cloudHosted
+            ? (
+              <>
+                <span>This dataset is hosted in the Earthdata Cloud. The dataset is also </span>
+                <PortalLinkContainer
+                  to={{
+                    pathname: '/search/granules',
+                    search: newSearch
+                  }}
+                  onClick={() => { onChangePath(`/search/granules${newSearch}`) }}
+                >
+                  hosted in a NASA datacenter
+                </PortalLinkContainer>
+                <span>, and may have different services available.</span>
+              </>
+            )
+            : (
+              <>
+                <span>This dataset is hosted inside a NASA datacenter. The dataset is also </span>
+                <PortalLinkContainer
+                  to={{
+                    pathname: '/search/granules',
+                    search: newSearch
+                  }}
+                  onClick={() => { onChangePath(`/search/granules${newSearch}`) }}
+                >
+                  hosted in the Earthdata Cloud
+                </PortalLinkContainer>
+                <span>, and may have different services available.</span>
+              </>
+            )
+        }]
+      }
 
       const { valid: isValid } = isAccessMethodValid(projectCollection, collectionMetadata)
 
@@ -476,7 +545,12 @@ class ProjectPanels extends PureComponent {
           footer={editOptionsFooter}
         >
           <PanelItem
-            header={<DataQualitySummary dataQualitySummaries={collectionDataQualitySummaries} />}
+            header={(
+              <DataQualitySummary
+                dataQualitySummaries={collectionDataQualitySummaries}
+                dataQualityHeader={dataQualityHeader}
+              />
+            )}
           >
             <AccessMethod
               accessMethods={accessMethods}
@@ -601,6 +675,7 @@ ProjectPanels.propTypes = {
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
+  onChangePath: PropTypes.func.isRequired,
   onChangeProjectGranulePageNum: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,

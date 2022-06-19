@@ -205,6 +205,12 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           dataCenters
           directDistributionInformation
           doi
+          duplicateCollections {
+            count
+            items {
+              id
+            }
+          }
           hasGranules
           lines
           points
@@ -311,6 +317,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           coordinateSystem,
           dataCenter,
           dataCenters,
+          duplicateCollections,
           granules,
           hasGranules,
           relatedCollections,
@@ -338,6 +345,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           boxes,
           coordinateSystem,
           dataCenter,
+          duplicateCollections,
           granules,
           hasAllMetadata: true,
           hasGranules,

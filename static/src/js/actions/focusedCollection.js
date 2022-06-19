@@ -104,6 +104,12 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         dataCenters
         directDistributionInformation
         doi
+        duplicateCollections {
+          count
+          items {
+            id
+          }
+        }
         hasGranules
         lines
         nativeDataFormats
@@ -209,6 +215,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           coordinateSystem,
           dataCenter,
           dataCenters,
+          duplicateCollections,
           granules,
           hasGranules,
           nativeDataFormats,
@@ -238,6 +245,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           boxes,
           coordinateSystem,
           dataCenter,
+          duplicateCollections,
           granules,
           hasAllMetadata: true,
           hasGranules,

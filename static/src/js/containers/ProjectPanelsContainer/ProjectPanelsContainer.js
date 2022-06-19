@@ -72,6 +72,7 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} spatial - The spatial from the store.
  * @param {Object} shapefileId - The shapefileId from the store.
  * @param {Object} projectCollection - The project collection.
+ * @param {Function} onChangePath - Callback to change the path.
  * @param {Function} onSetActivePanelGroup - Callback to set the page number.
  * @param {Function} onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.

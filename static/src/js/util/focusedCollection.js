@@ -3,6 +3,7 @@ import { isEmpty } from 'lodash'
 import { buildDataCenters } from './collectionMetadata/dataCenters'
 import { buildDirectDistributionInformation } from './collectionMetadata/buildDirectDistributionInformation'
 import { buildDoi } from './collectionMetadata/doi'
+import { buildDuplicateCollections } from './collectionMetadata/buildDuplicateCollections'
 import { buildGibsLayers } from './collectionMetadata/buildGibsLayers'
 import { buildRelatedUrls } from './collectionMetadata/relatedUrls'
 import { buildScienceKeywords } from './collectionMetadata/scienceKeywords'
@@ -34,6 +35,7 @@ export const createFocusedCollectionMetadata = (metadata, authToken, earthdataEn
   dataCenters: buildDataCenters(metadata),
   directDistributionInformation: buildDirectDistributionInformation(metadata),
   doi: buildDoi(metadata),
+  duplicateCollections: buildDuplicateCollections(metadata),
   relatedUrls: buildRelatedUrls(metadata),
   scienceKeywords: buildScienceKeywords(metadata),
   temporal: buildTemporal(metadata),
