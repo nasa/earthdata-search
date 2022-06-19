@@ -499,8 +499,8 @@ describe('ProjectPanels component', () => {
     })
   })
 
-  describe('when viewing a duplicate collection', () => {
-    test('duplicate collection notice appears', () => {
+  describe('when viewing a cloud-hosted collection', () => {
+    test('an on-prem duplicate collection notice appears', () => {
       const { enzymeWrapper, props } = setup({
         project: {
           collections: {
@@ -521,6 +521,7 @@ describe('ProjectPanels component', () => {
         },
         projectCollectionsMetadata: {
           'C2208418228-POCLOUD': {
+            cloudHosted: true,
             duplicateCollections: ['C1972954180-PODAAC'],
             id: 'C2208418228-POCLOUD'
           }
@@ -539,13 +540,74 @@ describe('ProjectPanels component', () => {
       const { id, summary } = header.props.dataQualitySummaries[0]
       expect(id).toBe('duplicate-collection')
 
+      expect(shallow(summary.props.children[0]).html()).toBe('<span>This dataset is hosted in the Earthdata Cloud. The dataset is also </span>')
+
       const link = summary.props.children[1]
+      expect(link.props.children).toBe('hosted in a NASA datacenter')
       expect(link.props.to.pathname).toBe('/search/granules')
       expect(link.props.to.search).toBe('?p=C1972954180-PODAAC!C2208418228-POCLOUD')
 
       link.props.onClick()
       expect(props.onChangePath).toBeCalledTimes(1)
       expect(props.onChangePath).toBeCalledWith('/search/granules?p=C1972954180-PODAAC!C2208418228-POCLOUD')
+
+      expect(shallow(summary.props.children[2]).html()).toBe('<span>, and may have different services available.</span>')
+    })
+  })
+
+  describe('when viewing an on-prem collection', () => {
+    test('a cloud-hosted duplicate collection notice appears', () => {
+      const { enzymeWrapper, props } = setup({
+        project: {
+          collections: {
+            allIds: ['C1972954180-PODAAC'],
+            byId: {
+              'C1972954180-PODAAC': {
+                accessMethods: {
+                  download: {
+                    isValid: true,
+                    type: 'download'
+                  }
+                },
+                granules: {},
+                isVisible: true
+              }
+            }
+          }
+        },
+        projectCollectionsMetadata: {
+          'C1972954180-PODAAC': {
+            cloudHosted: false,
+            duplicateCollections: ['C2208418228-POCLOUD'],
+            id: 'C1972954180-PODAAC'
+          }
+        }
+      })
+
+      const panelItems = enzymeWrapper.find(PanelItem)
+
+      const panelItem = panelItems.findWhere((node) => (
+        node.props().header?.type.name === 'DataQualitySummary'
+      )).first()
+
+      const { header } = panelItem.props()
+      expect(header.props.dataQualityHeader).toBe('Important data availability information')
+      expect(header.props.dataQualitySummaries).toHaveLength(1)
+      const { id, summary } = header.props.dataQualitySummaries[0]
+      expect(id).toBe('duplicate-collection')
+
+      expect(shallow(summary.props.children[0]).html()).toBe('<span>This dataset is hosted inside a NASA datacenter. The dataset is also </span>')
+
+      const link = summary.props.children[1]
+      expect(link.props.children).toBe('hosted in the Earthdata Cloud')
+      expect(link.props.to.pathname).toBe('/search/granules')
+      expect(link.props.to.search).toBe('?p=C2208418228-POCLOUD!C1972954180-PODAAC')
+
+      link.props.onClick()
+      expect(props.onChangePath).toBeCalledTimes(1)
+      expect(props.onChangePath).toBeCalledWith('/search/granules?p=C2208418228-POCLOUD!C1972954180-PODAAC')
+
+      expect(shallow(summary.props.children[2]).html()).toBe('<span>, and may have different services available.</span>')
     })
   })
 })
