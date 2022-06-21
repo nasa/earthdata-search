@@ -49,7 +49,10 @@ describe('mapDispatchToProps', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateSubscription')
 
-    mapDispatchToProps(dispatch).onUpdateSubscription()
+    mapDispatchToProps(dispatch).onUpdateSubscription({
+      subscription: {},
+      shouldUpdateQuery: false
+    })
 
     expect(spy).toBeCalledTimes(1)
   })
