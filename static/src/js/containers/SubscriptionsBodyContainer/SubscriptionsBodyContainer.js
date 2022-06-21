@@ -22,8 +22,8 @@ export const mapDispatchToProps = (dispatch) => ({
       actions.createSubscription(subscriptionName, subscriptionType)
     ),
   onUpdateSubscription:
-    (conceptId, nativeId, subscriptionName, subscriptionType) => dispatch(
-      actions.updateSubscription(conceptId, nativeId, subscriptionName, subscriptionType)
+    (data) => dispatch(
+      actions.updateSubscription(data)
     ),
   onUpdateSubscriptionDisabledFields:
     (data) => dispatch(actions.updateSubscriptionDisabledFields(data)),
