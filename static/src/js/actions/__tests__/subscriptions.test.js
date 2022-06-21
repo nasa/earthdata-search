@@ -896,12 +896,15 @@ describe('updateSubscription', () => {
     })
 
     await store.dispatch(updateSubscription({
-      conceptId: 'SUB1000-EDSC',
-      nativeId: 'mock-guid',
-      name: 'Collection Name',
-      query: 'point[]=0,0',
-      type: 'granule'
-    }, true)).then(() => {
+      subscription: {
+        conceptId: 'SUB1000-EDSC',
+        nativeId: 'mock-guid',
+        name: 'Collection Name',
+        query: 'point[]=0,0',
+        type: 'granule'
+      },
+      shouldUpdateQuery: true
+    })).then(() => {
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][0]).toEqual('Subscription updated')
       expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
@@ -963,12 +966,15 @@ describe('updateSubscription', () => {
     })
 
     await store.dispatch(updateSubscription({
-      conceptId: 'SUB1000-EDSC',
-      nativeId: 'mock-guid',
-      name: 'Collection Name',
-      query: 'point[]=0,0',
-      type: 'collection'
-    }, true)).then(() => {
+      subscription: {
+        conceptId: 'SUB1000-EDSC',
+        nativeId: 'mock-guid',
+        name: 'Collection Name',
+        query: 'point[]=0,0',
+        type: 'collection'
+      },
+      shouldUpdateQuery: true
+    })).then(() => {
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][0]).toEqual('Subscription updated')
       expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
@@ -1031,12 +1037,15 @@ describe('updateSubscription', () => {
     })
 
     await store.dispatch(updateSubscription({
-      conceptId: 'SUB1000-EDSC',
-      nativeId: 'mock-guid',
-      name: 'Collection Name',
-      query: 'point[]=0,0',
-      type: 'collection'
-    }, false)).then(() => {
+      subscription: {
+        conceptId: 'SUB1000-EDSC',
+        nativeId: 'mock-guid',
+        name: 'Collection Name',
+        query: 'point[]=0,0',
+        type: 'collection'
+      },
+      shouldUpdateQuery: false
+    })).then(() => {
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][0]).toEqual('Subscription updated')
       expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
@@ -1122,12 +1131,15 @@ describe('updateSubscription', () => {
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(updateSubscription({
-      conceptId: 'SUB1000-EDSC',
-      nativeId: 'mock-guid',
-      name: 'Collection Name',
-      query: 'point[]=0,0',
-      type: 'collection'
-    }, true)).then(() => {
+      subscription: {
+        conceptId: 'SUB1000-EDSC',
+        nativeId: 'mock-guid',
+        name: 'Collection Name',
+        query: 'point[]=0,0',
+        type: 'collection'
+      },
+      shouldUpdateQuery: true
+    })).then(() => {
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
       expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
         action: 'updateSubscription',

@@ -316,10 +316,10 @@ export const deleteSubscription = (
 /**
  * Perform a subscriptions update.
  */
-export const updateSubscription = (
+export const updateSubscription = ({
   subscription,
   shouldUpdateQuery
-) => async (dispatch, getState) => {
+}) => async (dispatch, getState) => {
   const state = getState()
 
   const username = getUsername(state)
