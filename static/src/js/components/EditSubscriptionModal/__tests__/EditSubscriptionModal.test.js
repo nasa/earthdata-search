@@ -98,13 +98,48 @@ describe('EditSubscriptionModal component', () => {
       enzymeWrapper.setProps({
         granuleSubscriptions: [{
           conceptId: 'SUB1',
-          name: 'Original Name (Granule)',
+          name: 'Original Name (Granule)'
         }],
         subscriptionConceptId: 'SUB1',
         subscriptionType: 'granule'
       })
       const modalBody = mount(enzymeWrapper.props().body)
       expect(modalBody.find(Form.Check).props().checked).toEqual(false)
+    })
+  })
+
+  describe('onSubscriptionEditSubmit', () => {
+    test('calls onUpdateSubscription and onToggleEditSubscriptionModal', async () => {
+      const { enzymeWrapper, props } = setup()
+      enzymeWrapper.setProps({
+        subscriptions: {
+          byId: {
+            SUB1: {
+              name: 'Original Name',
+              conceptId: 'SUB1',
+              nativeId: 'mock-guid'
+            }
+          }
+        },
+        subscriptionConceptId: 'SUB1'
+      })
+      await enzymeWrapper.instance().onSubscriptionEditSubmit()
+
+      expect(props.onUpdateSubscription).toHaveBeenCalledTimes(1)
+      expect(props.onUpdateSubscription).toHaveBeenCalledWith({
+        shouldUpdateQuery: false,
+        subscription: {
+          conceptId: 'SUB1',
+          name: 'Original Name',
+          nativeId: 'mock-guid'
+        }
+      })
+      expect(props.onToggleEditSubscriptionModal).toHaveBeenCalledTimes(1)
+      expect(props.onToggleEditSubscriptionModal).toHaveBeenCalledWith({
+        isOpen: false,
+        subscriptionConceptId: '',
+        type: ''
+      })
     })
   })
 })

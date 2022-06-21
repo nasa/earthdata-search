@@ -27,8 +27,6 @@ import {
   LOADING_SUBSCRIPTIONS,
   REMOVE_SUBSCRIPTION,
   STARTED_SUBSCRIPTIONS_TIMER,
-  UPDATE_COLLECTION_SUBSCRIPTION,
-  UPDATE_GRANULE_SUBSCRIPTION,
   UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../../constants/actionTypes'
@@ -897,7 +895,13 @@ describe('updateSubscription', () => {
       }
     })
 
-    await store.dispatch(updateSubscription('SUB1000-EDSC', 'mock-guid', 'Collection Name', 'granule')).then(() => {
+    await store.dispatch(updateSubscription({
+      conceptId: 'SUB1000-EDSC',
+      nativeId: 'mock-guid',
+      name: 'Collection Name',
+      query: 'point[]=0,0',
+      type: 'granule'
+    }, true)).then(() => {
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][0]).toEqual('Subscription updated')
       expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
@@ -958,7 +962,81 @@ describe('updateSubscription', () => {
       }
     })
 
-    await store.dispatch(updateSubscription('SUB1000-EDSC', 'mock-guid', 'Collection Name', 'collection')).then(() => {
+    await store.dispatch(updateSubscription({
+      conceptId: 'SUB1000-EDSC',
+      nativeId: 'mock-guid',
+      name: 'Collection Name',
+      query: 'point[]=0,0',
+      type: 'collection'
+    }, true)).then(() => {
+      expect(addToastMock.mock.calls.length).toBe(1)
+      expect(addToastMock.mock.calls[0][0]).toEqual('Subscription updated')
+      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
+      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
+
+      expect(getSubscriptionsMock.mock.calls.length).toBe(1)
+      expect(getSubscriptionsMock.mock.calls[0][0]).toBe('collection')
+      expect(getSubscriptionsMock.mock.calls[0][1]).toBe(false)
+    })
+  })
+
+  test('should update the subscription but not update the query', async () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      cmrHost: 'https://cmr.example.com',
+      graphQlHost: 'https://graphql.example.com'
+    }))
+    const addToastMock = jest.spyOn(addToast, 'addToast')
+    const getSubscriptionsMock = jest.spyOn(actions, 'getSubscriptions').mockImplementationOnce(() => jest.fn())
+
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        data: {
+          updateSubscription: {
+            conceptId: 'SUB1000-EDSC'
+          }
+        }
+      })
+
+    const store = mockStore({
+      authToken: 'token',
+      earthdataEnvironment: 'prod',
+      metadata: {
+        collections: {}
+      },
+      project: {},
+      query: {
+        collection: {
+          byId: {},
+          temporal: {
+            startDate: '2020-01-01T00:00:00.000Z',
+            endDate: '2020-01-31T23:59:59.999Z',
+            isRecurring: false
+          },
+          spatial: {}
+        }
+      },
+      subscriptions: {
+        disabledFields: {
+          collection: {},
+          granule: {}
+        }
+      },
+      timeline: {
+        query: {}
+      },
+      user: {
+        username: 'testUser'
+      }
+    })
+
+    await store.dispatch(updateSubscription({
+      conceptId: 'SUB1000-EDSC',
+      nativeId: 'mock-guid',
+      name: 'Collection Name',
+      query: 'point[]=0,0',
+      type: 'collection'
+    }, false)).then(() => {
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][0]).toEqual('Subscription updated')
       expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
@@ -1043,7 +1121,13 @@ describe('updateSubscription', () => {
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
-    await store.dispatch(updateSubscription()).then(() => {
+    await store.dispatch(updateSubscription({
+      conceptId: 'SUB1000-EDSC',
+      nativeId: 'mock-guid',
+      name: 'Collection Name',
+      query: 'point[]=0,0',
+      type: 'collection'
+    }, true)).then(() => {
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
       expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
         action: 'updateSubscription',

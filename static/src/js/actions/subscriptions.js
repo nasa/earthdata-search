@@ -317,31 +317,42 @@ export const deleteSubscription = (
  * Perform a subscriptions update.
  */
 export const updateSubscription = (
-  conceptId,
-  nativeId,
-  subscriptionName,
-  subscriptionType
+  subscription,
+  shouldUpdateQuery
 ) => async (dispatch, getState) => {
   const state = getState()
 
   const username = getUsername(state)
-  const collectionId = getFocusedCollectionId(state)
 
   let subscriptionQuery
 
+  const {
+    collectionConceptId,
+    nativeId,
+    name,
+    query: previousSubscriptionQuery,
+    type: subscriptionType
+  } = subscription
+
   const params = {
-    name: subscriptionName,
+    name,
     nativeId,
     subscriberId: username,
     type: subscriptionType
   }
 
-  if (subscriptionType === 'collection') {
-    subscriptionQuery = getCollectionSubscriptionQueryString(state)
-  } else {
-    subscriptionQuery = getGranuleSubscriptionQueryString(state)
+  if (shouldUpdateQuery) {
+    // Pull the new query out of the redux selectors
+    if (subscriptionType === 'collection') {
+      subscriptionQuery = getCollectionSubscriptionQueryString(state)
+    } else {
+      subscriptionQuery = getGranuleSubscriptionQueryString(state)
 
-    params.collectionConceptId = collectionId
+      params.collectionConceptId = collectionConceptId
+    }
+  } else {
+    // Use the previous query
+    subscriptionQuery = previousSubscriptionQuery
   }
 
   params.query = subscriptionQuery
