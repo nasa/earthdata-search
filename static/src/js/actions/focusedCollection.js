@@ -98,6 +98,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         archiveAndDistributionInformation
         associatedDois
         boxes
+        cloudHosted
         conceptId
         coordinateSystem
         dataCenter
@@ -211,6 +212,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           archiveAndDistributionInformation,
           associatedDois,
           boxes,
+          cloudHosted,
           conceptId,
           coordinateSystem,
           dataCenter,
@@ -243,6 +245,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           archiveAndDistributionInformation,
           associatedDois,
           boxes,
+          cloudHosted,
           coordinateSystem,
           dataCenter,
           duplicateCollections,

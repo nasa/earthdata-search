@@ -199,6 +199,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           archiveAndDistributionInformation
           associatedDois
           boxes
+          cloudHosted
           conceptId
           coordinateSystem
           dataCenter
@@ -313,6 +314,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           archiveAndDistributionInformation,
           associatedDois,
           boxes,
+          cloudHosted,
           conceptId,
           coordinateSystem,
           dataCenter,
@@ -343,6 +345,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           archiveAndDistributionInformation,
           associatedDois,
           boxes,
+          cloudHosted,
           coordinateSystem,
           dataCenter,
           duplicateCollections,
