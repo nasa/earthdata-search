@@ -56,18 +56,15 @@ export class EditSubscriptionModal extends Component {
 
   async onSubscriptionEditSubmit() {
     const { onUpdateSubscription } = this.props
-    const { subscription } = this.state
-    const {
-      conceptId,
-      nativeId,
-      name,
-      type
-    } = subscription
+    const { subscription, shouldUpdateQuery } = this.state
 
     this.setState({
       isSubmitting: true
     })
-    await onUpdateSubscription(conceptId, nativeId, name, type)
+    await onUpdateSubscription({
+      subscription,
+      shouldUpdateQuery
+    })
     this.setState({
       isSubmitting: false
     })
