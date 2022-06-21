@@ -324,8 +324,6 @@ export const updateSubscription = (
 
   const username = getUsername(state)
 
-  let subscriptionQuery
-
   const {
     collectionConceptId,
     nativeId,
@@ -341,8 +339,11 @@ export const updateSubscription = (
     type: subscriptionType
   }
 
+  // Default the subscriptionQuery to the previous query
+  let subscriptionQuery = previousSubscriptionQuery
+
+  // If shouldUpdateQuery is true, update the query with new values pulled from redux
   if (shouldUpdateQuery) {
-    // Pull the new query out of the redux selectors
     if (subscriptionType === 'collection') {
       subscriptionQuery = getCollectionSubscriptionQueryString(state)
     } else {
@@ -350,9 +351,6 @@ export const updateSubscription = (
 
       params.collectionConceptId = collectionConceptId
     }
-  } else {
-    // Use the previous query
-    subscriptionQuery = previousSubscriptionQuery
   }
 
   params.query = subscriptionQuery
