@@ -36,7 +36,10 @@ describe('ousGranuleSearch', () => {
       jwtToken: 'mockJwt',
       path: '/service-bridge/ous/collection/C100000-EDSC',
       params: {},
-      requestId: 'asdf-1234-qwer-5678'
+      requestId: 'asdf-1234-qwer-5678',
+      providedHeaders: {
+        Accept: 'application/vnd.cmr-service-bridge.v3+json'
+      }
     })
   })
 
