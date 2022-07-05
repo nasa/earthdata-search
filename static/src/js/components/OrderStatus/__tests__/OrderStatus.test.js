@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { StaticRouter } from 'react-router'
+import Helmet from 'react-helmet'
 
 import { retrievalStatusProps } from './mocks'
 
@@ -15,10 +16,12 @@ import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalL
 
 import * as config from '../../../../../../sharedUtils/config'
 
+
 const store = configureStore()
 
 beforeEach(() => {
   jest.clearAllMocks()
+  jest.spyOn(config, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 })
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -45,6 +48,18 @@ describe('OrderStatus component', () => {
     const { enzymeWrapper } = setup()
     const orderStatus = enzymeWrapper.find(OrderStatus)
     expect(orderStatus).toBeDefined()
+  })
+
+  test('renders the correct Helmet meta information', () => {
+    setup()
+    const helmet = Helmet.peek()
+    expect(helmet.title).toEqual('Download Status')
+    expect(helmet.metaTags[0].name).toEqual('title')
+    expect(helmet.metaTags[0].content).toEqual('Download Status')
+    expect(helmet.metaTags[1].name).toEqual('robots')
+    expect(helmet.metaTags[1].content).toEqual('noindex, nofollow')
+    expect(helmet.linkTags[0].rel).toEqual('canonical')
+    expect(helmet.linkTags[0].href).toEqual('https://search.earthdata.nasa.gov/downloads')
   })
 
   test('calls onFetchRetrieval when mounted', () => {

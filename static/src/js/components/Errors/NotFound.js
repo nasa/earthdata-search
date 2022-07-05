@@ -29,7 +29,7 @@ class NotFound extends Component {
 
     return (
       <div className="wrap">
-        <h1>Sorry! The page you were looking for does not exist.</h1>
+        <h2 className="h1">Sorry! The page you were looking for does not exist.</h2>
         <p>
           Please refer to the ID
           {' '}

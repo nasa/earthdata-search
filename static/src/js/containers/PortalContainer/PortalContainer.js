@@ -34,9 +34,6 @@ export class PortalContainer extends Component {
     let portalTitle = ''
     if (!isDefaultPortal(portalId)) portalTitle = ` :: ${pageTitle || startCase(portalId)} Portal`
 
-    const { env } = getApplicationConfig()
-    const titleEnv = env.toUpperCase() === 'PROD' ? '' : `[${env.toUpperCase()}] `
-
     const defaultConfig = getPortalConfig(getApplicationConfig().defaultPortal)
 
     // Use the default portal org and title for the page title
@@ -48,11 +45,7 @@ export class PortalContainer extends Component {
     return (
       <Helmet>
         <title>
-          {titleEnv}
-          {defaultOrg}
-          {' '}
-          {defaultTitle}
-          {portalTitle}
+          {`${defaultOrg} ${defaultTitle}${portalTitle}`}
         </title>
       </Helmet>
     )
