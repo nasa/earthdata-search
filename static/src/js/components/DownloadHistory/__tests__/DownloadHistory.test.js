@@ -1,9 +1,11 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { shallow, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Table } from 'react-bootstrap'
+import Helmet from 'react-helmet'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
+import * as AppConfig from '../../../../../../sharedUtils/config'
 
 import Spinner from '../../Spinner/Spinner'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -22,6 +24,7 @@ function setup(props) {
 
 beforeEach(() => {
   jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+  jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 })
 
 describe('DownloadHistory component', () => {
@@ -118,6 +121,36 @@ describe('DownloadHistory component', () => {
       expect(enzymeWrapper.find('tbody tr').length).toBe(1)
       expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({ pathname: '/downloads/8069076', search: '' })
       expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('Collection Title and 1 other collection')
+    })
+
+    test('renders the correct Helmet meta information', () => {
+      const { enzymeWrapper } = setup({
+        authToken: 'testToken',
+        earthdataEnvironment: 'prod',
+        retrievalHistory: [{
+          id: '8069076',
+          jsondata: {},
+          created_at: '2019-08-25T11:58:14.390Z',
+          collections: [{
+            title: 'Collection Title'
+          }, {
+            title: 'Collection Title Two'
+          }]
+        }],
+        retrievalHistoryLoading: false,
+        retrievalHistoryLoaded: true,
+        onDeleteRetrieval: jest.fn()
+      })
+
+      const helmet = enzymeWrapper.find(Helmet)
+      expect(helmet.childAt(0).type()).toEqual('title')
+      expect(helmet.childAt(0).text()).toEqual('Download Status & History')
+      expect(helmet.childAt(1).props().name).toEqual('title')
+      expect(helmet.childAt(1).props().content).toEqual('Download Status & History')
+      expect(helmet.childAt(2).props().name).toEqual('robots')
+      expect(helmet.childAt(2).props().content).toEqual('noindex, nofollow')
+      expect(helmet.childAt(3).props().rel).toEqual('canonical')
+      expect(helmet.childAt(3).props().href).toEqual('https://search.earthdata.nasa.gov/downloads')
     })
 
     test('renders links correctly when portals were used to place an order', () => {

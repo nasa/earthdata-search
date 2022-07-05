@@ -10,9 +10,11 @@ import {
   FaMap,
   FaTable
 } from 'react-icons/fa'
+import Helmet from 'react-helmet'
 
 import configureStore from '../../../store/configureStore'
 import * as PortalUtils from '../../../util/portals'
+import * as AppConfig from '../../../../../../sharedUtils/config'
 
 import SearchPanels from '../SearchPanels'
 import Panels from '../../Panels/Panels'
@@ -28,6 +30,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 
   jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => true)
+  jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 })
 
 delete window.location
@@ -47,6 +50,7 @@ function setup(overrideProps, location = '/search') {
     collectionMetadata: {
       hasAllMetadata: true,
       title: 'Collection Title',
+      conceptId: 'C-1000',
       isCSDA: false,
       isOpenSearch: false
     },
@@ -62,6 +66,7 @@ function setup(overrideProps, location = '/search') {
     },
     collectionSubscriptions: [],
     granuleMetadata: {
+      conceptId: 'G-1000',
       title: 'Granule Title'
     },
     granuleSearchResults: {
@@ -289,6 +294,18 @@ describe('SearchPanels component', () => {
   })
 
   describe('while on the /granules route', () => {
+    test('sets the correct Helmet meta elements', () => {
+      setup({}, '/search/granules')
+      const helmet = Helmet.peek()
+      expect(helmet.title).toEqual('Collection Title')
+      expect(helmet.metaTags[0]).toEqual({ name: 'title', content: 'Collection Title' })
+      expect(helmet.metaTags[1]).toEqual({ property: 'og:title', content: 'Collection Title' })
+      expect(helmet.metaTags[2]).toEqual({ name: 'description', content: 'Explore and access Collection Title data on Earthdata Search' })
+      expect(helmet.metaTags[3]).toEqual({ property: 'og:description', content: 'Explore and access Collection Title data on Earthdata Search' })
+      expect(helmet.metaTags[4]).toEqual({ property: 'og:url', content: 'https://search.earthdata.nasa.gov/search/granules?p=C-1000' })
+      expect(helmet.linkTags[0]).toEqual({ rel: 'canonical', href: 'https://search.earthdata.nasa.gov/search/granules?p=C-1000' })
+    })
+
     test('sets the correct breadcrumbs', () => {
       const { enzymeWrapper } = setup({}, '/search/granules')
       const panels = enzymeWrapper.find(Panels)
@@ -760,6 +777,18 @@ describe('SearchPanels component', () => {
   })
 
   describe('while on the /granules/granule-details route', () => {
+    test('sets the correct Helmet meta elements', () => {
+      setup({}, '/search/granules/granule-details')
+      const helmet = Helmet.peek()
+      expect(helmet.title).toEqual('Granule Title Details')
+      expect(helmet.metaTags[0]).toEqual({ name: 'title', content: 'Granule Title Details' })
+      expect(helmet.metaTags[1]).toEqual({ property: 'og:title', content: 'Granule Title Details' })
+      expect(helmet.metaTags[2]).toEqual({ name: 'description', content: 'View Granule Title on Earthdata Search' })
+      expect(helmet.metaTags[3]).toEqual({ property: 'og:description', content: 'View Granule Title on Earthdata Search' })
+      expect(helmet.metaTags[4]).toEqual({ property: 'og:url', content: 'https://search.earthdata.nasa.gov/search/granules/granule-details?p=C-1000&g=G-1000' })
+      expect(helmet.linkTags[0]).toEqual({ rel: 'canonical', href: 'https://search.earthdata.nasa.gov/search/granules/granule-details?p=C-1000&g=G-1000' })
+    })
+
     test('sets the correct breadcrumbs', () => {
       const { enzymeWrapper } = setup({}, '/search/granules/granule-details')
       const panels = enzymeWrapper.find(Panels)
@@ -841,6 +870,18 @@ describe('SearchPanels component', () => {
   })
 
   describe('while on the /granules/collection-details route', () => {
+    test('sets the correct Helmet meta elements', () => {
+      setup({}, '/search/granules/collection-details')
+      const helmet = Helmet.peek()
+      expect(helmet.title).toEqual('Collection Title Details')
+      expect(helmet.metaTags[0]).toEqual({ name: 'title', content: 'Collection Title Details' })
+      expect(helmet.metaTags[1]).toEqual({ property: 'og:title', content: 'Collection Title Details' })
+      expect(helmet.metaTags[2]).toEqual({ name: 'description', content: 'View Collection Title on Earthdata Search' })
+      expect(helmet.metaTags[3]).toEqual({ property: 'og:description', content: 'View Collection Title on Earthdata Search' })
+      expect(helmet.metaTags[4]).toEqual({ property: 'og:url', content: 'https://search.earthdata.nasa.gov/search/collection-details?p=C-1000' })
+      expect(helmet.linkTags[0]).toEqual({ rel: 'canonical', href: 'https://search.earthdata.nasa.gov/search/collection-details?p=C-1000' })
+    })
+
     test('sets the correct breadcrumbs', () => {
       const { enzymeWrapper } = setup({}, '/search/granules/collection-details')
       const panels = enzymeWrapper.find(Panels)
@@ -913,6 +954,18 @@ describe('SearchPanels component', () => {
   })
 
   describe('while on the /granules/subscriptions route', () => {
+    test('sets the correct Helmet meta elements', () => {
+      setup({}, '/search/granules/subscriptions')
+      const helmet = Helmet.peek()
+      expect(helmet.title).toEqual('Collection Title Subscriptions')
+      expect(helmet.metaTags[0]).toEqual({ name: 'title', content: 'Collection Title Subscriptions' })
+      expect(helmet.metaTags[1]).toEqual({ property: 'og:title', content: 'Collection Title Subscriptions' })
+      expect(helmet.metaTags[2]).toEqual({ name: 'description', content: 'Subscribe to be notifed when new Collection Title data is available' })
+      expect(helmet.metaTags[3]).toEqual({ property: 'og:description', content: 'Subscribe to be notifed when new Collection Title data is available' })
+      expect(helmet.metaTags[4]).toEqual({ property: 'og:url', content: 'https://search.earthdata.nasa.gov/search/granules/subscriptions?p=C-1000' })
+      expect(helmet.linkTags[0]).toEqual({ rel: 'canonical', href: 'https://search.earthdata.nasa.gov/search/granules/subscriptions?p=C-1000' })
+    })
+
     test('sets the correct breadcrumbs', () => {
       const { enzymeWrapper } = setup({}, '/search/granules/subscriptions')
       const panels = enzymeWrapper.find(Panels)
@@ -968,6 +1021,18 @@ describe('SearchPanels component', () => {
   })
 
   describe('while on the /subscriptions route', () => {
+    test('sets the correct Helmet meta elements', () => {
+      setup({}, '/search/subscriptions')
+      const helmet = Helmet.peek()
+      expect(helmet.title).toEqual('Dataset Search Subscriptions')
+      expect(helmet.metaTags[0]).toEqual({ name: 'title', content: 'Dataset Search Subscriptions' })
+      expect(helmet.metaTags[1]).toEqual({ property: 'og:title', content: 'Dataset Search Subscriptions' })
+      expect(helmet.metaTags[2]).toEqual({ name: 'description', content: 'Subscribe to be notifed when new datasets become available' })
+      expect(helmet.metaTags[3]).toEqual({ property: 'og:description', content: 'Subscribe to be notifed when new datasets become available' })
+      expect(helmet.metaTags[4]).toEqual({ property: 'og:url', content: 'https://search.earthdata.nasa.gov/search/subscriptions' })
+      expect(helmet.linkTags[0]).toEqual({ rel: 'canonical', href: 'https://search.earthdata.nasa.gov/search/subscriptions' })
+    })
+
     test('sets the correct breadcrumbs', () => {
       const { enzymeWrapper } = setup({}, '/search/subscriptions')
       const panels = enzymeWrapper.find(Panels)
