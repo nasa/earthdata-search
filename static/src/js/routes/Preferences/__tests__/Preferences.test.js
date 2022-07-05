@@ -4,8 +4,6 @@ import Adapter from 'enzyme-adapter-react-16'
 import Helmet from 'react-helmet'
 
 import Preferences from '../Preferences'
-// import PreferencesContainer
-//   from '../../../containers/PreferencesContainer/PreferencesContainer'
 import * as AppConfig from '../../../../../../sharedUtils/config'
 
 Enzyme.configure({ adapter: new Adapter() })
