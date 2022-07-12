@@ -132,7 +132,8 @@ export class EDSCModalContainer extends Component {
       modalOverlayEl
     ] = [
       innerHeader,
-      body,
+      /* eslint-disable react/jsx-no-useless-fragment */
+      Array.isArray(body) ? <>{body}</> : body,
       activeModalOverlay
     ].map(addPropsToChildren)
 

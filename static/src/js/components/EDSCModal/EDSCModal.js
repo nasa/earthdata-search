@@ -88,9 +88,13 @@ export const EDSCModal = ({
           </div>
         )
       }
-      <div className="edsc-modal__inner-body" ref={modalInner}>
-        {bodyEl}
-      </div>
+      {
+        bodyEl && (
+          <div className="edsc-modal__inner-body" ref={modalInner}>
+            {bodyEl}
+          </div>
+        )
+      }
       {
         modalOverlayEl && (
           <EDSCModalOverlay>

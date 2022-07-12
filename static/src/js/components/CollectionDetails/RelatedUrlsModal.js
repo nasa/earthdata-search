@@ -28,8 +28,9 @@ export class RelatedUrlsModal extends Component {
     const { relatedUrls = [] } = collectionMetadata
 
     const body = (
-      relatedUrls && relatedUrls.map((category, i) => {
-        if (category.urls.length) {
+      relatedUrls && relatedUrls
+        .filter((category) => category.urls.length > 0)
+        .map((category, i) => {
           const key = `modal_related_url_${i}`
           return (
             <div key={key} className="related-urls-modal__group">
@@ -48,9 +49,7 @@ export class RelatedUrlsModal extends Component {
               }
             </div>
           )
-        }
-        return null
-      })
+        })
     )
 
     return (
