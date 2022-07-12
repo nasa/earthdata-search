@@ -8,6 +8,7 @@ import {
   TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_DEPRECATED_PARAMETER_MODAL,
   TOGGLE_DRAWING_NEW_LAYER,
+  TOGGLE_EDIT_SUBSCRIPTION_MODAL,
   TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
@@ -75,6 +76,11 @@ const initialState = {
   deprecatedParameterModal: {
     isOpen: false,
     deprecatedUrlParams: []
+  },
+  editSubscriptionModal: {
+    isOpen: false,
+    subscriptionConceptId: '',
+    type: ''
   }
 }
 
@@ -167,6 +173,17 @@ const uiReducer = (state = initialState, action = {}) => {
         ...state,
         aboutCwicModal: {
           isOpen: action.payload
+        }
+      }
+    }
+    case TOGGLE_EDIT_SUBSCRIPTION_MODAL: {
+      const { isOpen, subscriptionConceptId, type } = action.payload
+      return {
+        ...state,
+        editSubscriptionModal: {
+          isOpen,
+          subscriptionConceptId,
+          type
         }
       }
     }

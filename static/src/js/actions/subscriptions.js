@@ -316,32 +316,41 @@ export const deleteSubscription = (
 /**
  * Perform a subscriptions update.
  */
-export const updateSubscription = (
-  conceptId,
-  nativeId,
-  subscriptionName,
-  subscriptionType
-) => async (dispatch, getState) => {
+export const updateSubscription = ({
+  subscription,
+  shouldUpdateQuery
+}) => async (dispatch, getState) => {
   const state = getState()
 
   const username = getUsername(state)
-  const collectionId = getFocusedCollectionId(state)
 
-  let subscriptionQuery
+  const {
+    collectionConceptId,
+    nativeId,
+    name,
+    query: previousSubscriptionQuery,
+    type: subscriptionType
+  } = subscription
 
   const params = {
-    name: subscriptionName,
+    name,
     nativeId,
     subscriberId: username,
     type: subscriptionType
   }
 
-  if (subscriptionType === 'collection') {
-    subscriptionQuery = getCollectionSubscriptionQueryString(state)
-  } else {
-    subscriptionQuery = getGranuleSubscriptionQueryString(state)
+  // Default the subscriptionQuery to the previous query
+  let subscriptionQuery = previousSubscriptionQuery
 
-    params.collectionConceptId = collectionId
+  // If shouldUpdateQuery is true, update the query with new values pulled from redux
+  if (shouldUpdateQuery) {
+    if (subscriptionType === 'collection') {
+      subscriptionQuery = getCollectionSubscriptionQueryString(state)
+    } else {
+      subscriptionQuery = getGranuleSubscriptionQueryString(state)
+
+      params.collectionConceptId = collectionConceptId
+    }
   }
 
   params.query = subscriptionQuery
@@ -377,18 +386,9 @@ export const updateSubscription = (
     })
 
     if (subscriptionType === 'collection') {
-      dispatch(updateCollectionSubscription({
-        conceptId,
-        query: subscriptionQuery
-      }))
+      dispatch(actions.getSubscriptions(subscriptionType, false))
     } else {
-      dispatch(
-        actions.updateGranuleSubscription({
-          collectionConceptId: collectionId,
-          conceptId,
-          query: subscriptionQuery
-        })
-      )
+      dispatch(actions.getGranuleSubscriptions())
     }
   } catch (error) {
     dispatch(actions.handleError({

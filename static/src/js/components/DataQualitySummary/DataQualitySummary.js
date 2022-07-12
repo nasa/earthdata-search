@@ -10,7 +10,8 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import './DataQualitySummary.scss'
 
 export const DataQualitySummary = ({
-  dataQualitySummaries
+  dataQualitySummaries,
+  dataQualityHeader
 }) => (
   dataQualitySummaries.length > 0 && (
     <div className="data-quality-summary">
@@ -19,7 +20,7 @@ export const DataQualitySummary = ({
         header={(
           <>
             <EDSCIcon icon={FaExclamationCircle} className="data-quality-summary__icon" />
-            {' Important data quality information'}
+            {` ${dataQualityHeader}`}
           </>
         )}
       >
@@ -28,6 +29,9 @@ export const DataQualitySummary = ({
               const { id, summary } = dqs
               const key = `dqs-${id}`
 
+              if (React.isValidElement(summary)) {
+                return <React.Fragment key={key}>{summary}</React.Fragment>
+              }
               return (
                 <SanitizedHTML
                   key={key}
@@ -45,7 +49,8 @@ export const DataQualitySummary = ({
 DataQualitySummary.propTypes = {
   dataQualitySummaries: PropTypes.arrayOf(
     PropTypes.shape({})
-  ).isRequired
+  ).isRequired,
+  dataQualityHeader: PropTypes.string.isRequired
 }
 
 export default DataQualitySummary

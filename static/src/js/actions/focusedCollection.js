@@ -98,12 +98,19 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         archiveAndDistributionInformation
         associatedDois
         boxes
+        cloudHosted
         conceptId
         coordinateSystem
         dataCenter
         dataCenters
         directDistributionInformation
         doi
+        duplicateCollections {
+          count
+          items {
+            id
+          }
+        }
         hasGranules
         lines
         nativeDataFormats
@@ -157,6 +164,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             name
             nativeId
             query
+            type
           }
         }
         tools {
@@ -204,10 +212,12 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           archiveAndDistributionInformation,
           associatedDois,
           boxes,
+          cloudHosted,
           conceptId,
           coordinateSystem,
           dataCenter,
           dataCenters,
+          duplicateCollections,
           granules,
           hasGranules,
           nativeDataFormats,
@@ -235,8 +245,10 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           archiveAndDistributionInformation,
           associatedDois,
           boxes,
+          cloudHosted,
           coordinateSystem,
           dataCenter,
+          duplicateCollections,
           granules,
           hasAllMetadata: true,
           hasGranules,
@@ -320,6 +332,7 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
           name
           nativeId
           query
+          type
         }
       }
     }`

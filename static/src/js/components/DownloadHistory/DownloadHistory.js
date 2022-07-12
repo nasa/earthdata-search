@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { Table } from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
 import { FaTimesCircle } from 'react-icons/fa'
+import { Helmet } from 'react-helmet'
 
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 import { pluralize } from '../../util/pluralize'
 import { stringify } from '../../util/url/url'
@@ -19,6 +21,9 @@ export class DownloadHistory extends Component {
     super()
 
     this.onHandleRemove = this.onHandleRemove.bind(this)
+
+    const { edscHost } = getEnvironmentConfig()
+    this.edscHost = edscHost
   }
 
   onHandleRemove(id) {
@@ -65,8 +70,16 @@ export class DownloadHistory extends Component {
       retrievalHistoryLoaded
     } = this.props
 
+    const { edscHost } = this
+
     return (
       <>
+        <Helmet>
+          <title>Download Status &amp; History</title>
+          <meta name="title" content="Download Status &amp; History" />
+          <meta name="robots" content="noindex, nofollow" />
+          <link rel="canonical" href={`${edscHost}/downloads`} />
+        </Helmet>
         <h2 className="route-wrapper__page-heading">Download Status & History</h2>
         {
           (retrievalHistoryLoading && !retrievalHistoryLoaded) && (

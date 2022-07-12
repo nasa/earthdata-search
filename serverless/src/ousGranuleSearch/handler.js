@@ -47,7 +47,10 @@ const ousGranuleSearch = async (event) => {
         stringifyResult: false
       }),
       requestId,
-      earthdataEnvironment
+      earthdataEnvironment,
+      providedHeaders: {
+        Accept: 'application/vnd.cmr-service-bridge.v3+json'
+      }
     })
   } catch (e) {
     return {

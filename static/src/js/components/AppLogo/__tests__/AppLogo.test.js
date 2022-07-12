@@ -39,6 +39,14 @@ describe('AppLogo component', () => {
     expect(enzymeWrapper.find('.app-logo__site-name').props().href).toEqual('/')
   })
 
+  test('renders the site title', () => {
+    const { enzymeWrapper } = setup({
+      edscEnv: 'prod'
+    })
+
+    expect(enzymeWrapper.find('h1').text()).toEqual('Earthdata Search')
+  })
+
   describe('when in production', () => {
     test('should hide the environment badge', () => {
       const { enzymeWrapper } = setup({
