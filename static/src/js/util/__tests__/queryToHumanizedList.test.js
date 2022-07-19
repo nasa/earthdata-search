@@ -32,10 +32,42 @@ describe('queryToHumanizedList', () => {
     }])
   })
 
+  test('returns a humanized param for EOSDIS collections tag when tagKey is not an array', () => {
+    const query = {
+      hasGranulesOrCwic: true,
+      tagKey: 'gov.nasa.eosdis'
+    }
+
+    const subscriptionType = 'collection'
+
+    const result = queryToHumanizedList(query, subscriptionType)
+
+    expect(result).toEqual([{
+      key: 'tagKey-gov.nasa.eosdis',
+      humanizedKey: 'Include only EOSDIS datasets'
+    }])
+  })
+
   test('returns a humanized param for Map Imagery tag', () => {
     const query = {
       hasGranulesOrCwic: true,
       tagKey: ['edsc.extra.serverless.gibs']
+    }
+
+    const subscriptionType = 'collection'
+
+    const result = queryToHumanizedList(query, subscriptionType)
+
+    expect(result).toEqual([{
+      key: 'tagKey-edsc.extra.serverless.gibs',
+      humanizedKey: 'Include only datasets with map imagery'
+    }])
+  })
+
+  test('returns a humanized param for Map Imagery tag when tagKey is not an array', () => {
+    const query = {
+      hasGranulesOrCwic: true,
+      tagKey: 'edsc.extra.serverless.gibs'
     }
 
     const subscriptionType = 'collection'

@@ -1,3 +1,5 @@
+import { castArray } from 'lodash'
+
 import { humanizedQueryValueFormattingMap } from './humanizedQueryValueFormattingMap'
 
 /**
@@ -25,7 +27,7 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
         key: 'tagKey-gov.nasa.eosdis',
         humanizedKey: 'Include only EOSDIS datasets'
       })
-      subscriptionsQueryTemp.tagKey = subscriptionsQueryTemp.tagKey.filter((tagKey) => tagKey !== 'gov.nasa.eosdis')
+      subscriptionsQueryTemp.tagKey = castArray(subscriptionsQueryTemp.tagKey).filter((tagKey) => tagKey !== 'gov.nasa.eosdis')
     }
 
     // If only displaying collections with Map Imagery, add a key of "Map Imagery"
@@ -34,7 +36,7 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
         key: 'tagKey-edsc.extra.serverless.gibs',
         humanizedKey: 'Include only datasets with map imagery'
       })
-      subscriptionsQueryTemp.tagKey = subscriptionsQueryTemp.tagKey.filter((tagKey) => tagKey !== 'edsc.extra.serverless.gibs')
+      subscriptionsQueryTemp.tagKey = castArray(subscriptionsQueryTemp.tagKey).filter((tagKey) => tagKey !== 'edsc.extra.serverless.gibs')
     }
 
     // If only displaying customizable collections, add a key of "Customizable"
