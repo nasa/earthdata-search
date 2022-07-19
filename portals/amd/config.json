@@ -9,7 +9,7 @@
   "pageTitle": "Antarctic Metadata Directory (AMD)",
   "parentConfig": "edsc",
   "query": {
-    "tagKey": "org.scar.amd",
+    "tagKey": ["org.scar.amd"],
     "hasGranulesOrCwic": null
   },
   "ui": {

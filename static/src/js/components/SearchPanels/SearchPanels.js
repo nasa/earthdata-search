@@ -696,9 +696,11 @@ class SearchPanels extends PureComponent {
         onPanelClose={this.onPanelClose}
       >
         <PanelItem>
-          <AuthRequiredContainer noRedirect>
-            <SubscriptionsBodyContainer subscriptionType="granule" />
-          </AuthRequiredContainer>
+          <PortalFeatureContainer authentication>
+            <AuthRequiredContainer noRedirect>
+              <SubscriptionsBodyContainer subscriptionType="granule" />
+            </AuthRequiredContainer>
+          </PortalFeatureContainer>
         </PanelItem>
       </PanelGroup>
     )
@@ -720,9 +722,11 @@ class SearchPanels extends PureComponent {
         onPanelClose={this.onPanelClose}
       >
         <PanelItem>
-          <AuthRequiredContainer noRedirect>
-            <SubscriptionsBodyContainer subscriptionType="collection" />
-          </AuthRequiredContainer>
+          <PortalFeatureContainer authentication>
+            <AuthRequiredContainer noRedirect>
+              <SubscriptionsBodyContainer subscriptionType="collection" />
+            </AuthRequiredContainer>
+          </PortalFeatureContainer>
         </PanelItem>
       </PanelGroup>
     )

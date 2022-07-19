@@ -9,7 +9,7 @@
   "pageTitle": "Southern Ocean Observing System",
   "parentConfig": "edsc",
   "query": {
-    "tagKey": "aq.soos",
+    "tagKey": ["aq.soos"],
     "hasGranulesOrCwic": null
   },
   "ui": {
