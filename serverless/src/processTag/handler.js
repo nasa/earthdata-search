@@ -5,6 +5,7 @@ import axios from 'axios'
 import { isEqual } from 'lodash'
 
 import { addTag } from './addTag'
+import { deleteSystemToken } from '../util/urs/deleteSystemToken'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
@@ -32,60 +33,73 @@ const processTag = async (event, context) => {
   // Retrieve a connection to the database
   const cmrToken = await getSystemToken()
 
-  await sqsRecords.forEachAsync(async (sqsRecord) => {
-    const { body } = sqsRecord
+  try {
+    await sqsRecords.forEachAsync(async (sqsRecord) => {
+      const { body } = sqsRecord
 
-    const providedTag = JSON.parse(body)
+      const providedTag = JSON.parse(body)
 
-    const {
-      action,
-      append,
-      requireGranules,
-      searchCriteria = {},
-      tagData,
-      tagName
-    } = providedTag
+      const {
+        action,
+        append,
+        requireGranules,
+        searchCriteria = {},
+        tagData,
+        tagName
+      } = providedTag
 
-    if (action === 'ADD') {
-      const { collection = {} } = searchCriteria
-      const { condition = {} } = collection
-      const { concept_id: conceptId } = condition
+      if (action === 'ADD') {
+        const { collection = {} } = searchCriteria
+        const { condition = {} } = collection
+        const { concept_id: conceptId } = condition
 
-      let existingTagData = {}
+        let existingTagData = {}
 
-      if (conceptId) {
-        const { cmrHost } = getEarthdataConfig(deployedEnvironment())
-        const collectionSearchUrl = `${cmrHost}/search/concepts/${conceptId}.json`
+        if (conceptId) {
+          const { cmrHost } = getEarthdataConfig(deployedEnvironment())
+          const collectionSearchUrl = `${cmrHost}/search/concepts/${conceptId}.json`
 
-        const response = await axios({
-          method: 'post',
-          url: collectionSearchUrl,
-          data: stringify({
-            ...condition,
-            include_tags: tagName
-          }, { indices: false, arrayFormat: 'brackets' }),
-          headers: {
-            'Client-Id': getClientId().background,
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Echo-Token': cmrToken
+          const response = await axios({
+            method: 'post',
+            url: collectionSearchUrl,
+            data: stringify({
+              ...condition,
+              include_tags: tagName
+            }, { indices: false, arrayFormat: 'brackets' }),
+            headers: {
+              'Client-Id': getClientId().background,
+              'Content-Type': 'application/x-www-form-urlencoded',
+              Authorization: `Bearer ${cmrToken}`
+            }
+          })
+
+          const { data } = response
+          const { tags } = data
+
+          existingTagData = getValueForTag(tagName, tags, '')
+
+          const strippedExistingTagData = existingTagData
+          const strippedTagData = tagData
+
+          // There are a few jobs that add an 'updated_at' field to the tag data which will always
+          // make the tags appear different so we want to ensure we strip that out before comparing
+          delete strippedExistingTagData.updated_at
+          delete strippedTagData.updated_at
+
+          // Prevent creating tag data that already exists
+          if (!isEqual(strippedTagData, strippedExistingTagData)) {
+            await addTag({
+              tagName,
+              tagData,
+              searchCriteria,
+              requireGranules,
+              append,
+              cmrToken
+            })
+          } else {
+            console.log(`Tag (${tagName}) for ${conceptId} matches existing value`)
           }
-        })
-
-        const { data } = response
-        const { tags } = data
-
-        existingTagData = getValueForTag(tagName, tags, '')
-
-        const strippedExistingTagData = existingTagData
-        const strippedTagData = tagData
-
-        // There are a few jobs that add an 'updated_at' field to the tag data which will always
-        // make the tags appear different so we want to ensure we strip that out before comparing
-        delete strippedExistingTagData.updated_at
-        delete strippedTagData.updated_at
-
-        // Prevent creating tag data that already exists
-        if (!isEqual(strippedTagData, strippedExistingTagData)) {
+        } else {
           await addTag({
             tagName,
             tagData,
@@ -94,25 +108,17 @@ const processTag = async (event, context) => {
             append,
             cmrToken
           })
-        } else {
-          console.log(`Tag (${tagName}) for ${conceptId} matches existing value`)
         }
-      } else {
-        await addTag({
-          tagName,
-          tagData,
-          searchCriteria,
-          requireGranules,
-          append,
-          cmrToken
-        })
       }
-    }
 
-    if (action === 'REMOVE') {
-      await removeTag(tagName, searchCriteria, cmrToken)
-    }
-  })
+      if (action === 'REMOVE') {
+        await removeTag(tagName, searchCriteria, cmrToken)
+      }
+    })
+  } finally {
+    // Delete the system token /oauth/token
+    await deleteSystemToken(cmrToken)
+  }
 }
 
 export default processTag

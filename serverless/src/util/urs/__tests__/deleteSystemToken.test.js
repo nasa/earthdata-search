@@ -1,11 +1,11 @@
 import nock from 'nock'
 
-import { getSystemToken } from '../getSystemToken'
+import { deleteSystemToken } from '../deleteSystemToken'
 
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 import * as getUrsSystemCredentials from '../getUrsSystemCredentials'
 
-describe('getSystemToken', () => {
+describe('deleteSystemToken', () => {
   test('correctly returns the cmr token when one is already set', async () => {
     jest.spyOn(getUrsSystemCredentials, 'getUrsSystemCredentials').mockImplementation(() => ({
       username: 'edsc',
@@ -15,13 +15,11 @@ describe('getSystemToken', () => {
 
     nock('http://example.com')
       .matchHeader('Authorization', 'Basic ZWRzYzptb2NrZWQtcGFzc3dvcmQ=')
-      .post('/api/users/token')
-      .reply(200, {
-        access_token: '1234-abcd-5678-efgh'
-      })
+      .post('/api/users/revoke_token?token=1234-abcd-5678-efgh')
+      .reply(200, {})
 
-    const tokenResponse = await getSystemToken()
+    const tokenResponse = await deleteSystemToken('1234-abcd-5678-efgh')
 
-    expect(tokenResponse).toEqual('1234-abcd-5678-efgh')
+    expect(tokenResponse).toEqual(undefined)
   })
 })

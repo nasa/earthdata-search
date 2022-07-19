@@ -39,7 +39,7 @@ export const getPageOfGranules = async (cmrToken, collectionId, pageSize = 20) =
     headers: {
       'Client-Id': getClientId().background,
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Echo-Token': cmrToken
+      Authorization: `Bearer ${cmrToken}`
     }
   })
 

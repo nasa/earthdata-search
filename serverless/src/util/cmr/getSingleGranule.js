@@ -38,7 +38,7 @@ export const getSingleGranule = async (cmrToken, collectionId) => {
     headers: {
       'Client-Id': getClientId().background,
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Echo-Token': cmrToken
+      Authorization: `Bearer ${cmrToken}`
     }
   })
 

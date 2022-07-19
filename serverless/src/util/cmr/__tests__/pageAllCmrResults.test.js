@@ -9,7 +9,7 @@ beforeEach(() => {
 describe('pageAllCmrResults', () => {
   test('does not iterate when uneccessary', async () => {
     nock(/cmr/)
-      .matchHeader('Echo-Token', 'test-token')
+      .matchHeader('Authorization', 'Bearer test-token')
       .post(/services/)
       .reply(200, {
         items: []
@@ -29,7 +29,7 @@ describe('pageAllCmrResults', () => {
 
   test('iterates through the correct number of pages', async () => {
     nock(/cmr/)
-      .matchHeader('Echo-Token', 'test-token')
+      .matchHeader('Authorization', 'Bearer test-token')
       .post(/services/)
       .times(4)
       .reply(200, {
@@ -52,7 +52,7 @@ describe('pageAllCmrResults', () => {
     const consoleMock = jest.spyOn(console, 'log')
 
     nock(/cmr/)
-      .matchHeader('Echo-Token', 'test-token')
+      .matchHeader('Authorization', 'Bearer test-token')
       .post(/services/)
       .reply(400, {
         errors: [

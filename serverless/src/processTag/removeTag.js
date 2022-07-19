@@ -20,7 +20,7 @@ export const removeTag = async (tagName, searchCriteria, cmrToken) => {
       url: tagRemovalUrl,
       headers: {
         'Client-Id': getClientId().background,
-        'Echo-Token': cmrToken
+        Authorization: `Bearer ${cmrToken}`
       },
       data: searchCriteria
     })
