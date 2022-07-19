@@ -1,7 +1,7 @@
 import { getAccessTokenFromJwtToken } from './getAccessTokenFromJwtToken'
 
 /**
- * Returns and EDL access token
+ * Returns an EDL access token
  * @param {String} jwtToken
  */
 export const getEchoToken = async (jwtToken, earthdataEnvironment) => {

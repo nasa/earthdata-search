@@ -2,6 +2,7 @@ import AWS from 'aws-sdk'
 import nock from 'nock'
 import MockDate from 'mockdate'
 
+import * as deleteSystemToken from '../../util/urs/deleteSystemToken'
 import * as getSystemToken from '../../util/urs/getSystemToken'
 import * as getPageOfGranules from '../../util/cmr/getPageOfGranules'
 
@@ -22,6 +23,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 
   jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+  jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementationOnce(() => {})
 
   // Manage resetting ENV variables
   jest.resetModules()
@@ -51,7 +53,7 @@ describe('generateCollectionCapabilityTags', () => {
       }]))
 
       nock(/cmr/)
-        .matchHeader('Echo-Token', 'mocked-system-token')
+        .matchHeader('Authorization', 'Bearer mocked-system-token')
         .post(/collections/, 'has_granules=true&page_num=1&page_size=300&include_granule_counts=true&include_tags=edsc.extra.serverless.%2A')
         .reply(200, {
           feed: {
@@ -103,7 +105,7 @@ describe('generateCollectionCapabilityTags', () => {
       }]))
 
       nock(/cmr/)
-        .matchHeader('Echo-Token', 'mocked-system-token')
+        .matchHeader('Authorization', 'Bearer mocked-system-token')
         .post(/collections/, 'has_granules=true&page_num=4&page_size=300&include_granule_counts=true&include_tags=edsc.extra.serverless.%2A')
         .reply(200, {
           feed: {
@@ -155,7 +157,7 @@ describe('generateCollectionCapabilityTags', () => {
       }]))
 
       nock(/cmr/)
-        .matchHeader('Echo-Token', 'mocked-system-token')
+        .matchHeader('Authorization', 'Bearer mocked-system-token')
         .post(/collections/, 'has_granules=true&page_num=1&page_size=300&include_granule_counts=true&include_tags=edsc.extra.serverless.%2A&concept_id=C100000-EDSC')
         .reply(200, {
           feed: {
