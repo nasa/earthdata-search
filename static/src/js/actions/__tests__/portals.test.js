@@ -1,7 +1,8 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import { ADD_PORTAL } from '../../constants/actionTypes'
+import { ADD_ERROR, ADD_PORTAL } from '../../constants/actionTypes'
+import { displayNotificationType } from '../../constants/enums'
 import { addPortal, loadPortalConfig } from '../portals'
 
 const mockStore = configureMockStore([thunk])
@@ -91,6 +92,29 @@ describe('loadPortalConfig', () => {
     expect(storeActions[0]).toEqual({
       type: ADD_PORTAL,
       payload
+    })
+  })
+
+  test('should call addError when unable to load portal config', () => {
+    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {})
+    const portalId = 'not-a-real-portal'
+
+    // mockStore with initialState
+    const store = mockStore()
+
+    // call the dispatch
+    store.dispatch(loadPortalConfig(portalId))
+
+    expect(consoleMock).toHaveBeenCalledTimes(1)
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: ADD_ERROR,
+      payload: {
+        id: portalId,
+        notificationType: displayNotificationType.banner,
+        title: `Portal ${portalId} could not be loaded`
+      }
     })
   })
 })
