@@ -6,12 +6,13 @@ import Button from '../../Button/Button'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps = {}) {
   const props = {
     title: 'title',
     message: 'message',
     onClose: jest.fn(),
-    type: 'error'
+    type: 'error',
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<Bannner {...props} />)
@@ -44,5 +45,13 @@ describe('Bannner component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.hasClass('banner--error')).toEqual(true)
+  })
+
+  test('does not render a message when no message was provided', () => {
+    const { enzymeWrapper } = setup({
+      message: undefined
+    })
+
+    expect(enzymeWrapper.find('.banner__message').exists()).toBeFalsy()
   })
 })
