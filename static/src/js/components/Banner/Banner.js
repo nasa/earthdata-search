@@ -24,7 +24,11 @@ export const Banner = ({
       <div className="banner__content">
         <h2 className="banner__title">{title}</h2>
         {' '}
-        <p className="banner__message">{message}</p>
+        {
+          message && (
+            <p className="banner__message">{message}</p>
+          )
+        }
       </div>
       <Button
         className="banner__close"
@@ -36,11 +40,15 @@ export const Banner = ({
   )
 }
 
+Banner.defaultProps = {
+  message: null
+}
+
 Banner.propTypes = {
   message: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node
-  ]).isRequired,
+  ]),
   title: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node
