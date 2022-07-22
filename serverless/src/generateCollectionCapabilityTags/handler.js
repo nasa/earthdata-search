@@ -5,7 +5,6 @@ import axios from 'axios'
 
 import { stringify } from 'qs'
 
-import { deleteSystemToken } from '../util/urs/deleteSystemToken'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getCollectionCapabilities } from './getCollectionCapabilities'
@@ -34,96 +33,91 @@ const generateCollectionCapabilityTags = async (input) => {
     sqs = new AWS.SQS(getSqsConfig())
   }
 
-  try {
-    const cmrParams = {
-      has_granules: true,
-      page_num: pageNumber,
-      page_size: pageSize,
-      include_granule_counts: true,
-      include_tags: tagName('*')
+  const cmrParams = {
+    has_granules: true,
+    page_num: pageNumber,
+    page_size: pageSize,
+    include_granule_counts: true,
+    include_tags: tagName('*')
+  }
+
+  const { conceptId } = input
+
+  // eslint-disable-next-line no-param-reassign
+  delete input.conceptId
+
+  // If a concept id was provided add it to the request params to scope it down
+  if (conceptId) cmrParams.concept_id = conceptId
+
+  const { cmrHost } = getEarthdataConfig(deployedEnvironment())
+  const collectionSearchUrl = `${cmrHost}/search/collections.json`
+
+  const response = await axios({
+    method: 'post',
+    url: collectionSearchUrl,
+    data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
+    headers: {
+      'Client-Id': getClientId().background,
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: `Bearer ${cmrToken}`
+    }
+  })
+
+  const cmrHits = parseInt(response.headers['cmr-hits'], 10)
+
+  console.log(`CMR returned ${cmrHits} collections. Current page number is ${pageNumber}, tagging ${pageSize} collections.`)
+
+  // All of the collections requested
+  const collections = readCmrResults('search/collections.json', response)
+
+  // Filter out collections that dont have any granules
+  const collectionsWithGranules = collections.filter((collection) => {
+    const {
+      id,
+      granule_count: granuleCount
+    } = collection
+
+    const hasGranules = granuleCount > 0
+
+    if (!hasGranules) {
+      console.log(`${id} has no granules, skipping ${tagName('collection_capabilities')} tag.`)
     }
 
-    const { conceptId } = input
+    return hasGranules
+  })
 
-    // eslint-disable-next-line no-param-reassign
-    delete input.conceptId
+  console.log(`Number of collections with granules: ${collectionsWithGranules.length}`)
 
-    // If a concept id was provided add it to the request params to scope it down
-    if (conceptId) cmrParams.concept_id = conceptId
+  // Build a list of associations to create
+  const associationPayload = []
 
-    const { cmrHost } = getEarthdataConfig(deployedEnvironment())
-    const collectionSearchUrl = `${cmrHost}/search/collections.json`
+  await collectionsWithGranules.forEachAsync(async (collection) => {
+    const { id } = collection
 
-    const response = await axios({
-      method: 'post',
-      url: collectionSearchUrl,
-      data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
-      headers: {
-        'Client-Id': getClientId().background,
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${cmrToken}`
-      }
+    const tagData = await getCollectionCapabilities({ cmrToken, collection })
+
+    associationPayload.push({
+      'concept-id': id,
+      data: tagData
     })
+  })
 
-    const cmrHits = parseInt(response.headers['cmr-hits'], 10)
+  if (associationPayload.length > 0) {
+    console.log(`Submitting ${associationPayload.length} tags to SQS for tagging`)
 
-    console.log(`CMR returned ${cmrHits} collections. Current page number is ${pageNumber}, tagging ${pageSize} collections.`)
-
-    // All of the collections requested
-    const collections = readCmrResults('search/collections.json', response)
-
-    // Filter out collections that dont have any granules
-    const collectionsWithGranules = collections.filter((collection) => {
-      const {
-        id,
-        granule_count: granuleCount
-      } = collection
-
-      const hasGranules = granuleCount > 0
-
-      if (!hasGranules) {
-        console.log(`${id} has no granules, skipping ${tagName('collection_capabilities')} tag.`)
-      }
-
-      return hasGranules
-    })
-
-    console.log(`Number of collections with granules: ${collectionsWithGranules.length}`)
-
-    // Build a list of associations to create
-    const associationPayload = []
-
-    await collectionsWithGranules.forEachAsync(async (collection) => {
-      const { id } = collection
-
-      const tagData = await getCollectionCapabilities({ cmrToken, collection })
-
-      associationPayload.push({
-        'concept-id': id,
-        data: tagData
+    await sqs.sendMessage({
+      QueueUrl: process.env.tagQueueUrl,
+      MessageBody: JSON.stringify({
+        tagName: tagName('collection_capabilities'),
+        action: 'ADD',
+        tagData: associationPayload
       })
-    })
+    }).promise()
+  }
 
-    if (associationPayload.length > 0) {
-      console.log(`Submitting ${associationPayload.length} tags to SQS for tagging`)
-
-      await sqs.sendMessage({
-        QueueUrl: process.env.tagQueueUrl,
-        MessageBody: JSON.stringify({
-          tagName: tagName('collection_capabilities'),
-          action: 'ADD',
-          tagData: associationPayload
-        })
-      }).promise()
-    }
-
-    return {
-      hasMoreCollections: pageNumber * pageSize < cmrHits,
-      pageNumber: pageNumber + 1
-    }
-  } finally {
-    // Delete the system token /oauth/token
-    await deleteSystemToken(cmrToken)
+  return {
+    hasMoreCollections: pageNumber * pageSize < cmrHits,
+    pageNumber: pageNumber + 1
   }
 }
 

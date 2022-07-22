@@ -5,7 +5,6 @@ import axios from 'axios'
 
 import { stringify } from 'qs'
 
-import { deleteSystemToken } from '../util/urs/deleteSystemToken'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
@@ -44,81 +43,76 @@ const fetchOptionDefinitions = async (event, context) => {
     sqs = new AWS.SQS(getSqsConfig())
   }
 
-  try {
-    const { echoRestRoot } = getEarthdataConfig(deployedEnvironment())
+  const { echoRestRoot } = getEarthdataConfig(deployedEnvironment())
 
-    // Retrieve option definition data for the collections pertaining to the echo orders tag
-    const optionDefinitionUrl = `${echoRestRoot}/order_information.json`
+  // Retrieve option definition data for the collections pertaining to the echo orders tag
+  const optionDefinitionUrl = `${echoRestRoot}/order_information.json`
 
-    await sqsRecords.forEachAsync(async (sqsRecord) => {
-      const { body } = sqsRecord
+  await sqsRecords.forEachAsync(async (sqsRecord) => {
+    const { body } = sqsRecord
 
-      const collectionGranuleAssocation = JSON.parse(body)
-      const { collectionId, tagData: providedTagData } = collectionGranuleAssocation
+    const collectionGranuleAssocation = JSON.parse(body)
+    const { collectionId, tagData: providedTagData } = collectionGranuleAssocation
 
-      try {
-        const singleGranule = await getSingleGranule(cmrToken, collectionId)
+    try {
+      const singleGranule = await getSingleGranule(cmrToken, collectionId)
 
-        const { id: granuleId } = singleGranule
+      const { id: granuleId } = singleGranule
 
-        const optionDefinitionResponse = await wrappedAxios({
-          method: 'post',
-          url: optionDefinitionUrl,
-          data: stringify({
-            'catalog_item_id[]': granuleId
-          }, { indices: false, arrayFormat: 'brackets' }),
-          headers: {
-            'Client-Id': getClientId().background,
-            'Content-Type': 'application/x-www-form-urlencoded',
-            Authorization: `Bearer ${cmrToken}`
-          }
-        })
-
-        const { config, data } = optionDefinitionResponse
-        const { elapsedTime } = config
-
-        console.log(`Request for option definition order information successfully completed in ${elapsedTime} ms`)
-
-        const [optionDefinition] = data
-        const { order_information: orderInformation } = optionDefinition
-        const { option_definition_refs: optionDefinitions = [] } = orderInformation
-
-        // Merge the option definitions into the previous tag data
-        const tagData = [{
-          'concept-id': collectionId,
-          data: {
-            ...providedTagData,
-            option_definitions: optionDefinitions.map((def) => {
-              const { id, name } = def
-
-              return {
-                id,
-                name
-              }
-            })
-          }
-        }]
-
-        if (optionDefinitions.length) {
-          await sqs.sendMessage({
-            QueueUrl: process.env.tagQueueUrl,
-            MessageBody: JSON.stringify({
-              tagName: tagName('subset_service.echo_orders'),
-              action: 'ADD',
-              tagData
-            })
-          }).promise()
-        } else {
-          console.log(`No Option Definitions for ${collectionId}, skipping '${tagName('subset_service.echo_orders')}' tag.`)
+      const optionDefinitionResponse = await wrappedAxios({
+        method: 'post',
+        url: optionDefinitionUrl,
+        data: stringify({
+          'catalog_item_id[]': granuleId
+        }, { indices: false, arrayFormat: 'brackets' }),
+        headers: {
+          'Client-Id': getClientId().background,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Bearer ${cmrToken}`
         }
-      } catch (e) {
-        parseError(e)
+      })
+
+      const { config, data } = optionDefinitionResponse
+      const { elapsedTime } = config
+
+      console.log(`Request for option definition order information successfully completed in ${elapsedTime} ms`)
+
+      const [optionDefinition] = data
+      const { order_information: orderInformation } = optionDefinition
+      const { option_definition_refs: optionDefinitions = [] } = orderInformation
+
+      // Merge the option definitions into the previous tag data
+      const tagData = [{
+        'concept-id': collectionId,
+        data: {
+          ...providedTagData,
+          option_definitions: optionDefinitions.map((def) => {
+            const { id, name } = def
+
+            return {
+              id,
+              name
+            }
+          })
+        }
+      }]
+
+      if (optionDefinitions.length) {
+        await sqs.sendMessage({
+          QueueUrl: process.env.tagQueueUrl,
+          MessageBody: JSON.stringify({
+            tagName: tagName('subset_service.echo_orders'),
+            action: 'ADD',
+            tagData
+          })
+        }).promise()
+      } else {
+        console.log(`No Option Definitions for ${collectionId}, skipping '${tagName('subset_service.echo_orders')}' tag.`)
       }
-    })
-  } finally {
-    // Delete the system token /oauth/token
-    await deleteSystemToken(cmrToken)
-  }
+    } catch (e) {
+      parseError(e)
+    }
+  })
 }
 
 export default fetchOptionDefinitions
