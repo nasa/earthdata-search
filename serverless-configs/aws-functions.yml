@@ -177,7 +177,7 @@
     timeout: 300
     events:
       - schedule:
-          rate: cron(0 12 ? * MON-FRI *)
+          rate: cron(30 12 ? * MON-FRI *)
           enabled: ${env:GIBS_JOB_ENABLED, false}
 
   generateSubsettingTags:
@@ -187,7 +187,7 @@
     memorySize: 192
     events:
       - schedule:
-          rate: cron(0 12-23/4 ? * MON-FRI *)
+          rate: cron(45 12-23/4 ? * MON-FRI *)
           enabled: ${env:SUBSETTING_JOB_ENABLED, true}
   #
   # API Gateway Endpoints
