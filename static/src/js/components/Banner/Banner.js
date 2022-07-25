@@ -23,10 +23,12 @@ export const Banner = ({
     <div className={bannerClassNames}>
       <div className="banner__content">
         <h2 className="banner__title">{title}</h2>
-        {' '}
         {
           message && (
-            <p className="banner__message">{message}</p>
+            <>
+              {' '}
+              <p className="banner__message">{message}</p>
+            </>
           )
         }
       </div>
