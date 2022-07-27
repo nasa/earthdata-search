@@ -3,6 +3,7 @@ import nock from 'nock'
 import AWS from 'aws-sdk'
 import MockDate from 'mockdate'
 
+import * as deleteSystemToken from '../../util/urs/deleteSystemToken'
 import * as getSystemToken from '../../util/urs/getSystemToken'
 import * as getSupportedGibsLayers from '../getSupportedGibsLayers'
 
@@ -31,6 +32,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 
   jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+  jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
   // Manage resetting ENV variables
   // TODO: This is causing problems with mocking knex but is noted as important for managing process.env

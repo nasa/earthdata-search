@@ -59,7 +59,7 @@ const generateCollectionCapabilityTags = async (input) => {
     headers: {
       'Client-Id': getClientId().background,
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Echo-Token': cmrToken
+      Authorization: `Bearer ${cmrToken}`
     }
   })
 

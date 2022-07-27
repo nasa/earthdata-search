@@ -67,7 +67,7 @@ const processTag = async (event, context) => {
           headers: {
             'Client-Id': getClientId().background,
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Echo-Token': cmrToken
+            Authorization: `Bearer ${cmrToken}`
           }
         })
 

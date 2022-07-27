@@ -11,7 +11,7 @@ describe('getPageOfGranules', () => {
     }))
 
     nock(/cmr/)
-      .matchHeader('Echo-Token', 'token')
+      .matchHeader('Authorization', 'Bearer token')
       .post(/granules/, 'echo_collection_id=C100000-EDSC&page_num=1&page_size=20')
       .reply(200, {
         feed: {
@@ -48,7 +48,7 @@ describe('getPageOfGranules', () => {
     }))
 
     nock(/cmr/)
-      .matchHeader('Echo-Token', 'token')
+      .matchHeader('Authorization', 'Bearer token')
       .post(/granules/, 'echo_collection_id=C100000-EDSC&page_num=1&page_size=30')
       .reply(200, {
         feed: {
