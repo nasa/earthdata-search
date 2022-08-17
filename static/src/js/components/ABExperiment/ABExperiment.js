@@ -19,27 +19,42 @@ export const ABExperiment = ({
   experimentId,
   variants
 }) => {
+  // If there is no experiment id, return the children without a variant, which will
+  // render the default variant
+  if (!experimentId) return children({ variant: undefined })
+
   // Variant hook returns the variant id for a given matching
   // Google Optimize experiment
   const variantId = useExperiment(experimentId)
 
+  let parsedVariants
+
+  // Catch any potential errors parsing the variants JSON string. If any errors occur,
+  // parsedVariants is set to an empty object.
+  try {
+    parsedVariants = JSON.parse(variants)
+  } catch {
+    parsedVariants = {}
+  }
+
   // If a variant is defined in the variants mapping, return the value
   // for the given key, otherwise return the variant id set by Google Optimize.
-  const variant = variants[variantId] || variantId
+  const variant = parsedVariants[variantId] || variantId
 
   // Call the children function and provide the variant
   return children({ variant })
 }
 
 ABExperiment.defaultProps = {
+  experimentId: '',
   children: null,
-  variants: {}
+  variants: ''
 }
 
 ABExperiment.propTypes = {
   children: PropTypes.func.isRequired,
-  experimentId: PropTypes.string.isRequired,
-  variants: PropTypes.shape({})
+  experimentId: PropTypes.string,
+  variants: PropTypes.string
 }
 
 export default ABExperiment

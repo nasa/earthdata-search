@@ -19,7 +19,8 @@ config="`jq '.application.granuleLinksPageSize = $newValue' --arg newValue $bamb
 config="`jq '.application.openSearchGranuleLinksPageSize = $newValue' --arg newValue $bamboo_OPEN_SEARCH_GRANULE_LINKS_PAGE_SIZE <<< $config`"
 config="`jq '.environment.production.apiHost = $newValue' --arg newValue $bamboo_API_HOST <<< $config`"
 config="`jq '.environment.production.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
-config="`jq '.experiments.collectionSearchResultsLayout = $newValue' --arg newValue $bamboo_COLLECTION_SEARCH_RESULTS_LAYOUT_EXPERIMENT_ID <<< $config`"
+config="`jq '.experiments.collectionSearchResultsLayout.experimentId = $newValue' --arg newValue $bamboo_COLLECTION_SEARCH_RESULTS_EXPERIMENT_ID <<< $config`"
+config="`jq '.experiments.collectionSearchResultsLayout.variants = $newValue' --arg newValue $bamboo_COLLECTION_SEARCH_RESULTS_EXPERIMENT_VARIANTS <<< $config`"
 
 # overwrite static.config.json with new values
 echo $config > tmp.$$.json && mv tmp.$$.json static.config.json

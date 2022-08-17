@@ -24,8 +24,8 @@ const useExperiment = (experimentId) => {
         if (window.google_optimize !== undefined) {
           const variant = window.google_optimize.get(experimentId)
 
-          if (!variant) {
-            console.warn('No Google Optimize variant found. Make sure you are using a valid Experiment ID.')
+          if (!variant && process.env.NODE_ENV === 'development') {
+            console.warn(`No Google Optimize variant found for experiment "${experimentId}". Make sure you are using a valid Experiment ID.`)
           }
 
           // Set the returned state to the current variant id and stop the interval.

@@ -18,9 +18,11 @@ function setup(overideProps) {
     <ABExperiment {...props}>
       {({ variant }) => (
         <div className="ab-experiment-child">
-          Variant:
-          {' '}
-          {variant}
+          {
+            variant
+              ? `Variant: ${variant}`
+              : 'default content'
+          }
         </div>
       )}
     </ABExperiment>
@@ -43,10 +45,33 @@ describe('ABExperiment component', () => {
     })
   })
 
+  describe('when no experiment id is provided', () => {
+    test('should render the correct child component', () => {
+      const { enzymeWrapper } = setup({
+        experimentId: undefined
+      })
+
+      expect(enzymeWrapper.find('.ab-experiment-child').length).toEqual(1)
+      expect(enzymeWrapper.find('.ab-experiment-child').text()).toEqual('default content')
+    })
+  })
+
   describe('when no variants mapping is provided', () => {
     test('should render the correct child component', () => {
       jest.spyOn(hooks, 'default').mockImplementation(() => ('0'))
       const { enzymeWrapper } = setup()
+
+      expect(enzymeWrapper.find('.ab-experiment-child').length).toEqual(1)
+      expect(enzymeWrapper.find('.ab-experiment-child').text()).toEqual('Variant: 0')
+    })
+  })
+
+  describe('when an invalid variants mapping is provided', () => {
+    test('should render the correct child component', () => {
+      jest.spyOn(hooks, 'default').mockImplementation(() => ('0'))
+      const { enzymeWrapper } = setup({
+        variants: 'asdf'
+      })
 
       expect(enzymeWrapper.find('.ab-experiment-child').length).toEqual(1)
       expect(enzymeWrapper.find('.ab-experiment-child').text()).toEqual('Variant: 0')
@@ -58,11 +83,7 @@ describe('ABExperiment component', () => {
       test('should render the correct child component', () => {
         jest.spyOn(hooks, 'default').mockImplementation(() => ('0'))
         const { enzymeWrapper } = setup({
-          variants: {
-            0: 'default',
-            1: 'first',
-            2: 'second'
-          }
+          variants: '{"0":"default","1":"first","2":"second"}'
         })
 
         expect(enzymeWrapper.find('.ab-experiment-child').length).toEqual(1)
@@ -74,11 +95,7 @@ describe('ABExperiment component', () => {
       test('should render the correct child component', () => {
         jest.spyOn(hooks, 'default').mockImplementation(() => ('1'))
         const { enzymeWrapper } = setup({
-          variants: {
-            0: 'default',
-            1: 'first',
-            2: 'second'
-          }
+          variants: '{"0":"default","1":"first","2":"second"}'
         })
 
         expect(enzymeWrapper.find('.ab-experiment-child').length).toEqual(1)
@@ -86,15 +103,11 @@ describe('ABExperiment component', () => {
       })
     })
 
-    describe('for the first mapping', () => {
+    describe('for the second mapping', () => {
       test('should render the correct child component', () => {
         jest.spyOn(hooks, 'default').mockImplementation(() => ('2'))
         const { enzymeWrapper } = setup({
-          variants: {
-            0: 'default',
-            1: 'first',
-            2: 'second'
-          }
+          variants: '{"0":"default","1":"first","2":"second"}'
         })
 
         expect(enzymeWrapper.find('.ab-experiment-child').length).toEqual(1)

@@ -1,6 +1,5 @@
 import React from 'react'
-import { render } from 'react-dom'
-import Enzyme, { mount, shallow } from 'enzyme'
+import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import {
   FaClock,
@@ -9,7 +8,6 @@ import {
   FaSlidersH,
   FaTags
 } from 'react-icons/fa'
-import { OverlayTrigger } from 'react-bootstrap'
 
 import { collectionListItemProps } from './mocks'
 
@@ -97,70 +95,6 @@ describe('CollectionResultsList component', () => {
         thumbnail.simulate('load')
         enzymeWrapper.update()
         expect(enzymeWrapper.find('.collection-results-item__thumb').find(Spinner).length).toEqual(0)
-      })
-    })
-  })
-
-  describe('When rendering the minimal variant', () => {
-    test('renders an overlay', () => {
-      const el = document.createElement('div')
-      const { enzymeWrapper } = setup({
-        variant: 'minimal'
-      })
-      const overlay = enzymeWrapper.find(OverlayTrigger)
-      render(overlay.props().overlay(), el)
-      expect(el.getElementsByClassName('collection-results-item__popover').length).toEqual(1)
-    })
-
-    describe('when mousing over the popover', () => {
-      test('sets the classname on the element', () => {
-        const { enzymeWrapper } = setup({
-          variant: 'minimal'
-        })
-        const overlayTrigger = enzymeWrapper.find(OverlayTrigger)
-        const overlay = mount(overlayTrigger.props().overlay())
-        overlay.simulate('mouseenter')
-        overlay.update()
-
-        expect(enzymeWrapper.find('.collection-results-item__link').props().className).toContain('collection-results-item__link--active')
-      })
-    })
-
-    describe('when mousing out of the popover', () => {
-      test('sets the classname on the element', () => {
-        const { enzymeWrapper } = setup({
-          variant: 'minimal'
-        })
-        const overlayTrigger = enzymeWrapper.find(OverlayTrigger)
-        const overlay = mount(overlayTrigger.props().overlay())
-        overlay.simulate('mouseenter')
-        overlay.update()
-
-        expect(enzymeWrapper.find('.collection-results-item__link').props().className).toContain('collection-results-item__link--active')
-
-        overlay.simulate('mouseleave')
-        overlay.update()
-
-        expect(enzymeWrapper.find('.collection-results-item__link').props().className).not.toContain('collection-results-item__link--active')
-      })
-    })
-
-    describe('when clicking the collection details button', () => {
-      test('sets the classname on the element', () => {
-        const { enzymeWrapper } = setup({
-          variant: 'minimal'
-        })
-        const overlayTrigger = enzymeWrapper.find(OverlayTrigger)
-        const overlay = mount(overlayTrigger.props().overlay())
-        overlay.simulate('mouseenter')
-        overlay.update()
-
-        expect(enzymeWrapper.find('.collection-results-item__link').props().className).toContain('collection-results-item__link--active')
-
-        const button = overlay.find('button')
-        button.simulate('click')
-
-        expect(enzymeWrapper.find('.collection-results-item__link').props().className).not.toContain('collection-results-item__link--active')
       })
     })
   })
