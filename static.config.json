@@ -108,6 +108,9 @@
     }
   },
   "experiments": {
-    "collectionSearchResultsLayout": ""
+    "collectionSearchResultsLayout": {
+      "experimentId": "",
+      "variants": ""
+    }
   }
 }

@@ -151,7 +151,40 @@ describe('useExperiment', () => {
           expect(enzymeWrapper.find('.test-component').text()).toEqual('Variant is undefined')
         })
 
-        test('generates a warning', async () => {
+        describe('when in development', () => {
+          const nodeEnv = process.env.NODE_ENV
+          beforeEach(() => {
+            process.env.NODE_ENV = 'development'
+          })
+          afterEach(() => {
+            process.env.NODE_ENV = nodeEnv
+          })
+          test('generates a warning', async () => {
+            // When trying to test without this mocked, the setInterval would not run
+            window.setInterval = jest.fn((func) => func())
+
+            window.google_optimize = {}
+            window.google_optimize.get = jest.fn(() => undefined)
+
+            await setup({
+              experimentId: 'test-invalid-experiment-id'
+            })
+
+            expect(console.warn).toHaveBeenCalledTimes(1)
+            expect(console.warn).toHaveBeenCalledWith('No Google Optimize variant found for experiment "test-invalid-experiment-id". Make sure you are using a valid Experiment ID.')
+          })
+        })
+      })
+
+      describe('when in an env other than development', () => {
+        const nodeEnv = process.env.NODE_ENV
+        beforeEach(() => {
+          process.env.NODE_ENV = 'production'
+        })
+        afterEach(() => {
+          process.env.NODE_ENV = nodeEnv
+        })
+        test('does not generate a warning', async () => {
           // When trying to test without this mocked, the setInterval would not run
           window.setInterval = jest.fn((func) => func())
 
@@ -162,8 +195,7 @@ describe('useExperiment', () => {
             experimentId: 'test-invalid-experiment-id'
           })
 
-          expect(console.warn).toHaveBeenCalledTimes(1)
-          expect(console.warn).toHaveBeenCalledWith('No Google Optimize variant found. Make sure you are using a valid Experiment ID.')
+          expect(console.warn).toHaveBeenCalledTimes(0)
         })
       })
 

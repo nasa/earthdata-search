@@ -16,8 +16,11 @@ import CollectionResultsListItem from './CollectionResultsListItem'
 
 import './CollectionResultsList.scss'
 
-const collectionSearchResultsLayoutExperimentId = getExperimentsConfig()
-  .collectionSearchResultsLayout
+const { collectionSearchResultsLayout = {} } = getExperimentsConfig()
+const {
+  experimentId: collectionSearchResultsLayoutExperimentId = '',
+  variants: collectionSearchResultsLayoutExperimentVariants = ''
+} = collectionSearchResultsLayout
 
 /**
  * Renders innerElementType to override the default react window behavior so sticky columns can be used.
@@ -103,12 +106,7 @@ export const CollectionResultsList = ({
   return (
     <ABExperiment
       experimentId={collectionSearchResultsLayoutExperimentId}
-      variants={{
-        0: 'default',
-        1: 'minimal',
-        2: 'thumb-only',
-        3: 'description-only'
-      }}
+      variants={collectionSearchResultsLayoutExperimentVariants}
     >
       {({ variant: itemVariant }) => (
         <div className="collection-results-list">
