@@ -67,7 +67,7 @@ describe('ABExperiment component', () => {
   })
 
   describe('when an invalid variants mapping is provided', () => {
-    test.only('should render the correct child component', () => {
+    test('should render the correct child component', () => {
       jest.spyOn(hooks, 'default').mockImplementation(() => ('0'))
       const { enzymeWrapper } = setup({
         variants: 'asdf'
