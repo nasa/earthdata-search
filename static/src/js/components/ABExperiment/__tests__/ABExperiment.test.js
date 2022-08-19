@@ -62,7 +62,7 @@ describe('ABExperiment component', () => {
       const { enzymeWrapper } = setup()
 
       expect(enzymeWrapper.find('.ab-experiment-child').length).toEqual(1)
-      expect(enzymeWrapper.find('.ab-experiment-child').text()).toEqual('Variant: 0')
+      expect(enzymeWrapper.find('.ab-experiment-child').text()).toEqual('default content')
     })
   })
 
