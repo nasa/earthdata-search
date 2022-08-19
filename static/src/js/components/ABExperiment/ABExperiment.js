@@ -4,10 +4,11 @@ import useExperiment from '../../hooks/useExperiment'
 
 /**
  * Renders an ABExperiment component. This component takes a Google Optimize
- * experiment id, and provides a variant id to be used to trigger UI changes
- * in it's children. If no variants mapping is present, the component will return
- * the variant id directly from Google Optimize. The variants mapping can be used
- * to return human-readable names for the variants.
+ * experiment id, and provides a variant id to be used to trigger UI changes in
+ * it's children. If no variants mapping is present, the component will return
+ * the variant id directly from Google Optimize. The variants mapping can be
+ * used to return human-readable names for the variants. If an error occurs, the
+ * `variant` prop will be `undefined`.
  * @param {Object} props - The props passed into the component.
  * @param {Function} props.children - A function returning React elements.
  * @param {String} props.experimentId - The unique experiment id provided by Google Optimize.
@@ -30,11 +31,11 @@ export const ABExperiment = ({
   let parsedVariants
 
   // Catch any potential errors parsing the variants JSON string. If any errors occur,
-  // parsedVariants is set to an empty object.
+  // render with no variant, which will render the default experiment.
   try {
     parsedVariants = JSON.parse(variants)
   } catch {
-    parsedVariants = {}
+    return children({ variant: undefined })
   }
 
   // If a variant is defined in the variants mapping, return the value
