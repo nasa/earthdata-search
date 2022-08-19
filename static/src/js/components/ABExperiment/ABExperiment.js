@@ -1,3 +1,4 @@
+import { isEmptyObject } from 'jquery'
 import PropTypes from 'prop-types'
 
 import useExperiment from '../../hooks/useExperiment'
@@ -22,7 +23,7 @@ export const ABExperiment = ({
 }) => {
   // If there is no experiment id, return the children without a variant, which will
   // render the default variant
-  if (!experimentId) return children({ variant: undefined })
+  if (!experimentId || !variants || isEmptyObject(variants)) return children({ variant: undefined })
 
   // Variant hook returns the variant id for a given matching
   // Google Optimize experiment

@@ -35,10 +35,13 @@ function setup(overideProps) {
 }
 
 describe('ABExperiment component', () => {
-  describe('when passed an experiment id', () => {
+  describe('when passed a valid id and variants object', () => {
     test('calls the useExperiment hook with the correct arguments', () => {
       jest.spyOn(hooks, 'default').mockImplementation(() => ('0'))
-      setup()
+      setup({
+        experimentId: 'test',
+        variants: '{"0":"default","1":"first","2":"second"}'
+      })
 
       expect(hooks.default).toHaveBeenCalledTimes(1)
       expect(hooks.default).toHaveBeenCalledWith('test')
@@ -60,6 +63,16 @@ describe('ABExperiment component', () => {
     test('should render the correct child component', () => {
       jest.spyOn(hooks, 'default').mockImplementation(() => ('0'))
       const { enzymeWrapper } = setup()
+
+      expect(enzymeWrapper.find('.ab-experiment-child').length).toEqual(1)
+      expect(enzymeWrapper.find('.ab-experiment-child').text()).toEqual('default content')
+    })
+  })
+
+  describe('when an empty object is passed to the variants', () => {
+    test('should render the correct child component', () => {
+      jest.spyOn(hooks, 'default').mockImplementation(() => ('0'))
+      const { enzymeWrapper } = setup({})
 
       expect(enzymeWrapper.find('.ab-experiment-child').length).toEqual(1)
       expect(enzymeWrapper.find('.ab-experiment-child').text()).toEqual('default content')
