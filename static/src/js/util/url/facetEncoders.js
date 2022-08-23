@@ -25,7 +25,5 @@ export const decodeFacets = (string) => {
     return undefined
   }
 
-  const decodedValues = string.split('!').map((value) => decodeURIComponent(value))
-
-  return decodedValues
+  return string.split('!')
 }

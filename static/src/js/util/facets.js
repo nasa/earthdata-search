@@ -79,7 +79,19 @@ export const changeFeatureFacet = (e, facetLinkInfo, onChangeHandler) => {
  * @param {object} onChangeHandler - The change handler to call.
  */
 export const changeCmrFacet = (e, facetLinkInfo, onChangeHandler, facet, applied) => {
-  const newParams = qs.parse(queryParamsFromUrlString(facetLinkInfo.destination))
+  const newParams = qs.parse(
+    queryParamsFromUrlString(facetLinkInfo.destination),
+    {
+      decoder: (string, defaultDecoder, charset, type) => {
+        // Avoid decoding the facet values
+        if (type === 'value') {
+          return string
+        }
+
+        return defaultDecoder(string)
+      }
+    }
+  )
 
   const paramsToSend = {
     data_center_h: newParams.data_center_h,
