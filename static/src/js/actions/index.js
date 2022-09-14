@@ -8,6 +8,13 @@ import {
   updateAdminRetrievalsPageNum
 } from './admin/retrievals'
 import {
+  adminViewProject,
+  fetchAdminProjects,
+  fetchAdminProject,
+  updateAdminProjectsSortKey,
+  updateAdminProjectsPageNum
+} from './admin/projects'
+import {
   updateAdvancedSearch
 } from './advancedSearch'
 import {
@@ -195,6 +202,7 @@ const actions = {
   addGranuleToProjectCollection,
   addProjectCollection,
   adminIsAuthorized,
+  adminViewProject,
   adminViewRetrieval,
   applyGranuleFilters,
   applyViewAllFacets,
@@ -216,9 +224,9 @@ const actions = {
   changeViewAllFacet,
   clearAutocompleteSelected,
   clearAutocompleteSuggestions,
+  clearFilters,
   clearFocusedCollectionGranuleFilters,
   clearGranuleFilters,
-  clearFilters,
   clearShapefile,
   collectionRelevancyMetrics,
   createSubscription,
@@ -235,18 +243,20 @@ const actions = {
   fetchAutocomplete,
   fetchContactInfo,
   fetchDataQualitySummaries,
+  fetchAdminProject,
+  fetchAdminProjects,
   fetchProviders,
   fetchRetrieval,
   fetchRetrievalCollection,
-  fetchRetrievalCollectionGranuleLinks,
   fetchRetrievalCollectionGranuleBrowseLinks,
+  fetchRetrievalCollectionGranuleLinks,
   fetchRetrievalHistory,
   fetchSavedProjects,
   fetchShapefile,
   getCollections,
   getFocusedCollection,
-  getGranuleSubscriptions,
   getFocusedGranule,
+  getGranuleSubscriptions,
   getProjectCollections,
   getProjectGranules,
   getRegions,
@@ -325,6 +335,8 @@ const actions = {
   updatePreferences,
   updateProjectGranuleParams,
   updateProjectName,
+  updateAdminProjectsPageNum,
+  updateAdminProjectsSortKey,
   updateRegionQuery,
   updateSavedProject,
   updateShapefile,
