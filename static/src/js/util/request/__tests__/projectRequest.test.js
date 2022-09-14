@@ -15,6 +15,35 @@ describe('ProjectRequest#constructor', () => {
   })
 })
 
+describe('ProjectRequest#adminAll', () => {
+  test('calls Request#get', () => {
+    const token = '123'
+    const request = new ProjectRequest(token)
+    const params = { mock: 'params' }
+
+    const getMock = jest.spyOn(Request.prototype, 'get').mockImplementation()
+
+    request.adminAll(params)
+
+    expect(getMock).toBeCalledTimes(1)
+    expect(getMock).toBeCalledWith('admin/projects', params)
+  })
+})
+
+describe('ProjectRequest#adminFetch', () => {
+  test('calls Request#get', () => {
+    const request = new ProjectRequest()
+
+    const getMock = jest.spyOn(Request.prototype, 'get').mockImplementation()
+
+    const projectId = '12345'
+    request.adminFetch(projectId)
+
+    expect(getMock).toBeCalledTimes(1)
+    expect(getMock).toBeCalledWith('admin/projects/12345')
+  })
+})
+
 describe('ProjectRequest#all', () => {
   test('calls Request#get', () => {
     const token = '123'
