@@ -689,3 +689,29 @@
             name: edlAdminAuthorizer
             type: request
             resultTtlInSeconds: 0
+
+  adminGetProjects:
+    handler: serverless/src/adminGetProjects/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
+    events:
+      - http:
+          method: get
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: admin/projects
+          authorizer:
+            name: edlAdminAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
+  adminGetProject:
+    handler: serverless/src/adminGetProject/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
+    events:
+      - http:
+          method: get
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: admin/projects/{id}
+          authorizer:
+            name: edlAdminAuthorizer
+            type: request
+            resultTtlInSeconds: 0
