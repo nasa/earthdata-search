@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
-import { uniq } from 'lodash'
+import { isEmpty, uniq } from 'lodash'
 import {
   FaCheckCircle,
   FaCog,
@@ -276,6 +276,7 @@ class ProjectPanels extends PureComponent {
       dataQualitySummaries,
       focusedGranuleId,
       granulesMetadata,
+      granulesQueries,
       location,
       onChangePath,
       onChangeProjectGranulePageNum,
@@ -341,6 +342,17 @@ class ProjectPanels extends PureComponent {
         cloudHosted,
         duplicateCollections = []
       } = collectionMetadata
+
+      const { granules: granulesQuery = {} } = granulesQueries[collectionId] || {}
+      const { temporal: granuleTemporal = {} } = granulesQuery
+
+      // Default the preferredTemporal to global temporal
+      let preferredTemporal = temporal
+
+      // If overrideTemporal is provided, use that value
+      if (!isEmpty(overrideTemporal)) preferredTemporal = overrideTemporal
+      // If granuleTemporal is provided, use that value
+      if (!isEmpty(granuleTemporal)) preferredTemporal = granuleTemporal
 
       let { [collectionId]: collectionDataQualitySummaries = [] } = dataQualitySummaries
 
@@ -555,6 +567,7 @@ class ProjectPanels extends PureComponent {
             <AccessMethod
               accessMethods={accessMethods}
               granuleMetadata={granulesMetadata}
+              granulesQuery={granulesQuery}
               index={index}
               metadata={collectionMetadata}
               onSelectAccessMethod={onSelectAccessMethod}
@@ -564,8 +577,7 @@ class ProjectPanels extends PureComponent {
               selectedAccessMethod={selectedAccessMethod}
               shapefileId={shapefileId}
               spatial={spatial}
-              temporal={temporal}
-              overrideTemporal={overrideTemporal}
+              temporal={preferredTemporal}
             />
           </PanelItem>
           <PanelItem
@@ -674,6 +686,7 @@ ProjectPanels.propTypes = {
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
+  granulesQueries: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeProjectGranulePageNum: PropTypes.func.isRequired,

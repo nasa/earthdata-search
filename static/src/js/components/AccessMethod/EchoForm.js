@@ -15,7 +15,6 @@ export const EchoForm = ({
   shapefileId,
   spatial,
   temporal,
-  overrideTemporal,
   onUpdateAccessMethod
 }) => {
   // Get the MBR of the spatial for prepopulated values
@@ -54,23 +53,11 @@ export const EchoForm = ({
   const formatDate = (date) => moment.utc(date).format('YYYY-MM-DDTHH:mm:ss')
 
   // Get the temporal prepopulated values
-  const getTemporalPrepopulateValues = (temporal, overrideTemporal) => {
-    const {
-      endDate: overrideEndDate,
-      startDate: overrideStartDate
-    } = overrideTemporal
-
+  const getTemporalPrepopulateValues = (temporal) => {
     const {
       endDate,
       startDate
     } = temporal
-
-    if (overrideEndDate || overrideStartDate) {
-      return {
-        TEMPORAL_START: formatDate(overrideStartDate),
-        TEMPORAL_END: formatDate(overrideEndDate)
-      }
-    }
 
     if (endDate || startDate) {
       return {
@@ -87,7 +74,7 @@ export const EchoForm = ({
 
   const calculatePrepopulateValues = () => {
     const spatialPrepopulateValues = getMbr(spatial)
-    const temporalPrepopulateValues = getTemporalPrepopulateValues(temporal, overrideTemporal)
+    const temporalPrepopulateValues = getTemporalPrepopulateValues(temporal)
 
     const values = {
       ...spatialPrepopulateValues,
@@ -135,7 +122,7 @@ export const EchoForm = ({
     if (!isEqual(newValues, prepopulateValues)) {
       setPrepopulateValues(newValues)
     }
-  }, [spatial, temporal, overrideTemporal])
+  }, [spatial, temporal])
 
   // EDSCEchoforms doesn't care about the shapefileId, just is there a shapefileId or not
   const hasShapefile = !!(shapefileId)
@@ -165,10 +152,6 @@ EchoForm.propTypes = {
   form: PropTypes.string.isRequired,
   methodKey: PropTypes.string.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
-  overrideTemporal: PropTypes.shape({
-    endDate: PropTypes.string,
-    startDate: PropTypes.string
-  }).isRequired,
   rawModel: PropTypes.string,
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({

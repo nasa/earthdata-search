@@ -6,6 +6,7 @@ import ProjectPanels from '../ProjectPanels'
 import PanelItem from '../../Panels/PanelItem'
 import PanelGroup from '../../Panels/PanelGroup'
 import PanelSection from '../../Panels/PanelSection'
+import AccessMethod from '../../AccessMethod/AccessMethod'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -56,7 +57,7 @@ function setup(overrideProps) {
     focusedCollectionId: '',
     focusedGranuleId: '',
     granulesMetadata: {},
-    granuleQuery: {},
+    granulesQueries: {},
     portal: {},
     project: {
       collections: {
@@ -473,6 +474,98 @@ describe('ProjectPanels component', () => {
 
         expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
         expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
+      })
+    })
+
+    describe('when only global temporal is provided', () => {
+      test('passes the temporal to AccessMethod', () => {
+        const expectedTemporal = {
+          endDate: '2022-01-15T23:59:59.999Z',
+          startDate: '2022-01-10T00:00:00.000Z',
+          recurringDayStart: '',
+          recurringDayEnd: '',
+          isRecurring: false
+        }
+
+        const { enzymeWrapper } = setup({
+          temporal: expectedTemporal
+        })
+
+        expect(enzymeWrapper.find(AccessMethod).props().temporal).toEqual({
+          endDate: '2022-01-15T23:59:59.999Z',
+          startDate: '2022-01-10T00:00:00.000Z',
+          recurringDayStart: '',
+          recurringDayEnd: '',
+          isRecurring: false
+        })
+      })
+    })
+
+    describe('when overrideTemporal is provided', () => {
+      test('passes the overrideTemporal to AccessMethod', () => {
+        const expectedTemporal = {
+          endDate: '2022-01-15T23:59:59.999Z',
+          startDate: '2022-01-10T00:00:00.000Z',
+          recurringDayStart: '',
+          recurringDayEnd: '',
+          isRecurring: false
+        }
+
+        const { enzymeWrapper } = setup({
+          overrideTemporal: expectedTemporal,
+          temporal: {
+            endDate: '2022-01-31T23:59:59.999Z',
+            startDate: '2022-01-01T00:00:00.000Z',
+            recurringDayStart: '',
+            recurringDayEnd: '',
+            isRecurring: false
+          }
+        })
+
+        expect(enzymeWrapper.find(AccessMethod).props().temporal).toEqual({
+          endDate: '2022-01-15T23:59:59.999Z',
+          startDate: '2022-01-10T00:00:00.000Z',
+          recurringDayStart: '',
+          recurringDayEnd: '',
+          isRecurring: false
+        })
+      })
+    })
+
+    describe('when granuleTemporal is provided', () => {
+      test('passes the granuleTemporal to AccessMethod', () => {
+        const expectedTemporal = {
+          endDate: '2022-01-15T23:59:59.999Z',
+          startDate: '2022-01-10T00:00:00.000Z',
+          recurringDayStart: '',
+          recurringDayEnd: '',
+          isRecurring: false
+        }
+
+        const { enzymeWrapper } = setup({
+          granulesQueries: {
+            collectionId: {
+              granules: {
+                temporal: expectedTemporal
+              }
+            }
+          },
+          temporal: {
+            endDate: '2022-01-31T23:59:59.999Z',
+            startDate: '2022-01-01T00:00:00.000Z',
+            recurringDayStart: '',
+            recurringDayEnd: '',
+            isRecurring: false
+          }
+        })
+
+        expect(enzymeWrapper.find(AccessMethod).props().temporal).toEqual({
+          endDate: '2022-01-15T23:59:59.999Z',
+          startDate: '2022-01-10T00:00:00.000Z',
+          recurringDayStart: '',
+          recurringDayEnd: '',
+          isRecurring: false
+        })
       })
     })
   })

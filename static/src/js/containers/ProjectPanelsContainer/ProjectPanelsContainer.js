@@ -16,15 +16,16 @@ export const mapStateToProps = (state) => ({
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
   granulesMetadata: state.metadata.granules,
+  granulesQueries: state.query.collection.byId,
   location: state.router.location,
+  overrideTemporal: state.query.collection.overrideTemporal,
   panels: state.panels,
   portal: state.portal,
   project: state.project,
   projectCollectionsMetadata: getProjectCollectionsMetadata(state),
   shapefileId: state.shapefile.shapefileId,
   spatial: state.query.collection.spatial,
-  temporal: state.query.collection.temporal,
-  overrideTemporal: state.query.collection.overrideTemporal
+  temporal: state.query.collection.temporal
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -89,6 +90,7 @@ export const ProjectPanelsContainer = ({
   focusedCollectionId,
   focusedGranuleId,
   granulesMetadata,
+  granulesQueries,
   location,
   onAddGranuleToProjectCollection,
   onChangePath,
@@ -117,6 +119,7 @@ export const ProjectPanelsContainer = ({
     focusedCollectionId={focusedCollectionId}
     focusedGranuleId={focusedGranuleId}
     granulesMetadata={granulesMetadata}
+    granulesQueries={granulesQueries}
     location={location}
     onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
     onChangePath={onChangePath}
@@ -143,6 +146,7 @@ export const ProjectPanelsContainer = ({
 )
 
 ProjectPanelsContainer.defaultProps = {
+  granulesQueries: {},
   shapefileId: null,
   temporal: {},
   overrideTemporal: {}
@@ -153,6 +157,7 @@ ProjectPanelsContainer.propTypes = {
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
+  granulesQueries: PropTypes.shape({}),
   location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,

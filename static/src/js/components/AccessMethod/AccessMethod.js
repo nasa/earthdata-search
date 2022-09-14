@@ -165,8 +165,7 @@ export class AccessMethod extends Component {
       selectedAccessMethod,
       shapefileId,
       spatial,
-      temporal,
-      overrideTemporal
+      temporal
     } = this.props
 
     const { conceptId: collectionId } = metadata
@@ -436,7 +435,6 @@ export class AccessMethod extends Component {
                           shapefileId={shapefileId}
                           spatial={spatial}
                           temporal={temporal}
-                          overrideTemporal={overrideTemporal}
                           onUpdateAccessMethod={onUpdateAccessMethod}
                         />
                       </Suspense>
@@ -589,6 +587,7 @@ export class AccessMethod extends Component {
 
 AccessMethod.defaultProps = {
   accessMethods: {},
+  granulesQuery: {},
   index: null,
   isActive: false,
   metadata: {},
@@ -601,6 +600,7 @@ AccessMethod.defaultProps = {
 
 AccessMethod.propTypes = {
   accessMethods: PropTypes.shape({}),
+  granulesQuery: PropTypes.shape({}),
   index: PropTypes.number,
   isActive: PropTypes.bool,
   metadata: PropTypes.shape({
@@ -619,8 +619,7 @@ AccessMethod.propTypes = {
     endDate: PropTypes.string,
     isRecurring: PropTypes.bool,
     startDate: PropTypes.string
-  }).isRequired,
-  overrideTemporal: PropTypes.shape({}).isRequired
+  }).isRequired
 }
 
 export default AccessMethod
