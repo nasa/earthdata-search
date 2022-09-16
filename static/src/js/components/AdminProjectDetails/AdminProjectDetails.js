@@ -27,39 +27,41 @@ export const AdminProjectDetails = ({ project }) => {
     <div className="admin-project-details">
       <Row>
         <Col sm="auto">
-          <div className="admin-project-details__metadata-display">
-            <p className="admin-project-details__metadata-display-item">
+          <Row className="admin-project-details__metadata-display mb-2">
+            <Col className="admin-project-details__metadata-display-item">
               <span className="admin-project-details__metadata-display-heading">Name</span>
               <span className="admin-project-details__metadata-display-content">{name}</span>
-            </p>
-            <p className="admin-project-details__metadata-display-item">
+            </Col>
+            <Col className="admin-project-details__metadata-display-item">
               <span className="admin-project-details__metadata-display-heading">Owner</span>
               <span className="admin-project-details__metadata-display-content">{username}</span>
-            </p>
-            <p className="admin-project-details__metadata-display-item">
+            </Col>
+            <Col className="admin-project-details__metadata-display-item">
               <span className="admin-project-details__metadata-display-heading">Obfuscated ID</span>
               <span className="admin-project-details__metadata-display-content">{obfuscatedId}</span>
-            </p>
-            <p className="admin-project-details__metadata-display-item">
+            </Col>
+          </Row>
+          <Row className="admin-project-details__metadata-display mb-2">
+            <Col className="admin-project-details__metadata-display-item">
               <span className="admin-project-details__metadata-display-heading">Source Path</span>
               <a className="admin-project-details__metadata-display-content" href={path} target="_blank" rel="noopener noreferrer">
                 {path}
               </a>
-            </p>
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        {
-          !isEmpty(parsedPath) && (
-            <Col sm="auto">
-              <p className="admin-project-details__metadata-display-item">
-                <span className="admin-project-details__metadata-display-heading">Parsed Path</span>
-                <span className="admin-project-details__metadata-display-content">{JSON.stringify(parsedPath, null, 2)}</span>
-              </p>
             </Col>
-          )
-        }
+          </Row>
+          <Row>
+            {
+              !isEmpty(parsedPath) && (
+                <Col sm="auto">
+                  <p className="admin-project-details__metadata-display-item">
+                    <span className="admin-project-details__metadata-display-heading">Parsed Path</span>
+                    <span className="admin-project-details__metadata-display-content admin-project-details__metadata-display-content__json">{JSON.stringify(parsedPath, null, 2)}</span>
+                  </p>
+                </Col>
+              )
+            }
+          </Row>
+        </Col>
       </Row>
     </div>
   )

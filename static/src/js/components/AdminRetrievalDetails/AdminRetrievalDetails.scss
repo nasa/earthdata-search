@@ -71,5 +71,6 @@
   &__metadata-display-content {
     font-size: 1rem;
     color: $color__black--700;
+    word-break: break-all;
   }
 }
