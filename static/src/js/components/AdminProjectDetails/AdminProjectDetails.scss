@@ -23,7 +23,11 @@
   &__metadata-display-content {
     font-size: 1rem;
     color: $color__black--700;
-    white-space: pre-wrap;
-    font-family: monospace;
+    word-break: break-all;
+
+    &__json {
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
   }
 }
