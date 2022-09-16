@@ -567,7 +567,6 @@ class ProjectPanels extends PureComponent {
             <AccessMethod
               accessMethods={accessMethods}
               granuleMetadata={granulesMetadata}
-              granulesQuery={granulesQuery}
               index={index}
               metadata={collectionMetadata}
               onSelectAccessMethod={onSelectAccessMethod}

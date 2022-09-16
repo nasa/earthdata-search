@@ -587,7 +587,6 @@ export class AccessMethod extends Component {
 
 AccessMethod.defaultProps = {
   accessMethods: {},
-  granulesQuery: {},
   index: null,
   isActive: false,
   metadata: {},
@@ -600,7 +599,6 @@ AccessMethod.defaultProps = {
 
 AccessMethod.propTypes = {
   accessMethods: PropTypes.shape({}),
-  granulesQuery: PropTypes.shape({}),
   index: PropTypes.number,
   isActive: PropTypes.bool,
   metadata: PropTypes.shape({
