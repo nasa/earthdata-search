@@ -46,7 +46,7 @@ const Facets = (props) => {
   if (showAvailableFromAwsCloud) {
     featuresFacet.children.push({
       applied: featureFacets.availableFromAwsCloud,
-      title: 'Available from AWS Cloud',
+      title: 'Available in Earthdata Cloud',
       type: 'feature'
     })
   }
