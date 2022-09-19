@@ -41,7 +41,7 @@ Earthdata Search runs on Node.js, in order to run the application you'll need to
 
 **Recommended:** Use Homebrew
 
- brew install node
+    brew install node
 
 ##### NPM
 
@@ -85,7 +85,7 @@ Once npm is installed locally, you need to download the dependencies by executin
 
 For local development Earthdata Search uses a json configuration file to store secure files, an example is provided and should be copied and completed before attempting to go any further.
 
- cp secret.config.json.example secret.config.json
+    cp secret.config.json.example secret.config.json
 
 In order to operate against a local database this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `dbPort` in `static.config.json` if you have custom configuration locally)
 
@@ -99,15 +99,15 @@ Non-secure values are stored in `static.config.json`. In order to prevent confli
 
 Ensure that you have a database created:
 
- createdb edsc_dev
+    createdb edsc_dev
 
 To run the migrations locally:
 
-  DATABASE_URL=postgresql://USERNAME:PASSWORD@localhost:5432/edsc_dev npm run migrate up
+    DATABASE_URL=postgresql://USERNAME:PASSWORD@localhost:5432/edsc_dev npm run migrate up
 
 When deployed our database migrations run within Lambda due to the fact that in non-development environments our resources are not publicly accessible. To run the migrations you'll need to invoke the Lambda:
 
- serverless invoke local --function migrateDatabase
+    serverless invoke local --function migrateDatabase
 
 ### Building the Application
 
@@ -132,13 +132,14 @@ The [serverless framework](https://serverless.com/framework/docs/providers/aws/)
 - SQS
 
  While there is an sqs-offline plugin for serverless it still requires an actual queue be running, we may investigate this in the future but for now sqs functionality isn't available while developing locally which means the following pieces of functionality will not operate locally:
-  - Generating Colormaps
+
+- Generating Colormaps
 
 #### Running API Gateway and Lambda Locally
 
 Running the following command will spin up API Gateway and Lambda locally which will open up a vast majority of the functionality the backend offers.
 
- serverless offline
+    serverless offline
 
 This will provide access to API Gateway at [http://localhost:3001](http://localhost:3001)
 
@@ -193,4 +194,4 @@ For production use, this application uses Scatter Swap to obfuscate some IDs -- 
 
 To deploy the full application use the following:
 
- NODE_ENV=production serverless deploy --stage UNIQUE_STAGE
+    NODE_ENV=production serverless deploy --stage UNIQUE_STAGE
