@@ -437,7 +437,7 @@ describe('Path /search', () => {
   })
 
   describe('Feature Facets Group', () => {
-    describe('When the path is loaded with the `Available from AWS Cloud` feature facet param', () => {
+    describe('When the path is loaded with the `Available in Earthdata Cloud` feature facet param', () => {
       it('loads with the feature facet applied', () => {
         const cmrHits = 720
 
@@ -457,13 +457,13 @@ describe('Path /search', () => {
           })
         })
 
-        cy.visit('/search?ff=Available%20from%20AWS%20Cloud')
+        cy.visit('/search?ff=Available%20in%20Earthdata%20Cloud')
 
         // Ensure the correct number of results were loaded
         testResultsSize(cmrHits)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('be.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('be.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
@@ -501,7 +501,7 @@ describe('Path /search', () => {
         testResultsSize(cmrHits)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('not.be.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('not.be.checked')
         getByTestId('facet_item-customizable').should('be.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
@@ -539,7 +539,7 @@ describe('Path /search', () => {
         testResultsSize(cmrHits)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('not.be.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('not.be.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.checked')
 
@@ -582,7 +582,7 @@ describe('Path /search', () => {
         testFacetGroupSelectedCount('keywords', 1)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
@@ -629,7 +629,7 @@ describe('Path /search', () => {
         testFacetGroupSelectedCount('platforms', 1)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
@@ -676,7 +676,7 @@ describe('Path /search', () => {
         testFacetGroupSelectedCount('instruments', 1)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
@@ -723,7 +723,7 @@ describe('Path /search', () => {
         testFacetGroupSelectedCount('organizations', 1)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
@@ -770,7 +770,7 @@ describe('Path /search', () => {
         testFacetGroupSelectedCount('projects', 1)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
@@ -817,7 +817,7 @@ describe('Path /search', () => {
         testFacetGroupSelectedCount('processing-levels', 1)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
@@ -864,7 +864,7 @@ describe('Path /search', () => {
         testFacetGroupSelectedCount('data-format', 1)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
@@ -911,7 +911,7 @@ describe('Path /search', () => {
         testFacetGroupSelectedCount('tiling-system', 1)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
@@ -958,7 +958,7 @@ describe('Path /search', () => {
         testFacetGroupSelectedCount('horizontal-data-resolution', 1)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
@@ -1005,7 +1005,7 @@ describe('Path /search', () => {
         testFacetGroupSelectedCount('latency', 1)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
@@ -1049,7 +1049,7 @@ describe('Path /search', () => {
         testResultsSize(cmrHits)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
@@ -1092,7 +1092,7 @@ describe('Path /search', () => {
         testResultsSize(cmrHits)
 
         // Ensure that the correct feature facets are selected
-        getByTestId('facet_item-available-from-aws-cloud').should('be.not.checked')
+        getByTestId('facet_item-available-in-earthdata-cloud').should('be.not.checked')
         getByTestId('facet_item-customizable').should('be.not.checked')
         getByTestId('facet_item-map-imagery').should('be.not.checked')
 
