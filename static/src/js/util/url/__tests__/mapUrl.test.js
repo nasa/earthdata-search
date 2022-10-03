@@ -163,7 +163,7 @@ describe('decodes projection correctly', () => {
         latitude: undefined,
         longitude: undefined,
         overlays: undefined,
-        projection: undefined,
+        projection: 'epsg3031',
         zoom: undefined
       }
     }

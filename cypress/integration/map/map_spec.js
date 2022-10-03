@@ -27,6 +27,8 @@ import pointBodyEdited from './__mocks__/point_collections_edited.body.json'
 import polygonBody from './__mocks__/polygon_collections.body.json'
 import simpleShapefileBody from './__mocks__/simple_shapefile_collections.body.json'
 import tooManyPointsShapefileBody from './__mocks__/too_many_points_shapefile_collections.body.json'
+import arcticShapefileBody from './__mocks__/arctic_shapefile_collections.body.json'
+import antarcticShapefileBody from './__mocks__/antarctic_shapefile_collections.body.json'
 
 describe('Map interactions', () => {
   describe('When drawing point spatial', () => {
@@ -1086,6 +1088,150 @@ describe('Map interactions', () => {
         // populates the spatial display field
         getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Shape File')
         getByTestId('spatial-display_shapefile-name').should('have.text', 'too_many_points.geojson')
+        getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
+      })
+    })
+
+    describe('When the shapefile has only arctic latitudes', () => {
+      it('renders correctly', () => {
+        const aliases = interceptUnauthenticatedCollections(
+          commonBody,
+          commonHeaders,
+          [{
+            alias: 'polygonAlias',
+            body: arcticShapefileBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '5479'
+            },
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,76.46517,56.25,76.46517,42.1875,82.40647,42.1875,76.46517&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+          }]
+        )
+
+        cy.fixture('shapefiles/arctic.geojson').then((fileContent) => {
+          cy.intercept(
+            'POST',
+            '**/convert',
+            {
+              body: fileContent,
+              headers: { 'content-type': 'application/json; charset=utf-8' }
+            }
+          )
+        }).as('shapefileConvertRequest')
+
+        cy.intercept(
+          'POST',
+          '**/shapefiles',
+          {
+            body: { shapefile_id: '1' },
+            headers: { 'content-type': 'application/json; charset=utf-8' }
+          }
+        ).as('shapefilesApiRequest')
+
+        cy.visit('/')
+
+        // Upload the shapefile
+        getByTestId('shapefile-dropzone').attachFile(
+          {
+            filePath: 'shapefiles/arctic.geojson',
+            mimeType: 'application/json',
+            encoding: 'utf-8'
+          },
+          { subjectType: 'drag-n-drop' }
+        )
+
+        cy.wait('@shapefileConvertRequest')
+        cy.wait('@shapefilesApiRequest')
+        // Wait for the large shape to be drawn
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(2000)
+
+        aliases.forEach((alias) => {
+          cy.wait(`@${alias}`)
+        })
+
+        // updates the URL
+        cy.url().should('include', '?polygon[0]=42.1875%2C76.46517%2C56.25%2C76.46517%2C42.1875%2C82.40647%2C42.1875%2C76.46517&sf=1&sfs[0]=0&lat=90&projection=EPSG%3A3413&zoom=0')
+
+        // draws a polygon on the map
+        cy.get('.leaflet-interactive').first().should('have.attr', 'd', 'M800 438L880 442L876 398L800 438z')
+        cy.get('.leaflet-interactive').last().should('have.attr', 'd', 'M880 442L876 398L800 438L880 442z')
+
+        // populates the spatial display field
+        getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Shape File')
+        getByTestId('spatial-display_shapefile-name').should('have.text', 'arctic.geojson')
+        getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
+      })
+    })
+
+    describe('When the shapefile has only antarctic latitudes', () => {
+      it('renders correctly', () => {
+        const aliases = interceptUnauthenticatedCollections(
+          commonBody,
+          commonHeaders,
+          [{
+            alias: 'polygonAlias',
+            body: antarcticShapefileBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '5479'
+            },
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,-76.46517,42.1875,-82.40647,56.25,-76.46517,42.1875,-76.46517&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+          }]
+        )
+
+        cy.fixture('shapefiles/antarctic.geojson').then((fileContent) => {
+          cy.intercept(
+            'POST',
+            '**/convert',
+            {
+              body: fileContent,
+              headers: { 'content-type': 'application/json; charset=utf-8' }
+            }
+          )
+        }).as('shapefileConvertRequest')
+
+        cy.intercept(
+          'POST',
+          '**/shapefiles',
+          {
+            body: { shapefile_id: '1' },
+            headers: { 'content-type': 'application/json; charset=utf-8' }
+          }
+        ).as('shapefilesApiRequest')
+
+        cy.visit('/')
+
+        // Upload the shapefile
+        getByTestId('shapefile-dropzone').attachFile(
+          {
+            filePath: 'shapefiles/antarctic.geojson',
+            mimeType: 'application/json',
+            encoding: 'utf-8'
+          },
+          { subjectType: 'drag-n-drop' }
+        )
+
+        cy.wait('@shapefileConvertRequest')
+        cy.wait('@shapefilesApiRequest')
+        // Wait for the large shape to be drawn
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(2000)
+
+        aliases.forEach((alias) => {
+          cy.wait(`@${alias}`)
+        })
+
+        // updates the URL
+        cy.url().should('include', '?polygon[0]=42.1875%2C-76.46517%2C42.1875%2C-82.40647%2C56.25%2C-76.46517%2C42.1875%2C-76.46517&sf=1&sfs[0]=0&lat=-90&projection=EPSG%3A3031&zoom=0')
+
+        // draws a polygon on the map
+        cy.get('.leaflet-interactive').first().should('have.attr', 'd', 'M768 358L821 299L850 333L768 358z')
+        cy.get('.leaflet-interactive').last().should('have.attr', 'd', 'M821 299L768 358L850 333L821 299z')
+
+        // populates the spatial display field
+        getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Shape File')
+        getByTestId('spatial-display_shapefile-name').should('have.text', 'antarctic.geojson')
         getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
       })
     })
