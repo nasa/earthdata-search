@@ -192,7 +192,9 @@ export class MapContainer extends Component {
       map.zoom = 0
     }
 
-    this.mapRef.leafletElement.options.crs = crsProjections[projection]
+    if (this.mapRef) {
+      this.mapRef.leafletElement.options.crs = crsProjections[projection]
+    }
 
     onMetricsMap(`Set Projection: ${Projection}`)
     onChangeMap({ ...map })
@@ -444,6 +446,7 @@ export class MapContainer extends Component {
           authToken={authToken}
           isProjectPage={isProjectPage}
           shapefile={shapefile}
+          onChangeProjection={this.handleProjectionSwitching}
           onFetchShapefile={onFetchShapefile}
           onSaveShapefile={onSaveShapefile}
           onShapefileErrored={onShapefileErrored}

@@ -15,7 +15,7 @@ const projectionList = {
  */
 const validateProjection = (param) => Object.keys(projectionList).some(
   (projection) => projection === param.replace(':', '').toLowerCase()
-).length > 0
+)
 
 /**
  * Encodes a Map object into a string

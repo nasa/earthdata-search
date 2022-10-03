@@ -26,6 +26,7 @@
     "test": "NODE_OPTIONS=--max-old-space-size=6144 jest",
     "silent-test": "NODE_OPTIONS=--max-old-space-size=8192 jest --silent",
     "test:watch": "NODE_OPTIONS=--max-old-space-size=6144 jest --watchAll",
+    "test:watch-lite": "jest --watchAll --collectCoverageFrom='' --coverage=true",
     "start:ci": "webpack-dev-server --config static.webpack.config.dev.js",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run -c video=false",

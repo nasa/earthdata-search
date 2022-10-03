@@ -31,6 +31,9 @@ const dropzoneOptions = {
   // We likely want to use this, once they fix OPTIONS requests
   // See: https://github.com/wavded/ogre/pull/22
   url: 'https://ogre.adc4gis.com/convert',
+  params: {
+    targetSrs: 'crs:84'
+  },
   headers: {
     'Cache-Control': undefined
   },
