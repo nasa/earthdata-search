@@ -1,7 +1,11 @@
-import { getMapPreferences } from '../preferences'
+import {
+  getCollectionSortPreference,
+  getGranuleSortPreference,
+  getMapPreferences
+} from '../preferences'
 
 describe('getMapPreferences selector', () => {
-  test('returns the granule metadata', () => {
+  test('returns the map preferences', () => {
     const state = {
       preferences: {
         preferences: {
@@ -30,5 +34,45 @@ describe('getMapPreferences selector', () => {
     const state = {}
 
     expect(getMapPreferences(state)).toEqual({})
+  })
+})
+
+describe('getCollectionSortPreference selector', () => {
+  test('returns the collection sort preference', () => {
+    const state = {
+      preferences: {
+        preferences: {
+          collectionSort: '-usage_score'
+        }
+      }
+    }
+
+    expect(getCollectionSortPreference(state)).toEqual(state.preferences.preferences.collectionSort)
+  })
+
+  test('returns default when there is no preference', () => {
+    const state = {}
+
+    expect(getCollectionSortPreference(state)).toEqual('default')
+  })
+})
+
+describe('getGranuleSortPreference selector', () => {
+  test('returns the collection sort preference', () => {
+    const state = {
+      preferences: {
+        preferences: {
+          granuleSort: '-end_date'
+        }
+      }
+    }
+
+    expect(getGranuleSortPreference(state)).toEqual(state.preferences.preferences.granuleSort)
+  })
+
+  test('returns default when there is no preference', () => {
+    const state = {}
+
+    expect(getGranuleSortPreference(state)).toEqual('default')
   })
 })

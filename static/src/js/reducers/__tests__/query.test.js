@@ -114,32 +114,99 @@ describe('UPDATE_REGION_QUERY', () => {
 })
 
 describe('RESTORE_FROM_URL', () => {
-  test('returns the correct state', () => {
-    const query = {
-      collection: { pageNum: 1 },
-      granule: { pageNum: 1 },
-      region: {
-        exact: true
+  describe('with the default collection sort preference', () => {
+    test('returns the correct state', () => {
+      const query = {
+        collection: { pageNum: 1 },
+        collectionSortPreference: 'default',
+        granule: { pageNum: 1 },
+        region: {
+          exact: true
+        }
       }
-    }
 
-    const action = {
-      type: RESTORE_FROM_URL,
-      payload: {
-        query
+      const action = {
+        type: RESTORE_FROM_URL,
+        payload: {
+          query
+        }
       }
-    }
 
-    const expectedState = {
-      ...initialState,
-      ...query,
-      collection: {
-        ...initialState.collection,
-        ...query.collection
+      const expectedState = {
+        ...initialState,
+        ...query,
+        collection: {
+          ...initialState.collection,
+          ...query.collection
+        }
       }
-    }
 
-    expect(queryReducer(undefined, action)).toEqual(expectedState)
+      expect(queryReducer(undefined, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('with the relevance collection sort preference', () => {
+    test('returns the correct state', () => {
+      const query = {
+        collection: { pageNum: 1 },
+        collectionSortPreference: 'relevance',
+        granule: { pageNum: 1 },
+        region: {
+          exact: true
+        }
+      }
+
+      const action = {
+        type: RESTORE_FROM_URL,
+        payload: {
+          query
+        }
+      }
+
+      const expectedState = {
+        ...initialState,
+        ...query,
+        collection: {
+          ...initialState.collection,
+          ...query.collection,
+          sortKey: undefined
+        }
+      }
+
+      expect(queryReducer(undefined, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('with the collection sort preference selected', () => {
+    test('returns the correct state', () => {
+      const query = {
+        collection: { pageNum: 1 },
+        collectionSortPreference: '-ongoing',
+        granule: { pageNum: 1 },
+        region: {
+          exact: true
+        }
+      }
+
+      const action = {
+        type: RESTORE_FROM_URL,
+        payload: {
+          query
+        }
+      }
+
+      const expectedState = {
+        ...initialState,
+        ...query,
+        collection: {
+          ...initialState.collection,
+          ...query.collection,
+          sortKey: ['-ongoing']
+        }
+      }
+
+      expect(queryReducer(undefined, action)).toEqual(expectedState)
+    })
   })
 })
 
@@ -351,37 +418,82 @@ describe('UPDATE_GRANULE_SEARCH_QUERY', () => {
 })
 
 describe('INITIALIZE_COLLECTION_GRANULES_QUERY', () => {
-  test('returns the correct state', () => {
-    const action = {
-      type: INITIALIZE_COLLECTION_GRANULES_QUERY,
-      payload: 'collectionId'
-    }
-
-    const initial = {
-      ...initialState,
-      collection: {
-        ...initialState.collection,
-        byId: {
-          collectionId: {}
+  describe('when the granule sort preference is the default', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: INITIALIZE_COLLECTION_GRANULES_QUERY,
+        payload: {
+          collectionId: 'collectionId',
+          granuleSortPreference: 'default'
         }
       }
-    }
 
-    const expectedState = {
-      ...initialState,
-      collection: {
-        ...initialState.collection,
-        byId: {
-          collectionId: {
-            granules: {
-              ...initialGranuleState,
-              pageNum: 1
+      const initial = {
+        ...initialState,
+        collection: {
+          ...initialState.collection,
+          byId: {
+            collectionId: {}
+          }
+        }
+      }
+
+      const expectedState = {
+        ...initialState,
+        collection: {
+          ...initialState.collection,
+          byId: {
+            collectionId: {
+              granules: {
+                ...initialGranuleState,
+                pageNum: 1
+              }
             }
           }
         }
       }
-    }
 
-    expect(queryReducer(initial, action)).toEqual(expectedState)
+      expect(queryReducer(initial, action)).toEqual(expectedState)
+    })
+  })
+
+  describe('when the granule sort preference set', () => {
+    test('returns the correct state', () => {
+      const action = {
+        type: INITIALIZE_COLLECTION_GRANULES_QUERY,
+        payload: {
+          collectionId: 'collectionId',
+          granuleSortPreference: 'start_date'
+        }
+      }
+
+      const initial = {
+        ...initialState,
+        collection: {
+          ...initialState.collection,
+          byId: {
+            collectionId: {}
+          }
+        }
+      }
+
+      const expectedState = {
+        ...initialState,
+        collection: {
+          ...initialState.collection,
+          byId: {
+            collectionId: {
+              granules: {
+                ...initialGranuleState,
+                sortKey: 'start_date',
+                pageNum: 1
+              }
+            }
+          }
+        }
+      }
+
+      expect(queryReducer(initial, action)).toEqual(expectedState)
+    })
   })
 })

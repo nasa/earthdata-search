@@ -583,7 +583,13 @@ describe('changeFocusedCollection', () => {
       const getTimelineMock = jest.spyOn(actions, 'getTimeline')
       getTimelineMock.mockImplementationOnce(() => jest.fn())
 
-      const store = mockStore({})
+      const store = mockStore({
+        preferences: {
+          preferences: {
+            granuleSort: 'default'
+          }
+        }
+      })
 
       const collectionId = 'C1000000000-EDSC'
 
@@ -596,7 +602,10 @@ describe('changeFocusedCollection', () => {
       })
       expect(storeActions[1]).toEqual({
         type: INITIALIZE_COLLECTION_GRANULES_QUERY,
-        payload: collectionId
+        payload: {
+          collectionId,
+          granuleSortPreference: 'default'
+        }
       })
       expect(storeActions[2]).toEqual({
         type: INITIALIZE_COLLECTION_GRANULES_RESULTS,

@@ -1,4 +1,12 @@
 {
+  "collectionSort": {
+    "ui:widget": "radio",
+    "ui:field": "radio"
+  },
+  "granuleSort": {
+    "ui:widget": "radio",
+    "ui:field": "radio"
+  },
   "panelState": {
     "ui:widget": "radio",
     "ui:field": "radio"

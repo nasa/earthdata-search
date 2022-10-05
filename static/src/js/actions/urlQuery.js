@@ -14,6 +14,7 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
 
 import ProjectRequest from '../util/request/projectRequest'
+import { getCollectionSortPreference } from '../selectors/preferences'
 
 const restoreFromUrl = (payload) => ({
   type: RESTORE_FROM_URL,
@@ -36,9 +37,12 @@ export const updateStore = ({
   shapefile,
   timeline
 }, newPathname) => async (dispatch, getState) => {
-  const { router } = getState()
+  const state = getState()
+  const { router } = state
   const { location } = router
   const { pathname } = location
+
+  const collectionSortPreference = getCollectionSortPreference(state)
 
   // Prevent loading from the urls that don't use URL params.
   const loadFromUrl = (
@@ -60,7 +64,10 @@ export const updateStore = ({
       deprecatedUrlParams,
       map,
       project,
-      query,
+      query: {
+        ...query,
+        collectionSortPreference
+      },
       shapefile,
       timeline
     }))
