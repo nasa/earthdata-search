@@ -31,8 +31,8 @@
 		"granuleSort": {
 			"$id": "#/properties/granuleSort",
 			"type": "string",
-			"title": "Collection Results Sort",
-			"description": "Select your preference for the sorting key used in the collection results panel when you are logged into Earthdata Search.",
+			"title": "Granule Results Sort",
+			"description": "Select your preference for the sorting key used in the granule results panel when you are logged into Earthdata Search.",
 			"default": "default",
 			"enum": [
 				"default",
