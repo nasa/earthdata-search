@@ -9,6 +9,46 @@
 		"granuleListView"
   ],
 	"properties": {
+		"collectionSort": {
+			"$id": "#/properties/collectionSort",
+			"type": "string",
+			"title": "Collection Results Sort",
+			"description": "Select your preference for the sorting key used in the collection results panel when you are logged into Earthdata Search.",
+			"default": "default",
+			"enum": [
+				"default",
+				"relevance",
+				"-usage_score",
+				"-ongoing"
+			],
+			"enumNames": [
+				"Default",
+				"Relevance",
+				"Usage",
+				"End Date"
+			]
+		},
+		"granuleSort": {
+			"$id": "#/properties/granuleSort",
+			"type": "string",
+			"title": "Collection Results Sort",
+			"description": "Select your preference for the sorting key used in the collection results panel when you are logged into Earthdata Search.",
+			"default": "default",
+			"enum": [
+				"default",
+				"-start_date",
+				"start_date",
+				"-end_date",
+				"end_date"
+			],
+			"enumNames": [
+				"Default",
+				"Start Date, Newest First",
+				"Start Date, Oldest First",
+				"End Date, Newest First",
+				"End Date, Oldest First"
+			]
+		},
 		"panelState": {
 			"$id": "#/properties/panelState",
 			"type": "string",

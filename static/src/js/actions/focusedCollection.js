@@ -12,11 +12,12 @@ import { getCollectionsQuery } from '../selectors/query'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
+import { getGranuleSortPreference } from '../selectors/preferences'
+import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
 import { getUsername } from '../selectors/user'
+import { isCSDACollection } from '../util/isCSDACollection'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
-import { isCSDACollection } from '../util/isCSDACollection'
-import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
@@ -380,6 +381,8 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
 export const changeFocusedCollection = (collectionId) => (dispatch, getState) => {
   dispatch(actions.updateFocusedCollection(collectionId))
 
+  const state = getState()
+
   if (collectionId === '') {
     // If clearing the focused collection, also clear the focused granule
     dispatch(actions.changeFocusedGranule(''))
@@ -388,18 +391,19 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
 
     eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granule: null })
 
-    const { router } = getState()
+    const { router } = state
     const { location } = router
     const { search } = location
 
     // If clearing the focused collection, redirect the user back to the search page
     dispatch(actions.changeUrl({
-      pathname: `${portalPathFromState(getState())}/search`,
+      pathname: `${portalPathFromState(state)}/search`,
       search
     }))
   } else {
     // Initialize a nested query element in Redux for the new focused collection
-    dispatch(actions.initializeCollectionGranulesQuery(collectionId))
+    const granuleSortPreference = getGranuleSortPreference(state)
+    dispatch(actions.initializeCollectionGranulesQuery({ collectionId, granuleSortPreference }))
 
     // Initialize a nested search results element in Redux for the new focused collection
     dispatch(actions.initializeCollectionGranulesResults(collectionId))
