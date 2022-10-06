@@ -1227,6 +1227,7 @@ describe('Path /search/granules', () => {
       },
       (req) => {
         expect(JSON.parse(req.body).params).to.eql({
+          consortium: [],
           has_granules_or_cwic: true,
           include_facets: 'v2',
           include_granule_counts: true,
