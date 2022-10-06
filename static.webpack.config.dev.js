@@ -16,7 +16,7 @@ const Config = mergeWithRules({
   }
 })(StaticCommonConfig, {
   mode: 'development',
-  devtool: 'inline-cheap-module-source-map',
+  devtool: 'eval-source-map',
   resolve: {
     extensions: ['.js', '.jsx']
   },

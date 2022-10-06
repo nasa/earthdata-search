@@ -113,7 +113,7 @@ describe('Search component', () => {
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
         collection: {
-          tagKey: 'gov.nasa.eosdis'
+          onlyEosdisCollections: true
         }
       })
     })

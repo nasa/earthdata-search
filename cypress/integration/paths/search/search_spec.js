@@ -1075,7 +1075,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score&tag_key[]=gov.nasa.eosdis')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&consortium[]=EOSDIS&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
           req.reply({
             body: nonEosdisBody,
@@ -1086,7 +1086,7 @@ describe('Path /search', () => {
           })
         })
 
-        cy.visit('/search?tag_key=gov.nasa.eosdis')
+        cy.visit('/search?oe=t')
 
         // Ensure the correct number of results were loaded
         testResultsSize(cmrHits)

@@ -28,6 +28,7 @@ export const prepareCollectionParams = (state) => {
   const {
     hasGranulesOrCwic,
     keyword,
+    onlyEosdisCollections,
     overrideTemporal = {},
     pageNum,
     sortKey = [],
@@ -78,7 +79,13 @@ export const prepareCollectionParams = (state) => {
   let cloudHosted
   if (featureFacets.availableFromAwsCloud) cloudHosted = true
 
+  let consortium = []
+  if (onlyEosdisCollections) {
+    consortium = ['EOSDIS']
+  }
+
   const { query: portalQuery = {} } = portal
+  const { consortium: portalConsortium = [] } = portalQuery
 
   const collectionParams = {
     authToken,
@@ -99,7 +106,11 @@ export const prepareCollectionParams = (state) => {
     temporalString,
     viewAllFacetsCategory,
     viewAllFacets,
-    ...portalQuery
+    ...portalQuery,
+    consortium: [
+      ...consortium,
+      ...portalConsortium
+    ]
   }
 
   // Add the autocomplete selected parameters if the type is not a CMR Facet

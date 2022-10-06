@@ -18,7 +18,6 @@
       "width": 85
     },
     "orderStatusRefreshTime": 60000,
-    "eosdisTagKey": "gov.nasa.eosdis",
     "defaultCmrPageSize": 20,
     "maxCmrPageSize": 2000,
     "granuleLinksPageSize": "500",
