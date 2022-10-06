@@ -38,6 +38,7 @@ export const humanizedQueryValueFormattingMap = {
   latency: (value) => formatFacetHierarchy(value),
   line: (value) => formatPoints(value),
   onlineOnly: (value) => formatBoolean(value),
+  onlyEosdisCollections: (value) => formatBoolean(value),
   platformsH: (value) => formatFacetHierarchy(value, platformsHierarchy),
   point: (value) => formatPoints(value),
   polygon: (value) => formatPoints(value),

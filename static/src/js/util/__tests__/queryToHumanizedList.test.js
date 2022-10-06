@@ -16,10 +16,10 @@ describe('queryToHumanizedList', () => {
     }])
   })
 
-  test('returns a humanized param for EOSDIS collections tag', () => {
+  test('returns a humanized param for EOSDIS consortium', () => {
     const query = {
       hasGranulesOrCwic: true,
-      tagKey: ['gov.nasa.eosdis']
+      consortium: ['EOSDIS']
     }
 
     const subscriptionType = 'collection'
@@ -27,23 +27,7 @@ describe('queryToHumanizedList', () => {
     const result = queryToHumanizedList(query, subscriptionType)
 
     expect(result).toEqual([{
-      key: 'tagKey-gov.nasa.eosdis',
-      humanizedKey: 'Include only EOSDIS datasets'
-    }])
-  })
-
-  test('returns a humanized param for EOSDIS collections tag when tagKey is not an array', () => {
-    const query = {
-      hasGranulesOrCwic: true,
-      tagKey: 'gov.nasa.eosdis'
-    }
-
-    const subscriptionType = 'collection'
-
-    const result = queryToHumanizedList(query, subscriptionType)
-
-    expect(result).toEqual([{
-      key: 'tagKey-gov.nasa.eosdis',
+      key: 'consortium-EOSDIS',
       humanizedKey: 'Include only EOSDIS datasets'
     }])
   })

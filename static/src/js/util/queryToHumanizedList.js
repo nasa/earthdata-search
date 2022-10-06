@@ -22,12 +22,11 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
     }
 
     // If only displaying EOSDIS collections, add a key of "EOSDIS collections"
-    if (subscriptionsQuery.tagKey && subscriptionsQuery.tagKey.includes('gov.nasa.eosdis')) {
+    if (subscriptionsQuery.consortium && ['EOSDIS'].every((type) => subscriptionsQuery.consortium.includes(type))) {
       values.push({
-        key: 'tagKey-gov.nasa.eosdis',
+        key: 'consortium-EOSDIS',
         humanizedKey: 'Include only EOSDIS datasets'
       })
-      subscriptionsQueryTemp.tagKey = castArray(subscriptionsQueryTemp.tagKey).filter((tagKey) => tagKey !== 'gov.nasa.eosdis')
     }
 
     // If only displaying collections with Map Imagery, add a key of "Map Imagery"
@@ -53,7 +52,8 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
     // hasGranulesOrCwic is the default, so it should not be displayed
     'hasGranulesOrCwic',
     // options are derrived from a users query and should not be displayed
-    'options'
+    'options',
+    'consortium'
   ]
 
   Object.keys(subscriptionsQueryTemp)

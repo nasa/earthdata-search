@@ -15,6 +15,7 @@ import { encodeAdvancedSearch, decodeAdvancedSearch } from './advancedSearchEnco
 import { encodeArray, decodeArray } from './arrayEncoders'
 import { encodeAutocomplete, decodeAutocomplete } from './autocompleteEncoders'
 import { encodeEarthdataEnvironment, decodeEarthdataEnvironment } from './environmentEncoders'
+import { decodeBoolean, encodeBoolean } from './booleanEncoders'
 
 import { isPath } from '../isPath'
 import { deprecatedURLParameters } from '../../constants/deprecatedURLParameters'
@@ -65,7 +66,8 @@ const urlDefs = {
   selectedFeatures: { shortKey: 'sfs', encode: encodeArray, decode: decodeArray },
   tagKey: { shortKey: 'tag_key', encode: encodeString, decode: decodeString },
   hasGranulesOrCwic: { shortKey: 'ac', encode: encodeHasGranulesOrCwic, decode: decodeHasGranulesOrCwic },
-  autocompleteSelected: { shortKey: 'as', encode: encodeAutocomplete, decode: decodeAutocomplete }
+  autocompleteSelected: { shortKey: 'as', encode: encodeAutocomplete, decode: decodeAutocomplete },
+  onlyEosdisCollections: { shortKey: 'oe', encode: encodeBoolean, decode: decodeBoolean }
 }
 
 /**
@@ -119,12 +121,13 @@ export const decodeUrlParams = (paramString) => {
     ...collection,
     pageNum: 1
   }
-  collectionQuery.spatial = spatial
-  collectionQuery.keyword = decodeHelp(params, 'keywordSearch')
-  collectionQuery.temporal = decodeHelp(params, 'temporalSearch')
-  collectionQuery.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
-  collectionQuery.tagKey = decodeHelp(params, 'tagKey')
   collectionQuery.hasGranulesOrCwic = decodeHelp(params, 'hasGranulesOrCwic')
+  collectionQuery.keyword = decodeHelp(params, 'keywordSearch')
+  collectionQuery.onlyEosdisCollections = decodeHelp(params, 'onlyEosdisCollections')
+  collectionQuery.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
+  collectionQuery.spatial = spatial
+  collectionQuery.tagKey = decodeHelp(params, 'tagKey')
+  collectionQuery.temporal = decodeHelp(params, 'temporalSearch')
 
   // Initialize the collection granule query
   const granuleQuery = {

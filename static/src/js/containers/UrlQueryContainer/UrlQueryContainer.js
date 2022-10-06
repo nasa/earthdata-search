@@ -40,6 +40,7 @@ export const mapStateToProps = (state) => ({
   location: state.router.location,
   map: state.map,
   mapPreferences: getMapPreferences(state),
+  onlyEosdisCollections: state.query.collection.onlyEosdisCollections,
   organizationFacets: state.facetsParams.cmr.data_center_h,
   overrideTemporalSearch: state.query.collection.overrideTemporal,
   pathname: state.router.location.pathname,
