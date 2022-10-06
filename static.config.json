@@ -107,10 +107,5 @@
       "redirectUriPath": "/urs_callback"
     }
   },
-  "experiments": {
-    "collectionSearchResultsLayout": {
-      "experimentId": "",
-      "variants": ""
-    }
-  }
+  "experiments": {}
 }
