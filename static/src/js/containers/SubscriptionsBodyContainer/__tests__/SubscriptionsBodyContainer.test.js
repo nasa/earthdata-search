@@ -110,6 +110,7 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       collectionQueryObj: {
+        consortium: [],
         serviceType: [],
         tagKey: []
       },
