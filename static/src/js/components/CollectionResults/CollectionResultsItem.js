@@ -44,8 +44,7 @@ export const CollectionResultsItem = forwardRef(({
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
-  onViewCollectionGranules,
-  variant
+  onViewCollectionGranules
 }, ref) => {
   const {
     collectionId,
@@ -361,13 +360,9 @@ export const CollectionResultsItem = forwardRef(({
                   )
                 }
               </div>
-              {
-                variant !== 'thumb-only' && (
-                  <p className="collection-results-item__desc">
-                    {summary}
-                  </p>
-                )
-              }
+              <p className="collection-results-item__desc">
+                {summary}
+              </p>
             </div>
             {
               thumbnail && (
@@ -514,17 +509,12 @@ export const CollectionResultsItem = forwardRef(({
 
 CollectionResultsItem.displayName = 'CollectionResultsItem'
 
-CollectionResultsItem.defaultProps = {
-  variant: ''
-}
-
 CollectionResultsItem.propTypes = {
   collectionMetadata: collectionMetadataPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
-  variant: PropTypes.string
+  onViewCollectionGranules: PropTypes.func.isRequired
 }
 
 export default CollectionResultsItem
