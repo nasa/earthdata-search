@@ -170,6 +170,7 @@ describe('Path /search/granules/collection-details', () => {
       },
       (req) => {
         expect(JSON.parse(req.body).params).to.eql({
+          consortium: [],
           include_facets: 'v2',
           include_granule_counts: true,
           include_has_granules: true,
