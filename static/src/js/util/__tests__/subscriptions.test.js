@@ -70,11 +70,27 @@ describe('removeDisabledFieldsFromQuery', () => {
     expect(result).toEqual({ keyword: 'modis' })
   })
 
+  test('removes disabled consortium field from query', () => {
+    const query = {
+      keyword: 'modis',
+      consortium: ['mockConsortium']
+    }
+
+    const disabledFields = {
+      'consortium-mockConsortium': true
+    }
+
+    const result = removeDisabledFieldsFromQuery(query, disabledFields)
+
+    expect(result).toEqual({ keyword: 'modis' })
+  })
+
   test('does not remove a disabled field from the query if it is false in the disabledFields', () => {
     // This can happen when the user disables and field, and reenables it
     const query = {
       keyword: 'modis',
-      tagKey: ['mocktag']
+      tagKey: ['mocktag'],
+      consortium: ['mockConsortium']
     }
 
     const disabledFields = {
@@ -83,7 +99,7 @@ describe('removeDisabledFieldsFromQuery', () => {
 
     const result = removeDisabledFieldsFromQuery(query, disabledFields)
 
-    expect(result).toEqual({ keyword: 'modis', tagKey: ['mocktag'] })
+    expect(result).toEqual({ keyword: 'modis', tagKey: ['mocktag'], consortium: ['mockConsortium'] })
   })
 
   test('removes any remaining fields that are empty arrays', () => {
