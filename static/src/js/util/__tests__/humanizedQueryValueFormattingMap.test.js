@@ -108,6 +108,14 @@ describe('humanizedQueryValueFormattingMap', () => {
     })
   })
 
+  describe('when formatting onlyEosdisCollections', () => {
+    test('calls the correct formatter with the correct arguments', () => {
+      humanizedQueryValueFormattingMap.onlyEosdisCollections(true)
+      expect(formatBooleanMock).toHaveBeenCalledTimes(1)
+      expect(formatBooleanMock).toHaveBeenCalledWith(true)
+    })
+  })
+
   describe('when formatting platformsH', () => {
     test('calls the correct formatter with the correct arguments', () => {
       humanizedQueryValueFormattingMap.platformsH([{
