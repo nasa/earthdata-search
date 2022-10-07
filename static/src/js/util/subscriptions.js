@@ -47,7 +47,7 @@ export const removeDisabledFieldsFromQuery = (query, disabledFields) => {
       return
     }
 
-    // If the key starts with `tagKey`, remove the correct tag from the tags array
+    // If the key starts with `consortium`, remove the correct tag from the tags array
     if (key.startsWith('consortium')) {
       const [, cosortiumValue] = key.split('-')
 
