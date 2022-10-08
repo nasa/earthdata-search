@@ -8,7 +8,7 @@ import {
   FaFolderMinus
 } from 'react-icons/fa'
 import { IoShare } from 'react-icons/io5'
-import { Dropdown } from 'react-bootstrap'
+import { Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { commafy } from '../../util/commafy'
 import { locationPropType } from '../../util/propTypes/location'
@@ -105,7 +105,7 @@ const GranuleResultsActions = ({
             <EDSCIcon icon={FaFolder} className="granule-results-actions__project-pill-icon" />
           )
         }
-        { commafy(granuleCount) }
+        {commafy(granuleCount)}
       </>
     )
 
@@ -139,6 +139,12 @@ const GranuleResultsActions = ({
     }
   ])
 
+  const renderTooltip = () => (
+    <Tooltip id="button-tooltip">
+      Invalid parameters
+    </Tooltip>
+  )
+
   return (
     <div ref={granuleResultsActionsContainer} className="granule-results-actions">
       <div className="granule-results-actions__secondary-actions">
@@ -163,44 +169,48 @@ const GranuleResultsActions = ({
               </PortalLinkContainer>
             </AuthRequiredContainer>
           </PortalFeatureContainer>
-          {
-            handoffLinks.length > 0 && (
-              <Dropdown
-                drop="up"
-                className="granule-results-actions__action granule-results-actions__action--explore"
+          <Dropdown
+            rop="up"
+            className="granule-results-actions__action granule-results-actions__action--explore"
+          >
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip}
+              show={!!handoffLinks.length}
+            >
+              <Dropdown.Toggle
+                as={Button}
+                type="button"
+                naked
+                icon={IoShare}
+                className="granule-results-actions__explore-button"
+                dataTestId="granule-results-actions__explore-button"
+                label="Explore"
+                title="Explore"
+                disabled={!!handoffLinks.length}
               >
-                <Dropdown.Toggle
-                  as={Button}
-                  type="button"
-                  naked
-                  icon={IoShare}
-                  className="granule-results-actions__explore-button"
-                  dataTestId="granule-results-actions__explore-button"
-                  label="Explore"
-                  title="Explore"
-                >
-                  Explore
-                </Dropdown.Toggle>
-                <Dropdown.Menu
-                  className={dropdownMenuClasses}
-                >
-                  <Dropdown.Header>Open search in:</Dropdown.Header>
-                  {
-                    handoffLinks.map((link) => (
-                      <Dropdown.Item
-                        key={link.title}
-                        className="link link--external more-actions-dropdown__item more-actions-dropdown__vis analytics__smart-handoff-link"
-                        href={link.href}
-                        target="_blank"
-                      >
-                        {link.title}
-                      </Dropdown.Item>
-                    ))
-                  }
-                </Dropdown.Menu>
-              </Dropdown>
-            )
-          }
+                Explore
+              </Dropdown.Toggle>
+            </OverlayTrigger>
+            <Dropdown.Menu
+              className={dropdownMenuClasses}
+            >
+              <Dropdown.Header>Open search in:</Dropdown.Header>
+              {
+                handoffLinks.map((link) => (
+                  <Dropdown.Item
+                    key={link.title}
+                    className="link link--external more-actions-dropdown__item more-actions-dropdown__vis analytics__smart-handoff-link"
+                    href={link.href}
+                    target="_blank"
+                  >
+                    {link.title}
+                  </Dropdown.Item>
+                ))
+              }
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
         <PortalFeatureContainer authentication>
           <>
