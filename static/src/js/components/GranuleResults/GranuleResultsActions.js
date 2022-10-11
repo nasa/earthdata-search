@@ -170,14 +170,14 @@ const GranuleResultsActions = ({
             </AuthRequiredContainer>
           </PortalFeatureContainer>
           <Dropdown
-            rop="up"
+            drop="up"
             className="granule-results-actions__action granule-results-actions__action--explore"
           >
             <OverlayTrigger
               placement="bottom"
               delay={{ show: 250, hide: 400 }}
               overlay={renderTooltip}
-              show={!!handoffLinks.length}
+              show={!handoffLinks.length}
             >
               <Dropdown.Toggle
                 as={Button}
@@ -188,7 +188,7 @@ const GranuleResultsActions = ({
                 dataTestId="granule-results-actions__explore-button"
                 label="Explore"
                 title="Explore"
-                disabled={!!handoffLinks.length}
+                disabled={!handoffLinks.length}
               >
                 Explore
               </Dropdown.Toggle>

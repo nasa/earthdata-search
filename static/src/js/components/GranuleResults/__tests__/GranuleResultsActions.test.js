@@ -32,6 +32,7 @@ function setup(overrideProps) {
     onSetActivePanelSection: jest.fn(),
     onChangePath: jest.fn(),
     subscriptions: [],
+    handoffLinks: [],
     ...overrideProps
   }
 
@@ -187,5 +188,21 @@ describe('GranuleResultsActions component', () => {
 
       expect(subscriptionButton.props().className).toContain('granule-results-actions__action--is-active')
     })
+  })
+})
+
+describe('when invalid parameters', () => {
+  test('explore button is disabled', () => {
+    const { enzymeWrapper } = setup()
+
+    const exploreButton = enzymeWrapper.find('.granule-results-actions__explore-button')
+
+    expect(exploreButton.getDOMNode().hasAttribute('disabled')).toBe(true)
+  })
+
+  test('ToolTip is Visible', () => {
+    const { enzymeWrapper } = setup()
+
+    expect(enzymeWrapper.exists('#button-tooltip')).to.equal(true)
   })
 })
