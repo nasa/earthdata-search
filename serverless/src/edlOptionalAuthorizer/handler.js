@@ -1,6 +1,7 @@
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { generatePolicy } from '../util/authorizer/generatePolicy'
 import { validateToken } from '../util/authorizer/validateToken'
+import { downcaseKeys } from '../util/downcaseKeys'
 
 /**
  * Custom authorizer for API Gateway authentication
@@ -16,7 +17,8 @@ const edlOptionalAuthorizer = async (event) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const { Authorization: authorizationToken = '' } = headers
+  // const { Authorization: authorizationToken = '' } = headers
+  const { authorization: authorizationToken } = downcaseKeys(headers)
 
   // resourcePath contains the path assigned to the lambda being requested
   const { resourcePath } = requestContext
