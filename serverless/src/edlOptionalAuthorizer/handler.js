@@ -18,7 +18,7 @@ const edlOptionalAuthorizer = async (event) => {
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   // const { Authorization: authorizationToken = '' } = headers
-  const { authorization: authorizationToken } = downcaseKeys(headers)
+  const { authorization: authorizationToken = '' } = downcaseKeys(headers)
 
   // resourcePath contains the path assigned to the lambda being requested
   const { resourcePath } = requestContext

@@ -48,7 +48,7 @@ describe('edlAdminAuthorizer', () => {
       const { jwtToken } = getEnvironmentConfig('test')
 
       const event = {
-        authorizationToken: `Bearer ${jwtToken}`
+        Authorization: `Bearer ${jwtToken}`
       }
 
       await expect(
@@ -68,7 +68,7 @@ describe('edlAdminAuthorizer', () => {
       const { jwtToken } = getEnvironmentConfig('test')
 
       const event = {
-        authorizationToken: `Bearer ${jwtToken}`
+        Authorization: `Bearer ${jwtToken}`
       }
 
       await expect(
