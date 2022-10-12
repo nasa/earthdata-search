@@ -1,6 +1,7 @@
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { generatePolicy } from '../util/authorizer/generatePolicy'
 import { validateToken } from '../util/authorizer/validateToken'
+import { downcaseKeys } from '../util/downcaseKeys'
 
 /**
  * Custom authorizer for API Gateway authentication
@@ -16,7 +17,8 @@ const edlAuthorizer = async (event) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const { Authorization: authorizationToken = '' } = headers
+  // const { Authorization: authorizationToken = '' } = headers
+  const { authorization: authorizationToken } = downcaseKeys(headers)
 
   // authorizationToken comes in as `Bearer asdf.qwer.hjkl` but we only need the actual token
   const tokenParts = authorizationToken.split(' ')
