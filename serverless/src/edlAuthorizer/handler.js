@@ -13,11 +13,9 @@ const edlAuthorizer = async (event) => {
     headers = {},
     methodArn
   } = event
-  console.log('🚀 ~ file: handler.js ~ line 19 ~ edlAuthorizer ~ headers', headers)
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  // const { Authorization: authorizationToken = '' } = headers
   const { authorization: authorizationToken = '' } = downcaseKeys(headers)
 
   // authorizationToken comes in as `Bearer asdf.qwer.hjkl` but we only need the actual token
@@ -25,7 +23,6 @@ const edlAuthorizer = async (event) => {
   const jwtToken = tokenParts[1]
 
   const username = await validateToken(jwtToken, earthdataEnvironment)
-  console.log('🚀 ~ file: handler.js ~ line 25 ~ edlAuthorizer ~ username', username)
 
   if (username) {
     return generatePolicy(username, jwtToken, 'Allow', methodArn)
