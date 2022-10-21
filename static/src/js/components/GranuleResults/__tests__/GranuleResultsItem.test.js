@@ -296,8 +296,6 @@ function setup(type, overrideProps) {
         id: 'granuleId',
         browseFlag: false,
         onlineAccessFlag: false,
-        // formattedTemporal is passed to GranuleResultsItem,
-        // but it is not used by GranuleResultsItem or its children
         formattedTemporal: [],
         granuleThumbnail: '/fake/path/image.jpg',
         title: 'Granule title',
