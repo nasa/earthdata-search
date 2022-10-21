@@ -77,7 +77,7 @@ export const GranuleResultsHighlights = ({
                 const {
                   id,
                   title,
-                  formattedTemporal
+                  formattedTemporal = ['Not Provided', 'Not Provided']
                 } = granule
 
                 const [

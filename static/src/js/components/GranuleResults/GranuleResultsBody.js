@@ -280,7 +280,7 @@ GranuleResultsBody.propTypes = {
       browseUrl: PropTypes.string,
       collectionConceptId: PropTypes.string,
       dayNightFlag: PropTypes.string,
-      formattedTemporal: PropTypes.arrayOf(PropTypes.string).isRequired,
+      formattedTemporal: PropTypes.arrayOf(PropTypes.string),
       granuleThumbnail: PropTypes.string,
       id: PropTypes.string.isRequired,
       links: PropTypes.arrayOf(

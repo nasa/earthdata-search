@@ -77,5 +77,21 @@ describe('GranuleResultsHighlights component', () => {
         expect(enzymeWrapper.find('.granule-results-highlights__item-title').text()).toEqual('producer_granule_id_1')
       })
     })
+
+    describe('when granules have no start time nor end time', () => {
+      test('display not provided instead of date', () => {
+        const { enzymeWrapper } = setup({
+          isLoading: false,
+          isLoaded: true,
+          granules: [{
+            // formattedTemporal is intentionally absent from the granule object
+            // in order to mimic the behavior of the app when it is run
+            title: 'producer_granule_id_1'
+          }]
+        })
+        expect(enzymeWrapper.find('.granule-results-highlights__temporal-row').at(0).text()).toEqual('StartNot Provided')
+        expect(enzymeWrapper.find('.granule-results-highlights__temporal-row').at(1).text()).toEqual('EndNot Provided')
+      });
+    });
   })
 })
