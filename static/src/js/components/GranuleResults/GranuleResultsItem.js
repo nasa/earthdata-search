@@ -88,8 +88,8 @@ const GranuleResultsItem = forwardRef(({
     isOpenSearch,
     onlineAccessFlag,
     s3Links,
-    timeEnd,
-    timeStart,
+    timeEnd = 'Not Provided',
+    timeStart = 'Not Provided',
     title
   } = granule
 
