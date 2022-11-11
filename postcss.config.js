@@ -1,5 +1,4 @@
 const autoprefixer = require('autoprefixer')
-const precss = require('precss')
 const cssnano = require('cssnano')
 
 let plugins = []
@@ -9,10 +8,9 @@ const autoprefix = autoprefixer({
 })
 
 // In development, we only want autoprefixer. In any other environment,
-// we run precss and postcss as well. The order is important here.
+// we run cssnano as well. The order is important here.
 if (process.env.NODE_ENV !== 'development') {
   plugins = [
-    precss,
     autoprefix,
     cssnano
   ]
