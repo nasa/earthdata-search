@@ -254,10 +254,32 @@ describe('GranuleResultsBody component', () => {
       .toEqual(props.onMetricsDataAccess)
   })
 
-  test('renders the correct search time', () => {
-    const { enzymeWrapper } = setup()
+  describe('search time', () => {
+    test('renders the correct search time', () => {
+      const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('.granule-results-body__search-time-value').text()).toEqual('1.1s')
+      expect(enzymeWrapper.find('.granule-results-body__search-time-value').text()).toEqual('1.1s')
+    })
+
+    test('renders a spinner when the page is loading', () => {
+      const { enzymeWrapper } = setup({}, {
+        granuleSearchResults: {
+          loadTime: undefined,
+          isLoading: true,
+          isLoaded: false
+        }
+      })
+
+      expect(enzymeWrapper.find('.granule-results-body__search-time-value').text()).toEqual('<Spinner />')
+    })
+
+    test('renders a spinner before the page has started loading', () => {
+      const { enzymeWrapper } = setup({}, {
+        granuleSearchResults: {}
+      })
+
+      expect(enzymeWrapper.find('.granule-results-body__search-time-value').text()).toEqual('<Spinner />')
+    })
   })
 
   describe('isItemLoaded', () => {

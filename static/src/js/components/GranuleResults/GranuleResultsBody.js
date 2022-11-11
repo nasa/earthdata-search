@@ -64,7 +64,7 @@ const GranuleResultsBody = ({
 
   const {
     hits: granuleHits,
-    loadTime,
+    loadTime = 0,
     isLoaded,
     isLoading,
     allIds
@@ -236,7 +236,7 @@ const GranuleResultsBody = ({
           Search Time:
           {' '}
           {
-            isLoading && !isLoaded
+            (isLoading && !isLoaded) || loadTime === 0
               ? (
                 <span className="granule-results-body__search-time-value">
                   <Spinner
