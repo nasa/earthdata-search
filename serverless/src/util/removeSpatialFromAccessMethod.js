@@ -1,5 +1,5 @@
 import xpath from 'xpath'
-import { DOMParser, XMLSerializer } from 'xmldom'
+import { DOMParser, XMLSerializer } from '@xmldom/xmldom'
 import { namespaces } from './echoForms/namespaces'
 
 /**
