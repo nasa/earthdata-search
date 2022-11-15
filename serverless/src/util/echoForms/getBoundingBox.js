@@ -1,6 +1,6 @@
 import xpath from 'xpath'
 
-import { DOMParser } from 'xmldom'
+import { DOMParser } from '@xmldom/xmldom'
 import { namespaces } from './namespaces'
 
 /**
