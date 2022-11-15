@@ -21,7 +21,7 @@ import {
   buildLayer,
   isCartesian,
   getPolygons,
-  getLines,
+  getDisplayLines,
   getPoints,
   getRectangles
 } from '../../util/map/layers'
@@ -422,7 +422,14 @@ export class GranuleGridLayerExtended extends L.GridLayer {
         }
 
         if (visibleOverlappingGranulePaths.length) {
-          pathsWithHoles.push(visibleOverlappingGranulePaths)
+          const visibleOverlappingGranuleLines = visibleOverlappingGranulePaths.filter((path) => path.line)
+          const visibleOverlappingGranuleNotLines = visibleOverlappingGranulePaths.filter((path) => !path.line)
+
+          visibleOverlappingGranuleLines.forEach((path) => pathsWithHoles.push([path]))
+
+          if (visibleOverlappingGranuleNotLines.length) {
+            pathsWithHoles.push(visibleOverlappingGranuleNotLines)
+          }
           paths = paths.concat(visibleOverlappingGranulePaths)
         }
       }
@@ -736,7 +743,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     })
 
     this.addIntersections(result, getRectangles(granule), tileBounds, 'poly', 'cartesian')
-    this.addIntersections(result, getLines(granule), tileBounds, 'line', interpolation)
+    this.addIntersections(result, getDisplayLines(granule), tileBounds, 'line', interpolation)
 
     Array.from(getPoints(granule)).forEach((point) => {
       if (tileBounds.contains(point)) {

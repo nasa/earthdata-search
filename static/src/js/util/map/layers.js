@@ -52,6 +52,44 @@ export function getPolygons(metadata = {}) {
   return polygons
 }
 
+export function fixDisplayLines(lines) {
+  if (!Array.isArray(lines)) return lines
+  const fixedLines = []
+  lines.forEach((line) => {
+    let points = []
+    const firstPoint = line[0]
+    points.push(firstPoint)
+    let { lat: prevLat, lng: prevLng } = firstPoint
+    for (let i = 1; i < line.length; i += 1) {
+      const point = line[i]
+      const { lat, lng } = point
+      if (lng > 170 && prevLng < -170) {
+        // calculate intersect with antimeridian using y = mx + b formula
+        const m = (lat - prevLat) / (lng - 360 - prevLng) // calculate slope or m
+        const x = -180 - prevLng // distance from previous point to antimeridian
+        const y = m * x + prevLat // prevLat is equal to b in formula
+        points.push(L.latLng({ lat: y, lng: -180 }))
+        fixedLines.push(points)
+        points = [L.latLng({ lat: y, lng: 180 }), point]
+      } else if (lng < -170 && prevLng > 170) {
+        const m = (lat - prevLat) / (lng + 360 - prevLng) // calculate slope or m
+        const x = 180 - prevLng // distance from previous point to antimeridian
+        const y = m * x + prevLat
+        points.push(L.latLng({ lat: y, lng: 180 }))
+        fixedLines.push(points)
+        points = [L.latLng({ lat: y, lng: -180 }), point]
+      } else {
+        points.push(point)
+      }
+      prevLat = lat
+      prevLng = lng
+    }
+    if (points.length > 0) fixedLines.push(points)
+    return fixedLines
+  })
+  return fixedLines
+}
+
 // Pull lines out of metadata
 export function getLines(metadata = {}) {
   let lines = []
@@ -59,6 +97,12 @@ export function getLines(metadata = {}) {
     lines = metadata.lines.map(parseSpatial)
   }
   return lines
+}
+
+export function getDisplayLines(metadata = {}) {
+  const lines = getLines(metadata)
+  const fixedLines = fixDisplayLines(lines)
+  return fixedLines
 }
 
 // Pull rectangles out of metadata
@@ -100,7 +144,7 @@ export const buildLayer = (options, metadata) => {
   const layer = new L.FeatureGroup()
   const points = getPoints(metadata)
   const polygons = getPolygons(metadata)
-  const lines = getLines(metadata)
+  const lines = getDisplayLines(metadata)
   const rectangles = getRectangles(metadata)
   const cartesian = isCartesian(metadata)
 

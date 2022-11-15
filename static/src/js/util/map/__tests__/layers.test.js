@@ -4,6 +4,7 @@ import '../sphericalPolygon'
 
 import {
   buildLayer,
+  fixDisplayLines,
   getLines,
   getPoints,
   getPolygons,
@@ -176,6 +177,43 @@ describe('layers util', () => {
 
     test('returns an empty array if no lines exist', () => {
       expect(getLines()).toEqual([])
+    })
+  })
+
+  describe('fixDisplayLines', () => {
+    test('returns lines that cross antimeridian fixed for spatial display', () => {
+      const lines = [
+        [
+          { lat: -9.5883198, lng: -178.8294983 },
+          { lat: -13.5291004, lng: -179.6929169 },
+          { lat: -13.82617, lng: -179.9929199 },
+          { lat: -14.6191406, lng: 179.0206604 },
+          { lat: -14.6336308, lng: 179.0071869 },
+          { lat: -14.6506786, lng: 178.9971924 },
+          { lat: -9.5883198, lng: -178.8294983 }
+        ]
+      ];
+
+      const fixedLines = [
+        [
+          { lat: -9.5883198, lng: -178.8294983 },
+          { lat: -13.5291004, lng: -179.6929169 },
+          { lat: -13.82617, lng: -179.9929199 },
+          { lat: -13.83186160484635, lng: -180 }
+        ],
+        [
+          { lat: -13.83186160484635, lng: 180 },
+          { lat: -14.6191406, lng: 179.0206604 },
+          { lat: -14.6336308, lng: 179.0071869 },
+          { lat: -14.6506786, lng: 178.9971924 },
+          { lat: -12.314806812874746, lng: 180 }
+        ],
+        [
+          { lat: -12.314806812874746, lng: -180},
+          { lat: -9.5883198, lng: -178.8294983 }
+        ]
+      ];
+      expect(fixDisplayLines(lines)).toEqual(fixedLines)
     })
   })
 
