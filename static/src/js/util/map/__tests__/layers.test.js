@@ -4,7 +4,6 @@ import '../sphericalPolygon'
 
 import {
   buildLayer,
-  fixDisplayLines,
   getLines,
   getPoints,
   getPolygons,
