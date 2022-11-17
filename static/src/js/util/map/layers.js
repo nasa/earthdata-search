@@ -58,7 +58,49 @@ export function getLines(metadata = {}) {
   if ((metadata._lines == null) && (metadata.lines != null)) {
     lines = metadata.lines.map(parseSpatial)
   }
-  return lines
+
+  const displayLines = []
+
+  lines.forEach((line) => {
+    let points = []
+
+    const firstPoint = line[0]
+    points.push(firstPoint)
+    let { lat: prevLat, lng: prevLng } = firstPoint
+
+    for (let i = 1; i < line.length; i += 1) {
+      const point = line[i]
+      const { lat, lng } = point
+
+      if (lng > 170 && prevLng < -170) {
+        // calculate intersect with antimeridian using y = mx + b formula
+        const m = (lat - prevLat) / (lng - 360 - prevLng) // calculate slope or m
+        const x = -180 - prevLng // distance from previous point to antimeridian
+        const y = m * x + prevLat // prevLat is equal to b in formula
+
+        points.push(L.latLng({ lat: y, lng: -180 }))
+        displayLines.push(points)
+        points = [L.latLng({ lat: y, lng: 180 }), point]
+      } else if (lng < -170 && prevLng > 170) {
+        const m = (lat - prevLat) / (lng + 360 - prevLng) // calculate slope or m
+        const x = 180 - prevLng // distance from previous point to antimeridian
+        const y = m * x + prevLat
+
+        points.push(L.latLng({ lat: y, lng: 180 }))
+        displayLines.push(points)
+        points = [L.latLng({ lat: y, lng: -180 }), point]
+      } else {
+        points.push(point)
+      }
+
+      prevLat = lat
+      prevLng = lng
+    }
+
+    if (points.length > 0) displayLines.push(points)
+  })
+
+  return displayLines
 }
 
 // Pull rectangles out of metadata
