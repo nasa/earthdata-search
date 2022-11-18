@@ -17,7 +17,8 @@ const ousGranuleSearch = async (event) => {
     'granules',
     'format',
     'temporal',
-    'variables'
+    'variables',
+    'page_size'
   ]
 
   const nonIndexedKeys = [

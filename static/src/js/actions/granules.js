@@ -391,6 +391,9 @@ export const fetchOpendapLinks = (retrievalCollectionData) => (dispatch, getStat
 
   const requestObject = new OusGranuleRequest(authToken, earthdataEnvironment)
 
+  // The number of granules to request per page from CMR
+  const { granuleLinksPageSize } = getApplicationConfig()
+
   const {
     id,
     access_method: accessMethod,
@@ -416,7 +419,8 @@ export const fetchOpendapLinks = (retrievalCollectionData) => (dispatch, getStat
   const ousPayload = {
     format,
     variables,
-    echo_collection_id: collectionId
+    echo_collection_id: collectionId,
+    page_size: granuleLinksPageSize
   }
 
   // If conceptId is truthy, send those granules explictly.
