@@ -1548,6 +1548,12 @@ describe('fetchOpendapLinks', () => {
   })
 
   test('calls lambda to get links from opendap', async () => {
+    const granuleLinksPageSize = '1'
+
+    jest.spyOn(applicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      granuleLinksPageSize: '1'
+    }))
+
     nock(/localhost/)
       .post(/ous/, (body) => {
         const { params } = body
@@ -1559,7 +1565,8 @@ describe('fetchOpendapLinks', () => {
           bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
           echo_collection_id: 'C10000005-EDSC',
           format: 'nc4',
-          variables: ['V1000004-EDSC']
+          variables: ['V1000004-EDSC'],
+          page_size: granuleLinksPageSize
         })
       })
       .reply(200, {
@@ -1588,7 +1595,8 @@ describe('fetchOpendapLinks', () => {
         echo_collection_id: 'C10000005-EDSC',
         bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
       },
-      granule_count: 3
+      granule_count: 3,
+      page_size: granuleLinksPageSize
     }
 
     await store.dispatch(fetchOpendapLinks(params))
@@ -1609,6 +1617,12 @@ describe('fetchOpendapLinks', () => {
   })
 
   test('calls lambda to get links from opendap with excluded granules', async () => {
+    const granuleLinksPageSize = '1'
+
+    jest.spyOn(applicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      granuleLinksPageSize: '1'
+    }))
+
     nock(/localhost/)
       .post(/ous/, (body) => {
         const { params } = body
@@ -1622,7 +1636,8 @@ describe('fetchOpendapLinks', () => {
           exclude_granules: true,
           granules: ['G10000404-EDSC'],
           format: 'nc4',
-          variables: ['V1000004-EDSC']
+          variables: ['V1000004-EDSC'],
+          page_size: granuleLinksPageSize
         })
       })
       .reply(200, {
@@ -1654,7 +1669,8 @@ describe('fetchOpendapLinks', () => {
           concept_id: ['G10000404-EDSC']
         }
       },
-      granule_count: 3
+      granule_count: 3,
+      page_size: granuleLinksPageSize
     }
 
     await store.dispatch(fetchOpendapLinks(params))
@@ -1675,6 +1691,12 @@ describe('fetchOpendapLinks', () => {
   })
 
   test('calls lambda to get links from opendap when using additive model', async () => {
+    const granuleLinksPageSize = '1'
+
+    jest.spyOn(applicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      granuleLinksPageSize: '1'
+    }))
+
     nock(/localhost/)
       .post(/ous/, (body) => {
         const { params } = body
@@ -1687,7 +1709,8 @@ describe('fetchOpendapLinks', () => {
           echo_collection_id: 'C10000005-EDSC',
           granules: ['G10000003-EDSC'],
           format: 'nc4',
-          variables: ['V1000004-EDSC']
+          variables: ['V1000004-EDSC'],
+          page_size: granuleLinksPageSize
         })
       })
       .reply(200, {
@@ -1715,7 +1738,8 @@ describe('fetchOpendapLinks', () => {
         echo_collection_id: 'C10000005-EDSC',
         bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
       },
-      granule_count: 1
+      granule_count: 1,
+      page_size: granuleLinksPageSize
     }
 
     await store.dispatch(fetchOpendapLinks(params))
@@ -1734,6 +1758,12 @@ describe('fetchOpendapLinks', () => {
   })
 
   test('calls lambda to get links from opendap without spatial params added', async () => {
+    const granuleLinksPageSize = '1'
+
+    jest.spyOn(applicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      granuleLinksPageSize: '1'
+    }))
+
     nock(/localhost/)
       .post(/ous/, (body) => {
         const { params } = body
@@ -1744,7 +1774,8 @@ describe('fetchOpendapLinks', () => {
         return JSON.stringify(params) === JSON.stringify({
           echo_collection_id: 'C10000005-EDSC',
           format: 'nc4',
-          variables: ['V1000004-EDSC']
+          variables: ['V1000004-EDSC'],
+          page_size: granuleLinksPageSize
         })
       })
       .reply(200, {
@@ -1772,7 +1803,8 @@ describe('fetchOpendapLinks', () => {
       granule_params: {
         echo_collection_id: 'C10000005-EDSC'
       },
-      granule_count: 3
+      granule_count: 3,
+      page_size: granuleLinksPageSize
     }
 
     await store.dispatch(fetchOpendapLinks(params))
