@@ -1565,8 +1565,8 @@ describe('fetchOpendapLinks', () => {
           bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
           echo_collection_id: 'C10000005-EDSC',
           format: 'nc4',
-          variables: ['V1000004-EDSC'],
-          page_size: granuleLinksPageSize
+          page_size: granuleLinksPageSize,
+          variables: ['V1000004-EDSC']
         })
       })
       .reply(200, {
@@ -1636,8 +1636,8 @@ describe('fetchOpendapLinks', () => {
           exclude_granules: true,
           granules: ['G10000404-EDSC'],
           format: 'nc4',
-          variables: ['V1000004-EDSC'],
-          page_size: granuleLinksPageSize
+          page_size: granuleLinksPageSize,
+          variables: ['V1000004-EDSC']
         })
       })
       .reply(200, {
@@ -1709,8 +1709,8 @@ describe('fetchOpendapLinks', () => {
           echo_collection_id: 'C10000005-EDSC',
           granules: ['G10000003-EDSC'],
           format: 'nc4',
-          variables: ['V1000004-EDSC'],
-          page_size: granuleLinksPageSize
+          page_size: granuleLinksPageSize,
+          variables: ['V1000004-EDSC']
         })
       })
       .reply(200, {
@@ -1774,8 +1774,8 @@ describe('fetchOpendapLinks', () => {
         return JSON.stringify(params) === JSON.stringify({
           echo_collection_id: 'C10000005-EDSC',
           format: 'nc4',
-          variables: ['V1000004-EDSC'],
-          page_size: granuleLinksPageSize
+          page_size: granuleLinksPageSize,
+          variables: ['V1000004-EDSC']
         })
       })
       .reply(200, {
