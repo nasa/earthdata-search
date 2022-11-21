@@ -381,7 +381,7 @@ export const fetchBrowseLinks = (retrievalCollectionData) => async (dispatch, ge
  * Fetch all relevant links from CMR Service Bridge (OPeNDAP) to the granules that are part of the provided collection
  * @param {Object} retrievalCollectionData Retreival Collection response from the database
  */
-export const fetchOpendapLinks = (retrievalCollectionData) => (dispatch, getState) => {
+export const fetchOpendapLinks = (retrievalCollectionData) => async (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -416,7 +416,8 @@ export const fetchOpendapLinks = (retrievalCollectionData) => (dispatch, getStat
   const ousPayload = {
     format,
     variables,
-    echo_collection_id: collectionId
+    echo_collection_id: collectionId,
+    page_size: granuleLinksPageSize
   }
 
   // If conceptId is truthy, send those granules explictly.
@@ -455,10 +456,24 @@ export const fetchOpendapLinks = (retrievalCollectionData) => (dispatch, getStat
     ousPayload.granules = excludedGranuleIds
   }
 
-  const response = requestObject.search(ousPayload)
-    .then((response) => {
+  let response
+  let finished = false
+  let currentPage = 1
+
+  try {
+    while (!finished) {
+      // When using POST on this endpoint, CMR requires the paging parameters to be strings
+      ousPayload.page_num = `${currentPage}`
+
+      // eslint-disable-next-line no-await-in-loop
+      response = await requestObject.search(ousPayload)
       const { data } = response
       const { items = [] } = data
+
+      if (items.length === 0) {
+        finished = true
+        break
+      }
 
       dispatch(updateGranuleLinks({
         id,
@@ -466,15 +481,17 @@ export const fetchOpendapLinks = (retrievalCollectionData) => (dispatch, getStat
           download: items
         }
       }))
-    })
-    .catch((error) => {
-      dispatch(actions.handleError({
-        error,
-        action: 'fetchOpendapLinks',
-        resource: 'OPeNDAP links',
-        requestObject
-      }))
-    })
+
+      currentPage += 1
+    }
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'fetchOpendapLinks',
+      resource: 'OPeNDAP links',
+      requestObject
+    }))
+  }
 
   return response
 }
