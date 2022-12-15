@@ -29,6 +29,7 @@ export const emptyDecodedResult = {
       byId: {},
       pageNum: 1,
       keyword: undefined,
+      onlyEosdisCollections: undefined,
       overrideTemporal: {},
       spatial: {
         boundingBox: undefined,

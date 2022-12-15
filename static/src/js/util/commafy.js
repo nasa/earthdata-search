@@ -1,4 +1,4 @@
-const commaRegex = new RegExp(/\B(?=(\d{3})+(?!\d))/g)
+const commaRegex = /\B(?=(\d{3})+(?!\d))/g
 
 /**
  * Returns a commafied number.

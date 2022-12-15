@@ -13,6 +13,15 @@ export default class ProjectRequest extends Request {
     }
   }
 
+  adminFetch(projectId) {
+    return this.get(`admin/projects/${projectId}`)
+  }
+
+  adminAll(params) {
+    this.authenticated = true
+    return this.get('admin/projects', params)
+  }
+
   all() {
     this.authenticated = true
     return this.get('projects')

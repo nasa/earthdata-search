@@ -1,0 +1,33 @@
+.admin-project-details {
+  &__metadata-display {
+    width: 100%;
+    display: flex;
+
+    &--width-auto {
+      justify-content: space-between;
+    }
+  }
+
+  &__metadata-display-item {
+    margin-bottom: 0;
+    margin-right: 2rem;
+  }
+
+  &__metadata-display-heading {
+    display: block;
+    font-size: 0.75rem;
+    font-style: italic;
+    color: $color__black--500;
+  }
+
+  &__metadata-display-content {
+    font-size: 1rem;
+    color: $color__black--700;
+    word-break: break-all;
+
+    &__json {
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+  }
+}

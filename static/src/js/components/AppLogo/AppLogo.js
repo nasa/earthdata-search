@@ -57,16 +57,18 @@ const AppLogo = ({
 
   return (
     <nav className="app-logo">
-      <h1 className="app-logo__site-logo">
-        <a
-          className="app-logo__site-meatball"
-          href="/"
-          title="Earthdata Search Home"
-        >
-          <span className="visually-hidden">
-            Earthdata Search Home
-          </span>
-        </a>
+      <span className="app-logo__site-logo">
+        <h1 className="mb-0">
+          <a
+            className="app-logo__site-meatball"
+            href="/"
+            title="Earthdata Search Home"
+          >
+            <span className="visually-hidden">
+              Earthdata Search
+            </span>
+          </a>
+        </h1>
         {portalLogo()}
         <a
           className="app-logo__site-name"
@@ -75,7 +77,7 @@ const AppLogo = ({
           <span className="app-logo__site-name-ent app-logo__site-name-ent--e">{org}</span>
           <span className="app-logo__site-name-ent app-logo__site-name-ent--s">{title}</span>
         </a>
-      </h1>
+      </span>
       <Switch>
         <Route path="/admin">
           <PortalLinkContainer

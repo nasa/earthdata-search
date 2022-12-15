@@ -51,6 +51,11 @@ describe('updateStore', () => {
     }
 
     const store = mockStore({
+      preferences: {
+        preferences: {
+          collectionSort: 'default'
+        }
+      },
       router: {
         location: {
           pathname: '/search'
@@ -62,7 +67,13 @@ describe('updateStore', () => {
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      payload: params,
+      payload: {
+        ...params,
+        query: {
+          ...params.query,
+          collectionSortPreference: 'default'
+        }
+      },
       type: RESTORE_FROM_URL
     })
   })
@@ -103,6 +114,11 @@ describe('updateStore', () => {
       jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
 
       const store = mockStore({
+        preferences: {
+          preferences: {
+            collectionSort: 'default'
+          }
+        },
         router: {
           location: {
             pathname: '/projects'
@@ -113,7 +129,13 @@ describe('updateStore', () => {
 
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
-        payload: params,
+        payload: {
+          ...params,
+          query: {
+            ...params.query,
+            collectionSortPreference: 'default'
+          }
+        },
         type: RESTORE_FROM_URL
       })
     })

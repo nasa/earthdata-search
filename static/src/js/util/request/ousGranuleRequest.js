@@ -22,6 +22,8 @@ export default class OusGranuleRequest extends CmrRequest {
       'exclude_granules',
       'granules',
       'format',
+      'page_num',
+      'page_size',
       'temporal',
       'variables'
     ]

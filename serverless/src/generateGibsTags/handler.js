@@ -86,7 +86,7 @@ const generateGibsTags = async (event, context) => {
           headers: {
             'Client-Id': getClientId().background,
             'Content-Type': 'application/json',
-            'Echo-Token': cmrToken
+            Authorization: `Bearer ${cmrToken}`
           }
         })
 

@@ -23,7 +23,7 @@ const initialFeatureState = {
 
 const initialViewAllState = {}
 
-export const cmrFacetsReducer = (state = initialCmrState, action) => {
+export const cmrFacetsReducer = (state = initialCmrState, action = {}) => {
   const { payload, type } = action
 
   switch (type) {
@@ -76,7 +76,7 @@ export const cmrFacetsReducer = (state = initialCmrState, action) => {
   }
 }
 
-export const featureFacetsReducer = (state = initialFeatureState, action) => {
+export const featureFacetsReducer = (state = initialFeatureState, action = {}) => {
   switch (action.type) {
     case UPDATE_SELECTED_FEATURE_FACET: {
       return {
@@ -100,7 +100,7 @@ export const featureFacetsReducer = (state = initialFeatureState, action) => {
   }
 }
 
-export const viewAllFacetsReducer = (state = initialViewAllState, action) => {
+export const viewAllFacetsReducer = (state = initialViewAllState, action = {}) => {
   switch (action.type) {
     case UPDATE_SELECTED_VIEW_ALL_FACET: {
       return {

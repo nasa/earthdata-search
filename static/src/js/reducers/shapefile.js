@@ -16,7 +16,7 @@ const initialState = {
   shapefileSize: undefined
 }
 
-const shapefileReducer = (state = initialState, action) => {
+const shapefileReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case CLEAR_SHAPEFILE: {
       return {

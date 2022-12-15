@@ -27,6 +27,8 @@ import pointBodyEdited from './__mocks__/point_collections_edited.body.json'
 import polygonBody from './__mocks__/polygon_collections.body.json'
 import simpleShapefileBody from './__mocks__/simple_shapefile_collections.body.json'
 import tooManyPointsShapefileBody from './__mocks__/too_many_points_shapefile_collections.body.json'
+import arcticShapefileBody from './__mocks__/arctic_shapefile_collections.body.json'
+import antarcticShapefileBody from './__mocks__/antarctic_shapefile_collections.body.json'
 
 describe('Map interactions', () => {
   describe('When drawing point spatial', () => {
@@ -42,7 +44,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&point%5B%5D=42.1875%2C-2.40647&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -84,7 +86,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&point%5B%5D=42.1875%2C-2.40647&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -123,7 +125,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&point%5B%5D=42.1875%2C-2.40647&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -166,7 +168,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&point%5B%5D=42.1875%2C-2.40647&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           },
           {
             alias: 'pointEditedAlias',
@@ -175,7 +177,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&point%5B%5D=42%2C-2&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42,-2&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -243,7 +245,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5157'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&circle%5B%5D=42.1875%2C2.2329%2C156326&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=42.1875,2.2329,156326&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -299,7 +301,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5157'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&circle%5B%5D=42.1875%2C2.2329%2C156326&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=42.1875,2.2329,156326&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -352,7 +354,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5157'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&circle%5B%5D=42.1875%2C2.2329%2C156326&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=42.1875,2.2329,156326&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -400,7 +402,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&bounding_box%5B%5D=42.1875%2C-16.46517%2C56.25%2C-2.40647&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=42.1875,-16.46517,56.25,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -445,7 +447,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&bounding_box%5B%5D=42.1875%2C-16.46517%2C56.25%2C-2.40647&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=42.1875,-16.46517,56.25,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -487,7 +489,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&bounding_box%5B%5D=42.1875%2C-16.46517%2C56.25%2C-2.40647&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=42.1875,-16.46517,56.25,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -535,7 +537,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5160'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&polygon%5B%5D=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,-2.40647,42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -582,7 +584,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5160'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&polygon%5B%5D=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,-2.40647,42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -630,7 +632,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5160'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&polygon%5B%5D=42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647%2C42.1875%2C-16.46517&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647,42.1875,-16.46517&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -702,7 +704,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5197'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&line%5B%5D=31%2C-15%2C36%2C-17%2C41%2C-15&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&line[]=31,-15,36,-17,41,-15&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -780,7 +782,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5197'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&circle%5B%5D=35%2C-5%2C50000&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=35,-5,50000&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -858,7 +860,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5197'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&point%5B%5D=35%2C0&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=35,0&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -936,7 +938,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5197'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20&polygon%5B%5D=42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647%2C42.1875%2C-16.46517&polygon%5B%5D=58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647%2C58.25%2C-14.46517&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[spatial][or]=true&page_num=1&page_size=20&polygon[]=42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647,42.1875,-16.46517&polygon[]=58.25,-14.46517,58.25,0.40647,44.1875,0.40647,58.25,-14.46517&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -1021,7 +1023,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5479'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&polygon%5B%5D=-114.04999%2C36.95777%2C-114.0506%2C37.0004%2C-114.04826%2C41.99381%2C-119.99917%2C41.99454%2C-120.00101%2C38.99957%2C-118.71431%2C38.10218%2C-117.50012%2C37.22038%2C-116.0936%2C36.15581%2C-114.63667%2C35.00881%2C-114.63689%2C35.02837%2C-114.60362%2C35.06423%2C-114.64435%2C35.1059%2C-114.57852%2C35.12875%2C-114.56924%2C35.18348%2C-114.60431%2C35.35358%2C-114.67764%2C35.48974%2C-114.65431%2C35.59759%2C-114.68941%2C35.65141%2C-114.68321%2C35.68939%2C-114.70531%2C35.71159%2C-114.69571%2C35.75599%2C-114.71211%2C35.80618%2C-114.67742%2C35.87473%2C-114.73116%2C35.94392%2C-114.74376%2C35.9851%2C-114.73043%2C36.03132%2C-114.75562%2C36.08717%2C-114.57203%2C36.15161%2C-114.51172%2C36.15096%2C-114.50217%2C36.1288%2C-114.45837%2C36.13859%2C-114.44661%2C36.12597%2C-114.40547%2C36.14737%2C-114.37211%2C36.14311%2C-114.30843%2C36.08244%2C-114.31403%2C36.05817%2C-114.25265%2C36.02019%2C-114.14819%2C36.02801%2C-114.11416%2C36.09698%2C-114.12086%2C36.1146%2C-114.09987%2C36.12165%2C-114.04684%2C36.19407%2C-114.04999%2C36.95777&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=-114.04999,36.95777,-114.0506,37.0004,-114.04826,41.99381,-119.99917,41.99454,-120.00101,38.99957,-118.71431,38.10218,-117.50012,37.22038,-116.0936,36.15581,-114.63667,35.00881,-114.63689,35.02837,-114.60362,35.06423,-114.64435,35.1059,-114.57852,35.12875,-114.56924,35.18348,-114.60431,35.35358,-114.67764,35.48974,-114.65431,35.59759,-114.68941,35.65141,-114.68321,35.68939,-114.70531,35.71159,-114.69571,35.75599,-114.71211,35.80618,-114.67742,35.87473,-114.73116,35.94392,-114.74376,35.9851,-114.73043,36.03132,-114.75562,36.08717,-114.57203,36.15161,-114.51172,36.15096,-114.50217,36.1288,-114.45837,36.13859,-114.44661,36.12597,-114.40547,36.14737,-114.37211,36.14311,-114.30843,36.08244,-114.31403,36.05817,-114.25265,36.02019,-114.14819,36.02801,-114.11416,36.09698,-114.12086,36.1146,-114.09987,36.12165,-114.04684,36.19407,-114.04999,36.95777&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -1086,6 +1088,150 @@ describe('Map interactions', () => {
         // populates the spatial display field
         getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Shape File')
         getByTestId('spatial-display_shapefile-name').should('have.text', 'too_many_points.geojson')
+        getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
+      })
+    })
+
+    describe('When the shapefile has only arctic latitudes', () => {
+      it('renders correctly', () => {
+        const aliases = interceptUnauthenticatedCollections(
+          commonBody,
+          commonHeaders,
+          [{
+            alias: 'polygonAlias',
+            body: arcticShapefileBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '5479'
+            },
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,76.46517,56.25,76.46517,42.1875,82.40647,42.1875,76.46517&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+          }]
+        )
+
+        cy.fixture('shapefiles/arctic.geojson').then((fileContent) => {
+          cy.intercept(
+            'POST',
+            '**/convert',
+            {
+              body: fileContent,
+              headers: { 'content-type': 'application/json; charset=utf-8' }
+            }
+          )
+        }).as('shapefileConvertRequest')
+
+        cy.intercept(
+          'POST',
+          '**/shapefiles',
+          {
+            body: { shapefile_id: '1' },
+            headers: { 'content-type': 'application/json; charset=utf-8' }
+          }
+        ).as('shapefilesApiRequest')
+
+        cy.visit('/')
+
+        // Upload the shapefile
+        getByTestId('shapefile-dropzone').attachFile(
+          {
+            filePath: 'shapefiles/arctic.geojson',
+            mimeType: 'application/json',
+            encoding: 'utf-8'
+          },
+          { subjectType: 'drag-n-drop' }
+        )
+
+        cy.wait('@shapefileConvertRequest')
+        cy.wait('@shapefilesApiRequest')
+        // Wait for the large shape to be drawn
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(2000)
+
+        aliases.forEach((alias) => {
+          cy.wait(`@${alias}`)
+        })
+
+        // updates the URL
+        cy.url().should('include', '?polygon[0]=42.1875%2C76.46517%2C56.25%2C76.46517%2C42.1875%2C82.40647%2C42.1875%2C76.46517&sf=1&sfs[0]=0&lat=90&projection=EPSG%3A3413&zoom=0')
+
+        // draws a polygon on the map
+        cy.get('.leaflet-interactive').first().should('have.attr', 'd', 'M800 438L880 442L876 398L800 438z')
+        cy.get('.leaflet-interactive').last().should('have.attr', 'd', 'M880 442L876 398L800 438L880 442z')
+
+        // populates the spatial display field
+        getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Shape File')
+        getByTestId('spatial-display_shapefile-name').should('have.text', 'arctic.geojson')
+        getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
+      })
+    })
+
+    describe('When the shapefile has only antarctic latitudes', () => {
+      it('renders correctly', () => {
+        const aliases = interceptUnauthenticatedCollections(
+          commonBody,
+          commonHeaders,
+          [{
+            alias: 'polygonAlias',
+            body: antarcticShapefileBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '5479'
+            },
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,-76.46517,42.1875,-82.40647,56.25,-76.46517,42.1875,-76.46517&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+          }]
+        )
+
+        cy.fixture('shapefiles/antarctic.geojson').then((fileContent) => {
+          cy.intercept(
+            'POST',
+            '**/convert',
+            {
+              body: fileContent,
+              headers: { 'content-type': 'application/json; charset=utf-8' }
+            }
+          )
+        }).as('shapefileConvertRequest')
+
+        cy.intercept(
+          'POST',
+          '**/shapefiles',
+          {
+            body: { shapefile_id: '1' },
+            headers: { 'content-type': 'application/json; charset=utf-8' }
+          }
+        ).as('shapefilesApiRequest')
+
+        cy.visit('/')
+
+        // Upload the shapefile
+        getByTestId('shapefile-dropzone').attachFile(
+          {
+            filePath: 'shapefiles/antarctic.geojson',
+            mimeType: 'application/json',
+            encoding: 'utf-8'
+          },
+          { subjectType: 'drag-n-drop' }
+        )
+
+        cy.wait('@shapefileConvertRequest')
+        cy.wait('@shapefilesApiRequest')
+        // Wait for the large shape to be drawn
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(2000)
+
+        aliases.forEach((alias) => {
+          cy.wait(`@${alias}`)
+        })
+
+        // updates the URL
+        cy.url().should('include', '?polygon[0]=42.1875%2C-76.46517%2C42.1875%2C-82.40647%2C56.25%2C-76.46517%2C42.1875%2C-76.46517&sf=1&sfs[0]=0&lat=-90&projection=EPSG%3A3031&zoom=0')
+
+        // draws a polygon on the map
+        cy.get('.leaflet-interactive').first().should('have.attr', 'd', 'M768 358L821 299L850 333L768 358z')
+        cy.get('.leaflet-interactive').last().should('have.attr', 'd', 'M821 299L768 358L850 333L821 299z')
+
+        // populates the spatial display field
+        getByTestId('filter-stack__spatial').get('.filter-stack-item__secondary-title').should('have.text', 'Shape File')
+        getByTestId('spatial-display_shapefile-name').should('have.text', 'antarctic.geojson')
         getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
       })
     })
@@ -1465,7 +1611,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '1'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&keyword=C1214470488-ASF%2A&page_num=1&page_size=20&polygon%5B%5D=42.1875%2C-2.40647%2C42.1875%2C-9.43582%2C49.21875%2C-9.43582%2C42.1875%2C-2.40647&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=C1214470488-ASF*&page_num=1&page_size=20&polygon[]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }],
           false
         )
@@ -1475,7 +1621,7 @@ describe('Map interactions', () => {
           url: '**/search/granules.json'
         },
         (req) => {
-          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&polygon%5B%5D=42.1875%2C-2.40647%2C42.1875%2C-9.43582%2C49.21875%2C-9.43582%2C42.1875%2C-2.40647&sort_key=-start_date')
+          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&polygon[]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&sort_key=-start_date')
 
           req.alias = 'granulesRequest'
           req.reply({
@@ -1489,7 +1635,7 @@ describe('Map interactions', () => {
           url: '**/search/granules/timeline'
         },
         (req) => {
-          expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C1214470488-ASF')
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
           req.reply({
             body: cmrGranulesTimelineBody,
@@ -1517,7 +1663,7 @@ describe('Map interactions', () => {
           body: { feed: { entry: [] } }
         })
 
-        cy.visit(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875%2C-2.40647%2C42.1875%2C-9.43582%2C49.21875%2C-9.43582%2C42.1875%2C-2.40647&tl=1622520000!3!!`)
+        cy.visit(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!`)
 
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)
@@ -1583,7 +1729,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '1'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&keyword=C1972468359-SCIOPS%2A&page_num=1&page_size=20&polygon%5B%5D=42.1875%2C-2.40647%2C42.1875%2C-9.43582%2C49.21875%2C-9.43582%2C42.1875%2C-2.40647&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=C1972468359-SCIOPS*&page_num=1&page_size=20&polygon[]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }],
           false
         )
@@ -1618,7 +1764,7 @@ describe('Map interactions', () => {
           url: '**/search/granules/timeline'
         },
         (req) => {
-          expect(req.body).to.eq('end_date=2023-12-01T00%3A00%3A00.000Z&interval=day&start_date=2018-12-01T00%3A00%3A00.000Z&concept_id%5B%5D=C1972468359-SCIOPS')
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1972468359-SCIOPS')
 
           req.reply({
             body: opensearchGranulesTimelineBody,
@@ -1646,7 +1792,7 @@ describe('Map interactions', () => {
           body: { feed: { entry: [] } }
         })
 
-        cy.visit(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875%2C-2.40647%2C42.1875%2C-9.43582%2C49.21875%2C-9.43582%2C42.1875%2C-2.40647&tl=1622520000!3!!`)
+        cy.visit(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!`)
 
         aliases.forEach((alias) => {
           cy.wait(`@${alias}`)

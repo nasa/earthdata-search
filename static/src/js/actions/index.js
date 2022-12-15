@@ -8,6 +8,13 @@ import {
   updateAdminRetrievalsPageNum
 } from './admin/retrievals'
 import {
+  adminViewProject,
+  fetchAdminProjects,
+  fetchAdminProject,
+  updateAdminProjectsSortKey,
+  updateAdminProjectsPageNum
+} from './admin/projects'
+import {
   updateAdvancedSearch
 } from './advancedSearch'
 import {
@@ -19,7 +26,7 @@ import {
 import {
   changeFocusedCollection,
   getFocusedCollection,
-  getCollectionSubscriptions,
+  getGranuleSubscriptions,
   updateFocusedCollection,
   viewCollectionGranules,
   viewCollectionDetails
@@ -80,6 +87,7 @@ import {
   toggleChunkedOrderModal,
   toggleDeprecatedParameterModal,
   toggleDrawingNewLayer,
+  toggleEditSubscriptionModal,
   toggleFacetsModal,
   toggleOverrideTemporalModal,
   toggleRelatedUrlsModal,
@@ -179,8 +187,10 @@ import {
   getSubscriptions,
   deleteSubscription,
   deleteCollectionSubscription,
+  removeSubscriptionDisabledFields,
   updateSubscription,
-  updateCollectionSubscription
+  updateSubscriptionDisabledFields,
+  updateGranuleSubscription
 } from './subscriptions'
 import { setUserFromJwt } from './user'
 import { exportSearch } from './exportSearch'
@@ -192,6 +202,7 @@ const actions = {
   addGranuleToProjectCollection,
   addProjectCollection,
   adminIsAuthorized,
+  adminViewProject,
   adminViewRetrieval,
   applyGranuleFilters,
   applyViewAllFacets,
@@ -213,9 +224,9 @@ const actions = {
   changeViewAllFacet,
   clearAutocompleteSelected,
   clearAutocompleteSuggestions,
+  clearFilters,
   clearFocusedCollectionGranuleFilters,
   clearGranuleFilters,
-  clearFilters,
   clearShapefile,
   collectionRelevancyMetrics,
   createSubscription,
@@ -232,18 +243,20 @@ const actions = {
   fetchAutocomplete,
   fetchContactInfo,
   fetchDataQualitySummaries,
+  fetchAdminProject,
+  fetchAdminProjects,
   fetchProviders,
   fetchRetrieval,
   fetchRetrievalCollection,
-  fetchRetrievalCollectionGranuleLinks,
   fetchRetrievalCollectionGranuleBrowseLinks,
+  fetchRetrievalCollectionGranuleLinks,
   fetchRetrievalHistory,
   fetchSavedProjects,
   fetchShapefile,
   getCollections,
   getFocusedCollection,
-  getCollectionSubscriptions,
   getFocusedGranule,
+  getGranuleSubscriptions,
   getProjectCollections,
   getProjectGranules,
   getRegions,
@@ -264,6 +277,7 @@ const actions = {
   removeError,
   removeGranuleFromProjectCollection,
   removeSpatialFilter,
+  removeSubscriptionDisabledFields,
   removeTemporalFilter,
   restoreProject,
   saveShapefile,
@@ -288,6 +302,7 @@ const actions = {
   toggleCollectionVisibility,
   toggleDeprecatedParameterModal,
   toggleDrawingNewLayer,
+  toggleEditSubscriptionModal,
   toggleFacetsModal,
   toggleKeyboardShortcutsModal,
   toggleOverrideTemporalModal,
@@ -308,7 +323,6 @@ const actions = {
   updateBrowserVersion,
   updateCmrFacet,
   updateCollectionMetadata,
-  updateCollectionSubscription,
   updateFeatureFacet,
   updateFocusedCollection,
   updateFocusedCollectionGranuleFilters,
@@ -316,15 +330,19 @@ const actions = {
   updateGranuleMetadata,
   updateGranuleResults,
   updateGranuleSearchQuery,
+  updateGranuleSubscription,
   updateNotificationLevel,
   updatePreferences,
   updateProjectGranuleParams,
   updateProjectName,
+  updateAdminProjectsPageNum,
+  updateAdminProjectsSortKey,
   updateRegionQuery,
   updateSavedProject,
   updateShapefile,
   updateStore,
   updateSubscription,
+  updateSubscriptionDisabledFields,
   viewCollectionDetails,
   viewCollectionGranules
 }

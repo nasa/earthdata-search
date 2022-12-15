@@ -26,6 +26,7 @@ import './EDSCModal.scss'
  * @param {Function} onSecondaryAction A callback function for the secondary action.
  * @param {String} primaryAction The text content for the primary action.
  * @param {Boolean} primaryActionDisabled Disables the primary action.
+ * @param {Boolean} primaryActionLoading Displays a spinner.
  * @param {String} secondaryAction The text content for the secondary action.
  * @param {String} size The size to be passed to the Bootstrap modal.
  * @param {Boolean} spinner Shows a loading spinner.
@@ -48,6 +49,7 @@ export const EDSCModal = ({
   onSecondaryAction,
   primaryAction,
   primaryActionDisabled,
+  primaryActionLoading,
   secondaryAction,
   size,
   spinner,
@@ -135,6 +137,7 @@ export const EDSCModal = ({
                           onClick={onPrimaryAction}
                           label={primaryAction}
                           disabled={primaryActionDisabled}
+                          spinner={primaryActionLoading}
                         >
                           {primaryAction}
                         </Button>
@@ -163,6 +166,7 @@ EDSCModal.defaultProps = {
   onSecondaryAction: null,
   primaryAction: null,
   primaryActionDisabled: false,
+  primaryActionLoading: false,
   secondaryAction: null,
   size: 'sm',
   spinner: false,
@@ -192,6 +196,7 @@ EDSCModal.propTypes = {
   onSecondaryAction: PropTypes.func,
   primaryAction: PropTypes.string,
   primaryActionDisabled: PropTypes.bool,
+  primaryActionLoading: PropTypes.bool,
   secondaryAction: PropTypes.string,
   size: PropTypes.string,
   spinner: PropTypes.bool,

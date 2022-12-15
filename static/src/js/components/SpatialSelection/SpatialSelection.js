@@ -1032,7 +1032,9 @@ SpatialSelection.propTypes = {
       removeLayer: PropTypes.func,
       latLngToLayerPoint: PropTypes.func
     }),
-    props: PropTypes.shape({})
+    props: PropTypes.shape({
+      center: PropTypes.arrayOf(PropTypes.number)
+    })
   }),
   onChangeQuery: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),

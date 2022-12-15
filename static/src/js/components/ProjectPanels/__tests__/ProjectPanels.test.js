@@ -3,8 +3,10 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import ProjectPanels from '../ProjectPanels'
+import PanelItem from '../../Panels/PanelItem'
 import PanelGroup from '../../Panels/PanelGroup'
 import PanelSection from '../../Panels/PanelSection'
+import AccessMethod from '../../AccessMethod/AccessMethod'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -55,7 +57,7 @@ function setup(overrideProps) {
     focusedCollectionId: '',
     focusedGranuleId: '',
     granulesMetadata: {},
-    granuleQuery: {},
+    granulesQueries: {},
     portal: {},
     project: {
       collections: {
@@ -466,13 +468,104 @@ describe('ProjectPanels component', () => {
         })
 
         const accessMethodPanelGroup = enzymeWrapper.find(PanelSection).at(1).find(PanelGroup).at(0)
-        const moreInfoButton = accessMethodPanelGroup.props()
-          .headerMessage.props.children.props.children[3]
+        const moreInfoButton = accessMethodPanelGroup.props().headerMessage.props.children[3]
 
         moreInfoButton.props.onClick()
 
         expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
         expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
+      })
+    })
+
+    describe('when only global temporal is provided', () => {
+      test('passes the temporal to AccessMethod', () => {
+        const expectedTemporal = {
+          endDate: '2022-01-15T23:59:59.999Z',
+          startDate: '2022-01-10T00:00:00.000Z',
+          recurringDayStart: '',
+          recurringDayEnd: '',
+          isRecurring: false
+        }
+
+        const { enzymeWrapper } = setup({
+          temporal: expectedTemporal
+        })
+
+        expect(enzymeWrapper.find(AccessMethod).props().temporal).toEqual({
+          endDate: '2022-01-15T23:59:59.999Z',
+          startDate: '2022-01-10T00:00:00.000Z',
+          recurringDayStart: '',
+          recurringDayEnd: '',
+          isRecurring: false
+        })
+      })
+    })
+
+    describe('when overrideTemporal is provided', () => {
+      test('passes the overrideTemporal to AccessMethod', () => {
+        const expectedTemporal = {
+          endDate: '2022-01-15T23:59:59.999Z',
+          startDate: '2022-01-10T00:00:00.000Z',
+          recurringDayStart: '',
+          recurringDayEnd: '',
+          isRecurring: false
+        }
+
+        const { enzymeWrapper } = setup({
+          overrideTemporal: expectedTemporal,
+          temporal: {
+            endDate: '2022-01-31T23:59:59.999Z',
+            startDate: '2022-01-01T00:00:00.000Z',
+            recurringDayStart: '',
+            recurringDayEnd: '',
+            isRecurring: false
+          }
+        })
+
+        expect(enzymeWrapper.find(AccessMethod).props().temporal).toEqual({
+          endDate: '2022-01-15T23:59:59.999Z',
+          startDate: '2022-01-10T00:00:00.000Z',
+          recurringDayStart: '',
+          recurringDayEnd: '',
+          isRecurring: false
+        })
+      })
+    })
+
+    describe('when granuleTemporal is provided', () => {
+      test('passes the granuleTemporal to AccessMethod', () => {
+        const expectedTemporal = {
+          endDate: '2022-01-15T23:59:59.999Z',
+          startDate: '2022-01-10T00:00:00.000Z',
+          recurringDayStart: '',
+          recurringDayEnd: '',
+          isRecurring: false
+        }
+
+        const { enzymeWrapper } = setup({
+          granulesQueries: {
+            collectionId: {
+              granules: {
+                temporal: expectedTemporal
+              }
+            }
+          },
+          temporal: {
+            endDate: '2022-01-31T23:59:59.999Z',
+            startDate: '2022-01-01T00:00:00.000Z',
+            recurringDayStart: '',
+            recurringDayEnd: '',
+            isRecurring: false
+          }
+        })
+
+        expect(enzymeWrapper.find(AccessMethod).props().temporal).toEqual({
+          endDate: '2022-01-15T23:59:59.999Z',
+          startDate: '2022-01-10T00:00:00.000Z',
+          recurringDayStart: '',
+          recurringDayEnd: '',
+          isRecurring: false
+        })
       })
     })
   })
@@ -489,14 +582,125 @@ describe('ProjectPanels component', () => {
         })
 
         const infoPanelGroup = enzymeWrapper.find(PanelSection).at(1).find(PanelGroup).at(0)
-        const moreInfoButton = infoPanelGroup.props()
-          .headerMessage.props.children.props.children[3]
+        const moreInfoButton = infoPanelGroup.props().headerMessage.props.children[3]
 
         moreInfoButton.props.onClick()
 
         expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
         expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
       })
+    })
+  })
+
+  describe('when viewing a cloud-hosted collection', () => {
+    test('an on-prem duplicate collection notice appears', () => {
+      const { enzymeWrapper, props } = setup({
+        project: {
+          collections: {
+            allIds: ['C2208418228-POCLOUD'],
+            byId: {
+              'C2208418228-POCLOUD': {
+                accessMethods: {
+                  download: {
+                    isValid: true,
+                    type: 'download'
+                  }
+                },
+                granules: {},
+                isVisible: true
+              }
+            }
+          }
+        },
+        projectCollectionsMetadata: {
+          'C2208418228-POCLOUD': {
+            cloudHosted: true,
+            duplicateCollections: ['C1972954180-PODAAC'],
+            id: 'C2208418228-POCLOUD'
+          }
+        }
+      })
+
+      const panelItems = enzymeWrapper.find(PanelItem)
+
+      const panelItem = panelItems.findWhere((node) => (
+        node.props().header?.type.name === 'DataQualitySummary'
+      )).first()
+
+      const { header } = panelItem.props()
+      expect(header.props.dataQualityHeader).toBe('Important data availability information')
+      expect(header.props.dataQualitySummaries).toHaveLength(1)
+      const { id, summary } = header.props.dataQualitySummaries[0]
+      expect(id).toBe('duplicate-collection')
+
+      expect(shallow(summary.props.children[0]).html()).toBe('<span>This dataset is hosted in the Earthdata Cloud. The dataset is also </span>')
+
+      const link = summary.props.children[1]
+      expect(link.props.children).toBe('hosted in a NASA datacenter')
+      expect(link.props.to.pathname).toBe('/search/granules')
+      expect(link.props.to.search).toBe('?p=C1972954180-PODAAC!C2208418228-POCLOUD')
+
+      link.props.onClick()
+      expect(props.onChangePath).toBeCalledTimes(1)
+      expect(props.onChangePath).toBeCalledWith('/search/granules?p=C1972954180-PODAAC!C2208418228-POCLOUD')
+
+      expect(shallow(summary.props.children[2]).html()).toBe('<span>, and may have different services available.</span>')
+    })
+  })
+
+  describe('when viewing an on-prem collection', () => {
+    test('a cloud-hosted duplicate collection notice appears', () => {
+      const { enzymeWrapper, props } = setup({
+        project: {
+          collections: {
+            allIds: ['C1972954180-PODAAC'],
+            byId: {
+              'C1972954180-PODAAC': {
+                accessMethods: {
+                  download: {
+                    isValid: true,
+                    type: 'download'
+                  }
+                },
+                granules: {},
+                isVisible: true
+              }
+            }
+          }
+        },
+        projectCollectionsMetadata: {
+          'C1972954180-PODAAC': {
+            cloudHosted: false,
+            duplicateCollections: ['C2208418228-POCLOUD'],
+            id: 'C1972954180-PODAAC'
+          }
+        }
+      })
+
+      const panelItems = enzymeWrapper.find(PanelItem)
+
+      const panelItem = panelItems.findWhere((node) => (
+        node.props().header?.type.name === 'DataQualitySummary'
+      )).first()
+
+      const { header } = panelItem.props()
+      expect(header.props.dataQualityHeader).toBe('Important data availability information')
+      expect(header.props.dataQualitySummaries).toHaveLength(1)
+      const { id, summary } = header.props.dataQualitySummaries[0]
+      expect(id).toBe('duplicate-collection')
+
+      expect(shallow(summary.props.children[0]).html()).toBe('<span>This dataset is hosted inside a NASA datacenter. The dataset is also </span>')
+
+      const link = summary.props.children[1]
+      expect(link.props.children).toBe('hosted in the Earthdata Cloud')
+      expect(link.props.to.pathname).toBe('/search/granules')
+      expect(link.props.to.search).toBe('?p=C2208418228-POCLOUD!C1972954180-PODAAC')
+
+      link.props.onClick()
+      expect(props.onChangePath).toBeCalledTimes(1)
+      expect(props.onChangePath).toBeCalledWith('/search/granules?p=C2208418228-POCLOUD!C1972954180-PODAAC')
+
+      expect(shallow(summary.props.children[2]).html()).toBe('<span>, and may have different services available.</span>')
     })
   })
 })

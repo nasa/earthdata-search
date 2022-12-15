@@ -12,7 +12,7 @@ const initialState = {
   isLoaded: false
 }
 
-const savedProjectsReducer = (state = initialState, action) => {
+const savedProjectsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case SET_SAVED_PROJECTS_LOADING: {
       return {

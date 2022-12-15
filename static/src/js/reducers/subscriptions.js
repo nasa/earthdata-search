@@ -1,11 +1,14 @@
 import {
   ERRORED_SUBSCRIPTIONS,
-  UPDATE_SUBSCRIPTION_RESULTS,
-  LOADING_SUBSCRIPTIONS,
-  LOADED_SUBSCRIPTIONS,
-  STARTED_SUBSCRIPTIONS_TIMER,
   FINISHED_SUBSCRIPTIONS_TIMER,
-  REMOVE_SUBSCRIPTION
+  LOADED_SUBSCRIPTIONS,
+  LOADING_SUBSCRIPTIONS,
+  REMOVE_SUBSCRIPTION,
+  REMOVE_SUBSCRIPTION_DISABLED_FIELDS,
+  STARTED_SUBSCRIPTIONS_TIMER,
+  UPDATE_COLLECTION_SUBSCRIPTION,
+  UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
+  UPDATE_SUBSCRIPTION_RESULTS
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -14,7 +17,11 @@ const initialState = {
   isLoaded: false,
   error: null,
   timerStart: null,
-  loadTime: 0
+  loadTime: 0,
+  disabledFields: {
+    collection: {},
+    granule: {}
+  }
 }
 
 const processResults = (results) => {
@@ -29,7 +36,7 @@ const processResults = (results) => {
   return byId
 }
 
-const subscriptionsReducer = (state = initialState, action) => {
+const subscriptionsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case LOADING_SUBSCRIPTIONS: {
       return {
@@ -57,6 +64,24 @@ const subscriptionsReducer = (state = initialState, action) => {
         ...state,
         timerStart: null,
         loadTime: Date.now() - timerStart
+      }
+    }
+    case UPDATE_COLLECTION_SUBSCRIPTION: {
+      const { payload } = action
+      const { conceptId } = payload
+
+      const { byId } = state
+
+      return {
+        ...state,
+        error: null,
+        byId: {
+          ...byId,
+          [conceptId]: {
+            ...byId[conceptId],
+            ...payload
+          }
+        }
       }
     }
     case UPDATE_SUBSCRIPTION_RESULTS: {
@@ -89,6 +114,29 @@ const subscriptionsReducer = (state = initialState, action) => {
         ...state,
         byId: {
           ...byId
+        }
+      }
+    }
+    case UPDATE_SUBSCRIPTION_DISABLED_FIELDS: {
+      return {
+        ...state,
+        disabledFields: {
+          collection: {
+            ...state.disabledFields.collection,
+            ...action.payload.collection
+          },
+          granule: {
+            ...state.disabledFields.granule,
+            ...action.payload.granule
+          }
+        }
+      }
+    }
+    case REMOVE_SUBSCRIPTION_DISABLED_FIELDS: {
+      return {
+        ...state,
+        disabledFields: {
+          ...initialState.disabledFields
         }
       }
     }

@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import actions from '../../actions'
 
 import { locationPropType } from '../../util/propTypes/location'
@@ -29,7 +31,8 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) => ({
-  projectCollectionsRequiringChunking: getProjectCollectionsRequiringChunking(state)
+  projectCollectionsRequiringChunking: getProjectCollectionsRequiringChunking(state),
+  name: state.savedProject.name
 })
 
 export class Project extends Component {
@@ -37,6 +40,9 @@ export class Project extends Component {
     super(props)
 
     this.handleSubmit = this.handleSubmit.bind(this)
+
+    const { edscHost } = getEnvironmentConfig()
+    this.edscHost = edscHost
   }
 
   handleSubmit(event) {
@@ -57,14 +63,22 @@ export class Project extends Component {
 
   render() {
     const {
-      location
+      location,
+      name
     } = this.props
     const { search } = location
+    const { edscHost } = this
 
     // If there are no params in the URL, show the saved projects page
     if (search === '') {
       return (
         <AuthRequiredContainer>
+          <Helmet>
+            <title>Saved Projects</title>
+            <meta name="title" content="Saved Projects" />
+            <meta name="robots" content="noindex, nofollow" />
+            <link rel="canonical" href={`${edscHost}/projects`} />
+          </Helmet>
           <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
             <div className="route-wrapper__content">
               <div className="route-wrapper__content-inner">
@@ -79,6 +93,12 @@ export class Project extends Component {
     // Show the project page
     return (
       <AuthRequiredContainer>
+        <Helmet>
+          <title>{name || 'Untitled Project'}</title>
+          <meta name="title" content={name || 'Untitled Project'} />
+          <meta name="robots" content="noindex, nofollow" />
+          <link rel="canonical" href={`${edscHost}`} />
+        </Helmet>
         <form
           id="form__project"
           onSubmit={this.handleSubmit}
@@ -100,6 +120,7 @@ export class Project extends Component {
 
 Project.propTypes = {
   location: locationPropType.isRequired,
+  name: PropTypes.string.isRequired,
   projectCollectionsRequiringChunking: PropTypes.shape({}).isRequired,
   onToggleChunkedOrderModal: PropTypes.func.isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired

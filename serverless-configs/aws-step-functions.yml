@@ -1,7 +1,7 @@
 stateMachines:
   UpdateOrderStatusWorkflow:
     name: UpdateOrderStatusWorkflow-${self:provider.stage}
-    role: 
+    role:
       Fn::ImportValue: ${self:provider.stage}-EDSCServerlessAppRole
     definition:
       StartAt: InitialWait
@@ -70,7 +70,7 @@ stateMachines:
       Fn::ImportValue: ${self:provider.stage}-EDSCServerlessAppRole
     events:
       - schedule:
-          rate: cron(0 12,18 ? * MON-FRI *)
+          rate: cron(20 12,18 ? * MON-FRI *)
           role:
             Fn::ImportValue: ${self:provider.stage}-EDSCServerlessAppRole
           enabled: true

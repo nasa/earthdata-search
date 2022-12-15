@@ -303,57 +303,55 @@ export const Timeline = ({
   ])
 
   return (
-    <>
-      <section ref={containerRef} className={timelineClasses}>
+    <section ref={containerRef} className={timelineClasses}>
+      {
+        hideTimeline && (
+          <Button
+            className="timeline__toggle-button timeline__toggle-button--open"
+            type="button"
+            icon={FaAngleDoubleUp}
+            label="Show Timeline"
+            onClick={() => onToggleTimeline(true)}
+          >
+            Expand timeline (t)
+          </Button>
+        )
+      }
+
+      <div className="timeline__container">
         {
-          hideTimeline && (
+          !isProjectPage && (
             <Button
-              className="timeline__toggle-button timeline__toggle-button--open"
+              className="timeline__toggle-button timeline__toggle-button--close"
               type="button"
-              icon={FaAngleDoubleUp}
-              label="Show Timeline"
-              onClick={() => onToggleTimeline(true)}
-            >
-              Expand timeline (t)
-            </Button>
+              variant="naked"
+              icon={FaAngleDoubleDown}
+              label="Hide Timeline"
+              onClick={() => onToggleTimeline(false)}
+            />
           )
         }
-
-        <div className="timeline__container">
-          {
-            !isProjectPage && (
-              <Button
-                className="timeline__toggle-button timeline__toggle-button--close"
-                type="button"
-                variant="naked"
-                icon={FaAngleDoubleDown}
-                label="Hide Timeline"
-                onClick={() => onToggleTimeline(false)}
-              />
-            )
-          }
-          <EDSCTimeline
-            center={center}
-            data={setupData(timeline)}
-            focusedInterval={setupFocused(timeline)}
-            maxZoom={5}
-            minZoom={1}
-            temporalRange={setupTemporal(temporalSearch)}
-            zoom={setupZoom(timeline)}
-            onArrowKeyPan={handleArrowKeyPan}
-            onButtonPan={handleButtonPan}
-            onButtonZoom={handleButtonZoom}
-            onDragPan={handleDragPan}
-            onFocusedIntervalClick={handleFocusedClick}
-            onFocusedSet={handleFocusedSet}
-            onScrollPan={handleScrollPan}
-            onScrollZoom={handleScrollZoom}
-            onTemporalSet={handleTemporalSet}
-            onTimelineMoveEnd={handleTimelineMoveEnd}
-          />
-        </div>
-      </section>
-    </>
+        <EDSCTimeline
+          center={center}
+          data={setupData(timeline)}
+          focusedInterval={setupFocused(timeline)}
+          maxZoom={5}
+          minZoom={1}
+          temporalRange={setupTemporal(temporalSearch)}
+          zoom={setupZoom(timeline)}
+          onArrowKeyPan={handleArrowKeyPan}
+          onButtonPan={handleButtonPan}
+          onButtonZoom={handleButtonZoom}
+          onDragPan={handleDragPan}
+          onFocusedIntervalClick={handleFocusedClick}
+          onFocusedSet={handleFocusedSet}
+          onScrollPan={handleScrollPan}
+          onScrollZoom={handleScrollZoom}
+          onTemporalSet={handleTemporalSet}
+          onTimelineMoveEnd={handleTimelineMoveEnd}
+        />
+      </div>
+    </section>
   )
 }
 

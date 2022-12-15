@@ -81,7 +81,7 @@ describe('FacetsModal component', () => {
       expect(enzymeWrapper.prop('spinner')).toEqual(true)
       expect(enzymeWrapper.prop('innerHeader').type).toEqual(FacetsModalNav)
       expect(enzymeWrapper.prop('body').type).toEqual(FacetsList)
-      expect(enzymeWrapper.prop('footerMeta').type).toEqual(React.Fragment)
+      expect(enzymeWrapper.prop('footerMeta').type).toEqual(undefined)
     })
   })
 
@@ -119,7 +119,7 @@ describe('FacetsModal component', () => {
       expect(enzymeWrapper.prop('spinner')).toEqual(false)
       expect(enzymeWrapper.prop('innerHeader').type).toEqual(FacetsModalNav)
       expect(enzymeWrapper.prop('body').type).toEqual(FacetsList)
-      expect(enzymeWrapper.prop('footerMeta').type).toEqual(React.Fragment)
+      expect(enzymeWrapper.prop('footerMeta').type).toEqual('span')
     })
   })
 

@@ -16,6 +16,8 @@ const ousGranuleSearch = async (event) => {
     'exclude_granules',
     'granules',
     'format',
+    'page_num',
+    'page_size',
     'temporal',
     'variables'
   ]
@@ -47,7 +49,10 @@ const ousGranuleSearch = async (event) => {
         stringifyResult: false
       }),
       requestId,
-      earthdataEnvironment
+      earthdataEnvironment,
+      providedHeaders: {
+        Accept: 'application/vnd.cmr-service-bridge.v3+json'
+      }
     })
   } catch (e) {
     return {

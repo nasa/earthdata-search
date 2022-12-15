@@ -287,6 +287,31 @@ function setup(type, overrideProps) {
     }
   }
 
+  if (type === 'static-coverage') {
+    // timeStart and timeEnd are intentionally left out in order to
+    // mimic what is passed to GranuleResultsItem when the app is running
+    props = {
+      ...defaultProps,
+      granule: {
+        id: 'granuleId',
+        browseFlag: false,
+        onlineAccessFlag: false,
+        formattedTemporal: [],
+        granuleThumbnail: '/fake/path/image.jpg',
+        title: 'Granule title',
+        dataLinks: [
+          {
+            rel: 'http://linkrel/data#',
+            title: 'linktitle',
+            href: 'http://linkhref'
+          }
+        ],
+        s3Links: []
+      },
+      ...overrideProps
+    }
+  }
+
   if (type === 'override') {
     props = {
       ...defaultProps,
@@ -621,4 +646,15 @@ describe('GranuleResultsItem component', () => {
       expect(props.onFocusedGranuleChange).toHaveBeenCalledWith('granuleId')
     })
   })
+
+  describe('static coverage granules', () => {
+    test('renders not provided for dates', () => {
+      const { enzymeWrapper } = setup('static-coverage')
+
+      expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('h5').text()).toEqual('Start')
+      expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('p').text()).toEqual('Not Provided')
+      expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('h5').text()).toEqual('End')
+      expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('p').text()).toEqual('Not Provided')
+    });
+  });
 })

@@ -48,7 +48,7 @@ describe('edlAdminAuthorizer', () => {
       const { jwtToken } = getEnvironmentConfig('test')
 
       const event = {
-        authorizationToken: `Bearer ${jwtToken}`
+        Authorization: `Bearer ${jwtToken}`
       }
 
       await expect(
@@ -61,13 +61,14 @@ describe('edlAdminAuthorizer', () => {
     test('returns unauthorized', async () => {
       jest.spyOn(validateToken, 'validateToken').mockImplementationOnce(() => 'testuser')
       jest.spyOn(getAdminUsers, 'getAdminUsers').mockImplementationOnce(() => (
+        // eslint-disable-next-line no-promise-executor-return
         new Promise((resolve, reject) => reject(new Error('Unkown Error')))
       ))
 
       const { jwtToken } = getEnvironmentConfig('test')
 
       const event = {
-        authorizationToken: `Bearer ${jwtToken}`
+        Authorization: `Bearer ${jwtToken}`
       }
 
       await expect(

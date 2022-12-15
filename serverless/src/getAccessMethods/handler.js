@@ -299,6 +299,7 @@ const getAccessMethods = async (event, context) => {
       // Update the accessMethod that matches the savedAccessConfig
       if (accessConfigRecord) {
         const { access_method: savedAccessConfig } = accessConfigRecord
+        console.log(`Found savedAccessConfig of type ${savedAccessConfig.type}`)
 
         if (method.type === savedAccessConfig.type) {
           if (['download'].includes(method.type)) {

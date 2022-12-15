@@ -1,0 +1,89 @@
+.admin-projects-list {
+  &__interactive {
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color__black--200 !important;
+    }
+  }
+
+  &__table-head-cell--sortable {
+    position: relative;
+  }
+
+  &__sortable-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__pagination-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__pagination {
+    margin: 0 auto;
+    width: auto;
+    display: inline-block;
+
+    .rc-pagination-item-active {
+      background-color: $color__blue;
+      border-color: $color__blue--dark;
+      color: $color__white;
+    }
+
+    .rc-pagination-jump-next,
+    .rc-pagination-jump-prev,
+    .rc-pagination-next,
+    .rc-pagination-prev,
+    .rc-pagination-item {
+      min-width: 32px;
+      height: 32px;
+      line-height: 32px;
+      border-radius: 16px;
+    }
+
+    .rc-pagination-next,
+    .rc-pagination-prev {
+      border-color: transparent;
+      color: $color__black--500;
+
+      &.rc-pagination-disabled {
+        color: $color__black--200;
+      }
+
+      &:hover {
+        color: $color__black--900;
+
+        &.rc-pagination-disabled {
+          color: $color__black--200;
+        }
+      }
+    }
+
+    .rc-pagination-item {
+      &:hover {
+        border-color: $color__black--300;
+        background-color: $color__black--200;
+        color: $color__black--500;
+
+        &.rc-pagination-item-active {
+          background-color: $color__blue--dark;
+          border-color: $color__blue--dark;
+          color: $color__white;
+
+          a {
+            color: $color__white
+          }
+        }
+
+        a {
+          color: $color__black--500;
+        }
+      }
+    }
+  }
+}

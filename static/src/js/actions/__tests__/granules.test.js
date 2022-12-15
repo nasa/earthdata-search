@@ -26,6 +26,7 @@ import {
   LOADING_GRANULES,
   PROJECT_GRANULES_LOADED,
   PROJECT_GRANULES_LOADING,
+  REMOVE_SUBSCRIPTION_DISABLED_FIELDS,
   STARTED_GRANULES_TIMER,
   STARTED_PROJECT_GRANULES_TIMER,
   TOGGLE_SPATIAL_POLYGON_WARNING,
@@ -70,8 +71,7 @@ describe('getSearchGranules', () => {
             mockGranuleData: 'goes here'
           }]
         }
-      },
-      {
+      }, {
         'cmr-hits': 1
       })
 
@@ -169,8 +169,7 @@ describe('getSearchGranules', () => {
             mockGranuleData: 'goes here'
           }]
         }
-      },
-      {
+      }, {
         'cmr-hits': 1,
         'jwt-token': 'token'
       })
@@ -536,8 +535,7 @@ describe('getProjectGranules', () => {
             mockGranuleData: 'goes here'
           }]
         }
-      },
-      {
+      }, {
         'cmr-hits': 1
       })
 
@@ -640,8 +638,7 @@ describe('getProjectGranules', () => {
             mockGranuleData: 'goes here'
           }]
         }
-      },
-      {
+      }, {
         'cmr-hits': 1,
         'jwt-token': 'token'
       })
@@ -911,8 +908,7 @@ describe('getProjectGranules', () => {
             mockGranuleData: 'goes here'
           }]
         }
-      },
-      {
+      }, {
         'cmr-hits': 1,
         'jwt-token': 'token'
       })
@@ -1563,6 +1559,8 @@ describe('fetchOpendapLinks', () => {
           bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
           echo_collection_id: 'C10000005-EDSC',
           format: 'nc4',
+          page_num: '1',
+          page_size: '500',
           variables: ['V1000004-EDSC']
         })
       })
@@ -1572,6 +1570,26 @@ describe('fetchOpendapLinks', () => {
           'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
           'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
         ]
+      })
+
+    nock(/localhost/)
+      .post(/ous/, (body) => {
+        const { params } = body
+
+        delete params.requestId
+
+        // Ensure that the payload we're sending OUS is correct
+        return JSON.stringify(params) === JSON.stringify({
+          bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
+          echo_collection_id: 'C10000005-EDSC',
+          format: 'nc4',
+          page_num: '2',
+          page_size: '500',
+          variables: ['V1000004-EDSC']
+        })
+      })
+      .reply(200, {
+        items: []
       })
 
     const store = mockStore({
@@ -1626,6 +1644,8 @@ describe('fetchOpendapLinks', () => {
           exclude_granules: true,
           granules: ['G10000404-EDSC'],
           format: 'nc4',
+          page_num: '1',
+          page_size: '500',
           variables: ['V1000004-EDSC']
         })
       })
@@ -1635,6 +1655,27 @@ describe('fetchOpendapLinks', () => {
           'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
           'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
         ]
+      })
+    nock(/localhost/)
+      .post(/ous/, (body) => {
+        const { params } = body
+
+        delete params.requestId
+
+        // Ensure that the payload we're sending OUS is correct
+        return JSON.stringify(params) === JSON.stringify({
+          bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
+          echo_collection_id: 'C10000005-EDSC',
+          exclude_granules: true,
+          granules: ['G10000404-EDSC'],
+          format: 'nc4',
+          page_num: '2',
+          page_size: '500',
+          variables: ['V1000004-EDSC']
+        })
+      })
+      .reply(200, {
+        items: []
       })
 
     const store = mockStore({
@@ -1691,6 +1732,8 @@ describe('fetchOpendapLinks', () => {
           echo_collection_id: 'C10000005-EDSC',
           granules: ['G10000003-EDSC'],
           format: 'nc4',
+          page_num: '1',
+          page_size: '500',
           variables: ['V1000004-EDSC']
         })
       })
@@ -1698,6 +1741,26 @@ describe('fetchOpendapLinks', () => {
         items: [
           'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
         ]
+      })
+    nock(/localhost/)
+      .post(/ous/, (body) => {
+        const { params } = body
+
+        delete params.requestId
+
+        // Ensure that the payload we're sending OUS is correct
+        return JSON.stringify(params) === JSON.stringify({
+          bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
+          echo_collection_id: 'C10000005-EDSC',
+          granules: ['G10000003-EDSC'],
+          format: 'nc4',
+          page_num: '2',
+          page_size: '500',
+          variables: ['V1000004-EDSC']
+        })
+      })
+      .reply(200, {
+        items: []
       })
 
     const store = mockStore({
@@ -1748,6 +1811,8 @@ describe('fetchOpendapLinks', () => {
         return JSON.stringify(params) === JSON.stringify({
           echo_collection_id: 'C10000005-EDSC',
           format: 'nc4',
+          page_num: '1',
+          page_size: '500',
           variables: ['V1000004-EDSC']
         })
       })
@@ -1757,6 +1822,24 @@ describe('fetchOpendapLinks', () => {
           'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
           'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
         ]
+      })
+    nock(/localhost/)
+      .post(/ous/, (body) => {
+        const { params } = body
+
+        delete params.requestId
+
+        // Ensure that the payload we're sending OUS is correct
+        return JSON.stringify(params) === JSON.stringify({
+          echo_collection_id: 'C10000005-EDSC',
+          format: 'nc4',
+          page_num: '2',
+          page_size: '500',
+          variables: ['V1000004-EDSC']
+        })
+      })
+      .reply(200, {
+        items: []
       })
 
     const store = mockStore({
@@ -1917,6 +2000,10 @@ describe('fetchOpenSearchLinks', () => {
       .post(/opensearch/)
       .reply(500)
 
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
     const store = mockStore({
       authToken: 'token'
     })
@@ -1982,6 +2069,9 @@ describe('applyGranuleFilters', () => {
         type: UPDATE_GRANULE_FILTERS,
         payload: { collectionId: 'C100000-EDSC', pageNum: 2 }
       })
+      expect(storeActions[1]).toEqual({
+        type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
+      })
 
       expect(getSearchGranulesMock).toBeCalledTimes(1)
       expect(getProjectGranulesMock).toBeCalledTimes(0)
@@ -2038,6 +2128,9 @@ describe('applyGranuleFilters', () => {
       expect(storeActions[0]).toEqual({
         type: UPDATE_GRANULE_FILTERS,
         payload: { collectionId: 'C100000-EDSC', pageNum: 2 }
+      })
+      expect(storeActions[1]).toEqual({
+        type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
       })
 
       expect(getSearchGranulesMock).toBeCalledTimes(1)

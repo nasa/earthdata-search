@@ -257,8 +257,7 @@ describe('getProjectCollections', () => {
             }]
           }
         }
-      },
-      {
+      }, {
         'jwt-token': 'token'
       })
 
@@ -345,6 +344,7 @@ describe('getProjectCollections', () => {
     })
 
     expect(store.dispatch(actions.getProjectCollections())).toEqual(
+      // eslint-disable-next-line no-promise-executor-return
       new Promise((resolve) => resolve(null))
     )
   })
@@ -360,8 +360,7 @@ describe('getProjectCollections', () => {
       .post(/graphql/)
       .reply(500, {
         errors: ['HTTP Request Error']
-      },
-      {
+      }, {
         'jwt-token': 'token'
       })
 
@@ -436,8 +435,7 @@ describe('getProjectCollections', () => {
               }]
             }
           }
-        },
-        {
+        }, {
           'jwt-token': 'token'
         })
 

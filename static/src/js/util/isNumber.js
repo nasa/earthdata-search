@@ -1,4 +1,4 @@
-const reg = new RegExp(/^\d+$/)
+const reg = /^\d+$/
 
 /**
  * Returns true the string contains only number characters and false if there are any non-number characters

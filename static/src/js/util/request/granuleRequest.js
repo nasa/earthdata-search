@@ -4,6 +4,8 @@ import {
   getEarthdataConfig,
   getEnvironmentConfig
 } from '../../../../../sharedUtils/config'
+import { granuleRequestNonIndexedCmrKeys } from '../../../../../sharedConstants/nonIndexedCmrKeys'
+import { granuleRequestPermittedCmrKeys } from '../../../../../sharedConstants/permittedCmrKeys'
 
 import { getTemporal } from '../edscDate'
 
@@ -26,44 +28,11 @@ export default class GranuleRequest extends CmrRequest {
   }
 
   permittedCmrKeys() {
-    return [
-      'bounding_box',
-      'browse_only',
-      'circle',
-      'cloud_cover',
-      'concept_id',
-      'day_night_flag',
-      'echo_collection_id',
-      'equator_crossing_date',
-      'equator_crossing_longitude',
-      'exclude',
-      'line',
-      'online_only',
-      'options',
-      'orbit_number',
-      'page_num',
-      'page_size',
-      'point',
-      'polygon',
-      'readable_granule_name',
-      'sort_key',
-      'temporal',
-      'two_d_coordinate_system'
-    ]
+    return granuleRequestPermittedCmrKeys
   }
 
   nonIndexedKeys() {
-    return [
-      'bounding_box',
-      'circle',
-      'concept_id',
-      'exclude',
-      'line',
-      'point',
-      'polygon',
-      'readable_granule_name',
-      'sort_key'
-    ]
+    return granuleRequestNonIndexedCmrKeys
   }
 
   transformResponse(data) {

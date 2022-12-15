@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { uniq } from 'lodash'
+import { parse } from 'qs'
+import { isEmpty, uniq } from 'lodash'
 import {
   FaCheckCircle,
   FaCog,
@@ -22,10 +23,12 @@ import VariableDetailsPanel from './VariableDetailsPanel'
 import DataQualitySummary from '../DataQualitySummary/DataQualitySummary'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import { isAccessMethodValid } from '../../util/accessMethods'
 import { locationPropType } from '../../util/propTypes/location'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
+import { stringify } from '../../util/url/url'
 
 import './ProjectPanels.scss'
 
@@ -43,6 +46,7 @@ import './ProjectPanels.scss'
  * @param {Object} spatial - The spatial from the store.
  * @param {Object} shapefileId - The shapefileId from the store.
  * @param {Object} projectCollection - The project collection.
+ * @param {Function} onChangePath - Callback to change the path.
  * @param {Function} onSetActivePanelGroup - Callback to set the page number.
  * @param {Function} onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.
@@ -272,7 +276,9 @@ class ProjectPanels extends PureComponent {
       dataQualitySummaries,
       focusedGranuleId,
       granulesMetadata,
+      granulesQueries,
       location,
+      onChangePath,
       onChangeProjectGranulePageNum,
       onFocusedGranuleChange,
       onRemoveGranuleFromProjectCollection,
@@ -332,10 +338,85 @@ class ProjectPanels extends PureComponent {
 
       const {
         title,
-        isCSDA: collectionIsCSDA
+        isCSDA: collectionIsCSDA,
+        cloudHosted,
+        duplicateCollections = []
       } = collectionMetadata
 
-      const { [collectionId]: collectionDataQualitySummaries = [] } = dataQualitySummaries
+      const { granules: granulesQuery = {} } = granulesQueries[collectionId] || {}
+      const { temporal: granuleTemporal = {} } = granulesQuery
+
+      // Default the preferredTemporal to global temporal
+      let preferredTemporal = temporal
+
+      // If overrideTemporal is provided, use that value
+      if (!isEmpty(overrideTemporal)) preferredTemporal = overrideTemporal
+      // If granuleTemporal is provided, use that value
+      if (!isEmpty(granuleTemporal)) preferredTemporal = granuleTemporal
+
+      let { [collectionId]: collectionDataQualitySummaries = [] } = dataQualitySummaries
+
+      const hasDataQualitySummary = collectionDataQualitySummaries.length > 0
+      const hasDuplicateCollection = duplicateCollections.length > 0
+
+      const dataQualityHeader = (() => {
+        if (hasDataQualitySummary && hasDuplicateCollection) {
+          return 'Important data quality and availability information'
+        }
+        if (hasDataQualitySummary) {
+          return 'Important data quality information'
+        }
+        if (hasDuplicateCollection) {
+          return 'Important data availability information'
+        }
+        return ''
+      })()
+
+      if (hasDuplicateCollection) {
+        const duplicateCollectionId = duplicateCollections[0]
+
+        const params = parse(location.search, { parseArrays: false, ignoreQueryPrefix: true })
+
+        // adding duplicateCollectionId to the front makes it the focused collection
+        const p = [duplicateCollectionId, ...projectIds].join('!')
+
+        const newSearch = stringify({ ...params, p })
+
+        collectionDataQualitySummaries = [...collectionDataQualitySummaries, {
+          id: 'duplicate-collection',
+          summary: cloudHosted
+            ? (
+              <>
+                <span>This dataset is hosted in the Earthdata Cloud. The dataset is also </span>
+                <PortalLinkContainer
+                  to={{
+                    pathname: '/search/granules',
+                    search: newSearch
+                  }}
+                  onClick={() => { onChangePath(`/search/granules${newSearch}`) }}
+                >
+                  hosted in a NASA datacenter
+                </PortalLinkContainer>
+                <span>, and may have different services available.</span>
+              </>
+            )
+            : (
+              <>
+                <span>This dataset is hosted inside a NASA datacenter. The dataset is also </span>
+                <PortalLinkContainer
+                  to={{
+                    pathname: '/search/granules',
+                    search: newSearch
+                  }}
+                  onClick={() => { onChangePath(`/search/granules${newSearch}`) }}
+                >
+                  hosted in the Earthdata Cloud
+                </PortalLinkContainer>
+                <span>, and may have different services available.</span>
+              </>
+            )
+        }]
+      }
 
       const { valid: isValid } = isAccessMethodValid(projectCollection, collectionMetadata)
 
@@ -441,28 +522,24 @@ class ProjectPanels extends PureComponent {
           key={`${collectionId}_edit-options`}
           primaryHeading="Edit Options"
           headerMessage={(
-            <>
-              {
-                collectionIsCSDA && (
-                  <Col className="search-panels__note">
-                    {'This collection is made available through the '}
-                    <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
-                    {' for NASA funded researchers. Access to the data will require additional authentication. '}
-                    <Button
-                      className="search-panels__header-message-link"
-                      dataTestId="search-panels__csda-modal-button"
-                      onClick={() => onToggleAboutCSDAModal(true)}
-                      variant="link"
-                      bootstrapVariant="link"
-                      icon={FaQuestionCircle}
-                      label="More details"
-                    >
-                      More Details
-                    </Button>
-                  </Col>
-                )
-              }
-            </>
+            collectionIsCSDA && (
+              <Col className="search-panels__note">
+                {'This collection is made available through the '}
+                <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                <Button
+                  className="search-panels__header-message-link"
+                  dataTestId="search-panels__csda-modal-button"
+                  onClick={() => onToggleAboutCSDAModal(true)}
+                  variant="link"
+                  bootstrapVariant="link"
+                  icon={FaQuestionCircle}
+                  label="More details"
+                >
+                  More Details
+                </Button>
+              </Col>
+            )
           )}
           breadcrumbs={[
             {
@@ -480,7 +557,12 @@ class ProjectPanels extends PureComponent {
           footer={editOptionsFooter}
         >
           <PanelItem
-            header={<DataQualitySummary dataQualitySummaries={collectionDataQualitySummaries} />}
+            header={(
+              <DataQualitySummary
+                dataQualitySummaries={collectionDataQualitySummaries}
+                dataQualityHeader={dataQualityHeader}
+              />
+            )}
           >
             <AccessMethod
               accessMethods={accessMethods}
@@ -494,8 +576,7 @@ class ProjectPanels extends PureComponent {
               selectedAccessMethod={selectedAccessMethod}
               shapefileId={shapefileId}
               spatial={spatial}
-              temporal={temporal}
-              overrideTemporal={overrideTemporal}
+              temporal={preferredTemporal}
             />
           </PanelItem>
           <PanelItem
@@ -535,28 +616,24 @@ class ProjectPanels extends PureComponent {
           primaryHeading={title}
           headerMetaPrimaryText={projectGranulesHeaderMetaPrimaryText}
           headerMessage={(
-            <>
-              {
-                collectionIsCSDA && (
-                  <Col className="search-panels__note">
-                    {'This collection is made available through the '}
-                    <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
-                    {' for NASA funded researchers. Access to the data will require additional authentication. '}
-                    <Button
-                      className="search-panels__header-message-link"
-                      dataTestId="search-panels__csda-modal-button"
-                      onClick={() => onToggleAboutCSDAModal(true)}
-                      variant="link"
-                      bootstrapVariant="link"
-                      icon={FaQuestionCircle}
-                      label="More details"
-                    >
-                      More Details
-                    </Button>
-                  </Col>
-                )
-              }
-            </>
+            collectionIsCSDA && (
+              <Col className="search-panels__note">
+                {'This collection is made available through the '}
+                <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                <Button
+                  className="search-panels__header-message-link"
+                  dataTestId="search-panels__csda-modal-button"
+                  onClick={() => onToggleAboutCSDAModal(true)}
+                  variant="link"
+                  bootstrapVariant="link"
+                  icon={FaQuestionCircle}
+                  label="More details"
+                >
+                  More Details
+                </Button>
+              </Col>
+            )
           )}
         >
           <PanelItem scrollable={false}>
@@ -608,7 +685,9 @@ ProjectPanels.propTypes = {
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
+  granulesQueries: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
+  onChangePath: PropTypes.func.isRequired,
   onChangeProjectGranulePageNum: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
@@ -626,7 +705,10 @@ ProjectPanels.propTypes = {
   }).isRequired,
   portal: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({
-    collections: PropTypes.shape({})
+    collections: PropTypes.shape({
+      allIds: PropTypes.arrayOf(PropTypes.string),
+      byId: PropTypes.shape({})
+    })
   }).isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,

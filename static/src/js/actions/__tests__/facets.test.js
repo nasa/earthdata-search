@@ -14,7 +14,8 @@ import {
   UPDATE_COLLECTION_QUERY,
   UPDATE_SELECTED_FEATURE_FACET,
   UPDATE_SELECTED_CMR_FACET,
-  DELETE_AUTOCOMPLETE_VALUE
+  DELETE_AUTOCOMPLETE_VALUE,
+  REMOVE_SUBSCRIPTION_DISABLED_FIELDS
 } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -74,6 +75,9 @@ describe('changeCmrFacet', () => {
     expect(storeActions[1]).toEqual({
       type: UPDATE_SELECTED_CMR_FACET,
       payload: newFacets
+    })
+    expect(storeActions[2]).toEqual({
+      type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
     })
 
     // was getCollections called
@@ -152,6 +156,9 @@ describe('changeFeatureFacet', () => {
     expect(storeActions[1]).toEqual({
       type: UPDATE_SELECTED_FEATURE_FACET,
       payload: newFacets
+    })
+    expect(storeActions[2]).toEqual({
+      type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
     })
 
     // was getCollections called

@@ -1,0 +1,31 @@
+.subscriptions-query-list {
+  &__query-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__query-list-item {
+    margin-bottom: 0.5rem;
+    text-align: left;
+
+    &__checkbox {
+      margin-right: 0.7rem;
+    }
+  }
+
+  &__query-list-item-heading {
+    flex-shrink: 0;
+    flex-grow: 0;
+    margin-right: 0.125rem;
+    font-weight: 500;
+  }
+
+  &__query-list-item-value {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    letter-spacing: 0.03rem;
+  }
+}

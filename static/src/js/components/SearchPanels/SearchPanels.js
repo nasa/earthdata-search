@@ -15,10 +15,13 @@ import {
   FaTable,
   FaLock
 } from 'react-icons/fa'
+import classNames from 'classnames'
+import Helmet from 'react-helmet'
 
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import CollectionResultsBodyContainer
@@ -33,6 +36,10 @@ import GranuleResultsActionsContainer
   from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
 import SubscriptionsBodyContainer
   from '../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer'
+import PortalFeatureContainer
+  from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import PortalLinkContainer
+  from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import Button from '../Button/Button'
 import Panels from '../Panels/Panels'
@@ -75,6 +82,9 @@ class SearchPanels extends PureComponent {
     this.onChangeCollectionsPanelView = this.onChangeCollectionsPanelView.bind(this)
     this.onChangeGranulePanelView = this.onChangeGranulePanelView.bind(this)
     this.updatePanelViewState = this.updatePanelViewState.bind(this)
+
+    const { edscHost } = getEnvironmentConfig()
+    this.edscHost = edscHost
   }
 
   componentDidUpdate(prevProps) {
@@ -144,6 +154,7 @@ class SearchPanels extends PureComponent {
       collectionMetadata,
       collectionQuery,
       collectionsSearch,
+      collectionSubscriptions,
       granuleMetadata,
       granuleQuery,
       granuleSearchResults,
@@ -186,6 +197,7 @@ class SearchPanels extends PureComponent {
     const { panelState } = preferences
 
     const {
+      conceptId,
       consortiums = [],
       hasAllMetadata: hasAllCollectionMetadata = false,
       title: collectionTitle = '',
@@ -196,7 +208,7 @@ class SearchPanels extends PureComponent {
     // Do not display the international/interagency data message for EOSDIS or CWIC collections
     const isInternationalInteragency = consortiums.filter((consortium) => consortium !== 'EOSDIS' && consortium !== 'GEOSS').length > 0
 
-    const { title: granuleTitle = '' } = granuleMetadata
+    const { title: granuleTitle = '', conceptId: granuleConceptId = '' } = granuleMetadata
 
     const handoffLinks = getHandoffLinks({
       collectionMetadata,
@@ -347,23 +359,61 @@ class SearchPanels extends PureComponent {
     ]
 
     const buildCollectionResultsBodyFooter = () => {
-      if (isDefaultPortal(portalId)) return null
+      const subscriptionButtonClassnames = classNames([
+        'search-panels__action',
+        'search-panels__action--subscriptions',
+        {
+          'search-panels__action--is-active': collectionSubscriptions.length > 0
+        }
+      ])
 
       return (
-        <div className="search-panels__portal-escape">
-          Looking for more collections?
-          {' '}
-          <a href="/" className="search-panels__portal-escape-link">
-            Leave
-            {' '}
-            {startCase(org)}
-            &#39;s
-            {' '}
-            {startCase(title)}
-            {' '}
-            Portal
-          </a>
-        </div>
+        <>
+          {
+            isLoggedIn && (
+              <div className="search-panels__actions">
+                <PortalFeatureContainer authentication>
+                  <AuthRequiredContainer noRedirect>
+                    <PortalLinkContainer
+                      type="button"
+                      icon={FaBell}
+                      className={subscriptionButtonClassnames}
+                      dataTestId="search-panels-actions__subscriptions-button"
+                      label={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
+                      title={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
+                      badge={collectionSubscriptions.length ? `${collectionSubscriptions.length}` : false}
+                      naked
+                      to={{
+                        pathname: '/search/subscriptions',
+                        search: location.search
+                      }}
+                    >
+                      Subscriptions
+                    </PortalLinkContainer>
+                  </AuthRequiredContainer>
+                </PortalFeatureContainer>
+              </div>
+            )
+          }
+          {
+            !isDefaultPortal(portalId) && (
+              <div className="search-panels__portal-escape">
+                Looking for more collections?
+                {' '}
+                <a href="/" className="search-panels__portal-escape-link">
+                  Leave
+                  {' '}
+                  {startCase(org)}
+                  &#39;s
+                  {' '}
+                  {startCase(title)}
+                  {' '}
+                  Portal
+                </a>
+              </div>
+            )
+          }
+        </>
       )
     }
 
@@ -603,8 +653,8 @@ class SearchPanels extends PureComponent {
 
     panelSection.push(
       <PanelGroup
-        key="subscriptions-panel"
-        primaryHeading="Subscriptions"
+        key="granule-subscriptions-panel"
+        primaryHeading="Granule Subscriptions"
         breadcrumbs={[
           {
             title: 'Search Results',
@@ -645,13 +695,43 @@ class SearchPanels extends PureComponent {
         ]}
         onPanelClose={this.onPanelClose}
       >
-        <PanelItem scrollable={false}>
-          <AuthRequiredContainer noRedirect>
-            <SubscriptionsBodyContainer />
-          </AuthRequiredContainer>
+        <PanelItem>
+          <PortalFeatureContainer authentication>
+            <AuthRequiredContainer noRedirect>
+              <SubscriptionsBodyContainer subscriptionType="granule" />
+            </AuthRequiredContainer>
+          </PortalFeatureContainer>
         </PanelItem>
       </PanelGroup>
     )
+
+    panelSection.push(
+      <PanelGroup
+        key="collection-subscriptions-panel"
+        primaryHeading="Dataset Search Subscriptions"
+        breadcrumbs={[
+          {
+            title: 'Search Results',
+            link: {
+              pathname: '/search',
+              search: location.search
+            },
+            onClick: () => onFocusedCollectionChange('')
+          }
+        ]}
+        onPanelClose={this.onPanelClose}
+      >
+        <PanelItem>
+          <PortalFeatureContainer authentication>
+            <AuthRequiredContainer noRedirect>
+              <SubscriptionsBodyContainer subscriptionType="collection" />
+            </AuthRequiredContainer>
+          </PortalFeatureContainer>
+        </PanelItem>
+      </PanelGroup>
+    )
+
+    const { edscHost } = this
 
     return (
       <Switch key="panel-children">
@@ -669,36 +749,84 @@ class SearchPanels extends PureComponent {
               const { params = {} } = match
               const { activePanel: activePanelFromProps = '' } = params
               let activePanel = '0.0.0'
+              let appTitle = ''
+              let appDescription = ''
+              let appUrl = ''
 
               switch (activePanelFromProps) {
+                case 'subscriptions':
+                  activePanel = '0.5.0'
+                  appTitle = 'Dataset Search Subscriptions'
+                  appDescription = 'Subscribe to be notifed when new datasets become available'
+                  appUrl = `${edscHost}/search/subscriptions`
+                  break
                 case 'granules/subscriptions':
                   activePanel = '0.4.0'
+                  if (collectionTitle) appTitle = `${collectionTitle} Subscriptions`
+                  if (collectionTitle) appDescription = `Subscribe to be notifed when new ${collectionTitle} data is available`
+                  if (conceptId) appUrl = `${edscHost}/search/granules/subscriptions?p=${conceptId}`
                   break
                 case 'granules/granule-details':
                   activePanel = '0.3.0'
+                  if (granuleTitle) appTitle = `${granuleTitle} Details`
+                  if (granuleTitle) appDescription = `View ${granuleTitle} on Earthdata Search`
+                  if (conceptId && granuleConceptId) appUrl = `${edscHost}/search/granules/granule-details?p=${conceptId}&g=${granuleConceptId}`
                   break
                 case 'granules/collection-details':
                   activePanel = '0.2.0'
+                  if (collectionTitle) appTitle = `${collectionTitle} Details`
+                  if (collectionTitle) appDescription = `View ${collectionTitle} on Earthdata Search`
+                  if (conceptId) appUrl = `${edscHost}/search/collection-details?p=${conceptId}`
                   break
                 case 'granules':
                   activePanel = '0.1.0'
+                  if (collectionTitle) appTitle = `${collectionTitle}`
+                  if (collectionTitle) appDescription = `Explore and access ${collectionTitle} data on Earthdata Search`
+                  if (conceptId) appUrl = `${edscHost}/search/granules?p=${conceptId}`
                   break
                 default:
                   activePanel = '0.0.0'
               }
 
               return (
-                <Panels
-                  className="search-panels"
-                  show
-                  activePanel={activePanel}
-                  draggable
-                  panelState={panelState}
-                >
-                  <PanelSection>
-                    {panelSection}
-                  </PanelSection>
-                </Panels>
+                <>
+                  {
+                    appTitle && (
+                      <Helmet>
+                        <title>{appTitle}</title>
+                        <meta name="title" content={appTitle} />
+                        <meta property="og:title" content={appTitle} />
+                      </Helmet>
+                    )
+                  }
+                  {
+                    appDescription && (
+                      <Helmet>
+                        <meta name="description" content={appDescription} />
+                        <meta property="og:description" content={appDescription} />
+                      </Helmet>
+                    )
+                  }
+                  {
+                    appUrl && (
+                      <Helmet>
+                        <link rel="canonical" href={appUrl} />
+                        <meta property="og:url" content={appUrl} />
+                      </Helmet>
+                    )
+                  }
+                  <Panels
+                    className="search-panels"
+                    show
+                    activePanel={activePanel}
+                    draggable
+                    panelState={panelState}
+                  >
+                    <PanelSection>
+                      {panelSection}
+                    </PanelSection>
+                  </Panels>
+                </>
               )
             }
           }
@@ -711,6 +839,7 @@ class SearchPanels extends PureComponent {
 SearchPanels.propTypes = {
   authToken: PropTypes.string.isRequired,
   collectionMetadata: PropTypes.shape({
+    conceptId: PropTypes.string,
     consortiums: PropTypes.arrayOf(PropTypes.string),
     hasAllMetadata: PropTypes.bool,
     isCSDA: PropTypes.bool,
@@ -729,7 +858,9 @@ SearchPanels.propTypes = {
     isLoaded: PropTypes.bool,
     isLoading: PropTypes.bool
   }).isRequired,
+  collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   granuleMetadata: PropTypes.shape({
+    conceptId: PropTypes.string,
     title: PropTypes.string
   }).isRequired,
   granuleQuery: PropTypes.shape({

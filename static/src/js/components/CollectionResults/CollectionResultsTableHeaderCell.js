@@ -56,36 +56,34 @@ const CollectionResultsTableHeaderCell = (props) => {
           }}
         />
         <PortalFeatureContainer authentication>
-          <>
-            {
-              !isCollectionInProject
-                ? (
-                  <Button
-                    className="collection-results-table__collection-action collection-results-table__collection-action--add"
-                    icon={FaPlus}
-                    variant="naked"
-                    label="Add collection to the current project"
-                    title="Add collection to the current project"
-                    onClick={(e) => {
-                      onAddProjectCollection(collectionId)
-                      e.stopPropagation()
-                    }}
-                  />
-                ) : (
-                  <Button
-                    className="collection-results-table__collection-action collection-results-table__collection-action--remove"
-                    icon={FaMinus}
-                    variant="naked"
-                    label="Remove collection from the current project"
-                    title="Remove collection from the current project"
-                    onClick={(e) => {
-                      onRemoveCollectionFromProject(collectionId)
-                      e.stopPropagation()
-                    }}
-                  />
-                )
-            }
-          </>
+          {
+            !isCollectionInProject
+              ? (
+                <Button
+                  className="collection-results-table__collection-action collection-results-table__collection-action--add"
+                  icon={FaPlus}
+                  variant="naked"
+                  label="Add collection to the current project"
+                  title="Add collection to the current project"
+                  onClick={(e) => {
+                    onAddProjectCollection(collectionId)
+                    e.stopPropagation()
+                  }}
+                />
+              ) : (
+                <Button
+                  className="collection-results-table__collection-action collection-results-table__collection-action--remove"
+                  icon={FaMinus}
+                  variant="naked"
+                  label="Remove collection from the current project"
+                  title="Remove collection from the current project"
+                  onClick={(e) => {
+                    onRemoveCollectionFromProject(collectionId)
+                    e.stopPropagation()
+                  }}
+                />
+              )
+          }
         </PortalFeatureContainer>
       </div>
     </>
@@ -105,7 +103,10 @@ CollectionResultsTableHeaderCell.propTypes = {
     })
   }).isRequired,
   row: PropTypes.shape({
-    original: PropTypes.shape({})
+    original: PropTypes.shape({
+      collectionId: PropTypes.string,
+      isCollectionInProject: PropTypes.bool
+    })
   }).isRequired
 }
 

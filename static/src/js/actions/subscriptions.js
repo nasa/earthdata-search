@@ -7,24 +7,23 @@ import {
   LOADED_SUBSCRIPTIONS,
   LOADING_SUBSCRIPTIONS,
   REMOVE_SUBSCRIPTION,
+  REMOVE_SUBSCRIPTION_DISABLED_FIELDS,
   STARTED_SUBSCRIPTIONS_TIMER,
-  UPDATE_SUBSCRIPTION_RESULTS,
-  UPDATE_COLLECTION_SUBSCRIPTION
+  UPDATE_COLLECTION_SUBSCRIPTION,
+  UPDATE_GRANULE_SUBSCRIPTION,
+  UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
+  UPDATE_SUBSCRIPTION_RESULTS
 } from '../constants/actionTypes'
 
-import { addToast } from '../util/addToast'
 import { displayNotificationType } from '../constants/enums'
-import { buildGranuleSearchParams, extractGranuleSearchParams, prepareGranuleParams } from '../util/granules'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
-import {
-  getCollectionsMetadata,
-  getFocusedCollectionMetadata
-} from '../selectors/collectionMetadata'
+import { getCollectionsMetadata } from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
-import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
-import { prepareSubscriptionQuery } from '../util/subscriptions'
+import { getCollectionSubscriptionQueryString, getGranuleSubscriptionQueryString } from '../selectors/query'
 
+import { addToast } from '../util/addToast'
+import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import GraphQlRequest from '../util/request/graphQlRequest'
 
 export const updateSubscriptionResults = (payload) => ({
@@ -59,8 +58,8 @@ export const removeSubscription = (payload) => ({
   payload
 })
 
-export const updateCollectionSubscription = (payload) => ({
-  type: UPDATE_COLLECTION_SUBSCRIPTION,
+export const updateGranuleSubscription = (payload) => ({
+  type: UPDATE_GRANULE_SUBSCRIPTION,
   payload
 })
 
@@ -69,65 +68,68 @@ export const deleteCollectionSubscription = (payload) => ({
   payload
 })
 
+export const updateCollectionSubscription = (payload) => ({
+  type: UPDATE_COLLECTION_SUBSCRIPTION,
+  payload
+})
+
+export const updateSubscriptionDisabledFields = (payload) => ({
+  type: UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
+  payload
+})
+
+export const removeSubscriptionDisabledFields = () => ({
+  type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
+})
+
 /**
  * Perform a subscriptions request.
  */
-export const createSubscription = () => async (dispatch, getState) => {
+export const createSubscription = (name, subscriptionType) => async (dispatch, getState) => {
   const state = getState()
 
   const {
     authToken
   } = state
 
-  // Retrieve data from Redux using selectors
-  const collectionId = getFocusedCollectionId(state)
-  const collectionMetadata = getFocusedCollectionMetadata(state)
   const earthdataEnvironment = getEarthdataEnvironment(state)
   const username = getUsername(state)
 
-  // Format the subscription name
-  const subscriptionName = `${collectionId} Subscription - ${new Date().toISOString()}`
-
-  // Extract granule search parameters from redux specific to the focused collection
-  const extractedGranuleParams = extractGranuleSearchParams(state, collectionId)
-
-  const granuleParams = prepareGranuleParams(
-    collectionMetadata,
-    extractedGranuleParams
-  )
-
-  const searchParams = buildGranuleSearchParams(granuleParams)
-
-  // Prune granuleParams and remove unused keys to create the subscription query
-  const subscriptionQuery = prepareSubscriptionQuery(searchParams)
+  let subscriptionQuery
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
-    mutation CreateSubscription (
-      $collectionConceptId: String!
-      $name: String!
-      $subscriberId: String!
-      $query: String!
-    ) {
-      createSubscription (
-        collectionConceptId: $collectionConceptId
-        name: $name
-        subscriberId: $subscriberId
-        query: $query
-      ) {
+    mutation CreateSubscription ($params: CreateSubscriptionInput) {
+      createSubscription (params: $params) {
           conceptId
         }
       }`
 
   let response
 
+  const params = {
+    name,
+    subscriberId: username,
+    type: subscriptionType
+  }
+
+  // If collection type get collection params, spatial, temporal, keyword, facets, feature facets, and checkboxes
+  if (subscriptionType === 'collection') {
+    subscriptionQuery = getCollectionSubscriptionQueryString(state)
+  } else {
+    // If granule type, pull out the granule specific params
+    subscriptionQuery = getGranuleSubscriptionQueryString(state)
+
+    // Retrieve data from Redux using selectors
+    const collectionId = getFocusedCollectionId(state)
+    params.collectionConceptId = collectionId
+  }
+  params.query = subscriptionQuery
+
   try {
     response = await graphQlRequestObject.search(graphQuery, {
-      collectionConceptId: collectionId,
-      name: subscriptionName,
-      subscriberId: username,
-      query: subscriptionQuery
+      params
     })
 
     parseGraphQLError(response)
@@ -137,7 +139,11 @@ export const createSubscription = () => async (dispatch, getState) => {
       autoDismiss: true
     })
 
-    await dispatch(actions.getCollectionSubscriptions())
+    if (subscriptionType === 'collection') {
+      dispatch(actions.getSubscriptions(subscriptionType, false))
+    } else {
+      dispatch(actions.getGranuleSubscriptions())
+    }
   } catch (error) {
     dispatch(actions.handleError({
       error,
@@ -154,7 +160,13 @@ export const createSubscription = () => async (dispatch, getState) => {
 /**
  * Perform a subscriptions request.
  */
-export const getSubscriptions = () => async (dispatch, getState) => {
+export const getSubscriptions = (
+  subscriptionType,
+  clearSubscriptions = true
+) => async (dispatch, getState) => {
+  if (clearSubscriptions) {
+    dispatch(updateSubscriptionResults([]))
+  }
   const state = getState()
 
   const {
@@ -171,12 +183,8 @@ export const getSubscriptions = () => async (dispatch, getState) => {
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
-    query GetSubscriptions (
-      $subscriberId: String!
-    ) {
-      subscriptions (
-        subscriberId: $subscriberId
-      ) {
+    query GetSubscriptions ($params: SubscriptionsInput) {
+      subscriptions (params: $params) {
           items {
             collection {
               conceptId
@@ -184,9 +192,12 @@ export const getSubscriptions = () => async (dispatch, getState) => {
             }
             collectionConceptId
             conceptId
+            creationDate
             name
             nativeId
             query
+            revisionDate
+            type
           }
         }
       }`
@@ -195,7 +206,10 @@ export const getSubscriptions = () => async (dispatch, getState) => {
 
   try {
     response = await graphQlRequestObject.search(graphQuery, {
-      subscriberId: username
+      params: {
+        subscriberId: username,
+        type: subscriptionType
+      }
     })
 
     parseGraphQLError(response)
@@ -253,14 +267,8 @@ export const deleteSubscription = (
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
-    mutation DeleteSubscription (
-      $conceptId: String!
-      $nativeId: String!
-    ) {
-      deleteSubscription (
-        conceptId: $conceptId
-        nativeId: $nativeId
-      ) {
+    mutation DeleteSubscription ($params: DeleteSubscriptionInput) {
+      deleteSubscription (params: $params) {
           conceptId
         }
       }`
@@ -269,8 +277,10 @@ export const deleteSubscription = (
 
   try {
     response = await graphQlRequestObject.search(graphQuery, {
-      conceptId,
-      nativeId
+      params: {
+        conceptId,
+        nativeId
+      }
     })
 
     parseGraphQLError(response)
@@ -306,29 +316,44 @@ export const deleteSubscription = (
 /**
  * Perform a subscriptions update.
  */
-export const updateSubscription = (
-  conceptId,
-  nativeId,
-  subscriptionName
-) => async (dispatch, getState) => {
+export const updateSubscription = ({
+  subscription,
+  shouldUpdateQuery
+}) => async (dispatch, getState) => {
   const state = getState()
 
   const username = getUsername(state)
-  const collectionId = getFocusedCollectionId(state)
-  const collectionMetadata = getFocusedCollectionMetadata(state)
 
-  // Extract granule search parameters from redux specific to the focused collection
-  const extractedGranuleParams = extractGranuleSearchParams(state, collectionId)
+  const {
+    collectionConceptId,
+    nativeId,
+    name,
+    query: previousSubscriptionQuery,
+    type: subscriptionType
+  } = subscription
 
-  const granuleParams = prepareGranuleParams(
-    collectionMetadata,
-    extractedGranuleParams
-  )
+  const params = {
+    name,
+    nativeId,
+    subscriberId: username,
+    type: subscriptionType
+  }
 
-  const searchParams = buildGranuleSearchParams(granuleParams)
+  // Default the subscriptionQuery to the previous query
+  let subscriptionQuery = previousSubscriptionQuery
 
-  // Prune granuleParams and remove unused keys to create the subscription query
-  const subscriptionQuery = prepareSubscriptionQuery(searchParams)
+  // If shouldUpdateQuery is true, update the query with new values pulled from redux
+  if (shouldUpdateQuery) {
+    if (subscriptionType === 'collection') {
+      subscriptionQuery = getCollectionSubscriptionQueryString(state)
+    } else {
+      subscriptionQuery = getGranuleSubscriptionQueryString(state)
+
+      params.collectionConceptId = collectionConceptId
+    }
+  }
+
+  params.query = subscriptionQuery
 
   const {
     authToken
@@ -340,20 +365,8 @@ export const updateSubscription = (
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
-    mutation UpdateSubscription (
-      $collectionConceptId: String!
-      $name: String!
-      $nativeId: String!
-      $subscriberId: String!
-      $query: String!
-    ) {
-      updateSubscription (
-        collectionConceptId: $collectionConceptId
-        name: $name
-        nativeId: $nativeId
-        subscriberId: $subscriberId
-        query: $query
-      ) {
+    mutation UpdateSubscription ($params: UpdateSubscriptionInput) {
+      updateSubscription (params: $params) {
           conceptId
         }
       }`
@@ -362,11 +375,7 @@ export const updateSubscription = (
 
   try {
     response = await graphQlRequestObject.search(graphQuery, {
-      collectionConceptId: collectionId,
-      name: subscriptionName,
-      nativeId,
-      subscriberId: username,
-      query: subscriptionQuery
+      params
     })
 
     parseGraphQLError(response)
@@ -376,13 +385,11 @@ export const updateSubscription = (
       autoDismiss: true
     })
 
-    dispatch(
-      actions.updateCollectionSubscription({
-        collectionConceptId: collectionId,
-        conceptId,
-        query: subscriptionQuery
-      })
-    )
+    if (subscriptionType === 'collection') {
+      dispatch(actions.getSubscriptions(subscriptionType, false))
+    } else {
+      dispatch(actions.getGranuleSubscriptions())
+    }
   } catch (error) {
     dispatch(actions.handleError({
       error,

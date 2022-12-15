@@ -10,6 +10,7 @@ import { isEqual } from 'lodash'
 
 import { eventEmitter } from '../../events/events'
 import { colorOptions } from '../SpatialSelection/SpatialSelection'
+import projections from '../../util/map/projections'
 
 import './ShapefileLayer.scss'
 
@@ -30,6 +31,7 @@ class ShapefileLayerExtended extends L.Layer {
     this.onMetricsMap = props.onMetricsMap
     this.isProjectPage = props.isProjectPage
     this.onToggleTooManyPointsModal = props.onToggleTooManyPointsModal
+    this.onChangeProjection = props.onChangeProjection
 
     this.options = {
       selection: L.extend({}, defaultOptions.selection, colorOptions)
@@ -185,6 +187,8 @@ class ShapefileLayerExtended extends L.Layer {
     newIcon.options.className = 'geojson-icon'
 
     const layersToSelect = []
+    let allLatsArctic = false
+    let allLatsAntarctic = false
     // eslint-disable-next-line new-cap
     const jsonLayer = new L.geoJson(response, {
       className: 'geojson-svg',
@@ -202,6 +206,15 @@ class ShapefileLayerExtended extends L.Layer {
         return new L.Marker(latlng)
       },
       onEachFeature(feature, featureLayer) {
+        let featureLatLngs
+        if (feature.geometry.type === 'Point') {
+          featureLatLngs = [featureLayer.getLatLng()]
+        } else {
+          featureLatLngs = featureLayer.getLatLngs().flat()
+        }
+        allLatsArctic = featureLatLngs.every((latlng) => latlng.lat > 45)
+        allLatsAntarctic = featureLatLngs.every((latlng) => latlng.lat < -45)
+
         const addIconClasses = (layer) => {
           const { options = {} } = layer
           const { icon = null } = options
@@ -247,6 +260,15 @@ class ShapefileLayerExtended extends L.Layer {
     const fileHash = forge.md.md5.create()
     fileHash.update(JSON.stringify(response))
     this.fileHash = fileHash.digest().toHex()
+
+    if (allLatsArctic) {
+      // Change projection to arctic
+      this.onChangeProjection(projections.arctic)
+    }
+    if (allLatsAntarctic) {
+      // Change projection to arctic
+      this.onChangeProjection(projections.antarctic)
+    }
   }
 
   // Fired when a shapefile layer, or selected shape layer is clicked

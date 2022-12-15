@@ -5,6 +5,9 @@ import {
   getEnvironmentConfig
 } from '../../../../../sharedUtils/config'
 
+import { collectionRequestPermittedCmrKeys } from '../../../../../sharedConstants/permittedCmrKeys'
+import { collectionRequestNonIndexedCmrKeys } from '../../../../../sharedConstants/nonIndexedCmrKeys'
+
 import { hasTag } from '../../../../../sharedUtils/tags'
 import { isCSDACollection } from '../isCSDACollection'
 import { getOpenSearchOsddLink } from '../getOpenSearchLink'
@@ -31,82 +34,11 @@ export default class CollectionRequest extends CmrRequest {
   }
 
   permittedCmrKeys() {
-    return [
-      'bounding_box',
-      'circle',
-      'cloud_hosted',
-      'collection_data_type',
-      'concept_id',
-      'consortium',
-      'data_center_h',
-      'data_center',
-      'echo_collection_id',
-      'facets_size',
-      'granule_data_format_h',
-      'granule_data_format',
-      'has_granules_or_cwic',
-      'has_granules',
-      'horizontal_data_resolution_range',
-      'include_facets',
-      'include_granule_counts',
-      'include_has_granules',
-      'include_tags',
-      'include_tags',
-      'instrument_h',
-      'instrument',
-      'keyword',
-      'latency',
-      'line',
-      'options',
-      'page_num',
-      'page_size',
-      'params',
-      'platform',
-      'platforms_h',
-      'point',
-      'polygon',
-      'processing_level_id_h',
-      'project_h',
-      'project',
-      'provider',
-      'science_keywords_h',
-      'service_type',
-      'sort_key',
-      'spatial_keyword',
-      'standard_product',
-      'tag_key',
-      'temporal',
-      'two_d_coordinate_system_name'
-    ]
+    return collectionRequestPermittedCmrKeys
   }
 
   nonIndexedKeys() {
-    return [
-      'bounding_box',
-      'circle',
-      'collection_data_type',
-      'concept_id',
-      'consortium',
-      'data_center_h',
-      'granule_data_format_h',
-      'granule_data_format',
-      'horizontal_data_resolution_range',
-      'instrument_h',
-      'instrument',
-      'latency',
-      'line',
-      'platform',
-      'point',
-      'polygon',
-      'processing_level_id_h',
-      'project_h',
-      'provider',
-      'service_type',
-      'sort_key',
-      'spatial_keyword',
-      'tag_key',
-      'two_d_coordinate_system_name'
-    ]
+    return collectionRequestNonIndexedCmrKeys
   }
 
   search(params) {

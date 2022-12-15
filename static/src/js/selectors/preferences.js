@@ -22,3 +22,27 @@ export const getMapPreferences = createSelector(
     return mapView
   }
 )
+
+/**
+ * Retrieve the collection sort preference from Redux
+ */
+export const getCollectionSortPreference = createSelector(
+  [getPreferences],
+  (preferences) => {
+    const { collectionSort = 'default' } = preferences
+
+    return collectionSort
+  }
+)
+
+/**
+ * Retrieve the granule sort preference from Redux
+ */
+export const getGranuleSortPreference = createSelector(
+  [getPreferences],
+  (preferences) => {
+    const { granuleSort = 'default' } = preferences
+
+    return granuleSort
+  }
+)

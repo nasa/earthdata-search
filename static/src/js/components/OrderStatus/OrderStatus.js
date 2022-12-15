@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import { Helmet } from 'react-helmet'
 
 import { FaChevronCircleRight } from 'react-icons/fa'
 
@@ -153,182 +154,190 @@ export const OrderStatus = ({
   ]
 
   return (
-    <div className="order-status">
-      <Well className="order-status">
-        <Well.Main>
-          <Well.Heading>Download Status</Well.Heading>
-          <Well.Introduction>{introduction}</Well.Introduction>
-          {
-            (isLoading && !isLoaded) && (
-              <Skeleton
-                className="order-status__item-skeleton"
-                containerStyle={{ display: 'inline-block', height: '175px', width: '100%' }}
-                shapes={orderStatusSkeleton}
-              />
-            )
-          }
-          {
-            isLoaded && (
-              <OrderStatusList
-                collections={allCollections}
-                earthdataEnvironment={earthdataEnvironment}
-                granuleDownload={granuleDownload}
-                match={match}
-                onChangePath={onChangePath}
-                onFetchRetrieval={onFetchRetrieval}
-                onFetchRetrievalCollection={onFetchRetrievalCollection}
-                onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
-                onFetchRetrievalCollectionGranuleBrowseLinks={
-                  onFetchRetrievalCollectionGranuleBrowseLinks
-                }
-                onToggleAboutCSDAModal={onToggleAboutCSDAModal}
-              />
-            )
-          }
-          <Well.Heading>Additional Resources and Documentation</Well.Heading>
-          <Well.Section>
+    <>
+      <Helmet>
+        <title>Download Status</title>
+        <meta name="title" content="Download Status" />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={`${edscHost}/downloads`} />
+      </Helmet>
+      <div className="order-status">
+        <Well className="order-status">
+          <Well.Main>
+            <Well.Heading>Download Status</Well.Heading>
+            <Well.Introduction>{introduction}</Well.Introduction>
             {
-              isLoading && (
+              (isLoading && !isLoaded) && (
                 <Skeleton
                   className="order-status__item-skeleton"
                   containerStyle={{ display: 'inline-block', height: '175px', width: '100%' }}
-                  shapes={orderStatusLinksSkeleton}
+                  shapes={orderStatusSkeleton}
                 />
               )
             }
             {
               isLoaded && (
-                <ul className="order-status__links">
-                  {
-                    (links && links.length > 0) && (
-                      links.map((link, i) => {
-                        const { dataset_id: datasetId, links } = link
-                        return (
-                          <li
-                            // eslint-disable-next-line react/no-array-index-key
-                            key={`${datasetId}_${i}`}
-                            className="order-status__links-item"
-                          >
-                            <h3 className="order-status__links-title">{datasetId}</h3>
-                            <ul className="order-status__collection-links">
-                              {
-                                links.map((link) => {
-                                  const { href } = link
-                                  return (
-                                    <li
-                                      key={href}
-                                      className="order-status__collection-links-item"
-                                    >
-                                      <a
-                                        href={href}
-                                        className="order-status__collection-link"
-                                      >
-                                        {href}
-                                      </a>
-                                    </li>
-                                  )
-                                })
-                              }
-                            </ul>
-                          </li>
-                        )
-                      })
-                    )
+                <OrderStatusList
+                  collections={allCollections}
+                  earthdataEnvironment={earthdataEnvironment}
+                  granuleDownload={granuleDownload}
+                  match={match}
+                  onChangePath={onChangePath}
+                  onFetchRetrieval={onFetchRetrieval}
+                  onFetchRetrievalCollection={onFetchRetrievalCollection}
+                  onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
+                  onFetchRetrievalCollectionGranuleBrowseLinks={
+                    onFetchRetrievalCollectionGranuleBrowseLinks
                   }
-                  {
-                    (links && links.length === 0) && (
-                      <li className="order-status__links-item">
-                        No additional resources provided
-                      </li>
-                    )
-                  }
-                </ul>
+                  onToggleAboutCSDAModal={onToggleAboutCSDAModal}
+                />
               )
             }
-          </Well.Section>
-          {
-            (isLoaded && (
-              filteredRelatedCollectionItems && filteredRelatedCollectionItems.length > 0
-            )) && (
-              <>
-                <Well.Heading>You might also be interested in...</Well.Heading>
-                <Well.Section>
+            <Well.Heading>Additional Resources and Documentation</Well.Heading>
+            <Well.Section>
+              {
+                isLoading && (
+                  <Skeleton
+                    className="order-status__item-skeleton"
+                    containerStyle={{ display: 'inline-block', height: '175px', width: '100%' }}
+                    shapes={orderStatusLinksSkeleton}
+                  />
+                )
+              }
+              {
+                isLoaded && (
                   <ul className="order-status__links">
                     {
-                      (
-                        filteredRelatedCollectionItems.map((relatedCollection, i) => {
-                          const { id } = relatedCollection
-
+                      (links && links.length > 0) && (
+                        links.map((link, i) => {
+                          const { dataset_id: datasetId, links } = link
                           return (
                             <li
                               // eslint-disable-next-line react/no-array-index-key
-                              key={`${id}_${i}`}
+                              key={`${datasetId}_${i}`}
                               className="order-status__links-item"
                             >
-                              <RelatedCollection
-                                key={`related-collection-${id}`}
-                                className="collection-body__related-collection-link"
-                                location={location}
-                                onFocusedCollectionChange={onFocusedCollectionChange}
-                                onMetricsRelatedCollection={onMetricsRelatedCollection}
-                                relatedCollection={relatedCollection}
-                              />
+                              <h3 className="order-status__links-title">{datasetId}</h3>
+                              <ul className="order-status__collection-links">
+                                {
+                                  links.map((link) => {
+                                    const { href } = link
+                                    return (
+                                      <li
+                                        key={href}
+                                        className="order-status__collection-links-item"
+                                      >
+                                        <a
+                                          href={href}
+                                          className="order-status__collection-link"
+                                        >
+                                          {href}
+                                        </a>
+                                      </li>
+                                    )
+                                  })
+                                }
+                              </ul>
                             </li>
                           )
                         })
                       )
                     }
+                    {
+                      (links && links.length === 0) && (
+                        <li className="order-status__links-item">
+                          No additional resources provided
+                        </li>
+                      )
+                    }
                   </ul>
-                </Well.Section>
-              </>
-            )
-        }
-        </Well.Main>
-        <Well.Footer>
-          <Well.Heading>Next Steps</Well.Heading>
-          <ul className="order-status__footer-link-list">
-            <li className="order-status__footer-link-item">
-              <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
-              <PortalLinkContainer
-                className="order-status__footer-link"
-                to={{
-                  pathname: '/search',
-                  search: source
-                }}
-                onClick={() => { onChangePath(`/search${source}`) }}
-              >
-                Back to Earthdata Search Results
-              </PortalLinkContainer>
-            </li>
-            <li className="order-status__footer-link-item">
-              <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
-              <PortalLinkContainer
-                className="order-status__footer-link"
-                to={{
-                  pathname: '/search',
-                  search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-                }}
-                onClick={() => { onChangePath('/search') }}
-              >
-                Start a New Earthdata Search Session
-              </PortalLinkContainer>
-            </li>
-            <li className="order-status__footer-link-item">
-              <EDSCIcon library="fa" icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
-              <PortalLinkContainer
-                className="order-status__footer-link"
-                to={{
-                  pathname: '/downloads',
-                  search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-                }}
-              >
-                View Your Download Status & History
-              </PortalLinkContainer>
-            </li>
-          </ul>
-        </Well.Footer>
-      </Well>
-    </div>
+                )
+              }
+            </Well.Section>
+            {
+              (isLoaded && (
+                filteredRelatedCollectionItems && filteredRelatedCollectionItems.length > 0
+              )) && (
+                <>
+                  <Well.Heading>You might also be interested in...</Well.Heading>
+                  <Well.Section>
+                    <ul className="order-status__links">
+                      {
+                        (
+                          filteredRelatedCollectionItems.map((relatedCollection, i) => {
+                            const { id } = relatedCollection
+
+                            return (
+                              <li
+                                // eslint-disable-next-line react/no-array-index-key
+                                key={`${id}_${i}`}
+                                className="order-status__links-item"
+                              >
+                                <RelatedCollection
+                                  key={`related-collection-${id}`}
+                                  className="collection-body__related-collection-link"
+                                  location={location}
+                                  onFocusedCollectionChange={onFocusedCollectionChange}
+                                  onMetricsRelatedCollection={onMetricsRelatedCollection}
+                                  relatedCollection={relatedCollection}
+                                />
+                              </li>
+                            )
+                          })
+                        )
+                      }
+                    </ul>
+                  </Well.Section>
+                </>
+              )
+          }
+          </Well.Main>
+          <Well.Footer>
+            <Well.Heading>Next Steps</Well.Heading>
+            <ul className="order-status__footer-link-list">
+              <li className="order-status__footer-link-item">
+                <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
+                <PortalLinkContainer
+                  className="order-status__footer-link"
+                  to={{
+                    pathname: '/search',
+                    search: source
+                  }}
+                  onClick={() => { onChangePath(`/search${source}`) }}
+                >
+                  Back to Earthdata Search Results
+                </PortalLinkContainer>
+              </li>
+              <li className="order-status__footer-link-item">
+                <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
+                <PortalLinkContainer
+                  className="order-status__footer-link"
+                  to={{
+                    pathname: '/search',
+                    search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+                  }}
+                  onClick={() => { onChangePath('/search') }}
+                >
+                  Start a New Earthdata Search Session
+                </PortalLinkContainer>
+              </li>
+              <li className="order-status__footer-link-item">
+                <EDSCIcon library="fa" icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
+                <PortalLinkContainer
+                  className="order-status__footer-link"
+                  to={{
+                    pathname: '/downloads',
+                    search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+                  }}
+                >
+                  View Your Download Status & History
+                </PortalLinkContainer>
+              </li>
+            </ul>
+          </Well.Footer>
+        </Well>
+      </div>
+    </>
   )
 }
 

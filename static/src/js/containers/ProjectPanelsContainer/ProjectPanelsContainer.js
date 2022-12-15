@@ -16,15 +16,16 @@ export const mapStateToProps = (state) => ({
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
   granulesMetadata: state.metadata.granules,
+  granulesQueries: state.query.collection.byId,
   location: state.router.location,
+  overrideTemporal: state.query.collection.overrideTemporal,
   panels: state.panels,
   portal: state.portal,
   project: state.project,
   projectCollectionsMetadata: getProjectCollectionsMetadata(state),
   shapefileId: state.shapefile.shapefileId,
   spatial: state.query.collection.spatial,
-  temporal: state.query.collection.temporal,
-  overrideTemporal: state.query.collection.overrideTemporal
+  temporal: state.query.collection.temporal
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -72,6 +73,7 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} spatial - The spatial from the store.
  * @param {Object} shapefileId - The shapefileId from the store.
  * @param {Object} projectCollection - The project collection.
+ * @param {Function} onChangePath - Callback to change the path.
  * @param {Function} onSetActivePanelGroup - Callback to set the page number.
  * @param {Function} onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.
@@ -88,6 +90,7 @@ export const ProjectPanelsContainer = ({
   focusedCollectionId,
   focusedGranuleId,
   granulesMetadata,
+  granulesQueries,
   location,
   onAddGranuleToProjectCollection,
   onChangePath,
@@ -116,6 +119,7 @@ export const ProjectPanelsContainer = ({
     focusedCollectionId={focusedCollectionId}
     focusedGranuleId={focusedGranuleId}
     granulesMetadata={granulesMetadata}
+    granulesQueries={granulesQueries}
     location={location}
     onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
     onChangePath={onChangePath}
@@ -142,6 +146,7 @@ export const ProjectPanelsContainer = ({
 )
 
 ProjectPanelsContainer.defaultProps = {
+  granulesQueries: {},
   shapefileId: null,
   temporal: {},
   overrideTemporal: {}
@@ -152,6 +157,7 @@ ProjectPanelsContainer.propTypes = {
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
+  granulesQueries: PropTypes.shape({}),
   location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,

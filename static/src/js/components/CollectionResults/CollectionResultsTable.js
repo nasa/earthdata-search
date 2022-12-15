@@ -114,22 +114,20 @@ export const CollectionResultsTable = ({
     },
     {
       Header: () => (
-        <>
-          <OverlayTrigger
-            id="collection-results-table-header--map-imagery"
-            placement="top"
-            overlay={(
-              <Tooltip id="collection-results-table-header-tooltip--earthdata-cloud">
-                Available in the Earthdata Cloud
-              </Tooltip>
+        <OverlayTrigger
+          id="collection-results-table-header--map-imagery"
+          placement="top"
+          overlay={(
+            <Tooltip id="collection-results-table-header-tooltip--earthdata-cloud">
+              Available in the Earthdata Cloud
+            </Tooltip>
             )}
-          >
-            <span>
-              <span className="mr-1">Earthdata Cloud</span>
-              <EDSCIcon icon={FaInfoCircle} size="0.625rem" />
-            </span>
-          </OverlayTrigger>
-        </>
+        >
+          <span>
+            <span className="mr-1">Earthdata Cloud</span>
+            <EDSCIcon icon={FaInfoCircle} size="0.625rem" />
+          </span>
+        </OverlayTrigger>
       ),
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
@@ -144,22 +142,20 @@ export const CollectionResultsTable = ({
     },
     {
       Header: () => (
-        <>
-          <OverlayTrigger
-            id="collection-results-table-header--map-imagery"
-            placement="top"
-            overlay={(
-              <Tooltip id="collection-results-table-header-tooltip--map-imagery">
-                Supports advanced map visualizations using the GIBS tile service
-              </Tooltip>
+        <OverlayTrigger
+          id="collection-results-table-header--map-imagery"
+          placement="top"
+          overlay={(
+            <Tooltip id="collection-results-table-header-tooltip--map-imagery">
+              Supports advanced map visualizations using the GIBS tile service
+            </Tooltip>
             )}
-          >
-            <span>
-              <span className="mr-1">Map Imagery</span>
-              <EDSCIcon icon={FaInfoCircle} size="0.625rem" />
-            </span>
-          </OverlayTrigger>
-        </>
+        >
+          <span>
+            <span className="mr-1">Map Imagery</span>
+            <EDSCIcon icon={FaInfoCircle} size="0.625rem" />
+          </span>
+        </OverlayTrigger>
       ),
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
@@ -174,24 +170,22 @@ export const CollectionResultsTable = ({
     },
     {
       Header: () => (
-        <>
-          <OverlayTrigger
-            id="collection-results-table-header--map-imagery"
-            placement="top"
-            overlay={(
-              <Tooltip id="collection-results-table-header-tooltip--map-imagery">
-                Data is available soon after being
-                {' '}
-                acquired by the instrument on the satellite
-              </Tooltip>
+        <OverlayTrigger
+          id="collection-results-table-header--map-imagery"
+          placement="top"
+          overlay={(
+            <Tooltip id="collection-results-table-header-tooltip--map-imagery">
+              Data is available soon after being
+              {' '}
+              acquired by the instrument on the satellite
+            </Tooltip>
             )}
-          >
-            <span>
-              <span className="mr-1">Near Real Time</span>
-              <EDSCIcon icon={FaInfoCircle} size="0.625rem" />
-            </span>
-          </OverlayTrigger>
-        </>
+        >
+          <span>
+            <span className="mr-1">Near Real Time</span>
+            <EDSCIcon icon={FaInfoCircle} size="0.625rem" />
+          </span>
+        </OverlayTrigger>
       ),
       Cell: ({ value, row }) => {
         const { original = {} } = row

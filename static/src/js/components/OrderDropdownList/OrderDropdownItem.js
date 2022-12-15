@@ -48,7 +48,9 @@ OrderDropdownItem.propTypes = {
   i: PropTypes.number.isRequired,
   order: PropTypes.shape({
     order_number: PropTypes.string,
-    order_information: PropTypes.shape({})
+    order_information: PropTypes.shape({
+      downloadUrls: PropTypes.shape({})
+    })
   }).isRequired,
   totalOrders: PropTypes.number.isRequired
 }

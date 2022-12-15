@@ -4,8 +4,8 @@ import {
   RESTORE_FROM_URL,
   DELETE_COLLECTION_SUBSCRIPTION,
   UPDATE_COLLECTION_METADATA,
-  UPDATE_COLLECTION_SUBSCRIPTIONS,
-  UPDATE_COLLECTION_SUBSCRIPTION
+  UPDATE_GRANULE_SUBSCRIPTIONS,
+  UPDATE_GRANULE_SUBSCRIPTION
 } from '../constants/actionTypes'
 
 const initialState = {}
@@ -33,7 +33,7 @@ const processResults = (results) => {
   return byId
 }
 
-const collectionMetadataReducer = (state = initialState, action) => {
+const collectionMetadataReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_COLLECTION_METADATA: {
       const newState = {}
@@ -55,7 +55,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
         ...newState
       }
     }
-    case UPDATE_COLLECTION_SUBSCRIPTIONS: {
+    case UPDATE_GRANULE_SUBSCRIPTIONS: {
       const { payload } = action
       const { collectionId, subscriptions } = payload
 
@@ -94,7 +94,7 @@ const collectionMetadataReducer = (state = initialState, action) => {
         }
       }
     }
-    case UPDATE_COLLECTION_SUBSCRIPTION: {
+    case UPDATE_GRANULE_SUBSCRIPTION: {
       const { payload } = action
       const { collectionConceptId, conceptId, query } = payload
 

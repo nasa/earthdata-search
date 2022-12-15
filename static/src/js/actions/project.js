@@ -199,12 +199,19 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           archiveAndDistributionInformation
           associatedDois
           boxes
+          cloudHosted
           conceptId
           coordinateSystem
           dataCenter
           dataCenters
           directDistributionInformation
           doi
+          duplicateCollections {
+            count
+            items {
+              id
+            }
+          }
           hasGranules
           lines
           points
@@ -307,10 +314,12 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           archiveAndDistributionInformation,
           associatedDois,
           boxes,
+          cloudHosted,
           conceptId,
           coordinateSystem,
           dataCenter,
           dataCenters,
+          duplicateCollections,
           granules,
           hasGranules,
           relatedCollections,
@@ -336,8 +345,10 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           archiveAndDistributionInformation,
           associatedDois,
           boxes,
+          cloudHosted,
           coordinateSystem,
           dataCenter,
+          duplicateCollections,
           granules,
           hasAllMetadata: true,
           hasGranules,

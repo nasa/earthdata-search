@@ -7,6 +7,8 @@ import {
   withRouter
 } from 'react-router-dom'
 
+import AdminProjectsContainer from '../../containers/AdminProjectsContainer/AdminProjectsContainer'
+import AdminProjectContainer from '../../containers/AdminProjectContainer/AdminProjectContainer'
 import AdminRetrievalsContainer from '../../containers/AdminRetrievalsContainer/AdminRetrievalsContainer'
 import AdminRetrievalContainer from '../../containers/AdminRetrievalContainer/AdminRetrievalContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -45,9 +47,19 @@ export class Admin extends Component {
                   >
                     View Retrievals
                   </PortalLinkContainer>
+                  {' '}
+                  |
+                  {' '}
+                  <PortalLinkContainer
+                    to="/admin/projects"
+                  >
+                    View Projects
+                  </PortalLinkContainer>
                 </Route>
                 <Route exact path={`${path}/retrievals`} component={AdminRetrievalsContainer} />
                 <Route exact path={`${path}/retrievals/:id`} component={AdminRetrievalContainer} />
+                <Route exact path={`${path}/projects`} component={AdminProjectsContainer} />
+                <Route exact path={`${path}/projects/:id`} component={AdminProjectContainer} />
               </Switch>
             </div>
           </div>

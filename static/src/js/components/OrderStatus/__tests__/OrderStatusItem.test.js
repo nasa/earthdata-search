@@ -12,7 +12,7 @@ const shouldRefreshCopy = OrderStatusItem.prototype.shouldRefresh
 
 beforeEach(() => {
   jest.clearAllMocks()
-  jest.useFakeTimers('legacy')
+  jest.useFakeTimers({ legacyFakeTimers: true })
 })
 
 afterEach(() => {

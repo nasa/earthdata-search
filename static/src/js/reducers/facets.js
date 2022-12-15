@@ -13,7 +13,7 @@ const initialState = {
   isLoaded: false
 }
 
-const facetsReducer = (state = initialState, action) => {
+const facetsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case LOADING_FACETS: {
       return {

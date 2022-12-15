@@ -32,7 +32,7 @@ export const initialGranuleState = {
   sortKey: '-start_date'
 }
 
-const queryReducer = (state = initialState, action) => {
+const queryReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_COLLECTION_QUERY: {
       return {
@@ -44,12 +44,17 @@ const queryReducer = (state = initialState, action) => {
       }
     }
     case INITIALIZE_COLLECTION_GRANULES_QUERY: {
-      const collectionId = action.payload
+      const { collectionId, granuleSortPreference } = action.payload
 
       const { collection = {} } = state
       const { byId = {} } = collection
       const { [collectionId]: focusedCollection = {} } = byId
       const { granules: focusedCollectionGranules = {} } = focusedCollection
+
+      const initialGranuleStateWithPreferences = initialGranuleState
+      if (granuleSortPreference !== 'default') {
+        initialGranuleStateWithPreferences.sortKey = granuleSortPreference
+      }
 
       return {
         ...state,
@@ -60,7 +65,7 @@ const queryReducer = (state = initialState, action) => {
             [collectionId]: {
               ...focusedCollection,
               granules: {
-                ...initialGranuleState,
+                ...initialGranuleStateWithPreferences,
                 ...focusedCollectionGranules
               }
             }
@@ -197,12 +202,19 @@ const queryReducer = (state = initialState, action) => {
     case RESTORE_FROM_URL: {
       const { query } = action.payload
 
+      const { collection, collectionSortPreference } = query
+
+      const initialCollectionQueryWithPreferences = { ...initialState.collection }
+      if (collectionSortPreference !== 'default') {
+        initialCollectionQueryWithPreferences.sortKey = collectionSortPreference === 'relevance' ? undefined : [collectionSortPreference]
+      }
+
       return {
         ...state,
         ...query,
         collection: {
-          ...initialState.collection,
-          ...query.collection
+          ...initialCollectionQueryWithPreferences,
+          ...collection
         }
       }
     }

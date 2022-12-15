@@ -18,12 +18,12 @@ describe('encodeFacets', () => {
 })
 
 describe('decodeFacets', () => {
-  test('decodes facet string into an array', () => {
+  test('decodes facet string into an array and leave values encoded', () => {
     const string = 'Facet%201!Facet%20%26%20Facet'
 
     const expectedResult = [
-      'Facet 1',
-      'Facet & Facet'
+      'Facet%201',
+      'Facet%20%26%20Facet'
     ]
 
     expect(decodeFacets(string)).toEqual(expectedResult)

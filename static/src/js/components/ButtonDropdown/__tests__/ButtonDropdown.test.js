@@ -1,5 +1,5 @@
 import React from 'react'
-import Enzyme, { mount } from 'enzyme'
+import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 
@@ -19,7 +19,7 @@ function setup(type) {
     props.badge = 'badge test'
   }
 
-  const enzymeWrapper = mount(<ButtonDropdown {...props}>Button Text</ButtonDropdown>)
+  const enzymeWrapper = shallow(<ButtonDropdown {...props}>Button Text</ButtonDropdown>)
 
   return {
     enzymeWrapper,
@@ -32,12 +32,6 @@ describe('ButtonDropdown component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper).toBeDefined()
-  })
-
-  test('should render its contents', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find('button').text()).toContain('Test Button Content')
   })
 
   test('update its open state when the open prop changes', () => {

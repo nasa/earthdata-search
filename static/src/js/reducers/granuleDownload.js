@@ -5,7 +5,7 @@ const initialState = {
   isLoaded: false
 }
 
-const updateGranuleDownloadParamsReducer = (state = initialState, action) => {
+const updateGranuleDownloadParamsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_GRANULE_LINKS: {
       const { [action.payload.id]: asdf = {} } = state

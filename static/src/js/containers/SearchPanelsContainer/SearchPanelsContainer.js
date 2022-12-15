@@ -4,9 +4,10 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
-import { getFocusedCollectionMetadata, getFocusedCollectionSubscriptions } from '../../selectors/collectionMetadata'
+import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
+import { getCollectionSubscriptions } from '../../selectors/subscriptions'
 
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions/index'
@@ -17,6 +18,7 @@ export const mapStateToProps = (state) => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
   collectionQuery: state.query.collection,
   collectionsSearch: state.searchResults.collections,
+  collectionSubscriptions: getCollectionSubscriptions(state),
   granuleMetadata: getFocusedGranuleMetadata(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
@@ -24,7 +26,6 @@ export const mapStateToProps = (state) => ({
   panels: state.panels,
   preferences: state.preferences.preferences,
   portal: state.portal,
-  subscriptions: getFocusedCollectionSubscriptions(state),
   isExportRunning: state.ui.export.isExportRunning
 })
 
@@ -77,6 +78,7 @@ export const SearchPanelsContainer = ({
   collectionMetadata,
   collectionQuery,
   collectionsSearch,
+  collectionSubscriptions,
   granuleMetadata,
   granuleSearchResults,
   granuleQuery,
@@ -102,6 +104,7 @@ export const SearchPanelsContainer = ({
     collectionMetadata={collectionMetadata}
     collectionQuery={collectionQuery}
     collectionsSearch={collectionsSearch}
+    collectionSubscriptions={collectionSubscriptions}
     granuleMetadata={granuleMetadata}
     granuleSearchResults={granuleSearchResults}
     granuleQuery={granuleQuery}
@@ -129,6 +132,7 @@ SearchPanelsContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
+  collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   granuleMetadata: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,

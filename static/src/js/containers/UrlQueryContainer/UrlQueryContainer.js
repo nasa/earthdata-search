@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -40,6 +40,7 @@ export const mapStateToProps = (state) => ({
   location: state.router.location,
   map: state.map,
   mapPreferences: getMapPreferences(state),
+  onlyEosdisCollections: state.query.collection.onlyEosdisCollections,
   organizationFacets: state.facetsParams.cmr.data_center_h,
   overrideTemporalSearch: state.query.collection.overrideTemporal,
   pathname: state.router.location.pathname,
@@ -117,11 +118,7 @@ export class UrlQueryContainer extends PureComponent {
 
   render() {
     const { children } = this.props
-    return (
-      <>
-        { children }
-      </>
-    )
+    return children
   }
 }
 

@@ -64,7 +64,7 @@ const GranuleResultsBody = ({
 
   const {
     hits: granuleHits,
-    loadTime,
+    loadTime = 0,
     isLoaded,
     isLoading,
     allIds
@@ -236,7 +236,7 @@ const GranuleResultsBody = ({
           Search Time:
           {' '}
           {
-            isLoading && !isLoaded
+            (isLoading && !isLoaded) || loadTime === 0
               ? (
                 <span className="granule-results-body__search-time-value">
                   <Spinner
@@ -280,7 +280,7 @@ GranuleResultsBody.propTypes = {
       browseUrl: PropTypes.string,
       collectionConceptId: PropTypes.string,
       dayNightFlag: PropTypes.string,
-      formattedTemporal: PropTypes.arrayOf(PropTypes.string).isRequired,
+      formattedTemporal: PropTypes.arrayOf(PropTypes.string),
       granuleThumbnail: PropTypes.string,
       id: PropTypes.string.isRequired,
       links: PropTypes.arrayOf(

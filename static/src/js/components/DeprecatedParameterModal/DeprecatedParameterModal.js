@@ -29,22 +29,20 @@ export class DeprecatedParameterModal extends Component {
     const body = (
       <>
         <p>
-          {`Occasionally, we need to make changes to our supported URL parameters. 
-          We've updated the URL in your browser, so you don't need to do anything. 
-          If you've used a bookmark to navigate here, consider updating the bookmark 
+          {`Occasionally, we need to make changes to our supported URL parameters.
+          We've updated the URL in your browser, so you don't need to do anything.
+          If you've used a bookmark to navigate here, consider updating the bookmark
           to use the new URL.`}
         </p>
         {
           deprecatedUrlParams.length !== 0 && (
-            <>
-              <Alert
-                className="text-center"
-                variant="warning"
-              >
-                {`The following URL ${pluralize('parameter', deprecatedUrlParams.length)} ${deprecatedUrlParams.length > 1 ? 'have' : 'has'} been deprecated: `}
-                <span className="font-weight-bold">{arrayToSentence(deprecatedUrlParams)}</span>
-              </Alert>
-            </>
+            <Alert
+              className="text-center"
+              variant="warning"
+            >
+              {`The following URL ${pluralize('parameter', deprecatedUrlParams.length)} ${deprecatedUrlParams.length > 1 ? 'have' : 'has'} been deprecated: `}
+              <span className="font-weight-bold">{arrayToSentence(deprecatedUrlParams)}</span>
+            </Alert>
           )
         }
         <p className="mb-0">

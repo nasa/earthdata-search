@@ -118,6 +118,9 @@ describe('ShapefileDropzoneContainer component', () => {
       },
       parallelUploads: 1,
       paramName: 'upload',
+      params: {
+        targetSrs: 'crs:84'
+      },
       previewTemplate: '<div>',
       uploadMultiple: false,
       url: 'https://ogre.adc4gis.com/convert'

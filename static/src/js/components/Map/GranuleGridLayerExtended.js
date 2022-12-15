@@ -20,8 +20,8 @@ import {
 import {
   buildLayer,
   isCartesian,
-  getPolygons,
   getLines,
+  getPolygons,
   getPoints,
   getRectangles
 } from '../../util/map/layers'
@@ -422,7 +422,18 @@ export class GranuleGridLayerExtended extends L.GridLayer {
         }
 
         if (visibleOverlappingGranulePaths.length) {
-          pathsWithHoles.push(visibleOverlappingGranulePaths)
+          const visibleOverlappingGranuleLines = visibleOverlappingGranulePaths.filter(
+            (path) => path.line
+          )
+          const visibleOverlappingGranuleNotLines = visibleOverlappingGranulePaths.filter(
+            (path) => !path.line
+          )
+
+          visibleOverlappingGranuleLines.forEach((path) => pathsWithHoles.push([path]))
+
+          if (visibleOverlappingGranuleNotLines.length) {
+            pathsWithHoles.push(visibleOverlappingGranuleNotLines)
+          }
           paths = paths.concat(visibleOverlappingGranulePaths)
         }
       }

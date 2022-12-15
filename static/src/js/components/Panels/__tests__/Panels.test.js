@@ -529,7 +529,7 @@ describe('Panels component', () => {
 
   describe('onMouseMove', () => {
     test('clears the click timeout', () => {
-      jest.useFakeTimers('legacy')
+      jest.useFakeTimers({ legacyFakeTimers: true })
 
       const { enzymeWrapper } = setup()
 

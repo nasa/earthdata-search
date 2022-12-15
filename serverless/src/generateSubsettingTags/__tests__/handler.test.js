@@ -2,6 +2,7 @@ import nock from 'nock'
 import AWS from 'aws-sdk'
 import MockDate from 'mockdate'
 import { relevantServices, relevantServiceCollections } from './mocks'
+import * as deleteSystemToken from '../../util/urs/deleteSystemToken'
 import * as getSystemToken from '../../util/urs/getSystemToken'
 import * as pageAllCmrResults from '../../util/cmr/pageAllCmrResults'
 import * as getRelevantServices from '../getRelevantServices'
@@ -30,9 +31,10 @@ describe('generateSubsettingTags', () => {
     process.env.optionDefinitionQueueUrl = 'http://example.com/optionDefinitionQueue'
 
     jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementationOnce(() => {})
 
     nock(/cmr/)
-      .matchHeader('Echo-Token', 'mocked-system-token')
+      .matchHeader('Authorization', 'Bearer mocked-system-token')
       .get(/service_option_assignments/)
       .reply(200, [
         {
@@ -47,7 +49,7 @@ describe('generateSubsettingTags', () => {
       ])
 
     nock(/cmr/)
-      .matchHeader('Echo-Token', 'mocked-system-token')
+      .matchHeader('Authorization', 'Bearer mocked-system-token')
       .get(/service_option_definitions/)
       .reply(200, [
         {
@@ -276,13 +278,16 @@ describe('generateSubsettingTags', () => {
 
   test('catches and logs errors from the service option assignments http request correctly', async () => {
     nock(/cmr/)
-      .matchHeader('Echo-Token', 'mocked-system-token')
+      .matchHeader('Authorization', 'Bearer mocked-system-token')
       .get(/service_option_assignments/)
       .reply(500, {
         errors: [
           'Test error message'
         ]
       })
+
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementationOnce(() => {})
 
     const response = await generateSubsettingTags({}, {})
 

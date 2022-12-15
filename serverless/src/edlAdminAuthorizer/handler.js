@@ -2,6 +2,7 @@ import { determineEarthdataEnvironment } from '../util/determineEarthdataEnviron
 import { generatePolicy } from '../util/authorizer/generatePolicy'
 import { getAdminUsers } from '../util/getAdminUsers'
 import { validateToken } from '../util/authorizer/validateToken'
+import { downcaseKeys } from '../util/downcaseKeys'
 
 /**
  * Custom authorizer for API Gateway authentication for the admin routes
@@ -20,7 +21,7 @@ const edlAdminAuthorizer = async (event, context) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const { Authorization: authorizationToken = '' } = headers
+  const { authorization: authorizationToken = '' } = downcaseKeys(headers)
 
   // authorizationToken comes in as `Bearer asdf.qwer.hjkl` but we only need the actual token
   const tokenParts = authorizationToken.split(' ')

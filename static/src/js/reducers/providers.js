@@ -4,7 +4,7 @@ import {
 
 const initialState = []
 
-const providersReducer = (state = initialState, action) => {
+const providersReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case SET_PROVIDERS: {
       return action.payload

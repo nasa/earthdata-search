@@ -2,7 +2,7 @@ service: earthdata-search
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs16.x
   versionFunctions: false
   stage: ${opt:stage, 'dev'}
   region: us-east-1
@@ -147,7 +147,10 @@ custom:
   # Default is 3000 so to avoid conflicts with rails applications we'll define a new port
   serverless-offline:
     httpPort: 3001
-    allowCache: true
+    reloadHandler: true
+    # Uncomment useInProcess to enable in-process run mode
+    # https://github.com/dherault/serverless-offline#run-modes
+    # useInProcess: true
 
   # Serverless Webpack configurations
   webpack:

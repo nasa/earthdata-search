@@ -2,7 +2,7 @@ import actions from './index'
 
 import {
   UPDATE_FOCUSED_COLLECTION,
-  UPDATE_COLLECTION_SUBSCRIPTIONS
+  UPDATE_GRANULE_SUBSCRIPTIONS
 } from '../constants/actionTypes'
 
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
@@ -12,11 +12,12 @@ import { getCollectionsQuery } from '../selectors/query'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
+import { getGranuleSortPreference } from '../selectors/preferences'
+import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
 import { getUsername } from '../selectors/user'
+import { isCSDACollection } from '../util/isCSDACollection'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import { portalPathFromState } from '../../../../sharedUtils/portalPath'
-import { isCSDACollection } from '../util/isCSDACollection'
-import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
@@ -98,12 +99,19 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         archiveAndDistributionInformation
         associatedDois
         boxes
+        cloudHosted
         conceptId
         coordinateSystem
         dataCenter
         dataCenters
         directDistributionInformation
         doi
+        duplicateCollections {
+          count
+          items {
+            id
+          }
+        }
         hasGranules
         lines
         nativeDataFormats
@@ -157,6 +165,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             name
             nativeId
             query
+            type
           }
         }
         tools {
@@ -204,10 +213,12 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           archiveAndDistributionInformation,
           associatedDois,
           boxes,
+          cloudHosted,
           conceptId,
           coordinateSystem,
           dataCenter,
           dataCenters,
+          duplicateCollections,
           granules,
           hasGranules,
           nativeDataFormats,
@@ -235,8 +246,10 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           archiveAndDistributionInformation,
           associatedDois,
           boxes,
+          cloudHosted,
           coordinateSystem,
           dataCenter,
+          duplicateCollections,
           granules,
           hasAllMetadata: true,
           hasGranules,
@@ -292,7 +305,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 /**
  * Request subscriptions for the focused collection
  */
-export const getCollectionSubscriptions = (collectionId) => async (dispatch, getState) => {
+export const getGranuleSubscriptions = (collectionId) => async (dispatch, getState) => {
   const state = getState()
 
   const {
@@ -311,14 +324,8 @@ export const getCollectionSubscriptions = (collectionId) => async (dispatch, get
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
-    query GetCollectionSubscriptions(
-      $collectionConceptId: String
-      $subscriberId: String
-    ) {
-      subscriptions(
-        collectionConceptId: $collectionConceptId
-        subscriberId: $subscriberId
-      ) {
+    query GetGranuleSubscriptions($params: SubscriptionsInput) {
+      subscriptions(params: $params) {
         count
         items {
           collectionConceptId
@@ -326,13 +333,17 @@ export const getCollectionSubscriptions = (collectionId) => async (dispatch, get
           name
           nativeId
           query
+          type
         }
       }
     }`
 
   const response = graphQlRequestObject.search(graphQuery, {
-    collectionConceptId,
-    subscriberId: username
+    params: {
+      collectionConceptId,
+      subscriberId: username,
+      type: 'granule'
+    }
   })
     .then((response) => {
       parseGraphQLError(response)
@@ -344,7 +355,7 @@ export const getCollectionSubscriptions = (collectionId) => async (dispatch, get
       const { subscriptions } = responseData
 
       dispatch({
-        type: UPDATE_COLLECTION_SUBSCRIPTIONS,
+        type: UPDATE_GRANULE_SUBSCRIPTIONS,
         payload: {
           collectionId: collectionConceptId,
           subscriptions
@@ -354,7 +365,7 @@ export const getCollectionSubscriptions = (collectionId) => async (dispatch, get
     .catch((error) => {
       dispatch(actions.handleError({
         error,
-        action: 'getCollectionSubscriptions',
+        action: 'getGranuleSubscriptions',
         resource: 'subscription',
         requestObject: graphQlRequestObject
       }))
@@ -370,6 +381,8 @@ export const getCollectionSubscriptions = (collectionId) => async (dispatch, get
 export const changeFocusedCollection = (collectionId) => (dispatch, getState) => {
   dispatch(actions.updateFocusedCollection(collectionId))
 
+  const state = getState()
+
   if (collectionId === '') {
     // If clearing the focused collection, also clear the focused granule
     dispatch(actions.changeFocusedGranule(''))
@@ -378,18 +391,19 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
 
     eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granule: null })
 
-    const { router } = getState()
+    const { router } = state
     const { location } = router
     const { search } = location
 
     // If clearing the focused collection, redirect the user back to the search page
     dispatch(actions.changeUrl({
-      pathname: `${portalPathFromState(getState())}/search`,
+      pathname: `${portalPathFromState(state)}/search`,
       search
     }))
   } else {
     // Initialize a nested query element in Redux for the new focused collection
-    dispatch(actions.initializeCollectionGranulesQuery(collectionId))
+    const granuleSortPreference = getGranuleSortPreference(state)
+    dispatch(actions.initializeCollectionGranulesQuery({ collectionId, granuleSortPreference }))
 
     // Initialize a nested search results element in Redux for the new focused collection
     dispatch(actions.initializeCollectionGranulesResults(collectionId))

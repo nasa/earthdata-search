@@ -48,6 +48,7 @@ describe('getActivePanelSize', () => {
 
   describe('when no values match', () => {
     test('returns null', () => {
+      // eslint-disable-next-line no-import-assign
       getPanelSizeMapExports.getPanelSizeMap = jest.fn(() => ({}))
       const result = getActivePanelSize(1100)
 

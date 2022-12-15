@@ -99,30 +99,30 @@ export class TemporalSelection extends Component {
     return value
   }
 
-  recurringSliderValues() {
-    const { temporal } = this.props
+  // recurringSliderValues() {
+  //   const { temporal } = this.props
 
-    const {
-      startDate,
-      endDate
-    } = temporal
+  //   const {
+  //     startDate,
+  //     endDate
+  //   } = temporal
 
-    const { minimumTemporalDate } = getApplicationConfig()
+  //   const { minimumTemporalDate } = getApplicationConfig()
 
-    try {
-      return {
-        min: startDate.getFullYear(),
-        max: endDate.getFullYear()
-      }
-    } catch (e) {
-      console.log(e)
+  //   try {
+  //     return {
+  //       min: startDate.getFullYear(),
+  //       max: endDate.getFullYear()
+  //     }
+  //   } catch (e) {
+  //     console.log(e)
 
-      return {
-        min: moment(minimumTemporalDate).year(),
-        max: new Date().getFullYear()
-      }
-    }
-  }
+  //     return {
+  //       min: moment(minimumTemporalDate).year(),
+  //       max: new Date().getFullYear()
+  //     }
+  //   }
+  // }
 
   render() {
     const {

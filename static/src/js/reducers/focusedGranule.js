@@ -2,7 +2,7 @@ import { UPDATE_FOCUSED_GRANULE, RESTORE_FROM_URL } from '../constants/actionTyp
 
 const initialState = ''
 
-const focusedGranuleReducer = (state = initialState, action) => {
+const focusedGranuleReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_FOCUSED_GRANULE: {
       return action.payload

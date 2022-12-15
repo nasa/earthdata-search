@@ -4,7 +4,7 @@ import {
 
 const initialState = {}
 
-const browserReducer = (state = initialState, action) => {
+const browserReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_BROWSER_VERSION: {
       const { payload } = action

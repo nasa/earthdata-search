@@ -53,9 +53,9 @@ class ErrorBoundary extends Component {
     if (hasError) {
       return (
         <div className="wrap">
-          <h1>
+          <h2 className="h1">
             We&#39;re sorry, but something went wrong.
-          </h1>
+          </h2>
           <p>
             An unknown error occurred. Please refer to the ID
             {' '}

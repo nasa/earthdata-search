@@ -94,11 +94,9 @@ export class AdvancedSearchForm extends Component {
                             }
                             {
                               errors[name] && (
-                                <>
-                                  <Form.Control.Feedback type="invalid">
-                                    {errors[name]}
-                                  </Form.Control.Feedback>
-                                </>
+                                <Form.Control.Feedback type="invalid">
+                                  {errors[name]}
+                                </Form.Control.Feedback>
                               )
                             }
                           </>

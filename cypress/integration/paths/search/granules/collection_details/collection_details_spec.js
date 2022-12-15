@@ -1,5 +1,6 @@
 import { getByTestId } from '../../../../../support/getByTestId'
 import { graphQlGetCollection } from '../../../../../support/graphQlGetCollection'
+import { graphQlGetSubscriptionsQuery } from '../../../../../support/graphQlGetSubscriptionsQuery'
 
 import { commafy } from '../../../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../../../static/src/js/util/pluralize'
@@ -11,6 +12,7 @@ import associatedDoisGranulesBody from './__mocks__/associated_dois/granules.bod
 import graphQlHeaders from './__mocks__/common/graphql.headers.json'
 import reformattingGraphQlBody from './__mocks__/reformattings/graphql.body.json'
 import reformattingsGranulesBody from './__mocks__/reformattings/granules.body.json'
+import getSubscriptionsGraphQlBody from './__mocks__/common/getSubscriptions.graphql.body.json'
 
 /**
  * Tests the search panel header and meta text for results size
@@ -168,6 +170,7 @@ describe('Path /search/granules/collection-details', () => {
       },
       (req) => {
         expect(JSON.parse(req.body).params).to.eql({
+          consortium: [],
           include_facets: 'v2',
           include_granule_counts: true,
           include_has_granules: true,
@@ -221,15 +224,26 @@ describe('Path /search/granules/collection-details', () => {
         url: '**/graphql'
       },
       (req) => {
-        expect(JSON.parse(req.body).data).to.eql(JSON.parse(graphQlGetCollection(conceptId)))
+        if (JSON.parse(req.body).data.query === graphQlGetSubscriptionsQuery) {
+          req.alias = 'graphQlSubscriptionsQuery'
+          req.reply({
+            body: getSubscriptionsGraphQlBody,
+            headers: graphQlHeaders
+          })
+        }
 
-        req.reply({
-          body: assocatedDoisGraphQlBody,
-          headers: graphQlHeaders
-        })
+        if (JSON.parse(req.body).data.query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+          req.alias = 'graphQlCollectionQuery'
+          req.reply({
+            body: assocatedDoisGraphQlBody,
+            headers: graphQlHeaders
+          })
+        }
       })
 
       cy.visit('/search/granules/collection-details?p=C1240222820-ECHO_REST&ee=uat&ac=true')
+      cy.wait('@graphQlSubscriptionsQuery')
+      cy.wait('@graphQlCollectionQuery')
 
       testCollectionTitle('Mapping Example for UMM-C 1.16.1')
 
@@ -265,7 +279,7 @@ describe('Path /search/granules/collection-details', () => {
         url: '**/search/collections.json'
       },
       (req) => {
-        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score')
+        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
         req.reply({
           body: collectionsBody,
@@ -301,6 +315,18 @@ describe('Path /search/granules/collection-details', () => {
 
         req.reply({
           body: reformattingGraphQlBody,
+          headers: graphQlHeaders
+        })
+      })
+
+      cy.intercept({
+        method: 'POST',
+        url: '**/graphql'
+      },
+      (req) => {
+        expect(JSON.parse(req.body).data.query).to.eql(graphQlGetSubscriptionsQuery)
+        req.reply({
+          body: getSubscriptionsGraphQlBody,
           headers: graphQlHeaders
         })
       })

@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, SubscriptionsContainer } from '../SubscriptionsContainer'
+import { mapDispatchToProps, mapStateToProps, SubscriptionsListContainer } from '../SubscriptionsListContainer'
 import SubscriptionsList from '../../../components/SubscriptionsList/SubscriptionsList'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -34,7 +34,7 @@ function setup() {
     onFocusedCollectionChange: jest.fn()
   }
 
-  const enzymeWrapper = shallow(<SubscriptionsContainer {...props} />)
+  const enzymeWrapper = shallow(<SubscriptionsListContainer {...props} />)
 
   return {
     enzymeWrapper,
@@ -87,7 +87,7 @@ describe('mapStateToProps', () => {
   })
 })
 
-describe('SubscriptionsContainer component', () => {
+describe('SubscriptionsListContainer component', () => {
   test('passes its props and renders SubscriptionsList component', () => {
     const { enzymeWrapper, props } = setup()
 

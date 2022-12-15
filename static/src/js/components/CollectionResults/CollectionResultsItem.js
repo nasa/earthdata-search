@@ -1,7 +1,7 @@
 import React, { forwardRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { OverlayTrigger, Tooltip, Popover } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import {
   FaClock,
   FaCloud,
@@ -41,7 +41,6 @@ import './CollectionResultsItem.scss'
  */
 export const CollectionResultsItem = forwardRef(({
   collectionMetadata,
-  variant,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
@@ -72,7 +71,6 @@ export const CollectionResultsItem = forwardRef(({
     versionId
   } = collectionMetadata
 
-  const [popoverOverride, setPopoverOverride] = useState()
   const [loadingThumbnail, setLoadingThumbnail] = useState(true)
   const { thumbnailSize } = getApplicationConfig()
   const {
@@ -143,7 +141,7 @@ export const CollectionResultsItem = forwardRef(({
       <div
         role="button"
         tabIndex="0"
-        className={`collection-results-item__link ${popoverOverride && 'collection-results-item__link--active'}`}
+        className="collection-results-item__link"
         onKeyPress={(e) => {
           if (e.key === 'Enter') {
             onViewCollectionGranules(collectionId)
@@ -362,16 +360,12 @@ export const CollectionResultsItem = forwardRef(({
                   )
                 }
               </div>
-              {
-                (variant !== 'minimal' && variant !== 'thumb-only') && (
-                  <p className="collection-results-item__desc">
-                    {summary}
-                  </p>
-                )
-              }
+              <p className="collection-results-item__desc">
+                {summary}
+              </p>
             </div>
             {
-              (variant !== 'minimal' && variant !== 'description-only') && thumbnail && (
+              thumbnail && (
                 <div className={`collection-results-item__thumb ${loadingThumbnail ? 'collection-results-item__thumb--is-loading' : 'collection-results-item__thumb--is-loaded'}`}>
                   {
                     loadingThumbnail && (
@@ -510,114 +504,17 @@ export const CollectionResultsItem = forwardRef(({
     </div>
   )
 
-  // If displaying the minimal variant, wrap the component in a popover
-  if (variant === 'minimal') {
-    return (
-      <OverlayTrigger
-        placement="right"
-        delay={{ show: 400, hide: 0 }}
-        flip
-        show={popoverOverride}
-        popperConfig={{
-          modifiers: [
-            {
-              name: 'offset',
-              options: {
-                offset: [0, 25]
-              }
-            },
-            {
-              name: 'preventOverflow',
-              options: {
-                padding: 8
-              }
-            },
-            {
-              name: 'flip',
-              options: {
-                fallbackPlacements: ['top', 'bottom']
-              }
-            }
-          ]
-        }}
-        overlay={(props) => (
-          <Popover
-            className="collection-results-item__popover"
-            {...props}
-            content
-            onMouseEnter={() => setPopoverOverride(true)}
-            onMouseLeave={() => setPopoverOverride()}
-          >
-            <section className="collection-results-item__popover-primary">
-              {
-                thumbnail && (
-                  <div className={`collection-results-item__popover-thumb ${loadingThumbnail ? 'collection-results-item__popover-thumb--is-loading' : 'collection-results-item__popover-thumb--is-loaded'}`}>
-                    {
-                      loadingThumbnail && (
-                        <Spinner
-                          className="collection-results-item__thumb-spinner"
-                          type="dots"
-                          color="white"
-                          size="tiny"
-                        />
-                      )
-                    }
-                    <img
-                      style={{ display: loadingThumbnail ? 'none' : 'block' }}
-                      className={`collection-results-item__popover-thumb-image ${loadingThumbnail ? 'collection-results-item__popover-thumb-image--is-loading' : 'collection-results-item__popover-thumb-image--is-loaded'}`}
-                      src={thumbnail.replace(`h=${thumbnailHeight}&w=${thumbnailWidth}`, 'h=500&w=500')}
-                      alt={`Thumbnail for ${datasetId}`}
-                      height="250"
-                      width="250"
-                      onLoad={onThumbnailLoaded}
-                    />
-                  </div>
-                )
-              }
-              <p className="collection-results-item__popover-desc">
-                {summary}
-              </p>
-            </section>
-            <section className="collection-results-item__popover-secondary">
-              <Button
-                className="collection-results-item__popover-secondary-button"
-                onClick={(e) => {
-                  setPopoverOverride()
-                  onViewCollectionDetails(collectionId)
-                  e.stopPropagation()
-                }}
-                label="View collection details"
-                title="View collection details"
-                bootstrapVariant="link"
-                icon={FaInfoCircle}
-              >
-                View Collection Details
-              </Button>
-            </section>
-          </Popover>
-        )}
-      >
-        {component}
-      </OverlayTrigger>
-    )
-  }
-
   return component
 })
 
 CollectionResultsItem.displayName = 'CollectionResultsItem'
-
-CollectionResultsItem.defaultProps = {
-  variant: ''
-}
 
 CollectionResultsItem.propTypes = {
   collectionMetadata: collectionMetadataPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
-  variant: PropTypes.string
+  onViewCollectionGranules: PropTypes.func.isRequired
 }
 
 export default CollectionResultsItem

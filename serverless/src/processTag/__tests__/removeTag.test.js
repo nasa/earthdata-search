@@ -14,7 +14,7 @@ describe('removeTag', () => {
     jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
 
     nock(/example/)
-      .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Authorization', 'Bearer 1234-abcd-5678-efgh')
       .delete(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify({ short_name: 'MIL3MLS' }))
       .reply(200)
 
@@ -32,7 +32,7 @@ describe('removeTag', () => {
     jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
 
     nock(/example/)
-      .matchHeader('Echo-Token', '1234-abcd-5678-efgh')
+      .matchHeader('Authorization', 'Bearer 1234-abcd-5678-efgh')
       .delete(/search\/tags\/edsc\.extra\.gibs\/associations/, JSON.stringify({ short_name: 'MIL3MLS' }))
       .reply(500)
 

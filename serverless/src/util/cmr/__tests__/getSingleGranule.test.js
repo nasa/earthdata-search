@@ -11,7 +11,7 @@ describe('getSingleGranule', () => {
     }))
 
     nock(/cmr/)
-      .matchHeader('Echo-Token', 'token')
+      .matchHeader('Authorization', 'Bearer token')
       .post(/granules/)
       .reply(200, {
         feed: {

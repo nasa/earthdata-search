@@ -3,6 +3,7 @@ import nock from 'nock'
 import processTag from '../handler'
 import * as addTag from '../addTag'
 import * as removeTag from '../removeTag'
+import * as deleteSystemToken from '../../util/urs/deleteSystemToken'
 import * as getSystemToken from '../../util/urs/getSystemToken'
 
 beforeEach(() => {
@@ -12,6 +13,7 @@ beforeEach(() => {
 describe('processTag', () => {
   test('correctly defaults the Records array', async () => {
     jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
     const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
 
@@ -24,6 +26,7 @@ describe('processTag', () => {
 
   test('correctly calls addTag', async () => {
     jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
     const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
 
@@ -60,6 +63,7 @@ describe('processTag', () => {
 
   test('doesnt call addTag when tagData matches current tagData', async () => {
     jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
     const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
 
@@ -106,6 +110,7 @@ describe('processTag', () => {
 
   test('correctly call addTag when no searchCriteria is provided', async () => {
     jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
     const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
 
@@ -140,6 +145,7 @@ describe('processTag', () => {
 
   test('doesnt call addTag when tagData matches current tagData when the difference is updated_at', async () => {
     jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
     const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
 
@@ -192,6 +198,7 @@ describe('processTag', () => {
 
   test('correctly calls removeTag', async () => {
     jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
+    jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => 'mocked-system-token')
 
     const removeTagMock = jest.spyOn(removeTag, 'removeTag').mockImplementation(() => jest.fn())
 

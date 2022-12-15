@@ -1,7 +1,9 @@
 /* eslint-disable import/no-dynamic-require, global-require */
 
 import { ADD_PORTAL } from '../constants/actionTypes'
+import { displayNotificationType } from '../constants/enums'
 import { getPortalConfig } from '../util/portals'
+import { addError } from './errors'
 
 export const addPortal = (payload) => ({
   type: ADD_PORTAL,
@@ -31,5 +33,12 @@ export const loadPortalConfig = (portalId) => (dispatch) => {
     dispatch(addPortal({ portalId, ...json }))
   } catch (error) {
     console.error('Portal could not be loaded', error)
+    dispatch(
+      addError({
+        id: portalId,
+        notificationType: displayNotificationType.banner,
+        title: `Portal ${portalId} could not be loaded`
+      })
+    )
   }
 }

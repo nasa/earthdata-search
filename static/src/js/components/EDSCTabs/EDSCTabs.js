@@ -25,20 +25,12 @@ export const EDSCTabs = ({
     }
   ])
 
-  return (
-    (
-      <>
-        {
-          children.filter(Boolean).length > 0 && (
-            <div className={tabsClassNames}>
-              <Tabs className="edsc-tabs__tabs">
-                {children}
-              </Tabs>
-            </div>
-          )
-        }
-      </>
-    )
+  return children.filter(Boolean).length > 0 && (
+    <div className={tabsClassNames}>
+      <Tabs className="edsc-tabs__tabs">
+        {children}
+      </Tabs>
+    </div>
   )
 }
 

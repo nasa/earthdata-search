@@ -101,27 +101,25 @@ export const GranuleResultsActionsContainer = (props) => {
   })
 
   return (
-    <>
-      <GranuleResultsActions
-        addedGranuleIds={addedGranuleIds}
-        focusedCollectionId={focusedCollectionId}
-        focusedProjectCollection={focusedProjectCollection}
-        granuleLimit={granuleLimit}
-        handoffLinks={handoffLinks}
-        initialLoading={initialLoading}
-        isCollectionInProject={isCollectionInProject}
-        location={location}
-        onAddProjectCollection={onAddProjectCollection}
-        onChangePath={onChangePath}
-        onRemoveCollectionFromProject={onRemoveCollectionFromProject}
-        onSetActivePanelSection={onSetActivePanelSection}
-        projectCollectionIds={projectCollectionIds}
-        projectGranuleCount={projectGranuleCount}
-        removedGranuleIds={removedGranuleIds}
-        searchGranuleCount={searchGranuleCount}
-        subscriptions={subscriptions}
-      />
-    </>
+    <GranuleResultsActions
+      addedGranuleIds={addedGranuleIds}
+      focusedCollectionId={focusedCollectionId}
+      focusedProjectCollection={focusedProjectCollection}
+      granuleLimit={granuleLimit}
+      handoffLinks={handoffLinks}
+      initialLoading={initialLoading}
+      isCollectionInProject={isCollectionInProject}
+      location={location}
+      onAddProjectCollection={onAddProjectCollection}
+      onChangePath={onChangePath}
+      onRemoveCollectionFromProject={onRemoveCollectionFromProject}
+      onSetActivePanelSection={onSetActivePanelSection}
+      projectCollectionIds={projectCollectionIds}
+      projectGranuleCount={projectGranuleCount}
+      removedGranuleIds={removedGranuleIds}
+      searchGranuleCount={searchGranuleCount}
+      subscriptions={subscriptions}
+    />
   )
 }
 

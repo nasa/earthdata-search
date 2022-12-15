@@ -165,8 +165,7 @@ export class AccessMethod extends Component {
       selectedAccessMethod,
       shapefileId,
       spatial,
-      temporal,
-      overrideTemporal
+      temporal
     } = this.props
 
     const { conceptId: collectionId } = metadata
@@ -436,7 +435,6 @@ export class AccessMethod extends Component {
                           shapefileId={shapefileId}
                           spatial={spatial}
                           temporal={temporal}
-                          overrideTemporal={overrideTemporal}
                           onUpdateAccessMethod={onUpdateAccessMethod}
                         />
                       </Suspense>
@@ -445,62 +443,59 @@ export class AccessMethod extends Component {
                 }
                 {
                   supportsTemporalSubsetting && (
-                    <>
-                      <ProjectPanelSection
-                        customHeadingTag="h4"
-                        heading="Temporal Subsetting"
-                        intro="When enabled, temporal subsetting will trim the data to the selected temporal range."
-                        warning={isRecurring && 'To prevent unexpected results, temporal subsetting is not supported for recurring dates.'}
-                        nested
-                      >
-                        {
-                          (startDate || endDate) && (
-                            <Form.Group controlId="input__temporal-subsetting" className="mb-0">
-                              <Form.Check
-                                id="input__temporal-subsetting"
-                                type="checkbox"
-                                label={(
-                                  <span className={`mb-1 d-block ${!enableTemporalSubsetting && 'text-muted'}`}>
-                                    Trim output granules to the selected temporal constraint
-                                  </span>
-                                )}
-                                checked={enableTemporalSubsetting}
-                                disabled={isRecurring}
-                                onChange={this.handleToggleTemporalSubsetting}
-                              />
-                              {
-                                enableTemporalSubsetting && (
-                                  <p className="access-method__section-status mt-2 mb-0">
-                                    Selected Range:
-                                    <br />
-                                    {selectedTemporalDisplay}
-                                  </p>
-                                )
-                              }
-                            </Form.Group>
-                          )
-                        }
-                        {
-                          !(startDate || endDate) && (
-                            <p className="access-method__section-status mb-0">
-                              { /* eslint-disable-next-line max-len */}
-                              No temporal range selected. Make a temporal selection to enable temporal subsetting.
-                            </p>
-                          )
-                        }
-                      </ProjectPanelSection>
-                    </>
+                    <ProjectPanelSection
+                      customHeadingTag="h4"
+                      heading="Temporal Subsetting"
+                      intro="When enabled, temporal subsetting will trim the data to the selected temporal range."
+                      warning={isRecurring && 'To prevent unexpected results, temporal subsetting is not supported for recurring dates.'}
+                      nested
+                    >
+                      {
+                        (startDate || endDate) && (
+                          <Form.Group controlId="input__temporal-subsetting" className="mb-0">
+                            <Form.Check
+                              id="input__temporal-subsetting"
+                              type="checkbox"
+                              label={(
+                                <span className={`mb-1 d-block ${!enableTemporalSubsetting && 'text-muted'}`}>
+                                  Trim output granules to the selected temporal constraint
+                                </span>
+                              )}
+                              checked={enableTemporalSubsetting}
+                              disabled={isRecurring}
+                              onChange={this.handleToggleTemporalSubsetting}
+                            />
+                            {
+                              enableTemporalSubsetting && (
+                                <p className="access-method__section-status mt-2 mb-0">
+                                  Selected Range:
+                                  <br />
+                                  {selectedTemporalDisplay}
+                                </p>
+                              )
+                            }
+                          </Form.Group>
+                        )
+                      }
+                      {
+                        !(startDate || endDate) && (
+                          <p className="access-method__section-status mb-0">
+                            { /* eslint-disable-next-line max-len */}
+                            No temporal range selected. Make a temporal selection to enable temporal subsetting.
+                          </p>
+                        )
+                      }
+                    </ProjectPanelSection>
                   )
                 }
                 {
                   supportsVariableSubsetting && (
-                    <>
-                      <ProjectPanelSection
-                        customHeadingTag="h4"
-                        heading="Variables"
-                        intro="Use science keywords to subset your collection granules by measurements and variables."
-                        nested
-                      >
+                    <ProjectPanelSection
+                      customHeadingTag="h4"
+                      heading="Variables"
+                      intro="Use science keywords to subset your collection granules by measurements and variables."
+                      nested
+                    >
                         {
                           selectedVariables.length > 0 && (
                             <p className="access-method__section-status">
@@ -516,67 +511,62 @@ export class AccessMethod extends Component {
                             </p>
                           )
                         }
-                        <Button
-                          type="button"
-                          bootstrapVariant="primary"
-                          label="Edit Variables"
-                          bootstrapSize="sm"
-                          onClick={() => {
-                            onSetActivePanel(`0.${index}.1`)
-                            onTogglePanels(true)
-                          }}
-                        >
-                          Edit Variables
-                        </Button>
-                      </ProjectPanelSection>
-                    </>
+                      <Button
+                        type="button"
+                        bootstrapVariant="primary"
+                        label="Edit Variables"
+                        bootstrapSize="sm"
+                        onClick={() => {
+                          onSetActivePanel(`0.${index}.1`)
+                          onTogglePanels(true)
+                        }}
+                      >
+                        Edit Variables
+                      </Button>
+                    </ProjectPanelSection>
                   )
                 }
                 {
                   supportedOutputFormatOptions.length > 0 && (
-                    <>
-                      <ProjectPanelSection
-                        customHeadingTag="h4"
-                        heading="Output Format"
-                        intro="Choose from output format options like GeoTIFF, NETCDF, and other file types."
-                        nested
+                    <ProjectPanelSection
+                      customHeadingTag="h4"
+                      heading="Output Format"
+                      intro="Choose from output format options like GeoTIFF, NETCDF, and other file types."
+                      nested
+                    >
+                      <select
+                        id="input__output-format"
+                        className="form-control form-control-sm"
+                        onChange={this.handleOutputFormatSelection}
+                        value={selectedOutputFormat}
                       >
-                        <select
-                          id="input__output-format"
-                          className="form-control form-control-sm"
-                          onChange={this.handleOutputFormatSelection}
-                          value={selectedOutputFormat}
-                        >
-                          {[
-                            <option key="output-format-none" value="">None</option>,
-                            ...supportedOutputFormatOptions
-                          ]}
-                        </select>
-                      </ProjectPanelSection>
-                    </>
+                        {[
+                          <option key="output-format-none" value="">None</option>,
+                          ...supportedOutputFormatOptions
+                        ]}
+                      </select>
+                    </ProjectPanelSection>
                   )
                 }
                 {
                   supportedOutputProjectionOptions.length > 0 && (
-                    <>
-                      <ProjectPanelSection
-                        heading="Output Projection Selection"
-                        intro="Choose a desired output projection from supported EPSG Codes."
-                        nested
+                    <ProjectPanelSection
+                      heading="Output Projection Selection"
+                      intro="Choose a desired output projection from supported EPSG Codes."
+                      nested
+                    >
+                      <select
+                        id="input__output-projection"
+                        className="form-control form-control-sm"
+                        onChange={this.handleOutputProjectionSelection}
+                        value={selectedOutputProjection}
                       >
-                        <select
-                          id="input__output-projection"
-                          className="form-control form-control-sm"
-                          onChange={this.handleOutputProjectionSelection}
-                          value={selectedOutputProjection}
-                        >
-                          {[
-                            <option key="output-projection-none" value="">None</option>,
-                            ...supportedOutputProjectionOptions
-                          ]}
-                        </select>
-                      </ProjectPanelSection>
-                    </>
+                        {[
+                          <option key="output-projection-none" value="">None</option>,
+                          ...supportedOutputProjectionOptions
+                        ]}
+                      </select>
+                    </ProjectPanelSection>
                   )
                 }
               </>
@@ -627,8 +617,7 @@ AccessMethod.propTypes = {
     endDate: PropTypes.string,
     isRecurring: PropTypes.bool,
     startDate: PropTypes.string
-  }).isRequired,
-  overrideTemporal: PropTypes.shape({}).isRequired
+  }).isRequired
 }
 
 export default AccessMethod

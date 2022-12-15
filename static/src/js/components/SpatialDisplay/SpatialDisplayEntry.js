@@ -1,14 +1,9 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 
 const SpatialDisplayEntry = (props) => {
   const { children } = props
 
-  return (
-    <>
-      {children}
-    </>
-  )
+  return children
 }
 
 SpatialDisplayEntry.defaultProps = {

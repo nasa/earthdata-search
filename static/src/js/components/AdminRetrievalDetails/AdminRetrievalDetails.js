@@ -37,22 +37,24 @@ export const AdminRetrievalDetails = ({
     <div className="admin-retrieval-details">
       <Row>
         <Col sm="auto">
-          <div className="admin-retrieval-details__metadata-display">
-            <p className="admin-retrieval-details__metadata-display-item">
+          <Row className="admin-retrieval-details__metadata-display mb-2">
+            <Col className="admin-retrieval-details__metadata-display-item">
               <span className="admin-retrieval-details__metadata-display-heading">Owner</span>
               <span className="admin-retrieval-details__metadata-display-content">{username}</span>
-            </p>
-            <p className="admin-retrieval-details__metadata-display-item">
+            </Col>
+            <Col className="admin-retrieval-details__metadata-display-item">
               <span className="admin-retrieval-details__metadata-display-heading">Obfuscated ID</span>
               <span className="admin-retrieval-details__metadata-display-content">{obfuscatedId}</span>
-            </p>
-            <p className="admin-retrieval-details__metadata-display-item">
+            </Col>
+          </Row>
+          <Row className="admin-retrieval-details__metadata-display mb-2">
+            <Col className="admin-retrieval-details__metadata-display-item">
               <span className="admin-retrieval-details__metadata-display-heading">Source Path</span>
               <a className="admin-retrieval-details__metadata-display-content" href={sourcePath} target="_blank" rel="noopener noreferrer">
                 {sourcePath}
               </a>
-            </p>
-          </div>
+            </Col>
+          </Row>
         </Col>
         <Col sm="auto">
           {

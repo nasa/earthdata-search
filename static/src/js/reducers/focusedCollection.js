@@ -2,7 +2,7 @@ import { UPDATE_FOCUSED_COLLECTION, RESTORE_FROM_URL } from '../constants/action
 
 const initialState = ''
 
-const focusedCollectionReducer = (state = initialState, action) => {
+const focusedCollectionReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_FOCUSED_COLLECTION: {
       return action.payload

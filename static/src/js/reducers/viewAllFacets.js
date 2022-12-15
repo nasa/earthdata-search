@@ -19,7 +19,7 @@ const initialState = {
   selectedCategory: null
 }
 
-const viewAllFacetsReducer = (state = initialState, action) => {
+const viewAllFacetsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case LOADING_VIEW_ALL_FACETS: {
       return {

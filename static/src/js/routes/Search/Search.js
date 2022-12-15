@@ -40,7 +40,6 @@ import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
 import actions from '../../actions'
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 const mapDispatchToProps = (dispatch) => ({
   onUpdateAdvancedSearch:
@@ -74,11 +73,13 @@ export const Search = ({
   const { path } = match
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
 
-  const { hasGranulesOrCwic = false, tagKey } = collectionQuery
+  const {
+    hasGranulesOrCwic = false,
+    onlyEosdisCollections
+  } = collectionQuery
   const isHasNoGranulesChecked = !hasGranulesOrCwic
 
-  const { eosdisTagKey } = getApplicationConfig()
-  const isEosdisChecked = tagKey === eosdisTagKey
+  const isEosdisChecked = onlyEosdisCollections || false
 
   const handleCheckboxCheck = (event) => {
     const { target } = event
@@ -86,8 +87,8 @@ export const Search = ({
 
     const collection = {}
     if (id === 'input__non-eosdis') {
-      if (!checked) collection.tagKey = undefined
-      if (checked) collection.tagKey = getApplicationConfig().eosdisTagKey
+      if (!checked) collection.onlyEosdisCollections = undefined
+      if (checked) collection.onlyEosdisCollections = true
     }
 
     if (id === 'input__only-granules') {
@@ -99,6 +100,24 @@ export const Search = ({
       collection
     })
   }
+
+  const granuleFiltersSidebar = (
+    <SidebarSection
+      sectionTitle="Filter Granules"
+      titleIcon={FaFilter}
+      headerAction={{
+        title: 'Clear Filters',
+        onClick: () => {
+          setGranuleFiltersNeedReset(true)
+        }
+      }}
+    >
+      <GranuleFiltersContainer
+        granuleFiltersNeedsReset={granuleFiltersNeedsReset}
+        setGranuleFiltersNeedReset={setGranuleFiltersNeedReset}
+      />
+    </SidebarSection>
+  )
 
   return (
     <div className="route-wrapper route-wrapper--search search">
@@ -118,21 +137,7 @@ export const Search = ({
             </SidebarSection>
           </Route>
           <Route exact path={`${path}/granules`}>
-            <SidebarSection
-              sectionTitle="Filter Granules"
-              titleIcon={FaFilter}
-              headerAction={{
-                title: 'Clear Filters',
-                onClick: () => {
-                  setGranuleFiltersNeedReset(true)
-                }
-              }}
-            >
-              <GranuleFiltersContainer
-                granuleFiltersNeedsReset={granuleFiltersNeedsReset}
-                setGranuleFiltersNeedReset={setGranuleFiltersNeedReset}
-              />
-            </SidebarSection>
+            {granuleFiltersSidebar}
           </Route>
           <Route exact path={`${path}/granules/granule-details`}>
             <SidebarSection
@@ -143,12 +148,7 @@ export const Search = ({
             </SidebarSection>
           </Route>
           <Route exact path={`${path}/granules/subscriptions`}>
-            <SidebarSection
-              sectionTitle="Collection Details"
-              titleIcon={FaInfoCircle}
-            >
-              <CollectionDetailsHighlightsContainer />
-            </SidebarSection>
+            {granuleFiltersSidebar}
           </Route>
           <Route path={path}>
             <SidebarSection
@@ -213,7 +213,7 @@ export const Search = ({
 Search.propTypes = {
   collectionQuery: PropTypes.shape({
     hasGranulesOrCwic: PropTypes.bool,
-    tagKey: PropTypes.string
+    onlyEosdisCollections: PropTypes.bool
   }).isRequired,
   match: PropTypes.shape({
     path: PropTypes.string

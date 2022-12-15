@@ -23,7 +23,7 @@ const processResults = (results) => {
   return byId
 }
 
-const granuleMetadataReducer = (state = initialState, action) => {
+const granuleMetadataReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_GRANULE_METADATA: {
       const newState = {}
