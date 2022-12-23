@@ -123,7 +123,7 @@
     "html-webpack-partials-plugin": "^0.8.0",
     "html-webpack-plugin": "^5.5.0",
     "jquery": "^3.6.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "knex": "^0.95.15",
     "leaflet": "^1.7.1",
     "leaflet-draw": "^1.0.4",
