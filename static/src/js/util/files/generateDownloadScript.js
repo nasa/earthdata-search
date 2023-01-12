@@ -64,7 +64,7 @@ exit_with_error() {
 prompt_credentials
   detect_app_approval() {
     approved=\`curl -s -b "$cookiejar" -c "$cookiejar" -L --max-redirs 5 --netrc-file "$netrc" ${firstGranuleLink} -w %{http_code} | tail  -1\`
-    if [ "$approved" -ne "302" ]; then
+    if [ "$approved" -ne "200" ] && [ "$approved" -ne "301" ] && [ "$approved" -ne "302" ]; then
         # User didn't approve the app. Direct users to approve the app in URS
         exit_with_error "Please ensure that you have authorized the remote application by visiting the link below "
     fi
