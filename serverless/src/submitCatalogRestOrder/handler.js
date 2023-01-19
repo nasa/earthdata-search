@@ -3,6 +3,7 @@ import 'array-foreach-async'
 import axios from 'axios'
 import { parse as parseXml } from 'fast-xml-parser'
 import { stringify } from 'qs'
+import camelcaseKeys from 'camelcase-keys'
 
 import { getBoundingBox } from '../util/echoForms/getBoundingBox'
 import { getClientId } from '../../../sharedUtils/getClientId'
@@ -25,7 +26,6 @@ import { parseError } from '../../../sharedUtils/parseError'
 import { portalPath } from '../../../sharedUtils/portalPath'
 import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
 import { processPartialShapefile } from '../util/processPartialShapefile'
-import { readCmrResults } from '../util/cmr/readCmrResults'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
 
 /**
@@ -88,23 +88,49 @@ const submitCatalogRestOrder = async (event, context) => {
         selectedFeatures
       } = jsondata
 
-      const preparedGranuleParams = prepareGranuleAccessParams(granuleParams)
+      const preparedGranuleParams = camelcaseKeys(prepareGranuleAccessParams(granuleParams))
+
+      const { pageNum = 1, pageSize: limit } = preparedGranuleParams
+      const offset = limit * (pageNum - 1)
+
+      // Only retrieve the granule title from cmr-graphql
+      const graphqlQuery = `
+        query GetGranules ($params: GranulesInput) {
+          granules (params: $params) {
+            items {
+              title
+            }
+          }
+        }
+      `
 
       const granuleResponse = await axios({
-        url: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
-        params: preparedGranuleParams,
-        paramsSerializer: (params) => stringify(params,
-          {
-            indices: false,
-            arrayFormat: 'brackets'
-          }),
+        url: `${getEarthdataConfig(environment).graphQlHost}/api`,
+        data: {
+          query: graphqlQuery,
+          variables: {
+            params: {
+              ...preparedGranuleParams,
+              pageNum: undefined,
+              pageSize: undefined,
+              echoCollectionId: undefined,
+              collectionConceptId: preparedGranuleParams.echoCollectionId,
+              limit,
+              offset
+            }
+          },
+          operationName: 'GetGranules'
+        },
+        method: 'post',
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'Client-Id': getClientId().background
         }
       })
-
-      const granuleResponseBody = readCmrResults('search/granules.json', granuleResponse)
+      const { data: responseData } = granuleResponse
+      const { data } = responseData
+      const { granules } = data
+      const { items: granulesItems } = granules
 
       const { edscHost } = getEnvironmentConfig()
 
@@ -135,7 +161,7 @@ const submitCatalogRestOrder = async (event, context) => {
       }
 
       const orderPayload = {
-        FILE_IDS: granuleResponseBody.map((granuleMetadata) => granuleMetadata.title).join(','),
+        FILE_IDS: granulesItems.map((granuleMetadata) => granuleMetadata.title).join(','),
         CLIENT_STRING: `To view the status of your request, please see: ${edscStatusUrl}`,
 
         // Add echo forms keys to the order payload
