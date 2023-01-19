@@ -41,7 +41,7 @@ const FilterStackItem = (props) => {
   return (
     <li
       className={filterStackItemClasses}
-      data-test-id={dataTestId}
+      data-testid={dataTestId}
     >
       <div className="filter-stack-item__content">
         <div className="filter-stack-item__body">
@@ -84,7 +84,7 @@ const FilterStackItem = (props) => {
           hint && (
             <div
               className="filter-stack-item__hint"
-              data-test-id="filter-stack-item__hint"
+              data-testid="filter-stack-item__hint"
             >
               {hint}
             </div>

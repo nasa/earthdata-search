@@ -91,7 +91,7 @@ class FacetsItem extends Component {
           <input
             id={uid}
             className="facets-item__checkbox"
-            data-test-id={`facet_item-${kebabCase(facet.title)}`}
+            data-testid={`facet_item-${kebabCase(facet.title)}`}
             type="checkbox"
             checked={applied}
             onChange={this.onFacetChange.bind(this, changeHandlerArgs)}

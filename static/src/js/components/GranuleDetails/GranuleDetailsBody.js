@@ -24,7 +24,7 @@ const GranuleDetailsBody = ({
   return (
     <div
       className="granule-details-body"
-      data-test-id="granule-details-body"
+      data-testid="granule-details-body"
     >
       <Tabs defaultActiveKey="information">
         <Tab eventKey="information" title="Information">

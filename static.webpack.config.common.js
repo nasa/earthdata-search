@@ -192,7 +192,9 @@ const StaticCommonConfig = {
     }),
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
-      $: 'jquery'
+      $: 'jquery',
+      process: 'process/browser.js',
+      Buffer: ['buffer', 'Buffer']
     }),
     new ESLintPlugin(),
     // Prevent importing of all moment locales. Moment includes and uses en-us by default.

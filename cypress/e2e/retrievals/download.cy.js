@@ -101,6 +101,20 @@ describe('Download project spec', () => {
         headers: authHeaders
       }
     )
+    cy.intercept(
+      'POST',
+      '**/graphql',
+      {
+        body: {
+          data: {
+            granules: {
+              items: null
+            }
+          }
+        },
+        headers: authHeaders
+      }
+    )
 
     // view download links
     cy.contains('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1720.061.2020008170450.hdf').should('be.visible')

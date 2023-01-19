@@ -1,10 +1,15 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
 import { CollectionDetailsBodyContainer, mapDispatchToProps, mapStateToProps } from '../CollectionDetailsBodyContainer'
 import CollectionDetailsBody from '../../../components/CollectionDetails/CollectionDetailsBody'
+
+// Mock react-leaflet because it causes errors
+jest.mock('react-leaflet', () => ({
+  createLayerComponent: jest.fn().mockImplementation(() => {})
+}))
 
 Enzyme.configure({ adapter: new Adapter() })
 

@@ -174,7 +174,7 @@ export const Search = ({
                         <Form.Check
                           checked={isHasNoGranulesChecked}
                           id="input__only-granules"
-                          data-test-id="input_only-granules"
+                          data-testid="input_only-granules"
                           label="Include collections without granules"
                           onChange={(event) => handleCheckboxCheck(event)}
                         />
@@ -183,7 +183,7 @@ export const Search = ({
                         <Form.Check
                           checked={isEosdisChecked}
                           id="input__non-eosdis"
-                          data-test-id="input_non-eosdis"
+                          data-testid="input_non-eosdis"
                           label="Include only EOSDIS collections"
                           onChange={(event) => handleCheckboxCheck(event)}
                         />

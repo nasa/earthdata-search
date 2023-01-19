@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import {
-  Map,
+  MapContainer,
   ImageOverlay
 } from 'react-leaflet'
 
@@ -13,7 +14,7 @@ import MapThumb from '../../../assets/images/plate_carree_earth_scaled@2x.png'
 import './CollectionDetailsMinimap.scss'
 
 export const CollectionDetailsMinimap = ({ metadata }) => (
-  <Map
+  <MapContainer
     className="collection-details-minimap"
     minZoom={0}
     maxZoom={0}
@@ -33,7 +34,7 @@ export const CollectionDetailsMinimap = ({ metadata }) => (
       bounds={[[-90, -180], [90, 180]]}
     />
     <CollectionDetailsFeatureGroup metadata={metadata} />
-  </Map>
+  </MapContainer>
 )
 
 CollectionDetailsMinimap.propTypes = {

@@ -54,7 +54,7 @@ export const CollectionDetailsHighlights = ({
         <div className="collection-details-highlights__item-body">
           <div
             className="collection-details-highlights__item-value"
-            data-test-id="collection-details-highlights__version-id"
+            data-testid="collection-details-highlights__version-id"
           >
             {
               (isLoading && !isLoaded) ? (
@@ -119,7 +119,7 @@ export const CollectionDetailsHighlights = ({
         <div className="collection-details-highlights__item-body">
           <div
             className="collection-details-highlights__item-value"
-            data-test-id="collection-details-highlights__temporal"
+            data-testid="collection-details-highlights__temporal"
           >
             {
               (isLoading && !isLoaded) ? (
@@ -149,7 +149,7 @@ export const CollectionDetailsHighlights = ({
               <div className="collection-details-highlights__item-body">
                 <div
                   className="collection-details-highlights__item-value collection-details-highlights__item-value--desc"
-                  data-test-id="collection-details-highlights__description"
+                  data-testid="collection-details-highlights__description"
                 >
                   {
                     (isLoading && !isLoaded) ? (

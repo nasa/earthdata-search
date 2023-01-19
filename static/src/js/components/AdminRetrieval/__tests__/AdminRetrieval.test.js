@@ -1,6 +1,6 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import { AdminRetrieval } from '../AdminRetrieval'
 import { AdminPage } from '../../AdminPage/AdminPage'

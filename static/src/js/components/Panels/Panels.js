@@ -4,8 +4,8 @@ import classNames from 'classnames'
 
 import { Overlay, Tooltip } from 'react-bootstrap'
 
-import PanelSection from './PanelSection'
-import PanelGroup from './PanelGroup'
+import { PanelSection } from './PanelSection'
+import { PanelGroup } from './PanelGroup'
 
 import history from '../../util/history'
 import { getPanelSizeMap } from '../../util/getPanelSizeMap'
@@ -66,9 +66,8 @@ export class Panels extends PureComponent {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.onWindowResize)
-    window.addEventListener('keyup', this.onWindowKeyUp)
-    window.addEventListener('resize', this.onWindowResize)
+    window.addEventListener('resize', this.onWindowResize, { capture: true })
+    window.addEventListener('keyup', this.onWindowKeyUp, { capture: true })
     this.browserHistoryUnlisten = history.listen(this.onWindowResize)
 
     const maxWidth = this.calculateMaxWidth()
@@ -255,7 +254,7 @@ export class Panels extends PureComponent {
     document.addEventListener('mousemove', this.onMouseMove)
     document.addEventListener('mouseup', this.onMouseUp)
 
-    this.onPanelDragStart(width, e.pageX)
+    this.onPanelDragStart(width, e.clientX)
   }
 
   onMouseUp() {
@@ -280,7 +279,7 @@ export class Panels extends PureComponent {
       })
     }
 
-    this.pageX = e.pageX
+    this.clientX = e.clientX
 
     if (!dragging) return
 
@@ -297,12 +296,12 @@ export class Panels extends PureComponent {
     } = this.state
 
     const {
-      pageX,
+      clientX,
       clickStartX,
       clickStartWidth
     } = this
 
-    const distanceDragged = pageX - clickStartX
+    const distanceDragged = clientX - clickStartX
 
     if (!show) {
       // If the panel is closed and a user drags the handle passed the threshold, reset the clickStartWidth
@@ -374,7 +373,7 @@ export class Panels extends PureComponent {
     } = this.state
 
     const {
-      pageX,
+      clientX,
       clickStartX,
       clickStartWidth
     } = this
@@ -387,7 +386,7 @@ export class Panels extends PureComponent {
         handleToolipVisible: false
       }
 
-      const distanceDragged = pageX - clickStartX
+      const distanceDragged = clientX - clickStartX
       const newWidth = distanceDragged + clickStartWidth
 
       // Close the panel if its current with is smaller than the minWidth minus the threshold
@@ -566,13 +565,14 @@ export class Panels extends PureComponent {
         ref={(node) => {
           this.container = node
         }}
-        data-test-id="panels-section"
+        data-testid="panels-section"
       >
         {
           draggable && (
             <>
               <div
                 className="panels__handle"
+                data-testid="panels__handle"
                 aria-label={`${handleTooltipState} panel (${keyboardShortcuts.togglePanel})`}
                 role="button"
                 tabIndex="0"

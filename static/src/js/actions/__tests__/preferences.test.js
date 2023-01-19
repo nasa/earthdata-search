@@ -1,7 +1,6 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import nock from 'nock'
-import jwt from 'jsonwebtoken'
 
 import {
   SET_PREFERENCES_IS_SUBMITTING,
@@ -20,6 +19,7 @@ import {
 import actions from '..'
 
 import * as addToast from '../../util/addToast'
+import { testJwtToken } from './mocks'
 
 const mockStore = configureMockStore([thunk])
 
@@ -55,13 +55,26 @@ describe('setPreferences', () => {
 describe('setPreferencesFromJwt', () => {
   test('should create an action to update the store', () => {
     const preferences = {
-      panelState: 'default'
+      mapView: {
+        zoom: 4,
+        latitude: 39,
+        baseLayer: 'blueMarble',
+        longitude: -95,
+        projection: 'epsg4326',
+        overlayLayers: [
+          'referenceFeatures',
+          'referenceLabels'
+        ]
+      },
+      panelState: 'default',
+      granuleSort: 'default',
+      collectionSort: 'default',
+      granuleListView: 'default',
+      collectionListView: 'default'
     }
 
-    jest.spyOn(jwt, 'decode').mockImplementation(() => ({ preferences }))
-
     const store = mockStore({})
-    store.dispatch(setPreferencesFromJwt('mockJwt'))
+    store.dispatch(setPreferencesFromJwt(testJwtToken))
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
@@ -89,13 +102,16 @@ describe('setPreferencesFromJwt', () => {
           'referenceFeatures',
           'referenceLabels'
         ]
-      }
+      },
+      panelState: 'default',
+      granuleSort: 'default',
+      collectionSort: 'default',
+      granuleListView: 'default',
+      collectionListView: 'default'
     }
 
-    jest.spyOn(jwt, 'decode').mockImplementation(() => ({ preferences }))
-
     const store = mockStore({})
-    store.dispatch(setPreferencesFromJwt('mockJwt'))
+    store.dispatch(setPreferencesFromJwt(testJwtToken))
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({

@@ -46,7 +46,11 @@ export const Timeline = ({
 
       previousHeight.current = elementHeight
     }
-  })
+
+    return () => {
+      window.dispatchEvent(new Event('resize'))
+    }
+  }, [containerRef.current])
 
   // Show the override temporal modal if temporal and focused exist and showOverrideModal is true
   useEffect(() => {

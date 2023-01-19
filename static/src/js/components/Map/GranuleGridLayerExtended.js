@@ -337,7 +337,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
 
     // If the devicePixelRatio is not 1, adjust the outline tile so pixelation of the borders is avoided.
     if (dpr !== 1) {
-      const outlineCanvasCtx = outlineCanvas.getContext('2d')
+      const outlineCanvasCtx = outlineCanvas.getContext('2d', { willReadFrequently: true })
       const currentWidth = outlineCanvas.width
       const currentHeight = outlineCanvas.height
       outlineCanvas.style.transform = `scale(${dpr / 4})`
@@ -462,7 +462,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
 
   // Draws an outline of the granule paths
   drawOutlines(canvas, paths, nwPoint) {
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
     ctx.globalCompositeOperation = 'destination-over'
@@ -480,7 +480,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
 
   // Draws the granule paths
   drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint) {
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
 
@@ -609,7 +609,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
 
   // Draws the gibs imagery for the granule
   drawClippedImagery(canvas, boundary, paths, nwPoint) {
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
 
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
@@ -685,7 +685,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
   drawFullBackTile(canvases, boundary, pathsWithHoles, nwPoint) {
     const { outline: outlineCanvas } = canvases
 
-    const ctx = outlineCanvas.getContext('2d')
+    const ctx = outlineCanvas.getContext('2d', { willReadFrequently: true })
 
     ctx.save()
     ctx.translate(-nwPoint.x, -nwPoint.y)
@@ -771,7 +771,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     const tilePixel = point.subtract(this._map.latLngToLayerPoint(bounds.getNorthWest()))
 
     let result = null
-    const ctx = outlineCanvas.getContext('2d')
+    const ctx = outlineCanvas.getContext('2d', { willReadFrequently: true })
     const { data } = ctx.getImageData(tilePixel.x, tilePixel.y, 1, 1)
     if (data[3] === 255) {
       // eslint-disable-next-line no-bitwise
@@ -919,7 +919,8 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     return (() => {
       const result = []
       events.forEach((event) => {
-        const method = `_on${event.split('.').map((str) => capitalize(str)).join('')}`
+        const edscMethodName = event.replace('map', 'edsc').replace('.layer', '').replace(/C\d+-[A-Z_]+\./, '')
+        const method = `_on${edscMethodName.split('.').map((str) => capitalize(str)).join('')}`
         result.push(obj[onOrOff](event, this[method]))
       })
       return result
@@ -1113,14 +1114,14 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     const marker = L.marker([0, 0], { clickable: false, icon })
     layer.addLayer(marker)
 
-    let firstShape = layer.getLayers()[0]
+    let [firstShape] = layer.getLayers()
     if ((firstShape != null ? firstShape._interiors : undefined) != null) {
       firstShape = firstShape._interiors
     }
 
     if (firstShape != null) {
       firstShape.on('add', function add() {
-        const center = (this.getLatLng != null) ? this.getLatLng() : this.getCenter()
+        const center = (this.getLatLng != null) ? this.getLatLng() : this.getBounds().getCenter()
         return marker.setLatLng(center)
       })
     }

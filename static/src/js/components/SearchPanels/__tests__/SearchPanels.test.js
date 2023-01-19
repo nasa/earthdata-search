@@ -1,6 +1,6 @@
 import React from 'react'
 import Enzyme, { mount, shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import { Provider } from 'react-redux'
 import { StaticRouter } from 'react-router'
 import {
@@ -21,6 +21,11 @@ import Panels from '../../Panels/Panels'
 import PanelGroup from '../../Panels/PanelGroup'
 import PanelGroupHeader from '../../Panels/PanelGroupHeader'
 import GranuleResultsActionsContainer from '../../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
+
+// Mock react-leaflet because it causes errors
+jest.mock('react-leaflet', () => ({
+  createLayerComponent: jest.fn().mockImplementation(() => {})
+}))
 
 const store = configureStore()
 

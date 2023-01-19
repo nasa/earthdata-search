@@ -35,7 +35,7 @@ class TextField extends Component {
         <span className={`visually-hidden ${classNames.labelSpan}`}>{placeholder}</span>
         <input
           id="input__search-bar"
-          data-test-id={dataTestId}
+          data-testid={dataTestId}
           name={name}
           type="text"
           placeholder={placeholder}

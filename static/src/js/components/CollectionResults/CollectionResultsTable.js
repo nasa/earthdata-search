@@ -280,7 +280,7 @@ export const CollectionResultsTable = ({
   return (
     <div
       className="collection-results-table"
-      data-test-id="collection-results-table"
+      data-testid="collection-results-table"
     >
       <EDSCTable
         id="collection-results-table"

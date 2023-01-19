@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import Enzyme, { shallow, mount } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import Autosuggest from 'react-autosuggest'
 
 import SearchForm from '../SearchForm'

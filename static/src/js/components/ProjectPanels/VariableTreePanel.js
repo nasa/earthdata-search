@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { pure } from 'recompose'
 
 import Button from '../Button/Button'
 import ProjectPanelSection from './ProjectPanelSection'
@@ -96,4 +95,4 @@ VariableTreePanel.propTypes = {
   onViewDetails: PropTypes.func.isRequired
 }
 
-export default pure(VariableTreePanel)
+export default VariableTreePanel

@@ -86,7 +86,7 @@ export const PanelGroupHeader = ({
         breadcrumbs.length > 0 && (
           <nav
             className="panel-group-header__breadcrumbs"
-            data-test-id="panel-group-header__breadcrumbs"
+            data-testid="panel-group-header__breadcrumbs"
           >
             {
               breadcrumbs.map((crumb, i) => {
@@ -177,7 +177,7 @@ export const PanelGroupHeader = ({
               <span className="panel-group-header__heading">
                 <h2
                   className="panel-group-header__heading-primary"
-                  data-test-id="panel-group-header__heading-primary"
+                  data-testid="panel-group-header__heading-primary"
                 >
                   {primaryHeading}
                 </h2>
@@ -272,7 +272,7 @@ export const PanelGroupHeader = ({
                   : (
                     <span
                       className="panel-group-header__heading-meta-text"
-                      data-test-id="panel-group-header__heading-meta-text"
+                      data-testid="panel-group-header__heading-meta-text"
                     >
                       {headerMetaPrimaryText}
                     </span>

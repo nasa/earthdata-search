@@ -1,5 +1,5 @@
 /**
- * Finds an element by using the data-test-id attribute
- * @param {String} id data-test-id attribute in markup
+ * Finds an element by using the data-testid attribute
+ * @param {String} id data-testid attribute in markup
  */
-export const getByTestId = (id) => cy.get(`[data-test-id=${id}]`)
+export const getByTestId = (id) => cy.get(`[data-testid=${id}]`)

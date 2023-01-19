@@ -129,7 +129,7 @@ export const RadioSettingDropdown = ({
         <Dropdown.Toggle
           ref={toggleRef}
           id={id}
-          data-test-id={id}
+          data-testid={id}
           className="radio-setting-dropdown__toggle"
           activeIcon={activeIcon}
           as={RadioSettingToggle}
@@ -138,7 +138,7 @@ export const RadioSettingDropdown = ({
         {
           ReactDOM.createPortal(
             <Dropdown.Menu
-              data-test-id={`${id}__menu`}
+              data-testid={`${id}__menu`}
               ref={menuRef}
               className={menuClasses}
               popperConfig={{

@@ -99,7 +99,7 @@ export const Button = React.forwardRef(({
       target={target}
       rel={rel}
       style={style}
-      data-test-id={dataTestId}
+      data-testid={dataTestId}
     >
       {(!spinner && icon && iconPosition === 'left') && (
         <EDSCIcon

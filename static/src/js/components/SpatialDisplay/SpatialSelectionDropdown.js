@@ -56,7 +56,7 @@ export class SpatialSelectionDropdown extends PureComponent {
     return (
       <Dropdown
         className="spatial-selection-dropdown dropdown-dark"
-        data-test-id="spatial-selection-dropdown"
+        data-testid="spatial-selection-dropdown"
       >
         <Dropdown.Toggle
           variant="inline-block"
@@ -68,7 +68,7 @@ export class SpatialSelectionDropdown extends PureComponent {
         <Dropdown.Menu className="spatial-selection-dropdown__menu">
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
-            data-test-id="spatial-selection__polygon"
+            data-testid="spatial-selection__polygon"
             as={Button}
             icon="edsc-icon-poly-open edsc-icon-fw"
             onClick={() => this.onItemClick('polygon')}
@@ -78,7 +78,7 @@ export class SpatialSelectionDropdown extends PureComponent {
           </Dropdown.Item>
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
-            data-test-id="spatial-selection__rectangle"
+            data-testid="spatial-selection__rectangle"
             as={Button}
             icon="edsc-icon-rect-open edsc-icon-fw"
             onClick={() => this.onItemClick('rectangle')}
@@ -88,7 +88,7 @@ export class SpatialSelectionDropdown extends PureComponent {
           </Dropdown.Item>
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
-            data-test-id="spatial-selection__point"
+            data-testid="spatial-selection__point"
             as={Button}
             icon={FaMapMarker}
             onClick={() => this.onItemClick('point')}
@@ -98,7 +98,7 @@ export class SpatialSelectionDropdown extends PureComponent {
           </Dropdown.Item>
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
-            data-test-id="spatial-selection__circle"
+            data-testid="spatial-selection__circle"
             as={Button}
             icon={FaCircle}
             onClick={() => this.onItemClick('circle')}
@@ -108,7 +108,7 @@ export class SpatialSelectionDropdown extends PureComponent {
           </Dropdown.Item>
           <Dropdown.Item
             className="spatial-selection-dropdown__button"
-            data-test-id="spatial-selection__shapefile"
+            data-testid="spatial-selection__shapefile"
             as={Button}
             icon={FaFile}
             onClick={() => this.onItemClick('file')}
