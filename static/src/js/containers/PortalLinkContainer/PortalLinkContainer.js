@@ -73,7 +73,7 @@ export const PortalLinkContainer = (props) => {
   return (
     <Link
       className={className}
-      data-test-id={dataTestId}
+      data-testid={dataTestId}
       type={type}
       to={newTo}
       onClick={onClick}

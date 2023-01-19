@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { pure } from 'recompose'
 import { uniqueId } from 'lodash'
 import classNames from 'classnames'
 
@@ -119,4 +118,4 @@ FacetsList.propTypes = {
   variation: PropTypes.string
 }
 
-export default pure(FacetsList)
+export default FacetsList

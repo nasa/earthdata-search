@@ -1,6 +1,6 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import FacetsGroup from '../FacetsGroup'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -9,7 +9,8 @@ const setup = (overrideProps) => {
   const props = {
     facet: {
       children: [],
-      totalSelected: 0
+      totalSelected: 0,
+      changeHandler: jest.fn()
     },
     facetCategory: 'Test Category',
     onTriggerViewAllFacets: jest.fn(),
@@ -50,7 +51,8 @@ describe('FacetsGroup component', () => {
       const { enzymeWrapper } = setup({
         facet: {
           children: new Array(10),
-          totalSelected: 9
+          totalSelected: 9,
+          changeHandler: jest.fn()
         }
       })
       enzymeWrapper.setState({ isOpen: true })
@@ -63,7 +65,8 @@ describe('FacetsGroup component', () => {
       const { enzymeWrapper } = setup({
         facet: {
           children: new Array(51),
-          totalSelected: 0
+          totalSelected: 0,
+          changeHandler: jest.fn()
         }
       })
       enzymeWrapper.setState({ isOpen: true })
@@ -76,7 +79,8 @@ describe('FacetsGroup component', () => {
       const { enzymeWrapper, props } = setup({
         facet: {
           children: new Array(51),
-          totalSelected: 0
+          totalSelected: 0,
+          changeHandler: jest.fn()
         }
       })
       enzymeWrapper.setState({ isOpen: true })

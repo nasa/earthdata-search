@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { pure } from 'recompose'
 
 import ProjectPanelSection from './ProjectPanelSection'
 
@@ -54,4 +53,4 @@ VariableDetailsPanel.propTypes = {
   })
 }
 
-export default pure(VariableDetailsPanel)
+export default VariableDetailsPanel

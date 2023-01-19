@@ -325,7 +325,7 @@ const EDSCTable = ({
             {...rowRest}
             style={{ ...rowStyle, width: '100%' }}
             className={rowClasses}
-            data-test-id={rowTestId}
+            data-testid={rowTestId}
             {...rowEvents}
             {...focusableProps}
             {...rowTitleFromState}

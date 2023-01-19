@@ -1,12 +1,7 @@
-/* eslint-disable max-classes-per-file */
-
 import React from 'react'
 import { renderToString } from 'react-dom/server'
+import { createControlComponent } from '@react-leaflet/core'
 import { Control } from 'leaflet'
-import {
-  withLeaflet,
-  MapControl
-} from 'react-leaflet'
 import { FaPlus, FaMinus, FaHome } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -127,15 +122,13 @@ class ZoomExtended extends Control.Zoom {
 
     // return this._map.setView([-90, 0], 0)
     // }
+
+    // TODO This isn't great for different projections, existing problem
     // eslint-disable-next-line no-underscore-dangle
     return this._map.setView([0, 0], 2)
   }
 }
 
-class ZoomHome extends MapControl {
-  createLeafletElement() {
-    return new ZoomExtended()
-  }
-}
+const ZoomHome = (props) => new ZoomExtended(props)
 
-export default withLeaflet(ZoomHome)
+export default createControlComponent(ZoomHome)

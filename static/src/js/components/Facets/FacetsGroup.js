@@ -60,7 +60,7 @@ class FacetsGroup extends Component {
     }
 
     return (
-      <li className="facets-group" key={title} data-test-id={`facet_group-${kebabCase(title)}`}>
+      <li className="facets-group" key={title} data-testid={`facet_group-${kebabCase(title)}`}>
         <h3 className="facets-group__heading">
           <button
             className="btn btn-block facets-group__button"
@@ -99,7 +99,7 @@ class FacetsGroup extends Component {
         </h3>
         {
           isOpen && (
-            <section className="facets-group__body" data-test-id={`facet-${kebabCase(title)}`}>
+            <section className="facets-group__body" data-testid={`facet-${kebabCase(title)}`}>
               {
                 facet.children.length > 49 && (
                   <header className="facets-group__header">

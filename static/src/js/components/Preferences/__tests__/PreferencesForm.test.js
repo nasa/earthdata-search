@@ -1,7 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow, mount } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-import Form from 'react-jsonschema-form'
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import Form from '@rjsf/core'
 import { act } from 'react-dom/test-utils'
 
 import PreferencesForm from '../PreferencesForm'

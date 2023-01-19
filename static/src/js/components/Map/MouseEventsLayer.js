@@ -1,10 +1,11 @@
 /* eslint-disable max-classes-per-file, no-underscore-dangle */
 
 import L from 'leaflet'
-import {
-  withLeaflet,
-  MapLayer
-} from 'react-leaflet'
+import { createLayerComponent } from '@react-leaflet/core'
+// import {
+//   withLeaflet,
+//   MapLayer
+// } from 'react-leaflet'
 
 import $ from 'jquery'
 
@@ -103,10 +104,17 @@ class MouseEventsLayerExtended extends L.Layer {
   }
 }
 
-class MouseEventsLayer extends MapLayer {
-  createLeafletElement(props) {
-    return new MouseEventsLayerExtended(props)
-  }
+// class MouseEventsLayer extends MapLayer {
+//   createLeafletElement(props) {
+//     return new MouseEventsLayerExtended(props)
+//   }
+// }
+
+// export default withLeaflet(MouseEventsLayer)
+
+const MouseEventsLayer = (props, context) => {
+  const layer = new MouseEventsLayerExtended(props)
+  return { instance: layer, context }
 }
 
-export default withLeaflet(MouseEventsLayer)
+export default createLayerComponent(MouseEventsLayer, MouseEventsLayer)

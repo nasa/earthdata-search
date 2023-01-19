@@ -1,15 +1,19 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import ArrowTags from '../../ArrowTags/ArrowTags'
 import Button from '../../Button/Button'
 import CollapsePanel from '../../CollapsePanel/CollapsePanel'
 import CollectionDetailsBody from '../CollectionDetailsBody'
-import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
 import RelatedCollection from '../../RelatedCollection/RelatedCollection'
 import Skeleton from '../../Skeleton/Skeleton'
 import SplitBadge from '../../SplitBadge/SplitBadge'
+
+// Mock react-leaflet because it causes errors
+jest.mock('react-leaflet', () => ({
+  createLayerComponent: jest.fn().mockImplementation(() => {})
+}))
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -108,93 +112,6 @@ describe('CollectionDetailsBody component', () => {
 
       expect(enzymeWrapper.type()).toBe('div')
       expect(enzymeWrapper.prop('className')).toBe('collection-details-body')
-    })
-
-    describe('MiniMap component', () => {
-      test('renders correctly', () => {
-        const { enzymeWrapper } = setup({
-          overrideMetadata: {
-            boxes: [
-              '-90 -180 90 180'
-            ],
-            spatial: [
-              'Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)'
-            ]
-          }
-        })
-
-        expect(enzymeWrapper.find(CollectionDetailsMinimap).length).toEqual(1)
-      })
-
-      test('does not render if the collectionDetailsBody is not active', () => {
-        const { enzymeWrapper } = setup({
-          overrideProps: {
-            isActive: false
-          }
-        })
-
-        expect(enzymeWrapper.find(CollectionDetailsMinimap).length).toEqual(0)
-      })
-
-      test('has the correct props', () => {
-        const { enzymeWrapper } = setup({
-          overrideMetadata: {
-            boxes: [
-              '-90 -180 90 180'
-            ],
-            spatial: [
-              'Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)'
-            ]
-          }
-        })
-        expect(enzymeWrapper.find(CollectionDetailsMinimap).props().metadata).toEqual({
-          hasAllMetadata: true,
-          boxes: [
-            '-90 -180 90 180'
-          ],
-          dataCenters: [],
-          directDistributionInformation: {},
-          scienceKeywords: [],
-          nativeDataFormats: [],
-          spatial: [
-            'Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)'
-          ],
-          urls: {
-            html: {
-              title: 'HTML',
-              href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.html'
-            },
-            native: {
-              title: 'Native',
-              href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.native'
-            },
-            atom: {
-              title: 'ATOM',
-              href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.atom'
-            },
-            echo10: {
-              title: 'ECHO10',
-              href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.echo10'
-            },
-            iso19115: {
-              title: 'ISO19115',
-              href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.iso19115'
-            },
-            dif: {
-              title: 'DIF',
-              href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.dif'
-            },
-            osdd: {
-              title: 'OSDD',
-              href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=edsc-prod&shortName=1860_1993_2050_NITROGEN_830&versionId=1&dataCenter=ORNL_DAAC'
-            },
-            granuleDatasource: {
-              title: 'CMR',
-              href: 'https://cmr.earthdata.nasa.gov/search/granules.json?echo_collection_id=C179003620-ORNL_DAAC'
-            }
-          }
-        })
-      })
     })
 
     describe('Spatial bounding', () => {

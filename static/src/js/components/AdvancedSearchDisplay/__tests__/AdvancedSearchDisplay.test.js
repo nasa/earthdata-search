@@ -1,6 +1,6 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import FilterStackItem from '../../FilterStack/FilterStackItem'
 import AdvancedSearchDisplay from '../AdvancedSearchDisplay'
 

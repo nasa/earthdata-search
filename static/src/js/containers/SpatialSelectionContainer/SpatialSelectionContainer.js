@@ -3,6 +3,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { useMap } from 'react-leaflet'
 
 import actions from '../../actions'
 import { metricsMap, metricsSpatialEdit } from '../../middleware/metrics/actions'
@@ -13,6 +14,7 @@ import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata
 import SpatialSelection from '../../components/SpatialSelection/SpatialSelection'
 
 export const mapDispatchToProps = (dispatch) => ({
+  onChangeMap: (query) => dispatch(actions.changeMap(query)),
   onChangeQuery: (query) => dispatch(actions.changeQuery(query)),
   onMetricsMap: (type) => dispatch(metricsMap(type)),
   onMetricsSpatialEdit: (data) => dispatch(metricsSpatialEdit(data)),
@@ -33,13 +35,13 @@ export const mapStateToProps = (state) => ({
 })
 
 export const SpatialSelectionContainer = (props) => {
+  const map = useMap()
   const {
     advancedSearch,
     boundingBoxSearch,
     circleSearch,
     collectionMetadata,
     lineSearch,
-    mapRef,
     onChangeQuery,
     pointSearch,
     polygonSearch,
@@ -57,10 +59,8 @@ export const SpatialSelectionContainer = (props) => {
 
   const { isOpenSearch = false } = collectionMetadata
 
-  const { leafletElement } = mapRef
-
   // If the map isn't loaded yet, don't render the spatial selection component
-  if (!leafletElement) return null
+  if (!map) return null
 
   return (
     <SpatialSelection
@@ -70,7 +70,6 @@ export const SpatialSelectionContainer = (props) => {
       isOpenSearch={isOpenSearch}
       isProjectPage={isProjectPage}
       lineSearch={lineSearch}
-      mapRef={mapRef}
       onChangeQuery={onChangeQuery}
       pointSearch={pointSearch}
       polygonSearch={polygonSearch}
@@ -79,6 +78,7 @@ export const SpatialSelectionContainer = (props) => {
       onMetricsMap={onMetricsMap}
       onMetricsSpatialEdit={onMetricsSpatialEdit}
       onRemoveSpatialFilter={onRemoveSpatialFilter}
+      map={map}
     />
   )
 }

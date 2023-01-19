@@ -134,7 +134,7 @@ export const CollectionResultsItem = forwardRef(({
   const component = (
     <div
       className="collection-results-item"
-      data-test-id="collection-results-item"
+      data-testid="collection-results-item"
       key={collectionId}
       ref={ref}
     >
@@ -152,7 +152,7 @@ export const CollectionResultsItem = forwardRef(({
           onViewCollectionGranules(collectionId)
           e.stopPropagation()
         }}
-        data-test-id={`collection-result-item_${collectionId}`}
+        data-testid={`collection-result-item_${collectionId}`}
       >
         <div className="collection-results-item__body">
           <div className="collection-results-item__body-primary">

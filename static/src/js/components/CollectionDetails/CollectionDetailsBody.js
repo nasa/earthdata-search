@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { uniq } from 'lodash'
@@ -224,8 +225,8 @@ export const CollectionDetailsBody = ({
           <div className="row collection-details-body__row">
             <div className="col col-12">
               <div className="collection-details-body__tags">
-                <Badge className="collection-details-header__short-name mr-2" variant="light" data-test-id="collection-details-header__short-name">{shortName}</Badge>
-                <Badge className="collection-details-header__version-id mr-2" variant="info" data-test-id="collection-details-header__version-id">{`Version ${versionId}`}</Badge>
+                <Badge className="collection-details-header__short-name mr-2" variant="light" data-testid="collection-details-header__short-name">{shortName}</Badge>
+                <Badge className="collection-details-header__version-id mr-2" variant="info" data-testid="collection-details-header__version-id">{`Version ${versionId}`}</Badge>
                 {
                   doiText && buildDoiLink(doiLink, doiText)
                 }
@@ -234,7 +235,7 @@ export const CollectionDetailsBody = ({
                 associatedDois && associatedDois.length > 0 && (
                   <dl
                     className="collection-details-body__info"
-                    data-test-id="collection-details-body__info-additional-dois"
+                    data-testid="collection-details-body__info-additional-dois"
                   >
                     <dt>Associated DOIs</dt>
                     <dd className="collection-details-body__links">
@@ -266,7 +267,7 @@ export const CollectionDetailsBody = ({
               }
               <dl
                 className="collection-details-body__info"
-                data-test-id="collection-details-body__info-related-urls"
+                data-testid="collection-details-body__info-related-urls"
               >
                 <dt>Related URLs</dt>
                 <dd className="collection-details-body__links collection-details-body__links--horizontal">
@@ -301,7 +302,7 @@ export const CollectionDetailsBody = ({
                 temporal && (
                   <dl
                     className="collection-details-body__info"
-                    data-test-id="collection-details-body__info-temporal"
+                    data-testid="collection-details-body__info-temporal"
                   >
                     <dt>Temporal Extent</dt>
                     <dd>
@@ -319,7 +320,7 @@ export const CollectionDetailsBody = ({
                 nativeDataFormats && nativeDataFormats.length > 0 && (
                   <dl
                     className="collection-details-body__info"
-                    data-test-id="collection-details-body__info-native-data-formats"
+                    data-testid="collection-details-body__info-native-data-formats"
                   >
                     <dt>{`Native ${pluralize('Format', nativeDataFormats.length)}`}</dt>
                     <dd>
@@ -334,7 +335,7 @@ export const CollectionDetailsBody = ({
                 Object.keys(reformattings).length > 0 && (
                   <dl
                     className="collection-details-body__info"
-                    data-test-id="collection-details-body__info-reformattings"
+                    data-testid="collection-details-body__info-reformattings"
                   >
                     <dt>
                       Reformatting Options
@@ -389,7 +390,7 @@ export const CollectionDetailsBody = ({
 
               <dl
                 className="collection-details-body__info"
-                data-test-id="collection-details-body__info-gibs-projections"
+                data-testid="collection-details-body__info-gibs-projections"
               >
                 <dt>GIBS Imagery Projection Availability</dt>
                 <dd>
@@ -399,7 +400,7 @@ export const CollectionDetailsBody = ({
 
               <dl
                 className="collection-details-body__info"
-                data-test-id="collection-details-body__info-science-keywords"
+                data-testid="collection-details-body__info-science-keywords"
               >
                 <dt>Science Keywords</dt>
                 <dd>
@@ -439,7 +440,7 @@ export const CollectionDetailsBody = ({
               dataCenters && dataCenters.length > 0 && (
                 <ul
                   className="col collection-details-body__provider-list"
-                  data-test-id="collection-details-body__provider-list"
+                  data-testid="collection-details-body__provider-list"
                 >
                   {
                     dataCenters.map((dataCenter, i) => {
@@ -465,7 +466,7 @@ export const CollectionDetailsBody = ({
                     <dt>Region</dt>
                     <dd
                       className="collection-details-body__cloud-access__region"
-                      data-test-id="collection-details-body__cloud-access__region"
+                      data-testid="collection-details-body__cloud-access__region"
                     >
                       {region}
                     </dd>
@@ -480,7 +481,7 @@ export const CollectionDetailsBody = ({
                             <dd
                               key={key}
                               className="collection-details-body__cloud-access__bucket-name"
-                              data-test-id="collection-details-body__cloud-access__bucket-name"
+                              data-testid="collection-details-body__cloud-access__bucket-name"
                             >
                               {name}
                             </dd>
@@ -493,7 +494,7 @@ export const CollectionDetailsBody = ({
                     <dd className="collection-details-body__links collection-details-body__links--horizontal">
                       <a
                         className="link link--external collection-details-body__link collection-details-body__cloud-access__api-link"
-                        data-test-id="collection-details-body__cloud-access__api-link"
+                        data-testid="collection-details-body__cloud-access__api-link"
                         href={s3CredentialsApiEndpoint}
                         rel="noopener noreferrer"
                         target="_blank"
@@ -502,7 +503,7 @@ export const CollectionDetailsBody = ({
                       </a>
                       <a
                         className="link link--separated link--external collection-details-body__link collection-details-body__cloud-access__documentation-link"
-                        data-test-id="collection-details-body__cloud-access__documentation-link"
+                        data-testid="collection-details-body__cloud-access__documentation-link"
                         href={s3CredentialsApiDocumentationUrl}
                         rel="noopener noreferrer"
                         target="_blank"

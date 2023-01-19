@@ -172,7 +172,7 @@ export const GranuleResultsTable = ({
   return (
     <div
       className="granule-results-table"
-      data-test-id="granule-results-table"
+      data-testid="granule-results-table"
     >
       <EDSCTable
         id="granule-results-table"

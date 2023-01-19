@@ -1,6 +1,6 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
 import { mapDispatchToProps, mapStateToProps, SpatialSelectionContainer } from '../SpatialSelectionContainer'
@@ -8,6 +8,10 @@ import SpatialSelection from '../../../components/SpatialSelection/SpatialSelect
 import * as metrics from '../../../middleware/metrics/actions'
 
 Enzyme.configure({ adapter: new Adapter() })
+
+jest.mock('react-leaflet', () => ({
+  useMap: jest.fn().mockImplementation(() => ({ mock: 'map' }))
+}))
 
 function setup() {
   const props = {

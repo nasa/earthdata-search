@@ -1,46 +1,61 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Control from 'react-leaflet-control'
+import L from 'leaflet'
+import { createControlComponent } from '@react-leaflet/core'
 
 import projections from '../../util/map/projections'
 
-const ProjectionSwitcher = (props) => {
-  const { onChangeProjection } = props
+class ProjectionSwitcherControl extends L.Control {
+  initialize(props) {
+    const { onChangeProjection } = props
 
-  return (
-    <Control position="bottomright">
-      <div className="projection-switcher leaflet-bar">
-        <button
-          aria-label="North Polar Stereographic"
-          className="projection-switcher__button projection-switcher__button--arctic"
-          data-test-id="projection-switcher__arctic"
-          onClick={() => onChangeProjection(projections.arctic)}
-          title="North Polar Stereographic"
-          type="button"
-        />
-        <button
-          aria-label="Geographic (Equirectangular)"
-          className="projection-switcher__button projection-switcher__button--geo"
-          data-test-id="projection-switcher__geo"
-          onClick={() => onChangeProjection(projections.geographic)}
-          title="Geographic (Equirectangular)"
-          type="button"
-        />
-        <button
-          aria-label="South Polar Stereographic"
-          className="projection-switcher__button projection-switcher__button--antarctic"
-          data-test-id="projection-switcher__antarctic"
-          onClick={() => onChangeProjection(projections.antarctic)}
-          title="South Polar Stereographic"
-          type="button"
-        />
-      </div>
-    </Control>
-  )
+    this.onChangeProjection = onChangeProjection
+  }
+
+  options = {
+    position: 'bottomright'
+  }
+
+  onAdd() {
+    this.container = L.DomUtil.create('div', '')
+    const switcher = L.DomUtil.create('div', 'projection-switcher leaflet-bar', this.container)
+
+    const arcticButton = L.DomUtil.create(
+      'button',
+      'projection-switcher__button projection-switcher__button--arctic',
+      switcher
+    )
+    arcticButton.ariaLabel = 'North Polar Stereographic'
+    arcticButton.title = 'North Polar Stereographic'
+    arcticButton.setAttribute('data-testid', 'projection-switcher__arctic')
+    arcticButton.onclick = () => this.onChangeProjection(projections.arctic)
+
+    const geographicButton = L.DomUtil.create(
+      'button',
+      'projection-switcher__button projection-switcher__button--geo',
+      switcher
+    )
+    geographicButton.ariaLabel = 'Geographic (Equirectangular)'
+    geographicButton.title = 'Geographic (Equirectangular)'
+    geographicButton.setAttribute('data-testid', 'projection-switcher__geo')
+    geographicButton.onclick = () => this.onChangeProjection(projections.geographic)
+
+    const antarcticButton = L.DomUtil.create(
+      'button',
+      'projection-switcher__button projection-switcher__button--antarctic',
+      switcher
+    )
+    antarcticButton.ariaLabel = 'South Polar Stereographic'
+    antarcticButton.title = 'South Polar Stereographic'
+    antarcticButton.setAttribute('data-testid', 'projection-switcher__antarctic')
+    antarcticButton.onclick = () => this.onChangeProjection(projections.antarctic)
+
+    return this.container
+  }
+
+  onRemove() {
+
+  }
 }
 
-ProjectionSwitcher.propTypes = {
-  onChangeProjection: PropTypes.func.isRequired
-}
+const ProjectionSwitcher = (props) => new ProjectionSwitcherControl(props)
 
-export default ProjectionSwitcher
+export default createControlComponent(ProjectionSwitcher)

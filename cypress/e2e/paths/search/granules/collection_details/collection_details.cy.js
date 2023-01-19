@@ -113,12 +113,14 @@ const testCollectionScienceKeywords = (count, keywords) => {
     cy.get('.collection-details-body__keywords').children('li').should('have.length', count)
 
     // Check the values of the science keywords
-    cy.get('.collection-details-body__keywords').children('li').within(() => {
+    cy.get('.collection-details-body__keywords').within(() => {
       keywords.forEach((keyword, keywordIndex) => {
-        keyword.forEach((keywordPart, partIndex) => {
-          cy.get('li')
-            .eq((keyword.length * keywordIndex) + partIndex)
-            .should('have.text', keywordPart)
+        cy.get('li > ul').eq(keywordIndex).within(() => {
+          keyword.forEach((keywordPart, partIndex) => {
+            cy.get('li')
+              .eq(partIndex)
+              .should('have.text', keywordPart)
+          })
         })
       })
     })
@@ -379,6 +381,77 @@ describe('Path /search/granules/collection-details', () => {
         telephone: '+1 256-961-7932',
         fax: '+1 256-824-5149'
       }])
+    })
+  })
+
+  describe('When collection has spatial', () => {
+    it('displays the spatial on the minimap', () => {
+      const conceptId = 'C1996546500-GHRC_DAAC'
+      const cmrHits = 8180
+      const granuleHits = 6338
+
+      cy.intercept({
+        method: 'POST',
+        url: '**/search/collections.json'
+      },
+      (req) => {
+        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+
+        req.reply({
+          body: collectionsBody,
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': cmrHits.toString()
+          }
+        })
+      })
+
+      cy.intercept({
+        method: 'POST',
+        url: '**/search/granules.json'
+      },
+      (req) => {
+        expect(req.body).to.eq('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+
+        req.reply({
+          body: reformattingsGranulesBody,
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': granuleHits.toString()
+          }
+        })
+      })
+
+      cy.intercept({
+        method: 'POST',
+        url: '**/api'
+      },
+      (req) => {
+        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+
+        req.reply({
+          body: reformattingGraphQlBody,
+          headers: graphQlHeaders
+        })
+      })
+
+      cy.intercept({
+        method: 'POST',
+        url: '**/graphql'
+      },
+      (req) => {
+        expect(JSON.parse(req.body).data.query).to.eql(graphQlGetSubscriptionsQuery)
+        req.reply({
+          body: getSubscriptionsGraphQlBody,
+          headers: graphQlHeaders
+        })
+      })
+
+      cy.visit('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
+
+      cy.get('.collection-details-minimap').within(() => {
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M0 180L360 180L360 0L0 0L0 180z')
+      })
     })
   })
 })
