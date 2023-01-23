@@ -64,7 +64,8 @@ const submitCatalogRestOrder = async (event, context) => {
         'retrievals.jsondata',
         'retrievals.user_id',
         'retrieval_collections.access_method',
-        'retrieval_orders.granule_params'
+        'retrieval_orders.granule_params',
+        'retrieval_orders.state'
       )
       .join('retrieval_collections', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
       .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
@@ -78,8 +79,15 @@ const submitCatalogRestOrder = async (event, context) => {
       granule_params: granuleParams,
       id: retrievalId,
       jsondata,
+      state,
       user_id: userId
     } = retrievalRecord
+
+    // If the order has been successfully sent to the provider, do not continue processing
+    // This can happen when one order fails to submit so the whole job returns to the queue to submit again, before the job is sent to the dead letter queue.
+    if (state !== 'creating' && state !== 'create_failed') {
+      return
+    }
 
     try {
       const {
@@ -207,9 +215,13 @@ const submitCatalogRestOrder = async (event, context) => {
       // Start the order status check workflow
       await startOrderStatusUpdateWorkflow(id, accessToken, type)
     } catch (e) {
-      const parsedErrorMessage = parseError(e, { asJSON: false })
+      let [errorMessage] = parseError(e, { asJSON: false })
 
-      const [errorMessage] = parsedErrorMessage
+      // If the current state is `creating` then we don't want to throw a timeout error in the UI because the
+      // job will run a second time through the SQS queue
+      if (state === 'creating' && errorMessage === 'Endpoint request timed out') {
+        errorMessage += '. The order has been placed on a queue for resubmission.'
+      }
 
       await dbConnection('retrieval_orders').update({
         state: 'create_failed',
