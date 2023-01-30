@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import PropTypes from 'prop-types'
 import {
   MapContainer as LeafletMapContainer,
   LayersControl,
   ScaleControl
 } from 'react-leaflet'
-import 'proj4leaflet'
+
 import crsProjections from '../../util/map/crs'
 
 import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
@@ -17,10 +17,6 @@ import ProjectionSwitcher from '../../components/Map/ProjectionSwitcher'
 import ShapefileLayer from '../../components/Map/ShapefileLayer'
 import ZoomHome from '../../components/Map/ZoomHome'
 import MapEvents from './MapEvents'
-import '../../util/map/sphericalPolygon'
-
-import 'leaflet/dist/leaflet.css'
-import './MapContainer.scss'
 
 const MapWrapper = (props) => {
   const {
@@ -53,6 +49,35 @@ const MapWrapper = (props) => {
     shapefile,
     zoom
   } = props
+
+  /**
+   * Sets the height of the leaflet controls. This is needed so they do not
+   * fall behind the footer.
+   */
+  const resizeLeafletControls = () => {
+    if (!document) return
+
+    const leafletControlContainer = document.querySelector('.leaflet-control-container')
+    const appHeader = document.querySelector('.app-header')
+    const routeWrapper = document.querySelector('.route-wrapper')
+
+    // If the control container and the route wrapper are defined, set the leaflet controls to
+    // the same height as the route wrapper.
+    if (leafletControlContainer && routeWrapper && appHeader) {
+      leafletControlContainer.style.height = `${routeWrapper.clientHeight + appHeader.clientHeight}px`
+    }
+  }
+
+  useLayoutEffect(() => {
+    // Resize the Leaflet controls container when the component map mounts,
+    // and any time the browser is resized
+    resizeLeafletControls()
+    window.addEventListener('resize', resizeLeafletControls)
+
+    return () => {
+      window.removeEventListener('resize', resizeLeafletControls)
+    }
+  }, [])
 
   return (
     <LeafletMapContainer
