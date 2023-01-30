@@ -10,7 +10,10 @@ import collectionResultsModis from './collection_results_modis.json'
 
 // Verify that your requests are mocked from within Cypress, you should see `(XHR STUB)` next to your network requests
 
-describe('Mock data example', () => {
+describe('Mock data example', {
+  viewportWidth: 1400,
+  viewportHeight: 900
+}, () => {
   it('How to setup mock data', () => {
     // // // //
     // Do not add these lines until after you have copied successfull responses into json files
