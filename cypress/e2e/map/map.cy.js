@@ -145,8 +145,7 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        // TODO Commenting out during react upgrade
-        // cy.url().should('include', '?sp[0]=42.1875%2C-2.40647&lat=-2.406005859375&long=42.1875&zoom=7')
+        cy.url().should('include', '?sp[0]=42.1875%2C-2.40647&lat=-2.40647&long=42.1875&zoom=7')
 
         // draws a point on the map
         cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(700px, 434px, 0px); z-index: 434;')
@@ -376,8 +375,7 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        // TODO Commenting out during react upgrade
-        // cy.url().should('include', '?circle[0]=42.1875%2C2.2329%2C156326&lat=2.23681640625&long=42.1875&zoom=6')
+        cy.url().should('include', '?circle[0]=42.1875%2C2.2329%2C156326&lat=2.2329000000000008&long=42.187500000000014&zoom=6')
 
         // draws a circle on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M540,433.9455999999991a160,160 0 1,0 320,0 a160,160 0 1,0 -320,0 ')
@@ -520,8 +518,7 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        // TODO Commenting out during react upgrade
-        // cy.url().should('include', '?sb[0]=42.1875%2C-16.46517%2C56.25%2C-2.40647&lat=-9.439453125&long=49.21875&zoom=4')
+        cy.url().should('include', '?sb[0]=42.1875%2C-16.46517%2C56.25%2C-2.40647&lat=-9.43582&long=49.21875&zoom=4')
 
         // draws a bounding box on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M500 633L500 233L900 233L900 633L500 633z')
@@ -1256,8 +1253,6 @@ describe('Map interactions', () => {
         cy.url().should('include', '?polygon[0]=42.1875%2C-76.46517%2C42.1875%2C-82.40647%2C56.25%2C-76.46517%2C42.1875%2C-76.46517&sf=1&sfs[0]=0&lat=-90&projection=EPSG%3A3031&zoom=0')
 
         // draws a polygon on the map
-        // cy.get('.leaflet-interactive').first().should('have.attr', 'd', 'M768 358L821 299L850 333L768 358z')
-        // cy.get('.leaflet-interactive').last().should('have.attr', 'd', 'M821 299L768 358L850 333L821 299z')
         cy.get('.geojson-svg.leaflet-interactive').should('have.attr', 'd', 'M768 358L821 299L850 333L768 358z')
         cy.get('.leaflet-interactive').eq(0).should('have.attr', 'd', 'M821 299L768 358L850 333L821 299z')
         cy.get('.leaflet-interactive').eq(2).should('have.attr', 'd', 'M821 299L850 333L768 358L821 299z')
@@ -1287,7 +1282,7 @@ describe('Map interactions', () => {
           cy.wait(`@${alias}`)
         })
 
-        cy.url().should('include', '?lat=')
+        cy.url().should('include', '?lat=15')
       })
     })
 
