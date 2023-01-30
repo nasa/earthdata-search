@@ -54,7 +54,6 @@ const MapEvents = (props) => {
 
   useMapEvents({
     moveend: () => {
-      console.log('moveend called')
       const center = map.getCenter()
       const { lat, lng } = center
       const zoom = map.getZoom()

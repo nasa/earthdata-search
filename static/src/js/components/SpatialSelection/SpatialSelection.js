@@ -695,7 +695,7 @@ const SpatialSelection = (props) => {
 
     const {
       regionSearch = {}
-    } = advancedSearch
+    } = advancedSearch.current
 
     const {
       selectedRegion = {}
