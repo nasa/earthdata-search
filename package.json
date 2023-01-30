@@ -79,7 +79,7 @@
     "@edsc/echoforms": "^1.1.15",
     "@edsc/geo-utils": "^1.0.3",
     "@edsc/smart-handoffs": "^1.0.4",
-    "@edsc/timeline": "file:../edsc-timeline/edsc-timeline-1.1.5.tgz",
+    "@edsc/timeline": "^1.1.6",
     "@googlemaps/google-maps-services-js": "^3.3.13",
     "@react-leaflet/core": "^2.1.0",
     "@redux-devtools/extension": "^3.2.2",
