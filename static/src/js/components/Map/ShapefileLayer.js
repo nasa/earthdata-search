@@ -1,12 +1,5 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable max-classes-per-file */
-
 import L from 'leaflet'
 import { createLayerComponent } from '@react-leaflet/core'
-// import {
-//   withLeaflet,
-//   MapLayer
-// } from 'react-leaflet'
 import forge from 'node-forge'
 import { isEqual } from 'lodash'
 
@@ -410,61 +403,19 @@ class ShapefileLayerExtended extends L.Layer {
   }
 }
 
-// class ShapefileLayer extends MapLayer {
-//   createLeafletElement(props) {
-//     return new ShapefileLayerExtended(props)
-//   }
-
-//   updateLeafletElement(fromProps, toProps) {
-//     const element = this.leafletElement
-
-//     const {
-//       isProjectPage: toIsProjectPage,
-//       leaflet: toLeaflet,
-//       shapefile: toShapefile
-//     } = toProps
-
-//     const { map } = toLeaflet
-
-//     element.map = map
-//     element.isProjectPage = toIsProjectPage
-
-//     const {
-//       file: toFile,
-//       shapefileId: toShapefileId,
-//       shapefileName,
-//       selectedFeatures
-//     } = toShapefile
-
-//     if (toFile) {
-//       element.drawNewShapefile(toFile, selectedFeatures)
-//     }
-
-//     if (!toShapefileId && !shapefileName) {
-//       element.onRemovedFile()
-//     }
-//   }
-// }
-
-// export default withLeaflet(ShapefileLayer)
 const createLayer = (props, context) => {
   const layer = new ShapefileLayerExtended(props)
   return { instance: layer, context }
 }
 
 const updateLayer = (instance, props) => {
-  // const element = this.leafletElement
-
   const {
     isProjectPage,
-    // leaflet: toLeaflet,
     shapefile = {},
     onFetchShapefile
   } = props
 
-  // const { map } = toLeaflet
-
-  // instance.map = map
+  // eslint-disable-next-line no-param-reassign
   instance.isProjectPage = isProjectPage
 
   const {

@@ -1,12 +1,7 @@
-/* eslint-disable max-classes-per-file, no-underscore-dangle */
+/* eslint-disable no-underscore-dangle */
 
 import L from 'leaflet'
 import { createLayerComponent } from '@react-leaflet/core'
-// import {
-//   withLeaflet,
-//   MapLayer
-// } from 'react-leaflet'
-
 import $ from 'jquery'
 
 import { eventEmitter } from '../../events/events'
@@ -103,14 +98,6 @@ class MouseEventsLayerExtended extends L.Layer {
     return this._hoverTimer
   }
 }
-
-// class MouseEventsLayer extends MapLayer {
-//   createLeafletElement(props) {
-//     return new MouseEventsLayerExtended(props)
-//   }
-// }
-
-// export default withLeaflet(MouseEventsLayer)
 
 const MouseEventsLayer = (props, context) => {
   const layer = new MouseEventsLayerExtended(props)
