@@ -161,7 +161,9 @@ const MapWrapper = (props) => {
           />
         </LayersControl.Overlay>
       </LayersControl>
-      <ZoomHome />
+      <ZoomHome
+        projection={projection}
+      />
       {
         !isProjectPage && (
           <ProjectionSwitcher
