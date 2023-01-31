@@ -106,7 +106,7 @@ class ZoomExtended extends Control.Zoom {
   zoomHome() {
     const { projection } = this.props
 
-    // Zoome to the 'home' view based on the current map projection
+    // Zoom to the 'home' view based on the current map projection
     if (projection === projections.geographic) {
       return this._map.setView([0, 0], 2)
     }
