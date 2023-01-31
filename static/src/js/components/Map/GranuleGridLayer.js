@@ -200,7 +200,7 @@ const updateGranuleGridLayer = (instance, props, prevProps) => {
     } = layerData[id]
 
     // Find the layer for this collection
-    const [layer] = Object.values(layers).filter((l) => l.collectionId === collectionId)
+    const layer = Object.values(layers).find((l) => l.collectionId === collectionId)
 
     const { project: prevPropsProject } = prevProps
     const { collections: prevPropsProjectCollections = {} } = prevPropsProject
@@ -232,10 +232,8 @@ const updateGranuleGridLayer = (instance, props, prevProps) => {
       } = newGranules)
     }
 
-    // If there are no granules, bail out
-    const { byId: granulesById = {} } = granules
-
     // If no granules were changed, bail out
+    const { byId: granulesById = {} } = granules
     const prevCollection = prevLayerData[collectionId]
     const { granules: prevGranules = {} } = prevCollection || {}
     const { byId: prevGranulesById = {} } = prevGranules

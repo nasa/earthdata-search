@@ -50,10 +50,6 @@ class ProjectionSwitcherControl extends L.Control {
 
     return this.container
   }
-
-  onRemove() {
-
-  }
 }
 
 const ProjectionSwitcher = (props) => new ProjectionSwitcherControl(props)
