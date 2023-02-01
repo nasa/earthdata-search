@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
@@ -11,39 +11,36 @@ export const mapStateToProps = (state) => ({
 })
 
 export const mapDispatchToProps = (dispatch) => ({
-  onFetchAdminRetrieval: (id) => dispatch(actions.fetchAdminRetrieval(id))
+  onFetchAdminRetrieval: (id) => dispatch(actions.fetchAdminRetrieval(id)),
+  onRequeueOrder: (orderId) => dispatch(actions.requeueOrder(orderId))
 })
 
-export class AdminRetrievalContainer extends Component {
-  componentDidMount() {
-    const {
-      match,
-      onFetchAdminRetrieval
-    } = this.props
-
+export const AdminRetrievalContainer = ({
+  match,
+  retrievals,
+  onFetchAdminRetrieval,
+  onRequeueOrder
+}) => {
+  // On mount call onFetchAdminRetrieval
+  useEffect(() => {
     const { params } = match
     const { id } = params
+    console.log('🚀 ~ file: AdminRetrievalContainer.js:28 ~ useEffect ~ id', id)
 
     onFetchAdminRetrieval(id)
-  }
+  }, [])
 
-  render() {
-    const {
-      match,
-      retrievals
-    } = this.props
+  const { params } = match
+  const { id } = params
 
-    const { params } = match
-    const { id } = params
+  const { [id]: selectedRetrieval } = retrievals
 
-    const { [id]: selectedRetrieval } = retrievals
-
-    return (
-      <AdminRetrieval
-        retrieval={selectedRetrieval}
-      />
-    )
-  }
+  return ((
+    <AdminRetrieval
+      retrieval={selectedRetrieval}
+      onRequeueOrder={onRequeueOrder}
+    />
+  ))
 }
 
 AdminRetrievalContainer.defaultProps = {
@@ -57,7 +54,8 @@ AdminRetrievalContainer.propTypes = {
     })
   }).isRequired,
   onFetchAdminRetrieval: PropTypes.func.isRequired,
-  retrievals: PropTypes.shape({})
+  retrievals: PropTypes.shape({}),
+  onRequeueOrder: PropTypes.func.isRequired
 }
 
 export default withRouter(

@@ -4,6 +4,7 @@ import {
   adminViewRetrieval,
   fetchAdminRetrievals,
   fetchAdminRetrieval,
+  requeueOrder,
   updateAdminRetrievalsSortKey,
   updateAdminRetrievalsPageNum
 } from './admin/retrievals'
@@ -279,6 +280,7 @@ const actions = {
   removeSpatialFilter,
   removeSubscriptionDisabledFields,
   removeTemporalFilter,
+  requeueOrder,
   restoreProject,
   saveShapefile,
   selectAccessMethod,

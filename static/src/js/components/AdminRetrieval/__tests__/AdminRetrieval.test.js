@@ -12,7 +12,8 @@ function setup() {
   const props = {
     retrieval: {
       id: 1
-    }
+    },
+    onRequeueOrder: jest.fn()
   }
 
   const enzymeWrapper = shallow(<AdminRetrieval {...props} />)
