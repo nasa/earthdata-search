@@ -5,7 +5,8 @@ import { withRouter } from 'react-router-dom'
 import {
   Table,
   Row,
-  Col
+  Col,
+  Alert
 } from 'react-bootstrap'
 
 import { commafy } from '../../util/commafy'
@@ -100,6 +101,11 @@ export const AdminRetrievalDetails = ({
                             </div>
                           </div>
                         </header>
+
+                        <Alert variant="warning">
+                          Clicking Requeue could generate duplicate orders, sending duplicated data to the user. Use with Caution
+                        </Alert>
+
                         {
                           orders.length > 0 && (
                             <Table className="admin-retrieval-details__orders-table" striped variant="light">
