@@ -25,7 +25,6 @@ export const AdminRetrievalContainer = ({
   useEffect(() => {
     const { params } = match
     const { id } = params
-    console.log('🚀 ~ file: AdminRetrievalContainer.js:28 ~ useEffect ~ id', id)
 
     onFetchAdminRetrieval(id)
   }, [])

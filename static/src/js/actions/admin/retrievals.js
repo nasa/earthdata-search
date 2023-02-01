@@ -170,27 +170,23 @@ export const requeueOrder = (orderId) => (dispatch, getState) => {
 
   const { authToken } = state
 
-  try {
-    const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
-    const response = requestObject.requeueOrder({ orderId })
-      .then(() => {
-        addToast('Order Requeued for processing', {
-          appearance: 'success',
-          autoDismiss: true
-        })
+  const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+  const response = requestObject.requeueOrder({ orderId })
+    .then(() => {
+      addToast('Order Requeued for processing', {
+        appearance: 'success',
+        autoDismiss: true
       })
-      .catch((error) => {
-        dispatch(actions.handleError({
-          error,
-          action: 'requeueOrder',
-          resource: 'admin retrievals',
-          requestObject,
-          notificationType: displayNotificationType.toast
-        }))
-      })
+    })
+    .catch((error) => {
+      dispatch(actions.handleError({
+        error,
+        action: 'requeueOrder',
+        resource: 'admin retrievals',
+        requestObject,
+        notificationType: displayNotificationType.toast
+      }))
+    })
 
-    return response
-  } catch (e) {
-    return null
-  }
+  return response
 }
