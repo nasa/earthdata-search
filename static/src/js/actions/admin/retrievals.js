@@ -1,4 +1,5 @@
 import RetrievalRequest from '../../util/request/admin/retrievalRequest'
+import { addToast } from '../../util/addToast'
 
 import {
   SET_ADMIN_RETRIEVAL,
@@ -14,8 +15,8 @@ import {
 
 import actions from '../index'
 
-import { handleError } from '../errors'
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
+import { displayNotificationType } from '../../constants/enums'
 
 export const setAdminRetrieval = (payload) => ({
   type: SET_ADMIN_RETRIEVAL,
@@ -72,7 +73,7 @@ export const fetchAdminRetrieval = (id) => (dispatch, getState) => {
       dispatch(setAdminRetrieval(data))
     })
     .catch((error) => {
-      dispatch(handleError({
+      dispatch(actions.handleError({
         error,
         action: 'fetchAdminRetrieval',
         resource: 'admin retrieval',
@@ -122,7 +123,7 @@ export const fetchAdminRetrievals = () => (dispatch, getState) => {
       dispatch(setAdminRetrievals(results))
     })
     .catch((error) => {
-      dispatch(handleError({
+      dispatch(actions.handleError({
         error,
         action: 'fetchAdminRetrievals',
         resource: 'admin retrievals',
@@ -155,4 +156,41 @@ export const updateAdminRetrievalsPageNum = (pageNum) => (dispatch) => {
   })
 
   dispatch(actions.fetchAdminRetrievals())
+}
+
+/**
+ * Sends a request to have the provided order requeued for processing
+ * @param {integer} orderId
+ */
+export const requeueOrder = (orderId) => (dispatch, getState) => {
+  const state = getState()
+
+  // Retrieve data from Redux using selectors
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  const { authToken } = state
+
+  try {
+    const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+    const response = requestObject.requeueOrder({ orderId })
+      .then(() => {
+        addToast('Order Requeued for processing', {
+          appearance: 'success',
+          autoDismiss: true
+        })
+      })
+      .catch((error) => {
+        dispatch(actions.handleError({
+          error,
+          action: 'requeueOrder',
+          resource: 'admin retrievals',
+          requestObject,
+          notificationType: displayNotificationType.toast
+        }))
+      })
+
+    return response
+  } catch (e) {
+    return null
+  }
 }

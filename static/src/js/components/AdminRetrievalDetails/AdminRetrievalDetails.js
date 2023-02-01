@@ -7,12 +7,16 @@ import {
   Row,
   Col
 } from 'react-bootstrap'
+
 import { commafy } from '../../util/commafy'
+
+import Button from '../Button/Button'
 
 import './AdminRetrievalDetails.scss'
 
 export const AdminRetrievalDetails = ({
-  retrieval
+  retrieval,
+  onRequeueOrder
 }) => {
   const {
     collections = [],
@@ -101,11 +105,12 @@ export const AdminRetrievalDetails = ({
                             <Table className="admin-retrieval-details__orders-table" striped variant="light">
                               <thead>
                                 <tr>
+                                  <th width="10%">Actions</th>
                                   <th width="7%">ID</th>
-                                  <th width="23%">Order Number</th>
+                                  <th width="20%">Order Number</th>
                                   <th width="20%">Type</th>
                                   <th width="10%">State</th>
-                                  <th width="50%">Details</th>
+                                  <th width="33%">Details</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -121,6 +126,20 @@ export const AdminRetrievalDetails = ({
 
                                     return (
                                       <tr className="admin-retrieval-details__order-row" key={`${collectionId}-${orderId}`}>
+                                        <td>
+                                          <Button
+                                            dataTestId="admin-retrieval-details__requeue-order"
+                                            type="button"
+                                            bootstrapVariant="secondary"
+                                            label="Requeue Order for Processing"
+                                            bootstrapSize="sm"
+                                            onClick={() => {
+                                              onRequeueOrder(orderId)
+                                            }}
+                                          >
+                                            Requeue
+                                          </Button>
+                                        </td>
                                         <td>{orderId}</td>
                                         <td>{orderNumber}</td>
                                         <td>{type}</td>
@@ -161,7 +180,8 @@ AdminRetrievalDetails.propTypes = {
     jsondata: PropTypes.shape({}),
     obfuscated_id: PropTypes.string,
     username: PropTypes.string
-  })
+  }),
+  onRequeueOrder: PropTypes.func.isRequired
 }
 
 export default withRouter(

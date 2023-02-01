@@ -18,6 +18,10 @@ export default class RetrievalRequest extends Request {
   }
 
   isAuthorized() {
-    return this.get('/admin/is_authorized')
+    return this.get('admin/is_authorized')
+  }
+
+  requeueOrder(params) {
+    return this.post('requeue_order', params)
   }
 }

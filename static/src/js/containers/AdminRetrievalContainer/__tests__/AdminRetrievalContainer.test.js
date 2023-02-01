@@ -1,31 +1,15 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { render } from '@testing-library/react'
+
+jest.mock('../../../components/AdminRetrieval/AdminRetrieval', () => jest.fn(({ children }) => (
+  <mock-AdminRetrieval data-testid="AdminRetrieval">
+    {children}
+  </mock-AdminRetrieval>
+)))
 
 import actions from '../../../actions'
 import AdminRetrieval from '../../../components/AdminRetrieval/AdminRetrieval'
 import { AdminRetrievalContainer, mapDispatchToProps, mapStateToProps } from '../AdminRetrievalContainer'
-
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
-  const props = {
-    match: {
-      params: {
-        id: '1'
-      }
-    },
-    onFetchAdminRetrieval: jest.fn(),
-    retrieval: {}
-  }
-
-  const enzymeWrapper = shallow(<AdminRetrievalContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
 
 describe('mapDispatchToProps', () => {
   test('onFetchAdminRetrieval calls actions.fetchAdminRetrieval', () => {
@@ -33,6 +17,16 @@ describe('mapDispatchToProps', () => {
     const spy = jest.spyOn(actions, 'fetchAdminRetrieval')
 
     mapDispatchToProps(dispatch).onFetchAdminRetrieval('id')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('id')
+  })
+
+  test('onRequeueOrder calls actions.requeueOrder', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'requeueOrder')
+
+    mapDispatchToProps(dispatch).onRequeueOrder('id')
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('id')
@@ -59,8 +53,34 @@ describe('mapStateToProps', () => {
 
 describe('AdminRetrievalContainer component', () => {
   test('render AdminRetrieval with the correct props', () => {
-    const { enzymeWrapper } = setup()
+    const onFetchAdminRetrievalMock = jest.fn()
+    const onRequeueOrderMock = jest.fn()
+    const props = {
+      match: {
+        params: {
+          id: '1'
+        }
+      },
+      onFetchAdminRetrieval: onFetchAdminRetrievalMock,
+      onRequeueOrder: onRequeueOrderMock,
+      retrieval: {}
+    }
 
-    expect(enzymeWrapper.find(AdminRetrieval).length).toBe(1)
+    const { rerender } = render((<AdminRetrievalContainer {...props} />))
+
+    expect(onFetchAdminRetrievalMock).toHaveBeenCalledTimes(1)
+    expect(onFetchAdminRetrievalMock).toHaveBeenCalledWith('1')
+
+    rerender((<AdminRetrievalContainer {...props} retrievals={{ 1: 'mock-retrieval' }} />))
+
+    expect(AdminRetrieval).toHaveBeenCalledTimes(2)
+    expect(AdminRetrieval).toHaveBeenCalledWith({
+      retrieval: undefined,
+      onRequeueOrder: onRequeueOrderMock
+    }, {})
+    expect(AdminRetrieval).toHaveBeenCalledWith({
+      retrieval: 'mock-retrieval',
+      onRequeueOrder: onRequeueOrderMock
+    }, {})
   })
 })
