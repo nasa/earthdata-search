@@ -483,7 +483,7 @@ class SpatialDisplay extends Component {
                 <>
                   <span
                     className="spatial-display__text-primary"
-                    data-test-id="spatial-display_shapefile-name"
+                    data-testid="spatial-display_shapefile-name"
                   >
                     {shapefileName}
                   </span>
@@ -553,7 +553,7 @@ class SpatialDisplay extends Component {
               >
                 <Form.Control
                   className="spatial-display__text-input"
-                  data-test-id="spatial-display_point"
+                  data-testid="spatial-display_point"
                   type="text"
                   placeholder="lat, lon (e.g. 44.2, 130)"
                   sm="auto"
@@ -594,7 +594,7 @@ class SpatialDisplay extends Component {
               <Col className="spatial-display__form-column">
                 <Form.Control
                   className="spatial-display__text-input"
-                  data-test-id="spatial-display_southwest-point"
+                  data-testid="spatial-display_southwest-point"
                   sm="auto"
                   type="text"
                   placeholder="lat, lon (e.g. 44.2, 130)"
@@ -619,7 +619,7 @@ class SpatialDisplay extends Component {
               <Col className="spatial-display__form-column">
                 <Form.Control
                   className="spatial-display__text-input"
-                  data-test-id="spatial-display_northeast-point"
+                  data-testid="spatial-display_northeast-point"
                   sm="auto"
                   type="text"
                   placeholder="lat, lon (e.g. 50, 133.24)"
@@ -662,7 +662,7 @@ class SpatialDisplay extends Component {
               <Col className="spatial-display__form-column">
                 <Form.Control
                   className="spatial-display__text-input"
-                  data-test-id="spatial-display_circle-center"
+                  data-testid="spatial-display_circle-center"
                   sm="auto"
                   type="text"
                   placeholder="lat, lon (e.g. 44.2, 130)"
@@ -687,7 +687,7 @@ class SpatialDisplay extends Component {
               <Col className="spatial-display__form-column">
                 <Form.Control
                   className="spatial-display__text-input"
-                  data-test-id="spatial-display_circle-radius"
+                  data-testid="spatial-display_circle-radius"
                   sm="auto"
                   type="text"
                   placeholder="meters (e.g. 200)"
@@ -726,7 +726,7 @@ class SpatialDisplay extends Component {
               <Row className="spatial-display__form-row">
                 <span
                   className="spatial-display__text-primary"
-                  data-test-id="spatial-display_polygon"
+                  data-testid="spatial-display_polygon"
                 >
                   {`${pointCount} ${pluralize('Point', pointCount)}`}
                 </span>

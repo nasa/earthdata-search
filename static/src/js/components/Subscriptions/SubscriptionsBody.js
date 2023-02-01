@@ -108,7 +108,7 @@ export const SubscriptionsBody = ({
                     </Form.Label>
                     <Form.Control
                       className="subscriptions-body__text-input"
-                      data-test-id="subscriptions-body_name-input"
+                      data-testid="subscriptions-body_name-input"
                       type="text"
                       value={name}
                       placeholder={placeholderName}

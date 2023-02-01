@@ -1,6 +1,6 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import AccessMethodRadio from '../AccessMethodRadio'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -35,7 +35,7 @@ describe('AccessMethodRadio component', () => {
   })
 
   test('has a test id', () => {
-    expect(enzymeWrapper.props()['data-test-id']).toBe('test-id')
+    expect(enzymeWrapper.props()['data-testid']).toBe('test-id')
   })
 
   test('adds an htmlFor prop using the id', () => {

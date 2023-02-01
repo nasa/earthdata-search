@@ -23,7 +23,7 @@ export class ShapefileDropzone extends Component {
       <div
         ref={this.ref}
         className={classes}
-        data-test-id="shapefile-dropzone"
+        data-testid="shapefile-dropzone"
       />
     )
   }

@@ -4,7 +4,8 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 
-import Form from 'react-jsonschema-form'
+import validator from '@rjsf/validator-ajv8'
+import Form from '@rjsf/core'
 
 import schema from '../../../../../schemas/sitePreferencesSchema.json'
 import uiSchema from '../../../../../schemas/sitePreferencesUISchema.json'
@@ -73,6 +74,7 @@ const PreferencesForm = (props) => {
         transformErrors={transformErrors}
         uiSchema={uiSchema}
         validate={validate}
+        validator={validator}
       >
         <div>
           <Button

@@ -1,9 +1,8 @@
-import { pure } from 'recompose'
 import PropTypes from 'prop-types'
 
-const AdvancedSearchDisplayEntry = pure(({
+const AdvancedSearchDisplayEntry = ({
   children
-}) => children)
+}) => children
 
 AdvancedSearchDisplayEntry.defaultProps = {
   children: null

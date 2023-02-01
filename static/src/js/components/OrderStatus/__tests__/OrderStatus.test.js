@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import Enzyme, { mount } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import { StaticRouter } from 'react-router'
 import Helmet from 'react-helmet'
 
@@ -15,7 +15,6 @@ import configureStore from '../../../store/configureStore'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import * as config from '../../../../../../sharedUtils/config'
-
 
 const store = configureStore()
 
@@ -143,7 +142,7 @@ describe('OrderStatus component', () => {
       const { enzymeWrapper, props } = setup()
       const orderStatus = enzymeWrapper.find(OrderStatus)
       const backToSearchLink = orderStatus.find('.order-status__footer-link-list').find(PortalLinkContainer).at(0)
-      backToSearchLink.simulate('click')
+      backToSearchLink.find('a').simulate('click')
       expect(props.onChangePath).toHaveBeenCalledTimes(1)
       expect(props.onChangePath).toHaveBeenCalledWith('/search?test=source_link')
     })

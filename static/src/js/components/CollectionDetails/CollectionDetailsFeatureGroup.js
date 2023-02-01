@@ -1,15 +1,12 @@
-import {
-  MapLayer,
-  withLeaflet
-} from 'react-leaflet'
+import { createLayerComponent } from '@react-leaflet/core'
 
 import { buildLayer } from '../../util/map/layers'
 
-export class FeatureGroup extends MapLayer {
-  createLeafletElement({ metadata }) {
-    const featureGroup = buildLayer({ color: '#54F7A3', fillOpacity: 0.4, weight: 1 }, metadata)
-    return featureGroup
-  }
+const createLayer = (props, context) => {
+  const { metadata } = props
+  const featureGroup = buildLayer({ color: '#54F7A3', fillOpacity: 0.4, weight: 1 }, metadata)
+
+  return { instance: featureGroup, context }
 }
 
-export default withLeaflet(FeatureGroup)
+export default createLayerComponent(createLayer)

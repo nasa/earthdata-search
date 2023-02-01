@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import PanelGroupHeader from './PanelGroupHeader'
-import PanelItem from './PanelItem'
+import { PanelItem } from './PanelItem'
 
 import './PanelGroup.scss'
 
@@ -86,7 +86,7 @@ export const PanelGroup = ({
   return (
     <div
       className={className}
-      data-test-id={dataTestId}
+      data-testid={dataTestId}
     >
       <PanelGroupHeader
         activePanelId={activePanelId}

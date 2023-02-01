@@ -1,9 +1,9 @@
 import { panBoundsToCenter } from '../panBoundsToCenter'
 
-const mockMapPanTo = jest.fn()
+const mockMapFlyTo = jest.fn()
 
 const mockMapFitBounds = jest.fn(() => ({
-  panTo: mockMapPanTo
+  flyTo: mockMapFlyTo
 }))
 
 const mockMap = {
@@ -44,8 +44,8 @@ describe('#panBoundsToCenter', () => {
       panBoundsToCenter(mockMap, mockValidBounds)
       expect(mockBoundsGetCenter).toHaveBeenCalled()
       expect(mockBoundsGetCenter).toHaveBeenCalledWith()
-      expect(mockMapPanTo).toHaveBeenCalled()
-      expect(mockMapPanTo).toHaveBeenCalledWith({ lat: 77, lng: -86 })
+      expect(mockMapFlyTo).toHaveBeenCalled()
+      expect(mockMapFlyTo).toHaveBeenCalledWith({ lat: 77, lng: -86 })
     })
   })
 })

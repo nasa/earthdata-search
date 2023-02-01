@@ -96,10 +96,10 @@ describe('submitRetrieval', () => {
     expect(queries[1].method).toEqual('insert')
     expect(queries[2].method).toEqual('insert')
     // granule_params should be snaked cased before inserting into db
-    expect(queries[2].bindings[4]).toEqual({
-      bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
-      echo_collection_id: 'C10000005-EDSC'
-    })
+    expect(queries[2].bindings[4]).toEqual(JSON.stringify({
+      echo_collection_id: 'C10000005-EDSC',
+      bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
+    }))
     // retrieve saved access configuration
     expect(queries[3].method).toEqual('select')
     // add new access configuration
@@ -160,10 +160,10 @@ describe('submitRetrieval', () => {
     expect(queries[1].method).toEqual('insert')
     expect(queries[2].method).toEqual('insert')
     // granule_params should be snaked cased before inserting into db
-    expect(queries[2].bindings[4]).toEqual({
-      bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
-      echo_collection_id: 'C10000005-EDSC'
-    })
+    expect(queries[2].bindings[4]).toEqual(JSON.stringify({
+      echo_collection_id: 'C10000005-EDSC',
+      bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
+    }))
     // retrieve saved access configuration
     expect(queries[3].method).toEqual('select')
     // add new access configuration

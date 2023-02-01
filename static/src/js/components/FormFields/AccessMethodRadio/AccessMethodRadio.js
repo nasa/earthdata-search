@@ -37,7 +37,7 @@ export const AccessMethodRadio = ({
     <label
       className={labelClassName}
       htmlFor={id}
-      data-test-id={id}
+      data-testid={id}
     >
       <input
         className="access-method-radio__input"

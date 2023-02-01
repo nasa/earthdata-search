@@ -169,7 +169,7 @@ const GranuleResultsItem = forwardRef(({
   return (
     <div
       className={granuleResultsItemClasses}
-      data-test-id="granule-results-item"
+      data-testid="granule-results-item"
       onClick={enhancedHandleOnClick}
       onKeyPress={handleClick}
       onMouseEnter={handleMouseEnter}

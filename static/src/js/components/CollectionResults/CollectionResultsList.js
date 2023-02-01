@@ -24,7 +24,7 @@ const innerElementType = forwardRef(({ children, ...rest }, ref) => {
   return (
     <ul
       className="collection-results-list__list"
-      data-test-id="collection-results-list"
+      data-testid="collection-results-list"
       ref={ref}
       style={{ ...style }}
     >

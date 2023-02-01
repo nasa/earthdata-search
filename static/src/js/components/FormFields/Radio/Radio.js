@@ -28,7 +28,7 @@ export const Radio = ({
       <input
         className="radio__input"
         id={id}
-        data-test-id={dataTestId}
+        data-testid={dataTestId}
         type="radio"
         name={name}
         value={value}

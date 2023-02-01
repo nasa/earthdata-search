@@ -33,7 +33,7 @@ const innerElementType = forwardRef(({ children, ...rest }, ref) => {
   return (
     <ul
       className="granule-results-list__list"
-      data-test-id="granule-results-list"
+      data-testid="granule-results-list"
       ref={ref}
       style={{
         ...style,

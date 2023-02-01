@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { startCase } from 'lodash'
 import { Form } from 'react-bootstrap'
-import { asNumber } from 'react-jsonschema-form/lib/utils'
+import { asNumber } from '@rjsf/utils'
 
 import './PreferencesNumberField.scss'
 

@@ -248,7 +248,7 @@ const GranuleResultsBody = ({
               : (
                 <span
                   className="granule-results-body__search-time-value"
-                  data-test-id="granule-results-body__search-time-value"
+                  data-testid="granule-results-body__search-time-value"
                 >
                   {`${loadTimeInSeconds}s`}
                 </span>

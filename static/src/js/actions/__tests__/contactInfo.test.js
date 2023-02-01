@@ -1,7 +1,6 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import nock from 'nock'
-import jwt from 'jsonwebtoken'
 
 import { UPDATE_CONTACT_INFO } from '../../constants/actionTypes'
 import {
@@ -12,6 +11,7 @@ import {
 } from '../contactInfo'
 
 import * as addToast from '../../util/addToast'
+import { testJwtToken } from './mocks'
 
 const mockStore = configureMockStore([thunk])
 
@@ -34,14 +34,12 @@ describe('setContactInfoFromJwt', () => {
   test('should create an action to update the store', () => {
     const contactInfo = {
       ursProfile: {
-        first_name: 'Test'
+        first_name: 'test'
       }
     }
 
-    jest.spyOn(jwt, 'decode').mockImplementation(() => (contactInfo))
-
     const store = mockStore({})
-    store.dispatch(setContactInfoFromJwt('mockJwt'))
+    store.dispatch(setContactInfoFromJwt(testJwtToken))
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({

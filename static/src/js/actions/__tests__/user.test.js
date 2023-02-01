@@ -1,12 +1,12 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import jwt from 'jsonwebtoken'
 
 import { SET_USER } from '../../constants/actionTypes'
 import {
   setUser,
   setUserFromJwt
 } from '../user'
+import { testJwtToken } from './mocks'
 
 const mockStore = configureMockStore([thunk])
 
@@ -29,13 +29,11 @@ describe('setUser', () => {
 describe('setUserFromJwt', () => {
   test('should create an action to update the store', () => {
     const user = {
-      username: 'testUser'
+      username: 'testuser'
     }
 
-    jest.spyOn(jwt, 'decode').mockImplementation(() => (user))
-
     const store = mockStore({})
-    store.dispatch(setUserFromJwt('mockJwt'))
+    store.dispatch(setUserFromJwt(testJwtToken))
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({

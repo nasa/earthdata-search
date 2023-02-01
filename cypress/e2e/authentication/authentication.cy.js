@@ -1,5 +1,5 @@
 import { getByTestId } from '../../support/getByTestId'
-import { getJwtToken } from '../../support/getJwtToken'
+import { testJwtToken } from '../../support/getJwtToken'
 import { graphQlGetSubscriptionsQuery } from '../../support/graphQlGetSubscriptionsQuery'
 
 import graphQlHeaders from './__mocks__/graphql.headers.json'
@@ -32,7 +32,7 @@ describe('Authentication', () => {
       })
     })
 
-    cy.visit(`/auth_callback?jwt=${getJwtToken('prod')}&redirect=http://localhost:8080/`)
+    cy.visit(`/auth_callback?jwt=${testJwtToken}&redirect=http://localhost:8080/`)
 
     cy.contains('Earthdata Login').should('not.exist')
     getByTestId('collection-results-list')

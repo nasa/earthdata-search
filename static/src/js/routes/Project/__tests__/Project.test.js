@@ -1,6 +1,6 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import Helmet from 'react-helmet'
 
 import * as AppConfig from '../../../../../../sharedUtils/config'
@@ -10,6 +10,12 @@ import SavedProjectsContainer
   from '../../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import ProjectCollectionsContainer
   from '../../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
+
+// Mock react-leaflet because it causes errors
+jest.mock('react-leaflet', () => ({
+  createLayerComponent: jest.fn().mockImplementation(() => {}),
+  createControlComponent: jest.fn().mockImplementation(() => {})
+}))
 
 Enzyme.configure({ adapter: new Adapter() })
 

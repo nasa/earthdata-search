@@ -1,15 +1,12 @@
-/* eslint-disable max-classes-per-file */
-
+/* eslint-disable no-underscore-dangle */
 import React from 'react'
 import { renderToString } from 'react-dom/server'
+import { createControlComponent } from '@react-leaflet/core'
 import { Control } from 'leaflet'
-import {
-  withLeaflet,
-  MapControl
-} from 'react-leaflet'
 import { FaPlus, FaMinus, FaHome } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import projections from '../../util/map/projections'
 
 /*
  * Prevents the default events.
@@ -33,6 +30,11 @@ const disableClickEvent = (el, disabled) => {
 }
 
 class ZoomExtended extends Control.Zoom {
+  constructor(props) {
+    super()
+    this.props = props
+  }
+
   options = {
     position: 'bottomright',
     zoomInText: renderToString(<EDSCIcon size="0.75rem" icon={FaPlus} />),
@@ -50,11 +52,10 @@ class ZoomExtended extends Control.Zoom {
     map.on('zoomend', this.onZoomEnd)
 
     // Trigger a zoom to the current map zoom level so zoomend fires and calls onZoomEnd on load
-    // eslint-disable-next-line no-underscore-dangle
     map.fire('zoom', { zoom: map._zoom })
 
     const container = Control.Zoom.prototype.onAdd.call(this, map)
-    // eslint-disable-next-line no-underscore-dangle
+
     const home = this._createButton(
       options.zoomHomeText,
       options.zoomHomeTitle,
@@ -62,7 +63,7 @@ class ZoomExtended extends Control.Zoom {
       container,
       ((_this) => (e) => _this.zoomHome(e))(this)
     )
-    // eslint-disable-next-line no-underscore-dangle
+
     container.insertBefore(home, this._zoomOutButton)
     return container
   }
@@ -103,39 +104,22 @@ class ZoomExtended extends Control.Zoom {
   }
 
   zoomHome() {
-    // TODO: Need to get info like spatial and project from props
+    const { projection } = this.props
 
-    // var bounds, i, len, point, points, spatial;
-    // spatial = currentPage.query.spatial();
-    // if ((spatial != null ? spatial.length : void 0) > 0) {
-    //   points = spatial.split(':');
-    //   points.shift();
-    //   bounds = new L.LatLngBounds();
-    //   for (i = 0, len = points.length; i < len; i++) {
-    //     point = points[i];
-    //     bounds.extend(point.split(',').reverse());
-    //   }
-    //   return this._map.fitBounds(bounds);
-    // } else {
-    // if (this._map.projection === 'geo') {
-    //   return this._map.setView([0, 0], 2)
-    // }
+    // Zoom to the 'home' view based on the current map projection
+    if (projection === projections.geographic) {
+      return this._map.setView([0, 0], 2)
+    }
 
-    // if (this._map.projection === 'arctic') {
-    //   return this._map.setView([90, 0], 0)
-    // }
+    if (projection === projections.arctic) {
+      return this._map.setView([90, 0], 0)
+    }
 
-    // return this._map.setView([-90, 0], 0)
-    // }
-    // eslint-disable-next-line no-underscore-dangle
-    return this._map.setView([0, 0], 2)
+    // Antarctic home view
+    return this._map.setView([-90, 0], 0)
   }
 }
 
-class ZoomHome extends MapControl {
-  createLeafletElement() {
-    return new ZoomExtended()
-  }
-}
+const ZoomHome = (props) => new ZoomExtended(props)
 
-export default withLeaflet(ZoomHome)
+export default createControlComponent(ZoomHome)
