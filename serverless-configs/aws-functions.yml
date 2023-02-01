@@ -454,20 +454,6 @@
             resultTtlInSeconds: 0
 
 
-  requeueOrder:
-    handler: serverless/src/requeueOrder/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT, '30'}
-    events:
-      - http:
-          method: post
-          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
-          path: requeue_order
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
-
-
   getRetrieval:
     handler: serverless/src/getRetrieval/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
@@ -725,6 +711,19 @@
           method: get
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: admin/projects/{id}
+          authorizer:
+            name: edlAdminAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
+  requeueOrder:
+    handler: serverless/src/requeueOrder/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
+    events:
+      - http:
+          method: post
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: requeue_order
           authorizer:
             name: edlAdminAuthorizer
             type: request
