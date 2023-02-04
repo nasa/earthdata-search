@@ -14,7 +14,7 @@ export const emptyDecodedResult = {
   deprecatedUrlParams: [],
   earthdataEnvironment: 'prod',
   featureFacets: {
-    availableFromAwsCloud: false,
+    availableInEarthdataCloud: false,
     customizable: false,
     mapImagery: false,
     nearRealTime: false

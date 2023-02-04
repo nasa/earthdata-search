@@ -183,7 +183,7 @@ function setup(overrideProps = {}) {
       }
     },
     featureFacets: {
-      availableFromAwsCloud: false,
+      availableInEarthdataCloud: false,
       customizable: false,
       mapImagery: false,
       nearRealTime: false
@@ -191,7 +191,7 @@ function setup(overrideProps = {}) {
     portal: {
       features: {
         featureFacets: {
-          showAvailableFromAwsCloud: true,
+          showAvailableInEarthdataCloud: true,
           showCustomizable: true,
           showMapImagery: true
         }

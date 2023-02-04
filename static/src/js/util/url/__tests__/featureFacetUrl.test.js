@@ -13,13 +13,13 @@ describe('url#decodeUrlParams', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       featureFacets: {
-        availableFromAwsCloud: true,
+        availableInEarthdataCloud: true,
         customizable: true,
         mapImagery: true,
         nearRealTime: true
       }
     }
-    expect(decodeUrlParams('?ff=Available%20from%20AWS%20Cloud!Customizable!Map%20Imagery!Near%20Real%20Time')).toEqual(expectedResult)
+    expect(decodeUrlParams('?ff=Available%20in%20Earthdata%20Cloud!Customizable!Map%20Imagery!Near%20Real%20Time')).toEqual(expectedResult)
   })
 })
 
@@ -29,7 +29,7 @@ describe('url#encodeUrlQuery', () => {
       hasGranulesOrCwic: true,
       pathname: '/path/here',
       featureFacets: {
-        availableFromAwsCloud: false,
+        availableInEarthdataCloud: false,
         customizable: false,
         mapImagery: false,
         nearRealTime: false
@@ -43,12 +43,12 @@ describe('url#encodeUrlQuery', () => {
       hasGranulesOrCwic: true,
       pathname: '/path/here',
       featureFacets: {
-        availableFromAwsCloud: true,
+        availableInEarthdataCloud: true,
         customizable: true,
         mapImagery: true,
         nearRealTime: true
       }
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?ff=Available%20from%20AWS%20Cloud!Customizable!Map%20Imagery!Near%20Real%20Time')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?ff=Available%20in%20Earthdata%20Cloud!Customizable!Map%20Imagery!Near%20Real%20Time')
   })
 })

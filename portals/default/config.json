@@ -3,7 +3,7 @@
     "advancedSearch": false,
     "authentication": false,
     "featureFacets": {
-      "showAvailableFromAwsCloud": false,
+      "showAvailableInEarthdataCloud": false,
       "showCustomizable": false,
       "showMapImagery": false
     }

@@ -31,7 +31,7 @@ const Facets = (props) => {
   const {
     showMapImagery,
     showCustomizable,
-    showAvailableFromAwsCloud
+    showAvailableInEarthdataCloud
   } = portalFeatureFacets
 
   const featuresFacet = {
@@ -43,10 +43,10 @@ const Facets = (props) => {
     children: []
   }
 
-  if (showAvailableFromAwsCloud) {
+  if (showAvailableInEarthdataCloud) {
     featuresFacet.children.push({
-      applied: featureFacets.availableFromAwsCloud,
-      title: 'Available from AWS Cloud',
+      applied: featureFacets.availableInEarthdataCloud,
+      title: 'Available in Earthdata Cloud',
       type: 'feature'
     })
   }
@@ -181,7 +181,7 @@ const Facets = (props) => {
 Facets.propTypes = {
   facetsById: PropTypes.shape({}).isRequired,
   featureFacets: PropTypes.shape({
-    availableFromAwsCloud: PropTypes.bool,
+    availableInEarthdataCloud: PropTypes.bool,
     customizable: PropTypes.bool,
     mapImagery: PropTypes.bool,
     nearRealTime: PropTypes.bool
