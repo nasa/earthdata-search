@@ -27,7 +27,7 @@ describe('ContactInfoRequest#fetch', () => {
     request.fetch()
 
     expect(getMock).toBeCalledTimes(1)
-    expect(getMock).toBeCalledWith('contact_info')
+    expect(getMock).toBeCalledWith('contact-info')
   })
 })
 
@@ -42,6 +42,6 @@ describe('ContactInfoRequest#updateNotificationLevel', () => {
     request.updateNotificationLevel(data)
 
     expect(postMock).toBeCalledTimes(1)
-    expect(postMock).toBeCalledWith('contact_info', data)
+    expect(postMock).toBeCalledWith('contact-info', data)
   })
 })

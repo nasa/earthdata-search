@@ -615,7 +615,7 @@
       - http:
           method: get
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
-          path: contact_info
+          path: contact-info
           authorizer:
             name: edlAuthorizer
             type: request
@@ -629,7 +629,7 @@
       - http:
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
-          path: contact_info
+          path: contact-info
           authorizer:
             name: edlAuthorizer
             type: request

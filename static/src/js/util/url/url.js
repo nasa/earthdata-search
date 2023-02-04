@@ -257,7 +257,7 @@ export const encodeUrlQuery = (props) => {
  * because it shares the base url with the projects page.
  */
 export const urlPathsWithoutUrlParams = [
-  /^\/contact_info/,
+  /^\/contact-info/,
   /^\/auth_callback/,
   /^\/admin/
 ]

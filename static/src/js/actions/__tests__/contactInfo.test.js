@@ -59,7 +59,7 @@ describe('setContactInfoFromJwt', () => {
 describe('fetchContactInfo', () => {
   test('should update the contact info with data from lambda', async () => {
     nock(/localhost/)
-      .get(/contact_info/)
+      .get(/contact-info/)
       .reply(200, {
         echo_preferences: { mock: 'echo' },
         urs_profile: { mock: 'urs' }
@@ -89,7 +89,7 @@ describe('updateNotificationLevel', () => {
     const addToastMock = jest.spyOn(addToast, 'addToast')
 
     nock(/localhost/)
-      .post(/contact_info/)
+      .post(/contact-info/)
       .reply(201, {
         preferences: { mock: 'echo' }
       })
@@ -117,7 +117,7 @@ describe('updateNotificationLevel', () => {
 
   test('does not call updateContactInfo on error', async () => {
     nock(/localhost/)
-      .post(/contact_info/)
+      .post(/contact-info/)
       .reply(500, {
         errors: ['An error occured.']
       })

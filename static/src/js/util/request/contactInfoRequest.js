@@ -10,10 +10,10 @@ export default class ContactInfoRequest extends Request {
   }
 
   fetch() {
-    return this.get('contact_info')
+    return this.get('contact-info')
   }
 
   updateNotificationLevel(data) {
-    return this.post('contact_info', data)
+    return this.post('contact-info', data)
   }
 }
