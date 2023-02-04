@@ -19,12 +19,14 @@
 				"default",
 				"relevance",
 				"-usage_score",
+				"start_date",
 				"-ongoing"
 			],
 			"enumNames": [
 				"Default",
 				"Relevance",
 				"Usage",
+				"Start Date",
 				"End Date"
 			]
 		},
