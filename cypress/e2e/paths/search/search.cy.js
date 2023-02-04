@@ -437,7 +437,7 @@ describe('Path /search', () => {
   })
 
   describe('Feature Facets Group', () => {
-    describe('When the path is loaded with the `Available from AWS Cloud` feature facet param', () => {
+    describe('When the path is loaded with the `Available in Earthdata Cloud` feature facet param', () => {
       it('loads with the feature facet applied', () => {
         const cmrHits = 720
 

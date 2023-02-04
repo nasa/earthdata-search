@@ -15,7 +15,7 @@ import {
 const initialCmrState = {}
 
 const initialFeatureState = {
-  availableFromAwsCloud: false,
+  availableInEarthdataCloud: false,
   customizable: false,
   mapImagery: false,
   nearRealTime: false
