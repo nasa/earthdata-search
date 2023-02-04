@@ -111,7 +111,7 @@ describe('getCollectionSubscriptionQueryString selector', () => {
     const state = {
       facetsParams: {
         feature: {
-          availableFromAwsCloud: true,
+          availableInEarthdataCloud: true,
           customizable: false,
           mapImagery: false,
           nearRealTime: false
@@ -146,7 +146,7 @@ describe('getCollectionSubscriptionQueryString selector', () => {
     const state = {
       facetsParams: {
         feature: {
-          availableFromAwsCloud: true,
+          availableInEarthdataCloud: true,
           customizable: false,
           mapImagery: false,
           nearRealTime: false

@@ -31,7 +31,7 @@ describe('getPortalConfig', () => {
         advancedSearch: true,
         authentication: true,
         featureFacets: {
-          showAvailableFromAwsCloud: true,
+          showAvailableInEarthdataCloud: true,
           showCustomizable: true,
           showMapImagery: true
         }

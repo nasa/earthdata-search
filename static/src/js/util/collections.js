@@ -77,7 +77,7 @@ export const prepareCollectionParams = (state) => {
   }
   if (featureFacets.mapImagery) tagKey.push(tagName('gibs'))
   let cloudHosted
-  if (featureFacets.availableFromAwsCloud) cloudHosted = true
+  if (featureFacets.availableInEarthdataCloud) cloudHosted = true
 
   let consortium = []
   if (onlyEosdisCollections) {
