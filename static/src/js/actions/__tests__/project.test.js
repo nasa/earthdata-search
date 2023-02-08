@@ -237,6 +237,10 @@ describe('getProjectCollections', () => {
       .reply(200, {})
 
     nock(/localhost/)
+      .post(/saved_access_configs/)
+      .reply(200, {})
+
+    nock(/localhost/)
       .post(/graphql/)
       .reply(200, {
         data: {
@@ -247,11 +251,17 @@ describe('getProjectCollections', () => {
                 items: [{
                   name: 'SOTO'
                 }]
+              },
+              services: {
+                items: null
               }
             },
             {
               conceptId: 'collectionId2',
               tools: {
+                items: null
+              },
+              services: {
                 items: null
               }
             }]
@@ -289,21 +299,6 @@ describe('getProjectCollections', () => {
           allIds: ['collectionId1', 'collectionId2']
         }
       },
-      providers: [
-        {
-          provider: {
-            id: 'abcd-1234-efgh-5678',
-            organization_name: 'EDSC-TEST',
-            provider_id: 'EDSC-TEST'
-          }
-        }, {
-          provider: {
-            id: 'abcd-1234-efgh-5678',
-            organization_name: 'NON-EDSC-TEST',
-            provider_id: 'NON-EDSC-TEST'
-          }
-        }
-      ],
       query: {
         collection: {}
       }
@@ -312,7 +307,23 @@ describe('getProjectCollections', () => {
     await store.dispatch(actions.getProjectCollections())
 
     const storeActions = store.getActions()
+
+    expect(storeActions.length).toEqual(3)
     expect(storeActions[0]).toEqual({
+      type: ADD_ACCESS_METHODS,
+      payload: {
+        collectionId: 'collectionId1',
+        methods: {}
+      }
+    })
+    expect(storeActions[1]).toEqual({
+      type: ADD_ACCESS_METHODS,
+      payload: {
+        collectionId: 'collectionId2',
+        methods: {}
+      }
+    })
+    expect(storeActions[2]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
         expect.objectContaining({
@@ -355,6 +366,10 @@ describe('getProjectCollections', () => {
     }))
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+    nock(/localhost/)
+      .post(/saved_access_configs/)
+      .reply(200, {})
 
     nock(/localhost/)
       .post(/graphql/)
@@ -412,6 +427,10 @@ describe('getProjectCollections', () => {
         .reply(200, {})
 
       nock(/localhost/)
+        .post(/saved_access_configs/)
+        .reply(200, {})
+
+      nock(/localhost/)
         .post(/graphql/)
         .reply(200, {
           data: {
@@ -425,11 +444,17 @@ describe('getProjectCollections', () => {
                 ],
                 tools: {
                   items: null
+                },
+                services: {
+                  items: null
                 }
               },
               {
                 conceptId: 'collectionId2',
                 tools: {
+                  items: null
+                },
+                services: {
                   items: null
                 }
               }]
@@ -467,21 +492,6 @@ describe('getProjectCollections', () => {
             allIds: ['collectionId1', 'collectionId2']
           }
         },
-        providers: [
-          {
-            provider: {
-              id: 'abcd-1234-efgh-5678',
-              organization_name: 'EDSC-TEST',
-              provider_id: 'EDSC-TEST'
-            }
-          }, {
-            provider: {
-              id: 'abcd-1234-efgh-5678',
-              organization_name: 'NON-EDSC-TEST',
-              provider_id: 'NON-EDSC-TEST'
-            }
-          }
-        ],
         query: {
           collection: {}
         }
@@ -490,7 +500,23 @@ describe('getProjectCollections', () => {
       await store.dispatch(actions.getProjectCollections())
 
       const storeActions = store.getActions()
+
+      expect(storeActions.length).toEqual(3)
       expect(storeActions[0]).toEqual({
+        type: ADD_ACCESS_METHODS,
+        payload: {
+          collectionId: 'collectionId1',
+          methods: {}
+        }
+      })
+      expect(storeActions[1]).toEqual({
+        type: ADD_ACCESS_METHODS,
+        payload: {
+          collectionId: 'collectionId2',
+          methods: {}
+        }
+      })
+      expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [
           expect.objectContaining({

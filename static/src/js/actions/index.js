@@ -132,9 +132,6 @@ import {
   updateProjectGranuleParams
 } from './project'
 import {
-  fetchProviders
-} from './providers'
-import {
   getRegions
 } from './regions'
 import {
@@ -143,9 +140,6 @@ import {
   deleteRetrieval
 } from './retrieval'
 import { fetchRetrievalHistory } from './retrievalHistory'
-import {
-  fetchAccessMethods
-} from './accessMethods'
 import {
   clearShapefile,
   fetchShapefile,
@@ -238,7 +232,6 @@ const actions = {
   deleteSubscription,
   excludeGranule,
   exportSearch,
-  fetchAccessMethods,
   fetchAdminRetrieval,
   fetchAdminRetrievals,
   fetchAutocomplete,
@@ -246,7 +239,6 @@ const actions = {
   fetchDataQualitySummaries,
   fetchAdminProject,
   fetchAdminProjects,
-  fetchProviders,
   fetchRetrieval,
   fetchRetrievalCollection,
   fetchRetrievalCollectionGranuleBrowseLinks,
