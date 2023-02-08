@@ -86,7 +86,6 @@ dockerRun() {
         -e "OBFUSCATION_SPIN=$bamboo_OBFUSCATION_SPIN" \
         -e "SUBNET_ID_A=$bamboo_SUBNET_ID_A" \
         -e "SUBNET_ID_B=$bamboo_SUBNET_ID_B" \
-        -e "SUBSETTING_JOB_ENABLED=$bamboo_SUBSETTING_JOB_ENABLED" \
         -e "VPC_ID=$bamboo_VPC_ID" \
         $dockerTag "$@"
 }

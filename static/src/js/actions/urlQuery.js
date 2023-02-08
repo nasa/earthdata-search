@@ -191,8 +191,6 @@ export const changePath = (path = '') => async (dispatch, getState) => {
     await dispatch(actions.getProjectCollections())
 
     await dispatch(actions.getProjectGranules())
-
-    dispatch(actions.fetchAccessMethods(allIds))
   }
 
   dispatch(actions.getTimeline())
