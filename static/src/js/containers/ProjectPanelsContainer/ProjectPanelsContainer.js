@@ -8,6 +8,7 @@ import actions from '../../actions/index'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getProjectCollectionsMetadata } from '../../selectors/project'
+import { getUrsProfile } from '../../selectors/contactInfo'
 
 import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
 
@@ -25,7 +26,8 @@ export const mapStateToProps = (state) => ({
   projectCollectionsMetadata: getProjectCollectionsMetadata(state),
   shapefileId: state.shapefile.shapefileId,
   spatial: state.query.collection.spatial,
-  temporal: state.query.collection.temporal
+  temporal: state.query.collection.temporal,
+  ursProfile: getUrsProfile(state)
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -112,6 +114,7 @@ export const ProjectPanelsContainer = ({
   shapefileId,
   spatial,
   temporal,
+  ursProfile,
   overrideTemporal
 }) => (
   <ProjectPanels
@@ -141,6 +144,7 @@ export const ProjectPanelsContainer = ({
     shapefileId={shapefileId}
     spatial={spatial}
     temporal={temporal}
+    ursProfile={ursProfile}
     overrideTemporal={overrideTemporal}
   />
 )
@@ -179,6 +183,9 @@ ProjectPanelsContainer.propTypes = {
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired,
   temporal: PropTypes.shape({}),
+  ursProfile: PropTypes.shape({
+    email_address: PropTypes.string
+  }).isRequired,
   overrideTemporal: PropTypes.shape({})
 }
 

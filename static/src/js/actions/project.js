@@ -1,4 +1,8 @@
-import { isEmpty, intersection } from 'lodash'
+import {
+  isEmpty,
+  intersection
+} from 'lodash'
+
 import actions from './index'
 
 import {
@@ -33,8 +37,11 @@ import { getUsername } from '../selectors/user'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { isCSDACollection } from '../util/isCSDACollection'
 import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
+import { buildAccessMethods } from '../util/accessMethods/buildAccessMethods'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
+import SavedAccessConfigsRequest from '../util/request/savedAccessConfigsRequest'
+import { insertSavedAccessConfig } from '../util/accessMethods/insertSavedAccessConfig'
 
 export const submittingProject = () => ({
   type: SUBMITTING_PROJECT
@@ -169,6 +176,27 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     return buildPromise(null)
   }
 
+  // Fetch the saved access configurations for the project collections
+  let savedAccessConfigs
+  try {
+    const savedAccessConfigsRequestObject = new SavedAccessConfigsRequest(
+      authToken,
+      earthdataEnvironment
+    )
+    savedAccessConfigsRequestObject.search(
+      { collectionIds: filteredIds }
+    ).then((response) => {
+      const { data } = response
+      savedAccessConfigs = data
+    })
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'getProjectCollections',
+      resource: 'saved access configurations'
+    }))
+  }
+
   const collectionParams = prepareCollectionParams(state)
 
   const searchParams = buildCollectionSearchParams(collectionParams)
@@ -181,7 +209,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
-    query GetCollections(
+    query GetProjectCollections (
       $ids: [String]
       $includeHasGranules: Boolean
       $includeTags: String
@@ -245,6 +273,14 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               serviceOptions
               supportedOutputProjections
               supportedReformattings
+              orderOptions {
+                count
+                items {
+                  conceptId
+                  name
+                  form
+                }
+              }
             }
           }
           granules {
@@ -340,6 +376,8 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           earthdataEnvironment
         )
 
+        const isOpenSearch = !!getOpenSearchOsddLink(metadata)
+
         payload.push({
           abstract,
           archiveAndDistributionInformation,
@@ -354,7 +392,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           hasGranules,
           id: conceptId,
           isCSDA: isCSDACollection(dataCenters),
-          isOpenSearch: !!getOpenSearchOsddLink(metadata),
+          isOpenSearch,
           relatedCollections,
           services,
           shortName,
@@ -367,6 +405,27 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           versionId,
           ...focusedMetadata
         })
+
+        const { [conceptId]: savedAccessConfig } = savedAccessConfigs
+
+        const accessMethodsObject = insertSavedAccessConfig(
+          buildAccessMethods(metadata, isOpenSearch),
+          savedAccessConfig
+        )
+
+        const { methods = {} } = accessMethodsObject
+        let { selectedAccessMethod } = accessMethodsObject
+
+        if (Object.keys(methods).length === 1 && !selectedAccessMethod) {
+          const [firstAccessMethod] = Object.keys(methods)
+          selectedAccessMethod = firstAccessMethod
+        }
+
+        dispatch(actions.addAccessMethods({
+          collectionId: conceptId,
+          methods,
+          selectedAccessMethod
+        }))
 
         dispatch(actions.fetchDataQualitySummaries(conceptId))
       })

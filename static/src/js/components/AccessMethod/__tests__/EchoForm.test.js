@@ -17,6 +17,7 @@ function setup(overrideProps) {
     shapefileId: null,
     spatial: {},
     temporal: {},
+    ursProfile: {},
     onUpdateAccessMethod: jest.fn(),
     ...overrideProps
   }
@@ -65,6 +66,20 @@ describe('EchoForm component', () => {
       TEMPORAL_START: '2019-12-06T07:34:12',
       TEMPORAL_END: '2020-03-05T17:49:07'
     })
+  })
+
+  test('renders an EDSCEchoform with email prepopulated', () => {
+    const { enzymeWrapper } = setup({
+      ursProfile: {
+        email_address: 'test@example.com'
+      }
+    })
+
+    expect(enzymeWrapper.find(EDSCEchoform).props().prepopulateValues).toEqual(
+      expect.objectContaining({
+        EMAIL: 'test@example.com'
+      })
+    )
   })
 
   test('renders an EDSCEchoform with a shapefile', () => {
