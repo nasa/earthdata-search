@@ -86,6 +86,7 @@ function setup(overrideProps) {
     shapefileId: '',
     spatial: {},
     temporal: {},
+    ursProfile: {},
     overrideTemporal: {},
     onChangePath: jest.fn(),
     onSelectAccessMethod: jest.fn(),

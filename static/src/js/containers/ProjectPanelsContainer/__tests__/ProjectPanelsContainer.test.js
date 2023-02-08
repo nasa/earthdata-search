@@ -46,7 +46,8 @@ function setup() {
       activePanel: '0.0.0',
       isOpen: false
     },
-    spatial: {}
+    spatial: {},
+    ursProfile: {}
   }
 
   const enzymeWrapper = shallow(<ProjectPanelsContainer {...props} />)
@@ -202,6 +203,9 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
+      contactInfo: {
+        ursProfile: {}
+      },
       dataQualitySummaries: {},
       metadata: {
         collections: {},
@@ -246,6 +250,7 @@ describe('mapStateToProps', () => {
       shapefileId: '',
       spatial: {},
       temporal: {},
+      ursProfile: {},
       overrideTemporal: {}
     }
 

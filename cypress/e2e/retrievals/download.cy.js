@@ -3,8 +3,6 @@ import collectionsGraphJson from './download_mocks/collections_graph.json'
 import timeline from './download_mocks/timeline.json'
 import granules from './download_mocks/granules.json'
 import granulesGraphqlBody from './download_mocks/granulesGraphqlBody.json'
-import providers from './download_mocks/providers.json'
-import accessMethods from './download_mocks/access_methods.json'
 import retrievals from './download_mocks/retrievals.json'
 import retrieval from './download_mocks/retrieval.json'
 import { getAuthHeaders } from '../utils/getAuthHeaders'
@@ -50,17 +48,10 @@ describe('Download project spec', () => {
       }
     )
     cy.intercept(
-      'GET',
-      '**/providers',
-      {
-        body: providers.body
-      }
-    )
-    cy.intercept(
       'POST',
-      '**/access_methods',
+      '**/saved_access_configs',
       {
-        body: accessMethods.body
+        body: {}
       }
     )
 

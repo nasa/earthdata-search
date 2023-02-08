@@ -261,6 +261,405 @@ describe('submitRetrieval', () => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
+
+  describe('metricsDataAccess', () => {
+    test('saves metrics for download retrievals', () => {
+      nock(/localhost/)
+        .post(/retrievals/)
+        .reply(200, {
+          id: 7
+        })
+
+      // mockStore with initialState
+      const store = mockStore({
+        authToken: 'mockToken',
+        earthdataEnvironment: 'prod',
+        metadata: {
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {},
+                metadata: {}
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            pageNum: 1,
+            keyword: 'search keyword'
+          },
+          granule: {
+            pageNum: 1
+          }
+        },
+        portal: {
+          portalId: 'edsc'
+        },
+        project: {
+          collections: {
+            byId: {
+              collectionId: {
+                accessMethods: {
+                  download: {
+                    type: 'download'
+                  }
+                },
+                selectedAccessMethod: 'download',
+                granules: {
+                  hits: 84
+                }
+              }
+            },
+            allIds: ['collectionId']
+          }
+        },
+        router: {
+          location: {
+            search: '?some=testparams'
+          }
+        },
+        shapefile: {}
+      })
+
+      // call the dispatch
+      store.dispatch(submitRetrieval()).then(() => {
+        expect(store.getActions().length).toEqual(4)
+
+        expect(store.getActions()[0]).toEqual({
+          payload: {
+            type: 'data_access_completion',
+            collections: [{
+              collectionId: 'collectionId',
+              service: 'Download',
+              type: 'download'
+            }]
+          },
+          type: 'METRICS_DATA_ACCESS'
+        })
+      })
+    })
+
+    test('saves metrics for echo orders retrievals', () => {
+      nock(/localhost/)
+        .post(/retrievals/)
+        .reply(200, {
+          id: 7
+        })
+
+      // mockStore with initialState
+      const store = mockStore({
+        authToken: 'mockToken',
+        earthdataEnvironment: 'prod',
+        metadata: {
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {},
+                metadata: {}
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            pageNum: 1,
+            keyword: 'search keyword'
+          },
+          granule: {
+            pageNum: 1
+          }
+        },
+        portal: {
+          portalId: 'edsc'
+        },
+        project: {
+          collections: {
+            byId: {
+              collectionId: {
+                accessMethods: {
+                  echoOrder0: {
+                    type: 'ECHO ORDERS',
+                    optionDefinition: {
+                      name: 'Mock Order'
+                    }
+                  }
+                },
+                selectedAccessMethod: 'echoOrder0',
+                granules: {
+                  hits: 84
+                }
+              }
+            },
+            allIds: ['collectionId']
+          }
+        },
+        router: {
+          location: {
+            search: '?some=testparams'
+          }
+        },
+        shapefile: {}
+      })
+
+      // call the dispatch
+      store.dispatch(submitRetrieval()).then(() => {
+        expect(store.getActions().length).toEqual(4)
+
+        expect(store.getActions()[0]).toEqual({
+          payload: {
+            type: 'data_access_completion',
+            collections: [{
+              collectionId: 'collectionId',
+              service: 'Mock Order',
+              type: 'order'
+            }]
+          },
+          type: 'METRICS_DATA_ACCESS'
+        })
+      })
+    })
+
+    test('saves metrics for esi retrievals', () => {
+      nock(/localhost/)
+        .post(/retrievals/)
+        .reply(200, {
+          id: 7
+        })
+
+      // mockStore with initialState
+      const store = mockStore({
+        authToken: 'mockToken',
+        earthdataEnvironment: 'prod',
+        metadata: {
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {},
+                metadata: {}
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            pageNum: 1,
+            keyword: 'search keyword'
+          },
+          granule: {
+            pageNum: 1
+          }
+        },
+        portal: {
+          portalId: 'edsc'
+        },
+        project: {
+          collections: {
+            byId: {
+              collectionId: {
+                accessMethods: {
+                  esi0: {
+                    type: 'ESI',
+                    optionDefinition: {
+                      name: 'Mock Order'
+                    }
+                  }
+                },
+                selectedAccessMethod: 'esi0',
+                granules: {
+                  hits: 84
+                }
+              }
+            },
+            allIds: ['collectionId']
+          }
+        },
+        router: {
+          location: {
+            search: '?some=testparams'
+          }
+        },
+        shapefile: {}
+      })
+
+      // call the dispatch
+      store.dispatch(submitRetrieval()).then(() => {
+        expect(store.getActions().length).toEqual(4)
+
+        expect(store.getActions()[0]).toEqual({
+          payload: {
+            type: 'data_access_completion',
+            collections: [{
+              collectionId: 'collectionId',
+              service: 'Mock Order',
+              type: 'esi'
+            }]
+          },
+          type: 'METRICS_DATA_ACCESS'
+        })
+      })
+    })
+
+    test('saves metrics for opendap retrievals', () => {
+      nock(/localhost/)
+        .post(/retrievals/)
+        .reply(200, {
+          id: 7
+        })
+
+      // mockStore with initialState
+      const store = mockStore({
+        authToken: 'mockToken',
+        earthdataEnvironment: 'prod',
+        metadata: {
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {},
+                metadata: {}
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            pageNum: 1,
+            keyword: 'search keyword'
+          },
+          granule: {
+            pageNum: 1
+          }
+        },
+        portal: {
+          portalId: 'edsc'
+        },
+        project: {
+          collections: {
+            byId: {
+              collectionId: {
+                accessMethods: {
+                  opendap: {
+                    type: 'OPeNDAP'
+                  }
+                },
+                selectedAccessMethod: 'opendap',
+                granules: {
+                  hits: 84
+                }
+              }
+            },
+            allIds: ['collectionId']
+          }
+        },
+        router: {
+          location: {
+            search: '?some=testparams'
+          }
+        },
+        shapefile: {}
+      })
+
+      // call the dispatch
+      store.dispatch(submitRetrieval()).then(() => {
+        expect(store.getActions().length).toEqual(4)
+
+        expect(store.getActions()[0]).toEqual({
+          payload: {
+            type: 'data_access_completion',
+            collections: [{
+              collectionId: 'collectionId',
+              service: 'OPeNDAP',
+              type: 'opendap'
+            }]
+          },
+          type: 'METRICS_DATA_ACCESS'
+        })
+      })
+    })
+
+    test('saves metrics for harmony retrievals', () => {
+      nock(/localhost/)
+        .post(/retrievals/)
+        .reply(200, {
+          id: 7
+        })
+
+      // mockStore with initialState
+      const store = mockStore({
+        authToken: 'mockToken',
+        earthdataEnvironment: 'prod',
+        metadata: {
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {},
+                metadata: {}
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            pageNum: 1,
+            keyword: 'search keyword'
+          },
+          granule: {
+            pageNum: 1
+          }
+        },
+        portal: {
+          portalId: 'edsc'
+        },
+        project: {
+          collections: {
+            byId: {
+              collectionId: {
+                accessMethods: {
+                  harmony0: {
+                    type: 'Harmony',
+                    name: 'mock-harmony-service'
+                  }
+                },
+                selectedAccessMethod: 'harmony0',
+                granules: {
+                  hits: 84
+                }
+              }
+            },
+            allIds: ['collectionId']
+          }
+        },
+        router: {
+          location: {
+            search: '?some=testparams'
+          }
+        },
+        shapefile: {}
+      })
+
+      // call the dispatch
+      store.dispatch(submitRetrieval()).then(() => {
+        expect(store.getActions().length).toEqual(4)
+
+        expect(store.getActions()[0]).toEqual({
+          payload: {
+            type: 'data_access_completion',
+            collections: [{
+              collectionId: 'collectionId',
+              service: 'mock-harmony-service',
+              type: 'harmony'
+            }]
+          },
+          type: 'METRICS_DATA_ACCESS'
+        })
+      })
+    })
+  })
 })
 
 describe('fetchRetrieval', () => {
