@@ -15,6 +15,7 @@ export const EchoForm = ({
   shapefileId,
   spatial,
   temporal,
+  ursProfile,
   onUpdateAccessMethod
 }) => {
   // Get the MBR of the spatial for prepopulated values
@@ -72,13 +73,23 @@ export const EchoForm = ({
     }
   }
 
+  const getEmailPrepopulateValues = (ursProfile) => {
+    const { email_address: emailAddress } = ursProfile
+
+    return {
+      EMAIL: emailAddress
+    }
+  }
+
   const calculatePrepopulateValues = () => {
     const spatialPrepopulateValues = getMbr(spatial)
     const temporalPrepopulateValues = getTemporalPrepopulateValues(temporal)
+    const emailPrepopulateValues = getEmailPrepopulateValues(ursProfile)
 
     const values = {
       ...spatialPrepopulateValues,
-      ...temporalPrepopulateValues
+      ...temporalPrepopulateValues,
+      ...emailPrepopulateValues
     }
 
     return values
@@ -171,6 +182,9 @@ EchoForm.propTypes = {
   temporal: PropTypes.shape({
     endDate: PropTypes.string,
     startDate: PropTypes.string
+  }).isRequired,
+  ursProfile: PropTypes.shape({
+    email_address: PropTypes.string
   }).isRequired
 }
 

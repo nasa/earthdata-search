@@ -292,6 +292,7 @@ class ProjectPanels extends PureComponent {
       shapefileId,
       spatial,
       temporal,
+      ursProfile,
       overrideTemporal
     } = this.props
 
@@ -575,6 +576,7 @@ class ProjectPanels extends PureComponent {
               shapefileId={shapefileId}
               spatial={spatial}
               temporal={preferredTemporal}
+              ursProfile={ursProfile}
             />
           </PanelItem>
           <PanelItem
@@ -709,7 +711,10 @@ ProjectPanels.propTypes = {
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired,
-  temporal: PropTypes.shape({}).isRequired
+  temporal: PropTypes.shape({}).isRequired,
+  ursProfile: PropTypes.shape({
+    email_address: PropTypes.string
+  }).isRequired
 }
 
 export default ProjectPanels

@@ -16,8 +16,6 @@ const mockStore = configureMockStore([thunk])
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
-
-  jest.spyOn(actions, 'fetchProviders').mockImplementation(() => jest.fn())
 })
 
 describe('updateStore', () => {
@@ -112,7 +110,6 @@ describe('updateStore', () => {
       }
 
       jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
-      jest.spyOn(actions, 'fetchAccessMethods').mockImplementation(() => jest.fn())
       jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
 
       const store = mockStore({
@@ -296,7 +293,6 @@ describe('changePath', () => {
           byId: {}
         }
       },
-      providers: [],
       query: {},
       router: {
         location: {
@@ -507,7 +503,6 @@ describe('changePath', () => {
               byId: {}
             }
           },
-          providers: [],
           query: {
             collection: {
               spatial: {}
@@ -545,7 +540,6 @@ describe('changePath', () => {
               byId: {}
             }
           },
-          providers: [],
           query: {
             collection: {
               spatial: {}
@@ -583,7 +577,6 @@ describe('changePath', () => {
               byId: {}
             }
           },
-          providers: [],
           query: {
             collection: {
               spatial: {}
@@ -623,7 +616,6 @@ describe('changePath', () => {
               byId: {}
             }
           },
-          providers: [],
           query: {
             collection: {
               spatial: {}
@@ -664,7 +656,6 @@ describe('changePath', () => {
               byId: {}
             }
           },
-          providers: [],
           query: {
             collection: {
               spatial: {}
@@ -702,7 +693,6 @@ describe('changePath', () => {
               byId: {}
             }
           },
-          providers: [],
           query: {
             collection: {
               spatial: {}
@@ -740,7 +730,6 @@ describe('changePath', () => {
               byId: {}
             }
           },
-          providers: [],
           query: {
             collection: {
               spatial: {}
@@ -780,7 +769,6 @@ describe('changePath', () => {
               byId: {}
             }
           },
-          providers: [],
           query: {
             collection: {
               spatial: {}
