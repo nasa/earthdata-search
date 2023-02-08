@@ -26,8 +26,6 @@ provider:
       Ref: CatalogRestOrderQueue
     harmonyQueueUrl:
       Ref: HarmonyOrderQueue
-    optionDefinitionQueueUrl:
-      Ref: OptionDefinitionsQueue
     userDataQueueUrl:
       Ref: UserDataQueue
 
