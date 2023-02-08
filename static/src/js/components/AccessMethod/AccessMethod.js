@@ -49,14 +49,10 @@ export class AccessMethod extends Component {
 
     // Disable temporal subsetting if the user has a recurring date selected
     const {
-      selectedOutputFormat = '',
-      selectedOutputProjection = '',
       enableTemporalSubsetting = !isRecurring
     } = selectedMethod || {}
 
     this.state = {
-      selectedOutputFormat,
-      selectedOutputProjection,
       enableTemporalSubsetting
     }
 
@@ -97,8 +93,6 @@ export class AccessMethod extends Component {
     const { target } = event
     const { value } = target
 
-    this.setState({ selectedOutputFormat: value })
-
     onUpdateAccessMethod({
       collectionId,
       method: {
@@ -115,8 +109,6 @@ export class AccessMethod extends Component {
 
     const { target } = event
     const { value } = target
-
-    this.setState({ selectedOutputProjection: value })
 
     onUpdateAccessMethod({
       collectionId,
@@ -149,8 +141,6 @@ export class AccessMethod extends Component {
 
   render() {
     const {
-      selectedOutputFormat,
-      selectedOutputProjection,
       enableTemporalSubsetting
     } = this.state
 
@@ -165,7 +155,8 @@ export class AccessMethod extends Component {
       selectedAccessMethod,
       shapefileId,
       spatial,
-      temporal
+      temporal,
+      ursProfile
     } = this.props
 
     const { conceptId: collectionId } = metadata
@@ -290,6 +281,8 @@ export class AccessMethod extends Component {
       form,
       rawModel = null,
       selectedVariables = [],
+      selectedOutputFormat,
+      selectedOutputProjection,
       supportedOutputFormats = [],
       supportedOutputProjections = [],
       supportsTemporalSubsetting = false,
@@ -435,6 +428,7 @@ export class AccessMethod extends Component {
                           shapefileId={shapefileId}
                           spatial={spatial}
                           temporal={temporal}
+                          ursProfile={ursProfile}
                           onUpdateAccessMethod={onUpdateAccessMethod}
                         />
                       </Suspense>
@@ -617,6 +611,9 @@ AccessMethod.propTypes = {
     endDate: PropTypes.string,
     isRecurring: PropTypes.bool,
     startDate: PropTypes.string
+  }).isRequired,
+  ursProfile: PropTypes.shape({
+    email_address: PropTypes.string
   }).isRequired
 }
 

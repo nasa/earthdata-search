@@ -48,7 +48,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
     const { [id]: projectCollection } = projectCollectionsById
     const { accessMethods, selectedAccessMethod = '' } = projectCollection
     const { [selectedAccessMethod]: selectedMethod } = accessMethods
-    const { type } = selectedMethod
+    const { name, type } = selectedMethod
 
     let selectedService
     let selectedType
@@ -57,18 +57,21 @@ export const submitRetrieval = () => (dispatch, getState) => {
       selectedService = 'Download'
       selectedType = 'download'
     } else if (type === 'ECHO ORDERS') {
-      const { option_definition: optionDefinition } = selectedMethod
+      const { optionDefinition } = selectedMethod
       const { name } = optionDefinition
       selectedService = name
       selectedType = 'order'
     } else if (type === 'ESI') {
-      const { service_option_definition: optionDefinition } = selectedMethod
+      const { optionDefinition } = selectedMethod
       const { name } = optionDefinition
       selectedService = name
       selectedType = 'esi'
     } else if (type === 'OPeNDAP') {
       selectedService = 'OPeNDAP'
       selectedType = 'opendap'
+    } else if (type === 'Harmony') {
+      selectedService = name
+      selectedType = 'harmony'
     }
 
     return {
