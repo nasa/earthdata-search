@@ -1107,6 +1107,13 @@ describe('Path /search/granules', () => {
         })
       })
 
+      cy.intercept(
+        'POST',
+        '**/saved_access_configs',
+        {
+          body: {}
+        }
+      )
       cy.intercept({
         method: 'POST',
         url: '**/api'
@@ -1180,6 +1187,13 @@ describe('Path /search/granules', () => {
         })
       })
 
+      cy.intercept(
+        'POST',
+        '**/saved_access_configs',
+        {
+          body: {}
+        }
+      )
       cy.intercept({
         method: 'POST',
         url: '**/api'
