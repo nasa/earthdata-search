@@ -1,15 +1,17 @@
-import axios from 'axios'
+import crypto from 'node:crypto'
 
-import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
-import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
-import { getJwtToken } from '../util/getJwtToken'
-import { parseError } from '../../../sharedUtils/parseError'
-import { getEchoToken } from '../util/urs/getEchoToken'
-import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
-import { jsonToCsv } from './jsonToCsv'
+import AWS from 'aws-sdk'
+import axios from 'axios'
+import { get } from 'sendero';
+
+import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { jsonToCsv } from '../util/jsonToCsv'
 import { wrapAxios } from '../util/wrapAxios'
 
 const wrappedAxios = wrapAxios(axios)
+
+// AWS S3 adapter
+let s3
 
 /**
  * Perform a loop through collection results and return the full results in the requested format.
@@ -20,105 +22,119 @@ const exportSearch = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
-  const { body, headers } = event
+  // we set the concurrency to 1, so we only process one at a time
+  // this way, if there's an issue, we can retry only the one that failed
+  const { Records: [sqsRecord] } = event
 
-  const { defaultResponseHeaders } = getApplicationConfig()
+  if (!sqsRecord) return
 
-  const { data, requestId } = JSON.parse(body)
+  const { body } = sqsRecord
 
-  const { format, variables, query } = data
+  const { extra, params } = JSON.parse(body)
 
-  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+  const { earthdataEnvironment, filename, key, jwt, requestId } = extra
+  if (!filename) throw new Error("missing filename")
+  if (!requestId) throw new Error("missing requestId")
 
+  // create request header for X-Request-Id
+  // so we can track a request across applications
   const requestHeaders = {
     'X-Request-Id': requestId
   }
 
-  const jwtToken = getJwtToken(event)
-  if (jwtToken) {
+  if (jwt) {
     // Support endpoints that have optional authentication
-    const token = await getEchoToken(jwtToken, earthdataEnvironment)
+    const token = await getEchoToken(jwt, earthdataEnvironment)
 
     requestHeaders.Authorization = `Bearer ${token}`
   }
 
   const { graphQlHost } = getEarthdataConfig(earthdataEnvironment)
 
+  const { columns, cursorpath, format, itempath, query, variables } = params;
+
   const graphQlUrl = `${graphQlHost}/api`
 
-  try {
-    let cursor
-    let finished = false
-    const returnItems = []
-    let status
-    let responseHeaders
+  let cursor
+  let finished = false
+  const returnItems = []
+  let responseHeaders
 
-    // Loop until the request comes back with no items
-    while (!finished) {
-      // We need this await inside the loop because we have to wait on the response from the previous
-      // call before making the next request
-      // eslint-disable-next-line no-await-in-loop
-      const response = await wrappedAxios({
-        url: graphQlUrl,
-        method: 'post',
-        data: {
-          query,
-          variables: {
-            ...variables,
-            cursor
-          }
-        },
-        headers: requestHeaders
-      })
-
-      const {
-        data: responseData,
-        config
-      } = response;
-      ({ headers: responseHeaders, status } = response)
-
-      const { elapsedTime } = config
-
-      const { collections = {} } = responseData.data
-      const { cursor: responseCursor, items = [] } = collections
-
-      console.log(`Request for ${items.length} exportSearch collections successfully completed in ${elapsedTime} ms`)
-
-      // Set the cursor returned from GraphQl so the next loop will use it
-      cursor = responseCursor
-
-      // If there are no items returned, set finished to true to exit the loop
-      if (!items || !items.length) {
-        finished = true
-        break
-      }
-
-      // Push the items returned onto the returnItems array
-      returnItems.push(...items)
-    }
-
-    // Format the returnItems into the requested format
-    let returnBody = null
-    if (format === 'json') returnBody = JSON.stringify(returnItems)
-    if (format === 'csv') returnBody = jsonToCsv(returnItems)
-
-    return {
-      isBase64Encoded: false,
-      statusCode: status,
-      headers: {
-        ...defaultResponseHeaders,
-        'access-control-allow-origin': responseHeaders['access-control-allow-origin'],
-        'access-control-expose-headers': prepareExposeHeaders(responseHeaders),
-        'jwt-token': jwtToken
+  // Loop until the request comes back with no items
+  while (!finished) {
+    // We need this await inside the loop because we have to wait on the response from the previous
+    // call before making the next request
+    // eslint-disable-next-line no-await-in-loop
+    const response = await wrappedAxios({
+      url: graphQlUrl,
+      method: 'post',
+      data: {
+        query,
+        variables: {
+          ...variables,
+          cursor
+        }
       },
-      body: returnBody
+      headers: requestHeaders
+    })
+
+    const {
+      data: responseData,
+      config
+    } = response;
+    ({ headers: responseHeaders, status } = response)
+
+    const { elapsedTime } = config
+
+    const { data } = responseData;
+
+    const responseCursor = get(data, cursorpath)[0];
+
+    const items = get(data, itempath, { clean: true })
+
+    console.log(`Request for ${items.length} exportSearch collections successfully completed in ${elapsedTime} ms`)
+
+    // Set the cursor returned from GraphQl so the next loop will use it
+    cursor = responseCursor
+
+    // If there are no items returned, set finished to true to exit the loop
+    if (!items || !items.length) {
+      finished = true
+      break
     }
-  } catch (e) {
-    return {
-      isBase64Encoded: false,
-      headers: defaultResponseHeaders,
-      ...parseError(e)
-    }
+
+    // Push the items returned onto the returnItems array
+    returnItems.push(...items)
+  }
+
+  // Format the returnItems into the requested format
+  let returnBody, contentType
+  if (format === 'json') {
+    returnBody = JSON.stringify(returnItems)
+    contentType = 'application/json'
+  } else if (format === 'csv') {
+    returnBody = jsonToCsv(returnItems, columns)
+    contentType = 'text/csv'
+  } else {
+    throw new Error("invalid format")
+  }
+
+  s3 ??= new AWS.S3({
+    endpoint: process.env.searchExportS3Endpoint
+  })
+
+  if (!process.env.IS_OFFLINE) {
+    await s3.upload({
+      Bucket: process.env.searchExportBucket,
+      Key: key,
+      Body: returnBody,
+      ACL: 'authenticated-read',
+      ContentDisposition: `attachment; filename="${filename}"`,
+      ContentType: contentType,
+
+      // Content-MD5 recommended by https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+      ContentMD5: crypto.createHash("md5").update(returnBody).digest("base64")
+    }).promise()
   }
 }
 
