@@ -1,6 +1,6 @@
 import React, { Component, lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
-import { Form } from 'react-bootstrap'
+import { Alert, Form } from 'react-bootstrap'
 import moment from 'moment'
 
 import { pluralize } from '../../util/pluralize'
@@ -10,7 +10,6 @@ import Button from '../Button/Button'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio'
 import RadioList from '../FormFields/RadioList/RadioList'
-import Skeleton from '../Skeleton/Skeleton'
 import Spinner from '../Spinner/Spinner'
 
 import './AccessMethod.scss'
@@ -253,28 +252,6 @@ export class AccessMethod extends Component {
       ...accessMethodsByType.download
     ]
 
-    const skeleton = [1, 2, 3].map((skeleton, i) => {
-      const key = `skeleton_${i}`
-      return (
-        <Skeleton
-          key={key}
-          containerStyle={{
-            height: '40px',
-            width: '300px',
-            marginBottom: '8px'
-          }}
-          shapes={[{
-            shape: 'rectangle',
-            x: 0,
-            y: 0,
-            height: 40,
-            width: 300,
-            radius: 3
-          }]}
-        />
-      )
-    })
-
     const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
 
     const {
@@ -395,7 +372,13 @@ export class AccessMethod extends Component {
           <div className="access-method__radio-list">
             {
               radioList.length === 0
-                ? skeleton
+                ? (
+                  <Alert
+                    variant="warning"
+                  >
+                    No access methods exist for this collection.
+                  </Alert>
+                )
                 : (
                   <RadioList
                     defaultValue={selectedAccessMethod}
