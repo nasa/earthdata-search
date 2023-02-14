@@ -4,7 +4,9 @@ import AWS from 'aws-sdk'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
+import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
+import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { parseError } from '../../../sharedUtils/parseError'
 
@@ -26,9 +28,14 @@ const exportSearchRequest = async (event, context) => {
 
     const { defaultResponseHeaders } = getApplicationConfig()
 
+
     const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
     const jwt = getJwtToken(event)
+
+    const { id: userId } = getVerifiedJwtToken(jwt, earthdataEnvironment)
+
+    if (!userId) throw Error("failed getting userId from jwt")
 
     try {
         const { data, requestId } = JSON.parse(body)
@@ -51,7 +58,7 @@ const exportSearchRequest = async (event, context) => {
         // hash the params
         const key = createHash('sha256').update(JSON.stringify(Object.entries(params))).digest('hex');
 
-        const filename = `search_results_export_${key.substring(0, 5)}.${format}`
+        const filename = `search_results_export_${key.substring(0, 10)}.${format}`
 
         const extra = {
             earthdataEnvironment,
@@ -66,13 +73,22 @@ const exportSearchRequest = async (event, context) => {
         const messageBody = JSON.stringify(message);
 
         if (!process.env.IS_OFFLINE) {
+            const dbConnection = await getDbConnection()
+
+            await dbConnection('exports').insert({
+                user_id: userId,
+                request_id: key,
+                state: "REQUESTED",
+                filename
+            })
+
             await sqs.sendMessage({
                 QueueUrl: process.env.searchExportQueueUrl,
                 MessageBody: messageBody
             }).promise()
         }
 
-        // maybe have a URL param to directly invoke the processing lambda instead of posting to a queue
+        // maybe have a environmental variable to directly invoke the processing lambda instead of posting to a queue
         // this would be done for local development
 
         return {

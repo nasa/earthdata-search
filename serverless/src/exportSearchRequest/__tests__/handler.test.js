@@ -1,9 +1,12 @@
 import AWS from 'aws-sdk'
 import MockDate from 'mockdate'
 import nock from 'nock'
+import { newDb } from "pg-mem";
 
 import * as deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
+import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getJwtToken from '../../util/getJwtToken'
+import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
 import * as getEchoToken from '../../util/urs/getEchoToken'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 
@@ -18,6 +21,7 @@ const SQS_TEST_LOCALHOST = `localhost:${SQS_TEST_PORT}`
 const SQS_TEST_QUEUE_NAME = 'REQUEST_SEARCH_EXPORT_TEST_QUEUE'
 const SQS_TEST_ENDPOINT = `http://${SQS_TEST_HOST}`
 const MOCK_ECHO_TOKEN = '1234-abcd-5678-efgh'
+const MOCK_USER_ID = 1234
 
 // need to configure here because the aws-sdk expects it
 // without it, the handler will throw an error
@@ -29,6 +33,8 @@ AWS.config.update({
 
 const sqs = new AWS.SQS({ endpoint: SQS_TEST_ENDPOINT })
 
+let mockDb, mockDbConnection
+
 let testSearchExportQueueUrl
 beforeAll(async () => {
   // explicitly allow network connections to ElasticMQ (SQS-Compatible) server
@@ -39,6 +45,24 @@ beforeAll(async () => {
 
   // we save the url here, so we can pass it to the handler via an environmental variable
   testSearchExportQueueUrl = QueueUrl
+
+  // create test database
+  mockDb = newDb()
+
+  // create exports table
+  mockDb.public.none(`create table exports (
+    user_id integer,
+    request_id varchar(1000),
+    state varchar(1000),
+    filename varchar(1000),
+    updated_at timestamp NOT NULL DEFAULT NOW(),
+    created_at timestamp NOT NULL DEFAULT NOW()
+  )`)
+
+  // create mock database connection
+  // it's asynchronous and getConnection is synchronous,
+  // so we have to intialize it outside the mock implementation call
+  mockDbConnection = await mockDb.adapters.createKnex()
 })
 
 afterAll(async () => {
@@ -52,7 +76,9 @@ beforeEach(async () => {
   jest.clearAllMocks()
 
   jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+  jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => mockDbConnection)
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
+  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: MOCK_USER_ID }))
 
   // Manage resetting ENV variables
   // TODO: This is causing problems with mocking knex but is noted as important for managing process.env
@@ -72,6 +98,9 @@ afterEach(() => {
   // reset hacks on built-ins
   MockDate.reset()
   jest.spyOn(global.Math, 'random').mockRestore();
+
+  // clear in-memory database table
+  mockDb.public.none('DELETE FROM exports')
 })
 
 describe('exportSearch', () => {
@@ -114,11 +143,23 @@ describe('exportSearch', () => {
       },
       extra: {
         earthdataEnvironment: "prod",
+        filename: "search_results_export_66241fe6c7.csv",
         jwt: 'mockJwt',
         key: expectedKey,
         requestId: 'asdf-1234-qwer-5678'
       }
     })
+
+    // check if the correct information was saved to the database
+    const databaseTableRows = await mockDbConnection('exports')
+    expect(databaseTableRows).toEqual([{
+      filename: 'search_results_export_66241fe6c7.csv',
+      request_id: '66241fe6c79c644cfc52b7f39644f5b7394ce1f30d4a0dd4b2237c8ca669ddee',
+      state: 'REQUESTED',
+      user_id: MOCK_USER_ID,
+      updated_at: new Date('1988-09-03T10:00:00.000Z'),
+      created_at: new Date('1988-09-03T10:00:00.000Z')
+    }])
   })
 
   test('returns json response correctly', async () => {
@@ -152,6 +193,7 @@ describe('exportSearch', () => {
       extra: {
         earthdataEnvironment: "prod",
         key: "6d5ae367c8c99d6bdf0fe7c4bfb56fc5306991c59a0d6c316386598f6711716b",
+        filename: "search_results_export_6d5ae367c8.json",
         jwt: "mockJwt",
         requestId: "asdf-1234-qwer-5678"
       },
@@ -161,6 +203,17 @@ describe('exportSearch', () => {
         variables: {}
       }
     })
+
+    // check if the correct information was saved to the database
+    const databaseTableRows = await mockDbConnection('exports')
+    expect(databaseTableRows).toEqual([{
+      filename: 'search_results_export_6d5ae367c8.json',
+      request_id: '6d5ae367c8c99d6bdf0fe7c4bfb56fc5306991c59a0d6c316386598f6711716b',
+      state: 'REQUESTED',
+      user_id: MOCK_USER_ID,
+      updated_at: new Date('1988-09-03T10:00:00.000Z'),
+      created_at: new Date('1988-09-03T10:00:00.000Z')
+    }])
   })
 
   test('responds correctly on malformed input', async () => {
@@ -190,5 +243,9 @@ describe('exportSearch', () => {
 
     // check that no message was created
     expect(Messages).toHaveLength(0)
+
+    // check that no information was saved to the database
+    const databaseTableRows = await mockDbConnection('exports')
+    expect(databaseTableRows).toEqual([])
   })
 })
