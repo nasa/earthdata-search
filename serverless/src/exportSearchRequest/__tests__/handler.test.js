@@ -7,7 +7,6 @@ import * as deployedEnvironment from '../../../../sharedUtils/deployedEnvironmen
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
-import * as getEchoToken from '../../util/urs/getEchoToken'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 
 import exportSearch from '../handler'
@@ -52,7 +51,7 @@ beforeAll(async () => {
   // create exports table
   mockDb.public.none(`create table exports (
     user_id integer,
-    request_id varchar(1000),
+    key varchar(1000),
     state varchar(1000),
     filename varchar(1000),
     updated_at timestamp NOT NULL DEFAULT NOW(),
@@ -146,7 +145,8 @@ describe('exportSearch', () => {
         filename: "search_results_export_66241fe6c7.csv",
         jwt: 'mockJwt',
         key: expectedKey,
-        requestId: 'asdf-1234-qwer-5678'
+        requestId: 'asdf-1234-qwer-5678',
+        userId: MOCK_USER_ID
       }
     })
 
@@ -154,7 +154,7 @@ describe('exportSearch', () => {
     const databaseTableRows = await mockDbConnection('exports')
     expect(databaseTableRows).toEqual([{
       filename: 'search_results_export_66241fe6c7.csv',
-      request_id: '66241fe6c79c644cfc52b7f39644f5b7394ce1f30d4a0dd4b2237c8ca669ddee',
+      key: '66241fe6c79c644cfc52b7f39644f5b7394ce1f30d4a0dd4b2237c8ca669ddee',
       state: 'REQUESTED',
       user_id: MOCK_USER_ID,
       updated_at: new Date('1988-09-03T10:00:00.000Z'),
@@ -195,7 +195,8 @@ describe('exportSearch', () => {
         key: "6d5ae367c8c99d6bdf0fe7c4bfb56fc5306991c59a0d6c316386598f6711716b",
         filename: "search_results_export_6d5ae367c8.json",
         jwt: "mockJwt",
-        requestId: "asdf-1234-qwer-5678"
+        requestId: "asdf-1234-qwer-5678",
+        userId: MOCK_USER_ID
       },
       params: {
         format: format,
@@ -208,7 +209,7 @@ describe('exportSearch', () => {
     const databaseTableRows = await mockDbConnection('exports')
     expect(databaseTableRows).toEqual([{
       filename: 'search_results_export_6d5ae367c8.json',
-      request_id: '6d5ae367c8c99d6bdf0fe7c4bfb56fc5306991c59a0d6c316386598f6711716b',
+      key: '6d5ae367c8c99d6bdf0fe7c4bfb56fc5306991c59a0d6c316386598f6711716b',
       state: 'REQUESTED',
       user_id: MOCK_USER_ID,
       updated_at: new Date('1988-09-03T10:00:00.000Z'),

@@ -65,7 +65,8 @@ const exportSearchRequest = async (event, context) => {
             key,
             filename,
             jwt,
-            requestId
+            requestId,
+            userId
         }
 
         const message = { params, extra }
@@ -77,7 +78,7 @@ const exportSearchRequest = async (event, context) => {
 
             await dbConnection('exports').insert({
                 user_id: userId,
-                request_id: key,
+                key,
                 state: "REQUESTED",
                 filename
             })

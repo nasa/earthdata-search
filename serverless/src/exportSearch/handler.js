@@ -5,6 +5,7 @@ import axios from 'axios'
 import { get } from 'sendero';
 
 import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { getDbConnection } from '../util/database/getDbConnection'
 import { jsonToCsv } from '../util/jsonToCsv'
 import { wrapAxios } from '../util/wrapAxios'
 
@@ -22,6 +23,8 @@ const exportSearch = async (event, context) => {
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
 
+  const dbConnection = await getDbConnection()
+
   // we set the concurrency to 1, so we only process one at a time
   // this way, if there's an issue, we can retry only the one that failed
   const { Records: [sqsRecord] } = event
@@ -32,9 +35,17 @@ const exportSearch = async (event, context) => {
 
   const { extra, params } = JSON.parse(body)
 
-  const { earthdataEnvironment, filename, key, jwt, requestId } = extra
+  const { earthdataEnvironment, filename, key, jwt, requestId, userId } = extra
   if (!filename) throw new Error("missing filename")
+  if (!key) throw new Error("missing key")
   if (!requestId) throw new Error("missing requestId")
+  if (!userId) throw new Error("missing userId")
+
+  if ((await dbConnection('exports').where({ user_id: userId, key })).length !== 1) {
+    throw Error("invalid number of rows matching user_id and key")
+  }
+
+  await dbConnection('exports').where({ user_id: userId, key }).update({ state: "PROCESSING" }).returning(['user_id', 'key'])
 
   // create request header for X-Request-Id
   // so we can track a request across applications
@@ -135,6 +146,10 @@ const exportSearch = async (event, context) => {
       // Content-MD5 recommended by https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
       ContentMD5: crypto.createHash("md5").update(returnBody).digest("base64")
     }).promise()
+    console.log(`uploaded object to bucket "${process.env.searchExportBucket}" with key "${key}"`)
+
+    await dbConnection('exports').where({ user_id: userId, key }).update({ state: "DONE" })
+    console.log('updated export status in the database')
   }
 }
 
