@@ -1,4 +1,4 @@
-import AWS, { S3 } from 'aws-sdk'
+import AWS from 'aws-sdk'
 import nock from 'nock'
 import { newDb } from "pg-mem";
 
