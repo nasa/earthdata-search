@@ -252,7 +252,7 @@ class SecondaryToolbar extends Component {
             </Dropdown.Item>
           </LinkContainer>
           <LinkContainer
-            to={`${portalPath(portal)}/contact_info`}
+            to={`${portalPath(portal)}/contact-info`}
           >
             <Dropdown.Item
               className="secondary-toolbar__contact-info"
