@@ -103,6 +103,7 @@ export const AdminRetrievalDetails = ({
                         </header>
 
                         <Alert variant="warning">
+                          {/* eslint-disable-next-line max-len */}
                           Clicking Requeue could generate duplicate orders, sending duplicated data to the user. Use with Caution
                         </Alert>
 
