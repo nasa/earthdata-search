@@ -111,7 +111,7 @@ class App extends Component {
                       )}
                     />
                     <Route
-                      path={this.portalPaths('/contact_info')}
+                      path={this.portalPaths('/contact-info')}
                       render={() => (
                         <AuthRequiredContainer>
                           <ContactInfo />
