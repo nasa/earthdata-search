@@ -15,7 +15,7 @@ export const ContactInfo = () => (
       <title>Contact Information</title>
       <meta name="title" content="Contact Information" />
       <meta name="robots" content="noindex, nofollow" />
-      <link rel="canonical" href={`${edscHost}/contact_info`} />
+      <link rel="canonical" href={`${edscHost}/contact-info`} />
     </Helmet>
     <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
       <div className="route-wrapper__content">

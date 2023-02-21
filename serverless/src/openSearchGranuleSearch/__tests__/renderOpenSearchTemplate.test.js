@@ -44,7 +44,7 @@ describe('renderOpenSearchTemplate', () => {
     expect(response).toEqual('https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&count=20&geoBox=-92.5761953125,40.874451651754995,-92.57519531250.001,40.875451651754990.001&clientId=eed-edsc-dev')
   })
 
-  test('inlcludes a start and end date when temporal values are provided', () => {
+  test('includes a start and end date when temporal values are provided', () => {
     const response = renderOpenSearchTemplate(
       'https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&amp;startIndex={startIndex?}&amp;count={count?}&amp;timeStart={time:start}&amp;timeEnd={time:end}&amp;geoBox={geo:box}&amp;clientId=eed-edsc-dev',
       {

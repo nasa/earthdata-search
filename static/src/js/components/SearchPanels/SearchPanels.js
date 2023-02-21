@@ -313,6 +313,11 @@ class SearchPanels extends PureComponent {
         onClick: () => setCollectionSort('-usage_score')
       },
       {
+        label: 'Start Date',
+        isActive: activeCollectionsSortKey === 'start_date',
+        onClick: () => setCollectionSort('start_date')
+      },
+      {
         label: 'End Date',
         isActive: activeCollectionsSortKey === '-ongoing',
         onClick: () => setCollectionSort('-ongoing')
