@@ -9,7 +9,7 @@ describe('INITIAL_STATE', () => {
     expect(dataQualitySummariesReducer(undefined, action)).toEqual(initialState)
   })
 })
-
+// TODO: Are we using the provider-id and updated at values
 describe('SET_DATA_QUALITY_SUMMARIES', () => {
   test('returns the correct state', () => {
     const action = {
@@ -19,9 +19,9 @@ describe('SET_DATA_QUALITY_SUMMARIES', () => {
         dataQualitySummaries: [{
           id: '1234-ABCD-5678-EFGH-91011',
           name: 'EDSC',
-          provider_id: 'EDSC-TEST',
-          summary: 'data quality summary',
-          updated_at: '2011-01-31T20:42:08Z'
+          // provider_id: 'EDSC-TEST',
+          summary: 'data quality summary'
+          // updated_at: '2011-01-31T20:42:08Z'
         }]
       }
     }
@@ -30,9 +30,9 @@ describe('SET_DATA_QUALITY_SUMMARIES', () => {
       'C10000001-EDSC': [{
         id: '1234-ABCD-5678-EFGH-91011',
         name: 'EDSC',
-        provider_id: 'EDSC-TEST',
-        summary: 'data quality summary',
-        updated_at: '2011-01-31T20:42:08Z'
+        // provider_id: 'EDSC-TEST',
+        summary: 'data quality summary'
+        // updated_at: '2011-01-31T20:42:08Z'
       }]
     }
 
