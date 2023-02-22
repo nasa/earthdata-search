@@ -354,8 +354,11 @@ class ProjectPanels extends PureComponent {
       if (!isEmpty(granuleTemporal)) preferredTemporal = granuleTemporal
 
       let { [collectionId]: collectionDataQualitySummaries = [] } = dataQualitySummaries
+      // console.log('The values of the data quality summary in the store', dataQualitySummaries)
+      // console.log('The collection dataquality summareis in the project panels', collectionDataQualitySummaries)
 
       const hasDataQualitySummary = collectionDataQualitySummaries.length > 0
+      // console.log(hasDataQualitySummary)
       const hasDuplicateCollection = duplicateCollections.length > 0
 
       const dataQualityHeader = (() => {
@@ -556,6 +559,7 @@ class ProjectPanels extends PureComponent {
           footer={editOptionsFooter}
         >
           <PanelItem
+            // TODO: This is the panel item that gets passed
             header={(
               <DataQualitySummary
                 dataQualitySummaries={collectionDataQualitySummaries}

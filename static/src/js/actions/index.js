@@ -130,7 +130,8 @@ import {
   selectAccessMethod,
   toggleCollectionVisibility,
   updateAccessMethod,
-  updateProjectGranuleParams
+  updateProjectGranuleParams,
+  setDataQualitySummaries
 } from './project'
 import {
   getRegions
@@ -150,7 +151,6 @@ import {
   updateShapefile
 } from './shapefiles'
 import { fetchRetrievalCollection } from './retrievalCollection'
-import { fetchDataQualitySummaries } from './dataQualitySummaries'
 import { deleteSavedProject, updateProjectName, updateSavedProject } from './savedProject'
 import { fetchSavedProjects, setSavedProjects } from './savedProjects'
 import { handleAlert } from './alerts'
@@ -236,7 +236,6 @@ const actions = {
   fetchAdminRetrievals,
   fetchAutocomplete,
   fetchContactInfo,
-  fetchDataQualitySummaries,
   fetchAdminProject,
   fetchAdminProjects,
   fetchRetrieval,
@@ -280,6 +279,7 @@ const actions = {
   setActivePanelGroup,
   setActivePanelSection,
   setContactInfoFromJwt,
+  setDataQualitySummaries,
   setIsSubmitting,
   setPreferences,
   setPreferencesFromJwt,

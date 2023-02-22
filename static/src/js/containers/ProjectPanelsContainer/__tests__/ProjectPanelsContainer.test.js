@@ -10,6 +10,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    // TODO: This is for the panel that is going to get rendered from the redux store in the props
     dataQualitySummaries: {},
     focusedCollectionId: '',
     focusedGranuleId: '',
@@ -119,11 +120,21 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith({ mock: 'data' })
   })
 
-  test('onFetchDataQualitySummaries calls actions.fetchDataQualitySummaries', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'fetchDataQualitySummaries')
+  // test('onFetchDataQualitySummaries calls actions.fetchDataQualitySummaries', () => {
+  //   const dispatch = jest.fn()
+  //   const spy = jest.spyOn(actions, 'fetchDataQualitySummaries')
 
-    mapDispatchToProps(dispatch).onFetchDataQualitySummaries('conceptId')
+  //   mapDispatchToProps(dispatch).onFetchDataQualitySummaries('conceptId')
+
+  //   expect(spy).toBeCalledTimes(1)
+  //   expect(spy).toBeCalledWith('conceptId')
+  // })
+  // TOD.oO: Pass
+  test('onSetDataQualitySummaries calls actions.setDataQualitySummaries', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'setDataQualitySummaries')
+
+    mapDispatchToProps(dispatch).onSetDataQualitySummaries('conceptId')
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('conceptId')
