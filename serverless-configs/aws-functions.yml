@@ -556,21 +556,6 @@
             type: request
             resultTtlInSeconds: 0
 
-
-  getDataQualitySummaries:
-    handler: serverless/src/getDataQualitySummaries/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT, '30'}
-    events:
-      - http:
-          method: post
-          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
-          path: dqs
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
-
-
   getContactInfo:
     handler: serverless/src/getContactInfo/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
