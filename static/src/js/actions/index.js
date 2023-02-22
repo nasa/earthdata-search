@@ -151,7 +151,6 @@ import {
 } from './shapefiles'
 import { fetchRetrievalCollection } from './retrievalCollection'
 import { loadPortalConfig } from './portals'
-// import { fetchDataQualitySummaries } from './dataQualitySummaries'
 import { deleteSavedProject, updateProjectName, updateSavedProject } from './savedProject'
 import { fetchSavedProjects, setSavedProjects } from './savedProjects'
 import { handleAlert } from './alerts'
