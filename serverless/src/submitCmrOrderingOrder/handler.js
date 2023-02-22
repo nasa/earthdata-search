@@ -12,6 +12,7 @@ import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWo
 
 /**
  * Submits an order to CMR Ordering (cmr-ordering)
+ * npm run invoke-local -- --function submitCmrOrderingOrder -p tmp/test_echo_order.json
  * @param {Object} event Queue messages from SQS
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
