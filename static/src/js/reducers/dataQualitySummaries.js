@@ -6,9 +6,6 @@ const dataQualitySummariesReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case SET_DATA_QUALITY_SUMMARIES: {
       const { catalogItemId, dataQualitySummaries } = action.payload
-      console.log('this is the payload that hte reducer is getting', action.payload)
-      console.log('This is the dataQualitySummaries in the reducer payload', dataQualitySummaries)
-      console.log('This is the catalogItemId in the reducer payload', catalogItemId)
       return {
         ...state,
         [catalogItemId]: dataQualitySummaries
