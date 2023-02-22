@@ -22,7 +22,7 @@ import './ProjectCollections.scss'
  * @param {Function} onSetActivePanelSection - Callback to set the active panel section.
  * @param {Function} onTogglePanels - Callback to toggle the visibility of the panels.
  * @param {Function} onToggleCollectionVisibility - Callback to toggle the visibility of the collection.
- * @param {Function} onUpdateProjectName - Callback to update the projet name.
+ * @param {Function} onUpdateProjectName - Callback to update the project name.
  * @param {Object} panels - The panels state.
  * @param {Object} project - The project state.
  * @param {Object} savedProject - The saved project state.
