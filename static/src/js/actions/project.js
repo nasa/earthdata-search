@@ -128,7 +128,7 @@ export const updateProjectGranuleParams = (payload) => ({
   type: UPDATE_PROJECT_GRANULE_PARAMS,
   payload
 })
-// TODO: Take off that dqsData alias
+
 export const setDataQualitySummaries = (payload) => ({
   type: SET_DATA_QUALITY_SUMMARIES,
   payload
@@ -238,6 +238,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           dataCenter
           dataCenters
           dataQualitySummaries {
+            count
             items {
               id
               name
@@ -440,30 +441,14 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           methods,
           selectedAccessMethod
         }))
-        // TODO OLD VERSION
-        // dispatch(actions.fetchDataQualitySummaries(conceptId))
-        // This is going to be deprecated but, it updates the metadata in the store
-        // This dispatch might be called but, just use the dataquiality summary data and then we
-        // TODO this part dosen't actually make sense because it will always exist
+
         const { items: dqsItems = [] } = dataQualitySummaries
         if (dqsItems) {
-          console.log('These are the dqs', dqsItems)
-          // dispatch(actions.fetchDataQualitySummaries(conceptId, dqsItems))
-          // const catalogItemId = conceptId
-          // console.log('the catalog item id', catalogItemId)
           dispatch(actions.setDataQualitySummaries({
             catalogItemId: conceptId,
             dataQualitySummaries: dqsItems
           }))
         }
-        // TODO: this is me
-
-        // if (dataQualitySummaries){
-        //   dispatch(actions.setDataQualitySummaries({
-        //     conceptId,
-        //     dataQualitySummaries: data
-        //   }))
-        // }
       })
 
       // Update metadata in the store
