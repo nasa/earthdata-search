@@ -92,14 +92,14 @@
     environment:
       updateOrderStatusStateMachineArn: ${self:resources.Outputs.UpdateOrderStatusWorkflow.Value}
 
-  submitLegacyServicesOrder:
-    handler: serverless/src/submitLegacyServicesOrder/handler.default
+  submitCmrOrderingOrder:
+    handler: serverless/src/submitCmrOrderingOrder/handler.default
     timeout: 600
     events:
       - sqs:
           arn:
             Fn::GetAtt:
-              - LegacyServicesOrderQueue
+              - CmrOrderingOrderQueue
               - Arn
     environment:
       updateOrderStatusStateMachineArn: ${self:resources.Outputs.UpdateOrderStatusWorkflow.Value}

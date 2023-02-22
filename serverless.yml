@@ -20,8 +20,8 @@ provider:
       Ref: ColorMapsProcessingQueue
     tagQueueUrl:
       Ref: TagProcessingQueue
-    legacyServicesQueueUrl:
-      Ref: LegacyServicesOrderQueue
+    cmrOrderingOrderQueueUrl:
+      Ref: CmrOrderingOrderQueue
     catalogRestQueueUrl:
       Ref: CatalogRestOrderQueue
     harmonyQueueUrl:

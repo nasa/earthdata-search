@@ -24,21 +24,21 @@ Resources:
       QueueName: ${self:custom.siteName}-TagProcessingDeadLetterQueue
       MessageRetentionPeriod: 1209600
 
-  LegacyServicesOrderQueue:
+  CmrOrderingOrderQueue:
     Type: 'AWS::SQS::Queue'
     Properties:
       VisibilityTimeout: 600
       RedrivePolicy:
         deadLetterTargetArn:
           Fn::GetAtt:
-            - LegacyServicesOrderDeadLetterQueue
+            - CmrOrderingOrderDeadLetterQueue
             - Arn
         maxReceiveCount: 2 # Number of times a message will be tried before being dumped to the DLQ
 
-  LegacyServicesOrderDeadLetterQueue:
+  CmrOrderingOrderDeadLetterQueue:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName: ${self:custom.siteName}-LegacyServicesOrderDeadLetterQueue
+      QueueName: ${self:custom.siteName}-CmrOrderingOrderDeadLetterQueue
       MessageRetentionPeriod: 1209600
 
   CatalogRestOrderQueue:
