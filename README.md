@@ -139,7 +139,7 @@ The [serverless framework](https://serverless.com/framework/docs/providers/aws/)
 
 Running the following command will spin up API Gateway and Lambda locally which will open up a vast majority of the functionality the backend offers.
 
-    serverless offline
+    npm run offline
 
 This will provide access to API Gateway at [http://localhost:3001](http://localhost:3001)
 
