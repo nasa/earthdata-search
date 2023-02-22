@@ -14,7 +14,8 @@ import {
   SUBMITTING_PROJECT,
   TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_ACCESS_METHOD,
-  UPDATE_COLLECTION_METADATA
+  UPDATE_COLLECTION_METADATA,
+  SET_DATA_QUALITY_SUMMARIES
 } from '../../constants/actionTypes'
 
 import {
@@ -27,7 +28,8 @@ import {
   selectAccessMethod,
   addAccessMethods,
   submittingProject,
-  submittedProject
+  submittedProject,
+  setDataQualitySummaries
 } from '../project'
 
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
@@ -47,6 +49,24 @@ describe('addCollectionToProject', () => {
       payload
     }
     expect(addCollectionToProject(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('setDataQualitySummary', () => {
+  test('should create an action to set the data-quality-summary for a collection in the project', () => {
+    const payload = {
+      catalogItemId: 'collectionId1',
+      dataQualitySummaries: [{
+        id: 'D5AC37C9-FF31-3885-5BDB-537D804C24B1',
+        name: '500 Test',
+        summary: '<p>This is another test</p>'
+      }]
+    }
+    const expectedAction = {
+      type: SET_DATA_QUALITY_SUMMARIES,
+      payload
+    }
+    expect(setDataQualitySummaries(payload)).toEqual(expectedAction)
   })
 })
 
@@ -216,7 +236,7 @@ describe('selectAccessMethod', () => {
     })
   })
 })
-
+// TODO: This test should be changed
 describe('getProjectCollections', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -228,13 +248,13 @@ describe('getProjectCollections', () => {
       opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
     }))
 
-    nock(/localhost/)
-      .post(/dqs/)
-      .reply(200, {})
+    // nock(/localhost/)
+    //   .post(/dqs/)
+    //   .reply(200, {})
 
-    nock(/localhost/)
-      .post(/dqs/)
-      .reply(200, {})
+    // nock(/localhost/)
+    //   .post(/dqs/)
+    //   .reply(200, {})
 
     nock(/localhost/)
       .post(/saved_access_configs/)
@@ -254,6 +274,10 @@ describe('getProjectCollections', () => {
               },
               services: {
                 items: null
+              },
+              dataQualitySummaries:
+              {
+                items: null
               }
             },
             {
@@ -262,6 +286,10 @@ describe('getProjectCollections', () => {
                 items: null
               },
               services: {
+                items: null
+              },
+              dataQualitySummaries:
+              {
                 items: null
               }
             }]
@@ -418,13 +446,13 @@ describe('getProjectCollections', () => {
         opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
       }))
 
-      nock(/localhost/)
-        .post(/dqs/)
-        .reply(200, {})
+      // nock(/localhost/)
+      //   .post(/dqs/)
+      //   .reply(200, {})
 
-      nock(/localhost/)
-        .post(/dqs/)
-        .reply(200, {})
+      // nock(/localhost/)
+      //   .post(/dqs/)
+      //   .reply(200, {})
 
       nock(/localhost/)
         .post(/saved_access_configs/)
@@ -442,6 +470,10 @@ describe('getProjectCollections', () => {
                     shortName: 'NASA/CSDA'
                   }
                 ],
+                dataQualitySummaries:
+                {
+                  items: null
+                },
                 tools: {
                   items: null
                 },
@@ -452,6 +484,10 @@ describe('getProjectCollections', () => {
               {
                 conceptId: 'collectionId2',
                 tools: {
+                  items: null
+                },
+                dataQualitySummaries:
+                {
                   items: null
                 },
                 services: {

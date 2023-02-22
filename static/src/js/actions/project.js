@@ -24,9 +24,9 @@ import {
   TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_ACCESS_METHOD,
   UPDATE_PROJECT_GRANULE_PARAMS,
-  UPDATE_PROJECT_GRANULE_RESULTS
+  UPDATE_PROJECT_GRANULE_RESULTS,
+  SET_DATA_QUALITY_SUMMARIES
 } from '../constants/actionTypes'
-
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { buildPromise } from '../util/buildPromise'
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
@@ -126,6 +126,11 @@ export const selectAccessMethod = (payload) => ({
 
 export const updateProjectGranuleParams = (payload) => ({
   type: UPDATE_PROJECT_GRANULE_PARAMS,
+  payload
+})
+// TODO: Take off that dqsData alias
+export const setDataQualitySummaries = (payload) => ({
+  type: SET_DATA_QUALITY_SUMMARIES,
   payload
 })
 
@@ -232,6 +237,13 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           coordinateSystem
           dataCenter
           dataCenters
+          dataQualitySummaries {
+            items {
+              id
+              name
+              summary
+            }
+          }
           directDistributionInformation
           doi
           duplicateCollections {
@@ -355,6 +367,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           coordinateSystem,
           dataCenter,
           dataCenters,
+          dataQualitySummaries,
           duplicateCollections,
           granules,
           hasGranules,
@@ -385,6 +398,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           boxes,
           cloudHosted,
           coordinateSystem,
+          dataQualitySummaries,
           dataCenter,
           duplicateCollections,
           granules,
@@ -426,8 +440,30 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           methods,
           selectedAccessMethod
         }))
+        // TODO OLD VERSION
+        // dispatch(actions.fetchDataQualitySummaries(conceptId))
+        // This is going to be deprecated but, it updates the metadata in the store
+        // This dispatch might be called but, just use the dataquiality summary data and then we
+        // TODO this part dosen't actually make sense because it will always exist
+        const { items: dqsItems = [] } = dataQualitySummaries
+        if (dqsItems) {
+          console.log('These are the dqs', dqsItems)
+          // dispatch(actions.fetchDataQualitySummaries(conceptId, dqsItems))
+          // const catalogItemId = conceptId
+          // console.log('the catalog item id', catalogItemId)
+          dispatch(actions.setDataQualitySummaries({
+            catalogItemId: conceptId,
+            dataQualitySummaries: dqsItems
+          }))
+        }
+        // TODO: this is me
 
-        dispatch(actions.fetchDataQualitySummaries(conceptId))
+        // if (dataQualitySummaries){
+        //   dispatch(actions.setDataQualitySummaries({
+        //     conceptId,
+        //     dataQualitySummaries: data
+        //   }))
+        // }
       })
 
       // Update metadata in the store
