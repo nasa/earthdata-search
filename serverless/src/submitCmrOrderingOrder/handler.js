@@ -7,7 +7,6 @@ import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
-// eslint-disable-next-line no-unused-vars
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
 
 /**
@@ -121,10 +120,9 @@ const submitCmrOrderingOrder = async (event, context) => {
 
       await dbConnection('retrieval_orders').update({ order_number: orderId, state }).where({ id })
 
-      // TODO comment this back in during EDSC-3640
-      // // Start the order status check workflow
-      // const { type } = accessMethod
-      // await startOrderStatusUpdateWorkflow(id, accessToken, type)
+      // Start the order status check workflow
+      const { type } = accessMethod
+      await startOrderStatusUpdateWorkflow(id, accessToken, type)
     } catch (e) {
       const parsedErrorMessage = parseError(e, { asJSON: false })
 

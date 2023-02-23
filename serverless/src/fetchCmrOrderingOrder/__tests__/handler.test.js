@@ -6,7 +6,7 @@ import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getSystemToken from '../../util/urs/getSystemToken'
 
-import fetchLegacyServicesOrder from '../handler'
+import fetchCmrOrderingOrder from '../handler'
 
 let dbTracker
 
@@ -36,8 +36,8 @@ afterEach(() => {
   dbTracker.uninstall()
 })
 
-describe('fetchLegacyServicesOrder', () => {
-  test('correctly retrieves a known legacy services order currently processing', async () => {
+describe('fetchCmrOrderingOrder', () => {
+  test('correctly retrieves a known cmr-ordering order currently processing', async () => {
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response({
@@ -50,35 +50,25 @@ describe('fetchLegacyServicesOrder', () => {
     })
 
     nock('https://cmr.earthdata.nasa.gov')
-      .get('/legacy-services/rest/orders.json?id=ABCD-1234-EFGH-5678')
-      .reply(200, [
-        {
+      .post('/ordering/api')
+      .reply(200, {
+        data: {
           order: {
-            client_identity: 'kzAY1v0kVjQ7QVpwBw-kLQ',
-            created_at: '2019-08-14T12:26:37Z',
             id: 'ABCD-1234-EFGH-5678',
-            notification_level: 'INFO',
-            order_price: 0,
-            owner_id: 'CF8F45-8138-232E-7C36-5D023FEF8',
-            provider_orders: [
-              {
-                reference: {
-                  id: 'EDF_DEV06',
-                  location: 'https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/ABCD-1234-EFGH-5678/provider_orders/EDF_DEV06',
-                  name: 'EDF_DEV06'
-                }
-              }
-            ],
             state: 'SUBMITTING',
-            submitted_at: '2019-08-14T12:26:42Z',
-            updated_at: '2019-08-14T12:27:13Z',
-            user_domain: 'OTHER',
-            user_region: 'USA'
+            collectionConceptId: 'C1000000085-EDF_DEV06',
+            providerId: 'EDF_DEV06',
+            providerTrackingId: null,
+            notificationLevel: 'INFO',
+            createdAt: '2019-08-14T12:26:37Z',
+            updatedAt: '2019-08-14T12:27:13Z',
+            submittedAt: null,
+            closedDate: null
           }
         }
-      ])
+      })
 
-    const legacyServicesResponse = await fetchLegacyServicesOrder({
+    const cmrOrderingResponse = await fetchCmrOrderingOrder({
       accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ECHO ORDERS'
@@ -89,7 +79,7 @@ describe('fetchLegacyServicesOrder', () => {
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('update')
 
-    expect(legacyServicesResponse).toEqual({
+    expect(cmrOrderingResponse).toEqual({
       accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'in_progress',
@@ -97,7 +87,7 @@ describe('fetchLegacyServicesOrder', () => {
     })
   })
 
-  test('correctly retrieves a known catalog rest order that is complete', async () => {
+  test('correctly retrieves a known cmr-ordering order that is complete', async () => {
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response({
@@ -110,35 +100,25 @@ describe('fetchLegacyServicesOrder', () => {
     })
 
     nock('https://cmr.earthdata.nasa.gov')
-      .get('/legacy-services/rest/orders.json?id=ABCD-1234-EFGH-5678')
-      .reply(200, [
-        {
+      .post('/ordering/api')
+      .reply(200, {
+        data: {
           order: {
-            client_identity: 'kzAY1v0kVjQ7QVpwBw-kLQ',
-            created_at: '2019-08-14T12:26:37Z',
             id: 'ABCD-1234-EFGH-5678',
-            notification_level: 'INFO',
-            order_price: 0,
-            owner_id: 'CF8F45-8138-232E-7C36-5D023FEF8',
-            provider_orders: [
-              {
-                reference: {
-                  id: 'EDF_DEV06',
-                  location: 'https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/ABCD-1234-EFGH-5678/provider_orders/EDF_DEV06',
-                  name: 'EDF_DEV06'
-                }
-              }
-            ],
             state: 'CLOSED',
-            submitted_at: '2019-08-14T12:26:42Z',
-            updated_at: '2019-08-14T12:27:13Z',
-            user_domain: 'OTHER',
-            user_region: 'USA'
+            collectionConceptId: 'C1000000085-EDF_DEV06',
+            providerId: 'EDF_DEV06',
+            providerTrackingId: null,
+            notificationLevel: 'INFO',
+            createdAt: '2019-08-14T12:26:37Z',
+            updatedAt: '2019-08-14T12:27:13Z',
+            submittedAt: '2019-08-14T12:28:13Z',
+            closedDate: '2019-08-14T12:29:13Z'
           }
         }
-      ])
+      })
 
-    const legacyServicesResponse = await fetchLegacyServicesOrder({
+    const cmrOrderingResponse = await fetchCmrOrderingOrder({
       accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ECHO ORDERS'
@@ -149,7 +129,7 @@ describe('fetchLegacyServicesOrder', () => {
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('update')
 
-    expect(legacyServicesResponse).toEqual({
+    expect(cmrOrderingResponse).toEqual({
       accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'complete',
@@ -157,7 +137,7 @@ describe('fetchLegacyServicesOrder', () => {
     })
   })
 
-  test('correctly retrieves a known catalog rest order that has failed', async () => {
+  test('correctly retrieves a known cmr-ordering order that has failed', async () => {
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response({
@@ -170,35 +150,25 @@ describe('fetchLegacyServicesOrder', () => {
     })
 
     nock('https://cmr.earthdata.nasa.gov')
-      .get('/legacy-services/rest/orders.json?id=ABCD-1234-EFGH-5678')
-      .reply(200, [
-        {
+      .post('/ordering/api')
+      .reply(200, {
+        data: {
           order: {
-            client_identity: 'kzAY1v0kVjQ7QVpwBw-kLQ',
-            created_at: '2019-08-14T12:26:37Z',
-            id: 'ABCD-1234-EFGH-5678',
-            notification_level: 'INFO',
-            order_price: 0,
-            owner_id: 'CF8F45-8138-232E-7C36-5D023FEF8',
-            provider_orders: [
-              {
-                reference: {
-                  id: 'EDF_DEV06',
-                  location: 'https://cmr.earthdata.nasa.gov:/legacy-services/rest/orders/ABCD-1234-EFGH-5678/provider_orders/EDF_DEV06',
-                  name: 'EDF_DEV06'
-                }
-              }
-            ],
-            state: 'NOT_VALIDATED',
-            submitted_at: '2019-08-14T12:26:42Z',
-            updated_at: '2019-08-14T12:27:13Z',
-            user_domain: 'OTHER',
-            user_region: 'USA'
+            id: '81da2666-0f93-4adb-bc58-c2bd1be76888',
+            state: 'SUBMIT_FAILED',
+            collectionConceptId: 'C1000000085-EDF_DEV06',
+            providerId: 'EDF_DEV06',
+            providerTrackingId: null,
+            notificationLevel: 'INFO',
+            createdAt: '2023-02-23T18:11:28.472Z',
+            updatedAt: '2023-02-23T18:11:30.721Z',
+            submittedAt: null,
+            closedDate: null
           }
         }
-      ])
+      })
 
-    const legacyServicesResponse = await fetchLegacyServicesOrder({
+    const cmrOrderingResponse = await fetchCmrOrderingOrder({
       accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ECHO ORDERS'
@@ -209,7 +179,7 @@ describe('fetchLegacyServicesOrder', () => {
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('update')
 
-    expect(legacyServicesResponse).toEqual({
+    expect(cmrOrderingResponse).toEqual({
       accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'failed',
@@ -226,7 +196,7 @@ describe('fetchLegacyServicesOrder', () => {
       }
     })
 
-    const legacyServicesResponse = await fetchLegacyServicesOrder({
+    const cmrOrderingResponse = await fetchCmrOrderingOrder({
       accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ECHO ORDERS'
@@ -236,7 +206,7 @@ describe('fetchLegacyServicesOrder', () => {
 
     expect(queries[0].method).toEqual('first')
 
-    expect(legacyServicesResponse).toEqual({
+    expect(cmrOrderingResponse).toEqual({
       accessToken: 'fake.access.token',
       id: 1,
       orderStatus: 'not_found',
@@ -251,7 +221,7 @@ describe('fetchLegacyServicesOrder', () => {
 
     // Exclude an error message from the `toThrow` matcher because its
     // a specific sql statement and not necessary
-    await expect(fetchLegacyServicesOrder({
+    await expect(fetchCmrOrderingOrder({
       accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ECHO ORDERS'
@@ -275,14 +245,45 @@ describe('fetchLegacyServicesOrder', () => {
     })
 
     nock('https://cmr.earthdata.nasa.gov')
-      .get('/legacy-services/rest/orders.json?id=ABCD-1234-EFGH-5678')
+      .post('/ordering/api')
       .reply(500, {
         errors: [
           'Test error message'
         ]
       })
 
-    await expect(fetchLegacyServicesOrder({
+    await expect(fetchCmrOrderingOrder({
+      accessToken: 'fake.access.token',
+      id: 1,
+      orderType: 'ECHO ORDERS'
+    })).rejects.toThrow('Test error message')
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('first')
+  })
+
+  test('responds correctly on cmr-ordering error', async () => {
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response({
+          environment: 'prod',
+          order_number: 'ABCD-1234-EFGH-5678'
+        })
+      } else {
+        query.response([])
+      }
+    })
+
+    nock('https://cmr.earthdata.nasa.gov')
+      .post('/ordering/api')
+      .reply(200, {
+        errors: [
+          'Test error message'
+        ]
+      })
+
+    await expect(fetchCmrOrderingOrder({
       accessToken: 'fake.access.token',
       id: 1,
       orderType: 'ECHO ORDERS'
