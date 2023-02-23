@@ -118,15 +118,23 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith({ mock: 'data' })
   })
-  // TODO lets double check this at the end to make sure it's this actual value
+
   test('onSetDataQualitySummaries calls actions.setDataQualitySummaries', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'setDataQualitySummaries')
 
-    mapDispatchToProps(dispatch).onSetDataQualitySummaries('conceptId')
+    const payload = {
+      catalogItemId: 'C1234',
+      dataQualitySummaries: {
+        id: 'D5AC37C9-FF31-3885-5BDB-537D804C24B1',
+        name: 'DQS_name',
+        summary: 'Summary'
+      }
+    }
+    mapDispatchToProps(dispatch).onSetDataQualitySummaries(payload)
 
     expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('conceptId')
+    expect(spy).toBeCalledWith(payload)
   })
 
   test('onAddGranuleToProjectCollection calls actions.addGranuleToProjectCollection', () => {

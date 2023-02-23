@@ -557,7 +557,6 @@ class ProjectPanels extends PureComponent {
           footer={editOptionsFooter}
         >
           <PanelItem
-            // TODO: This is the panel item that gets passed
             header={(
               <DataQualitySummary
                 dataQualitySummaries={collectionDataQualitySummaries}
