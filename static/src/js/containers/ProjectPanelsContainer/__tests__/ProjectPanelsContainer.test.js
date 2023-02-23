@@ -124,7 +124,7 @@ describe('mapDispatchToProps', () => {
     const spy = jest.spyOn(actions, 'setDataQualitySummaries')
 
     const payload = {
-      catalogItemId: 'C1234',
+      catalogItemId: 'C1000000426-LPDAAC_ECS',
       dataQualitySummaries: {
         id: 'D5AC37C9-FF31-3885-5BDB-537D804C24B1',
         name: 'DQS_name',
