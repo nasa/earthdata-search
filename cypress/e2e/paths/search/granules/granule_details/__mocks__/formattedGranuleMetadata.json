@@ -28,23 +28,23 @@
   "metadataUrls": {
     "atom": {
       "title": "ATOM",
-      "href": "https://cmr.sit.earthdata.nasa.gov/search/concepts/G1287941210-ASF.atom"
+      "href": "https://cmr.earthdata.nasa.gov/search/concepts/G1287941210-ASF.atom"
     },
     "echo10": {
       "title": "ECHO 10",
-      "href": "https://cmr.sit.earthdata.nasa.gov/search/concepts/G1287941210-ASF.echo10"
+      "href": "https://cmr.earthdata.nasa.gov/search/concepts/G1287941210-ASF.echo10"
     },
     "iso19115": {
       "title": "ISO 19115",
-      "href": "https://cmr.sit.earthdata.nasa.gov/search/concepts/G1287941210-ASF.iso19115"
+      "href": "https://cmr.earthdata.nasa.gov/search/concepts/G1287941210-ASF.iso19115"
     },
     "native": {
       "title": "Native",
-      "href": "https://cmr.sit.earthdata.nasa.gov/search/concepts/G1287941210-ASF"
+      "href": "https://cmr.earthdata.nasa.gov/search/concepts/G1287941210-ASF"
     },
     "umm_json": {
       "title": "UMM-G",
-      "href": "https://cmr.sit.earthdata.nasa.gov/search/concepts/G1287941210-ASF.umm_json"
+      "href": "https://cmr.earthdata.nasa.gov/search/concepts/G1287941210-ASF.umm_json"
     }
   },
   "onlineAccessFlag": true,
