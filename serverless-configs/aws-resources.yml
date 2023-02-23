@@ -1,4 +1,27 @@
 Resources:
+  SearchExportBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: ${self:custom.siteName}-SearchExportBucket
+      AccessControl: Private
+      CorsConfiguration:
+        CorsRules:
+        - AllowedMethods:
+          - GET
+          - OPTIONS
+          - HEAD
+          AllowedOrigins:
+          - "*"
+          AllowedHeaders:
+          - "*"
+
+  SearchExportQueue:
+    Type: 'AWS::SQS::Queue'
+    Properties:
+      QueueName: ${self:custom.siteName}-SearchExportQueue
+      ReceiveMessageWaitTimeSeconds: 20
+      VisibilityTimeout: 300
+
   # SQS Queue to process Color Map entries
   ColorMapsProcessingQueue:
     Type: 'AWS::SQS::Queue'
