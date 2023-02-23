@@ -15,7 +15,7 @@ import exportSearchCheck from '../handler'
 
 const OLD_ENV = process.env
 
-const MOCK_REGION = 'antarctica'
+const MOCK_REGION = 'moon'
 const S3_TEST_PORT = 5000
 const S3_TEST_HOST = `0.0.0.0:${S3_TEST_PORT}`
 const S3_TEST_LOCALHOST = `localhost:${S3_TEST_PORT}`
@@ -25,9 +25,10 @@ const S3_TEST_ENDPOINT = `http://${S3_TEST_HOST}`
 const MOCK_EXPORT_REQUEST_KEY = '123456789abcdefg'
 const MOCK_FILENAME_CSV = 'search_results_export_123456789.csv'
 const MOCK_FILENAME_JSON = 'search_results_export_123456789.json'
+const MOCK_REQUEST_ID = 'd1b9b99c-c001-4502-bf82-5efaccf8c542'
 
-const CONTENT_TYPE_CSV = 'text/csv';
-const CONTENT_TYPE_JSON = 'application/json';
+const CONTENT_TYPE_CSV = 'text/csv'
+const CONTENT_TYPE_JSON = 'application/json'
 
 // need to configure here because the aws-sdk expects it
 // without it, the handler will throw an error
@@ -53,7 +54,7 @@ beforeAll(async () => {
     CreateBucketConfiguration: {
       LocationConstraint: MOCK_REGION
     }
-  }).promise();
+  }).promise()
 
   // create test database
   mockDb = newDb()
@@ -90,7 +91,6 @@ beforeEach(() => {
   jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => mockDbConnection)
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-
 
   // Manage resetting ENV variables
   // TODO: This is causing problems with mocking knex but is noted as important for managing process.env
@@ -130,7 +130,10 @@ describe('exportSearchCheck', () => {
 
     const event = {
       body: JSON.stringify({
-        key: MOCK_EXPORT_REQUEST_KEY
+        requestId: MOCK_REQUEST_ID,
+        data: {
+          key: MOCK_EXPORT_REQUEST_KEY
+        }
       })
     }
 
@@ -156,7 +159,10 @@ describe('exportSearchCheck', () => {
 
     const event = {
       body: JSON.stringify({
-        key: MOCK_EXPORT_REQUEST_KEY
+        requestId: MOCK_REQUEST_ID,
+        data: {
+          key: MOCK_EXPORT_REQUEST_KEY
+        }
       })
     }
 
@@ -197,7 +203,10 @@ describe('exportSearchCheck', () => {
 
     const event = {
       body: JSON.stringify({
-        key: MOCK_EXPORT_REQUEST_KEY
+        requestId: MOCK_REQUEST_ID,
+        data: {
+          key: MOCK_EXPORT_REQUEST_KEY
+        }
       })
     }
 
@@ -244,7 +253,10 @@ describe('exportSearchCheck', () => {
 
     const event = {
       body: JSON.stringify({
-        key: MOCK_EXPORT_REQUEST_KEY
+        requestId: MOCK_REQUEST_ID,
+        data: {
+          key: MOCK_EXPORT_REQUEST_KEY
+        }
       })
     }
 
@@ -255,7 +267,7 @@ describe('exportSearchCheck', () => {
 
     const response = await axios.get(url, {
       transformResponse: data => data, // ensure treated as plain text
-    });
+    })
     expect(response.data).toEqual(MOCK_CSV)
     expect(response.status).toEqual(200)
     expect(response.headers['content-type']).toEqual(CONTENT_TYPE_CSV)

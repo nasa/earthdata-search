@@ -1,6 +1,8 @@
 import AWS from 'aws-sdk'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
+import { getS3Config } from '../util/aws/getS3Config'
+import { getSearchExportBucket } from '../util/aws/getSearchExportBucket'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getJwtToken } from '../util/getJwtToken'
@@ -21,11 +23,20 @@ const exportSearchCheck = async (event, context) => {
     // eslint-disable-next-line no-param-reassign
     context.callbackWaitsForEmptyEventLoop = false
 
-    s3 ??= new AWS.S3({
-        endpoint: process.env.searchExportS3Endpoint
-    })
+    if (process.env.IS_OFFLINE) {
+        // fake/mock values when doing local development
+        AWS.config.update({
+            accessKeyId: Math.random().toString(),
+            secretAccessKey: Math.random().toString(),
+            region: 'moon'
+        })
+    }
+
+    s3 ??= new AWS.S3(getS3Config())
 
     const { body, headers } = event
+
+    if (!body) throw Error("post did not include a body")
 
     const { defaultResponseHeaders } = getApplicationConfig()
 
@@ -39,7 +50,10 @@ const exportSearchCheck = async (event, context) => {
     // adding a little extra validation
     if (body.length > 1000) throw Error("body is too long")
 
-    const { key } = JSON.parse(body);
+    const { requestId, data } = JSON.parse(body)
+    console.log(`requestId: ${requestId}`)
+
+    const { key } = data
     if (!key) {
         return {
             isBase64Encoded: false,
@@ -51,6 +65,7 @@ const exportSearchCheck = async (event, context) => {
             body: JSON.stringify({ errors: ["missing key"] })
         }
     }
+    console.log(`key: ${key}`)
 
     const dbConnection = await getDbConnection()
 
@@ -73,7 +88,10 @@ const exportSearchCheck = async (event, context) => {
         }
     }
 
-    const exists = await doesObjectExist(s3, process.env.searchExportBucket, key)
+    const searchExportBucket = getSearchExportBucket()
+    if (!searchExportBucket) throw Error('failed to get bucket name')
+
+    const exists = await doesObjectExist(s3, searchExportBucket, key)
     if (!exists) {
         return {
             isBase64Encoded: false,
@@ -87,7 +105,7 @@ const exportSearchCheck = async (event, context) => {
     }
 
     const signedUrl = await s3.getSignedUrlPromise('getObject', {
-        Bucket: process.env.searchExportBucket,
+        Bucket: searchExportBucket,
         Key: key,
         Expires: 10 * 60 // pre-signed URL expires after 10 minutes
     })
@@ -99,7 +117,7 @@ const exportSearchCheck = async (event, context) => {
             ...defaultResponseHeaders,
             'jwt-token': jwt
         },
-        body: JSON.stringify({ state, url: signedUrl })
+        body: JSON.stringify({ state, url: signedUrl }) 
     }
 }
 
