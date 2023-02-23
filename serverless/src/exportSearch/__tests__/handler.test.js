@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk'
 import nock from 'nock'
-import { newDb } from "pg-mem";
+import { newDb } from "pg-mem"
 
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getDbConnection from '../../util/database/getDbConnection'
@@ -10,7 +10,7 @@ import exportSearch from '../handler'
 
 const OLD_ENV = process.env
 
-const MOCK_REGION = 'antarctica'
+const MOCK_REGION = 'moon'
 const S3_TEST_PORT = 5000
 const S3_TEST_HOST = `0.0.0.0:${S3_TEST_PORT}`
 const S3_TEST_LOCALHOST = `localhost:${S3_TEST_PORT}`

@@ -19,35 +19,43 @@ class ServerlessOfflineConfigS3 {
 
     this.hooks = {
       'offline:start:init': this.start.bind(this),
-    };
+    }
   }
 
   async start() {
-    AWS.config.update({
-      accessKeyId: Math.random().toString(),
-      secretAccessKey: Math.random().toString(),
-      region: this.region
-    })
+    try {
+      AWS.config.update({
+        accessKeyId: Math.random().toString(),
+        secretAccessKey: Math.random().toString(),
+        region: this.region
+      })
 
-    const s3 = new AWS.S3({
-      endpoint: this.endpoint,
-      s3ForcePathStyle: true
-    })
+      const s3 = new AWS.S3({
+        endpoint: this.endpoint,
+        s3ForcePathStyle: true
+      })
 
-    const { Buckets = [] } = await s3.listBuckets().promise()
+      const { Buckets = [] } = await s3.listBuckets().promise()
 
-    const bucketNames = Buckets.map(({ Name }) => Name)
+      const bucketNames = Buckets.map(({ Name }) => Name)
 
-    for (let i = 0; i < this.buckets.length; i++) {
-      const bucketName = this.buckets[i]
+      for (let i = 0; i < this.buckets.length; i++) {
+        const bucketName = this.buckets[i]
 
-      if (!bucketNames.includes(bucketName)) {
-        await s3.createBucket({
-          Bucket: bucketName,
-          CreateBucketConfiguration: {
-            LocationConstraint: this.region
-          }
-        }).promise()
+        if (!bucketNames.includes(bucketName)) {
+          await s3.createBucket({
+            Bucket: bucketName,
+            CreateBucketConfiguration: {
+              LocationConstraint: this.region
+            }
+          }).promise()
+        }
+      }
+    } catch (error) {
+      if (error.code === 'UnknownEndpoint') {
+        console.error('please run: npm run s3')
+      } else {
+        throw error
       }
     }
   }
