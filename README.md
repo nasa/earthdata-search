@@ -24,11 +24,12 @@ It builds upon several public-facing services provided by EOSDIS, including the 
 
 ## Application Installation and Usage
 
-The Earthdata Search application uses Node v14 and Webpack 5 to generate static assets. The serverless application utilizes the following AWS services (important to note if deploying to an AWS environment):
+The Earthdata Search application uses Node.js and Webpack to generate static assets. The serverless application utilizes the following AWS services (important to note if deploying to an AWS environment):
 
 - S3
-  - We highly recommend using CloudFront in front of S3.
+  - We highly recommend using CloudFront in front of S3.  We use [moto](https://github.com/getmoto/moto) to simulate S3 during local development.  If you have [homebrew](https://brew.sh/) installed, you can install moto by running `npm s3:install` or by following the guide [here](http://docs.getmoto.org/en/latest/docs/getting_started.html#installing-moto).
 - SQS
+  - We use [ElasticMQ](https://github.com/softwaremill/elasticmq) to simulate SQS during local development.  If you have curl installed, you can install ElasticMQ by running `npm sqs:install` or by following the instructions [here](https://github.com/softwaremill/elasticmq)
 - API Gateway
 - Lambda
 - Cloudwatch (Events)
@@ -62,6 +63,7 @@ Earthdata Search utilizes the [Serverless Framework](https://serverless.com/) fo
 ##### PostgreSQL
 
 Earthdata Search uses PostgreSQL in production on AWS RDS. If you don't already have it installed, [download](https://www.postgresql.org/download/) and install it to your development environment.
+We also use [pg-mem](https://github.com/oguimbal/pg-mem) for some tests and may roll it out to more tests in the future.  pg-mem is automatically installed along with all the other dependencies when you run `npm install`.
 
 **Recommended:** Use Homebrew
 
@@ -131,15 +133,13 @@ The [serverless framework](https://serverless.com/framework/docs/providers/aws/)
 
 - SQS
 
- While there is an sqs-offline plugin for serverless it still requires an actual queue be running, we may investigate this in the future but for now sqs functionality isn't available while developing locally which means the following pieces of functionality will not operate locally:
-
-- Generating Colormaps
+ We are currently using [ElasticMQ](https://github.com/softwaremill/elasticmq) to simulate SQS during local development.  However we haven't yet rolled this functionality out to colormap generation and other parts of the code.
 
 #### Running API Gateway and Lambda Locally
 
 Running the following command will spin up API Gateway and Lambda locally which will open up a vast majority of the functionality the backend offers.
 
-    serverless offline
+    npm run api
 
 This will provide access to API Gateway at [http://localhost:3001](http://localhost:3001)
 
@@ -150,6 +150,8 @@ Additionally, this ties in with the `serverless webpack` plugin which will ensur
 Once the project is built, you must ensure that the automated unit tests pass:
 
     npm run test
+
+You must run `npm run s3` and `npm run sqs` before running the Jest tests for exporting search results.
 
 ### Run the Automated [Cypress](https://www.cypress.io/) tests
 
