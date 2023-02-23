@@ -15,9 +15,12 @@ provider:
       Fn::ImportValue: ${self:provider.stage}-DatabasePort
     dbUsername: edsc
     dbName: edsc_${self:provider.stage}
-
+    searchExportBucket:
+      Ref: SearchExportBucket
     colorMapQueueUrl:
       Ref: ColorMapsProcessingQueue
+    searchExportQueueUrl:
+      Ref: SearchExportQueue
     tagQueueUrl:
       Ref: TagProcessingQueue
     legacyServicesQueueUrl:
@@ -71,6 +74,8 @@ plugins:
   - serverless-step-functions
   - serverless-plugin-split-stacks
   - serverless-plugin-log-subscription
+  - serverless-offline-sqs # see https://github.com/CoorpAcademy/serverless-plugins/tree/master/packages/serverless-offline-sqs#installation
+  - ./serverless-plugins/serverless-offline-config-s3.js
   - serverless-offline
   - ./serverless-plugins/serverless-webpack-include-migrations.js
 
@@ -151,6 +156,21 @@ custom:
     # Uncomment useInProcess to enable in-process run mode
     # https://github.com/dherault/serverless-offline#run-modes
     # useInProcess: true
+
+  serverless-offline-config-s3:
+    endpoint: http://0.0.0.0:5000
+    region: moon
+    buckets:
+      - mock-search-export-bucket
+
+  serverless-offline-sqs:
+    autoCreate: true
+    apiVersion: '2012-11-05'
+    endpoint: http://0.0.0.0:9324
+    region: moon
+    accessKeyId: MOCK_ACCESS_KEY_ID
+    secretAccessKey: MOCK_SECRET_ACCESS_KEY
+    skipCacheInvalidation: false
 
   # Serverless Webpack configurations
   webpack:
