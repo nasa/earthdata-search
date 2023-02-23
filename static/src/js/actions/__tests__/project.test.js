@@ -236,7 +236,7 @@ describe('selectAccessMethod', () => {
     })
   })
 })
-// TODO: This test should be changed
+
 describe('getProjectCollections', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -247,14 +247,6 @@ describe('getProjectCollections', () => {
       cmrHost: 'https://cmr.earthdata.nasa.gov',
       opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
     }))
-
-    // nock(/localhost/)
-    //   .post(/dqs/)
-    //   .reply(200, {})
-
-    // nock(/localhost/)
-    //   .post(/dqs/)
-    //   .reply(200, {})
 
     nock(/localhost/)
       .post(/saved_access_configs/)
@@ -445,14 +437,6 @@ describe('getProjectCollections', () => {
         cmrHost: 'https://cmr.earthdata.nasa.gov',
         opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
       }))
-
-      // nock(/localhost/)
-      //   .post(/dqs/)
-      //   .reply(200, {})
-
-      // nock(/localhost/)
-      //   .post(/dqs/)
-      //   .reply(200, {})
 
       nock(/localhost/)
         .post(/saved_access_configs/)
