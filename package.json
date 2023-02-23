@@ -194,7 +194,7 @@
     "serverless": "^3.27.0",
     "serverless-finch": "^4.0.0",
     "serverless-offline": "^12.0.4",
-    "serverless-plugin-ifelse": "github:macrouch/serverless-plugin-ifelse",
+    "serverless-plugin-ifelse": "git+https://git@github.com/macrouch/serverless-plugin-ifelse.git",
     "serverless-plugin-log-subscription": "^2.1.5",
     "serverless-plugin-split-stacks": "^1.12.0",
     "serverless-step-functions": "^3.11.0",
