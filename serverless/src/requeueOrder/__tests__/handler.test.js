@@ -99,7 +99,7 @@ describe('requeueOrder', () => {
   })
 
   test('correctly requeues an ECHO ORDERS order', async () => {
-    process.env.legacyServicesQueueUrl = 'http://example.com/echoQueue'
+    process.env.cmrOrderingOrderQueueUrl = 'http://example.com/echoQueue'
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
