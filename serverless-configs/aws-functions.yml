@@ -120,8 +120,8 @@
     handler: serverless/src/fetchCatalogRestOrder/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
 
-  fetchLegacyServicesOrder:
-    handler: serverless/src/fetchLegacyServicesOrder/handler.default
+  fetchCmrOrderingOrder:
+    handler: serverless/src/fetchCmrOrderingOrder/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
 
   fetchHarmonyOrder:
