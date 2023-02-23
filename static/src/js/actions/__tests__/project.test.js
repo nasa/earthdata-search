@@ -58,7 +58,6 @@ describe('setDataQualitySummary', () => {
       catalogItemId: 'collectionId1',
       dataQualitySummaries: [{
         id: 'D5AC37C9-FF31-3885-5BDB-537D804C24B1',
-        name: '500 Test',
         summary: '<p>This is another test</p>'
       }]
     }

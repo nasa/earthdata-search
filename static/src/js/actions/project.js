@@ -241,7 +241,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
             count
             items {
               id
-              name
               summary
             }
           }
