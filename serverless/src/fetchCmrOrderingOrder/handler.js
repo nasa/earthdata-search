@@ -1,7 +1,7 @@
 import 'array-foreach-async'
 
 import axios from 'axios'
-import { stringify } from 'qs'
+import { v4 as uuidv4 } from 'uuid'
 
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
@@ -9,7 +9,7 @@ import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
 import { parseError } from '../../../sharedUtils/parseError'
 
-const fetchLegacyServicesOrder = async (input) => {
+const fetchCmrOrderingOrder = async (input) => {
   const dbConnection = await getDbConnection()
 
   // Destructure the payload from step function input
@@ -47,29 +47,61 @@ const fetchLegacyServicesOrder = async (input) => {
       order_number: orderNumber
     } = retrievalOrderRecord
 
-    console.log(`Requesting order data from Legacy Services at ${getEarthdataConfig(environment).echoRestRoot}/orders.json`)
+    // Build cmr-ordering payload
+    const query = `
+      query Order (
+        $id: String!
+      ) {
+        order (
+          id: $id
+        ) {
+          id
+          state
+          collectionConceptId
+          providerId
+          providerTrackingId
+          notificationLevel
+          createdAt
+          updatedAt
+          submittedAt
+          closedDate
+        }
+      }
+    `
+
+    const variables = {
+      id: orderNumber
+    }
+
+    const cmrOrderingUrl = `${getEarthdataConfig(environment).cmrHost}/ordering/api`
+
+    const requestId = uuidv4()
+
+    console.log(`Requesting order data from cmr-ordering with requestId ${requestId} for orderId ${orderNumber}`)
 
     const orderResponse = await axios({
-      method: 'get',
-      url: `${getEarthdataConfig(environment).echoRestRoot}/orders.json`,
+      url: cmrOrderingUrl,
+      method: 'post',
+      data: {
+        query,
+        variables
+      },
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        'Client-Id': getClientId().background
-      },
-      params: { id: orderNumber },
-      paramsSerializer: (params) => stringify(params,
-        {
-          indices: false,
-          arrayFormat: 'brackets'
-        })
+        'Client-Id': getClientId().background,
+        'X-Request-Id': requestId
+      }
     })
 
     console.log('Order Response Body', JSON.stringify(orderResponse.data, null, 4))
 
-    // This endpoint returns and array, but we're only asking for a single record
-    const [firstOrder] = orderResponse.data
+    const { data: responseData } = orderResponse
+    const { data, errors } = responseData
+    console.log('🚀 ~ file: handler.js:100 ~ fetchCmrOrderingOrder ~ responseData:', responseData)
 
-    const { order } = firstOrder
+    if (errors) throw new Error(JSON.stringify(errors))
+
+    const { order } = data
     const { state } = order
 
     // Updates the database with current order data
@@ -98,4 +130,4 @@ const fetchLegacyServicesOrder = async (input) => {
   }
 }
 
-export default fetchLegacyServicesOrder
+export default fetchCmrOrderingOrder
