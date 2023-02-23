@@ -18,7 +18,6 @@ describe('SET_DATA_QUALITY_SUMMARIES', () => {
         catalogItemId: 'C10000001-EDSC',
         dataQualitySummaries: [{
           id: '1234-ABCD-5678-EFGH-91011',
-          name: 'EDSC',
           summary: 'data quality summary'
         }]
       }
@@ -27,7 +26,6 @@ describe('SET_DATA_QUALITY_SUMMARIES', () => {
     const expectedState = {
       'C10000001-EDSC': [{
         id: '1234-ABCD-5678-EFGH-91011',
-        name: 'EDSC',
         summary: 'data quality summary'
       }]
     }
