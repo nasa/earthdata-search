@@ -85,11 +85,11 @@ describe('Path /search/granules/granule-details', () => {
 
       // Displays the metadata links in the Metadata Tab
       getByTestId('granule-details-body').contains('Metadata').click()
-      getByTestId('granule-details-metadata__list').contains('Native').should('have.attr', 'href', 'https://cmr.sit.earthdata.nasa.gov/search/concepts/G1287941210-ASF')
-      getByTestId('granule-details-metadata__list').contains('UMM-G').should('have.attr', 'href', 'https://cmr.sit.earthdata.nasa.gov/search/concepts/G1287941210-ASF.umm_json')
-      getByTestId('granule-details-metadata__list').contains('ATOM').should('have.attr', 'href', 'https://cmr.sit.earthdata.nasa.gov/search/concepts/G1287941210-ASF.atom')
-      getByTestId('granule-details-metadata__list').contains('ECHO 10').should('have.attr', 'href', 'https://cmr.sit.earthdata.nasa.gov/search/concepts/G1287941210-ASF.echo10')
-      getByTestId('granule-details-metadata__list').contains('ISO 19115').should('have.attr', 'href', 'https://cmr.sit.earthdata.nasa.gov/search/concepts/G1287941210-ASF.iso19115')
+      getByTestId('granule-details-metadata__list').contains('Native').should('have.attr', 'href', 'https://cmr.earthdata.nasa.gov/search/concepts/G1287941210-ASF')
+      getByTestId('granule-details-metadata__list').contains('UMM-G').should('have.attr', 'href', 'https://cmr.earthdata.nasa.gov/search/concepts/G1287941210-ASF.umm_json')
+      getByTestId('granule-details-metadata__list').contains('ATOM').should('have.attr', 'href', 'https://cmr.earthdata.nasa.gov/search/concepts/G1287941210-ASF.atom')
+      getByTestId('granule-details-metadata__list').contains('ECHO 10').should('have.attr', 'href', 'https://cmr.earthdata.nasa.gov/search/concepts/G1287941210-ASF.echo10')
+      getByTestId('granule-details-metadata__list').contains('ISO 19115').should('have.attr', 'href', 'https://cmr.earthdata.nasa.gov/search/concepts/G1287941210-ASF.iso19115')
 
       // Displays collection info in the sidebar
       getByTestId('collection-details-highlights__version-id').should('have.text', '1')
