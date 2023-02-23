@@ -36,8 +36,6 @@ export const mapDispatchToProps = (dispatch) => ({
     (path) => dispatch(actions.changePath(path)),
   onChangeProjectGranulePageNum:
     (data) => dispatch(actions.changeProjectGranulePageNum(data)),
-  onSetDataQualitySummaries:
-  (dataQualitySummaries) => dispatch(actions.setDataQualitySummaries(dataQualitySummaries)),
   onFocusedGranuleChange:
     (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
   onRemoveGranuleFromProjectCollection:
