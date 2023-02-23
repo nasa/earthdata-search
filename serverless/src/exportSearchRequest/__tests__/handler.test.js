@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk'
 import MockDate from 'mockdate'
 import nock from 'nock'
-import { newDb } from "pg-mem";
+import { newDb } from "pg-mem"
 
 import * as deployedEnvironment from '../../../../sharedUtils/deployedEnvironment'
 import * as getDbConnection from '../../util/database/getDbConnection'
@@ -19,8 +19,11 @@ const SQS_TEST_HOST = `0.0.0.0:${SQS_TEST_PORT}`
 const SQS_TEST_LOCALHOST = `localhost:${SQS_TEST_PORT}`
 const SQS_TEST_QUEUE_NAME = 'REQUEST_SEARCH_EXPORT_TEST_QUEUE'
 const SQS_TEST_ENDPOINT = `http://${SQS_TEST_HOST}`
-const MOCK_ECHO_TOKEN = '1234-abcd-5678-efgh'
 const MOCK_USER_ID = 1234
+const MOCK_KEY = '00000000-0000-0000-0000-000000000000' // see /__mocks__/crypto.js
+
+// over-rides randomUUID to return the MOCK_KEY
+jest.mock('crypto')
 
 // need to configure here because the aws-sdk expects it
 // without it, the handler will throw an error
@@ -91,12 +94,13 @@ beforeEach(async () => {
 })
 
 afterEach(() => {
+  jest.clearAllMocks()
+
   // Restore any ENV variables overwritten in tests
   process.env = OLD_ENV
 
   // reset hacks on built-ins
   MockDate.reset()
-  jest.spyOn(global.Math, 'random').mockRestore();
 
   // clear in-memory database table
   mockDb.public.none('DELETE FROM exports')
@@ -125,9 +129,7 @@ describe('exportSearch', () => {
 
     const result = await exportSearch(event, {})
 
-    const expectedKey = '66241fe6c79c644cfc52b7f39644f5b7394ce1f30d4a0dd4b2237c8ca669ddee';
-
-    expect(result.body).toEqual(`{"key":"${expectedKey}"}`)
+    expect(result.body).toEqual(`{"key":"${MOCK_KEY}"}`)
 
     const { Messages } = await sqs.receiveMessage({ QueueUrl: testSearchExportQueueUrl }).promise()
     expect(Messages).toHaveLength(1)
@@ -142,9 +144,9 @@ describe('exportSearch', () => {
       },
       extra: {
         earthdataEnvironment: "prod",
-        filename: "search_results_export_66241fe6c7.csv",
+        filename: "search_results_export_00000000.csv",
         jwt: 'mockJwt',
-        key: expectedKey,
+        key: MOCK_KEY,
         requestId: 'asdf-1234-qwer-5678',
         userId: MOCK_USER_ID
       }
@@ -153,8 +155,8 @@ describe('exportSearch', () => {
     // check if the correct information was saved to the database
     const databaseTableRows = await mockDbConnection('exports')
     expect(databaseTableRows).toEqual([{
-      filename: 'search_results_export_66241fe6c7.csv',
-      key: '66241fe6c79c644cfc52b7f39644f5b7394ce1f30d4a0dd4b2237c8ca669ddee',
+      filename: 'search_results_export_00000000.csv',
+      key: MOCK_KEY,
       state: 'REQUESTED',
       user_id: MOCK_USER_ID,
       updated_at: new Date('1988-09-03T10:00:00.000Z'),
@@ -183,7 +185,7 @@ describe('exportSearch', () => {
 
     const result = await exportSearch(event, {})
 
-    expect(result.body).toEqual("{\"key\":\"6d5ae367c8c99d6bdf0fe7c4bfb56fc5306991c59a0d6c316386598f6711716b\"}")
+    expect(result.body).toEqual(`{"key":"${MOCK_KEY}"}`)
 
     const { Messages } = await sqs.receiveMessage({ QueueUrl: testSearchExportQueueUrl }).promise()
     expect(Messages).toHaveLength(1)
@@ -192,8 +194,8 @@ describe('exportSearch', () => {
     expect(message).toEqual({
       extra: {
         earthdataEnvironment: "prod",
-        key: "6d5ae367c8c99d6bdf0fe7c4bfb56fc5306991c59a0d6c316386598f6711716b",
-        filename: "search_results_export_6d5ae367c8.json",
+        key: MOCK_KEY,
+        filename: "search_results_export_00000000.json",
         jwt: "mockJwt",
         requestId: "asdf-1234-qwer-5678",
         userId: MOCK_USER_ID
@@ -208,8 +210,8 @@ describe('exportSearch', () => {
     // check if the correct information was saved to the database
     const databaseTableRows = await mockDbConnection('exports')
     expect(databaseTableRows).toEqual([{
-      filename: 'search_results_export_6d5ae367c8.json',
-      key: '6d5ae367c8c99d6bdf0fe7c4bfb56fc5306991c59a0d6c316386598f6711716b',
+      filename: 'search_results_export_00000000.json',
+      key: MOCK_KEY,
       state: 'REQUESTED',
       user_id: MOCK_USER_ID,
       updated_at: new Date('1988-09-03T10:00:00.000Z'),
@@ -235,7 +237,7 @@ describe('exportSearch', () => {
     const { body } = response
     const parsedBody = JSON.parse(body)
     const { errors } = parsedBody
-    const [errorMessage] = errors
+    const errorMessage = errors[0]
 
     expect(errorMessage).toEqual('SyntaxError: Unexpected end of JSON input')
 

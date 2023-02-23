@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto'
+import { randomUUID } from 'crypto' // if we do 'node:crypto', jest.mock won't work
 
 import AWS from 'aws-sdk'
 
@@ -8,6 +8,7 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
+import getSearchExportQueueUrl from '../util/aws/getSearchExportQueueUrl'
 import { parseError } from '../../../sharedUtils/parseError'
 
 // adapter for Amazon Simple Queue Service (SQS)
@@ -22,29 +23,39 @@ const exportSearchRequest = async (event, context) => {
     // eslint-disable-next-line no-param-reassign
     context.callbackWaitsForEmptyEventLoop = false
 
+    if (process.env.IS_OFFLINE || process.env.JEST_WORKER_ID) {
+        // fake/mock values when doing local development or testing
+        AWS.config.update({
+            accessKeyId: Math.random().toString(),
+            secretAccessKey: Math.random().toString(),
+            region: 'moon'
+        })
+    }
+
     sqs ??= new AWS.SQS(getSqsConfig())
 
     const { body, headers } = event
 
     const { defaultResponseHeaders } = getApplicationConfig()
 
-
-    const earthdataEnvironment = determineEarthdataEnvironment(headers)
-
-    const jwt = getJwtToken(event)
-
-    const { id: userId } = getVerifiedJwtToken(jwt, earthdataEnvironment)
-
-    if (!userId) throw Error("failed getting userId from jwt")
-
     try {
+
+        const earthdataEnvironment = determineEarthdataEnvironment(headers)
+
+        const jwt = getJwtToken(event)
+        if (!jwt) throw Error("missing jwt")
+
+        const { id: userId } = getVerifiedJwtToken(jwt, earthdataEnvironment)
+
+        if (!userId) throw Error("failed getting userId from jwt")
+
         const { data, requestId } = JSON.parse(body)
 
         if (!requestId) throw Error("missing requestId");
 
         const { columns, cursorpath, format = 'json', itempath, query, variables } = data
 
-        if (!['csv', 'json'].includes(format)) throw Error("invalid format");
+        if (!['csv', 'json'].includes(format)) throw Error("invalid or missing format");
 
         const params = {
             columns,
@@ -55,10 +66,9 @@ const exportSearchRequest = async (event, context) => {
             variables
         }
 
-        // hash the params
-        const key = createHash('sha256').update(JSON.stringify(Object.entries(params))).digest('hex');
+        const key = randomUUID()
 
-        const filename = `search_results_export_${key.substring(0, 10)}.${format}`
+        const filename = `search_results_export_${key.split('-')[0]}.${format}`
 
         const extra = {
             earthdataEnvironment,
@@ -73,24 +83,23 @@ const exportSearchRequest = async (event, context) => {
 
         const messageBody = JSON.stringify(message);
 
-        if (!process.env.IS_OFFLINE) {
-            const dbConnection = await getDbConnection()
+        const dbConnection = await getDbConnection()
 
-            await dbConnection('exports').insert({
-                user_id: userId,
-                key,
-                state: "REQUESTED",
-                filename
-            })
+        await dbConnection('exports').insert({
+            user_id: userId,
+            key,
+            state: "REQUESTED",
+            filename
+        })
 
-            await sqs.sendMessage({
-                QueueUrl: process.env.searchExportQueueUrl,
-                MessageBody: messageBody
-            }).promise()
-        }
+        const searchExportQueueUrl = getSearchExportQueueUrl()
+        console.log('searchExportQueueUrl:', searchExportQueueUrl)
 
-        // maybe have a environmental variable to directly invoke the processing lambda instead of posting to a queue
-        // this would be done for local development
+        await sqs.sendMessage({
+            QueueUrl: searchExportQueueUrl,
+            MessageBody: messageBody
+        }).promise()
+        console.log('posted to search export queue')
 
         return {
             isBase64Encoded: false,
