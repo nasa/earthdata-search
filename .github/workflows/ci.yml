@@ -34,10 +34,18 @@ jobs:
           ${{ runner.os }}-
     - name: Install dependencies
       run: npm ci
+    - name: Install local S3
+      run: npm run s3:install
+    - name: Install local SQS
+      run: npm run sqs:install
     - name: Copy secrets example file
       run: npm run copy-secrets
     - name: Run Jest tests
-      run: npm run silent-test -- --shard=${{ matrix.shard }}
+      run: |
+        npm run s3 &
+        npm run sqs &
+        sleep 5
+        npm run silent-test -- --shard=${{ matrix.shard }}
     - name: Upload coverage to codecov
       uses: codecov/codecov-action@v3
   cypress:
