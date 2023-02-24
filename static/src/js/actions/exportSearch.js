@@ -167,9 +167,9 @@ export const exportSearch = (format) => (dispatch, getState) => {
       // key is a random uuid for this specific export request
       // we use it to poll the status of the export later
       const { key } = response.data
-      if (!key) throw Error('server did not response with a uuid for the export request, which we need in order to find the download')
+      if (!key) throw Error('server did not respond with a uuid for the export request, which we need in order to find the download')
 
-      const { exportStatusRefreshTime = 5 * 1000 } = getApplicationConfig()
+      const { exportStatusRefreshTime = 5000 } = getApplicationConfig()
 
       const [error, signedUrl] = await new Promise((resolve) => {
         const intervalId = setInterval(async () => {
@@ -207,6 +207,7 @@ export const exportSearch = (format) => (dispatch, getState) => {
       } else {
         // Create a hyperlink to the export and give it a filename
         const link = document.createElement('a')
+
         link.href = signedUrl
         link.setAttribute('download', `edsc_collection_results_export.${format}`)
 
