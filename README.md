@@ -81,6 +81,8 @@ Once npm is installed locally, you need to download the dependencies by executin
 
 ##### Configuration
 
+We can configure some of the layouts for the EDSC presentation by updating the defaultPortal value. For development purposes we should set this to `edsc`.
+
 ###### Secrets
 
 For local development Earthdata Search uses a json configuration file to store secure files, an example is provided and should be copied and completed before attempting to go any further.
@@ -105,7 +107,7 @@ To run the migrations locally:
 
     DATABASE_URL=postgresql://USERNAME:PASSWORD@localhost:5432/edsc_dev npm run migrate up
 
-When deployed our database migrations run within Lambda due to the fact that in non-development environments our resources are not publicly accessible. To run the migrations you'll need to invoke the Lambda:
+Optionally, we can run the migration locally and not within a deployed Lambda When deployed our database migrations run within Lambda due to the fact that in non-development environments our resources are not publicly accessible. To run the migrations you'll need to invoke the Lambda:
 
     serverless invoke local --function migrateDatabase
 

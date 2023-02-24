@@ -440,6 +440,15 @@
                 }
               ]
             },
+            "dataQualitySummaries": {
+              "count": 1,
+              "items": [
+                {
+                  "id": "D5AC37C9-FF31-3885-5BDB-537D804C24B1",
+                  "summary": "Summary"
+                }
+              ]
+            },
             "tools": { "count": 0, "items": null },
             "variables": { "count": 0, "items": null }
           }

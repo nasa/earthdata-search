@@ -119,16 +119,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith({ mock: 'data' })
   })
 
-  test('onFetchDataQualitySummaries calls actions.fetchDataQualitySummaries', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'fetchDataQualitySummaries')
-
-    mapDispatchToProps(dispatch).onFetchDataQualitySummaries('conceptId')
-
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('conceptId')
-  })
-
   test('onAddGranuleToProjectCollection calls actions.addGranuleToProjectCollection', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'addGranuleToProjectCollection')

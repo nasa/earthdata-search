@@ -24,9 +24,9 @@ import {
   TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_ACCESS_METHOD,
   UPDATE_PROJECT_GRANULE_PARAMS,
-  UPDATE_PROJECT_GRANULE_RESULTS
+  UPDATE_PROJECT_GRANULE_RESULTS,
+  SET_DATA_QUALITY_SUMMARIES
 } from '../constants/actionTypes'
-
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { buildPromise } from '../util/buildPromise'
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
@@ -126,6 +126,11 @@ export const selectAccessMethod = (payload) => ({
 
 export const updateProjectGranuleParams = (payload) => ({
   type: UPDATE_PROJECT_GRANULE_PARAMS,
+  payload
+})
+
+export const setDataQualitySummaries = (payload) => ({
+  type: SET_DATA_QUALITY_SUMMARIES,
   payload
 })
 
@@ -232,6 +237,13 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           coordinateSystem
           dataCenter
           dataCenters
+          dataQualitySummaries {
+            count
+            items {
+              id
+              summary
+            }
+          }
           directDistributionInformation
           doi
           duplicateCollections {
@@ -355,6 +367,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           coordinateSystem,
           dataCenter,
           dataCenters,
+          dataQualitySummaries,
           duplicateCollections,
           granules,
           hasGranules,
@@ -385,6 +398,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           boxes,
           cloudHosted,
           coordinateSystem,
+          dataQualitySummaries,
           dataCenter,
           duplicateCollections,
           granules,
@@ -427,7 +441,13 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           selectedAccessMethod
         }))
 
-        dispatch(actions.fetchDataQualitySummaries(conceptId))
+        const { items: dqsItems = [] } = dataQualitySummaries
+        if (dqsItems) {
+          dispatch(actions.setDataQualitySummaries({
+            catalogItemId: conceptId,
+            dataQualitySummaries: dqsItems
+          }))
+        }
       })
 
       // Update metadata in the store

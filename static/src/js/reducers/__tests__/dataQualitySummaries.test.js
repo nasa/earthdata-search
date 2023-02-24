@@ -18,10 +18,7 @@ describe('SET_DATA_QUALITY_SUMMARIES', () => {
         catalogItemId: 'C10000001-EDSC',
         dataQualitySummaries: [{
           id: '1234-ABCD-5678-EFGH-91011',
-          name: 'EDSC',
-          provider_id: 'EDSC-TEST',
-          summary: 'data quality summary',
-          updated_at: '2011-01-31T20:42:08Z'
+          summary: 'data quality summary'
         }]
       }
     }
@@ -29,10 +26,7 @@ describe('SET_DATA_QUALITY_SUMMARIES', () => {
     const expectedState = {
       'C10000001-EDSC': [{
         id: '1234-ABCD-5678-EFGH-91011',
-        name: 'EDSC',
-        provider_id: 'EDSC-TEST',
-        summary: 'data quality summary',
-        updated_at: '2011-01-31T20:42:08Z'
+        summary: 'data quality summary'
       }]
     }
 

@@ -358,6 +358,7 @@ class ProjectPanels extends PureComponent {
       let { [collectionId]: collectionDataQualitySummaries = [] } = dataQualitySummaries
 
       const hasDataQualitySummary = collectionDataQualitySummaries.length > 0
+
       const hasDuplicateCollection = duplicateCollections.length > 0
 
       const dataQualityHeader = (() => {
