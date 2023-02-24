@@ -13,11 +13,11 @@ const OLD_ENV = process.env
 const MOCK_REGION = 'moon'
 const S3_TEST_PORT = 5000
 const S3_TEST_HOST = `0.0.0.0:${S3_TEST_PORT}`
-const S3_TEST_LOCALHOST = `localhost:${S3_TEST_PORT}`
-const S3_TEST_BUCKET_NAME = 'S3_TEST_BUCKET_NAME'
+const S3_TEST_BUCKET_NAME = 'test-export-search-bucket'
 const S3_TEST_ENDPOINT = `http://${S3_TEST_HOST}`
 const MOCK_REQUEST_ID = 'MOCK_REQUEST_ID'
 const MOCK_USER_ID = 1234
+const S3_HOST_REGEX = /(localhost|127.0.0.1|0.0.0.0):5000/
 
 // need to configure here because the aws-sdk expects it
 // without it, the handler will throw an error
@@ -27,21 +27,14 @@ AWS.config.update({
   region: MOCK_REGION
 })
 
-const s3 = new AWS.S3({ endpoint: S3_TEST_ENDPOINT })
+const s3 = new AWS.S3({
+  endpoint: S3_TEST_ENDPOINT,
+  s3ForcePathStyle: true
+})
 
 let mockDb, mockDbConnection
 
 beforeAll(async () => {
-  // explicitly allow network connections to local mock S3 server
-  nock.enableNetConnect(host => host === S3_TEST_HOST || host === S3_TEST_LOCALHOST)
-
-  await s3.createBucket({
-    Bucket: S3_TEST_BUCKET_NAME,
-    CreateBucketConfiguration: {
-      LocationConstraint: MOCK_REGION
-    }
-  }).promise();
-
   // create test database
   mockDb = newDb()
 
@@ -62,16 +55,22 @@ beforeAll(async () => {
 })
 
 afterAll(async () => {
-  await deleteBucket(s3, S3_TEST_BUCKET_NAME)
-
-  // re-disable all network connections, including those to localhost and 0.0.0.0
   nock.disableNetConnect()
 })
 
-beforeEach(() => {
+beforeEach(async () => {
   jest.clearAllMocks()
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => mockDbConnection)
+
+  nock.enableNetConnect(S3_HOST_REGEX)
+
+  await s3.createBucket({
+    Bucket: S3_TEST_BUCKET_NAME,
+    CreateBucketConfiguration: {
+      LocationConstraint: MOCK_REGION
+    }
+  }).promise();
 
   // Manage resetting ENV variables
   // TODO: This is causing problems with mocking knex but is noted as important for managing process.env
@@ -80,15 +79,23 @@ beforeEach(() => {
   delete process.env.NODE_ENV
 })
 
-afterEach(() => {
+afterEach(async () => {
   // Restore any ENV variables overwritten in tests
   process.env = OLD_ENV
 
   // just in case, for safety
   jest.clearAllMocks()
 
+  // re-enable connections to the local S3 instance
+  // in case another test re-disabled connections
+  nock.enableNetConnect(S3_HOST_REGEX)
+
+  await deleteBucket(s3, S3_TEST_BUCKET_NAME)
+
   // clear in-memory database table
   mockDb.public.none('DELETE FROM exports')
+
+  nock.disableNetConnect()
 })
 
 describe('exportSearch', () => {
@@ -175,7 +182,10 @@ describe('exportSearch', () => {
 
     await exportSearch(event, {})
 
+    nock.enableNetConnect(S3_HOST_REGEX) // allow connections to local S3
     const obj = await s3.getObject({ Bucket: S3_TEST_BUCKET_NAME, Key: key }).promise()
+    nock.disableNetConnect()
+
     expect(obj.ContentType).toEqual('text/csv');
     expect(obj.Body.toString()).toEqual('Data Provider,Short Name,Version,Entry Title,Processing Level,Platform,Start Time,End Time\r\n,,,Test collection,,platform,,\r\n,,,Test collection 1,,platform,,\r\n')
 
@@ -275,7 +285,10 @@ describe('exportSearch', () => {
 
     await exportSearch(event, {})
 
+    nock.enableNetConnect(S3_HOST_REGEX) // allow connections to local S3
     const obj = await s3.getObject({ Bucket: S3_TEST_BUCKET_NAME, Key: key }).promise()
+    nock.disableNetConnect()
+
     expect(obj.ContentType).toEqual('application/json');
     expect(JSON.parse(obj.Body.toString())).toEqual([{ "conceptId": "C100000-EDSC", "title": "Test collection", "platforms": [{ "shortName": "platform" }] }, { "conceptId": "C100001-EDSC", "title": "Test collection 1", "platforms": [{ "shortName": "platform" }] }])
 

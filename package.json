@@ -36,6 +36,7 @@
     "cypress:prepare-ci": "bin/cypress-prepare-ci",
     "s3": "EXTRA_CORS_ALLOWED_ORIGINS=http://localhost:5000 MOTO_ALLOW_NONEXISTENT_REGION=True moto_server -H 0.0.0.0",
     "s3:install": "brew install moto",
+    "s3:reset": "curl -X POST http://localhost:5000/moto-api/reset",
     "sqs": "java -jar elasticmq-server-1.3.9.jar",
     "sqs:install": "curl https://s3-eu-west-1.amazonaws.com/softwaremill-public/elasticmq-server-1.3.9.jar --output elasticmq-server-1.3.9.jar"
   },

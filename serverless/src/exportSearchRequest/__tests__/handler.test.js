@@ -16,9 +16,9 @@ const OLD_ENV = process.env
 const AWS_TEST_REGION = 'us-east-1'
 const SQS_TEST_PORT = 9324
 const SQS_TEST_HOST = `0.0.0.0:${SQS_TEST_PORT}`
-const SQS_TEST_LOCALHOST = `localhost:${SQS_TEST_PORT}`
-const SQS_TEST_QUEUE_NAME = 'REQUEST_SEARCH_EXPORT_TEST_QUEUE'
+const SQS_TEST_QUEUE_NAME = 'SEARCH_EXPORT_REQUEST_TEST_QUEUE'
 const SQS_TEST_ENDPOINT = `http://${SQS_TEST_HOST}`
+const SQS_HOST_REGEX = /(localhost|127.0.0.1|0.0.0.0):9324/
 const MOCK_USER_ID = 1234
 const MOCK_KEY = '00000000-0000-0000-0000-000000000000' // see /__mocks__/crypto.js
 
@@ -40,10 +40,13 @@ let mockDb, mockDbConnection
 let testSearchExportQueueUrl
 beforeAll(async () => {
   // explicitly allow network connections to ElasticMQ (SQS-Compatible) server
-  nock.enableNetConnect(host => host === SQS_TEST_HOST || host === SQS_TEST_LOCALHOST)
+  nock.enableNetConnect(SQS_HOST_REGEX)
 
   // create a queue and save the url to it
   const { QueueUrl } = await sqs.createQueue({ QueueName: SQS_TEST_QUEUE_NAME }).promise()
+
+  // re-disable network connections after creating the queue
+  nock.disableNetConnect()
 
   // we save the url here, so we can pass it to the handler via an environmental variable
   testSearchExportQueueUrl = QueueUrl
@@ -68,6 +71,9 @@ beforeAll(async () => {
 })
 
 afterAll(async () => {
+  // re-enable network connections to local SQS
+  nock.enableNetConnect(SQS_HOST_REGEX)
+
   await sqs.deleteQueue({ QueueUrl: testSearchExportQueueUrl }).promise()
 
   // re-disable all network connections, including those to localhost and 0.0.0.0
@@ -75,6 +81,9 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
+  // explicitly allow network connections to ElasticMQ (SQS-Compatible) server
+  nock.enableNetConnect(SQS_HOST_REGEX)
+
   jest.clearAllMocks()
 
   jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
@@ -104,6 +113,9 @@ afterEach(() => {
 
   // clear in-memory database table
   mockDb.public.none('DELETE FROM exports')
+
+  // re-disable all network connections, including those to localhost and 0.0.0.0
+  nock.disableNetConnect()
 })
 
 describe('exportSearch', () => {
@@ -131,7 +143,10 @@ describe('exportSearch', () => {
 
     expect(result.body).toEqual(`{"key":"${MOCK_KEY}"}`)
 
+    nock.enableNetConnect(SQS_HOST_REGEX)
     const { Messages } = await sqs.receiveMessage({ QueueUrl: testSearchExportQueueUrl }).promise()
+    nock.disableNetConnect()
+
     expect(Messages).toHaveLength(1)
 
     const message = JSON.parse(Messages[0].Body);
@@ -187,7 +202,10 @@ describe('exportSearch', () => {
 
     expect(result.body).toEqual(`{"key":"${MOCK_KEY}"}`)
 
+    nock.enableNetConnect(SQS_HOST_REGEX)
     const { Messages } = await sqs.receiveMessage({ QueueUrl: testSearchExportQueueUrl }).promise()
+    nock.disableNetConnect()
+
     expect(Messages).toHaveLength(1)
 
     const message = JSON.parse(Messages[0].Body);
@@ -241,8 +259,9 @@ describe('exportSearch', () => {
 
     expect(errorMessage).toEqual('SyntaxError: Unexpected end of JSON input')
 
-    // retrieve message from queue
+    nock.enableNetConnect(SQS_HOST_REGEX)
     const { Messages = [] } = await sqs.receiveMessage({ QueueUrl: testSearchExportQueueUrl }).promise()
+    nock.disableNetConnect()
 
     // check that no message was created
     expect(Messages).toHaveLength(0)
