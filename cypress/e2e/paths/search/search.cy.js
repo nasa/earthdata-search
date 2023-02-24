@@ -1032,7 +1032,7 @@ describe('Path /search', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+          expect(req.body).to.eq('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=-usage_score')
 
           req.reply({
             body: noGranulesBody,
