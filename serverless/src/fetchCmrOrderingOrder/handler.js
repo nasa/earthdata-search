@@ -97,7 +97,6 @@ const fetchCmrOrderingOrder = async (input) => {
 
     const { data: responseData } = orderResponse
     const { data, errors } = responseData
-    console.log('🚀 ~ file: handler.js:100 ~ fetchCmrOrderingOrder ~ responseData:', responseData)
 
     if (errors) throw new Error(JSON.stringify(errors))
 
