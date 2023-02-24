@@ -34,8 +34,9 @@ jobs:
           ${{ runner.os }}-
     - name: Install dependencies
       run: npm ci
+    - uses: actions/setup-python@v4
     - name: Install local S3
-      run: npm run s3:install
+      run: pip install moto[server]
     - name: Install local SQS
       run: npm run sqs:install
     - name: Copy secrets example file
