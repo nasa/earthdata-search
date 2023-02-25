@@ -54,10 +54,6 @@ beforeAll(async () => {
   mockDbConnection = await mockDb.adapters.createKnex()
 })
 
-afterAll(async () => {
-  nock.disableNetConnect()
-})
-
 beforeEach(async () => {
   jest.clearAllMocks()
 
@@ -94,8 +90,6 @@ afterEach(async () => {
 
   // clear in-memory database table
   mockDb.public.none('DELETE FROM exports')
-
-  nock.disableNetConnect()
 })
 
 describe('exportSearch', () => {
@@ -182,9 +176,7 @@ describe('exportSearch', () => {
 
     await exportSearch(event, {})
 
-    nock.enableNetConnect(S3_HOST_REGEX) // allow connections to local S3
     const obj = await s3.getObject({ Bucket: S3_TEST_BUCKET_NAME, Key: key }).promise()
-    nock.disableNetConnect()
 
     expect(obj.ContentType).toEqual('text/csv');
     expect(obj.Body.toString()).toEqual('Data Provider,Short Name,Version,Entry Title,Processing Level,Platform,Start Time,End Time\r\n,,,Test collection,,platform,,\r\n,,,Test collection 1,,platform,,\r\n')
@@ -285,9 +277,7 @@ describe('exportSearch', () => {
 
     await exportSearch(event, {})
 
-    nock.enableNetConnect(S3_HOST_REGEX) // allow connections to local S3
     const obj = await s3.getObject({ Bucket: S3_TEST_BUCKET_NAME, Key: key }).promise()
-    nock.disableNetConnect()
 
     expect(obj.ContentType).toEqual('application/json');
     expect(JSON.parse(obj.Body.toString())).toEqual([{ "conceptId": "C100000-EDSC", "title": "Test collection", "platforms": [{ "shortName": "platform" }] }, { "conceptId": "C100001-EDSC", "title": "Test collection 1", "platforms": [{ "shortName": "platform" }] }])

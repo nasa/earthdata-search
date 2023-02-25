@@ -78,9 +78,6 @@ afterAll(async () => {
   nock.enableNetConnect(S3_HOST_REGEX)
 
   await deleteBucket(s3, S3_TEST_BUCKET_NAME)
-
-  // re-disable all network connections, including those to localhost and 0.0.0.0
-  nock.disableNetConnect()
 })
 
 beforeEach(() => {
@@ -114,7 +111,6 @@ afterEach(async () => {
 
   // clear in-memory database table
   mockDb.public.none('DELETE FROM exports')
-  nock.disableNetConnect()
 })
 
 describe('exportSearchCheck', () => {

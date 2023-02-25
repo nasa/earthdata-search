@@ -39,14 +39,8 @@ let mockDb, mockDbConnection
 
 let testSearchExportQueueUrl
 beforeAll(async () => {
-  // explicitly allow network connections to ElasticMQ (SQS-Compatible) server
-  nock.enableNetConnect(SQS_HOST_REGEX)
-
   // create a queue and save the url to it
   const { QueueUrl } = await sqs.createQueue({ QueueName: SQS_TEST_QUEUE_NAME }).promise()
-
-  // re-disable network connections after creating the queue
-  nock.disableNetConnect()
 
   // we save the url here, so we can pass it to the handler via an environmental variable
   testSearchExportQueueUrl = QueueUrl
@@ -71,13 +65,7 @@ beforeAll(async () => {
 })
 
 afterAll(async () => {
-  // re-enable network connections to local SQS
-  nock.enableNetConnect(SQS_HOST_REGEX)
-
   await sqs.deleteQueue({ QueueUrl: testSearchExportQueueUrl }).promise()
-
-  // re-disable all network connections, including those to localhost and 0.0.0.0
-  nock.disableNetConnect()
 })
 
 beforeEach(async () => {
@@ -113,9 +101,6 @@ afterEach(() => {
 
   // clear in-memory database table
   mockDb.public.none('DELETE FROM exports')
-
-  // re-disable all network connections, including those to localhost and 0.0.0.0
-  nock.disableNetConnect()
 })
 
 describe('exportSearch', () => {
@@ -143,9 +128,7 @@ describe('exportSearch', () => {
 
     expect(result.body).toEqual(`{"key":"${MOCK_KEY}"}`)
 
-    nock.enableNetConnect(SQS_HOST_REGEX)
     const { Messages } = await sqs.receiveMessage({ QueueUrl: testSearchExportQueueUrl }).promise()
-    nock.disableNetConnect()
 
     expect(Messages).toHaveLength(1)
 
@@ -202,9 +185,7 @@ describe('exportSearch', () => {
 
     expect(result.body).toEqual(`{"key":"${MOCK_KEY}"}`)
 
-    nock.enableNetConnect(SQS_HOST_REGEX)
     const { Messages } = await sqs.receiveMessage({ QueueUrl: testSearchExportQueueUrl }).promise()
-    nock.disableNetConnect()
 
     expect(Messages).toHaveLength(1)
 
@@ -259,9 +240,7 @@ describe('exportSearch', () => {
 
     expect(errorMessage).toEqual('SyntaxError: Unexpected end of JSON input')
 
-    nock.enableNetConnect(SQS_HOST_REGEX)
     const { Messages = [] } = await sqs.receiveMessage({ QueueUrl: testSearchExportQueueUrl }).promise()
-    nock.disableNetConnect()
 
     // check that no message was created
     expect(Messages).toHaveLength(0)

@@ -33,6 +33,16 @@ console.error = consoleError
 nock.cleanAll()
 nock.disableNetConnect()
 
+nock.enableNetConnect(host => {
+  // allow requests to local S3-compatible server (moto)
+  if (host.match(/^(localhost|127.0.0.1|0.0.0.0):5000/)) return true
+
+  // allow requests to local SQS-compatible server (ElasticMQ)
+  if (host.match(/^(localhost|127.0.0.1|0.0.0.0):9324/)) return true
+
+  return false
+})
+
 // Mock toast provider
 window.reactToastProvider = {
   current: {
