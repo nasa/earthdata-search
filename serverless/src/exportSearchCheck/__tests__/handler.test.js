@@ -20,7 +20,6 @@ const S3_TEST_PORT = 5000
 const S3_TEST_HOST = `0.0.0.0:${S3_TEST_PORT}`
 const S3_TEST_BUCKET_NAME = 'test-export-search-check-bucket'
 const S3_TEST_ENDPOINT = `http://${S3_TEST_HOST}`
-const S3_HOST_REGEX = /(localhost|127.0.0.1|0.0.0.0):5000/
 
 const MOCK_EXPORT_REQUEST_KEY = '123456789abcdefg'
 const MOCK_FILENAME_CSV = 'search_results_export_123456789.csv'
@@ -46,8 +45,6 @@ const s3 = new AWS.S3({
 let mockDb, mockDbConnection
 
 beforeAll(async () => {
-  nock.enableNetConnect(S3_HOST_REGEX)
-
   await s3.createBucket({
     Bucket: S3_TEST_BUCKET_NAME,
     CreateBucketConfiguration: {
@@ -75,13 +72,11 @@ beforeAll(async () => {
 })
 
 afterAll(async () => {
-  nock.enableNetConnect(S3_HOST_REGEX)
-
   await deleteBucket(s3, S3_TEST_BUCKET_NAME)
 })
 
 beforeEach(() => {
-  nock.enableNetConnect(S3_HOST_REGEX)
+  nock.cleanAll() // remove any interceptors created by other files
 
   process.env.searchExportBucket = S3_TEST_BUCKET_NAME
   process.env.searchExportS3Endpoint = S3_TEST_ENDPOINT
@@ -100,8 +95,6 @@ beforeEach(() => {
 })
 
 afterEach(async () => {
-  nock.enableNetConnect(S3_HOST_REGEX)
-
   // Restore any ENV variables overwritten in tests
   process.env = OLD_ENV
 

@@ -18,7 +18,6 @@ const SQS_TEST_PORT = 9324
 const SQS_TEST_HOST = `0.0.0.0:${SQS_TEST_PORT}`
 const SQS_TEST_QUEUE_NAME = 'SEARCH_EXPORT_REQUEST_TEST_QUEUE'
 const SQS_TEST_ENDPOINT = `http://${SQS_TEST_HOST}`
-const SQS_HOST_REGEX = /(localhost|127.0.0.1|0.0.0.0):9324/
 const MOCK_USER_ID = 1234
 const MOCK_KEY = '00000000-0000-0000-0000-000000000000' // see /__mocks__/crypto.js
 
@@ -69,8 +68,7 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  // explicitly allow network connections to ElasticMQ (SQS-Compatible) server
-  nock.enableNetConnect(SQS_HOST_REGEX)
+  nock.cleanAll() // remove any interceptors created by other files
 
   jest.clearAllMocks()
 

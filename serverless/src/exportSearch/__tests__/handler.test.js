@@ -17,7 +17,6 @@ const S3_TEST_BUCKET_NAME = 'test-export-search-bucket'
 const S3_TEST_ENDPOINT = `http://${S3_TEST_HOST}`
 const MOCK_REQUEST_ID = 'MOCK_REQUEST_ID'
 const MOCK_USER_ID = 1234
-const S3_HOST_REGEX = /(localhost|127.0.0.1|0.0.0.0):5000/
 
 // need to configure here because the aws-sdk expects it
 // without it, the handler will throw an error
@@ -55,11 +54,11 @@ beforeAll(async () => {
 })
 
 beforeEach(async () => {
+  nock.cleanAll() // remove any interceptors created by other files
+
   jest.clearAllMocks()
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => mockDbConnection)
-
-  nock.enableNetConnect(S3_HOST_REGEX)
 
   await s3.createBucket({
     Bucket: S3_TEST_BUCKET_NAME,
@@ -81,10 +80,6 @@ afterEach(async () => {
 
   // just in case, for safety
   jest.clearAllMocks()
-
-  // re-enable connections to the local S3 instance
-  // in case another test re-disabled connections
-  nock.enableNetConnect(S3_HOST_REGEX)
 
   await deleteBucket(s3, S3_TEST_BUCKET_NAME)
 
