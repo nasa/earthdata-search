@@ -42,7 +42,8 @@ beforeAll(async () => {
   const { QueueUrl } = await sqs.createQueue({ QueueName: SQS_TEST_QUEUE_NAME }).promise()
 
   // we save the url here, so we can pass it to the handler via an environmental variable
-  testSearchExportQueueUrl = QueueUrl
+  // we replace localhost with 0.0.0.0 to avoid conflicts with interceptors created by other tests
+  testSearchExportQueueUrl = QueueUrl.replace('localhost', '0.0.0.0')
 
   // create test database
   mockDb = newDb()
