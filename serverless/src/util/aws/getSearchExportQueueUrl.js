@@ -7,7 +7,7 @@ export default function getSearchExportQueueUrl() {
 
   if (process.env.IS_OFFLINE) {
     // If we are running locally offline, this is the queueUrl
-    queueUrl = 'http://localhost:9324/queue/earthdata-search-dev-SearchExportQueue'
+    queueUrl = 'http://0.0.0.0:9324/queue/earthdata-search-dev-SearchExportQueue'
   }
 
   return queueUrl
