@@ -182,7 +182,6 @@ describe('Path /search/granules/collection-details', () => {
           page_size: 20,
           service_type: [],
           sort_key: [
-            'has_granules_or_cwic',
             '-usage_score'
           ],
           tag_key: []

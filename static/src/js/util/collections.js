@@ -77,7 +77,7 @@ export const prepareCollectionParams = (state) => {
   }
   if (featureFacets.mapImagery) tagKey.push(tagName('gibs'))
   let cloudHosted
-  if (featureFacets.availableFromAwsCloud) cloudHosted = true
+  if (featureFacets.availableInEarthdataCloud) cloudHosted = true
 
   let consortium = []
   if (onlyEosdisCollections) {
@@ -190,6 +190,10 @@ export const buildCollectionSearchParams = (params) => {
     keywordWithWildcard = `${keyword.replace(/\s+/g, '* ')}*`
   }
 
+  const sortKey = [...selectedSortKey]
+  // Only include has_granules_or_cwic sort key if the parameter is being used
+  if (hasGranulesOrCwic) sortKey.unshift('has_granules_or_cwic')
+
   // Set up params that are not driven by the URL
   const defaultParams = {
     includeFacets: 'v2',
@@ -198,7 +202,7 @@ export const buildCollectionSearchParams = (params) => {
     includeTags: `${tagName('*', 'edsc')},opensearch.granule.osdd`,
     options: {},
     pageSize: defaultCmrPageSize,
-    sortKey: ['has_granules_or_cwic', ...selectedSortKey]
+    sortKey
   }
 
   if (facetsToSend.science_keywords_h && facetsToSend.science_keywords_h.length > 1) {

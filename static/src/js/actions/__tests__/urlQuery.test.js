@@ -26,7 +26,7 @@ describe('updateStore', () => {
       cmrFacets: {},
       earthdataEnvironment: 'prod',
       featureFacets: {
-        availableFromAwsCloud: false,
+        availableInEarthdataCloud: false,
         customizable: false,
         mapImagery: false,
         nearRealTime: false
@@ -84,7 +84,7 @@ describe('updateStore', () => {
         cmrFacets: {},
         earthdataEnvironment: 'prod',
         featureFacets: {
-          availableFromAwsCloud: false,
+          availableInEarthdataCloud: false,
           customizable: false,
           mapImagery: false,
           nearRealTime: false
@@ -200,7 +200,7 @@ describe('changePath', () => {
       expect(updateStoreMock).toBeCalledWith(
         expect.objectContaining({
           featureFacets: {
-            availableFromAwsCloud: false,
+            availableInEarthdataCloud: false,
             customizable: false,
             mapImagery: false,
             nearRealTime: false
@@ -284,7 +284,7 @@ describe('changePath', () => {
     expect(updateStoreMock).toBeCalledWith(
       expect.objectContaining({
         featureFacets: {
-          availableFromAwsCloud: false,
+          availableInEarthdataCloud: false,
           customizable: false,
           mapImagery: false,
           nearRealTime: false
