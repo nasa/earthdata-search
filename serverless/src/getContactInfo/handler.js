@@ -31,7 +31,7 @@ const getContactInfo = async (event, context) => {
   try {
     const userRecord = await dbConnection('users')
       .first(
-        'echo_preferences',
+        'cmr_preferences',
         'urs_profile'
       )
       .where({

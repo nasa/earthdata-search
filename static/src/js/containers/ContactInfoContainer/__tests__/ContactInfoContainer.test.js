@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     contactInfo: {
-      echoPreferences: { mock: 'echo' },
+      cmrPreferences: { mock: 'cmr' },
       ursProfile: { mock: 'urs' }
     },
     earthdataEnvironment: 'prod',
@@ -70,7 +70,7 @@ describe('ContactInfoContainer component', () => {
 
     expect(enzymeWrapper.find(ContactInfo).length).toBe(1)
     expect(enzymeWrapper.find(ContactInfo).props().contactInfo).toEqual({
-      echoPreferences: { mock: 'echo' },
+      cmrPreferences: { mock: 'cmr' },
       ursProfile: { mock: 'urs' }
     })
     expect(typeof enzymeWrapper.find(ContactInfo).props().onUpdateNotificationLevel).toEqual('function')

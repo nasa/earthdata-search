@@ -41,7 +41,7 @@ describe('getContactInfo', () => {
       if (step === 1) {
         query.response([
           {
-            echo_preferences: { mock: 'echo' },
+            cmr_preferences: { mock: 'cmr' },
             urs_profile: { mock: 'urs' }
           }
         ])
@@ -51,9 +51,8 @@ describe('getContactInfo', () => {
     })
 
     const result = await getContactInfo({}, {})
-
     const expectedBody = JSON.stringify({
-      echo_preferences: { mock: 'echo' },
+      cmr_preferences: { mock: 'cmr' },
       urs_profile: { mock: 'urs' }
     })
 
