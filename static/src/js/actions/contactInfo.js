@@ -25,7 +25,7 @@ export const setContactInfoFromJwt = (jwtToken) => (dispatch) => {
 }
 
 /**
- * Fetch the user's ECHO preferences and URS profile from lambda
+ * Fetch the user's CMR-ordering preferences and URS profile from lambda
  */
 export const fetchContactInfo = () => (dispatch, getState) => {
   const state = getState()
@@ -41,12 +41,12 @@ export const fetchContactInfo = () => (dispatch, getState) => {
     .then((response) => {
       const { data } = response
       const {
-        echo_preferences: echoPreferences,
+        cmr_preferences: cmrPreferences,
         urs_profile: ursProfile
       } = data
 
       dispatch(updateContactInfo({
-        echoPreferences,
+        cmrPreferences,
         ursProfile
       }))
     })
@@ -55,7 +55,7 @@ export const fetchContactInfo = () => (dispatch, getState) => {
 }
 
 /**
- * Calls lambda to update Legacy Services with new ECHO preferences
+ * Calls lambda to update CMR-ordering with new notification level preference
  * @param {String} level New order notification level
  */
 export const updateNotificationLevel = (level) => (dispatch, getState) => {
@@ -64,35 +64,11 @@ export const updateNotificationLevel = (level) => (dispatch, getState) => {
   // Retrieve data from Redux using selectors
   const earthdataEnvironment = getEarthdataEnvironment(state)
 
-  const { authToken, contactInfo } = state
+  const { authToken } = state
 
-  const { ursProfile = {} } = contactInfo
-  const {
-    country,
-    email_address: email,
-    first_name: firstName,
-    last_name: lastName,
-    organization
-  } = ursProfile
-
-  // Build the ECHO preferences object
-  // default values that are required in legacy services (role, phones)
+  // Build the CMR-ordering preferences object
   const preferences = {
-    general_contact: {
-      first_name: firstName,
-      last_name: lastName,
-      email,
-      organization,
-      role: 'Order Contact',
-      address: {
-        country
-      },
-      phones: [{
-        number: '0000000000',
-        phone_number_type: 'BUSINESS'
-      }]
-    },
-    order_notification_level: level
+    notificationLevel: level
   }
 
   const requestObject = new ContactInfoRequest(authToken, earthdataEnvironment)
@@ -100,12 +76,9 @@ export const updateNotificationLevel = (level) => (dispatch, getState) => {
   const response = requestObject.updateNotificationLevel({ preferences })
     .then((response) => {
       const { data } = response
-      const {
-        preferences: echoPreferences
-      } = data
 
       dispatch(updateContactInfo({
-        echoPreferences
+        cmrPreferences: data
       }))
 
       addToast('Notification Preference Level updated', {
