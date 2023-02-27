@@ -17,17 +17,30 @@ class ContactInfo extends Component {
     super(props)
 
     const { contactInfo } = props
-    const { echoPreferences = {} } = contactInfo
+    const { cmrPreferences = {} } = contactInfo
     const {
-      order_notification_level: orderNotificationLevel
-    } = echoPreferences
+      notificationLevel
+    } = cmrPreferences
 
     this.state = {
-      notificationLevel: orderNotificationLevel || 'VERBOSE'
+      notificationLevel: notificationLevel || 'VERBOSE'
     }
 
     this.handleNotificationLevelChange = this.handleNotificationLevelChange.bind(this)
     this.handleUpdateNotificationClick = this.handleUpdateNotificationClick.bind(this)
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const { notificationLevel } = this.state
+
+    const { contactInfo } = nextProps
+
+    const { cmrPreferences = {} } = contactInfo
+    const { notificationLevel: nextNotificationLevel } = cmrPreferences
+
+    if (notificationLevel !== nextNotificationLevel) {
+      this.setState({ notificationLevel: nextNotificationLevel })
+    }
   }
 
   handleNotificationLevelChange(event) {
@@ -150,7 +163,7 @@ class ContactInfo extends Component {
 
 ContactInfo.propTypes = {
   contactInfo: PropTypes.shape({
-    echoPreferences: PropTypes.shape({}),
+    cmrPreferences: PropTypes.shape({}),
     ursProfile: PropTypes.shape({})
   }).isRequired,
   earthdataEnvironment: PropTypes.string.isRequired,
