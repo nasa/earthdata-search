@@ -9,7 +9,7 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     contactInfo: {
-      echoPreferences: { mock: 'echo' },
+      cmrPreferences: { mock: 'cmr' },
       ursProfile: { mock: 'urs' }
     },
     earthdataEnvironment: 'prod',

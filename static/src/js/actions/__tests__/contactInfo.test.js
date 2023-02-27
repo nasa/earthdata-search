@@ -61,7 +61,7 @@ describe('fetchContactInfo', () => {
     nock(/localhost/)
       .get(/contact_info/)
       .reply(200, {
-        echo_preferences: { mock: 'echo' },
+        cmr_preferences: { mock: 'cmr' },
         urs_profile: { mock: 'urs' }
       })
 
@@ -76,7 +76,7 @@ describe('fetchContactInfo', () => {
       expect(storeActions[0]).toEqual({
         type: UPDATE_CONTACT_INFO,
         payload: {
-          echoPreferences: { mock: 'echo' },
+          cmrPreferences: { mock: 'cmr' },
           ursProfile: { mock: 'urs' }
         }
       })
@@ -90,8 +90,8 @@ describe('updateNotificationLevel', () => {
 
     nock(/localhost/)
       .post(/contact_info/)
-      .reply(201, {
-        preferences: { mock: 'echo' }
+      .reply(200, {
+        mock: 'cmr'
       })
 
     const store = mockStore({
@@ -104,7 +104,7 @@ describe('updateNotificationLevel', () => {
       expect(storeActions[0]).toEqual({
         type: UPDATE_CONTACT_INFO,
         payload: {
-          echoPreferences: { mock: 'echo' }
+          cmrPreferences: { mock: 'cmr' }
         }
       })
 
