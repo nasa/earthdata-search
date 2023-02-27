@@ -13,7 +13,7 @@ describe('INITIAL_STATE', () => {
 describe('UPDATE_CONTACT_INFO', () => {
   test('returns the correct state', () => {
     const preferences = {
-      echoPreferences: { mock: 'echo' },
+      cmrPreferences: { mock: 'cmr' },
       ursProfile: { mock: 'urs' }
     }
     const action = {
@@ -27,19 +27,19 @@ describe('UPDATE_CONTACT_INFO', () => {
   })
 
   test('returns the correct state with existing data', () => {
-    const echoPreferences = { mock: 'echo' }
+    const cmrPreferences = { mock: 'cmr' }
     const initial = {
-      echoPreferences: { mock: 'old echo' },
+      cmrPreferences: { mock: 'old cmr' },
       ursProfile: { mock: 'urs' }
     }
     const action = {
       type: UPDATE_CONTACT_INFO,
-      payload: { echoPreferences }
+      payload: { cmrPreferences }
     }
 
     const expectedState = {
       ...initial,
-      echoPreferences
+      cmrPreferences
     }
 
     expect(contactInfoReducer(initial, action)).toEqual(expectedState)
