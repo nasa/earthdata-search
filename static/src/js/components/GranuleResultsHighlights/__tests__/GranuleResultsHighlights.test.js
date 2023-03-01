@@ -88,13 +88,13 @@ describe('GranuleResultsHighlights component', () => {
           }]
         })
         const row1 = enzymeWrapper.find('.granule-results-highlights__temporal-row').at(0)
-        expect(row1.find(".granule-results-highlights__temporal-label").text()).toEqual('Start')
-        expect(row1.find(".granule-results-highlights__temporal-value").text()).toEqual('Not Provided')
+        expect(row1.find('.granule-results-highlights__temporal-label').text()).toEqual('Start')
+        expect(row1.find('.granule-results-highlights__temporal-value').text()).toEqual('Not Provided')
 
         const row2 = enzymeWrapper.find('.granule-results-highlights__temporal-row').at(1)
-        expect(row2.find(".granule-results-highlights__temporal-label").text()).toEqual('End')
-        expect(row2.find(".granule-results-highlights__temporal-value").text()).toEqual('Not Provided')
-      });
-    });
+        expect(row2.find('.granule-results-highlights__temporal-label').text()).toEqual('End')
+        expect(row2.find('.granule-results-highlights__temporal-value').text()).toEqual('Not Provided')
+      })
+    })
   })
 })
