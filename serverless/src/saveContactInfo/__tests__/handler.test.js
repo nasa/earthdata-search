@@ -7,7 +7,7 @@ import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEdlConfig from '../../util/getEdlConfig'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
-import * as getEarthdataConfig  from '../../../../sharedUtils/config'
+import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getClientId from '../../../../sharedUtils/getClientId'
 import * as determineEarthdataEnvironment from '../../util/determineEarthdataEnvironment'
 
@@ -86,7 +86,7 @@ describe('saveContactInfo', () => {
           preferences: { mock: 'cmr' }
         },
         requestId: 'mock-request-id'
-      }),
+      })
     }
 
     const result = await saveContactInfo(event)
@@ -130,7 +130,7 @@ describe('saveContactInfo', () => {
     const event = {
       body: JSON.stringify({
         params: {
-          preferences: { mock: 'cmr' },
+          preferences: { mock: 'cmr' }
         },
         requestId: 'mock-request-id'
       })
@@ -139,7 +139,7 @@ describe('saveContactInfo', () => {
     const result = await saveContactInfo(event)
     const expectedBody = JSON.stringify({
       statusCode: 500,
-      errors:["Error: mock error"]
+      errors: ['Error: mock error']
     })
 
     const { queries } = dbTracker.queries
