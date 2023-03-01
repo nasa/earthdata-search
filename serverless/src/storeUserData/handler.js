@@ -1,7 +1,7 @@
 import 'array-foreach-async'
 
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getCmrPreferencesData } from './getCmrPreferencesData.js'
+import { getCmrPreferencesData } from './getCmrPreferencesData'
 import { getUrsUserData } from './getUrsUserData'
 import { parseError } from '../../../sharedUtils/parseError'
 
@@ -72,7 +72,7 @@ const storeUserData = async (event, context) => {
       try {
         cmrPreferences = await getCmrPreferencesData(username, token, environment)
         // Add CMR-ordering response to the database payload if non-null
-        if(cmrPreferences != null) {
+        if (cmrPreferences != null) {
           userPayload.cmr_preferences = cmrPreferences
         }
       } catch (e) {

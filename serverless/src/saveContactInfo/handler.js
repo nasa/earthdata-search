@@ -40,7 +40,6 @@ const saveContactInfo = async (event) => {
       urs_id: ursId
     } = userRecord
 
-
     const orderingUrl = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/ordering/api`
 
     const {
@@ -60,25 +59,25 @@ const saveContactInfo = async (event) => {
         notificationLevel
       }
     }`
-  
-  const requestHeaders = {
-    Authorization: `Bearer ${authToken}`,
-    'Client-Id': getClientId().lambda,
-    'X-Request-Id': requestId
-  }
-  
-  const cmrPreferencesResponse = await axios({
-    url: orderingUrl,
-    method: 'post',
-    data: {
-      variables: {
-        ursId: ursId,
-        ...params.preferences
+
+    const requestHeaders = {
+      Authorization: `Bearer ${authToken}`,
+      'Client-Id': getClientId().lambda,
+      'X-Request-Id': requestId
+    }
+
+    const cmrPreferencesResponse = await axios({
+      url: orderingUrl,
+      method: 'post',
+      data: {
+        variables: {
+          ursId,
+          ...params.preferences
+        },
+        query: cmrQuery
       },
-      query: cmrQuery
-    },
-    headers: requestHeaders
-  })
+      headers: requestHeaders
+    })
 
     const { data, statusCode } = cmrPreferencesResponse
     const { updateUser } = data.data
