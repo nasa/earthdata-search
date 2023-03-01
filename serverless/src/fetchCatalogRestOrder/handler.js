@@ -1,10 +1,15 @@
 import 'array-foreach-async'
 import axios from 'axios'
-import { parse as parseXml } from 'fast-xml-parser'
+import { XMLParser } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
 import { parseError } from '../../../sharedUtils/parseError'
+
+const xmlParser = new XMLParser({
+  ignoreAttributes: false,
+  attributeNamePrefix: ''
+})
 
 const fetchCatalogRestOrder = async (input) => {
   // Retrieve a connection to the database
@@ -59,10 +64,7 @@ const fetchCatalogRestOrder = async (input) => {
 
     console.log('Order Response Body', orderResponse.data)
 
-    const orderResponseBody = parseXml(orderResponse.data, {
-      ignoreAttributes: false,
-      attributeNamePrefix: ''
-    })
+    const orderResponseBody = xmlParser.parse(orderResponse.data)
 
     console.log('Parsed Order Response Body', JSON.stringify(orderResponseBody, null, 4))
 

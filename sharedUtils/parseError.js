@@ -1,4 +1,8 @@
-import { parse as parseXml } from 'fast-xml-parser'
+import { XMLParser } from 'fast-xml-parser'
+const xmlParser = new XMLParser({
+  ignoreAttributes: false,
+  attributeNamePrefix: ''
+})
 
 /**
  * Parse and return a lambda friendly response to errors
@@ -39,10 +43,7 @@ export const parseError = (errorObj, {
 
     if (contentType.indexOf('application/opensearchdescription+xml') > -1) {
       // OpenSearch collections can return errors in XML, ensure we capture them
-      const osddBody = parseXml(data, {
-        ignoreAttributes: false,
-        attributeNamePrefix: ''
-      })
+      const osddBody = xmlParser.parse(data)
 
       const {
         feed = {},
@@ -71,10 +72,7 @@ export const parseError = (errorObj, {
       }
     } else if (contentType.indexOf('text/xml') > -1) {
       // OpenSearch collections can return errors in XML, ensure we capture them
-      const gibsError = parseXml(data, {
-        ignoreAttributes: false,
-        attributeNamePrefix: ''
-      })
+      const gibsError = xmlParser.parse(data)
 
       const { ExceptionReport: report } = gibsError
       const { Exception: exception } = report
