@@ -8,11 +8,7 @@ exports.up = (pgm) => {
       type: 'jsonb',
       notNull: true,
       default: '{}'
-    },
+    }
   })
   pgm.dropColumns('users', ['echo_preferences', 'echo_profile', 'echo_id'])
-
 }
-
-exports.down = (pgm) => {}
-
