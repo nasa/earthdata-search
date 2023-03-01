@@ -655,6 +655,6 @@ describe('GranuleResultsItem component', () => {
       expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('p').text()).toEqual('Not Provided')
       expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('h5').text()).toEqual('End')
       expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('p').text()).toEqual('Not Provided')
-    });
-  });
+    })
+  })
 })

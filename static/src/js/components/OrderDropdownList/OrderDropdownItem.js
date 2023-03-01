@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import './OrderDropdownItem.scss'
 
 export const OrderDropdownItem = ({
-  i,
+  index,
   order,
   totalOrders
 }) => {
@@ -21,11 +21,10 @@ export const OrderDropdownItem = ({
   return (
     <li
       key={orderId}
-      i={i}
       className="order-dropdown-item"
     >
       <h4 className="order-dropdown-item__title">
-        {`Order ${i + 1}/${totalOrders} `}
+        {`Order ${index + 1}/${totalOrders} `}
         <span>{`Order ID: ${orderId}`}</span>
       </h4>
       <ul className="order-dropdown-item__list">
@@ -45,7 +44,7 @@ export const OrderDropdownItem = ({
 }
 
 OrderDropdownItem.propTypes = {
-  i: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
   order: PropTypes.shape({
     order_number: PropTypes.string,
     order_information: PropTypes.shape({
