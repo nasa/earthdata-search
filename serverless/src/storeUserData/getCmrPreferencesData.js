@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid'
 import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getClientId } from '../../../sharedUtils/getClientId'
 
-
 /**
  * Retrieve CMR-ordering preferences data for the provided username
  * @param {String} username The CMR username to lookup
@@ -40,7 +39,7 @@ export const getCmrPreferencesData = async (username, token, environment) => {
     method: 'post',
     data: {
       variables: {
-        ursId: username,
+        ursId: username
       },
       query: cmrQuery
     },

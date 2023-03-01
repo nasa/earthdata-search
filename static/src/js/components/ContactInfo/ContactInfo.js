@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FaArrowCircleRight } from 'react-icons/fa'
+import { isEmpty } from 'lodash'
 
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import Spinner from '../Spinner/Spinner'
 
 import './ContactInfo.scss'
 
@@ -58,7 +60,8 @@ class ContactInfo extends Component {
     const { notificationLevel } = this.state
 
     const { contactInfo, earthdataEnvironment } = this.props
-    const { ursProfile = {} } = contactInfo
+
+    const { ursProfile = {}, cmrPreferences } = contactInfo
     const {
       affiliation,
       country,
@@ -71,6 +74,7 @@ class ContactInfo extends Component {
     } = ursProfile
 
     const { edlHost } = getEarthdataConfig(earthdataEnvironment)
+    const emptyPreferences = isEmpty(cmrPreferences)
 
     return (
       <fieldset className="contact-info-form">
@@ -133,17 +137,20 @@ class ContactInfo extends Component {
             Receive delayed access notifications
           </label>
           {' '}
-          <select
-            id="notificationLevel"
-            onChange={this.handleNotificationLevelChange}
-            value={notificationLevel}
-          >
-            <option value="VERBOSE">Always</option>
-            <option value="DETAIL">When requests change state</option>
-            <option value="INFO">When requests reach a completed or failed state</option>
-            <option value="CRITICAL">When requests fail</option>
-            <option value="NONE">Never</option>
-          </select>
+          { emptyPreferences ? <Spinner className="contact-info-form__preferences-spinner" size="x-tiny" type="dots" inline />
+            : (
+              <select
+                id="notificationLevel"
+                onChange={this.handleNotificationLevelChange}
+                value={notificationLevel}
+              >
+                <option value="VERBOSE">Always</option>
+                <option value="DETAIL">When requests change state</option>
+                <option value="INFO">When requests reach a completed or failed state</option>
+                <option value="CRITICAL">When requests fail</option>
+                <option value="NONE">Never</option>
+              </select>
+            )}
         </p>
 
         <Button
@@ -152,6 +159,7 @@ class ContactInfo extends Component {
           bootstrapVariant="primary"
           label="Update Notification Preference"
           onClick={this.handleUpdateNotificationClick}
+          disabled={emptyPreferences}
         >
           Update Notification Preference
         </Button>
