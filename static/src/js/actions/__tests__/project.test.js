@@ -430,6 +430,136 @@ describe('getProjectCollections', () => {
     expect(consoleMock).toBeCalledTimes(1)
   })
 
+  test('continues to load project collections if savedAccessConfig errors', async () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      cmrHost: 'https://cmr.earthdata.nasa.gov',
+      opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
+    }))
+
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+    nock(/localhost/)
+      .post(/saved_access_configs/)
+      .reply(500, {})
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        data: {
+          collections: {
+            items: [{
+              conceptId: 'collectionId1',
+              tools: {
+                items: [{
+                  name: 'SOTO'
+                }]
+              },
+              services: {
+                items: null
+              },
+              dataQualitySummaries:
+              {
+                items: null
+              }
+            },
+            {
+              conceptId: 'collectionId2',
+              tools: {
+                items: null
+              },
+              services: {
+                items: null
+              },
+              dataQualitySummaries:
+              {
+                items: null
+              }
+            }]
+          }
+        }
+      }, {
+        'jwt-token': 'token'
+      })
+
+    nock(/localhost/)
+      .post(/granules/)
+      .reply(200, {
+        feed: {
+          updated: '2019-03-27T20:21:14.705Z',
+          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+          title: 'ECHO granule metadata',
+          entry: [{
+            id: 'G1000001-EDSC'
+          }, {
+            id: 'G1000002-EDSC'
+          }]
+        }
+      }, {
+        'cmr-hits': 1
+      })
+
+    const store = mockStore({
+      authToken: 'token',
+      metadata: {
+        collections: {}
+      },
+      focusedCollection: '',
+      project: {
+        collections: {
+          allIds: ['collectionId1', 'collectionId2']
+        }
+      },
+      query: {
+        collection: {}
+      }
+    })
+
+    await store.dispatch(actions.getProjectCollections())
+
+    expect(consoleMock).toBeCalledTimes(1)
+
+    const storeActions = store.getActions()
+
+    expect(storeActions.length).toEqual(4)
+    expect(storeActions[0]).toEqual({
+      type: ADD_ERROR,
+      payload: expect.objectContaining({
+        message: 'Unknown Error',
+        notificationType: 'banner',
+        title: 'Error retrieving saved access configurations'
+      })
+    })
+    expect(storeActions[1]).toEqual({
+      type: ADD_ACCESS_METHODS,
+      payload: {
+        collectionId: 'collectionId1',
+        methods: {}
+      }
+    })
+    expect(storeActions[2]).toEqual({
+      type: ADD_ACCESS_METHODS,
+      payload: {
+        collectionId: 'collectionId2',
+        methods: {}
+      }
+    })
+    expect(storeActions[3]).toEqual({
+      type: UPDATE_COLLECTION_METADATA,
+      payload: [
+        expect.objectContaining({
+          id: 'collectionId1'
+        }),
+        expect.objectContaining({
+          id: 'collectionId2'
+        })
+      ]
+    })
+  })
+
   describe('when requesting a CSDA collection', () => {
     test('calls lambda to get authenticated collections', async () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
