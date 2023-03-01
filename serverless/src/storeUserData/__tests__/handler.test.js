@@ -6,7 +6,6 @@ import * as parseError from '../../../../sharedUtils/parseError'
 import * as getUrsUserData from '../getUrsUserData'
 import * as getCmrPreferencesData from '../getCmrPreferencesData'
 
-
 import storeUserData from '../handler'
 
 let dbTracker
@@ -81,12 +80,11 @@ describe('storeUserData', () => {
       { ursId: 'urs_user', notificationLevel: 'INFO' },
       1
     ])
-
   })
 
   test('logs error if URS data is not fetched properly', async () => {
-    const parseErrorMock = jest.spyOn(parseError, 'parseError').mockImplementation(() => {})
-    jest.spyOn(getUrsUserData, 'getUrsUserData').mockImplementation(() => {throw new Error('mock error')})
+    const parseErrorMock = jest.spyOn(parseError, 'parseError').mockImplementation(() => { })
+    jest.spyOn(getUrsUserData, 'getUrsUserData').mockImplementation(() => { throw new Error('mock error') })
     // If username and token data don't match, getCmrPreferencesData returns user: null
     jest.spyOn(getCmrPreferencesData, 'getCmrPreferencesData').mockResolvedValue(null)
 
@@ -122,12 +120,11 @@ describe('storeUserData', () => {
     ])
 
     expect(parseErrorMock).toHaveBeenCalledTimes(1)
-    expect(parseErrorMock).toHaveBeenCalledWith(new Error('mock error'), {"logPrefix": "[StoreUserData Error] (URS Profile)"})
-    
+    expect(parseErrorMock).toHaveBeenCalledWith(new Error('mock error'), { logPrefix: '[StoreUserData Error] (URS Profile)' })
   })
 
   test('logs error if CMR-ordering data is not fetched properly', async () => {
-    const parseErrorMock = jest.spyOn(parseError, 'parseError').mockImplementation(() => {})
+    const parseErrorMock = jest.spyOn(parseError, 'parseError').mockImplementation(() => { })
     jest.spyOn(getUrsUserData, 'getUrsUserData').mockResolvedValue({
       user: {
         uid: 'urs_user',
@@ -135,8 +132,7 @@ describe('storeUserData', () => {
         last_name: 'user'
       }
     })
-    jest.spyOn(getCmrPreferencesData, 'getCmrPreferencesData').mockImplementation(() => {throw new Error('mock error')})
-
+    jest.spyOn(getCmrPreferencesData, 'getCmrPreferencesData').mockImplementation(() => { throw new Error('mock error') })
 
     dbTracker.on('query', (query, step) => {
       // Default response from queries
@@ -171,7 +167,7 @@ describe('storeUserData', () => {
     ])
 
     expect(parseErrorMock).toHaveBeenCalledTimes(1)
-    expect(parseErrorMock).toHaveBeenCalledWith(new Error('mock error'), { "logPrefix": '[StoreUserData Error] (CMR-ordering)' })
+    expect(parseErrorMock).toHaveBeenCalledWith(new Error('mock error'), { logPrefix: '[StoreUserData Error] (CMR-ordering)' })
   })
 
   test('logs error if user does not have a token', async () => {
@@ -212,7 +208,6 @@ describe('storeUserData', () => {
     await storeUserData({
       Records: []
     }, {})
-    
   })
 
   test('returns early if there are no SQS records', async () => {
@@ -225,6 +220,6 @@ describe('storeUserData', () => {
       }
     })
 
-    await storeUserData({}, {})    
+    await storeUserData({}, {})
   })
 })
