@@ -1,6 +1,7 @@
 import { merge } from 'lodash'
 
 import staticConfig from '../static.config.json'
+// eslint-disable-next-line import/no-unresolved
 import secretConfig from '../secret.config.json'
 
 const getConfig = () => {
