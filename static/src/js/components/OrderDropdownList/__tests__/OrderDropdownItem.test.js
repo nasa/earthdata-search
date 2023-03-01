@@ -17,7 +17,7 @@ function setup() {
 
   const props = {
     order,
-    i: 0,
+    index: 0,
     totalOrders: 2
   }
 
