@@ -1,4 +1,4 @@
-import parser from 'fast-xml-parser'
+import { XMLValidator } from 'fast-xml-parser'
 import { isEmpty } from 'lodash'
 
 /**
@@ -66,9 +66,10 @@ export const insertSavedAccessConfig = (methods, savedAccessConfig) => {
             } = savedAccessConfig
 
             // Parse the savedAccessConfig values and if it is not valid XML, don't use it
-            if (parser.validate(form) === true
-              && parser.validate(model) === true
-              && parser.validate(rawModel) === true
+            if (
+              XMLValidator.validate(form) === true
+              && XMLValidator.validate(model) === true
+              && XMLValidator.validate(rawModel) === true
             ) {
               // Only override values that the user configured
               accessMethods[methodName] = {
