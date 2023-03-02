@@ -347,9 +347,9 @@ const getAccessMethods = async (event, context) => {
 
                 // Parse the savedAccessConfig values and if it is not valid XML, don't use it
                 if (
-                  XMLValidator.validate(form) === true &&
-                  XMLValidator.validate(model) === true &&
-                  XMLValidator.validate(rawModel) === true
+                  XMLValidator.validate(form) === true
+                  && XMLValidator.validate(model) === true
+                  && XMLValidator.validate(rawModel) === true
                 ) {
                   // Only override values that the user configured
                   accessMethods[methodName] = {
