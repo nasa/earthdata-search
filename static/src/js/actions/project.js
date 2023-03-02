@@ -188,12 +188,13 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       authToken,
       earthdataEnvironment
     )
-    await savedAccessConfigsRequestObject.search(
+
+    const savedAccessConfigsResponse = await savedAccessConfigsRequestObject.search(
       { collectionIds: filteredIds }
-    ).then((response) => {
-      const { data } = response
-      savedAccessConfigs = data
-    })
+    )
+
+    const { data } = savedAccessConfigsResponse
+    savedAccessConfigs = data
   } catch (error) {
     dispatch(actions.handleError({
       error,
