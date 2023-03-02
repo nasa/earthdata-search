@@ -191,7 +191,7 @@
     "scatter-swap": "^0.1.0",
     "serverless": "^3.24.1",
     "serverless-finch": "^4.0.0",
-    "serverless-offline": "^11.3.0",
+    "serverless-offline": "^12.0.4",
     "serverless-plugin-log-subscription": "^2.1.5",
     "serverless-plugin-split-stacks": "^1.12.0",
     "serverless-step-functions": "^3.11.0",
