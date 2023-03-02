@@ -3,11 +3,16 @@ import 'array-foreach-async'
 import AWS from 'aws-sdk'
 import axios from 'axios'
 
-import { parse as parseXml } from 'fast-xml-parser'
+import { XMLParser } from 'fast-xml-parser'
 
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { parseError } from '../../../sharedUtils/parseError'
+
+const xmlParser = new XMLParser({
+  ignoreAttributes: false,
+  attributeNamePrefix: ''
+})
 
 // Name of the db table that this lambda operates on
 const colorMapsTableName = 'colormaps'
@@ -43,10 +48,7 @@ export const getProjectionCapabilities = async (projection) => {
       url: capabilitiesUrl
     })
 
-    const parsedCapabilities = parseXml(gibsResponse.data, {
-      ignoreAttributes: false,
-      attributeNamePrefix: ''
-    })
+    const parsedCapabilities = xmlParser.parse(gibsResponse.data)
 
     const { Capabilities: capabilities = {} } = parsedCapabilities
     const { Contents: contents = {} } = capabilities

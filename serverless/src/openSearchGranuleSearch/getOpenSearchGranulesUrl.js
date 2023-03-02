@@ -1,12 +1,18 @@
 import axios from 'axios'
 
-import { parse as parseXml } from 'fast-xml-parser'
+import { XMLParser } from 'fast-xml-parser'
 
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { parseError } from '../../../sharedUtils/parseError'
 import { wrapAxios } from '../util/wrapAxios'
 
 const wrappedAxios = wrapAxios(axios)
+
+const xmlParser = new XMLParser({
+  attributeNamePrefix: '',
+  ignoreAttributes: false,
+  removeNSPrefix: true
+})
 
 /**
  * Get the URL that will be used to retrieve granules from OpenSearch
@@ -28,11 +34,7 @@ export const getOpenSearchGranulesUrl = async (collectionId, openSearchOsddUrl) 
 
     console.log(`Request for granules URL for OpenSearch collection '${collectionId}' successfully completed in ${elapsedTime} ms`)
 
-    const osddBody = parseXml(data, {
-      attributeNamePrefix: '',
-      ignoreAttributes: false,
-      ignoreNameSpace: true
-    })
+    const osddBody = xmlParser.parse(data)
 
     const { OpenSearchDescription: opensearchDescription = {} } = osddBody
     let { Url: granuleUrls = [] } = opensearchDescription

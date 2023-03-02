@@ -58,7 +58,7 @@ describe('getOpenSearchGranulesUrl', () => {
           value: '{count}'
         }
       ],
-      template: 'https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&amp;startIndex={startIndex?}&amp;count={count?}&amp;timeStart={time:start}&amp;timeEnd={time:end}&amp;geoBox={geo:box}&amp;clientId=eed-edsc-dev',
+      template: 'https://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=C1597928934-NOAA_NCEI&startIndex={startIndex?}&count={count?}&timeStart={time:start}&timeEnd={time:end}&geoBox={geo:box}&clientId=eed-edsc-dev',
       type: 'application/atom+xml'
     })
   })

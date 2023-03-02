@@ -1,7 +1,7 @@
 import 'array-foreach-async'
 
 import axios from 'axios'
-import { parse as parseXml } from 'fast-xml-parser'
+import { XMLParser } from 'fast-xml-parser'
 import { stringify } from 'qs'
 import camelcaseKeys from 'camelcase-keys'
 
@@ -27,6 +27,11 @@ import { portalPath } from '../../../sharedUtils/portalPath'
 import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
 import { processPartialShapefile } from '../util/processPartialShapefile'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
+
+const xmlParser = new XMLParser({
+  ignoreAttributes: false,
+  attributeNamePrefix: ''
+})
 
 /**
  * Submits an order to Catalog Rest (ESI)
@@ -201,10 +206,7 @@ const submitCatalogRestOrder = async (event, context) => {
         }
       })
 
-      const orderResponseBody = parseXml(orderResponse.data, {
-        ignoreAttributes: false,
-        attributeNamePrefix: ''
-      })
+      const orderResponseBody = xmlParser.parse(orderResponse.data)
 
       const { 'eesi:agentResponse': agentResponse } = orderResponseBody
       const { order } = agentResponse

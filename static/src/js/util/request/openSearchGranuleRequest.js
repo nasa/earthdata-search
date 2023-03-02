@@ -1,4 +1,4 @@
-import { parse as parseXml } from 'fast-xml-parser'
+import { XMLParser } from 'fast-xml-parser'
 import { isEmpty, isString } from 'lodash'
 
 import Request from './request'
@@ -11,6 +11,12 @@ export default class OpenSearchGranuleRequest extends Request {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
     this.lambda = true
+
+    this.xmlParser = new XMLParser({
+      attributeNamePrefix: '',
+      ignoreAttributes: false,
+      removeNSPrefix: true
+    })
 
     if (authToken && authToken !== '') {
       this.authenticated = true
@@ -43,11 +49,7 @@ export default class OpenSearchGranuleRequest extends Request {
         return data
       }
 
-      const formattedResponse = parseXml(data, {
-        attributeNamePrefix: '',
-        ignoreAttributes: false,
-        ignoreNameSpace: true
-      })
+      const formattedResponse = this.xmlParser.parse(data)
 
       // CWIC provides a completely different response format when a 4XX error is thrown
       // so we handle that format and response here

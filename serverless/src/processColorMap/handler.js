@@ -2,9 +2,14 @@ import 'array-foreach-async'
 
 import axios from 'axios'
 
-import { parse as parseXml } from 'fast-xml-parser'
+import { XMLParser } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getClientId } from '../../../sharedUtils/getClientId'
+
+const xmlParser = new XMLParser({
+  ignoreAttributes: false,
+  attributeNamePrefix: ''
+})
 
 /**
  * Converts a single color component to hex
@@ -64,10 +69,7 @@ const processColorMap = async (event, context) => {
       }
     })
 
-    const parsedColorMap = parseXml(gibsResponse.data, {
-      ignoreAttributes: false,
-      attributeNamePrefix: ''
-    })
+    const parsedColorMap = xmlParser.parse(gibsResponse.data)
 
     const colorMapsToIgnore = ['No Data', 'Classification', 'Classifications']
     const { ColorMaps: colorMaps = {} } = parsedColorMap
