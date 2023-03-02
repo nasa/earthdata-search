@@ -13,7 +13,7 @@ beforeEach(() => {
 describe('getUrsUserData', () => {
   test('correctly requests a users data from urs', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://urs.example.com' }))
-    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ lambda: 'eed-edsc-test-serverless-lambda' }))
+    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
 
     jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
       client: {
@@ -23,7 +23,7 @@ describe('getUrsUserData', () => {
 
     nock(/urs/)
       .matchHeader('Authorization', 'Bearer fake.access.token')
-      .matchHeader('Client-Id', 'eed-edsc-test-serverless-lambda')
+      .matchHeader('Client-Id', 'eed-edsc-test-serverless-background')
       .get(/api\/users\/test_user/)
       .reply(200, {
         user: {

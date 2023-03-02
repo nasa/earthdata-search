@@ -1,19 +1,21 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import Spinner from '../../Spinner/Spinner'
 
 import ContactInfo from '../ContactInfo'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+function setup(overrideProps) {
   const props = {
     contactInfo: {
-      echoPreferences: { mock: 'echo' },
+      cmrPreferences: { mock: 'cmr' },
       ursProfile: { mock: 'urs' }
     },
     earthdataEnvironment: 'prod',
-    onUpdateNotificationLevel: jest.fn()
+    onUpdateNotificationLevel: jest.fn(),
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(<ContactInfo {...props} />)
@@ -29,6 +31,77 @@ describe('ContactInfo component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.exists()).toBeTruthy()
+  })
+
+  test('should render contact info form correctly before preferences are retrieved', () => {
+    const { enzymeWrapper } = setup({
+      contactInfo: {
+        ursProfile: { mock: 'urs' }
+      }
+    })
+
+    const spinner = enzymeWrapper.find(Spinner)
+    expect(spinner.prop('size')).toEqual('x-tiny')
+    expect(spinner.prop('inline')).toEqual(true)
+    expect(spinner.length).toEqual(1)
+    expect(enzymeWrapper.state()).toEqual({ notificationLevel: 'VERBOSE' })
+  })
+
+  test('should render user notification level after preferences are retrieved', () => {
+    const { enzymeWrapper } = setup({
+      contactInfo: {
+        ursProfile: { mock: 'urs' }
+      }
+    })
+
+    let spinner = enzymeWrapper.find(Spinner)
+    let notificationLevel = enzymeWrapper.find('#notificationLevel')
+
+    expect(spinner.length).toEqual(1)
+    expect(notificationLevel.exists()).toBeFalsy()
+    expect(enzymeWrapper.state()).toEqual({ notificationLevel: 'VERBOSE' })
+
+    enzymeWrapper.setProps({
+      contactInfo: {
+        cmrPreferences: { notificationLevel: 'INFO' }
+      }
+    })
+
+    spinner = enzymeWrapper.find(Spinner)
+    notificationLevel = enzymeWrapper.find('#notificationLevel')
+
+    expect(spinner.length).toEqual(0)
+    expect(notificationLevel.exists()).toBeTruthy()
+    expect(enzymeWrapper.state()).toEqual({ notificationLevel: 'INFO' })
+  })
+
+  test('should not update user notification level if retrieved preferences are VERBOSE already', () => {
+    const { enzymeWrapper } = setup({
+      contactInfo: {
+        ursProfile: { mock: 'urs' }
+      }
+    })
+    expect(enzymeWrapper.exists()).toBeTruthy()
+
+    let spinner = enzymeWrapper.find(Spinner)
+    let notificationLevel = enzymeWrapper.find('#notificationLevel')
+
+    expect(spinner.length).toEqual(1)
+    expect(notificationLevel.exists()).toBeFalsy()
+    expect(enzymeWrapper.state()).toEqual({ notificationLevel: 'VERBOSE' })
+
+    enzymeWrapper.setProps({
+      contactInfo: {
+        cmrPreferences: { notificationLevel: 'VERBOSE' }
+      }
+    })
+
+    spinner = enzymeWrapper.find(Spinner)
+    notificationLevel = enzymeWrapper.find('#notificationLevel')
+
+    expect(spinner.length).toEqual(0)
+    expect(notificationLevel.exists()).toBeTruthy()
+    expect(enzymeWrapper.state()).toEqual({ notificationLevel: 'VERBOSE' })
   })
 
   test('changing the notification level should set the state', () => {

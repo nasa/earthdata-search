@@ -5,13 +5,13 @@ const initialState = {}
 const contactInfoReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_CONTACT_INFO: {
-      const { echoPreferences, ursProfile } = action.payload
+      const { cmrPreferences, ursProfile } = action.payload
 
       return {
         ...state,
-        echoPreferences: {
-          ...state.echoPreferences,
-          ...echoPreferences
+        cmrPreferences: {
+          ...state.cmrPreferences,
+          ...cmrPreferences
         },
         ursProfile: {
           ...state.ursProfile,
