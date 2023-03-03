@@ -38,29 +38,29 @@ const submitCmrOrderingOrder = async (event, context) => {
       id
     } = JSON.parse(body)
 
-    // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page
-    const retrievalRecord = await dbConnection('retrieval_orders')
-      .first(
-        'retrievals.id',
-        'retrievals.environment',
-        'retrieval_collections.collection_id',
-        'retrieval_collections.access_method',
-        'retrieval_orders.granule_params'
-      )
-      .join('retrieval_collections', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
-      .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
-      .where({
-        'retrieval_orders.id': id
-      })
-
-    const {
-      access_method: accessMethod,
-      collection_id: collectionConceptId,
-      environment: earthdataEnvironment,
-      granule_params: granuleParams
-    } = retrievalRecord
-
     try {
+      // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page
+      const retrievalRecord = await dbConnection('retrieval_orders')
+        .first(
+          'retrievals.id',
+          'retrievals.environment',
+          'retrieval_collections.collection_id',
+          'retrieval_collections.access_method',
+          'retrieval_orders.granule_params'
+        )
+        .join('retrieval_collections', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
+        .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
+        .where({
+          'retrieval_orders.id': id
+        })
+
+      const {
+        access_method: accessMethod,
+        collection_id: collectionConceptId,
+        environment: earthdataEnvironment,
+        granule_params: granuleParams
+      } = retrievalRecord
+
       // Build cmr-ordering payload
       const query = `
         mutation CreateOrder (
