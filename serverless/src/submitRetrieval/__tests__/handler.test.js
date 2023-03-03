@@ -178,7 +178,8 @@ describe('submitRetrieval', () => {
           accessToken: '2e8e995e7511c2c6620336797b',
           id: 5
         })
-      }]
+      }],
+      DelaySeconds: 3
     }])
 
     const { body } = orderResponse
