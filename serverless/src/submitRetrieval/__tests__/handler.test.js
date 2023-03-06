@@ -173,13 +173,13 @@ describe('submitRetrieval', () => {
     expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
       QueueUrl: 'http://example.com/echoQueue',
       Entries: [{
+        DelaySeconds: 3,
         Id: '2-1',
         MessageBody: JSON.stringify({
           accessToken: '2e8e995e7511c2c6620336797b',
           id: 5
         })
-      }],
-      DelaySeconds: 3
+      }]
     }])
 
     const { body } = orderResponse

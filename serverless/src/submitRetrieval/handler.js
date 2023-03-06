@@ -166,7 +166,10 @@ const submitRetrieval = async (event, context) => {
               MessageBody: JSON.stringify({
                 accessToken,
                 id: newOrderRecord[0].id
-              })
+              }),
+              // Wait a few seconds before picking up the SQS job to ensure the database transaction
+              // has been committed
+              DelaySeconds: 3
             })
           } catch (e) {
             parseError(e)
@@ -179,10 +182,7 @@ const submitRetrieval = async (event, context) => {
               // Send all of the order messages to sqs as a single batch
               await sqs.sendMessageBatch({
                 QueueUrl: queueUrl,
-                Entries: sqsEntries,
-                // Wait a few seconds before picking up the SQS job to ensure the database transaction
-                // has been committed
-                DelaySeconds: 3
+                Entries: sqsEntries
               }).promise()
 
               sqsEntries = []
