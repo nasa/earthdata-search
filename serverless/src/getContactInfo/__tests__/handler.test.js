@@ -2,8 +2,10 @@ import knex from 'knex'
 import mockKnex from 'mock-knex'
 
 import getContactInfo from '../handler'
+import * as getCmrPreferencesData from '../getCmrPreferencesData'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
+import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
 
 let dbConnectionToMock
@@ -14,6 +16,7 @@ beforeEach(() => {
 
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
   jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: '1' }))
+  jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
@@ -41,7 +44,7 @@ describe('getContactInfo', () => {
       if (step === 1) {
         query.response([
           {
-            cmr_preferences: { mock: 'cmr' },
+            urs_id: { mock: 'ursId' },
             urs_profile: { mock: 'urs' }
           }
         ])
@@ -50,10 +53,21 @@ describe('getContactInfo', () => {
       }
     })
 
+    jest.spyOn(getCmrPreferencesData, 'getCmrPreferencesData').mockResolvedValue({
+      data: {
+        data: {
+          user: {
+            mock: 'cmr'
+          }
+        }
+      },
+      status: 200
+    })
+
     const result = await getContactInfo({}, {})
     const expectedBody = JSON.stringify({
-      cmr_preferences: { mock: 'cmr' },
-      urs_profile: { mock: 'urs' }
+      urs_profile: { mock: 'urs' },
+      cmr_preferences: { mock: 'cmr' }
     })
 
     const { queries } = dbTracker.queries

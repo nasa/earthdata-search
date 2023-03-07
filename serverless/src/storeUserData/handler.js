@@ -1,7 +1,6 @@
 import 'array-foreach-async'
 
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getCmrPreferencesData } from './getCmrPreferencesData'
 import { getUrsUserData } from './getUrsUserData'
 import { parseError } from '../../../sharedUtils/parseError'
 
@@ -48,7 +47,6 @@ const storeUserData = async (event, context) => {
       .orderBy('created_at', 'DESC')
 
     let ursUserData // URS user Profile
-    let cmrPreferences // CMR-ordering user preferences
 
     if (existingUserTokens.length > 0) {
       const [tokenRow] = existingUserTokens
@@ -67,16 +65,6 @@ const storeUserData = async (event, context) => {
         userPayload.urs_profile = ursUserData
       } catch (e) {
         parseError(e, { logPrefix: '[StoreUserData Error] (URS Profile)' })
-      }
-
-      try {
-        cmrPreferences = await getCmrPreferencesData(username, token, environment)
-        // Add CMR-ordering response to the database payload if non-null
-        if (cmrPreferences != null) {
-          userPayload.cmr_preferences = cmrPreferences
-        }
-      } catch (e) {
-        parseError(e, { logPrefix: '[StoreUserData Error] (CMR-ordering)' })
       }
 
       const dbResponse = await dbConnection('users').update({ ...userPayload }).where({ id: userId })
