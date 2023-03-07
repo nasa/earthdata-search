@@ -79,15 +79,12 @@ const saveContactInfo = async (event) => {
       headers: requestHeaders
     })
 
-    const { data, statusCode } = cmrPreferencesResponse
+    const { data, status } = cmrPreferencesResponse
     const { updateUser } = data.data
-
-    // Save to database directly instead of queueing job
-    await dbConnection('users').update({ cmr_preferences: updateUser }).where({ id })
 
     return {
       isBase64Encoded: false,
-      statusCode,
+      statusCode: status,
       headers: defaultResponseHeaders,
       body: JSON.stringify(updateUser)
     }
