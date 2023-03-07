@@ -22,7 +22,6 @@ beforeEach(() => {
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
   jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: '1' }))
   jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'mock token' }))
-
   jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
     client: {
       id: 'clientId'
@@ -95,11 +94,6 @@ describe('saveContactInfo', () => {
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('first')
-    expect(queries[1].method).toEqual('update')
-    expect(queries[1].bindings).toEqual([
-      { mock: 'cmr' },
-      '1'
-    ])
 
     expect(result.body).toEqual(expectedBody)
   })

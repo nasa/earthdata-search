@@ -30,7 +30,7 @@ export const getCmrPreferencesData = async (username, token, environment) => {
 
   const requestHeaders = {
     Authorization: `Bearer ${token}`,
-    'Client-Id': getClientId().background,
+    'Client-Id': getClientId().lambda,
     'X-Request-Id': requestId
   }
 
@@ -46,7 +46,5 @@ export const getCmrPreferencesData = async (username, token, environment) => {
     headers: requestHeaders
   })
 
-  const { user } = cmrPreferencesResponse.data.data
-
-  return user
+  return cmrPreferencesResponse
 }
