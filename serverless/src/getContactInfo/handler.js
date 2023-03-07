@@ -3,7 +3,9 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
+import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
+import { getCmrPreferencesData } from './getCmrPreferencesData'
 
 /**
  * Handler for retreiving a users contact information
@@ -31,18 +33,36 @@ const getContactInfo = async (event, context) => {
   try {
     const userRecord = await dbConnection('users')
       .first(
-        'cmr_preferences',
+        'urs_id',
         'urs_profile'
       )
       .where({
         id
       })
 
+    const {
+      access_token: authToken
+    } = await getAccessTokenFromJwtToken(jwtToken, earthdataEnvironment)
+
+    // Make a request to CMR-ordering instead of the EDSC database
+    const cmrPreferencesData = await getCmrPreferencesData(
+      userRecord.urs_id,
+      authToken,
+      earthdataEnvironment
+    )
+    const { status, data } = cmrPreferencesData
+    const { user } = data.data
+
+    const contactInfoData = {
+      urs_profile: userRecord.urs_profile,
+      cmr_preferences: user
+    }
+
     return {
       isBase64Encoded: false,
-      statusCode: 200,
+      statusCode: status,
       headers: defaultResponseHeaders,
-      body: JSON.stringify(userRecord)
+      body: JSON.stringify(contactInfoData)
     }
   } catch (e) {
     return {
