@@ -1696,12 +1696,25 @@ describe('Map interactions', () => {
           cy.get('.map').click(1000, 450)
         })
 
+        it('shows the granule and a label on the map', () => {
+          cy.get('.leaflet-interactive').eq(1).should('have.attr', 'd', 'M991 446L994 458L1010 455L1007 443L991 446z')
+          cy.get('.granule-spatial-label-temporal').should('have.text', '2021-05-31 15:31:202021-05-31 15:31:48')
+        })
+
         it('focuses the selected granule', () => {
           getByTestId('granule-results-item').should('have.class', 'granule-results-item--active')
         })
 
         it('updates the URL', () => {
           cy.url().should('match', /\/search\/granules.*g=G2061183408-ASF/)
+        })
+
+        describe('when returning to the collections results list', () => {
+          it('removes the granule label from the map', () => {
+            getByTestId('breadcrumb-button').contains('Search Results').click()
+
+            cy.get('.granule-spatial-label-temporal').should('not.exist')
+          })
         })
       })
     })

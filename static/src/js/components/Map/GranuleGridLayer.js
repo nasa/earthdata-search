@@ -172,7 +172,11 @@ const updateGranuleGridLayer = (instance, props, prevProps) => {
 
   // Nothing should be drawn, remove any existing layers
   if (layerDataCollectionIds.length === 0) {
-    Object.values(layers).forEach((layer) => instance.removeLayer(layer))
+    Object.values(layers).forEach((layer) => {
+      if (layer._granuleFocusLayer) layer._granuleFocusLayer.onRemove(instance._map)
+      if (layer._granuleStickyLayer) layer._granuleStickyLayer.onRemove(instance._map)
+      instance.removeLayer(layer)
+    })
   } else if (layerDataCollectionIds.length < Object.keys(prevLayerData).length) {
     // If there is less data than before, figure out which collection was removed and remove the layer
 
