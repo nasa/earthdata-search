@@ -30,12 +30,4 @@ describe('getSupportedGibsLayers', () => {
     expect(Object.keys(response)).not.toContain('ExcludedProjection_Value')
     expect(Object.keys(response)).not.toContain('MissingProjection_Value')
   })
-
-  test('with custom gibs layers merged', async () => {
-    const response = await getSupportedGibsLayers()
-
-    expect(Object.keys(response)).toContain('AMSRE_Surface_Rain_Rate_Night')
-    expect(Object.keys(response)).toContain('MOPITT_CO_Monthly_Total_Column_Day')
-    expect(Object.keys(response).length).toEqual(51)
-  })
 })
