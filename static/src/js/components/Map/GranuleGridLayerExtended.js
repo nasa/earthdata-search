@@ -821,7 +821,11 @@ export class GranuleGridLayerExtended extends L.GridLayer {
         this._onEdscStickygranule({ granule: null })
       } else {
         const [granule] = defaultGranules.filter((g) => g.id === focusedGranuleId)
-        this._onEdscStickygranule({ granule })
+
+        // If this._stickied is the focusedGranule from props, the stickied granule should not change.
+        if (this._stickied !== granule) {
+          this._onEdscStickygranule({ granule })
+        }
       }
     }
 
