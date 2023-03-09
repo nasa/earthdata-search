@@ -62,8 +62,7 @@ describe('generateGibsTags', () => {
 
     await generateGibsTags({}, {})
 
-    // 14 ADD calls for the unique concept ids and 1 DELETE call
-    expect(sqsSendMessagePromise.mock.calls.length).toEqual(15)
+    expect(sqsSendMessagePromise.mock.calls.length).toEqual(4)
 
     expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
       QueueUrl: 'http://example.com/tagQueue',
@@ -162,68 +161,28 @@ describe('generateGibsTags', () => {
       })
     }])
 
-    expect(sqsSendMessagePromise.mock.calls[14]).toEqual([{
+    expect(sqsSendMessagePromise.mock.calls[3]).toEqual([{
       QueueUrl: 'http://example.com/tagQueue',
       MessageBody: JSON.stringify({
         tagName: 'edsc.extra.serverless.gibs',
         action: 'REMOVE',
         searchCriteria: {
           condition: {
-            and: [
-              {
-                tag: {
-                  tag_key: 'edsc.extra.serverless.gibs'
-                }
-              },
-              {
-                not: {
-                  or: [
-                    {
-                      concept_id: 'C1000000001-EDSC'
-                    },
-                    {
-                      concept_id: 'C1000000002-EDSC'
-                    },
-                    {
-                      concept_id: 'C1000000003-EDSC'
-                    },
-                    {
-                      concept_id: 'C191855458-LARC'
-                    },
-                    {
-                      concept_id: 'C43677721-LARC'
-                    },
-                    {
-                      concept_id: 'C43677725-LARC'
-                    },
-                    {
-                      concept_id: 'C191855459-LARC'
-                    },
-                    {
-                      concept_id: 'C7227850-LARC_ASDC'
-                    },
-                    {
-                      concept_id: 'C7085910-LARC_ASDC'
-                    },
-                    {
-                      concept_id: 'C7612165-LARC_ASDC'
-                    },
-                    {
-                      concept_id: 'C6011924-LARC_ASDC'
-                    },
-                    {
-                      concept_id: 'C43677719-LARC'
-                    },
-                    {
-                      concept_id: 'C61095981-LARC'
-                    },
-                    {
-                      concept_id: 'C84942916-LARC'
-                    }
-                  ]
-                }
+            and: [{
+              tag: {
+                tag_key: 'edsc.extra.serverless.gibs'
               }
-            ]
+            }, {
+              not: {
+                or: [{
+                  concept_id: 'C1000000001-EDSC'
+                }, {
+                  concept_id: 'C1000000002-EDSC'
+                }, {
+                  concept_id: 'C1000000003-EDSC'
+                }]
+              }
+            }]
           }
         }
       })

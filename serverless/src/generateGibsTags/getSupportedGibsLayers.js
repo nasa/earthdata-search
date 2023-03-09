@@ -1,7 +1,6 @@
 import 'array-foreach-async'
 import axios from 'axios'
 
-import customGibsProducts from '../static/gibs'
 import { getClientId } from '../../../sharedUtils/getClientId'
 
 /*
@@ -26,16 +25,6 @@ export const getSupportedGibsLayers = async () => {
   const supportedProjections = Object.values(projectionMap)
 
   const { data: worldviewProducts } = worldviewResponse
-
-  // Merge the EDSC custom products into the GIBS products before processing
-  Object.keys(customGibsProducts).forEach((key) => {
-    console.log(`Merged ${Object.keys(customGibsProducts[key]).length} objects into '${key}'`)
-
-    worldviewProducts[key] = {
-      ...worldviewProducts[key],
-      ...customGibsProducts[key]
-    }
-  })
 
   const { layers } = worldviewProducts
 
