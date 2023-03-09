@@ -1716,6 +1716,44 @@ describe('Map interactions', () => {
             cy.get('.granule-spatial-label-temporal').should('not.exist')
           })
         })
+
+        describe('when panning the map', () => {
+          it('does not remove the stickied granule', () => {
+            // Drag the map
+            cy.get('.map').dragMapFromCenter({
+              yMoveFactor: 1 / 8
+            })
+
+            cy.get('.leaflet-interactive').eq(1).should('have.attr', 'd', 'M991 446L994 458L1010 455L1007 443L991 446z')
+            cy.get('.granule-spatial-label-temporal').should('have.text', '2021-05-31 15:31:202021-05-31 15:31:48')
+          })
+        })
+
+        describe('when zooming the map', () => {
+          it('does not remove the stickied granule', () => {
+            // Zoom the map
+            cy.get('.leaflet-control-zoom-in').click()
+
+            cy.get('.leaflet-interactive').eq(1).should('have.attr', 'd', 'M1282 458L1287 482L1319 475L1314 452L1282 458z')
+            cy.get('.granule-spatial-label-temporal').should('have.text', '2021-05-31 15:31:202021-05-31 15:31:48')
+          })
+        })
+
+        describe('when clicking on an empty spot on the map', () => {
+          it('removes the stickied granule', () => {
+            cy.get('.map').click(1100, 750)
+
+            cy.get('.granule-spatial-label-temporal').should('not.exist')
+          })
+        })
+
+        describe('when clicking the same granule again', () => {
+          it('removes the stickied granule', () => {
+            cy.get('.map').click(1000, 450)
+
+            cy.get('.granule-spatial-label-temporal').should('not.exist')
+          })
+        })
       })
     })
 
