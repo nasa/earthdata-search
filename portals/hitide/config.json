@@ -1,0 +1,19 @@
+{
+  "hasStyles": true,
+  "logo": {
+    "id": "hitide-logo",
+    "link": "https://hitide.podaac.earthdatacloud.nasa.gov/",
+    "title": "HiTIDE Home"
+  },
+  "org": "HiTIDE",
+  "pageTitle": "HiTIDE",
+  "parentConfig": "edsc",
+  "query": {
+    "dataCenter": "NASA/JPL/PODAAC",
+    "hasGranulesOrCwic": null
+  },
+  "ui": {
+    "showOnlyGranulesCheckbox": false,
+    "showNonEosdisCheckbox": false
+  }
+}
