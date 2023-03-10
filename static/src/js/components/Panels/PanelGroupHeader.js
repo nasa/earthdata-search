@@ -125,6 +125,7 @@ export const PanelGroupHeader = ({
                       icon={icon}
                       label={title}
                       onClick={onClick}
+                      dataTestId="breadcrumb-button"
                     >
                       {title}
                     </Button>
@@ -144,6 +145,7 @@ export const PanelGroupHeader = ({
                         pathname,
                         search
                       }}
+                      dataTestId="breadcrumb-button"
                     >
                       {title}
                     </PortalLinkContainer>
