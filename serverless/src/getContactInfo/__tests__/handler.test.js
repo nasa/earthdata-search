@@ -76,9 +76,36 @@ describe('getContactInfo', () => {
     expect(result.body).toEqual(expectedBody)
   })
 
-  test('responds correctly on error', async () => {
+  test('responds correctly on database error', async () => {
     dbTracker.on('query', (query) => {
       query.reject('Unknown Error')
+    })
+
+    const response = await getContactInfo({}, {})
+
+    expect(response.statusCode).toEqual(500)
+  })
+
+  test('responds correctly on CMR-ordering error', async () => {
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response([
+          {
+            urs_id: { mock: 'ursId' },
+            urs_profile: { mock: 'urs' }
+          }
+        ])
+      } else {
+        query.response(undefined)
+      }
+    })
+
+    jest.spyOn(getCmrPreferencesData, 'getCmrPreferencesData').mockResolvedValue({
+      status: 200,
+      errors:
+      [
+        'Test error message'
+      ]
     })
 
     const response = await getContactInfo({}, {})

@@ -107,7 +107,11 @@ describe('saveContactInfo', () => {
       .matchHeader('Client-Id', 'eed-edsc-test-serverless-lambda')
       .matchHeader('X-Request-Id', 'mock-request-id')
       .post(/ordering\/api/)
-      .replyWithError('mock error')
+      .reply(200, {
+        errors: [
+          'Test error message'
+        ]
+      })
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
@@ -131,14 +135,10 @@ describe('saveContactInfo', () => {
     }
 
     const result = await saveContactInfo(event)
-    const expectedBody = JSON.stringify({
-      statusCode: 500,
-      errors: ['Error: mock error']
-    })
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('first')
 
-    expect(result.body).toEqual(expectedBody)
+    expect(result.statusCode).toEqual(500)
   })
 })

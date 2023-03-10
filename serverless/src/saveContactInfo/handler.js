@@ -79,7 +79,10 @@ const saveContactInfo = async (event) => {
       headers: requestHeaders
     })
 
-    const { data, status } = cmrPreferencesResponse
+    const { status, data, errors } = cmrPreferencesResponse
+
+    if (errors) throw new Error(JSON.stringify(errors))
+
     const { updateUser } = data.data
 
     return {
