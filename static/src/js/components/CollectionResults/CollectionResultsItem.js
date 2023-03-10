@@ -342,7 +342,7 @@ export const CollectionResultsItem = forwardRef(({
                       label="Earthdata Cloud"
                       metadata="Earthdata Cloud"
                       tooltipClassName="collection-results-item__tooltip"
-                      tooltipContent="Dataset is available the Earthdata Cloud"
+                      tooltipContent="Dataset is available in the Earthdata Cloud"
                     />
                   )
                 }
