@@ -79,13 +79,13 @@ const saveContactInfo = async (event) => {
       headers: requestHeaders
     })
 
-    const { status, data } = cmrPreferencesResponse
+    const { status, data: responseData } = cmrPreferencesResponse
 
-    const { errors } = data
+    const { errors, data } = responseData
 
     if (errors) throw new Error(JSON.stringify(errors))
 
-    const { updateUser } = data.data
+    const { updateUser } = data
 
     return {
       isBase64Encoded: false,

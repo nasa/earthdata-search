@@ -50,11 +50,12 @@ const getContactInfo = async (event, context) => {
       authToken,
       earthdataEnvironment
     )
-    const { status, data, errors } = cmrPreferencesData
+    const { status, data: responseData } = cmrPreferencesData
+    const { errors, data } = responseData
 
     if (errors) throw new Error(JSON.stringify(errors))
 
-    const { user } = data.data
+    const { user } = data
 
     const contactInfoData = {
       urs_profile: userRecord.urs_profile,
