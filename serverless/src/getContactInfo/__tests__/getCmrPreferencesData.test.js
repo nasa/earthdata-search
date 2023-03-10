@@ -22,18 +22,19 @@ describe('getCmrPreferencesData', () => {
       .matchHeader('X-Request-Id', 'mock-request-id')
       .post(/ordering\/api/)
       .reply(200, {
-        user: {
-          mock: 'cmr'
-        }
+        data: { user: { mock: 'cmr' } }
       })
 
     const cmrData = await getCmrPreferencesData('urs_user', 'fake.access.token', 'test')
-
-    const { data: preferences } = cmrData
-    expect(preferences).toEqual({
-      user: {
-        mock: 'cmr'
-      }
-    })
+    expect(cmrData).toEqual(expect.objectContaining({
+      data: {
+        data: {
+          user: {
+            mock: 'cmr'
+          }
+        }
+      },
+      status: 200
+    }))
   })
 })
