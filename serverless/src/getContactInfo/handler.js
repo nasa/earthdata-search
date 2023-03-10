@@ -50,7 +50,10 @@ const getContactInfo = async (event, context) => {
       authToken,
       earthdataEnvironment
     )
-    const { status, data } = cmrPreferencesData
+    const { status, data, errors } = cmrPreferencesData
+
+    if (errors) throw new Error(JSON.stringify(errors))
+
     const { user } = data.data
 
     const contactInfoData = {
@@ -65,6 +68,11 @@ const getContactInfo = async (event, context) => {
       body: JSON.stringify(contactInfoData)
     }
   } catch (e) {
+    console.log({
+      isBase64Encoded: false,
+      headers: defaultResponseHeaders,
+      ...parseError(e)
+    })
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
