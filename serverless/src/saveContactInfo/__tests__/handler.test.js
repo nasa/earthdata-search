@@ -138,7 +138,12 @@ describe('saveContactInfo', () => {
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('first')
+    const expectedError = JSON.stringify({
+      statusCode: 500,
+      errors: ['Error: ["Test error message"]']
+    })
 
     expect(result.statusCode).toEqual(500)
+    expect(result.body).toEqual(expectedError)
   })
 })

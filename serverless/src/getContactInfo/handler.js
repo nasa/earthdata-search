@@ -10,8 +10,7 @@ import { getCmrPreferencesData } from './getCmrPreferencesData'
 /**
  * Handler for retreiving a users contact information
  * @param {Object} event Details about the HTTP request that it received
- * @param {Object} context Method
- s and properties that provide information about the invocation, function, and execution environment
+ * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 const getContactInfo = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
@@ -51,13 +50,12 @@ const getContactInfo = async (event, context) => {
       authToken,
       earthdataEnvironment
     )
-    const { status, data } = cmrPreferencesData
-
-    const { errors } = data
+    const { status, data: responseData } = cmrPreferencesData
+    const { errors, data } = responseData
 
     if (errors) throw new Error(JSON.stringify(errors))
 
-    const { user } = data.data
+    const { user } = data
 
     const contactInfoData = {
       urs_profile: userRecord.urs_profile,
