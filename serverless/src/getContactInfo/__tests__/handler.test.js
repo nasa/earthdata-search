@@ -102,14 +102,21 @@ describe('getContactInfo', () => {
 
     jest.spyOn(getCmrPreferencesData, 'getCmrPreferencesData').mockResolvedValue({
       status: 200,
-      errors:
-      [
-        'Test error message'
-      ]
+      data: {
+        errors:
+        [
+          'Test error message'
+        ]
+      }
     })
 
     const response = await getContactInfo({}, {})
+    const expectedError = JSON.stringify({
+      statusCode: 500,
+      errors: ['Error: ["Test error message"]']
+    })
 
     expect(response.statusCode).toEqual(500)
+    expect(response.body).toEqual(expectedError)
   })
 })
