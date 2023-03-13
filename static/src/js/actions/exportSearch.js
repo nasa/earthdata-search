@@ -35,85 +35,20 @@ export const exportSearch = (format) => (dispatch, getState) => {
   const graphQlRequestObject = new ExportSearchRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
-    query SearchCollections(
-      $boundingBox: [String]
-      $circle: [String]
-      $cloudHosted: Boolean
-      $collectionDataType: [String]
-      $dataCenter: String
-      $dataCenterH: [String]
-      $facetsSize: Int
-      $granuleDataFormat: String
-      $granuleDataFormatH: [String]
-      $hasGranulesOrCwic: Boolean
-      $horizontalDataResolutionRange: [String]
-      $instrument: String
-      $instrumentH: [String]
-      $keyword: String
-      $line: [String]
-      $offset: Int
-      $options: JSON
-      $platform: String
-      $platformH: [String]
-      $point: [String]
-      $polygon: [String]
-      $processingLevelIdH: [String]
-      $project: String
-      $projectH: [String]
-      $provider: String
-      $scienceKeywordsH: JSON
-      $serviceType: [String]
-      $sortKey: [String]
-      $spatialKeyword: String
-      $tagKey: [String]
-      $temporal: String
-      $twoDCoordinateSystemName: [String]
-      $limit: Int
-      $cursor: String
+    query ExportCollections (
+      $params: CollectionsInput
     ) {
       collections (
-        boundingBox: $boundingBox
-        circle: $circle
-        collectionDataType: $collectionDataType
-        cloudHosted: $cloudHosted
-        dataCenter: $dataCenter
-        dataCenterH: $dataCenterH
-        facetsSize: $facetsSize
-        granuleDataFormat: $granuleDataFormat
-        granuleDataFormatH: $granuleDataFormatH
-        hasGranulesOrCwic: $hasGranulesOrCwic
-        horizontalDataResolutionRange: $horizontalDataResolutionRange
-        instrument: $instrument
-        instrumentH: $instrumentH
-        keyword: $keyword
-        line: $line
-        offset: $offset
-        options: $options
-        platform: $platform
-        platformH: $platformH
-        point: $point
-        polygon: $polygon
-        processingLevelIdH: $processingLevelIdH
-        project: $project
-        projectH: $projectH
-        provider: $provider
-        scienceKeywordsH: $scienceKeywordsH
-        serviceType: $serviceType
-        sortKey: $sortKey
-        spatialKeyword: $spatialKeyword
-        tagKey: $tagKey
-        temporal: $temporal
-        twoDCoordinateSystemName: $twoDCoordinateSystemName
-        limit: $limit,
-        cursor: $cursor
+        params: $params
       ) {
         cursor
+        count
         items {
           provider
           shortName
-          versionId
+          version
           title
-          processingLevelId
+          processingLevel
           platforms
           timeStart
           timeEnd
@@ -122,14 +57,16 @@ export const exportSearch = (format) => (dispatch, getState) => {
     }`
 
   const response = graphQlRequestObject.search(graphQuery, {
-    ...buildCollectionSearchParams(collectionParams),
-    limit: 1000,
-    // These params include data that is not used in exporting collections. Setting them to undefined to remove the params
-    includeFacets: undefined,
-    includeGranuleCounts: undefined,
-    includeTags: undefined,
-    pageNum: undefined,
-    pageSize: undefined
+    params: {
+      ...buildCollectionSearchParams(collectionParams),
+      limit: 1000,
+      // These params include data that is not used in exporting collections. Setting them to undefined to remove the params
+      includeFacets: undefined,
+      includeGranuleCounts: undefined,
+      includeTags: undefined,
+      pageNum: undefined,
+      pageSize: undefined
+    }
   }, format)
     .then((response) => {
       const { data } = response

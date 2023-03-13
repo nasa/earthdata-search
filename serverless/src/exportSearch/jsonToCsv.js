@@ -14,9 +14,9 @@ const headers = [
 const keysToMap = [
   'provider',
   'shortName',
-  'versionId',
+  'version',
   'title',
-  'processingLevelId',
+  'processingLevel',
   'platforms',
   'timeStart',
   'timeEnd'
@@ -46,6 +46,11 @@ export const jsonToCsv = (jsonArray) => {
         const shortNames = collection[key].map((platform) => platform.shortName)
 
         collectionValues.push(JSON.stringify(shortNames.join(', '), replacer))
+      } else if (key === 'processingLevel') {
+        // Use the ID field in processingLevel
+        const { id } = collection[key]
+
+        collectionValues.push(`"${id}"`)
       } else {
         collectionValues.push(JSON.stringify(collection[key], replacer))
       }
