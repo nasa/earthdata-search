@@ -5,9 +5,11 @@ describe('jsonToCsv', () => {
     const json = [{
       provider: 'test provider',
       shortName: 'test shortName',
-      versionId: 'test versionId',
+      version: 'test versionId',
       title: 'test title',
-      processingLevelId: 'test processingLevelId',
+      processingLevel: {
+        id: 'test processingLevelId'
+      },
       platforms: [{ shortName: 'test platforms' }],
       timeStart: 'test timeStart',
       timeEnd: 'test timeEnd'
@@ -22,9 +24,11 @@ describe('jsonToCsv', () => {
     const json = [{
       provider: 'test provider',
       shortName: 'test shortName',
-      versionId: 'test versionId',
+      version: 'test versionId',
       title: 'test title',
-      processingLevelId: 'test processingLevelId',
+      processingLevel: {
+        id: 'test processingLevelId'
+      },
       platforms: [{
         shortName: 'test platform 1'
       }, {
@@ -43,9 +47,11 @@ describe('jsonToCsv', () => {
     const json = [{
       provider: 'test provider',
       shortName: 'test shortName',
-      versionId: 'test versionId',
+      version: 'test versionId',
       title: 'test title',
-      processingLevelId: 'test processingLevelId',
+      processingLevel: {
+        id: 'test processingLevelId'
+      },
       platforms: [{ shortName: 'test platforms' }],
       timeStart: 'test timeStart',
       timeEnd: null

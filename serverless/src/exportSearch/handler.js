@@ -65,7 +65,10 @@ const exportSearch = async (event, context) => {
           query,
           variables: {
             ...variables,
-            cursor
+            params: {
+              ...variables.params,
+              cursor
+            }
           }
         },
         headers: requestHeaders

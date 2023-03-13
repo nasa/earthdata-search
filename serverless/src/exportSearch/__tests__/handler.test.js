@@ -31,11 +31,27 @@ describe('exportSearch', () => {
             items: [{
               conceptId: 'C100000-EDSC',
               title: 'Test collection',
-              platforms: [{ shortName: 'platform' }]
+              platforms: [{ shortName: 'platform' }],
+              processingLevel: {
+                id: '1'
+              },
+              provider: 'EDSC',
+              shortName: 'TestShortName',
+              timeStart: '2018-07-11T00:00:00.000Z',
+              timeEnd: '2023-08-31T00:00:00.000Z',
+              version: 'v1'
             }, {
               conceptId: 'C100001-EDSC',
               title: 'Test collection 1',
-              platforms: [{ shortName: 'platform' }]
+              platforms: [{ shortName: 'platform' }],
+              processingLevel: {
+                id: '1'
+              },
+              provider: 'EDSC',
+              shortName: 'TestShortName',
+              timeStart: '2018-07-11T00:00:00.000Z',
+              timeEnd: '2023-08-31T00:00:00.000Z',
+              version: 'v1'
             }]
           }
         }
@@ -64,7 +80,7 @@ describe('exportSearch', () => {
 
     const result = await exportSearch(event, {})
 
-    expect(result.body).toEqual('Data Provider,Short Name,Version,Entry Title,Processing Level,Platform,Start Time,End Time\r\n,,,"Test collection",,"platform",,\r\n,,,"Test collection 1",,"platform",,\r\n')
+    expect(result.body).toEqual('Data Provider,Short Name,Version,Entry Title,Processing Level,Platform,Start Time,End Time\r\n"EDSC","TestShortName","v1","Test collection","1","platform","2018-07-11T00:00:00.000Z","2023-08-31T00:00:00.000Z"\r\n"EDSC","TestShortName","v1","Test collection 1","1","platform","2018-07-11T00:00:00.000Z","2023-08-31T00:00:00.000Z"\r\n')
   })
 
   test('returns json response correctly', async () => {
@@ -82,11 +98,27 @@ describe('exportSearch', () => {
             items: [{
               conceptId: 'C100000-EDSC',
               title: 'Test collection',
-              platforms: [{ shortName: 'platform' }]
+              platforms: [{ shortName: 'platform' }],
+              processingLevel: {
+                id: '1'
+              },
+              provider: 'EDSC',
+              shortName: 'TestShortName',
+              timeStart: '2018-07-11T00:00:00.000Z',
+              timeEnd: '2023-08-31T00:00:00.000Z',
+              version: 'v1'
             }, {
               conceptId: 'C100001-EDSC',
               title: 'Test collection 1',
-              platforms: [{ shortName: 'platform' }]
+              platforms: [{ shortName: 'platform' }],
+              processingLevel: {
+                id: '1'
+              },
+              provider: 'EDSC',
+              shortName: 'TestShortName',
+              timeStart: '2018-07-11T00:00:00.000Z',
+              timeEnd: '2023-08-31T00:00:00.000Z',
+              version: 'v1'
             }]
           }
         }
@@ -115,7 +147,7 @@ describe('exportSearch', () => {
 
     const result = await exportSearch(event, {})
 
-    expect(result.body).toEqual('[{"conceptId":"C100000-EDSC","title":"Test collection","platforms":[{"shortName":"platform"}]},{"conceptId":"C100001-EDSC","title":"Test collection 1","platforms":[{"shortName":"platform"}]}]')
+    expect(result.body).toEqual('[{"conceptId":"C100000-EDSC","title":"Test collection","platforms":[{"shortName":"platform"}],"processingLevel":{"id":"1"},"provider":"EDSC","shortName":"TestShortName","timeStart":"2018-07-11T00:00:00.000Z","timeEnd":"2023-08-31T00:00:00.000Z","version":"v1"},{"conceptId":"C100001-EDSC","title":"Test collection 1","platforms":[{"shortName":"platform"}],"processingLevel":{"id":"1"},"provider":"EDSC","shortName":"TestShortName","timeStart":"2018-07-11T00:00:00.000Z","timeEnd":"2023-08-31T00:00:00.000Z","version":"v1"}]')
   })
 
   test('responds correctly on http error', async () => {
