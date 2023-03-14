@@ -132,7 +132,7 @@ class ContactInfo extends Component {
 
         <h3>Update Notification Preference Level</h3>
 
-        <p>
+        <div className="mb-2">
           <label htmlFor="notificationLevel">
             Receive delayed access notifications
           </label>
@@ -151,7 +151,7 @@ class ContactInfo extends Component {
                 <option value="NONE">Never</option>
               </select>
             )}
-        </p>
+        </div>
 
         <Button
           className="contact-info-form__update-notification-level"

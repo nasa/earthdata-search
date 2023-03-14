@@ -26,6 +26,7 @@ describe('util#createJwtToken', () => {
         collectionListView: 'default'
       },
       urs_profile: {
+        email_address: 'test@example.com',
         first_name: 'test'
       }
     }
@@ -55,6 +56,7 @@ describe('util#createJwtToken', () => {
       },
       username: 'testuser',
       ursProfile: {
+        email_address: 'test@example.com',
         first_name: 'test'
       }
     }))

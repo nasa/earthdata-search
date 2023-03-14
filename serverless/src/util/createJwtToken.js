@@ -21,6 +21,7 @@ export const createJwtToken = (user, earthdataEnvironment) => {
     username,
     preferences,
     ursProfile: {
+      email_address: ursProfile.email_address,
       first_name: ursProfile.first_name
     },
     earthdataEnvironment
