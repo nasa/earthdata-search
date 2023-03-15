@@ -1,20 +1,28 @@
 {
-  "hasStyles": true,
+  "description": "The mission of the ORNL DAAC is to assemble, distribute, and provide data services for a comprehensive archive of terrestrial biogeochemistry and ecological dynamics observations and models to facilitate research, education, and decision-making in support of NASA's Earth Science.",
+  "hasLogo": true,
   "hasScripts": true,
+  "hasStyles": true,
   "logo": {
     "id": "ornl-daac-logo",
     "link": "https://daac.ornl.gov",
     "title": "ORNL DAAC Home"
   },
+  "moreInfoURL": "https://daac.ornl.gov",
   "org": "ORNL DAAC",
   "pageTitle": "ORNL DAAC",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
     "dataCenter": "ORNL_DAAC",
     "hasGranulesOrCwic": null
   },
+  "title": {
+    "primary": "ORNL DAAC",
+    "secondary": "Oak Ridge National Laboratory Distributed Active Archive Center"
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

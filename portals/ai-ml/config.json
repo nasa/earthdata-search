@@ -1,19 +1,26 @@
 {
+  "description": "ESDS AI/ML research is conducted primarily through NASA's Interagency Implementation and Advanced Concepts Team (IMPACT). IMPACT is an interdisciplinary team that works to further the ESDS goal of overseeing the lifecycle of Earth science data to maximize the scientific return of NASA's missions and experiments for scientists, decision makers, and society.",
+  "hasLogo": true,
   "hasStyles": true,
   "logo": {
     "id": "AI-ML-logo",
     "link": "https://www.earthdata.nasa.gov/esds/ai-ml",
     "title": "Artificial Intelligence / Machine Learning Search"
   },
+  "moreInfoURL": "https://www.earthdata.nasa.gov/esds/ai-ml",
   "org": "Artificial Intelligence / Machine Learning",
   "pageTitle": "Artificial intelligence / Machine Learning Portal",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
-    "tagKey": "machine.learning",
-    "hasGranulesOrCwic": null
+    "hasGranulesOrCwic": null,
+    "tagKey": "machine.learning"
+  },
+  "title": {
+    "primary": "Artificial Intelligence / Machine Learning"
   },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

@@ -903,7 +903,9 @@ SearchPanels.propTypes = {
   portal: PropTypes.shape({
     org: PropTypes.string,
     portalId: PropTypes.string,
-    title: PropTypes.string
+    title: PropTypes.shape({
+      primary: PropTypes.string
+    })
   }).isRequired,
   preferences: PropTypes.shape({
     collectionListView: PropTypes.node,

@@ -1,20 +1,28 @@
 {
-  "hasStyles": true,
+  "description": "The mission of the GHRC DAAC is to provide a comprehensive active archive of both data and knowledge augmentation services with a focus on hazardous weather, its governing dynamical and physical processes, and associated applications.",
+  "hasLogo": true,
   "hasScripts": true,
+  "hasStyles": true,
   "logo": {
     "id": "ghrc-logo",
     "link": "https://ghrc.nsstc.nasa.gov/home",
     "title": "GHRC Home"
   },
+  "moreInfoURL": "https://ghrc.nsstc.nasa.gov/home",
   "org": "GHRC",
   "pageTitle": "GHRC",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
     "dataCenter": "NASA/MSFC/GHRC",
     "hasGranulesOrCwic": null
   },
+  "title": {
+    "primary": "GHRC",
+    "secondary": "Global Hydrometeorology Resource Center"
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }
