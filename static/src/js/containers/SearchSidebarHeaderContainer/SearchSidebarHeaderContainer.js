@@ -8,22 +8,32 @@ import SearchSidebarHeader from '../../components/SearchSidebar/SearchSidebarHea
 import actions from '../../actions/index'
 import { locationPropType } from '../../util/propTypes/location'
 
+export const mapStateToProps = (state) => ({
+  portal: state.portal
+})
+
 export const mapDispatchToProps = (dispatch) => ({
   onFocusedCollectionChange:
     (collectionId) => dispatch(actions.changeFocusedCollection(collectionId))
 })
 
-export const SearchSidebarHeaderContainer = ({ location, onFocusedCollectionChange }) => (
+export const SearchSidebarHeaderContainer = ({
+  location,
+  onFocusedCollectionChange,
+  portal
+}) => (
   <SearchSidebarHeader
     location={location}
     onFocusedCollectionChange={onFocusedCollectionChange}
+    portal={portal}
   />
 )
 SearchSidebarHeaderContainer.propTypes = {
   location: locationPropType.isRequired,
-  onFocusedCollectionChange: PropTypes.func.isRequired
+  onFocusedCollectionChange: PropTypes.func.isRequired,
+  portal: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(
-  connect(null, mapDispatchToProps)(SearchSidebarHeaderContainer)
+  connect(mapStateToProps, mapDispatchToProps)(SearchSidebarHeaderContainer)
 )

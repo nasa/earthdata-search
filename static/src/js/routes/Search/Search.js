@@ -170,7 +170,6 @@ export const Search = ({
             >
               <SidebarFiltersList>
                 <SidebarFiltersItem
-                  heading="Categories"
                   hasPadding={false}
                 >
                   <FacetsContainer />

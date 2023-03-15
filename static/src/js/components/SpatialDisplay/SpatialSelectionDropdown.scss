@@ -7,26 +7,24 @@
 
   &__menu {
     margin-top: -0.5rem;
-    border: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    box-shadow: $shadow__panel-dark;
+    box-shadow: $shadow__panel;
+
+    .button__icon {
+      width: 1rem;
+      text-align: center;
+      flex-shrink: 0;
+      color: $color__black--400;
+    }
+
+    .button__contents {
+      line-height: 1.25rem;
+    }
   }
 
   &__button {
     display: flex;
     align-items: center;
     padding-left: 0.625rem;
-
-    .button__icon {
-      margin-right: .35rem;
-      width: 1rem;
-      text-align: center;
-    }
-
-    .button__contents {
-      line-height: 1.25rem;
-    }
   }
 
   &__icon {

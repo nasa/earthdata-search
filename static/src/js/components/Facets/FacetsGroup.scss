@@ -31,12 +31,12 @@
     position: relative;
     top: 0.01rem;
     margin-left: 0.5rem;
-    padding: 0 0.5rem;
-    background-color: rgba($color__blue--dark, 0.75);
+    padding: 0.0625rem 0.5rem;
+    background-color: $color__blue;
     color: $color__white;
-    font-size: 0.625rem;
-    height: 1rem;
-    border-radius: 0.5rem;
+    font-size: 0.725rem;
+    font-weight: 400;
+    border-radius: 1rem;
     line-height: 1rem;
   }
 
@@ -44,26 +44,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.425rem 0.5rem;
-    color: $color__white;
+    padding: 0.5rem 0.5rem;
     border-radius: 0;
-    border-bottom: 1px solid darken($color__black--700, 5);
     font-size: 0.875rem;
-    font-weight: 300;
-
-    .facets-group:first-child & {
-      border-top: 1px solid darken($color__black--700, 5);
-    }
+    font-weight: 400;
 
     &:hover {
-      color: $color__white;
-      background: darken($color__black--700, 5);
+      background: $color__black--100;
     }
 
     &:focus {
       outline: 0;
       border-color: transparent;
-      border-bottom-color: darken($color__black--700, 5);
     }
   }
 
@@ -102,7 +94,7 @@
     align-items: center;
     justify-content: center;
     margin-left: 0.5rem;
-    color: darken($color__black--400, 10);
+    color: $color__black--400;
 
     svg {
       transform: translateY(-0.125rem)
@@ -111,7 +103,7 @@
 
   &__body {
     overflow: hidden;
-    border-bottom: 1px solid darken($color__black--700, 5);
+    background-color: darken($color__black--100, 5);\
 
     &:first-child {
       padding-top: 0.6rem;

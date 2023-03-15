@@ -312,7 +312,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
     } = this.props
 
     return (
-      <Dropdown show={open} className="temporal-selection-dropdown dropdown-dark" onToggle={this.onDropdownToggle}>
+      <Dropdown show={open} className="temporal-selection-dropdown" onToggle={this.onDropdownToggle}>
         <TemporalSelectionDropdownToggle onToggleClick={this.onToggleClick} />
         {
           open && (

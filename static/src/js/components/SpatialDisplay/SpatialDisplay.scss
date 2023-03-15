@@ -33,21 +33,6 @@
     padding: 0 $spacer/4;
   }
 
-  &__text-input {
-    background-color: $color__black--700;
-    color: $color__white;
-    border: $color__black--700;
-
-    &:placeholder-shown {
-      color: $color__black--300;
-    }
-
-    &:focus {
-      color: $color__white;
-      background-color: $color__black--600;
-    }
-  }
-
   &__text-primary {
     max-width: 19rem;
     margin-left: $spacer/4;

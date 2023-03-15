@@ -43,7 +43,7 @@ const TemporalSelectionDropdownMenu = ({
 
   return ReactDOM.createPortal(
     <Dropdown.Menu
-      className="temporal-selection-dropdown-menu dropdown-menu-dark"
+      className="temporal-selection-dropdown-menu"
       popperConfig={{
         preventOverflow: {
           boundariesElement: 'window'
@@ -74,7 +74,7 @@ const TemporalSelectionDropdownMenu = ({
         </Button>
         <Button
           className={classes.btnCancel}
-          bootstrapVariant="dark"
+          bootstrapVariant="light"
           label="Clear"
           onClick={onClearClick}
         >
