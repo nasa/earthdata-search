@@ -1,19 +1,27 @@
 {
+  "description": "For more than 50 years, NASA has collected airborne and field data during field campaigns applicable to many science disciplines, including meteorology, hydrology, oceanography, and terrestrial studies. Data collected from these campaigns have been stored in various locations making them difficult to locate and access.",
+  "hasLogo": true,
   "hasStyles": true,
   "logo": {
     "id": "suborbital-logo",
     "link": "https://earthdata.nasa.gov/esds/impact/admg/the-airborne-inventory",
     "title": "Sub-Orbital Catalog"
   },
+  "moreInfoURL": "https://earthdata.nasa.gov/esds/impact/admg/the-airborne-inventory",
   "org": "Sub-Orbital Catalog",
   "pageTitle": "NASA Sub-Orbital Catalog",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
-    "tagKey": ["gov.nasa.impact.*"],
-    "hasGranulesOrCwic": null
+    "hasGranulesOrCwic": null,
+    "tagKey": ["gov.nasa.impact.*"]
+  },
+  "title": {
+    "primary": "CASEI",
+    "secondary": "Catalog of Archived Suborbital Earth Science Investigations"
   },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

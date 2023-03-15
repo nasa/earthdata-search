@@ -18,8 +18,10 @@ const AppLogo = ({
     portalId,
     logo = {},
     org,
-    title
+    title = {}
   } = portal
+
+  const { primary: primaryTitle } = title
 
   let portalLink = '/'
   if (!isDefaultPortal(portalId)) {
@@ -75,7 +77,7 @@ const AppLogo = ({
           href={portalLink}
         >
           <span className="app-logo__site-name-ent app-logo__site-name-ent--e">{org}</span>
-          <span className="app-logo__site-name-ent app-logo__site-name-ent--s">{title}</span>
+          <span className="app-logo__site-name-ent app-logo__site-name-ent--s">{primaryTitle}</span>
         </a>
       </span>
       <Switch>
@@ -97,7 +99,9 @@ AppLogo.propTypes = {
     logo: PropTypes.shape({}),
     org: PropTypes.string,
     portalId: PropTypes.string,
-    title: PropTypes.string
+    title: PropTypes.shape({
+      primary: PropTypes.string
+    })
   }).isRequired
 }
 
