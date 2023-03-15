@@ -5,8 +5,8 @@
     font-size: 0.775rem;
     font-weight: 500;
     letter-spacing: 0.005rem;
-    color: rgba($color__black--100, 0.9);
-    background-color: darken($color__blue--dark, 20);
+    color: $color__black--700;
+    background-color: $color__black--200;
   }
 
   &__body {

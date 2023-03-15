@@ -3,8 +3,8 @@
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
-  padding: $spacer/2 $spacer*0.78 $spacer/2 $spacer*0.925;
-  color: $color__white;
+  padding: $spacer*0.75 $spacer*0.78 $spacer*0.75 $spacer*0.925;
+  color: $color__black--900;
   border-bottom: 1px solid rgba($color__black--700, 0.5);
 
   &--naked {
@@ -25,8 +25,9 @@
 
   &__icon {
     text-align: center;
-    color: $color__black--200;
+    color: $color__black--700;
     font-size: 0.925rem !important;
+    width: 0.825rem;
 
     &--small {
       font-size: 1rem;
@@ -38,15 +39,15 @@
     margin-bottom: 0;
     margin-left: 0.25rem;
     font-size: 0.875rem;
-    color: $color__black--200;
+    color: $color__black--700;
   }
 
   &__secondary-title {
     margin-left: 0.5rem;
     padding: 0.0125rem .25rem;
     border-radius: 0.125rem;
-    background-color: $color__black--600;
-    color: $color__black--100;
+    background-color: $color__black--500;
+    color: $color__white;
     font-size: 0.75rem;
   }
 

@@ -4,7 +4,8 @@
   flex-direction: column;
   width: auto;
   z-index: 2;
-  background-color: $color__black--900;
+  background-color: $color__white;
+  box-shadow: 0 0 0.75rem 0 rgba(0, 0, 0, 0.1);
 
   &__loading-suggestions {
     display: flex;
@@ -23,6 +24,7 @@
     display: flex;
     align-items: stretch;
     width: 100%;
+    border-bottom: 1px solid $color__black--200;
   }
 
   &__secondary {
@@ -50,40 +52,32 @@
   }
 
   &__button {
+    position: relative;
     border: 0;
     border-radius: 0;
     background-color: $color__white;
     vertical-align: middle;
+    color: $color__black--500;
+    border-right: 1px solid $color__black--200;
+    z-index: 1;
 
     &:focus {
-      box-shadow: none;
-      outline: 0;
+      z-index: 2;
     }
 
     .fa {
       margin-top: 0.3em;
     }
 
-    &--dark {
-      padding: 0 0.925rem;
-      color: $color__black--300;
-      background-color: $color__black--900;
-
-      &:hover {
-        color: $color__white;
-        background-color: $color__black--700;
-      }
+    &--clear {
+      border-left: 1px solid $color__black--200;
+      border-right: 0;
     }
 
-    &--clear {
-      color: $color__black--500;
-      border-left: 1px solid $color__black--200;
-      border-right: 1px solid $color__black--200;
-
-      &:focus {
-        border-left: 1px solid $color__black--200;
-        border-right: 1px solid $color__black--200;
-      }
+    .search-form__secondary & {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 
@@ -98,6 +92,17 @@
     padding: 0.825rem 0.925rem;
     border: none;
     font-size: 0.875rem;
+
+    &:before {
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      content: "\f007";
+    }
 
     &:focus {
       box-shadow: none;
