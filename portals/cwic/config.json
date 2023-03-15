@@ -1,19 +1,27 @@
 {
+  "description": "The CWIC Project provides the world’s satellite Earth observation data providers with a way to make their data collections searchable using common standards. ",
+  "hasLogo": true,
   "hasStyles": true,
   "logo": {
     "id": "ceos-logo",
     "link": "http://ceos.org/ourwork/workinggroups/wgiss/access/cwic/",
     "title": "CEOS Home"
   },
+  "moreInfoURL": "http://ceos.org/ourwork/workinggroups/wgiss/access/cwic/",
   "org": "CWIC",
   "pageTitle": "CWIC",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
     "consortium": ["EOSDIS", "CWIC"],
     "hasGranulesOrCwic": null
   },
+  "title": {
+    "primary": "CWIC",
+    "secondary": "CEOS WGISS Integrated Catalog"
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

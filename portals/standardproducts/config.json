@@ -2,12 +2,16 @@
   "org": "Standard Products",
   "pageTitle": "Standard Products",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
     "hasGranulesOrCwic": null,
     "standardProduct": true
   },
+  "title": {
+    "primary": "Standard Products"
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

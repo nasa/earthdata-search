@@ -1,19 +1,27 @@
 {
+  "description": "The SOOS mission is to facilitate the sustained collection and delivery of essential observations of the Southern Ocean to all stakeholders, through the design, advocacy, and implementation of cost-effective observing and data delivery systems.",
+  "hasLogo": true,
   "hasStyles": true,
   "logo": {
     "id": "SOOS-logo",
     "link": "http://www.soos.aq",
     "title": "SOOS Metadata Search"
   },
+  "moreInfoURL": "http://www.soos.aq",
   "org": "SOOS",
   "pageTitle": "Southern Ocean Observing System",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
-    "tagKey": ["aq.soos"],
-    "hasGranulesOrCwic": null
+    "hasGranulesOrCwic": null,
+    "tagKey": ["aq.soos"]
+  },
+  "title": {
+    "primary": "SOOS",
+    "secondary": "Southern Ocean Observing System"
   },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

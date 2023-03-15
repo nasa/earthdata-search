@@ -1,21 +1,28 @@
 {
-  "hasStyles": true,
+  "description": "The Carbon in Arctic Reservoirs Vulnerability Experiment (CARVE) is an Earth Venture Sub-orbital mission funded in 2010 as part of NASA's Earth System Science Pathfinder Mission.",
+  "hasLogo": true,
   "hasScripts": true,
+  "hasStyles": true,
   "logo": {
     "id": "ornl-daac-logo",
     "link": "https://carve.ornl.gov",
     "title": "ORNL DAAC CARVE Home"
   },
+  "moreInfoURL": "https://carve.ornl.gov",
   "org": "ORNL DAAC",
   "pageTitle": "CARVE",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
-    "project": "CARVE",
-    "hasGranulesOrCwic": null
+    "hasGranulesOrCwic": null,
+    "project": "CARVE"
   },
-  "title": "CARVE",
+  "title": {
+    "primary": "CARVE",
+    "secondary": "Carbon in Arctic Reservoirs Vulnerability Experiment"
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

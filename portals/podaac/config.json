@@ -1,19 +1,27 @@
 {
+  "description": "The Physical Oceanography Distributed Active Archive Center (PO.DAAC) is a NASA Earth Observing System Data and Information System (EOSDIS) data center managed by the Earth Science Data and Information System (ESDIS) Project.",
+  "hasLogo": true,
   "hasStyles": true,
   "logo": {
     "id": "podaac-logo",
     "link": "https://podaac.jpl.nasa.gov",
     "title": "PO.DAAC Home"
   },
+  "moreInfoURL": "https://podaac.jpl.nasa.gov",
   "org": "PO.DAAC",
   "pageTitle": "PO.DAAC",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
     "dataCenter": "NASA/JPL/PODAAC",
     "hasGranulesOrCwic": null
   },
+  "title": {
+    "primary": "PO.DAAC",
+    "secondary": "Physical Oceanography Distributed Active Archive Center"
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }
