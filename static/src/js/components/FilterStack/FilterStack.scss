@@ -4,9 +4,10 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  background-color: $color__black--900;
-  border-top: 1px solid $color__black--700;
-  color: $color__white;
+  background-color: $color__white;
+  border-top: 1px solid $color__black--200;
+  border-bottom: 1px solid $color__black--200;
+  color: $color__black--900;
   visibility: hidden;
 
   &--is-open {

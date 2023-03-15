@@ -55,15 +55,15 @@ export class SpatialSelectionDropdown extends PureComponent {
   render() {
     return (
       <Dropdown
-        className="spatial-selection-dropdown dropdown-dark"
+        className="spatial-selection-dropdown"
         data-testid="spatial-selection-dropdown"
       >
         <Dropdown.Toggle
           variant="inline-block"
           id="spatial-selection-dropdown"
-          className="spatial-selection-dropdown__button search-form__button search-form__button--dark"
+          className="search-form__button search-form__button--dark"
         >
-          <EDSCIcon className="spatial-selection-dropdown__icon" icon={FaCrop} size="0.825rem" />
+          <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={FaCrop} size="0.825rem" />
         </Dropdown.Toggle>
         <Dropdown.Menu className="spatial-selection-dropdown__menu">
           <Dropdown.Item

@@ -39,7 +39,7 @@
     }
 
     &:hover {
-      background: $color__black--700;
+      background: $color__black--200;
       border-left: .2rem solid $color__green;
       cursor: pointer;
     }
@@ -50,20 +50,12 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    color: $color__black--200;
-    font-weight: 300;
+    color: $color__black--600;
+    font-weight: 400;
     font-size: 0.875rem;
 
-    .facets-list--light & {
-      color: $color__black--600;
-    }
-
     .facets-item:hover & {
-      color: $color__white;
-
-      .facets-list--light & {
-        color: $color__black--900;
-      }
+      color: $color__black--900;
     }
   }
 

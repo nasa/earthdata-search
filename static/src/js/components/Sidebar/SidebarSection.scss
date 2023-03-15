@@ -1,8 +1,12 @@
 .sidebar-section {
-  margin: $spacer/2;
+  margin: 0.75rem;
   min-height: 0;
   color: $color__black--400;
-  background-color: $color__black--900;
+  background-color: $color__white;
+  border-radius: 0.25rem;
+  border: 1px solid darken($color__black--200, 5);
+  box-shadow: 0 0 0.75rem 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 
   &--padded {
     padding: 0.5*$spacer;
@@ -12,7 +16,6 @@
     display: flex;
     align-items: center;
     color: $color__black--300;
-    border-bottom: 1px solid $color__black--700;
   }
 
   &__header-action {
@@ -34,6 +37,8 @@
   &__header-primary {
     padding:0.5rem;
     flex-grow: 1;
+    background-color: $color__blue;
+    color: $color__white;
   }
 
   &__header-secondary {
@@ -44,8 +49,7 @@
     display: flex;
     align-items: center;
     margin: 0;
-    font-size: 0.875rem;
-    color: $color__black--200;
+    font-size: 0.75rem;
   }
 
   &__title-icon {

@@ -5,4 +5,8 @@
   padding: 0;
   list-style: none;
   color: $color__white;
+
+  .sidebar-filters-item:last-child & {
+    margin-bottom: 0;
+  }
 }
