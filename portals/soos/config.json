@@ -7,7 +7,7 @@
     "link": "http://www.soos.aq",
     "title": "SOOS Metadata Search"
   },
-  "moreInfoURL": "http://www.soos.aq",
+  "moreInfoUrl": "http://www.soos.aq",
   "org": "SOOS",
   "pageTitle": "Southern Ocean Observing System",
   "parentConfig": "edsc",

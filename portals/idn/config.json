@@ -7,7 +7,7 @@
     "link": "https://idn.ceos.org/",
     "title": "CEOS IDN Search"
   },
-  "moreInfoURL": "https://idn.ceos.org/",
+  "moreInfoUrl": "https://idn.ceos.org/",
   "org": "IDN",
   "pageTitle": "IDN",
   "parentConfig": "edsc",

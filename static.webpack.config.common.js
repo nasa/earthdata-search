@@ -1,4 +1,5 @@
 require('@babel/register')
+const fs = require('fs')
 
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -20,6 +21,35 @@ const {
 const portalConfig = getPortalConfig(defaultPortal)
 
 const { ui } = portalConfig
+
+// Webpack plugin that will merge all of our portal configs into a single JSON file
+class MergePortalConfigsPlugin {
+  apply(compiler) {
+    compiler.hooks.watchRun.tap(
+      'MergePortalConfigsPlugin',
+      () => {
+        console.log('Merging Portal Configs')
+
+        const output = {}
+        const portalDirectory = 'portals'
+        const directories = fs.readdirSync(portalDirectory, { withFileTypes: true })
+          .filter((dirent) => dirent.isDirectory())
+
+        directories.forEach((directory) => {
+          const { name } = directory
+          const contents = JSON.parse(fs.readFileSync(`${portalDirectory}/${name}/config.json`, 'utf8'))
+
+          output[name] = {
+            ...contents,
+            portalId: name
+          }
+        })
+
+        fs.writeFileSync(`${portalDirectory}/mergedPortalConfigs.json`, JSON.stringify(output))
+      }
+    )
+  }
+}
 
 const StaticCommonConfig = {
   name: 'static',
@@ -202,8 +232,12 @@ const StaticCommonConfig = {
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/
-    })
-  ]
+    }),
+    new MergePortalConfigsPlugin()
+  ],
+  watchOptions: {
+    ignored: /mergedPortalConfigs.json/
+  }
 }
 
 module.exports = StaticCommonConfig

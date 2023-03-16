@@ -14,7 +14,7 @@ beforeEach(() => {
 describe('addPortal', () => {
   test('should create an action to add portal configs', () => {
     const payload = {
-      portalId: 'simple',
+      portalId: 'example',
       query: {
         echoCollectionId: 'C203234523-LAADS'
       },
@@ -32,10 +32,10 @@ describe('addPortal', () => {
 
 describe('loadPortalConfig', () => {
   test('should load the portal config from a file', () => {
-    const portalId = 'simple'
+    const portalId = 'example'
 
     const payload = {
-      portalId: 'simple',
+      description: 'Example portal only, not for use in EDSC',
       features: {
         advancedSearch: true,
         authentication: true,
@@ -46,40 +46,43 @@ describe('loadPortalConfig', () => {
         }
       },
       footer: {
-        displayVersion: true,
         attributionText: 'NASA Official: Stephen Berrick',
+        displayVersion: true,
         primaryLinks: [{
-          title: 'FOIA',
-          href: 'http://www.nasa.gov/FOIA/index.html'
-        },
-        {
-          title: 'NASA Privacy Policy',
-          href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html'
-        },
-        {
-          title: 'USA.gov',
-          href: 'http://www.usa.gov'
+          href: 'http://www.nasa.gov/FOIA/index.html',
+          title: 'FOIA'
+        }, {
+          href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html',
+          title: 'NASA Privacy Policy'
+        }, {
+          href: 'http://www.usa.gov',
+          title: 'USA.gov'
         }],
         secondaryLinks: [{
-          title: 'Earthdata Access: A Section 508 accessible alternative',
-          href: 'https://access.earthdata.nasa.gov/'
+          href: 'https://access.earthdata.nasa.gov/',
+          title: 'Earthdata Access: A Section 508 accessible alternative'
         }]
       },
+      hasLogo: false,
       hasScripts: false,
       hasStyles: false,
       logo: {},
       org: 'Earthdata',
-      pageTitle: 'Earthdata Search',
+      pageTitle: 'Example',
+      parentConfig: 'edsc',
+      portalBrowser: false,
+      portalId: 'example',
       query: {
         echoCollectionId: 'C203234523-LAADS'
       },
-      title: 'Search',
-      ui: {
-        showOnlyGranulesCheckbox: true,
-        showNonEosdisCheckbox: true,
-        showTophat: true
+      title: {
+        primary: 'Example'
       },
-      parentConfig: 'edsc'
+      ui: {
+        showNonEosdisCheckbox: true,
+        showOnlyGranulesCheckbox: true,
+        showTophat: true
+      }
     }
 
     // mockStore with initialState

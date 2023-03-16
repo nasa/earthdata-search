@@ -7,7 +7,7 @@
     "link": "https://www.earthdata.nasa.gov/esds/ai-ml",
     "title": "Artificial Intelligence / Machine Learning Search"
   },
-  "moreInfoURL": "https://www.earthdata.nasa.gov/esds/ai-ml",
+  "moreInfoUrl": "https://www.earthdata.nasa.gov/esds/ai-ml",
   "org": "Artificial Intelligence / Machine Learning",
   "pageTitle": "Artificial intelligence / Machine Learning Portal",
   "parentConfig": "edsc",

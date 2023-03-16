@@ -79,24 +79,26 @@ describe('PortalContainer component', () => {
 
     const { enzymeWrapper } = setup({
       portal: {
-        portalId: 'simple',
-        title: 'Simple'
+        portalId: 'example',
+        title: {
+          primary: 'example'
+        }
       }
     })
 
-    expect(enzymeWrapper.find('title').text()).toEqual('Earthdata Search :: Simple Portal')
+    expect(enzymeWrapper.find('title').text()).toEqual('Earthdata Search :: example Portal')
   })
 
   test('should call onLoadPortalConfig on mount with a portal', () => {
     const { props } = setup({
       match: {
         params: {
-          portalId: 'simple'
+          portalId: 'example'
         }
       }
     })
 
     expect(props.onLoadPortalConfig.mock.calls.length).toBe(1)
-    expect(props.onLoadPortalConfig.mock.calls[0]).toEqual(['simple'])
+    expect(props.onLoadPortalConfig.mock.calls[0]).toEqual(['example'])
   })
 })

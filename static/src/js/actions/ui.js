@@ -8,6 +8,7 @@ import {
   TOGGLE_EDIT_SUBSCRIPTION_MODAL,
   TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
+  TOGGLE_PORTAL_BROWSER_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SECONDARY_OVERLAY_PANEL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
@@ -24,6 +25,11 @@ export const toggleFacetsModal = (state) => ({
 
 export const toggleOverrideTemporalModal = (state) => ({
   type: TOGGLE_OVERRIDE_TEMPORAL_MODAL,
+  payload: state
+})
+
+export const togglePortalBrowserModal = (state) => ({
+  type: TOGGLE_PORTAL_BROWSER_MODAL,
   payload: state
 })
 
