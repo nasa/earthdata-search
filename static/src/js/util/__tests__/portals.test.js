@@ -27,6 +27,7 @@ describe('getPortalConfig', () => {
     const config = getPortalConfig('idn')
 
     expect(config).toEqual({
+      description: 'The CEOS IDN is an international effort developed to assist researchers in locating information on available datasets.',
       features: {
         advancedSearch: true,
         authentication: true,
@@ -56,6 +57,7 @@ describe('getPortalConfig', () => {
           href: 'https://access.earthdata.nasa.gov/'
         }]
       },
+      hasLogo: true,
       hasScripts: false,
       hasStyles: true,
       logo: {
@@ -63,10 +65,15 @@ describe('getPortalConfig', () => {
         link: 'https://idn.ceos.org/',
         title: 'CEOS IDN Search'
       },
+      moreInfoUrl: 'https://idn.ceos.org/',
       org: 'IDN',
       pageTitle: 'IDN',
+      portalBrowser: true,
       query: { hasGranulesOrCwic: null },
-      title: 'Search',
+      title: {
+        primary: 'IDN',
+        secondary: 'CEOS International Directory Network'
+      },
       ui: {
         showOnlyGranulesCheckbox: false,
         showNonEosdisCheckbox: false,

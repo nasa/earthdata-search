@@ -8,7 +8,7 @@
     "link": "https://daac.ornl.gov",
     "title": "ORNL DAAC Home"
   },
-  "moreInfoURL": "https://daac.ornl.gov",
+  "moreInfoUrl": "https://daac.ornl.gov",
   "org": "ORNL DAAC",
   "pageTitle": "ORNL DAAC",
   "parentConfig": "edsc",

@@ -8,7 +8,7 @@
     "link": "https://carve.ornl.gov",
     "title": "ORNL DAAC CARVE Home"
   },
-  "moreInfoURL": "https://carve.ornl.gov",
+  "moreInfoUrl": "https://carve.ornl.gov",
   "org": "ORNL DAAC",
   "pageTitle": "CARVE",
   "parentConfig": "edsc",

@@ -1,7 +1,7 @@
 {
   "description": "ABoVE is a large-scale study of environmental change and its implications for social-ecological systems.",
   "hasLogo": true,
-  "moreInfoURL": "https://above.nasa.gov/",
+  "moreInfoUrl": "https://above.nasa.gov/",
   "parentConfig": "edsc",
   "portalBrowser": true,
   "query": {

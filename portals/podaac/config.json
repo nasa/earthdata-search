@@ -7,7 +7,7 @@
     "link": "https://podaac.jpl.nasa.gov",
     "title": "PO.DAAC Home"
   },
-  "moreInfoURL": "https://podaac.jpl.nasa.gov",
+  "moreInfoUrl": "https://podaac.jpl.nasa.gov",
   "org": "PO.DAAC",
   "pageTitle": "PO.DAAC",
   "parentConfig": "edsc",
