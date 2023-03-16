@@ -1,10 +1,6 @@
 {
   "description": "Example portal only, not for use in EDSC",
   "hasLogo": false,
-  "logo": {
-    "image": "http://placehold.it/45x24",
-    "link": "https://example.com/logo"
-  },
   "pageTitle": "Example",
   "parentConfig": "edsc",
   "portalBrowser": false,

@@ -1,0 +1,60 @@
+.portal-list {
+  &__item {
+    height: 10rem;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    margin-bottom: 1.25rem;
+
+    &-contents {
+      display: flex;
+      flex-direction: row;
+
+      &__logo {
+        display: flex;
+        height: 10rem;
+        align-items: center;
+        padding: .5rem;
+        flex-shrink: 0;
+      }
+
+      &__details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 10rem;
+        flex-grow: 1;
+        padding: .5rem;
+        background-color: lighten($color__black--200, 5%);
+
+        &--title {
+          .primary-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-right: 0.25rem;
+          }
+
+          .secondary-title {
+            font-size: 0.825rem;
+            color: $color__black--600;
+          }
+        }
+
+        &--description {
+          text-overflow: ellipsis;
+
+          overflow: hidden;
+          font-size: 0.8rem;
+          color: $color__black--600;
+        }
+
+        &--link {
+          display: flex;
+          justify-content: flex-end;
+          font-size: .725rem;
+          font-weight: 500;
+          color: $color__black--500;
+        }
+      }
+    }
+  }
+}

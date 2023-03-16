@@ -10,7 +10,9 @@ import { Form } from 'react-bootstrap'
 import {
   FaMap,
   FaFilter,
-  FaInfoCircle
+  FaInfoCircle,
+  FaSitemap,
+  FaChevronRight
 } from 'react-icons/fa'
 
 import AdvancedSearchModalContainer
@@ -24,6 +26,9 @@ import GranuleResultsHighlightsContainer
   from '../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'
 import GranuleFiltersContainer
   from '../../containers/GranuleFiltersContainer/GranuleFiltersContainer'
+import PortalBrowserModalContainer
+  from '../../containers/PortalBrowserModalContainer/PortalBrowserModalContainer'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
 import SearchPanelsContainer
@@ -32,27 +37,25 @@ import SearchSidebarHeaderContainer
   from '../../containers/SearchSidebarHeaderContainer/SearchSidebarHeaderContainer'
 import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
+
+import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 import SidebarSection from '../../components/Sidebar/SidebarSection'
-import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
 
 import actions from '../../actions'
-import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
 
-const mapDispatchToProps = (dispatch) => ({
+export const mapDispatchToProps = (dispatch) => ({
   onUpdateAdvancedSearch:
     (values) => dispatch(actions.updateAdvancedSearch(values)),
-  onFocusedCollectionChange:
-    (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onChangeQuery:
     (query) => dispatch(actions.changeQuery(query)),
-  onMetricsCollectionSortChange:
-    (data) => dispatch(metricsCollectionSortChange(data))
+  onTogglePortalBrowserModal:
+    (data) => dispatch(actions.togglePortalBrowserModal(data))
 })
 
-const mapStateToProps = (state) => ({
+export const mapStateToProps = (state) => ({
   collectionQuery: state.query.collection
 })
 
@@ -61,14 +64,16 @@ const mapStateToProps = (state) => ({
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.collectionQuery - Collection query state
  * @param {Object} props.match - Router match state
- * @param {Function} props.onUpdateAdvancedSearch - Callback to update the advanced search state
  * @param {Function} props.onChangeQuery - Callback to change the query
+ * @param {Function} props.onTogglePortalBrowserModal - Callback to update the portal browser modal state
+ * @param {Function} props.onUpdateAdvancedSearch - Callback to update the advanced search state
  */
 export const Search = ({
   collectionQuery,
   match,
-  onUpdateAdvancedSearch,
-  onChangeQuery
+  onChangeQuery,
+  onTogglePortalBrowserModal,
+  onUpdateAdvancedSearch
 }) => {
   const { path } = match
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
@@ -152,6 +157,14 @@ export const Search = ({
           </Route>
           <Route path={path}>
             <SidebarSection
+              sectionTitle="Browse Portals"
+              titleIcon={FaSitemap}
+              onClick={() => onTogglePortalBrowserModal(true)}
+              headerAction={{
+                title: (<EDSCIcon className="sidebar-section__title-icon" icon={FaChevronRight} />)
+              }}
+            />
+            <SidebarSection
               sectionTitle="Filter Collections"
               titleIcon={FaFilter}
             >
@@ -197,6 +210,7 @@ export const Search = ({
         </Switch>
       </SidebarContainer>
       <div className="route-wrapper__content">
+        <PortalBrowserModalContainer />
         <RelatedUrlsModalContainer />
         <FacetsModalContainer />
         <PortalFeatureContainer advancedSearch>
@@ -218,8 +232,9 @@ Search.propTypes = {
   match: PropTypes.shape({
     path: PropTypes.string
   }).isRequired,
-  onUpdateAdvancedSearch: PropTypes.func.isRequired,
-  onChangeQuery: PropTypes.func.isRequired
+  onChangeQuery: PropTypes.func.isRequired,
+  onTogglePortalBrowserModal: PropTypes.func.isRequired,
+  onUpdateAdvancedSearch: PropTypes.func.isRequired
 }
 
 export default withRouter(

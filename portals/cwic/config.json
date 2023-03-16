@@ -7,7 +7,7 @@
     "link": "http://ceos.org/ourwork/workinggroups/wgiss/access/cwic/",
     "title": "CEOS Home"
   },
-  "moreInfoURL": "http://ceos.org/ourwork/workinggroups/wgiss/access/cwic/",
+  "moreInfoUrl": "http://ceos.org/ourwork/workinggroups/wgiss/access/cwic/",
   "org": "CWIC",
   "pageTitle": "CWIC",
   "parentConfig": "edsc",

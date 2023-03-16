@@ -9,6 +9,7 @@ import EDSCModal from '../../components/EDSCModal/EDSCModal'
  * @param {Element} body The modal body content.
  * @param {Boolean} bodyPadding Sets the padding on the inner body.
  * @param {String} className An optional classname for the modal.
+ * @param {String} dataTestId Test ID to be added to the element.
  * @param {Boolean} fixedHeight Sets the modal to fixed height.
  * @param {Element} footer The footer content.
  * @param {Element} footerMeta The footer meta content.
@@ -63,6 +64,7 @@ export class EDSCModalContainer extends Component {
       body,
       bodyPadding,
       className,
+      dataTestId,
       size,
       fixedHeight,
       footer,
@@ -142,6 +144,7 @@ export class EDSCModalContainer extends Component {
       <EDSCModal
         activeModalOverlay={activeModalOverlay}
         bodyEl={bodyEl}
+        dataTestId={dataTestId}
         footer={footer}
         footerMeta={footerMeta}
         identifier={identifier}
@@ -171,6 +174,7 @@ export default EDSCModalContainer
 EDSCModalContainer.defaultProps = {
   bodyPadding: true,
   className: '',
+  dataTestId: null,
   fixedHeight: false,
   footer: null,
   footerMeta: null,
@@ -192,6 +196,7 @@ EDSCModalContainer.propTypes = {
   body: PropTypes.node.isRequired,
   bodyPadding: PropTypes.bool,
   className: PropTypes.string,
+  dataTestId: PropTypes.string,
   fixedHeight: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool

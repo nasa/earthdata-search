@@ -7,7 +7,7 @@
     "link": "https://earthdata.nasa.gov/esds/impact/admg/the-airborne-inventory",
     "title": "Sub-Orbital Catalog"
   },
-  "moreInfoURL": "https://earthdata.nasa.gov/esds/impact/admg/the-airborne-inventory",
+  "moreInfoUrl": "https://earthdata.nasa.gov/esds/impact/admg/the-airborne-inventory",
   "org": "Sub-Orbital Catalog",
   "pageTitle": "NASA Sub-Orbital Catalog",
   "parentConfig": "edsc",

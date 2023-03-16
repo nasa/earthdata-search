@@ -7,7 +7,7 @@
     "link": "https://www.scar.org/resources/amd/",
     "title": "Antarctic Metadata Directory (AMD) "
   },
-  "moreInfoURL": "https://www.scar.org/resources/amd/",
+  "moreInfoUrl": "https://www.scar.org/resources/amd/",
   "org": "Antarctic Metadata Directory (AMD)",
   "pageTitle": "Antarctic Metadata Directory (AMD)",
   "parentConfig": "edsc",

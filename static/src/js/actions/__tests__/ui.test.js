@@ -2,28 +2,40 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import {
+  toggleAboutCSDAModal,
   toggleAboutCwicModal,
   toggleAdvancedSearchModal,
   toggleChunkedOrderModal,
   toggleDeprecatedParameterModal,
+  toggleDrawingNewLayer,
+  toggleEditSubscriptionModal,
   toggleFacetsModal,
   toggleKeyboardShortcutsModal,
   toggleOverrideTemporalModal,
+  togglePortalBrowserModal,
   toggleRelatedUrlsModal,
+  toggleSecondaryOverlayPanel,
   toggleShapefileUploadModal,
+  toggleSpatialPolygonWarning,
   toggleTimeline,
   toggleTooManyPointsModal
 } from '../ui'
 
 import {
+  TOGGLE_ABOUT_CSDA_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
   TOGGLE_ADVANCED_SEARCH_MODAL,
   TOGGLE_CHUNKED_ORDER_MODAL,
   TOGGLE_DEPRECATED_PARAMETER_MODAL,
+  TOGGLE_DRAWING_NEW_LAYER,
+  TOGGLE_EDIT_SUBSCRIPTION_MODAL,
   TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
+  TOGGLE_PORTAL_BROWSER_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
+  TOGGLE_SECONDARY_OVERLAY_PANEL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
+  TOGGLE_SPATIAL_POLYGON_WARNING,
   TOGGLE_TIMELINE,
   TOGGLE_TOO_MANY_POINTS_MODAL,
   TOGGLE_VIEW_ALL_FACETS_MODAL
@@ -253,5 +265,131 @@ describe('toggleTimeline', () => {
       payload
     }
     expect(toggleTimeline(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('togglePortalBrowserModal', () => {
+  test('should create an action to update the state', () => {
+    const store = mockStore({
+      ui: {
+        facetsModal: {
+          isOpen: false
+        }
+      }
+    })
+
+    const payload = true
+    store.dispatch(togglePortalBrowserModal(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: TOGGLE_PORTAL_BROWSER_MODAL,
+      payload: true
+    })
+  })
+})
+
+describe('toggleAboutCSDAModal', () => {
+  test('should create an action to update the state', () => {
+    const store = mockStore({
+      ui: {
+        facetsModal: {
+          isOpen: false
+        }
+      }
+    })
+
+    const payload = true
+    store.dispatch(toggleAboutCSDAModal(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: TOGGLE_ABOUT_CSDA_MODAL,
+      payload: true
+    })
+  })
+})
+
+describe('toggleDrawingNewLayer', () => {
+  test('should create an action to update the state', () => {
+    const store = mockStore({
+      ui: {
+        facetsModal: {
+          isOpen: false
+        }
+      }
+    })
+
+    const payload = true
+    store.dispatch(toggleDrawingNewLayer(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: TOGGLE_DRAWING_NEW_LAYER,
+      payload: true
+    })
+  })
+})
+
+describe('toggleEditSubscriptionModal', () => {
+  test('should create an action to update the state', () => {
+    const store = mockStore({
+      ui: {
+        facetsModal: {
+          isOpen: false
+        }
+      }
+    })
+
+    const payload = true
+    store.dispatch(toggleEditSubscriptionModal(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: TOGGLE_EDIT_SUBSCRIPTION_MODAL,
+      payload: true
+    })
+  })
+})
+
+describe('toggleSecondaryOverlayPanel', () => {
+  test('should create an action to update the state', () => {
+    const store = mockStore({
+      ui: {
+        facetsModal: {
+          isOpen: false
+        }
+      }
+    })
+
+    const payload = true
+    store.dispatch(toggleSecondaryOverlayPanel(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: TOGGLE_SECONDARY_OVERLAY_PANEL,
+      payload: true
+    })
+  })
+})
+
+describe('toggleSpatialPolygonWarning', () => {
+  test('should create an action to update the state', () => {
+    const store = mockStore({
+      ui: {
+        facetsModal: {
+          isOpen: false
+        }
+      }
+    })
+
+    const payload = true
+    store.dispatch(toggleSpatialPolygonWarning(payload))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: TOGGLE_SPATIAL_POLYGON_WARNING,
+      payload: true
+    })
   })
 })
