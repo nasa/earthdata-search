@@ -43,6 +43,18 @@ const SidebarSection = (props) => {
     onClick: headerActionOnClick
   } = headerAction
 
+  let headerProps = {}
+
+  if (onClick) {
+    // If onClick has been defined, add some extra props to the .sidebar-section__header-primary div
+    headerProps = {
+      onClick,
+      onKeyUp: onClick,
+      role: 'button',
+      tabIndex: 0
+    }
+  }
+
   return (
     <section className={classes}>
       {
@@ -50,10 +62,8 @@ const SidebarSection = (props) => {
           <header className="sidebar-section__header">
             <div
               className="sidebar-section__header-primary"
-              onClick={onClick}
-              role="button"
-              tabIndex={0}
-              onKeyUp={onClick}
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...headerProps}
             >
               <h2 className="sidebar-section__title">
                 {titleIcon && <EDSCIcon className="sidebar-section__title-icon" icon={titleIcon} />}
@@ -153,7 +163,6 @@ SidebarSection.propTypes = {
   footerButtonProps: PropTypes.shape({}),
   headerAction: PropTypes.shape({
     onClick: PropTypes.func,
-    // title: PropTypes.string
     title: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.node
