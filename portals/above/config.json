@@ -1,5 +1,5 @@
 {
-  "description": "ABoVE is a large-scale study of environmental change and its implications for social-ecological systems.",
+  "description": "The ABoVE portal provides access to data from the Arctic-Boreal Vulnerability Experiment (ABoVE) NASA mission.",
   "hasLogo": true,
   "moreInfoUrl": "https://above.nasa.gov/",
   "parentConfig": "edsc",

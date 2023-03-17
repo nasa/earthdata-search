@@ -27,7 +27,7 @@ describe('getPortalConfig', () => {
     const config = getPortalConfig('idn')
 
     expect(config).toEqual({
-      description: 'The CEOS IDN is an international effort developed to assist researchers in locating information on available datasets.',
+      description: 'The CEOS International Directory Network (IDN) Search portal offers online information and access on scientific datasets about the Earth sciences, including geoscience, hydrospheric science, biospheric science, satellite remote sensing, and atmospheric science. This metadata describes data held by university departments, government agencies, multinational organizations, and other organizations all over the world.',
       features: {
         advancedSearch: true,
         authentication: true,
