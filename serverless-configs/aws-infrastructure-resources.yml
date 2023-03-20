@@ -38,7 +38,7 @@ Resources:
       AllocatedStorage: '20'
       DBInstanceClass: ${env:DB_INSTANCE_CLASS}
       Engine: postgres
-      EngineVersion: '10.6'
+      EngineVersion: '14.6'
       MasterUsername: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:username}}"] ] }
       MasterUserPassword: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:password}}"] ] }
       MultiAZ: true
@@ -67,7 +67,7 @@ Resources:
           FromPort: 5432
           ToPort: 5432
       VpcId: ${env:VPC_ID}
-  
+
   ServerlessAppRole:
     Type: "AWS::IAM::Role"
     Properties:
