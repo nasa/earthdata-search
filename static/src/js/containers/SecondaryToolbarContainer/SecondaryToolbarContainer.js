@@ -84,7 +84,7 @@ SecondaryToolbarContainer.propTypes = {
     first_name: PropTypes.string
   }).isRequired
 }
-
+// TODO connect to the redux store
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(SecondaryToolbarContainer)
 )

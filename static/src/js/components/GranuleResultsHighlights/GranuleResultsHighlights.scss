@@ -1,7 +1,7 @@
 .granule-results-highlights {
   &__count {
     padding: 0.25rem 0.75rem;
-    color: $color__black--300;
+    color: $color__black--400;
     font-size: 0.75rem;
     border-bottom: 1px solid $color__black--700;
   }
@@ -14,7 +14,7 @@
 
   &__item {
     border-bottom: 1px solid $color__black--700;
-    color: $color__black--200;
+    color: $color__black--700;
   }
 
   &__item-header {

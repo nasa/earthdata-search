@@ -66,7 +66,6 @@ describe('getPortalConfig', () => {
         title: 'CEOS IDN Search'
       },
       moreInfoUrl: 'https://idn.ceos.org/',
-      org: 'IDN',
       pageTitle: 'IDN',
       portalBrowser: true,
       query: { hasGranulesOrCwic: null },

@@ -16,17 +16,18 @@
     display: flex;
     align-items: center;
     color: $color__black--300;
+    background-color: $color__blue;
   }
-
+ 
   &__header-action {
     margin-right: 0.5rem;
     padding: 0.075rem 0.425rem;
-    background-color: $color__blue--dark;
-    border-color: $color__blue--dark;
+    background-color: $color__black--400;
+    border-color: $color__black--400;
 
     &:hover {
-      background-color: darken($color__blue--dark, 5);
-      border-color: darken($color__blue--dark, 5);
+      background-color: darken($color__blue, 5);
+      border-color: darken($color__blue, 5);
     }
   }
 
@@ -38,9 +39,10 @@
     padding:0.5rem;
     flex-grow: 1;
     background-color: $color__blue;
+    background-color: $color__blue;
     color: $color__white;
   }
-
+/* I don't think that this does anything*/
   &__header-secondary {
     flex-grow: 0;
   }
@@ -67,8 +69,8 @@
 
     label {
       font-size: 0.8rem;
-      color: $color__black--200;
-      font-weight: 400;
+      color: $color__black--600;
+      font-weight: 500;
       letter-spacing: 0.005rem;
     }
 
@@ -94,7 +96,8 @@
     label {
       position: relative;
       top: 0.075rem;
-      font-weight: 300;
+      font-weight: 400;
+      color: $color__black--600;
     }
 
     input[type='checkbox'] {

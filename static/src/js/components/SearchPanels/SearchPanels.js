@@ -229,9 +229,12 @@ class SearchPanels extends PureComponent {
 
     const {
       portalId,
-      org = portalId,
-      title = portalId
+      // org = portalId,
+      title = portalId,
+      pageTitle = portalId
     } = portal
+
+    const { primary: primaryPortalTitle = portalId } = title
 
     const granuleResultsHeaderMetaPrimaryText = `Showing ${commafy(allGranuleIds.length)} of ${commafy(
       granuleHits
@@ -401,6 +404,7 @@ class SearchPanels extends PureComponent {
             )
           }
           {
+            // TODO this should also keep all of the prop information?
             !isDefaultPortal(portalId) && (
               <div className="search-panels__portal-escape">
                 Looking for more collections?
@@ -408,10 +412,10 @@ class SearchPanels extends PureComponent {
                 <a href="/" className="search-panels__portal-escape-link">
                   Leave
                   {' '}
-                  {startCase(org)}
+                  {startCase(pageTitle)}
                   &#39;s
                   {' '}
-                  {startCase(title)}
+                  {startCase(primaryPortalTitle)}
                   {' '}
                   Portal
                 </a>
@@ -901,11 +905,12 @@ SearchPanels.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({
-    org: PropTypes.string,
+    // org: PropTypes.string,
     portalId: PropTypes.string,
     title: PropTypes.shape({
       primary: PropTypes.string
-    })
+    }),
+    pageTitle: PropTypes.string
   }).isRequired,
   preferences: PropTypes.shape({
     collectionListView: PropTypes.node,

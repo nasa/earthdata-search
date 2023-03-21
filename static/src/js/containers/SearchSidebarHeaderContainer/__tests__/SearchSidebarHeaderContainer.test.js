@@ -13,7 +13,20 @@ function setup() {
     location: {
       search: '?some=test-params'
     },
-    onFocusedCollectionChange: jest.fn()
+    onFocusedCollectionChange: jest.fn(),
+    portal: {
+      title: {
+        primary: 'Earthdata Search'
+      },
+      logo: {
+        id: 'idn-logo',
+        link: 'https://idn.ceos.org/',
+        title: 'CEOS IDN Search'
+      },
+      portalId: 'edsc'
+    },
+    onChangePath: jest.fn(),
+    onLoadPortalConfig: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SearchSidebarHeaderContainer {...props} />)

@@ -17,7 +17,6 @@ const {
   defaultPortal,
   feedbackApp
 } = config.getApplicationConfig()
-
 const portalConfig = getPortalConfig(defaultPortal)
 
 const { ui } = portalConfig
@@ -33,15 +32,16 @@ class MergePortalConfigsPlugin {
         const output = {}
         const portalDirectory = 'portals'
         const directories = fs.readdirSync(portalDirectory, { withFileTypes: true })
-          .filter((dirent) => dirent.isDirectory())
+          .filter((dirent) => dirent.isDirectory() || !dirent.name.startsWith('.'))
 
         directories.forEach((directory) => {
           const { name } = directory
-          const contents = JSON.parse(fs.readFileSync(`${portalDirectory}/${name}/config.json`, 'utf8'))
-
-          output[name] = {
-            ...contents,
-            portalId: name
+          if (name !== 'mergedPortalConfigs.json') {
+            const contents = JSON.parse(fs.readFileSync(`${portalDirectory}/${name}/config.json`, 'utf8'))
+            output[name] = {
+              ...contents,
+              portalId: name
+            }
           }
         })
 

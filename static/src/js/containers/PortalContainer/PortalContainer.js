@@ -7,7 +7,7 @@ import { startCase } from 'lodash'
 
 import actions from '../../actions/index'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import { isDefaultPortal, getPortalConfig } from '../../util/portals'
+import { isDefaultPortal } from '../../util/portals'
 
 export const mapDispatchToProps = (dispatch) => ({
   onLoadPortalConfig:
@@ -15,6 +15,7 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const mapStateToProps = (state) => ({
+  availablePortals: state.availablePortals,
   portal: state.portal
 })
 
@@ -28,15 +29,17 @@ export class PortalContainer extends Component {
   }
 
   render() {
-    const { portal } = this.props
+    const { availablePortals, portal } = this.props
     const { portalId, title = {} } = portal
     const { primary: primaryTitle } = title
 
     let portalTitle = ''
     if (!isDefaultPortal(portalId)) portalTitle = ` :: ${primaryTitle || startCase(portalId)} Portal`
+    // TODO pulls out the primary title from the portal
+    // const defaultConfig = getPortalConfig(getApplicationConfig().defaultPortal)
+    const { default: defaultPortal } = availablePortals
 
-    const defaultConfig = getPortalConfig(getApplicationConfig().defaultPortal)
-
+    const defaultConfig = defaultPortal
     // Use the default portal org and title for the page title
     const {
       title: defaultTitle
@@ -59,6 +62,10 @@ PortalContainer.propTypes = {
     params: PropTypes.shape({
       portalId: PropTypes.string
     })
+  }).isRequired,
+  availablePortals: PropTypes.shape({
+    default:
+  PropTypes.shape()
   }).isRequired,
   portal: PropTypes.shape({
     title: PropTypes.shape({
