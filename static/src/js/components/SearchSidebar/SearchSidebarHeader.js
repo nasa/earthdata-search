@@ -1,9 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {
+  Link
+} from 'react-router-dom'
+
+import { parse } from 'qs'
 import { FaTimes } from 'react-icons/fa'
 
 import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
 import Button from '../Button/Button'
+import { locationPropType } from '../../util/propTypes/location'
+import { stringify } from '../../util/url/url'
 
 import './SearchSidebarHeader.scss'
 
@@ -11,7 +18,9 @@ import './SearchSidebarHeader.scss'
  * Renders SearchSidebarHeader
  */
 export const SearchSidebarHeader = ({
-  portal
+  portal,
+  location,
+  onChangePath
 }) => {
   const { title, logo, portalId } = portal
 
@@ -22,6 +31,15 @@ export const SearchSidebarHeader = ({
       </header>
     )
   }
+
+  const params = parse(location.search, { parseArrays: false, ignoreQueryPrefix: true })
+  let { p = '' } = params
+  p = p.replace(/^[^!]*/, '')
+
+  const newSearch = stringify({
+    ...params,
+    p
+  })
 
   const { primary: primaryTitle, secondary: secondaryTitle } = title
   const { id: logoId, link: logoLink } = logo
@@ -65,15 +83,21 @@ export const SearchSidebarHeader = ({
               )
             }
           </h2>
-          <Button
-            className="search-sidebar-header__button"
-            icon={FaTimes}
-            variant="link"
-            title="Exit Portal"
-            label="Exit Portal"
-          >
-            Exit Portal
-          </Button>
+          <Link to={`/search${newSearch}`}>
+            <Button
+              className="search-sidebar-header__button"
+              icon={FaTimes}
+              variant="link"
+              title="Exit Portal"
+              label="Exit Portal"
+              onClick={() => {
+                onChangePath(`/search${newSearch}`)
+              }}
+            >
+              Exit Portal
+            </Button>
+          </Link>
+
         </div>
       </section>
       <SearchFormContainer />
@@ -82,8 +106,8 @@ export const SearchSidebarHeader = ({
 }
 
 SearchSidebarHeader.propTypes = {
-  // location: locationPropType.isRequired,
-  // onFocusedCollectionChange: PropTypes.func.isRequired,
+  location: locationPropType.isRequired,
+  onChangePath: PropTypes.func.isRequired,
   portal: PropTypes.shape({
     title: PropTypes.shape({
       primary: PropTypes.string,

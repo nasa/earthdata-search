@@ -28,8 +28,7 @@ const Config = mergeWithRules({
         warnings: false
       }
     },
-    compress: true,
-    hot: true
+    compress: true
   },
   module: {
     rules: [

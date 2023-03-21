@@ -25,6 +25,7 @@
   .rdtPicker {
     flex-direction: column;
     width: 13.4375rem;
+    position: relative;
     margin-top: 0.1875em;
     font-size: 0.8125rem;
     border: 1px solid $color__black--200;

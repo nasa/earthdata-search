@@ -17,13 +17,34 @@ export const isDefaultPortal = (portalId) => {
  * Recursively build the portal config merging the config into the configs parent config
  * @param {Object} json Portal config
  */
-const buildConfig = (json) => {
+export const buildConfig = (json, availablePortals) => {
+  const { parentConfig } = json
+
+  // If the current config has a parent, merge the current config into the result of the parents being merged together
+  if (parentConfig) {
+    const { [parentConfig]: parentJson } = availablePortals
+    const parent = buildConfig({ ...parentJson }, availablePortals)
+    const merged = merge({ ...parent }, { ...json })
+    return cloneDeep({ ...merged })
+  }
+
+  // If the config doesn't have a parent, merge the current config into the default portal config
+  const { default: defaultJson } = availablePortals
+  const merged = merge({ ...defaultJson }, { ...json })
+  return cloneDeep({ ...merged })
+}
+
+/**
+ * Recursively build the portal config merging the config into the configs parent config
+ * @param {Object} json Portal config
+ */
+const buildInitialPortalConfig = (json) => {
   const { parentConfig } = json
 
   // If the current config has a parent, merge the current config into the result of the parents being merged together
   if (parentConfig) {
     const parentJson = require(`../../../../portals/${parentConfig}/config.json`)
-    const parent = buildConfig(parentJson)
+    const parent = buildInitialPortalConfig(parentJson)
     const merged = merge(parent, json)
     return cloneDeep(merged)
   }
@@ -37,8 +58,9 @@ const buildConfig = (json) => {
  * Returns the portal config json
  * @param {String} portalId
  */
+
 export const getPortalConfig = (portalId) => {
   const portalJson = require(`../../../../portals/${portalId}/config.json`)
-
-  return buildConfig(portalJson)
+  // TODO override this to use the large portal config
+  return buildInitialPortalConfig(portalJson)
 }

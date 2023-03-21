@@ -67,7 +67,6 @@ describe('loadPortalConfig', () => {
       hasScripts: false,
       hasStyles: false,
       logo: {},
-      org: 'Earthdata',
       pageTitle: 'Example',
       parentConfig: 'edsc',
       portalBrowser: false,
@@ -85,12 +84,64 @@ describe('loadPortalConfig', () => {
       }
     }
 
+    const parentPayload = {
+      description: 'Example portal only, not for use in EDSC',
+      features: {
+        advancedSearch: true,
+        authentication: true,
+        featureFacets: {
+          showAvailableInEarthdataCloud: true,
+          showCustomizable: true,
+          showMapImagery: true
+        }
+      },
+      footer: {
+        attributionText: 'NASA Official: Stephen Berrick',
+        displayVersion: true,
+        primaryLinks: [{
+          href: 'http://www.nasa.gov/FOIA/index.html',
+          title: 'FOIA'
+        }, {
+          href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html',
+          title: 'NASA Privacy Policy'
+        }, {
+          href: 'http://www.usa.gov',
+          title: 'USA.gov'
+        }],
+        secondaryLinks: [{
+          href: 'https://access.earthdata.nasa.gov/',
+          title: 'Earthdata Access: A Section 508 accessible alternative'
+        }]
+      },
+      hasLogo: false,
+      hasScripts: false,
+      hasStyles: false,
+      logo: {},
+      pageTitle: 'Example',
+      portalBrowser: false,
+      portalId: 'example',
+      query: {
+        echoCollectionId: 'C203234523-LAADS'
+      },
+      title: {
+        primary: 'Example'
+      },
+      ui: {
+        showNonEosdisCheckbox: true,
+        showOnlyGranulesCheckbox: true,
+        showTophat: true
+      }
+    }
+
+    // mock store for available collections in EDSC
+    const mockAvailablePortals = {
+      availablePortals: { example: payload, edsc: parentPayload }
+    }
+
     // mockStore with initialState
-    const store = mockStore()
+    const store = mockStore(mockAvailablePortals)
 
-    // call the dispatch
     store.dispatch(loadPortalConfig(portalId))
-
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: ADD_PORTAL,

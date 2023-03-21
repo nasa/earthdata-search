@@ -229,9 +229,10 @@ class SearchPanels extends PureComponent {
 
     const {
       portalId,
-      org = portalId,
       title = portalId
     } = portal
+
+    const { primary: primaryPortalTitle = portalId } = title
 
     const granuleResultsHeaderMetaPrimaryText = `Showing ${commafy(allGranuleIds.length)} of ${commafy(
       granuleHits
@@ -408,10 +409,9 @@ class SearchPanels extends PureComponent {
                 <a href="/" className="search-panels__portal-escape-link">
                   Leave
                   {' '}
-                  {startCase(org)}
-                  &#39;s
+                  the
                   {' '}
-                  {startCase(title)}
+                  {startCase(primaryPortalTitle)}
                   {' '}
                   Portal
                 </a>
@@ -901,11 +901,11 @@ SearchPanels.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({
-    org: PropTypes.string,
     portalId: PropTypes.string,
     title: PropTypes.shape({
       primary: PropTypes.string
-    })
+    }),
+    pageTitle: PropTypes.string
   }).isRequired,
   preferences: PropTypes.shape({
     collectionListView: PropTypes.node,

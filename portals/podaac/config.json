@@ -4,12 +4,13 @@
   "hasStyles": true,
   "logo": {
     "id": "podaac-logo",
-    "link": "https://podaac.jpl.nasa.gov"
+    "link": "https://podaac.jpl.nasa.gov",
+    "title": "PO.DAAC Home"
   },
   "moreInfoUrl": "https://podaac.jpl.nasa.gov",
-  "org": "PO.DAAC",
   "pageTitle": "PO.DAAC",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
     "dataCenter": "NASA/JPL/PODAAC",
     "hasGranulesOrCwic": null

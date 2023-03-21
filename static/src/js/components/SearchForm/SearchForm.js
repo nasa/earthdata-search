@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import ReactDOMServer from 'react-dom/server'
 import PropTypes from 'prop-types'
 import { isEmpty, isEqual } from 'lodash'
 import Autosuggest from 'react-autosuggest'
@@ -29,8 +28,6 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
 import './SearchForm.scss'
-
-// console.log('FaSearch', ReactDOMServer.renderToString(FaSearch))
 
 class SearchForm extends Component {
   constructor(props) {

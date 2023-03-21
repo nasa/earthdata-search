@@ -84,7 +84,6 @@ SecondaryToolbarContainer.propTypes = {
     first_name: PropTypes.string
   }).isRequired
 }
-
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(SecondaryToolbarContainer)
 )
