@@ -9,11 +9,22 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    portal: {
+      title: {
+        primary: 'Earthdata Search'
+      },
+      logo: {
+        id: 'idn-logo',
+        link: 'https://idn.ceos.org/',
+        title: 'CEOS IDN Search'
+      },
+      portalId: 'edsc'
+    },
     location: {
       pathname: '/search',
       search: ''
     },
-    onFocusedCollectionChange: jest.fn(),
+    onChangePath: jest.fn(),
     ...overrideProps
   }
 

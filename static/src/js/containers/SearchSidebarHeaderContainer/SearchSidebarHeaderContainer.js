@@ -9,28 +9,38 @@ import actions from '../../actions/index'
 import { locationPropType } from '../../util/propTypes/location'
 
 export const mapStateToProps = (state) => ({
-  portal: state.portal
+  portal: state.portal,
+  projectCollectionIds: state.project.collections.allIds
 })
 
 export const mapDispatchToProps = (dispatch) => ({
   onFocusedCollectionChange:
-    (collectionId) => dispatch(actions.changeFocusedCollection(collectionId))
+    (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
+  onChangePath: (path) => dispatch(actions.changePath(path)),
+  onLoadPortalConfig:
+  (portalId) => dispatch(actions.loadPortalConfig(portalId))
 })
 
 export const SearchSidebarHeaderContainer = ({
   location,
   onFocusedCollectionChange,
-  portal
+  portal,
+  onChangePath,
+  onLoadPortalConfig
 }) => (
   <SearchSidebarHeader
     location={location}
     onFocusedCollectionChange={onFocusedCollectionChange}
     portal={portal}
+    onChangePath={onChangePath}
+    onLoadPortalConfig={onLoadPortalConfig}
   />
 )
 SearchSidebarHeaderContainer.propTypes = {
   location: locationPropType.isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
+  onChangePath: PropTypes.func.isRequired,
+  onLoadPortalConfig: PropTypes.func.isRequired,
   portal: PropTypes.shape({}).isRequired
 }
 

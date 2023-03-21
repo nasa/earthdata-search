@@ -19,7 +19,7 @@ export const configureStore = () => {
   // If we already have a redux store defined, return it
   if (store) return store
 
-  // Create the redux store and immediatly dispatch the actions we want to occur on load
+  // Create the redux store and immediately dispatch the actions we want to occur on load
   store = createStore(
     createRootReducer(history),
     initialState,

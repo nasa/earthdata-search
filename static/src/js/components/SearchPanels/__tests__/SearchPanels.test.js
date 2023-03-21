@@ -41,7 +41,7 @@ beforeEach(() => {
 delete window.location
 window.location = { assign: jest.fn() }
 
-// Mock ReactDOM.createPortal to prevent any errors in the MoreActionsDropdown compontent
+// Mock ReactDOM.createPortal to prevent any errors in the MoreActionsDropdown component
 jest.mock('react-dom', () => (
   {
     ...(jest.requireActual('react-dom')),

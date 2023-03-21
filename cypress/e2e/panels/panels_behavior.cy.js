@@ -72,7 +72,7 @@ describe('Panel Behavior', () => {
   it('drags the panel to a specific width', () => {
     dragPanelToX(800)
 
-    getByTestId('panels-section').should('have.css', 'width', '505px')
+    getByTestId('panels-section').should('have.css', 'width', '480px')
   })
 
   it('drags the panel to closed', () => {
@@ -91,13 +91,13 @@ describe('Panel Behavior', () => {
 
     dragPanelToX(900)
 
-    getByTestId('panels-section').should('have.css', 'width', '595px')
+    getByTestId('panels-section').should('have.css', 'width', '570px')
     cy.get('.panels--is-open').should('have.length', 1)
   })
 
   it('drags the panel to maximum width', () => {
     dragPanelToX(1500)
 
-    getByTestId('panels-section').should('have.css', 'width', '1059px')
+    getByTestId('panels-section').should('have.css', 'width', '1035px')
   })
 })

@@ -36,7 +36,7 @@ export const getValueForTag = (key, tags, namespaceOverride = null) => {
 }
 
 /**
- * Searches collection metadata for the existance of a tag
+ * Searches collection metadata for the existence of a tag
  * @param {Object} collection Collection metadata
  * @param {String} key Tag key
  */

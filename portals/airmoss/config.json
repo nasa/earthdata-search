@@ -9,7 +9,6 @@
     "title": "ORNL DAAC AirMOSS Home"
   },
   "moreInfoUrl": "https://airmoss.ornl.gov",
-  "org": "ORNL DAAC",
   "pageTitle": "AirMOSS",
   "parentConfig": "edsc",
   "portalBrowser": true,
