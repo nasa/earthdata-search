@@ -9,7 +9,6 @@
     "title": "GHRC Home"
   },
   "moreInfoUrl": "https://ghrc.nsstc.nasa.gov/home",
-  "org": "GHRC",
   "pageTitle": "GHRC",
   "parentConfig": "edsc",
   "portalBrowser": true,

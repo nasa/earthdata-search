@@ -8,7 +8,6 @@
     "title": "CEOS IDN Search"
   },
   "moreInfoUrl": "https://idn.ceos.org/",
-  "org": "IDN",
   "pageTitle": "IDN",
   "parentConfig": "edsc",
   "portalBrowser": true,

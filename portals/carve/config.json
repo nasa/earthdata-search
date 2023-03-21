@@ -9,7 +9,6 @@
     "title": "ORNL DAAC CARVE Home"
   },
   "moreInfoUrl": "https://carve.ornl.gov",
-  "org": "ORNL DAAC",
   "pageTitle": "CARVE",
   "parentConfig": "edsc",
   "portalBrowser": true,
