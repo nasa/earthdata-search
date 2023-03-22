@@ -402,13 +402,14 @@ class SearchPanels extends PureComponent {
             )
           }
           {
-            // TODO this should also keep all of the prop information?
             !isDefaultPortal(portalId) && (
               <div className="search-panels__portal-escape">
                 Looking for more collections?
                 {' '}
                 <a href="/" className="search-panels__portal-escape-link">
                   Leave
+                  {' '}
+                  the
                   {' '}
                   {startCase(primaryPortalTitle)}
                   {' '}

@@ -21,7 +21,6 @@ export const SearchSidebarHeader = ({
   portal,
   location,
   onChangePath
-  // onLoadPortalConfig
 }) => {
   const { title, logo, portalId } = portal
 
@@ -109,7 +108,6 @@ export const SearchSidebarHeader = ({
 SearchSidebarHeader.propTypes = {
   location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
-  // onLoadPortalConfig: PropTypes.func.isRequired,
   portal: PropTypes.shape({
     title: PropTypes.shape({
       primary: PropTypes.string,

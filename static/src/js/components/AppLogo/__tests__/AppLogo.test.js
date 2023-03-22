@@ -35,9 +35,6 @@ describe('AppLogo component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find('.app-logo__site-meatball').props().href).toEqual('/')
-    // TODO: Should we really get rid of these two????
-    // expect(enzymeWrapper.find('.app-logo__portal-logo').length).toEqual(0)
-    // expect(enzymeWrapper.find('.app-logo__site-name').props().href).toEqual('/')
   })
 
   test('renders the site title', () => {

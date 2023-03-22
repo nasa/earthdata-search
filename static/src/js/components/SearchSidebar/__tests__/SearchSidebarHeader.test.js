@@ -25,7 +25,6 @@ function setup(overrideProps) {
       search: ''
     },
     onChangePath: jest.fn(),
-    onLoadPortalConfig: jest.fn(),
     ...overrideProps
   }
 
