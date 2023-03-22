@@ -29,23 +29,25 @@ export class PortalContainer extends Component {
 
   render() {
     const { portal } = this.props
-    const { portalId, pageTitle } = portal
+    const { portalId, title = {} } = portal
+    const { primary: primaryTitle } = title
 
     let portalTitle = ''
-    if (!isDefaultPortal(portalId)) portalTitle = ` :: ${pageTitle || startCase(portalId)} Portal`
+    if (!isDefaultPortal(portalId)) portalTitle = ` :: ${primaryTitle || startCase(portalId)} Portal`
 
     const defaultConfig = getPortalConfig(getApplicationConfig().defaultPortal)
 
     // Use the default portal org and title for the page title
     const {
-      org: defaultOrg,
       title: defaultTitle
     } = defaultConfig
+
+    const { primary: defaultPrimaryTitle } = defaultTitle
 
     return (
       <Helmet>
         <title>
-          {`${defaultOrg} ${defaultTitle}${portalTitle}`}
+          {`${defaultPrimaryTitle}${portalTitle}`}
         </title>
       </Helmet>
     )
@@ -59,7 +61,9 @@ PortalContainer.propTypes = {
     })
   }).isRequired,
   portal: PropTypes.shape({
-    pageTitle: PropTypes.string,
+    title: PropTypes.shape({
+      primary: PropTypes.string
+    }),
     portalId: PropTypes.string
   }).isRequired,
   onLoadPortalConfig: PropTypes.func.isRequired
