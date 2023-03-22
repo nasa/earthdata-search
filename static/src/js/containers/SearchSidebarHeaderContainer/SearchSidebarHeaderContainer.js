@@ -17,7 +17,6 @@ export const mapDispatchToProps = (dispatch) => ({
   onFocusedCollectionChange:
     (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onChangePath: (path) => dispatch(actions.changePath(path)),
-  // TODO adding onload
   onLoadPortalConfig:
   (portalId) => dispatch(actions.loadPortalConfig(portalId))
 })
@@ -39,7 +38,6 @@ export const SearchSidebarHeaderContainer = ({
 )
 SearchSidebarHeaderContainer.propTypes = {
   location: locationPropType.isRequired,
-  // TODO we may not need the onFocusedCollectionChange anymore
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onLoadPortalConfig: PropTypes.func.isRequired,

@@ -48,7 +48,6 @@ const AppLogo = () => (
 AppLogo.propTypes = {
   portal: PropTypes.shape({
     logo: PropTypes.shape({}),
-    // org: PropTypes.string,
     portalId: PropTypes.string,
     pageTitle: PropTypes.string
   }).isRequired

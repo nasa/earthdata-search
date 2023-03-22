@@ -16,28 +16,6 @@
     }
   }
 
-  // &__button {
-  //   margin: 0 1rem;
-  //   padding: 0.4rem 0;
-  //   border: 0;
-  //   outline: 0;
-  //   color: $color__blue;
-  //   font-size: 0.825rem;
-  //   visibility: visible;
-  //   opacity: 1;
-  //   transition: all 0.1s ease-out;
-
-  //   &:hover {
-  //     color: $color__blue--dark;
-  //   }
-
-  //   &--is-hidden {
-  //     visibility: hidden;
-  //     opacity: 0;
-  //     pointer-events: none;
-  //   }
-  // }
-
   &__header {
     display: flex;
     padding: 0.5rem 0.75rem;

@@ -23,7 +23,6 @@ export const buildConfig = (json, availablePortals) => {
   // If the current config has a parent, merge the current config into the result of the parents being merged together
   if (parentConfig) {
     const { [parentConfig]: parentJson } = availablePortals
-    // const parentJson = require(`../../../../portals/${parentConfig}/config.json`)
     const parent = buildConfig({ ...parentJson }, availablePortals)
     const merged = merge({ ...parent }, { ...json })
     return cloneDeep({ ...merged })
@@ -32,7 +31,6 @@ export const buildConfig = (json, availablePortals) => {
   // If the config doesn't have a parent, merge the current config into the default portal config
   const { default: defaultJson } = availablePortals
   const merged = merge({ ...defaultJson }, { ...json })
-  // TODO: This helped for some reason but, I can't yet explain why
   return cloneDeep({ ...merged })
 }
 
@@ -40,13 +38,13 @@ export const buildConfig = (json, availablePortals) => {
  * Recursively build the portal config merging the config into the configs parent config
  * @param {Object} json Portal config
  */
-const buildIntialPortalConfig = (json) => {
+const buildInitialPortalConfig = (json) => {
   const { parentConfig } = json
 
   // If the current config has a parent, merge the current config into the result of the parents being merged together
   if (parentConfig) {
     const parentJson = require(`../../../../portals/${parentConfig}/config.json`)
-    const parent = buildIntialPortalConfig(parentJson)
+    const parent = buildInitialPortalConfig(parentJson)
     const merged = merge(parent, json)
     return cloneDeep(merged)
   }
@@ -64,5 +62,5 @@ const buildIntialPortalConfig = (json) => {
 export const getPortalConfig = (portalId) => {
   const portalJson = require(`../../../../portals/${portalId}/config.json`)
   // TODO override this to use the large portal config
-  return buildIntialPortalConfig(portalJson)
+  return buildInitialPortalConfig(portalJson)
 }

@@ -7,7 +7,7 @@ import { startCase } from 'lodash'
 
 import actions from '../../actions/index'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import { isDefaultPortal } from '../../util/portals'
+import { isDefaultPortal, getPortalConfig } from '../../util/portals'
 
 export const mapDispatchToProps = (dispatch) => ({
   onLoadPortalConfig:
@@ -15,7 +15,6 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const mapStateToProps = (state) => ({
-  availablePortals: state.availablePortals,
   portal: state.portal
 })
 
@@ -29,28 +28,24 @@ export class PortalContainer extends Component {
   }
 
   render() {
-    const { availablePortals, portal } = this.props
-    const { portalId, title = {} } = portal
-    const { primary: primaryTitle } = title
+    const { portal } = this.props
+    const { portalId, pageTitle } = portal
 
     let portalTitle = ''
-    if (!isDefaultPortal(portalId)) portalTitle = ` :: ${primaryTitle || startCase(portalId)} Portal`
-    // TODO pulls out the primary title from the portal
-    // const defaultConfig = getPortalConfig(getApplicationConfig().defaultPortal)
-    const { default: defaultPortal } = availablePortals
+    if (!isDefaultPortal(portalId)) portalTitle = ` :: ${pageTitle || startCase(portalId)} Portal`
 
-    const defaultConfig = defaultPortal
+    const defaultConfig = getPortalConfig(getApplicationConfig().defaultPortal)
+
     // Use the default portal org and title for the page title
     const {
+      org: defaultOrg,
       title: defaultTitle
     } = defaultConfig
-
-    const { primary: defaultPrimaryTitle } = defaultTitle
 
     return (
       <Helmet>
         <title>
-          {`${defaultPrimaryTitle}${portalTitle}`}
+          {`${defaultOrg} ${defaultTitle}${portalTitle}`}
         </title>
       </Helmet>
     )
@@ -63,14 +58,8 @@ PortalContainer.propTypes = {
       portalId: PropTypes.string
     })
   }).isRequired,
-  availablePortals: PropTypes.shape({
-    default:
-  PropTypes.shape()
-  }).isRequired,
   portal: PropTypes.shape({
-    title: PropTypes.shape({
-      primary: PropTypes.string
-    }),
+    pageTitle: PropTypes.string,
     portalId: PropTypes.string
   }).isRequired,
   onLoadPortalConfig: PropTypes.func.isRequired

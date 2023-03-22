@@ -117,8 +117,6 @@ describe('loadPortalConfig', () => {
       hasScripts: false,
       hasStyles: false,
       logo: {},
-      // TOOD: potentially remove
-      // org: 'Earthdata',
       pageTitle: 'Example',
       portalBrowser: false,
       portalId: 'example',
@@ -144,9 +142,6 @@ describe('loadPortalConfig', () => {
     const store = mockStore(mockAvailablePortals)
 
     store.dispatch(loadPortalConfig(portalId))
-
-    // call the dispatch
-
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       type: ADD_PORTAL,

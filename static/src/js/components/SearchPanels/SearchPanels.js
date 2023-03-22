@@ -229,9 +229,7 @@ class SearchPanels extends PureComponent {
 
     const {
       portalId,
-      // org = portalId,
-      title = portalId,
-      pageTitle = portalId
+      title = portalId
     } = portal
 
     const { primary: primaryPortalTitle = portalId } = title
@@ -411,9 +409,6 @@ class SearchPanels extends PureComponent {
                 {' '}
                 <a href="/" className="search-panels__portal-escape-link">
                   Leave
-                  {' '}
-                  {startCase(pageTitle)}
-                  &#39;s
                   {' '}
                   {startCase(primaryPortalTitle)}
                   {' '}
@@ -905,7 +900,6 @@ SearchPanels.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({
-    // org: PropTypes.string,
     portalId: PropTypes.string,
     title: PropTypes.shape({
       primary: PropTypes.string

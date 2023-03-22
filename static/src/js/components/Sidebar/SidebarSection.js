@@ -153,7 +153,6 @@ SidebarSection.propTypes = {
   footerButtonProps: PropTypes.shape({}),
   headerAction: PropTypes.shape({
     onClick: PropTypes.func,
-    // title: PropTypes.string
     title: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.node

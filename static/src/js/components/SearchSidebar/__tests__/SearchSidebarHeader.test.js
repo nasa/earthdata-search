@@ -24,7 +24,6 @@ function setup(overrideProps) {
       pathname: '/search',
       search: ''
     },
-    // onFocusedCollectionChange: jest.fn(),
     onChangePath: jest.fn(),
     onLoadPortalConfig: jest.fn(),
     ...overrideProps

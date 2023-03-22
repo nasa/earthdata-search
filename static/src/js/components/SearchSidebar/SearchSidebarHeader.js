@@ -2,16 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   Link
-// withRouter
-// Route,
-// // Routes,
-// Switch
 } from 'react-router-dom'
 
 import { parse } from 'qs'
 import { FaTimes } from 'react-icons/fa'
-
-// import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
 import Button from '../Button/Button'
@@ -20,17 +14,14 @@ import { stringify } from '../../util/url/url'
 
 import './SearchSidebarHeader.scss'
 
-export const mapStateToProps = (state) => ({
-  portal: state.portal
-})
 /**
  * Renders SearchSidebarHeader
  */
 export const SearchSidebarHeader = ({
   portal,
   location,
-  onChangePath,
-  onLoadPortalConfig
+  onChangePath
+  // onLoadPortalConfig
 }) => {
   const { title, logo, portalId } = portal
 
@@ -93,28 +84,7 @@ export const SearchSidebarHeader = ({
               )
             }
           </h2>
-          {/* <PortalLinkContainer
-            type="button"
-            className="search-sidebar-header__button"
-            // bootstrapVariant="light"
-            icon={FaTimes}
-            label="Exit Portal"
-            dataTestId="exit-portal-button"
-        // TODO: passes search params
-            to={{
-              pathname: '/',
-              search: newSearch
-            }}
-            // onClick={() => { onChangePath(`/search${newSearch}`) }}
-          >
-            Exit Portal
-          </PortalLinkContainer> */}
-
-          <Link to={{
-            pathname: '/',
-            search: newSearch
-          }}
-          >
+          <Link to={`/search${newSearch}`}>
             <Button
               className="search-sidebar-header__button"
               icon={FaTimes}
@@ -122,7 +92,6 @@ export const SearchSidebarHeader = ({
               title="Exit Portal"
               label="Exit Portal"
               onClick={() => {
-                onLoadPortalConfig()
                 onChangePath(`/search${newSearch}`)
               }}
             >
@@ -140,8 +109,7 @@ export const SearchSidebarHeader = ({
 SearchSidebarHeader.propTypes = {
   location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
-  onLoadPortalConfig: PropTypes.func.isRequired,
-  // onFocusedCollectionChange: PropTypes.func.isRequired,
+  // onLoadPortalConfig: PropTypes.func.isRequired,
   portal: PropTypes.shape({
     title: PropTypes.shape({
       primary: PropTypes.string,

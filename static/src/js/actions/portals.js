@@ -15,10 +15,9 @@ export const addPortal = (payload) => ({
  * Loads the portal config into the Redux Store.
  * @param {String} portalId Portal Name, must match the directory name in which the config is stored.
  */
-// eslint-disable-next-line max-len
-export const loadPortalConfig = (portalId = getApplicationConfig().defaultPortal) => (dispatch, getState) => {
-  // if (!portalId) return
-
+export const loadPortalConfig = (
+  portalId = getApplicationConfig().defaultPortal
+) => (dispatch, getState) => {
   try {
     const state = getState()
     const { availablePortals } = state

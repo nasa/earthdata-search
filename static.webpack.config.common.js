@@ -32,16 +32,14 @@ class MergePortalConfigsPlugin {
         const output = {}
         const portalDirectory = 'portals'
         const directories = fs.readdirSync(portalDirectory, { withFileTypes: true })
-          .filter((dirent) => dirent.isDirectory() || !dirent.name.startsWith('.'))
+          .filter((dirent) => dirent.isDirectory() && !dirent.name.startsWith('.'))
 
         directories.forEach((directory) => {
           const { name } = directory
-          if (name !== 'mergedPortalConfigs.json') {
-            const contents = JSON.parse(fs.readFileSync(`${portalDirectory}/${name}/config.json`, 'utf8'))
-            output[name] = {
-              ...contents,
-              portalId: name
-            }
+          const contents = JSON.parse(fs.readFileSync(`${portalDirectory}/${name}/config.json`, 'utf8'))
+          output[name] = {
+            ...contents,
+            portalId: name
           }
         })
 

@@ -42,7 +42,7 @@
     background-color: $color__blue;
     color: $color__white;
   }
-/* I don't think that this does anything*/
+
   &__header-secondary {
     flex-grow: 0;
   }
@@ -70,7 +70,7 @@
     label {
       font-size: 0.8rem;
       color: $color__black--600;
-      font-weight: 500;
+      font-weight: 400;
       letter-spacing: 0.005rem;
     }
 
@@ -96,7 +96,7 @@
     label {
       position: relative;
       top: 0.075rem;
-      font-weight: 400;
+      font-weight: 300;
       color: $color__black--600;
     }
 
