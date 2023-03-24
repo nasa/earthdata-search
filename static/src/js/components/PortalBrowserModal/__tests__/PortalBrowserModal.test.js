@@ -16,38 +16,34 @@ import { PortalList } from '../PortalList'
 describe('PortalBrowserModal component', () => {
   test('renders a PortalList component', () => {
     const isOpen = true
-    const portals = {
-      mockPortal: {
-        mock: 'data'
-      }
+    const location = {
+      pathname: '/search'
     }
     const onTogglePortalBrowserModal = jest.fn()
     render(
       <PortalBrowserModal
         isOpen={isOpen}
-        portals={portals}
+        location={location}
         onTogglePortalBrowserModal={onTogglePortalBrowserModal}
       />
     )
 
     expect(PortalList).toHaveBeenCalledTimes(1)
-    expect(PortalList).toHaveBeenCalledWith({ portals }, {})
+    expect(PortalList).toHaveBeenCalledWith(expect.objectContaining({ location }), {})
   })
 
   test('closing the portal works', async () => {
     const user = userEvent.setup()
 
     const isOpen = true
-    const portals = {
-      mockPortal: {
-        mock: 'data'
-      }
+    const location = {
+      pathname: '/search'
     }
     const onTogglePortalBrowserModal = jest.fn()
     render(
       <PortalBrowserModal
         isOpen={isOpen}
-        portals={portals}
+        location={location}
         onTogglePortalBrowserModal={onTogglePortalBrowserModal}
       />
     )

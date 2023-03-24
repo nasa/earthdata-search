@@ -1,5 +1,6 @@
-import { getPortalConfig, isDefaultPortal } from '../portals'
+import { buildConfig, isDefaultPortal } from '../portals'
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
+import { availablePortals } from '../../../../../portals'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -22,9 +23,9 @@ describe('isDefaultPortal', () => {
   })
 })
 
-describe('getPortalConfig', () => {
+describe('buildConfig', () => {
   test('builds a portal config of portal > edsc portal > default portal', () => {
-    const config = getPortalConfig('idn')
+    const config = buildConfig(availablePortals.idn)
 
     expect(config).toEqual({
       description: 'The CEOS International Directory Network (IDN) Search portal offers online information and access on scientific datasets about the Earth sciences, including geoscience, hydrospheric science, biospheric science, satellite remote sensing, and atmospheric science. This metadata describes data held by university departments, government agencies, multinational organizations, and other organizations all over the world.',
@@ -68,6 +69,7 @@ describe('getPortalConfig', () => {
       moreInfoUrl: 'https://idn.ceos.org/',
       pageTitle: 'IDN',
       portalBrowser: true,
+      portalId: 'idn',
       query: { hasGranulesOrCwic: null },
       title: {
         primary: 'IDN',

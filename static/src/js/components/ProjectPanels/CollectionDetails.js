@@ -5,7 +5,6 @@ import classNames from 'classnames'
 import { FaInfoCircle, FaMinus } from 'react-icons/fa'
 
 import { eventEmitter } from '../../events/events'
-import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { locationPropType } from '../../util/propTypes/location'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -33,7 +32,6 @@ export const CollectionDetails = ({
   onChangeProjectGranulePageNum,
   onFocusedGranuleChange,
   onRemoveGranuleFromProjectCollection,
-  portal,
   projectCollection
 }) => {
   const {
@@ -115,7 +113,7 @@ export const CollectionDetails = ({
                         icon={FaInfoCircle}
                         iconSize="0.875rem"
                         to={{
-                          pathname: `${portalPath(portal)}/search/granules/granule-details`,
+                          pathname: '/search/granules/granule-details',
                           search: location.search
                         }}
                       />
@@ -177,7 +175,6 @@ CollectionDetails.propTypes = {
   onChangeProjectGranulePageNum: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   projectCollection: PropTypes.shape({
     granules: PropTypes.shape({})
   }).isRequired

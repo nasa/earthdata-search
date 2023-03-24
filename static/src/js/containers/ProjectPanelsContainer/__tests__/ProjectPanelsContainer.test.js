@@ -211,7 +211,6 @@ describe('mapStateToProps', () => {
       focusedGranule: 'granuleId',
       map: {},
       panels: {},
-      portal: {},
       project: {},
       query: {
         collection: {
@@ -240,7 +239,6 @@ describe('mapStateToProps', () => {
       granulesMetadata: {},
       location: {},
       panels: {},
-      portal: {},
       project: {},
       projectCollectionsMetadata: {},
       shapefileId: '',

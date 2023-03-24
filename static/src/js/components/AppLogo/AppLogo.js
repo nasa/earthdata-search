@@ -1,7 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {
-  Link,
   Route,
   Switch
 } from 'react-router-dom'
@@ -14,23 +12,29 @@ const AppLogo = () => (
   <nav className="app-logo">
     <span className="app-logo__site-logo">
       <h1 className="mb-0">
-        <a
+        <PortalLinkContainer
           className="app-logo__site-meatball"
-          href="/"
           title="Earthdata Search Home"
+          to={{
+            pathname: '/search'
+          }}
+          updatePath
         >
           <span className="visually-hidden">
             Earthdata Search
           </span>
-        </a>
+        </PortalLinkContainer>
       </h1>
-      <Link
+      <PortalLinkContainer
         className="app-logo__site-name"
-        to="/"
+        to={{
+          pathname: '/search'
+        }}
+        updatePath
       >
         <span className="app-logo__site-name-ent app-logo__site-name-ent--e">Earthdata</span>
         <span className="app-logo__site-name-ent app-logo__site-name-ent--s">Search</span>
-      </Link>
+      </PortalLinkContainer>
     </span>
     <Switch>
       <Route path="/admin">
@@ -44,13 +48,5 @@ const AppLogo = () => (
     </Switch>
   </nav>
 )
-
-AppLogo.propTypes = {
-  portal: PropTypes.shape({
-    logo: PropTypes.shape({}),
-    portalId: PropTypes.string,
-    pageTitle: PropTypes.string
-  }).isRequired
-}
 
 export default AppLogo

@@ -19,6 +19,7 @@ import { decodeBoolean, encodeBoolean } from './booleanEncoders'
 
 import { isPath } from '../isPath'
 import { deprecatedURLParameters } from '../../constants/deprecatedURLParameters'
+import { decodePortal, encodePortal } from './portalEncoders'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
@@ -188,6 +189,7 @@ export const decodeUrlParams = (paramString) => {
   const autocompleteSelected = decodeHelp(params, 'autocompleteSelected')
 
   const earthdataEnvironment = decodeHelp(params, 'earthdataEnvironment')
+  const portalId = decodePortal(params)
 
   return {
     advancedSearch,
@@ -200,6 +202,7 @@ export const decodeUrlParams = (paramString) => {
     focusedGranule,
     deprecatedUrlParams,
     map,
+    portalId,
     project,
     query: {
       ...query,
@@ -231,8 +234,10 @@ export const encodeUrlQuery = (props) => {
   const collectionsQuery = encodeCollections(props)
   const timelineQuery = encodeTimeline(props.timelineQuery, props.pathname)
   const advancedQuery = encodeAdvancedSearch(props.advancedSearch)
+  const portalQuery = encodePortal(props.portalId)
 
   const encodedQuery = {
+    ...portalQuery,
     ...collectionsQuery,
     ...query,
     ...timelineQuery,

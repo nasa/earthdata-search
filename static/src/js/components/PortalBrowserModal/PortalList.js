@@ -6,8 +6,14 @@ import {
   Col
 } from 'react-bootstrap'
 import { FaExternalLinkAlt } from 'react-icons/fa'
-import { portalPath } from '../../../../../sharedUtils/portalPath'
+
+import { locationPropType } from '../../util/propTypes/location'
+
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+
+import { availablePortals } from '../../../../../portals'
 
 import './PortalList.scss'
 
@@ -16,15 +22,11 @@ import './PortalList.scss'
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.portals - The props passed into the component.
  */
-export const PortalList = ({ portals }) => {
-  // Redirect the browser to the selected portal
-  const onPortalClick = (event, portalId) => {
-    const portalPrefix = portalPath({ portalId })
-
-    window.location.replace(portalPrefix)
-  }
-
-  const sortedPortals = sortBy(portals, (portal) => portal.title.primary)
+export const PortalList = ({
+  location,
+  onModalClose
+}) => {
+  const sortedPortals = sortBy(availablePortals, (portal) => portal.title.primary)
 
   return (
     <Row className="portal-list">
@@ -34,7 +36,7 @@ export const PortalList = ({ portals }) => {
             description,
             hasLogo,
             moreInfoUrl,
-            portalBrowser,
+            portalBrowser = false,
             portalId,
             title
           } = portal
@@ -49,15 +51,23 @@ export const PortalList = ({ portals }) => {
             imageSrc = require(`../../../../../portals/${portalId}/images/logo.png`)
           }
 
+          const newPathname = '/search'
+
           return (
             <Col xs={6} key={portalId}>
-              <div
+              <PortalLinkContainer
+                variant="naked"
                 className="portal-list__item"
-                role="button"
-                tabIndex={0}
-                onClick={(event) => onPortalClick(event, portalId)}
-                onKeyUp={(event) => onPortalClick(event, portalId)}
-                data-testid={`portal-list-item-${portalId}`}
+                type="button"
+                label={`Visit ${primary} Portal`}
+                newPortal={portal}
+                to={{
+                  pathname: newPathname,
+                  search: location.search
+                }}
+                onClick={onModalClose}
+                updatePath
+                dataTestId={`portal-list-item-${portalId}`}
               >
                 <div className="portal-list__item-contents">
                   {
@@ -116,7 +126,7 @@ export const PortalList = ({ portals }) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </PortalLinkContainer>
             </Col>
           )
         })
@@ -126,16 +136,6 @@ export const PortalList = ({ portals }) => {
 }
 
 PortalList.propTypes = {
-  portals: PropTypes.objectOf(
-    PropTypes.shape({
-      description: PropTypes.string,
-      hasLogo: PropTypes.bool,
-      moreInfoUrl: PropTypes.string,
-      portalBrowser: PropTypes.bool.isRequired,
-      portalId: PropTypes.string.isRequired,
-      title: PropTypes.shape({
-        primary: PropTypes.string.isRequired
-      })
-    }).isRequired
-  ).isRequired
+  location: locationPropType.isRequired,
+  onModalClose: PropTypes.func.isRequired
 }

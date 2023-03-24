@@ -41,7 +41,6 @@ export const GranuleResultsListItem = memo(({
     onFocusedGranuleChange,
     onMetricsDataAccess,
     onRemoveGranuleFromProjectCollection,
-    portal,
     setRowHeight,
     windowWidth
   } = data
@@ -108,7 +107,6 @@ export const GranuleResultsListItem = memo(({
         onFocusedGranuleChange={onFocusedGranuleChange}
         onMetricsDataAccess={onMetricsDataAccess}
         onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
-        portal={portal}
         ref={element}
       />
     </li>
@@ -133,7 +131,6 @@ GranuleResultsListItem.propTypes = {
     onFocusedGranuleChange: PropTypes.func,
     onMetricsDataAccess: PropTypes.func,
     onRemoveGranuleFromProjectCollection: PropTypes.func,
-    portal: PropTypes.shape({}),
     setRowHeight: PropTypes.func,
     windowWidth: PropTypes.number
   }).isRequired,

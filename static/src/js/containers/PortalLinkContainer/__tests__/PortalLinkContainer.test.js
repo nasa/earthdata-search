@@ -3,8 +3,9 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import { Link } from 'react-router-dom'
 
-import { mapStateToProps, PortalLinkContainer } from '../PortalLinkContainer'
+import { mapDispatchToProps, mapStateToProps, PortalLinkContainer } from '../PortalLinkContainer'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+import actions from '../../../actions'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -12,7 +13,6 @@ function setup(overrideProps) {
   const props = {
     children: 'Click Here',
     className: 'test-class',
-    dispatch: jest.fn(),
     match: {},
     label: '',
     location: {},
@@ -21,10 +21,12 @@ function setup(overrideProps) {
     portal: {
       portalId: 'edsc'
     },
+    newPortal: undefined,
     to: {
       pathname: '/search'
     },
     type: 'link',
+    onChangePath: jest.fn(),
     ...overrideProps
   }
 
@@ -35,6 +37,18 @@ function setup(overrideProps) {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onChangePath calls actions.changePath', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changePath')
+
+    mapDispatchToProps(dispatch).onChangePath(false)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(false)
+  })
+})
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
@@ -65,14 +79,15 @@ describe('PortalLinkContainer component', () => {
     expect(link.props().type).toEqual('link')
     expect(link.props().children).toEqual('Click Here')
     expect(link.props().to).toEqual({
-      pathname: '/search'
+      pathname: '/search',
+      search: ''
     })
   })
 
   test('should return a link with a non-default portal provided', () => {
     const { enzymeWrapper } = setup({
       portal: {
-        portalId: 'simple'
+        portalId: 'example'
       }
     })
 
@@ -81,23 +96,47 @@ describe('PortalLinkContainer component', () => {
     expect(link.props().type).toEqual('link')
     expect(link.props().children).toEqual('Click Here')
     expect(link.props().to).toEqual({
-      pathname: '/portal/simple/search'
+      pathname: '/search',
+      search: '?portal=example'
     })
   })
 
-  test('should return a link with a non-default portal and a string `to` link', () => {
-    const { enzymeWrapper } = setup({
-      portal: {
-        portalId: 'simple'
-      },
-      to: '/search'
+  describe('when passing a string `to` link', () => {
+    test('should return a link with a non-default portal', () => {
+      const { enzymeWrapper } = setup({
+        portal: {
+          portalId: 'example'
+        },
+        to: '/search'
+      })
+
+      const link = enzymeWrapper.find(Link)
+      expect(link.props().className).toEqual('test-class')
+      expect(link.props().type).toEqual('link')
+      expect(link.props().children).toEqual('Click Here')
+      expect(link.props().to).toEqual({
+        pathname: '/search',
+        search: '?portal=example'
+      })
     })
 
-    const link = enzymeWrapper.find(Link)
-    expect(link.props().className).toEqual('test-class')
-    expect(link.props().type).toEqual('link')
-    expect(link.props().children).toEqual('Click Here')
-    expect(link.props().to).toEqual('/portal/simple/search')
+    test('should return a link with search parameters', () => {
+      const { enzymeWrapper } = setup({
+        portal: {
+          portalId: 'edsc'
+        },
+        to: '/search?q=modis'
+      })
+
+      const link = enzymeWrapper.find(Link)
+      expect(link.props().className).toEqual('test-class')
+      expect(link.props().type).toEqual('link')
+      expect(link.props().children).toEqual('Click Here')
+      expect(link.props().to).toEqual({
+        pathname: '/search',
+        search: '?q=modis'
+      })
+    })
   })
 
   test('should return a button when the type is set', () => {
@@ -116,6 +155,87 @@ describe('PortalLinkContainer component', () => {
     button.props().onClick()
 
     expect(pushMock).toHaveBeenCalledTimes(1)
-    expect(pushMock).toHaveBeenCalledWith({ pathname: '/search' })
+    expect(pushMock).toHaveBeenCalledWith({
+      pathname: '/search',
+      search: ''
+    })
+  })
+
+  describe('when newPortal is provided', () => {
+    test('should return a link when newPortal is set', () => {
+      const { enzymeWrapper } = setup({
+        portal: {
+          portalId: 'example'
+        },
+        newPortal: {
+          portalId: 'anotherExample'
+        }
+      })
+
+      const link = enzymeWrapper.find(Link)
+      expect(link.props().className).toEqual('test-class')
+      expect(link.props().type).toEqual('link')
+      expect(link.props().children).toEqual('Click Here')
+      expect(link.props().to).toEqual({
+        pathname: '/search',
+        search: '?portal=anotherExample'
+      })
+    })
+
+    test('should return a link when newPortal is empty', () => {
+      const { enzymeWrapper } = setup({
+        portal: {
+          portalId: 'example'
+        },
+        newPortal: {}
+      })
+
+      const link = enzymeWrapper.find(Link)
+      expect(link.props().className).toEqual('test-class')
+      expect(link.props().type).toEqual('link')
+      expect(link.props().children).toEqual('Click Here')
+      expect(link.props().to).toEqual({
+        pathname: '/search',
+        search: ''
+      })
+    })
+  })
+
+  describe('when updatePath is true', () => {
+    test('should call onChangePath', () => {
+      const { enzymeWrapper, props } = setup({
+        portal: {
+          portalId: 'example'
+        },
+        updatePath: true,
+        onClick: null
+      })
+
+      const link = enzymeWrapper.find(Link)
+
+      link.props().onClick()
+
+      expect(props.onChangePath).toHaveBeenCalledTimes(1)
+      expect(props.onChangePath).toHaveBeenCalledWith('/search?portal=example')
+    })
+
+    test('should call the provided onClick and onChangePath', () => {
+      const { enzymeWrapper, props } = setup({
+        portal: {
+          portalId: 'example'
+        },
+        updatePath: true
+      })
+
+      const link = enzymeWrapper.find(Link)
+
+      link.props().onClick({ mock: 'event' })
+
+      expect(props.onClick).toHaveBeenCalledTimes(1)
+      expect(props.onClick).toHaveBeenCalledWith({ mock: 'event' })
+
+      expect(props.onChangePath).toHaveBeenCalledTimes(1)
+      expect(props.onChangePath).toHaveBeenCalledWith('/search?portal=example')
+    })
   })
 })

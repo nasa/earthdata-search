@@ -29,7 +29,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      availablePortals: {},
       ui: {
         portalBrowserModal: {
           isOpen: false
@@ -38,8 +37,7 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      isOpen: false,
-      portals: {}
+      isOpen: false
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -49,16 +47,11 @@ describe('mapStateToProps', () => {
 describe('PortalBrowserModalContainer component', () => {
   test('passes its props and renders a single FacetsModal component', () => {
     const isOpen = true
-    const portals = {
-      mockPortal: {
-        mock: 'data'
-      }
-    }
     const onTogglePortalBrowserModal = jest.fn()
     render(
       <PortalBrowserModalContainer
         isOpen={isOpen}
-        portals={portals}
+        location={{}}
         onTogglePortalBrowserModal={onTogglePortalBrowserModal}
       />
     )
@@ -66,7 +59,7 @@ describe('PortalBrowserModalContainer component', () => {
     expect(PortalBrowserModal).toHaveBeenCalledTimes(1)
     expect(PortalBrowserModal).toHaveBeenCalledWith({
       isOpen,
-      portals,
+      location: {},
       onTogglePortalBrowserModal
     }, {})
   })

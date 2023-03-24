@@ -1,14 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 import actions from '../../actions'
 
 import { PortalBrowserModal } from '../../components/PortalBrowserModal/PortalBrowserModal'
 
+import { locationPropType } from '../../util/propTypes/location'
+
 export const mapStateToProps = (state) => ({
-  isOpen: state.ui.portalBrowserModal.isOpen,
-  portals: state.availablePortals
+  isOpen: state.ui.portalBrowserModal.isOpen
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -24,20 +26,22 @@ export const mapDispatchToProps = (dispatch) => ({
  */
 export const PortalBrowserModalContainer = ({
   isOpen,
-  portals,
+  location,
   onTogglePortalBrowserModal
 }) => (
   <PortalBrowserModal
     isOpen={isOpen}
-    portals={portals}
+    location={location}
     onTogglePortalBrowserModal={onTogglePortalBrowserModal}
   />
 )
 
 PortalBrowserModalContainer.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  portals: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onTogglePortalBrowserModal: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PortalBrowserModalContainer)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(PortalBrowserModalContainer)
+)

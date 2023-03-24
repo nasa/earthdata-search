@@ -6,19 +6,11 @@ import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup(overrideProps) {
-  const props = {
-    edscEnv: 'sit',
-    portal: {
-      portalId: 'edsc'
-    },
-    ...overrideProps
-  }
-  const enzymeWrapper = shallow(<AppLogo {...props} />)
+function setup() {
+  const enzymeWrapper = shallow(<AppLogo />)
 
   return {
-    enzymeWrapper,
-    props
+    enzymeWrapper
   }
 }
 
@@ -34,7 +26,7 @@ describe('AppLogo component', () => {
     }))
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('.app-logo__site-meatball').props().href).toEqual('/')
+    expect(enzymeWrapper.find('.app-logo__site-meatball').props().to).toEqual({ pathname: '/search' })
   })
 
   test('renders the site title', () => {
@@ -42,16 +34,7 @@ describe('AppLogo component', () => {
       edscEnv: 'prod'
     })
 
-    expect(enzymeWrapper.find('h1').text()).toEqual('Earthdata Search')
-  })
-
-  describe('when in production', () => {
-    test('should hide the environment badge', () => {
-      const { enzymeWrapper } = setup({
-        edscEnv: 'prod'
-      })
-
-      expect(enzymeWrapper.find('.app-logo__site-env').length).toEqual(0)
-    })
+    expect(enzymeWrapper.find('.app-logo__site-name-ent--e').text()).toEqual('Earthdata')
+    expect(enzymeWrapper.find('.app-logo__site-name-ent--s').text()).toEqual('Search')
   })
 })

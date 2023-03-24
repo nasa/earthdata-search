@@ -2,11 +2,6 @@
   "description": "The Artificial Intelligence / Machine Learning AI/ML Search Portal provides access to all AI/ML data holdings in NASA's Common Metadata Repository (CMR).",
   "hasLogo": true,
   "hasStyles": true,
-  "logo": {
-    "id": "AI-ML-logo",
-    "link": "https://www.earthdata.nasa.gov/esds/ai-ml",
-    "title": "Artificial Intelligence / Machine Learning Search"
-  },
   "moreInfoUrl": "https://www.earthdata.nasa.gov/esds/ai-ml",
   "pageTitle": "Artificial intelligence / Machine Learning Portal",
   "parentConfig": "edsc",
