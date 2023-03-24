@@ -1,28 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Link
-} from 'react-router-dom'
 
-import { parse } from 'qs'
 import { FaTimes } from 'react-icons/fa'
 
 import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
-import Button from '../Button/Button'
 import { locationPropType } from '../../util/propTypes/location'
-import { stringify } from '../../util/url/url'
 
 import './SearchSidebarHeader.scss'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 /**
  * Renders SearchSidebarHeader
  */
 export const SearchSidebarHeader = ({
   portal,
-  location,
-  onChangePath
+  location
 }) => {
-  const { title, logo, portalId } = portal
+  const {
+    title = {},
+    hasLogo,
+    portalId,
+    moreInfoUrl
+  } = portal
 
   if (portalId === 'edsc') {
     return (
@@ -32,31 +31,21 @@ export const SearchSidebarHeader = ({
     )
   }
 
-  const params = parse(location.search, { parseArrays: false, ignoreQueryPrefix: true })
-  let { p = '' } = params
-  p = p.replace(/^[^!]*/, '')
-
-  const newSearch = stringify({
-    ...params,
-    p
-  })
-
   const { primary: primaryTitle, secondary: secondaryTitle } = title
-  const { id: logoId, link: logoLink } = logo
 
   let logoEl
 
-  if (logoId) {
+  if (hasLogo) {
     logoEl = (
       <div className="search-sidebar-header__thumbnail-container">
-        <div className="search-sidebar-header__thumbnail" id={logoId} />
+        <div className="search-sidebar-header__thumbnail" id="portal-logo" />
       </div>
     )
   }
 
-  if (logoLink) {
+  if (moreInfoUrl) {
     logoEl = (
-      <a target="_blank" rel="noreferrer" href={logoLink}>
+      <a target="_blank" rel="noreferrer" href={moreInfoUrl}>
         {logoEl}
       </a>
     )
@@ -83,20 +72,19 @@ export const SearchSidebarHeader = ({
               )
             }
           </h2>
-          <Link to={`/search${newSearch}`}>
-            <Button
-              className="search-sidebar-header__button"
-              icon={FaTimes}
-              variant="link"
-              title="Exit Portal"
-              label="Exit Portal"
-              onClick={() => {
-                onChangePath(`/search${newSearch}`)
-              }}
-            >
-              Exit Portal
-            </Button>
-          </Link>
+          <PortalLinkContainer
+            newPortal={{}}
+            className="search-sidebar-header__button"
+            icon={FaTimes}
+            variant="link"
+            type="button"
+            title="Exit Portal"
+            label="Exit Portal"
+            to={location}
+            updatePath
+          >
+            Exit Portal
+          </PortalLinkContainer>
 
         </div>
       </section>
@@ -107,16 +95,13 @@ export const SearchSidebarHeader = ({
 
 SearchSidebarHeader.propTypes = {
   location: locationPropType.isRequired,
-  onChangePath: PropTypes.func.isRequired,
   portal: PropTypes.shape({
     title: PropTypes.shape({
       primary: PropTypes.string,
       secondary: PropTypes.string
     }),
-    logo: PropTypes.shape({
-      id: PropTypes.string,
-      link: PropTypes.string
-    }).isRequired,
+    hasLogo: PropTypes.bool,
+    moreInfoUrl: PropTypes.string,
     portalId: PropTypes.string
   }).isRequired
 }

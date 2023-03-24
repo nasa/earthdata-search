@@ -5,16 +5,18 @@ import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalCon
 
 import { PortalList } from './PortalList'
 
+import { locationPropType } from '../../util/propTypes/location'
+
 /**
  * Renders PortalBrowserModal.
  * @param {Object} props - The props passed into the component.
  * @param {Boolean} props.isOpen - The modal state.
- * @param {Object} props.portals - Available portals to be displayed.
+ * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onTogglePortalBrowserModal - Callback function close the modal.
  */
 export const PortalBrowserModal = ({
   isOpen,
-  portals,
+  location,
   onTogglePortalBrowserModal
 }) => {
   const onModalClose = () => {
@@ -30,7 +32,10 @@ export const PortalBrowserModal = ({
       <p>
         Note: Enabling a portal might impact the features available for search.
       </p>
-      <PortalList portals={portals} />
+      <PortalList
+        location={location}
+        onModalClose={onModalClose}
+      />
     </div>
   )
 
@@ -51,6 +56,6 @@ export const PortalBrowserModal = ({
 
 PortalBrowserModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  portals: PropTypes.shape({}).isRequired,
+  location: locationPropType.isRequired,
   onTogglePortalBrowserModal: PropTypes.func.isRequired
 }

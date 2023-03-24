@@ -21,7 +21,7 @@ beforeEach(() => {
 })
 
 describe('updateStore', () => {
-  test('calls restoreFromUrl and gets new search results', () => {
+  test('calls restoreFromUrl and gets new search results', async () => {
     const params = {
       cmrFacets: {},
       earthdataEnvironment: 'prod',
@@ -33,6 +33,7 @@ describe('updateStore', () => {
       },
       focusedCollection: 'C00001-EDSC',
       map: {},
+      portal: {},
       project: {
         collections: {
           allIds: [],
@@ -63,7 +64,7 @@ describe('updateStore', () => {
       }
     })
 
-    store.dispatch(urlQuery.updateStore(params))
+    await store.dispatch(urlQuery.updateStore(params))
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
@@ -91,6 +92,7 @@ describe('updateStore', () => {
         },
         focusedCollection: 'C00001-EDSC',
         map: {},
+        portal: {},
         project: {
           collections: {
             allIds: ['C00001-EDSC'],
@@ -134,6 +136,132 @@ describe('updateStore', () => {
           query: {
             ...params.query,
             collectionSortPreference: 'default'
+          }
+        },
+        type: RESTORE_FROM_URL
+      })
+    })
+  })
+
+  describe('when a portal parameter is provided', () => {
+    test('loads the included styles', async () => {
+      jest.mock('../../../../../portals/airmoss/styles.scss', () => ({
+        use: jest.fn()
+      }))
+
+      const params = {
+        cmrFacets: {},
+        earthdataEnvironment: 'prod',
+        featureFacets: {
+          availableInEarthdataCloud: false,
+          customizable: false,
+          mapImagery: false,
+          nearRealTime: false
+        },
+        focusedCollection: '',
+        map: {},
+        portalId: 'airmoss',
+        project: {},
+        query: {
+          collection: {
+            overrideTemporal: {},
+            pageNum: 1,
+            spatial: {},
+            temporal: {}
+          },
+          granule: { pageNum: 1 }
+        },
+        shapefile: {}
+      }
+
+      jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
+      jest.spyOn(actions, 'fetchAccessMethods').mockImplementation(() => jest.fn())
+      jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
+
+      const store = mockStore({
+        preferences: {
+          preferences: {
+            collectionSort: 'default'
+          }
+        },
+        router: {
+          location: {
+            pathname: '/projects'
+          }
+        }
+      })
+      await store.dispatch(urlQuery.updateStore(params, '/projects'))
+
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        payload: {
+          ...params,
+          query: {
+            ...params.query,
+            collectionSortPreference: 'default'
+          },
+          portalId: undefined,
+          portal: {
+            description: 'The goal of the Airborne Microwave Observatory of Subcanopy and Subsurface (AirMOSS) investigation is to provide high-resolution observations of root-zone soil moisture over regions representative of the major North American climatic habitats (biomes), quantify the impact of variations in soil moisture on the estimation of regional carbon fluxes, and extrapolate the reduced-uncertainty estimates of regional carbon fluxes to the continental scale of North America.',
+            features: {
+              advancedSearch: true,
+              authentication: true,
+              featureFacets: {
+                showAvailableInEarthdataCloud: true,
+                showCustomizable: true,
+                showMapImagery: true
+              }
+            },
+            footer: {
+              attributionText: 'NASA Official: Stephen Berrick',
+              displayVersion: true,
+              primaryLinks: [
+                {
+                  href: 'http://www.nasa.gov/FOIA/index.html',
+                  title: 'FOIA'
+                },
+                {
+                  href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html',
+                  title: 'NASA Privacy Policy'
+                },
+                {
+                  href: 'http://www.usa.gov',
+                  title: 'USA.gov'
+                }
+              ],
+              secondaryLinks: [
+                {
+                  href: 'https://access.earthdata.nasa.gov/',
+                  title: 'Earthdata Access: A Section 508 accessible alternative'
+                }
+              ]
+            },
+            hasLogo: true,
+            hasScripts: true,
+            hasStyles: true,
+            logo: {
+              id: 'ornl-daac-logo',
+              link: 'https://airmoss.ornl.gov',
+              title: 'ORNL DAAC AirMOSS Home'
+            },
+            moreInfoUrl: 'https://airmoss.ornl.gov',
+            pageTitle: 'AirMOSS',
+            parentConfig: 'edsc',
+            portalBrowser: true,
+            portalId: 'airmoss',
+            query: {
+              hasGranulesOrCwic: null,
+              project: 'AirMOSS'
+            },
+            title: {
+              primary: 'AirMOSS',
+              secondary: 'Airborne Microwave Observatory of Subcanopy and Subsurface '
+            },
+            ui: {
+              showNonEosdisCheckbox: false,
+              showOnlyGranulesCheckbox: false,
+              showTophat: true
+            }
           }
         },
         type: RESTORE_FROM_URL
@@ -248,7 +376,7 @@ describe('changePath', () => {
     })
   })
 
-  test('updates the store if there is not a projectId', () => {
+  test('updates the store if there is not a projectId', async () => {
     const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
     const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
     const getTimelineMock = jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
@@ -278,7 +406,7 @@ describe('changePath', () => {
       }
     })
 
-    store.dispatch(urlQuery.changePath(newPath))
+    await store.dispatch(urlQuery.changePath(newPath))
 
     expect(updateStoreMock).toBeCalledTimes(1)
     expect(updateStoreMock).toBeCalledWith(
@@ -319,7 +447,7 @@ describe('changePath', () => {
 
   describe('when a path is provided', () => {
     describe('when the path matches granule search', () => {
-      test('calls getFocusedCollection action', () => {
+      test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
         const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
 
@@ -349,7 +477,7 @@ describe('changePath', () => {
           }
         })
 
-        store.dispatch(urlQuery.changePath(newPath))
+        await store.dispatch(urlQuery.changePath(newPath))
 
         expect(getCollectionsMock).toBeCalledTimes(1)
         expect(getFocusedCollectionMock).toBeCalledTimes(1)
@@ -357,7 +485,7 @@ describe('changePath', () => {
     })
 
     describe('when the path matches collection details', () => {
-      test('calls getFocusedCollection action', () => {
+      test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
         const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
 
@@ -387,7 +515,7 @@ describe('changePath', () => {
           }
         })
 
-        store.dispatch(urlQuery.changePath(newPath))
+        await store.dispatch(urlQuery.changePath(newPath))
 
         expect(getCollectionsMock).toBeCalledTimes(1)
         expect(getFocusedCollectionMock).toBeCalledTimes(1)
@@ -395,7 +523,7 @@ describe('changePath', () => {
     })
 
     describe('when the path matches subscription list', () => {
-      test('calls getFocusedCollection action', () => {
+      test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
         const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
 
@@ -425,7 +553,7 @@ describe('changePath', () => {
           }
         })
 
-        store.dispatch(urlQuery.changePath(newPath))
+        await store.dispatch(urlQuery.changePath(newPath))
 
         expect(getCollectionsMock).toBeCalledTimes(1)
         expect(getFocusedCollectionMock).toBeCalledTimes(1)
@@ -433,7 +561,7 @@ describe('changePath', () => {
     })
 
     describe('when the path matches granule details', () => {
-      test('calls getFocusedCollection action', () => {
+      test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
         const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
         const getFocusedGranuleMock = jest.spyOn(actions, 'getFocusedGranule').mockImplementation(() => jest.fn())
@@ -465,7 +593,7 @@ describe('changePath', () => {
           }
         })
 
-        store.dispatch(urlQuery.changePath(newPath))
+        await store.dispatch(urlQuery.changePath(newPath))
 
         expect(getCollectionsMock).toBeCalledTimes(1)
         expect(getFocusedCollectionMock).toBeCalledTimes(1)
@@ -476,7 +604,7 @@ describe('changePath', () => {
 
   describe('when a portal path is provided', () => {
     describe('when the path matches granule search', () => {
-      test('calls getFocusedCollection action', () => {
+      test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
         const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
 
@@ -506,7 +634,7 @@ describe('changePath', () => {
           }
         })
 
-        store.dispatch(urlQuery.changePath(newPath))
+        await store.dispatch(urlQuery.changePath(newPath))
 
         expect(getCollectionsMock).toBeCalledTimes(1)
         expect(getFocusedCollectionMock).toBeCalledTimes(1)
@@ -514,7 +642,7 @@ describe('changePath', () => {
     })
 
     describe('when the path matches collection details', () => {
-      test('calls getFocusedCollection action', () => {
+      test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
         const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
 
@@ -544,7 +672,7 @@ describe('changePath', () => {
           }
         })
 
-        store.dispatch(urlQuery.changePath(newPath))
+        await store.dispatch(urlQuery.changePath(newPath))
 
         expect(getCollectionsMock).toBeCalledTimes(1)
         expect(getFocusedCollectionMock).toBeCalledTimes(1)
@@ -552,7 +680,7 @@ describe('changePath', () => {
     })
 
     describe('when the path matches subscription list', () => {
-      test('calls getFocusedCollection action', () => {
+      test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
         const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
 
@@ -582,7 +710,7 @@ describe('changePath', () => {
           }
         })
 
-        store.dispatch(urlQuery.changePath(newPath))
+        await store.dispatch(urlQuery.changePath(newPath))
 
         expect(getCollectionsMock).toBeCalledTimes(1)
         expect(getFocusedCollectionMock).toBeCalledTimes(1)
@@ -590,7 +718,7 @@ describe('changePath', () => {
     })
 
     describe('when the path matches granule details', () => {
-      test('calls getFocusedCollection action', () => {
+      test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
         const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
         const getFocusedGranuleMock = jest.spyOn(actions, 'getFocusedGranule').mockImplementation(() => jest.fn())
@@ -622,7 +750,7 @@ describe('changePath', () => {
           }
         })
 
-        store.dispatch(urlQuery.changePath(newPath))
+        await store.dispatch(urlQuery.changePath(newPath))
 
         expect(getCollectionsMock).toBeCalledTimes(1)
         expect(getFocusedCollectionMock).toBeCalledTimes(1)

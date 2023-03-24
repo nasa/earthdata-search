@@ -4,7 +4,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom'
-import { isEqual, startCase } from 'lodash'
+import { isEqual } from 'lodash'
 import { Badge, Col } from 'react-bootstrap'
 import {
   FaBell,
@@ -406,15 +406,19 @@ class SearchPanels extends PureComponent {
               <div className="search-panels__portal-escape">
                 Looking for more collections?
                 {' '}
-                <a href="/" className="search-panels__portal-escape-link">
+                <PortalLinkContainer
+                  newPortal={{}}
+                  to={location}
+                  updatePath
+                >
                   Leave
                   {' '}
                   the
                   {' '}
-                  {startCase(primaryPortalTitle)}
+                  {primaryPortalTitle}
                   {' '}
                   Portal
-                </a>
+                </PortalLinkContainer>
               </div>
             )
           }

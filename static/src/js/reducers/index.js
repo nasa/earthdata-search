@@ -7,7 +7,6 @@ import adminRetrievalsReducer from './admin/retrievals'
 import advancedSearchReducer from './advancedSearch'
 import authTokenReducer from './authToken'
 import autocompleteReducer from './autocomplete'
-import availablePortalsReducer from './availablePortals'
 import browserReducer from './browser'
 import collectionMetadataReducer from './collectionMetadata'
 import collectionsResultsReducer from './collectionsResults'
@@ -53,7 +52,6 @@ export default (history) => combineReducers({
   advancedSearch: advancedSearchReducer,
   authToken: authTokenReducer,
   autocomplete: autocompleteReducer,
-  availablePortals: availablePortalsReducer,
   browser: browserReducer,
   contactInfo: contactInfoReducer,
   dataQualitySummaries: dataQualitySummariesReducer,

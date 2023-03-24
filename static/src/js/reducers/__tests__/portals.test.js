@@ -1,5 +1,5 @@
 import portalsReducer from '../portals'
-import { ADD_PORTAL } from '../../constants/actionTypes'
+import { RESTORE_FROM_URL } from '../../constants/actionTypes'
 
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
@@ -12,23 +12,25 @@ describe('INITIAL_STATE', () => {
   })
 })
 
-describe('ADD_PORTAL', () => {
+describe('RESTORE_FROM_URL', () => {
   test('returns the correct state', () => {
     const payload = {
-      portalId: 'simple',
-      hasStyles: false,
-      hasScripts: false,
-      query: {
-        echoCollectionId: 'C203234523-LAADS'
-      },
-      title: 'Simple'
+      portal: {
+        portalId: 'example',
+        hasStyles: false,
+        hasScripts: false,
+        query: {
+          echoCollectionId: 'C203234523-LAADS'
+        },
+        title: 'Example'
+      }
     }
 
     const action = {
-      type: ADD_PORTAL,
+      type: RESTORE_FROM_URL,
       payload
     }
 
-    expect(portalsReducer(undefined, action)).toEqual(payload)
+    expect(portalsReducer(undefined, action)).toEqual(payload.portal)
   })
 })

@@ -27,7 +27,6 @@ import './GranuleResultsList.scss'
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
  * @param {Function} props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
- * @param {Object} props.portal - Portal object passed from the store.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the visible middle index.
  * @param {Number} props.visibleMiddleIndex - The current visible middle index.
  */
@@ -48,7 +47,6 @@ export const GranuleResultsList = ({
   onFocusedGranuleChange,
   onMetricsDataAccess,
   onRemoveGranuleFromProjectCollection,
-  portal,
   setVisibleMiddleIndex,
   visibleMiddleIndex
 }) => (
@@ -74,7 +72,6 @@ export const GranuleResultsList = ({
             onFocusedGranuleChange={onFocusedGranuleChange}
             onMetricsDataAccess={onMetricsDataAccess}
             onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
-            portal={portal}
             setVisibleMiddleIndex={setVisibleMiddleIndex}
             visibleMiddleIndex={visibleMiddleIndex}
             width={width}
@@ -107,7 +104,6 @@ GranuleResultsList.propTypes = {
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number
 }

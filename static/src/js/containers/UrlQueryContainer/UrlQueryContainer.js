@@ -45,6 +45,7 @@ export const mapStateToProps = (state) => ({
   overrideTemporalSearch: state.query.collection.overrideTemporal,
   pathname: state.router.location.pathname,
   platformFacets: state.facetsParams.cmr.platforms_h,
+  portalId: state.portal.portalId,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
   processingLevelFacets: state.facetsParams.cmr.processing_level_id_h,

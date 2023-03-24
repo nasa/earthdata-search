@@ -2,11 +2,6 @@
   "description": "The Antarctic Metadata Directory is the largest collection of Antarctic data set description in the world, holding over 7700 dataset descriptions from 25 countries.",
   "hasLogo": true,
   "hasStyles": true,
-  "logo": {
-    "id": "amd-logo",
-    "link": "https://www.scar.org/resources/amd/",
-    "title": "Antarctic Metadata Directory (AMD) "
-  },
   "moreInfoUrl": "https://www.scar.org/resources/amd/",
   "pageTitle": "Antarctic Metadata Directory (AMD)",
   "parentConfig": "edsc",

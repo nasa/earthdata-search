@@ -39,6 +39,7 @@ import ShapefileUploadModalContainer from './containers/ShapefileUploadModalCont
 import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
 import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 import EditSubscriptionModalContainer from './containers/EditSubscriptionModalContainer/EditSubscriptionModalContainer'
+import BackButtonContainer from './containers/BackButtonContainer/BackButtonContainer'
 
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
@@ -64,6 +65,8 @@ class App extends Component {
     this.env = env
   }
 
+  // Portal paths have been removed, but this needs to stay in order to redirect users using
+  // a path to the param based portal
   portalPaths(path) {
     return [`/portal/:portalId${path}`, path]
   }
@@ -93,6 +96,7 @@ class App extends Component {
               <link rel="canonical" href={url} />
             </Helmet>
             <ConnectedRouter history={history}>
+              <BackButtonContainer />
               <MetricsEventsContainer />
               <Switch>
                 <Route path={this.portalPaths('/')} component={PortalContainer} />

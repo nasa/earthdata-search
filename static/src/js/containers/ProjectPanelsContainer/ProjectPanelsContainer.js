@@ -20,7 +20,6 @@ export const mapStateToProps = (state) => ({
   location: state.router.location,
   overrideTemporal: state.query.collection.overrideTemporal,
   panels: state.panels,
-  portal: state.portal,
   project: state.project,
   projectCollectionsMetadata: getProjectCollectionsMetadata(state),
   shapefileId: state.shapefile.shapefileId,
@@ -68,7 +67,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {String} collectionId - The current collection ID.
  * @param {Object} location - The location from the store.
  * @param {Object} panels - The current panels state.
- * @param {Object} portal - The portal from the store.
  * @param {Object} project - The project from the store.
  * @param {Object} spatial - The spatial from the store.
  * @param {Object} shapefileId - The shapefileId from the store.
@@ -106,7 +104,6 @@ export const ProjectPanelsContainer = ({
   onUpdateFocusedCollection,
   onViewCollectionGranules,
   panels,
-  portal,
   project,
   projectCollectionsMetadata,
   shapefileId,
@@ -135,7 +132,6 @@ export const ProjectPanelsContainer = ({
     onUpdateFocusedCollection={onUpdateFocusedCollection}
     onViewCollectionGranules={onViewCollectionGranules}
     panels={panels}
-    portal={portal}
     project={project}
     projectCollectionsMetadata={projectCollectionsMetadata}
     shapefileId={shapefileId}
@@ -173,7 +169,6 @@ ProjectPanelsContainer.propTypes = {
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
-  portal: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,

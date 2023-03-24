@@ -70,48 +70,6 @@ describe('SecondaryToolbar component', () => {
       }))
     })
 
-    describe('when on the project page', () => {
-      test('the Back to Search link calls onChangePath', () => {
-        const { enzymeWrapper, props } = setup('loggedIn')
-
-        enzymeWrapper.setProps({
-          location: {
-            pathname: '/projects',
-            search: '?p=!EDSC-1000'
-          }
-        })
-
-        const link = enzymeWrapper.find('.secondary-toolbar__back')
-        link.simulate('click')
-
-        expect(props.onChangePath).toBeCalledTimes(1)
-        expect(props.onChangePath).toBeCalledWith('/search?p=!EDSC-1000')
-      })
-    })
-
-    describe('when on the downloads page', () => {
-      test('the Back to Project link calls onChangePath', () => {
-        const { enzymeWrapper, props } = setup('loggedIn')
-
-        enzymeWrapper.setProps({
-          location: {
-            pathname: '/downloads/1234'
-          },
-          retrieval: {
-            jsondata: {
-              source: '?p=!EDSC-1000'
-            }
-          }
-        })
-
-        const link = enzymeWrapper.find('.secondary-toolbar__back')
-        link.simulate('click')
-
-        expect(props.onChangePath).toBeCalledTimes(1)
-        expect(props.onChangePath).toBeCalledWith('/projects?p=!EDSC-1000')
-      })
-    })
-
     test('should render the user dropdown', () => {
       const { enzymeWrapper } = setup('loggedIn')
 
@@ -143,24 +101,6 @@ describe('SecondaryToolbar component', () => {
       logoutButton.simulate('click')
 
       expect(instance.handleLogout).toBeCalledTimes(1)
-    })
-
-    test('the My Project link calls onChangePath', () => {
-      const { enzymeWrapper, props } = setup('loggedIn')
-
-      enzymeWrapper.setProps({
-        location: {
-          pathname: '/search',
-          search: '?p=!EDSC-1000'
-        },
-        projectCollectionIds: ['EDSC-1000']
-      })
-
-      const link = enzymeWrapper.find('.secondary-toolbar__project')
-      link.simulate('click')
-
-      expect(props.onChangePath).toBeCalledTimes(1)
-      expect(props.onChangePath).toBeCalledWith('/projects?p=!EDSC-1000')
     })
 
     describe('Download Status and History link', () => {

@@ -1,53 +1,25 @@
 require('@babel/register')
-const fs = require('fs')
-
 const path = require('path')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
-const HtmlWebPackPlugin = require('html-webpack-plugin')
-const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
+
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin')
+const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const config = require('./sharedUtils/config')
-const { getPortalConfig } = require('./static/src/js/util/portals')
+const { availablePortals } = require('./portals/index')
 
 const {
   analytics,
   defaultPortal,
   feedbackApp
 } = config.getApplicationConfig()
-const portalConfig = getPortalConfig(defaultPortal)
+
+const { [defaultPortal]: portalConfig } = availablePortals
 
 const { ui } = portalConfig
-
-// Webpack plugin that will merge all of our portal configs into a single JSON file
-class MergePortalConfigsPlugin {
-  apply(compiler) {
-    compiler.hooks.watchRun.tap(
-      'MergePortalConfigsPlugin',
-      () => {
-        console.log('Merging Portal Configs')
-
-        const output = {}
-        const portalDirectory = 'portals'
-        const directories = fs.readdirSync(portalDirectory, { withFileTypes: true })
-          .filter((dirent) => dirent.isDirectory() && !dirent.name.startsWith('.'))
-
-        directories.forEach((directory) => {
-          const { name } = directory
-          const contents = JSON.parse(fs.readFileSync(`${portalDirectory}/${name}/config.json`, 'utf8'))
-          output[name] = {
-            ...contents,
-            portalId: name
-          }
-        })
-
-        fs.writeFileSync(`${portalDirectory}/mergedPortalConfigs.json`, JSON.stringify(output))
-      }
-    )
-  }
-}
 
 const StaticCommonConfig = {
   name: 'static',
@@ -230,8 +202,7 @@ const StaticCommonConfig = {
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/
-    }),
-    new MergePortalConfigsPlugin()
+    })
   ],
   watchOptions: {
     ignored: /mergedPortalConfigs.json/

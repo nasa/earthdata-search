@@ -28,7 +28,6 @@ import './GranuleResultsTable.scss'
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
  * @param {Function} props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
- * @param {Object} props.portal - Portal object passed from the store.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the state with the current middle item.
  * @param {String} props.visibleMiddleIndex - The current middle item.
  */
@@ -49,7 +48,6 @@ export const GranuleResultsTable = ({
   onFocusedGranuleChange,
   onMetricsDataAccess,
   onRemoveGranuleFromProjectCollection,
-  portal,
   setVisibleMiddleIndex,
   visibleMiddleIndex
 }) => {
@@ -71,8 +69,7 @@ export const GranuleResultsTable = ({
         onExcludeGranule,
         onFocusedGranuleChange,
         onMetricsDataAccess,
-        onRemoveGranuleFromProjectCollection,
-        portal
+        onRemoveGranuleFromProjectCollection
       }
     },
     {
@@ -218,7 +215,6 @@ GranuleResultsTable.propTypes = {
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number
 }

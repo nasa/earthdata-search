@@ -41,7 +41,6 @@ import './ProjectPanels.scss'
  * @param {String} collectionId - The current collection ID.
  * @param {Object} location - The location from the store.
  * @param {Object} panels - The current panels state.
- * @param {Object} portal - The portal from the store.
  * @param {Object} project - The project from the store.
  * @param {Object} spatial - The spatial from the store.
  * @param {Object} shapefileId - The shapefileId from the store.
@@ -288,7 +287,6 @@ class ProjectPanels extends PureComponent {
       onTogglePanels,
       onUpdateAccessMethod,
       panels,
-      portal,
       project,
       projectCollectionsMetadata,
       shapefileId,
@@ -645,7 +643,6 @@ class ProjectPanels extends PureComponent {
               onChangeProjectGranulePageNum={onChangeProjectGranulePageNum}
               onFocusedGranuleChange={onFocusedGranuleChange}
               onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
-              portal={portal}
               projectCollection={projectCollection}
             />
           </PanelItem>
@@ -703,7 +700,6 @@ ProjectPanels.propTypes = {
     activePanel: PropTypes.string,
     isOpen: PropTypes.bool
   }).isRequired,
-  portal: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({
     collections: PropTypes.shape({
       allIds: PropTypes.arrayOf(PropTypes.string),

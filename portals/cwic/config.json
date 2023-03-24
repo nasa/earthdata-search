@@ -2,11 +2,6 @@
   "description": "The CEOS WGISS Integrated Catalog (CWIC) Search Portal offers satellite Earth observation information and access on scientific datasets from CWIC members' holdings (ISRO, NASA, NOAA, NRSCC, and USGS).",
   "hasLogo": true,
   "hasStyles": true,
-  "logo": {
-    "id": "ceos-logo",
-    "link": "http://ceos.org/ourwork/workinggroups/wgiss/access/cwic/",
-    "title": "CEOS Home"
-  },
   "moreInfoUrl": "http://ceos.org/ourwork/workinggroups/wgiss/access/cwic/",
   "pageTitle": "CWIC",
   "parentConfig": "edsc",

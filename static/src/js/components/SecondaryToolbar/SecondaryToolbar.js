@@ -23,7 +23,6 @@ import { isDownloadPathWithId } from '../../util/isDownloadPathWithId'
 import { isPath } from '../../util/isPath'
 import { locationPropType } from '../../util/propTypes/location'
 import { pathStartsWith } from '../../util/pathStartsWith'
-import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { stringify } from '../../util/url/url'
 
 import Button from '../Button/Button'
@@ -116,9 +115,7 @@ class SecondaryToolbar extends Component {
       earthdataEnvironment,
       projectCollectionIds,
       location,
-      portal,
       retrieval = {},
-      onChangePath,
       ursProfile
     } = this.props
 
@@ -150,7 +147,7 @@ class SecondaryToolbar extends Component {
           pathname: '/search',
           search: newSearch
         }}
-        onClick={() => { onChangePath(`/search${newSearch}`) }}
+        updatePath
       >
         Back to Search
       </PortalLinkContainer>
@@ -164,12 +161,12 @@ class SecondaryToolbar extends Component {
         className="secondary-toolbar__back"
         bootstrapVariant="light"
         icon={FaArrowCircleLeft}
-        label="Back to Search"
+        label="Back to Project"
         to={{
           pathname: '/projects',
           search: source
         }}
-        onClick={() => { onChangePath(`/projects${source}`) }}
+        updatePath
       >
         Back to Project
       </PortalLinkContainer>
@@ -177,7 +174,7 @@ class SecondaryToolbar extends Component {
 
     const buildProjectLink = (loggedIn) => {
       if (!loggedIn) {
-        const projectPath = `${window.location.protocol}//${window.location.host}${portalPath(portal)}/projects${window.location.search}`
+        const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
         return (
           <Button
             className="secondary-toolbar__project"
@@ -192,9 +189,6 @@ class SecondaryToolbar extends Component {
       return (
         <PortalLinkContainer
           type="button"
-          onClick={() => {
-            onChangePath(`/projects${location.search}`)
-          }}
           to={{
             pathname: '/projects',
             search: location.search
@@ -203,6 +197,7 @@ class SecondaryToolbar extends Component {
           bootstrapVariant="light"
           label="View Project"
           icon={FaFolder}
+          updatePath
         >
           My Project
         </PortalLinkContainer>
@@ -242,7 +237,7 @@ class SecondaryToolbar extends Component {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer
-            to={`${portalPath(portal)}/preferences`}
+            to="/preferences"
           >
             <Dropdown.Item
               className="secondary-toolbar__preferences"
@@ -252,7 +247,7 @@ class SecondaryToolbar extends Component {
             </Dropdown.Item>
           </LinkContainer>
           <LinkContainer
-            to={`${portalPath(portal)}/contact-info`}
+            to="/contact-info"
           >
             <Dropdown.Item
               className="secondary-toolbar__contact-info"
@@ -263,7 +258,7 @@ class SecondaryToolbar extends Component {
           </LinkContainer>
           <LinkContainer
             to={{
-              pathname: `${portalPath(portal)}/downloads`,
+              pathname: '/downloads',
               search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
             }}
           >
@@ -275,7 +270,7 @@ class SecondaryToolbar extends Component {
             </Dropdown.Item>
           </LinkContainer>
           <LinkContainer
-            to={`${portalPath(portal)}/projects`}
+            to="/projects"
           >
             <Dropdown.Item
               className="secondary-toolbar__saved-projects"
@@ -285,7 +280,7 @@ class SecondaryToolbar extends Component {
             </Dropdown.Item>
           </LinkContainer>
           <LinkContainer
-            to={`${portalPath(portal)}/subscriptions`}
+            to="/subscriptions"
           >
             <Dropdown.Item
               className="secondary-toolbar__saved-subscriptions"
@@ -383,10 +378,8 @@ SecondaryToolbar.propTypes = {
   authToken: PropTypes.string.isRequired,
   earthdataEnvironment: PropTypes.string.isRequired,
   location: locationPropType.isRequired,
-  onChangePath: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   retrieval: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({

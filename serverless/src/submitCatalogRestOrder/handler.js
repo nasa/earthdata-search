@@ -11,7 +11,6 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { getEmail } from '../util/echoForms/getEmail'
 import {
   getEnvironmentConfig,
-  getApplicationConfig,
   getEarthdataConfig
 } from '../../../sharedUtils/config'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
@@ -23,7 +22,6 @@ import { getSwitchFields } from '../util/echoForms/getSwitchFields'
 import { getTopLevelFields } from '../util/echoForms/getTopLevelFields'
 import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { parseError } from '../../../sharedUtils/parseError'
-import { portalPath } from '../../../sharedUtils/portalPath'
 import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
 import { processPartialShapefile } from '../util/processPartialShapefile'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
@@ -96,7 +94,6 @@ const submitCatalogRestOrder = async (event, context) => {
 
     try {
       const {
-        portalId = getApplicationConfig().defaultPortal,
         shapefileId,
         selectedFeatures
       } = jsondata
@@ -152,7 +149,7 @@ const submitCatalogRestOrder = async (event, context) => {
       const eeLink = environment === deployedEnvironment() ? '' : `?ee=${environment}`
 
       // URL used when submitting the order to inform the user where they can retrieve their order status
-      const edscStatusUrl = `${edscHost}${portalPath({ portalId })}/downloads/${obfuscatedRetrievalId}${eeLink}`
+      const edscStatusUrl = `${edscHost}/downloads/${obfuscatedRetrievalId}${eeLink}`
 
       const { model, url, type } = accessMethod
 

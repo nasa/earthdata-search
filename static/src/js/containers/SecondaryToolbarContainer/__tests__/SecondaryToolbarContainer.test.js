@@ -13,15 +13,11 @@ function setup(overrideProps) {
     authToken: '',
     earthdataEnvironment: 'prod',
     location: {},
-    portal: {
-      portalId: 'edsc'
-    },
     projectCollectionIds: [],
     savedProject: {},
     retrieval: {},
     onLogout: jest.fn(),
     onUpdateProjectName: jest.fn(),
-    onChangePath: jest.fn(),
     onFetchContactInfo: jest.fn(),
     ursProfile: {},
     ...overrideProps
@@ -55,16 +51,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith('name')
   })
 
-  test('onChangePath calls actions.changePath', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changePath')
-
-    mapDispatchToProps(dispatch).onChangePath('path')
-
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('path')
-  })
-
   test('onFetchContactInfo calls actions.fetchContactInfo', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'fetchContactInfo')
@@ -83,7 +69,6 @@ describe('mapStateToProps', () => {
         ursProfile: {}
       },
       earthdataEnvironment: 'prod',
-      portal: {},
       project: {
         collections: {
           allIds: []
@@ -96,7 +81,6 @@ describe('mapStateToProps', () => {
     const expectedState = {
       authToken: 'mock-token',
       earthdataEnvironment: 'prod',
-      portal: {},
       projectCollectionIds: [],
       savedProject: {},
       retrieval: {},

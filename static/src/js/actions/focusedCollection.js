@@ -17,7 +17,6 @@ import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
 import { getUsername } from '../selectors/user'
 import { isCSDACollection } from '../util/isCSDACollection'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
-import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
@@ -285,7 +284,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         const { search } = location
 
         dispatch(actions.changeUrl({
-          pathname: `${portalPathFromState(getState())}/search`,
+          pathname: '/search',
           search
         }))
       }
@@ -397,7 +396,7 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
 
     // If clearing the focused collection, redirect the user back to the search page
     dispatch(actions.changeUrl({
-      pathname: `${portalPathFromState(state)}/search`,
+      pathname: '/search',
       search
     }))
   } else {
@@ -429,7 +428,7 @@ export const viewCollectionDetails = (collectionId) => (dispatch, getState) => {
   const { search } = location
 
   dispatch(actions.changeUrl({
-    pathname: `${portalPathFromState(getState())}/search/granules/collection-details`,
+    pathname: '/search/granules/collection-details',
     search
   }))
 }
@@ -447,7 +446,7 @@ export const viewCollectionGranules = (collectionId) => (dispatch, getState) => 
   const { search } = location
 
   dispatch(actions.changeUrl({
-    pathname: `${portalPathFromState(getState())}/search/granules`,
+    pathname: '/search/granules',
     search
   }))
 }

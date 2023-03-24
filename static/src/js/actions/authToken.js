@@ -5,7 +5,6 @@ import { UPDATE_AUTH } from '../constants/actionTypes'
 import LogoutRequest from '../util/request/logoutRequest'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
-import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 
 export const updateAuthToken = (payload) => ({
   type: UPDATE_AUTH,
@@ -42,7 +41,7 @@ export const logout = () => (dispatch, getState) => {
       remove('authToken')
 
       // Redirect to root url
-      window.location.assign(`${portalPathFromState(state)}/search?ee=${earthdataEnvironment}`)
+      window.location.assign(`/search?ee=${earthdataEnvironment}`)
     })
 
   return response

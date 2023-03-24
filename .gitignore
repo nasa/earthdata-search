@@ -17,4 +17,3 @@ cypress/videos
 overrideStatic.config.json
 cypress-coverage
 .nyc_output
-portals/mergedPortalConfigs.json

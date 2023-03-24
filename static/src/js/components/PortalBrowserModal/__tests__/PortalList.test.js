@@ -2,178 +2,95 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
+import { Router } from 'react-router'
+import { Provider } from 'react-redux'
+import { createMemoryHistory } from 'history'
 
 import { PortalList } from '../PortalList'
 
+import configureStore from '../../../store/configureStore'
+
+import actions from '../../../actions'
+
+const store = configureStore()
+
+const setup = () => {
+  const props = {
+    location: {
+      pathname: '/search'
+    },
+    onModalClose: jest.fn()
+  }
+
+  const history = createMemoryHistory({
+    initialEntries: ['/search']
+  })
+
+  render(
+    <Provider store={store}>
+      <Router history={history} location={props.location}>
+        <PortalList {...props} />
+      </Router>
+    </Provider>
+  )
+
+  return { history, props }
+}
+
 describe('PortalList component', () => {
   test('renders a list of portals', () => {
-    const portals = {
-      mockPortal: {
-        description: 'mock description',
-        hasLogo: true,
-        portalBrowser: true,
-        portalId: 'mockPortal',
-        moreInfoUrl: 'http://example.com',
-        title: {
-          primary: 'Example Portal',
-          secondary: 'Just an example'
-        }
-      }
-    }
-    render(
-      <PortalList
-        portals={portals}
-      />
-    )
+    setup()
 
-    expect(screen.getByTestId('portal-title-mockPortal')).toHaveTextContent('Example Portal(Just an example)')
-    expect(screen.getByTestId('portal-description-mockPortal')).toHaveTextContent('mock description')
-    expect(screen.getByTestId('portal-link-mockPortal').querySelector('a')).toHaveAttribute('href', 'http://example.com')
+    expect(screen.getByTestId('portal-title-above')).toHaveTextContent('ABoVE(Arctic-Boreal Vulnerability Experiment)')
+    expect(screen.getByTestId('portal-description-above')).toHaveTextContent('The ABoVE portal provides access to data from the Arctic-Boreal Vulnerability Experiment (ABoVE) NASA mission.')
+    expect(screen.getByTestId('portal-link-above').querySelector('a')).toHaveAttribute('href', 'https://above.nasa.gov/')
   })
 
   test('renders a portal without an image', () => {
-    const portals = {
-      mockPortal: {
-        description: 'mock description',
-        hasLogo: false,
-        portalBrowser: true,
-        portalId: 'mockPortal',
-        moreInfoUrl: 'http://example.com',
-        title: {
-          primary: 'Example Portal',
-          secondary: 'Just an example'
-        }
-      }
-    }
-    render(
-      <PortalList
-        portals={portals}
-      />
-    )
+    setup()
 
-    expect(screen.getByTestId('portal-title-mockPortal')).toHaveTextContent('Example Portal(Just an example)')
-    expect(screen.getByTestId('portal-description-mockPortal')).toHaveTextContent('mock description')
-    expect(screen.getByTestId('portal-link-mockPortal').querySelector('a')).toHaveAttribute('href', 'http://example.com')
+    expect(screen.getByTestId('portal-title-standardproducts')).toHaveTextContent('Standard Products')
+    expect(screen.getByTestId('portal-description-standardproducts')).toHaveTextContent('')
+    expect(screen.getByTestId('portal-link-standardproducts').querySelector('a')).toBeNull()
   })
 
   test('does not render a portal that is excluded from the browser', () => {
-    const portals = {
-      mockPortal: {
-        description: 'mock description',
-        hasLogo: false,
-        portalBrowser: false,
-        portalId: 'mockPortal',
-        moreInfoUrl: 'http://example.com',
-        title: {
-          primary: 'Example Portal',
-          secondary: 'Just an example'
-        }
-      }
-    }
-    render(
-      <PortalList
-        portals={portals}
-      />
-    )
+    setup()
 
-    expect(screen.queryByTestId('portal-title-mockPortal')).toBeNull()
-    expect(screen.queryByTestId('portal-description-mockPortal')).toBeNull()
-    expect(screen.queryByTestId('portal-link-mockPortal')).toBeNull()
+    expect(screen.queryByTestId('portal-title-example')).toBeNull()
+    expect(screen.queryByTestId('portal-description-example')).toBeNull()
+    expect(screen.queryByTestId('portal-link-example')).toBeNull()
   })
 
   test('clicking on the portal opens the portal', async () => {
+    jest.spyOn(actions, 'changePath').mockImplementation(() => jest.fn())
     const user = userEvent.setup()
 
-    delete window.location
-    window.location = { replace: jest.fn() }
+    const { history, props } = setup()
 
-    const portals = {
-      mockPortal: {
-        description: 'mock description',
-        hasLogo: false,
-        portalBrowser: true,
-        portalId: 'mockPortal',
-        moreInfoUrl: 'http://example.com',
-        title: {
-          primary: 'Example Portal',
-          secondary: 'Just an example'
-        }
-      }
-    }
-    render(
-      <PortalList
-        portals={portals}
-      />
-    )
-
-    const portalTitle = screen.queryByTestId('portal-list-item-mockPortal')
+    const portalTitle = screen.queryByTestId('portal-list-item-standardproducts')
     await user.click(portalTitle)
 
-    expect(window.location.replace).toHaveBeenCalledTimes(1)
-    expect(window.location.replace).toHaveBeenCalledWith('/portal/mockPortal')
-  })
+    expect(history.location).toEqual(expect.objectContaining({
+      pathname: '/search',
+      search: '?portal=standardproducts'
+    }))
 
-  test('using keyUp on the portal opens the portal', async () => {
-    const user = userEvent.setup()
-
-    delete window.location
-    window.location = { replace: jest.fn() }
-
-    const portals = {
-      mockPortal: {
-        description: 'mock description',
-        hasLogo: false,
-        portalBrowser: true,
-        portalId: 'mockPortal',
-        moreInfoUrl: 'http://example.com',
-        title: {
-          primary: 'Example Portal',
-          secondary: 'Just an example'
-        }
-      }
-    }
-    render(
-      <PortalList
-        portals={portals}
-      />
-    )
-
-    // Focus on the list item, then press `enter`
-    screen.queryByTestId('portal-list-item-mockPortal').focus()
-    await user.keyboard('{enter}')
-
-    expect(window.location.replace).toHaveBeenCalledTimes(1)
-    expect(window.location.replace).toHaveBeenCalledWith('/portal/mockPortal')
+    expect(props.onModalClose).toHaveBeenCalledTimes(1)
   })
 
   test('clicking on the `More Info` does not open the portal', async () => {
     const user = userEvent.setup()
 
-    delete window.location
-    window.location = { replace: jest.fn() }
+    const { history, props } = setup()
 
-    const portals = {
-      mockPortal: {
-        description: 'mock description',
-        hasLogo: false,
-        portalBrowser: true,
-        portalId: 'mockPortal',
-        moreInfoUrl: 'http://example.com',
-        title: {
-          primary: 'Example Portal',
-          secondary: 'Just an example'
-        }
-      }
-    }
-    render(
-      <PortalList
-        portals={portals}
-      />
-    )
-
-    const moreInfoLink = screen.getByTestId('portal-link-mockPortal').querySelector('a')
+    const moreInfoLink = screen.getByTestId('portal-link-above').querySelector('a')
     await user.click(moreInfoLink)
 
-    expect(window.location.replace).toHaveBeenCalledTimes(0)
+    expect(history.location).toEqual(expect.objectContaining({
+      pathname: '/search'
+    }))
+
+    expect(props.onModalClose).toHaveBeenCalledTimes(0)
   })
 })

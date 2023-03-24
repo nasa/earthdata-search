@@ -106,9 +106,6 @@ describe('mapStateToProps', () => {
       authToken: 'mock-token',
       earthdataEnvironment: 'prod',
       granuleDownload: {},
-      portal: {
-        portalId: 'edsc'
-      },
       retrieval: {}
     }
 
@@ -116,9 +113,6 @@ describe('mapStateToProps', () => {
       authToken: 'mock-token',
       earthdataEnvironment: 'prod',
       granuleDownload: {},
-      portal: {
-        portalId: 'edsc'
-      },
       retrieval: {}
     }
 

@@ -1,13 +1,7 @@
 {
   "description": "The Global Hydrometeorology Resource Center (GHRC) Search Portal is powered by Earthdata Search and provides access to GHRC DAAC data holdings. This search portal was created to help the community quickly access GHRC data in a user-friendly, concise, and easy to use manor. GHRC Search Portal help page: https://ghrc.nsstc.nasa.gov/home/ghrc-docs/search-portal-help",
   "hasLogo": true,
-  "hasScripts": true,
   "hasStyles": true,
-  "logo": {
-    "id": "ghrc-logo",
-    "link": "https://ghrc.nsstc.nasa.gov/home",
-    "title": "GHRC Home"
-  },
   "moreInfoUrl": "https://ghrc.nsstc.nasa.gov/home",
   "pageTitle": "GHRC",
   "parentConfig": "edsc",
