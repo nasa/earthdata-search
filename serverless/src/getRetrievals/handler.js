@@ -61,12 +61,15 @@ export default async function getRetrievals(event, context) {
         environment
       } = firstRow
 
+      const collectionMetadata = retrievalRecord.map((record) => record.collection_metadata)
+      const titles = collectionMetadata.map((collection) => ({ titles: collection }))
+
       retrievalsResponse.push({
         id,
         created_at: createdAt,
         jsondata,
         environment,
-        collections: retrievalRecord.map((record) => record.collection_metadata)
+        collections: titles
       })
     })
 
