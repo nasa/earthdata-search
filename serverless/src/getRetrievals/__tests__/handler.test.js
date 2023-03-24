@@ -37,7 +37,6 @@ afterEach(() => {
 describe('getRetrievals', () => {
   test('correctly retrieves retrievals', async () => {
     const determineEarthdataEnvironmentMock = jest.spyOn(determineEarthdataEnvironment, 'determineEarthdataEnvironment')
-    // [{\"id\":\"7023641925\",\"created_at\":\"2019-08-25T11:58:14.390Z\",\"jsondata\":{},\"environment\":\"prod\",\"collections\":[{\"titles\":{\"title\":\"Collection Title Three\"}}]},{\"id\":\"4517239960\",\"created_at\":\"2019-08-25T11:58:14.390Z\",\"jsondata\":{},\"environment\":\"prod\",\"collections\":[{\"titles\":{\"title\":\"Collection Title One\"}},{\"titles\":{\"title\":\"Collection Title Two\"}}]}]
     dbTracker.on('query', (query) => {
       query.response([{
         id: 1,
