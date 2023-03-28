@@ -237,13 +237,7 @@ describe('updateStore', () => {
               ]
             },
             hasLogo: true,
-            hasScripts: true,
             hasStyles: true,
-            logo: {
-              id: 'ornl-daac-logo',
-              link: 'https://airmoss.ornl.gov',
-              title: 'ORNL DAAC AirMOSS Home'
-            },
             moreInfoUrl: 'https://airmoss.ornl.gov',
             pageTitle: 'AirMOSS',
             parentConfig: 'edsc',
