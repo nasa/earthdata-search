@@ -1,11 +1,22 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { render, screen } from '@testing-library/react'
+
+jest.mock('../../../containers/SearchFormContainer/SearchFormContainer', () => jest.fn(({ children }) => (
+  <mock-SearchFormContainer data-testid="SearchFormContainer">
+    {children}
+  </mock-SearchFormContainer>
+)))
+jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children }) => (
+  <mock-PortalLinkContainer data-testid="PortalLinkContainer">
+    {children}
+  </mock-PortalLinkContainer>
+)))
 
 import SearchSidebarHeader from '../SearchSidebarHeader'
 import SearchFormContainer from '../../../containers/SearchFormContainer/SearchFormContainer'
+import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
+import { availablePortals } from '../../../../../../portals'
 
 function setup(overrideProps) {
   const props = {
@@ -13,55 +24,77 @@ function setup(overrideProps) {
       title: {
         primary: 'Earthdata Search'
       },
-      logo: {
-        id: 'idn-logo',
-        link: 'https://idn.ceos.org/',
-        title: 'CEOS IDN Search'
-      },
+      hasLogo: false,
+      moreInfoUrl: null,
       portalId: 'edsc'
     },
     location: {
       pathname: '/search',
       search: ''
     },
-    onChangePath: jest.fn(),
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<SearchSidebarHeader {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+  render(<SearchSidebarHeader {...props} />)
 }
+
+beforeEach(() => {
+  jest.clearAllMocks()
+  jest.restoreAllMocks()
+})
 
 describe('SearchSidebarHeader component', () => {
   test('renders the SearchFormContainer', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(SearchFormContainer).exists()).toBeTruthy()
+    expect(SearchFormContainer).toHaveBeenCalledTimes(1)
   })
 
-  test('does not display a "Back to collections" link on search page', () => {
-    const { enzymeWrapper } = setup({
-      location: {
-        pathname: '/search',
-        search: ''
-      }
+  describe('when a portal is loaded', () => {
+    test('renders the Exit Portal link', () => {
+      setup({
+        portal: availablePortals.idn,
+        location: {
+          pathname: '/search',
+          search: '?portal=idn'
+        }
+      })
+
+      expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
+      expect(PortalLinkContainer).toHaveBeenCalledWith(expect.objectContaining({
+        children: 'Exit Portal',
+        newPortal: {},
+        title: 'Exit Portal',
+        to: {
+          pathname: '/search',
+          search: '?portal=idn'
+        },
+        updatePath: true
+      }), {})
     })
 
-    expect(enzymeWrapper.find('.search-sidebar-header__link-wrapper--is-active').length).toBe(0)
-  })
+    test('renders the portal logo', () => {
+      setup({
+        portal: availablePortals.idn,
+        location: {
+          pathname: '/search',
+          search: '?portal=idn'
+        }
+      })
 
-  test('does not display a "Back to collections" link on portal search page', () => {
-    const { enzymeWrapper } = setup({
-      location: {
-        pathname: '/portal/mockPortal/search',
-        search: ''
-      }
+      expect(screen.getByTestId('portal-logo')).toBeDefined()
     })
 
-    expect(enzymeWrapper.find('.search-sidebar-header__link-wrapper--is-active').length).toBe(0)
+    test('renders the portal logo with a moreInfoUrl', () => {
+      setup({
+        portal: availablePortals.idn,
+        location: {
+          pathname: '/search',
+          search: '?portal=idn'
+        }
+      })
+
+      expect(screen.getByTestId('portal-logo-link').href).toEqual('https://idn.ceos.org/')
+    })
   })
 })

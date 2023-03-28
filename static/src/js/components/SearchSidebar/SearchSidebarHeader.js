@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { FaTimes } from 'react-icons/fa'
 
 import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+
 import { locationPropType } from '../../util/propTypes/location'
 
 import './SearchSidebarHeader.scss'
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Renders SearchSidebarHeader
@@ -23,7 +24,7 @@ export const SearchSidebarHeader = ({
     moreInfoUrl
   } = portal
 
-  if (portalId === 'edsc') {
+  if (portalId === getApplicationConfig().defaultPortal) {
     return (
       <header className="search-sidebar-header">
         <SearchFormContainer />
@@ -38,14 +39,23 @@ export const SearchSidebarHeader = ({
   if (hasLogo) {
     logoEl = (
       <div className="search-sidebar-header__thumbnail-container">
-        <div className="search-sidebar-header__thumbnail" id="portal-logo" />
+        <div
+          className="search-sidebar-header__thumbnail"
+          id="portal-logo"
+          data-testid="portal-logo"
+        />
       </div>
     )
   }
 
   if (moreInfoUrl) {
     logoEl = (
-      <a target="_blank" rel="noreferrer" href={moreInfoUrl}>
+      <a
+        target="_blank"
+        rel="noreferrer"
+        href={moreInfoUrl}
+        data-testid="portal-logo-link"
+      >
         {logoEl}
       </a>
     )
