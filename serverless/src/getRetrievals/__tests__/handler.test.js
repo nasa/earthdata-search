@@ -45,7 +45,10 @@ describe('getRetrievals', () => {
         created_at: '2019-08-25T11:58:14.390Z',
         environment: 'prod',
         collection_metadata: {
-          title: 'Collection Title One'
+          title: 'Collection Title One',
+          orbit_parameters: {},
+          id: 'C1200000001-EDSC',
+          has_formats: true
         }
       }, {
         id: 1,
@@ -53,7 +56,10 @@ describe('getRetrievals', () => {
         created_at: '2019-08-25T11:58:14.390Z',
         environment: 'prod',
         collection_metadata: {
-          title: 'Collection Title Two'
+          title: 'Collection Title Two',
+          orbit_parameters: {},
+          id: 'C1200000002-EDSC',
+          has_formats: false
         }
       }, {
         id: 2,
@@ -61,7 +67,10 @@ describe('getRetrievals', () => {
         created_at: '2019-08-25T11:58:14.390Z',
         environment: 'prod',
         collection_metadata: {
-          title: 'Collection Title Three'
+          title: 'Collection Title Three',
+          orbit_parameters: {},
+          id: 'C1200000003-EDSC',
+          has_formats: true
         }
       }])
     })
@@ -74,6 +83,7 @@ describe('getRetrievals', () => {
 
     const { body, statusCode } = retrievalResponse
 
+    // Only extract titles from the collection metadata
     const responseObj = [
       {
         id: '7023641925',
