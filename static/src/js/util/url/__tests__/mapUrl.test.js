@@ -5,9 +5,13 @@ import { decodeUrlParams, encodeUrlQuery } from '../url'
 import { emptyDecodedResult } from './url.mocks'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 beforeEach(() => {
   jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
+  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    defaultPortal: 'default'
+  }))
 })
 
 describe('decodes base correctly', () => {
