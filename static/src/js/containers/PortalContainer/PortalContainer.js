@@ -56,13 +56,15 @@ export const PortalContainer = ({
       })
     }
 
-    // Update the URL with the new value
-    onChangeUrl({
-      pathname: newPathname,
-      search: newSearch
-    })
-    // Reset the store based on the new URL
-    onChangePath(`${newPathname}${newSearch}`)
+    if (newPathname !== pathname || newSearch !== search) {
+      // Update the URL with the new value
+      onChangeUrl({
+        pathname: newPathname,
+        search: newSearch
+      })
+      // Reset the store based on the new URL
+      onChangePath(`${newPathname}${newSearch}`)
+    }
   }, [])
 
   const { portalId, title = {} } = portal

@@ -59,13 +59,7 @@ describe('buildConfig', () => {
         }]
       },
       hasLogo: true,
-      hasScripts: false,
       hasStyles: true,
-      logo: {
-        id: 'idn-logo',
-        link: 'https://idn.ceos.org/',
-        title: 'CEOS IDN Search'
-      },
       moreInfoUrl: 'https://idn.ceos.org/',
       pageTitle: 'IDN',
       portalBrowser: true,

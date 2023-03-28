@@ -18,7 +18,6 @@ describe('RESTORE_FROM_URL', () => {
       portal: {
         portalId: 'example',
         hasStyles: false,
-        hasScripts: false,
         query: {
           echoCollectionId: 'C203234523-LAADS'
         },
