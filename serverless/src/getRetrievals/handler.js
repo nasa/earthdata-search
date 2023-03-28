@@ -61,9 +61,9 @@ export default async function getRetrievals(event, context) {
         environment
       } = firstRow
 
-      const collectionMetadata = retrievalRecord.map((
-        { collection_metadata: collectionMetadata = {} }
-      ) => {
+      const collections = retrievalRecord.map(({
+        collection_metadata: collectionMetadata = {}
+      }) => {
         const { title } = collectionMetadata
         return { title }
       })
@@ -73,7 +73,7 @@ export default async function getRetrievals(event, context) {
         created_at: createdAt,
         jsondata,
         environment,
-        collections: collectionMetadata
+        collections
       })
     })
 
