@@ -8,6 +8,11 @@ describe('retrievals', () => {
       metadata: {
         collections: {
           'C100000-EDSC': {
+            conceptId: 'C100000-EDSC',
+            dataCenter: 'EDSC',
+            directDistributionInformation: {},
+            isCSDA: false,
+            shortName: 'mock shortName',
             title: 'Vestibulum id ligula porta felis euismod semper.'
           }
         }
@@ -82,44 +87,21 @@ describe('retrievals', () => {
       authToken: 'auth-token',
       collections: [{
         access_method: {
-          id: 'S100000-EDSC',
-          isValid: true,
-          longName: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam.',
           mbr: {
             neLat: 34.00000001,
             neLng: -76.99999999,
             swLat: 33.99999999,
             swLng: -77.00000001
           },
-          name: 'harmony/gdal-argo Subsetter and Reformatter.',
           selectedOutputProjection: 'EPSG:4326',
-          supportedOutputFormats: [
-            'TIFF',
-            'PNG',
-            'GIF'
-          ],
-          supportedOutputProjections: [
-            'EPSG:4326'
-          ],
           type: 'Harmony',
-          url: 'https://harmony.sit.earthdata.nasa.gov',
-          variables: {
-            'V100000-EDSC': {
-              conceptId: 'V100000-EDSC',
-              definition: 'Alpha channel value',
-              longName: 'Alpha channel ',
-              name: 'alpha_var',
-              scienceKeywords: [
-                {
-                  category: 'EARTH SCIENCE',
-                  topic: 'ATMOSPHERE',
-                  term: 'ATMOSPHERIC PRESSURE'
-                }
-              ]
-            }
-          }
+          url: 'https://harmony.sit.earthdata.nasa.gov'
         },
         collection_metadata: {
+          conceptId: 'C100000-EDSC',
+          dataCenter: 'EDSC',
+          directDistributionInformation: {},
+          isCSDA: false,
           title: 'Vestibulum id ligula porta felis euismod semper.'
         },
         granule_count: 100,
