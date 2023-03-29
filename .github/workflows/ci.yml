@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [main]
   pull_request: {}
 
 jobs:
@@ -109,7 +109,7 @@ jobs:
       with:
         directory: 'cypress-coverage'
   deploy:
-    if: success() && github.ref == 'refs/heads/master' # only run on master success
+    if: success() && github.ref == 'refs/heads/main' # only run on main success
     needs: [jest, cypress] # only run after jest and cypress jobs complete
     runs-on: ubuntu-latest
     steps:
@@ -127,4 +127,4 @@ jobs:
 
         git fetch --unshallow || true
         echo "GITHUB_COMMIT=$GITHUB_SHA"
-        git push ecc $GITHUB_SHA:refs/heads/serverless
+        git push ecc $GITHUB_SHA:refs/heads/main
