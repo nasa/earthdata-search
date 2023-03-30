@@ -51,7 +51,7 @@ describe('SearchSidebarHeader component', () => {
   })
 
   describe('when a portal is loaded', () => {
-    test('renders the Exit Portal link', () => {
+    test('renders the Leave Portal link', () => {
       setup({
         portal: availablePortals.idn,
         location: {
@@ -62,9 +62,9 @@ describe('SearchSidebarHeader component', () => {
 
       expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
       expect(PortalLinkContainer).toHaveBeenCalledWith(expect.objectContaining({
-        children: 'Exit Portal',
+        children: 'Leave Portal',
         newPortal: {},
-        title: 'Exit Portal',
+        title: 'Leave Portal',
         to: {
           pathname: '/search',
           search: '?portal=idn'

@@ -164,30 +164,6 @@ describe('SearchPanels component', () => {
       expect(collectionResultsPanelProps.sortsArray[3].isActive).toBe(false)
     })
 
-    describe('when in the default portal', () => {
-      test('does not show the link to the default portal', () => {
-        const { enzymeWrapper } = setup()
-        const panels = enzymeWrapper.find(Panels)
-        const collectionResultsPanel = panels.find(PanelGroup).at(0)
-        const collectionResultsPanelProps = collectionResultsPanel.props()
-
-        expect(collectionResultsPanelProps.footer.props.children).toEqual([false, false])
-      })
-    })
-
-    describe('when not the default portal', () => {
-      test('does not show the link to the deault portal', () => {
-        jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => false)
-
-        const { enzymeWrapper } = setup()
-        const panels = enzymeWrapper.find(Panels)
-        const collectionResultsPanel = panels.find(PanelGroup).at(0)
-        const collectionResultsPanelProps = collectionResultsPanel.props()
-
-        expect(shallow(collectionResultsPanelProps.footer.props.children[1]).text()).toContain('Looking for more collections?')
-      })
-    })
-
     describe('when the collections are loading', () => {
       test('shows the loading state', () => {
         const { enzymeWrapper } = setup({
@@ -216,7 +192,7 @@ describe('SearchPanels component', () => {
         expect(collectionResultsPanelProps.headerMessage).toBe(null)
         expect(collectionResultsPanelProps.headingLink).toBe(null)
         expect(collectionResultsPanelProps.moreActionsDropdownItems).toStrictEqual([])
-        expect(collectionResultsPanelProps.footer.props.children).toEqual([false, false])
+        expect(collectionResultsPanelProps.footer).toBe(false)
         expect(collectionResultsPanelProps.primaryHeading).toBe('0 Matching Collections')
         expect(collectionResultsPanelProps.headerMetaPrimaryLoading).toBe(true)
         expect(collectionResultsPanelProps.headerMetaPrimaryText).toBe('Showing 0 of 0 matching collections')
@@ -245,7 +221,7 @@ describe('SearchPanels component', () => {
         expect(collectionResultsPanelProps.headerMessage).toBe(null)
         expect(collectionResultsPanelProps.headingLink).toBe(null)
         expect(collectionResultsPanelProps.moreActionsDropdownItems).toStrictEqual([])
-        expect(collectionResultsPanelProps.footer.props.children).toEqual([false, false])
+        expect(collectionResultsPanelProps.footer).toBe(false)
         expect(collectionResultsPanelProps.primaryHeading).toBe('1 Matching Collection')
         expect(collectionResultsPanelProps.headerMetaPrimaryLoading).toBe(false)
         expect(collectionResultsPanelProps.headerMetaPrimaryText).toBe('Showing 1 of 1 matching collection')
@@ -281,7 +257,7 @@ describe('SearchPanels component', () => {
         expect(collectionResultsPanelProps.headerMessage).toBe(null)
         expect(collectionResultsPanelProps.headingLink).toBe(null)
         expect(collectionResultsPanelProps.moreActionsDropdownItems).toStrictEqual([])
-        expect(collectionResultsPanelProps.footer.props.children).toEqual([false, false])
+        expect(collectionResultsPanelProps.footer).toBe(false)
         expect(collectionResultsPanelProps.primaryHeading).toBe('4 Matching Collections')
         expect(collectionResultsPanelProps.headerMetaPrimaryLoading).toBe(false)
         expect(collectionResultsPanelProps.headerMetaPrimaryText).toBe('Showing 2 of 4 matching collections')

@@ -47,7 +47,6 @@ import PanelGroup from '../Panels/PanelGroup'
 import PanelItem from '../Panels/PanelItem'
 import PanelSection from '../Panels/PanelSection'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
-import { isDefaultPortal } from '../../util/portals'
 
 import './SearchPanels.scss'
 
@@ -169,7 +168,6 @@ class SearchPanels extends PureComponent {
       onMetricsCollectionSortChange,
       onToggleAboutCSDAModal,
       onToggleAboutCwicModal,
-      portal,
       preferences
     } = this.props
 
@@ -226,13 +224,6 @@ class SearchPanels extends PureComponent {
       collectionPanelView,
       granulePanelView
     } = this.state
-
-    const {
-      portalId,
-      title = portalId
-    } = portal
-
-    const { primary: primaryPortalTitle = portalId } = title
 
     const granuleResultsHeaderMetaPrimaryText = `Showing ${commafy(allGranuleIds.length)} of ${commafy(
       granuleHits
@@ -373,56 +364,29 @@ class SearchPanels extends PureComponent {
         }
       ])
 
-      return (
-        <>
-          {
-            isLoggedIn && (
-              <div className="search-panels__actions">
-                <PortalFeatureContainer authentication>
-                  <AuthRequiredContainer noRedirect>
-                    <PortalLinkContainer
-                      type="button"
-                      icon={FaBell}
-                      className={subscriptionButtonClassnames}
-                      dataTestId="search-panels-actions__subscriptions-button"
-                      label={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
-                      title={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
-                      badge={collectionSubscriptions.length ? `${collectionSubscriptions.length}` : false}
-                      naked
-                      to={{
-                        pathname: '/search/subscriptions',
-                        search: location.search
-                      }}
-                    >
-                      Subscriptions
-                    </PortalLinkContainer>
-                  </AuthRequiredContainer>
-                </PortalFeatureContainer>
-              </div>
-            )
-          }
-          {
-            !isDefaultPortal(portalId) && (
-              <div className="search-panels__portal-escape">
-                Looking for more collections?
-                {' '}
-                <PortalLinkContainer
-                  newPortal={{}}
-                  to={location}
-                  updatePath
-                >
-                  Leave
-                  {' '}
-                  the
-                  {' '}
-                  {primaryPortalTitle}
-                  {' '}
-                  Portal
-                </PortalLinkContainer>
-              </div>
-            )
-          }
-        </>
+      return isLoggedIn && (
+        <div className="search-panels__actions">
+          <PortalFeatureContainer authentication>
+            <AuthRequiredContainer noRedirect>
+              <PortalLinkContainer
+                type="button"
+                icon={FaBell}
+                className={subscriptionButtonClassnames}
+                dataTestId="search-panels-actions__subscriptions-button"
+                label={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
+                title={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
+                badge={collectionSubscriptions.length ? `${collectionSubscriptions.length}` : false}
+                naked
+                to={{
+                  pathname: '/search/subscriptions',
+                  search: location.search
+                }}
+              >
+                Subscriptions
+              </PortalLinkContainer>
+            </AuthRequiredContainer>
+          </PortalFeatureContainer>
+        </div>
       )
     }
 
