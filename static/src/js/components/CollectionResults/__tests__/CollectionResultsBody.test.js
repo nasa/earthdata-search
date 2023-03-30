@@ -7,6 +7,7 @@ import CollectionResultsList from '../CollectionResultsList'
 import { collectionResultsBodyData } from './mocks'
 import CollectionResultsTable from '../CollectionResultsTable'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
+import * as PortalUtils from '../../../util/portals'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -320,6 +321,7 @@ describe('CollectionResultsBody component', () => {
 
   describe('when in the default portal', () => {
     test('does not show the link to the default portal', () => {
+      jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => true)
       const { enzymeWrapper } = setup()
       const portalExitButton = enzymeWrapper.find(PortalLinkContainer)
       expect(portalExitButton.length).toBe(0)
@@ -328,6 +330,7 @@ describe('CollectionResultsBody component', () => {
 
   describe('when not in the default portal', () => {
     test('does not show the link to the default portal', () => {
+      jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => false)
       const { enzymeWrapper } = setup({
         portal: {
           portalId: 'another-portal'
