@@ -317,7 +317,10 @@ export const Timeline = ({
             label="Show Timeline"
             onClick={() => onToggleTimeline(true)}
           >
-            Expand timeline (t)
+            Expand timeline
+            <span className="keyboard-shortcut">
+              t
+            </span>
           </Button>
         )
       }

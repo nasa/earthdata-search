@@ -25,6 +25,7 @@
   }
 
   &__thumbnail-container {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,10 +33,44 @@
     flex-shrink: 0;
     height: 2.1875rem;
     width: 2.1875rem;
-    margin-right: 0.5rem;
     background-color: $color__white;
     border: 1px solid $color__black--200;
     border-radius: 0.25rem;
+
+    &:hover,
+    &:focus {
+      border: 1px solid $color__blue;
+
+      .search-sidebar-header__thumbnail-icon-wrapper {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  &__thumbnail-icon-wrapper {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 16px;
+    width: 16px;
+    background-color: rgba($color__black, 0.5);
+    border-top-left-radius: 4px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &__thumbnail-icon {
+    display: block;
+    height: 0.625rem;
+    width: 0.625rem;
+    color: $color__black--100;
+    text-shadow: 0 0 4px rgba($color__black, 0.5);
+    font-size: 0.625rem;
   }
 
   &__thumbnail {
@@ -45,9 +80,16 @@
     background-position: center;
   }
 
+  &__portal-tooltip-icon {
+    margin-left: 0.25rem;
+    font-size: 0.625rem;
+    color: $color__black--400;
+  }
+
   &__primary {
     display: flex;
     flex-direction: column;
+    margin-left: 0.5rem;
     overflow: hidden;
     justify-content: center;
     align-items: flex-start;

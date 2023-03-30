@@ -2,6 +2,10 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  background-color: $color__black--100;
+  box-shadow:
+    inset 0px 10px 15px -20px rgba($color__black--100, 10),
+    inset 0px -10px 15px -20px rgba($color__black--100, 10);
 
   &--light {
     .facets-item__label {

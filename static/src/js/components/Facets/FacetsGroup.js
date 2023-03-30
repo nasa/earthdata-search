@@ -56,7 +56,11 @@ class FacetsGroup extends Component {
     let buttonTitleText = title
 
     if (totalSelected > 0) {
-      buttonTitleText += `  (${totalSelected} Selected)`
+      buttonTitleText += ` (${totalSelected} Filters Selected)`
+    }
+
+    if (facet.children.length === 0) {
+      buttonTitleText += ' (0 Filters Available)'
     }
 
     return (
@@ -68,6 +72,7 @@ class FacetsGroup extends Component {
             label={buttonTitleText}
             title={buttonTitleText}
             onClick={this.onToggle}
+            disabled={facet.children.length === 0}
           >
             <div className="facets-group__heading-primary">
               <span className="facets-group__title">

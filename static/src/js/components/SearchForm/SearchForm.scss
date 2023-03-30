@@ -61,6 +61,11 @@
     border-right: 1px solid $color__black--200;
     z-index: 1;
 
+    &:hover,
+    &:focus {
+      background-color: $color__black--100;
+    }
+
     &:focus {
       z-index: 2;
     }

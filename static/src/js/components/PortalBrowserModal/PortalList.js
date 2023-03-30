@@ -5,15 +5,11 @@ import {
   Row,
   Col
 } from 'react-bootstrap'
-import { FaExternalLinkAlt } from 'react-icons/fa'
 
 import { locationPropType } from '../../util/propTypes/location'
-
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import { availablePortals } from '../../../../../portals'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-
-import { availablePortals } from '../../../../../portals'
 
 import './PortalList.scss'
 
@@ -33,7 +29,7 @@ export const PortalList = ({
       {
         sortedPortals.map((portal) => {
           const {
-            description,
+            // description,
             hasLogo,
             moreInfoUrl,
             portalBrowser = false,
@@ -54,10 +50,10 @@ export const PortalList = ({
           const newPathname = '/search'
 
           return (
-            <Col xs={6} key={portalId}>
+            <Col className="d-flex" xs={6} key={portalId}>
               <PortalLinkContainer
                 variant="naked"
-                className="portal-list__item"
+                className="portal-list__item-link"
                 type="button"
                 label={`Visit ${primary} Portal`}
                 newPortal={portal}
@@ -69,10 +65,10 @@ export const PortalList = ({
                 updatePath
                 dataTestId={`portal-list-item-${portalId}`}
               >
-                <div className="portal-list__item-contents">
+                <div className="portal-list__item">
                   {
                     imageSrc && (
-                      <div className="portal-list__item-contents__logo">
+                      <div className="portal-list__item-logo">
                         <img
                           alt="portal"
                           src={imageSrc}
@@ -81,35 +77,36 @@ export const PortalList = ({
                       </div>
                     )
                   }
-                  <div className="portal-list__item-contents__details">
+                  <div className="portal-list__item-primary">
                     <div
-                      className="portal-list__item-contents__details--title"
+                      className="portal-list__item-title"
                       data-testid={`portal-title-${portalId}`}
                     >
-                      <span className="primary-title">{primary}</span>
+                      <span className="portal-list__item-title-primary">{primary}</span>
                       {
                         secondary && (
-                          <span className="secondary-title">
-                            (
+                          <span className="portal-list__item-title-secondary">
+                            <span className="visually-hidden"> (</span>
                             {secondary}
-                            )
+                            <span className="visually-hidden">)</span>
                           </span>
                         )
                       }
                     </div>
-                    <div
-                      className="portal-list__item-contents__details--description"
+                    {/* <div
+                      className="portal-list__item-description"
                       data-testid={`portal-description-${portalId}`}
                     >
                       {description}
-                    </div>
+                    </div> */}
                     <div
-                      className="portal-list__item-contents__details--link"
+                      className="portal-list__item-details-link"
                       data-testid={`portal-link-${portalId}`}
                     >
                       {
                         moreInfoUrl && (
                           <a
+                            className="link link--external"
                             href={moreInfoUrl}
                             target="_blank"
                             rel="noreferrer"
@@ -118,8 +115,6 @@ export const PortalList = ({
                             }}
                           >
                             More Info
-                            {' '}
-                            <EDSCIcon icon={FaExternalLinkAlt} size="0.725rem" />
                           </a>
                         )
                       }

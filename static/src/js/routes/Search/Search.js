@@ -6,13 +6,17 @@ import {
   Switch,
   withRouter
 } from 'react-router-dom'
-import { Form } from 'react-bootstrap'
+import {
+  Form,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap'
 import {
   FaMap,
   FaFilter,
   FaInfoCircle,
   FaSitemap,
-  FaChevronRight
+  FaQuestionCircle
 } from 'react-icons/fa'
 
 import AdvancedSearchModalContainer
@@ -38,13 +42,14 @@ import SearchSidebarHeaderContainer
 import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
 
-import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
+import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 
 import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
+import Button from '../../components/Button/Button'
 
 export const mapDispatchToProps = (dispatch) => ({
   onUpdateAdvancedSearch:
@@ -82,8 +87,8 @@ export const Search = ({
     hasGranulesOrCwic = false,
     onlyEosdisCollections
   } = collectionQuery
-  const isHasNoGranulesChecked = !hasGranulesOrCwic
 
+  const isHasNoGranulesChecked = !hasGranulesOrCwic
   const isEosdisChecked = onlyEosdisCollections || false
 
   const handleCheckboxCheck = (event) => {
@@ -156,14 +161,26 @@ export const Search = ({
             {granuleFiltersSidebar}
           </Route>
           <Route path={path}>
-            <SidebarSection
-              sectionTitle="Browse Portals"
-              titleIcon={FaSitemap}
-              onClick={() => onTogglePortalBrowserModal(true)}
-              headerAction={{
-                title: (<EDSCIcon className="sidebar-section__title-icon" icon={FaChevronRight} />)
-              }}
-            />
+            <SidebarSection>
+              <Button
+                variant="full"
+                bootstrapVariant="light"
+                icon={FaSitemap}
+                onClick={() => onTogglePortalBrowserModal(true)}
+              >
+                Browse Portals
+                <OverlayTrigger
+                  placement="top"
+                  overlay={(
+                    <Tooltip style={{ width: '20rem' }}>
+                      Enable a portal in order to refine the data available within Earthdata Search
+                    </Tooltip>
+                  )}
+                >
+                  <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
+                </OverlayTrigger>
+              </Button>
+            </SidebarSection>
             <SidebarSection
               sectionTitle="Filter Collections"
               titleIcon={FaFilter}

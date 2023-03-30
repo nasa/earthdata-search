@@ -1,5 +1,4 @@
 .spatial-display {
-  color: white;
   padding: 10px 15px;
   background: rgb(17, 17, 17);
   font-size: 1em;
@@ -31,6 +30,9 @@
   &__form-label {
     flex-grow: 0;
     padding: 0 $spacer/4;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: $color__black--500;
   }
 
   &__text-primary {

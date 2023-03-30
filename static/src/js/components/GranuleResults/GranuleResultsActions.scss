@@ -3,9 +3,6 @@
   align-items: center;
   justify-content: space-between;
   padding: $spacer/2 $spacer;
-  border: 1px solid $color__black--200;
-  border-left: 0;
-  border-right: 0;
 
   .panels--sm & {
     flex-direction: row;

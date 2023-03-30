@@ -198,7 +198,7 @@ export class Panels extends PureComponent {
         handleToolipVisible: true,
         handleTooltipState: nextHandleTooltipState
       })
-    }, 750)
+    }, 0)
   }
 
   onPanelHandleMouseOut() {
@@ -602,7 +602,10 @@ export class Panels extends PureComponent {
                         id="panel-handle-tooltip"
                         className="panels__handle-tooltip panels__handle-tooltip--collapse"
                       >
-                        {`${handleTooltipState} panel (${keyboardShortcuts.togglePanel})`}
+                        {`${handleTooltipState} panel`}
+                        <span className="keyboard-shortcut">
+                          {keyboardShortcuts.togglePanel}
+                        </span>
                       </Tooltip>
                     )
                   }

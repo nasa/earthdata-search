@@ -2,8 +2,7 @@
   &__body {
     padding-top: 0.5rem;
     padding-bottom: 0.25rem;
-    border-bottom: 1px solid $color__black--700;
-    color: $color__black--200;
+    border-bottom: 1px solid $color__black--200;
   }
 
   &__item-header {
@@ -12,8 +11,10 @@
 
   &__item-title {
     margin: 0;
-    font-weight: 300;
     font-size: 0.825rem;
+    font-weight: 700;
+    letter-spacing: 0.005rem;
+    color: $color__black--500;
     word-break: break-all;
   }
 
@@ -28,8 +29,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.75rem;
-    color: $color__black--400;
+    font-size: 0.825rem;
+    color: $color__black--700;
 
     &--desc {
       display: -webkit-box;
@@ -47,7 +48,7 @@
     padding: 0;
     display: inline-block;
     white-space: nowrap;
-    font-size: .825rem;
+    font-size: 0.825rem;
     line-height: 1;
     vertical-align: baseline;
 
