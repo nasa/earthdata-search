@@ -6,6 +6,7 @@ import CollectionResultsBody from '../CollectionResultsBody'
 import CollectionResultsList from '../CollectionResultsList'
 import { collectionResultsBodyData } from './mocks'
 import CollectionResultsTable from '../CollectionResultsTable'
+import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -314,6 +315,27 @@ describe('CollectionResultsBody component', () => {
 
         expect(resultsList.props().isItemLoaded(2)).toEqual(false)
       })
+    })
+  })
+
+  describe('when in the default portal', () => {
+    test('does not show the link to the default portal', () => {
+      const { enzymeWrapper } = setup()
+      const portalExitButton = enzymeWrapper.find(PortalLinkContainer)
+      // console.warn('portalExitButton', portalExitButton.props())
+      expect(portalExitButton.length).toBe(0)
+    })
+  })
+
+  describe('when not in the default portal', () => {
+    test('does not show the link to the default portal', () => {
+      const { enzymeWrapper } = setup({
+        portal: {
+          portalId: 'another-portal'
+        }
+      })
+      const portalExitButton = enzymeWrapper.find(PortalLinkContainer)
+      expect(portalExitButton.length).toBe(1)
     })
   })
 })

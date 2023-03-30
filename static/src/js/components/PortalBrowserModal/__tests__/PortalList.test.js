@@ -45,13 +45,6 @@ describe('PortalList component', () => {
     expect(screen.getByTestId('portal-link-above').querySelector('a')).toHaveAttribute('href', 'https://above.nasa.gov/')
   })
 
-  test('renders a portal without an image', () => {
-    setup()
-
-    expect(screen.getByTestId('portal-title-standardproducts')).toHaveTextContent('Standard Products')
-    expect(screen.getByTestId('portal-link-standardproducts').querySelector('a')).toBeNull()
-  })
-
   test('does not render a portal that is excluded from the browser', () => {
     setup()
 

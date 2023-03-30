@@ -107,12 +107,12 @@ export const SearchSidebarHeader = ({
             icon={FaDoorOpen}
             variant="link"
             type="button"
-            title="Exit Portal"
-            label="Exit Portal"
+            title="Leave Portal"
+            label="Leave Portal"
             to={location}
             updatePath
           >
-            Exit Portal
+            Leave Portal
           </PortalLinkContainer>
 
         </div>
