@@ -322,7 +322,6 @@ describe('CollectionResultsBody component', () => {
     test('does not show the link to the default portal', () => {
       const { enzymeWrapper } = setup()
       const portalExitButton = enzymeWrapper.find(PortalLinkContainer)
-      // console.warn('portalExitButton', portalExitButton.props())
       expect(portalExitButton.length).toBe(0)
     })
   })

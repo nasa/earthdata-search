@@ -50,7 +50,7 @@ export const PortalList = ({
           const newPathname = '/search'
 
           return (
-            <Col className="d-flex" xs={6} key={portalId}>
+            <Col className="d-flex" xs={12} lg={6} key={portalId}>
               <PortalLinkContainer
                 variant="naked"
                 className="portal-list__item-link"
