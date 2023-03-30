@@ -1,3 +1,11 @@
+.form-control {
+  border: 1px solid $color__black--300;
+
+  &:focus {
+    border: 1px solid $color__black--400;
+  }
+}
+
 .form-control-basic {
   width: auto;
   height: auto;
@@ -52,4 +60,9 @@
       opacity: 1;
     }
   }
+}
+
+.form-check-input:hover,
+.form-check-label:hover {
+  cursor: pointer;
 }

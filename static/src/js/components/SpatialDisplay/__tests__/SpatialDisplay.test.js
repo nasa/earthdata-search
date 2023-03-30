@@ -53,7 +53,7 @@ describe('SpatialDisplay component', () => {
       expect(filterStackContents.props().title).toEqual('Point')
       const label = filterStackContents.props().body.props.children.props.children.props.children[0]
       const input = filterStackContents.props().body.props.children.props.children.props.children[1]
-      expect(label.props.children).toContain('Coordinates:') // Lat,Lon
+      expect(label.props.children).toContain('Point:') // Lat,Lon
       expect(input.props.children.props.value).toEqual('38.805869,-77.0418825') // Lat,Lon
     })
   })

@@ -217,11 +217,11 @@ const GranuleResultsItem = forwardRef(({
         <div className="granule-results-item__meta">
           <div className="granule-results-item__temporal granule-results-item__temporal--start">
             <h5>Start</h5>
-            <p>{timeStart}</p>
+            <p>{timeStart || <>&ndash;</>}</p>
           </div>
           <div className="granule-results-item__temporal granule-results-item__temporal--end">
             <h5>End</h5>
-            <p>{timeEnd}</p>
+            <p>{timeEnd || <>&ndash;</>}</p>
           </div>
           <div className="granule-results-item__actions">
             <div className="granule-results-item__buttons">

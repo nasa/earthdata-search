@@ -1,13 +1,16 @@
 {
+  "hasLogo": true,
   "pageTitle": "Standard Products",
   "parentConfig": "edsc",
   "portalBrowser": true,
+  "moreInfoUrl": "https://www.earthdata.nasa.gov/eosdis/science-system-description/eosdis-standard-products",
   "query": {
     "hasGranulesOrCwic": null,
     "standardProduct": true
   },
   "title": {
-    "primary": "Standard Products"
+    "primary": "Standard Products",
+    "secondary": "NASA EOSDIS Earth Science Standard Products"
   },
   "ui": {
     "showNonEosdisCheckbox": false,

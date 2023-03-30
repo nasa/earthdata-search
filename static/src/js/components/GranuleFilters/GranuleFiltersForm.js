@@ -587,6 +587,7 @@ export const GranuleFiltersForm = (props) => {
                       heading="Orbit Number"
                     >
                       <Form.Group
+                        className="mb-1"
                         as={Row}
                         controlId="granule-filters__orbit-number-min"
                         noGutters
@@ -653,6 +654,7 @@ export const GranuleFiltersForm = (props) => {
                       heading="Equatorial Crossing Longitude"
                     >
                       <Form.Group
+                        className="mb-1"
                         as={Row}
                         controlId="granule-filters__equatorial-crossing-longitude-min"
                         noGutters

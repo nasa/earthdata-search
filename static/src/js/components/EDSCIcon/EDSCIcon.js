@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { IconContext } from 'react-icons'
 
+import './EDSCIcon.scss'
+
 /**
  * Renders an icon wrapped with EDSCIcon.
  * @param {String|Function} icon - The `react-icon` or 'edsc-*' icon name to render
@@ -17,11 +19,15 @@ export const EDSCIcon = ({
   context,
   size,
   title,
+  variant,
   ...props
 }) => {
   if (!icon) return null
 
-  let iconClassNames = `edsc-icon ${className}`
+  let iconClassNames = 'edsc-icon'
+
+  if (variant) iconClassNames = `${iconClassNames} edsc-icon--${variant}`
+  if (className) iconClassNames = `${iconClassNames} ${className}`
 
   if (typeof icon === 'string') {
     iconClassNames = `${iconClassNames} edsc-icon--simple`
@@ -29,6 +35,7 @@ export const EDSCIcon = ({
       <i
         className={iconClassNames}
         title={title}
+        data-testid="edsc-icon-simple"
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
       />
@@ -46,6 +53,7 @@ export const EDSCIcon = ({
           className={iconClassNames}
           title={title}
           size={size}
+          data-testid="edsc-icon"
           {...props}
         />
         {children}
@@ -59,6 +67,7 @@ export const EDSCIcon = ({
         className={iconClassNames}
         title={title}
         size={size}
+        data-testid="edsc-icon"
         {...props}
       />
       {children}
@@ -72,7 +81,8 @@ EDSCIcon.defaultProps = {
   className: null,
   context: null,
   size: '1rem',
-  title: null
+  title: null,
+  variant: null
 }
 
 EDSCIcon.propTypes = {
@@ -81,7 +91,8 @@ EDSCIcon.propTypes = {
   className: PropTypes.string,
   context: PropTypes.shape({}),
   size: PropTypes.string,
-  title: PropTypes.string
+  title: PropTypes.string,
+  variant: PropTypes.string
 }
 
 export default EDSCIcon

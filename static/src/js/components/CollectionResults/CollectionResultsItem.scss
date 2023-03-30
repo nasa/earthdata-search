@@ -72,7 +72,7 @@
   }
 
   &__thumb {
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     flex-basis: auto;
@@ -84,10 +84,6 @@
     font-size: 0.5rem;
     overflow: hidden;
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.175);
-
-    .panels--sm & {
-      display: flex;
-    }
   }
 
   &__thumb-image {
@@ -182,12 +178,16 @@
 
   &__desc {
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
     margin-bottom: $spacer * 0.25;
     font-size: 0.825rem;
     color: $color__black--600;
+
+    .panels--sm & {
+      -webkit-line-clamp: 2;
+    }
   }
 
   &__actions {

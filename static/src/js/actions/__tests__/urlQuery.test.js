@@ -202,7 +202,6 @@ describe('updateStore', () => {
           },
           portalId: undefined,
           portal: {
-            description: 'The goal of the Airborne Microwave Observatory of Subcanopy and Subsurface (AirMOSS) investigation is to provide high-resolution observations of root-zone soil moisture over regions representative of the major North American climatic habitats (biomes), quantify the impact of variations in soil moisture on the estimation of regional carbon fluxes, and extrapolate the reduced-uncertainty estimates of regional carbon fluxes to the continental scale of North America.',
             features: {
               advancedSearch: true,
               authentication: true,

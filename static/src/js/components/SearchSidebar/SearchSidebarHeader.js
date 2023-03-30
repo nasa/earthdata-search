@@ -1,14 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FaTimes } from 'react-icons/fa'
+import { Tooltip, OverlayTrigger } from 'react-bootstrap'
+import { FaDoorOpen } from 'react-icons/fa'
 
-import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { locationPropType } from '../../util/propTypes/location'
 
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
+
 import './SearchSidebarHeader.scss'
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Renders SearchSidebarHeader
@@ -34,6 +36,8 @@ export const SearchSidebarHeader = ({
 
   const { primary: primaryTitle, secondary: secondaryTitle } = title
 
+  const displayTitle = `${primaryTitle}${secondaryTitle && ` (${secondaryTitle})`}`
+
   let logoEl
 
   if (hasLogo) {
@@ -44,20 +48,35 @@ export const SearchSidebarHeader = ({
           id="portal-logo"
           data-testid="portal-logo"
         />
+        <div className="search-sidebar-header__thumbnail-icon-wrapper">
+          <EDSCIcon className="search-sidebar-header__thumbnail-icon edsc-icon-ext-link edsc-icon-fw" icon="edsc-icon-ext-link edsc-icon-fw" />
+        </div>
       </div>
     )
   }
 
-  if (moreInfoUrl) {
+  if (moreInfoUrl && hasLogo) {
     logoEl = (
-      <a
-        target="_blank"
-        rel="noreferrer"
-        href={moreInfoUrl}
-        data-testid="portal-logo-link"
+      <OverlayTrigger
+        placement="top"
+        overlay={(
+          <Tooltip className="tooltip--auto">
+            Find more information about
+            {' '}
+            {displayTitle}
+            <EDSCIcon className="search-sidebar-header__portal-tooltip-icon edsc-icon-ext-link edsc-icon-fw" icon="edsc-icon-ext-link edsc-icon-fw" />
+          </Tooltip>
+        )}
       >
-        {logoEl}
-      </a>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={moreInfoUrl}
+          data-testid="portal-logo-link"
+        >
+          {logoEl}
+        </a>
+      </OverlayTrigger>
     )
   }
 
@@ -68,7 +87,7 @@ export const SearchSidebarHeader = ({
         <div className="search-sidebar-header__primary">
           <h2
             className="search-sidebar-header__heading"
-            title={`${primaryTitle}${secondaryTitle && ` (${secondaryTitle})`}`}
+            title={displayTitle}
           >
             {primaryTitle}
             {
@@ -85,7 +104,7 @@ export const SearchSidebarHeader = ({
           <PortalLinkContainer
             newPortal={{}}
             className="search-sidebar-header__button"
-            icon={FaTimes}
+            icon={FaDoorOpen}
             variant="link"
             type="button"
             title="Exit Portal"

@@ -1,5 +1,4 @@
 {
-  "description": "This portal is used as the primary EDSC portal. It is not intended to be displayed in the portal browser, or to be used by any open source deployments of EDSC.",
   "features": {
     "advancedSearch": true,
     "authentication": true,

@@ -93,17 +93,17 @@ export const GranuleResultsHighlights = ({
                       <h4 className="granule-results-highlights__item-title">{title}</h4>
                     </header>
                     <div className="granule-results-highlights__item-body">
-                      <div className="granule-results-highlights__temporal-row">
+                      <div className="granule-results-highlights__temporal-row granule-results-highlights__temporal-row--start">
                         <h5 className="granule-results-highlights__temporal-label">
                           Start
                         </h5>
-                        <p className="granule-results-highlights__temporal-value">{timeStart}</p>
+                        <p className="granule-results-highlights__temporal-value">{timeStart || <>&ndash;</>}</p>
                       </div>
-                      <div className="granule-results-highlights__temporal-row">
+                      <div className="granule-results-highlights__temporal-row granule-results-highlights__temporal-row--end">
                         <h5 className="granule-results-highlights__temporal-label">
                           End
                         </h5>
-                        <p className="granule-results-highlights__temporal-value">{timeEnd}</p>
+                        <p className="granule-results-highlights__temporal-value">{timeEnd || <>&ndash;</>}</p>
                       </div>
                     </div>
                   </li>

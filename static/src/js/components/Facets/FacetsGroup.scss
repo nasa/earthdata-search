@@ -48,6 +48,7 @@
     border-radius: 0;
     font-size: 0.875rem;
     font-weight: 400;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
       background: $color__black--100;
@@ -57,32 +58,48 @@
       outline: 0;
       border-color: transparent;
     }
+
+    &:disabled {
+      background-color: #fff;
+      cursor: not-allowed;
+    }
   }
 
   &__action {
     align-self: flex-end;
     color: $color__black--300;
+
+    .facets-group__button:disabled & {
+      display: none;
+    }
   }
 
   &__header {
     display: flex;
-    padding: 0.2rem 0.5rem 0.2rem 0.7rem;
+    padding: 0.2rem 0.5rem 0.325rem 0.7rem;
+    background-color: $color__black--100;
+    color:#fff;
   }
 
   &__meta {
     font-size: 0.8rem;
-    color: $color__black--400;
+    color: $color__black--600;
+    font-weight: 500;
   }
 
   &__view-all {
     margin-left: auto;
     padding: 0;
     font-size: 0.8rem;
-    font-weight: 700;
-    color: $color__black--400;
+    font-weight: 500;
+    color: $color__blue;
     background: none;
     outline: none;
     border: 0;
+
+    &:hover {
+      color: $color__blue--dark;
+    }
 
     &:focus {
       outline: 0;
@@ -103,7 +120,6 @@
 
   &__body {
     overflow: hidden;
-    background-color: darken($color__black--100, 5);\
 
     &:first-child {
       padding-top: 0.6rem;

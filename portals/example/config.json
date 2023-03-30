@@ -1,5 +1,4 @@
 {
-  "description": "Example portal only, not for use in EDSC",
   "hasLogo": false,
   "pageTitle": "Example",
   "parentConfig": "edsc",

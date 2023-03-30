@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { FaTimesCircle } from 'react-icons/fa'
+import { FaTrash } from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -49,9 +49,9 @@ const FilterStackItem = (props) => {
             variant === 'naked'
               ? children
               : (
-                <>
-                  <div className="filter-stack-item__body-primary">
-                    <header className="filter-stack-item__header">
+                <div className="filter-stack-item__body-primary">
+                  <header className="filter-stack-item__header">
+                    <div className="filter-stack-item__header-primary">
                       <EDSCIcon className={iconClass} icon={icon} title={title} />
                       <h3 className="filter-stack-item__title">{title}</h3>
                       {
@@ -59,24 +59,27 @@ const FilterStackItem = (props) => {
                           <span className="filter-stack-item__secondary-title">{secondaryTitle}</span>
                         )
                       }
-                    </header>
-                    <div className="filter-stack-item__body-contents">
-                      {children}
                     </div>
+                    <div className="filter-stack-item__header-secondary">
+                      {
+                          onRemove && (
+                            <Button
+                              variant="naked"
+                              className="filter-stack-item__action-button"
+                              label={`Remove ${title.toLowerCase()} filter`}
+                              icon={FaTrash}
+                              onClick={() => { onRemove() }}
+                            >
+                              Remove
+                            </Button>
+                          )
+                        }
+                    </div>
+                  </header>
+                  <div className="filter-stack-item__body-contents">
+                    {children}
                   </div>
-                  <div className="filter-stack-item__body-actions">
-                    {
-                      onRemove && (
-                        <Button
-                          className="filter-stack-item__action-button"
-                          label={`Remove ${title.toLowerCase()} filter`}
-                          icon={FaTimesCircle}
-                          onClick={() => { onRemove() }}
-                        />
-                      )
-                    }
-                  </div>
-                </>
+                </div>
               )
           }
         </div>

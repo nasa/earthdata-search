@@ -41,8 +41,7 @@ describe('PortalList component', () => {
   test('renders a list of portals', () => {
     setup()
 
-    expect(screen.getByTestId('portal-title-above')).toHaveTextContent('ABoVE(Arctic-Boreal Vulnerability Experiment)')
-    expect(screen.getByTestId('portal-description-above')).toHaveTextContent('The ABoVE portal provides access to data from the Arctic-Boreal Vulnerability Experiment (ABoVE) NASA mission.')
+    expect(screen.getByTestId('portal-title-above')).toHaveTextContent('ABoVE (Arctic-Boreal Vulnerability Experiment)')
     expect(screen.getByTestId('portal-link-above').querySelector('a')).toHaveAttribute('href', 'https://above.nasa.gov/')
   })
 
@@ -50,7 +49,6 @@ describe('PortalList component', () => {
     setup()
 
     expect(screen.getByTestId('portal-title-standardproducts')).toHaveTextContent('Standard Products')
-    expect(screen.getByTestId('portal-description-standardproducts')).toHaveTextContent('')
     expect(screen.getByTestId('portal-link-standardproducts').querySelector('a')).toBeNull()
   })
 
@@ -58,7 +56,6 @@ describe('PortalList component', () => {
     setup()
 
     expect(screen.queryByTestId('portal-title-example')).toBeNull()
-    expect(screen.queryByTestId('portal-description-example')).toBeNull()
     expect(screen.queryByTestId('portal-link-example')).toBeNull()
   })
 

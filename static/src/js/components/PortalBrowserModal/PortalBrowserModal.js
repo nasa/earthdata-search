@@ -29,7 +29,7 @@ export const PortalBrowserModal = ({
         Enable a portal to quickly refine the data available within Earthdata Search
         by limiting the search results to a particular area of interest, project, or organization.
       </p>
-      <p>
+      <p className="font-italic text-muted">
         Note: Enabling a portal might impact the features available for search.
       </p>
       <PortalList
@@ -46,7 +46,7 @@ export const PortalBrowserModal = ({
       isOpen={isOpen}
       id="portal-browser"
       size="lg"
-      fixedHeight="sm"
+      fixedHeight="lg"
       onClose={onModalClose}
       body={body}
       dataTestId="portal-browser-modal"

@@ -1,5 +1,4 @@
 {
-  "description": "This is the default portal, it holds all configuration values, but should not be used as an active portal in EDSC.",
   "features": {
     "advancedSearch": false,
     "authentication": false,
