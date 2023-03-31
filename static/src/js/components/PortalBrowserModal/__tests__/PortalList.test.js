@@ -83,4 +83,20 @@ describe('PortalList component', () => {
 
     expect(props.onModalClose).toHaveBeenCalledTimes(0)
   })
+
+  test('displays a title attribute for the `More Info` link', async () => {
+    setup()
+
+    const moreInfoLink = screen.getByTestId('portal-link-above').querySelector('a')
+
+    expect(moreInfoLink).toHaveAttribute('title', 'Find more information about ABoVE (Arctic-Boreal Vulnerability Experiment)')
+  })
+
+  test('Clicking the `More Info` link opens a new windoe', async () => {
+    setup()
+
+    const moreInfoLink = screen.getByTestId('portal-link-above').querySelector('a')
+
+    expect(moreInfoLink).toHaveAttribute('target', '_blank')
+  })
 })

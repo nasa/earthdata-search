@@ -106,6 +106,7 @@ export const PortalList = ({
                             onClick={(event) => {
                               event.stopPropagation()
                             }}
+                            title={`Find more information about ${primary}${secondary && ` (${secondary})`}`}
                           >
                             More Info
                           </a>
