@@ -10,7 +10,7 @@ export const mapDispatchToProps = (dispatch) => ({
     (portalId) => dispatch(actions.changePath(portalId))
 })
 
-export const BackButtonContainer = ({ onChangePath }) => {
+export const HistoryContainer = ({ onChangePath }) => {
   useEffect(() => {
     const unlisten = history.listen((location, action) => {
       // If the action is POP (browser back or forward buttons), call onChangePath to reset the store
@@ -30,8 +30,8 @@ export const BackButtonContainer = ({ onChangePath }) => {
   return null
 }
 
-BackButtonContainer.propTypes = {
+HistoryContainer.propTypes = {
   onChangePath: PropTypes.func.isRequired
 }
 
-export default connect(null, mapDispatchToProps)(BackButtonContainer)
+export default connect(null, mapDispatchToProps)(HistoryContainer)

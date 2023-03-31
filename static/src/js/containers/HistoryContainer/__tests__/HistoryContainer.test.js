@@ -1,4 +1,4 @@
-import { mapDispatchToProps } from '../BackButtonContainer'
+import { mapDispatchToProps } from '../HistoryContainer'
 
 import actions from '../../../actions'
 

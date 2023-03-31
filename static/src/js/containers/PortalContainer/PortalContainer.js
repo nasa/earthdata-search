@@ -46,6 +46,9 @@ export const PortalContainer = ({
     if (portalId) {
       newPathname = pathname.replace(`/portal/${portalId}`, '')
 
+      // If the pathname doesn't exist after replacing the portalPath, set it to /search
+      if (!newPathname) newPathname = '/search'
+
       const params = parse(search, { parseArrays: false, ignoreQueryPrefix: true })
 
       newSearch = stringify({

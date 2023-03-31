@@ -100,7 +100,6 @@ export const PortalLinkContainer = (props) => {
   if (type === 'button') {
     // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button#answer-49439893
     const {
-      // dispatch,
       history,
       location,
       to,

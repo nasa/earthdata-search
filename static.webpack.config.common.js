@@ -203,10 +203,7 @@ const StaticCommonConfig = {
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/
     })
-  ],
-  watchOptions: {
-    ignored: /mergedPortalConfigs.json/
-  }
+  ]
 }
 
 module.exports = StaticCommonConfig
