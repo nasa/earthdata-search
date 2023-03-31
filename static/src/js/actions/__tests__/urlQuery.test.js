@@ -173,7 +173,6 @@ describe('updateStore', () => {
       }
 
       jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
-      jest.spyOn(actions, 'fetchAccessMethods').mockImplementation(() => jest.fn())
       jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
 
       const store = mockStore({
