@@ -27,8 +27,7 @@ const SidebarSection = (props) => {
     moreActionsDropdownItems,
     padded,
     sectionTitle,
-    titleIcon,
-    onClick
+    titleIcon
   } = props
 
   const classes = classNames([
@@ -43,28 +42,12 @@ const SidebarSection = (props) => {
     onClick: headerActionOnClick
   } = headerAction
 
-  let headerProps = {}
-
-  if (onClick) {
-    // If onClick has been defined, add some extra props to the .sidebar-section__header-primary div
-    headerProps = {
-      onClick,
-      onKeyUp: onClick,
-      role: 'button',
-      tabIndex: 0
-    }
-  }
-
   return (
     <section className={classes}>
       {
         (sectionTitle || moreActionsDropdownItems.length > 0) && (
           <header className="sidebar-section__header">
-            <div
-              className="sidebar-section__header-primary"
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...headerProps}
-            >
+            <div className="sidebar-section__header-primary">
               <h2 className="sidebar-section__title">
                 {titleIcon && <EDSCIcon className="sidebar-section__title-icon" icon={titleIcon} />}
                 {sectionTitle}
@@ -84,9 +67,6 @@ const SidebarSection = (props) => {
                     {headerActionTitle}
                   </Button>
                 )
-              }
-              {
-                (headerActionTitle && !headerActionOnClick) && headerActionTitle
               }
               {
                 (moreActionsDropdownItems.length > 0) && (
@@ -148,25 +128,20 @@ const SidebarSection = (props) => {
 }
 
 SidebarSection.defaultProps = {
-  children: null,
   footerButtonProps: {},
   headerAction: {},
   moreActionsDropdownItems: [],
   sectionTitle: null,
   titleIcon: null,
-  padded: false,
-  onClick: null
+  padded: false
 }
 
 SidebarSection.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
   footerButtonProps: PropTypes.shape({}),
   headerAction: PropTypes.shape({
     onClick: PropTypes.func,
-    title: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.node
-    ])
+    title: PropTypes.string
   }),
   moreActionsDropdownItems: PropTypes.arrayOf(
     PropTypes.shape({
@@ -180,8 +155,7 @@ SidebarSection.propTypes = {
   ),
   padded: PropTypes.bool,
   sectionTitle: PropTypes.string,
-  titleIcon: PropTypes.func,
-  onClick: PropTypes.func
+  titleIcon: PropTypes.func
 }
 
 export default SidebarSection

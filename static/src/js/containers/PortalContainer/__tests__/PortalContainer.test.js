@@ -123,4 +123,32 @@ describe('PortalContainer component', () => {
     expect(props.onChangePath).toHaveBeenCalledTimes(1)
     expect(props.onChangePath).toHaveBeenCalledWith('/search?q=modis&portal=example')
   })
+
+  test('updates the url if the url is using a portal path without /search', async () => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      env: 'dev',
+      defaultPortal: 'edsc'
+    }))
+
+    const { props } = setup({
+      match: {
+        params: {
+          portalId: 'example'
+        }
+      },
+      location: {
+        pathname: '/portal/example',
+        search: '?q=modis'
+      }
+    })
+
+    expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
+    expect(props.onChangeUrl).toHaveBeenCalledWith({
+      pathname: '/search',
+      search: '?q=modis&portal=example'
+    })
+
+    expect(props.onChangePath).toHaveBeenCalledTimes(1)
+    expect(props.onChangePath).toHaveBeenCalledWith('/search?q=modis&portal=example')
+  })
 })

@@ -15,7 +15,7 @@ import { graphQlGetCollections } from '../../support/graphQlGetCollections'
 
 const conceptId = 'C1214470488-ASF'
 
-describe('Browser Buttons', () => {
+describe('History', () => {
   beforeEach(() => {
     const granuleHits = 1
 
@@ -127,7 +127,6 @@ describe('Browser Buttons', () => {
         cy.go('forward')
 
         cy.wait('@graphQlSubscriptionsQuery')
-        // cy.wait('@graphQlCollectionQuery')
         cy.wait('@graphQlCollectionsQuery')
       })
 

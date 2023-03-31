@@ -29,7 +29,6 @@ export const PortalList = ({
       {
         sortedPortals.map((portal) => {
           const {
-            // description,
             hasLogo,
             moreInfoUrl,
             portalBrowser = false,
@@ -93,12 +92,6 @@ export const PortalList = ({
                         )
                       }
                     </div>
-                    {/* <div
-                      className="portal-list__item-description"
-                      data-testid={`portal-description-${portalId}`}
-                    >
-                      {description}
-                    </div> */}
                     <div
                       className="portal-list__item-details-link"
                       data-testid={`portal-link-${portalId}`}
