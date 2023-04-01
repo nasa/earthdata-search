@@ -43,7 +43,10 @@ export const updateStore = ({
   timeline
 }, newPathname) => async (dispatch, getState) => {
   const state = getState()
-  const { router } = state
+  const {
+    portal: previousPortal = {},
+    router
+  } = state
   const { location } = router
   const { pathname } = location
 
@@ -57,6 +60,18 @@ export const updateStore = ({
 
   let portal = {}
   if (portalId) {
+    const {
+      hasStyles: previousPortalHasStyles,
+      portalId: previousPortalId
+    } = previousPortal
+
+    // If the previous portal is different than the new portal, and it did have a styles file,
+    // unload those styles
+    if (previousPortalId && portalId !== previousPortalId && previousPortalHasStyles) {
+      const css = require(`../../../../portals/${previousPortalId}/styles.scss`)
+      css.unuse()
+    }
+
     portal = buildConfig(availablePortals[portalId])
 
     const { hasStyles } = portal
@@ -200,7 +215,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   }
 
   // Fetch collections in the project
-  const { project = {} } = decodedParams
+  const { project = {} } = decodedParams || {}
   const { collections: projectCollections = {} } = project
   const { allIds = [] } = projectCollections
 
