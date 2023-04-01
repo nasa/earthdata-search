@@ -146,6 +146,7 @@ describe('updateStore', () => {
   describe('when a portal parameter is provided', () => {
     test('loads the included styles', async () => {
       jest.mock('../../../../../portals/airmoss/styles.scss', () => ({
+        unuse: jest.fn(),
         use: jest.fn()
       }))
 
@@ -258,6 +259,134 @@ describe('updateStore', () => {
           }
         },
         type: RESTORE_FROM_URL
+      })
+    })
+
+    describe('when the previous portal has styles', () => {
+      test('unloads the previous styles before loading the new styles', async () => {
+        jest.mock('../../../../../portals/airmoss/styles.scss', () => ({
+          unuse: jest.fn(),
+          use: jest.fn()
+        }))
+        jest.mock('../../../../../portals/carve/styles.scss', () => ({
+          unuse: jest.fn(),
+          use: jest.fn()
+        }))
+
+        const params = {
+          cmrFacets: {},
+          earthdataEnvironment: 'prod',
+          featureFacets: {
+            availableInEarthdataCloud: false,
+            customizable: false,
+            mapImagery: false,
+            nearRealTime: false
+          },
+          focusedCollection: '',
+          map: {},
+          portalId: 'airmoss',
+          project: {},
+          query: {
+            collection: {
+              overrideTemporal: {},
+              pageNum: 1,
+              spatial: {},
+              temporal: {}
+            },
+            granule: { pageNum: 1 }
+          },
+          shapefile: {}
+        }
+
+        jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
+        jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
+
+        const store = mockStore({
+          portal: {
+            hasStyles: true,
+            portalId: 'carve'
+          },
+          preferences: {
+            preferences: {
+              collectionSort: 'default'
+            }
+          },
+          router: {
+            location: {
+              pathname: '/projects'
+            }
+          }
+        })
+
+        await store.dispatch(urlQuery.updateStore(params, '/projects'))
+
+        const storeActions = store.getActions()
+        expect(storeActions[0]).toEqual({
+          payload: {
+            ...params,
+            query: {
+              ...params.query,
+              collectionSortPreference: 'default'
+            },
+            portalId: undefined,
+            portal: {
+              features: {
+                advancedSearch: true,
+                authentication: true,
+                featureFacets: {
+                  showAvailableInEarthdataCloud: true,
+                  showCustomizable: true,
+                  showMapImagery: true
+                }
+              },
+              footer: {
+                attributionText: 'NASA Official: Stephen Berrick',
+                displayVersion: true,
+                primaryLinks: [
+                  {
+                    href: 'http://www.nasa.gov/FOIA/index.html',
+                    title: 'FOIA'
+                  },
+                  {
+                    href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html',
+                    title: 'NASA Privacy Policy'
+                  },
+                  {
+                    href: 'http://www.usa.gov',
+                    title: 'USA.gov'
+                  }
+                ],
+                secondaryLinks: [
+                  {
+                    href: 'https://access.earthdata.nasa.gov/',
+                    title: 'Earthdata Access: A Section 508 accessible alternative'
+                  }
+                ]
+              },
+              hasLogo: true,
+              hasStyles: true,
+              moreInfoUrl: 'https://airmoss.ornl.gov',
+              pageTitle: 'AirMOSS',
+              parentConfig: 'edsc',
+              portalBrowser: true,
+              portalId: 'airmoss',
+              query: {
+                hasGranulesOrCwic: null,
+                project: 'AirMOSS'
+              },
+              title: {
+                primary: 'AirMOSS',
+                secondary: 'Airborne Microwave Observatory of Subcanopy and Subsurface '
+              },
+              ui: {
+                showNonEosdisCheckbox: false,
+                showOnlyGranulesCheckbox: false,
+                showTophat: true
+              }
+            }
+          },
+          type: RESTORE_FROM_URL
+        })
       })
     })
   })
@@ -436,6 +565,60 @@ describe('changePath', () => {
 
     expect(getCollectionsMock).toBeCalledTimes(1)
     expect(getTimelineMock).toBeCalledTimes(1)
+  })
+
+  test('handles an error fetching the project', async () => {
+    nock(/localhost/)
+      .get(/projects/)
+      .reply(500, { mock: 'error' })
+
+    const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
+    const getTimelineMock = jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
+    const handleErrorMock = jest.spyOn(actions, 'handleError').mockImplementation(() => jest.fn())
+
+    const newPath = '/search?projectId=1'
+
+    const store = mockStore({
+      earthdataEnvironment: 'prod',
+      metadata: {
+        collections: {
+          'C00001-EDSC': {
+            services: [],
+            variables: []
+          }
+        },
+        granules: {}
+      },
+      project: {
+        collections: {
+          allIds: ['C00001-EDSC'],
+          byId: {}
+        }
+      },
+      providers: [],
+      query: {},
+      router: {
+        location: {
+          pathname: '/search'
+        }
+      }
+    })
+
+    await store.dispatch(urlQuery.changePath(newPath)).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions.length).toEqual(0)
+
+      expect(getCollectionsMock).toBeCalledTimes(1)
+      expect(getTimelineMock).toBeCalledTimes(1)
+
+      expect(handleErrorMock).toBeCalledTimes(1)
+      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+        action: 'changePath',
+        error: new Error('Request failed with status code 500'),
+        resource: 'project',
+        verb: 'updating'
+      }))
+    })
   })
 
   describe('when a path is provided', () => {
@@ -911,6 +1094,42 @@ describe('changeUrl', () => {
 
         const storeActions = store.getActions()
         expect(storeActions.length).toBe(0)
+      })
+
+      test('handles an error updating the stored path', async () => {
+        nock(/localhost/)
+          .post(/projects/)
+          .reply(500, { mock: 'error' })
+
+        const handleErrorMock = jest.spyOn(actions, 'handleError').mockImplementation(() => jest.fn())
+
+        const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
+
+        const store = mockStore({
+          query: {},
+          router: {
+            location: {
+              pathname: '/projectId=1'
+            }
+          },
+          savedProject: {
+            projectId: 1,
+            path: '/search?p=C00001-EDSC'
+          }
+        })
+
+        await store.dispatch(urlQuery.changeUrl(newPath)).then(() => {
+          const storeActions = store.getActions()
+          expect(storeActions.length).toEqual(0)
+        })
+
+        expect(handleErrorMock).toBeCalledTimes(1)
+        expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+          action: 'changeUrl',
+          error: new Error('Request failed with status code 500'),
+          resource: 'project',
+          verb: 'updating'
+        }))
       })
     })
   })
