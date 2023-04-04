@@ -33,11 +33,13 @@ const shapefileReducer = (state = initialState, action = {}) => {
       }
     }
     case LOADING_SHAPEFILE: {
-      const { payload } = action
+      const { payload = {} } = action
       const {
-        name
+        name = ''
       } = payload
+
       return {
+        ...state,
         isErrored: false,
         isLoading: true,
         isLoaded: false,
