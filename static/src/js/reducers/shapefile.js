@@ -61,7 +61,7 @@ const shapefileReducer = (state = initialState, action = {}) => {
       const { shapefile } = action.payload
 
       return {
-        ...state,
+        ...initialState,
         ...shapefile
       }
     }

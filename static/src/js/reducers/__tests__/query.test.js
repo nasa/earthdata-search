@@ -132,6 +132,16 @@ describe('RESTORE_FROM_URL', () => {
         }
       }
 
+      const initial = {
+        ...initialState,
+        collection: {
+          keyword: 'old keyword',
+          spatial: {
+            point: '0,0'
+          }
+        }
+      }
+
       const expectedState = {
         ...initialState,
         ...query,
@@ -141,7 +151,7 @@ describe('RESTORE_FROM_URL', () => {
         }
       }
 
-      expect(queryReducer(undefined, action)).toEqual(expectedState)
+      expect(queryReducer(initial, action)).toEqual(expectedState)
     })
   })
 

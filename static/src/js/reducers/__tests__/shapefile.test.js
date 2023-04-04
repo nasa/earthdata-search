@@ -160,12 +160,22 @@ describe('RESTORE_FROM_URL', () => {
       payload
     }
 
+    const initial = {
+      ...initialState,
+      isLoading: false,
+      isLoaded: true,
+      isErrored: false,
+      shapefileId: 'some-id',
+      shapefileName: 'some-name',
+      shapefileSize: 'some-size'
+    }
+
     const expectedState = {
       ...initialState,
       shapefileId: 'test-id'
     }
 
-    expect(shapefileReducer(undefined, action)).toEqual(expectedState)
+    expect(shapefileReducer(initial, action)).toEqual(expectedState)
   })
 })
 

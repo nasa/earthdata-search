@@ -37,7 +37,7 @@ export const cmrFacetsReducer = (state = initialCmrState, action = {}) => {
       const { cmrFacets } = payload
 
       return {
-        ...state,
+        ...initialCmrState,
         ...cmrFacets
       }
     }
@@ -88,7 +88,7 @@ export const featureFacetsReducer = (state = initialFeatureState, action = {}) =
       const { featureFacets } = action.payload
 
       return {
-        ...state,
+        ...initialFeatureState,
         ...featureFacets
       }
     }

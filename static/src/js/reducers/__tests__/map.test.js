@@ -2,25 +2,26 @@ import mapReducer from '../map'
 import { UPDATE_MAP, RESTORE_FROM_URL } from '../../constants/actionTypes'
 import projections from '../../util/map/projections'
 
+const initialState = {
+  base: {
+    blueMarble: true,
+    trueColor: false,
+    landWaterMap: false
+  },
+  latitude: 0,
+  longitude: 0,
+  overlays: {
+    referenceFeatures: true,
+    coastlines: false,
+    referenceLabels: true
+  },
+  projection: projections.geographic,
+  zoom: 2
+}
+
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
     const action = { type: 'dummy_action' }
-    const initialState = {
-      base: {
-        blueMarble: true,
-        trueColor: false,
-        landWaterMap: false
-      },
-      latitude: 0,
-      longitude: 0,
-      overlays: {
-        referenceFeatures: true,
-        coastlines: false,
-        referenceLabels: true
-      },
-      projection: projections.geographic,
-      zoom: 2
-    }
 
     expect(mapReducer(undefined, action)).toEqual(initialState)
   })
@@ -74,6 +75,15 @@ describe('RESTORE_FROM_URL', () => {
       zoom: 2
     }
 
+    const initial = {
+      ...initialState,
+      base: {
+        blueMarble: false,
+        trueColor: false,
+        landWaterMap: true
+      }
+    }
+
     const action = {
       type: RESTORE_FROM_URL,
       payload: {
@@ -83,6 +93,6 @@ describe('RESTORE_FROM_URL', () => {
 
     const expectedState = map
 
-    expect(mapReducer(undefined, action)).toEqual(expectedState)
+    expect(mapReducer(initial, action)).toEqual(expectedState)
   })
 })

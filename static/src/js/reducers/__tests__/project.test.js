@@ -497,6 +497,17 @@ describe('RESTORE_FROM_URL', () => {
       }
     }
 
+    const initial = {
+      ...initialState,
+      collections: {
+        allIds: ['existingCollectionId', 'anotherExistingCollectionId'],
+        byId: {
+          existingCollectionId: {},
+          anotherExistingCollectionId: {}
+        }
+      }
+    }
+
     const expectedState = {
       ...initialState,
       collections: {
@@ -507,7 +518,7 @@ describe('RESTORE_FROM_URL', () => {
       }
     }
 
-    expect(projectReducer(undefined, action)).toEqual(expectedState)
+    expect(projectReducer(initial, action)).toEqual(expectedState)
   })
 })
 

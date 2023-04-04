@@ -63,9 +63,15 @@ describe('cmrFacetsReducer', () => {
         }
       }
 
+      const initial = {
+        science_keywords_h: [{
+          topic: 'Argriculture'
+        }]
+      }
+
       const expectedState = cmrFacets
 
-      expect(cmrFacetsReducer(undefined, action)).toEqual(expectedState)
+      expect(cmrFacetsReducer(initial, action)).toEqual(expectedState)
     })
   })
 
@@ -192,9 +198,13 @@ describe('featureFacetsReducer', () => {
         }
       }
 
+      const initial = {
+        mapImagery: true
+      }
+
       const expectedState = featureFacets
 
-      expect(featureFacetsReducer(undefined, action)).toEqual(expectedState)
+      expect(featureFacetsReducer(initial, action)).toEqual(expectedState)
     })
   })
 
