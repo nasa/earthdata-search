@@ -35,7 +35,7 @@ describe('usePortalLogo', () => {
         })
 
         await waitFor(() => {
-            expect(screen.getByTestId('test-component')).toHaveAttribute('src', '')
+          expect(screen.getByTestId('test-component')).toHaveAttribute('src', '')
         })
       })
     })
@@ -47,7 +47,7 @@ describe('usePortalLogo', () => {
         })
 
         await waitFor(() => {
-            expect(screen.getByTestId('test-component')).toHaveAttribute('src', '')
+          expect(screen.getByTestId('test-component')).toHaveAttribute('src', '')
         })
       })
     })
@@ -59,7 +59,7 @@ describe('usePortalLogo', () => {
         })
 
         await waitFor(() => {
-            expect(screen.getByTestId('test-component')).toHaveAttribute('src', 'soos_logo_path')
+          expect(screen.getByTestId('test-component')).toHaveAttribute('src', 'soos_logo_path')
         })
       })
     })
