@@ -1,5 +1,6 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
+import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 import { Router } from 'react-router'
@@ -26,30 +27,36 @@ const setup = () => {
     initialEntries: ['/search']
   })
 
-  render(
-    <Provider store={store}>
-      <Router history={history} location={props.location}>
-        <PortalList {...props} />
-      </Router>
-    </Provider>
-  )
+  act(() => {
+    render(
+      <Provider store={store}>
+        <Router history={history} location={props.location}>
+          <PortalList {...props} />
+        </Router>
+      </Provider>
+    )
+  })
 
   return { history, props }
 }
 
 describe('PortalList component', () => {
-  test('renders a list of portals', () => {
+  test('renders a list of portals', async () => {
     setup()
 
-    expect(screen.getByTestId('portal-title-above')).toHaveTextContent('ABoVE (Arctic-Boreal Vulnerability Experiment)')
-    expect(screen.getByTestId('portal-link-above').querySelector('a')).toHaveAttribute('href', 'https://above.nasa.gov/')
+    await waitFor(() => {
+      expect(screen.getByTestId('portal-title-above')).toHaveTextContent('ABoVE (Arctic-Boreal Vulnerability Experiment)')
+      expect(screen.getByTestId('portal-link-above').querySelector('a')).toHaveAttribute('href', 'https://above.nasa.gov/')
+    })
   })
 
-  test('does not render a portal that is excluded from the browser', () => {
+  test('does not render a portal that is excluded from the browser', async () => {
     setup()
 
-    expect(screen.queryByTestId('portal-title-example')).toBeNull()
-    expect(screen.queryByTestId('portal-link-example')).toBeNull()
+    await waitFor(() => {
+      expect(screen.queryByTestId('portal-title-example')).toBeNull()
+      expect(screen.queryByTestId('portal-link-example')).toBeNull()
+    })
   })
 
   test('clicking on the portal opens the portal', async () => {
@@ -61,27 +68,30 @@ describe('PortalList component', () => {
     const portalTitle = screen.queryByTestId('portal-list-item-standardproducts')
     await user.click(portalTitle)
 
-    expect(history.location).toEqual(expect.objectContaining({
-      pathname: '/search',
-      search: '?portal=standardproducts'
-    }))
+    await waitFor(() => {
+      expect(history.location).toEqual(expect.objectContaining({
+        pathname: '/search',
+        search: '?portal=standardproducts'
+      }))
+    })
 
     expect(props.onModalClose).toHaveBeenCalledTimes(1)
   })
 
   test('clicking on the `More Info` does not open the portal', async () => {
-    const user = userEvent.setup()
-
+    const user = await userEvent.setup()
     const { history, props } = setup()
 
     const moreInfoLink = screen.getByTestId('portal-link-above').querySelector('a')
-    await user.click(moreInfoLink)
+    user.click(moreInfoLink)
 
-    expect(history.location).toEqual(expect.objectContaining({
-      pathname: '/search'
-    }))
+    await waitFor(async () => {
+      expect(history.location).toEqual(expect.objectContaining({
+        pathname: '/search'
+      }))
 
-    expect(props.onModalClose).toHaveBeenCalledTimes(0)
+      expect(props.onModalClose).toHaveBeenCalledTimes(0)
+    })
   })
 
   test('displays a title attribute for the `More Info` link', async () => {
@@ -89,14 +99,18 @@ describe('PortalList component', () => {
 
     const moreInfoLink = screen.getByTestId('portal-link-above').querySelector('a')
 
-    expect(moreInfoLink).toHaveAttribute('title', 'Find more information about ABoVE (Arctic-Boreal Vulnerability Experiment)')
+    await waitFor(() => {
+      expect(moreInfoLink).toHaveAttribute('title', 'Find more information about ABoVE (Arctic-Boreal Vulnerability Experiment)')
+    })
   })
 
-  test('Clicking the `More Info` link opens a new windoe', async () => {
+  test('Clicking the `More Info` link opens a new window', async () => {
     setup()
 
     const moreInfoLink = screen.getByTestId('portal-link-above').querySelector('a')
 
-    expect(moreInfoLink).toHaveAttribute('target', '_blank')
+    await waitFor(() => {
+      expect(moreInfoLink).toHaveAttribute('target', '_blank')
+    })
   })
 })

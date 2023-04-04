@@ -73,13 +73,6 @@ export const updateStore = ({
     }
 
     portal = buildConfig(availablePortals[portalId])
-
-    const { hasStyles } = portal
-
-    if (hasStyles) {
-      const css = require(`../../../../portals/${portalId}/styles.scss`)
-      css.use()
-    }
   }
 
   // If the newPathname is not equal to the current pathname, restore the data from the url

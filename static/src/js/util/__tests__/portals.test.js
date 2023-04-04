@@ -57,8 +57,6 @@ describe('buildConfig', () => {
           href: 'https://access.earthdata.nasa.gov/'
         }]
       },
-      hasLogo: true,
-      hasStyles: true,
       moreInfoUrl: 'https://idn.ceos.org/',
       pageTitle: 'IDN',
       portalBrowser: true,

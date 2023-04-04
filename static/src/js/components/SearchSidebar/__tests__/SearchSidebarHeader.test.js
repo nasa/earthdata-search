@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 
 jest.mock('../../../containers/SearchFormContainer/SearchFormContainer', () => jest.fn(({ children }) => (
   <mock-SearchFormContainer data-testid="SearchFormContainer">
@@ -17,6 +17,7 @@ import SearchFormContainer from '../../../containers/SearchFormContainer/SearchF
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import { availablePortals } from '../../../../../../portals'
+import { act } from 'react-dom/test-utils'
 
 function setup(overrideProps) {
   const props = {
@@ -24,7 +25,6 @@ function setup(overrideProps) {
       title: {
         primary: 'Earthdata Search'
       },
-      hasLogo: false,
       moreInfoUrl: null,
       portalId: 'edsc'
     },
@@ -51,50 +51,62 @@ describe('SearchSidebarHeader component', () => {
   })
 
   describe('when a portal is loaded', () => {
-    test('renders the Leave Portal link', () => {
-      setup({
-        portal: availablePortals.idn,
-        location: {
-          pathname: '/search',
-          search: '?portal=idn'
-        }
+    test('renders the Leave Portal link', async () => {
+      act(() => {
+        setup({
+          portal: availablePortals.idn,
+          location: {
+            pathname: '/search',
+            search: '?portal=idn'
+          }
+        })
       })
 
-      expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
-      expect(PortalLinkContainer).toHaveBeenCalledWith(expect.objectContaining({
-        children: 'Leave Portal',
-        newPortal: {},
-        title: 'Leave Portal',
-        to: {
-          pathname: '/search',
-          search: '?portal=idn'
-        },
-        updatePath: true
-      }), {})
+      await waitFor(() => {
+        expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
+        expect(PortalLinkContainer).toHaveBeenCalledWith(expect.objectContaining({
+          children: 'Leave Portal',
+          newPortal: {},
+          title: 'Leave Portal',
+          to: {
+            pathname: '/search',
+            search: '?portal=idn'
+          },
+          updatePath: true
+        }), {})
+      })
     })
 
-    test('renders the portal logo', () => {
-      setup({
-        portal: availablePortals.idn,
-        location: {
-          pathname: '/search',
-          search: '?portal=idn'
-        }
+    test('renders the portal logo', async () => {
+      act(() => {
+        setup({
+          portal: availablePortals.idn,
+          location: {
+            pathname: '/search',
+            search: '?portal=idn'
+          }
+        })
       })
 
-      expect(screen.getByTestId('portal-logo')).toBeDefined()
+      await waitFor(() => {
+        expect(screen.getByTestId('portal-logo')).toBeDefined()
+      })
     })
 
-    test('renders the portal logo with a moreInfoUrl', () => {
-      setup({
-        portal: availablePortals.idn,
-        location: {
-          pathname: '/search',
-          search: '?portal=idn'
-        }
+    test('renders the portal logo with a moreInfoUrl', async () => {
+      act(() => {
+        setup({
+          portal: availablePortals.idn,
+          location: {
+            pathname: '/search',
+            search: '?portal=idn'
+          }
+        })
       })
 
-      expect(screen.getByTestId('portal-logo-link').href).toEqual('https://idn.ceos.org/')
+      await waitFor(() => {
+        expect(screen.getByTestId('portal-logo-link').href).toEqual('https://idn.ceos.org/')
+      })
     })
   })
 })
