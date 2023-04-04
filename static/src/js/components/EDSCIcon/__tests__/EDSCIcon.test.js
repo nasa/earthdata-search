@@ -19,8 +19,6 @@ describe('EDSCIcon component', () => {
     test('should render nothing', async () => {
       const { container } = render(<EDSCIcon />)
 
-      console.log(screen.debug())
-
       expect(container).toBeEmptyDOMElement()
     })
   })
@@ -62,8 +60,6 @@ describe('EDSCIcon component', () => {
   describe('when an icon is not found', () => {
     test('should render a simple icon', async () => {
       render(<EDSCIcon icon="noIcon" />)
-      console.log(screen.debug())
-
       const icon = await screen.findByTestId('edsc-icon-simple')
 
       expect(icon).toBeTruthy()
