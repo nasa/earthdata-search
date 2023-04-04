@@ -267,11 +267,11 @@ const uiReducer = (state = initialState, action = {}) => {
       const { deprecatedUrlParams } = payload
       const { deprecatedParameterModal } = state
 
-      if (deprecatedUrlParams.length === 0) return state
+      if (deprecatedUrlParams.length === 0) return initialState
 
       // If any deprecated URL params are defined, display the modal
       return {
-        ...state,
+        ...initialState,
         deprecatedParameterModal: {
           ...deprecatedParameterModal,
           deprecatedUrlParams,

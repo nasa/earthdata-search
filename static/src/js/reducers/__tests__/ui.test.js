@@ -456,6 +456,10 @@ describe('RESTORE_FROM_URL', () => {
       }
     }
 
+    const initial = {
+      timeline: { isOpen: false }
+    }
+
     const expectedState = {
       ...initialState,
       deprecatedParameterModal: {
@@ -464,7 +468,7 @@ describe('RESTORE_FROM_URL', () => {
       }
     }
 
-    expect(uiReducer(undefined, action)).toEqual(expectedState)
+    expect(uiReducer(initial, action)).toEqual(expectedState)
   })
 
   test('returns the original state if no deprecatedUrlParams were found', () => {
@@ -475,10 +479,15 @@ describe('RESTORE_FROM_URL', () => {
       }
     }
 
+    const initial = {
+      ...initialState,
+      timeline: { isOpen: false }
+    }
+
     const expectedState = {
       ...initialState
     }
 
-    expect(uiReducer(undefined, action)).toEqual(expectedState)
+    expect(uiReducer(initial, action)).toEqual(expectedState)
   })
 })

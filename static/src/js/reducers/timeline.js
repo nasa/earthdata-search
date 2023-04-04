@@ -46,7 +46,7 @@ const timelineReducer = (state = initialState, action = {}) => {
       const { timeline = initialState.query } = action.payload
 
       return {
-        ...state,
+        ...initialState,
         query: {
           ...state.query,
           ...timeline

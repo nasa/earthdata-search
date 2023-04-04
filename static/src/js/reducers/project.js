@@ -535,7 +535,7 @@ const projectReducer = (state = initialState, action = {}) => {
       const { project } = action.payload
 
       return {
-        ...state,
+        ...initialState,
         ...project
       }
     }

@@ -115,7 +115,7 @@ const autocompleteReducer = (state = initialState, action = {}) => {
       const { autocompleteSelected = [] } = payload
 
       return {
-        ...state,
+        ...initialState,
         selected: autocompleteSelected
       }
     }

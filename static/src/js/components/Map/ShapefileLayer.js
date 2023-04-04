@@ -80,7 +80,11 @@ class ShapefileLayerExtended extends L.Layer {
   }
 
   onRemovedFile() {
-    if (this.jsonLayer != null) { this.map.removeLayer(this.jsonLayer) }
+    if (this.jsonLayer != null) {
+      this.map.removeLayer(this.jsonLayer)
+    }
+
+    this.fileHash = null
   }
 
   // Leaflet 1.0+ changed the way that MultiPolygons are handled.
