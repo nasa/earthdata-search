@@ -1,6 +1,4 @@
 {
-  "hasLogo": true,
-  "hasStyles": true,
   "moreInfoUrl": "https://www.earthdata.nasa.gov/esds/ai-ml",
   "pageTitle": "Artificial intelligence / Machine Learning Portal",
   "parentConfig": "edsc",

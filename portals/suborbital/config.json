@@ -1,6 +1,4 @@
 {
-  "hasLogo": true,
-  "hasStyles": true,
   "moreInfoUrl": "https://earthdata.nasa.gov/esds/impact/admg/the-airborne-inventory",
   "pageTitle": "NASA Sub-Orbital Catalog",
   "parentConfig": "edsc",

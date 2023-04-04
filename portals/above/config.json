@@ -1,6 +1,4 @@
 {
-  "hasLogo": true,
-  "hasStyles": true,
   "moreInfoUrl": "https://above.nasa.gov/",
   "parentConfig": "edsc",
   "portalBrowser": true,
