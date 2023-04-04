@@ -48,17 +48,17 @@
     font-size: 0.725rem;
     background-color: $color__blue;
     border-radius: 0;
-    color: rgba($color__black, 0.7);
+    color: rgba($color__white, 0.7);
 
     &:hover {
       background-color: darken($color__blue--dark, 1);
-      color: rgba($color__black, 0.7);
+      color: rgba($color__white, 0.7);
     }
   }
 
   &__type {
     text-transform: uppercase;
-    color: rgba($color__black, 0.7);
+    color: rgba($color__white, 0.8);
     font-weight: 600;
     letter-spacing: -0.025rem;
   }
@@ -70,5 +70,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: $color__white;
   }
 }
