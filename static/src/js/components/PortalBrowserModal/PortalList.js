@@ -12,6 +12,7 @@ import { availablePortals } from '../../../../../portals'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './PortalList.scss'
+import usePortalLogo from '../../hooks/usePortalLogo'
 
 /**
  * Renders a list of portals.
@@ -29,7 +30,6 @@ export const PortalList = ({
       {
         sortedPortals.map((portal) => {
           const {
-            hasLogo,
             moreInfoUrl,
             portalBrowser = false,
             portalId,
@@ -38,15 +38,13 @@ export const PortalList = ({
 
           if (!portalBrowser) return null
 
-          const { primary, secondary } = title
+          const { primary: primaryTitle, secondary: secondaryTitle } = title
 
-          let imageSrc
-          if (hasLogo) {
-            // eslint-disable-next-line import/no-dynamic-require, global-require
-            imageSrc = require(`../../../../../portals/${portalId}/images/logo.png`)
-          }
+          const portalLogoSrc = usePortalLogo(portalId)
 
           const newPathname = '/search'
+
+          const displayTitle = `${primaryTitle}${secondaryTitle && ` (${secondaryTitle})`}`
 
           return (
             <Col className="d-flex" xs={12} lg={6} key={portalId}>
@@ -54,7 +52,7 @@ export const PortalList = ({
                 variant="naked"
                 className="portal-list__item-link"
                 type="button"
-                label={`Visit ${primary} Portal`}
+                label={`Visit the ${primaryTitle} Portal`}
                 newPortal={portal}
                 to={{
                   pathname: newPathname,
@@ -66,11 +64,11 @@ export const PortalList = ({
               >
                 <div className="portal-list__item">
                   {
-                    imageSrc && (
+                    portalLogoSrc && (
                       <div className="portal-list__item-logo">
                         <img
-                          alt="portal"
-                          src={imageSrc}
+                          alt={`A logo for ${displayTitle}`}
+                          src={portalLogoSrc}
                           width="75"
                         />
                       </div>
@@ -81,12 +79,12 @@ export const PortalList = ({
                       className="portal-list__item-title"
                       data-testid={`portal-title-${portalId}`}
                     >
-                      <span className="portal-list__item-title-primary">{primary}</span>
+                      <span className="portal-list__item-title-primary">{primaryTitle}</span>
                       {
-                        secondary && (
+                        secondaryTitle && (
                           <span className="portal-list__item-title-secondary">
                             <span className="visually-hidden"> (</span>
-                            {secondary}
+                            {secondaryTitle}
                             <span className="visually-hidden">)</span>
                           </span>
                         )
@@ -106,7 +104,7 @@ export const PortalList = ({
                             onClick={(event) => {
                               event.stopPropagation()
                             }}
-                            title={`Find more information about ${primary}${secondary && ` (${secondary})`}`}
+                            title={`Find more information about ${displayTitle}`}
                           >
                             More Info
                           </a>

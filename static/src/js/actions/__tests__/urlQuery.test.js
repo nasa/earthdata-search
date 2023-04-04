@@ -236,8 +236,6 @@ describe('updateStore', () => {
                 }
               ]
             },
-            hasLogo: true,
-            hasStyles: true,
             moreInfoUrl: 'https://airmoss.ornl.gov',
             pageTitle: 'AirMOSS',
             parentConfig: 'edsc',

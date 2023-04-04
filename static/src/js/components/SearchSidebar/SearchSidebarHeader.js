@@ -11,6 +11,7 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
 
 import './SearchSidebarHeader.scss'
+import usePortalLogo from '../../hooks/usePortalLogo'
 
 /**
  * Renders SearchSidebarHeader
@@ -21,7 +22,6 @@ export const SearchSidebarHeader = ({
 }) => {
   const {
     title = {},
-    hasLogo,
     portalId,
     moreInfoUrl
   } = portal
@@ -34,19 +34,24 @@ export const SearchSidebarHeader = ({
     )
   }
 
+  const portalLogoSrc = usePortalLogo(portalId)
+
   const { primary: primaryTitle, secondary: secondaryTitle } = title
 
   const displayTitle = `${primaryTitle}${secondaryTitle && ` (${secondaryTitle})`}`
 
   let logoEl
 
-  if (hasLogo) {
+  if (portalLogoSrc) {
     logoEl = (
       <div className="search-sidebar-header__thumbnail-container">
-        <div
+        <img
           className="search-sidebar-header__thumbnail"
-          id="portal-logo"
+          src={portalLogoSrc}
+          height="30"
+          width="30"
           data-testid="portal-logo"
+          alt={`A logo for ${displayTitle}`}
         />
         <div className="search-sidebar-header__thumbnail-icon-wrapper">
           <EDSCIcon className="search-sidebar-header__thumbnail-icon edsc-icon-ext-link edsc-icon-fw" icon="edsc-icon-ext-link edsc-icon-fw" />
@@ -55,7 +60,7 @@ export const SearchSidebarHeader = ({
     )
   }
 
-  if (moreInfoUrl && hasLogo) {
+  if (moreInfoUrl && portalLogoSrc) {
     logoEl = (
       <OverlayTrigger
         placement="top"
@@ -129,9 +134,8 @@ SearchSidebarHeader.propTypes = {
       primary: PropTypes.string,
       secondary: PropTypes.string
     }),
-    hasLogo: PropTypes.bool,
     moreInfoUrl: PropTypes.string,
-    portalId: PropTypes.string
+    portalId: PropTypes.string.isRequired
   }).isRequired
 }
 
