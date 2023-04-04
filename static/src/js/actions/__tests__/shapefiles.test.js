@@ -197,6 +197,9 @@ describe('saveShapefile', () => {
       await store.dispatch(fetchShapefile('1')).then(() => {
         const storeActions = store.getActions()
         expect(storeActions[0]).toEqual({
+          type: LOADING_SHAPEFILE
+        })
+        expect(storeActions[1]).toEqual({
           type: UPDATE_SHAPEFILE,
           payload: {
             file: 'mock shapefile',

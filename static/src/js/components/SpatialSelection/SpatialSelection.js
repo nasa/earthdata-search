@@ -9,6 +9,7 @@ import React, {
 import PropTypes from 'prop-types'
 import {
   difference,
+  isEqual,
   startCase,
   uniq
 } from 'lodash'
@@ -273,20 +274,25 @@ const SpatialSelection = (props) => {
       // Add new selected shape to any existing spatial, keep existing spatial of different types as well
       const existingSearch = getExistingSearch(type)
 
-      // Save existing spatial params for all types, while adding the currently selected points from layerType
-      // Set types to undefined if no spatial search exists, to remove that value from the redux store
-      onChangeQuery({
-        collection: {
-          spatial: {
-            boundingBox: spatialSearchOrUndefined(boundingBoxSearch.current),
-            circle: spatialSearchOrUndefined(circleSearch.current),
-            line: spatialSearchOrUndefined(lineSearch.current),
-            point: spatialSearchOrUndefined(pointSearch.current),
-            polygon: spatialSearchOrUndefined(polygonSearch.current),
-            [type]: spatialSearchOrUndefined(uniq([...existingSearch, points]))
+      const typeSpatial = spatialSearchOrUndefined(uniq([...existingSearch, points]))
+
+      // Only call onChangeQuery if the search has actually changed
+      if (!isEqual(existingSearch, typeSpatial)) {
+        // Save existing spatial params for all types, while adding the currently selected points from layerType
+        // Set types to undefined if no spatial search exists, to remove that value from the redux store
+        onChangeQuery({
+          collection: {
+            spatial: {
+              boundingBox: spatialSearchOrUndefined(boundingBoxSearch.current),
+              circle: spatialSearchOrUndefined(circleSearch.current),
+              line: spatialSearchOrUndefined(lineSearch.current),
+              point: spatialSearchOrUndefined(pointSearch.current),
+              polygon: spatialSearchOrUndefined(polygonSearch.current),
+              [type]: typeSpatial
+            }
           }
-        }
-      })
+        })
+      }
     } else {
       drawnLayers.current = [newDrawnLayer]
 

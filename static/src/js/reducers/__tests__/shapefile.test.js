@@ -82,15 +82,44 @@ describe('LOADING_SHAPEFILE', () => {
       payload
     }
 
-    const expectedState = {
+    const initial = {
       ...initialState,
+      shapefileId: 123
+    }
+
+    const expectedState = {
+      ...initial,
       isErrored: false,
       isLoaded: false,
       isLoading: true,
       shapefileName: 'test-name'
     }
 
-    expect(shapefileReducer(undefined, action)).toEqual(expectedState)
+    expect(shapefileReducer(initial, action)).toEqual(expectedState)
+  })
+
+  test('returns the correct state when name is not included', () => {
+    const payload = {}
+
+    const action = {
+      type: UPDATE_SHAPEFILE,
+      payload
+    }
+
+    const initial = {
+      ...initialState,
+      shapefileId: 123
+    }
+
+    const expectedState = {
+      ...initial,
+      isErrored: false,
+      isLoaded: true,
+      isLoading: false,
+      shapefileName: undefined
+    }
+
+    expect(shapefileReducer(initial, action)).toEqual(expectedState)
   })
 })
 

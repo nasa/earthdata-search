@@ -420,12 +420,13 @@ const updateLayer = (instance, props) => {
 
   const {
     file: toFile,
+    isLoading,
     shapefileId: toShapefileId,
     shapefileName,
     selectedFeatures
   } = shapefile
 
-  if (toShapefileId && !toFile) {
+  if (toShapefileId && !toFile && !isLoading) {
     onFetchShapefile(toShapefileId)
   }
 
