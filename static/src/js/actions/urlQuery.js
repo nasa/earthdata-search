@@ -43,10 +43,7 @@ export const updateStore = ({
   timeline
 }, newPathname) => async (dispatch, getState) => {
   const state = getState()
-  const {
-    portal: previousPortal = {},
-    router
-  } = state
+  const { router } = state
   const { location } = router
   const { pathname } = location
 
@@ -58,22 +55,7 @@ export const updateStore = ({
     && !isSavedProjectsPage(location)
   )
 
-  let portal = {}
-  if (portalId) {
-    const {
-      hasStyles: previousPortalHasStyles,
-      portalId: previousPortalId
-    } = previousPortal
-
-    // If the previous portal is different than the new portal, and it did have a styles file,
-    // unload those styles
-    if (previousPortalId && portalId !== previousPortalId && previousPortalHasStyles) {
-      const css = require(`../../../../portals/${previousPortalId}/styles.scss`)
-      css.unuse()
-    }
-
-    portal = buildConfig(availablePortals[portalId])
-  }
+  const portal = portalId ? buildConfig(availablePortals[portalId]) : {}
 
   // If the newPathname is not equal to the current pathname, restore the data from the url
   if (loadFromUrl || (newPathname && newPathname !== pathname)) {
