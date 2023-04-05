@@ -14,7 +14,6 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 
 import './PortalList.scss'
 
-// console.log('🚀 ~ file: PortalList.js:11 ~ availablePortals:', availablePortals)
 /**
  * Renders a list of portals.
  * @param {Object} props - The props passed into the component.
