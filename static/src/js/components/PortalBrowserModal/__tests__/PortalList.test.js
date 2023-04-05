@@ -15,8 +15,6 @@ import actions from '../../../actions'
 
 import * as availablePortals from '../../../../../../portals'
 
-// console.log('🚀 ~ file: PortalList.test.js:17 ~ availablePortals:', availablePortals)
-
 const store = configureStore()
 
 const setup = () => {
@@ -122,7 +120,6 @@ describe('PortalList component', () => {
 
   describe('When loading a portal without the portalBrowser flag', () => {
     test('does not display the portal', async () => {
-      // console.log('availablePortals.availablePortals', availablePortals.availablePortals)
       // eslint-disable-next-line no-import-assign
       availablePortals.availablePortals = {
         included: {

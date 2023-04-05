@@ -24,9 +24,7 @@ export const PortalList = ({
   location,
   onModalClose
 }) => {
-  // console.log('🚀 ~ file: PortalList.js:29 ~ availablePortals:', availablePortals)
   const sortedPortals = sortBy(availablePortals, (portal) => portal.title.primary)
-  // console.log('🚀 ~ file: PortalList.js:27 ~ sortedPortals:', sortedPortals)
 
   return (
     <Row className="portal-list" data-testid="portal-list">
@@ -105,7 +103,6 @@ export const PortalList = ({
                             target="_blank"
                             rel="noreferrer"
                             onClick={(event) => {
-                              console.log('clicking the button')
                               event.stopPropagation()
                             }}
                             title={`Find more information about ${displayTitle}`}
