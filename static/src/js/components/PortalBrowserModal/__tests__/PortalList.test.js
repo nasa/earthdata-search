@@ -13,6 +13,10 @@ import configureStore from '../../../store/configureStore'
 
 import actions from '../../../actions'
 
+import * as availablePortals from '../../../../../../portals'
+
+// console.log('🚀 ~ file: PortalList.test.js:17 ~ availablePortals:', availablePortals)
+
 const store = configureStore()
 
 const setup = () => {
@@ -66,6 +70,7 @@ describe('PortalList component', () => {
     const { history, props } = setup()
 
     const portalTitle = screen.queryByTestId('portal-list-item-standardproducts')
+
     await user.click(portalTitle)
 
     await waitFor(() => {
@@ -83,7 +88,8 @@ describe('PortalList component', () => {
     const { history, props } = setup()
 
     const moreInfoLink = screen.getByTestId('portal-link-above').querySelector('a')
-    user.click(moreInfoLink)
+
+    await user.click(moreInfoLink)
 
     await waitFor(async () => {
       expect(history.location).toEqual(expect.objectContaining({
@@ -111,6 +117,39 @@ describe('PortalList component', () => {
 
     await waitFor(() => {
       expect(moreInfoLink).toHaveAttribute('target', '_blank')
+    })
+  })
+
+  describe('When loading a portal without the portalBrowser flag', () => {
+    test('does not display the portal', async () => {
+      // console.log('availablePortals.availablePortals', availablePortals.availablePortals)
+      // eslint-disable-next-line no-import-assign
+      availablePortals.availablePortals = {
+        included: {
+          portalId: 'included',
+          portalBrowser: true,
+          title: {
+            primary: 'Included'
+          }
+        },
+        excluded: {
+          portalId: 'excluded',
+          title: {
+            primary: 'Excluded'
+          }
+        }
+      }
+
+      setup()
+
+      const portalList = screen.getByTestId('portal-list')
+      const portalItems = portalList.getElementsByTagName('button')
+
+      await waitFor(() => {
+        expect(portalList).toBeInTheDocument()
+        expect(portalItems.length).toEqual(1)
+        expect(portalItems[0].textContent).toEqual('Included')
+      })
     })
   })
 })

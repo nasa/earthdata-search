@@ -8,12 +8,13 @@ import {
 
 import { locationPropType } from '../../util/propTypes/location'
 import { availablePortals } from '../../../../../portals'
+import { usePortalLogo } from '../../hooks/usePortalLogo'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './PortalList.scss'
-import usePortalLogo from '../../hooks/usePortalLogo'
 
+// console.log('🚀 ~ file: PortalList.js:11 ~ availablePortals:', availablePortals)
 /**
  * Renders a list of portals.
  * @param {Object} props - The props passed into the component.
@@ -23,10 +24,12 @@ export const PortalList = ({
   location,
   onModalClose
 }) => {
+  // console.log('🚀 ~ file: PortalList.js:29 ~ availablePortals:', availablePortals)
   const sortedPortals = sortBy(availablePortals, (portal) => portal.title.primary)
+  // console.log('🚀 ~ file: PortalList.js:27 ~ sortedPortals:', sortedPortals)
 
   return (
-    <Row className="portal-list">
+    <Row className="portal-list" data-testid="portal-list">
       {
         sortedPortals.map((portal) => {
           const {
@@ -102,6 +105,7 @@ export const PortalList = ({
                             target="_blank"
                             rel="noreferrer"
                             onClick={(event) => {
+                              console.log('clicking the button')
                               event.stopPropagation()
                             }}
                             title={`Find more information about ${displayTitle}`}

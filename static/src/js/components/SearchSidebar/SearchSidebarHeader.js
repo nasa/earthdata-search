@@ -5,13 +5,13 @@ import { FaDoorOpen } from 'react-icons/fa'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { locationPropType } from '../../util/propTypes/location'
+import { usePortalLogo } from '../../hooks/usePortalLogo'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
 
 import './SearchSidebarHeader.scss'
-import usePortalLogo from '../../hooks/usePortalLogo'
 
 /**
  * Renders SearchSidebarHeader

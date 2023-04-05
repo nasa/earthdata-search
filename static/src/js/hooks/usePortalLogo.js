@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from 'react'
  * @prop {String} portalId - The portal id
  * @returns {String} - The url for a portal image or an empty string
  */
-const usePortalLogo = (portalId) => {
+export const usePortalLogo = (portalId) => {
   const [portalLogoSrc, setPortalLogoSrc] = useState('')
 
   const getPortalLogo = useCallback(async () => {
