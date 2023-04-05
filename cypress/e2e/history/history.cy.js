@@ -5,7 +5,7 @@ import commonHeaders from './__mocks__/common.headers.json'
 import getCollectionsGraphQlBody from './__mocks__/getCollectionsGraphql.body.json'
 import getSubscriptionsGraphQlBody from './__mocks__/getSubscriptions.graphql.body.json'
 import granulesBody from './__mocks__/granules.body.json'
-import granulesGraphQlBody from './__mocks__/granulesGraphql.body.json'
+import getCollectionGraphQlBody from './__mocks__/getCollectionGraphql.body.json'
 import graphQlHeaders from './__mocks__/graphql.headers.json'
 import timeline from './__mocks__/timeline.json'
 
@@ -81,7 +81,7 @@ describe('History', () => {
       if (JSON.parse(req.body).data.query === JSON.parse(graphQlGetCollection(conceptId)).query) {
         req.alias = 'graphQlCollectionQuery'
         req.reply({
-          body: granulesGraphQlBody,
+          body: getCollectionGraphQlBody,
           headers: graphQlHeaders
         })
       }
@@ -94,6 +94,13 @@ describe('History', () => {
         })
       }
     })
+    cy.intercept(
+      'POST',
+      '**/saved_access_configs',
+      {
+        body: {}
+      }
+    )
 
     cy.login()
 
