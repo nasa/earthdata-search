@@ -107,7 +107,7 @@ To run the migrations locally:
 
     DATABASE_URL=postgresql://USERNAME:PASSWORD@localhost:5432/edsc_dev npm run migrate up
 
-Optionally, we can run the migration locally and not within a deployed Lambda When deployed our database migrations run within Lambda due to the fact that in non-development environments our resources are not publicly accessible. To run the migrations you'll need to invoke the Lambda:
+Optionally, we can run the migration locally and not within a deployed Lambda. When deployed our database migrations run within Lambda due to the fact that in non-development environments our resources are not publicly accessible. To run the migrations you'll need to invoke the Lambda:
 
     serverless invoke local --function migrateDatabase
 

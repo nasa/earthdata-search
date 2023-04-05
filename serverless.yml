@@ -103,7 +103,7 @@ custom:
   infrastructureStackName: earthdata-search-infrastructure-${self:provider.stage}
 
   serverlessIfElse:
-    # When invoking a offline lambda with `npm run invoke-local` this condition will disable serverless components that need to import or reference cloudformation values
+    # When invoking an offline lambda with `npm run invoke-local` this condition will disable serverless components that need to import or reference cloudformation values
     - If: '"${self:provider.stage}" == "invokeLocal"'
       Exclude:
         - provider.environment.dbEndpoint

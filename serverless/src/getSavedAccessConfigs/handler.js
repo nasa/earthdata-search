@@ -32,7 +32,7 @@ const getSavedAccessConfigs = async (event, context) => {
 
     const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 
-    // Retrive a connection to the database
+    // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
 
     // Retrieve the savedAccessConfig for this user and collection
