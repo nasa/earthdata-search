@@ -21,6 +21,8 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     variables: associatedVariables = {}
   } = collectionMetadata
 
+  const { disableOrdering } = process.env
+
   const accessMethods = {}
 
   let harmonyIndex = 0
@@ -76,6 +78,9 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           if (methodKey === 'echoOrders') {
             methodKey = 'echoOrder'
           }
+
+          // Do not return any ECHO ORDERS methods if `disableOrdering` is set to `true`
+          if (disableOrdering === 'true' && methodKey === 'echoOrder') return
 
           accessMethods[`${methodKey}${orderOptionIndex}`] = method
         })
