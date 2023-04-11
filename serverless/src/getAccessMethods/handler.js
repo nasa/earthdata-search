@@ -31,6 +31,8 @@ const getAccessMethods = async (event, context) => {
 
   const { defaultResponseHeaders } = getApplicationConfig()
 
+  const { disableOrdering } = process.env
+
   try {
     const { body, headers } = event
 
@@ -99,7 +101,8 @@ const getAccessMethods = async (event, context) => {
       }
     }
 
-    if (hasEchoOrders) {
+    // Do not return any ECHO ORDERS methods if `disableOrdering` is set to `true`
+    if (hasEchoOrders && disableOrdering !== 'true') {
       const echoOrderData = getValueForTag('subset_service.echo_orders', tags)
       const { option_definitions: optionDefinitions } = echoOrderData
 

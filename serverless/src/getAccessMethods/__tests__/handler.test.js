@@ -31,6 +31,8 @@ beforeEach(() => {
 
   dbTracker = mockKnex.getTracker()
   dbTracker.install()
+
+  process.env.disableOrdering = 'false'
 })
 
 afterEach(() => {
@@ -209,7 +211,7 @@ describe('getAccessMethods', () => {
     expect(enableTemporalSubsetting).toBe(true)
   })
 
-  test('populates a echoOrder method', async () => {
+  test('populates an echoOrder method', async () => {
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response(undefined)
@@ -283,6 +285,81 @@ describe('getAccessMethods', () => {
           }
         },
         selectedAccessMethod: 'echoOrder0'
+      }),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      isBase64Encoded: false,
+      statusCode: 200
+    })
+  })
+
+  test('does not populate an echoOrder method if the disableOrdering is true', async () => {
+    process.env.disableOrdering = 'true'
+
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response(undefined)
+      } else if (step === 2) {
+        query.response({
+          urs_profile: {
+            email_address: 'test@edsc.com'
+          }
+        })
+      }
+    })
+
+    jest.spyOn(getOptionDefinitions, 'getOptionDefinitions').mockImplementation(() => [
+      {
+        echoOrder0: {
+          form: 'mock echo form',
+          option_definition: {
+            id: 'option_def_guid',
+            name: 'Option Definition'
+          },
+          option_definitions: undefined
+        }
+      }
+    ])
+
+    const event = {
+      body: JSON.stringify({
+        params: {
+          collectionId: 'collectionId',
+          services: {
+            count: 1,
+            items: [{
+              conceptId: 'umm-s-record-1',
+              type: 'ECHO ORDERS',
+              url: {
+                description: 'EOSDIS ECHO ORDERS Service Implementation',
+                urlValue: 'http://echo-order-endpoint.com'
+              }
+            }]
+          },
+          tags: {
+            'edsc.extra.serverless.subset_service.echo_orders': {
+              data: {
+                id: 'umm-s-record-1',
+                option_definitions: [{
+                  id: 'option_def_guid',
+                  name: 'Option Definition'
+                }],
+                type: 'ECHO ORDERS'
+              }
+            }
+          }
+        }
+      })
+    }
+
+    const result = await getAccessMethods(event, {})
+
+    expect(result).toEqual({
+      body: JSON.stringify({
+        accessMethods: {}
       }),
       headers: {
         'Access-Control-Allow-Origin': '*',
