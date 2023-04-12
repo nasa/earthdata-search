@@ -11,8 +11,11 @@ import { login } from '../../support/login'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
 
 test.describe('Timeline spec', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page }, testInfo) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+
+    // eslint-disable-next-line no-param-reassign
+    testInfo.snapshotPath = (name) => `${testInfo.file}-snapshots/${name}`
   })
 
   test('should resize the leaflet controls', async ({ page, context }) => {
@@ -76,7 +79,16 @@ test.describe('Timeline spec', () => {
     // Confirm the leaflet tools are the correct
     // const searchHeight = await page.locator('.leaflet-control-container').evaluate((el) => window.getComputedStyle(el).getPropertyValue('height'))
     // await expect(searchHeight).toEqual('826px')
-    await expect(page).toHaveScreenshot('search-screenshot.png')
+
+    // ! the screenshots added to the repo are darwin, github actions are different screenshot names
+    await expect(page).toHaveScreenshot('search-screenshot.png', {
+      clip: {
+        x: 1200,
+        y: 700,
+        width: 200,
+        height: 200
+      }
+    })
 
     // Click a collection that exists in the project
     await page.getByTestId('collection-result-item_C1443528505-LAADS').click()
@@ -85,6 +97,13 @@ test.describe('Timeline spec', () => {
     // const granulesHeight = await page.locator('.leaflet-control-container').evaluate((el) => window.getComputedStyle(el).getPropertyValue('height'))
 
     // await expect(granulesHeight).toEqual('758px')
-    await expect(page).toHaveScreenshot('granules-screenshot.png')
+    await expect(page).toHaveScreenshot('granules-screenshot.png', {
+      clip: {
+        x: 1200,
+        y: 700,
+        width: 200,
+        height: 200
+      }
+    })
   })
 })
