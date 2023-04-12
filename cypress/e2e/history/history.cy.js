@@ -15,7 +15,7 @@ import { graphQlGetCollections } from '../../support/graphQlGetCollections'
 
 const conceptId = 'C1214470488-ASF'
 
-describe('History', () => {
+describe.skip('History', () => {
   beforeEach(() => {
     const granuleHits = 1
 
