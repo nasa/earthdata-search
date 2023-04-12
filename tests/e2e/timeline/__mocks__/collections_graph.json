@@ -1,0 +1,442 @@
+{
+  "body": {
+    "data": {
+      "collections": {
+        "items": [
+          {
+            "archiveAndDistributionInformation": {
+              "fileDistributionInformation": [
+                {
+                  "formatType": "Native",
+                  "fees": "No Fee",
+                  "format": "HDF-EOS",
+                  "media": ["Online (HTTPS)"]
+                }
+              ]
+            },
+            "boxes": ["-90 -180 90 180"],
+            "conceptId": "C1443528505-LAADS",
+            "dataCenter": "LAADS",
+            "dataCenters": [
+              {
+                "roles": ["ORIGINATOR"],
+                "shortName": "NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS",
+                "longName": "MODIS Adaptive Processing System, Biospheric Information Systems Branch, Hydrospheric and Biospheric Sciences Laboratory, Earth Sciences Division, Science and Exploration Directorate, Goddard Space Flight Center, NASA",
+                "contactGroups": [
+                  {
+                    "roles": ["Data Center Contact"],
+                    "contactInformation": {
+                      "contactMechanisms": [
+                        {
+                          "type": "Email",
+                          "value": "MODAPSUSO@lists.nasa.gov"
+                        },
+                        { "type": "U.S. toll free", "value": "800-596-8132" },
+                        { "type": "Fax", "value": "301-794-7035" }
+                      ],
+                      "addresses": [
+                        {
+                          "streetAddresses": [
+                            "MODAPS User Support Team",
+                            "NASA/GSFC",
+                            "Mail Code: 619"
+                          ],
+                          "city": "Greenbelt",
+                          "stateProvince": "MD",
+                          "country": "United States",
+                          "postalCode": "20771"
+                        }
+                      ]
+                    },
+                    "groupName": "MODAPS USER SUPPORT TEAM"
+                  }
+                ],
+                "contactInformation": {
+                  "relatedUrls": [
+                    {
+                      "urlContentType": "DataCenterURL",
+                      "type": "HOME PAGE",
+                      "url": "https://ladsweb.modaps.eosdis.nasa.gov/"
+                    }
+                  ]
+                }
+              },
+              {
+                "roles": ["PROCESSOR"],
+                "shortName": "NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS",
+                "longName": "MODIS Adaptive Processing System, Biospheric Information Systems Branch, Hydrospheric and Biospheric Sciences Laboratory, Earth Sciences Division, Science and Exploration Directorate, Goddard Space Flight Center, NASA",
+                "contactGroups": [
+                  {
+                    "roles": ["Data Center Contact"],
+                    "contactInformation": {
+                      "contactMechanisms": [
+                        {
+                          "type": "Email",
+                          "value": "MODAPSUSO@lists.nasa.gov"
+                        },
+                        { "type": "U.S. toll free", "value": "800-596-8132" },
+                        { "type": "Fax", "value": "301-794-7035" }
+                      ],
+                      "addresses": [
+                        {
+                          "streetAddresses": [
+                            "MODAPS User Support Team",
+                            "NASA/GSFC",
+                            "Mail Code: 619"
+                          ],
+                          "city": "Greenbelt",
+                          "stateProvince": "MD",
+                          "country": "United States",
+                          "postalCode": "20771"
+                        }
+                      ]
+                    },
+                    "groupName": "MODAPS USER SUPPORT TEAM"
+                  }
+                ],
+                "contactInformation": {
+                  "relatedUrls": [
+                    {
+                      "urlContentType": "DataCenterURL",
+                      "type": "HOME PAGE",
+                      "url": "https://ladsweb.modaps.eosdis.nasa.gov/"
+                    }
+                  ]
+                }
+              },
+              {
+                "roles": ["DISTRIBUTOR"],
+                "shortName": "NASA/GSFC/SED/ESD/HBSL/BISB/LAADS",
+                "longName": "L1 and Atmosphere Archive and Distribution System,Biospheric Information Systems Branch, Hydrospheric and Biospheric Sciences Laboratory, Earth Sciences Division, Science and Exploration Directorate, Goddard Space Flight Center, NASA",
+                "contactGroups": [
+                  {
+                    "roles": ["Data Center Contact"],
+                    "contactInformation": {
+                      "contactMechanisms": [
+                        {
+                          "type": "Email",
+                          "value": "MODAPSUSO@lists.nasa.gov"
+                        },
+                        { "type": "U.S. toll free", "value": "800-596-8132" },
+                        { "type": "Fax", "value": "301-794-7035" }
+                      ],
+                      "addresses": [
+                        {
+                          "streetAddresses": [
+                            "MODAPS User Support Team",
+                            "NASA/GSFC",
+                            "Mail Code: 619"
+                          ],
+                          "city": "Greenbelt",
+                          "stateProvince": "MD",
+                          "country": "United States",
+                          "postalCode": "20771"
+                        }
+                      ]
+                    },
+                    "groupName": "MODAPS USER SUPPORT TEAM"
+                  }
+                ],
+                "contactInformation": {
+                  "relatedUrls": [
+                    {
+                      "urlContentType": "DataCenterURL",
+                      "type": "HOME PAGE",
+                      "url": "https://ladsweb.modaps.eosdis.nasa.gov/"
+                    }
+                  ]
+                }
+              }
+            ],
+            "doi": { "doi": "10.5067/MODIS/MYD04_3K.061" },
+            "hasGranules": true,
+            "relatedUrls": [
+              {
+                "description": "The product landing page",
+                "urlContentType": "CollectionURL",
+                "type": "DATA SET LANDING PAGE",
+                "url": "https://doi.org/10.5067/MODIS/MYD04_3K.061"
+              },
+              {
+                "description": "The MODIS deep blue aerosol version 6 to 6.1 change document",
+                "urlContentType": "PublicationURL",
+                "type": "VIEW RELATED INFORMATION",
+                "subtype": "SCIENCE DATA PRODUCT SOFTWARE DOCUMENTATION",
+                "url": "https://modis-atmos.gsfc.nasa.gov/sites/default/files/ModAtmo/modis_deep_blue_c61_changes2.pdf"
+              },
+              {
+                "description": "The dark target 6.1 update document.",
+                "urlContentType": "PublicationURL",
+                "type": "VIEW RELATED INFORMATION",
+                "subtype": "SCIENCE DATA PRODUCT SOFTWARE DOCUMENTATION",
+                "url": "https://modis-atmos.gsfc.nasa.gov/sites/default/files/ModAtmo/C061_Aerosol_Dark_Target_v2.pdf"
+              },
+              {
+                "description": "Aerosol product ATBD",
+                "urlContentType": "PublicationURL",
+                "type": "VIEW RELATED INFORMATION",
+                "subtype": "ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)",
+                "url": "https://modis-atmos.gsfc.nasa.gov/sites/default/files/ModAtmo/ATBD_MOD04_C005_rev2_0.pdf"
+              },
+              {
+                "description": "Search and order products from LAADS website.",
+                "urlContentType": "DistributionURL",
+                "type": "GET DATA",
+                "subtype": "LAADS",
+                "url": "https://ladsweb.modaps.eosdis.nasa.gov/search/order/2/MYD04_3K--61",
+                "getData": {
+                  "format": "Not provided",
+                  "mimeType": "text/html",
+                  "size": 0,
+                  "unit": "KB"
+                }
+              },
+              {
+                "description": "Direct access to MYD04_3K C6.1 data set.",
+                "urlContentType": "DistributionURL",
+                "type": "GET DATA",
+                "subtype": "DIRECT DOWNLOAD",
+                "url": "https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/",
+                "getData": {
+                  "format": "Not provided",
+                  "mimeType": "text/html",
+                  "size": 0,
+                  "unit": "KB"
+                }
+              },
+              {
+                "description": "Direct access to product's OPeNDAP directory",
+                "urlContentType": "DistributionURL",
+                "type": "USE SERVICE API",
+                "subtype": "OPENDAP DATA",
+                "url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/allData/61/MYD04_3K/contents.html",
+                "getService": {
+                  "format": "Not provided",
+                  "mimeType": "text/html",
+                  "fullName": "Not provided",
+                  "dataId": "Not provided",
+                  "dataType": "Not provided"
+                }
+              }
+            ],
+            "scienceKeywords": [
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "AEROSOLS",
+                "variableLevel1": "AEROSOL BACKSCATTER"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "AEROSOLS",
+                "variableLevel1": "AEROSOL EXTINCTION"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "AEROSOLS",
+                "variableLevel1": "AEROSOL OPTICAL DEPTH/THICKNESS"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "AEROSOLS",
+                "variableLevel1": "AEROSOL OPTICAL DEPTH/THICKNESS",
+                "variableLevel2": "ANGSTROM EXPONENT"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "AEROSOLS",
+                "variableLevel1": "AEROSOL PARTICLE PROPERTIES"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "AEROSOLS",
+                "variableLevel1": "AEROSOL RADIANCE"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "AEROSOLS",
+                "variableLevel1": "CARBONACEOUS AEROSOLS"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "AEROSOLS",
+                "variableLevel1": "CLOUD CONDENSATION NUCLEI"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "AEROSOLS",
+                "variableLevel1": "DUST/ASH/SMOKE"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "AEROSOLS",
+                "variableLevel1": "NITRATE PARTICLES"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "AEROSOLS",
+                "variableLevel1": "ORGANIC PARTICLES"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "AEROSOLS",
+                "variableLevel1": "PARTICULATE MATTER"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "AEROSOLS",
+                "variableLevel1": "SULFATE PARTICLES"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "ATMOSPHERIC RADIATION",
+                "variableLevel1": "OPTICAL DEPTH/THICKNESS"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "ATMOSPHERIC RADIATION",
+                "variableLevel1": "RADIATIVE FLUX"
+              },
+              {
+                "category": "EARTH SCIENCE",
+                "topic": "ATMOSPHERE",
+                "term": "ATMOSPHERIC RADIATION",
+                "variableLevel1": "REFLECTANCE"
+              }
+            ],
+            "shortName": "MYD04_3K",
+            "spatialExtent": {
+              "horizontalSpatialDomain": {
+                "geometry": {
+                  "coordinateSystem": "CARTESIAN",
+                  "boundingRectangles": [
+                    {
+                      "westBoundingCoordinate": -180,
+                      "northBoundingCoordinate": 90,
+                      "eastBoundingCoordinate": 180,
+                      "southBoundingCoordinate": -90
+                    }
+                  ]
+                }
+              },
+              "granuleSpatialRepresentation": "GEODETIC"
+            },
+            "abstract": "The new Collection 6.1 (C61) MODIS/Aqua Aerosol 5 Min L2 Swath 3km (MYD04_3K) product is an improved version based on algorithm changes in Dark Target (DT) Aerosol retrieval over urban areas and uncertainty estimates for Deep Blue (DB) Aerosol retrievals.\n\nThe MODIS level-2 atmospheric aerosol product provides retrieved ambient aerosol optical properties, quality assurance, and other parameters, globally over ocean and land. In Collection 5, and earlier collections, there was only one aerosol product (MYD04_L2) at 10km (at nadir) spatial resolution. Starting from C6, the Dark Target (DT) Aerosol algorithm team provided a new 3 km spatial resolution product (MYD04_3k) intended for the air quality community.\n\nThe MYD04_3K product is based on the same algorithm and Look up Tables as the standard Dark Target aerosol product. Because of finer resolution, subtle differences are made in selecting pixels for retrieval and in determining QA. The only differences between the existing 10km algorithm and the new 3km algorithm are: 1) the size of the pixel-arrays defining each retrieval box ( 6x6 retrieval boxes of 36 pixels at 0.5km resolution for 3km algorithm as oppose to 20x20 retrieval boxes of 400 pixels at 0.5km resolution for 10km product); 2) the minimum percentage of \"good\" pixels required for a retrieval (a minimum of 5 pixels over ocean and 6 pixels over land instead of a minimum of 10 pixels over ocean or 12 pixels over land for 10km product retrieval); 3) the 10km algorithm attempts a \"poor quality\" retrieval while 3km algorithm does not. Everything else is the same between two products.\n\nFor more information on C6.1 changes and updates, visit the MODIS Atmosphere website at:\nhttps://modis-atmosphere.gsfc.nasa.gov/documentation/collection-61",
+            "tags": {
+              "gov.nasa.eosdis": {},
+              "edsc.extra.gibs": {
+                "data": [
+                  {
+                    "geo_resolution": "2km",
+                    "format": "png",
+                    "antarctic": false,
+                    "group": "overlays",
+                    "arctic_resolution": null,
+                    "geo": true,
+                    "source": "Aqua / MODIS",
+                    "arctic": false,
+                    "title": "Aerosol Optical Depth 3km (3km, Land and Ocean)",
+                    "resolution": "2km",
+                    "antarctic_resolution": null,
+                    "product": "MODIS_Aqua_Aerosol_Optical_Depth_3km",
+                    "maxNativeZoom": 5,
+                    "match": { "time_start": ">=2002-07-03T00:00:00Z" }
+                  }
+                ]
+              },
+              "edsc.extra.serverless.gibs": {
+                "data": [
+                  {
+                    "format": "png",
+                    "antarctic": false,
+                    "geographic": true,
+                    "group": "overlays",
+                    "geographic_resolution": "2km",
+                    "arctic_resolution": null,
+                    "source": "Aqua / MODIS",
+                    "arctic": false,
+                    "title": "Aerosol Optical Depth 3km (3km, Land and Ocean)",
+                    "antarctic_resolution": null,
+                    "product": "MODIS_Aqua_Aerosol_Optical_Depth_3km",
+                    "match": { "time_start": ">=2002-07-03T00:00:00Z" }
+                  }
+                ]
+              },
+              "edsc.extra.serverless.subset_service.echo_orders": {
+                "data": {
+                  "updated_at": "2020-06-08T16:00:38.845Z",
+                  "id": "S1571420629-LAADS",
+                  "type": "ECHO ORDERS",
+                  "url": "http://modx.nascom.nasa.gov:8011",
+                  "option_definitions": [
+                    {
+                      "id": "E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1",
+                      "name": "FtpPushPull"
+                    }
+                  ]
+                }
+              },
+              "edsc.extra.serverless.collection_capabilities": {
+                "data": {
+                  "cloud_cover": true,
+                  "day_night_flag": true,
+                  "granule_online_access_flag": true,
+                  "orbit_calculated_spatial_domains": false
+                }
+              },
+              "gov.nasa.eosdis.standardproduct": {},
+              "aq.soos": {}
+            },
+            "temporalExtents": [
+              {
+                "precisionOfSeconds": 1,
+                "endsAtPresentFlag": true,
+                "rangeDateTimes": [
+                  { "beginningDateTime": "2002-07-04T00:45:00.000Z" }
+                ]
+              }
+            ],
+            "title": "MODIS/Aqua Aerosol 5-Min L2 Swath 3km",
+            "versionId": "6.1",
+            "granules": {
+              "count": 1047870,
+              "items": [
+                { "conceptId": "G1465827297-LAADS", "onlineAccessFlag": true },
+                { "conceptId": "G1465833789-LAADS", "onlineAccessFlag": true }
+              ]
+            },
+            "services": {
+              "count": 1,
+              "items": [
+                {
+                  "conceptId": "S1571420629-LAADS",
+                  "type": "ECHO ORDERS",
+                  "supportedOutputFormats": null
+                }
+              ]
+            },
+            "tools": { "count": 0, "items": null },
+            "variables": { "count": 0, "items": null }
+          }
+        ]
+      },
+      "subscriptions": {
+        "items": []
+      }
+    }
+  }
+}
