@@ -33,6 +33,7 @@ export const Dots = ({
 
 Dots.defaultProps = {
   className: null,
+  dataTestId: null,
   color: '',
   inline: false,
   size: ''
@@ -40,6 +41,7 @@ Dots.defaultProps = {
 
 Dots.propTypes = {
   className: PropTypes.string,
+  dataTestId: PropTypes.string,
   color: PropTypes.string,
   inline: PropTypes.bool,
   size: PropTypes.string
