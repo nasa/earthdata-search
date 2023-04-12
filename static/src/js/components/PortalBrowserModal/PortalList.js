@@ -41,7 +41,7 @@ export const PortalList = ({
 
           const portalLogoSrc = usePortalLogo(portalId)
 
-          const [thumbnailLoading, setThumbnailLoading] = useState(true)
+          const [thumbnailLoading, setThumbnailLoading] = useState(portalLogoSrc === undefined)
 
           const { primary: primaryTitle, secondary: secondaryTitle } = title
 
