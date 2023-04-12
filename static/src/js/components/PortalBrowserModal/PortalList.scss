@@ -26,11 +26,40 @@
     width: 100%;
   }
 
-  &__item-logo {
+  &__thumbnail-container {
+    position: relative;
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    width: 5rem;
+    min-height: 7.25rem;
     padding: .5rem;
+  }
+
+  &__thumbnail {
+    flex-grow: 1;
+    flex-shrink: 0;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    object-fit: contain;
+    opacity: 0;
+
+    &--is-loaded {
+      display: block;
+      position: relative;
+      visibility: visible;
+      width: 100%;
+      height: auto;
+      opacity: 1;
+    }
+  }
+
+  &__thumb-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   &__item-primary {
