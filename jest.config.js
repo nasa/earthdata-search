@@ -26,7 +26,8 @@ module.exports = {
   ],
   testPathIgnorePatterns: [
     'mocks.js',
-    'node_modules'
+    'node_modules',
+    '/tests'
   ],
   transform: {
     // Use the fileTransformer for all the logo.pngs that exist in the portals directory
