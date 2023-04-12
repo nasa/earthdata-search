@@ -26,7 +26,7 @@ export const SearchSidebarHeader = ({
 }) => {
   let logoEl
   const {
-    title,
+    title = {},
     portalId,
     moreInfoUrl
   } = portal

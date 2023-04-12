@@ -8,6 +8,7 @@ import collectionFixture from './timeline_mocks/authenticated_collections.json'
 
 import { getAuthHeaders } from '../utils/getAuthHeaders'
 
+// TODO Investigate intermittent timeline failures
 describe('Timeline spec', () => {
   it('should resize the leaflet controls', () => {
     cy.login()
