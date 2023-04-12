@@ -7,6 +7,7 @@ import './Spinner.scss'
 export const Dots = ({
   className,
   color,
+  dataTestId,
   inline,
   size
 }) => {
@@ -22,7 +23,7 @@ export const Dots = ({
   ])
 
   return (
-    <div className={classes}>
+    <div className={classes} data-testid={dataTestId}>
       <div className="spinner__inner" />
       <div className="spinner__inner" />
       <div className="spinner__inner" />
@@ -47,16 +48,28 @@ Dots.propTypes = {
 export const Spinner = ({
   className,
   color,
+  dataTestId,
   inline,
   size,
   type
 }) => {
-  if (type === 'dots') return <Dots color={color} size={size} inline={inline} className={className} />
+  if (type === 'dots') {
+    return (
+      <Dots
+        className={className}
+        dataTestId={dataTestId}
+        color={color}
+        size={size}
+        inline={inline}
+      />
+    )
+  }
   return null
 }
 
 Spinner.defaultProps = {
   className: null,
+  dataTestId: null,
   color: '',
   inline: false,
   size: ''
@@ -64,6 +77,7 @@ Spinner.defaultProps = {
 
 Spinner.propTypes = {
   className: PropTypes.string,
+  dataTestId: PropTypes.string,
   color: PropTypes.string,
   inline: PropTypes.bool,
   size: PropTypes.string,

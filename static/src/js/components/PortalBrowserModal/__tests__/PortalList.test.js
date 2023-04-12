@@ -1,5 +1,10 @@
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
@@ -14,6 +19,8 @@ import configureStore from '../../../store/configureStore'
 import actions from '../../../actions'
 
 import * as availablePortals from '../../../../../../portals'
+
+jest.mock('../../../../../../portals/above/images/logo.png', () => ('above_logo_path'))
 
 const store = configureStore()
 
@@ -115,6 +122,55 @@ describe('PortalList component', () => {
 
     await waitFor(() => {
       expect(moreInfoLink).toHaveAttribute('target', '_blank')
+    })
+  })
+
+  describe('When loading a portal thumbnail', () => {
+    test('displays a spinner', async () => {
+      setup()
+
+      const spinner = screen.getByTestId('portal-thumbnail-spinner')
+
+      await waitFor(() => {
+        expect(spinner).toBeInTheDocument()
+      })
+    })
+
+    test('does not display an image', async () => {
+      setup()
+
+      const thumbnail = screen.queryByTestId('portal-thumbnail')
+
+      await waitFor(() => {
+        expect(thumbnail.classList).not.toContain('portal-list__thumbnail--is-loaded')
+      })
+    })
+  })
+
+  describe('When a portal thumbnail has finished loading', () => {
+    test('does not display a spinner', async () => {
+      setup()
+
+      const thumbnail = screen.getByTestId('portal-thumbnail')
+
+      fireEvent.load(thumbnail)
+
+      await waitFor(() => {
+        const spinner = screen.queryByTestId('portal-thumbnail-spinner')
+        expect(spinner).not.toBeInTheDocument()
+      })
+    })
+
+    test('displays an image', async () => {
+      setup()
+
+      const thumbnail = screen.getByTestId('portal-thumbnail')
+
+      fireEvent.load(thumbnail)
+
+      await waitFor(() => {
+        expect(thumbnail.classList).toContain('portal-list__thumbnail--is-loaded')
+      })
     })
   })
 

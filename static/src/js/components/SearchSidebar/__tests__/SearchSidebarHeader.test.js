@@ -1,6 +1,12 @@
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
+import '@testing-library/jest-dom'
 
 jest.mock('../../../containers/SearchFormContainer/SearchFormContainer', () => jest.fn(({ children }) => (
   <mock-SearchFormContainer data-testid="SearchFormContainer">
@@ -12,6 +18,8 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
     {children}
   </mock-PortalLinkContainer>
 )))
+
+jest.mock('../../../../../../portals/idn/images/logo.png', () => ('idn_logo_path'))
 
 import SearchSidebarHeader from '../SearchSidebarHeader'
 import SearchFormContainer from '../../../containers/SearchFormContainer/SearchFormContainer'
@@ -88,8 +96,33 @@ describe('SearchSidebarHeader component', () => {
         })
       })
 
+      const image = screen.getByTestId('portal-logo')
+
+      fireEvent.load(image)
+
       await waitFor(() => {
         expect(screen.getByTestId('portal-logo')).toBeDefined()
+        expect(screen.getByTestId('portal-logo')).toHaveAttribute('src', 'idn_logo_path')
+      })
+    })
+
+    test('removes the spinner', async () => {
+      act(() => {
+        setup({
+          portal: availablePortals.idn,
+          location: {
+            pathname: '/search',
+            search: '?portal=idn'
+          }
+        })
+      })
+
+      const image = screen.getByTestId('portal-logo')
+
+      fireEvent.load(image)
+
+      await waitFor(() => {
+        expect(screen.queryByTestId('portal-logo-spinner')).not.toBeInTheDocument()
       })
     })
 
