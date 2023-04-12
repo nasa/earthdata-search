@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { FaDoorOpen } from 'react-icons/fa'
+import classNames from 'classnames'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { locationPropType } from '../../util/propTypes/location'
@@ -51,6 +52,13 @@ export const SearchSidebarHeader = ({
     setThumbnailLoading(false)
   })
 
+  const portalLogoClassNames = classNames(
+    'search-sidebar-header__thumbnail',
+    {
+      'search-sidebar-header__thumbnail--is-loaded': !thumbnailLoading
+    }
+  )
+
   if (portalLogoSrc === undefined || portalLogoSrc) {
     logoEl = (
       <div className="search-sidebar-header__thumbnail-container">
@@ -68,7 +76,7 @@ export const SearchSidebarHeader = ({
         {
           portalLogoSrc && (
             <img
-              className={`search-sidebar-header__thumbnail ${!thumbnailLoading && 'search-sidebar-header__thumbnail--is-loaded'}`}
+              className={portalLogoClassNames}
               src={portalLogoSrc}
               height="30"
               width="30"

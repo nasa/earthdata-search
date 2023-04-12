@@ -129,9 +129,8 @@ describe('PortalList component', () => {
     test('displays a spinner', async () => {
       setup()
 
-      const spinner = screen.getByTestId('portal-thumbnail-spinner')
-
       await waitFor(() => {
+        const spinner = screen.getByTestId('portal-thumbnail-spinner')
         expect(spinner).toBeInTheDocument()
       })
     })
@@ -139,9 +138,8 @@ describe('PortalList component', () => {
     test('does not display an image', async () => {
       setup()
 
-      const thumbnail = screen.queryByTestId('portal-thumbnail')
-
       await waitFor(() => {
+        const thumbnail = screen.queryByTestId('portal-thumbnail')
         expect(thumbnail.classList).not.toContain('portal-list__thumbnail--is-loaded')
       })
     })
@@ -151,11 +149,11 @@ describe('PortalList component', () => {
     test('does not display a spinner', async () => {
       setup()
 
-      const thumbnail = screen.getByTestId('portal-thumbnail')
-
-      fireEvent.load(thumbnail)
-
       await waitFor(() => {
+        const thumbnail = screen.getByTestId('portal-thumbnail')
+
+        fireEvent.load(thumbnail)
+
         const spinner = screen.queryByTestId('portal-thumbnail-spinner')
         expect(spinner).not.toBeInTheDocument()
       })
@@ -164,11 +162,11 @@ describe('PortalList component', () => {
     test('displays an image', async () => {
       setup()
 
-      const thumbnail = screen.getByTestId('portal-thumbnail')
-
-      fireEvent.load(thumbnail)
-
       await waitFor(() => {
+        const thumbnail = screen.getByTestId('portal-thumbnail')
+
+        fireEvent.load(thumbnail)
+
         expect(thumbnail.classList).toContain('portal-list__thumbnail--is-loaded')
       })
     })
@@ -195,10 +193,10 @@ describe('PortalList component', () => {
 
       setup()
 
-      const portalList = screen.getByTestId('portal-list')
-      const portalItems = portalList.getElementsByTagName('button')
-
       await waitFor(() => {
+        const portalList = screen.getByTestId('portal-list')
+        const portalItems = portalList.getElementsByTagName('button')
+
         expect(portalList).toBeInTheDocument()
         expect(portalItems.length).toEqual(1)
         expect(portalItems[0].textContent).toEqual('Included')
