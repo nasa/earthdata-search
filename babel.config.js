@@ -18,5 +18,10 @@ module.exports = {
     '@babel/plugin-transform-runtime',
     '@babel/plugin-syntax-dynamic-import',
     'transform-class-properties'
-  ]
+  ],
+  env: {
+    test: {
+      plugins: ['istanbul']
+    }
+  }
 }
