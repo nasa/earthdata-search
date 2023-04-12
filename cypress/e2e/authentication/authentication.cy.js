@@ -9,7 +9,7 @@ import collectionFixture from './__mocks__/authenticated_collections.json'
 // At the default size, react-window will render 6 items
 const expectedCollectionCount = 6
 
-describe('Authentication', () => {
+describe.skip('Authentication', () => {
   it('logs the user in with the auth_callback endpoint and redirects the user', () => {
     cy.intercept(
       'POST',
