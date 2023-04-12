@@ -20,7 +20,7 @@ module.exports = {
     'transform-class-properties'
   ],
   env: {
-    test: {
+    playwright: {
       plugins: ['istanbul']
     }
   }

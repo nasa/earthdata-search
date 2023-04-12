@@ -41,7 +41,7 @@
     "playwright:ci:2/3": "start-server-and-test start:ci http-get://localhost:8080 'npm run playwright:test -- --shard=2/3'",
     "playwright:ci:3/3": "start-server-and-test start:ci http-get://localhost:8080 'npm run playwright:test -- --shard=3/3'",
     "pretest:playwright": "rm -rf playwright-coverage/ .nyc_output/",
-    "playwright:test": "NODE_ENV=test nyc playwright test --reporter=list",
+    "playwright:test": "NODE_ENV=playwright nyc playwright test --reporter=list",
     "playwright:ui": "npx playwright test --ui",
     "posttest:playwright": "npx nyc report --reporter=lcov --report-dir=playwright-coverage"
   },
