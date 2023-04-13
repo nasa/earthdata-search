@@ -135,7 +135,7 @@ const submitRetrieval = async (event, context) => {
           // service order -- this is presenting in EDSC as the 'Customize' access method
           queueUrl = process.env.catalogRestQueueUrl
         } else if (type === 'ECHO ORDERS') {
-          // Submits to Legacy Services (CMR) and is often referred to as an
+          // Submits to cmr-ordering and is often referred to as an
           // echo order -- this is presenting in EDSC as the 'Stage For Delivery' access method
           queueUrl = process.env.cmrOrderingOrderQueueUrl
         } else if (type === 'Harmony') {
