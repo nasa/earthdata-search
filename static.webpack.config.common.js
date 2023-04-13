@@ -6,7 +6,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const config = require('./sharedUtils/config')
 const { availablePortals } = require('./portals/index')
@@ -69,21 +68,14 @@ const StaticCommonConfig = {
         exclude: /portals/i,
         use: [
           {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'css-loader'
           },
           {
-            loader: 'resolve-url-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'resolve-url-loader'
           },
           {
             loader: 'postcss-loader',
             options: {
-              sourceMap: true,
               postcssOptions: {
                 plugins: [
                   'autoprefixer'
@@ -92,10 +84,7 @@ const StaticCommonConfig = {
             }
           },
           {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'sass-loader'
           },
           {
             loader: 'style-resources-loader',
@@ -149,7 +138,6 @@ const StaticCommonConfig = {
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin(),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
       DEBUG: false

@@ -23,8 +23,8 @@ const defaultPlugins = [
 
   // Creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
   new MiniCssExtractPlugin({
-    filename: '[name].[contenthash].min.css',
-    chunkFilename: '[id].[contenthash].min.css'
+    filename: '[name].[contenthash].css',
+    chunkFilename: '[id].[contenthash].css'
   })
 ]
 
