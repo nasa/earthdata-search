@@ -14,10 +14,6 @@ import {
 export const usePortalLogo = (portalId) => {
   const [portalLogoSrc, setPortalLogoSrc] = useState()
 
-  const setPortalLogoStateAndRef = (portalId, imgSrc) => {
-    setPortalLogoSrc(imgSrc)
-  }
-
   const getPortalLogo = useCallback(async () => {
     // If a portal id is not provided, do nothing. The default empty string will be
     // returned from the hook.
@@ -28,10 +24,10 @@ export const usePortalLogo = (portalId) => {
       // to the url for the image.
       const logo = await import(`../../../../portals/${portalId}/images/logo.png`)
       const { default: imgSrc } = logo
-      setPortalLogoStateAndRef(portalId, imgSrc)
+      setPortalLogoSrc(imgSrc)
     } catch (e) {
       // If the import fails, set the state to an empty string.
-      setPortalLogoStateAndRef(portalId, '')
+      setPortalLogoSrc('')
     }
   }, [portalId])
 
