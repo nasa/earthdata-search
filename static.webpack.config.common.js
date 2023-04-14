@@ -107,33 +107,6 @@ const StaticCommonConfig = {
       {
         test: /\.(?:ico|gif|png|jpe?g)$/i,
         type: 'asset/resource'
-      },
-      {
-        test: /portals.*styles\.s?css$/i,
-        use: [
-          {
-            loader: 'style-loader',
-            options: {
-              injectType: 'lazyStyleTag',
-              esModule: false
-            }
-          },
-          {
-            loader: 'css-loader'
-          },
-          {
-            loader: 'resolve-url-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
       }
     ]
   },

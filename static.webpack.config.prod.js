@@ -23,8 +23,8 @@ const defaultPlugins = [
 
   // Creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
   new MiniCssExtractPlugin({
-    filename: '[name].[contenthash].css',
-    chunkFilename: '[id].[contenthash].css'
+    filename: '[name].[contenthash].min.css',
+    chunkFilename: '[id].[contenthash].min.css'
   })
 ]
 
@@ -99,7 +99,6 @@ const Config = mergeWithRules({
     rules: [
       {
         test: /\.(css|scss)$/,
-        exclude: /portals/i,
         use: [
           MiniCssExtractPlugin.loader
         ]

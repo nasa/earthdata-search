@@ -34,7 +34,6 @@ const Config = mergeWithRules({
     rules: [
       {
         test: /\.(css|scss)$/,
-        exclude: /portals/i,
         use: [
           {
             loader: 'style-loader'
