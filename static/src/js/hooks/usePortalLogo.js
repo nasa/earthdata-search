@@ -1,17 +1,22 @@
-import { useCallback, useEffect, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 
 /**
  * Attempts to import a portal logo, if the logo exists, the path is returned. If a logo
- * does not exist, an empty string is returned.
+ * does not exist, an empty string is returned. While the src is loading, the value will
+ * be undefined.
  * @prop {String} portalId - The portal id
- * @returns {String} - The url for a portal image or an empty string
- */
+ * @returns {String} - The url for a portal image, an empty string, or undefined
+*/
 export const usePortalLogo = (portalId) => {
-  const [portalLogoSrc, setPortalLogoSrc] = useState('')
+  const [portalLogoSrc, setPortalLogoSrc] = useState()
 
   const getPortalLogo = useCallback(async () => {
-    // If a portal id is not provided, do nothing. The default empty string
-    // will be returned from the hook.
+    // If a portal id is not provided, do nothing. The default empty string will be
+    // returned from the hook.
     if (!portalId) return
 
     try {

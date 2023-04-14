@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { FaDoorOpen } from 'react-icons/fa'
+import classNames from 'classnames'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { locationPropType } from '../../util/propTypes/location'
@@ -10,16 +11,21 @@ import { usePortalLogo } from '../../hooks/usePortalLogo'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
+import Spinner from '../Spinner/Spinner'
 
 import './SearchSidebarHeader.scss'
 
 /**
  * Renders SearchSidebarHeader
+ * @prop {Object} props - The props object
+ * @prop {Object} props.portal - A portal object from Redux
+ * @prop {Object} props.location - A location object from React Router
  */
 export const SearchSidebarHeader = ({
   portal,
   location
 }) => {
+  let logoEl
   const {
     title = {},
     portalId,
@@ -36,23 +42,50 @@ export const SearchSidebarHeader = ({
 
   const portalLogoSrc = usePortalLogo(portalId)
 
+  const [thumbnailLoading, setThumbnailLoading] = useState(true)
+
   const { primary: primaryTitle, secondary: secondaryTitle } = title
 
   const displayTitle = `${primaryTitle}${secondaryTitle && ` (${secondaryTitle})`}`
 
-  let logoEl
+  const onThumbnailLoaded = useCallback(() => {
+    setThumbnailLoading(false)
+  })
 
-  if (portalLogoSrc) {
+  const portalLogoClassNames = classNames(
+    'search-sidebar-header__thumbnail',
+    {
+      'search-sidebar-header__thumbnail--is-loaded': !thumbnailLoading
+    }
+  )
+
+  if (portalLogoSrc === undefined || portalLogoSrc) {
     logoEl = (
       <div className="search-sidebar-header__thumbnail-container">
-        <img
-          className="search-sidebar-header__thumbnail"
-          src={portalLogoSrc}
-          height="30"
-          width="30"
-          data-testid="portal-logo"
-          alt={`A logo for ${displayTitle}`}
-        />
+        {
+          thumbnailLoading && (
+            <Spinner
+              dataTestId="portal-logo-spinner"
+              type="dots"
+              className="search-sidebar-header__thumb-spinner"
+              color="gray"
+              size="x-tiny"
+            />
+          )
+        }
+        {
+          portalLogoSrc && (
+            <img
+              className={portalLogoClassNames}
+              src={portalLogoSrc}
+              height="30"
+              width="30"
+              data-testid="portal-logo"
+              alt={`A logo for ${displayTitle}`}
+              onLoad={() => onThumbnailLoaded()}
+            />
+          )
+        }
         <div className="search-sidebar-header__thumbnail-icon-wrapper">
           <EDSCIcon className="search-sidebar-header__thumbnail-icon edsc-icon-ext-link edsc-icon-fw" icon="edsc-icon-ext-link edsc-icon-fw" />
         </div>

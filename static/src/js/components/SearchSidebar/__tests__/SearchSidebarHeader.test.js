@@ -1,6 +1,11 @@
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from '@testing-library/react'
+import '@testing-library/jest-dom'
 
 jest.mock('../../../containers/SearchFormContainer/SearchFormContainer', () => jest.fn(({ children }) => (
   <mock-SearchFormContainer data-testid="SearchFormContainer">
@@ -13,21 +18,20 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
   </mock-PortalLinkContainer>
 )))
 
+jest.mock('../../../../../../portals/idn/images/logo.png', () => ('idn_logo_path'))
+jest.mock('../../../../../../portals/soos/images/logo.png', () => ('soos_logo_path'))
+
 import SearchSidebarHeader from '../SearchSidebarHeader'
 import SearchFormContainer from '../../../containers/SearchFormContainer/SearchFormContainer'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import { availablePortals } from '../../../../../../portals'
 
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+
 function setup(overrideProps) {
   const props = {
-    portal: {
-      title: {
-        primary: 'Earthdata Search'
-      },
-      moreInfoUrl: null,
-      portalId: 'edsc'
-    },
+    portal: availablePortals.edsc,
     location: {
       pathname: '/search',
       search: ''
@@ -39,8 +43,13 @@ function setup(overrideProps) {
 }
 
 beforeEach(() => {
+  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    defaultPortal: 'edsc'
+  }))
+})
+
+afterEach(() => {
   jest.clearAllMocks()
-  jest.restoreAllMocks()
 })
 
 describe('SearchSidebarHeader component', () => {
@@ -52,14 +61,12 @@ describe('SearchSidebarHeader component', () => {
 
   describe('when a portal is loaded', () => {
     test('renders the Leave Portal link', async () => {
-      act(() => {
-        setup({
-          portal: availablePortals.idn,
-          location: {
-            pathname: '/search',
-            search: '?portal=idn'
-          }
-        })
+      setup({
+        portal: availablePortals.idn,
+        location: {
+          pathname: '/search',
+          search: '?portal=idn'
+        }
       })
 
       await waitFor(() => {
@@ -77,31 +84,35 @@ describe('SearchSidebarHeader component', () => {
       })
     })
 
-    test('renders the portal logo', async () => {
-      act(() => {
-        setup({
-          portal: availablePortals.idn,
-          location: {
-            pathname: '/search',
-            search: '?portal=idn'
-          }
-        })
+    test('renders the portal logo and removes the spinner', async () => {
+      setup({
+        portal: availablePortals.soos,
+        location: {
+          pathname: '/search',
+          search: '?portal=soos'
+        }
       })
 
       await waitFor(() => {
-        expect(screen.getByTestId('portal-logo')).toBeDefined()
+        const image = screen.getByTestId('portal-logo')
+        expect(image).toBeDefined()
+
+        fireEvent.load(image)
+
+        expect(screen.queryByTestId('portal-logo-spinner')).not.toBeInTheDocument()
+
+        expect(screen.getByTestId('portal-logo')).toHaveAttribute('src', 'soos_logo_path')
+        expect(screen.getByTestId('portal-logo')).toHaveClass('search-sidebar-header__thumbnail--is-loaded')
       })
     })
 
     test('renders the portal logo with a moreInfoUrl', async () => {
-      act(() => {
-        setup({
-          portal: availablePortals.idn,
-          location: {
-            pathname: '/search',
-            search: '?portal=idn'
-          }
-        })
+      setup({
+        portal: availablePortals.idn,
+        location: {
+          pathname: '/search',
+          search: '?portal=idn'
+        }
       })
 
       await waitFor(() => {

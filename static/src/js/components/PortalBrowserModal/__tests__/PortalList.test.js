@@ -1,5 +1,10 @@
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
@@ -14,6 +19,8 @@ import configureStore from '../../../store/configureStore'
 import actions from '../../../actions'
 
 import * as availablePortals from '../../../../../../portals'
+
+jest.mock('../../../../../../portals/above/images/logo.png', () => ('above_logo_path'))
 
 const store = configureStore()
 
@@ -118,6 +125,53 @@ describe('PortalList component', () => {
     })
   })
 
+  describe('When loading a portal thumbnail', () => {
+    test('displays a spinner', async () => {
+      setup()
+
+      await waitFor(() => {
+        const spinner = screen.getByTestId('portal-thumbnail-spinner')
+        expect(spinner).toBeInTheDocument()
+      })
+    })
+
+    test('does not display an image', async () => {
+      setup()
+
+      await waitFor(() => {
+        const thumbnail = screen.queryByTestId('portal-thumbnail')
+        expect(thumbnail.classList).not.toContain('portal-list__thumbnail--is-loaded')
+      })
+    })
+  })
+
+  describe('When a portal thumbnail has finished loading', () => {
+    test('does not display a spinner', async () => {
+      setup()
+
+      await waitFor(() => {
+        const thumbnail = screen.getByTestId('portal-thumbnail')
+
+        fireEvent.load(thumbnail)
+
+        const spinner = screen.queryByTestId('portal-thumbnail-spinner')
+        expect(spinner).not.toBeInTheDocument()
+      })
+    })
+
+    test('displays an image', async () => {
+      setup()
+
+      await waitFor(() => {
+        const thumbnail = screen.getByTestId('portal-thumbnail')
+
+        fireEvent.load(thumbnail)
+
+        expect(thumbnail.classList).toContain('portal-list__thumbnail--is-loaded')
+      })
+    })
+  })
+
   describe('When loading a portal without the portalBrowser flag', () => {
     test('does not display the portal', async () => {
       // eslint-disable-next-line no-import-assign
@@ -139,10 +193,10 @@ describe('PortalList component', () => {
 
       setup()
 
-      const portalList = screen.getByTestId('portal-list')
-      const portalItems = portalList.getElementsByTagName('button')
-
       await waitFor(() => {
+        const portalList = screen.getByTestId('portal-list')
+        const portalItems = portalList.getElementsByTagName('button')
+
         expect(portalList).toBeInTheDocument()
         expect(portalItems.length).toEqual(1)
         expect(portalItems[0].textContent).toEqual('Included')

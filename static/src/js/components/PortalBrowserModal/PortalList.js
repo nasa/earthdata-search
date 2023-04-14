@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { sortBy } from 'lodash'
 import {
@@ -11,6 +11,7 @@ import { availablePortals } from '../../../../../portals'
 import { usePortalLogo } from '../../hooks/usePortalLogo'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import Spinner from '../Spinner/Spinner'
 
 import './PortalList.scss'
 
@@ -38,13 +39,19 @@ export const PortalList = ({
 
           if (!portalBrowser) return null
 
-          const { primary: primaryTitle, secondary: secondaryTitle } = title
-
           const portalLogoSrc = usePortalLogo(portalId)
+
+          const [thumbnailLoading, setThumbnailLoading] = useState(portalLogoSrc === undefined)
+
+          const { primary: primaryTitle, secondary: secondaryTitle } = title
 
           const newPathname = '/search'
 
           const displayTitle = `${primaryTitle}${secondaryTitle && ` (${secondaryTitle})`}`
+
+          const onThumbnailLoaded = useCallback(() => {
+            setThumbnailLoading(false)
+          })
 
           return (
             <Col className="d-flex" xs={12} lg={6} key={portalId}>
@@ -64,13 +71,31 @@ export const PortalList = ({
               >
                 <div className="portal-list__item">
                   {
-                    portalLogoSrc && (
-                      <div className="portal-list__item-logo">
-                        <img
-                          alt={`A logo for ${displayTitle}`}
-                          src={portalLogoSrc}
-                          width="75"
-                        />
+                    (portalLogoSrc === undefined || portalLogoSrc) && (
+                      <div className="portal-list__thumbnail-container">
+                        {
+                          thumbnailLoading && (
+                            <Spinner
+                              className="portal-list__thumb-spinner"
+                              dataTestId="portal-thumbnail-spinner"
+                              type="dots"
+                              color="gray"
+                              size="x-tiny"
+                            />
+                          )
+                        }
+                        {
+                          portalLogoSrc && (
+                            <img
+                              className={`portal-list__thumbnail ${!thumbnailLoading && 'portal-list__thumbnail--is-loaded'}`}
+                              data-testid="portal-thumbnail"
+                              alt={`A logo for ${displayTitle}`}
+                              src={portalLogoSrc}
+                              width="75"
+                              onLoad={() => onThumbnailLoaded()}
+                            />
+                          )
+                        }
                       </div>
                     )
                   }
