@@ -34,6 +34,7 @@
               }
             }
           ],
+          "dataQualitySummaries": { "count": 0, "items": null },
           "directDistributionInformation": {
             "region": "us-west-2",
             "s3CredentialsApiEndpoint": "https://sentinel1.asf.alaska.edu/s3credentials",
@@ -865,7 +866,7 @@
                 "day_night_flag": false,
                 "granule_online_access_flag": true,
                 "orbit_calculated_spatial_domains": true,
-                "updated_at": "2023-03-30T19:11:37.371Z"
+                "updated_at": "2023-04-05T19:17:09.659Z"
               }
             }
           },
@@ -883,7 +884,7 @@
           "versionId": "1",
           "services": { "count": 0, "items": null },
           "granules": {
-            "count": 1440085,
+            "count": 1443699,
             "items": [
               {
                 "browseFlag": false,
@@ -987,7 +988,17 @@
               }
             ]
           },
-          "subscriptions": { "count": 0, "items": [] },
+          "subscriptions": {
+            "count": 1,
+            "items": [
+              {
+                "collectionConceptId": "C1214470488-ASF",
+                "conceptId": "SUB2255261357-ASF",
+                "name": "C1214470488-ASF Subscription - 2022-04-22T15:23:48.528Z",
+                "query": "point[]=68.34375,-1.69768"
+              }
+            ]
+          },
           "tools": { "count": 0, "items": null },
           "variables": { "count": 0, "items": null }
         }

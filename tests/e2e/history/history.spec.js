@@ -11,7 +11,7 @@ import timeline from './__mocks__/timeline.json'
 
 import { graphQlGetSubscriptionsQuery } from '../../support/graphQlGetSubscriptionsQuery'
 import { graphQlGetCollection } from '../../support/graphQlGetCollection'
-import { graphQlGetCollections } from '../../support/graphQlGetCollections'
+import { graphQlGetProjectCollections } from '../../support/graphQlProjectGetCollections'
 import { login } from '../../support/login'
 
 const conceptId = 'C1214470488-ASF'
@@ -61,7 +61,7 @@ test.describe('History', () => {
           headers: graphQlHeaders
         })
       }
-      if (query === JSON.parse(graphQlGetCollections(conceptId)).query) {
+      if (query === JSON.parse(graphQlGetProjectCollections(conceptId)).query) {
         await route.fulfill({
           json: getCollectionsGraphQlBody,
           headers: graphQlHeaders
