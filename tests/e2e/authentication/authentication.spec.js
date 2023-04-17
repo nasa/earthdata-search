@@ -8,12 +8,11 @@ import getSubscriptionsGraphQlBody from './__mocks__/getSubscriptions.graphql.bo
 import collectionFixture from './__mocks__/authenticated_collections.json'
 
 // At the default size, react-window will render 6 items
-// TODO webkit is only showing 3 here sometimes - it is adding `position: relative` to a few elements
 const expectedCollectionCount = 6
 
 test.describe('Authentication', () => {
   test.beforeEach(async ({ page }) => {
-    // await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
     await page.route(/collections/, (route) => route.fulfill({
       json: collectionFixture.body,
       headers: collectionFixture.headers

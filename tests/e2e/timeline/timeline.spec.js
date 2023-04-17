@@ -73,14 +73,7 @@ test.describe('Timeline spec', () => {
 
     await page.waitForSelector('[data-testid="collection-result-item_C1443528505-LAADS"]')
 
-    // ? the pixels are slightly different in each browser, so a hard valud isn't working
-
-    // ? Screenshot testing isn't great either, because the different search times are causing too many pixels on the page to change
-    // Confirm the leaflet tools are the correct
-    // const searchHeight = await page.locator('.leaflet-control-container').evaluate((el) => window.getComputedStyle(el).getPropertyValue('height'))
-    // await expect(searchHeight).toEqual('826px')
-
-    // ! the screenshots added to the repo are darwin, github actions are different screenshot names
+    // Confirm the leaflet tools are in the correct location
     await expect(page).toHaveScreenshot('search-screenshot.png', {
       clip: {
         x: 1200,
@@ -93,10 +86,7 @@ test.describe('Timeline spec', () => {
     // Click a collection that exists in the project
     await page.getByTestId('collection-result-item_C1443528505-LAADS').click()
 
-    // Confirm the leaflet tools are the correct
-    // const granulesHeight = await page.locator('.leaflet-control-container').evaluate((el) => window.getComputedStyle(el).getPropertyValue('height'))
-
-    // await expect(granulesHeight).toEqual('758px')
+    // Confirm the leaflet tools are in the correct location
     await expect(page).toHaveScreenshot('granules-screenshot.png', {
       clip: {
         x: 1200,
