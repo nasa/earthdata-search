@@ -70,7 +70,7 @@ export const CollectionResultsList = ({
   const sizeMap = React.useRef({})
 
   // If visibleMiddleIndex is set, that means we want to scroll to a particular item. react-window
-  // will immediatly render the items at the default index, which calls setVisibleIndex and resets
+  // will immediately render the items at the default index, which calls setVisibleIndex and resets
   // the values. visibleMiddleIndexRef will hold on to this value so it can be used once the listRef
   // is defined and we can call scrollToItem.
   const visibleMiddleIndexRef = useRef(visibleMiddleIndex)
