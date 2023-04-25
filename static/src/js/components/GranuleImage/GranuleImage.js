@@ -9,11 +9,11 @@ import Spinner from '../Spinner/Spinner'
 import './GranuleImage.scss'
 
 /**
- * Renders GranuleImage.
+ * Renders GranuleImage component. This component displays the image of a granule if it has one
+ * the image can be open or closed with buttons
  * @param {Object} props - The props passed into the component.
- * @param {String} imageSrc - The image source.
+ * @param {String} props.imageSrc - The image source.
  */
-
 export const GranuleImage = ({
   imageSrc
 }) => {
@@ -48,28 +48,26 @@ export const GranuleImage = ({
     setIsErrored(true)
   })
 
-  const loadImage = () => {
+  // When the imageSrc changes value then load the new image
+  useEffect(() => {
     setIsErrored(false)
     setIsLoaded(false)
     setIsLoading(true)
-  }
-
-  // When the imageSrc changes value then load the new image
-  useEffect(() => {
-    loadImage()
   }, [imageSrc])
 
   if (!imageSrc) return null
 
   return (
-    <div className={containerClassName}>
+    <div
+      className={containerClassName}
+    >
       { isOpen ? (
         <Button
           className="granule-image__button granule-image__button--close"
           icon={FaTimes}
           onClick={handleToggleImage}
           label="Close browse image"
-          data-testid="granule-image__button granule-image__button--close"
+          dataTestId="granule-image__button--close"
         />
       ) : (
         <Button
@@ -77,10 +75,13 @@ export const GranuleImage = ({
           icon={FaPlus}
           onClick={handleToggleImage}
           label="Open browse image"
-          data-testid="granule-image__button granule-image__button--open"
+          dataTestId="granule-image__button--open"
         />
       )}
-      <div className="granule-image__container">
+      <div
+        className="granule-image__container"
+        data-testid="granule-image"
+      >
         {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
         <img
           className={imageClassName}

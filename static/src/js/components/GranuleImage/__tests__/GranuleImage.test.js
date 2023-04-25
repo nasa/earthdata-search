@@ -3,17 +3,14 @@ import {
   render,
   screen
 } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 import GranuleImage from '../GranuleImage'
 
 const setup = (props) => {
-  act(() => {
-    render(
-      <GranuleImage imageSrc={props.imageSrc} />
-    )
-  })
+  render(
+    <GranuleImage imageSrc={props.imageSrc} />
+  )
 }
 
 describe('GranuleImage component', () => {
@@ -23,7 +20,8 @@ describe('GranuleImage component', () => {
         imageSrc: ''
       }
       setup(props)
-      expect(screen.queryByRole('button')).toBeNull()
+      // getByTestId will return an error if it cannot find element queryBy returns null if it cannot
+      expect(screen.queryByTestId('granule-image')).toBeNull()
     })
   })
 
@@ -33,7 +31,7 @@ describe('GranuleImage component', () => {
         imageSrc: '/some/image/src'
       }
       setup(props)
-      expect(screen.queryByRole('button')).toBeTruthy()
+      expect(screen.getByTestId('granule-image')).toBeTruthy()
     })
   })
 })
@@ -45,9 +43,9 @@ describe('buttons', () => {
     }
     const user = userEvent.setup()
     setup(props)
-    const closeButton = screen.getByRole('button')
+    const closeButton = screen.getByTestId('granule-image__button--close')
     await user.click(closeButton)
-    expect(screen.getByRole('button')).toHaveClass('granule-image__button granule-image__button--open')
+    expect(screen.getByTestId('granule-image__button--open')).toBeTruthy()
   })
 
   test('when clicking the open button, opens the image', async () => {
@@ -56,13 +54,11 @@ describe('buttons', () => {
     }
     const user = userEvent.setup()
     setup(props)
-    expect(screen.getByRole('button')).toHaveClass('granule-image__button granule-image__button--close')
-    const closeButton = screen.getByRole('button')
+    const closeButton = screen.getByTestId('granule-image__button--close')
     await user.click(closeButton)
 
-    const openButton = screen.getByRole('button')
-    expect(screen.getByRole('button')).toHaveClass('granule-image__button granule-image__button--open')
+    const openButton = screen.getByTestId('granule-image__button--open')
     await user.click(openButton)
-    expect(screen.getByRole('button')).toHaveClass('granule-image__button granule-image__button--close')
+    expect(screen.getByTestId('granule-image__button--close')).toBeTruthy()
   })
 })
