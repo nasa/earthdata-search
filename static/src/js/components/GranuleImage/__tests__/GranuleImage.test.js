@@ -1,70 +1,64 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import {
+  render,
+  screen
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import '@testing-library/jest-dom'
 import GranuleImage from '../GranuleImage'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
-    imageSrc: '',
-    ...overrideProps
-  }
-
-  const enzymeWrapper = shallow(<GranuleImage {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+const setup = (props) => {
+  render(
+    <GranuleImage imageSrc={props.imageSrc} />
+  )
 }
 
 describe('GranuleImage component', () => {
   describe('when no image is present', () => {
     test('renders itself correctly', () => {
-      const { enzymeWrapper } = setup()
-
-      expect(enzymeWrapper.type()).toBe(null)
+      const props = {
+        imageSrc: ''
+      }
+      setup(props)
+      // getByTestId will return an error if it cannot find element queryBy returns null if it cannot
+      expect(screen.queryByTestId('granule-image')).toBeNull()
     })
   })
 
   describe('when an image is present', () => {
     test('renders itself correctly', () => {
-      const { enzymeWrapper } = setup({
+      const props = {
         imageSrc: '/some/image/src'
-      })
-
-      expect(enzymeWrapper.type()).toBe('div')
+      }
+      setup(props)
+      expect(screen.getByTestId('granule-image')).toBeTruthy()
     })
   })
+})
 
-  describe('buttons', () => {
-    test('when clicking the close button, closes the image', () => {
-      const { enzymeWrapper } = setup({
-        imageSrc: '/some/image/src'
-      })
+describe('buttons', () => {
+  test('when clicking the close button, closes the image', async () => {
+    const props = {
+      imageSrc: '/some/image/src'
+    }
+    const user = userEvent.setup()
+    setup(props)
+    const closeButton = screen.getByTestId('granule-image__button--close')
+    await user.click(closeButton)
+    expect(screen.getByTestId('granule-image__button--open')).toBeTruthy()
+  })
 
-      expect(enzymeWrapper.state().isOpen).toEqual(true)
+  test('when clicking the open button, opens the image', async () => {
+    const props = {
+      imageSrc: '/some/image/src'
+    }
+    const user = userEvent.setup()
+    setup(props)
+    const closeButton = screen.getByTestId('granule-image__button--close')
+    await user.click(closeButton)
 
-      enzymeWrapper.find('.granule-image__button').simulate('click')
-
-      expect(enzymeWrapper.state().isOpen).toEqual(false)
-    })
-
-    test('when clicking the open button, closes the image', () => {
-      const { enzymeWrapper } = setup({
-        imageSrc: '/some/image/src'
-      })
-
-      enzymeWrapper.setState({
-        isOpen: false
-      })
-
-      expect(enzymeWrapper.state().isOpen).toEqual(false)
-
-      enzymeWrapper.find('.granule-image__button').simulate('click')
-
-      expect(enzymeWrapper.state().isOpen).toEqual(true)
-    })
+    const openButton = screen.getByTestId('granule-image__button--open')
+    await user.click(openButton)
+    expect(screen.getByTestId('granule-image__button--close')).toBeTruthy()
   })
 })
