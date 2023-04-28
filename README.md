@@ -24,11 +24,12 @@ It builds upon several public-facing services provided by EOSDIS, including the 
 
 ## Application Installation and Usage
 
-The Earthdata Search application uses Node v14 and Webpack 5 to generate static assets. The serverless application utilizes the following AWS services (important to note if deploying to an AWS environment):
+The Earthdata Search application uses Node.js and Webpack to generate static assets. The serverless application utilizes the following AWS services (important to note if deploying to an AWS environment):
 
 - S3
-  - We highly recommend using CloudFront in front of S3.
+  - We highly recommend using CloudFront in front of S3.  We use [moto](https://github.com/getmoto/moto) to simulate S3 during local development.
 - SQS
+  - We use [ElasticMQ](https://github.com/softwaremill/elasticmq) to simulate SQS during local development.  However we haven't yet rolled this functionality out to colormap generation and other parts of the code.
 - API Gateway
 - Lambda
 - Cloudwatch (Events)
@@ -139,11 +140,13 @@ The [serverless framework](https://serverless.com/framework/docs/providers/aws/)
 
 Running the following command will spin up API Gateway and Lambda locally which will open up a vast majority of the functionality the backend offers.
 
-    serverless offline
+    npm run sls
 
 This will provide access to API Gateway at [http://localhost:3001](http://localhost:3001)
 
 Additionally, this ties in with the `serverless webpack` plugin which will ensure that your lambdas are re-built when changes are detected.
+
+Running the following command will enable integration with local AWS services: `S3=true SQS=true npm run sls`
 
 ### Run the Automated [Jest](https://jestjs.io/) tests
 

@@ -18,6 +18,7 @@
       "width": 85
     },
     "orderStatusRefreshTime": 60000,
+    "exportStatusRefreshTime": 5000,
     "defaultCmrPageSize": 20,
     "maxCmrPageSize": 2000,
     "granuleLinksPageSize": "500",

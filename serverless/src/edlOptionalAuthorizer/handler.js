@@ -32,7 +32,8 @@ const edlOptionalAuthorizer = async (event) => {
     const authOptionalPaths = [
       '/autocomplete',
       '/opensearch/granules',
-      '/collections/export'
+      '/collections/export',
+      '/collections/export-check'
     ]
 
     // Allow for optional authentication

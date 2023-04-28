@@ -1,0 +1,17 @@
+version: "3"
+services:
+  s3:
+    environment:
+      - EXTRA_CORS_ALLOWED_ORIGINS=http://localhost:5000
+      - AWS_DEFAULT_REGION=us-east-1
+      - MOTO_PORT=5000
+    image: motoserver/moto:latest
+    ports:
+      - "5000:5000"
+  sqs:
+    environment:
+      - DEBUG=1
+    image: softwaremill/elasticmq:latest
+    ports:
+      - "9324:9324"
+      - "9325:9325"

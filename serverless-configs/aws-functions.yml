@@ -130,6 +130,54 @@
     environment:
       updateOrderStatusStateMachineArn: ${self:resources.Outputs.UpdateOrderStatusWorkflow.Value}
 
+  exportSearchRequest:
+    handler: serverless/src/exportSearchRequest/handler.default
+    events:
+      - http:
+          method: post
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: collections/export
+          authorizer:
+            name: edlOptionalAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
+  # Lambda that actually creates the .json or .csv file and uploads it to S3
+  exportSearch:
+    handler: serverless/src/exportSearch/handler.default
+    timeout: 600 # this lambda isn't restricted to 30s because it's triggered by SQS not API Gateway
+    events:
+      - sqs:
+          # we set the batch size to 1 for several reasons:
+          # - protect cmr-graphql from too many requests
+          # - ensure independent execution of exports
+          # - prevent an error in one export from failing other exports
+          batchSize: 1
+          arn:
+            Fn::GetAtt:
+              - SearchExportQueue # runs when a new request appears in SearchExportQueue
+              - Arn
+
+  exportSearchCheck:
+    handler: serverless/src/exportSearchCheck/handler.default
+    events:
+      - http:
+          method: post
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: collections/export-check
+          authorizer:
+            name: edlOptionalAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
+  exportSearchClean:
+    handler: serverless/src/exportSearchClean/handler.default
+    description: Delete all records of search export requests older than 30 days
+    events:
+      - schedule:
+          rate: cron(0 0 * * ? *) # every midnight
+          enabled: ${env:EXPORT_SEARCH_CLEAN_JOB_ENABLED, false}
+
   fetchCatalogRestOrder:
     handler: serverless/src/fetchCatalogRestOrder/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
@@ -255,20 +303,6 @@
           method: get
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: concepts/metadata
-
-  exportSearch:
-    handler: serverless/src/exportSearch/handler.default
-    timeout: 300
-    memorySize: 192
-    events:
-      - http:
-          method: post
-          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
-          path: collections/export
-          authorizer:
-            name: edlOptionalAuthorizer
-            type: request
-            resultTtlInSeconds: 0
 
   saveShapefile:
     handler: serverless/src/saveShapefile/handler.default

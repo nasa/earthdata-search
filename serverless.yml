@@ -15,9 +15,12 @@ provider:
       Fn::ImportValue: ${self:provider.stage}-DatabasePort
     dbUsername: edsc
     dbName: edsc_${self:provider.stage}
-
+    searchExportBucket:
+      Ref: SearchExportBucket
     colorMapQueueUrl:
       Ref: ColorMapsProcessingQueue
+    searchExportQueueUrl:
+      Ref: SearchExportQueue
     tagQueueUrl:
       Ref: TagProcessingQueue
     legacyServicesQueueUrl:
@@ -65,14 +68,7 @@ provider:
   apiGateway:
     shouldStartNameWithService: true
 
-plugins:
-  - serverless-finch
-  - serverless-webpack
-  - serverless-step-functions
-  - serverless-plugin-split-stacks
-  - serverless-plugin-log-subscription
-  - serverless-offline
-  - ./serverless-plugins/serverless-webpack-include-migrations.js
+plugins: ${file(./serverless-configs/${self:provider.name}-plugins.js):plugins}
 
 #
 # Lambda Functions
@@ -151,6 +147,20 @@ custom:
     # Uncomment useInProcess to enable in-process run mode
     # https://github.com/dherault/serverless-offline#run-modes
     # useInProcess: true
+
+  serverless-offline-sqs:
+    autoCreate: true
+    apiVersion: '2012-11-05'
+    endpoint: http://0.0.0.0:9324
+    accessKeyId: MOCK_ACCESS_KEY_ID
+    secretAccessKey: MOCK_SECRET_ACCESS_KEY
+    skipCacheInvalidation: false
+    queueName: ${self:custom.siteName}-SearchExportQueue
+
+  serverless-offline-config-s3:
+    endpoint: http://0.0.0.0:5000
+    buckets:
+      - ${self:custom.siteName}-SearchExportBucket
 
   # Serverless Webpack configurations
   webpack:
