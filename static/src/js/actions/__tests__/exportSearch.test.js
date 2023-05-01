@@ -10,9 +10,21 @@ import {
 
 import { EXPORT_FINISHED, EXPORT_STARTED } from '../../constants/actionTypes'
 
+import * as sharedConfig from '../../../../../sharedUtils/config'
+
+const MOCK_AUTH_TOKEN = '7SDFGI856gi12s36x7fe5duv5fb6bgds'
+const MOCK_KEY = '00000000-0000-0000-0000-000000000000'
+const MOCK_SIGNED_URL = 'https://example.gov/fake-signed-url'
+
+const defaultApplicationConfig = sharedConfig.getApplicationConfig()
+
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
+  jest.clearAllMocks()
+})
+
+afterEach(() => {
   jest.clearAllMocks()
 })
 
@@ -42,28 +54,39 @@ describe('onExportFinished', () => {
 
 describe('exportSearch', () => {
   test('calls lambda to get csv search export', async () => {
-    const createObjectMock = jest.fn()
-    window.URL.createObjectURL = createObjectMock
+    jest.spyOn(sharedConfig, 'getApplicationConfig').mockImplementation(() => ({
+      ...defaultApplicationConfig,
+      exportStatusRefreshTime: 1000 // prevents test timeout
+    }))
+
+    const click = jest.fn()
     jest.spyOn(document, 'createElement').mockImplementation(() => ({
       setAttribute: jest.fn(),
-      click: jest.fn(),
+      click,
       parentNode: {
         removeChild: jest.fn()
       }
     }))
-    document.body.appendChild = jest.fn()
+    jest.spyOn(document.body, 'appendChild').mockImplementation(() => ({
+      appendChild: jest.fn()
+    }))
 
     nock(/localhost/)
       .post(/export/)
-      .reply(200, [
-        {
-          mock: 'data'
-        }
-      ])
+      .reply(200, {
+        key: MOCK_KEY
+      })
+
+    nock(/localhost/)
+      .post(/export-check/)
+      .reply(200, {
+        state: 'DONE',
+        url: MOCK_SIGNED_URL
+      })
 
     // mockStore with initialState
     const store = mockStore({
-      authToken: ''
+      authToken: MOCK_AUTH_TOKEN
     })
 
     // call the dispatch
@@ -71,34 +94,44 @@ describe('exportSearch', () => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({ type: EXPORT_STARTED, payload: 'csv' })
       expect(storeActions[1]).toEqual({ type: EXPORT_FINISHED, payload: 'csv' })
-
-      expect(createObjectMock).toHaveBeenCalledTimes(1)
+      expect(click).toHaveBeenCalledTimes(1)
     })
   })
 
   test('calls lambda to get json search export', async () => {
-    const createObjectMock = jest.fn()
-    window.URL.createObjectURL = createObjectMock
+    jest.spyOn(sharedConfig, 'getApplicationConfig').mockImplementation(() => ({
+      ...defaultApplicationConfig,
+      exportStatusRefreshTime: 1000 // prevents test timeout
+    }))
+
+    const click = jest.fn()
     jest.spyOn(document, 'createElement').mockImplementation(() => ({
       setAttribute: jest.fn(),
-      click: jest.fn(),
+      click,
       parentNode: {
         removeChild: jest.fn()
       }
     }))
-    document.body.appendChild = jest.fn()
+    jest.spyOn(document.body, 'appendChild').mockImplementation(() => ({
+      appendChild: jest.fn()
+    }))
 
     nock(/localhost/)
       .post(/export/)
-      .reply(200, [
-        {
-          mock: 'data'
-        }
-      ])
+      .reply(200, {
+        key: MOCK_KEY
+      })
+
+    nock(/localhost/)
+      .post(/export-check/)
+      .reply(200, {
+        state: 'DONE',
+        url: MOCK_SIGNED_URL
+      })
 
     // mockStore with initialState
     const store = mockStore({
-      authToken: ''
+      authToken: MOCK_AUTH_TOKEN
     })
 
     // call the dispatch
@@ -106,8 +139,7 @@ describe('exportSearch', () => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({ type: EXPORT_STARTED, payload: 'json' })
       expect(storeActions[1]).toEqual({ type: EXPORT_FINISHED, payload: 'json' })
-
-      expect(createObjectMock).toHaveBeenCalledTimes(1)
+      expect(click).toHaveBeenCalledTimes(1)
     })
   })
 
