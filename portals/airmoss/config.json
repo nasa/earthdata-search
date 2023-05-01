@@ -1,21 +1,18 @@
 {
-  "hasStyles": true,
-  "hasScripts": true,
-  "logo": {
-    "id": "ornl-daac-logo",
-    "link": "https://airmoss.ornl.gov",
-    "title": "ORNL DAAC AirMOSS Home"
-  },
-  "org": "ORNL DAAC",
+  "moreInfoUrl": "https://airmoss.ornl.gov",
   "pageTitle": "AirMOSS",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
-    "project": "AirMOSS",
-    "hasGranulesOrCwic": null
+    "hasGranulesOrCwic": null,
+    "project": "AirMOSS"
   },
-  "title": "AirMOSS",
+  "title": {
+    "primary": "AirMOSS",
+    "secondary": "Airborne Microwave Observatory of Subcanopy and Subsurface "
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

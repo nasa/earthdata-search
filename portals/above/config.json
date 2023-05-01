@@ -1,12 +1,16 @@
 {
-  "org": "ABoVE",
-  "pageTitle": "ABoVE",
+  "moreInfoUrl": "https://above.nasa.gov/",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
     "project": "ABoVE"
   },
+  "title": {
+    "primary": "ABoVE",
+    "secondary": "Arctic-Boreal Vulnerability Experiment"
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

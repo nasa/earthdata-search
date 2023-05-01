@@ -23,6 +23,7 @@ export const emptyDecodedResult = {
   focusedGranule: undefined,
   map: {},
   metadata: undefined,
+  portalId: 'default',
   project: {},
   query: {
     collection: {

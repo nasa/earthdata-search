@@ -1,20 +1,18 @@
 {
-  "hasStyles": true,
-  "hasScripts": true,
-  "logo": {
-    "id": "ornl-daac-logo",
-    "link": "https://daac.ornl.gov",
-    "title": "ORNL DAAC Home"
-  },
-  "org": "ORNL DAAC",
+  "moreInfoUrl": "https://daac.ornl.gov",
   "pageTitle": "ORNL DAAC",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
     "dataCenter": "ORNL_DAAC",
     "hasGranulesOrCwic": null
   },
+  "title": {
+    "primary": "ORNL DAAC",
+    "secondary": "Oak Ridge National Laboratory Distributed Active Archive Center"
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

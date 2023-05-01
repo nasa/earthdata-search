@@ -9,21 +9,20 @@
     }
   },
   "footer": {
-    "displayVersion": false,
     "attributionText": "",
+    "displayVersion": false,
     "primaryLinks": [],
     "secondaryLinks": []
   },
-  "hasScripts": false,
-  "hasStyles": false,
-  "logo": {},
-  "org": "Site Name",
   "pageTitle": "",
+  "portalBrowser": false,
   "query": {},
-  "title": "Search",
+  "title": {
+    "primary": "Default"
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
     "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false,
     "showTophat": false
   }
 }

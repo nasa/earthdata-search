@@ -23,14 +23,12 @@ provider:
       Ref: SearchExportQueue
     tagQueueUrl:
       Ref: TagProcessingQueue
-    legacyServicesQueueUrl:
-      Ref: LegacyServicesOrderQueue
+    cmrOrderingOrderQueueUrl:
+      Ref: CmrOrderingOrderQueue
     catalogRestQueueUrl:
       Ref: CatalogRestOrderQueue
     harmonyQueueUrl:
       Ref: HarmonyOrderQueue
-    optionDefinitionQueueUrl:
-      Ref: OptionDefinitionsQueue
     userDataQueueUrl:
       Ref: UserDataQueue
 
@@ -44,6 +42,8 @@ provider:
 
     geocodingService: ${self:custom.variables.geocodingService}
     geocodingIncludePolygons: ${self:custom.variables.geocodingIncludePolygons}
+
+    disableOrdering: ${self:custom.variables.disableOrdering}
 
     NODE_OPTIONS: '--enable-source-maps'
 
@@ -97,12 +97,32 @@ custom:
 
   infrastructureStackName: earthdata-search-infrastructure-${self:provider.stage}
 
+  serverlessIfElse:
+    # When invoking an offline lambda with `npm run invoke-local` this condition will disable serverless components that need to import or reference cloudformation values
+    - If: '"${self:provider.stage}" == "invokeLocal"'
+      Exclude:
+        - provider.environment.dbEndpoint
+        - provider.environment.dbPort
+        - provider.environment.colorMapQueueUrl
+        - provider.environment.tagQueueUrl
+        - provider.environment.cmrOrderingOrderQueueUrl
+        - provider.environment.catalogRestQueueUrl
+        - provider.environment.harmonyQueueUrl
+        - provider.environment.userDataQueueUrl
+        - provider.environment.configSecretId
+        - provider.vpc
+        - provider.iam
+        - functions.submitCatalogRestOrder.environment.updateOrderStatusStateMachineArn
+        - functions.submitCmrOrderingOrder.environment.updateOrderStatusStateMachineArn
+        - functions.submitHarmonyOrder.environment.updateOrderStatusStateMachineArn
+
   variables:
     # Default values for environment variables used to set environment variables
     obfuscationSpin: ${env:OBFUSCATION_SPIN, ''}
     obfuscationSpinShapefiles: ${env:OBFUSCATION_SPIN_SHAPEFILES, ''}
     geocodingService: ${env:GEOCODING_SERVICE, 'nominatim'}
     geocodingIncludePolygons: ${env:GEOCODING_INCLUDE_POLYGONS, 'false'}
+    disableOrdering: ${env:DISABLE_ORDERING, 'true'}
 
     cloudfrontToCloudwatchBucketPrefixApi:
       Fn::Join:

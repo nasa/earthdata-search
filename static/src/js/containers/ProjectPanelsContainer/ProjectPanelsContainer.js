@@ -8,6 +8,7 @@ import actions from '../../actions/index'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getProjectCollectionsMetadata } from '../../selectors/project'
+import { getUrsProfile } from '../../selectors/contactInfo'
 
 import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
 
@@ -20,12 +21,12 @@ export const mapStateToProps = (state) => ({
   location: state.router.location,
   overrideTemporal: state.query.collection.overrideTemporal,
   panels: state.panels,
-  portal: state.portal,
   project: state.project,
   projectCollectionsMetadata: getProjectCollectionsMetadata(state),
   shapefileId: state.shapefile.shapefileId,
   spatial: state.query.collection.spatial,
-  temporal: state.query.collection.temporal
+  temporal: state.query.collection.temporal,
+  ursProfile: getUrsProfile(state)
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -35,8 +36,6 @@ export const mapDispatchToProps = (dispatch) => ({
     (path) => dispatch(actions.changePath(path)),
   onChangeProjectGranulePageNum:
     (data) => dispatch(actions.changeProjectGranulePageNum(data)),
-  onFetchDataQualitySummaries:
-    (conceptId) => dispatch(actions.fetchDataQualitySummaries(conceptId)),
   onFocusedGranuleChange:
     (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
   onRemoveGranuleFromProjectCollection:
@@ -68,7 +67,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {String} collectionId - The current collection ID.
  * @param {Object} location - The location from the store.
  * @param {Object} panels - The current panels state.
- * @param {Object} portal - The portal from the store.
  * @param {Object} project - The project from the store.
  * @param {Object} spatial - The spatial from the store.
  * @param {Object} shapefileId - The shapefileId from the store.
@@ -106,12 +104,12 @@ export const ProjectPanelsContainer = ({
   onUpdateFocusedCollection,
   onViewCollectionGranules,
   panels,
-  portal,
   project,
   projectCollectionsMetadata,
   shapefileId,
   spatial,
   temporal,
+  ursProfile,
   overrideTemporal
 }) => (
   <ProjectPanels
@@ -135,12 +133,12 @@ export const ProjectPanelsContainer = ({
     onUpdateFocusedCollection={onUpdateFocusedCollection}
     onViewCollectionGranules={onViewCollectionGranules}
     panels={panels}
-    portal={portal}
     project={project}
     projectCollectionsMetadata={projectCollectionsMetadata}
     shapefileId={shapefileId}
     spatial={spatial}
     temporal={temporal}
+    ursProfile={ursProfile}
     overrideTemporal={overrideTemporal}
   />
 )
@@ -173,12 +171,14 @@ ProjectPanelsContainer.propTypes = {
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
-  portal: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired,
   temporal: PropTypes.shape({}),
+  ursProfile: PropTypes.shape({
+    email_address: PropTypes.string
+  }).isRequired,
   overrideTemporal: PropTypes.shape({})
 }
 

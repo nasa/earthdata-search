@@ -22,12 +22,12 @@ export const getUrsUserData = async (username, token, environment) => {
     method: 'get',
     url: ursProfileUrl,
     headers: {
-      'Client-Id': getClientId().lambda,
+      'Client-Id': getClientId().background,
       Authorization: `Bearer ${token}`
     }
   })
 
-  const { data = {} } = ursProfileResponse
+  const { data } = ursProfileResponse
 
   return data
 }

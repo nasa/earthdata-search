@@ -1,31 +1,28 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { render, waitFor } from '@testing-library/react'
+import '@testing-library/jest-dom'
 
 import actions from '../../../actions'
 import { mapDispatchToProps, mapStateToProps, PortalContainer } from '../PortalContainer'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
     match: {
       params: {}
     },
+    location: {},
     portal: {
       portalId: 'edsc'
     },
-    onLoadPortalConfig: jest.fn(),
+    onChangePath: jest.fn(),
+    onChangeUrl: jest.fn(),
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<PortalContainer {...props} />)
+  render(<PortalContainer {...props} />)
 
-  return {
-    enzymeWrapper,
-    props
-  }
+  return { props }
 }
 
 beforeEach(() => {
@@ -34,11 +31,21 @@ beforeEach(() => {
 })
 
 describe('mapDispatchToProps', () => {
-  test('onLoadPortalConfig calls actions.loadPortalConfig', () => {
+  test('onChangePath calls actions.changePath', () => {
     const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'loadPortalConfig')
+    const spy = jest.spyOn(actions, 'changePath')
 
-    mapDispatchToProps(dispatch).onLoadPortalConfig('portalId')
+    mapDispatchToProps(dispatch).onChangePath('portalId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('portalId')
+  })
+
+  test('onChangeUrl calls actions.changeUrl', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeUrl')
+
+    mapDispatchToProps(dispatch).onChangeUrl('portalId')
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('portalId')
@@ -60,43 +67,88 @@ describe('mapStateToProps', () => {
 })
 
 describe('PortalContainer component', () => {
-  test('renders the page title without a portal', () => {
+  test('renders the page title without a portal', async () => {
     jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
       env: 'dev',
       defaultPortal: 'edsc'
     }))
 
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('title').text()).toEqual('Earthdata Search')
+    await waitFor(() => expect(document.title).toEqual('Earthdata Search'))
   })
 
-  test('renders the page title with a portal', () => {
+  test('renders the page title with a portal', async () => {
     jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
       env: 'dev',
       defaultPortal: 'edsc'
     }))
 
-    const { enzymeWrapper } = setup({
+    setup({
       portal: {
-        portalId: 'simple',
-        title: 'Simple'
-      }
-    })
-
-    expect(enzymeWrapper.find('title').text()).toEqual('Earthdata Search :: Simple Portal')
-  })
-
-  test('should call onLoadPortalConfig on mount with a portal', () => {
-    const { props } = setup({
-      match: {
-        params: {
-          portalId: 'simple'
+        portalId: 'example',
+        title: {
+          primary: 'example'
         }
       }
     })
 
-    expect(props.onLoadPortalConfig.mock.calls.length).toBe(1)
-    expect(props.onLoadPortalConfig.mock.calls[0]).toEqual(['simple'])
+    await waitFor(() => expect(document.title).toEqual('Earthdata Search :: example Portal'))
+  })
+
+  test('updates the url if the url is using a portal path', async () => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      env: 'dev',
+      defaultPortal: 'edsc'
+    }))
+
+    const { props } = setup({
+      match: {
+        params: {
+          portalId: 'example'
+        }
+      },
+      location: {
+        pathname: '/portal/example/search',
+        search: '?q=modis'
+      }
+    })
+
+    expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
+    expect(props.onChangeUrl).toHaveBeenCalledWith({
+      pathname: '/search',
+      search: '?q=modis&portal=example'
+    })
+
+    expect(props.onChangePath).toHaveBeenCalledTimes(1)
+    expect(props.onChangePath).toHaveBeenCalledWith('/search?q=modis&portal=example')
+  })
+
+  test('updates the url if the url is using a portal path without /search', async () => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      env: 'dev',
+      defaultPortal: 'edsc'
+    }))
+
+    const { props } = setup({
+      match: {
+        params: {
+          portalId: 'example'
+        }
+      },
+      location: {
+        pathname: '/portal/example',
+        search: '?q=modis'
+      }
+    })
+
+    expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
+    expect(props.onChangeUrl).toHaveBeenCalledWith({
+      pathname: '/search',
+      search: '?q=modis&portal=example'
+    })
+
+    expect(props.onChangePath).toHaveBeenCalledTimes(1)
+    expect(props.onChangePath).toHaveBeenCalledWith('/search?q=modis&portal=example')
   })
 })

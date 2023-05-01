@@ -1,68 +1,116 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { startCase } from 'lodash'
+import { parse, stringify } from 'qs'
 
 import actions from '../../actions/index'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import { isDefaultPortal, getPortalConfig } from '../../util/portals'
+import { isDefaultPortal, buildConfig } from '../../util/portals'
+import { locationPropType } from '../../util/propTypes/location'
+
+import { availablePortals } from '../../../../../portals'
 
 export const mapDispatchToProps = (dispatch) => ({
-  onLoadPortalConfig:
-    (portalId) => dispatch(actions.loadPortalConfig(portalId))
+  onChangePath:
+    (portalId) => dispatch(actions.changePath(portalId)),
+  onChangeUrl:
+    (data) => dispatch(actions.changeUrl(data))
 })
 
 export const mapStateToProps = (state) => ({
   portal: state.portal
 })
 
-export class PortalContainer extends Component {
-  UNSAFE_componentWillMount() {
-    const { match, onLoadPortalConfig } = this.props
+export const PortalContainer = ({
+  match,
+  portal,
+  location,
+  onChangePath,
+  onChangeUrl
+}) => {
+  const defaultPortalId = getApplicationConfig().defaultPortal
+
+  useEffect(() => {
     const { params } = match
-    const { portalId = getApplicationConfig().defaultPortal } = params
+    const { portalId } = params
 
-    onLoadPortalConfig(portalId)
-  }
+    const { pathname, search } = location
 
-  render() {
-    const { portal } = this.props
-    const { portalId, pageTitle } = portal
+    let newPathname = pathname
+    let newSearch = search
 
-    let portalTitle = ''
-    if (!isDefaultPortal(portalId)) portalTitle = ` :: ${pageTitle || startCase(portalId)} Portal`
+    // If portalId exists in the match params, convert it to a query param
+    if (portalId) {
+      newPathname = pathname.replace(`/portal/${portalId}`, '')
 
-    const defaultConfig = getPortalConfig(getApplicationConfig().defaultPortal)
+      // If the pathname doesn't exist after replacing the portalPath, set it to /search
+      if (!newPathname) newPathname = '/search'
 
-    // Use the default portal org and title for the page title
-    const {
-      org: defaultOrg,
-      title: defaultTitle
-    } = defaultConfig
+      const params = parse(search, { parseArrays: false, ignoreQueryPrefix: true })
 
-    return (
-      <Helmet>
-        <title>
-          {`${defaultOrg} ${defaultTitle}${portalTitle}`}
-        </title>
-      </Helmet>
-    )
-  }
+      newSearch = stringify({
+        ...params,
+        portal: portalId
+      }, {
+        addQueryPrefix: true
+      })
+    }
+
+    if (newPathname !== pathname || newSearch !== search) {
+      // Update the URL with the new value
+      onChangeUrl({
+        pathname: newPathname,
+        search: newSearch
+      })
+      // Reset the store based on the new URL
+      onChangePath(`${newPathname}${newSearch}`)
+    }
+  }, [])
+
+  const { portalId, title = {} } = portal
+  const { primary: primaryTitle } = title
+
+  let portalTitle = ''
+  if (!isDefaultPortal(portalId)) portalTitle = ` :: ${primaryTitle || startCase(portalId)} Portal`
+
+  const { [defaultPortalId]: defaultPortal } = availablePortals
+
+  const defaultConfig = buildConfig(defaultPortal, availablePortals)
+
+  // Use the default title for the page title
+  const {
+    title: defaultTitle
+  } = defaultConfig
+
+  const { primary: defaultPrimaryTitle } = defaultTitle
+
+  return (
+    <Helmet>
+      <title>
+        {`${defaultPrimaryTitle}${portalTitle}`}
+      </title>
+    </Helmet>
+  )
 }
 
 PortalContainer.propTypes = {
+  location: locationPropType.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       portalId: PropTypes.string
     })
   }).isRequired,
   portal: PropTypes.shape({
-    pageTitle: PropTypes.string,
+    title: PropTypes.shape({
+      primary: PropTypes.string
+    }),
     portalId: PropTypes.string
   }).isRequired,
-  onLoadPortalConfig: PropTypes.func.isRequired
+  onChangePath: PropTypes.func.isRequired,
+  onChangeUrl: PropTypes.func.isRequired
 }
 
 export default withRouter(

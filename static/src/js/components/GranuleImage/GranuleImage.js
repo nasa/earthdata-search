@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { FaPlus, FaTimes } from 'react-icons/fa'
@@ -9,132 +9,104 @@ import Spinner from '../Spinner/Spinner'
 import './GranuleImage.scss'
 
 /**
- * Renders GranuleImage.
+ * Renders GranuleImage component. This component displays the image of a granule if it has one
+ * the image can be open or closed with buttons
  * @param {Object} props - The props passed into the component.
- * @param {String} imageSrc - The image source.
+ * @param {String} props.imageSrc - The image source.
  */
-class GranuleImage extends Component {
-  constructor(props) {
-    super(props)
+export const GranuleImage = ({
+  imageSrc
+}) => {
+  const [isOpen, setIsOpen] = useState(true)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isErrored, setIsErrored] = useState(false)
 
-    this.state = {
-      isOpen: true,
-      isLoaded: false,
-      isLoading: true,
-      isErrored: false
-    }
+  const containerClassName = classNames({
+    'granule-image': true,
+    'granule-image--is-open': isOpen
+  })
 
-    this.handleToggleImage = this.handleToggleImage.bind(this)
-    this.handleImageLoaded = this.handleImageLoaded.bind(this)
-    this.handleImageErrored = this.handleImageErrored.bind(this)
-  }
+  const imageClassName = classNames({
+    'granule-image__image': true,
+    'granule-image__image--is-loaded': isLoaded
+  })
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { imageSrc } = this.props
-    const { imageSrc: nextImageSrc } = nextProps
-    if (nextImageSrc && imageSrc !== nextImageSrc) {
-      this.setState({
-        isLoaded: false,
-        isLoading: true,
-        isErrored: false
-      })
-    }
-  }
+  const handleToggleImage = (() => {
+    setIsOpen(!isOpen)
+  })
 
-  handleToggleImage() {
-    const {
-      isOpen
-    } = this.state
+  const handleImageLoaded = (() => {
+    setIsLoaded(true)
+    setIsLoading(false)
+    setIsErrored(false)
+  })
 
-    this.setState({
-      isOpen: !isOpen
-    })
-  }
+  const handleImageErrored = (() => {
+    setIsLoaded(false)
+    setIsLoading(false)
+    setIsErrored(true)
+  })
 
-  handleImageLoaded() {
-    this.setState({
-      isLoaded: true,
-      isLoading: false,
-      isErrored: false
-    })
-  }
+  // When the imageSrc changes value then load the new image
+  useEffect(() => {
+    setIsErrored(false)
+    setIsLoaded(false)
+    setIsLoading(true)
+  }, [imageSrc])
 
-  handleImageErrored() {
-    this.setState({
-      isLoaded: false,
-      isLoading: false,
-      isErrored: true
-    })
-  }
+  if (!imageSrc) return null
 
-  render() {
-    const {
-      isErrored,
-      isLoaded,
-      isLoading,
-      isOpen
-    } = this.state
-
-    const { imageSrc } = this.props
-
-    const containerClassName = classNames({
-      'granule-image': true,
-      'granule-image--is-open': isOpen
-    })
-
-    const imageClassName = classNames({
-      'granule-image__image': true,
-      'granule-image__image--is-loaded': isLoaded
-    })
-
-    if (!imageSrc) return null
-
-    return (
-      <div className={containerClassName}>
+  return (
+    <div
+      className={containerClassName}
+    >
+      { isOpen ? (
+        <Button
+          className="granule-image__button granule-image__button--close"
+          icon={FaTimes}
+          onClick={handleToggleImage}
+          label="Close browse image"
+          dataTestId="granule-image__button--close"
+        />
+      ) : (
+        <Button
+          className="granule-image__button granule-image__button--open"
+          icon={FaPlus}
+          onClick={handleToggleImage}
+          label="Open browse image"
+          dataTestId="granule-image__button--open"
+        />
+      )}
+      <div
+        className="granule-image__container"
+        data-testid="granule-image"
+      >
+        {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
+        <img
+          className={imageClassName}
+          src={imageSrc}
+          alt="Browse Image"
+          onLoad={handleImageLoaded}
+          onError={handleImageErrored}
+        />
         {
-          isOpen ? (
-            <Button
-              className="granule-image__button granule-image__button--close"
-              icon={FaTimes}
-              onClick={this.handleToggleImage}
-              label="Close browse image"
-            />
-          ) : (
-            <Button
-              className="granule-image__button granule-image__button--open"
-              icon={FaPlus}
-              onClick={this.handleToggleImage}
-              label="Open browse image"
-            />
+          isLoading && (
+            <div className="granule-image__placeholder">
+              <Spinner type="dots" color="white" size="small" />
+            </div>
           )
         }
-        <div className="granule-image__container">
-          {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-          <img
-            className={imageClassName}
-            src={imageSrc}
-            alt="Browse Image"
-            onLoad={this.handleImageLoaded}
-            onError={this.handleImageErrored}
-          />
-          {
-            isLoading && (
-              <div className="granule-image__placeholder">
-                <Spinner type="dots" color="white" size="small" />
-              </div>
-            )
-          }
-          {
-            isErrored && (
-              <div className="granule-image__placeholder">
-                <span>Error loading granule image</span>
-              </div>
-            )
-          }
-        </div>
+        {
+          isErrored && (
+            <div className="granule-image__placeholder">
+              <span>Error loading granule image</span>
+            </div>
+          )
+        }
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 GranuleImage.propTypes = {

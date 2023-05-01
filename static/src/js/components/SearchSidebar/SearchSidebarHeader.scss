@@ -16,25 +16,126 @@
     }
   }
 
-  &__button {
-    margin: 0 1rem;
-    padding: 0.4rem 0;
-    border: 0;
-    outline: 0;
-    color: $color__blue;
+  &__header {
+    display: flex;
+    padding: 0.5rem 0.75rem;
+    padding-right: 0.5rem;
+    background: darken($color__black--100, 5);
+    color: $color__black--800;
+  }
+
+  &__thumbnail-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: 2.1875rem;
+    width: 2.1875rem;
+    padding: 0.2rem;
+    background-color: $color__white;
+    border: 1px solid $color__black--200;
+    border-radius: 0.25rem;
+
+    &:hover,
+    &:focus {
+      border: 1px solid $color__blue;
+
+      .search-sidebar-header__thumbnail-icon-wrapper {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  &__thumbnail-icon-wrapper {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 16px;
+    width: 16px;
+    background-color: rgba($color__black, 0.5);
+    border-top-left-radius: 4px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &__thumbnail-icon {
+    display: block;
+    height: 0.625rem;
+    width: 0.625rem;
+    color: $color__black--100;
+    text-shadow: 0 0 4px rgba($color__black, 0.5);
+    font-size: 0.625rem;
+  }
+
+  &__thumbnail {
+    flex-grow: 1;
+    flex-shrink: 0;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    object-fit: contain;
+    opacity: 0;
+
+    &--is-loaded {
+      display: block;
+      position: relative;
+      visibility: visible;
+      width: 100%;
+      height: auto;
+      opacity: 1;
+    }
+  }
+
+  &__thumb-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__portal-tooltip-icon {
+    margin-left: 0.25rem;
+    font-size: 0.625rem;
+    color: $color__black--400;
+  }
+
+  &__primary {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.5rem;
+    overflow: hidden;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  &__heading {
+    width: 100%;
+    margin-bottom: 0.25rem;
     font-size: 0.825rem;
-    visibility: visible;
-    opacity: 1;
-    transition: all 0.1s ease-out;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &__heading-secondary {
+    font-weight: 300;
+  }
+
+  &__button {
+    font-size: 0.75rem;
+    color: $color__blue;
 
     &:hover {
       color: $color__blue--dark;
-    }
-
-    &--is-hidden {
-      visibility: hidden;
-      opacity: 0;
-      pointer-events: none;
     }
   }
 }

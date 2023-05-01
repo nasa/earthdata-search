@@ -1,5 +1,6 @@
-import { getPortalConfig, isDefaultPortal } from '../portals'
+import { buildConfig, isDefaultPortal } from '../portals'
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
+import { availablePortals } from '../../../../../portals'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -22,9 +23,9 @@ describe('isDefaultPortal', () => {
   })
 })
 
-describe('getPortalConfig', () => {
+describe('buildConfig', () => {
   test('builds a portal config of portal > edsc portal > default portal', () => {
-    const config = getPortalConfig('idn')
+    const config = buildConfig(availablePortals.idn)
 
     expect(config).toEqual({
       features: {
@@ -56,17 +57,15 @@ describe('getPortalConfig', () => {
           href: 'https://access.earthdata.nasa.gov/'
         }]
       },
-      hasScripts: false,
-      hasStyles: true,
-      logo: {
-        id: 'idn-logo',
-        link: 'https://idn.ceos.org/',
-        title: 'CEOS IDN Search'
-      },
-      org: 'IDN',
+      moreInfoUrl: 'https://idn.ceos.org/',
       pageTitle: 'IDN',
+      portalBrowser: true,
+      portalId: 'idn',
       query: { hasGranulesOrCwic: null },
-      title: 'Search',
+      title: {
+        primary: 'IDN',
+        secondary: 'CEOS International Directory Network'
+      },
       ui: {
         showOnlyGranulesCheckbox: false,
         showNonEosdisCheckbox: false,

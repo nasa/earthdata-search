@@ -306,6 +306,19 @@ describe('RESTORE_FROM_URL', () => {
       payload
     }
 
+    const initial = {
+      selected: [
+        {
+          type: 'science_keywords',
+          value: 'Atmosphere:Clouds:Cloud Properties:Cloud Frequency:Cloud Frequency'
+        },
+        {
+          type: 'science_keywords',
+          value: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols'
+        }
+      ]
+    }
+
     const expectedState = {
       ...initialState,
       selected: [{
@@ -314,7 +327,7 @@ describe('RESTORE_FROM_URL', () => {
       }]
     }
 
-    expect(autocompleteReducer(undefined, action)).toEqual(expectedState)
+    expect(autocompleteReducer(initial, action)).toEqual(expectedState)
   })
 })
 

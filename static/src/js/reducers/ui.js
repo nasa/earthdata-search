@@ -11,6 +11,7 @@ import {
   TOGGLE_EDIT_SUBSCRIPTION_MODAL,
   TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
+  TOGGLE_PORTAL_BROWSER_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SECONDARY_OVERLAY_PANEL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
@@ -21,51 +22,26 @@ import {
 } from '../constants/actionTypes'
 
 const initialState = {
-  granuleResultsPanel: {
-    sortOrder: '-start_date',
-    searchValue: ''
-  },
-  facetsModal: {
-    isOpen: false
-  },
-  overrideTemporalModal: {
-    isOpen: false
-  },
-  relatedUrlsModal: {
-    isOpen: false
-  },
-  map: {
-    drawingNewLayer: false
-  },
-  secondaryOverlayPanel: {
-    isOpen: false
-  },
-  advancedSearchModal: {
-    isOpen: false
-  },
-  shapefileUploadModal: {
-    isOpen: false
-  },
-  tooManyPointsModal: {
-    isOpen: false
-  },
-  chunkedOrderModal: {
-    isOpen: false
-  },
   aboutCSDAModal: {
     isOpen: false
   },
   aboutCwicModal: {
     isOpen: false
   },
-  spatialPolygonWarning: {
-    isDisplayed: false
-  },
-  keyboardShortcutsModal: {
+  advancedSearchModal: {
     isOpen: false
   },
-  timeline: {
-    isOpen: true
+  chunkedOrderModal: {
+    isOpen: false
+  },
+  deprecatedParameterModal: {
+    deprecatedUrlParams: [],
+    isOpen: false
+  },
+  editSubscriptionModal: {
+    isOpen: false,
+    subscriptionConceptId: '',
+    type: ''
   },
   export: {
     isExportRunning: {
@@ -73,14 +49,42 @@ const initialState = {
       json: false
     }
   },
-  deprecatedParameterModal: {
-    isOpen: false,
-    deprecatedUrlParams: []
+  facetsModal: {
+    isOpen: false
   },
-  editSubscriptionModal: {
-    isOpen: false,
-    subscriptionConceptId: '',
-    type: ''
+  granuleResultsPanel: {
+    searchValue: '',
+    sortOrder: '-start_date'
+  },
+  keyboardShortcutsModal: {
+    isOpen: false
+  },
+  map: {
+    drawingNewLayer: false
+  },
+  overrideTemporalModal: {
+    isOpen: false
+  },
+  portalBrowserModal: {
+    isOpen: false
+  },
+  relatedUrlsModal: {
+    isOpen: false
+  },
+  secondaryOverlayPanel: {
+    isOpen: false
+  },
+  shapefileUploadModal: {
+    isOpen: false
+  },
+  spatialPolygonWarning: {
+    isDisplayed: false
+  },
+  timeline: {
+    isOpen: true
+  },
+  tooManyPointsModal: {
+    isOpen: false
   }
 }
 
@@ -98,6 +102,14 @@ const uiReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         overrideTemporalModal: {
+          isOpen: action.payload
+        }
+      }
+    }
+    case TOGGLE_PORTAL_BROWSER_MODAL: {
+      return {
+        ...state,
+        portalBrowserModal: {
           isOpen: action.payload
         }
       }
@@ -255,11 +267,11 @@ const uiReducer = (state = initialState, action = {}) => {
       const { deprecatedUrlParams } = payload
       const { deprecatedParameterModal } = state
 
-      if (deprecatedUrlParams.length === 0) return state
+      if (deprecatedUrlParams.length === 0) return initialState
 
       // If any deprecated URL params are defined, display the modal
       return {
-        ...state,
+        ...initialState,
         deprecatedParameterModal: {
           ...deprecatedParameterModal,
           deprecatedUrlParams,

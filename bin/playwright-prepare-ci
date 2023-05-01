@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# read in static.config.json
+config="`cat static.config.json`"
+
+# update keys for testing in CI
+config="`jq '.application.ciMode = $newValue' --arg newValue true <<< $config`"
+config="`jq '.application.defaultPortal = $newValue' --arg newValue edsc <<< $config`"
+
+# overwrite static.config.json with new values
+echo $config > tmp.$$.json && mv tmp.$$.json static.config.json
+
+# create empty overrideStatic.config.json if it doesn't exist
+overrideFile=overrideStatic.config.json
+if [ ! -f $overrideFile ]; then
+    echo {} > overrideStatic.config.json
+fi

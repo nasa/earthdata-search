@@ -14,14 +14,12 @@ import SecondaryToolbar from '../../components/SecondaryToolbar/SecondaryToolbar
 export const mapDispatchToProps = (dispatch) => ({
   onLogout: () => dispatch(actions.logout()),
   onUpdateProjectName: (name) => dispatch(actions.updateProjectName(name)),
-  onChangePath: (path) => dispatch(actions.changePath(path)),
   onFetchContactInfo: () => dispatch(actions.fetchContactInfo())
 })
 
 export const mapStateToProps = (state) => ({
   authToken: state.authToken,
   earthdataEnvironment: getEarthdataEnvironment(state),
-  portal: state.portal,
   projectCollectionIds: state.project.collections.allIds,
   savedProject: state.savedProject,
   retrieval: state.retrieval,
@@ -33,10 +31,8 @@ export const SecondaryToolbarContainer = (props) => {
     authToken,
     earthdataEnvironment,
     location,
-    onChangePath,
     onLogout,
     onUpdateProjectName,
-    portal,
     projectCollectionIds,
     savedProject,
     retrieval,
@@ -56,10 +52,8 @@ export const SecondaryToolbarContainer = (props) => {
       authToken={authToken}
       earthdataEnvironment={earthdataEnvironment}
       location={location}
-      onChangePath={onChangePath}
       onLogout={onLogout}
       onUpdateProjectName={onUpdateProjectName}
-      portal={portal}
       projectCollectionIds={projectCollectionIds}
       savedProject={savedProject}
       retrieval={retrieval}
@@ -72,11 +66,9 @@ SecondaryToolbarContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   earthdataEnvironment: PropTypes.string.isRequired,
   location: locationPropType.isRequired,
-  onChangePath: PropTypes.func.isRequired,
   onFetchContactInfo: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   retrieval: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
@@ -84,7 +76,6 @@ SecondaryToolbarContainer.propTypes = {
     first_name: PropTypes.string
   }).isRequired
 }
-
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(SecondaryToolbarContainer)
 )

@@ -34,6 +34,8 @@ export const mapDispatchToProps = (dispatch) => ({
     (values) => dispatch(actions.applyGranuleFilters(values)),
   onChangeQuery:
     (query) => dispatch(actions.changeQuery(query)),
+  onChangePath:
+    (path) => dispatch(actions.changePath(path)),
   onFocusedCollectionChange:
     (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onMetricsCollectionSortChange:
@@ -87,6 +89,7 @@ export const SearchPanelsContainer = ({
   map,
   onApplyGranuleFilters,
   onFocusedCollectionChange,
+  onChangePath,
   onChangeQuery,
   onMetricsCollectionSortChange,
   onSetActivePanel,
@@ -113,6 +116,7 @@ export const SearchPanelsContainer = ({
     map={map}
     onApplyGranuleFilters={onApplyGranuleFilters}
     onFocusedCollectionChange={onFocusedCollectionChange}
+    onChangePath={onChangePath}
     onChangeQuery={onChangeQuery}
     onMetricsCollectionSortChange={onMetricsCollectionSortChange}
     onSetActivePanel={onSetActivePanel}
@@ -142,6 +146,7 @@ SearchPanelsContainer.propTypes = {
   map: PropTypes.shape({}).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
+  onChangePath: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,

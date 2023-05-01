@@ -1,15 +1,11 @@
 import 'array-foreach-async'
 
-import { isEmpty } from 'lodash'
-
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getEchoPreferencesData } from './getEchoPreferencesData'
-import { getEchoProfileData } from './getEchoProfileData'
 import { getUrsUserData } from './getUrsUserData'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
- * Accepts a username and token to fetch profile information from URS and ECHO
+ * Accepts a username and token to fetch profile information from URS and CMR-ordering
  * @param {Object} event Details about the HTTP request that it received
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
@@ -50,9 +46,6 @@ const storeUserData = async (event, context) => {
       .where({ user_id: userId, environment })
       .orderBy('created_at', 'DESC')
 
-    let id // ECHO guid
-    let user // ECHO User Profile
-    let echoPreferencesData // ECHO Preferences Data
     let ursUserData // URS user Profile
 
     if (existingUserTokens.length > 0) {
@@ -61,7 +54,6 @@ const storeUserData = async (event, context) => {
 
       // Default the payload that gets sent to the database
       const userPayload = {
-        echo_id: id,
         environment,
         urs_id: username
       }
@@ -73,34 +65,6 @@ const storeUserData = async (event, context) => {
         userPayload.urs_profile = ursUserData
       } catch (e) {
         parseError(e, { logPrefix: '[StoreUserData Error] (URS Profile)' })
-      }
-
-      let echoProfileData = {}
-      try {
-        echoProfileData = await getEchoProfileData(token, environment)
-      } catch (e) {
-        parseError(e, { logPrefix: '[StoreUserData Error] (Echo Profile)' })
-      }
-
-      // Update the previously defined value for this variable
-      ({ user = {} } = echoProfileData)
-
-      if (!isEmpty(user)) {
-        // If we successfully retrieved Echo Profile data add the response to the database payload
-        userPayload.echo_profile = user;
-
-        // The user GUID will be used to get the preference data as well as stored separately in the database
-        ({ id } = user)
-
-        try {
-          echoPreferencesData = await getEchoPreferencesData(id, token, environment)
-
-          userPayload.echo_preferences = echoPreferencesData
-        } catch (e) {
-          parseError(e, { logPrefix: '[StoreUserData Error] (Echo Preferences)' })
-        }
-      } else {
-        console.log(`[StoreUserData Debug] Ignoring attempt to retrieve echo preferences data for ${username} (userId: ${userId}, environment: ${environment}) because the attempt to retrieve echo profile data failed.`)
       }
 
       const dbResponse = await dbConnection('users').update({ ...userPayload }).where({ id: userId })

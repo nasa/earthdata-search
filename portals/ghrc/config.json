@@ -1,20 +1,18 @@
 {
-  "hasStyles": true,
-  "hasScripts": true,
-  "logo": {
-    "id": "ghrc-logo",
-    "link": "https://ghrc.nsstc.nasa.gov/home",
-    "title": "GHRC Home"
-  },
-  "org": "GHRC",
+  "moreInfoUrl": "https://ghrc.nsstc.nasa.gov/home",
   "pageTitle": "GHRC",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
     "dataCenter": "NASA/MSFC/GHRC",
     "hasGranulesOrCwic": null
   },
+  "title": {
+    "primary": "GHRC",
+    "secondary": "Global Hydrometeorology Resource Center"
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

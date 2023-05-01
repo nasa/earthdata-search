@@ -1,19 +1,18 @@
 {
-  "hasStyles": true,
-  "logo": {
-    "id": "AI-ML-logo",
-    "link": "https://www.earthdata.nasa.gov/esds/ai-ml",
-    "title": "Artificial Intelligence / Machine Learning Search"
-  },
-  "org": "Artificial Intelligence / Machine Learning",
+  "moreInfoUrl": "https://www.earthdata.nasa.gov/esds/ai-ml",
   "pageTitle": "Artificial intelligence / Machine Learning Portal",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
-    "tagKey": "machine.learning",
-    "hasGranulesOrCwic": null
+    "hasGranulesOrCwic": null,
+    "tagKey": "machine.learning"
+  },
+  "title": {
+    "primary": "AI/ML",
+    "secondary": "Artificial Intelligence / Machine Learning"
   },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

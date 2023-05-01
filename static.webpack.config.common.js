@@ -1,15 +1,14 @@
 require('@babel/register')
-
 const path = require('path')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
-const HtmlWebPackPlugin = require('html-webpack-plugin')
-const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
+
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
 
 const config = require('./sharedUtils/config')
-const { getPortalConfig } = require('./static/src/js/util/portals')
+const { availablePortals } = require('./portals/index')
 
 const {
   analytics,
@@ -17,7 +16,7 @@ const {
   feedbackApp
 } = config.getApplicationConfig()
 
-const portalConfig = getPortalConfig(defaultPortal)
+const { [defaultPortal]: portalConfig } = availablePortals
 
 const { ui } = portalConfig
 
@@ -69,21 +68,14 @@ const StaticCommonConfig = {
         exclude: /portals/i,
         use: [
           {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'css-loader'
           },
           {
-            loader: 'resolve-url-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'resolve-url-loader'
           },
           {
             loader: 'postcss-loader',
             options: {
-              sourceMap: true,
               postcssOptions: {
                 plugins: [
                   'autoprefixer'
@@ -92,10 +84,7 @@ const StaticCommonConfig = {
             }
           },
           {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'sass-loader'
           },
           {
             loader: 'style-resources-loader',
@@ -118,38 +107,10 @@ const StaticCommonConfig = {
       {
         test: /\.(?:ico|gif|png|jpe?g)$/i,
         type: 'asset/resource'
-      },
-      {
-        test: /portals.*styles\.s?css$/i,
-        use: [
-          {
-            loader: 'style-loader',
-            options: {
-              injectType: 'lazyStyleTag',
-              esModule: false
-            }
-          },
-          {
-            loader: 'css-loader'
-          },
-          {
-            loader: 'resolve-url-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
       }
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin(),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
       DEBUG: false

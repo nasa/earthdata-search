@@ -210,7 +210,7 @@ const queryReducer = (state = initialState, action = {}) => {
       }
 
       return {
-        ...state,
+        ...initialState,
         ...query,
         collection: {
           ...initialCollectionQueryWithPreferences,

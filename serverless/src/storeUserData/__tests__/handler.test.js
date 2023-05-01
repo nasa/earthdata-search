@@ -1,10 +1,9 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
-import nock from 'nock'
 
 import * as getDbConnection from '../../util/database/getDbConnection'
-import * as getEarthdataConfig from '../../../../sharedUtils/config'
-import * as getEdlConfig from '../../util/getEdlConfig'
+import * as parseError from '../../../../sharedUtils/parseError'
+import * as getUrsUserData from '../getUrsUserData'
 
 import storeUserData from '../handler'
 
@@ -12,12 +11,6 @@ let dbTracker
 
 beforeEach(() => {
   jest.clearAllMocks()
-
-  jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
-    client: {
-      id: 'clientId'
-    }
-  }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
@@ -41,40 +34,13 @@ afterEach(() => {
 
 describe('storeUserData', () => {
   test('correctly updates a user that already exists', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
-      edlHost: 'https://edl.com',
-      echoRestRoot: 'https://echorest.com'
-    }))
-
-    nock(/edl/)
-      .get(/api\/users/)
-      .reply(200, {
-        user: {
-          uid: 'urs_user',
-          first_name: 'urs',
-          last_name: 'user'
-        }
-      })
-
-    nock(/echorest/)
-      .get(/users\/current/)
-      .reply(200, {
-        user: {
-          id: 'guid',
-          first_name: 'echo',
-          last_name: 'user'
-        }
-      })
-
-    nock(/echorest/)
-      .get(/users\/guid\/preferences/)
-      .reply(200, {
-        general_contact: {
-          uid: 'echo_user',
-          first_name: 'echo',
-          last_name: 'user'
-        }
-      })
+    jest.spyOn(getUrsUserData, 'getUrsUserData').mockResolvedValue({
+      user: {
+        uid: 'urs_user',
+        first_name: 'urs',
+        last_name: 'user'
+      }
+    })
 
     dbTracker.on('query', (query, step) => {
       // Default response from queries
@@ -105,35 +71,13 @@ describe('storeUserData', () => {
       'test',
       'urs_user',
       { user: { uid: 'urs_user', first_name: 'urs', last_name: 'user' } },
-      { id: 'guid', first_name: 'echo', last_name: 'user' },
-      {
-        general_contact: { uid: 'echo_user', first_name: 'echo', last_name: 'user' }
-      },
       1
     ])
   })
 
-  test('excludes echo preferences when echo profile fails', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
-      edlHost: 'https://edl.com',
-      echoRestRoot: 'https://echorest.com'
-    }))
-
-    nock(/edl/)
-      .get(/api\/users/)
-      .reply(200, {
-        user: {
-          uid: 'urs_user',
-          first_name: 'urs',
-          last_name: 'user'
-        }
-      })
-
-    nock(/echorest/)
-      .get(/users\/current/)
-      .reply(404, {
-        errors: ['User not found']
-      })
+  test('logs error if URS data is not fetched properly', async () => {
+    const parseErrorMock = jest.spyOn(parseError, 'parseError').mockImplementation(() => { })
+    jest.spyOn(getUrsUserData, 'getUrsUserData').mockImplementation(() => { throw new Error('mock error') })
 
     dbTracker.on('query', (query, step) => {
       // Default response from queries
@@ -163,8 +107,63 @@ describe('storeUserData', () => {
     expect(queries[1].bindings).toEqual([
       'test',
       'urs_user',
-      { user: { uid: 'urs_user', first_name: 'urs', last_name: 'user' } },
       1
     ])
+
+    expect(parseErrorMock).toHaveBeenCalledTimes(1)
+    expect(parseErrorMock).toHaveBeenCalledWith(new Error('mock error'), { logPrefix: '[StoreUserData Error] (URS Profile)' })
+  })
+
+  test('logs error if user does not have a token', async () => {
+    dbTracker.on('query', (query, step) => {
+      // Default response from queries
+      query.response([])
+
+      if (step === 1) {
+        query.response([])
+      }
+    })
+
+    await storeUserData({
+      Records: [{
+        body: JSON.stringify({
+          environment: 'test',
+          userId: 1,
+          username: 'urs_user'
+        })
+      }]
+    }, {})
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('select')
+  })
+
+  test('returns early if SQS records are empty', async () => {
+    dbTracker.on('query', (query, step) => {
+      // Default response from queries
+      query.response([])
+
+      if (step === 1) {
+        query.response([])
+      }
+    })
+
+    await storeUserData({
+      Records: []
+    }, {})
+  })
+
+  test('returns early if there are no SQS records', async () => {
+    dbTracker.on('query', (query, step) => {
+      // Default response from queries
+      query.response([])
+
+      if (step === 1) {
+        query.response([])
+      }
+    })
+
+    await storeUserData({}, {})
   })
 })

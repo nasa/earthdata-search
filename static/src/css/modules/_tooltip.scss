@@ -1,5 +1,10 @@
 .tooltip {
-  font-size: .75rem;
+  font-size: 0.75rem;
+
+  .tooltip-inner {
+    background-color: $color__black;
+    border: 1px solid $color__black--600;
+  }
 
   &--large {
     font-size: 0.625rem;
@@ -17,6 +22,12 @@
     }
   }
 
+  &--auto {
+    .tooltip-inner {
+      max-width: inherit;
+    }
+  }
+
   &__tooltip-heading {
     font-size: 0.825rem;
     font-weight: 500;
@@ -25,4 +36,25 @@
     padding-bottom: 0.325rem;
     border-bottom: 1px solid rgba($color__white, 0.15);
   }
+}
+
+/* Account for the addition of the 1px border on tooltip content */
+.bs-tooltip-top .arrow,
+.bs-tooltip-auto[x-placement^="top"] .arrow {
+  bottom: 1px;
+}
+
+.bs-tooltip-bottom .arrow,
+.bs-tooltip-auto[x-placement^="bottom"] .arrow {
+  top: 1px;
+}
+
+.bs-tooltip-left .arrow,
+.bs-tooltip-auto[x-placement^="left"] .arrow {
+  right: 1px;
+}
+
+.bs-tooltip-right .arrow,
+.bs-tooltip-auto[x-placement^="right"] .arrow {
+  left: 1px;
 }

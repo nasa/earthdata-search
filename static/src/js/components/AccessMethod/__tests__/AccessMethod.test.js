@@ -18,6 +18,7 @@ function setup(overrideProps) {
     shapefileId: null,
     spatial: {},
     temporal: {},
+    ursProfile: {},
     overrideTemporal: {},
     onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),

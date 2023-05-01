@@ -9,5 +9,10 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    margin-bottom: 4.75rem;
+
+    .panels--sm & {
+      margin-bottom: 3.5rem;
+    }
   }
 }

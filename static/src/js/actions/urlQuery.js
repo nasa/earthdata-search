@@ -1,3 +1,5 @@
+/* eslint-disable import/no-dynamic-require, global-require */
+
 import { replace, push } from 'connected-react-router'
 import { parse, stringify } from 'qs'
 
@@ -15,6 +17,8 @@ import { RESTORE_FROM_URL } from '../constants/actionTypes'
 
 import ProjectRequest from '../util/request/projectRequest'
 import { getCollectionSortPreference } from '../selectors/preferences'
+import { buildConfig } from '../util/portals'
+import availablePortals from '../../../../portals'
 
 const restoreFromUrl = (payload) => ({
   type: RESTORE_FROM_URL,
@@ -32,6 +36,7 @@ export const updateStore = ({
   focusedGranule,
   deprecatedUrlParams,
   map,
+  portalId,
   project,
   query,
   shapefile,
@@ -50,9 +55,11 @@ export const updateStore = ({
     && !isSavedProjectsPage(location)
   )
 
+  const portal = portalId ? buildConfig(availablePortals[portalId]) : {}
+
   // If the newPathname is not equal to the current pathname, restore the data from the url
   if (loadFromUrl || (newPathname && newPathname !== pathname)) {
-    dispatch(restoreFromUrl({
+    await dispatch(restoreFromUrl({
       advancedSearch,
       autocompleteSelected,
       cmrFacets,
@@ -63,6 +70,7 @@ export const updateStore = ({
       focusedGranule,
       deprecatedUrlParams,
       map,
+      portal,
       project,
       query: {
         ...query,
@@ -119,7 +127,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
       }))
 
       decodedParams = decodeUrlParams(stringify(paramsObj))
-      dispatch(actions.updateStore(decodedParams))
+      await dispatch(actions.updateStore(decodedParams))
     } catch (error) {
       dispatch(actions.handleError({
         error,
@@ -132,7 +140,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   } else {
     decodedParams = decodeUrlParams(queryString)
 
-    dispatch(actions.updateStore(decodedParams, pathname))
+    await dispatch(actions.updateStore(decodedParams, pathname))
   }
 
   // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
@@ -182,7 +190,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   }
 
   // Fetch collections in the project
-  const { project = {} } = decodedParams
+  const { project = {} } = decodedParams || {}
   const { collections: projectCollections = {} } = project
   const { allIds = [] } = projectCollections
 
@@ -191,8 +199,6 @@ export const changePath = (path = '') => async (dispatch, getState) => {
     await dispatch(actions.getProjectCollections())
 
     await dispatch(actions.getProjectGranules())
-
-    dispatch(actions.fetchAccessMethods(allIds))
   }
 
   dispatch(actions.getTimeline())

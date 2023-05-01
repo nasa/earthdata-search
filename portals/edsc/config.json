@@ -9,33 +9,31 @@
     }
   },
   "footer": {
-    "displayVersion": true,
     "attributionText": "NASA Official: Stephen Berrick",
+    "displayVersion": true,
     "primaryLinks": [{
-      "title": "FOIA",
-      "href": "http://www.nasa.gov/FOIA/index.html"
-    },
-    {
-      "title": "NASA Privacy Policy",
-      "href": "http://www.nasa.gov/about/highlights/HP_Privacy.html"
-    },
-    {
-      "title": "USA.gov",
-      "href": "http://www.usa.gov"
+      "href": "http://www.nasa.gov/FOIA/index.html",
+      "title": "FOIA"
+    }, {
+      "href": "http://www.nasa.gov/about/highlights/HP_Privacy.html",
+      "title": "NASA Privacy Policy"
+    }, {
+      "href": "http://www.usa.gov",
+      "title": "USA.gov"
     }],
     "secondaryLinks": [{
-      "title": "Earthdata Access: A Section 508 accessible alternative",
-      "href": "https://access.earthdata.nasa.gov/"
+      "href": "https://access.earthdata.nasa.gov/",
+      "title": "Earthdata Access: A Section 508 accessible alternative"
     }]
   },
-  "hasScripts": false,
-  "hasStyles": false,
-  "org": "Earthdata",
   "pageTitle": "Earthdata Search",
-  "title": "Search",
+  "portalBrowser": false,
+  "title": {
+    "primary": "Earthdata Search"
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": true,
     "showNonEosdisCheckbox": true,
+    "showOnlyGranulesCheckbox": true,
     "showTophat": true
   }
 }

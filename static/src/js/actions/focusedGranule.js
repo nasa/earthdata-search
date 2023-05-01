@@ -8,7 +8,6 @@ import { createEcho10MetadataUrls } from '../util/granules'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedGranuleId } from '../selectors/focusedGranule'
 import { getFocusedGranuleMetadata } from '../selectors/granuleMetadata'
-import { portalPathFromState } from '../../../../sharedUtils/portalPath'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
@@ -146,7 +145,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
         const { search } = location
 
         dispatch(actions.changeUrl({
-          pathname: `${portalPathFromState(getState())}/search`,
+          pathname: '/search',
           search
         }))
       }

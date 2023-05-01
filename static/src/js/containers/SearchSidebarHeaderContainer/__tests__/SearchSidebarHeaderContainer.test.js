@@ -2,8 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
-import actions from '../../../actions'
-import { mapDispatchToProps, SearchSidebarHeaderContainer } from '../SearchSidebarHeaderContainer'
+import { mapStateToProps, SearchSidebarHeaderContainer } from '../SearchSidebarHeaderContainer'
 import SearchSidebarHeader from '../../../components/SearchSidebar/SearchSidebarHeader'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -13,7 +12,20 @@ function setup() {
     location: {
       search: '?some=test-params'
     },
-    onFocusedCollectionChange: jest.fn()
+    onFocusedCollectionChange: jest.fn(),
+    portal: {
+      title: {
+        primary: 'Earthdata Search'
+      },
+      logo: {
+        id: 'idn-logo',
+        link: 'https://idn.ceos.org/',
+        title: 'CEOS IDN Search'
+      },
+      portalId: 'edsc'
+    },
+    onChangePath: jest.fn(),
+    onLoadPortalConfig: jest.fn()
   }
 
   const enzymeWrapper = shallow(<SearchSidebarHeaderContainer {...props} />)
@@ -24,15 +36,21 @@ function setup() {
   }
 }
 
-describe('mapDispatchToProps', () => {
-  test('onFocusedCollectionChange calls actions.changeFocusedCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeFocusedCollection')
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      portal: {
+        portalId: 'edsc'
+      }
+    }
 
-    mapDispatchToProps(dispatch).onFocusedCollectionChange('collectionId')
+    const expectedState = {
+      portal: {
+        portalId: 'edsc'
+      }
+    }
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('collectionId')
+    expect(mapStateToProps(store)).toEqual(expectedState)
   })
 })
 
@@ -44,6 +62,5 @@ describe('SearchSidebarHeaderContainer component', () => {
     expect(enzymeWrapper.find(SearchSidebarHeader).props().location).toEqual({
       search: '?some=test-params'
     })
-    expect(typeof enzymeWrapper.find(SearchSidebarHeader).props().onFocusedCollectionChange).toEqual('function')
   })
 })

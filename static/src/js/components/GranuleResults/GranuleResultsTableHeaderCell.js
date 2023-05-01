@@ -9,7 +9,6 @@ import {
 } from 'react-icons/fa'
 
 import murmurhash3 from '../../util/murmurhash3'
-import { portalPath } from '../../../../../sharedUtils/portalPath'
 
 import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
 import Button from '../Button/Button'
@@ -38,8 +37,7 @@ const GranuleResultsTableHeaderCell = (props) => {
     onExcludeGranule,
     onFocusedGranuleChange,
     onMetricsDataAccess,
-    onRemoveGranuleFromProjectCollection,
-    portal
+    onRemoveGranuleFromProjectCollection
   } = customProps
 
   const isInProject = isGranuleInProject(id)
@@ -129,7 +127,7 @@ const GranuleResultsTableHeaderCell = (props) => {
               onFocusedGranuleChange(id)
             }}
             to={{
-              pathname: `${portalPath(portal)}/search/granules/granule-details`,
+              pathname: '/search/granules/granule-details',
               search: location.search
             }}
           >
@@ -168,8 +166,7 @@ GranuleResultsTableHeaderCell.propTypes = {
       onExcludeGranule: PropTypes.func,
       onFocusedGranuleChange: PropTypes.func,
       onMetricsDataAccess: PropTypes.func,
-      onRemoveGranuleFromProjectCollection: PropTypes.func,
-      portal: PropTypes.shape({})
+      onRemoveGranuleFromProjectCollection: PropTypes.func
     })
   }).isRequired,
   row: PropTypes.shape({

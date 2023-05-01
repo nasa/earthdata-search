@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { changeViewAllFacet } from '../../util/facets'
+import { commafy } from '../../util/commafy'
+import { pluralize } from '../../util/pluralize'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import FacetsList from './FacetsList'
@@ -70,7 +72,7 @@ export class FacetsModal extends Component {
     )
 
     const footerMeta = !isFirstLoad && (
-      <span className="facets-modal__hits">{`${collectionHits} Matching Collections`}</span>
+      <span className="facets-modal__hits">{`${commafy(collectionHits)} Matching ${pluralize('Collection', collectionHits)}`}</span>
     )
 
     return (

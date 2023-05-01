@@ -135,9 +135,9 @@ const submitRetrieval = async (event, context) => {
           // service order -- this is presenting in EDSC as the 'Customize' access method
           queueUrl = process.env.catalogRestQueueUrl
         } else if (type === 'ECHO ORDERS') {
-          // Submits to Legacy Services (CMR) and is often referred to as an
+          // Submits to cmr-ordering and is often referred to as an
           // echo order -- this is presenting in EDSC as the 'Stage For Delivery' access method
-          queueUrl = process.env.legacyServicesQueueUrl
+          queueUrl = process.env.cmrOrderingOrderQueueUrl
         } else if (type === 'Harmony') {
           // Submits to Harmony
           queueUrl = process.env.harmonyQueueUrl
@@ -166,7 +166,10 @@ const submitRetrieval = async (event, context) => {
               MessageBody: JSON.stringify({
                 accessToken,
                 id: newOrderRecord[0].id
-              })
+              }),
+              // Wait a few seconds before picking up the SQS job to ensure the database transaction
+              // has been committed
+              DelaySeconds: 3
             })
           } catch (e) {
             parseError(e)

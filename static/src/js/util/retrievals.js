@@ -1,3 +1,4 @@
+import { pick } from 'lodash'
 import { mbr } from '@edsc/geo-utils'
 
 import {
@@ -12,6 +13,30 @@ import {
   getProjectCollectionsMetadata
 } from '../selectors/project'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+
+// Limit the fields we send with the retrieval to save space in the payload
+const permittedCollectionMetadataFields = [
+  'conceptId',
+  'dataCenter',
+  'datasetId',
+  'directDistributionInformation',
+  'isCSDA',
+  'links',
+  'title'
+]
+const permittedAccessMethodFields = [
+  'enableTemporalSubsetting',
+  'mbr',
+  'model',
+  'optionDefinition',
+  'rawModel',
+  'selectedOutputFormat',
+  'selectedOutputProjection',
+  'supportsBoundingBoxSubsetting',
+  'supportsShapefileSubsetting',
+  'type',
+  'url'
+]
 
 /**
  * Prepare parameters used in submitRetrieval() based on current Redux State
@@ -50,7 +75,7 @@ export const prepareRetrievalParams = (state) => {
 
     returnValue.id = collectionId
     returnValue.granule_count = granuleCount
-    returnValue.collection_metadata = collectionMetadata
+    returnValue.collection_metadata = pick(collectionMetadata, permittedCollectionMetadataFields)
 
     const extractedGranuleParams = extractProjectCollectionGranuleParams(state, collectionId)
 
@@ -62,7 +87,10 @@ export const prepareRetrievalParams = (state) => {
     const params = buildGranuleSearchParams(preparedParams)
 
     returnValue.granule_params = params
-    returnValue.access_method = accessMethods[selectedAccessMethod]
+    returnValue.access_method = pick(
+      accessMethods[selectedAccessMethod],
+      permittedAccessMethodFields
+    )
 
     const {
       boundingBox = [],

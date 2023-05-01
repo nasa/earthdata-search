@@ -13,7 +13,6 @@ import {
 import murmurhash3 from '../../util/murmurhash3'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { locationPropType } from '../../util/propTypes/location'
-import { portalPath } from '../../../../../sharedUtils/portalPath'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -41,7 +40,6 @@ const thumbnailWidth = getApplicationConfig().thumbnailSize.width
  * @param {Function} props.onFocusedGranuleChange - Callback to focus a granule.
  * @param {Function} props.onMetricsDataAccess - Callback to capture data access metrics.
  * @param {Function} props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
- * @param {Object} props.portal - Portal object passed from the store.
  */
 const GranuleResultsItem = forwardRef(({
   collectionId,
@@ -54,8 +52,7 @@ const GranuleResultsItem = forwardRef(({
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess,
-  onRemoveGranuleFromProjectCollection,
-  portal
+  onRemoveGranuleFromProjectCollection
 }, ref) => {
   const handleFilterClick = () => {
     let { id } = granule
@@ -199,7 +196,7 @@ const GranuleResultsItem = forwardRef(({
           <LinkContainer
             onClick={() => handleClickGranuleDetails(id)}
             to={{
-              pathname: `${portalPath(portal)}/search/granules/granule-details`,
+              pathname: '/search/granules/granule-details',
               search: location.search
             }}
           >
@@ -220,11 +217,11 @@ const GranuleResultsItem = forwardRef(({
         <div className="granule-results-item__meta">
           <div className="granule-results-item__temporal granule-results-item__temporal--start">
             <h5>Start</h5>
-            <p>{timeStart}</p>
+            <p>{timeStart || <>&ndash;</>}</p>
           </div>
           <div className="granule-results-item__temporal granule-results-item__temporal--end">
             <h5>End</h5>
-            <p>{timeEnd}</p>
+            <p>{timeEnd || <>&ndash;</>}</p>
           </div>
           <div className="granule-results-item__actions">
             <div className="granule-results-item__buttons">
@@ -323,8 +320,7 @@ GranuleResultsItem.propTypes = {
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
-  portal: PropTypes.shape({}).isRequired
+  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired
 }
 
 export default GranuleResultsItem

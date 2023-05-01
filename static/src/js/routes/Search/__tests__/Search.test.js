@@ -1,9 +1,12 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { Search } from '../Search'
+
+import { Search, mapDispatchToProps, mapStateToProps } from '../Search'
 import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import AdvancedSearchModalContainer from '../../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
+
+import actions from '../../../actions'
 
 // Mock react-leaflet because it causes errors
 jest.mock('react-leaflet', () => ({
@@ -18,6 +21,7 @@ function setup() {
     match: {},
     advancedSearch: {},
     onChangeQuery: jest.fn(),
+    onTogglePortalBrowserModal: jest.fn(),
     onUpdateAdvancedSearch: jest.fn()
   }
 
@@ -28,6 +32,54 @@ function setup() {
     props
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onChangeQuery calls actions.changeQuery', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeQuery')
+
+    mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onTogglePortalBrowserModal calls actions.togglePortalBrowserModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'togglePortalBrowserModal')
+
+    mapDispatchToProps(dispatch).onTogglePortalBrowserModal({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onUpdateAdvancedSearch calls actions.updateAdvancedSearch', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'updateAdvancedSearch')
+
+    mapDispatchToProps(dispatch).onUpdateAdvancedSearch({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('returns the correct state', () => {
+    const store = {
+      query: {
+        collection: {}
+      }
+    }
+
+    const expectedState = {
+      collectionQuery: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+})
 
 describe('Search component', () => {
   test('should render self', () => {

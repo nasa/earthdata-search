@@ -209,11 +209,20 @@ describe('RESTORE_FROM_URL', () => {
       payload: { collections: payload }
     }
 
+    const initial = {
+      collectionId: {
+        id: 'collectionId',
+        conceptId: 'collectionId',
+        mock: 'metadata',
+        graphqlMock: 'new metadata'
+      }
+    }
+
     const expectedState = {
       ...initialState,
       ...payload
     }
 
-    expect(collectionMetadataReducer(undefined, action)).toEqual(expectedState)
+    expect(collectionMetadataReducer(initial, action)).toEqual(expectedState)
   })
 })

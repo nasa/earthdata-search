@@ -89,8 +89,23 @@ describe('RESTORE_FROM_URL', () => {
       }
     }
 
-    const expectedState = timeline
+    const initial = {
+      intervals: {
+        collectionId: [
+          [
+            1298937600,
+            1304208000,
+            3
+          ]
+        ]
+      }
+    }
 
-    expect(timelineReducer(undefined, action)).toEqual(expectedState)
+    const expectedState = {
+      ...initialState,
+      ...timeline
+    }
+
+    expect(timelineReducer(initial, action)).toEqual(expectedState)
   })
 })

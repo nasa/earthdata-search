@@ -15,7 +15,6 @@ export const mapStateToProps = (state) => ({
   authToken: state.authToken,
   earthdataEnvironment: getEarthdataEnvironment(state),
   granuleDownload: state.granuleDownload,
-  portal: state.portal,
   retrieval: state.retrieval
 })
 
@@ -58,7 +57,6 @@ export const OrderStatusContainer = ({
   onFocusedCollectionChange,
   onMetricsRelatedCollection,
   onToggleAboutCSDAModal,
-  portal,
   retrieval
 }) => (
   <OrderStatus
@@ -75,7 +73,6 @@ export const OrderStatusContainer = ({
     onFocusedCollectionChange={onFocusedCollectionChange}
     onMetricsRelatedCollection={onMetricsRelatedCollection}
     onToggleAboutCSDAModal={onToggleAboutCSDAModal}
-    portal={portal}
     retrieval={retrieval}
   />
 )
@@ -94,7 +91,6 @@ OrderStatusContainer.propTypes = {
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   retrieval: PropTypes.shape({}).isRequired
 }
 

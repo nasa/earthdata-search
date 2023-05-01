@@ -1,19 +1,18 @@
 {
-  "hasStyles": true,
-  "logo": {
-    "id": "suborbital-logo",
-    "link": "https://earthdata.nasa.gov/esds/impact/admg/the-airborne-inventory",
-    "title": "Sub-Orbital Catalog"
-  },
-  "org": "Sub-Orbital Catalog",
+  "moreInfoUrl": "https://earthdata.nasa.gov/esds/impact/admg/the-airborne-inventory",
   "pageTitle": "NASA Sub-Orbital Catalog",
   "parentConfig": "edsc",
+  "portalBrowser": false,
   "query": {
-    "tagKey": ["gov.nasa.impact.*"],
-    "hasGranulesOrCwic": null
+    "hasGranulesOrCwic": null,
+    "tagKey": ["gov.nasa.impact.*"]
+  },
+  "title": {
+    "primary": "CASEI",
+    "secondary": "Catalog of Archived Suborbital Earth Science Investigations"
   },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

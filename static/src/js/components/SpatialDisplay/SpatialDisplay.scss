@@ -1,5 +1,4 @@
 .spatial-display {
-  color: white;
   padding: 10px 15px;
   background: rgb(17, 17, 17);
   font-size: 1em;
@@ -31,21 +30,9 @@
   &__form-label {
     flex-grow: 0;
     padding: 0 $spacer/4;
-  }
-
-  &__text-input {
-    background-color: $color__black--700;
-    color: $color__white;
-    border: $color__black--700;
-
-    &:placeholder-shown {
-      color: $color__black--300;
-    }
-
-    &:focus {
-      color: $color__white;
-      background-color: $color__black--600;
-    }
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: $color__black--500;
   }
 
   &__text-primary {

@@ -6,11 +6,17 @@ import {
   Switch,
   withRouter
 } from 'react-router-dom'
-import { Form } from 'react-bootstrap'
+import {
+  Form,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap'
 import {
   FaMap,
   FaFilter,
-  FaInfoCircle
+  FaInfoCircle,
+  FaSitemap,
+  FaQuestionCircle
 } from 'react-icons/fa'
 
 import AdvancedSearchModalContainer
@@ -24,6 +30,9 @@ import GranuleResultsHighlightsContainer
   from '../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'
 import GranuleFiltersContainer
   from '../../containers/GranuleFiltersContainer/GranuleFiltersContainer'
+import PortalBrowserModalContainer
+  from '../../containers/PortalBrowserModalContainer/PortalBrowserModalContainer'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
 import SearchPanelsContainer
@@ -32,27 +41,26 @@ import SearchSidebarHeaderContainer
   from '../../containers/SearchSidebarHeaderContainer/SearchSidebarHeaderContainer'
 import SidebarContainer
   from '../../containers/SidebarContainer/SidebarContainer'
+
 import SidebarSection from '../../components/Sidebar/SidebarSection'
-import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
+import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 
 import actions from '../../actions'
-import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
+import Button from '../../components/Button/Button'
 
-const mapDispatchToProps = (dispatch) => ({
+export const mapDispatchToProps = (dispatch) => ({
   onUpdateAdvancedSearch:
     (values) => dispatch(actions.updateAdvancedSearch(values)),
-  onFocusedCollectionChange:
-    (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onChangeQuery:
     (query) => dispatch(actions.changeQuery(query)),
-  onMetricsCollectionSortChange:
-    (data) => dispatch(metricsCollectionSortChange(data))
+  onTogglePortalBrowserModal:
+    (data) => dispatch(actions.togglePortalBrowserModal(data))
 })
 
-const mapStateToProps = (state) => ({
+export const mapStateToProps = (state) => ({
   collectionQuery: state.query.collection
 })
 
@@ -61,14 +69,16 @@ const mapStateToProps = (state) => ({
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.collectionQuery - Collection query state
  * @param {Object} props.match - Router match state
- * @param {Function} props.onUpdateAdvancedSearch - Callback to update the advanced search state
  * @param {Function} props.onChangeQuery - Callback to change the query
+ * @param {Function} props.onTogglePortalBrowserModal - Callback to update the portal browser modal state
+ * @param {Function} props.onUpdateAdvancedSearch - Callback to update the advanced search state
  */
 export const Search = ({
   collectionQuery,
   match,
-  onUpdateAdvancedSearch,
-  onChangeQuery
+  onChangeQuery,
+  onTogglePortalBrowserModal,
+  onUpdateAdvancedSearch
 }) => {
   const { path } = match
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
@@ -77,8 +87,8 @@ export const Search = ({
     hasGranulesOrCwic = false,
     onlyEosdisCollections
   } = collectionQuery
-  const isHasNoGranulesChecked = !hasGranulesOrCwic
 
+  const isHasNoGranulesChecked = !hasGranulesOrCwic
   const isEosdisChecked = onlyEosdisCollections || false
 
   const handleCheckboxCheck = (event) => {
@@ -151,13 +161,32 @@ export const Search = ({
             {granuleFiltersSidebar}
           </Route>
           <Route path={path}>
+            <SidebarSection>
+              <Button
+                variant="full"
+                bootstrapVariant="light"
+                icon={FaSitemap}
+                onClick={() => onTogglePortalBrowserModal(true)}
+              >
+                Browse Portals
+                <OverlayTrigger
+                  placement="top"
+                  overlay={(
+                    <Tooltip style={{ width: '20rem' }}>
+                      Enable a portal in order to refine the data available within Earthdata Search
+                    </Tooltip>
+                  )}
+                >
+                  <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
+                </OverlayTrigger>
+              </Button>
+            </SidebarSection>
             <SidebarSection
               sectionTitle="Filter Collections"
               titleIcon={FaFilter}
             >
               <SidebarFiltersList>
                 <SidebarFiltersItem
-                  heading="Categories"
                   hasPadding={false}
                 >
                   <FacetsContainer />
@@ -197,6 +226,7 @@ export const Search = ({
         </Switch>
       </SidebarContainer>
       <div className="route-wrapper__content">
+        <PortalBrowserModalContainer />
         <RelatedUrlsModalContainer />
         <FacetsModalContainer />
         <PortalFeatureContainer advancedSearch>
@@ -218,8 +248,9 @@ Search.propTypes = {
   match: PropTypes.shape({
     path: PropTypes.string
   }).isRequired,
-  onUpdateAdvancedSearch: PropTypes.func.isRequired,
-  onChangeQuery: PropTypes.func.isRequired
+  onChangeQuery: PropTypes.func.isRequired,
+  onTogglePortalBrowserModal: PropTypes.func.isRequired,
+  onUpdateAdvancedSearch: PropTypes.func.isRequired
 }
 
 export default withRouter(

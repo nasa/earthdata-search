@@ -32,7 +32,7 @@ const mapReducer = (state = initialState, action = {}) => {
       Object.keys(map).forEach((key) => map[key] === undefined && delete map[key])
 
       return {
-        ...state,
+        ...initialState,
         ...map
       }
     }

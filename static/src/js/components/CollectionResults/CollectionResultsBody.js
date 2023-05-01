@@ -1,10 +1,14 @@
 import React, { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransition } from 'react-transition-group'
+import { FaDoorOpen } from 'react-icons/fa'
+
+import { formatCollectionList } from '../../util/formatCollectionList'
+import { isDefaultPortal } from '../../util/portals'
 
 import CollectionResultsList from './CollectionResultsList'
 import CollectionResultsTable from './CollectionResultsTable'
-import { formatCollectionList } from '../../util/formatCollectionList'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './CollectionResultsBody.scss'
 
@@ -26,11 +30,13 @@ const CollectionResultsBody = ({
   collectionsMetadata,
   projectCollectionsIds,
   loadNextPage,
-  panelView,
+  location,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionGranules,
-  onViewCollectionDetails
+  onViewCollectionDetails,
+  panelView,
+  portal
 }) => {
   const {
     allIds: collectionIds,
@@ -71,6 +77,13 @@ const CollectionResultsBody = ({
 
   // Callback to check if a particular collection has loaded.
   const isItemLoaded = (index) => !hasNextPage || index < collectionList.length
+
+  const {
+    portalId,
+    title = portalId
+  } = portal
+
+  const { primary: primaryPortalTitle = portalId } = title
 
   return (
     <div className="collection-results-body">
@@ -113,6 +126,32 @@ const CollectionResultsBody = ({
           visibleMiddleIndex={visibleMiddleIndex}
         />
       </CSSTransition>
+      {
+        !isDefaultPortal(portalId) && (
+          <div className="collection-results-body__portal-escape-wrapper">
+            <PortalLinkContainer
+              className="collection-results-body__portal-escape"
+              type="button"
+              newPortal={{}}
+              to={location}
+              updatePath
+              icon={FaDoorOpen}
+            >
+              Looking for more collections?
+              {' '}
+              <span className="collection-results-body__portal-escape-emphasis">
+                Leave
+                {' '}
+                the
+                {' '}
+                {primaryPortalTitle}
+                {' '}
+                Portal
+              </span>
+            </PortalLinkContainer>
+          </div>
+        )
+      }
     </div>
   )
 }
@@ -127,11 +166,21 @@ CollectionResultsBody.propTypes = {
     isLoaded: PropTypes.bool
   }).isRequired,
   loadNextPage: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string
+  }).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired,
+  portal: PropTypes.shape({
+    portalId: PropTypes.string,
+    title: PropTypes.shape({
+      primary: PropTypes.string
+    }),
+    pageTitle: PropTypes.string
+  }).isRequired,
   projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 

@@ -91,6 +91,7 @@ import {
   toggleEditSubscriptionModal,
   toggleFacetsModal,
   toggleOverrideTemporalModal,
+  togglePortalBrowserModal,
   toggleRelatedUrlsModal,
   toggleSecondaryOverlayPanel,
   toggleShapefileUploadModal,
@@ -129,11 +130,9 @@ import {
   selectAccessMethod,
   toggleCollectionVisibility,
   updateAccessMethod,
-  updateProjectGranuleParams
+  updateProjectGranuleParams,
+  setDataQualitySummaries
 } from './project'
-import {
-  fetchProviders
-} from './providers'
 import {
   getRegions
 } from './regions'
@@ -144,9 +143,6 @@ import {
 } from './retrieval'
 import { fetchRetrievalHistory } from './retrievalHistory'
 import {
-  fetchAccessMethods
-} from './accessMethods'
-import {
   clearShapefile,
   fetchShapefile,
   saveShapefile,
@@ -155,8 +151,6 @@ import {
   updateShapefile
 } from './shapefiles'
 import { fetchRetrievalCollection } from './retrievalCollection'
-import { loadPortalConfig } from './portals'
-import { fetchDataQualitySummaries } from './dataQualitySummaries'
 import { deleteSavedProject, updateProjectName, updateSavedProject } from './savedProject'
 import { fetchSavedProjects, setSavedProjects } from './savedProjects'
 import { handleAlert } from './alerts'
@@ -238,15 +232,12 @@ const actions = {
   deleteSubscription,
   excludeGranule,
   exportSearch,
-  fetchAccessMethods,
   fetchAdminRetrieval,
   fetchAdminRetrievals,
   fetchAutocomplete,
   fetchContactInfo,
-  fetchDataQualitySummaries,
   fetchAdminProject,
   fetchAdminProjects,
-  fetchProviders,
   fetchRetrieval,
   fetchRetrievalCollection,
   fetchRetrievalCollectionGranuleBrowseLinks,
@@ -269,7 +260,6 @@ const actions = {
   handleError,
   initializeCollectionGranulesQuery,
   initializeCollectionGranulesResults,
-  loadPortalConfig,
   logout,
   onExcludeGranule,
   removeAutocompleteValue,
@@ -289,6 +279,7 @@ const actions = {
   setActivePanelGroup,
   setActivePanelSection,
   setContactInfoFromJwt,
+  setDataQualitySummaries,
   setIsSubmitting,
   setPreferences,
   setPreferencesFromJwt,
@@ -309,6 +300,7 @@ const actions = {
   toggleKeyboardShortcutsModal,
   toggleOverrideTemporalModal,
   togglePanels,
+  togglePortalBrowserModal,
   toggleRelatedUrlsModal,
   toggleSecondaryOverlayPanel,
   toggleShapefileUploadModal,

@@ -1,18 +1,17 @@
 {
-  "hasStyles": true,
-  "logo": {
-    "id": "idn-logo",
-    "link": "https://idn.ceos.org/",
-    "title": "CEOS IDN Search"
-  },
-  "org": "IDN",
+  "moreInfoUrl": "https://idn.ceos.org/",
   "pageTitle": "IDN",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
     "hasGranulesOrCwic": null
   },
+  "title": {
+    "primary": "IDN",
+    "secondary": "CEOS International Directory Network"
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

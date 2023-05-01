@@ -1,4 +1,8 @@
-import { isEmpty, intersection } from 'lodash'
+import {
+  isEmpty,
+  intersection
+} from 'lodash'
+
 import actions from './index'
 
 import {
@@ -20,9 +24,9 @@ import {
   TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_ACCESS_METHOD,
   UPDATE_PROJECT_GRANULE_PARAMS,
-  UPDATE_PROJECT_GRANULE_RESULTS
+  UPDATE_PROJECT_GRANULE_RESULTS,
+  SET_DATA_QUALITY_SUMMARIES
 } from '../constants/actionTypes'
-
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { buildPromise } from '../util/buildPromise'
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
@@ -33,8 +37,11 @@ import { getUsername } from '../selectors/user'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { isCSDACollection } from '../util/isCSDACollection'
 import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
+import { buildAccessMethods } from '../util/accessMethods/buildAccessMethods'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
+import SavedAccessConfigsRequest from '../util/request/savedAccessConfigsRequest'
+import { insertSavedAccessConfig } from '../util/accessMethods/insertSavedAccessConfig'
 
 export const submittingProject = () => ({
   type: SUBMITTING_PROJECT
@@ -122,6 +129,11 @@ export const updateProjectGranuleParams = (payload) => ({
   payload
 })
 
+export const setDataQualitySummaries = (payload) => ({
+  type: SET_DATA_QUALITY_SUMMARIES,
+  payload
+})
+
 /**
  * Retrieve collection metadata for the collections provided
  * @param {String} collectionId Single collection to lookup, if null then all collections in the project will be retrieved
@@ -169,6 +181,28 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     return buildPromise(null)
   }
 
+  // Fetch the saved access configurations for the project collections
+  let savedAccessConfigs = {}
+  try {
+    const savedAccessConfigsRequestObject = new SavedAccessConfigsRequest(
+      authToken,
+      earthdataEnvironment
+    )
+
+    const savedAccessConfigsResponse = await savedAccessConfigsRequestObject.search(
+      { collectionIds: filteredIds }
+    )
+
+    const { data } = savedAccessConfigsResponse
+    savedAccessConfigs = data
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'getProjectCollections',
+      resource: 'saved access configurations'
+    }))
+  }
+
   const collectionParams = prepareCollectionParams(state)
 
   const searchParams = buildCollectionSearchParams(collectionParams)
@@ -181,7 +215,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
-    query GetCollections(
+    query GetProjectCollections (
       $ids: [String]
       $includeHasGranules: Boolean
       $includeTags: String
@@ -204,6 +238,13 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           coordinateSystem
           dataCenter
           dataCenters
+          dataQualitySummaries {
+            count
+            items {
+              id
+              summary
+            }
+          }
           directDistributionInformation
           doi
           duplicateCollections {
@@ -245,6 +286,14 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               serviceOptions
               supportedOutputProjections
               supportedReformattings
+              orderOptions {
+                count
+                items {
+                  conceptId
+                  name
+                  form
+                }
+              }
             }
           }
           granules {
@@ -319,6 +368,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           coordinateSystem,
           dataCenter,
           dataCenters,
+          dataQualitySummaries,
           duplicateCollections,
           granules,
           hasGranules,
@@ -340,6 +390,8 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           earthdataEnvironment
         )
 
+        const isOpenSearch = !!getOpenSearchOsddLink(metadata)
+
         payload.push({
           abstract,
           archiveAndDistributionInformation,
@@ -347,6 +399,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           boxes,
           cloudHosted,
           coordinateSystem,
+          dataQualitySummaries,
           dataCenter,
           duplicateCollections,
           granules,
@@ -354,7 +407,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           hasGranules,
           id: conceptId,
           isCSDA: isCSDACollection(dataCenters),
-          isOpenSearch: !!getOpenSearchOsddLink(metadata),
+          isOpenSearch,
           relatedCollections,
           services,
           shortName,
@@ -368,7 +421,34 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           ...focusedMetadata
         })
 
-        dispatch(actions.fetchDataQualitySummaries(conceptId))
+        const { [conceptId]: savedAccessConfig } = savedAccessConfigs
+
+        const accessMethodsObject = insertSavedAccessConfig(
+          buildAccessMethods(metadata, isOpenSearch),
+          savedAccessConfig
+        )
+
+        const { methods = {} } = accessMethodsObject
+        let { selectedAccessMethod } = accessMethodsObject
+
+        if (Object.keys(methods).length === 1 && !selectedAccessMethod) {
+          const [firstAccessMethod] = Object.keys(methods)
+          selectedAccessMethod = firstAccessMethod
+        }
+
+        dispatch(actions.addAccessMethods({
+          collectionId: conceptId,
+          methods,
+          selectedAccessMethod
+        }))
+
+        const { items: dqsItems = [] } = dataQualitySummaries
+        if (dqsItems) {
+          dispatch(actions.setDataQualitySummaries({
+            catalogItemId: conceptId,
+            dataQualitySummaries: dqsItems
+          }))
+        }
       })
 
       // Update metadata in the store

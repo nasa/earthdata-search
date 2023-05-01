@@ -17,3 +17,11 @@ cypress/videos
 overrideStatic.config.json
 cypress-coverage
 .nyc_output
+
+/test-results/
+/playwright-report/
+/playwright/.cache/
+playwright-coverage
+/test-results/
+/playwright-report/
+/playwright/.cache/

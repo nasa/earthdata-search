@@ -1,19 +1,18 @@
 {
-  "hasStyles": true,
-  "logo": {
-    "id": "podaac-logo",
-    "link": "https://podaac.jpl.nasa.gov",
-    "title": "PO.DAAC Home"
-  },
-  "org": "PO.DAAC Cloud",
+  "moreInfoUrl": "https://podaac.jpl.nasa.gov",
   "pageTitle": "PO.DAAC Cloud",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
-    "provider": "POCLOUD",
-    "hasGranulesOrCwic": null
+    "hasGranulesOrCwic": null,
+    "provider": "POCLOUD"
+  },
+  "title": {
+    "primary": "PO.DAAC Cloud",
+    "secondary": "Physical Oceanography Distributed Active Archive Center"
   },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

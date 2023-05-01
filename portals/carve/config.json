@@ -1,21 +1,18 @@
 {
-  "hasStyles": true,
-  "hasScripts": true,
-  "logo": {
-    "id": "ornl-daac-logo",
-    "link": "https://carve.ornl.gov",
-    "title": "ORNL DAAC CARVE Home"
-  },
-  "org": "ORNL DAAC",
+  "moreInfoUrl": "https://carve.ornl.gov",
   "pageTitle": "CARVE",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
-    "project": "CARVE",
-    "hasGranulesOrCwic": null
+    "hasGranulesOrCwic": null,
+    "project": "CARVE"
   },
-  "title": "CARVE",
+  "title": {
+    "primary": "CARVE",
+    "secondary": "Carbon in Arctic Reservoirs Vulnerability Experiment"
+  },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

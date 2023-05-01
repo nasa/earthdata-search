@@ -17,10 +17,11 @@
     display: flex;
     align-items: center;
     margin: 0;
-    padding: 0.15rem 0.5rem 0.15rem 0.3rem;
+    padding: 0.2rem 0.5rem 0.2rem 0.3rem;
     font-size: 0.875rem;
     vertical-align: middle;
     border-left: .2rem solid transparent;
+    transition: border-color 0.1s ease-in-out, background 0.1s ease-in-out;
 
     .facets-item--level-1 & {
       padding-left: 2rem;
@@ -39,7 +40,7 @@
     }
 
     &:hover {
-      background: $color__black--700;
+      background: $color__black--200;
       border-left: .2rem solid $color__green;
       cursor: pointer;
     }
@@ -50,20 +51,12 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    color: $color__black--200;
-    font-weight: 300;
+    color: $color__black--600;
+    font-weight: 400;
     font-size: 0.875rem;
 
-    .facets-list--light & {
-      color: $color__black--600;
-    }
-
     .facets-item:hover & {
-      color: $color__white;
-
-      .facets-list--light & {
-        color: $color__black--900;
-      }
+      color: $color__black--900;
     }
   }
 

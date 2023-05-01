@@ -128,7 +128,7 @@ const collectionMetadataReducer = (state = initialState, action = {}) => {
       const { collections } = action.payload
 
       return {
-        ...state,
+        ...initialState,
         ...collections
       }
     }

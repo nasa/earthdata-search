@@ -2,8 +2,10 @@ import knex from 'knex'
 import mockKnex from 'mock-knex'
 
 import getContactInfo from '../handler'
+import * as getCmrPreferencesData from '../getCmrPreferencesData'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
+import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
 
 let dbConnectionToMock
@@ -14,6 +16,7 @@ beforeEach(() => {
 
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
   jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: '1' }))
+  jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: 'access_token' }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
@@ -41,7 +44,7 @@ describe('getContactInfo', () => {
       if (step === 1) {
         query.response([
           {
-            echo_preferences: { mock: 'echo' },
+            urs_id: { mock: 'ursId' },
             urs_profile: { mock: 'urs' }
           }
         ])
@@ -50,11 +53,21 @@ describe('getContactInfo', () => {
       }
     })
 
-    const result = await getContactInfo({}, {})
+    jest.spyOn(getCmrPreferencesData, 'getCmrPreferencesData').mockResolvedValue({
+      data: {
+        data: {
+          user: {
+            mock: 'cmr'
+          }
+        }
+      },
+      status: 200
+    })
 
+    const result = await getContactInfo({}, {})
     const expectedBody = JSON.stringify({
-      echo_preferences: { mock: 'echo' },
-      urs_profile: { mock: 'urs' }
+      urs_profile: { mock: 'urs' },
+      cmr_preferences: { mock: 'cmr' }
     })
 
     const { queries } = dbTracker.queries
@@ -63,7 +76,7 @@ describe('getContactInfo', () => {
     expect(result.body).toEqual(expectedBody)
   })
 
-  test('responds correctly on error', async () => {
+  test('responds correctly on database error', async () => {
     dbTracker.on('query', (query) => {
       query.reject('Unknown Error')
     })
@@ -71,5 +84,39 @@ describe('getContactInfo', () => {
     const response = await getContactInfo({}, {})
 
     expect(response.statusCode).toEqual(500)
+  })
+
+  test('responds correctly on CMR-ordering error', async () => {
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response([
+          {
+            urs_id: { mock: 'ursId' },
+            urs_profile: { mock: 'urs' }
+          }
+        ])
+      } else {
+        query.response(undefined)
+      }
+    })
+
+    jest.spyOn(getCmrPreferencesData, 'getCmrPreferencesData').mockResolvedValue({
+      status: 200,
+      data: {
+        errors:
+        [
+          'Test error message'
+        ]
+      }
+    })
+
+    const response = await getContactInfo({}, {})
+    const expectedError = JSON.stringify({
+      statusCode: 500,
+      errors: ['Error: ["Test error message"]']
+    })
+
+    expect(response.statusCode).toEqual(500)
+    expect(response.body).toEqual(expectedError)
   })
 })

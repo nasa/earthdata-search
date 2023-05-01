@@ -14,7 +14,8 @@ import {
   SUBMITTING_PROJECT,
   TOGGLE_COLLECTION_VISIBILITY,
   UPDATE_ACCESS_METHOD,
-  UPDATE_COLLECTION_METADATA
+  UPDATE_COLLECTION_METADATA,
+  SET_DATA_QUALITY_SUMMARIES
 } from '../../constants/actionTypes'
 
 import {
@@ -27,7 +28,8 @@ import {
   selectAccessMethod,
   addAccessMethods,
   submittingProject,
-  submittedProject
+  submittedProject,
+  setDataQualitySummaries
 } from '../project'
 
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
@@ -47,6 +49,23 @@ describe('addCollectionToProject', () => {
       payload
     }
     expect(addCollectionToProject(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('setDataQualitySummary', () => {
+  test('should create an action to set the data-quality-summary for a collection in the project', () => {
+    const payload = {
+      catalogItemId: 'collectionId1',
+      dataQualitySummaries: [{
+        id: 'D5AC37C9-FF31-3885-5BDB-537D804C24B1',
+        summary: '<p>This is another test</p>'
+      }]
+    }
+    const expectedAction = {
+      type: SET_DATA_QUALITY_SUMMARIES,
+      payload
+    }
+    expect(setDataQualitySummaries(payload)).toEqual(expectedAction)
   })
 })
 
@@ -229,11 +248,7 @@ describe('getProjectCollections', () => {
     }))
 
     nock(/localhost/)
-      .post(/dqs/)
-      .reply(200, {})
-
-    nock(/localhost/)
-      .post(/dqs/)
+      .post(/saved_access_configs/)
       .reply(200, {})
 
     nock(/localhost/)
@@ -247,11 +262,25 @@ describe('getProjectCollections', () => {
                 items: [{
                   name: 'SOTO'
                 }]
+              },
+              services: {
+                items: null
+              },
+              dataQualitySummaries:
+              {
+                items: null
               }
             },
             {
               conceptId: 'collectionId2',
               tools: {
+                items: null
+              },
+              services: {
+                items: null
+              },
+              dataQualitySummaries:
+              {
                 items: null
               }
             }]
@@ -289,21 +318,6 @@ describe('getProjectCollections', () => {
           allIds: ['collectionId1', 'collectionId2']
         }
       },
-      providers: [
-        {
-          provider: {
-            id: 'abcd-1234-efgh-5678',
-            organization_name: 'EDSC-TEST',
-            provider_id: 'EDSC-TEST'
-          }
-        }, {
-          provider: {
-            id: 'abcd-1234-efgh-5678',
-            organization_name: 'NON-EDSC-TEST',
-            provider_id: 'NON-EDSC-TEST'
-          }
-        }
-      ],
       query: {
         collection: {}
       }
@@ -312,7 +326,23 @@ describe('getProjectCollections', () => {
     await store.dispatch(actions.getProjectCollections())
 
     const storeActions = store.getActions()
+
+    expect(storeActions.length).toEqual(3)
     expect(storeActions[0]).toEqual({
+      type: ADD_ACCESS_METHODS,
+      payload: {
+        collectionId: 'collectionId1',
+        methods: {}
+      }
+    })
+    expect(storeActions[1]).toEqual({
+      type: ADD_ACCESS_METHODS,
+      payload: {
+        collectionId: 'collectionId2',
+        methods: {}
+      }
+    })
+    expect(storeActions[2]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
         expect.objectContaining({
@@ -357,6 +387,10 @@ describe('getProjectCollections', () => {
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     nock(/localhost/)
+      .post(/saved_access_configs/)
+      .reply(200, {})
+
+    nock(/localhost/)
       .post(/graphql/)
       .reply(500, {
         errors: ['HTTP Request Error']
@@ -396,6 +430,136 @@ describe('getProjectCollections', () => {
     expect(consoleMock).toBeCalledTimes(1)
   })
 
+  test('continues to load project collections if savedAccessConfig errors', async () => {
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      cmrHost: 'https://cmr.earthdata.nasa.gov',
+      opensearchRoot: 'https://cmr.earthdata.nasa.gov/opensearch'
+    }))
+
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+    nock(/localhost/)
+      .post(/saved_access_configs/)
+      .reply(500, {})
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        data: {
+          collections: {
+            items: [{
+              conceptId: 'collectionId1',
+              tools: {
+                items: [{
+                  name: 'SOTO'
+                }]
+              },
+              services: {
+                items: null
+              },
+              dataQualitySummaries:
+              {
+                items: null
+              }
+            },
+            {
+              conceptId: 'collectionId2',
+              tools: {
+                items: null
+              },
+              services: {
+                items: null
+              },
+              dataQualitySummaries:
+              {
+                items: null
+              }
+            }]
+          }
+        }
+      }, {
+        'jwt-token': 'token'
+      })
+
+    nock(/localhost/)
+      .post(/granules/)
+      .reply(200, {
+        feed: {
+          updated: '2019-03-27T20:21:14.705Z',
+          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
+          title: 'ECHO granule metadata',
+          entry: [{
+            id: 'G1000001-EDSC'
+          }, {
+            id: 'G1000002-EDSC'
+          }]
+        }
+      }, {
+        'cmr-hits': 1
+      })
+
+    const store = mockStore({
+      authToken: 'token',
+      metadata: {
+        collections: {}
+      },
+      focusedCollection: '',
+      project: {
+        collections: {
+          allIds: ['collectionId1', 'collectionId2']
+        }
+      },
+      query: {
+        collection: {}
+      }
+    })
+
+    await store.dispatch(actions.getProjectCollections())
+
+    expect(consoleMock).toBeCalledTimes(1)
+
+    const storeActions = store.getActions()
+
+    expect(storeActions.length).toEqual(4)
+    expect(storeActions[0]).toEqual({
+      type: ADD_ERROR,
+      payload: expect.objectContaining({
+        message: 'Unknown Error',
+        notificationType: 'banner',
+        title: 'Error retrieving saved access configurations'
+      })
+    })
+    expect(storeActions[1]).toEqual({
+      type: ADD_ACCESS_METHODS,
+      payload: {
+        collectionId: 'collectionId1',
+        methods: {}
+      }
+    })
+    expect(storeActions[2]).toEqual({
+      type: ADD_ACCESS_METHODS,
+      payload: {
+        collectionId: 'collectionId2',
+        methods: {}
+      }
+    })
+    expect(storeActions[3]).toEqual({
+      type: UPDATE_COLLECTION_METADATA,
+      payload: [
+        expect.objectContaining({
+          id: 'collectionId1'
+        }),
+        expect.objectContaining({
+          id: 'collectionId2'
+        })
+      ]
+    })
+  })
+
   describe('when requesting a CSDA collection', () => {
     test('calls lambda to get authenticated collections', async () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
@@ -404,11 +568,7 @@ describe('getProjectCollections', () => {
       }))
 
       nock(/localhost/)
-        .post(/dqs/)
-        .reply(200, {})
-
-      nock(/localhost/)
-        .post(/dqs/)
+        .post(/saved_access_configs/)
         .reply(200, {})
 
       nock(/localhost/)
@@ -423,13 +583,27 @@ describe('getProjectCollections', () => {
                     shortName: 'NASA/CSDA'
                   }
                 ],
+                dataQualitySummaries:
+                {
+                  items: null
+                },
                 tools: {
+                  items: null
+                },
+                services: {
                   items: null
                 }
               },
               {
                 conceptId: 'collectionId2',
                 tools: {
+                  items: null
+                },
+                dataQualitySummaries:
+                {
+                  items: null
+                },
+                services: {
                   items: null
                 }
               }]
@@ -467,21 +641,6 @@ describe('getProjectCollections', () => {
             allIds: ['collectionId1', 'collectionId2']
           }
         },
-        providers: [
-          {
-            provider: {
-              id: 'abcd-1234-efgh-5678',
-              organization_name: 'EDSC-TEST',
-              provider_id: 'EDSC-TEST'
-            }
-          }, {
-            provider: {
-              id: 'abcd-1234-efgh-5678',
-              organization_name: 'NON-EDSC-TEST',
-              provider_id: 'NON-EDSC-TEST'
-            }
-          }
-        ],
         query: {
           collection: {}
         }
@@ -490,7 +649,23 @@ describe('getProjectCollections', () => {
       await store.dispatch(actions.getProjectCollections())
 
       const storeActions = store.getActions()
+
+      expect(storeActions.length).toEqual(3)
       expect(storeActions[0]).toEqual({
+        type: ADD_ACCESS_METHODS,
+        payload: {
+          collectionId: 'collectionId1',
+          methods: {}
+        }
+      })
+      expect(storeActions[1]).toEqual({
+        type: ADD_ACCESS_METHODS,
+        payload: {
+          collectionId: 'collectionId2',
+          methods: {}
+        }
+      })
+      expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [
           expect.objectContaining({

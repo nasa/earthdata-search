@@ -1,3 +1,6 @@
 .edsc-icon {
-  vertical-align: inherit;
+  &--more-info {
+    color: $color__black--400;
+    margin-left: 0.25rem;
+  }
 }

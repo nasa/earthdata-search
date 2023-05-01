@@ -1,19 +1,18 @@
 {
-  "hasStyles": true,
-  "logo": {
-    "id": "amd-logo",
-    "link": "https://www.scar.org/resources/amd/",
-    "title": "Antarctic Metadata Directory (AMD) "
-  },
-  "org": "Antarctic Metadata Directory (AMD)",
+  "moreInfoUrl": "https://www.scar.org/resources/amd/",
   "pageTitle": "Antarctic Metadata Directory (AMD)",
   "parentConfig": "edsc",
+  "portalBrowser": true,
   "query": {
-    "tagKey": ["org.scar.amd"],
-    "hasGranulesOrCwic": null
+    "hasGranulesOrCwic": null,
+    "tagKey": ["org.scar.amd"]
+  },
+  "title": {
+    "primary": "AMD",
+    "secondary": "Antarctic Metadata Directory"
   },
   "ui": {
-    "showOnlyGranulesCheckbox": false,
-    "showNonEosdisCheckbox": false
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
   }
 }

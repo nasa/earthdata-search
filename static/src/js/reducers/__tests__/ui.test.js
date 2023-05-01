@@ -12,6 +12,7 @@ import {
   TOGGLE_EDIT_SUBSCRIPTION_MODAL,
   TOGGLE_KEYBOARD_SHORTCUTS_MODAL,
   TOGGLE_OVERRIDE_TEMPORAL_MODAL,
+  TOGGLE_PORTAL_BROWSER_MODAL,
   TOGGLE_RELATED_URLS_MODAL,
   TOGGLE_SECONDARY_OVERLAY_PANEL,
   TOGGLE_SHAPEFILE_UPLOAD_MODAL,
@@ -63,6 +64,9 @@ const initialState = {
     drawingNewLayer: false
   },
   overrideTemporalModal: {
+    isOpen: false
+  },
+  portalBrowserModal: {
     isOpen: false
   },
   relatedUrlsModal: {
@@ -119,6 +123,22 @@ describe('TOGGLE_OVERRIDE_TEMPORAL_MODAL', () => {
     const expectedState = {
       ...initialState,
       overrideTemporalModal: { isOpen: true }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
+})
+
+describe('TOGGLE_PORTAL_BROWSER_MODAL', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: TOGGLE_PORTAL_BROWSER_MODAL,
+      payload: true
+    }
+
+    const expectedState = {
+      ...initialState,
+      portalBrowserModal: { isOpen: true }
     }
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
@@ -334,6 +354,23 @@ describe('TOGGLE_DEPRECATED_PARAMETER_MODAL', () => {
 
     expect(uiReducer(undefined, action)).toEqual(expectedState)
   })
+
+  test('returns the correct state when the modal is closing', () => {
+    const action = {
+      type: TOGGLE_DEPRECATED_PARAMETER_MODAL,
+      payload: false
+    }
+
+    const expectedState = {
+      ...initialState,
+      deprecatedParameterModal: {
+        deprecatedUrlParams: [],
+        isOpen: false
+      }
+    }
+
+    expect(uiReducer(undefined, action)).toEqual(expectedState)
+  })
 })
 
 describe('TOGGLE_EDIT_SUBSCRIPTION_MODAL', () => {
@@ -419,6 +456,10 @@ describe('RESTORE_FROM_URL', () => {
       }
     }
 
+    const initial = {
+      timeline: { isOpen: false }
+    }
+
     const expectedState = {
       ...initialState,
       deprecatedParameterModal: {
@@ -427,6 +468,26 @@ describe('RESTORE_FROM_URL', () => {
       }
     }
 
-    expect(uiReducer(undefined, action)).toEqual(expectedState)
+    expect(uiReducer(initial, action)).toEqual(expectedState)
+  })
+
+  test('returns the original state if no deprecatedUrlParams were found', () => {
+    const action = {
+      type: RESTORE_FROM_URL,
+      payload: {
+        deprecatedUrlParams: []
+      }
+    }
+
+    const initial = {
+      ...initialState,
+      timeline: { isOpen: false }
+    }
+
+    const expectedState = {
+      ...initialState
+    }
+
+    expect(uiReducer(initial, action)).toEqual(expectedState)
   })
 })

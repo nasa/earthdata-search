@@ -1,19 +1,13 @@
-import AWS from 'aws-sdk'
-
 import axios from 'axios'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'
-import { getEchoToken } from '../util/urs/getEchoToken'
+import { getAccessTokenFromJwtToken } from '../util/urs/getAccessTokenFromJwtToken'
 import { getJwtToken } from '../util/getJwtToken'
-import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
-
-// AWS SQS adapter
-let sqs
 
 /**
  * Handler for saving a users contact info
@@ -22,7 +16,7 @@ const saveContactInfo = async (event) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   const { body, headers } = event
-  const { params } = JSON.parse(body)
+  const { params, requestId } = JSON.parse(body)
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
@@ -33,14 +27,9 @@ const saveContactInfo = async (event) => {
   // Retrive a connection to the database
   const dbConnection = await getDbConnection()
 
-  if (sqs == null) {
-    sqs = new AWS.SQS(getSqsConfig())
-  }
-
   try {
     const userRecord = await dbConnection('users')
       .first(
-        'echo_id',
         'urs_id'
       )
       .where({
@@ -48,42 +37,61 @@ const saveContactInfo = async (event) => {
       })
 
     const {
-      echo_id: echoId,
-      urs_id: userId
+      urs_id: ursId
     } = userRecord
 
-    const url = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/legacy-services/rest/users/${echoId}/preferences.json`
+    const orderingUrl = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/ordering/api`
 
-    const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
+    const {
+      access_token: authToken
+    } = await getAccessTokenFromJwtToken(jwtToken, earthdataEnvironment)
 
-    const response = await axios({
-      method: 'put',
-      url,
-      headers: {
-        Authorization: `Bearer ${echoToken}`,
-        'Client-Id': getClientId().lambda
-      },
-      data: params
-    })
+    const cmrQuery = `
+    mutation updateUser (
+      $ursId: String!,
+      $notificationLevel: NotificationLevel!
+    ) {
+      updateUser (
+        ursId: $ursId,
+        notificationLevel: $notificationLevel
+      ) {
+        ursId
+        notificationLevel
+      }
+    }`
 
-    if (process.env.IS_OFFLINE) {
-      await sqs.sendMessage({
-        QueueUrl: process.env.userDataQueueUrl,
-        MessageBody: JSON.stringify({
-          environment: earthdataEnvironment,
-          userId: id,
-          username: userId
-        })
-      }).promise()
+    const requestHeaders = {
+      Authorization: `Bearer ${authToken}`,
+      'Client-Id': getClientId().lambda,
+      'X-Request-Id': requestId
     }
 
-    const { data, statusCode } = response
+    const cmrPreferencesResponse = await axios({
+      url: orderingUrl,
+      method: 'post',
+      data: {
+        variables: {
+          ursId,
+          ...params.preferences
+        },
+        query: cmrQuery
+      },
+      headers: requestHeaders
+    })
+
+    const { status, data: responseData } = cmrPreferencesResponse
+
+    const { errors, data } = responseData
+
+    if (errors) throw new Error(JSON.stringify(errors))
+
+    const { updateUser } = data
 
     return {
       isBase64Encoded: false,
-      statusCode,
+      statusCode: status,
       headers: defaultResponseHeaders,
-      body: JSON.stringify(data)
+      body: JSON.stringify(updateUser)
     }
   } catch (e) {
     return {

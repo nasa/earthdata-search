@@ -1,0 +1,121 @@
+.portal-list {
+  &__item-link {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    border: 1px solid $color__black--200;
+    border-radius: .25rem;
+    margin-bottom: 1.25rem;
+    text-align: left;
+    overflow: hidden;
+
+    &:hover {
+      border: 1px solid $color__black--300;
+    }
+
+    .button__contents {
+      display: flex;
+      align-items: stretch;
+      flex-grow: 1;
+    }
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  &__thumbnail-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    width: 5rem;
+    min-height: 7.25rem;
+    padding: .5rem;
+  }
+
+  &__thumbnail {
+    flex-grow: 1;
+    flex-shrink: 0;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    object-fit: contain;
+    opacity: 0;
+
+    &--is-loaded {
+      display: block;
+      position: relative;
+      visibility: visible;
+      width: 100%;
+      height: auto;
+      opacity: 1;
+    }
+  }
+
+  &__thumb-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__item-primary {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    padding: 1rem;
+    padding-bottom: 0.825rem;
+    background-color: $color__black--100;
+
+    .portal-list__item:hover & {
+      background-color: darken($color__black--100, 2);
+    }
+  }
+
+  &__item-title-primary {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-right: 0.25rem;
+  }
+
+  &__item-title-secondary {
+    display: block;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: $color__black--500;
+  }
+
+  &__item-description {
+    margin-top: 0.25rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    font-size: 0.8rem;
+    color: $color__black--600;
+  }
+
+  &__item-details-link {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.25rem;
+    font-size: 0.825rem;
+    font-weight: 500;
+    color: $color__black--500;
+
+    .link--external:after {
+      color: $color__black--400;
+    }
+
+    &:hover {
+      .link--external:after {
+        color: $color__black--500;
+      }
+    }
+  }
+}

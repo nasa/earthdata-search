@@ -15,7 +15,6 @@ import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironm
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { locationPropType } from '../../util/propTypes/location'
 import { orderStatusSkeleton, orderStatusLinksSkeleton } from './skeleton'
-import { portalPath } from '../../../../../sharedUtils/portalPath'
 import { stringify } from '../../util/url/url'
 
 import './OrderStatus.scss'
@@ -51,7 +50,6 @@ export const OrderStatus = ({
   onFocusedCollectionChange,
   onMetricsRelatedCollection,
   onToggleAboutCSDAModal,
-  portal,
   retrieval = {}
 }) => {
   useEffect(() => {
@@ -129,8 +127,8 @@ export const OrderStatus = ({
   const introduction = (
     <p>
       {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
-      <a href={`${edscHost}${portalPath(portal)}/downloads/${id}${eeLink}`}>
-        {`${edscHost}${portalPath(portal)}/downloads/${id}${eeLink}`}
+      <a href={`${edscHost}/downloads/${id}${eeLink}`}>
+        {`${edscHost}/downloads/${id}${eeLink}`}
       </a>
       {' or the '}
       <PortalLinkContainer
@@ -359,7 +357,6 @@ OrderStatus.propTypes = {
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   retrieval: PropTypes.shape({}).isRequired
 }
 

@@ -1,6 +1,6 @@
 import React, { Component, lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
-import { Form } from 'react-bootstrap'
+import { Alert, Form } from 'react-bootstrap'
 import moment from 'moment'
 
 import { pluralize } from '../../util/pluralize'
@@ -10,7 +10,6 @@ import Button from '../Button/Button'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio'
 import RadioList from '../FormFields/RadioList/RadioList'
-import Skeleton from '../Skeleton/Skeleton'
 import Spinner from '../Spinner/Spinner'
 
 import './AccessMethod.scss'
@@ -49,14 +48,10 @@ export class AccessMethod extends Component {
 
     // Disable temporal subsetting if the user has a recurring date selected
     const {
-      selectedOutputFormat = '',
-      selectedOutputProjection = '',
       enableTemporalSubsetting = !isRecurring
     } = selectedMethod || {}
 
     this.state = {
-      selectedOutputFormat,
-      selectedOutputProjection,
       enableTemporalSubsetting
     }
 
@@ -97,8 +92,6 @@ export class AccessMethod extends Component {
     const { target } = event
     const { value } = target
 
-    this.setState({ selectedOutputFormat: value })
-
     onUpdateAccessMethod({
       collectionId,
       method: {
@@ -115,8 +108,6 @@ export class AccessMethod extends Component {
 
     const { target } = event
     const { value } = target
-
-    this.setState({ selectedOutputProjection: value })
 
     onUpdateAccessMethod({
       collectionId,
@@ -149,8 +140,6 @@ export class AccessMethod extends Component {
 
   render() {
     const {
-      selectedOutputFormat,
-      selectedOutputProjection,
       enableTemporalSubsetting
     } = this.state
 
@@ -165,7 +154,8 @@ export class AccessMethod extends Component {
       selectedAccessMethod,
       shapefileId,
       spatial,
-      temporal
+      temporal,
+      ursProfile
     } = this.props
 
     const { conceptId: collectionId } = metadata
@@ -262,34 +252,14 @@ export class AccessMethod extends Component {
       ...accessMethodsByType.download
     ]
 
-    const skeleton = [1, 2, 3].map((skeleton, i) => {
-      const key = `skeleton_${i}`
-      return (
-        <Skeleton
-          key={key}
-          containerStyle={{
-            height: '40px',
-            width: '300px',
-            marginBottom: '8px'
-          }}
-          shapes={[{
-            shape: 'rectangle',
-            x: 0,
-            y: 0,
-            height: 40,
-            width: 300,
-            radius: 3
-          }]}
-        />
-      )
-    })
-
     const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
 
     const {
       form,
       rawModel = null,
       selectedVariables = [],
+      selectedOutputFormat,
+      selectedOutputProjection,
       supportedOutputFormats = [],
       supportedOutputProjections = [],
       supportsTemporalSubsetting = false,
@@ -402,7 +372,13 @@ export class AccessMethod extends Component {
           <div className="access-method__radio-list">
             {
               radioList.length === 0
-                ? skeleton
+                ? (
+                  <Alert
+                    variant="warning"
+                  >
+                    No access methods exist for this collection.
+                  </Alert>
+                )
                 : (
                   <RadioList
                     defaultValue={selectedAccessMethod}
@@ -435,6 +411,7 @@ export class AccessMethod extends Component {
                           shapefileId={shapefileId}
                           spatial={spatial}
                           temporal={temporal}
+                          ursProfile={ursProfile}
                           onUpdateAccessMethod={onUpdateAccessMethod}
                         />
                       </Suspense>
@@ -617,6 +594,9 @@ AccessMethod.propTypes = {
     endDate: PropTypes.string,
     isRecurring: PropTypes.bool,
     startDate: PropTypes.string
+  }).isRequired,
+  ursProfile: PropTypes.shape({
+    email_address: PropTypes.string
   }).isRequired
 }
 

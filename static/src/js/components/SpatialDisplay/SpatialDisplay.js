@@ -545,8 +545,12 @@ class SpatialDisplay extends Component {
         <SpatialDisplayEntry>
           <Form.Row className="spatial-display__form-row">
             <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
-              <Form.Label srOnly>
-                Coordinates:
+              <Form.Label
+                className="spatial-display__form-label"
+                column
+                sm="auto"
+              >
+                Point:
               </Form.Label>
               <Col
                 className="spatial-display__form-column"

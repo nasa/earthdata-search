@@ -79,20 +79,6 @@
               - TagProcessingQueue
               - Arn
 
-  # We need to limit the concurrency on this lambda due to a call to Legacy Services
-  # within it. Putting too much load on the endpoint will cause production systems to fail
-  fetchOptionDefinitions:
-    handler: serverless/src/fetchOptionDefinitions/handler.default
-    timeout: 600
-    reservedConcurrency: 5
-    events:
-      - sqs:
-          batchSize: 5
-          arn:
-            Fn::GetAtt:
-              - OptionDefinitionsQueue
-              - Arn
-
   submitCatalogRestOrder:
     handler: serverless/src/submitCatalogRestOrder/handler.default
     timeout: 600
@@ -106,14 +92,14 @@
     environment:
       updateOrderStatusStateMachineArn: ${self:resources.Outputs.UpdateOrderStatusWorkflow.Value}
 
-  submitLegacyServicesOrder:
-    handler: serverless/src/submitLegacyServicesOrder/handler.default
+  submitCmrOrderingOrder:
+    handler: serverless/src/submitCmrOrderingOrder/handler.default
     timeout: 600
     events:
       - sqs:
           arn:
             Fn::GetAtt:
-              - LegacyServicesOrderQueue
+              - CmrOrderingOrderQueue
               - Arn
     environment:
       updateOrderStatusStateMachineArn: ${self:resources.Outputs.UpdateOrderStatusWorkflow.Value}
@@ -182,8 +168,8 @@
     handler: serverless/src/fetchCatalogRestOrder/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
 
-  fetchLegacyServicesOrder:
-    handler: serverless/src/fetchLegacyServicesOrder/handler.default
+  fetchCmrOrderingOrder:
+    handler: serverless/src/fetchCmrOrderingOrder/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
 
   fetchHarmonyOrder:
@@ -228,15 +214,6 @@
           rate: cron(45 12 ? * MON-FRI *)
           enabled: ${env:GIBS_JOB_ENABLED, false}
 
-  generateSubsettingTags:
-    handler: serverless/src/generateSubsettingTags/handler.default
-    description: Tag CMR collections with umm service subsetting information
-    timeout: 600
-    memorySize: 192
-    events:
-      - schedule:
-          rate: cron(30 12-23/4 ? * MON-FRI *)
-          enabled: ${env:SUBSETTING_JOB_ENABLED, true}
   #
   # API Gateway Endpoints
   #
@@ -544,14 +521,14 @@
             resultTtlInSeconds: 0
 
 
-  getAccessMethods:
-    handler: serverless/src/getAccessMethods/handler.default
+  getSavedAccessConfigs:
+    handler: serverless/src/getSavedAccessConfigs/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
-          path: access_methods
+          path: saved_access_configs
           authorizer:
             name: edlAuthorizer
             type: request
@@ -612,35 +589,6 @@
             name: edlAuthorizer
             type: request
             resultTtlInSeconds: 0
-
-
-  getDataQualitySummaries:
-    handler: serverless/src/getDataQualitySummaries/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT, '30'}
-    events:
-      - http:
-          method: post
-          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
-          path: dqs
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
-
-
-  getProviders:
-    handler: serverless/src/getProviders/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT, '30'}
-    events:
-      - http:
-          method: get
-          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
-          path: providers
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
-
 
   getContactInfo:
     handler: serverless/src/getContactInfo/handler.default

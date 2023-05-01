@@ -1,18 +1,4 @@
 .search-panels {
-  &__portal-escape {
-    color: $color__black--600;
-    margin: 0;
-    padding: 0.5rem 1rem;
-    text-align: center;
-    font-size: 0.875rem;
-    background-color: $color__black--100;
-    border-top: 1px solid $color__black--200;
-  }
-
-  &__portal-escape-link {
-    text-decoration: underline;
-  }
-
   &__note {
     display: block;
     margin-bottom: $spacer/2;

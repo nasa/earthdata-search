@@ -78,6 +78,7 @@ export const saveShapefile = (data) => (dispatch, getState) => {
  */
 export const fetchShapefile = (shapefileId) => (dispatch, getState) => {
   const state = getState()
+  dispatch(shapefileLoading())
 
   // Retrieve data from Redux using selectors
   const earthdataEnvironment = getEarthdataEnvironment(state)

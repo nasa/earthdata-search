@@ -36,4 +36,51 @@
     opacity: 0;
     visibility: hidden;
   }
+
+  &__portal-escape-wrapper {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    bottom: 0;
+    padding: 0.5rem 1rem;
+    padding-top: 0;
+    z-index: 2;
+  }
+
+  &__portal-escape {
+    display: flex;
+    align-items: center;
+    color: $color__black--700;
+    margin: 0;
+    padding: 0.5rem 1.25rem;
+    text-align: center;
+    font-size: 0.925rem;
+    background-color: $color__white;
+    border: 1px solid $color__black--200;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.25rem 0.75rem 0 rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background-color: lighten($color__black--200, 5);
+      border: 1px solid $color__black--200;
+    }
+
+    .button__contents {
+      display: block;
+    }
+
+    .edsc-icon {
+      flex-shrink: 0;
+      height: 1.125rem;
+      width: 1.125rem;
+      top: -0.0625rem;
+    }
+  }
+
+  &__portal-escape-emphasis {
+    margin-left: 0.5em;
+    font-weight: 500;
+    white-space: nowrap;
+  }
 }

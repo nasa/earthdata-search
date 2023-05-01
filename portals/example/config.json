@@ -1,0 +1,11 @@
+{
+  "pageTitle": "Example",
+  "parentConfig": "edsc",
+  "portalBrowser": false,
+  "query": {
+    "echoCollectionId": "C203234523-LAADS"
+  },
+  "title": {
+    "primary": "Example"
+  }
+}
