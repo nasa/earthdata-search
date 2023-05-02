@@ -68,7 +68,7 @@ provider:
   apiGateway:
     shouldStartNameWithService: true
 
-plugins: ${file(./serverless-configs/${self:provider.name}-plugins.js):plugins}
+plugins: ${file(./serverless-configs/serverless-plugins.js):plugins}
 
 #
 # Lambda Functions
