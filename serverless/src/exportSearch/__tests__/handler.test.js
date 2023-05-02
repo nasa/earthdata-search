@@ -142,9 +142,9 @@ describe('exportSearch', () => {
               { name: 'Start Time', path: 'timeStart' },
               { name: 'End Time', path: 'timeEnd' }
             ],
-            cursorpath: 'collections.cursor',
+            cursorPath: 'collections.cursor',
             format: 'csv',
-            itempath: 'collections.items',
+            itemPath: 'collections.items',
             query: {},
             variables: {}
           },
@@ -249,9 +249,9 @@ describe('exportSearch', () => {
               { name: 'Start Time', path: 'timeStart' },
               { name: 'End Time', path: 'timeEnd' }
             ],
-            cursorpath: 'collections.cursor',
+            cursorPath: 'collections.cursor',
             format: 'json',
-            itempath: 'collections.items',
+            itemPath: 'collections.items',
             query: {},
             variables: {}
           },

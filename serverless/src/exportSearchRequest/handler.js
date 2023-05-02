@@ -47,16 +47,16 @@ const exportSearchRequest = async (event, context) => {
     const { data, requestId } = JSON.parse(body)
 
     const {
-      columns, cursorpath, format = 'json', itempath, query, variables
+      columns, cursorPath, format = 'json', itemPath, query, variables
     } = data
 
     if (!['csv', 'json'].includes(format)) throw Error('invalid or missing format')
 
     const params = {
       columns,
-      cursorpath,
+      cursorPath,
       format,
-      itempath,
+      itemPath,
       query,
       variables
     }

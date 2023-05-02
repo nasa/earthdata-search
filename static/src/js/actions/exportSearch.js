@@ -58,8 +58,8 @@ export const exportSearch = (format) => (dispatch, getState) => {
     }`
 
   const searchExportParams = {
-    itempath: 'collections.items',
-    cursorpath: 'collections.cursor'
+    itemPath: 'collections.items',
+    cursorPath: 'collections.cursor'
   }
 
   if (format === 'csv') {

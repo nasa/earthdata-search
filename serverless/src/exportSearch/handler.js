@@ -84,7 +84,7 @@ const exportSearch = async (event, context) => {
     const { graphQlHost } = getEarthdataConfig(earthdataEnvironment)
 
     const {
-      columns, cursorpath, format, itempath, query, variables
+      columns, cursorPath, format, itemPath, query, variables
     } = params
 
     const graphQlUrl = `${graphQlHost}/api`
@@ -141,9 +141,9 @@ const exportSearch = async (event, context) => {
 
       const { data } = responseData
 
-      const responseCursor = get(data, cursorpath)[0]
+      const responseCursor = get(data, cursorPath)[0]
 
-      const items = get(data, itempath, { clean: true })
+      const items = get(data, itemPath, { clean: true })
 
       console.log(`Inside exportSearch Lambda, Request "${requestId}" for ${items.length} exportSearch collections successfully completed in ${elapsedTime} ms`)
 
