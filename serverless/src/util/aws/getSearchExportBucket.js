@@ -1,7 +1,6 @@
 /**
- * @name getSearchExportBucket
- * @description Returns the search export bucket name from the env variable or the hard-coded offline value
- * @return {string} the bucket name
+ * Returns the search export bucket name from the env variable or the hard-coded offline value
+ * @returns {string} the bucket name
  */
 export const getSearchExportBucket = () => {
   let bucket = process.env.searchExportBucket

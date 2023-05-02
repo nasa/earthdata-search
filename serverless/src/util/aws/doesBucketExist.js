@@ -1,5 +1,4 @@
 /**
- * @name doesBucketExist
  * @param {Object} s3 - instance of AWS.S3 from 'aws-sdk'
  * @param {String} bucketName
  * @returns {Promise<Boolean>} exists - Promise that resolves to true or false

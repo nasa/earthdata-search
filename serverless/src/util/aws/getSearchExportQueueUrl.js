@@ -1,7 +1,6 @@
 /**
- * @name getSearchExportQueueUrl
- * @description Returns the search export SQS queue url from the env variable
- * @return {string} The order processing queue URL
+ * Returns the search export SQS queue url from the env variable
+ * @returns {string} The order processing queue URL
  */
 export default function getSearchExportQueueUrl() {
   let queueUrl = process.env.searchExportQueueUrl

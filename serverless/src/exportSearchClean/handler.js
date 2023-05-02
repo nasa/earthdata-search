@@ -1,8 +1,7 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 
 /**
- * @name exportSearchClean
- * @description Delete all rows for exports older than 30 days.  Policy automatically will delete objects from S3 bucket.
+ * Delete all rows for exports older than 30 days.  Policy automatically will delete objects from S3 bucket.
  */
 const exportSearchClean = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js

@@ -1,9 +1,7 @@
 /**
- * @name sleep
+ * sleep for the given number of seconds
  * @param {number} seconds - time in seconds
- * @return Promise<undefined>
- * @description sleep for the given number of seconds
- * @example await sleep(5) // sleep for 5 seconds
+ * @returns Promise<undefined>
 */
 export default function sleep(seconds) {
   const ms = seconds * 1000
