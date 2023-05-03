@@ -11,7 +11,6 @@ import { getSearchExportBucket } from '../util/aws/getSearchExportBucket'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEchoToken } from '../util/urs/getEchoToken'
 import retry from '../util/retry'
-import sleep from '../util/sleep'
 import { jsonToCsv } from '../util/jsonToCsv'
 import { wrapAxios } from '../util/wrapAxios'
 
@@ -116,12 +115,6 @@ const exportSearch = async (event, context) => {
         },
         headers: requestHeaders
       }
-
-      // sleep 2 seconds before each request except the first
-      // so as not to over-load cmr-graphql
-
-      // eslint-disable-next-line no-await-in-loop
-      if (returnItems.length > 0) await sleep(2)
 
       try {
         // eslint-disable-next-line no-await-in-loop
