@@ -88,12 +88,12 @@ const exportSearchRequest = async (event, context) => {
     })
 
     const searchExportQueueUrl = getSearchExportQueueUrl()
-    console.log('searchExportQueueUrl:', JSON.stringify(searchExportQueueUrl))
 
     await sqs.sendMessage({
       QueueUrl: searchExportQueueUrl,
       MessageBody: messageBody
     }).promise()
+    console.log(`Lambda exportSearchRequest (requestId=${requestId}) posted to searchExportQueue: ${JSON.stringify(searchExportQueueUrl)}`)
 
     return {
       isBase64Encoded: false,
