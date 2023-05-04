@@ -63,7 +63,7 @@ const exportSearchRequest = async (event, context) => {
 
     const key = uuidv4()
 
-    const filename = `search_results_export_${key.split('-')[0]}.${format}`
+    const filename = `search_results_export.${format}`
 
     const extra = {
       earthdataEnvironment,

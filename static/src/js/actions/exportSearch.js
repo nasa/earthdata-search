@@ -144,7 +144,6 @@ export const exportSearch = (format) => (dispatch, getState) => {
         const link = document.createElement('a')
 
         link.href = signedUrl
-        link.setAttribute('download', `edsc_collection_results_export.${format}`)
 
         // Add the link to the page
         document.body.appendChild(link)
