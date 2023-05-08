@@ -69,7 +69,7 @@ const exportSearch = async (event, context) => {
 
     if (matches.length !== 1) {
       await updateState('FAILED')
-      throw Error(`expected only one row to match key "${key}", but instead saw ${matches.length} matches`)
+      throw Error(`Expected only one row to match key "${key}", but instead saw ${matches.length} matches`)
     }
 
     await updateState('PROCESSING')
@@ -170,7 +170,7 @@ const exportSearch = async (event, context) => {
       returnBody = jsonToCsv(returnItems, columns)
       contentType = 'text/csv'
     } else {
-      throw new Error('invalid format')
+      throw new Error('Invalid export format')
     }
 
     s3 ??= new AWS.S3(getS3Config())
@@ -179,7 +179,7 @@ const exportSearch = async (event, context) => {
 
     if (!(await doesBucketExist(s3, searchExportBucket))) {
       await updateState('FAILED')
-      throw Error(`bucket with name "${searchExportBucket}" does not exist`)
+      throw Error(`Bucket with name "${searchExportBucket}" does not exist`)
     }
 
     await s3.upload({

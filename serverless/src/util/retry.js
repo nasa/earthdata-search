@@ -19,5 +19,5 @@ export default async function retry(func, { attempts = 3, backoff = 5 }) {
       else await sleep(backoff ** (i + 1)) // eslint-disable-line no-await-in-loop
     }
   }
-  throw Error('failed retry')
+  throw Error('Retry failed')
 }

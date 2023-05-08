@@ -46,7 +46,7 @@ const exportSearchCheck = async (event, context) => {
   const userId = jwt ? getVerifiedJwtToken(jwt, earthdataEnvironment).id : undefined
 
   // adding a little extra validation
-  if (body.length > 1000) throw Error('body is too long')
+  if (body.length > 1000) throw Error('Body is too long')
 
   const { requestId, data } = JSON.parse(body)
 
