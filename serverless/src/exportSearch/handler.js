@@ -51,10 +51,16 @@ const exportSearch = async (event, context) => {
     const { extra, params } = JSON.parse(body)
 
     const {
-      earthdataEnvironment, filename, key, jwt, requestId, userId
+      earthdataEnvironment,
+      filename,
+      key,
+      jwt,
+      requestId,
+      userId
     } = extra
-    if (!filename) throw new Error('missing filename')
-    if (!key) throw new Error('missing key')
+
+    if (!filename) throw new Error('SQS Message body missing extra.filename')
+    if (!key) throw new Error('SQS Message body missing extra.key')
     console.log(`Lambda exportSearch creating export with filename="${filename}" key="${key}" requestId="${requestId}" userId="${userId || 'anonymous'}"`)
 
     const updateState = (state) => dbConnection('exports').where({ key }).update({ state })
