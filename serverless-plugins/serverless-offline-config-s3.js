@@ -39,9 +39,7 @@ class ServerlessOfflineConfigS3 {
 
       const bucketNames = Buckets.map(({ Name }) => Name)
 
-      for (let i = 0; i < this.buckets.length; i += 1) {
-        const bucketName = this.buckets[i]
-
+      const promises = this.buckets.map(async (bucketName) => {
         if (!bucketNames.includes(bucketName)) {
           const createBucketOptions = {
             Bucket: bucketName
@@ -55,16 +53,17 @@ class ServerlessOfflineConfigS3 {
             LocationConstraint: typeof this.region === 'string' && this.region !== 'us-east-1' ? this.region : ''
           }
           try {
-            // eslint-disable-next-line no-await-in-loop
             await s3.createBucket(createBucketOptions).promise()
-            console.log('created bucket:', bucketName)
           } catch (error) {
-            console.error('failed to create bucket:', bucketName)
+            console.error('Failed to create bucket:', bucketName)
             console.error(error)
             throw error
           }
         }
-      }
+      })
+
+      // wait for all buckets to be created
+      await Promise.all(promises)
     } catch (error) {
       if (error.code === 'UnknownEndpoint') {
         console.error('please run: npm run s3')
