@@ -99,8 +99,8 @@ export const exportSearch = (format) => (dispatch, getState) => {
     }
   }, format, searchExportParams)
     .then(async (response) => {
-      // key is a random uuid for this specific export request
-      // we use it to poll the status of the export later
+      // Key is a random uuid for this specific export request.
+      // We use it to poll the status of the export later.
       const { key } = response.data
       if (!key) throw Error('Server did not respond with a uuid for the export request, which we need in order to find the download')
 
