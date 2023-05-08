@@ -66,6 +66,7 @@ const exportSearch = async (event, context) => {
     const updateState = (state) => dbConnection('exports').where({ key }).update({ state })
 
     const matches = await dbConnection('exports').where({ key })
+
     if (matches.length !== 1) {
       await updateState('FAILED')
       throw Error(`expected only one row to match key "${key}", but instead saw ${matches.length} matches`)
