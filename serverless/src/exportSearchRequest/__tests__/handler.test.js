@@ -122,7 +122,7 @@ describe('exportSearch', () => {
       },
       extra: {
         earthdataEnvironment: 'prod',
-        filename: 'search_results_export_00000000.csv',
+        filename: 'search_results_export.csv',
         jwt: 'mockJwt',
         key: MOCK_UUID,
         requestId: 'asdf-1234-qwer-5678',
@@ -172,7 +172,7 @@ describe('exportSearch', () => {
       },
       extra: {
         earthdataEnvironment: 'prod',
-        filename: 'search_results_export_00000000.json',
+        filename: 'search_results_export.json',
         jwt: 'mockJwt',
         key: MOCK_UUID,
         requestId: 'asdf-1234-qwer-5678',
