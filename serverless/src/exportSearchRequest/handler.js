@@ -14,7 +14,7 @@ import { parseError } from '../../../sharedUtils/parseError'
 let sqs
 
 /**
- * @description Request an export from cmr-graphql
+ * Request an export from cmr-graphql
  * @param {Object} event Details about the HTTP request that it received
  */
 const exportSearchRequest = async (event, context) => {
