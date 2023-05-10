@@ -2,7 +2,7 @@ import { get } from 'sendero'
 import { unparse } from 'papaparse'
 
 /**
- * converts an array of JSON objects to a CSV
+ * Converts an array of JSON objects to a CSV
  * @param {Array} jsonArray - array of JSON objects
  * @param {Array} columns - array of column objects with name and dot path to value, such as [{ name: "Platform", path: "platforms.shortName" }, ...]
  * @returns {String} csv
