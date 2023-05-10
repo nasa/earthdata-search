@@ -22,7 +22,8 @@ jest.mock('aws-sdk', () => {
     headObject: jest.fn(() => ({
       promise: jest.fn().mockResolvedValue(true)
     })),
-    // jest.fn().mockResolvedValue(MOCK_SIGNED_URL) returns Promise { undefined }
+    // We don't do jest.fn().mockResolvedValue(MOCK_SIGNED_URL),
+    // because it returns a Promise that resolves to undefined
     getSignedUrlPromise: jest.fn(() => Promise.resolve(MOCK_SIGNED_URL))
   }
   return {
