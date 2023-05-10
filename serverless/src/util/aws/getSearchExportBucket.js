@@ -6,7 +6,7 @@ export const getSearchExportBucket = () => {
   let bucket = process.env.searchExportBucket
 
   if (process.env.IS_OFFLINE) {
-    // If we are running locally offline, this is the queueUrl
+    // If running locally, set a default bucket
     bucket = 'earthdata-search-dev-SearchExportBucket'
   }
 
