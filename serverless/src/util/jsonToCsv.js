@@ -21,7 +21,5 @@ export const jsonToCsv = (jsonArray, columns) => {
     columns: columns.map(({ name }) => name)
   }
 
-  // adding line break at end to ensure backwards compatability
-  // but may remove it in the future
   return `${unparse(data, config)}\r\n`
 }
