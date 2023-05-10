@@ -6,7 +6,7 @@ export default function getSearchExportS3Endpoint() {
   let endpoint = process.env.searchExportS3Endpoint
 
   if (process.env.IS_OFFLINE) {
-    // if we are running locally offline, this is the local S3-compatible endpoint
+    // If running locally, this is the local S3-compatible endpoint
     endpoint = 'http://0.0.0.0:5000'
   }
 
