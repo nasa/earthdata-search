@@ -24,6 +24,7 @@ const normalizeSizeValues = (obj) => mapValues(obj, (value) => {
  */
 export const Skeleton = ({
   className,
+  dataTestId,
   containerStyle,
   shapes,
   variant
@@ -67,6 +68,7 @@ export const Skeleton = ({
   return (
     <div
       className={classes}
+      data-testid={dataTestId}
       style={{ ...normalizedStyles }}
     >
       <div
@@ -80,11 +82,13 @@ export const Skeleton = ({
 
 Skeleton.defaultProps = {
   className: '',
+  dataTestId: undefined,
   variant: null
 }
 
 Skeleton.propTypes = {
   className: PropTypes.string,
+  dataTestId: PropTypes.string,
   containerStyle: PropTypes.shape({}).isRequired,
   shapes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   variant: PropTypes.string

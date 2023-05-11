@@ -1,17 +1,15 @@
 import React from 'react'
-import Enzyme, { mount } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-
-import Skeleton from '../../Skeleton/Skeleton'
+import {
+  render,
+  screen
+} from '@testing-library/react'
+import { act } from 'react-dom/test-utils'
+import userEvent from '@testing-library/user-event'
 import ProjectHeader from '../ProjectHeader'
+import '@testing-library/jest-dom'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps = {}) {
+const setup = (overrideProps) => {
   const props = {
-    collectionsQuery: {
-      pageNum: 1
-    },
     project: {
       collections: {
         allIds: ['collectionId1'],
@@ -34,25 +32,36 @@ function setup(overrideProps = {}) {
     onUpdateProjectName: jest.fn(),
     ...overrideProps
   }
-
-  const enzymeWrapper = mount(<ProjectHeader {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+  act(() => {
+    render(
+      <ProjectHeader {...props} />
+    )
+  })
 }
 
 describe('ProjectHeader component', () => {
   test('renders its title correctly', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find('header').length).toBe(1)
-    expect(enzymeWrapper.find('.project-header__title').find('input').props().value).toEqual('test project')
+    setup()
+
+    expect(screen.getByRole('heading', { name: /test project/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /test project/i })).toHaveTextContent('test project')
+  })
+
+  test('renders title correctly when a name value is not defined', () => {
+    const overrideProps = {
+      savedProject: {
+        name: undefined
+      }
+    }
+    setup(overrideProps)
+
+    expect(screen.getByRole('heading', { name: /untitled project/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /untitled project/i })).toHaveTextContent('Untitled Project')
   })
 
   describe('when the collections are loading', () => {
     test('renders project metadata loading state', () => {
-      const { enzymeWrapper } = setup({
+      const overrideProps = {
         project: {
           collections: {
             allIds: ['collectionId1'],
@@ -63,27 +72,33 @@ describe('ProjectHeader component', () => {
             }
           }
         }
-      })
-      expect(enzymeWrapper.find(Skeleton).length).toEqual(1)
-      expect(enzymeWrapper.find(Skeleton).prop('shapes').length).toEqual(3)
+      }
+      setup(overrideProps)
+      const skeletons = screen.queryAllByTestId('project-header__skeleton')
+      const skeleton = screen.getByTestId('project-header__skeleton')
+
+      expect(skeletons.length).toEqual(1)
+      expect(skeleton.querySelectorAll('div').length).toEqual(4) // top-level skeleton__inner div + 3 children divs
     })
   })
 
   describe('with one collection', () => {
     test('renders collection count correctly', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('.project-header__stats-item--collections').text()).toEqual('1 Collection')
+      setup()
+
+      expect(screen.getByText(/collection/i)).toHaveTextContent('1 Collection')
     })
 
     test('renders collection size correctly', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('.project-header__stats-item--size').text().indexOf('4.0 MB') > -1).toEqual(true)
+      setup()
+
+      expect(screen.getByText(/mb/i)).toHaveTextContent('4.0 MB')
     })
   })
 
   describe('with multiple collections', () => {
     test('renders collection count and size correctly', () => {
-      const { enzymeWrapper } = setup({
+      const overrideProps = {
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -109,23 +124,25 @@ describe('ProjectHeader component', () => {
             }
           }
         }
-      })
+      }
+      setup(overrideProps)
 
-      expect(enzymeWrapper.find('.project-header__stats-item--collections').text()).toEqual('2 Collections')
-      expect(enzymeWrapper.find('.project-header__stats-item--size').text().indexOf('9.0 MB') > -1).toEqual(true)
+      expect(screen.getByText(/collection/i)).toHaveTextContent('2 Collections')
+      expect(screen.getByText(/mb/i)).toHaveTextContent('9.0 MB')
     })
   })
 
   describe('with one granule', () => {
     test('renders granule count correctly', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('1 Granule')
+      setup()
+
+      expect(screen.getByText(/granule/i)).toHaveTextContent('1 Granule')
     })
   })
 
   describe('with multiple granules', () => {
     test('renders granule count correctly', () => {
-      const { enzymeWrapper } = setup({
+      const overrideProps = {
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -151,15 +168,16 @@ describe('ProjectHeader component', () => {
             }
           }
         }
-      })
+      }
+      setup(overrideProps)
 
-      expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('6 Granules')
+      expect(screen.getByText(/granules/i)).toHaveTextContent('6 Granules')
     })
   })
 
   describe('with added granules', () => {
     test('renders granule count and size correctly', () => {
-      const { enzymeWrapper } = setup({
+      const overrideProps = {
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -186,23 +204,17 @@ describe('ProjectHeader component', () => {
             }
           }
         }
-      })
+      }
+      setup(overrideProps)
 
-      expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('4 Granules')
-      expect(enzymeWrapper.find('.project-header__stats-item--size').text()).toEqual('19.0 MB') // 3 * 5MB + 1 * 4MB
+      expect(screen.getByText(/granules/i)).toHaveTextContent('4 Granules')
+      expect(screen.getByText(/mb/i)).toHaveTextContent('19.0 MB') // 3 * 5MB + 1 * 4MB
     })
   })
 
   describe('with excluded granules', () => {
     test('renders granule count and size correctly', () => {
-      const { enzymeWrapper } = setup({
-        collectionsQuery: {
-          byId: {
-            collectionId2: {
-              excludedGranuleIds: [1, 2]
-            }
-          }
-        },
+      const overrideProps = {
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -228,23 +240,17 @@ describe('ProjectHeader component', () => {
             }
           }
         }
-      })
+      }
+      setup(overrideProps)
 
-      expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('4 Granules')
-      expect(enzymeWrapper.find('.project-header__stats-item--size').text()).toEqual('19.0 MB') // 3 * 5MB + 1 * 4MB
+      expect(screen.getByText(/granules/i)).toHaveTextContent('4 Granules')
+      expect(screen.getByText(/mb/i)).toHaveTextContent('19.0 MB') // 3 * 5MB + 1 * 4MB
     })
   })
 
   describe('with excluded and removed granules', () => {
     test('renders granule count and size correctly', () => {
-      const { enzymeWrapper } = setup({
-        collectionsQuery: {
-          byId: {
-            collectionId2: {
-              excludedGranuleIds: [1]
-            }
-          }
-        },
+      const overrideProps = {
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -271,23 +277,17 @@ describe('ProjectHeader component', () => {
             }
           }
         }
-      })
+      }
+      setup(overrideProps)
 
-      expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('4 Granules')
-      expect(enzymeWrapper.find('.project-header__stats-item--size').text()).toEqual('19.0 MB') // 3 * 5MB + 1 * 4MB
+      expect(screen.getByText(/granules/i)).toHaveTextContent('4 Granules')
+      expect(screen.getByText(/mb/i)).toHaveTextContent('19.0 MB') // 3 * 5MB + 1 * 4MB
     })
   })
 
   describe('with duplicate excluded and removed granules', () => {
     test('renders granule count and size correctly', () => {
-      const { enzymeWrapper } = setup({
-        collectionsQuery: {
-          byId: {
-            collectionId2: {
-              excludedGranuleIds: [1]
-            }
-          }
-        },
+      const overrideProps = {
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -314,23 +314,17 @@ describe('ProjectHeader component', () => {
             }
           }
         }
-      })
+      }
+      setup(overrideProps)
 
-      expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('4 Granules')
-      expect(enzymeWrapper.find('.project-header__stats-item--size').text()).toEqual('19.0 MB') // 3 * 5MB + 1 * 4MB
+      expect(screen.getByText(/granules/i)).toHaveTextContent('4 Granules')
+      expect(screen.getByText(/mb/i)).toHaveTextContent('19.0 MB') // 3 * 5MB + 1 * 4MB
     })
   })
 
   describe('with multiple granule, some of which being excluded', () => {
     test('renders granule count correctly', () => {
-      const { enzymeWrapper } = setup({
-        collectionsQuery: {
-          byId: {
-            collectionId2: {
-              excludedGranuleIds: ['G10000001-EDSC', 'G10000002-EDSC']
-            }
-          }
-        },
+      const overrideProps = {
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -356,61 +350,126 @@ describe('ProjectHeader component', () => {
             }
           }
         }
-      })
+      }
+      setup(overrideProps)
 
-      expect(enzymeWrapper.find('.project-header__stats-item--granules').text()).toEqual('4 Granules')
+      expect(screen.getByText(/granules/i)).toHaveTextContent('4 Granules')
     })
   })
 
   describe('editing project name', () => {
-    test('when the state is editing the submit button is visible', () => {
-      const { enzymeWrapper } = setup()
+    test('when the state is editing the submit button is visible', async () => {
+      setup()
+      const user = userEvent.setup()
+      await user.click(screen.getByRole('textbox'))
 
-      enzymeWrapper.setState({ isEditingName: true })
-
-      expect(enzymeWrapper.find('.project-header__button--submit').length).toBe(1)
-      expect(enzymeWrapper.find('.project-header__button--edit').length).toBe(0)
+      expect(screen.queryByTestId('submit_button')).toBeInTheDocument()
+      expect(screen.queryByTestId('edit_button')).not.toBeInTheDocument()
     })
 
-    test('when the state is not editing the edit button is visible', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setState({ isEditingName: false })
-
-      expect(enzymeWrapper.find('.project-header__button--submit').length).toBe(0)
-      expect(enzymeWrapper.find('.project-header__button--edit').length).toBe(1)
+    test('when the state is not editing the edit button is visible', async () => {
+      setup()
+      expect(screen.queryByTestId('submit_button')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('edit_button')).toBeInTheDocument()
     })
 
-    test('focusing the text field sets the state to editing', () => {
-      const { enzymeWrapper } = setup()
+    test('focusing on project name and pressing enter enables editing', async () => {
+      setup()
+      const user = userEvent.setup()
 
-      const input = enzymeWrapper.find('input')
-      input.simulate('focus')
+      expect(screen.getByTestId('project-header__span')).toBeInTheDocument()
 
-      expect(enzymeWrapper.state().isEditingName).toBeTruthy()
+      screen.getByTestId('project-header__span').focus()
+      await user.keyboard('{Enter}')
+
+      expect(screen.queryByTestId('submit_button')).toBeInTheDocument()
+      expect(screen.queryByTestId('edit_button')).not.toBeInTheDocument()
     })
 
-    test('clicking the edit button sets the state to editing', () => {
-      const { enzymeWrapper } = setup()
+    test('focusing on project name and pressing a non-enter key does not enable editing', async () => {
+      setup()
+      const user = userEvent.setup()
 
-      const editButton = enzymeWrapper.find('.project-header__button--edit')
-      editButton.simulate('click')
+      expect(screen.getByTestId('project-header__span')).toBeInTheDocument()
 
-      expect(enzymeWrapper.state().isEditingName).toBeTruthy()
+      screen.getByTestId('project-header__span').focus()
+      await user.keyboard('{a}')
+
+      expect(screen.queryByTestId('submit_button')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('edit_button')).toBeInTheDocument()
     })
 
-    test('clicking the submit button calls onUpdateProjectName', () => {
-      const { enzymeWrapper, props } = setup()
+    test('clicking on the project name enables editing', async () => {
+      setup()
+      const user = userEvent.setup()
 
-      const editButton = enzymeWrapper.find('.project-header__button--edit')
-      editButton.simulate('click')
+      expect(screen.queryByTestId('submit_button')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('edit_button')).toBeInTheDocument()
 
-      const submitButton = enzymeWrapper.find('.project-header__button--submit')
-      submitButton.simulate('click')
+      await user.click(screen.getByRole('button', { name: /test project/i }))
 
-      expect(enzymeWrapper.state().isEditingName).toBeFalsy()
-      expect(props.onUpdateProjectName).toBeCalledTimes(1)
-      expect(props.onUpdateProjectName).toBeCalledWith('test project')
+      expect(screen.getByRole('button', { name: /test project/i })).toHaveClass('project-header__text-wrap')
+      expect(screen.queryByTestId('submit_button')).toBeInTheDocument()
+      expect(screen.queryByTestId('edit_button')).not.toBeInTheDocument()
+
+      await user.keyboard('{Enter}')
+
+      expect(screen.queryByTestId('submit_button')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('edit_button')).toBeInTheDocument()
+    })
+
+    test('editing the text field changes the project name', async () => {
+      setup()
+      const user = userEvent.setup()
+      const textbox = screen.getByRole('textbox')
+      await user.click(textbox)
+
+      expect(textbox.value).toBe('test project')
+
+      await user.clear(textbox)
+      await user.keyboard('{a}')
+
+      expect(textbox.value).toBe('a')
+    })
+
+    test('clicking the edit button enables editing in the text field', async () => {
+      setup()
+      const user = userEvent.setup()
+      await user.click(screen.getByTestId('edit_button'))
+      const textbox = screen.getByRole('textbox')
+
+      expect(textbox.value).toBe('test project')
+
+      // user is editing the textbox value after clicking edit button
+      await user.keyboard('{a}')
+
+      expect(textbox.value).toBe('test projecta')
+    })
+
+    test('clicking the submit button calls onUpdateProjectName', async () => {
+      const overrideProps = {
+        onUpdateProjectName: jest.fn()
+      }
+      setup(overrideProps)
+      const user = userEvent.setup()
+      await user.click(screen.queryByTestId('edit_button'))
+      await user.click(screen.queryByTestId('submit_button'))
+
+      expect(overrideProps.onUpdateProjectName).toBeCalledTimes(1)
+      expect(overrideProps.onUpdateProjectName).toBeCalledWith('test project')
+    })
+
+    test('pressing enter while editing calls onUpdateProjectName', async () => {
+      const overrideProps = {
+        onUpdateProjectName: jest.fn()
+      }
+      setup(overrideProps)
+      const user = userEvent.setup()
+      await user.click(screen.queryByTestId('edit_button'))
+      await user.keyboard('{Enter}')
+
+      expect(overrideProps.onUpdateProjectName).toBeCalledTimes(1)
+      expect(overrideProps.onUpdateProjectName).toBeCalledWith('test project')
     })
   })
 })
