@@ -22,7 +22,6 @@
     "build-sit": "NODE_ENV=production webpack --mode production",
     "copy-secrets": "cp secret.config.json.example secret.config.json",
     "migrate": "node-pg-migrate",
-    "sls": "serverless offline",
     "start": "NODE_ENV=development webpack-dev-server --open --config static.webpack.config.dev.js",
     "offline": "serverless offline start",
     "offline:with-export": "S3=true SQS=true npm run offline",

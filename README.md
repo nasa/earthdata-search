@@ -148,7 +148,7 @@ This will provide access to API Gateway at [http://localhost:3001](http://localh
 
 Additionally, this ties in with the `serverless webpack` plugin which will ensure that your lambdas are re-built when changes are detected.
 
-Running the following command will enable integration with local AWS services: `S3=true SQS=true npm run sls`
+Running the following command will enable integration with local AWS services: `npm run offline:with-export`
 
 ### Run the Automated [Jest](https://jestjs.io/) tests
 
