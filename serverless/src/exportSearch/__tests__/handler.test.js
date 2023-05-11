@@ -86,10 +86,6 @@ afterEach(async () => {
   dbTracker.uninstall()
 })
 
-afterAll(() => {
-  jest.clearAllMocks()
-})
-
 describe('exportSearch', () => {
   test('returns csv response correctly', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
