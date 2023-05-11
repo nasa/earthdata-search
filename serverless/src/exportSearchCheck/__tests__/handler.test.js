@@ -83,10 +83,6 @@ afterEach(async () => {
   dbTracker.uninstall()
 })
 
-afterAll(() => {
-  jest.clearAllMocks()
-})
-
 describe('exportSearchCheck', () => {
   test('returns requested response correctly', async () => {
     const MOCK_USER_ID = 1234
