@@ -197,7 +197,7 @@ const exportSearch = async (event, context) => {
 
     await updateState('DONE')
   } catch (error) {
-    console.error('\n\n\nThe following error was thrown in exportSearch Lambda:', error)
+    console.error('The following error was thrown in exportSearch Lambda:', error)
   }
 }
 
