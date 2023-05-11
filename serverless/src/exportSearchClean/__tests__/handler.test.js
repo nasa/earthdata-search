@@ -53,10 +53,6 @@ afterEach(async () => {
   dbTracker.uninstall()
 })
 
-afterAll(() => {
-  jest.clearAllMocks()
-})
-
 describe('exportSearchClean', () => {
   test('cleans old exports from database', async () => {
     dbTracker.on('query', (query) => {
