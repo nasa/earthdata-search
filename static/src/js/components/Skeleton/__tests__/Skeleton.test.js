@@ -58,6 +58,7 @@ function setup(options) {
 
   const props = {
     className: 'test-class',
+    dataTestId: 'test-id',
     containerStyle: testStyles,
     shapes: testSkeleton
   }
@@ -75,6 +76,7 @@ describe('Skeleton component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.type()).toBe('div')
+    expect(enzymeWrapper.find({ 'data-testid': 'test-id' })).toBeTruthy()
     expect(enzymeWrapper.hasClass('skeleton')).toBe(true)
     expect(enzymeWrapper.hasClass('test-class')).toBe(true)
   })

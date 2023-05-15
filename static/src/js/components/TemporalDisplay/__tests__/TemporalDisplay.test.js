@@ -1,174 +1,172 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import moment from 'moment'
-import FilterStackItem from '../../FilterStack/FilterStackItem'
-import FilterStackContents from '../../FilterStack/FilterStackContents'
+import {
+  render,
+  screen
+} from '@testing-library/react'
+import { act } from 'react-dom/test-utils'
+import userEvent from '@testing-library/user-event'
+
 import TemporalDisplay from '../TemporalDisplay'
+import '@testing-library/jest-dom'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const { temporalSearch = {} } = overrideProps || {}
-
+const setup = (overrideProps) => {
   const props = {
     onRemoveTimelineFilter: jest.fn(),
     temporalSearch: {
-      isRecurring: false,
-      ...temporalSearch
-    }
+      endDate: '',
+      startDate: '',
+      isRecurring: false
+    },
+    ...overrideProps
   }
-
-  const enzymeWrapper = shallow(<TemporalDisplay {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+  act(() => {
+    render(
+      <TemporalDisplay {...props} />
+    )
+  })
 }
 
 describe('TemporalDisplay component', () => {
   test('with no props should render self without display', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.html()).toBe(null)
+    expect(screen.queryByRole('heading', { name: /temporal/i })).not.toBeInTheDocument()
   })
 
   test('with only a start date should render the start date', () => {
-    const { enzymeWrapper } = setup({
+    const overrideProps = {
       temporalSearch: {
-        startDate: '2019-03-30T00:00:00.000Z'
+        endDate: '',
+        startDate: '2019-03-30T00:00:00.000Z',
+        isRecurring: false
       }
-    })
+    }
+    setup(overrideProps)
 
-    const filterStackItem = enzymeWrapper.find(FilterStackItem)
-    const filterStackContents = enzymeWrapper.find(FilterStackContents)
-
-    expect(filterStackItem.length).toBe(1)
-    expect(filterStackContents.length).toBe(3)
-    expect(filterStackContents.at(0).prop('title')).toBe('Start')
-    expect(filterStackContents.at(0).prop('body').props.type).toBe('start')
-    expect(filterStackContents.at(0).prop('body').props.startDate).toEqual(moment.utc('2019-03-30T00:00:00.000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
-    expect(filterStackContents.at(1).prop('title')).toBe('Stop')
-    expect(filterStackContents.at(1).prop('body')).toBe(null)
+    expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
+    expect(screen.getByTitle('Temporal')).toHaveTextContent('Temporal')
+    expect(screen.getByText(/start:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-03-30 00:00:00/i)).toBeInTheDocument()
+    expect(screen.queryByText(/stop:/i)).not.toBeInTheDocument()
   })
 
   test('with only a end date should render the end date', () => {
-    const { enzymeWrapper } = setup({
-      temporalSearch: {
-        endDate: '2019-05-30T00:00:00.000Z'
-      }
-    })
-
-    const filterStackItem = enzymeWrapper.find(FilterStackItem)
-    const filterStackContents = enzymeWrapper.find(FilterStackContents)
-
-    expect(filterStackItem.length).toBe(1)
-    expect(filterStackContents.length).toBe(3)
-    expect(filterStackContents.at(0).prop('title')).toBe('Start')
-    expect(filterStackContents.at(0).prop('body')).toBe(null)
-    expect(filterStackContents.at(1).prop('title')).toBe('Stop')
-    expect(filterStackContents.at(1).prop('body').props.type).toBe('end')
-    expect(filterStackContents.at(1).prop('body').props.endDate).toEqual(moment.utc('2019-05-30T00:00:00.000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
-  })
-
-  test('with both start and end date should render the both start and end date', () => {
-    const { enzymeWrapper } = setup({
+    const overrideProps = {
+      onRemoveTimelineFilter: jest.fn(),
       temporalSearch: {
         endDate: '2019-05-30T00:00:00.000Z',
-        startDate: '2019-03-30T00:00:00.000Z'
+        startDate: '',
+        isRecurring: false
       }
-    })
+    }
+    setup(overrideProps)
 
-    const filterStackItem = enzymeWrapper.find(FilterStackItem)
-    const filterStackContents = enzymeWrapper.find(FilterStackContents)
+    expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
+    expect(screen.getByTitle('Temporal')).toHaveTextContent('Temporal')
+    expect(screen.getByText(/stop:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-05-30 00:00:00/i)).toBeInTheDocument()
+    expect(screen.queryByText(/start:/i)).not.toBeInTheDocument()
+  })
 
-    expect(filterStackItem.length).toBe(1)
-    expect(filterStackContents.length).toBe(3)
-    expect(filterStackContents.at(0).prop('title')).toBe('Start')
-    expect(filterStackContents.at(0).prop('body').props.type).toBe('start')
-    expect(filterStackContents.at(0).prop('body').props.startDate).toEqual(moment.utc('2019-03-30T00:00:00.000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
-    expect(filterStackContents.at(1).prop('title')).toBe('Stop')
-    expect(filterStackContents.at(1).prop('body').props.type).toBe('end')
-    expect(filterStackContents.at(1).prop('body').props.endDate).toEqual(moment.utc('2019-05-30T00:00:00.000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
+  test('with start date, end date, and isRecurring should render all', () => {
+    const overrideProps = {
+      onRemoveTimelineFilter: jest.fn(),
+      temporalSearch: {
+        endDate: '2019-05-30T00:00:00.000Z',
+        startDate: '2019-03-30T00:00:00.000Z',
+        isRecurring: true
+      }
+    }
+    setup(overrideProps)
+
+    expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
+    expect(screen.getByTitle('Temporal')).toHaveTextContent('Temporal')
+    expect(screen.getByText(/start:/i)).toBeInTheDocument()
+    expect(screen.getByText(/03-30 00:00:00/i)).toBeInTheDocument()
+    expect(screen.getByText(/stop:/i)).toBeInTheDocument()
+    expect(screen.getByText(/05-30 00:00:00/i)).toBeInTheDocument()
+    expect(screen.getByText(/range:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019 - 2019/i)).toBeInTheDocument()
   })
 
   test('with the same props should not rerender', () => {
-    const { enzymeWrapper } = setup({
+    const props = {
+      onRemoveTimelineFilter: jest.fn(),
       temporalSearch: {
         endDate: '2019-05-30T00:00:00.000Z',
-        startDate: '2019-03-30T00:00:00.000Z'
+        startDate: '2019-03-30T00:00:00.000Z',
+        isRecurring: false
       }
-    })
+    }
 
-    const filterStackItem = enzymeWrapper.find(FilterStackItem)
-    const filterStackContents = enzymeWrapper.find(FilterStackContents)
+    const { rerender } = render(
+      <TemporalDisplay {...props} />
+    )
 
-    expect(filterStackItem.length).toBe(1)
-    expect(filterStackContents.length).toBe(3)
-    expect(filterStackContents.at(0).prop('title')).toBe('Start')
-    expect(filterStackContents.at(0).prop('body').props.type).toBe('start')
-    expect(filterStackContents.at(0).prop('body').props.startDate).toEqual(moment.utc('2019-03-30T00:00:00.000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
-    expect(filterStackContents.at(1).prop('title')).toBe('Stop')
-    expect(filterStackContents.at(1).prop('body').props.type).toBe('end')
-    expect(filterStackContents.at(1).prop('body').props.endDate).toEqual(moment.utc('2019-05-30T00:00:00.000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
+    expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
+    expect(screen.getByTitle('Temporal')).toHaveTextContent('Temporal')
+    expect(screen.getByText(/start:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-03-30 00:00:00/i)).toBeInTheDocument()
+    expect(screen.getByText(/stop:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-05-30 00:00:00/i)).toBeInTheDocument()
 
-    enzymeWrapper.setProps({
-      temporalSearch: {
-        isRecurring: false,
-        endDate: '2019-05-30T00:00:00.000Z',
-        startDate: '2019-03-30T00:00:00.000Z'
-      }
-    })
+    rerender(<TemporalDisplay {...props} />)
 
-    expect(filterStackItem.length).toBe(1)
-    expect(filterStackContents.length).toBe(3)
-    expect(filterStackContents.at(0).prop('title')).toBe('Start')
-    expect(filterStackContents.at(0).prop('body').props.type).toBe('start')
-    expect(filterStackContents.at(0).prop('body').props.startDate).toEqual(moment.utc('2019-03-30T00:00:00.000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
-    expect(filterStackContents.at(1).prop('title')).toBe('Stop')
-    expect(filterStackContents.at(1).prop('body').props.type).toBe('end')
-    expect(filterStackContents.at(1).prop('body').props.endDate).toEqual(moment.utc('2019-05-30T00:00:00.000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
+    expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
+    expect(screen.getByTitle('Temporal')).toHaveTextContent('Temporal')
+    expect(screen.getByText(/start:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-03-30 00:00:00/i)).toBeInTheDocument()
+    expect(screen.getByText(/stop:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-05-30 00:00:00/i)).toBeInTheDocument()
   })
 
   test('with new props should rerender', () => {
-    const { enzymeWrapper } = setup({
+    const props = {
+      onRemoveTimelineFilter: jest.fn(),
       temporalSearch: {
         endDate: '2019-05-30T00:00:00.000Z',
-        startDate: '2019-03-30T00:00:00.000Z'
+        startDate: '2019-03-30T00:00:00.000Z',
+        isRecurring: false
       }
-    })
+    }
 
-    const filterStackItem = enzymeWrapper.find(FilterStackItem)
-    const filterStackContents = enzymeWrapper.find(FilterStackContents)
+    const { rerender } = render(
+      <TemporalDisplay {...props} />
+    )
 
-    expect(filterStackItem.length).toBe(1)
-    expect(filterStackContents.length).toBe(3)
-    expect(filterStackContents.at(0).prop('title')).toBe('Start')
-    expect(filterStackContents.at(0).prop('body').props.type).toBe('start')
-    expect(filterStackContents.at(0).prop('body').props.startDate).toEqual(moment.utc('2019-03-30T00:00:00.000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
-    expect(filterStackContents.at(1).prop('title')).toBe('Stop')
-    expect(filterStackContents.at(1).prop('body').props.type).toBe('end')
-    expect(filterStackContents.at(1).prop('body').props.endDate).toEqual(moment.utc('2019-05-30T00:00:00.000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
-
-    enzymeWrapper.setProps({
+    const newProps = {
+      onRemoveTimelineFilter: jest.fn(),
       temporalSearch: {
         isRecurring: false,
         endDate: '2019-05-29T00:00:00.000Z',
         startDate: '2019-03-29T00:00:00.000Z'
       }
-    })
+    }
 
-    const secondfilterStackItem = enzymeWrapper.find(FilterStackItem)
-    const secondfilterStackContents = enzymeWrapper.find(FilterStackContents)
+    rerender(<TemporalDisplay {...newProps} />)
 
-    expect(secondfilterStackItem.length).toBe(1)
-    expect(secondfilterStackContents.length).toBe(3)
-    expect(secondfilterStackContents.at(0).prop('title')).toBe('Start')
-    expect(secondfilterStackContents.at(0).prop('body').props.type).toBe('start')
-    expect(secondfilterStackContents.at(0).prop('body').props.startDate).toEqual(moment.utc('2019-03-29T00:00:00.000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
-    expect(secondfilterStackContents.at(1).prop('title')).toBe('Stop')
-    expect(secondfilterStackContents.at(1).prop('body').props.type).toBe('end')
-    expect(secondfilterStackContents.at(1).prop('body').props.endDate).toEqual(moment.utc('2019-05-29T00:00:00.000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
+    expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
+    expect(screen.getByTitle('Temporal')).toHaveTextContent('Temporal')
+    expect(screen.getByText(/start:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-03-29 00:00:00/i)).toBeInTheDocument()
+    expect(screen.getByText(/stop:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-05-29 00:00:00/i)).toBeInTheDocument()
+  })
+
+  test('clicking remove calls onTimelineRemove', async () => {
+    const overrideProps = {
+      onRemoveTimelineFilter: jest.fn(),
+      temporalSearch: {
+        endDate: '2019-05-30T00:00:00.000Z',
+        startDate: '2019-03-30T00:00:00.000Z',
+        isRecurring: false
+      }
+    }
+    setup(overrideProps)
+    const user = userEvent.setup()
+    const remove = screen.getByRole('button', { name: /remove temporal filter/i })
+    await user.click(remove)
+
+    expect(overrideProps.onRemoveTimelineFilter).toBeCalledTimes(1)
   })
 })
