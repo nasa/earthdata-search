@@ -1,13 +1,11 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { render } from '@testing-library/react'
+import { act } from 'react-dom/test-utils'
 import * as tinyCookie from 'tiny-cookie'
 
 import { AuthCallbackContainer, mapStateToProps } from '../AuthCallbackContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
+const setup = (overrideProps) => {
   const props = {
     location: {
       search: '?jwt=mockjwttoken&redirect=http%3A%2F%2Flocalhost%3A8080%2Fsearch'
@@ -15,18 +13,12 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<AuthCallbackContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+  act(() => {
+    render(
+      <AuthCallbackContainer {...props} />
+    )
+  })
 }
-
-beforeEach(() => {
-  jest.restoreAllMocks()
-  jest.clearAllMocks()
-})
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {

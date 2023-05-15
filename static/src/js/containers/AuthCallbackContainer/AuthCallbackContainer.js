@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { memo } from 'react'
 import { set } from 'tiny-cookie'
 import { connect } from 'react-redux'
 import { parse } from 'qs'
@@ -15,31 +15,27 @@ export const mapStateToProps = (state) => ({
  * the user to the correct location based on where they were trying to get before logging
  * in.
  */
-export class AuthCallbackContainer extends Component {
-  UNSAFE_componentWillMount() {
-    // Pull the jwt and redirect params out of the URL
-    const { location } = this.props
-    const { search } = location
+export const AuthCallbackContainer = memo(({
+  location
+}) => {
+  const { search } = location
 
-    const params = parse(search, { ignoreQueryPrefix: true })
-    const {
-      jwt = '',
-      redirect = '/'
-    } = params
+  const params = parse(search, { ignoreQueryPrefix: true })
+  const {
+    jwt = '',
+    redirect = '/'
+  } = params
 
-    // Set the authToken cookie
-    set('authToken', jwt)
+  // Set the authToken cookie
+  set('authToken', jwt)
 
-    // Redirect the user to the correct location
-    window.location.replace(redirect)
-  }
+  // Redirect the user to the correct location
+  window.location.replace(redirect)
 
-  render() {
-    return (
-      <div className="route-wrapper" />
-    )
-  }
-}
+  return (
+    <div className="route-wrapper" />
+  )
+})
 
 AuthCallbackContainer.propTypes = {
   location: locationPropType.isRequired

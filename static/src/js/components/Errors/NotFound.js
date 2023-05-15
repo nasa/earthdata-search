@@ -1,59 +1,57 @@
-import React, { Component } from 'react'
+import React, { memo, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import { eventEmitter } from '../../events/events'
 import LoggerRequest from '../../util/request/loggerRequest'
 import { locationPropType } from '../../util/propTypes/location'
 
-class NotFound extends Component {
-  UNSAFE_componentWillMount() {
+export const NotFound = memo(({
+  location
+}) => {
+  useEffect(() => {
     eventEmitter.emit('error.global', true)
-  }
+    return () => {
+      eventEmitter.emit('error.global', false)
+    }
+  })
 
-  componentWillUnmount() {
-    eventEmitter.emit('error.global', false)
-  }
+  const guid = uuidv4()
 
-  render() {
-    const { location } = this.props
-    const guid = uuidv4()
+  const requestObject = new LoggerRequest()
+  requestObject.log({
+    error: {
+      guid,
+      message: '404 Not Found',
+      location
+    }
+  })
 
-    const requestObject = new LoggerRequest()
-    requestObject.log({
-      error: {
-        guid,
-        message: '404 Not Found',
-        location
-      }
-    })
-
-    return (
-      <div className="wrap">
-        <h2 className="h1">Sorry! The page you were looking for does not exist.</h2>
-        <p>
-          Please refer to the ID
-          {' '}
-          <strong>
-            {guid}
-          </strong>
-          {' '}
-          when contacting
-          {' '}
-          <a href="mailto:support@earthdata.nasa.gov">Earthdata Operations</a>
-          .
-        </p>
-        <p>
-          <a href="/">Click here</a>
-          {' '}
-          to return to the home page.
-        </p>
-        <div className="earth">
-          <div className="orbit" />
-        </div>
+  return (
+    <div className="wrap">
+      <h2 className="h1">Sorry! The page you were looking for does not exist.</h2>
+      <p>
+        Please refer to the ID
+        {' '}
+        <strong>
+          {guid}
+        </strong>
+        {' '}
+        when contacting
+        {' '}
+        <a href="mailto:support@earthdata.nasa.gov">Earthdata Operations</a>
+        .
+      </p>
+      <p>
+        <a href="/">Click here</a>
+        {' '}
+        to return to the home page.
+      </p>
+      <div className="earth">
+        <div className="orbit" />
       </div>
-    )
-  }
-}
+    </div>
+  )
+})
 
 NotFound.propTypes = {
   location: locationPropType.isRequired
