@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'tiny-cookie'
 import { connect } from 'react-redux'
@@ -23,12 +23,14 @@ export const AuthTokenContainer = memo(({
   onSetUserFromJwt,
   onUpdateAuthToken
 }) => {
-  const jwtToken = get('authToken')
+  useEffect(() => {
+    const jwtToken = get('authToken')
 
-  onUpdateAuthToken(jwtToken || '')
-  onSetPreferencesFromJwt(jwtToken)
-  onSetContactInfoFromJwt(jwtToken)
-  onSetUserFromJwt(jwtToken)
+    onUpdateAuthToken(jwtToken || '')
+    onSetPreferencesFromJwt(jwtToken)
+    onSetContactInfoFromJwt(jwtToken)
+    onSetUserFromJwt(jwtToken)
+  }, [])
 
   return children
 })

@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 import { set } from 'tiny-cookie'
 import { connect } from 'react-redux'
 import { parse } from 'qs'
@@ -18,19 +18,21 @@ export const mapStateToProps = (state) => ({
 export const AuthCallbackContainer = memo(({
   location
 }) => {
-  const { search } = location
+  useEffect(() => {
+    const { search } = location
 
-  const params = parse(search, { ignoreQueryPrefix: true })
-  const {
-    jwt = '',
-    redirect = '/'
-  } = params
+    const params = parse(search, { ignoreQueryPrefix: true })
+    const {
+      jwt = '',
+      redirect = '/'
+    } = params
 
-  // Set the authToken cookie
-  set('authToken', jwt)
+    // Set the authToken cookie
+    set('authToken', jwt)
 
-  // Redirect the user to the correct location
-  window.location.replace(redirect)
+    // Redirect the user to the correct location
+    window.location.replace(redirect)
+  }, [])
 
   return (
     <div className="route-wrapper" />
