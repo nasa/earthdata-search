@@ -1,15 +1,20 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import '@testing-library/jest-dom'
+import { Router } from 'react-router'
+import { Provider } from 'react-redux'
+import { createMemoryHistory } from 'history'
 
 import ChunkedOrderModal from '../ChunkedOrderModal'
-import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
+import configureStore from '../../../store/configureStore'
+
+const store = configureStore()
 
 function setup() {
   const props = {
-    isOpen: false,
+    isOpen: true,
     location: {
       search: '?p=C100005-EDSC!C100005-EDSC&pg[1][v]=t'
     },
@@ -29,85 +34,77 @@ function setup() {
     onToggleChunkedOrderModal: jest.fn()
   }
 
-  const enzymeWrapper = shallow(<ChunkedOrderModal {...props} />)
+  const history = createMemoryHistory()
+
+  render(
+    <Provider store={store}>
+      <Router history={history} location={props.location}>
+        <ChunkedOrderModal {...props} />
+      </Router>
+    </Provider>
+  )
 
   return {
-    enzymeWrapper,
-    props
+    history,
+    onSubmitRetrieval: props.onSubmitRetrieval,
+    onToggleChunkedOrderModal: props.onToggleChunkedOrderModal
   }
 }
 
 describe('ChunkedOrderModal component', () => {
-  test('should render a Modal', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find(EDSCModalContainer).length).toEqual(1)
-  })
-
   test('should render a title', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(EDSCModalContainer).prop('title')).toEqual('Per-order Granule Limit Exceeded')
+    expect(screen.getByTestId('edsc-modal__title')).toHaveTextContent('Per-order Granule Limit Exceeded')
   })
 
   test('should render instructions', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    const message = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[0].props.children.join('')
-
-    expect(message).toEqual('Orders for data containing more than 2,000 granules will be split into multiple orders. You will receive a set of emails for each order placed.')
+    expect(screen.getByTestId('chunked_order_message-0')).toHaveTextContent('The collection collection title contains 9,001 granules which exceeds the 2,000 granule limit configured by the provider. When submitted, the order will automatically be split into 5 orders.')
   })
 
-  test.skip('should render collection specific instructions', () => {
-    const { enzymeWrapper } = setup()
-    // TODO this doesn't display the actually information, just [object Object]
-    console.log('🚀 ~ file: ChunkedOrderModal.test.js:57 ~ test ~ enzymeWrapper.find(EDSCModalContainer).prop().props:', enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1][0].props.children.join(''))
+  test('should render a \'Refine your search\' link that keeps the project params intact and removes the focused collection', async () => {
+    const user = userEvent.setup()
+    const { history } = setup()
 
-    const message = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1].props.children.join('')
-    console.log('🚀 ~ file: ChunkedOrderModal.test.js:65 ~ test ~ message:', message)
+    await user.click(screen.getByRole('button', { name: 'Refine your search' }))
 
-    expect(message).toEqual('Orders for data containing more than 2,000 granules will be split into multiple orders. You will receive a set of emails for each order placed.')
-  })
-
-  test('should render a \'Refine your search\' link that keeps the project params intact and removes the focused collection', () => {
-    const { enzymeWrapper } = setup()
-
-    const { to } = enzymeWrapper.find(EDSCModalContainer).prop('footerMeta').props
-
-    expect(to).toEqual({
-      pathname: '/search',
-      search: '?p=!C100005-EDSC&pg[1][v]=t'
-    })
+    expect(history.location.pathname).toEqual('/search')
+    expect(decodeURIComponent(history.location.search)).toContain('?p=!C100005-EDSC&pg[1][v]=t')
   })
 
   describe('modal actions', () => {
-    test('\'Refine your search\' button should trigger onToggleChunkedOrderModal', () => {
-      const { enzymeWrapper, props } = setup()
+    test('\'Refine your search\' button should trigger onToggleChunkedOrderModal', async () => {
+      const user = userEvent.setup()
+      const { onToggleChunkedOrderModal } = setup()
 
-      enzymeWrapper.find(EDSCModalContainer).prop('footerMeta').props.onClick()
+      await user.click(screen.getByRole('button', { name: 'Refine your search' }))
 
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
+      expect(onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
+      expect(onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
     })
 
-    test('\'Change access method\' button should trigger onToggleChunkedOrderModal', () => {
-      const { enzymeWrapper, props } = setup()
+    test('\'Change access methods\' button should trigger onToggleChunkedOrderModal', async () => {
+      const user = userEvent.setup()
+      const { onToggleChunkedOrderModal } = setup()
 
-      enzymeWrapper.find(EDSCModalContainer).prop('onSecondaryAction')()
+      await user.click(screen.getByRole('button', { name: 'Change access methods' }))
 
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
+      expect(onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
+      expect(onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
     })
 
-    test('\'Continue\' button should trigger onToggleChunkedOrderModal', () => {
-      const { enzymeWrapper, props } = setup()
+    test('\'Continue\' button should trigger onToggleChunkedOrderModal', async () => {
+      const user = userEvent.setup()
+      const { onSubmitRetrieval, onToggleChunkedOrderModal } = setup()
 
-      enzymeWrapper.find(EDSCModalContainer).prop('onPrimaryAction')()
+      await user.click(screen.getByRole('button', { name: 'Continue' }))
 
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
+      expect(onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
+      expect(onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
 
-      expect(props.onSubmitRetrieval).toHaveBeenCalledTimes(1)
+      expect(onSubmitRetrieval).toHaveBeenCalledTimes(1)
     })
   })
 })

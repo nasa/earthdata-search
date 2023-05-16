@@ -74,6 +74,7 @@ export const EDSCModal = ({
     >
       <Modal.Title
         className="edsc-modal__title"
+        data-testid="edsc-modal__title"
       >
         {title}
       </Modal.Title>
