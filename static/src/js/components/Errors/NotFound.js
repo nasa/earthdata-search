@@ -1,11 +1,11 @@
-import React, { memo, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import { eventEmitter } from '../../events/events'
 import LoggerRequest from '../../util/request/loggerRequest'
 import { locationPropType } from '../../util/propTypes/location'
 
-export const NotFound = memo(({
+export const NotFound = ({
   location
 }) => {
   useEffect(() => {
@@ -13,7 +13,7 @@ export const NotFound = memo(({
     return () => {
       eventEmitter.emit('error.global', false)
     }
-  })
+  }, [])
 
   const guid = uuidv4()
 
@@ -51,7 +51,7 @@ export const NotFound = memo(({
       </div>
     </div>
   )
-})
+}
 
 NotFound.propTypes = {
   location: locationPropType.isRequired

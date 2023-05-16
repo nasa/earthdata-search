@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { set } from 'tiny-cookie'
 import { connect } from 'react-redux'
 import { parse } from 'qs'
@@ -15,7 +15,7 @@ export const mapStateToProps = (state) => ({
  * the user to the correct location based on where they were trying to get before logging
  * in.
  */
-export const AuthCallbackContainer = memo(({
+export const AuthCallbackContainer = ({
   location
 }) => {
   useEffect(() => {
@@ -37,7 +37,7 @@ export const AuthCallbackContainer = memo(({
   return (
     <div className="route-wrapper" />
   )
-})
+}
 
 AuthCallbackContainer.propTypes = {
   location: locationPropType.isRequired

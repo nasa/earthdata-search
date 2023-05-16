@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react'
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'tiny-cookie'
 import { connect } from 'react-redux'
@@ -16,7 +16,7 @@ export const mapDispatchToProps = (dispatch) => ({
     (token) => dispatch(actions.updateAuthToken(token))
 })
 
-export const AuthTokenContainer = memo(({
+export const AuthTokenContainer = ({
   children,
   onSetContactInfoFromJwt,
   onSetPreferencesFromJwt,
@@ -33,7 +33,7 @@ export const AuthTokenContainer = memo(({
   }, [])
 
   return children
-})
+}
 
 AuthTokenContainer.propTypes = {
   children: PropTypes.node.isRequired,
