@@ -5,7 +5,6 @@ import { FaArrowCircleLeft } from 'react-icons/fa'
 
 import { calculateGranulesPerOrder, calculateOrderCount } from '../../util/orderCount'
 import { commafy } from '../../util/commafy'
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { stringify } from '../../util/url/url'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
@@ -43,8 +42,6 @@ export class ChunkedOrderModal extends Component {
       projectCollectionsRequiringChunking
     } = this.props
 
-    const { defaultGranulesPerOrder } = getApplicationConfig()
-
     // Remove focused collection from back button params
     const params = parse(location.search, { ignoreQueryPrefix: true, parseArrays: false })
     let { p = '' } = params
@@ -70,15 +67,8 @@ export class ChunkedOrderModal extends Component {
       </PortalLinkContainer>
     )
 
-    // TODO this message needs to represent either defaultGranulesPerOrder or maxItemsPerOrder for echo orders
     const body = (
       <>
-        <p>
-          Orders for data containing more than
-          {` ${commafy(defaultGranulesPerOrder)} `}
-          granules will be split into multiple orders.
-          You will receive a set of emails for each order placed.
-        </p>
         {
           Object.keys(projectCollectionsRequiringChunking).length > 0 && (
             Object.keys(projectCollectionsRequiringChunking).map((collectionId, i) => {
@@ -89,8 +79,11 @@ export class ChunkedOrderModal extends Component {
 
               const {
                 accessMethods = {},
+                granules = {},
                 selectedAccessMethod
               } = projectCollection
+
+              const { hits: granuleCount } = granules
 
               const granulesPerOrder = calculateGranulesPerOrder(
                 accessMethods,
@@ -101,18 +94,24 @@ export class ChunkedOrderModal extends Component {
               const { title } = projectCollectionMetadata
 
               return (
-                <p key={key}>
-                  Your order for
+                <p
+                  key={key}
+                  data-testid={key}
+                >
+                  The collection
                   {' '}
                   <span className="chunked-order-modal__body-emphasis">{title}</span>
                   {' '}
-                  supports
+                  contains
                   {' '}
-                  <span className="chunked-order-modal__body-emphasis">{granulesPerOrder}</span>
+                  <span className="chunked-order-modal__body-emphasis">{commafy(granuleCount)}</span>
                   {' '}
-                  granules per order.
+                  granules which exceeds the
                   {' '}
-                  It will be automatically split up into
+                  <span className="chunked-order-modal__body-emphasis">{commafy(granulesPerOrder)}</span>
+                  {' '}
+                  granule limit configured by the provider.
+                  When submitted, the order will automatically be split into
                   {' '}
                   <span className="chunked-order-modal__body-strong">{`${orderCount} orders`}</span>
                   .
@@ -121,6 +120,9 @@ export class ChunkedOrderModal extends Component {
             })
           )
         }
+        <p>
+          Note: You will receive a separate set of confirmation emails for each order placed.
+        </p>
       </>
     )
 

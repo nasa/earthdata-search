@@ -2,8 +2,8 @@ import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 /**
  * Calulate the number of granules per order supported
- * @param {*} param0
- * @returns
+ * @param {Object} accessMethods Available access methods for a project collection
+ * @param {String} selectedAccessMethod Selected access method
  */
 export const calculateGranulesPerOrder = (accessMethods, selectedAccessMethod) => {
   const { [selectedAccessMethod]: accessMethod = {} } = accessMethods
@@ -18,7 +18,7 @@ export const calculateGranulesPerOrder = (accessMethods, selectedAccessMethod) =
 
 /**
  * Calculate the number of orders that will be created based on granule count
- * @param {Integer} granuleCount Number of granules being requested
+ * @param {Object} projectCollection Project collection metadata from redux store
  */
 export const calculateOrderCount = (projectCollection) => {
   const {
