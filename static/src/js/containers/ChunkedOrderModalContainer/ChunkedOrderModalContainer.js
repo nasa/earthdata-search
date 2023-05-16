@@ -17,7 +17,6 @@ import ChunkedOrderModal from '../../components/ChunkedOrderModal/ChunkedOrderMo
 export const mapStateToProps = (state) => ({
   isOpen: state.ui.chunkedOrderModal.isOpen,
   location: state.router.location,
-  project: state.project,
   projectCollectionsMetadata: getProjectCollectionsMetadata(state),
   projectCollectionsRequiringChunking: getProjectCollectionsRequiringChunking(state)
 })

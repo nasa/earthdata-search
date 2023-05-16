@@ -83,6 +83,7 @@ describe('buildAccessMethods', () => {
           url: {
             urlValue: 'https://example.com'
           },
+          maxItemsPerOrder: 2000,
           orderOptions: {
             items: [{
               conceptId: 'OO10000-EDSC',
@@ -106,6 +107,7 @@ describe('buildAccessMethods', () => {
           name: 'mock form'
         },
         type: 'ECHO ORDERS',
+        maxItemsPerOrder: 2000,
         url: 'https://example.com'
       }
     })

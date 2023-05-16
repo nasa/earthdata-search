@@ -37,6 +37,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         type: serviceType,
         url,
         longName,
+        maxItemsPerOrder,
         name,
         supportedReformattings
       } = serviceItem
@@ -63,6 +64,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
 
           const method = {
             type: serviceType,
+            maxItemsPerOrder,
             url: urlValue,
             optionDefinition: {
               conceptId: orderOptionConceptId,
