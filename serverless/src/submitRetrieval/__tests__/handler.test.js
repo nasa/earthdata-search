@@ -191,7 +191,11 @@ describe('submitRetrieval', () => {
     })
 
     expect(generateRetrievalPayloadsSpy).toBeCalledTimes(1)
-    expect(generateRetrievalPayloadsSpy).toBeCalledWith(retrievalCollectionRecord)
+    expect(generateRetrievalPayloadsSpy).toBeCalledWith(retrievalCollectionRecord, {
+      id: 'S10000001-EDSC',
+      type: 'ESI',
+      url: 'https://n5eil09e.ecs.edsc.org/egi/request'
+    })
   })
 
   test('correctly rolls back the transaction on failure', async () => {

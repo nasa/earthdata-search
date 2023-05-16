@@ -126,7 +126,7 @@ const submitRetrieval = async (event, context) => {
 
         // Provide the inserted row to the generateOrder payload to construct
         // the payloads we need to submit the users' order
-        const orderPayloads = await generateRetrievalPayloads(retrievalCollection)
+        const orderPayloads = await generateRetrievalPayloads(retrievalCollection, accessMethod)
 
         let queueUrl
 
