@@ -12,7 +12,7 @@ import configureStore from '../../../store/configureStore'
 
 const store = configureStore()
 
-function setup() {
+function setup(overrideProps = {}) {
   const props = {
     isOpen: true,
     location: {
@@ -31,7 +31,8 @@ function setup() {
       }
     },
     onSubmitRetrieval: jest.fn(),
-    onToggleChunkedOrderModal: jest.fn()
+    onToggleChunkedOrderModal: jest.fn(),
+    ...overrideProps
   }
 
   const history = createMemoryHistory()
@@ -62,6 +63,26 @@ describe('ChunkedOrderModal component', () => {
     setup()
 
     expect(screen.getByTestId('chunked_order_message-0')).toHaveTextContent('The collection collection title contains 9,001 granules which exceeds the 2,000 granule limit configured by the provider. When submitted, the order will automatically be split into 5 orders.')
+  })
+
+  test('should render instructions when the maxItemsPerOrder is less than 2000', () => {
+    setup({
+      projectCollectionsRequiringChunking: {
+        'C100005-EDSC': {
+          accessMethods: {
+            echoOrder0: {
+              maxItemsPerOrder: 1000
+            }
+          },
+          granules: {
+            hits: 9001
+          },
+          selectedAccessMethod: 'echoOrder0'
+        }
+      }
+    })
+
+    expect(screen.getByTestId('chunked_order_message-0')).toHaveTextContent('The collection collection title contains 9,001 granules which exceeds the 1,000 granule limit configured by the provider. When submitted, the order will automatically be split into 10 orders.')
   })
 
   test('should render a \'Refine your search\' link that keeps the project params intact and removes the focused collection', async () => {
