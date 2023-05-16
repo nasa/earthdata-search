@@ -58,6 +58,17 @@ describe('ChunkedOrderModal component', () => {
     expect(message).toEqual('Orders for data containing more than 2,000 granules will be split into multiple orders. You will receive a set of emails for each order placed.')
   })
 
+  test.skip('should render collection specific instructions', () => {
+    const { enzymeWrapper } = setup()
+    // TODO this doesn't display the actually information, just [object Object]
+    console.log('🚀 ~ file: ChunkedOrderModal.test.js:57 ~ test ~ enzymeWrapper.find(EDSCModalContainer).prop().props:', enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1][0].props.children.join(''))
+
+    const message = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1].props.children.join('')
+    console.log('🚀 ~ file: ChunkedOrderModal.test.js:65 ~ test ~ message:', message)
+
+    expect(message).toEqual('Orders for data containing more than 2,000 granules will be split into multiple orders. You will receive a set of emails for each order placed.')
+  })
+
   test('should render a \'Refine your search\' link that keeps the project params intact and removes the focused collection', () => {
     const { enzymeWrapper } = setup()
 

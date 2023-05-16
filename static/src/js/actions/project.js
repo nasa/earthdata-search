@@ -286,6 +286,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               serviceOptions
               supportedOutputProjections
               supportedReformattings
+              maxItemsPerOrder
               orderOptions {
                 count
                 items {

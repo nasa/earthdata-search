@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { FaArrowCircleLeft } from 'react-icons/fa'
 
-import { calculateOrderCount } from '../../util/orderCount'
+import { calculateGranulesPerOrder, calculateOrderCount } from '../../util/orderCount'
 import { commafy } from '../../util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { stringify } from '../../util/url/url'
@@ -70,6 +70,7 @@ export class ChunkedOrderModal extends Component {
       </PortalLinkContainer>
     )
 
+    // TODO this message needs to represent either defaultGranulesPerOrder or maxItemsPerOrder for echo orders
     const body = (
       <>
         <p>
@@ -86,6 +87,16 @@ export class ChunkedOrderModal extends Component {
               const { [collectionId]: projectCollection } = projectCollectionsRequiringChunking
               const orderCount = calculateOrderCount(projectCollection)
 
+              const {
+                accessMethods = {},
+                selectedAccessMethod
+              } = projectCollection
+
+              const granulesPerOrder = calculateGranulesPerOrder(
+                accessMethods,
+                selectedAccessMethod
+              )
+
               const { [collectionId]: projectCollectionMetadata = {} } = projectCollectionsMetadata
               const { title } = projectCollectionMetadata
 
@@ -95,7 +106,13 @@ export class ChunkedOrderModal extends Component {
                   {' '}
                   <span className="chunked-order-modal__body-emphasis">{title}</span>
                   {' '}
-                  will be automatically split up into
+                  supports
+                  {' '}
+                  <span className="chunked-order-modal__body-emphasis">{granulesPerOrder}</span>
+                  {' '}
+                  granules per order.
+                  {' '}
+                  It will be automatically split up into
                   {' '}
                   <span className="chunked-order-modal__body-strong">{`${orderCount} orders`}</span>
                   .

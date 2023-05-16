@@ -1,11 +1,28 @@
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 /**
+ * Calulate the number of granules per order supported
+ * @param {*} param0
+ * @returns
+ */
+export const calculateGranulesPerOrder = (accessMethods, selectedAccessMethod) => {
+  const { [selectedAccessMethod]: accessMethod = {} } = accessMethods
+  const { maxItemsPerOrder } = accessMethod
+
+  const { defaultGranulesPerOrder } = getApplicationConfig()
+
+  if (!maxItemsPerOrder) return defaultGranulesPerOrder
+
+  return Math.min(maxItemsPerOrder, parseInt(defaultGranulesPerOrder, 10))
+}
+
+/**
  * Calculate the number of orders that will be created based on granule count
  * @param {Integer} granuleCount Number of granules being requested
  */
 export const calculateOrderCount = (projectCollection) => {
   const {
+    accessMethods = {},
     granules: projectCollectionGranules = {},
     selectedAccessMethod
   } = projectCollection
@@ -14,9 +31,7 @@ export const calculateOrderCount = (projectCollection) => {
   // subsetting work and therefore create orders
   if (['download', 'opendap'].indexOf(selectedAccessMethod) > -1) return 0
 
-  const { defaultGranulesPerOrder } = getApplicationConfig()
-
   const { hits: granuleCount } = projectCollectionGranules
 
-  return Math.ceil(granuleCount / parseInt(defaultGranulesPerOrder, 10))
+  return Math.ceil(granuleCount / calculateGranulesPerOrder(accessMethods, selectedAccessMethod))
 }

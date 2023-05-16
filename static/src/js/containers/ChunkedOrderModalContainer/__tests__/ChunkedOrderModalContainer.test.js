@@ -13,7 +13,6 @@ function setup() {
     projectCollectionsMetadata: {},
     projectCollectionsRequiringChunking: {},
     location: {},
-    project: {},
     isOpen: true,
     onSubmitRetrieval: jest.fn(),
     onToggleChunkedOrderModal: jest.fn()
@@ -52,7 +51,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      project: {},
       router: {
         location: {}
       },
@@ -66,7 +64,6 @@ describe('mapStateToProps', () => {
     const expectedState = {
       isOpen: false,
       location: {},
-      project: {},
       projectCollectionsMetadata: {},
       projectCollectionsRequiringChunking: {}
     }
