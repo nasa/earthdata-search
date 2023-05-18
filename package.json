@@ -44,7 +44,10 @@
     "preplaywright": "rm -rf playwright-coverage/ .nyc_output/",
     "playwright": "NODE_ENV=playwright nyc playwright test --reporter=list",
     "playwright:ui": "npx playwright test --ui",
-    "postplaywright": "npx nyc report --reporter=json --reporter=lcov --reporter=clover --report-dir=playwright-coverage"
+    "postplaywright": "npx nyc report --reporter=json --reporter=lcov --reporter=clover --report-dir=playwright-coverage",
+    "prestart": "npm run start:aws",
+    "start:aws": "docker-compose up -d",
+    "stop:aws": "docker-compose down"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.10.0",
