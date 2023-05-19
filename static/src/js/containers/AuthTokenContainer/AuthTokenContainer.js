@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'tiny-cookie'
 import { connect } from 'react-redux'
@@ -16,28 +16,23 @@ export const mapDispatchToProps = (dispatch) => ({
     (token) => dispatch(actions.updateAuthToken(token))
 })
 
-export class AuthTokenContainer extends Component {
-  UNSAFE_componentWillMount() {
-    const {
-      onSetContactInfoFromJwt,
-      onSetPreferencesFromJwt,
-      onSetUserFromJwt,
-      onUpdateAuthToken
-    } = this.props
-
+export const AuthTokenContainer = ({
+  children,
+  onSetContactInfoFromJwt,
+  onSetPreferencesFromJwt,
+  onSetUserFromJwt,
+  onUpdateAuthToken
+}) => {
+  useEffect(() => {
     const jwtToken = get('authToken')
 
     onUpdateAuthToken(jwtToken || '')
     onSetPreferencesFromJwt(jwtToken)
     onSetContactInfoFromJwt(jwtToken)
     onSetUserFromJwt(jwtToken)
-  }
+  }, [])
 
-  render() {
-    const { children } = this.props
-
-    return children
-  }
+  return children
 }
 
 AuthTokenContainer.propTypes = {

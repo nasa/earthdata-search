@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { set } from 'tiny-cookie'
 import { connect } from 'react-redux'
 import { parse } from 'qs'
@@ -15,10 +15,10 @@ export const mapStateToProps = (state) => ({
  * the user to the correct location based on where they were trying to get before logging
  * in.
  */
-export class AuthCallbackContainer extends Component {
-  UNSAFE_componentWillMount() {
-    // Pull the jwt and redirect params out of the URL
-    const { location } = this.props
+export const AuthCallbackContainer = ({
+  location
+}) => {
+  useEffect(() => {
     const { search } = location
 
     const params = parse(search, { ignoreQueryPrefix: true })
@@ -32,13 +32,11 @@ export class AuthCallbackContainer extends Component {
 
     // Redirect the user to the correct location
     window.location.replace(redirect)
-  }
+  }, [])
 
-  render() {
-    return (
-      <div className="route-wrapper" />
-    )
-  }
+  return (
+    <div className="route-wrapper" />
+  )
 }
 
 AuthCallbackContainer.propTypes = {

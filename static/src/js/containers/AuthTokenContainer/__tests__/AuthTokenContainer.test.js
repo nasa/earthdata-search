@@ -1,28 +1,17 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { render } from '@testing-library/react'
+import { act } from 'react-dom/test-utils'
 import * as tinyCookie from 'tiny-cookie'
 
 import actions from '../../../actions'
 import { AuthTokenContainer, mapDispatchToProps } from '../AuthTokenContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
-  const props = {
-    children: 'children',
-    onSetContactInfoFromJwt: jest.fn(),
-    onSetPreferencesFromJwt: jest.fn(),
-    onSetUserFromJwt: jest.fn(),
-    onUpdateAuthToken: jest.fn()
-  }
-
-  const enzymeWrapper = shallow(<AuthTokenContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+const setup = (props) => {
+  act(() => {
+    render(
+      <AuthTokenContainer {...props} />
+    )
+  })
 }
 
 beforeEach(() => {
@@ -78,9 +67,15 @@ describe('AuthTokenContainer component', () => {
       return ''
     })
 
-    const { enzymeWrapper, props } = setup()
+    const props = {
+      children: 'children',
+      onSetContactInfoFromJwt: jest.fn(),
+      onSetPreferencesFromJwt: jest.fn(),
+      onSetUserFromJwt: jest.fn(),
+      onUpdateAuthToken: jest.fn()
+    }
+    setup(props)
 
-    expect(enzymeWrapper).toBeDefined()
     expect(props.onUpdateAuthToken).toHaveBeenCalled()
     expect(props.onUpdateAuthToken.mock.calls[0]).toEqual(['token'])
     expect(props.onSetContactInfoFromJwt).toHaveBeenCalled()
