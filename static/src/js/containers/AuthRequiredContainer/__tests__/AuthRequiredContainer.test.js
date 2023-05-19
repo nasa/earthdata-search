@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
-
 import '@testing-library/jest-dom'
 import * as tinyCookie from 'tiny-cookie'
 
@@ -59,7 +58,7 @@ describe('AuthRequiredContainer component', () => {
     window.location = { href: returnPath }
 
     setup()
-    expect(screen.queryByTestId('auth-required')).toBeInTheDocument()
+    expect(screen.getByTestId('auth-required')).toBeInTheDocument()
     expect(window.location.href).toEqual(`http://localhost:3000/login?ee=prod&state=${encodeURIComponent(returnPath)}`)
   })
 
@@ -70,7 +69,7 @@ describe('AuthRequiredContainer component', () => {
     })
 
     setup()
-    expect(screen.queryByText('children')).toBeInTheDocument()
+    expect(screen.getByText('children')).toBeInTheDocument()
   })
 
   describe('when redirect is set to false', () => {

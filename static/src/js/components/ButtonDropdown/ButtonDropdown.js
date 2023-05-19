@@ -1,10 +1,12 @@
-import React, { memo, useState, useEffect } from 'react'
+import React, {
+  memo,
+  useEffect,
+  useState
+} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-
 import Dropdown from 'react-bootstrap/Dropdown'
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa'
-
 import ButtonToggle from '../CustomToggle/ButtonToggle'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 

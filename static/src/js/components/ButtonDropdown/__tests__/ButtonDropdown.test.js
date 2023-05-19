@@ -2,7 +2,6 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
-
 import '@testing-library/jest-dom'
 
 import ButtonDropdown from '../ButtonDropdown'
@@ -29,7 +28,7 @@ describe('ButtonDropdown component', () => {
     expect(screen.queryByText('Button Text')).not.toBeInTheDocument()
   })
 
-  test('update state when dropdown is toggled', async () => {
+  test('update display when dropdown is opened', async () => {
     setup()
     const user = userEvent.setup()
     await user.click(screen.getByRole('button'))

@@ -29,7 +29,6 @@ export const AuthRequiredContainer = ({
 
     if (token === null || token === '') {
       setIsLoggedIn(false)
-
       if (!noRedirect) window.location.href = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`
     } else {
       setIsLoggedIn(true)
@@ -39,6 +38,7 @@ export const AuthRequiredContainer = ({
   if (isLoggedIn) {
     return children
   }
+
   return (
     <div data-testid="auth-required" className="route-wrapper" />
   )
