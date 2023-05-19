@@ -82,6 +82,8 @@ export const ProjectHeader = memo(({
   const handleNameKeyPress = ((e) => {
     if (e.key === 'Enter') {
       handleEditClick()
+      e.stopPropagation()
+      e.preventDefault()
     }
   })
 
@@ -155,7 +157,7 @@ export const ProjectHeader = memo(({
                 role="button"
                 tabIndex={0}
                 data-testid="project-header__span"
-                onKeyUp={handleNameKeyPress}
+                onKeyDown={handleNameKeyPress}
               >
                 {projectName}
               </span>
@@ -168,7 +170,7 @@ export const ProjectHeader = memo(({
               value={projectName}
               onFocus={handleOnFocus}
               onChange={onInputChange}
-              onKeyUp={handleKeypress}
+              onKeyDown={handleKeypress}
               ref={projectTitleInput}
             />
           </div>
