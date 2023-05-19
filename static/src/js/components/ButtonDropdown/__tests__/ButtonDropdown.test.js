@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-  render,
-  screen
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
 
@@ -49,7 +46,6 @@ describe('ButtonDropdown component', () => {
       setup()
       const user = userEvent.setup()
       await user.click(screen.getByRole('button'))
-      screen.debug()
       expect(screen.getByTestId('dropdown-open')).toBeInTheDocument()
     })
   })

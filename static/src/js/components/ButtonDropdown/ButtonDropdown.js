@@ -12,7 +12,6 @@ import './ButtonDropdown.scss'
 
 /**
  * A button that toggles a custom react-bootstrap dropdown
- * @extends PureComponent
  */
 export const ButtonDropdown = memo(({
   buttonLabel,
@@ -29,7 +28,7 @@ export const ButtonDropdown = memo(({
   }, [isOpen])
 
   /**
-   * Called when a user
+   * Called when a user clicks on the dropdown element
    */
   const onDropdownToggle = (() => {
     setIsOpen(!isOpen)

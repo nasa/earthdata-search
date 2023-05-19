@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-  render,
-  screen
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 
 import '@testing-library/jest-dom'
@@ -16,6 +13,7 @@ const setup = (overrideProps) => {
     earthdataEnvironment: 'prod',
     ...overrideProps
   }
+
   act(() => {
     render(
       <AuthRequiredContainer {...props} />
@@ -61,10 +59,7 @@ describe('AuthRequiredContainer component', () => {
     window.location = { href: returnPath }
 
     setup()
-    // const div = enzymeWrapper.find('div')
     expect(screen.queryByTestId('auth-required')).toBeInTheDocument()
-    // expect(div.hasClass('route-wrapper')).toEqual(true)
-
     expect(window.location.href).toEqual(`http://localhost:3000/login?ee=prod&state=${encodeURIComponent(returnPath)}`)
   })
 
@@ -90,9 +85,7 @@ describe('AuthRequiredContainer component', () => {
       window.location = { href: returnPath }
 
       setup({ noRedirect: true })
-
       expect(screen.getByTestId('auth-required')).toBeInTheDocument()
-
       expect(window.location.href).toEqual('http://example.com/test/path')
     })
 
@@ -102,9 +95,7 @@ describe('AuthRequiredContainer component', () => {
         return null
       })
 
-      setup({
-        noRedirect: true
-      })
+      setup({ noRedirect: true })
       expect(screen.queryByText('children')).not.toBeInTheDocument()
     })
   })
