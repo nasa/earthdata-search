@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom'
 
 import OrderStatusContainer from '../../containers/OrderStatusContainer/OrderStatusContainer'
-import CollectionContainer from '../../containers/CollectionContainer/CollectionContainer'
 import DownloadHistoryContainer from '../../containers/DownloadHistoryContainer/DownloadHistoryContainer'
 
 export const Downloads = ({
@@ -17,14 +16,6 @@ export const Downloads = ({
 
   return (
     <Switch>
-      <Route path={`${path}/:retrieval_id/collections/:id`}>
-        <div className="route-wrapper route-wrapper--collections route-wrapper--light route-wrapper--content-page">
-          <div className="route-wrapper__content">
-            <CollectionContainer />
-          </div>
-        </div>
-      </Route>
-
       <Route path={`${path}`}>
         <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
           <div className="route-wrapper__content">

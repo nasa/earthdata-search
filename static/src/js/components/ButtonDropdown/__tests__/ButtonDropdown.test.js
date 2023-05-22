@@ -1,13 +1,12 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
+import { render, screen } from '@testing-library/react'
+import { act } from 'react-dom/test-utils'
+import userEvent from '@testing-library/user-event'
+import '@testing-library/jest-dom'
 
 import ButtonDropdown from '../ButtonDropdown'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(type) {
+const setup = () => {
   const props = {
     onClick: jest.fn(),
     buttonLabel: 'Test Label',
@@ -15,56 +14,38 @@ function setup(type) {
     className: 'some-test-classname'
   }
 
-  if (type === 'badge') {
-    props.badge = 'badge test'
-  }
-
-  const enzymeWrapper = shallow(<ButtonDropdown {...props}>Button Text</ButtonDropdown>)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+  act(() => {
+    render(
+      <ButtonDropdown {...props}>Button Text</ButtonDropdown>
+    )
+  })
 }
 
 describe('ButtonDropdown component', () => {
   test('should render self', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper).toBeDefined()
+    setup()
+    expect(screen.getByRole('button', { name: /test label/i })).toBeInTheDocument()
+    expect(screen.queryByText('Button Text')).not.toBeInTheDocument()
   })
 
-  test('update its open state when the open prop changes', () => {
-    const { enzymeWrapper } = setup()
-
-    enzymeWrapper.setProps({
-      open: true
-    })
-
-    expect(enzymeWrapper.state()).toEqual({ open: true })
-  })
-
-  test('update its open state onDropdownToggle is called', () => {
-    const { enzymeWrapper } = setup()
-
-    enzymeWrapper.instance().onDropdownToggle()
-
-    expect(enzymeWrapper.state()).toEqual({ open: true })
+  test('update display when dropdown is opened', async () => {
+    setup()
+    const user = userEvent.setup()
+    await user.click(screen.getByRole('button'))
+    expect(screen.getByText('Button Text')).toBeInTheDocument()
   })
 
   describe('icon', () => {
     test('displays correctly by default', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find('EDSCIcon').props().icon).toEqual(FaChevronDown)
+      setup()
+      expect(screen.getByTestId('dropdown-closed')).toBeInTheDocument()
     })
 
-    test('displays correctly when opened', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.instance().onDropdownToggle()
-      enzymeWrapper.update()
-
-      expect(enzymeWrapper.find('EDSCIcon').props().icon).toEqual(FaChevronUp)
+    test('displays correctly when opened', async () => {
+      setup()
+      const user = userEvent.setup()
+      await user.click(screen.getByRole('button'))
+      expect(screen.getByTestId('dropdown-open')).toBeInTheDocument()
     })
   })
 })

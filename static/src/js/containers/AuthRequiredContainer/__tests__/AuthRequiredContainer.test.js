@@ -1,25 +1,23 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { render, screen } from '@testing-library/react'
+import { act } from 'react-dom/test-utils'
+import '@testing-library/jest-dom'
 import * as tinyCookie from 'tiny-cookie'
 
 import { AuthRequiredContainer, mapStateToProps } from '../AuthRequiredContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
+const setup = (overrideProps) => {
   const props = {
     children: 'children',
     earthdataEnvironment: 'prod',
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<AuthRequiredContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+  act(() => {
+    render(
+      <AuthRequiredContainer {...props} />
+    )
+  })
 }
 
 beforeEach(() => {
@@ -59,11 +57,8 @@ describe('AuthRequiredContainer component', () => {
     delete window.location
     window.location = { href: returnPath }
 
-    const { enzymeWrapper } = setup()
-
-    const div = enzymeWrapper.find('div')
-    expect(div.hasClass('route-wrapper')).toEqual(true)
-
+    setup()
+    expect(screen.getByTestId('auth-required')).toBeInTheDocument()
     expect(window.location.href).toEqual(`http://localhost:3000/login?ee=prod&state=${encodeURIComponent(returnPath)}`)
   })
 
@@ -73,8 +68,8 @@ describe('AuthRequiredContainer component', () => {
       return null
     })
 
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.text()).toEqual('children')
+    setup()
+    expect(screen.getByText('children')).toBeInTheDocument()
   })
 
   describe('when redirect is set to false', () => {
@@ -88,11 +83,8 @@ describe('AuthRequiredContainer component', () => {
       delete window.location
       window.location = { href: returnPath }
 
-      const { enzymeWrapper } = setup({ noRedirect: true })
-
-      const div = enzymeWrapper.find('div')
-      expect(div.hasClass('route-wrapper')).toEqual(true)
-
+      setup({ noRedirect: true })
+      expect(screen.getByTestId('auth-required')).toBeInTheDocument()
       expect(window.location.href).toEqual('http://example.com/test/path')
     })
 
@@ -102,10 +94,8 @@ describe('AuthRequiredContainer component', () => {
         return null
       })
 
-      const { enzymeWrapper } = setup({
-        noRedirect: true
-      })
-      expect(enzymeWrapper.text()).toEqual('')
+      setup({ noRedirect: true })
+      expect(screen.queryByText('children')).not.toBeInTheDocument()
     })
   })
 })

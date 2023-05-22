@@ -1,10 +1,12 @@
-import React, { PureComponent } from 'react'
+import React, {
+  memo,
+  useEffect,
+  useState
+} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-
 import Dropdown from 'react-bootstrap/Dropdown'
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa'
-
 import ButtonToggle from '../CustomToggle/ButtonToggle'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -12,82 +14,57 @@ import './ButtonDropdown.scss'
 
 /**
  * A button that toggles a custom react-bootstrap dropdown
- * @extends PureComponent
  */
-export default class ButtonDropdown extends PureComponent {
-  constructor(props) {
-    super(props)
+export const ButtonDropdown = memo(({
+  buttonLabel,
+  buttonContent,
+  children,
+  className,
+  disabled,
+  open
+}) => {
+  const [isOpen, setIsOpen] = useState(open)
 
-    this.state = {
-      open: props.open
-    }
-
-    this.onDropdownToggle = this.onDropdownToggle.bind(this)
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { open: openState } = this.state
-    if (nextProps.open !== openState) {
-      this.setState({
-        open: nextProps.open
-      })
-    }
-  }
+  useEffect(() => {
+    setIsOpen(isOpen)
+  }, [isOpen])
 
   /**
-   * Called when a user
+   * Called when a user clicks on the dropdown element
    */
-  onDropdownToggle() {
-    const { open } = this.state
+  const onDropdownToggle = (() => {
+    setIsOpen(!isOpen)
+  })
 
-    this.setState({
-      open: !open
-    })
-  }
+  const classnames = classNames([
+    'button-dropdown',
+    className
+  ])
 
-  render() {
-    const {
-      buttonLabel,
-      buttonContent,
-      children,
-      className,
-      disabled
-    } = this.props
-
-    const {
-      open
-    } = this.state
-
-    const classnames = classNames([
-      'button-dropdown',
-      className
-    ])
-
-    return (
-      <Dropdown show={open} className={classnames} onToggle={this.onDropdownToggle}>
-        <Dropdown.Toggle
-          className="button-dropdown__toggle"
-          id="download-selection-dropdown"
-          as={ButtonToggle}
-          onClick={this.onDropdownToggle}
-          label={buttonLabel}
-          disabled={disabled}
-        >
-          {buttonContent}
-          &nbsp;
-          {
-            open
-              ? <EDSCIcon icon={FaChevronUp} />
-              : <EDSCIcon icon={FaChevronDown} />
-          }
-        </Dropdown.Toggle>
-        <Dropdown.Menu className="button-dropdown__menu">
-          {children}
-        </Dropdown.Menu>
-      </Dropdown>
-    )
-  }
-}
+  return (
+    <Dropdown show={isOpen} className={classnames} onToggle={onDropdownToggle}>
+      <Dropdown.Toggle
+        className="button-dropdown__toggle"
+        id="download-selection-dropdown"
+        as={ButtonToggle}
+        onClick={onDropdownToggle}
+        label={buttonLabel}
+        disabled={disabled}
+      >
+        {buttonContent}
+        &nbsp;
+        {
+          isOpen
+            ? <EDSCIcon icon={FaChevronUp} data-testid="dropdown-open" />
+            : <EDSCIcon icon={FaChevronDown} data-testid="dropdown-closed" />
+        }
+      </Dropdown.Toggle>
+      <Dropdown.Menu className="button-dropdown__menu">
+        {children}
+      </Dropdown.Menu>
+    </Dropdown>
+  )
+})
 
 ButtonDropdown.defaultProps = {
   children: null,
@@ -104,3 +81,5 @@ ButtonDropdown.propTypes = {
   disabled: PropTypes.bool,
   open: PropTypes.bool
 }
+
+export default ButtonDropdown
