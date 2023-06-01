@@ -1,0 +1,18 @@
+{
+  "moreInfoUrl": "https://www.earthdata.nasa.gov/esds/impact/snwg",
+  "pageTitle": "SNWG",
+  "parentConfig": "edsc",
+  "portalBrowser": true,
+  "query": {
+    "hasGranulesOrCwic": null,
+    "tagKey": "org.snwg"
+  },
+  "title": {
+    "primary": "SNWG",
+    "secondary": "Satellite Needs Working Group"
+  },
+  "ui": {
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
+  }
+}
