@@ -19,16 +19,6 @@
     z-index: 1;
   }
 
-  &__action {
-    margin-left: $spacer/4;
-    background-color: $color__black--200;
-
-    &--edd {
-      background-color: $color__green;
-      color: $color__white;
-    }
-  }
-
   &__copied-success {
     display: none;
   }
@@ -52,5 +42,13 @@
     &--no-actions {
       padding-top: $spacer*1.5;
     }
+  }
+
+  &__modal-icon {
+    color: $color__black--300;
+  }
+
+  &__modal-blurb {
+    max-width: 25rem;
   }
 }

@@ -15,9 +15,12 @@
     flex-grow: 1;
     height: 100%;
     z-index: 1;
-    border-right: 1px solid $color__black--200;
     background: darken($color__black--100, 5);
     overflow: hidden;
+
+    .route-wrapper--search & {
+      border-right: 1px solid $color__black--200;
+    }
   }
 
   &__section-title {
