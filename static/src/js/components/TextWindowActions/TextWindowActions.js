@@ -41,7 +41,6 @@ export const TextWindowActions = ({
   modalTitle,
   eddLink
 }) => {
-  // const { disableEddDownload = 'true' } = process.env
   const { disableEddDownload } = process.env
 
   const supportsClipboard = document.queryCommandSupported('copy')
