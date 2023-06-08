@@ -78,6 +78,14 @@
   &__header {
     background-color: $color__theme--light;
     border-bottom: 0;
+
+    &--is-empty {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
+      background-color: transparent;
+    }
   }
 
   &__title {

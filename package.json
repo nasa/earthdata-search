@@ -23,6 +23,7 @@
     "copy-secrets": "cp secret.config.json.example secret.config.json",
     "migrate": "node-pg-migrate",
     "start": "NODE_ENV=development webpack-dev-server --open --config static.webpack.config.dev.js",
+    "start:hot": "NODE_ENV=development webpack-dev-server --hot --open --config static.webpack.config.dev.js",
     "offline": "serverless offline start",
     "test": "NODE_OPTIONS=--max-old-space-size=6144 jest",
     "silent-test": "NODE_OPTIONS=--max-old-space-size=8192 jest --silent",

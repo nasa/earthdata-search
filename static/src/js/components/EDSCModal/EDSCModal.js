@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Modal } from 'react-bootstrap'
+import classNames from 'classnames'
 
 import Button from '../Button/Button'
 import Spinner from '../Spinner/Spinner'
@@ -56,106 +57,114 @@ export const EDSCModal = ({
   size,
   spinner,
   title
-}) => (
-  <Modal
-    dialogClassName={modalClassNames}
-    show={isOpen}
-    animation={false}
-    onHide={onModalHide}
-    onExit={onModalExit}
-    centered
-    size={size}
-    aria-labelledby={identifier}
-    data-testid={dataTestId}
-  >
-    <Modal.Header
-      className="edsc-modal__header"
-      closeButton
-    >
-      <Modal.Title
-        className="edsc-modal__title"
-        data-testid="edsc-modal__title"
-      >
-        {title}
-      </Modal.Title>
-    </Modal.Header>
-    <Modal.Body className="edsc-modal__body">
-      {
-        spinner && (
-          <div className="edsc-modal__inner-loading">
-            <Spinner type="dots" />
-          </div>
-        )
-      }
-      {
-        innerHeaderEl && (
-          <div className="edsc-modal__inner-header">
-            {innerHeaderEl}
-          </div>
-        )
-      }
-      <div className="edsc-modal__inner-body" ref={modalInner}>
-        {bodyEl}
-      </div>
-      {
-        modalOverlayEl && (
-          <EDSCModalOverlay>
-            {modalOverlayEl}
-          </EDSCModalOverlay>
-        )
-      }
-    </Modal.Body>
+}) => {
+  const headerClassNames = classNames([
+    'edsc-modal__header',
     {
-      ((footer || primaryAction || footerMeta) && !activeModalOverlay) && (
-        <Modal.Footer className="edsc-modal__footer">
-          {
-            footer
-              ? { footer }
-              : (
-                <>
-                  {
-                    footerMeta && (
-                      <div className="edsc-modal__footer-meta">
-                        {footerMeta}
-                      </div>
-                    )
-                  }
-                  <div className="edsc-modal__footer-actions">
-                    {
-                      (secondaryAction && onSecondaryAction) && (
-                        <Button
-                          className="edsc-modal__action edsc-modal__action--secondary"
-                          bootstrapVariant="light"
-                          onClick={onSecondaryAction}
-                          label={secondaryAction}
-                        >
-                          {secondaryAction}
-                        </Button>
-                      )
-                    }
-                    {
-                      (primaryAction && onPrimaryAction) && (
-                        <Button
-                          className="edsc-modal__action edsc-modal__action--primary"
-                          bootstrapVariant="primary"
-                          onClick={onPrimaryAction}
-                          label={primaryAction}
-                          disabled={primaryActionDisabled}
-                          spinner={primaryActionLoading}
-                        >
-                          {primaryAction}
-                        </Button>
-                      )
-                    }
-                  </div>
-                </>
-              )
-          }
-        </Modal.Footer>
-      )
+      'edsc-modal__header--is-empty': !title
     }
-  </Modal>
-)
+  ])
+  return (
+    <Modal
+      dialogClassName={modalClassNames}
+      show={isOpen}
+      animation={false}
+      onHide={onModalHide}
+      onExit={onModalExit}
+      centered
+      size={size}
+      aria-labelledby={identifier}
+      data-testid={dataTestId}
+    >
+      <Modal.Header
+        className={headerClassNames}
+        closeButton
+      >
+        <Modal.Title
+          className="edsc-modal__title"
+          data-testid="edsc-modal__title"
+        >
+          {title}
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="edsc-modal__body">
+        {
+          spinner && (
+            <div className="edsc-modal__inner-loading">
+              <Spinner type="dots" />
+            </div>
+          )
+        }
+        {
+          innerHeaderEl && (
+            <div className="edsc-modal__inner-header">
+              {innerHeaderEl}
+            </div>
+          )
+        }
+        <div className="edsc-modal__inner-body" ref={modalInner}>
+          {bodyEl}
+        </div>
+        {
+          modalOverlayEl && (
+            <EDSCModalOverlay>
+              {modalOverlayEl}
+            </EDSCModalOverlay>
+          )
+        }
+      </Modal.Body>
+      {
+        ((footer || primaryAction || footerMeta) && !activeModalOverlay) && (
+          <Modal.Footer className="edsc-modal__footer">
+            {
+              footer
+                ? { footer }
+                : (
+                  <>
+                    {
+                      footerMeta && (
+                        <div className="edsc-modal__footer-meta">
+                          {footerMeta}
+                        </div>
+                      )
+                    }
+                    <div className="edsc-modal__footer-actions">
+                      {
+                        (secondaryAction && onSecondaryAction) && (
+                          <Button
+                            className="edsc-modal__action edsc-modal__action--secondary"
+                            bootstrapVariant="light"
+                            onClick={onSecondaryAction}
+                            label={secondaryAction}
+                          >
+                            {secondaryAction}
+                          </Button>
+                        )
+                      }
+                      {
+                        (primaryAction && onPrimaryAction) && (
+                          <Button
+                            className="edsc-modal__action edsc-modal__action--primary"
+                            bootstrapVariant="primary"
+                            onClick={onPrimaryAction}
+                            label={primaryAction}
+                            disabled={primaryActionDisabled}
+                            spinner={primaryActionLoading}
+                          >
+                            {primaryAction}
+                          </Button>
+                        )
+                      }
+                    </div>
+                  </>
+                )
+            }
+          </Modal.Footer>
+        )
+      }
+    </Modal>
+  )
+}
 
 EDSCModal.defaultProps = {
   activeModalOverlay: null,

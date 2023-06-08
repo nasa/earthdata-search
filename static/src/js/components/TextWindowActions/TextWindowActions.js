@@ -219,42 +219,53 @@ export const TextWindowActions = ({
         className="order-status-links-edd-modal"
         onClose={handleEddModalClose}
         isOpen={showEddModal}
-        size="lg"
+        size="md"
         body={(
-          <>
-            <h3>Opening Earthdata Download to download your your files...</h3>
-            <div>
-              <EDSCIcon
-                icon={FaDownload}
-                size="8rem"
-              />
-              <Spinner
-                type="dots"
-              />
-            </div>
-            <div>
-              Click Open Earthdata Download in the dialog presented by your browser.
-              If the dialog does not open automatically, click Open Earthdata Download below.
+          <div className="d-flex flex-column align-items-center">
+            <h3 className="font-weight-bolder h5 mt-3 text-center w-75">Opening Earthdata Download to download your your files...</h3>
+            <EDSCIcon
+              className="mt-3 text-window-actions__modal-icon"
+              icon={FaDownload}
+              size="4rem"
+            />
+            <Spinner
+              className="mt-3"
+              type="dots"
+            />
+            <div className="mt-4 text-muted text-center text--lg text-window-actions__modal-blurb">
+              Click
+              {' '}
+              <strong className="text-dark">Open Earthdata Download</strong>
+              {' '}
+              in the dialog presented by your browser.
+              If the dialog does not open automatically, click
+              {' '}
+              <strong className="text-dark">Open Earthdata Download</strong>
+              {' '}
+              below.
             </div>
             <Button
-              className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--open-edd"
+              className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--open-edd mt-3"
               bootstrapSize="sm"
               label="Open Earthdata Download"
               icon={FaExternalLinkAlt}
               href={eddLink}
+              bootstrapVariant="primary"
             >
               Open Earthdata Download
             </Button>
-            <div>
-              Don’t have the Earthdata Download installed?
-              {' '}
-              Install the application now
-              {' '}
-              or
-              {' '}
-              learn more.
-            </div>
-          </>
+            {/* TODO Uncomment this when we have implemented the landing page and/or download link
+              <Alert className="mt-3 mb-0 text-center" variant="secondary">
+                Don’t have the Earthdata Download installed?
+                <br />
+                <a href="/">Install the application now</a>
+                {' '}
+                or
+                {' '}
+                <a className="link link-external" href="/">learn more.</a>
+              </Alert>
+            */}
+          </div>
         )}
       />
     </div>

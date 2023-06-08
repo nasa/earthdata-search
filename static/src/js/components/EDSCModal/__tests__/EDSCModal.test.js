@@ -51,6 +51,16 @@ describe('EDSCModal component', () => {
     expect(enzymeWrapper.find(Modal.Title).text()).toEqual('Test Title')
   })
 
+  describe('when a title is not defined', () => {
+    test('should render a title', () => {
+      const { enzymeWrapper } = setup({
+        isOpen: true
+      })
+
+      expect(enzymeWrapper.find(Modal.Header).props().className).toContain('edsc-modal__header--is-empty')
+    })
+  })
+
   test('should render no footer by default', () => {
     const { enzymeWrapper } = setup({
       isOpen: true
