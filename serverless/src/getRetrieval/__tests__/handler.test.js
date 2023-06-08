@@ -106,6 +106,7 @@ describe('getRetrieval', () => {
         byId: {
           22: {
             id: 22,
+            retrieval_collection_id: '9452013926',
             access_method: {
               type: 'download'
             },
@@ -115,6 +116,7 @@ describe('getRetrieval', () => {
           },
           23: {
             id: 23,
+            retrieval_collection_id: '4519237960',
             access_method: {
               type: 'download'
             },
@@ -181,6 +183,7 @@ describe('getRetrieval', () => {
         byId: {
           22: {
             id: 22,
+            retrieval_collection_id: '9452013926',
             access_method: {
               type: 'download'
             },
@@ -199,6 +202,7 @@ describe('getRetrieval', () => {
           },
           23: {
             id: 23,
+            retrieval_collection_id: '4519237960',
             access_method: {
               type: 'download'
             },

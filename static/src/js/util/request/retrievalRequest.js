@@ -25,4 +25,8 @@ export default class RetrievalRequest extends Request {
   submit(params) {
     return this.post('retrievals', params)
   }
+
+  fetchLinks(paramString) {
+    return this.get(`granule_links${paramString}&requestId=${this.requestId}`)
+  }
 }

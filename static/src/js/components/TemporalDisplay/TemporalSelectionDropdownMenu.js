@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 import Dropdown from 'react-bootstrap/Dropdown'
 
-import { getTemporalDateFormat } from '../../util/edscDate'
+import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
 
 import Button from '../Button/Button'
 import TemporalSelection from '../TemporalSelection/TemporalSelection'

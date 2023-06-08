@@ -487,6 +487,20 @@
             resultTtlInSeconds: 0
 
 
+  retrieveGranuleLinks:
+    handler: serverless/src/retrieveGranuleLinks/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
+    events:
+      - http:
+          method: get
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: granule_links
+          authorizer:
+            name: edlAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
+
   getSavedAccessConfigs:
     handler: serverless/src/getSavedAccessConfigs/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
@@ -495,20 +509,6 @@
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: saved_access_configs
-          authorizer:
-            name: edlAuthorizer
-            type: request
-            resultTtlInSeconds: 0
-
-
-  ousGranuleSearch:
-    handler: serverless/src/ousGranuleSearch/handler.default
-    timeout: ${env:LAMBDA_TIMEOUT, '30'}
-    events:
-      - http:
-          method: post
-          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
-          path: granules/ous
           authorizer:
             name: edlAuthorizer
             type: request

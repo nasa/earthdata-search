@@ -13,7 +13,8 @@ describe('retrievals', () => {
             directDistributionInformation: {},
             isCSDA: false,
             shortName: 'mock shortName',
-            title: 'Vestibulum id ligula porta felis euismod semper.'
+            title: 'Vestibulum id ligula porta felis euismod semper.',
+            versionId: 'mock version'
           }
         }
       },
@@ -102,7 +103,9 @@ describe('retrievals', () => {
           dataCenter: 'EDSC',
           directDistributionInformation: {},
           isCSDA: false,
-          title: 'Vestibulum id ligula porta felis euismod semper.'
+          title: 'Vestibulum id ligula porta felis euismod semper.',
+          shortName: 'mock shortName',
+          versionId: 'mock version'
         },
         granule_count: 100,
         granule_params: {

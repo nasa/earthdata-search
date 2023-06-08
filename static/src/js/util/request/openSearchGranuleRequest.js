@@ -3,7 +3,7 @@ import { isEmpty, isString } from 'lodash'
 
 import Request from './request'
 
-import { getTemporal } from '../edscDate'
+import { getTemporal } from '../../../../../sharedUtils/edscDate'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 export default class OpenSearchGranuleRequest extends Request {

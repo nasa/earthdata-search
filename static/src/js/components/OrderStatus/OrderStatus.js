@@ -176,6 +176,7 @@ export const OrderStatus = ({
             {
               isLoaded && (
                 <OrderStatusList
+                  authToken={authToken}
                   collections={allCollections}
                   earthdataEnvironment={earthdataEnvironment}
                   granuleDownload={granuleDownload}

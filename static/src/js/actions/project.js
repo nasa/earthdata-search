@@ -36,7 +36,7 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getUsername } from '../selectors/user'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { isCSDACollection } from '../util/isCSDACollection'
-import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
+import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
 import { buildAccessMethods } from '../util/accessMethods/buildAccessMethods'
 
 import GraphQlRequest from '../util/request/graphQlRequest'

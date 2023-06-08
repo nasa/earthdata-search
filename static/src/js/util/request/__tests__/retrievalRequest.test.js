@@ -1,5 +1,10 @@
+import { v4 as uuidv4 } from 'uuid'
+
 import RetrievalRequest from '../retrievalRequest'
 import Request from '../request'
+
+jest.mock('uuid')
+uuidv4.mockImplementation(() => 'mock-request-id')
 
 beforeEach(() => {
   jest.restoreAllMocks()
@@ -78,7 +83,7 @@ describe('RetrievalRequest#remove', () => {
   })
 })
 
-describe('RetrievalRequest#save', () => {
+describe('RetrievalRequest#submit', () => {
   test('calls Request#post', () => {
     const request = new RetrievalRequest()
 
@@ -89,5 +94,19 @@ describe('RetrievalRequest#save', () => {
 
     expect(postMock).toBeCalledTimes(1)
     expect(postMock).toBeCalledWith('retrievals', params)
+  })
+})
+
+describe('RetrievalRequest#fetchLinks', () => {
+  test('calls Request#get', () => {
+    const request = new RetrievalRequest()
+
+    const getMock = jest.spyOn(Request.prototype, 'get').mockImplementation()
+
+    const params = '?id=1234'
+    request.fetchLinks(params)
+
+    expect(getMock).toBeCalledTimes(1)
+    expect(getMock).toBeCalledWith('granule_links?id=1234&requestId=mock-request-id')
   })
 })

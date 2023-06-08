@@ -7,7 +7,7 @@ import {
 import { granuleRequestNonIndexedCmrKeys } from '../../../../../sharedConstants/nonIndexedCmrKeys'
 import { granuleRequestPermittedCmrKeys } from '../../../../../sharedConstants/permittedCmrKeys'
 
-import { getTemporal } from '../edscDate'
+import { getTemporal } from '../../../../../sharedUtils/edscDate'
 
 /**
  * Request object for granule specific requests

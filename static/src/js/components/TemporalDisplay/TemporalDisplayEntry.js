@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { getTemporalDateFormat } from '../../util/edscDate'
+import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
 
 const TemporalDisplayEntry = (props) => {
   const {

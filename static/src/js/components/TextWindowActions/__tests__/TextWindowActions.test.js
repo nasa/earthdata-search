@@ -25,13 +25,24 @@ jest.mock('../../../util/files/constructDownloadableFile', () => ({
   constructDownloadableFile: jest.fn()
 }))
 
+const { assign } = window.location
+
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
+
+  delete window.location
+  window.location = { assign: jest.fn() }
+})
+
+afterEach(() => {
+  jest.clearAllMocks()
+  window.location.assign = assign
 })
 
 function setup(overrideProps, shouldMount) {
   const props = {
+    eddLink: 'earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=shortName_versionId&token=Bearer mock-token',
     ...overrideProps
   }
 
@@ -58,25 +69,40 @@ describe('TextWindowActions component', () => {
     expect(expandButton.length).toEqual(1)
   })
 
-  test('renders the modal closed by default', () => {
-    const modal = enzymeWrapper.find(EDSCModalContainer)
+  test('renders the links modal closed by default', () => {
+    const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
 
-    expect(modal.props().isOpen).toEqual(false)
+    expect(linksModal.props().isOpen).toEqual(false)
   })
 
   describe('when clicking the expand button', () => {
     const { enzymeWrapper } = setup()
     const expandButton = enzymeWrapper.find('.text-window-actions__action--expand')
 
-    test('opens the modal', () => {
+    test('opens the linksModal', () => {
       expandButton.simulate('click')
-      const modal = enzymeWrapper.find(EDSCModalContainer)
+      const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
 
-      expect(modal.props().isOpen).toEqual(true)
+      expect(linksModal.props().isOpen).toEqual(true)
     })
   })
 
-  describe('when the modal is open', () => {
+  describe('when clicking the download with edd button', () => {
+    test('opens the eddModal and opens EDD', () => {
+      const { enzymeWrapper } = setup()
+      const downloadWithEddButton = enzymeWrapper.find('.text-window-actions__action--edd')
+
+      downloadWithEddButton.simulate('click')
+      const eddModal = enzymeWrapper.find(EDSCModalContainer).at(1)
+
+      expect(eddModal.props().isOpen).toEqual(true)
+
+      expect(window.location.assign).toHaveBeenCalledTimes(1)
+      expect(window.location.assign).toHaveBeenCalledWith('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=shortName_versionId&token=Bearer mock-token')
+    })
+  })
+
+  describe('when the linksModal is open', () => {
     describe('when the browser does supports copy/paste', () => {
       test('renders the copy button', () => {
         const { enzymeWrapper } = setup({
@@ -86,8 +112,8 @@ describe('TextWindowActions component', () => {
         const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
         expandButton.simulate('click')
 
-        const modal = enzymeWrapper.find(EDSCModalContainer)
-        expect(modal.props().isOpen).toEqual(true)
+        const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
+        expect(linksModal.props().isOpen).toEqual(true)
       })
 
       describe('when clicking the copy button', () => {
@@ -99,9 +125,9 @@ describe('TextWindowActions component', () => {
           const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
           expandButton.simulate('click')
 
-          const modal = enzymeWrapper.find(EDSCModalContainer)
+          const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
 
-          const copyButton = modal.find('.text-window-actions__modal-action--copy').filter(Button)
+          const copyButton = linksModal.find('.text-window-actions__modal-action--copy').filter(Button)
           copyButton.simulate('click')
 
           expect(document.execCommand).toHaveBeenCalledTimes(1)
@@ -117,8 +143,8 @@ describe('TextWindowActions component', () => {
           const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
           expandButton.simulate('click')
 
-          const modal = enzymeWrapper.find(EDSCModalContainer)
-          expect(modal.find('.text-window-actions__modal-action--copy').filter(Button).length).toEqual(0)
+          const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
+          expect(linksModal.find('.text-window-actions__modal-action--copy').filter(Button).length).toEqual(0)
           // Reset the queryCommandSupported function
           global.document.queryCommandSupported = queryCommandSupportedMock
         })
@@ -135,9 +161,9 @@ describe('TextWindowActions component', () => {
         const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
         expandButton.simulate('click')
 
-        const modal = enzymeWrapper.find(EDSCModalContainer)
+        const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
 
-        const saveButton = modal.find('.text-window-actions__modal-action--save').filter(Button)
+        const saveButton = linksModal.find('.text-window-actions__modal-action--save').filter(Button)
 
         expect(saveButton.length).toEqual(1)
       })
@@ -154,9 +180,9 @@ describe('TextWindowActions component', () => {
           const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
           expandButton.simulate('click')
 
-          const modal = enzymeWrapper.find(EDSCModalContainer)
+          const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
 
-          const saveButton = modal.find('.text-window-actions__modal-action--save').filter(Button)
+          const saveButton = linksModal.find('.text-window-actions__modal-action--save').filter(Button)
 
           saveButton.simulate('click', {
             stopPropagation: stopPropagationMock
@@ -168,19 +194,55 @@ describe('TextWindowActions component', () => {
     })
   })
 
-  describe('when closing the modal', () => {
-    test('closes the modal', () => {
+  describe('when the eddModal is open', () => {
+    describe('when clicking the Open Earthdata Download button ', () => {
+      test('renders the save button', () => {
+        const { enzymeWrapper } = setup({}, true)
+
+        const eddButton = enzymeWrapper.find('.text-window-actions__action--edd').filter(Button)
+        eddButton.simulate('click')
+
+        const eddModal = enzymeWrapper.find(EDSCModalContainer).at(1)
+
+        const openButton = eddModal.find('.text-window-actions__modal-action--open-edd').filter(Button)
+        openButton.simulate('click')
+
+        expect(window.location.assign).toHaveBeenCalledTimes(1)
+        expect(window.location.assign).toHaveBeenCalledWith('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=shortName_versionId&token=Bearer mock-token')
+      })
+    })
+  })
+
+  describe('when closing the linksModal', () => {
+    test('closes the linksModal', () => {
       const { enzymeWrapper } = setup()
       const expandButton = enzymeWrapper.find('.text-window-actions__action--expand')
       expandButton.simulate('click')
-      const modal = enzymeWrapper.find(EDSCModalContainer)
-      expect(modal.props().isOpen).toEqual(true)
+      const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
+      expect(linksModal.props().isOpen).toEqual(true)
 
-      modal.props().onClose()
+      linksModal.props().onClose()
 
-      const modalAfter = enzymeWrapper.find(EDSCModalContainer)
+      const linksModalAfter = enzymeWrapper.find(EDSCModalContainer).at(0)
 
-      expect(modalAfter.props().isOpen).toEqual(false)
+      expect(linksModalAfter.props().isOpen).toEqual(false)
+    })
+  })
+
+  describe('when closing the eddModal', () => {
+    test('closes the eddModal', () => {
+      const { enzymeWrapper } = setup()
+      const downloadWithEddButton = enzymeWrapper.find('.text-window-actions__action--edd')
+      downloadWithEddButton.simulate('click')
+
+      const eddModal = enzymeWrapper.find(EDSCModalContainer).at(1)
+      expect(eddModal.props().isOpen).toEqual(true)
+
+      eddModal.props().onClose()
+
+      const eddModalAfter = enzymeWrapper.find(EDSCModalContainer).at(1)
+
+      expect(eddModalAfter.props().isOpen).toEqual(false)
     })
   })
 
@@ -255,8 +317,8 @@ describe('TextWindowActions component', () => {
         const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
         expandButton.simulate('click')
 
-        const modal = enzymeWrapper.find(EDSCModalContainer)
-        expect(modal.props().isOpen).toEqual(true)
+        const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
+        expect(linksModal.props().isOpen).toEqual(true)
 
         test('hides the copy button', () => {
           expect(enzymeWrapper.find('.text-window-actions__modal-action--copy').length).toEqual(0)
@@ -277,8 +339,8 @@ describe('TextWindowActions component', () => {
         const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
         expandButton.simulate('click')
 
-        const modal = enzymeWrapper.find(EDSCModalContainer)
-        expect(modal.props().isOpen).toEqual(true)
+        const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
+        expect(linksModal.props().isOpen).toEqual(true)
 
         test('hides the save button', () => {
           expect(enzymeWrapper.find('.text-window-actions__modal-action--save').length).toEqual(0)

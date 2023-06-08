@@ -6,10 +6,7 @@ import actions from '../index'
 
 import {
   excludeGranule,
-  fetchLinks,
-  fetchBrowseLinks,
-  fetchOpendapLinks,
-  fetchOpenSearchLinks,
+  fetchGranuleLinks,
   getProjectGranules,
   getSearchGranules,
   undoExcludeGranule,
@@ -1081,80 +1078,41 @@ describe('updateGranuleLinks', () => {
   })
 })
 
-describe('fetchLinks', () => {
+describe('fetchGranuleLinks', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
-  test('calls lambda to get the granules from cmr', async () => {
+  test('calls lambda to get the granules links from cmr', async () => {
     nock(/localhost/)
-      .post(/graphql/)
+      .get(/granule_links/)
       .reply(200, {
-        data: {
-          granules: {
-            cursor: 'mock-cursor',
-            items: [
-              {
-                links: [
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
-                    type: 'application/x-hdfeos',
-                    title: 'This file may be downloaded directly from this link',
-                    hreflang: 'en-US',
-                    href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                  },
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
-                    type: 'text/html',
-                    title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
-                    hreflang: 'en-US',
-                    href: 'https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                  },
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
-                    type: 'image/jpeg',
-                    title: 'This Browse file may be downloaded directly from this link (BROWSE)',
-                    hreflang: 'en-US',
-                    href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2015.03.10/BROWSE.MOD11A1.A2000055.h20v06.006.2015057071544.1.jpg'
-                  }
-                ]
-              }
-            ]
-          }
+        cursor: 'mock-cursor',
+        links: {
+          download: [
+            'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf',
+            'https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+          ]
         }
       })
 
     nock(/localhost/)
-      .post(/graphql/)
+      .get(/granule_links/)
       .reply(200, {
-        data: {
-          granules: {
-            cursor: 'mock-cursor',
-            items: [
-              {
-                links: [
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
-                    type: 'application/x-hdfeos',
-                    title: 'This file may be downloaded directly from this link',
-                    hreflang: 'en-US',
-                    href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
-                  }
-                ]
-              }
-            ]
-          }
+        cursor: 'mock-cursor',
+        links: {
+          download: [
+            'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
+          ]
         }
       })
 
     nock(/localhost/)
-      .post(/graphql/)
+      .get(/granule_links/)
       .reply(200, {
-        data: {
-          granules: {
-            cursor: 'mock-cursor',
-            items: []
-          }
+        cursor: null,
+        links: {
+          download: []
         }
       })
     const store = mockStore({
@@ -1176,7 +1134,94 @@ describe('fetchLinks', () => {
       granule_count: 588
     }
 
-    await store.dispatch(fetchLinks(params))
+    await store.dispatch(fetchGranuleLinks(params, ['data', 's3']))
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      payload: {
+        id: 3,
+        percentDone: '50',
+        links: {
+          download: [
+            'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf',
+            'https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+          ]
+        }
+      },
+      type: UPDATE_GRANULE_LINKS
+    })
+    expect(storeActions[1]).toEqual({
+      payload: {
+        id: 3,
+        percentDone: '100',
+        links: {
+          download: [
+            'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
+          ]
+        }
+      },
+      type: UPDATE_GRANULE_LINKS
+    })
+  })
+
+  test('calls lambda to get the granules s3 links from cmr', async () => {
+    nock(/localhost/)
+      .get(/granule_links/)
+      .reply(200, {
+        cursor: 'mock-cursor',
+        links: {
+          download: [
+            'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+          ],
+          s3: [
+            's3://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+          ]
+        }
+      })
+
+    nock(/localhost/)
+      .get(/granule_links/)
+      .reply(200, {
+        cursor: 'mock-cursor',
+        links: {
+          download: [
+            'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
+          ],
+          s3: [
+            's3://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+          ]
+        }
+      })
+
+    nock(/localhost/)
+      .get(/granule_links/)
+      .reply(200, {
+        cursor: null,
+        links: {
+          download: [],
+          s3: []
+        }
+      })
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'download'
+      },
+      collection_id: 'C10000005-EDSC',
+      collection_metadata: {},
+      granule_params: {
+        echo_collection_id: 'C10000005-EDSC',
+        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
+      },
+      granule_count: 588
+    }
+
+    await store.dispatch(fetchGranuleLinks(params, ['data', 's3']))
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       payload: {
@@ -1186,7 +1231,9 @@ describe('fetchLinks', () => {
           download: [
             'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
           ],
-          s3: []
+          s3: [
+            's3://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+          ]
         }
       },
       type: UPDATE_GRANULE_LINKS
@@ -1199,265 +1246,33 @@ describe('fetchLinks', () => {
           download: [
             'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
           ],
-          s3: []
+          s3: [
+            's3://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
+          ]
         }
       },
       type: UPDATE_GRANULE_LINKS
     })
   })
 
-  test('does not update granule links if no links exist', async () => {
+  test('calls lambda to get the browse links', async () => {
     nock(/localhost/)
-      .post(/graphql/)
+      .get(/granule_links/)
       .reply(200, {
-        data: {
-          granules: {
-            cursor: 'mock-cursor',
-            items: []
-          }
-        }
-      })
-
-    const store = mockStore({
-      authToken: 'token'
-    })
-
-    const params = {
-      id: 3,
-      environment: 'prod',
-      access_method: {
-        type: 'download'
-      },
-      collection_id: 'C10000005-EDSC',
-      collection_metadata: {},
-      granule_params: {
-        echo_collection_id: 'C10000005-EDSC',
-        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
-      },
-      granule_count: 1
-    }
-
-    await store.dispatch(fetchLinks(params))
-    const storeActions = store.getActions()
-    expect(storeActions.length).toEqual(0)
-  })
-
-  describe('when S3 links exist', () => {
-    test('populates the S3 links', async () => {
-      nock(/localhost/)
-        .post(/graphql/)
-        .reply(200, {
-          data: {
-            granules: {
-              cursor: 'mock-cursor',
-              items: [
-                {
-                  links: [
-                    {
-                      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
-                      type: 'application/x-hdfeos',
-                      title: 'This file may be downloaded directly from this link',
-                      hreflang: 'en-US',
-                      href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                    },
-                    {
-                      rel: 'http://esipfed.org/ns/fedsearch/1.1/s3#',
-                      type: 'application/x-hdfeos',
-                      title: 'This file may be downloaded directly from this link',
-                      hreflang: 'en-US',
-                      href: 's3://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                    },
-                    {
-                      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
-                      type: 'text/html',
-                      title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
-                      hreflang: 'en-US',
-                      href: 'https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                    },
-                    {
-                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
-                      type: 'image/jpeg',
-                      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
-                      hreflang: 'en-US',
-                      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2015.03.10/BROWSE.MOD11A1.A2000055.h20v06.006.2015057071544.1.jpg'
-                    }
-                  ]
-                }
-              ]
-            }
-          }
-        })
-
-      nock(/localhost/)
-        .post(/graphql/)
-        .reply(200, {
-          data: {
-            granules: {
-              cursor: 'mock-cursor',
-              items: [
-                {
-                  links: [
-                    {
-                      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
-                      type: 'application/x-hdfeos',
-                      title: 'This file may be downloaded directly from this link',
-                      hreflang: 'en-US',
-                      href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
-                    },
-                    {
-                      rel: 'http://esipfed.org/ns/fedsearch/1.1/s3#',
-                      type: 'application/x-hdfeos',
-                      title: 'This file may be downloaded directly from this link',
-                      hreflang: 'en-US',
-                      href: 's3://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                    }
-                  ]
-                }
-              ]
-            }
-          }
-        })
-
-      nock(/localhost/)
-        .post(/graphql/)
-        .reply(200, {
-          data: {
-            granules: {
-              cursor: 'mock-cursor',
-              items: []
-            }
-          }
-        })
-
-      const store = mockStore({
-        authToken: 'token'
-      })
-
-      const params = {
-        id: 3,
-        environment: 'prod',
-        access_method: {
-          type: 'download'
-        },
-        collection_id: 'C10000005-EDSC',
-        collection_metadata: {},
-        granule_params: {
-          echo_collection_id: 'C10000005-EDSC',
-          bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
-        },
-        granule_count: 588
-      }
-
-      await store.dispatch(fetchLinks(params))
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        payload: {
-          id: 3,
-          percentDone: '50',
-          links: {
-            download: [
-              'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-            ],
-            s3: [
-              's3://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-            ]
-          }
-        },
-        type: UPDATE_GRANULE_LINKS
-      })
-      expect(storeActions[1]).toEqual({
-        payload: {
-          id: 3,
-          percentDone: '100',
-          links: {
-            download: [
-              'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
-            ],
-            s3: [
-              's3://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-            ]
-          }
-        },
-        type: UPDATE_GRANULE_LINKS
-      })
-    })
-  })
-})
-
-describe('fetchBrowseLinks', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
-  test('calls lambda to get the granules from cmr', async () => {
-    nock(/localhost/)
-      .post(/graphql/)
-      .reply(200, {
-        data: {
-          granules: {
-            cursor: 'mock-cursor',
-            items: [
-              {
-                links: [
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
-                    type: 'application/x-hdfeos',
-                    title: 'This file may be downloaded directly from this link',
-                    hreflang: 'en-US',
-                    href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                  },
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
-                    type: 'text/html',
-                    title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
-                    hreflang: 'en-US',
-                    href: 'https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h20v06.006.2015057071542.hdf'
-                  },
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
-                    type: 'image/jpeg',
-                    title: 'This Browse file may be downloaded directly from this link (BROWSE)',
-                    hreflang: 'en-US',
-                    href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2015.03.10/BROWSE.MOD11A1.A2000055.h20v06.006.2015057071544.1.jpg'
-                  }
-                ]
-              }
-            ]
-          }
+        cursor: 'mock-cursor',
+        links: {
+          browse: [
+            'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2015.03.10/BROWSE.MOD11A1.A2000055.h20v06.006.2015057071544.1.jpg'
+          ]
         }
       })
 
     nock(/localhost/)
-      .post(/graphql/)
+      .get(/granule_links/)
       .reply(200, {
-        data: {
-          granules: {
-            cursor: 'mock-cursor',
-            items: [
-              {
-                links: [
-                  {
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
-                    type: 'application/x-hdfeos',
-                    title: 'This file may be downloaded directly from this link',
-                    hreflang: 'en-US',
-                    href: 'https://e4ftl01.cr.usgs.gov//MODV6_Dal_E/MOLT/MOD11A1.006/2000.02.24/MOD11A1.A2000055.h30v12.006.2015057072109.hdf'
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      })
-
-    nock(/localhost/)
-      .post(/graphql/)
-      .reply(200, {
-        data: {
-          granules: {
-            cursor: 'mock-cursor',
-            items: []
-          }
+        cursor: null,
+        links: {
+          browse: []
         }
       })
     const store = mockStore({
@@ -1471,7 +1286,13 @@ describe('fetchBrowseLinks', () => {
         type: 'download'
       },
       collection_id: 'C10000005-EDSC',
-      collection_metadata: {},
+      collection_metadata: {
+        granules: {
+          items: [{
+            browseFlag: true
+          }]
+        }
+      },
       granule_params: {
         echo_collection_id: 'C10000005-EDSC',
         bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
@@ -1479,7 +1300,7 @@ describe('fetchBrowseLinks', () => {
       granule_count: 588
     }
 
-    await store.dispatch(fetchBrowseLinks(params))
+    await store.dispatch(fetchGranuleLinks(params, ['browse']))
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       payload: {
@@ -1493,443 +1314,28 @@ describe('fetchBrowseLinks', () => {
       },
       type: UPDATE_GRANULE_LINKS
     })
-    expect(storeActions[1]).toEqual({
-      payload: {
-        id: 3,
-        percentDone: '100',
+  })
+
+  test('calls lambda to get the opensearch links', async () => {
+    nock(/localhost/)
+      .get(/granule_links/)
+      .reply(200, {
+        cursor: 'mock-cursor',
+        links: {
+          browse: [
+            'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2015.03.10/BROWSE.MOD11A1.A2000055.h20v06.006.2015057071544.1.jpg'
+          ]
+        }
+      })
+
+    nock(/localhost/)
+      .get(/granule_links/)
+      .reply(200, {
+        cursor: null,
         links: {
           browse: []
         }
-      },
-      type: UPDATE_GRANULE_LINKS
-    })
-  })
-
-  test('does not update granule links if no links exist', async () => {
-    nock(/localhost/)
-      .post(/graphql/)
-      .reply(200, {
-        data: {
-          granules: {
-            cursor: 'mock-cursor',
-            items: []
-          }
-        }
       })
-
-    const store = mockStore({
-      authToken: 'token'
-    })
-
-    const params = {
-      id: 3,
-      environment: 'prod',
-      access_method: {
-        type: 'download'
-      },
-      collection_id: 'C10000005-EDSC',
-      collection_metadata: {},
-      granule_params: {
-        echo_collection_id: 'C10000005-EDSC',
-        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
-      },
-      granule_count: 1
-    }
-
-    await store.dispatch(fetchBrowseLinks(params))
-    const storeActions = store.getActions()
-    expect(storeActions.length).toEqual(0)
-  })
-})
-
-describe('fetchOpendapLinks', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
-  test('calls lambda to get links from opendap', async () => {
-    nock(/localhost/)
-      .post(/ous/, (body) => {
-        const { params } = body
-
-        delete params.requestId
-
-        // Ensure that the payload we're sending OUS is correct
-        return JSON.stringify(params) === JSON.stringify({
-          bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
-          echo_collection_id: 'C10000005-EDSC',
-          format: 'nc4',
-          page_num: '1',
-          page_size: '500',
-          variables: ['V1000004-EDSC']
-        })
-      })
-      .reply(200, {
-        items: [
-          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
-          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
-          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
-        ]
-      })
-
-    nock(/localhost/)
-      .post(/ous/, (body) => {
-        const { params } = body
-
-        delete params.requestId
-
-        // Ensure that the payload we're sending OUS is correct
-        return JSON.stringify(params) === JSON.stringify({
-          bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
-          echo_collection_id: 'C10000005-EDSC',
-          format: 'nc4',
-          page_num: '2',
-          page_size: '500',
-          variables: ['V1000004-EDSC']
-        })
-      })
-      .reply(200, {
-        items: []
-      })
-
-    const store = mockStore({
-      authToken: 'token'
-    })
-
-    const params = {
-      id: 3,
-      environment: 'prod',
-      access_method: {
-        type: 'OPeNDAP',
-        selectedVariables: ['V1000004-EDSC'],
-        selectedOutputFormat: 'nc4'
-      },
-      collection_id: 'C10000005-EDSC',
-      collection_metadata: {},
-      granule_params: {
-        echo_collection_id: 'C10000005-EDSC',
-        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
-      },
-      granule_count: 3
-    }
-
-    await store.dispatch(fetchOpendapLinks(params))
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      payload: {
-        id: 3,
-        links: {
-          download: [
-            'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
-            'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
-            'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
-          ]
-        }
-      },
-      type: UPDATE_GRANULE_LINKS
-    })
-  })
-
-  test('calls lambda to get links from opendap with excluded granules', async () => {
-    nock(/localhost/)
-      .post(/ous/, (body) => {
-        const { params } = body
-
-        delete params.requestId
-
-        // Ensure that the payload we're sending OUS is correct
-        return JSON.stringify(params) === JSON.stringify({
-          bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
-          echo_collection_id: 'C10000005-EDSC',
-          exclude_granules: true,
-          granules: ['G10000404-EDSC'],
-          format: 'nc4',
-          page_num: '1',
-          page_size: '500',
-          variables: ['V1000004-EDSC']
-        })
-      })
-      .reply(200, {
-        items: [
-          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
-          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
-          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
-        ]
-      })
-    nock(/localhost/)
-      .post(/ous/, (body) => {
-        const { params } = body
-
-        delete params.requestId
-
-        // Ensure that the payload we're sending OUS is correct
-        return JSON.stringify(params) === JSON.stringify({
-          bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
-          echo_collection_id: 'C10000005-EDSC',
-          exclude_granules: true,
-          granules: ['G10000404-EDSC'],
-          format: 'nc4',
-          page_num: '2',
-          page_size: '500',
-          variables: ['V1000004-EDSC']
-        })
-      })
-      .reply(200, {
-        items: []
-      })
-
-    const store = mockStore({
-      authToken: 'token'
-    })
-
-    const params = {
-      id: 3,
-      environment: 'prod',
-      access_method: {
-        type: 'OPeNDAP',
-        selectedVariables: ['V1000004-EDSC'],
-        selectedOutputFormat: 'nc4'
-      },
-      collection_id: 'C10000005-EDSC',
-      collection_metadata: {},
-      granule_params: {
-        echo_collection_id: 'C10000005-EDSC',
-        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'],
-        exclude: {
-          concept_id: ['G10000404-EDSC']
-        }
-      },
-      granule_count: 3
-    }
-
-    await store.dispatch(fetchOpendapLinks(params))
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      payload: {
-        id: 3,
-        links: {
-          download: [
-            'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
-            'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
-            'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
-          ]
-        }
-      },
-      type: UPDATE_GRANULE_LINKS
-    })
-  })
-
-  test('calls lambda to get links from opendap when using additive model', async () => {
-    nock(/localhost/)
-      .post(/ous/, (body) => {
-        const { params } = body
-
-        delete params.requestId
-
-        // Ensure that the payload we're sending OUS is correct
-        return JSON.stringify(params) === JSON.stringify({
-          bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
-          echo_collection_id: 'C10000005-EDSC',
-          granules: ['G10000003-EDSC'],
-          format: 'nc4',
-          page_num: '1',
-          page_size: '500',
-          variables: ['V1000004-EDSC']
-        })
-      })
-      .reply(200, {
-        items: [
-          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
-        ]
-      })
-    nock(/localhost/)
-      .post(/ous/, (body) => {
-        const { params } = body
-
-        delete params.requestId
-
-        // Ensure that the payload we're sending OUS is correct
-        return JSON.stringify(params) === JSON.stringify({
-          bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502',
-          echo_collection_id: 'C10000005-EDSC',
-          granules: ['G10000003-EDSC'],
-          format: 'nc4',
-          page_num: '2',
-          page_size: '500',
-          variables: ['V1000004-EDSC']
-        })
-      })
-      .reply(200, {
-        items: []
-      })
-
-    const store = mockStore({
-      authToken: 'token'
-    })
-
-    const params = {
-      id: 3,
-      environment: 'prod',
-      access_method: {
-        type: 'OPeNDAP',
-        selectedVariables: ['V1000004-EDSC'],
-        selectedOutputFormat: 'nc4'
-      },
-      collection_id: 'C10000005-EDSC',
-      collection_metadata: {},
-      granule_params: {
-        concept_id: ['G10000003-EDSC'],
-        echo_collection_id: 'C10000005-EDSC',
-        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
-      },
-      granule_count: 1
-    }
-
-    await store.dispatch(fetchOpendapLinks(params))
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      payload: {
-        id: 3,
-        links: {
-          download: [
-            'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
-          ]
-        }
-      },
-      type: UPDATE_GRANULE_LINKS
-    })
-  })
-
-  test('calls lambda to get links from opendap without spatial params added', async () => {
-    nock(/localhost/)
-      .post(/ous/, (body) => {
-        const { params } = body
-
-        delete params.requestId
-
-        // Ensure that the payload we're sending OUS is correct
-        return JSON.stringify(params) === JSON.stringify({
-          echo_collection_id: 'C10000005-EDSC',
-          format: 'nc4',
-          page_num: '1',
-          page_size: '500',
-          variables: ['V1000004-EDSC']
-        })
-      })
-      .reply(200, {
-        items: [
-          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
-          'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
-          'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
-        ]
-      })
-    nock(/localhost/)
-      .post(/ous/, (body) => {
-        const { params } = body
-
-        delete params.requestId
-
-        // Ensure that the payload we're sending OUS is correct
-        return JSON.stringify(params) === JSON.stringify({
-          echo_collection_id: 'C10000005-EDSC',
-          format: 'nc4',
-          page_num: '2',
-          page_size: '500',
-          variables: ['V1000004-EDSC']
-        })
-      })
-      .reply(200, {
-        items: []
-      })
-
-    const store = mockStore({
-      authToken: 'token'
-    })
-
-    const params = {
-      id: 3,
-      environment: 'prod',
-      access_method: {
-        type: 'OPeNDAP',
-        selectedVariables: ['V1000004-EDSC'],
-        selectedOutputFormat: 'nc4'
-      },
-      collection_id: 'C10000005-EDSC',
-      collection_metadata: {},
-      granule_params: {
-        echo_collection_id: 'C10000005-EDSC'
-      },
-      granule_count: 3
-    }
-
-    await store.dispatch(fetchOpendapLinks(params))
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      payload: {
-        id: 3,
-        links: {
-          download: [
-            'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.003.L2.RetStd.v6.0.7.0.G13075064534.hdf.nc',
-            'https://f5eil01.edn.ecs.nasa.gov/opendap/DEV01/FS2/AIRS/AIRX2RET.006/2009.01.08/AIRS.2009.01.08.004.L2.RetStd.v6.0.7.0.G13075064644.hdf.nc',
-            'https://airsl2.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level2/AIRX2RET.006/2009/008/AIRS.2009.01.08.005.L2.RetStd.v6.0.7.0.G13075064139.hdf.nc'
-          ]
-        }
-      },
-      type: UPDATE_GRANULE_LINKS
-    })
-  })
-})
-
-describe('fetchOpenSearchLinks', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
-  test('fetches all pages of opensearch links', async () => {
-    jest.spyOn(applicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-      openSearchGranuleLinksPageSize: '3'
-    }))
-
-    nock(/localhost/)
-      .post(/opensearch/)
-      .reply(200, `
-        <feed>
-          <opensearch:totalResults>5</opensearch:totalResults>
-          <entry>
-            <link href="https://example.com/granule1.zip" rel="enclosure" />
-            <link href="https://example.com" rel="alternate" />
-            <link href="https://example.com/browse1.png" rel="browse" />
-          </entry>
-          <entry>
-            <link href="https://example.com/granule2.zip" rel="enclosure" />
-            <link href="https://example.com" rel="alternate" />
-            <link href="https://example.com/browse2.png" rel="browse" />
-          </entry>
-          <entry>
-            <link href="https://example.com/granule3.zip" rel="enclosure" />
-            <link href="https://example.com" rel="alternate" />
-            <link href="https://example.com/browse3.png" rel="browse" />
-          </entry>
-        </feed>
-      `)
-    nock(/localhost/)
-      .post(/opensearch/)
-      .reply(200, `
-        <feed>
-          <opensearch:totalResults>5</opensearch:totalResults>
-          <entry>
-            <link href="https://example.com/granule4.zip" rel="enclosure" />
-            <link href="https://example.com" rel="alternate" />
-            <link href="https://example.com/browse4.png" rel="browse" />
-            </entry>
-          <entry>
-            <link href="https://example.com/granule5.zip" rel="enclosure" />
-            <link href="https://example.com" rel="alternate" />
-            <link href="https://example.com/browse5.png" rel="browse" />
-          </entry>
-        </feed>
-      `)
-
     const store = mockStore({
       authToken: 'token'
     })
@@ -1942,52 +1348,24 @@ describe('fetchOpenSearchLinks', () => {
       },
       collection_id: 'C10000005-EDSC',
       collection_metadata: {
-        links: [
-          {
-            href: 'http://exmple.com/mock-osdd',
-            rel: 'http://exmple.com/search#'
-          }
-        ]
+        isOpenSearch: true
       },
       granule_params: {
-        echo_collection_id: 'C10000005-EDSC'
+        echo_collection_id: 'C10000005-EDSC',
+        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
       },
-      granule_count: 5
+      granule_count: 588
     }
 
-    await store.dispatch(fetchOpenSearchLinks(params))
+    await store.dispatch(fetchGranuleLinks(params, ['browse']))
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
       payload: {
         id: 3,
-        percentDone: '50',
+        percentDone: '8',
         links: {
           browse: [
-            'https://example.com/browse1.png',
-            'https://example.com/browse2.png',
-            'https://example.com/browse3.png'
-          ],
-          download: [
-            'https://example.com/granule1.zip',
-            'https://example.com/granule2.zip',
-            'https://example.com/granule3.zip'
-          ]
-        }
-      },
-      type: UPDATE_GRANULE_LINKS
-    })
-    expect(storeActions[1]).toEqual({
-      payload: {
-        id: 3,
-        percentDone: '100',
-        links: {
-          browse: [
-            'https://example.com/browse4.png',
-            'https://example.com/browse5.png'
-          ],
-          download: [
-            'https://example.com/granule4.zip',
-            'https://example.com/granule5.zip'
+            'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2015.03.10/BROWSE.MOD11A1.A2000055.h20v06.006.2015057071544.1.jpg'
           ]
         }
       },
@@ -1995,9 +1373,45 @@ describe('fetchOpenSearchLinks', () => {
     })
   })
 
-  test('does not update granule links on error', async () => {
+  test('does not update granule links if no links exist', async () => {
     nock(/localhost/)
-      .post(/opensearch/)
+      .get(/granule_links/)
+      .reply(200, {
+        cursor: null,
+        links: {
+          download: []
+        }
+      })
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const params = {
+      id: 3,
+      environment: 'prod',
+      access_method: {
+        type: 'download'
+      },
+      collection_id: 'C10000005-EDSC',
+      collection_metadata: {},
+      granule_params: {
+        echo_collection_id: 'C10000005-EDSC',
+        bounding_box: ['23.607421875,5.381262277997806,27.7965087890625,14.973184553280502']
+      },
+      granule_count: 1
+    }
+
+    await store.dispatch(fetchGranuleLinks(params, ['data', 's3']))
+    const storeActions = store.getActions()
+    expect(storeActions.length).toEqual(0)
+  })
+
+  test('handles an error when fetching links', async () => {
+    const handleErrorMock = jest.spyOn(actions, 'handleError')
+
+    nock(/localhost/)
+      .get(/granule_links/)
       .reply(500)
 
     nock(/localhost/)
@@ -2031,7 +1445,13 @@ describe('fetchOpenSearchLinks', () => {
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
-    await store.dispatch(fetchOpenSearchLinks(params)).then(() => {
+    await store.dispatch(fetchGranuleLinks(params, ['data', 's3'])).then(() => {
+      expect(handleErrorMock).toHaveBeenCalledTimes(1)
+      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+        action: 'fetchGranuleLinks',
+        resource: 'granule links'
+      }))
+
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })

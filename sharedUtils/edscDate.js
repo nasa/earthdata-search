@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { getApplicationConfig } from './config'
 
 export const normalizeTime = (time) => {
   if (!time) return null

@@ -22,6 +22,11 @@
   &__action {
     margin-left: $spacer/4;
     background-color: $color__black--200;
+
+    &--edd {
+      background-color: $color__green;
+      color: $color__white;
+    }
   }
 
   &__copied-success {
