@@ -3,7 +3,7 @@ import { encodeGridCoords } from './url/gridEncoders'
 import { encodeTemporal } from './url/temporalEncoders'
 import { getApplicationConfig, getEarthdataConfig } from '../../../../sharedUtils/config'
 import { withAdvancedSearch } from './withAdvancedSearch'
-import { getOpenSearchOsddLink } from './getOpenSearchLink'
+import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
 
 /**
  * Populate granule payload used to update the store
@@ -239,7 +239,8 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     temporalString = encodeTemporal(temporal)
   }
 
-  const isOpenSearch = !!getOpenSearchOsddLink(collectionMetadata)
+  const openSearchOsdd = getOpenSearchOsddLink(collectionMetadata)
+  const isOpenSearch = !!openSearchOsdd
 
   const options = {}
   if (readableGranuleName) {
@@ -273,7 +274,7 @@ export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
     isOpenSearch,
     line,
     onlineOnly,
-    openSearchOsdd: getOpenSearchOsddLink(collectionMetadata),
+    openSearchOsdd,
     options,
     orbitNumber,
     pageNum,
@@ -411,19 +412,6 @@ export const isDataLink = (link, type) => {
 }
 
 /**
- * Determines if a given link is a data link.
- * A link is a data link if it has data in the rel property and it is not inherited.
- * @param {Object} link An individual link object from granule metadata
- * @param {String} type 'http' or 'ftp'
- * @returns {Boolean}
- */
-export const isS3Link = (link) => {
-  const { rel } = link
-
-  return rel.indexOf('/s3#') !== -1
-}
-
-/**
  * Given a list of granule metadata links, filters out those links that are not data links
  * prefering http over ftp for duplicate filenames
  * @param {Array} links List of links from granule metadata
@@ -450,74 +438,4 @@ export const createDataLinks = (links = []) => {
     ...httpDataLinks,
     ...ftpLinks
   ]
-}
-
-/**
- * Given a list of granule metadata links, filters out those links that are not s3 links
- * @param {Array} links List of links from granule metadata
- * @returns {Array} List of s3 links filtered from input links
- */
-export const createS3Links = (links = []) => links.filter((link) => isS3Link(link))
-
-/**
-* Pull out download links from within the granule metadata
-* @param {Array} granules search result for granules that a user has asked to download
-* @returns {Array} All relevant urls for downloadable granules
-*/
-export const getDownloadUrls = (granules) => {
-  // Iterate through each granule search result to pull out relevant links
-  const urlArrays = granules.map((granuleMetadata) => {
-    const { links: linkMetadata = [] } = granuleMetadata
-
-    // Find the correct link from the list within the metadata
-    return linkMetadata.filter((link) => {
-      const { inherited, rel } = link
-      return rel.includes('/data#') && !inherited
-    })
-  }).filter(Boolean)
-
-  // `filter` returns an array so we'll end up with an array of arrays so we
-  // need to flatten the result before we return it
-  return [].concat(...urlArrays)
-}
-
-/**
-* Pull out browse links from within the granule metadata
-* @param {Array} granules search result for granules that a user has asked to download
-* @returns {Array} All relevant urls for downloadable granules
-*/
-export const getBrowseUrls = (granules) => {
-  // Iterate through each granule search result to pull out relevant links
-  const urlArrays = granules.map((granuleMetadata) => {
-    const { links: linkMetadata = [] } = granuleMetadata
-
-    // Find the correct link from the list within the metadata
-    return linkMetadata.filter((link) => {
-      const { inherited, rel } = link
-      return rel.includes('/browse#') && !inherited
-    })
-  }).filter(Boolean)
-
-  // `filter` returns an array so we'll end up with an array of arrays so we
-  // need to flatten the result before we return it
-  return [].concat(...urlArrays)
-}
-
-/**
-* Pull out S3 links from within the granule metadata
-* @param {Array} granules search result for granules that a user has asked to download
-* @returns {Array} All relevant s3 paths for downloadable granules
-*/
-export const getS3Urls = (granules) => {
-  // Iterate through each granule search result to pull out relevant links
-  const urlArrays = granules.map((granuleMetadata) => {
-    const { links: linkMetadata = [] } = granuleMetadata
-
-    // Find the correct link from the list within the metadata
-    return createS3Links(linkMetadata)
-  }).filter(Boolean)
-
-  // `filter` returns an array so we'll end up with an array of arrays so we
-  // need to flatten the result before we return it
-  return [].concat(...urlArrays)
 }

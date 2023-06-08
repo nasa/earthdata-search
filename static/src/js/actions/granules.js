@@ -1,24 +1,19 @@
 import { isCancel } from 'axios'
 import { isEmpty } from 'lodash'
-import camelcaseKeys from 'camelcase-keys'
 import { mbr } from '@edsc/geo-utils'
 import 'array-foreach-async'
+import { stringify } from 'qs'
 
 import actions from './index'
 import {
   populateGranuleResults,
   prepareGranuleParams,
   buildGranuleSearchParams,
-  getDownloadUrls,
-  getS3Urls,
   extractProjectCollectionGranuleParams,
-  extractGranuleSearchParams,
-  getBrowseUrls
+  extractGranuleSearchParams
 } from '../util/granules'
 import GranuleRequest from '../util/request/granuleRequest'
-import OusGranuleRequest from '../util/request/ousGranuleRequest'
 import OpenSearchGranuleRequest from '../util/request/openSearchGranuleRequest'
-import GraphQlRequest from '../util/request/graphQlRequest'
 import {
   ADD_GRANULE_METADATA,
   ADD_MORE_GRANULE_RESULTS,
@@ -38,7 +33,6 @@ import {
   UPDATE_GRANULE_RESULTS,
   INITIALIZE_COLLECTION_GRANULES_QUERY
 } from '../constants/actionTypes'
-import { prepareGranuleAccessParams } from '../../../../sharedUtils/prepareGranuleAccessParams'
 import { toggleSpatialPolygonWarning } from './ui'
 import {
   startProjectGranulesTimer,
@@ -59,9 +53,9 @@ import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { eventEmitter } from '../events/events'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
-import { getOpenSearchOsddLink } from '../util/getOpenSearchLink'
+import RetrievalRequest from '../util/request/retrievalRequest'
 
-const { granuleLinksPageSize } = getApplicationConfig()
+const { granuleLinksPageSize, openSearchGranuleLinksPageSize } = getApplicationConfig()
 
 export const addMoreGranuleResults = (payload) => ({
   type: ADD_MORE_GRANULE_RESULTS,
@@ -145,71 +139,15 @@ export const initializeCollectionGranulesQuery = (payload) => ({
   payload
 })
 
-const granulesGraphQlQuery = `
-  query GetGranuleLinks(
-    $boundingBox: [String]
-    $browseOnly: Boolean
-    $circle: [String]
-    $cloudCover: JSON
-    $collectionConceptId: String
-    $conceptId: [String]
-    $cursor: String
-    $dayNightFlag: String
-    $equatorCrossingDate: JSON
-    $equatorCrossingLongitude: JSON
-    $exclude: JSON
-    $limit: Int
-    $line: [String]
-    $linkTypes: [String]
-    $offset: Int
-    $onlineOnly: Boolean
-    $options: JSON
-    $orbitNumber: JSON
-    $point: [String]
-    $polygon: [String]
-    $readableGranuleName: [String]
-    $sortKey: [String]
-    $temporal: String
-    $twoDCoordinateSystem: JSON
-  ) {
-    granules(
-      boundingBox: $boundingBox
-      browseOnly: $browseOnly
-      circle: $circle
-      cloudCover: $cloudCover
-      collectionConceptId: $collectionConceptId
-      conceptId: $conceptId
-      cursor: $cursor
-      dayNightFlag: $dayNightFlag
-      equatorCrossingDate: $equatorCrossingDate
-      equatorCrossingLongitude: $equatorCrossingLongitude
-      exclude: $exclude
-      limit: $limit
-      line: $line
-      linkTypes: $linkTypes
-      offset: $offset
-      onlineOnly: $onlineOnly
-      options: $options
-      orbitNumber: $orbitNumber
-      point: $point
-      polygon: $polygon
-      readableGranuleName: $readableGranuleName
-      sortKey: $sortKey
-      temporal: $temporal
-      twoDCoordinateSystem: $twoDCoordinateSystem
-    ) {
-      cursor
-      items {
-        links
-      }
-    }
-  }`
-
 /**
  * Fetch all relevant links to the granules that are part of the provided collection
  * @param {Object} retrievalCollectionData Retrieval Collection response from the database
+ * @param {Array} linkTypes List of linkTypes to retrieve
  */
-export const fetchLinks = (retrievalCollectionData) => async (dispatch, getState) => {
+export const fetchGranuleLinks = (
+  retrievalCollectionData,
+  linkTypes
+) => async (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -217,365 +155,85 @@ export const fetchLinks = (retrievalCollectionData) => async (dispatch, getState
 
   const { authToken } = state
 
-  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
-
   const {
     id,
-    collection_id: collectionId,
-    granule_count: granuleCount,
-    granule_params: granuleParams
+    retrieval_collection_id: retrievalCollectionId,
+    collection_metadata: collectionMetadata,
+    granule_count: granuleCount
   } = retrievalCollectionData
 
+  const { isOpenSearch } = collectionMetadata
   // The number of granules to request per page from CMR
-  const pageSize = parseInt(granuleLinksPageSize, 10)
+  let pageSize = parseInt(granuleLinksPageSize, 10)
+  if (isOpenSearch) {
+    pageSize = parseInt(openSearchGranuleLinksPageSize, 10)
+  }
 
   // Determine how many pages we will need to load to display all granules
   const totalPages = Math.ceil(granuleCount / pageSize)
 
-  const preparedGranuleParams = camelcaseKeys(prepareGranuleAccessParams(granuleParams))
+  const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
 
   let cursor
-  let response
-  let finished = false
-  let currentPage = 0
-
-  try {
-    while (!finished) {
-      // eslint-disable-next-line no-await-in-loop
-      response = await graphQlRequestObject.search(granulesGraphQlQuery, {
-        ...preparedGranuleParams,
-        limit: pageSize,
-        linkTypes: ['data', 's3'],
-        collectionConceptId: collectionId,
-        cursor
-      })
-
-      const { data } = response
-      const { data: granulesData } = data
-      const { granules } = granulesData
-      const { cursor: responseCursor, items } = granules
-
-      // Set the cursor returned from GraphQl so the next loop will use it
-      cursor = responseCursor
-
-      if (!items || !items.length) {
-        finished = true
-        break
-      }
-
-      const percentDone = (((currentPage + 1) / totalPages) * 100).toFixed()
-
-      // Fetch the download links from the granule metadata
-      const granuleDownloadLinks = getDownloadUrls(items)
-      const granuleS3Links = getS3Urls(items)
-
-      dispatch(updateGranuleLinks({
-        id,
-        percentDone,
-        links: {
-          download: granuleDownloadLinks.map((lnk) => lnk.href),
-          s3: granuleS3Links.map((lnk) => lnk.href)
-        }
-      }))
-
-      currentPage += 1
-    }
-  } catch (error) {
-    dispatch(actions.handleError({
-      error,
-      action: 'fetchLinks',
-      resource: 'granule links',
-      requestObject: graphQlRequestObject
-    }))
-  }
-
-  return response
-}
-
-/**
- * Fetch all browse links for the granules that are part of the provided collection
- * @param {Object} retrievalCollectionData Retrieval Collection response from the database
- */
-export const fetchBrowseLinks = (retrievalCollectionData) => async (dispatch, getState) => {
-  const state = getState()
-
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
-
-  const { authToken } = state
-
-  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
-
-  const {
-    id,
-    collection_id: collectionId,
-    granule_count: granuleCount,
-    granule_params: granuleParams
-  } = retrievalCollectionData
-
-  // The number of granules to request per page from CMR
-  const pageSize = parseInt(granuleLinksPageSize, 10)
-
-  // Determine how many pages we will need to load to display all granules
-  const totalPages = Math.ceil(granuleCount / pageSize)
-
-  const preparedGranuleParams = camelcaseKeys(prepareGranuleAccessParams(granuleParams))
-
-  let cursor
-  let response
-  let finished = false
-  let currentPage = 0
-
-  try {
-    while (!finished) {
-      // eslint-disable-next-line no-await-in-loop
-      response = await graphQlRequestObject.search(granulesGraphQlQuery, {
-        ...preparedGranuleParams,
-        limit: pageSize,
-        linkTypes: ['browse'],
-        collectionConceptId: collectionId,
-        cursor
-      })
-
-      const { data } = response
-      const { data: granulesData } = data
-      const { granules } = granulesData
-      const { cursor: responseCursor, items } = granules
-
-      // Set the cursor returned from GraphQl so the next loop will use it
-      cursor = responseCursor
-
-      if (!items || !items.length) {
-        finished = true
-        break
-      }
-
-      const percentDone = (((currentPage + 1) / totalPages) * 100).toFixed()
-
-      // Fetch the download links from the granule metadata
-      const granuleBrowseLinks = getBrowseUrls(items)
-
-      dispatch(updateGranuleLinks({
-        id,
-        percentDone,
-        links: {
-          browse: granuleBrowseLinks.map((lnk) => lnk.href)
-        }
-      }))
-
-      currentPage += 1
-    }
-  } catch (error) {
-    dispatch(actions.handleError({
-      error,
-      action: 'fetchBrowseLinks',
-      resource: 'browse links',
-      requestObject: graphQlRequestObject
-    }))
-  }
-
-  return response
-}
-
-/**
- * Fetch all relevant links from CMR Service Bridge (OPeNDAP) to the granules that are part of the provided collection
- * @param {Object} retrievalCollectionData Retreival Collection response from the database
- */
-export const fetchOpendapLinks = (retrievalCollectionData) => async (dispatch, getState) => {
-  const state = getState()
-
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
-
-  const { authToken } = state
-
-  const requestObject = new OusGranuleRequest(authToken, earthdataEnvironment)
-
-  const {
-    id,
-    access_method: accessMethod,
-    collection_id: collectionId,
-    granule_params: granuleParams
-  } = retrievalCollectionData
-
-  const {
-    bounding_box: boundingBox = [],
-    circle = [],
-    concept_id: conceptId = [],
-    exclude = {},
-    point = [],
-    polygon = [],
-    temporal
-  } = granuleParams
-
-  const {
-    selectedVariables: variables,
-    selectedOutputFormat: format
-  } = accessMethod
-
-  const ousPayload = {
-    format,
-    variables,
-    echo_collection_id: collectionId,
-    page_size: granuleLinksPageSize
-  }
-
-  // If conceptId is truthy, send those granules explictly.
-  if (conceptId.length) {
-    ousPayload.granules = conceptId
-  }
-
-  const { concept_id: excludedGranuleIds = [] } = exclude
-
-  if (
-    boundingBox.length > 0
-    || circle.length > 0
-    || point.length > 0
-    || polygon.length > 0
-  ) {
-    const {
-      swLat,
-      swLng,
-      neLat,
-      neLng
-    } = mbr({
-      boundingBox: boundingBox[0],
-      circle: circle[0],
-      point: point[0],
-      polygon: polygon[0]
-    })
-
-    ousPayload.bounding_box = [swLng, swLat, neLng, neLat].join(',')
-  }
-
-  ousPayload.temporal = temporal
-
-  // OUS has a slightly different syntax for excluding params
-  if (excludedGranuleIds.length > 0) {
-    ousPayload.exclude_granules = true
-    ousPayload.granules = excludedGranuleIds
-  }
-
   let response
   let finished = false
   let currentPage = 1
 
+  const params = {
+    cursor,
+    flattenLinks: false,
+    id: retrievalCollectionId,
+    linkTypes,
+    pageNum: currentPage
+  }
+
   try {
     while (!finished) {
-      // When using POST on this endpoint, CMR requires the paging parameters to be strings
-      ousPayload.page_num = `${currentPage}`
-
       // eslint-disable-next-line no-await-in-loop
-      response = await requestObject.search(ousPayload)
-      const { data } = response
-      const { items = [] } = data
+      response = await requestObject.fetchLinks(stringify(params, { addQueryPrefix: true, arrayFormat: 'repeat' }))
 
-      if (items.length === 0) {
+      const { data } = response
+      const { cursor: responseCursor, links = {} } = data
+
+      // Set the cursor returned from GraphQl so the next loop will use it
+      cursor = responseCursor
+      params.cursor = cursor
+
+      const percentDone = (((currentPage) / totalPages) * 100).toFixed()
+
+      // Fetch the download links from the granule metadata
+      const {
+        browse: granuleBrowseLinks,
+        download: granuleDownloadLinks,
+        s3: granuleS3Links
+      } = links
+
+      if ((!granuleBrowseLinks || granuleBrowseLinks.length === 0)
+        && (!granuleDownloadLinks || granuleDownloadLinks.length === 0)
+        && (!granuleS3Links || granuleS3Links.length === 0)
+      ) {
         finished = true
         break
       }
 
       dispatch(updateGranuleLinks({
         id,
+        percentDone,
         links: {
-          download: items
+          browse: granuleBrowseLinks,
+          download: granuleDownloadLinks,
+          s3: granuleS3Links
         }
       }))
 
       currentPage += 1
+      params.pageNum = currentPage
     }
   } catch (error) {
     dispatch(actions.handleError({
       error,
-      action: 'fetchOpendapLinks',
-      resource: 'OPeNDAP links',
-      requestObject
-    }))
-  }
-
-  return response
-}
-
-/**
- * Fetch all relevant links from OpenSearch to the granules that are part of the provided collection
- * @param {Object} retrievalCollectionData Retreival Collection response from the database
- */
-export const fetchOpenSearchLinks = (retrievalCollectionData) => async (dispatch, getState) => {
-  const state = getState()
-
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
-
-  const { authToken } = state
-
-  // Format and structure data from Redux to be sent to CMR
-  const {
-    id,
-    collection_metadata: collectionMetadata,
-    granule_count: granuleCount,
-    granule_params: granuleParams
-  } = retrievalCollectionData
-
-  const { openSearchGranuleLinksPageSize } = getApplicationConfig()
-  const pageSize = parseInt(openSearchGranuleLinksPageSize, 10)
-
-  granuleParams.open_search_osdd = getOpenSearchOsddLink(collectionMetadata)
-  granuleParams.page_size = pageSize
-
-  const totalPages = Math.ceil(granuleCount / pageSize)
-
-  const requestObject = new OpenSearchGranuleRequest(authToken, earthdataEnvironment)
-
-  let response
-
-  try {
-    await new Array(totalPages).forEachAsync(async (_, index) => {
-      const currentPage = index + 1
-      granuleParams.pageNum = currentPage
-
-      response = await requestObject.search(camelcaseKeys(granuleParams))
-
-      const { data } = response
-      const { feed } = data
-      const { entry } = feed
-
-      const downloadLinks = []
-      const browseLinks = []
-
-      entry.forEach((granule) => {
-        const {
-          browse_url: browseUrl,
-          link: links = []
-        } = granule
-
-        const [downloadLink] = links.filter((link) => link.rel === 'enclosure')
-
-        const { href } = downloadLink
-        downloadLinks.push(href)
-
-        if (browseUrl) {
-          browseLinks.push(browseUrl)
-        }
-      })
-
-      const percentDone = (((currentPage) / totalPages) * 100).toFixed()
-
-      dispatch(updateGranuleLinks({
-        id,
-        percentDone,
-        links: {
-          browse: browseLinks,
-          download: downloadLinks
-        }
-      }))
-
-      return response
-    })
-  } catch (error) {
-    dispatch(actions.handleError({
-      error,
-      action: 'fetchOpenSearchLinks',
-      resource: 'OpenSearch links',
+      action: 'fetchGranuleLinks',
+      resource: 'granule links',
       requestObject
     }))
   }
@@ -584,54 +242,17 @@ export const fetchOpenSearchLinks = (retrievalCollectionData) => async (dispatch
 }
 
 export const fetchRetrievalCollectionGranuleLinks = (data) => (dispatch) => {
-  const {
-    access_method: accessMethod,
-    collection_metadata: collectionMetadata
-  } = data
-  const { type } = accessMethod
+  dispatch(setGranuleLinksLoading())
 
-  // Determine which action to take based on the access method type
-  if (type === 'download') {
-    const { isOpenSearch } = collectionMetadata
-    dispatch(setGranuleLinksLoading())
-
-    if (isOpenSearch) {
-      dispatch(fetchOpenSearchLinks(data)).then(() => {
-        dispatch(setGranuleLinksLoaded())
-      })
-    } else {
-      dispatch(fetchLinks(data)).then(() => {
-        dispatch(setGranuleLinksLoaded())
-      })
-    }
-  } else if (type === 'OPeNDAP') {
-    dispatch(setGranuleLinksLoading())
-    dispatch(fetchOpendapLinks(data)).then(() => {
-      dispatch(setGranuleLinksLoaded())
-    })
-  }
+  dispatch(fetchGranuleLinks(data, ['data', 's3', 'browse'])).then(() => {
+    dispatch(setGranuleLinksLoaded())
+  })
 }
 
 export const fetchRetrievalCollectionGranuleBrowseLinks = (data) => (dispatch) => {
-  const {
-    collection_metadata: collectionMetadata
-  } = data
-
-  // Check for any granules retrieved in the project collection metadata for browseFlag = true
-  const { granules = {} } = collectionMetadata
-  const { items: granuleItems = [] } = granules
-
-  const hasBrowse = granuleItems.some((granule) => {
-    const { browseFlag } = granule
-
-    return browseFlag
+  dispatch(fetchGranuleLinks(data, ['browse'])).then(() => {
+    dispatch(setGranuleLinksLoaded())
   })
-
-  if (hasBrowse) {
-    dispatch(fetchBrowseLinks(data)).then(() => {
-      dispatch(setGranuleLinksLoaded())
-    })
-  }
 }
 
 // Cancel token to cancel pending search requests
@@ -691,6 +312,7 @@ export const getSearchGranules = () => (dispatch, getState) => {
 
   let requestObject = null
 
+  // TODO can I replace this with a single page of fetchGranuleLinks? Maybe just the opensearch call
   if (isOpenSearch) {
     requestObject = new OpenSearchGranuleRequest(authToken, earthdataEnvironment)
 
@@ -826,6 +448,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
 
     let requestObject = null
 
+    // TODO can I replace this with a single page of fetchGranuleLinks?
     if (isOpenSearch) {
       requestObject = new OpenSearchGranuleRequest(authToken, earthdataEnvironment)
 

@@ -41,6 +41,7 @@ export const STACJsonPanel = ({
         fileName={downloadFileName}
         clipboardContents={stacLinks.join('\n')}
         modalTitle="STAC Links"
+        disableEdd
       >
         <ul className="download-links-panel__list">
           {

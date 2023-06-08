@@ -9,7 +9,7 @@ import {
   FaQuestionCircle
 } from 'react-icons/fa'
 
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { getStateFromOrderStatus, aggregatedOrderStatus, formatOrderStatus } from '../../../../../sharedUtils/orderStatus'
 import { pluralize } from '../../util/pluralize'
 import { commafy } from '../../util/commafy'
@@ -81,6 +81,11 @@ export class OrderStatusItem extends PureComponent {
           this.shouldRefresh()
         }, orderStatusRefreshTime)
       }
+
+      // Fetch the granule browse links recardless of accessMethodType
+      // download & opendap browse links return with the granule links, every other access method needs
+      // to fetch them here
+      onFetchRetrievalCollectionGranuleBrowseLinks(collection)
     }
 
     if (collection && ['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
@@ -95,9 +100,6 @@ export class OrderStatusItem extends PureComponent {
         onFetchRetrievalCollectionGranuleLinks(collection)
       }
     }
-
-    // Fetch the granule browse links recardless of accessMethodType
-    onFetchRetrievalCollectionGranuleBrowseLinks(collection)
   }
 
   componentWillUnmount() {
@@ -134,6 +136,30 @@ export class OrderStatusItem extends PureComponent {
     }
   }
 
+  buildEddLink(linkType) {
+    const { authToken, collection } = this.props
+
+    const {
+      collection_metadata: collectionMetadata,
+      retrieval_collection_id: retrievalCollectionId
+    } = collection
+
+    const {
+      conceptId,
+      shortName,
+      versionId
+    } = collectionMetadata
+
+    let downloadId = conceptId
+    if (shortName) downloadId = `${shortName}_${versionId}`
+
+    const { apiHost } = getEnvironmentConfig()
+    const retrievalUrl = `${apiHost}/granule_links?id=${retrievalCollectionId}&flattenLinks=true&linkTypes=${linkType}`
+    const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(retrievalUrl)}&downloadId=${downloadId}&token=Bearer ${authToken}`
+
+    return link
+  }
+
   render() {
     const {
       opened
@@ -153,7 +179,8 @@ export class OrderStatusItem extends PureComponent {
       orders = [],
       id,
       isLoaded,
-      retrieval_id: retrievalId
+      retrieval_id: retrievalId,
+      retrieval_collection_id: retrievalCollectionId
     } = collection
 
     const { type: accessMethodType } = accessMethod
@@ -572,10 +599,12 @@ export class OrderStatusItem extends PureComponent {
                         <DownloadFilesPanel
                           accessMethodType={accessMethodType}
                           downloadLinks={downloadUrls}
+                          eddLink={this.buildEddLink('data')}
                           granuleCount={granuleCount}
                           granuleLinksIsLoading={granuleLinksIsLoading}
                           percentDoneDownloadLinks={percentDoneDownloadLinks}
                           retrievalId={retrievalId}
+                          retrievalCollectionId={retrievalCollectionId}
                           showTextWindowActions={!isEsi}
                         />
                       </Tab>
@@ -651,6 +680,7 @@ export class OrderStatusItem extends PureComponent {
                           earthdataEnvironment={earthdataEnvironment}
                           browseUrls={browseUrls}
                           retrievalCollection={collection}
+                          eddLink={this.buildEddLink('browse')}
                           retrievalId={retrievalId}
                           granuleCount={granuleCount}
                           granuleLinksIsLoading={granuleLinksIsLoading}
@@ -704,21 +734,26 @@ OrderStatusItem.defaultProps = {
 }
 
 OrderStatusItem.propTypes = {
+  authToken: PropTypes.string.isRequired,
   collection: PropTypes.shape({
     access_method: PropTypes.shape({
       type: PropTypes.string
     }),
     collection_metadata: PropTypes.shape({
+      conceptId: PropTypes.string,
       directDistributionInformation: PropTypes.shape({}),
+      isCSDA: PropTypes.bool,
+      shortName: PropTypes.string,
       title: PropTypes.string,
-      isCSDA: PropTypes.bool
+      versionId: PropTypes.string
     }),
     collection: PropTypes.shape({}),
     granule_count: PropTypes.number,
     id: PropTypes.number,
     isLoaded: PropTypes.bool,
     orders: PropTypes.arrayOf(PropTypes.shape({})),
-    retrieval_id: PropTypes.string
+    retrieval_id: PropTypes.string,
+    retrieval_collection_id: PropTypes.string
   }).isRequired,
   defaultOpen: PropTypes.bool,
   earthdataEnvironment: PropTypes.string.isRequired,

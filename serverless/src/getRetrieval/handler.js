@@ -8,6 +8,7 @@ import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { isLinkType } from '../../../static/src/js/util/isLinkType'
 import { parseError } from '../../../sharedUtils/parseError'
+import { obfuscateId } from '../util/obfuscation/obfuscateId'
 
 /**
  * Retrieve a single retrieval record from the database
@@ -104,6 +105,8 @@ export default async function getRetrieval(event, context) {
             urs_id: ursId
           } = collections.byId[collection]
 
+          const obfuscatedId = obfuscateId(id)
+
           const { type } = accessMethod
           const accessMethodKey = type.toLowerCase().replace(/ /g, '_')
 
@@ -117,6 +120,7 @@ export default async function getRetrieval(event, context) {
 
           collections.byId[collection] = {
             id,
+            retrieval_collection_id: obfuscatedId,
             access_method: accessMethod,
             collection_id: collectionId,
             collection_metadata: collectionMetadata,

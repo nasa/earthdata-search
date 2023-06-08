@@ -12,7 +12,7 @@ import {
 import moment from 'moment'
 
 import { findGridByName } from '../../util/grid'
-import { getTemporalDateFormat } from '../../util/edscDate'
+import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 import { pluralize } from '../../util/pluralize'
 

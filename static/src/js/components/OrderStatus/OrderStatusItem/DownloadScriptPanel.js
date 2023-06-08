@@ -72,6 +72,7 @@ export const DownloadScriptPanel = ({
             earthdataEnvironment
           )}
           modalTitle="Download Script"
+          disableEdd
         >
           <pre className="download-links-panel__pre">
             {

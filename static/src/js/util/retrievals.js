@@ -21,8 +21,12 @@ const permittedCollectionMetadataFields = [
   'datasetId',
   'directDistributionInformation',
   'isCSDA',
+  'isOpenSearch',
   'links',
-  'title'
+  'relatedUrls',
+  'title',
+  'shortName',
+  'versionId'
 ]
 const permittedAccessMethodFields = [
   'enableTemporalSubsetting',

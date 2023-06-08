@@ -109,6 +109,7 @@ export const S3LinksPanel = ({
         fileName={downloadFileName}
         clipboardContents={s3Links.join('\n')}
         modalTitle="AWS S3 Access"
+        disableEdd
         disableCopy={!showTextWindowActions}
         disableSave={!showTextWindowActions}
       >

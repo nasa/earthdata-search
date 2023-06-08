@@ -27,7 +27,7 @@ import {
 } from '../../util/map/layers'
 
 import { eventEmitter } from '../../events/events'
-import { getTemporal } from '../../util/edscDate'
+import { getTemporal } from '../../../../../sharedUtils/edscDate'
 import { panBoundsToCenter } from '../../util/map/actions/panBoundsToCenter'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 

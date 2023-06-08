@@ -27,6 +27,7 @@ function setup(overrideProps, mockRefresh) {
   OrderStatusItem.prototype.shouldRefresh = mockRefresh ? shouldRefreshMock : shouldRefreshCopy
 
   const props = {
+    authToken: 'mock-token',
     collection: retrievalStatusProps.retrieval.collections.byId[1],
     defaultOpen: false,
     earthdataEnvironment: 'prod',
@@ -270,10 +271,13 @@ describe('OrderStatusItem', () => {
         collection: {
           id: 1,
           collection_id: 'TEST_COLLECTION_111',
+          retrieval_collection_id: '42',
           retrieval_id: '54',
           collection_metadata: {
             id: 'TEST_COLLECTION_111',
-            title: 'Test Dataset ID'
+            title: 'Test Dataset ID',
+            shortName: 'shortName',
+            versionId: 'versionId'
           },
           access_method: {
             type: 'download'
@@ -334,6 +338,7 @@ describe('OrderStatusItem', () => {
       expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
       expect(linksTab.childAt(0).props().percentDoneDownloadLinks).toEqual('50')
       expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
+      expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=shortName_versionId&token=Bearer mock-token')
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')
@@ -349,10 +354,13 @@ describe('OrderStatusItem', () => {
         collection: {
           id: 1,
           collection_id: 'TEST_COLLECTION_111',
+          retrieval_collection_id: '42',
           retrieval_id: '54',
           collection_metadata: {
             id: 'TEST_COLLECTION_111',
             title: 'Test Dataset ID',
+            shortName: 'shortName',
+            versionId: 'versionId',
             granules: {
               items: [{
                 browse_flag: true
@@ -420,6 +428,7 @@ describe('OrderStatusItem', () => {
       expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
       expect(linksTab.childAt(0).props().percentDoneDownloadLinks).toEqual('50')
       expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
+      expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=shortName_versionId&token=Bearer mock-token')
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')
@@ -430,6 +439,7 @@ describe('OrderStatusItem', () => {
       expect(browseTab.props().title).toEqual('Browse Imagery')
       expect(browseTab.childAt(0).props().granuleCount).toEqual(100)
       expect(browseTab.childAt(0).props().browseUrls).toEqual(['http://example.com'])
+      expect(browseTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Dbrowse&downloadId=shortName_versionId&token=Bearer mock-token')
     })
   })
 
@@ -502,10 +512,13 @@ describe('OrderStatusItem', () => {
         collection: {
           id: 1,
           collection_id: 'TEST_COLLECTION_111',
+          retrieval_collection_id: '42',
           retrieval_id: '54',
           collection_metadata: {
             id: 'TEST_COLLECTION_111',
-            title: 'Test Dataset ID'
+            title: 'Test Dataset ID',
+            shortName: 'shortName',
+            versionId: 'versionId'
           },
           access_method: {
             type: 'OPeNDAP'
@@ -568,6 +581,7 @@ describe('OrderStatusItem', () => {
       expect(linksTab.props().title).toEqual('Download Files')
       expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
       expect(linksTab.childAt(0).props().downloadLinks).toEqual(['http://example.com'])
+      expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=shortName_versionId&token=Bearer mock-token')
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')

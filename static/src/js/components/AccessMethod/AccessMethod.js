@@ -4,7 +4,7 @@ import { Alert, Form } from 'react-bootstrap'
 import moment from 'moment'
 
 import { pluralize } from '../../util/pluralize'
-import { getTemporalDateFormat } from '../../util/edscDate'
+import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
 
 import Button from '../Button/Button'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'

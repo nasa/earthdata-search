@@ -15,6 +15,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    authToken: 'mock-token',
     collections: Object.values(retrievalStatusPropsEchoOrder.retrieval.collections.byId),
     earthdataEnvironment: 'prod',
     granuleDownload: {},
@@ -57,6 +58,7 @@ describe('OrderStatus component', () => {
 
       expect(enzymeWrapper.find(OrderStatusItem).length).toEqual(1)
       expect(enzymeWrapper.find(OrderStatusItem).at(0).props()).toEqual({
+        authToken: 'mock-token',
         defaultOpen: true,
         earthdataEnvironment: 'prod',
         granuleDownload: {},

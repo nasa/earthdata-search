@@ -25,6 +25,7 @@ export const DownloadFilesPanel = ({
   granuleLinksIsLoading,
   percentDoneDownloadLinks,
   retrievalId,
+  eddLink,
   showTextWindowActions
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}.txt`
@@ -50,6 +51,7 @@ export const DownloadFilesPanel = ({
       </div>
       <TextWindowActions
         id={`links-${retrievalId}`}
+        eddLink={eddLink}
         fileContents={downloadLinks.join('\n')}
         fileName={downloadFileName}
         clipboardContents={downloadLinks.join('\n')}
@@ -81,7 +83,8 @@ export const DownloadFilesPanel = ({
 
 DownloadFilesPanel.defaultProps = {
   percentDoneDownloadLinks: null,
-  showTextWindowActions: true
+  showTextWindowActions: true,
+  eddLink: null
 }
 
 DownloadFilesPanel.propTypes = {
@@ -90,6 +93,7 @@ DownloadFilesPanel.propTypes = {
     PropTypes.string
   ).isRequired,
   retrievalId: PropTypes.string.isRequired,
+  eddLink: PropTypes.string,
   granuleCount: PropTypes.number.isRequired,
   granuleLinksIsLoading: PropTypes.bool.isRequired,
   percentDoneDownloadLinks: PropTypes.string,

@@ -1,5 +1,6 @@
+import { createS3Links } from '../../../../sharedUtils/getS3Urls'
 import { eventEmitter } from '../events/events'
-import { createDataLinks, createS3Links } from './granules'
+import { createDataLinks } from './granules'
 
 /**
  * @typedef {Object} GranuleListInfo
