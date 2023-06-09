@@ -26,7 +26,6 @@ export const fetchOpendapLinks = async ({
     temporal
   } = granuleParams
 
-  // TODO is this actually working when creating the retrieval?
   const {
     selectedVariables: variables,
     selectedOutputFormat: format

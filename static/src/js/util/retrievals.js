@@ -35,6 +35,7 @@ const permittedAccessMethodFields = [
   'model',
   'optionDefinition',
   'rawModel',
+  'selectedVariables',
   'selectedOutputFormat',
   'selectedOutputProjection',
   'supportsBoundingBoxSubsetting',
