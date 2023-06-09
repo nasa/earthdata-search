@@ -7,10 +7,10 @@ import { determineEarthdataEnvironment } from '../util/determineEarthdataEnviron
 import { getJwtToken } from '../util/getJwtToken'
 import { getVerifiedJwtToken } from '../util/getVerifiedJwtToken'
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
-import { fetchCmrLinks } from './fetchCmrLinks'
-import { fetchOpenSearchLinks } from './fetchOpenSearchLinks'
 import { fetchOpendapLinks } from './fetchOpendapLinks'
 import { flattenGranuleLinks } from './flattenGranuleLinks'
+import fetchDownloadLinks from './fetchDownloadLinks'
+import fetchHarmonyLinks from './fetchHarmonyLinks'
 
 const retrieveGranuleLinks = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
@@ -82,62 +82,41 @@ const retrieveGranuleLinks = async (event, context) => {
     let done
     let links
     let newCursor
-    // Determine which action to take based on the access method type
-    if (type.toLowerCase() === 'download') {
-      const { isOpenSearch } = collectionMetadata
 
-      if (isOpenSearch) {
-        ({ links } = await fetchOpenSearchLinks({
+    switch (type.toLowerCase()) {
+      case 'download':
+        ({ links, newCursor } = await fetchDownloadLinks({
+          collectionId,
           collectionMetadata,
-          collectionId,
-          granuleParams,
-          pageNum
-        }))
-      } else {
-        ({ cursor: newCursor, links } = await fetchCmrLinks({
-          collectionId,
           cursor,
           earthdataEnvironment,
           granuleParams,
           linkTypes,
+          pageNum,
           requestId,
           token
         }))
-      }
-    }
 
-    if (type.toLowerCase() === 'opendap') {
-      const download = await fetchOpendapLinks({
-        accessMethod,
-        collectionId,
-        earthdataEnvironment,
-        event,
-        granuleParams,
-        pageNum,
-        requestId
-      })
-      links = { download }
-    }
+        break
+      case 'opendap':
+        links = await fetchOpendapLinks({
+          accessMethod,
+          collectionId,
+          earthdataEnvironment,
+          event,
+          granuleParams,
+          pageNum,
+          requestId
+        })
 
-    if (type.toLowerCase() === 'harmony') {
-      // Harmony links are stored in order_information as rel=data links
-      const { links: rawLinks = [] } = orderInformation
+        break
+      case 'harmony':
+        links = fetchHarmonyLinks(orderInformation)
 
-      links = {}
-      rawLinks.forEach((linkObject) => {
-        const { href, rel } = linkObject
-
-        const adjustedRel = rel === 'data' ? 'download' : rel
-
-        if (links[adjustedRel]) {
-          links[adjustedRel].push(href)
-        } else {
-          links[adjustedRel] = [href]
-        }
-      })
-
-      // Don't request another page of links for Harmony
-      done = true
+        done = true
+        break
+      default:
+        break
     }
 
     return {
