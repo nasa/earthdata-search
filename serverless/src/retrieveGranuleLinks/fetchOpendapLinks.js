@@ -5,6 +5,17 @@ import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { buildParams } from '../util/cmr/buildParams'
 import { getJwtToken } from '../util/getJwtToken'
 
+/**
+ * Fetches opendap access method links from CMR
+ * @param {Object} params
+ * @param {Object} params.accessMethod Access method pulled from database
+ * @param {String} params.collectionId Collection ID of links being retrieved
+ * @param {String} params.earthdataEnvironment Earthdata environment of the links being retrieved
+ * @param {Object} params.event Lambda event object
+ * @param {Object} params.granuleParams Granule parameters used in retrieval
+ * @param {Number} params.pageNum Page number of request to send
+ * @param {String} params.requestId Request ID to include in requests
+ */
 export const fetchOpendapLinks = async ({
   accessMethod,
   collectionId,
@@ -109,5 +120,5 @@ export const fetchOpendapLinks = async ({
   const { body } = response
   const { items } = JSON.parse(body)
 
-  return items
+  return { download: items }
 }

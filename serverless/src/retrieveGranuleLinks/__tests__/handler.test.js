@@ -188,7 +188,7 @@ describe('retrieveGranuleLinks', () => {
         ]
       }
     }
-    const fetchOpendapLinksMock = jest.spyOn(fetchOpendapLinks, 'fetchOpendapLinks').mockImplementation(() => expectedResponse.links.download)
+    const fetchOpendapLinksMock = jest.spyOn(fetchOpendapLinks, 'fetchOpendapLinks').mockImplementation(() => expectedResponse.links)
 
     dbTracker.on('query', (query) => {
       query.response([{
