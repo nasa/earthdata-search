@@ -53,9 +53,11 @@ const retrieveGranuleLinks = async (event, context) => {
         'retrieval_collections.collection_id',
         'retrieval_collections.granule_params',
         'retrieval_collections.collection_metadata',
+        'retrieval_orders.order_information',
         // TODO retrieving the latest user token, is there a way we can refresh this token before using it here
         'user_tokens.access_token')
       .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
+      .leftOuterJoin('retrieval_orders', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
       .join('user_tokens', { 'user_tokens.user_id': 'users.id' })
       .where({
@@ -71,10 +73,13 @@ const retrieveGranuleLinks = async (event, context) => {
       collection_id: collectionId,
       collection_metadata: collectionMetadata,
       granule_params: granuleParams,
+      order_information: orderInformation,
       access_token: token
     } = retrievalCollectionResponse
+
     const { type } = accessMethod
 
+    let done
     let links
     let newCursor
     // Determine which action to take based on the access method type
@@ -114,7 +119,26 @@ const retrieveGranuleLinks = async (event, context) => {
       links = { download }
     }
 
-    // TODO if type is harmony?
+    if (type.toLowerCase() === 'harmony') {
+      // Harmony links are stored in order_information as rel=data links
+      const { links: rawLinks = [] } = orderInformation
+
+      links = {}
+      rawLinks.forEach((linkObject) => {
+        const { href, rel } = linkObject
+
+        const adjustedRel = rel === 'data' ? 'download' : rel
+
+        if (links[adjustedRel]) {
+          links[adjustedRel].push(href)
+        } else {
+          links[adjustedRel] = [href]
+        }
+      })
+
+      // Don't request another page of links for Harmony
+      done = true
+    }
 
     return {
       isBase64Encoded: false,
@@ -122,6 +146,7 @@ const retrieveGranuleLinks = async (event, context) => {
       headers: defaultResponseHeaders,
       body: JSON.stringify({
         cursor: newCursor,
+        done,
         links: flattenGranuleLinks(links, linkTypes, flattenLinks)
         // TODO EDD needs the user's access_token
       })

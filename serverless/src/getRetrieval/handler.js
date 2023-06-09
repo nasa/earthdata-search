@@ -119,13 +119,13 @@ export default async function getRetrieval(event, context) {
           collections[accessMethodKey].push(id)
 
           collections.byId[collection] = {
-            id,
-            retrieval_collection_id: obfuscatedId,
             access_method: accessMethod,
             collection_id: collectionId,
             collection_metadata: collectionMetadata,
             granule_count: granuleCount,
             granule_params: granuleParams,
+            id,
+            retrieval_collection_id: obfuscatedId,
             retrieval_id: providedRetrieval, // Ensure the obfuscated id is returned
             urs_id: ursId
           }

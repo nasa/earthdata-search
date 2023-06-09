@@ -193,7 +193,11 @@ export const fetchGranuleLinks = (
       response = await requestObject.fetchLinks(stringify(params, { addQueryPrefix: true, arrayFormat: 'repeat' }))
 
       const { data } = response
-      const { cursor: responseCursor, links = {} } = data
+      const {
+        cursor: responseCursor,
+        done,
+        links = {}
+      } = data
 
       // Set the cursor returned from GraphQl so the next loop will use it
       cursor = responseCursor
@@ -208,9 +212,12 @@ export const fetchGranuleLinks = (
         s3: granuleS3Links
       } = links
 
-      if ((!granuleBrowseLinks || granuleBrowseLinks.length === 0)
-        && (!granuleDownloadLinks || granuleDownloadLinks.length === 0)
-        && (!granuleS3Links || granuleS3Links.length === 0)
+      if (done
+        || (
+          (!granuleBrowseLinks || granuleBrowseLinks.length === 0)
+          && (!granuleDownloadLinks || granuleDownloadLinks.length === 0)
+          && (!granuleS3Links || granuleS3Links.length === 0)
+        )
       ) {
         finished = true
         break
