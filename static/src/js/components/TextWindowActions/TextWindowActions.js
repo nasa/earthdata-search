@@ -80,7 +80,7 @@ export const TextWindowActions = ({
     <div className="text-window-actions">
       <header className="text-window-actions__actions">
         {
-          (!disableEdd && disableEddDownload !== 'true') && (
+          (!disableEdd && disableEddDownload !== 'true' && eddLink) && (
             <Button
               className="text-window-actions__action text-window-actions__action--edd"
               bootstrapSize="sm"

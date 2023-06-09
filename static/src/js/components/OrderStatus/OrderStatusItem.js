@@ -141,8 +141,18 @@ export class OrderStatusItem extends PureComponent {
 
     const {
       collection_metadata: collectionMetadata,
+      orders = [],
       retrieval_collection_id: retrievalCollectionId
     } = collection
+
+    const [firstOrder = {}] = orders
+    const {
+      state,
+      type = ''
+    } = firstOrder
+
+    // If the order is Harmony iand isn't successful, don't show the EDD link
+    if (type.toLowerCase() === 'harmony' && state !== 'successful') return null
 
     const {
       conceptId,

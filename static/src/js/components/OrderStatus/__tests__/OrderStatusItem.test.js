@@ -1700,6 +1700,7 @@ describe('OrderStatusItem', () => {
             },
             granule_count: 100,
             orders: [{
+              type: 'Harmony',
               state: 'running',
               order_information: {
                 jobID: 'e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
@@ -1788,6 +1789,7 @@ describe('OrderStatusItem', () => {
         expect(linksTab.childAt(0).props().downloadLinks).toEqual([
           'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
         ])
+        expect(linksTab.childAt(0).props().eddLink).toEqual(null)
 
         const stacLinksTab = tabs.childAt(1)
         expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
@@ -1808,17 +1810,21 @@ describe('OrderStatusItem', () => {
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
+            retrieval_collection_id: '42',
             retrieval_id: '54',
             collection_metadata: {
               id: 'TEST_COLLECTION_111',
-              title: 'Test Dataset ID'
+              title: 'Test Dataset ID',
+              shortName: 'testDataset',
+              versionId: '1'
             },
             access_method: {
               type: 'Harmony'
             },
             granule_count: 100,
             orders: [{
-              state: 'complete',
+              type: 'Harmony',
+              state: 'successful',
               order_information: {
                 jobID: 'e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
                 links: [
@@ -1907,6 +1913,7 @@ describe('OrderStatusItem', () => {
         expect(linksTab.childAt(0).props().downloadLinks).toEqual([
           'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
         ])
+        expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=testDataset_1&token=Bearer mock-token')
 
         const stacLinksTab = tabs.childAt(1)
         expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)

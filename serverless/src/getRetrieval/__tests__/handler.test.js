@@ -105,23 +105,23 @@ describe('getRetrieval', () => {
       collections: {
         byId: {
           22: {
-            id: 22,
-            retrieval_collection_id: '9452013926',
             access_method: {
               type: 'download'
             },
             collection_metadata: {},
             granule_count: 3,
+            id: 22,
+            retrieval_collection_id: '9452013926',
             retrieval_id: 2
           },
           23: {
-            id: 23,
-            retrieval_collection_id: '4519237960',
             access_method: {
               type: 'download'
             },
             collection_metadata: {},
             granule_count: 3,
+            id: 23,
+            retrieval_collection_id: '4519237960',
             retrieval_id: 2
           }
         },
@@ -182,8 +182,6 @@ describe('getRetrieval', () => {
       collections: {
         byId: {
           22: {
-            id: 22,
-            retrieval_collection_id: '9452013926',
             access_method: {
               type: 'download'
             },
@@ -198,16 +196,18 @@ describe('getRetrieval', () => {
               }]
             },
             granule_count: 3,
+            id: 22,
+            retrieval_collection_id: '9452013926',
             retrieval_id: 2
           },
           23: {
-            id: 23,
-            retrieval_collection_id: '4519237960',
             access_method: {
               type: 'download'
             },
             collection_metadata: {},
             granule_count: 3,
+            id: 23,
+            retrieval_collection_id: '4519237960',
             retrieval_id: 2
           }
         },
