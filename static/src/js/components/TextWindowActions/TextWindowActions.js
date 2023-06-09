@@ -254,7 +254,7 @@ export const TextWindowActions = ({
             >
               Open Earthdata Download
             </Button>
-            {/* TODO Uncomment this when we have implemented the landing page and/or download link
+            {/* TODO EDSC-3762 Uncomment this when we have implemented the landing page and/or download link
               <Alert className="mt-3 mb-0 text-center" variant="secondary">
                 Don’t have the Earthdata Download installed?
                 <br />

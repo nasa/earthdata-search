@@ -54,7 +54,7 @@ const retrieveGranuleLinks = async (event, context) => {
         'retrieval_collections.granule_params',
         'retrieval_collections.collection_metadata',
         'retrieval_orders.order_information',
-        // TODO retrieving the latest user token, is there a way we can refresh this token before using it here
+        // TODO EDD-6 retrieving the latest user token, is there a way we can refresh this token before using it here
         'user_tokens.access_token')
       .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
       .leftOuterJoin('retrieval_orders', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
@@ -148,7 +148,7 @@ const retrieveGranuleLinks = async (event, context) => {
         cursor: newCursor,
         done,
         links: flattenGranuleLinks(links, linkTypes, flattenLinks)
-        // TODO EDD needs the user's access_token
+        // TODO EDD-6 EDD needs the user's access_token
       })
     }
   } catch (error) {
