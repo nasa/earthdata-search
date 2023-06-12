@@ -26,8 +26,6 @@ const retrieveGranuleLinks = async (event, context) => {
       queryStringParameters
     } = event
 
-    const earthdataEnvironment = determineEarthdataEnvironment(headers)
-
     const {
       id: retrievalCollectionId,
       cursor,
@@ -35,6 +33,10 @@ const retrieveGranuleLinks = async (event, context) => {
       flattenLinks = false,
       requestId = uuidv4()
     } = queryStringParameters
+
+    let { ee: earthdataEnvironment } = queryStringParameters
+    if (!earthdataEnvironment) earthdataEnvironment = determineEarthdataEnvironment(headers)
+
     const { linkTypes } = multiValueQueryStringParameters
 
     // Decode the provided retrieval id

@@ -160,7 +160,7 @@ jobs:
 
   deploy:
     if: success() && github.ref == 'refs/heads/main' # only run on main success
-    needs: [jest, cypress] # only run after jest and cypress jobs complete
+    needs: [jest, cypress, playwright] # only run after jest and cypress jobs complete
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code

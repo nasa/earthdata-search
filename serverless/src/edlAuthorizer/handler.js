@@ -11,10 +11,12 @@ import { downcaseKeys } from '../util/downcaseKeys'
 const edlAuthorizer = async (event) => {
   const {
     headers = {},
-    methodArn
+    methodArn,
+    queryStringParameters = {}
   } = event
 
-  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+  let { ee: earthdataEnvironment } = queryStringParameters || {}
+  if (!earthdataEnvironment) earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   const { authorization: authorizationToken = '' } = downcaseKeys(headers)
 
