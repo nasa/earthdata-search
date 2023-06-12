@@ -1,7 +1,7 @@
 /**
  * Flattens an object of links to a single list of links if necessary
  * @param {Object} links Links to format
- * @param {Array} linkTypes List of types of links that need to be selected when flattening list
+ * @param {String} linkTypes Comma delimited string of types of links that need to be selected when flattening list
  * @param {String} flattenLinks Stringified boolean if the links need to be flattened to a single list
  */
 export const flattenGranuleLinks = (links, linkTypes, flattenLinks) => {

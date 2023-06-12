@@ -46,7 +46,7 @@ describe('fetchCmrLinks', () => {
         echo_collection_id: 'C1214470488-ASF',
         two_d_coordinate_system: {}
       },
-      linkTypes: ['data', 's3'],
+      linkTypes: 'data,s3',
       requestId: '1234',
       token: 'mock-token'
     })

@@ -251,13 +251,13 @@ export const fetchGranuleLinks = (
 export const fetchRetrievalCollectionGranuleLinks = (data) => (dispatch) => {
   dispatch(setGranuleLinksLoading())
 
-  dispatch(fetchGranuleLinks(data, ['data', 's3', 'browse'])).then(() => {
+  dispatch(fetchGranuleLinks(data, 'data,s3,browse')).then(() => {
     dispatch(setGranuleLinksLoaded())
   })
 }
 
 export const fetchRetrievalCollectionGranuleBrowseLinks = (data) => (dispatch) => {
-  dispatch(fetchGranuleLinks(data, ['browse'])).then(() => {
+  dispatch(fetchGranuleLinks(data, 'browse')).then(() => {
     dispatch(setGranuleLinksLoaded())
   })
 }
