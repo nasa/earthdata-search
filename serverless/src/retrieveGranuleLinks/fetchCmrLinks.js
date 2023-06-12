@@ -86,7 +86,7 @@ export const fetchCmrLinks = async ({
   const variables = {
     ...preparedGranuleParams,
     limit: parseInt(granuleLinksPageSize, 10),
-    linkTypes,
+    linkTypes: linkTypes.split(','),
     collectionConceptId: collectionId,
     cursor
   }

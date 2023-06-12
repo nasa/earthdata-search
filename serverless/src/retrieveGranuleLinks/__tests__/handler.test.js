@@ -79,10 +79,8 @@ describe('retrieveGranuleLinks', () => {
 
     const event = {
       queryStringParameters: {
-        id: '1234567'
-      },
-      multiValueQueryStringParameters: {
-        linkTypes: ['data', 's3']
+        id: '1234567',
+        linkTypes: 'data,s3'
       }
     }
 
@@ -108,7 +106,7 @@ describe('retrieveGranuleLinks', () => {
         temporal: '2023-03-26T15:05:48.871Z,2023-03-27T10:48:39.230Z',
         two_d_coordinate_system: {}
       },
-      linkTypes: ['data', 's3'],
+      linkTypes: 'data,s3',
       requestId: 'mock-request-id',
       token: 'mock-access-token'
     })
@@ -148,10 +146,8 @@ describe('retrieveGranuleLinks', () => {
 
     const event = {
       queryStringParameters: {
-        id: '1234567'
-      },
-      multiValueQueryStringParameters: {
-        linkTypes: ['data', 's3']
+        id: '1234567',
+        linkTypes: 'data,s3'
       }
     }
 
@@ -213,10 +209,8 @@ describe('retrieveGranuleLinks', () => {
 
     const event = {
       queryStringParameters: {
-        id: '1234567'
-      },
-      multiValueQueryStringParameters: {
-        linkTypes: ['data', 's3']
+        id: '1234567',
+        linkTypes: 'data,s3'
       }
     }
 
@@ -233,11 +227,9 @@ describe('retrieveGranuleLinks', () => {
       collectionId: 'C1214470488-ASF',
       earthdataEnvironment: 'prod',
       event: {
-        multiValueQueryStringParameters: {
-          linkTypes: ['data', 's3']
-        },
         queryStringParameters: {
-          id: '1234567'
+          id: '1234567',
+          linkTypes: 'data,s3'
         }
       },
       granuleParams: {
@@ -320,10 +312,8 @@ describe('retrieveGranuleLinks', () => {
     const event = {
       queryStringParameters: {
         id: '1234567',
-        flattenLinks: true
-      },
-      multiValueQueryStringParameters: {
-        linkTypes: ['data', 's3']
+        flattenLinks: true,
+        linkTypes: 'data,s3'
       }
     }
 
@@ -342,10 +332,9 @@ describe('retrieveGranuleLinks', () => {
 
     const event = {
       queryStringParameters: {
-        id: '1234567'
-      },
-      multiValueQueryStringParameters: {
-        linkTypes: ['data', 's3']
+        id: '1234567',
+        flattenLinks: true,
+        linkTypes: 'data,s3'
       }
     }
 

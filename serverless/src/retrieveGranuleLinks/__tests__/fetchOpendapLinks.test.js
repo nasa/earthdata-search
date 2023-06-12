@@ -30,9 +30,6 @@ describe('fetchOpendapLinks', () => {
       earthdataEnvironment: 'prod',
       event: {
         headers: {},
-        multiValueQueryStringParameters: {
-          linkTypes: ['data', 's3']
-        },
         queryStringParameters: {
           id: '1234567'
         }
@@ -84,9 +81,6 @@ describe('fetchOpendapLinks', () => {
       earthdataEnvironment: 'prod',
       event: {
         headers: {},
-        multiValueQueryStringParameters: {
-          linkTypes: ['data', 's3']
-        },
         queryStringParameters: {
           id: '1234567'
         }
@@ -140,9 +134,6 @@ describe('fetchOpendapLinks', () => {
       earthdataEnvironment: 'prod',
       event: {
         headers: {},
-        multiValueQueryStringParameters: {
-          linkTypes: ['data', 's3']
-        },
         queryStringParameters: {
           id: '1234567'
         }
