@@ -43,7 +43,8 @@
       "background": "eed-PORTAL-ENV-serverless-background",
       "client": "eed-PORTAL-ENV-serverless-client",
       "lambda": "eed-PORTAL-ENV-serverless-lambda"
-    }
+    },
+    "disableEddDownload": "false"
   },
   "environment": {
     "test": {

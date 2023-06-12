@@ -1,9 +1,5 @@
 import { buildAccessMethods } from '../buildAccessMethods'
 
-beforeEach(() => {
-  process.env.disableOrdering = 'false'
-})
-
 describe('buildAccessMethods', () => {
   test('returns a download access method', () => {
     const collectionMetadata = {
@@ -111,33 +107,6 @@ describe('buildAccessMethods', () => {
         url: 'https://example.com'
       }
     })
-  })
-
-  test('does not return an echo orders access method if the disableOrdering is true', () => {
-    process.env.disableOrdering = 'true'
-
-    const collectionMetadata = {
-      services: {
-        items: [{
-          type: 'ECHO ORDERS',
-          url: {
-            urlValue: 'https://example.com'
-          },
-          orderOptions: {
-            items: [{
-              conceptId: 'OO10000-EDSC',
-              name: 'mock form',
-              form: 'mock form'
-            }]
-          }
-        }]
-      }
-    }
-    const isOpenSearch = false
-
-    const methods = buildAccessMethods(collectionMetadata, isOpenSearch)
-
-    expect(methods).toEqual({})
   })
 
   test('returns a harmony access method', () => {
