@@ -83,18 +83,20 @@ export const fetchCmrLinks = async ({
 
   const preparedGranuleParams = camelcaseKeys(prepareGranuleAccessParams(granuleParams))
 
+  const variables = {
+    ...preparedGranuleParams,
+    limit: parseInt(granuleLinksPageSize, 10),
+    linkTypes,
+    collectionConceptId: collectionId,
+    cursor
+  }
+
   const response = await axios({
     url: graphQlUrl,
     method: 'post',
     data: {
       query: granulesGraphQlQuery,
-      variables: {
-        ...preparedGranuleParams,
-        limit: parseInt(granuleLinksPageSize, 10),
-        linkTypes,
-        collectionConceptId: collectionId,
-        cursor
-      }
+      variables
     },
     headers: {
       Authorization: `Bearer ${token}`,
@@ -103,14 +105,19 @@ export const fetchCmrLinks = async ({
   })
 
   const { data } = response
-  const { data: granulesData } = data
+  const { data: granulesData, errors } = data
+
+  if (errors && errors.length > 0) {
+    throw new Error(JSON.stringify(errors))
+  }
+
   const { granules } = granulesData
   const { cursor: responseCursor, items } = granules
 
   // Fetch the download links from the granule metadata
-  const granuleBrowseLinks = getBrowseUrls(items)
-  const granuleDownloadLinks = getDownloadUrls(items)
-  const granuleS3Links = getS3Urls(items)
+  const granuleBrowseLinks = getBrowseUrls([...items])
+  const granuleDownloadLinks = getDownloadUrls([...items])
+  const granuleS3Links = getS3Urls([...items])
 
   return {
     cursor: responseCursor,

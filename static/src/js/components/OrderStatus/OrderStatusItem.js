@@ -137,7 +137,11 @@ export class OrderStatusItem extends PureComponent {
   }
 
   buildEddLink(linkType) {
-    const { authToken, collection } = this.props
+    const {
+      authToken,
+      collection,
+      earthdataEnvironment
+    } = this.props
 
     const {
       collection_metadata: collectionMetadata,
@@ -164,7 +168,7 @@ export class OrderStatusItem extends PureComponent {
     if (shortName) downloadId = `${shortName}_${versionId}`
 
     const { apiHost } = getEnvironmentConfig()
-    const retrievalUrl = `${apiHost}/granule_links?id=${retrievalCollectionId}&flattenLinks=true&linkTypes=${linkType}`
+    const retrievalUrl = `${apiHost}/granule_links?id=${retrievalCollectionId}&flattenLinks=true&linkTypes=${linkType}&ee=${earthdataEnvironment}`
     const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(retrievalUrl)}&downloadId=${downloadId}&token=Bearer ${authToken}`
 
     return link
