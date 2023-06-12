@@ -40,9 +40,6 @@ provider:
     geocodingService: ${self:custom.variables.geocodingService}
     geocodingIncludePolygons: ${self:custom.variables.geocodingIncludePolygons}
 
-    disableOrdering: ${self:custom.variables.disableOrdering}
-    disableEddDownload: ${self:custom.variables.disableEddDownload}
-
     NODE_OPTIONS: '--enable-source-maps'
 
   vpc:
@@ -128,8 +125,6 @@ custom:
     obfuscationSpinShapefiles: ${env:OBFUSCATION_SPIN_SHAPEFILES, ''}
     geocodingService: ${env:GEOCODING_SERVICE, 'nominatim'}
     geocodingIncludePolygons: ${env:GEOCODING_INCLUDE_POLYGONS, 'false'}
-    disableOrdering: ${env:DISABLE_ORDERING, 'true'}
-    disableEddDownload: ${env:DISABLE_EDD_DOWNLOAD, 'true'}
 
     cloudfrontToCloudwatchBucketPrefixApi:
       Fn::Join:

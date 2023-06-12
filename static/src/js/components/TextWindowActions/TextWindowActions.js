@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fa'
 
 import { constructDownloadableFile } from '../../util/files/constructDownloadableFile'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import Spinner from '../Spinner/Spinner'
@@ -41,7 +42,7 @@ export const TextWindowActions = ({
   modalTitle,
   eddLink
 }) => {
-  const { disableEddDownload } = process.env
+  const { disableEddDownload } = getApplicationConfig()
 
   const supportsClipboard = document.queryCommandSupported('copy')
   const textareaElRef = useRef(null)

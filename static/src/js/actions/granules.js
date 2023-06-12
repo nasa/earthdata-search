@@ -142,7 +142,7 @@ export const initializeCollectionGranulesQuery = (payload) => ({
 /**
  * Fetch all relevant links to the granules that are part of the provided collection
  * @param {Object} retrievalCollectionData Retrieval Collection response from the database
- * @param {Array} linkTypes List of linkTypes to retrieve
+ * @param {String} linkTypes Comma delimited string of linkTypes to retrieve
  */
 export const fetchGranuleLinks = (
   retrievalCollectionData,
