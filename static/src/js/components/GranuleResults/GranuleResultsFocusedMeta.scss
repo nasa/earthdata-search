@@ -71,6 +71,8 @@
 
   &__list {
     border: none;
+    max-height: 50vh;
+    overflow-y: scroll;
   }
 
   &__list-item {

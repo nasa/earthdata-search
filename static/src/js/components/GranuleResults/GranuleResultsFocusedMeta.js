@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -37,7 +36,6 @@ const GranuleResultsFocusedMeta = ({
   focusedGranuleId
 }) => {
   const { title, links = [], browseFlag } = focusedGranuleMetadata
-  const testProtocol = /^(http|https):\/\//
   const [activeBrowseImageIndex, setActiveBrowseImageIndex] = useState(0)
   const [activeModalBrowseImageIndex, setActiveModalBrowseImageIndex] = useState(0)
   const [browseImageModalIsActive, setBrowseImageModalIsActive] = useState(false)
@@ -48,7 +46,8 @@ const GranuleResultsFocusedMeta = ({
 
   // Filter the links on the granule to find all browse links with an http/https protocol. This filters
   // any S3 browse links which cause protocol issues.
-  const browseThumbnails = links.filter(({ rel, href }) => rel.indexOf('/browse#') > -1 && testProtocol.test(href))
+  const testProtocol = /^(http|https):\/\//
+  const browseThumbnails = links.filter(({ rel, href }) => rel.includes('/browse#') && testProtocol.test(href))
 
   const onClickPreviousButton = () => {
     if (activeBrowseImageIndex > 0) {
