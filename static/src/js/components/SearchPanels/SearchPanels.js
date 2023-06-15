@@ -32,6 +32,8 @@ import GranuleDetailsBodyContainer
   from '../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer'
 import GranuleResultsBodyContainer
   from '../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer'
+import GranuleResultsFocusedMetaContainer
+  from '../../containers/GranuleResultsFocusedMetaContainer/GranuleResultsFocusedMetaContainer'
 import GranuleResultsActionsContainer
   from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
 import SubscriptionsBodyContainer
@@ -794,6 +796,18 @@ class SearchPanels extends PureComponent {
                     activePanel={activePanel}
                     draggable
                     panelState={panelState}
+                    focusedMeta={(
+                      <div className="search-panels__focused-meta">
+                        <Switch>
+                          <Route
+                            path="/search/granules"
+                            render={() => (
+                              <GranuleResultsFocusedMetaContainer />
+                            )}
+                          />
+                        </Switch>
+                      </div>
+                    )}
                   >
                     <PanelSection>
                       {panelSection}

@@ -78,6 +78,7 @@ export class EDSCModalContainer extends Component {
       primaryActionLoading,
       secondaryAction,
       spinner,
+      subtitle,
       onPrimaryAction,
       onSecondaryAction,
       modalOverlays
@@ -163,6 +164,7 @@ export class EDSCModalContainer extends Component {
         secondaryAction={secondaryAction}
         size={size}
         spinner={spinner}
+        subtitle={subtitle}
         title={title}
       />
     )
@@ -188,6 +190,7 @@ EDSCModalContainer.defaultProps = {
   primaryActionDisabled: false,
   primaryActionLoading: false,
   secondaryAction: null,
+  subtitle: '',
   onPrimaryAction: null,
   onSecondaryAction: null
 }
@@ -215,6 +218,7 @@ EDSCModalContainer.propTypes = {
   primaryActionDisabled: PropTypes.bool,
   primaryActionLoading: PropTypes.bool,
   secondaryAction: PropTypes.string,
+  subtitle: PropTypes.string,
   onPrimaryAction: PropTypes.func,
   onSecondaryAction: PropTypes.func
 }

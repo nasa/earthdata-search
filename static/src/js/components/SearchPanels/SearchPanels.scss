@@ -40,4 +40,12 @@
       }
     }
   }
+
+  &__focused-meta {
+    margin: 0.5rem;
+    background: $color__white;
+    border-radius: 0.125rem;
+    overflow: hidden;
+  }
 }
+

@@ -10,7 +10,7 @@ import crsProjections from '../../util/map/crs'
 
 import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
 import GranuleGridLayer from '../../components/Map/GranuleGridLayer'
-import GranuleImageContainer from '../GranuleImageContainer/GranuleImageContainer'
+// import GranuleImageContainer from '../GranuleImageContainer/GranuleImageContainer'
 import LayerBuilder from '../../components/Map/LayerBuilder'
 import MouseEventsLayer from '../../components/Map/MouseEventsLayer'
 import ProjectionSwitcher from '../../components/Map/ProjectionSwitcher'
@@ -202,7 +202,7 @@ const MapWrapper = (props) => {
         onToggleTooManyPointsModal={onToggleTooManyPointsModal}
         onUpdateShapefile={onUpdateShapefile}
       />
-      <GranuleImageContainer />
+      {/* <GranuleImageContainer /> */}
       <MapEvents
         overlays={overlays}
         mapProps={mapProps}

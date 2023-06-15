@@ -28,6 +28,14 @@
     }
   }
 
+  &--nowrap {
+    .tooltip-inner {
+      width: auto;
+      max-width: initial;
+      white-space: nowrap;
+    }
+  }
+
   &__tooltip-heading {
     font-size: 0.825rem;
     font-weight: 500;

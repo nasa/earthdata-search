@@ -464,6 +464,27 @@ export class Panels extends PureComponent {
         this.responsiveContainer.classList.remove(`panels--${size}`)
       }
     })
+
+    const thumbnailContainer = document.querySelector('.granule-results-focused-meta')
+    const routeWrapper = document.querySelector('.route-wrapper__content')
+
+    if (thumbnailContainer) {
+      const thumbnailWidth = thumbnailContainer.getBoundingClientRect().width
+      const routeWrapperWidth = routeWrapper.getBoundingClientRect().width
+
+      console.log({
+        width,
+        routeWrapperWidth,
+        thumbnailWidth,
+        eq: width > routeWrapperWidth - thumbnailWidth
+      })
+
+      if (width > routeWrapperWidth - thumbnailWidth - 20) {
+        this.responsiveContainer.classList.add('panels--hide-thumbnail')
+      } else {
+        this.responsiveContainer.classList.remove('panels--hide-thumbnail')
+      }
+    }
   }
 
   /**
@@ -529,7 +550,8 @@ export class Panels extends PureComponent {
   render() {
     const {
       children,
-      draggable
+      draggable,
+      focusedMeta
     } = this.props
 
     const {
@@ -622,6 +644,9 @@ export class Panels extends PureComponent {
         >
           {panelGroups}
         </div>
+        <div className="panels__focused-meta">
+          {focusedMeta}
+        </div>
       </section>
     )
   }
@@ -630,25 +655,27 @@ export class Panels extends PureComponent {
 Panels.defaultProps = {
   activePanel: '0.0.0',
   draggable: false,
-  panelState: 'default',
-  show: false,
+  focusedMeta: null,
   onPanelClose: null,
   onPanelOpen: null,
-  onChangePanel: null
+  onChangePanel: null,
+  panelState: 'default',
+  show: false
 }
 
 Panels.propTypes = {
   activePanel: PropTypes.string,
-  panelState: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
   draggable: PropTypes.bool,
-  show: PropTypes.bool,
+  focusedMeta: PropTypes.node,
   onPanelClose: PropTypes.func,
   onPanelOpen: PropTypes.func,
-  onChangePanel: PropTypes.func
+  onChangePanel: PropTypes.func,
+  panelState: PropTypes.string,
+  show: PropTypes.bool
 }
 
 export default Panels

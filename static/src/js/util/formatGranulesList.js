@@ -5,7 +5,7 @@ import { createDataLinks } from './granules'
 /**
  * @typedef {Object} GranuleListInfo
  * @property {Array} granulesList - An array of formatted granule info
- * @property {Boolean} hasBrowseImagery - Flag to detirmine if any of the granules have browse imagery defined
+ * @property {Boolean} hasBrowseImagery - Flag to determine if any of the granules have browse imagery defined
  */
 
 /**

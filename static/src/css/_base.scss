@@ -8,9 +8,18 @@
 * > textarea,
 .btn {
   &:focus {
+    box-shadow: none;
+  }
+
+  &:focus-visible {
     border-color: transparent;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(83,130,177, 0.3);
+  }
+
+  &.disabled,
+  &.btn:disabled {
+    opacity: 0.4;
   }
 }
 
@@ -52,7 +61,7 @@ body.is-panels-will-minimize {
 }
 
 button {
-  &:focus {
+  &:focus-visible {
     border-color: $color__blue--dark;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba($color__blue--dark, 0.5);
