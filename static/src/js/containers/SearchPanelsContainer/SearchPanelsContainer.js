@@ -96,7 +96,6 @@ export const SearchPanelsContainer = ({
   onToggleAboutCSDAModal,
   onToggleAboutCwicModal,
   onTogglePanels,
-  onUpdatePanelWidth,
   onExport,
   panels,
   preferences,
@@ -124,7 +123,6 @@ export const SearchPanelsContainer = ({
     onToggleAboutCSDAModal={onToggleAboutCSDAModal}
     onToggleAboutCwicModal={onToggleAboutCwicModal}
     onTogglePanels={onTogglePanels}
-    onUpdatePanelWidth={onUpdatePanelWidth}
     onExport={onExport}
     panels={panels}
     preferences={preferences}
@@ -132,10 +130,6 @@ export const SearchPanelsContainer = ({
     portal={portal}
   />
 )
-
-SearchPanelsContainer.defaultProps = {
-  onUpdatePanelWidth: null
-}
 
 SearchPanelsContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
@@ -158,7 +152,6 @@ SearchPanelsContainer.propTypes = {
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
-  onUpdatePanelWidth: PropTypes.func,
   onExport: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,

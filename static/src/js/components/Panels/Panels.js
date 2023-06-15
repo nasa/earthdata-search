@@ -479,7 +479,7 @@ export class Panels extends PureComponent {
         eq: width > routeWrapperWidth - thumbnailWidth
       })
 
-      if (width > routeWrapperWidth - thumbnailWidth - 20) {
+      if (width > routeWrapperWidth - thumbnailWidth) {
         this.responsiveContainer.classList.add('panels--hide-thumbnail')
       } else {
         this.responsiveContainer.classList.remove('panels--hide-thumbnail')

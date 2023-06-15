@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -82,7 +82,6 @@ export const Search = ({
 }) => {
   const { path } = match
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
-  const [searchPanelsWidth, setSearchPanelsWidth] = useState()
 
   const {
     hasGranulesOrCwic = false,
@@ -112,14 +111,6 @@ export const Search = ({
     })
   }
 
-  const onUpdateSearchPanelWidth = (width) => {
-    setSearchPanelsWidth(width)
-  }
-
-  useEffect(() => {
-    console.log('searchPanelsWidth', searchPanelsWidth)
-  }, [searchPanelsWidth])
-
   const granuleFiltersSidebar = (
     <SidebarSection
       sectionTitle="Filter Granules"
@@ -145,7 +136,6 @@ export const Search = ({
           <SearchSidebarHeaderContainer />
         )}
         panels={<SearchPanelsContainer />}
-        onUpdatePanelWidth={onUpdateSearchPanelWidth}
       >
         <Switch>
           <Route exact path={`${path}/granules/collection-details`}>
@@ -235,9 +225,6 @@ export const Search = ({
           </Route>
         </Switch>
       </SidebarContainer>
-      <section className="focused-section">
-        Focused Section
-      </section>
       <div className="route-wrapper__content">
         <PortalBrowserModalContainer />
         <RelatedUrlsModalContainer />
