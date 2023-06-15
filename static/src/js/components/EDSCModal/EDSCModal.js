@@ -56,6 +56,7 @@ export const EDSCModal = ({
   secondaryAction,
   size,
   spinner,
+  subtitle,
   title
 }) => {
   const headerClassNames = classNames([
@@ -162,6 +163,9 @@ export const EDSCModal = ({
           </Modal.Footer>
         )
       }
+      {
+        subtitle && <p className="edsc-modal__subtitle">{subtitle}</p>
+      }
     </Modal>
   )
 }
@@ -184,6 +188,7 @@ EDSCModal.defaultProps = {
   secondaryAction: null,
   size: 'sm',
   spinner: false,
+  subtitle: '',
   title: null
 }
 
@@ -215,6 +220,7 @@ EDSCModal.propTypes = {
   secondaryAction: PropTypes.string,
   size: PropTypes.string,
   spinner: PropTypes.bool,
+  subtitle: PropTypes.string,
   title: PropTypes.string
 }
 
