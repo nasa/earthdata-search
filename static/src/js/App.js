@@ -11,6 +11,7 @@ import history from './util/history'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 
 import Admin from './routes/Admin/Admin'
+import EddLandingPage from './routes/EddLandingPage/EddLandingPage'
 import ContactInfo from './routes/ContactInfo/ContactInfo'
 import Downloads from './routes/Downloads/Downloads'
 import FooterContainer from './containers/FooterContainer/FooterContainer'
@@ -120,6 +121,12 @@ class App extends Component {
                         <AuthRequiredContainer>
                           <ContactInfo />
                         </AuthRequiredContainer>
+                      )}
+                    />
+                    <Route
+                      path={this.portalPaths('/eddLandingPage')}
+                      render={() => (
+                        <EddLandingPage />
                       )}
                     />
                     <Route

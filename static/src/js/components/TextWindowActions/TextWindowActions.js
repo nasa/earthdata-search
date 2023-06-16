@@ -5,10 +5,18 @@ import {
   FaSave,
   FaExpand,
   FaDownload,
-  FaExternalLinkAlt
+  FaExternalLinkAlt,
+  FaApple,
+  FaWindows,
+  FaLinux
 } from 'react-icons/fa'
 
+import { Alert } from 'react-bootstrap'
+
+import { capitalize } from 'lodash'
 import { constructDownloadableFile } from '../../util/files/constructDownloadableFile'
+import { getOperatingSystem } from '../../util/files/parseUserAgent'
+
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
@@ -42,6 +50,58 @@ export const TextWindowActions = ({
   modalTitle,
   eddLink
 }) => {
+  let downloadLink
+  // Can't detect chip type from browser, branch to show links to both binaries
+  let isMacOs = false
+  let isLinux = false
+  let isWindows = false
+  let osIcon
+
+  const { userAgent } = navigator
+  const operatingSystem = getOperatingSystem(userAgent)
+  console.log('🚀 ~ file: TextWindowActions.js:77 ~ operatingSystem:', operatingSystem)
+
+  const windowsDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
+  const macDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.dmg'
+  const macSiliconDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-arm64.dmg'
+  const linuxDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata.Download-amd64.deb'
+
+  // todo remove this is for testing purposes
+  // operatingSystem = 'windows'
+  // operatingSystem = 'linux'
+
+  switch (operatingSystem) {
+    case 'macOs': {
+      console.log('I am macIOS')
+      downloadLink = macDownloadLink
+      isMacOs = true
+      osIcon = FaApple
+      break
+    }
+    case 'windows': {
+      console.log('I am windows')
+      downloadLink = windowsDownloadLink
+      osIcon = FaWindows
+      isWindows = true
+      break
+    }
+    case 'linux': {
+      console.log('I am linux')
+      downloadLink = linuxDownloadLink
+      osIcon = FaLinux
+      isLinux = true
+      break
+    }
+    default:
+    {
+      // arbitrary default all links still accessible on page
+      downloadLink = macDownloadLink
+      osIcon = FaApple
+      isMacOs = true
+      break
+    }
+  }
+
   const { disableEddDownload } = getApplicationConfig()
 
   const supportsClipboard = document.queryCommandSupported('copy')
@@ -255,17 +315,72 @@ export const TextWindowActions = ({
             >
               Open Earthdata Download
             </Button>
-            {/* TODO EDSC-3762 Uncomment this when we have implemented the landing page and/or download link
-              <Alert className="mt-3 mb-0 text-center" variant="secondary">
-                Don’t have the Earthdata Download installed?
+            <Alert className="mt-3 mb-0 text-center" variant="secondary">
+              Don’t have the Earthdata Download installed?
+              <br />
+              <EDSCIcon icon={osIcon} />
+              <a
+                href={downloadLink}
+              >
+                Download for
+                {' '}
+                {capitalize(operatingSystem)}
+                {' '}
+              </a>
+              or
+              {' '}
+              <a className="link link-external" href="/eddLandingPage">learn more.</a>
+              <br />
+              <>
+                Download for
+                <a href={macSiliconDownloadLink} download> silicon Macs</a>
                 <br />
-                <a href="/">Install the application now</a>
+                See the
                 {' '}
-                or
+                <a href="https://support.apple.com/en-us/HT211814">Apple docs</a>
                 {' '}
-                <a className="link link-external" href="/">learn more.</a>
-              </Alert>
-            */}
+                about Apple vs Intel chips.
+              </>
+              <br />
+              { !isWindows ? (
+                <>
+                  Windows?
+                  <br />
+                  Download for
+                  {' '}
+                  <a data-testid="eddLandingPage-link-windows" download href={windowsDownloadLink}>
+                    Windows
+                  </a>
+                  <br />
+                </>
+              ) : null}
+              {' '}
+              { !isLinux ? (
+                <>
+                  Linux?
+                  <br />
+                  Download for
+                  {' '}
+                  <a className="eddLinuxLink" data-testid="eddLandingPage-link-linux" download href={linuxDownloadLink}>
+                    Linux
+                  </a>
+                  <br />
+                </>
+              ) : null}
+              {' '}
+              { !isMacOs ? (
+                <>
+                  MacOs?
+                  <br />
+                  Download for
+                  {' '}
+                  <a className="eddMacOsLink" data-testid="eddLandingPage-link-macosx64" download href={macDownloadLink}>
+                    Intel Macs
+                  </a>
+                  <br />
+                </>
+              ) : null}
+            </Alert>
           </div>
         )}
       />
