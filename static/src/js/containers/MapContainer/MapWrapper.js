@@ -201,7 +201,6 @@ const MapWrapper = (props) => {
         onToggleTooManyPointsModal={onToggleTooManyPointsModal}
         onUpdateShapefile={onUpdateShapefile}
       />
-      {/* <GranuleImageContainer /> */}
       <MapEvents
         overlays={overlays}
         mapProps={mapProps}

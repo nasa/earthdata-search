@@ -28,7 +28,7 @@ describe('EDSCImage component', () => {
   })
 
   describe('when the image has loaded', () => {
-    test('should render a spinner', async () => {
+    test('should not render a spinner', async () => {
       const { container } = render(
         <EDSCImage
           alt="Test alt text"
@@ -52,7 +52,7 @@ describe('EDSCImage component', () => {
   })
 
   describe('when the image has errored', () => {
-    test('should render a spinner', async () => {
+    test('should not render a spinner', async () => {
       const { container } = render(
         <EDSCImage
           alt="Test alt text"
