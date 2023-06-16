@@ -15,7 +15,7 @@ import './EDSCImage.scss'
  * @param {String} props.height - The height of the image.
  * @param {String} props.src - The src to be used as the src attribute on the image..
  * @param {String} props.srcSet - The srcSet to be used as the srcSet attribute on the image.
- * @param {String} props.width - The width of the imag.
+ * @param {String} props.width - The width of the image.
  */
 export const EDSCImage = ({
   alt,
