@@ -113,7 +113,10 @@ const GranuleResultsFocusedMeta = ({
       show={showBrowseImageSelectionPopover}
       overlay={(
         <Popover className="granule-results-focused-meta__list-popover">
-          <ListGroup className="granule-results-focused-meta__list">
+          <ListGroup
+            className="granule-results-focused-meta__list"
+            data-testid="granule-results-focused-meta-list"
+          >
             {
               browseThumbnails.map(({ href, description }, i) => {
                 const filename = href.split('/').pop()
@@ -150,7 +153,10 @@ const GranuleResultsFocusedMeta = ({
       show={showModalImageSelectionPopover}
       overlay={(
         <Popover className="granule-results-focused-meta__list-popover">
-          <ListGroup className="granule-results-focused-meta__list">
+          <ListGroup
+            className="granule-results-focused-meta__list"
+            data-testid="granule-results-focused-meta-modal-popover-list"
+          >
             {
               browseThumbnails.map(({ href, description }, i) => {
                 const filename = href.split('/').pop()
@@ -162,6 +168,7 @@ const GranuleResultsFocusedMeta = ({
                     active={activeModalBrowseImageIndex === i}
                     onClick={() => {
                       setActiveModalBrowseImageIndex(i)
+                      setShowModalImageSelectionPopover(false)
                     }}
                   >
                     {description || filename}
@@ -205,12 +212,13 @@ const GranuleResultsFocusedMeta = ({
           <Tooltip
             id="tooltip__granule-results-actions__download-all-button"
             className="tooltip--nowrap"
+            data-testid="granule-results-focused-meta-tooltip"
           >
             {activeTitle}
           </Tooltip>
         )}
       >
-        <div>
+        <div data-testid="granule-results-focused-meta-overlay-wrapper">
           {
             // Focused granule id is used here to prevent a bug that surfaced with loading new focused granules.
             // The value in the store is becoming unset momentarily when focusing new granules.
@@ -233,14 +241,15 @@ const GranuleResultsFocusedMeta = ({
                           className="granule-results-focused-meta__image-nav-button"
                           type="button"
                           icon={FaChevronLeft}
-                          label="Previous thumbnail"
+                          label="Previous browse image thumbnail"
                           onClick={() => onClickPreviousButton()}
+                          data-testid="granule-results-focused-meta-nav-previous"
                         />
                         <Button
                           className="granule-results-focused-meta__image-nav-button"
                           type="button"
                           icon={FaChevronRight}
-                          label="Next thumbnail"
+                          label="Next browse image thumbnail"
                           onClick={() => onClickNextButton()}
                         />
                       </div>
@@ -280,6 +289,7 @@ const GranuleResultsFocusedMeta = ({
                           <EDSCImage
                             key={href}
                             className={thumbnailClassName}
+                            dataTestId="granule-results-focused-meta-image"
                             srcSet={`${imgSrc1x} 1x, ${imgSrc2x} 2x`}
                             src={imgSrc1x}
                             alt={description || `Browse image for ${title}`}
@@ -303,6 +313,7 @@ const GranuleResultsFocusedMeta = ({
         onClose={() => setBrowseImageModalIsActive(false)}
         size="md"
         subtitle={activeModalTitle}
+        dataTestId="granule-results-focused-meta-modal"
         body={(
           <>
             <div className="granule-results-focused-meta__full-container">
@@ -328,9 +339,10 @@ const GranuleResultsFocusedMeta = ({
                       href && (
                         <EDSCImage
                           key={href}
+                          dataTestId="granule-results-focused-meta-modal-image"
                           className={thumbnailClassName}
                           src={href}
-                          alt={description}
+                          alt={description || `Browse image for ${title}`}
                           width="528px"
                           height="528px"
                         />
@@ -347,14 +359,14 @@ const GranuleResultsFocusedMeta = ({
                       className="granule-results-focused-meta__image-nav-button"
                       type="button"
                       icon={FaChevronLeft}
-                      label="Previous thumbnail"
+                      label="Previous browse image"
                       onClick={() => onClickModalPreviousButton()}
                     />
                     <Button
                       className="granule-results-focused-meta__image-nav-button"
                       type="button"
                       icon={FaChevronRight}
-                      label="Next thumbnail"
+                      label="Next browse image"
                       onClick={() => onClickModalNextButton()}
                     />
                     <span className="granule-results-focused-meta__pagination">

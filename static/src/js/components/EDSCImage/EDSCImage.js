@@ -10,6 +10,7 @@ import './EDSCImage.scss'
  * Renders EDSCImage.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.alt - The alt text to be used as the alt attribute on the image.
+ * @param {String} props.dataTestId - An optional test id.
  * @param {String} props.className - An optional css class attribute.
  * @param {String} props.height - The height of the image.
  * @param {String} props.src - The src to be used as the src attribute on the image..
@@ -19,6 +20,7 @@ import './EDSCImage.scss'
 export const EDSCImage = ({
   alt,
   className,
+  dataTestId,
   height,
   src,
   srcSet,
@@ -45,7 +47,11 @@ export const EDSCImage = ({
   ])
 
   return (
-    <div className={`${imageClasses} ${className}`} style={{ height, width }}>
+    <div
+      className={`${imageClasses} ${className}`}
+      style={{ height, width }}
+      data-testid={dataTestId}
+    >
       {(!isLoaded && !isErrored) && (
         <Spinner
           className="edsc-image__spinner"
