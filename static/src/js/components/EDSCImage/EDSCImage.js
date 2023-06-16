@@ -78,12 +78,14 @@ export const EDSCImage = ({
 
 EDSCImage.defaultProps = {
   className: undefined,
+  dataTestId: undefined,
   srcSet: undefined
 }
 
 EDSCImage.propTypes = {
   alt: PropTypes.string.isRequired,
   className: PropTypes.string,
+  dataTestId: PropTypes.string,
   height: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   srcSet: PropTypes.string,
