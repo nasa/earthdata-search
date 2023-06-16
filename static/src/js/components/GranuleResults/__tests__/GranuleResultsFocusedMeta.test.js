@@ -201,13 +201,15 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           const popoverListButton = screen.getByLabelText('View available browse imagery')
 
-          await user.click(popoverListButton)
+          await waitFor(async () => {
+            await user.click(popoverListButton)
 
-          const popoverList = screen.getAllByTestId('granule-results-focused-meta-list')
-          const popoverListItems = screen.getAllByText('.jpg', { exact: false })
+            const popoverList = screen.getAllByTestId('granule-results-focused-meta-list')
+            const popoverListItems = screen.getAllByText('.jpg', { exact: false })
 
-          expect(popoverList.length).toEqual(1)
-          expect(popoverListItems.length).toEqual(3)
+            expect(popoverList.length).toEqual(1)
+            expect(popoverListItems.length).toEqual(3)
+          })
         })
 
         test('should hide the tooltip', async () => {
@@ -362,7 +364,9 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           const popoverListButton = screen.queryByLabelText('View available browse imagery')
 
-          await user.click(popoverListButton)
+          await waitFor(async () => {
+            await user.click(popoverListButton)
+          })
 
           const popoverList = screen.queryByTestId('granule-results-focused-meta-list')
 
@@ -658,7 +662,9 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             const popoverListButton = within(modal).queryByLabelText('View available browse imagery')
 
-            await user.click(popoverListButton)
+            await waitFor(async () => {
+              await user.click(popoverListButton)
+            })
 
             const popoverList = screen.queryByTestId('granule-results-focused-meta-modal-popover-list')
             const popoverListItem = within(popoverList).queryByText('test-3.jpg')
