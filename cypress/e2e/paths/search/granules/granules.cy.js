@@ -1056,7 +1056,7 @@ describe('Path /search/granules', () => {
       // Granule is focused
       cy.get('.granule-results-item--active').contains('MYD11A2.A2021137.h21v17.006.2021146041018.hdf').should('be.visible')
       // Browse image is open
-      cy.get('.granule-image--is-open').should('be.visible')
+      cy.get('.granule-results-focused-meta').should('be.visible')
     })
   })
 

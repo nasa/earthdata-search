@@ -48,7 +48,7 @@ describe('GranuleResultsFocusedMeta component', () => {
     })
   })
 
-  describe('when links are provided is false', () => {
+  describe('when links are provided', () => {
     test('should render', async () => {
       render(
         <GranuleResultsFocusedMeta

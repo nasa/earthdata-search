@@ -472,13 +472,6 @@ export class Panels extends PureComponent {
       const thumbnailWidth = thumbnailContainer.getBoundingClientRect().width
       const routeWrapperWidth = routeWrapper.getBoundingClientRect().width
 
-      console.log({
-        width,
-        routeWrapperWidth,
-        thumbnailWidth,
-        eq: width > routeWrapperWidth - thumbnailWidth
-      })
-
       if (width > routeWrapperWidth - thumbnailWidth) {
         this.responsiveContainer.classList.add('panels--hide-thumbnail')
       } else {
