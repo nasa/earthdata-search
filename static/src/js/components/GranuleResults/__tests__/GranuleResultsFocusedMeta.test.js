@@ -2,9 +2,9 @@ import React from 'react'
 import {
   render,
   screen,
-  waitFor
+  waitFor,
+  within
 } from '@testing-library/react'
-import { within } from '@testing-library/dom'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 
