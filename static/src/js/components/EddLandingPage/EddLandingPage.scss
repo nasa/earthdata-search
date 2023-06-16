@@ -1,0 +1,74 @@
+.eddLandingPage {
+
+  &__install-button {
+    margin-left: $spacer/2;
+    padding: 0.075rem 0.425rem;
+    background-color: $color__blue--dark;
+    border-color: $color__blue--dark;
+    font-weight: 500;
+
+    &:hover {
+      background-color: darken($color__blue--dark, 5);
+      border-color: darken($color__blue--dark, 5);
+    }
+  }
+  
+  // &__screenshot {
+  //   text-align: left;
+  //   height: 500;
+  //   width: 500;
+  //   max-width: 100%; 
+  // }
+
+  // &__header {
+  //   display: block;
+  //   font-size: 1.5em;
+  //   margin-top: 0.83em;
+  //   margin-bottom: 0.83em;
+  //   margin-left: 0;
+  //   margin-right: 0;
+  //   font-weight: lighter;
+  // }
+    &__list-group{
+      text-align: right;
+    }
+    // &__feature-list{
+    //   text-align: right;
+    // }
+    &__container{
+      text-align: right;
+    }
+
+}
+
+// using this causes all of EDSC to break
+
+
+// h2 {
+//   display: block;
+//   font-size: 1.5em;
+//   font-weight: bolder;
+//   float: right; // Float the element to the right
+//   text-align: right; // Align the text within the element to the right
+// }
+
+// h3 {
+//   display: block;
+//   font-size: 1.5em;
+//   font-weight: bolder;
+//   float: right; // Float the element to the right
+//   text-align: right; // Align the text within the element to the right
+// }
+
+// ul {
+//   float: right; // Float the unordered list to the right
+//   text-align: right; // Align the list items' text to the right
+//   list-style-position: inside; // Ensure the bullet points are aligned with the text
+// }
+
+
+img {
+  width: 500;
+  max-width: 100%; 
+  text-align: left;
+}

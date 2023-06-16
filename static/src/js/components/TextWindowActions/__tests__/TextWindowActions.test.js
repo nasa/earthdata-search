@@ -6,6 +6,10 @@ import TextWindowActions from '../TextWindowActions'
 import * as DownloadableFile from '../../../util/files/constructDownloadableFile'
 import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'
 import Button from '../../Button/Button'
+import { getOperatingSystem } from '../../../util/files/parseUserAgent'
+import { render, screen } from '@testing-library/react'
+
+import '@testing-library/jest-dom'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -23,6 +27,10 @@ const constructDownloadableFileMock = jest.spyOn(DownloadableFile, 'constructDow
 
 jest.mock('../../../util/files/constructDownloadableFile', () => ({
   constructDownloadableFile: jest.fn()
+}))
+
+jest.mock('../../../util/files/parseUserAgent', () => ({
+  getOperatingSystem: jest.fn()
 }))
 
 const { assign } = window.location
@@ -193,22 +201,43 @@ describe('TextWindowActions component', () => {
       })
     })
   })
-
+  // todo write tests here
   describe('when the eddModal is open', () => {
     describe('when clicking the Open Earthdata Download button ', () => {
       test('renders the save button', () => {
         const { enzymeWrapper } = setup({}, true)
+        console.log('🚀 ~ file: TextWindowActions.test.js:206 ~ test ~ enzymeWrapper:', enzymeWrapper)
 
         const eddButton = enzymeWrapper.find('.text-window-actions__action--edd').filter(Button)
         eddButton.simulate('click')
 
         const eddModal = enzymeWrapper.find(EDSCModalContainer).at(1)
+        console.log('🚀 ~ file: TextWindowActions.test.js:211 ~ test ~ eddModal:', eddModal)
 
         const openButton = eddModal.find('.text-window-actions__modal-action--open-edd').filter(Button)
         openButton.simulate('click')
 
         expect(window.location.assign).toHaveBeenCalledTimes(1)
         expect(window.location.assign).toHaveBeenCalledWith('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=shortName_versionId&token=Bearer mock-token')
+      })
+      test.only('Download links render correctly based on operating system', () => {
+        getOperatingSystem.mockImplementation(() => 'windows')
+
+        const { enzymeWrapper } = setup({}, true)
+
+        const eddButton = enzymeWrapper.find('.text-window-actions__action--edd').filter(Button)
+        eddButton.simulate('click')
+        // grab the bottom EDSCModalContainer
+        const eddModal = enzymeWrapper.find(EDSCModalContainer).at(1)
+        // expect(enzymeWrapper.find(EDSCModalContainer).length).toEqual(1)
+        // console.log('🚀 ~ file: TextWindowActions.test.js:224 ~ test.only ~ eddModal:', eddModal)
+        // const macEddDownloadLink = eddModal.find('eddMacOsLink').at(0)
+        const link = eddModal.find('a').at(2)
+        console.log('🚀 ~ file: TextWindowActions.test.js:233 ~ test.only ~ link:', link.prop('href'))
+        expect(eddModal.find('a').length).toEqual(1)
+        // expect(macEddDownloadLink).toHaveAttribute('href', 'https://test.com')
+        // console.log('🚀 ~ file: TextWindowActions.test.js:225 ~ test.only ~ macEddDownloadLink:', macEddDownloadLink)
+        // has href something
       })
     })
   })
