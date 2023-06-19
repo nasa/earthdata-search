@@ -1,74 +1,120 @@
 .eddLandingPage {
+  display: flex;
+  flex-direction: column; 
+  justify-content: space-between;
+  align-items: center;
 
-  &__install-button {
-    margin-left: $spacer/2;
-    padding: 0.075rem 0.425rem;
-    background-color: $color__blue--dark;
-    border-color: $color__blue--dark;
-    font-weight: 500;
+  &__imageContainer{
+    max-width: 100%;
+    max-height: 100%;
+    max-width: 50vw;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+  }
 
-    &:hover {
-      background-color: darken($color__blue--dark, 5);
-      border-color: darken($color__blue--dark, 5);
-    }
+  &__screenshot {
+    // float: left;
+    height: 500px;
+    width: 500px;
+  }
+
+  &__appContent{
+    flex: 1;
+    top: 50%;
+    right: 0;
+    width: 50%;
+    padding: 0 20px;
+    max-width: 100%;
+    max-height: 100%;
+    max-width: 50vw;
+    position: fixed;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+
+  &__header-primary {
+    position: absolute;
+    top: 50;
+    left: 0;
   }
   
-  // &__screenshot {
-  //   text-align: left;
-  //   height: 500;
-  //   width: 500;
-  //   max-width: 100%; 
-  // }
-
-  // &__header {
-  //   display: block;
-  //   font-size: 1.5em;
-  //   margin-top: 0.83em;
-  //   margin-bottom: 0.83em;
-  //   margin-left: 0;
-  //   margin-right: 0;
-  //   font-weight: lighter;
-  // }
-    &__list-group{
-      text-align: right;
-    }
-    // &__feature-list{
-    //   text-align: right;
-    // }
-    &__container{
-      text-align: right;
+    &__list-group {
+      text-align: left;
+      font-size: larger;
+      margin: 0;
+      padding: 0;
     }
 
-}
+    &__list-item {
+      text-align: left;
+    }
 
-// using this causes all of EDSC to break
+    &__container {
+      position: relative;
+      margin-top: 100px;
+      text-align: left;
+      list-style-position: inside; /* Places the bullets inside the list items */
+      position: relative;
+      background-color: rgba(204, 204, 204, 0.685);
+      display: inline-block;
+      padding: 15px;
+    }
+
+    &__header {
+      position: absolute;
+      top: 0;
+      left: 10;
+      margin: 0;
+    }
+
+    &__install_content {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+    }
+
+    &__downloaderSize {
+      font-weight: 400;
+    }
+
+    &__osLinkFileExt {
+      font-weight: 400;
+      color: #6f6e6e;
+      font-style: italic;
+    }
 
 
-// h2 {
-//   display: block;
-//   font-size: 1.5em;
-//   font-weight: bolder;
-//   float: right; // Float the element to the right
-//   text-align: right; // Align the text within the element to the right
-// }
+  &__other-links{
+    display: flex;
+    align-items: center; // Vertically centers the items
+    justify-content: space-between; // Distributes items evenly along the main axis
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 100px;
+    padding: 20px;
 
-// h3 {
-//   display: block;
-//   font-size: 1.5em;
-//   font-weight: bolder;
-//   float: right; // Float the element to the right
-//   text-align: right; // Align the text within the element to the right
-// }
+  }
 
-// ul {
-//   float: right; // Float the unordered list to the right
-//   text-align: right; // Align the list items' text to the right
-//   list-style-position: inside; // Ensure the bullet points are aligned with the text
-// }
+  eddLandingPage__repo {
+    text-align: center;
+    padding: 10px;
+    background-color: #ccc;
+    color: #000;
+    text-decoration: none;
+    align-items: flex-end;
+    
+  }
 
+  &__repo{
+    position: fixed;
+    left: 0;
+    margin-bottom: 100;
+    bottom: 0;
+    width: 10%;
+  }
 
-img {
-  width: 500;
-  max-width: 100%; 
-  text-align: left;
 }
