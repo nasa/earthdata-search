@@ -324,7 +324,7 @@ export const TextWindowActions = ({
               </a>
               or
               {' '}
-              <a className="link link-external" href="/eddLandingPage">learn more.</a>
+              <a className="link link-external" href="/earthdataDownload">learn more.</a>
             </Alert>
           </div>
         )}

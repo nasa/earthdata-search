@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
-import EddLandingPage from '../EddLandingPage'
+import EarthdataDownload from '../EarthdataDownload'
 
 import { getOperatingSystem } from '../../../util/files/parseUserAgent'
 
@@ -17,11 +17,11 @@ jest.mock('../../../util/files/parseUserAgent', () => ({
 // mock the result coming out of the OS user-agent function
 const setup = () => {
   render(
-    <EddLandingPage> </EddLandingPage>
+    <EarthdataDownload> </EarthdataDownload>
   )
 }
 
-describe('EddLandingPage component', () => {
+describe('EarthdataDownload component', () => {
   test('render the download link for windows', () => {
     getOperatingSystem.mockImplementation(() => 'windows')
     setup()
