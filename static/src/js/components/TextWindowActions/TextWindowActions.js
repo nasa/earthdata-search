@@ -51,46 +51,34 @@ export const TextWindowActions = ({
   eddLink
 }) => {
   let downloadLink
-  // Can't detect chip type from browser, branch to show links to both binaries
-  // let isMacOs = false
-  // let isLinux = false
-  // let isWindows = false
   let osIcon
 
   const { userAgent } = navigator
-  const operatingSystem = getOperatingSystem(userAgent)
-  console.log('🚀 ~ file: TextWindowActions.js:77 ~ operatingSystem:', operatingSystem)
+  let operatingSystem = capitalize(getOperatingSystem(userAgent))
 
   const windowsDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
   const macDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.dmg'
   const linuxDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata.Download-amd64.deb'
 
-  // todo remove this is for testing purposes
-  // operatingSystem = 'windows'
-  // operatingSystem = 'linux'
-
   switch (operatingSystem) {
-    case 'macOs': {
-      console.log('I am macIOS')
+    case 'MacOs': {
       downloadLink = macDownloadLink
       osIcon = FaApple
       break
     }
-    case 'windows': {
-      console.log('I am windows')
+    case 'Windows': {
       downloadLink = windowsDownloadLink
       osIcon = FaWindows
       break
     }
-    case 'linux': {
-      console.log('I am linux')
+    case 'Linux': {
       downloadLink = linuxDownloadLink
       osIcon = FaLinux
       break
     }
     default:
     {
-      // arbitrary default all links still accessible on page
+      operatingSystem = 'MacOs'
       downloadLink = macDownloadLink
       osIcon = FaApple
       break
@@ -319,7 +307,7 @@ export const TextWindowActions = ({
               >
                 Download for
                 {' '}
-                {capitalize(operatingSystem)}
+                {operatingSystem}
                 {' '}
               </a>
               or

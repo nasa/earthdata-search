@@ -20,6 +20,5 @@ export const getOperatingSystem = (userAgent) => {
       return operatingSystem
     }
   }
-  // todo return something better
-  return ''
+  return null
 }
