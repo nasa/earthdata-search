@@ -4,23 +4,23 @@ import { Helmet } from 'react-helmet'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
-import EddLandingPageContainer from '../../containers/EddLandingPageContainer/EddLandingPageContainer'
+import EarthdataDownloadContainer from '../../containers/EddLandingPageContainer/EarthdataDownloadContainer'
 
-export const EddLandingPage = () => {
+export const EarthdataDownload = () => {
   const { edscHost } = getEnvironmentConfig()
 
   return (
     <>
       <Helmet>
-        <title>EddLandingPage</title>
-        <meta name="title" content="EddLandingPage" />
+        <title>EarthdataDownload</title>
+        <meta name="title" content="EarthdataDownload" />
         <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href={`${edscHost}/eddLandingPage`} />
+        <link rel="canonical" href={`${edscHost}/earthdataDownload`} />
       </Helmet>
       <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
         <div className="route-wrapper__content">
           <div className="route-wrapper__content-inner">
-            <EddLandingPageContainer />
+            <EarthdataDownloadContainer />
           </div>
         </div>
       </div>
@@ -28,4 +28,4 @@ export const EddLandingPage = () => {
   )
 }
 
-export default withRouter(EddLandingPage)
+export default withRouter(EarthdataDownload)

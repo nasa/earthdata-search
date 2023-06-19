@@ -7,9 +7,9 @@ import eddLogo from '../../../assets/images/earthdata-download-logo.png'
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 import { getOperatingSystem } from '../../util/files/parseUserAgent'
 
-import './EddLandingPage.scss'
+import './EarthdataDownload.scss'
 
-export const EddLandingPage = () => {
+export const EarthdataDownload = () => {
   const { userAgent } = navigator
   const operatingSystem = upperFirst(getOperatingSystem(userAgent))
   let downloadLink
@@ -60,55 +60,55 @@ export const EddLandingPage = () => {
   const osLinkFileExt = `(.${downloadLink.split('.').pop()})`
 
   return (
-    <div className="eddLandingPage">
+    <div className="earthdataDownload">
 
-      <div className="eddLandingPage__imageContainer">
-        <img className="eddLandingPage__screenshot" src={eddLogo} alt={unavailableImg} />
+      <div className="earthdataDownload__imageContainer">
+        <img className="earthdataDownload__screenshot" src={eddLogo} alt={unavailableImg} />
       </div>
 
-      <div className="eddLandingPage__appContent">
-        <h2 className="eddLandingPage__header-primary">
+      <div className="earthdataDownload__appContent">
+        <h2 className="earthdataDownload__header-primary">
           Download your files from Earthdata Search
           <br />
           with only one click!
         </h2>
         <br />
-        <div className="eddLandingPage__container">
-          <h3 className="eddLandingPage__header">Earthdata Downloader Features</h3>
+        <div className="earthdataDownload__container">
+          <h3 className="earthdataDownload__header">Earthdata Downloader Features</h3>
           <br />
           <br />
-          <ul className="eddLandingPage__list-group">
-            <li className="eddLandingPage__list-item">Easily Authenticate with Earthdata login</li>
-            <li className="eddLandingPage__list-item">Manage your downloads and preferences</li>
-            <li className="eddLandingPage__list-item">Works on Mac, Windows, and Linux</li>
+          <ul className="earthdataDownload__list-group">
+            <li className="earthdataDownload__list-item">Easily Authenticate with Earthdata login</li>
+            <li className="earthdataDownload__list-item">Manage your downloads and preferences</li>
+            <li className="earthdataDownload__list-item">Works on Mac, Windows, and Linux</li>
           </ul>
         </div>
-        <div className="eddLandingPage__install-content">
-          <Button dataTestId="eddDownloadButton" className="eddLandingPage__install-button" type="button" icon={FaDownload} bootstrapVariant="primary" href={downloadLink}>
+        <div className="earthdataDownload__install-content">
+          <Button dataTestId="eddDownloadButton" className="earthdataDownload__install-button" type="button" icon={FaDownload} bootstrapVariant="primary" href={downloadLink}>
             Download for
             {' '}
             {operatingSystem}
           </Button>
           {' '}
-          <span className="eddLandingPage__downloaderSize">
+          <span className="earthdataDownload__downloaderSize">
             {downloaderSize}
           </span>
           {' '}
-          <span className="eddLandingPage__osLinkFileExt">
+          <span className="earthdataDownload__osLinkFileExt">
             {osLinkFileExt}
           </span>
         </div>
 
       </div>
       <br />
-      <div className="eddLandingPage__other-links">
+      <div className="earthdataDownload__other-links">
 
         <div className="other-links__item">
           Apple silicon?
           <br />
           Download for
           {' '}
-          <a data-testid="eddLandingPage-link-macOsSilicone" download href={macSiliconDownloadLink}>
+          <a data-testid="earthdataDownload-link-macOsSilicone" download href={macSiliconDownloadLink}>
             Apple silicon Mac
           </a>
           <br />
@@ -119,7 +119,7 @@ export const EddLandingPage = () => {
             <br />
             Download for
             {' '}
-            <a data-testid="eddLandingPage-link-windows" download href={windowsDownloadLink}>
+            <a data-testid="earthdataDownload-link-windows" download href={windowsDownloadLink}>
               Windows
             </a>
             <br />
@@ -132,7 +132,7 @@ export const EddLandingPage = () => {
             <br />
             Download for
             {' '}
-            <a className="eddLinuxLink" data-testid="eddLandingPage-link-linux" download href={linuxDownloadLink}>
+            <a className="eddLinuxLink" data-testid="earthdataDownload-link-linux" download href={linuxDownloadLink}>
               Linux
             </a>
             <br />
@@ -145,17 +145,17 @@ export const EddLandingPage = () => {
             <br />
             Download for
             {' '}
-            <a className="eddMacOsLink" data-testid="eddLandingPage-link-macosx64" download href={macDownloadLink}>
+            <a className="eddMacOsLink" data-testid="earthdataDownload-link-macosx64" download href={macDownloadLink}>
               Intel Macs
             </a>
           </div>
         ) : null}
       </div>
-      <a className="eddLandingPage__repo" href="https://github.com/nasa/earthdata-download">
+      <a className="earthdataDownload__repo" href="https://github.com/nasa/earthdata-download">
         Source Code Repository
       </a>
     </div>
   )
 }
 
-export default EddLandingPage
+export default EarthdataDownload
