@@ -1,9 +1,9 @@
 import React from 'react'
 import { FaDownload } from 'react-icons/fa'
-import { upperFirst } from 'lodash'
+import { capitalize } from 'lodash'
 import Button from '../Button/Button'
 
-import eddLogo from '../../../assets/images/earthdata-download-logo.png'
+import eddLogo from '../../../assets/images/earthdataDownload-screenshot.png'
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 import { getOperatingSystem } from '../../util/files/parseUserAgent'
 
@@ -11,7 +11,7 @@ import './EarthdataDownload.scss'
 
 export const EarthdataDownload = () => {
   const { userAgent } = navigator
-  const operatingSystem = upperFirst(getOperatingSystem(userAgent))
+  let operatingSystem = capitalize(getOperatingSystem(userAgent))
   let downloadLink
 
   let executableSize
@@ -23,24 +23,21 @@ export const EarthdataDownload = () => {
   let isMacOs = false
   let isLinux = false
   let isWindows = false
-  // operatingSystem = 'MacOs'
+
   switch (operatingSystem) {
     case 'MacOs': {
-      console.log('I am macIOS')
       downloadLink = macDownloadLink
       isMacOs = true
       executableSize = 130
       break
     }
     case 'Windows': {
-      console.log('I am windows')
       downloadLink = windowsDownloadLink
       executableSize = 100
       isWindows = true
       break
     }
     case 'Linux': {
-      console.log('I am linux')
       downloadLink = linuxDownloadLink
       executableSize = 90
       isLinux = true
@@ -48,8 +45,7 @@ export const EarthdataDownload = () => {
     }
     default:
     {
-      // arbitrary default all links still possible user agents access page
-      console.log('Defaulting to macOs')
+      operatingSystem = 'MacOs'
       downloadLink = macDownloadLink
       isMacOs = true
       executableSize = 130
@@ -66,15 +62,15 @@ export const EarthdataDownload = () => {
         <img className="earthdataDownload__screenshot" src={eddLogo} alt={unavailableImg} />
       </div>
 
-      <div className="earthdataDownload__appContent">
+      <div className="earthdataDownload__content">
         <h2 className="earthdataDownload__header-primary">
           Download your files from Earthdata Search
           <br />
           with only one click!
         </h2>
         <br />
-        <div className="earthdataDownload__container">
-          <h3 className="earthdataDownload__header">Earthdata Downloader Features</h3>
+        <div className="earthdataDownload__content-container">
+          <h3 className="earthdataDownload__header-secondary">Earthdata Downloader Features</h3>
           <br />
           <br />
           <ul className="earthdataDownload__list-group">
@@ -98,9 +94,7 @@ export const EarthdataDownload = () => {
             {osLinkFileExt}
           </span>
         </div>
-
       </div>
-      <br />
       <div className="earthdataDownload__other-links">
 
         <div className="other-links__item">
@@ -151,9 +145,6 @@ export const EarthdataDownload = () => {
           </div>
         ) : null}
       </div>
-      <a className="earthdataDownload__repo" href="https://github.com/nasa/earthdata-download">
-        Source Code Repository
-      </a>
     </div>
   )
 }

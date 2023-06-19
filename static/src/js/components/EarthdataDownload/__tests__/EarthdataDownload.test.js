@@ -22,20 +22,20 @@ const setup = () => {
 }
 
 describe('EarthdataDownload component', () => {
-  test('render the download link for windows', () => {
+  test('Render the download link for windows', () => {
     getOperatingSystem.mockImplementation(() => 'windows')
     setup()
     expect(screen.getByTestId('eddDownloadButton')).toBeInTheDocument()
     expect(screen.getByTestId('eddDownloadButton')).toHaveAttribute('href', windowsDownloadLink)
   })
-  test('should render the download link for macOs', () => {
+  test('Render the download link for macOs', () => {
     getOperatingSystem.mockImplementation(() => 'macOs')
     setup()
     expect(screen.getByTestId('eddDownloadButton')).toBeInTheDocument()
     expect(screen.getByTestId('eddDownloadButton')).toHaveAttribute('href', macDownloadLink)
   })
 
-  test('should render the download link for linux', () => {
+  test('Render the download link for linux', () => {
     getOperatingSystem.mockImplementation(() => 'linux')
     setup()
     expect(screen.getByTestId('eddDownloadButton')).toBeInTheDocument()

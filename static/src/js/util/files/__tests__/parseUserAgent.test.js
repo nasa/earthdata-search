@@ -16,4 +16,9 @@ describe('Test operating system parsing of user-agent', () => {
     const os = getOperatingSystem(linuxUserAgent)
     expect(os).toEqual('linux')
   })
+  test('Return null if the user-agent could not be parsed', () => {
+    const fakeUserAgent = 'mock-testing'
+    const os = getOperatingSystem(fakeUserAgent)
+    expect(os).toEqual(null)
+  })
 })

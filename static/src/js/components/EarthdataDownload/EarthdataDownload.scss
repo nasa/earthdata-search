@@ -1,6 +1,6 @@
 .earthdataDownload {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 
@@ -10,17 +10,16 @@
     max-width: 50vw;
     position: fixed;
     top: 50%;
-    left: 0;
+    left: 20%;
     transform: translate(0, -50%);
   }
 
   &__screenshot {
-    // float: left;
     height: 500px;
     width: 500px;
   }
 
-  &__appContent{
+  &__content {
     flex: 1;
     top: 50%;
     right: 0;
@@ -39,19 +38,18 @@
     top: 50;
     left: 0;
   }
-  
+
     &__list-group {
       text-align: left;
       font-size: larger;
       margin: 0;
-      padding: 0;
     }
 
     &__list-item {
       text-align: left;
     }
 
-    &__container {
+    &__content-container {
       position: relative;
       margin-top: 100px;
       text-align: left;
@@ -62,7 +60,7 @@
       padding: 15px;
     }
 
-    &__header {
+    &__header-secondary {
       position: absolute;
       top: 0;
       left: 10;
@@ -85,36 +83,13 @@
       font-style: italic;
     }
 
-
   &__other-links{
     display: flex;
-    align-items: center; // Vertically centers the items
-    justify-content: space-between; // Distributes items evenly along the main axis
+    justify-content: space-around;
     position: fixed;
-    left: 0;
+    right: 0;
     bottom: 0;
-    width: 100%;
-    margin-bottom: 100px;
-    padding: 20px;
-
+    margin-bottom: 250px;
+    width: 50%;
   }
-
-  earthdataDownload__repo {
-    text-align: center;
-    padding: 10px;
-    background-color: #ccc;
-    color: #000;
-    text-decoration: none;
-    align-items: flex-end;
-    
-  }
-
-  &__repo{
-    position: fixed;
-    left: 0;
-    margin-bottom: 100;
-    bottom: 0;
-    width: 10%;
-  }
-
 }

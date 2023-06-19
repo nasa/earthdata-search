@@ -200,18 +200,15 @@ describe('TextWindowActions component', () => {
       })
     })
   })
-  // todo write tests here
   describe('when the eddModal is open', () => {
     describe('when clicking the Open Earthdata Download button ', () => {
       test('renders the save button', () => {
         const { enzymeWrapper } = setup({}, true)
-        console.log('🚀 ~ file: TextWindowActions.test.js:206 ~ test ~ enzymeWrapper:', enzymeWrapper)
 
         const eddButton = enzymeWrapper.find('.text-window-actions__action--edd').filter(Button)
         eddButton.simulate('click')
 
         const eddModal = enzymeWrapper.find(EDSCModalContainer).at(1)
-        console.log('🚀 ~ file: TextWindowActions.test.js:211 ~ test ~ eddModal:', eddModal)
 
         const openButton = eddModal.find('.text-window-actions__modal-action--open-edd').filter(Button)
         openButton.simulate('click')
