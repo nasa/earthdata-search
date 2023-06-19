@@ -33,7 +33,7 @@ import './TextWindowActions.scss'
  * @param {String} clipboardContents - An string that will be copied to the users clipboard.
  * @param {String} fileContents - An optional string to be saved to the users computer.
  * @param {String} fileName - An optional string to to set the name for the file saved to the users computer.
- * @param {String} id - The id to use for the boostrap modal.
+ * @param {String} id - The id to use for the bootstrap modal.
  * @param {String} modalTitle - The title for the modal.
  * @param {Boolean} disableCopy - Disables the copy functionality.
  * @param {Boolean} disableSave - Disables the save functionality.
@@ -52,9 +52,9 @@ export const TextWindowActions = ({
 }) => {
   let downloadLink
   // Can't detect chip type from browser, branch to show links to both binaries
-  let isMacOs = false
-  let isLinux = false
-  let isWindows = false
+  // let isMacOs = false
+  // let isLinux = false
+  // let isWindows = false
   let osIcon
 
   const { userAgent } = navigator
@@ -63,7 +63,6 @@ export const TextWindowActions = ({
 
   const windowsDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
   const macDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.dmg'
-  const macSiliconDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-arm64.dmg'
   const linuxDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata.Download-amd64.deb'
 
   // todo remove this is for testing purposes
@@ -74,7 +73,6 @@ export const TextWindowActions = ({
     case 'macOs': {
       console.log('I am macIOS')
       downloadLink = macDownloadLink
-      isMacOs = true
       osIcon = FaApple
       break
     }
@@ -82,14 +80,12 @@ export const TextWindowActions = ({
       console.log('I am windows')
       downloadLink = windowsDownloadLink
       osIcon = FaWindows
-      isWindows = true
       break
     }
     case 'linux': {
       console.log('I am linux')
       downloadLink = linuxDownloadLink
       osIcon = FaLinux
-      isLinux = true
       break
     }
     default:
@@ -97,7 +93,6 @@ export const TextWindowActions = ({
       // arbitrary default all links still accessible on page
       downloadLink = macDownloadLink
       osIcon = FaApple
-      isMacOs = true
       break
     }
   }
@@ -330,56 +325,6 @@ export const TextWindowActions = ({
               or
               {' '}
               <a className="link link-external" href="/eddLandingPage">learn more.</a>
-              <br />
-              <>
-                Download for
-                <a href={macSiliconDownloadLink} download> silicon Macs</a>
-                <br />
-                See the
-                {' '}
-                <a href="https://support.apple.com/en-us/HT211814">Apple docs</a>
-                {' '}
-                about Apple vs Intel chips.
-              </>
-              <br />
-              { !isWindows ? (
-                <>
-                  Windows?
-                  <br />
-                  Download for
-                  {' '}
-                  <a data-testid="eddLandingPage-link-windows" download href={windowsDownloadLink}>
-                    Windows
-                  </a>
-                  <br />
-                </>
-              ) : null}
-              {' '}
-              { !isLinux ? (
-                <>
-                  Linux?
-                  <br />
-                  Download for
-                  {' '}
-                  <a className="eddLinuxLink" data-testid="eddLandingPage-link-linux" download href={linuxDownloadLink}>
-                    Linux
-                  </a>
-                  <br />
-                </>
-              ) : null}
-              {' '}
-              { !isMacOs ? (
-                <>
-                  MacOs?
-                  <br />
-                  Download for
-                  {' '}
-                  <a className="eddMacOsLink" data-testid="eddLandingPage-link-macosx64" download href={macDownloadLink}>
-                    Intel Macs
-                  </a>
-                  <br />
-                </>
-              ) : null}
             </Alert>
           </div>
         )}

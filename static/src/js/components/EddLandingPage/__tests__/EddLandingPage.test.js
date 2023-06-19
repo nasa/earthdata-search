@@ -1,7 +1,5 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-// import { act } from 'react-dom/test-utils'
-// import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 
 import EddLandingPage from '../EddLandingPage'
@@ -23,7 +21,6 @@ const setup = () => {
   )
 }
 
-// todo what other tests do you write besides if stuff is there or not?
 describe('EddLandingPage component', () => {
   test('render the download link for windows', () => {
     getOperatingSystem.mockImplementation(() => 'windows')
