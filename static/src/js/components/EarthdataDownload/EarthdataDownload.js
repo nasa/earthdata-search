@@ -66,64 +66,64 @@ export const EarthdataDownload = () => {
   const osLinkFileExt = `(.${downloadLink.split('.').pop()})`
 
   return (
-    <div className="earthdataDownload">
+    <div className="earthdata-download">
 
-      <div className="earthdataDownload__imageContainer">
-        <img className="earthdataDownload__screenshot" src={eddLogo} alt={unavailableImg} />
+      <div className="earthdata-download__image-container">
+        <img className="earthdata-download__screenshot" src={eddLogo} alt={unavailableImg} />
       </div>
 
-      <div className="earthdataDownload__content">
-        <h2 className="earthdataDownload__header-primary">
+      <div className="earthdata-download__content">
+        <h2 className="earthdata-download__header-primary">
           Download your files from Earthdata Search
           <br />
           with only one click!
         </h2>
         <br />
-        <div className="earthdataDownload__content-container">
-          <h3 className="earthdataDownload__header-secondary">Earthdata Downloader Features</h3>
+        <div className="earthdata-download__content-container">
+          <h3 className="earthdata-download__header-secondary">Earthdata Downloader Features</h3>
           <br />
           <br />
-          <ul className="earthdataDownload__list-group">
-            <li className="earthdataDownload__list-item">Easily Authenticate with Earthdata login</li>
-            <li className="earthdataDownload__list-item">Manage your downloads and preferences</li>
-            <li className="earthdataDownload__list-item">Works on Mac, Windows, and Linux</li>
+          <ul className="earthdata-download__list-group">
+            <li className="earthdata-download__list-item">Easily Authenticate with Earthdata login</li>
+            <li className="earthdata-download__list-item">Manage your downloads and preferences</li>
+            <li className="earthdata-download__list-item">Works on Mac, Windows, and Linux</li>
           </ul>
         </div>
-        <div className="earthdataDownload__install-content">
-          <Button dataTestId="eddDownloadButton" className="earthdataDownload__install-button" type="button" icon={FaDownload} bootstrapVariant="primary" href={downloadLink}>
+        <div className="earthdata-download__install-content">
+          <Button dataTestId="eddDownloadButton" className="earthdata-download__install-button" type="button" icon={FaDownload} bootstrapVariant="primary" href={downloadLink}>
             Download for
             {' '}
             {operatingSystem}
           </Button>
           {' '}
-          <span className="earthdataDownload__downloaderSize">
+          <span className="earthdata-download__download-size">
             {downloaderSize}
           </span>
           {' '}
-          <span className="earthdataDownload__osLinkFileExt">
+          <span className="earthdata-download__os-link-file-ext">
             {osLinkFileExt}
           </span>
         </div>
       </div>
-      <div className="earthdataDownload__other-links">
+      <div className="earthdata-download__other-links">
 
-        <div className="other-links__item">
+        <div className="earthdata-download__other-links-item">
           Apple silicon?
           <br />
           Download for
           {' '}
-          <a data-testid="earthdataDownload-link-macOsSilicone" download href={macSiliconDownloadLink}>
+          <a data-testid="earthdata-download-link-macOsSilicone" download href={macSiliconDownloadLink}>
             Apple silicon Mac
           </a>
           <br />
         </div>
         { !isWindows ? (
-          <div className="other-links__item">
+          <div className="earthdata-download__other-links-item">
             Windows?
             <br />
             Download for
             {' '}
-            <a data-testid="earthdataDownload-link-windows" download href={windowsDownloadLink}>
+            <a data-testid="earthdata-download-link-windows" download href={windowsDownloadLink}>
               Windows
             </a>
             <br />
@@ -131,12 +131,12 @@ export const EarthdataDownload = () => {
         ) : null}
         {' '}
         { !isLinux ? (
-          <div className="other-links__item">
+          <div className="earthdata-download__other-links-item">
             Linux?
             <br />
             Download for
             {' '}
-            <a className="eddLinuxLink" data-testid="earthdataDownload-link-linux" download href={linuxDownloadLink}>
+            <a className="eddLinuxLink" data-testid="earthdata-download-link-linux" download href={linuxDownloadLink}>
               Linux
             </a>
             <br />
@@ -144,12 +144,12 @@ export const EarthdataDownload = () => {
         ) : null}
         {' '}
         { !isMacOs ? (
-          <div className="other-links__item">
+          <div className="earthdata-download__other-links-item">
             MacOs?
             <br />
             Download for
             {' '}
-            <a className="eddMacOsLink" data-testid="earthdataDownload-link-macosx64" download href={macDownloadLink}>
+            <a className="eddMacOsLink" data-testid="earthdata-download-link-macosx64" download href={macDownloadLink}>
               Intel Macs
             </a>
           </div>
