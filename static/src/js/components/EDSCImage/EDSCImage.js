@@ -49,7 +49,6 @@ export const EDSCImage = ({
   return (
     <div
       className={`${imageClasses} ${className}`}
-      style={{ height, width }}
       data-testid={dataTestId}
     >
       {(!isLoaded && !isErrored) && (
