@@ -3,8 +3,8 @@
 
   &__thumb-container {
     position: relative;
-    height: 9rem;
-    width: 9rem;
+    height: 11rem;
+    width: 11rem;
     margin: 0.25rem;
     display: flex;
     align-items: center;
@@ -90,7 +90,7 @@
   }
 
   &__pagination {
-    margin-right: 0.325rem;
+    margin: 0 0 0 0.25rem;
     display: block;
     font-weight: 700;
   }
@@ -106,8 +106,6 @@
     padding-left: 0.25rem;
     padding-right: 0.25rem;
     justify-content: space-between;
-    color: $color__white;
-    filter: drop-shadow(0px 1px 0px rgba($color__black, 0.8)) drop-shadow(0px 0px 4px rgba($color__black, 0.8));
   }
 
   &__image-nav-primary,
@@ -117,26 +115,53 @@
     justify-content: center;
   }
 
-  &__image-nav-button {
+  &__image-nav-primary,
+  &__image-nav-secondary {
+    border: 2px solid rgba($color__black--700, 0.3);
+    border-radius: 0.25rem;
+    background-color: rgba($color__white, 0.825);
+  }
+
+  &__image-nav-button,
+  &__image-nav-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 2rem;
-    width: 2rem;
+    height: 1.75rem;
+    width: 1.75rem;
     padding: 0;
-    color: $color__white;
+    border: 2px solid rgba($color__black--700, 0.3);
+    border-radius: 0.25rem;
+    color: $color__black--700;
+    background-color: rgba($color__white, 0.825);
 
-    .button__icon {
-      transform: scale(1.075);
+    .granule-results-focused-meta__image-nav-primary & ,
+    .granule-results-focused-meta__image-nav-secondary & {
+      border: none;
+      border-radius: 0;
+      background-color: transparent;
+
+      &:hover {
+        color: $color__black--800;
+
+        &:not(.granule-results-focused-meta__image-nav-item) {
+          background-color: $color__black--100;
+        }
+      }
+    }
+
+    &__image-nav-item {
+      width: auto;
     }
 
     &:hover {
-      color: $color__white;
+      color: $color__black--800;
     }
 
     .edsc-modal & {
       width: 2.25rem;
       height: 2.25rem;
+      border: 0;
     }
   }
 
@@ -152,7 +177,7 @@
     padding-right: 0.25rem;
     justify-content: flex-end;
     color: $color__white;
-    filter: drop-shadow(0px 1px 0px rgba($color__black, 0.8)) drop-shadow(0px 0px 4px rgba($color__black, 0.8));
+    // filter: drop-shadow(0px 1px 0px rgba($color__black, 0.8)) drop-shadow(0px 0px 4px rgba($color__black, 0.8));
   }
 
   &__browse-image-modal {
@@ -181,5 +206,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+.edsc-modal__granule-browse-image-modal {
+  .modal-header {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.75rem;
+    width: 1.75rem;
+    padding: 0;
+    border: 2px solid rgba($color__black--700, 0.3);
+    border-radius: 0.25rem;
+    color: $color__black--700;
+    background-color: rgba($color__white, 0.825);
   }
 }
