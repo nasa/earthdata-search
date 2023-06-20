@@ -1,16 +1,21 @@
-import AWS from 'aws-sdk'
+import { SFNClient } from '@aws-sdk/client-sfn'
 
 import { startOrderStatusUpdateWorkflow } from '../startOrderStatusUpdateWorkflow'
 
-const stepFunctionData = jest.fn().mockReturnValue({
-  promise: jest.fn().mockResolvedValue()
+jest.mock('@aws-sdk/client-sfn', () => {
+  const original = jest.requireActual('@aws-sdk/client-sfn')
+  const stepFunctionData = jest.fn()
+
+  return {
+    ...original,
+    SFNClient: jest.fn().mockImplementation(() => ({
+      startExecution: stepFunctionData
+        .mockResolvedValue(stepFunctionData)
+    }))
+  }
 })
 
-AWS.StepFunctions = jest.fn()
-  .mockImplementationOnce(() => ({
-    startExecution: stepFunctionData
-  }))
-
+const client = new SFNClient()
 const OLD_ENV = process.env
 
 beforeEach(() => {
@@ -33,14 +38,16 @@ describe('startOrderStatusUpdateWorkflow', () => {
 
     await startOrderStatusUpdateWorkflow(1, 'access-token', 'ESI')
 
-    expect(stepFunctionData).toBeCalledTimes(1)
-    expect(stepFunctionData.mock.calls[0]).toEqual([{
-      stateMachineArn: 'order-status-arn',
-      input: JSON.stringify({
-        id: 1,
-        accessToken: 'access-token',
-        orderType: 'ESI'
-      })
-    }])
+    expect(client.startExecution).toBeCalledTimes(1)
+    expect(client.startExecution).toHaveBeenCalledWith(
+      {
+        stateMachineArn: 'order-status-arn',
+        input: JSON.stringify({
+          id: 1,
+          accessToken: 'access-token',
+          orderType: 'ESI'
+        })
+      }
+    )
   })
 })
