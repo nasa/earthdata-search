@@ -1,10 +1,10 @@
-.earthdataDownload {
+.earthdata-download {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 
-  &__imageContainer{
+  &__image-container{
     max-width: 100%;
     max-height: 100%;
     max-width: 50vw;
@@ -43,17 +43,18 @@
       text-align: left;
       font-size: larger;
       margin: 0;
+      padding-left: 20px;
     }
 
     &__list-item {
       text-align: left;
+      padding-right: 10px;
     }
 
     &__content-container {
       position: relative;
       margin-top: 100px;
       text-align: left;
-      list-style-position: inside; /* Places the bullets inside the list items */
       background-color: rgba(204, 204, 204, 0.685);
       display: inline-block;
       padding: 15px;
@@ -66,19 +67,20 @@
       margin: 0;
     }
 
-    &__install_content {
-      bottom: 0;
-      left: 0;
-      position: absolute;
+    &__install-content {
+      padding-top: 20px;
     }
 
-    &__downloaderSize {
-      font-weight: 400;
+    &__download-size {
+      // font-weight: 400;
+      color: #918c8c;
+      // font-family: normal;
+      font-weight: bold;
     }
 
-    &__osLinkFileExt {
+    &__os-link-file-ext {
       font-weight: 400;
-      color: #6f6e6e;
+      color: #7d7b7b;
       font-style: italic;
     }
 
