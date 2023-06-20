@@ -1,6 +1,6 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
-import AWS from 'aws-sdk'
+import { SQS, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import * as getDbConnection from '../../util/database/getDbConnection'
 import submitRetrieval from '../handler'
 import { orderPayload, echoOrderPayload, badOrderPayload } from './mocks'
@@ -12,14 +12,20 @@ let dbTracker
 
 const OLD_ENV = process.env
 
-const sqsSendMessagePromise = jest.fn().mockReturnValue({
-  promise: jest.fn().mockResolvedValue()
-})
+const mockSend = jest.fn().mockResolvedValue({});
 
-AWS.SQS = jest.fn()
-  .mockImplementationOnce(() => ({
-    sendMessageBatch: sqsSendMessagePromise
-  }))
+jest.mock('@aws-sdk/client-sqs', () => {
+  return {
+    SQSClient: jest.fn().mockImplementation(() => {
+      return {
+        send: mockSend
+      };
+    }),
+    SendMessageBatchCommand: jest.fn().mockImplementation((params) => {
+      return params;
+    })
+  };
+});
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -170,7 +176,7 @@ describe('submitRetrieval', () => {
     expect(queries[4].method).toEqual('insert')
     expect(queries[5].method).toEqual('insert')
     expect(queries[6].sql).toContain('COMMIT')
-    expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
+    expect(mockSend.mock.calls[0]).toEqual([{
       QueueUrl: 'http://example.com/echoQueue',
       Entries: [{
         DelaySeconds: 3,
