@@ -8,8 +8,6 @@ import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModal
 import Button from '../../Button/Button'
 import { getOperatingSystem } from '../../../util/files/parseUserAgent'
 
-import '@testing-library/jest-dom'
-
 Enzyme.configure({ adapter: new Adapter() })
 
 const dom = new JSDOM()

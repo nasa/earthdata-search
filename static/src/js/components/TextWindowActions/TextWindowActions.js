@@ -54,31 +54,34 @@ export const TextWindowActions = ({
   let osIcon
 
   const { userAgent } = navigator
-  let operatingSystem = capitalize(getOperatingSystem(userAgent))
+  let operatingSystem = getOperatingSystem(userAgent)
 
   const windowsDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
   const macDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.dmg'
   const linuxDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata.Download-amd64.deb'
 
   switch (operatingSystem) {
-    case 'MacOs': {
+    case 'macOs': {
+      // Apple standard is not to capitalize macOs
       downloadLink = macDownloadLink
       osIcon = FaApple
       break
     }
-    case 'Windows': {
+    case 'windows': {
+      operatingSystem = capitalize(operatingSystem)
       downloadLink = windowsDownloadLink
       osIcon = FaWindows
       break
     }
-    case 'Linux': {
+    case 'linux': {
+      operatingSystem = capitalize(operatingSystem)
       downloadLink = linuxDownloadLink
       osIcon = FaLinux
       break
     }
     default:
     {
-      operatingSystem = 'MacOs'
+      operatingSystem = 'macOs'
       downloadLink = macDownloadLink
       osIcon = FaApple
       break
@@ -312,7 +315,7 @@ export const TextWindowActions = ({
               </a>
               or
               {' '}
-              <a className="link link-external" href="/earthdataDownload">learn more.</a>
+              <a className="link link-external" href="/earthdata-download">learn more.</a>
             </Alert>
           </div>
         )}

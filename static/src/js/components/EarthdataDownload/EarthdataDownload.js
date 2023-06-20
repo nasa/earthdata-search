@@ -7,11 +7,13 @@ import eddLogo from '../../../assets/images/earthdataDownload-screenshot.png'
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 import { getOperatingSystem } from '../../util/files/parseUserAgent'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
 import './EarthdataDownload.scss'
 
 export const EarthdataDownload = () => {
   const { userAgent } = navigator
-  let operatingSystem = capitalize(getOperatingSystem(userAgent))
+  let operatingSystem = getOperatingSystem(userAgent)
   let downloadLink
 
   let executableSize
@@ -19,36 +21,46 @@ export const EarthdataDownload = () => {
   const macDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.dmg'
   const macSiliconDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-arm64.dmg'
   const linuxDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata.Download-amd64.deb'
+  const {
+    macOsEDDExecutableSize,
+    windowsEDDExecutableSize,
+    linuxEDDExecutableSize
+  } = getApplicationConfig()
 
   let isMacOs = false
   let isLinux = false
   let isWindows = false
 
+  operatingSystem = null
+
   switch (operatingSystem) {
-    case 'MacOs': {
-      downloadLink = macDownloadLink
+    case 'macOs': {
+      // Apple standard is not to capitalize macOs
       isMacOs = true
-      executableSize = 130
+      downloadLink = macDownloadLink
+      executableSize = macOsEDDExecutableSize
       break
     }
-    case 'Windows': {
-      downloadLink = windowsDownloadLink
-      executableSize = 100
+    case 'windows': {
+      operatingSystem = capitalize(operatingSystem)
       isWindows = true
+      downloadLink = windowsDownloadLink
+      executableSize = windowsEDDExecutableSize
       break
     }
-    case 'Linux': {
-      downloadLink = linuxDownloadLink
-      executableSize = 90
+    case 'linux': {
+      operatingSystem = capitalize(operatingSystem)
       isLinux = true
+      downloadLink = linuxDownloadLink
+      executableSize = linuxEDDExecutableSize
       break
     }
     default:
     {
-      operatingSystem = 'MacOs'
+      operatingSystem = 'macOs'
       downloadLink = macDownloadLink
       isMacOs = true
-      executableSize = 130
+      executableSize = macOsEDDExecutableSize
       break
     }
   }
