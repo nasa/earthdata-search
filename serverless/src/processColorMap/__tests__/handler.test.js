@@ -1,4 +1,4 @@
-import AWS from 'aws-sdk'
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 
 import nock from 'nock'
 import knex from 'knex'
@@ -12,14 +12,18 @@ import { colorMapOne } from './mocks'
 
 let dbTracker
 
-const sqsColorMap = jest.fn().mockReturnValue({
-  promise: jest.fn().mockResolvedValue()
-})
+const sqsColorMap = jest.fn().mockResolvedValue({})
 
-AWS.SQS = jest.fn()
-  .mockImplementationOnce(() => ({
-    sendMessage: sqsColorMap
-  }))
+const mockSqsClient = {
+  send: sqsColorMap
+}
+
+jest.mock('@aws-sdk/client-sqs', () => {
+  return {
+    SQSClient: jest.fn(() => mockSqsClient),
+    SendMessageCommand: jest.fn()
+  }
+})
 
 beforeEach(() => {
   jest.clearAllMocks()
