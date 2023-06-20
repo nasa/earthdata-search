@@ -1,25 +1,21 @@
-import AWS from 'aws-sdk'
-
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 import nock from 'nock'
 import knex from 'knex'
 import mockKnex from 'mock-knex'
-
 import * as getDbConnection from '../../util/database/getDbConnection'
-
 import { gibsError, gibsResponse } from './mocks'
-
 import { getProjectionCapabilities } from '../getProjectionCapabilities'
 
 let dbTracker
 
-const sqsColorMap = jest.fn().mockReturnValue({
-  promise: jest.fn().mockResolvedValue()
-})
+const mocksqsColorMap = jest.fn().mockResolvedValue()
 
-AWS.SQS = jest.fn()
-  .mockImplementationOnce(() => ({
-    sendMessage: sqsColorMap
-  }))
+jest.mock('@aws-sdk/client-sqs', () => ({
+  SQSClient: jest.fn().mockImplementation(() => ({
+    send: mocksqsColorMap
+  })),
+  SendMessageCommand: jest.fn().mockImplementation((params) => params),
+}))
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -30,7 +26,6 @@ beforeEach(() => {
       debug: false
     })
 
-    // Mock the db connection
     mockKnex.mock(dbCon)
 
     return dbCon
@@ -67,14 +62,14 @@ describe('getProjectionCapabilities', () => {
 
       expect(response.statusCode).toEqual(200)
 
-      expect(sqsColorMap).toBeCalledTimes(1)
-      expect(sqsColorMap.mock.calls[0]).toEqual([expect.objectContaining({
+      expect(mocksqsColorMap).toBeCalledTimes(1)
+      expect(mocksqsColorMap.mock.calls[0][0]).toEqual(expect.objectContaining({
         MessageBody: JSON.stringify({
           id: 1,
           product: 'VIIRS_Angstrom_Exponent_Deep_Blue',
           url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/VIIRS_Angstrom_Exponent_Deep_Blue.xml'
         })
-      })])
+      }))
 
       expect(response).toEqual({
         statusCode: 200,
@@ -105,14 +100,14 @@ describe('getProjectionCapabilities', () => {
 
       expect(response.statusCode).toEqual(200)
 
-      expect(sqsColorMap).toBeCalledTimes(1)
-      expect(sqsColorMap.mock.calls[0]).toEqual([expect.objectContaining({
+      expect(mocksqsColorMap).toBeCalledTimes(1)
+      expect(mocksqsColorMap.mock.calls[0][0]).toEqual(expect.objectContaining({
         MessageBody: JSON.stringify({
           id: 1,
           product: 'VIIRS_Angstrom_Exponent_Deep_Blue',
           url: 'https://gibs.earthdata.nasa.gov/colormaps/v1.3/VIIRS_Angstrom_Exponent_Deep_Blue.xml'
         })
-      })])
+      }))
 
       expect(response).toEqual({
         statusCode: 200,
@@ -132,20 +127,11 @@ describe('getProjectionCapabilities', () => {
       }
     })
 
-    const sqsColorMap = jest.fn().mockReturnValue({
-      promise: jest.fn().mockResolvedValue()
-    })
-
-    AWS.SQS = jest.fn()
-      .mockImplementationOnce(() => ({
-        sendMessage: sqsColorMap
-      }))
-
     const response = await getProjectionCapabilities('epsg4236')
 
     expect(response.statusCode).toEqual(500)
 
-    expect(sqsColorMap).toBeCalledTimes(0)
+    expect(mocksqsColorMap).toBeCalledTimes(0)
 
     const { body } = response
     const parsedBody = JSON.parse(body)

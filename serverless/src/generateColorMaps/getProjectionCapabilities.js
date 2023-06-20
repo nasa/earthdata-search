@@ -1,10 +1,7 @@
 import 'array-foreach-async'
-
-import AWS from 'aws-sdk'
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 import axios from 'axios'
-
 import { XMLParser } from 'fast-xml-parser'
-
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { parseError } from '../../../sharedUtils/parseError'
@@ -17,36 +14,26 @@ const xmlParser = new XMLParser({
 // Name of the db table that this lambda operates on
 const colorMapsTableName = 'colormaps'
 
-// AWS SQS adapter
-let sqs
+// AWS SQS client
+let sqsClient
 
-/**
- * Parse the GIBS capabilities document and provide individual ColorMaps to SQS for further processing
- * @param {String} projection - The projection used to determine which GIBS file to examine
- * @return {Object} An object containing a valid response code and a JSON body
- */
 export const getProjectionCapabilities = async (projection) => {
   const capabilitiesUrl = `https://gibs.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?SERVICE=WMTS&request=GetCapabilities`
 
   console.log(`GIBS Capabilties URL: ${capabilitiesUrl}`)
 
   try {
-    if (sqs == null) {
-      sqs = new AWS.SQS(getSqsConfig())
+    if (!sqsClient) {
+      sqsClient = new SQSClient(getSqsConfig())
     }
 
-    // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
 
-    // Delete colormaps that havent been updated in the last 5 days
     await dbConnection(colorMapsTableName).whereRaw("updated_at <= now() - INTERVAL '5 DAYS'").del()
 
     const colormapProducts = []
 
-    const gibsResponse = await axios({
-      method: 'get',
-      url: capabilitiesUrl
-    })
+    const gibsResponse = await axios.get(capabilitiesUrl)
 
     const parsedCapabilities = xmlParser.parse(gibsResponse.data)
 
@@ -65,9 +52,7 @@ export const getProjectionCapabilities = async (projection) => {
 
       const metadataLinks = layer['ows:Metadata'] || []
       await metadataLinks.filter(Boolean).forEachAsync(async (link) => {
-        // Look for the v1.3 colormap link
         if (link['xlink:role'].includes('1.3')) {
-          // If there is no previous record of this product, insert a new row into the database
           if (knownColorMap == null) {
             [knownColorMap] = await dbConnection(colorMapsTableName)
               .returning(['id', 'product', 'url'])
@@ -79,10 +64,12 @@ export const getProjectionCapabilities = async (projection) => {
             console.log('knownColorMap', knownColorMap)
           }
 
-          await sqs.sendMessage({
+          const sendMessageCommand = new SendMessageCommand({
             QueueUrl: process.env.colorMapQueueUrl,
             MessageBody: JSON.stringify(knownColorMap)
-          }).promise()
+          })
+
+          await sqsClient.send(sendMessageCommand)
         }
       })
 
