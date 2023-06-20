@@ -1,21 +1,17 @@
-import AWS from 'aws-sdk'
 import { AuthorizationCode } from 'simple-oauth2'
-
 import { parse, stringify } from 'qs'
+import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs";
 
 import { createJwtToken } from '../util/createJwtToken'
 import { getDbConnection } from '../util/database/getDbConnection'
-import {
-  getEarthdataConfig,
-  getEnvironmentConfig
-} from '../../../sharedUtils/config'
+import { getEarthdataConfig, getEnvironmentConfig} from '../../../sharedUtils/config'
 import { getEdlConfig } from '../util/getEdlConfig'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { parseError } from '../../../sharedUtils/parseError'
 
 // AWS SQS adapter
-let sqs
+let sqsClient
 
 /**
  * Fetches an EDL token based on the 'code' param supplied by EDL. Sets a cookie containing a JWT containing the EDL token
@@ -30,8 +26,8 @@ const edlCallback = async (event, context) => {
   // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
 
-  if (sqs == null) {
-    sqs = new AWS.SQS(getSqsConfig())
+  if (sqsClient == null) {
+    sqsClient = new SQSClient(getSqsConfig());
   }
 
   const { code, state } = event.queryStringParameters
@@ -105,14 +101,15 @@ const edlCallback = async (event, context) => {
     jwtToken = createJwtToken(userRow, earthdataEnvironment)
 
     if (!process.env.IS_OFFLINE) {
-      await sqs.sendMessage({
+      const sqsCommand = new SendMessageCommand({
         QueueUrl: process.env.userDataQueueUrl,
         MessageBody: JSON.stringify({
           environment: earthdataEnvironment,
           userId: userRow.id,
           username
         })
-      }).promise()
+      });
+      await sqsClient.send(sqsCommand);
     }
   } catch (e) {
     parseError(e)

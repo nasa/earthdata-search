@@ -1,7 +1,7 @@
-import AWS from 'aws-sdk'
 import knex from 'knex'
 import mockKnex from 'mock-knex'
 import jwt from 'jsonwebtoken'
+import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs"
 
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEdlConfig from '../../util/getEdlConfig'
@@ -19,14 +19,19 @@ jest.mock('simple-oauth2', () => ({
         access_token: 'accessToken',
         token_type: 'Bearer',
         expires_in: 3600,
-        refresh_token:
-              'refreshToken',
+        refresh_token: 'refreshToken',
         endpoint: '/api/users/edsc',
         expires_at: '2019-09-10T20:00:23.313Z'
       }
     })))
   }))
 }))
+
+jest.mock("@aws-sdk/client-sqs", () => {
+  const mSQS = { send: jest.fn() };
+  const mSendMessageCommand = jest.fn(() => "message command");
+  return { SQSClient: jest.fn(() => mSQS), SendMessageCommand: mSendMessageCommand };
+});
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -52,6 +57,9 @@ beforeEach(() => {
 
   dbTracker = mockKnex.getTracker()
   dbTracker.install()
+
+  SQSClient.mockClear();
+  SendMessageCommand.mockClear();
 })
 
 afterEach(() => {
@@ -62,15 +70,6 @@ describe('edlCallback', () => {
   test('logs in the user and redirects to edscHost', async () => {
     const code = '2057964173'
     const state = 'http://example.com?ee=prod'
-
-    const sqsUserData = jest.fn().mockReturnValue({
-      promise: jest.fn().mockResolvedValue()
-    })
-
-    AWS.SQS = jest.fn()
-      .mockImplementationOnce(() => ({
-        sendMessage: sqsUserData
-      }))
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
@@ -89,14 +88,16 @@ describe('edlCallback', () => {
 
     const response = await edlCallback(event, {})
 
-    expect(sqsUserData).toBeCalledTimes(1)
-    expect(sqsUserData.mock.calls[0]).toEqual([expect.objectContaining({
+    expect(SQSClient).toBeCalledTimes(1);
+    expect(SendMessageCommand).toBeCalledTimes(1);
+    expect(SendMessageCommand).toBeCalledWith({
+      QueueUrl: process.env.userDataQueueUrl,
       MessageBody: JSON.stringify({
         environment: 'prod',
         userId: 1,
         username: 'edsc'
-      })
-    })])
+      }),
+    });
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('first')
