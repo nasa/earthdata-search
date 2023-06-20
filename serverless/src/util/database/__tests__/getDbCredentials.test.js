@@ -1,10 +1,26 @@
-import AWS from 'aws-sdk'
+import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager'
 
 import { getDbCredentials } from '../getDbCredentials'
 
 import * as deployedEnvironment from '../../../../../sharedUtils/deployedEnvironment'
 
 const OLD_ENV = process.env
+
+jest.mock('@aws-sdk/client-secrets-manager', () => {
+  const original = jest.requireActual('@aws-sdk/client-secrets-manager')
+  const sendMock = jest.fn().mockReturnValueOnce({
+    SecretString: '{"username":"fake-username", "password":"fake-pw"}'
+  })
+
+  return {
+    ...original,
+    SecretsManagerClient: jest.fn().mockImplementation(() => ({
+      send: sendMock
+    }))
+  }
+})
+
+const client = new SecretsManagerClient()
 
 describe('getDbCredentials', () => {
   beforeEach(() => {
@@ -22,17 +38,6 @@ describe('getDbCredentials', () => {
   test('fetches urs credentials from secrets manager', async () => {
     process.env.configSecretId = 'test-DbPasswordSecret'
 
-    const secretsManagerData = jest.fn().mockReturnValue({
-      promise: jest.fn().mockResolvedValue({
-        SecretString: '{"username":"fake-username", "password":"fake-pw"}'
-      })
-    })
-
-    AWS.SecretsManager = jest.fn()
-      .mockImplementationOnce(() => ({
-        getSecretValue: secretsManagerData
-      }))
-
     jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 
     const response = await getDbCredentials()
@@ -42,10 +47,9 @@ describe('getDbCredentials', () => {
       password: 'fake-pw'
     })
 
-    expect(secretsManagerData).toBeCalledTimes(1)
-
-    expect(secretsManagerData.mock.calls[0]).toEqual([{
-      SecretId: 'test-DbPasswordSecret'
-    }])
+    expect(client.send).toBeCalledTimes(1)
+    expect(client.send).toHaveBeenCalledWith(
+      { SecretId: 'test-DbPasswordSecret' }
+    )
   })
 })
