@@ -124,7 +124,7 @@ class App extends Component {
                       )}
                     />
                     <Route
-                      path={this.portalPaths('/earthdataDownload')}
+                      path={this.portalPaths('/earthdata-download')}
                       render={() => (
                         <EarthdataDownload />
                       )}

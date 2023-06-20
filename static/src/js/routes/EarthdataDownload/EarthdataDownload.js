@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
-import EarthdataDownloadContainer from '../../containers/EddLandingPageContainer/EarthdataDownloadContainer'
+import EarthdataDownloadComponent from '../../components/EarthdataDownload/EarthdataDownload'
 
 export const EarthdataDownload = () => {
   const { edscHost } = getEnvironmentConfig()
@@ -12,15 +12,14 @@ export const EarthdataDownload = () => {
   return (
     <>
       <Helmet>
-        <title>EarthdataDownload</title>
-        <meta name="title" content="EarthdataDownload" />
-        <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href={`${edscHost}/earthdataDownload`} />
+        <title>Earthdata Download</title>
+        <meta name="title" content="Earthdata Download" />
+        <link rel="canonical" href={`${edscHost}/earthdata-download`} />
       </Helmet>
       <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
         <div className="route-wrapper__content">
           <div className="route-wrapper__content-inner">
-            <EarthdataDownloadContainer />
+            <EarthdataDownloadComponent />
           </div>
         </div>
       </div>

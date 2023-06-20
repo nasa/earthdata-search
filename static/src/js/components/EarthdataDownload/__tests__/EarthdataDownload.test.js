@@ -14,7 +14,6 @@ jest.mock('../../../util/files/parseUserAgent', () => ({
   getOperatingSystem: jest.fn()
 }))
 
-// mock the result coming out of the OS user-agent function
 const setup = () => {
   render(
     <EarthdataDownload> </EarthdataDownload>
@@ -28,6 +27,7 @@ describe('EarthdataDownload component', () => {
     expect(screen.getByTestId('eddDownloadButton')).toBeInTheDocument()
     expect(screen.getByTestId('eddDownloadButton')).toHaveAttribute('href', windowsDownloadLink)
   })
+
   test('Render the download link for macOs', () => {
     getOperatingSystem.mockImplementation(() => 'macOs')
     setup()
