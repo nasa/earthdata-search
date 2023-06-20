@@ -31,8 +31,6 @@ export const EarthdataDownload = () => {
   let isLinux = false
   let isWindows = false
 
-  operatingSystem = null
-
   switch (operatingSystem) {
     case 'macOs': {
       // Apple standard is not to capitalize macOs
