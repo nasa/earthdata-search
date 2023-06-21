@@ -1,6 +1,6 @@
 import nock from 'nock'
 
-import AWS from 'aws-sdk'
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 import MockDate from 'mockdate'
 
 import * as deleteSystemToken from '../../util/urs/deleteSystemToken'
