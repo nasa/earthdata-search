@@ -13,20 +13,14 @@ import generateGibsTags from '../handler'
 
 const OLD_ENV = process.env
 
-const sqsSendMessagePromise = jest.fn().mockReturnValue({
-  promise: jest.fn().mockResolvedValue()
-})
+const mocksqsSendMessage = jest.fn().mockResolvedValue()
 
-AWS.SQS = jest.fn()
-  .mockImplementationOnce(() => ({
-    sendMessage: sqsSendMessagePromise
-  }))
-  .mockImplementationOnce(() => ({
-    sendMessage: sqsSendMessagePromise
-  }))
-  .mockImplementationOnce(() => ({
-    sendMessage: sqsSendMessagePromise
-  }))
+jest.mock('@aws-sdk/client-sqs', () => ({
+  SQSClient: jest.fn().mockImplementation(() => ({
+    send: mocksqsSendMessage
+  })),
+  SendMessageCommand: jest.fn().mockImplementation((params) => params),
+}))
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -62,9 +56,9 @@ describe('generateGibsTags', () => {
 
     await generateGibsTags({}, {})
 
-    expect(sqsSendMessagePromise.mock.calls.length).toEqual(4)
+    expect(mocksqsSendMessage.mock.calls.length).toEqual(4)
 
-    expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
+    expect(mocksqsSendMessage.mock.calls[0]).toEqual([{
       QueueUrl: 'http://example.com/tagQueue',
       MessageBody: JSON.stringify({
         tagName: 'edsc.extra.serverless.gibs',
@@ -97,7 +91,7 @@ describe('generateGibsTags', () => {
       })
     }])
 
-    expect(sqsSendMessagePromise.mock.calls[1]).toEqual([{
+    expect(mocksqsSendMessage.mock.calls[1]).toEqual([{
       QueueUrl: 'http://example.com/tagQueue',
       MessageBody: JSON.stringify({
         tagName: 'edsc.extra.serverless.gibs',
@@ -129,7 +123,7 @@ describe('generateGibsTags', () => {
       })
     }])
 
-    expect(sqsSendMessagePromise.mock.calls[2]).toEqual([{
+    expect(mocksqsSendMessage.mock.calls[2]).toEqual([{
       QueueUrl: 'http://example.com/tagQueue',
       MessageBody: JSON.stringify({
         tagName: 'edsc.extra.serverless.gibs',
@@ -161,7 +155,7 @@ describe('generateGibsTags', () => {
       })
     }])
 
-    expect(sqsSendMessagePromise.mock.calls[3]).toEqual([{
+    expect(mocksqsSendMessage.mock.calls[3]).toEqual([{
       QueueUrl: 'http://example.com/tagQueue',
       MessageBody: JSON.stringify({
         tagName: 'edsc.extra.serverless.gibs',
@@ -203,9 +197,9 @@ describe('generateGibsTags', () => {
     await generateGibsTags({}, {})
 
     // 1 DELETE call
-    expect(sqsSendMessagePromise.mock.calls.length).toEqual(1)
+    expect(mocksqsSendMessage.mock.calls.length).toEqual(1)
 
-    expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
+    expect(mocksqsSendMessage.mock.calls[0]).toEqual([{
       QueueUrl: 'http://example.com/tagQueue',
       MessageBody: JSON.stringify({
         tagName: 'edsc.extra.serverless.gibs',
