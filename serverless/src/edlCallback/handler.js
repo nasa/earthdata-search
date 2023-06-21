@@ -1,10 +1,10 @@
 import { AuthorizationCode } from 'simple-oauth2'
 import { parse, stringify } from 'qs'
-import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs"
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 
 import { createJwtToken } from '../util/createJwtToken'
 import { getDbConnection } from '../util/database/getDbConnection'
-import { getEarthdataConfig, getEnvironmentConfig} from '../../../sharedUtils/config'
+import { getEarthdataConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 import { getEdlConfig } from '../util/getEdlConfig'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'

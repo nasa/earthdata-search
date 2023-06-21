@@ -1,7 +1,7 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
 import jwt from 'jsonwebtoken'
-import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs"
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEdlConfig from '../../util/getEdlConfig'
@@ -27,9 +27,9 @@ jest.mock('simple-oauth2', () => ({
   }))
 }))
 
-jest.mock("@aws-sdk/client-sqs", () => {
+jest.mock('@aws-sdk/client-sqs', () => {
   const mSQS = { send: jest.fn() }
-  const mSendMessageCommand = jest.fn(() => "message command")
+  const mSendMessageCommand = jest.fn(() => 'message command')
   return { SQSClient: jest.fn(() => mSQS), SendMessageCommand: mSendMessageCommand }
 })
 
@@ -96,7 +96,7 @@ describe('edlCallback', () => {
         environment: 'prod',
         userId: 1,
         username: 'edsc'
-      }),
+      })
     })
 
     const { queries } = dbTracker.queries

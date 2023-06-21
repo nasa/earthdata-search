@@ -1,4 +1,3 @@
-import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 import nock from 'nock'
 import MockDate from 'mockdate'
 
@@ -16,7 +15,7 @@ jest.mock('@aws-sdk/client-sqs', () => ({
   SQSClient: jest.fn().mockImplementation(() => ({
     send: mocksqsCollectionCapabilities
   })),
-  SendMessageCommand: jest.fn().mockImplementation((params) => params),
+  SendMessageCommand: jest.fn().mockImplementation((params) => params)
 }))
 
 beforeEach(() => {

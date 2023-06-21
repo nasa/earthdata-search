@@ -45,6 +45,7 @@ describe('getEdlConfig', () => {
 
     expect(client.send).toBeCalledWith({ SecretId: 'UrsClientConfigSecret_prod' })
 
+    // call getEdlConfig again for a different value to ensure the cached value isn't being passed for the new env
     const uatResponse = await getEdlConfig('uat')
 
     expect(uatResponse).toEqual({
