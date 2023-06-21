@@ -28,10 +28,10 @@ jest.mock('simple-oauth2', () => ({
 }))
 
 jest.mock("@aws-sdk/client-sqs", () => {
-  const mSQS = { send: jest.fn() };
-  const mSendMessageCommand = jest.fn(() => "message command");
-  return { SQSClient: jest.fn(() => mSQS), SendMessageCommand: mSendMessageCommand };
-});
+  const mSQS = { send: jest.fn() }
+  const mSendMessageCommand = jest.fn(() => "message command")
+  return { SQSClient: jest.fn(() => mSQS), SendMessageCommand: mSendMessageCommand }
+})
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -58,8 +58,8 @@ beforeEach(() => {
   dbTracker = mockKnex.getTracker()
   dbTracker.install()
 
-  SQSClient.mockClear();
-  SendMessageCommand.mockClear();
+  SQSClient.mockClear()
+  SendMessageCommand.mockClear()
 })
 
 afterEach(() => {
@@ -88,8 +88,8 @@ describe('edlCallback', () => {
 
     const response = await edlCallback(event, {})
 
-    expect(SQSClient).toBeCalledTimes(1);
-    expect(SendMessageCommand).toBeCalledTimes(1);
+    expect(SQSClient).toBeCalledTimes(1)
+    expect(SendMessageCommand).toBeCalledTimes(1)
     expect(SendMessageCommand).toBeCalledWith({
       QueueUrl: process.env.userDataQueueUrl,
       MessageBody: JSON.stringify({
@@ -97,7 +97,7 @@ describe('edlCallback', () => {
         userId: 1,
         username: 'edsc'
       }),
-    });
+    })
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('first')

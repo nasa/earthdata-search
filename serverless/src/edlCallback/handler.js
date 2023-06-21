@@ -1,6 +1,6 @@
 import { AuthorizationCode } from 'simple-oauth2'
 import { parse, stringify } from 'qs'
-import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs";
+import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs"
 
 import { createJwtToken } from '../util/createJwtToken'
 import { getDbConnection } from '../util/database/getDbConnection'
@@ -27,7 +27,7 @@ const edlCallback = async (event, context) => {
   const dbConnection = await getDbConnection()
 
   if (sqsClient == null) {
-    sqsClient = new SQSClient(getSqsConfig());
+    sqsClient = new SQSClient(getSqsConfig())
   }
 
   const { code, state } = event.queryStringParameters
@@ -108,8 +108,8 @@ const edlCallback = async (event, context) => {
           userId: userRow.id,
           username
         })
-      });
-      await sqsClient.send(sqsCommand);
+      })
+      await sqsClient.send(sqsCommand)
     }
   } catch (e) {
     parseError(e)

@@ -1,6 +1,6 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
-import { SQS, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
+import { SQS, SendMessageBatchCommand } from '@aws-sdk/client-sqs'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import submitRetrieval from '../handler'
 import { orderPayload, echoOrderPayload, badOrderPayload } from './mocks'
@@ -12,20 +12,20 @@ let dbTracker
 
 const OLD_ENV = process.env
 
-const mockSend = jest.fn().mockResolvedValue({});
+const mockSend = jest.fn().mockResolvedValue({})
 
 jest.mock('@aws-sdk/client-sqs', () => {
   return {
     SQSClient: jest.fn().mockImplementation(() => {
       return {
         send: mockSend
-      };
+      }
     }),
     SendMessageBatchCommand: jest.fn().mockImplementation((params) => {
-      return params;
+      return params
     })
-  };
-});
+  }
+})
 
 beforeEach(() => {
   jest.clearAllMocks()

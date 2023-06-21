@@ -1,6 +1,6 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
-import { SQSClient, SendMessageBatchCommand } from "@aws-sdk/client-sqs";
+import { SQSClient, SendMessageBatchCommand } from "@aws-sdk/client-sqs"
 import * as getDbConnection from '../../util/database/getDbConnection'
 import requeueOrder from '../handler'
 

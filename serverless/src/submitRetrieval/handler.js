@@ -183,8 +183,8 @@ const submitRetrieval = async (event, context) => {
               const command = new SendMessageBatchCommand({
                 QueueUrl: queueUrl,
                 Entries: sqsEntries
-              });
-              await sqs.send(command);
+              })
+              await sqs.send(command)
           
               sqsEntries = []
             }
