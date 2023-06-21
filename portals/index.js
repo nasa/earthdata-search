@@ -34,3 +34,9 @@ portals.forEach((portalId) => {
 export const availablePortals = output
 
 export default output
+
+
+
+
+
+
