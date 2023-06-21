@@ -32,7 +32,8 @@ export const getUrsSystemCredentials = async (earthdataEnvironment) => {
     }
 
     // If not running in development mode fetch secrets from AWS
-    const secretValue = await secretsmanager.send(new GetSecretValueCommand(params))
+    const command = new GetSecretValueCommand(params)
+    const secretValue = await secretsmanager.send(command)
 
     ursSystemCredentials = JSON.parse(secretValue.SecretString)
   }
