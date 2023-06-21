@@ -1,6 +1,6 @@
 import 'array-foreach-async'
 
-import AWS from 'aws-sdk'
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 import axios from 'axios'
 
 import { stringify } from 'qs'
@@ -30,7 +30,7 @@ const generateCollectionCapabilityTags = async (input) => {
   const cmrToken = await getSystemToken()
 
   if (sqs == null) {
-    sqs = new AWS.SQS(getSqsConfig())
+    sqs = new SQSClient(getSqsConfig())
   }
 
   const cmrParams = {
@@ -105,14 +105,14 @@ const generateCollectionCapabilityTags = async (input) => {
   if (associationPayload.length > 0) {
     console.log(`Submitting ${associationPayload.length} tags to SQS for tagging`)
 
-    await sqs.sendMessage({
+    await sqs.send(new SendMessageCommand({
       QueueUrl: process.env.tagQueueUrl,
       MessageBody: JSON.stringify({
         tagName: tagName('collection_capabilities'),
         action: 'ADD',
         tagData: associationPayload
       })
-    }).promise()
+    }))
   }
 
   return {
