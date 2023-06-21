@@ -1,4 +1,3 @@
-import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 import nock from 'nock'
 import knex from 'knex'
 import mockKnex from 'mock-knex'
@@ -14,7 +13,7 @@ jest.mock('@aws-sdk/client-sqs', () => ({
   SQSClient: jest.fn().mockImplementation(() => ({
     send: mocksqsColorMap
   })),
-  SendMessageCommand: jest.fn().mockImplementation((params) => params),
+  SendMessageCommand: jest.fn().mockImplementation((params) => params)
 }))
 
 beforeEach(() => {

@@ -1,6 +1,5 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
-import { SQS, SendMessageBatchCommand } from '@aws-sdk/client-sqs'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import submitRetrieval from '../handler'
 import { orderPayload, echoOrderPayload, badOrderPayload } from './mocks'
@@ -21,9 +20,7 @@ jest.mock('@aws-sdk/client-sqs', () => {
         send: mockSend
       }
     }),
-    SendMessageBatchCommand: jest.fn().mockImplementation((params) => {
-      return params
-    })
+    SendMessageBatchCommand: jest.fn().mockImplementation((params) => { return params })
   }
 })
 

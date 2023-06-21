@@ -1,6 +1,5 @@
 import nock from 'nock'
 
-import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 import MockDate from 'mockdate'
 
 import * as deleteSystemToken from '../../util/urs/deleteSystemToken'
@@ -19,7 +18,7 @@ jest.mock('@aws-sdk/client-sqs', () => ({
   SQSClient: jest.fn().mockImplementation(() => ({
     send: mocksqsSendMessage
   })),
-  SendMessageCommand: jest.fn().mockImplementation((params) => params),
+  SendMessageCommand: jest.fn().mockImplementation((params) => params)
 }))
 
 beforeEach(() => {

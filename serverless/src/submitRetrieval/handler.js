@@ -185,7 +185,7 @@ const submitRetrieval = async (event, context) => {
                 Entries: sqsEntries
               })
               await sqs.send(command)
-          
+              
               sqsEntries = []
             }
           }

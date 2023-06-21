@@ -1,5 +1,3 @@
-import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
-
 import nock from 'nock'
 import knex from 'knex'
 import mockKnex from 'mock-knex'
