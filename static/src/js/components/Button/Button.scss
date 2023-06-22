@@ -1,4 +1,6 @@
 .button {
+  display: flex;
+  align-items: center;
   vertical-align: middle;
 
   &:disabled {

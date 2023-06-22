@@ -17,6 +17,7 @@ export const getOperatingSystem = (userAgent) => {
     const match = userAgent.match(pattern.pattern)
     if (match) {
       operatingSystem = camelCase(`${pattern.name}`)
+      if (operatingSystem === 'macOs') return 'macOS'
       return operatingSystem
     }
   }
