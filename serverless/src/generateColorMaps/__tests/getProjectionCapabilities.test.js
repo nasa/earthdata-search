@@ -30,6 +30,7 @@ beforeEach(() => {
     return dbCon
   })
 
+  // Mock the db connection
   dbTracker = mockKnex.getTracker()
   dbTracker.install()
 })
