@@ -6,7 +6,6 @@ import {
   FaLinux,
   FaWindows
 } from 'react-icons/fa'
-import { capitalize } from 'lodash'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { getOperatingSystem } from '../../util/files/parseUserAgent'
@@ -40,21 +39,19 @@ export const EarthdataDownload = () => {
 
   switch (operatingSystem) {
     case 'macOS': {
-      // Apple standard is not to capitalize macOs
+      // Apple standard is not to capitalize macOS
       isMacOS = true
       downloadLink = macDownloadLink
       executableSize = macOsEDDExecutableSize
       break
     }
-    case 'windows': {
-      operatingSystem = capitalize(operatingSystem)
+    case 'Windows': {
       isWindows = true
       downloadLink = windowsDownloadLink
       executableSize = windowsEDDExecutableSize
       break
     }
-    case 'linux': {
-      operatingSystem = capitalize(operatingSystem)
+    case 'Linux': {
       isLinux = true
       downloadLink = linuxDownloadLink
       executableSize = linuxEDDExecutableSize
@@ -62,8 +59,8 @@ export const EarthdataDownload = () => {
     }
     default: {
       operatingSystem = 'macOS'
-      downloadLink = macDownloadLink
       isMacOS = true
+      downloadLink = macDownloadLink
       executableSize = macOsEDDExecutableSize
       break
     }

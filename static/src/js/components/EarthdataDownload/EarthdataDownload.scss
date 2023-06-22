@@ -7,7 +7,6 @@
     transition: all 0.2s ease-in-out;
 
     .earthdata-download__download-link:hover & {
-      // top: -2px;
       transform: scale(1.125);
       color: $color__black--500;
     }
