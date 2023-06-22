@@ -1,4 +1,4 @@
-import { SQSClient, SendMessageBatchCommand } from "@aws-sdk/client-sqs"
+import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs'
 
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
