@@ -216,7 +216,7 @@ describe('TextWindowActions component', () => {
       })
 
       test('Download link render correctly based on operating system', () => {
-        getOperatingSystem.mockImplementation(() => 'windows')
+        getOperatingSystem.mockImplementation(() => 'Windows')
         const windowsDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
         const { enzymeWrapper } = setup({}, true)
 
