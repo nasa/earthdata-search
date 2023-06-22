@@ -16,12 +16,10 @@ const mockSqsClient = {
   send: sqsColorMap
 }
 
-jest.mock('@aws-sdk/client-sqs', () => {
-  return {
-    SQSClient: jest.fn(() => mockSqsClient),
-    SendMessageCommand: jest.fn()
-  }
-})
+jest.mock('@aws-sdk/client-sqs', () => ({
+  SQSClient: jest.fn(() => mockSqsClient),
+  SendMessageCommand: jest.fn()
+}))
 
 beforeEach(() => {
   jest.clearAllMocks()
