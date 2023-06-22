@@ -13,16 +13,12 @@ const OLD_ENV = process.env
 
 const mockSend = jest.fn().mockResolvedValue({})
 
-jest.mock('@aws-sdk/client-sqs', () => {
-  return {
-    SQSClient: jest.fn().mockImplementation(() => {
-      return {
-        send: mockSend
-      }
-    }),
-    SendMessageBatchCommand: jest.fn().mockImplementation((params) => { return params })
-  }
-})
+jest.mock('@aws-sdk/client-sqs', () => ({
+  SQSClient: jest.fn().mockImplementation(() => ({
+    send: mockSend
+  })),
+  SendMessageBatchCommand: jest.fn().mockImplementation(params => params)
+}))
 
 beforeEach(() => {
   jest.clearAllMocks()
