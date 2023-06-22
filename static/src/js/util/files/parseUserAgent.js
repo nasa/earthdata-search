@@ -1,5 +1,3 @@
-import { camelCase } from 'lodash'
-
 /**
  * Get the operating system of the client
  * @param {String} userAgent - A string containing the navigator.userAgent from browser
@@ -16,8 +14,8 @@ export const getOperatingSystem = (userAgent) => {
     const pattern = patterns[i]
     const match = userAgent.match(pattern.pattern)
     if (match) {
-      operatingSystem = camelCase(`${pattern.name}`)
-      if (operatingSystem === 'macOs') return 'macOS'
+      operatingSystem = `${pattern.name}`
+      if (operatingSystem === 'Mac OS') return 'macOS'
       return operatingSystem
     }
   }

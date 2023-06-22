@@ -5,15 +5,11 @@ import {
   FaSave,
   FaExpand,
   FaDownload,
-  FaExternalLinkAlt,
-  FaApple,
-  FaWindows,
-  FaLinux
+  FaExternalLinkAlt
 } from 'react-icons/fa'
 
 import { Alert } from 'react-bootstrap'
 
-import { capitalize } from 'lodash'
 import { constructDownloadableFile } from '../../util/files/constructDownloadableFile'
 import { getOperatingSystem } from '../../util/files/parseUserAgent'
 
@@ -51,7 +47,6 @@ export const TextWindowActions = ({
   eddLink
 }) => {
   let downloadLink
-  let osIcon
 
   const { userAgent } = navigator
   let operatingSystem = getOperatingSystem(userAgent)
@@ -61,29 +56,23 @@ export const TextWindowActions = ({
   const linuxDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata.Download-amd64.deb'
 
   switch (operatingSystem) {
-    case 'macOs': {
+    case 'macOS': {
       // Apple standard is not to capitalize macOs
       downloadLink = macDownloadLink
-      osIcon = FaApple
       break
     }
-    case 'windows': {
-      operatingSystem = capitalize(operatingSystem)
+    case 'Windows': {
       downloadLink = windowsDownloadLink
-      osIcon = FaWindows
       break
     }
-    case 'linux': {
-      operatingSystem = capitalize(operatingSystem)
+    case 'Linux': {
       downloadLink = linuxDownloadLink
-      osIcon = FaLinux
       break
     }
     default:
     {
-      operatingSystem = 'macOs'
+      operatingSystem = 'macOS'
       downloadLink = macDownloadLink
-      osIcon = FaApple
       break
     }
   }
@@ -304,7 +293,6 @@ export const TextWindowActions = ({
             <Alert className="mt-3 mb-0 text-center" variant="secondary">
               Don’t have the Earthdata Download installed?
               <br />
-              <EDSCIcon icon={osIcon} />
               <a
                 href={downloadLink}
               >
