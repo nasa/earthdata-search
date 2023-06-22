@@ -1,94 +1,44 @@
 .earthdata-download {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  &__other-links-item-icon,
+  &__repo-icon {
+    position: relative;
+    top: 0;
+    color: $color__black--400;
+    transition: all 0.2s ease-in-out;
 
-  &__image-container{
-    max-width: 100%;
-    max-height: 100%;
-    max-width: 50vw;
-    position: fixed;
-    top: 50%;
-    left: 20%;
-    transform: translate(0, -50%);
+    .earthdata-download__download-link:hover & {
+      // top: -2px;
+      transform: scale(1.125);
+      color: $color__black--500;
+    }
   }
 
-  &__screenshot {
-    height: 500px;
-    width: 500px;
+  &__other-links-item-icon {
+    display: block;
+    margin-bottom: 0.5rem;
+    width: 1.5rem;
   }
 
-  &__content {
-    flex: 1;
-    top: 50%;
-    right: 0;
-    width: 50%;
-    padding: 0 20px;
-    max-width: 100%;
-    max-height: 100%;
-    max-width: 50vw;
-    position: fixed;
-    top: 50%;
-    transform: translate(0, -50%);
+  &__repo-icon {
+    margin-right: 0.5rem;
   }
 
-  &__header-primary {
-    position: absolute;
-    top: 50;
-    left: 0;
+  &__feature-list-item {
+    margin: 0.5rem 0;
+    line-height: 1.5rem;
+    vertical-align: middle;
+    font-size: 1.125rem;
+
+    &::marker {
+      margin-right: 0.25rem;
+      color: $color__blue;
+      content: "\2713";
+      font-size: 1.25rem;
+    }
   }
 
-    &__list-group {
-      text-align: left;
-      font-size: larger;
-      margin: 0;
-      padding-left: 20px;
-    }
-
-    &__list-item {
-      text-align: left;
-      padding-right: 10px;
-    }
-
-    &__content-container {
-      position: relative;
-      margin-top: 100px;
-      text-align: left;
-      background-color: rgba(204, 204, 204, 0.685);
-      display: inline-block;
-      padding: 15px;
-    }
-
-    &__header-secondary {
-      position: absolute;
-      top: 0;
-      left: 10;
-      margin: 0;
-    }
-
-    &__install-content {
-      padding-top: 20px;
-    }
-
-    &__download-size {
-      color: #918c8c;
-      font-weight: bold;
-    }
-
-    &__os-link-file-ext {
-      font-weight: 400;
-      color: #7d7b7b;
-      font-style: italic;
-    }
-
-  &__other-links{
-    display: flex;
-    justify-content: space-around;
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    margin-bottom: 220px;
-    width: 50%;
+  &__feature-list-item-text {
+    position: relative;
+    left: 0.5rem;
   }
 }

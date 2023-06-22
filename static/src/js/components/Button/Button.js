@@ -23,6 +23,7 @@ export const Button = React.forwardRef(({
   children,
   dataTestId,
   disabled,
+  download,
   href,
   icon,
   iconPosition,
@@ -100,6 +101,7 @@ export const Button = React.forwardRef(({
       rel={rel}
       style={style}
       data-testid={dataTestId}
+      download={download}
     >
       {(!spinner && icon && iconPosition === 'left') && (
         <EDSCIcon
@@ -157,6 +159,7 @@ Button.defaultProps = {
   bootstrapVariant: null,
   disabled: false,
   dataTestId: undefined,
+  download: undefined,
   children: null,
   className: null,
   href: null,
@@ -188,6 +191,7 @@ Button.propTypes = {
   bootstrapVariant: PropTypes.string,
   dataTestId: PropTypes.string,
   disabled: PropTypes.bool,
+  download: PropTypes.bool,
   className: PropTypes.string,
   children: PropTypes.node,
   href: PropTypes.string,
