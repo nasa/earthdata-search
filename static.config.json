@@ -45,9 +45,9 @@
       "lambda": "eed-PORTAL-ENV-serverless-lambda"
     },
     "disableEddDownload": "false",
-    "macOsEDDExecutableSize":130,
-    "windowsEDDExecutableSize":100,
-    "linuxEDDExecutableSize":90
+    "macOSEddDownloadSize":130,
+    "windowsEddDownloadSize":100,
+    "linuxEddDownloadSize":90
   },
   "environment": {
     "test": {

@@ -28,9 +28,9 @@ export const EarthdataDownload = () => {
   const macSiliconDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-arm64.dmg'
   const linuxDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata.Download-amd64.deb'
   const {
-    macOsEDDExecutableSize,
-    windowsEDDExecutableSize,
-    linuxEDDExecutableSize
+    macOSEddDownloadSize,
+    windowsEddDownloadSize,
+    linuxEddDownloadSize
   } = getApplicationConfig()
 
   let isMacOS = false
@@ -42,26 +42,26 @@ export const EarthdataDownload = () => {
       // Apple standard is not to capitalize macOS
       isMacOS = true
       downloadLink = macDownloadLink
-      executableSize = macOsEDDExecutableSize
+      executableSize = macOSEddDownloadSize
       break
     }
     case 'Windows': {
       isWindows = true
       downloadLink = windowsDownloadLink
-      executableSize = windowsEDDExecutableSize
+      executableSize = windowsEddDownloadSize
       break
     }
     case 'Linux': {
       isLinux = true
       downloadLink = linuxDownloadLink
-      executableSize = linuxEDDExecutableSize
+      executableSize = linuxEddDownloadSize
       break
     }
     default: {
       operatingSystem = 'macOS'
       isMacOS = true
       downloadLink = macDownloadLink
-      executableSize = macOsEDDExecutableSize
+      executableSize = macOSEddDownloadSize
       break
     }
   }
