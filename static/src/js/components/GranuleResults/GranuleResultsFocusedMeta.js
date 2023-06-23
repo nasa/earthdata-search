@@ -254,7 +254,7 @@ const GranuleResultsFocusedMeta = ({
                         />
                       </div>
                       <div className="granule-results-focused-meta__image-nav-secondary">
-                        <span className="granule-results-focused-meta__pagination">
+                        <span className="granule-results-focused-meta__image-nav-item  granule-results-focused-meta__pagination">
                           {`${activeBrowseImageIndex + 1}/${browseThumbnails.length}`}
                         </span>
                         {browseImageSelectionPopover}
@@ -281,8 +281,8 @@ const GranuleResultsFocusedMeta = ({
                       preloadImg.src = href
                       preloadImg.addEventListener('load', () => { preloadImg = undefined })
 
-                      const imgSrc1x = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${focusedGranuleId}?h=150&w=150&imageSrc=${href}`
-                      const imgSrc2x = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${focusedGranuleId}?h=300&w=300&imageSrc=${href}`
+                      const imgSrc1x = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${focusedGranuleId}?h=175&w=175&imageSrc=${href}`
+                      const imgSrc2x = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${focusedGranuleId}?h=350&w=350&imageSrc=${href}`
 
                       return (
                         href && (
@@ -293,8 +293,8 @@ const GranuleResultsFocusedMeta = ({
                             srcSet={`${imgSrc1x} 1x, ${imgSrc2x} 2x`}
                             src={imgSrc1x}
                             alt={description || `Browse image for ${title}`}
-                            width="150px"
-                            height="150px"
+                            width="175px"
+                            height="175px"
                           />
                         )
                       )
