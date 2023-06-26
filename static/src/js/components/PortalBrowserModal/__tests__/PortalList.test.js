@@ -76,9 +76,9 @@ describe('PortalList component', () => {
 
     const portalTitle = screen.queryByTestId('portal-list-item-standardproducts')
 
-    await user.click(portalTitle)
+    await waitFor(async () => {
+      await user.click(portalTitle)
 
-    await waitFor(() => {
       expect(history.location).toEqual(expect.objectContaining({
         pathname: '/search',
         search: '?portal=standardproducts'
@@ -94,9 +94,9 @@ describe('PortalList component', () => {
 
     const moreInfoLink = screen.getByTestId('portal-link-above').querySelector('a')
 
-    await user.click(moreInfoLink)
-
     await waitFor(async () => {
+      await user.click(moreInfoLink)
+
       expect(history.location).toEqual(expect.objectContaining({
         pathname: '/search'
       }))

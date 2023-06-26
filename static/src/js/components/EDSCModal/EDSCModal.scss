@@ -83,7 +83,7 @@
       position: absolute;
       top: 0;
       right: 0;
-      z-index: 1;
+      z-index: 1000;
       background-color: transparent;
     }
   }
@@ -116,5 +116,19 @@
     &:last-child {
       margin-right: 0;
     }
+  }
+
+  &__subtitle {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: auto;
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+    border-radius: 0.25rem;
+    transform: translate(-50%, 0%);
+    background-color: #000;
+    color: #fff;
+    white-space: nowrap;
   }
 }

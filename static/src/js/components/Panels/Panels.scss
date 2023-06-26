@@ -63,4 +63,18 @@
     pointer-events: none;
     left: 5px !important;
   }
+
+  &__focused-meta {
+    position: absolute;
+    left: 100%;
+    bottom: 0;
+    transition: all 0.2s ease-in-out;
+    opacity: 1;
+  }
+
+  .panels--hide-thumbnail + .panels__focused-meta {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
 }

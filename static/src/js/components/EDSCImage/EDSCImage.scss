@@ -1,0 +1,29 @@
+.edsc-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__image {
+    position: relative;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.1s ease-in-out;
+    max-height: 100% !important;
+    max-width: 100% !important;
+    z-index: 0;
+    object-fit: contain;
+
+    .edsc-image--is-loaded & {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &__spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+}
