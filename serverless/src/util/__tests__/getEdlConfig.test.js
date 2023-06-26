@@ -1,30 +1,34 @@
-import AWS from 'aws-sdk'
+import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager'
 
 import { getEdlConfig } from '../getEdlConfig'
 
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 
+jest.mock('@aws-sdk/client-secrets-manager', () => {
+  const original = jest.requireActual('@aws-sdk/client-secrets-manager')
+
+  const sendMock = jest.fn()
+    .mockReturnValueOnce({
+      SecretString: '{"id":"prodTest","secret":"prodSecret"}'
+    })
+    .mockReturnValueOnce({
+      SecretString: '{"id":"uatTest","secret":"uatSecret"}'
+    })
+
+  return {
+    ...original,
+    SecretsManagerClient: jest.fn().mockImplementation(() => ({
+      send: sendMock
+    }))
+  }
+})
+
+const client = new SecretsManagerClient()
+
 describe('getEdlConfig', () => {
   test('fetches urs credentials from secrets manager', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       edlHost: 'http://urs.example.com'
-    }))
-
-    const prodSecretsManagerData = {
-      promise: jest.fn().mockResolvedValue({
-        SecretString: '{"id":"prodTest","secret":"prodSecret"}'
-      })
-    }
-    const uatSecretsManagerData = {
-      promise: jest.fn().mockResolvedValue({
-        SecretString: '{"id":"uatTest","secret":"uatSecret"}'
-      })
-    }
-
-    AWS.SecretsManager = jest.fn(() => ({
-      getSecretValue: jest.fn()
-        .mockImplementationOnce(() => (prodSecretsManagerData))
-        .mockImplementationOnce(() => (uatSecretsManagerData))
     }))
 
     const prodResponse = await getEdlConfig('prod')
@@ -39,7 +43,7 @@ describe('getEdlConfig', () => {
       }
     })
 
-    expect(prodSecretsManagerData.promise).toBeCalledTimes(1)
+    expect(client.send).toBeCalledWith({ SecretId: 'UrsClientConfigSecret_prod' })
 
     // call getEdlConfig again for a different value to ensure the cached value isn't being passed for the new env
     const uatResponse = await getEdlConfig('uat')
@@ -54,6 +58,7 @@ describe('getEdlConfig', () => {
       }
     })
 
-    expect(uatSecretsManagerData.promise).toBeCalledTimes(1)
+    expect(client.send).toBeCalledWith({ SecretId: 'UrsClientConfigSecret_uat' })
+    expect(client.send).toBeCalledTimes(2)
   })
 })

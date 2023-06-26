@@ -1,7 +1,6 @@
 import axios from 'axios'
 import 'array-foreach-async'
-import AWS from 'aws-sdk'
-
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 import { constructLayerTagData } from './constructLayerTagData'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
@@ -24,7 +23,7 @@ const generateGibsTags = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
   if (sqs == null) {
-    sqs = new AWS.SQS(getSqsConfig())
+    sqs = new SQSClient(getSqsConfig())
   }
 
   // Retrieve a connection to the database
@@ -116,7 +115,7 @@ const generateGibsTags = async (event, context) => {
   await Object.keys(conceptIdLayers).forEachAsync(async (conceptId) => {
     const { [conceptId]: tagData } = conceptIdLayers
 
-    await sqs.sendMessage({
+    await sqs.send(new SendMessageCommand({
       QueueUrl: process.env.tagQueueUrl,
       MessageBody: JSON.stringify({
         tagName: tagName('gibs'),
@@ -127,14 +126,14 @@ const generateGibsTags = async (event, context) => {
           data: tagData
         }
       })
-    }).promise()
+    }))
   })
 
   // Remove stale tags
   if (Object.keys(conceptIdLayers).length > 0) {
     // If conceptIdLayers contains values we want to ensure we delete tags
     // from only the collections that arent within it
-    await sqs.sendMessage({
+    await sqs.send(new SendMessageCommand({
       QueueUrl: process.env.tagQueueUrl,
       MessageBody: JSON.stringify({
         tagName: tagName('gibs'),
@@ -156,10 +155,10 @@ const generateGibsTags = async (event, context) => {
           }
         }
       })
-    }).promise()
+    }))
   } else {
     // If no collections were found to match the gibs criteria, we'll just delete all the tags.
-    await sqs.sendMessage({
+    await sqs.send(new SendMessageCommand({
       QueueUrl: process.env.tagQueueUrl,
       MessageBody: JSON.stringify({
         tagName: tagName('gibs'),
@@ -172,7 +171,7 @@ const generateGibsTags = async (event, context) => {
           }
         }
       })
-    }).promise()
+    }))
   }
 
   return {

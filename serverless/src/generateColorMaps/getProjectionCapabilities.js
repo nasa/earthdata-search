@@ -1,10 +1,7 @@
 import 'array-foreach-async'
-
-import AWS from 'aws-sdk'
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 import axios from 'axios'
-
 import { XMLParser } from 'fast-xml-parser'
-
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { parseError } from '../../../sharedUtils/parseError'
@@ -17,8 +14,8 @@ const xmlParser = new XMLParser({
 // Name of the db table that this lambda operates on
 const colorMapsTableName = 'colormaps'
 
-// AWS SQS adapter
-let sqs
+// AWS SQS client
+let sqsClient
 
 /**
  * Parse the GIBS capabilities document and provide individual ColorMaps to SQS for further processing
@@ -31,8 +28,8 @@ export const getProjectionCapabilities = async (projection) => {
   console.log(`GIBS Capabilties URL: ${capabilitiesUrl}`)
 
   try {
-    if (sqs == null) {
-      sqs = new AWS.SQS(getSqsConfig())
+    if (!sqsClient) {
+      sqsClient = new SQSClient(getSqsConfig())
     }
 
     // Retrieve a connection to the database
@@ -43,10 +40,7 @@ export const getProjectionCapabilities = async (projection) => {
 
     const colormapProducts = []
 
-    const gibsResponse = await axios({
-      method: 'get',
-      url: capabilitiesUrl
-    })
+    const gibsResponse = await axios.get(capabilitiesUrl)
 
     const parsedCapabilities = xmlParser.parse(gibsResponse.data)
 
@@ -79,10 +73,12 @@ export const getProjectionCapabilities = async (projection) => {
             console.log('knownColorMap', knownColorMap)
           }
 
-          await sqs.sendMessage({
+          const sendMessageCommand = new SendMessageCommand({
             QueueUrl: process.env.colorMapQueueUrl,
             MessageBody: JSON.stringify(knownColorMap)
-          }).promise()
+          })
+
+          await sqsClient.send(sendMessageCommand)
         }
       })
 

@@ -1,4 +1,4 @@
-import AWS from 'aws-sdk'
+import { SFNClient } from '@aws-sdk/client-sfn'
 
 import { getStepFunctionsConfig } from './aws/getStepFunctionsConfig'
 import { parseError } from '../../../sharedUtils/parseError'
@@ -10,7 +10,7 @@ import { parseError } from '../../../sharedUtils/parseError'
  */
 export const startOrderStatusUpdateWorkflow = async (orderId, accessToken, orderType) => {
   try {
-    const stepfunctions = new AWS.StepFunctions(getStepFunctionsConfig())
+    const stepfunctions = new SFNClient(getStepFunctionsConfig())
 
     const stepFunctionResponse = await stepfunctions.startExecution({
       stateMachineArn: process.env.updateOrderStatusStateMachineArn,
