@@ -1,4 +1,4 @@
-import AWS from 'aws-sdk'
+import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager'
 
 import { getSecretEnvironmentConfig } from '../../../../sharedUtils/config'
 import { getSecretsManagerConfig } from '../aws/getSecretsManagerConfig'
@@ -12,7 +12,7 @@ let secretsmanager
 export const getDbCredentials = async () => {
   if (dbCredentials == null) {
     if (secretsmanager == null) {
-      secretsmanager = new AWS.SecretsManager(getSecretsManagerConfig())
+      secretsmanager = new SecretsManagerClient(getSecretsManagerConfig())
     }
 
     if (process.env.NODE_ENV === 'development') {
@@ -29,7 +29,7 @@ export const getDbCredentials = async () => {
       SecretId: process.env.configSecretId
     }
 
-    const secretValue = await secretsmanager.getSecretValue(params).promise()
+    const secretValue = await secretsmanager.send(params)
 
     dbCredentials = JSON.parse(secretValue.SecretString)
   }

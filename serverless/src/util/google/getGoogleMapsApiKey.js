@@ -1,4 +1,4 @@
-import AWS from 'aws-sdk'
+import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager'
 
 import { getSecretEarthdataConfig } from '../../../../sharedUtils/config'
 import { getSecretsManagerConfig } from '../aws/getSecretsManagerConfig'
@@ -12,7 +12,7 @@ let secretsmanager
 export const getGoogleMapsApiKey = async (earthdataEnvironment) => {
   if (googleMapsApiKey == null) {
     if (secretsmanager == null) {
-      secretsmanager = new AWS.SecretsManager(getSecretsManagerConfig())
+      secretsmanager = new SecretsManagerClient(getSecretsManagerConfig())
     }
 
     if (process.env.NODE_ENV === 'development') {
@@ -26,7 +26,7 @@ export const getGoogleMapsApiKey = async (earthdataEnvironment) => {
       SecretId: 'GoogleMapsApiKey'
     }
 
-    const secretValue = await secretsmanager.getSecretValue(params).promise()
+    const secretValue = await secretsmanager.send(params)
 
     googleMapsApiKey = JSON.parse(secretValue.SecretString)
   }

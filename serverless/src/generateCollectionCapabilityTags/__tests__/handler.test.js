@@ -1,4 +1,3 @@
-import AWS from 'aws-sdk'
 import nock from 'nock'
 import MockDate from 'mockdate'
 
@@ -10,14 +9,14 @@ import generateCollectionCapabilityTags from '../handler'
 
 const OLD_ENV = process.env
 
-const sqsCollectionCapabilities = jest.fn().mockReturnValue({
-  promise: jest.fn().mockResolvedValue()
-})
+const mocksqsCollectionCapabilities = jest.fn().mockResolvedValue()
 
-AWS.SQS = jest.fn()
-  .mockImplementationOnce(() => ({
-    sendMessage: sqsCollectionCapabilities
-  }))
+jest.mock('@aws-sdk/client-sqs', () => ({
+  SQSClient: jest.fn().mockImplementation(() => ({
+    send: mocksqsCollectionCapabilities
+  })),
+  SendMessageCommand: jest.fn().mockImplementation((params) => params)
+}))
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -68,9 +67,9 @@ describe('generateCollectionCapabilityTags', () => {
 
       const response = await generateCollectionCapabilityTags({})
 
-      expect(sqsCollectionCapabilities).toBeCalledTimes(1)
+      expect(mocksqsCollectionCapabilities).toBeCalledTimes(1)
 
-      expect(sqsCollectionCapabilities.mock.calls[0]).toEqual([{
+      expect(mocksqsCollectionCapabilities.mock.calls[0]).toEqual([{
         MessageBody: JSON.stringify({
           tagName: 'edsc.extra.serverless.collection_capabilities',
           action: 'ADD',
@@ -120,9 +119,9 @@ describe('generateCollectionCapabilityTags', () => {
 
       const response = await generateCollectionCapabilityTags({ pageNumber: 4 })
 
-      expect(sqsCollectionCapabilities).toBeCalledTimes(1)
+      expect(mocksqsCollectionCapabilities).toBeCalledTimes(1)
 
-      expect(sqsCollectionCapabilities.mock.calls[0]).toEqual([{
+      expect(mocksqsCollectionCapabilities.mock.calls[0]).toEqual([{
         MessageBody: JSON.stringify({
           tagName: 'edsc.extra.serverless.collection_capabilities',
           action: 'ADD',
@@ -172,9 +171,9 @@ describe('generateCollectionCapabilityTags', () => {
 
       const response = await generateCollectionCapabilityTags({ conceptId: 'C100000-EDSC' })
 
-      expect(sqsCollectionCapabilities).toBeCalledTimes(1)
+      expect(mocksqsCollectionCapabilities).toBeCalledTimes(1)
 
-      expect(sqsCollectionCapabilities.mock.calls[0]).toEqual([{
+      expect(mocksqsCollectionCapabilities.mock.calls[0]).toEqual([{
         MessageBody: JSON.stringify({
           tagName: 'edsc.extra.serverless.collection_capabilities',
           action: 'ADD',

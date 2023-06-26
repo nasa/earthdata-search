@@ -1,6 +1,6 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
-import AWS from 'aws-sdk'
+import { SendMessageBatchCommand } from '@aws-sdk/client-sqs'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import requeueOrder from '../handler'
 
@@ -9,14 +9,10 @@ let dbTracker
 
 const OLD_ENV = process.env
 
-const sqsSendMessagePromise = jest.fn().mockReturnValue({
-  promise: jest.fn().mockResolvedValue()
+jest.mock('@aws-sdk/client-sqs', () => {
+  const mSQS = { send: jest.fn() }
+  return { SQSClient: jest.fn(() => mSQS), SendMessageBatchCommand: jest.fn() }
 })
-
-AWS.SQS = jest.fn()
-  .mockImplementationOnce(() => ({
-    sendMessageBatch: sqsSendMessagePromise
-  }))
 
 export const orderPayload = {
   body: JSON.stringify({
@@ -80,7 +76,7 @@ describe('requeueOrder', () => {
 
     expect(queries[0].method).toContain('select')
 
-    expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
+    expect(SendMessageBatchCommand.mock.calls[0][0]).toEqual({
       QueueUrl: 'http://example.com/echoQueue',
       Entries: [{
         Id: '1',
@@ -89,7 +85,7 @@ describe('requeueOrder', () => {
           id: 1234
         })
       }]
-    }])
+    })
 
     const { body } = orderResponse
 
@@ -119,7 +115,7 @@ describe('requeueOrder', () => {
 
     expect(queries[0].method).toContain('select')
 
-    expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
+    expect(SendMessageBatchCommand.mock.calls[0][0]).toEqual({
       QueueUrl: 'http://example.com/echoQueue',
       Entries: [{
         Id: '1',
@@ -128,7 +124,7 @@ describe('requeueOrder', () => {
           id: 1234
         })
       }]
-    }])
+    })
 
     const { body } = orderResponse
 
@@ -158,7 +154,7 @@ describe('requeueOrder', () => {
 
     expect(queries[0].method).toContain('select')
 
-    expect(sqsSendMessagePromise.mock.calls[0]).toEqual([{
+    expect(SendMessageBatchCommand.mock.calls[0][0]).toEqual({
       QueueUrl: 'http://example.com/echoQueue',
       Entries: [{
         Id: '1',
@@ -167,7 +163,7 @@ describe('requeueOrder', () => {
           id: 1234
         })
       }]
-    }])
+    })
 
     const { body } = orderResponse
 

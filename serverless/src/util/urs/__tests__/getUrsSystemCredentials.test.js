@@ -1,19 +1,14 @@
-import AWS from 'aws-sdk'
+import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager'
 
 import { getUrsSystemCredentials } from '../getUrsSystemCredentials'
 
 describe('getUrsSystemCredentials', () => {
   test('fetches urs credentials from secrets manager', async () => {
-    const secretsManagerData = jest.fn().mockReturnValue({
-      promise: jest.fn().mockResolvedValue({
-        SecretString: '{"username":"test","password":"password"}'
-      })
+    const secretsManagerData = jest.fn().mockResolvedValue({
+      SecretString: '{"username":"test","password":"password"}'
     })
 
-    AWS.SecretsManager = jest.fn()
-      .mockImplementationOnce(() => ({
-        getSecretValue: secretsManagerData
-      }))
+    SecretsManagerClient.prototype.send = secretsManagerData
 
     const response = await getUrsSystemCredentials('prod')
 
@@ -23,8 +18,9 @@ describe('getUrsSystemCredentials', () => {
     })
 
     expect(secretsManagerData).toBeCalledTimes(1)
-    expect(secretsManagerData.mock.calls[0]).toEqual([{
+    expect(secretsManagerData.mock.calls[0][0]).toBeInstanceOf(GetSecretValueCommand)
+    expect(secretsManagerData.mock.calls[0][0].input).toEqual({
       SecretId: 'UrsSystemPasswordSecret_prod'
-    }])
+    })
   })
 })

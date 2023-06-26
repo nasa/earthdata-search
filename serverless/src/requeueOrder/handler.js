@@ -1,11 +1,11 @@
-import AWS from 'aws-sdk'
+import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs'
 
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getDbConnection } from '../util/database/getDbConnection'
 
 // AWS SQS adapter
-let sqs
+let sqsClient
 
 /**
  * Requeues an order onto an SQS queue for processing
@@ -24,8 +24,8 @@ const requeueOrder = async (event, context) => {
 
   const { orderId } = params
 
-  if (sqs == null) {
-    sqs = new AWS.SQS(getSqsConfig())
+  if (sqsClient == null) {
+    sqsClient = new SQSClient(getSqsConfig())
   }
 
   // Fetch order from database to find the type of order
@@ -68,7 +68,7 @@ const requeueOrder = async (event, context) => {
 
     if (!process.env.IS_OFFLINE) {
       // Send all of the order messages to sqs as a single batch
-      await sqs.sendMessageBatch({
+      await sqsClient.send(new SendMessageBatchCommand({
         QueueUrl: queueUrl,
         Entries: [{
           Id: `${retrievalCollectionId}`,
@@ -77,7 +77,7 @@ const requeueOrder = async (event, context) => {
             id: orderId
           })
         }]
-      }).promise()
+      }))
     }
   }
 

@@ -1,5 +1,5 @@
 import 'array-foreach-async'
-import AWS from 'aws-sdk'
+import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs'
 import snakecaseKeys from 'snakecase-keys'
 
 import { getDbConnection } from '../util/database/getDbConnection'
@@ -35,7 +35,7 @@ const submitRetrieval = async (event, context) => {
   const jwtToken = getJwtToken(event)
 
   if (sqs == null) {
-    sqs = new AWS.SQS(getSqsConfig())
+    sqs = new SQSClient(getSqsConfig())
   }
 
   const {
@@ -180,11 +180,11 @@ const submitRetrieval = async (event, context) => {
             // chunk potentially larger request into acceptable chunks
             if (pageNum % 10 === 0 || pageNum === orderPayloads.length) {
               // Send all of the order messages to sqs as a single batch
-              await sqs.sendMessageBatch({
+              const command = new SendMessageBatchCommand({
                 QueueUrl: queueUrl,
                 Entries: sqsEntries
-              }).promise()
-
+              })
+              await sqs.send(command)
               sqsEntries = []
             }
           }
