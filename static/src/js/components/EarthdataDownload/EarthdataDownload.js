@@ -26,7 +26,12 @@ export const EarthdataDownload = () => {
   const windowsDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
   const macDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.dmg'
   const macSiliconDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-arm64.dmg'
-  const linuxDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata.Download-amd64.deb'
+
+  // AppImage extension made the principal as it allows for auto-updates
+  const linuxDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x86_64.AppImage'
+  const linuxDownloadLinkRpm = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x86_64.rpm'
+  const linuxDownloadLinkDeb = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-amd64.deb'
+
   const {
     macOSEddDownloadSize,
     windowsEddDownloadSize,
@@ -68,6 +73,60 @@ export const EarthdataDownload = () => {
   const downloaderSize = `${executableSize}mb`
   const osLinkFileExt = `.${downloadLink.split('.').pop()}`
 
+  const macOSElement = isMacOS ? (
+    <div className="col-md align-items-center d-flex flex-column">
+      <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-macOsSilicone" download href={macSiliconDownloadLink}>
+        <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaApple} size="1.5rem" />
+        Download for Apple Silicon
+      </a>
+      <p className="text-center text-black-50">
+        {'Download the installer for Apple silicon (.dmg). See '}
+        <a className="link link--external" href="https://support.apple.com/en-us/HT211814" target="_blank" rel="noopener noreferrer">
+          Apple documentation
+        </a>
+        {' for more information about Apple vs. Intel processors.'}
+      </p>
+    </div>
+  ) : (
+    <div className="col-md align-items-center d-flex flex-column">
+      <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-macosx64" download href={macDownloadLink}>
+        <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaApple} size="1.5rem" />
+        Download for macOS
+      </a>
+      <p className="text-center text-black-50">Download the installer for macOS (.dmg).</p>
+    </div>
+  )
+
+  const linuxElement = isLinux ? (
+    <div>
+      <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-linux" download href={linuxDownloadLinkDeb}>
+        <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaLinux} size="1.5rem" />
+        Download for Linux (.deb)
+      </a>
+      <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-linux" download href={linuxDownloadLinkRpm}>
+        Download for Linux (.rpm)
+      </a>
+    </div>
+  ) : (
+    <div className="col-md align-items-center d-flex flex-column">
+      <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-linux" download href={linuxDownloadLink}>
+        <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaLinux} size="1.5rem" />
+        Download for Linux
+      </a>
+      <p className="text-center text-black-50">Download the installer for Linux (.AppImage).</p>
+    </div>
+  )
+
+  const windowsElement = !isWindows && (
+    <div className="col-md align-items-center d-flex flex-column">
+      <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-windows" download href={windowsDownloadLink}>
+        <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaWindows} size="1.5rem" />
+        Download for Windows
+      </a>
+      <p className="text-center text-black-50">Download the installer for Windows (.exe).</p>
+    </div>
+  )
+
   return (
     <div className="earthdata-download container">
       <section className="mb-5 mt-4">
@@ -107,51 +166,9 @@ export const EarthdataDownload = () => {
         </div>
       </section>
       <section className="row my-5">
-        {
-        isMacOS
-          ? (
-            <div className="col-md align-items-center d-flex flex-column">
-              <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-macOsSilicone" download href={macSiliconDownloadLink}>
-                <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaApple} size="1.5rem" />
-                Download for Apple Silicon
-              </a>
-              <p className="text-center text-black-50">
-                {'Download the installer for Apple silicon (.dmg). See '}
-                <a className="link link--external" href="https://support.apple.com/en-us/HT211814" target="_blank" rel="noopener noreferrer">
-                  Apple documentation
-                </a>
-                {' for more information about Apple vs. Intel processors.'}
-              </p>
-            </div>
-          )
-          : (
-            <div className="col-md align-items-center d-flex flex-column">
-              <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-macosx64" download href={macDownloadLink}>
-                <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaApple} size="1.5rem" />
-                Download for macOS
-              </a>
-              <p className="text-center text-black-50">Download the installer for macOS (.dmg).</p>
-            </div>
-          )
-      }
-        { !isWindows && (
-          <div className="col-md align-items-center d-flex flex-column">
-            <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-windows" download href={windowsDownloadLink}>
-              <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaWindows} size="1.5rem" />
-              Download for Windows
-            </a>
-            <p className="text-center text-black-50">Download the installer for Windows (.exe).</p>
-          </div>
-        )}
-        { !isLinux && (
-          <div className="col-md align-items-center d-flex flex-column">
-            <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-linux" download href={linuxDownloadLink}>
-              <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaLinux} size="1.5rem" />
-              Download for Linux
-            </a>
-            <p className="text-center text-black-50">Download the installer for Linux (.deb).</p>
-          </div>
-        )}
+        { macOSElement }
+        { windowsElement}
+        { linuxElement}
       </section>
       <section className="row my-5 justify-content-center">
         <div className="col-auto d-flex">

@@ -9,15 +9,14 @@ export const getOperatingSystem = (userAgent) => {
     { name: 'Mac OS', pattern: /Macintosh.*?([^\s;)]+)/ },
     { name: 'Linux', pattern: /Linux(?:\si686|\samd64)?(?:\su;)?\s?([^\s;)]+)/ }
   ]
-  let operatingSystem
-  for (let i = 0; i < patterns.length; i += 1) {
-    const pattern = patterns[i]
+  let operatingSystem = null
+
+  patterns.forEach((pattern) => {
     const match = userAgent.match(pattern.pattern)
     if (match) {
       operatingSystem = `${pattern.name}`
-      if (operatingSystem === 'Mac OS') return 'macOS'
-      return operatingSystem
+      if (operatingSystem === 'Mac OS') operatingSystem = 'macOS'
     }
-  }
-  return null
+  })
+  return operatingSystem
 }

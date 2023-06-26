@@ -8,7 +8,7 @@ import { getOperatingSystem } from '../../../util/files/parseUserAgent'
 
 const windowsDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
 const macDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.dmg'
-const linuxDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata.Download-amd64.deb'
+const linuxDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x86_64.AppImage'
 
 jest.mock('../../../util/files/parseUserAgent', () => ({
   getOperatingSystem: jest.fn()
