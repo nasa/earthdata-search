@@ -1,7 +1,7 @@
 import knex from 'knex'
 import mockKnex from 'mock-knex'
 import jwt from 'jsonwebtoken'
-import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
+import { SQSClient } from '@aws-sdk/client-sqs'
 
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEdlConfig from '../../util/getEdlConfig'
@@ -28,10 +28,18 @@ jest.mock('simple-oauth2', () => ({
 }))
 
 jest.mock('@aws-sdk/client-sqs', () => {
-  const mSQS = { send: jest.fn() }
-  const mSendMessageCommand = jest.fn(() => 'message command')
-  return { SQSClient: jest.fn(() => mSQS), SendMessageCommand: mSendMessageCommand }
+  const original = jest.requireActual('@aws-sdk/client-sqs')
+  const sendMock = jest.fn().mockResolvedValue()
+
+  return {
+    ...original,
+    SQSClient: jest.fn().mockImplementation(() => ({
+      send: sendMock
+    }))
+  }
 })
+
+const client = new SQSClient()
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -58,8 +66,8 @@ beforeEach(() => {
   dbTracker = mockKnex.getTracker()
   dbTracker.install()
 
-  SQSClient.mockClear()
-  SendMessageCommand.mockClear()
+  // SQSClient.mockClear()
+  // SendMessageCommand.mockClear()
 })
 
 afterEach(() => {
@@ -88,16 +96,13 @@ describe('edlCallback', () => {
 
     const response = await edlCallback(event, {})
 
-    expect(SQSClient).toBeCalledTimes(1)
-    expect(SendMessageCommand).toBeCalledTimes(1)
-    expect(SendMessageCommand).toBeCalledWith({
-      QueueUrl: process.env.userDataQueueUrl,
-      MessageBody: JSON.stringify({
-        environment: 'prod',
-        userId: 1,
-        username: 'edsc'
-      })
-    })
+    expect(client.send).toHaveBeenCalledTimes(1)
+    expect(client.send).toHaveBeenCalledWith(expect.objectContaining({
+      input: {
+        MessageBody: '{"environment":"prod","userId":1,"username":"edsc"}',
+        QueueUrl: undefined
+      }
+    }))
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('first')
@@ -105,6 +110,43 @@ describe('edlCallback', () => {
 
     expect(response.statusCode).toEqual(307)
     expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?redirect=http%3A%2F%2Fexample.com%3Fee%3Dprod&jwt=mockToken' })
+  })
+
+  test('includes the accessToken when redirecting to earthdata-download', async () => {
+    const code = '2057964173'
+    const state = 'earthdata-download://example.com?ee=prod'
+
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response({ id: 1 })
+      } else {
+        query.response(undefined)
+      }
+    })
+
+    const event = {
+      queryStringParameters: {
+        code,
+        state
+      }
+    }
+
+    const response = await edlCallback(event, {})
+
+    expect(client.send).toHaveBeenCalledTimes(1)
+    expect(client.send).toHaveBeenCalledWith(expect.objectContaining({
+      input: {
+        MessageBody: '{"environment":"prod","userId":1,"username":"edsc"}',
+        QueueUrl: undefined
+      }
+    }))
+
+    const { queries } = dbTracker.queries
+    expect(queries[0].method).toEqual('first')
+    expect(queries[1].method).toEqual('insert')
+
+    expect(response.statusCode).toEqual(307)
+    expect(response.headers).toEqual({ Location: 'http://localhost:8080/auth_callback?redirect=earthdata-download%3A%2F%2Fexample.com%3Fee%3Dprod&jwt=mockToken&accessToken=accessToken' })
   })
 
   test('creates a new user if one does not exist', async () => {
@@ -160,7 +202,7 @@ describe('edlCallback', () => {
 
     // The first will output the number of records, the second will
     // contain the message we're looking for
-    expect(consoleMock).toBeCalledTimes(1)
+    expect(consoleMock).toHaveBeenCalledTimes(1)
 
     expect(response.statusCode).toEqual(307)
     expect(response.headers).toEqual({ Location: 'http://localhost:3000/login?ee=prod&state=http%3A%2F%2Fexample.com%3Fee%3Dprod' })

@@ -1,12 +1,21 @@
 import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { set } from 'tiny-cookie'
 import { connect } from 'react-redux'
 import { parse } from 'qs'
 
 import { locationPropType } from '../../util/propTypes/location'
+import history from '../../util/history'
+
+import actions from '../../actions'
 
 export const mapStateToProps = (state) => ({
   location: state.router.location
+})
+
+export const mapDispatchToProps = (dispatch) => ({
+  onAddEarthdataDownloadRedirect:
+    (data) => dispatch(actions.addEarthdataDownloadRedirect(data))
 })
 
 /**
@@ -16,7 +25,8 @@ export const mapStateToProps = (state) => ({
  * in.
  */
 export const AuthCallbackContainer = ({
-  location
+  location,
+  onAddEarthdataDownloadRedirect
 }) => {
   useEffect(() => {
     const { search } = location
@@ -24,8 +34,24 @@ export const AuthCallbackContainer = ({
     const params = parse(search, { ignoreQueryPrefix: true })
     const {
       jwt = '',
-      redirect = '/'
+      accessToken
     } = params
+    let { redirect = '/' } = params
+
+    // If the redirect includes earthdata-download, redirect to the edd callback
+    if (redirect.includes('earthdata-download')) {
+      redirect += `&token=${accessToken}`
+
+      // Add the redirect information to the store
+      onAddEarthdataDownloadRedirect({
+        redirect
+      })
+
+      // Redirect to the edd callback
+      history.push('/earthdata-download-callback')
+
+      return
+    }
 
     // Set the authToken cookie
     set('authToken', jwt)
@@ -40,7 +66,8 @@ export const AuthCallbackContainer = ({
 }
 
 AuthCallbackContainer.propTypes = {
-  location: locationPropType.isRequired
+  location: locationPropType.isRequired,
+  onAddEarthdataDownloadRedirect: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps)(AuthCallbackContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(AuthCallbackContainer)

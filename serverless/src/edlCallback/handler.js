@@ -54,6 +54,7 @@ const edlCallback = async (event, context) => {
   }
 
   let jwtToken
+  let accessToken
 
   try {
     // Retrieve the Earthdata Login token
@@ -62,10 +63,10 @@ const edlCallback = async (event, context) => {
     const { token } = oauthToken
 
     const {
-      access_token: accessToken,
       refresh_token: refreshToken,
       expires_at: expiresAt
-    } = token
+    } = token;
+    ({ access_token: accessToken } = token)
 
     const username = getUsernameFromToken(token)
 
@@ -109,6 +110,7 @@ const edlCallback = async (event, context) => {
           username
         })
       })
+
       await sqsClient.send(sqsCommand)
     }
   } catch (e) {
@@ -136,6 +138,10 @@ const edlCallback = async (event, context) => {
   if (jwtToken) {
     // Set the JWT token to a cookie and redirect back to EDSC
     queryParams.jwt = jwtToken
+  }
+
+  if (state.includes('earthdata-download')) {
+    queryParams.accessToken = accessToken
   }
 
   const location = `${edscHost}/auth_callback?${stringify(queryParams)}`

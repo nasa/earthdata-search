@@ -3,13 +3,19 @@ import { render } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import * as tinyCookie from 'tiny-cookie'
 
-import { AuthCallbackContainer, mapStateToProps } from '../AuthCallbackContainer'
+import {
+  AuthCallbackContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../AuthCallbackContainer'
+import actions from '../../../actions'
 
 const setup = (overrideProps) => {
   const props = {
     location: {
       search: '?jwt=mockjwttoken&redirect=http%3A%2F%2Flocalhost%3A8080%2Fsearch'
     },
+    onAddEarthdataDownloadRedirect: jest.fn(),
     ...overrideProps
   }
 
@@ -18,7 +24,23 @@ const setup = (overrideProps) => {
       <AuthCallbackContainer {...props} />
     )
   })
+
+  return {
+    props
+  }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onAddEarthdataDownloadRedirect calls actions.addEarthdataDownloadRedirect', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'addEarthdataDownloadRedirect')
+
+    mapDispatchToProps(dispatch).onAddEarthdataDownloadRedirect({ redirect: 'earthdata-download://authCallback' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ redirect: 'earthdata-download://authCallback' })
+  })
+})
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
@@ -56,6 +78,27 @@ describe('AuthCallbackContainer component', () => {
 
     expect(window.location.replace.mock.calls.length).toBe(1)
     expect(window.location.replace.mock.calls[0]).toEqual(['http://localhost:8080/search'])
+  })
+
+  test('updates redux and redirects to earthdata-download-callback', () => {
+    const setSpy = jest.spyOn(tinyCookie, 'set')
+    delete window.location
+    window.location = { replace: jest.fn() }
+
+    const { props } = setup({
+      location: {
+        search: '?jwt=mockjwttoken&accessToken=mock-token&redirect=earthdata-download%3A%2F%2FauthCallback'
+      }
+    })
+
+    expect(setSpy).toHaveBeenCalledTimes(0)
+
+    expect(window.location.replace).toHaveBeenCalledTimes(0)
+
+    expect(props.onAddEarthdataDownloadRedirect).toHaveBeenCalledTimes(1)
+    expect(props.onAddEarthdataDownloadRedirect).toHaveBeenCalledWith({
+      redirect: 'earthdata-download://authCallback&token=mock-token'
+    })
   })
 
   test('clears the auth cookie and redirects to root path if values are not set', () => {

@@ -189,11 +189,13 @@ import {
 } from './subscriptions'
 import { setUserFromJwt } from './user'
 import { exportSearch } from './exportSearch'
+import { addEarthdataDownloadRedirect } from './earthdataDownloadRedirect'
 
 const actions = {
   addAccessMethods,
   addCmrFacet,
   addCollectionToProject,
+  addEarthdataDownloadRedirect,
   addGranuleToProjectCollection,
   addProjectCollection,
   adminIsAuthorized,
