@@ -167,9 +167,15 @@ export class OrderStatusItem extends PureComponent {
     let downloadId = conceptId
     if (shortName) downloadId = `${shortName}_${versionId}`
 
+    // Build the `getLinks` URL to tell EDD where to find the download links
     const { apiHost } = getEnvironmentConfig()
-    const retrievalUrl = `${apiHost}/granule_links?id=${retrievalCollectionId}&flattenLinks=true&linkTypes=${linkType}&ee=${earthdataEnvironment}`
-    const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(retrievalUrl)}&downloadId=${downloadId}&token=Bearer ${authToken}`
+    const getLinksUrl = `${apiHost}/granule_links?id=${retrievalCollectionId}&flattenLinks=true&linkTypes=${linkType}&ee=${earthdataEnvironment}`
+
+    // Build the authUrl to tell EDD how to authenticate the user
+    const returnUrl = 'earthdata-download://authCallback'
+    const authUrl = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnUrl)}`
+
+    const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(getLinksUrl)}&downloadId=${downloadId}&token=Bearer ${authToken}&authUrl=${encodeURIComponent(authUrl)}`
 
     return link
   }

@@ -14,6 +14,7 @@ import Admin from './routes/Admin/Admin'
 import EarthdataDownload from './routes/EarthdataDownload/EarthdataDownload'
 import ContactInfo from './routes/ContactInfo/ContactInfo'
 import Downloads from './routes/Downloads/Downloads'
+import EarthdataDownloadRedirect from './routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'
 import FooterContainer from './containers/FooterContainer/FooterContainer'
 import Preferences from './routes/Preferences/Preferences'
 import Project from './routes/Project/Project'
@@ -135,6 +136,12 @@ class App extends Component {
                         <AuthRequiredContainer>
                           <Preferences />
                         </AuthRequiredContainer>
+                      )}
+                    />
+                    <Route
+                      path={this.portalPaths('/earthdata-download-callback')}
+                      render={() => (
+                        <EarthdataDownloadRedirect />
                       )}
                     />
                     <Route
