@@ -43,7 +43,14 @@ describe('getEdlConfig', () => {
       }
     })
 
-    expect(client.send).toBeCalledWith({ SecretId: 'UrsClientConfigSecret_prod' })
+    expect(client.send).toHaveBeenCalledTimes(1)
+    expect(client.send).toHaveBeenCalledWith(expect.objectContaining({
+      input: {
+        SecretId: 'UrsClientConfigSecret_prod'
+      }
+    }))
+
+    jest.clearAllMocks()
 
     // call getEdlConfig again for a different value to ensure the cached value isn't being passed for the new env
     const uatResponse = await getEdlConfig('uat')
@@ -58,7 +65,11 @@ describe('getEdlConfig', () => {
       }
     })
 
-    expect(client.send).toBeCalledWith({ SecretId: 'UrsClientConfigSecret_uat' })
-    expect(client.send).toBeCalledTimes(2)
+    expect(client.send).toHaveBeenCalledTimes(1)
+    expect(client.send).toHaveBeenCalledWith(expect.objectContaining({
+      input: {
+        SecretId: 'UrsClientConfigSecret_uat'
+      }
+    }))
   })
 })
