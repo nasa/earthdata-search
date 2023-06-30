@@ -1,23 +1,4 @@
 .earthdata-download {
-  &__other-links-item-icon,
-  &__repo-icon {
-    position: relative;
-    top: 0;
-    color: $color__black--400;
-    transition: all 0.2s ease-in-out;
-
-    .earthdata-download__download-link:hover & {
-      transform: scale(1.125);
-      color: $color__black--500;
-    }
-  }
-
-  &__other-links-item-icon {
-    display: block;
-    margin-bottom: 0.5rem;
-    width: 1.5rem;
-  }
-
   &__repo-icon {
     margin-right: 0.5rem;
   }
@@ -39,5 +20,12 @@
   &__feature-list-item-text {
     position: relative;
     left: 0.5rem;
+  }
+}
+
+.feature-with-link-list {
+  &__icon {
+    color: $color__black--400;
+    width: 1.5rem;
   }
 }

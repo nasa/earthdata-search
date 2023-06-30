@@ -17,19 +17,56 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './EarthdataDownload.scss'
 
+// eslint-disable-next-line arrow-body-style
+const FeatureWithLinkList = ({
+  osTitle,
+  osIcon,
+  links
+}) => (
+  <div className="col-md align-items-center d-flex flex-column">
+    <h3 className="h5 align-items-center d-flex flex-column text-center feature-with-link-list">
+      <EDSCIcon className="mb-2 d-block feature-with-link-list__icon" icon={osIcon} size="1.5rem" />
+      {`Download for ${osTitle}`}
+    </h3>
+    <ul className="list-unstyled text-center">
+      {
+        links.map(({
+          href: linkHref,
+          format: linkFormat
+        }) => (
+          <li key={linkFormat}>
+            <a className="feature-with-link-list__download-link link link--external" data-testid={`earthdata-download-link-${linkFormat}`} download href={linkHref}>
+              {`Download the .${linkFormat} installer`}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    {
+      osTitle === 'Apple Silicon' && (
+        <p className="text-center text-black-50">
+          {'See '}
+          <a className="link link--external" href="https://support.apple.com/en-us/HT211814" target="_blank" rel="noopener noreferrer">
+            Apple documentation
+          </a>
+          {' for more information about Apple vs. Intel processors.'}
+        </p>
+      )
+    }
+  </div>
+)
+
 export const EarthdataDownload = () => {
   const { userAgent } = navigator
-  let operatingSystem = getOperatingSystem(userAgent)
-  let downloadLink
+  const operatingSystem = getOperatingSystem(userAgent)
 
-  let executableSize
-  const windowsDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
-  const macDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.dmg'
-  const macSiliconDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-arm64.dmg'
+  const windowsDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
+  const macDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.dmg'
+  const macSiliconDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-arm64.dmg'
 
   // AppImage extension made the principal as it allows for auto-updates
-  const linuxDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x86_64.AppImage'
-  const linuxDownloadLinkRpm = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x86_64.rpm'
+  const linuxDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x86_64.AppImage'
+  const linuxDownloadLinkRpm = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x86_64.rpm'
   const linuxDownloadLinkDeb = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-amd64.deb'
 
   const {
@@ -38,94 +75,92 @@ export const EarthdataDownload = () => {
     linuxEddDownloadSize
   } = getApplicationConfig()
 
-  let isMacOS = false
-  let isLinux = false
-  let isWindows = false
-
-  switch (operatingSystem) {
-    case 'macOS': {
-      // Apple standard is not to capitalize macOS
-      isMacOS = true
-      downloadLink = macDownloadLink
-      executableSize = macOSEddDownloadSize
-      break
-    }
-    case 'Windows': {
-      isWindows = true
-      downloadLink = windowsDownloadLink
-      executableSize = windowsEddDownloadSize
-      break
-    }
-    case 'Linux': {
-      isLinux = true
-      downloadLink = linuxDownloadLink
-      executableSize = linuxEddDownloadSize
-      break
-    }
-    default: {
-      operatingSystem = 'macOS'
-      isMacOS = true
-      downloadLink = macDownloadLink
-      executableSize = macOSEddDownloadSize
-      break
+  const primaryDownloadLinkMap = {
+    macOS: {
+      href: macDownloadLink,
+      size: macOSEddDownloadSize
+    },
+    Windows: {
+      href: windowsDownloadLink,
+      size: windowsEddDownloadSize
+    },
+    Linux: {
+      href: linuxDownloadLink,
+      size: linuxEddDownloadSize
     }
   }
-  const downloaderSize = `${executableSize}mb`
-  const osLinkFileExt = `.${downloadLink.split('.').pop()}`
 
-  const macOSElement = isMacOS ? (
-    <div className="col-md align-items-center d-flex flex-column">
-      <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-macOsSilicone" download href={macSiliconDownloadLink}>
-        <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaApple} size="1.5rem" />
-        Download for Apple Silicon
-      </a>
-      <p className="text-center text-black-50">
-        {'Download the installer for Apple silicon (.dmg). See '}
-        <a className="link link--external" href="https://support.apple.com/en-us/HT211814" target="_blank" rel="noopener noreferrer">
-          Apple documentation
-        </a>
-        {' for more information about Apple vs. Intel processors.'}
-      </p>
-    </div>
-  ) : (
-    <div className="col-md align-items-center d-flex flex-column">
-      <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-macosx64" download href={macDownloadLink}>
-        <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaApple} size="1.5rem" />
-        Download for macOS
-      </a>
-      <p className="text-center text-black-50">Download the installer for macOS (.dmg).</p>
-    </div>
-  )
+  const primaryDownloadLinkInfo = primaryDownloadLinkMap[operatingSystem] || {}
+  const { href: primaryDownloadHref = '', size: primaryDownloadSize = '' } = primaryDownloadLinkInfo
+  const downloaderSize = `${primaryDownloadSize}mb`
+  const osLinkFileExt = `(.${primaryDownloadHref.split('.').pop()})`
 
-  const linuxElement = isLinux ? (
-    <div>
-      <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-linux" download href={linuxDownloadLinkDeb}>
-        <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaLinux} size="1.5rem" />
-        Download for Linux (.deb)
-      </a>
-      <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-linux" download href={linuxDownloadLinkRpm}>
-        Download for Linux (.rpm)
-      </a>
-    </div>
-  ) : (
-    <div className="col-md align-items-center d-flex flex-column">
-      <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-linux" download href={linuxDownloadLink}>
-        <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaLinux} size="1.5rem" />
-        Download for Linux
-      </a>
-      <p className="text-center text-black-50">Download the installer for Linux (.AppImage).</p>
-    </div>
-  )
-
-  const windowsElement = !isWindows && (
-    <div className="col-md align-items-center d-flex flex-column">
-      <a className="h5 align-items-center d-flex flex-column text-center earthdata-download__download-link" data-testid="earthdata-download-link-windows" download href={windowsDownloadLink}>
-        <EDSCIcon className="earthdata-download__other-links-item-icon" icon={FaWindows} size="1.5rem" />
-        Download for Windows
-      </a>
-      <p className="text-center text-black-50">Download the installer for Windows (.exe).</p>
-    </div>
-  )
+  const additionalOSList = [
+    // macOS
+    {
+      show: operatingSystem !== 'macOS',
+      title: 'macOS',
+      icon: FaApple,
+      links: [
+        {
+          href: macDownloadLink,
+          format: 'dmg'
+        }
+      ]
+    },
+    // macOS Extras
+    {
+      show: operatingSystem === 'macOS',
+      title: 'Apple Silicon',
+      icon: FaApple,
+      links: [
+        {
+          href: macSiliconDownloadLink,
+          format: 'dmg'
+        }
+      ]
+    },
+    // Windows
+    {
+      show: operatingSystem !== 'Windows',
+      title: 'Windows',
+      icon: FaWindows,
+      links: [
+        {
+          href: windowsDownloadLink,
+          format: 'exe'
+        }
+      ]
+    },
+    // Linux
+    {
+      show: operatingSystem !== 'Linux',
+      title: 'Linux',
+      icon: FaLinux,
+      links: [
+        {
+          href: linuxDownloadLink,
+          format: 'AppImage'
+        }
+      ]
+    },
+    // Linux Extras
+    {
+      show: operatingSystem === 'Linux',
+      title: 'Linux',
+      icon: FaLinux,
+      links: [
+        {
+          href: linuxDownloadLinkDeb,
+          format: 'deb'
+        },
+        {
+          href: linuxDownloadLinkRpm,
+          format: 'rpm'
+        }
+      ]
+    }
+  ]
 
   return (
     <div className="earthdata-download container">
@@ -135,40 +170,56 @@ export const EarthdataDownload = () => {
           Download your Earth science data from Earthdata Search with only one click
         </span>
       </section>
-      <section className="d-flex flex-column align-items-center mt-4">
-        <Button
-          dataTestId="eddDownloadButton"
-          className="earthdata-download__install-button"
-          type="button"
-          icon={FaDownload}
-          bootstrapVariant="success"
-          bootstrapSize="lg"
-          href={downloadLink}
-          download
-        >
-          Download for
-          {' '}
-          {operatingSystem}
-        </Button>
-        <div className="mt-2 text-black-50">
-          <span className="earthdata-download__download-size">
-            {downloaderSize}
-          </span>
-          {' '}
-          <span className="earthdata-download__os-link-file-ext">
-            {osLinkFileExt}
-          </span>
-          {
-            operatingSystem === 'macOS' && (
-              <span>{' (for Intel-based Macs)'}</span>
-            )
-          }
-        </div>
-      </section>
+      {
+        primaryDownloadHref && (
+          <section className="d-flex flex-column align-items-center mt-4">
+            <Button
+              dataTestId="eddDownloadButton"
+              className="earthdata-download__install-button"
+              type="button"
+              icon={FaDownload}
+              bootstrapVariant="success"
+              bootstrapSize="lg"
+              href={primaryDownloadHref}
+              download
+            >
+              Download for
+              {' '}
+              {operatingSystem}
+            </Button>
+            <div className="mt-2 text-black-50">
+              <span className="earthdata-download__download-size">
+                {downloaderSize}
+              </span>
+              {' '}
+              <span className="earthdata-download__os-link-file-ext">
+                {osLinkFileExt}
+              </span>
+              {
+                operatingSystem === 'macOS' && (
+                  <em className="font-italic"> for Intel-based Macs</em>
+                )
+              }
+            </div>
+          </section>
+        )
+      }
       <section className="row my-5">
-        { macOSElement }
-        { windowsElement}
-        { linuxElement}
+        {
+          additionalOSList.map(({
+            icon,
+            links,
+            show,
+            title
+          }) => show && (
+            <FeatureWithLinkList
+              key={title}
+              osTitle={title}
+              osIcon={icon}
+              links={links}
+            />
+          ))
+        }
       </section>
       <section className="row my-5 justify-content-center">
         <div className="col-auto d-flex">
