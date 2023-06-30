@@ -51,11 +51,11 @@ export const TextWindowActions = ({
   const { userAgent } = navigator
   let operatingSystem = getOperatingSystem(userAgent)
 
-  const windowsDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
-  const macDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.dmg'
+  const windowsDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
+  const macDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.dmg'
 
   // AppImage extension made the principal as it allows for auto-updates
-  const linuxDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x86_64.AppImage'
+  const linuxDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x86_64.AppImage'
 
   switch (operatingSystem) {
     case 'macOS': {

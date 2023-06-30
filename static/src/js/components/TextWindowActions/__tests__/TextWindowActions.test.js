@@ -217,7 +217,7 @@ describe('TextWindowActions component', () => {
 
       test('Download link render correctly based on operating system', () => {
         getOperatingSystem.mockImplementation(() => 'Windows')
-        const windowsDownloadLink = '//github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
+        const windowsDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
         const { enzymeWrapper } = setup({}, true)
 
         const eddButton = enzymeWrapper.find('.text-window-actions__action--edd').filter(Button)

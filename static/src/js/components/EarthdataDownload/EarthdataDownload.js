@@ -17,7 +17,6 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './EarthdataDownload.scss'
 
-// eslint-disable-next-line arrow-body-style
 const FeatureWithLinkList = ({
   osTitle,
   osIcon,
@@ -64,7 +63,7 @@ export const EarthdataDownload = () => {
   const macDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.dmg'
   const macSiliconDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-arm64.dmg'
 
-  // AppImage extension made the principal as it allows for auto-updates
+  // AppImage extension made the principal download since it allows for auto-updates
   const linuxDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x86_64.AppImage'
   const linuxDownloadLinkRpm = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x86_64.rpm'
   const linuxDownloadLinkDeb = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-amd64.deb'
