@@ -34,7 +34,7 @@ const FeatureWithLinkList = ({
           format: linkFormat
         }) => (
           <li key={linkFormat}>
-            <a className="feature-with-link-list__download-link link link--external" data-testid={`earthdata-download-link-${linkFormat}`} download href={linkHref}>
+            <a className="feature-with-link-list__download-link link" data-testid={`earthdata-download-link-${linkFormat}`} download href={linkHref}>
               {`Download the .${linkFormat} installer`}
             </a>
           </li>

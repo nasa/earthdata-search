@@ -293,9 +293,10 @@ export const TextWindowActions = ({
               Open Earthdata Download
             </Button>
             <Alert className="mt-3 mb-0 text-center" variant="secondary">
-              Don’t have the Earthdata Download installed?
+              Don’t have the Earthdata Download application installed?
               <br />
               <a
+                className="link"
                 href={downloadLink}
               >
                 Download for
