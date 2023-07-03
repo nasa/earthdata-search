@@ -1,0 +1,31 @@
+.earthdata-download {
+  &__repo-icon {
+    margin-right: 0.5rem;
+  }
+
+  &__feature-list-item {
+    margin: 0.5rem 0;
+    line-height: 1.5rem;
+    vertical-align: middle;
+    font-size: 1.125rem;
+
+    &::marker {
+      margin-right: 0.25rem;
+      color: $color__blue;
+      content: "\2713";
+      font-size: 1.25rem;
+    }
+  }
+
+  &__feature-list-item-text {
+    position: relative;
+    left: 0.5rem;
+  }
+}
+
+.feature-with-link-list {
+  &__icon {
+    color: $color__black--400;
+    width: 1.5rem;
+  }
+}

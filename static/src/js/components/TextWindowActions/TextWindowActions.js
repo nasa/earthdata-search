@@ -8,7 +8,11 @@ import {
   FaExternalLinkAlt
 } from 'react-icons/fa'
 
+import { Alert } from 'react-bootstrap'
+
 import { constructDownloadableFile } from '../../util/files/constructDownloadableFile'
+import { getOperatingSystem } from '../../util/files/parseUserAgent'
+
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
@@ -25,7 +29,7 @@ import './TextWindowActions.scss'
  * @param {String} clipboardContents - An string that will be copied to the users clipboard.
  * @param {String} fileContents - An optional string to be saved to the users computer.
  * @param {String} fileName - An optional string to to set the name for the file saved to the users computer.
- * @param {String} id - The id to use for the boostrap modal.
+ * @param {String} id - The id to use for the bootstrap modal.
  * @param {String} modalTitle - The title for the modal.
  * @param {Boolean} disableCopy - Disables the copy functionality.
  * @param {Boolean} disableSave - Disables the save functionality.
@@ -42,6 +46,39 @@ export const TextWindowActions = ({
   modalTitle,
   eddLink
 }) => {
+  let downloadLink
+
+  const { userAgent } = navigator
+  let operatingSystem = getOperatingSystem(userAgent)
+
+  const windowsDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
+  const macDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.dmg'
+
+  // AppImage extension made the principal as it allows for auto-updates
+  const linuxDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x86_64.AppImage'
+
+  switch (operatingSystem) {
+    case 'macOS': {
+      // Apple standard is not to capitalize macOs
+      downloadLink = macDownloadLink
+      break
+    }
+    case 'Windows': {
+      downloadLink = windowsDownloadLink
+      break
+    }
+    case 'Linux': {
+      downloadLink = linuxDownloadLink
+      break
+    }
+    default:
+    {
+      operatingSystem = 'macOS'
+      downloadLink = macDownloadLink
+      break
+    }
+  }
+
   const { disableEddDownload } = getApplicationConfig()
 
   const supportsClipboard = document.queryCommandSupported('copy')
@@ -255,17 +292,21 @@ export const TextWindowActions = ({
             >
               Open Earthdata Download
             </Button>
-            {/* TODO EDSC-3762 Uncomment this when we have implemented the landing page and/or download link
-              <Alert className="mt-3 mb-0 text-center" variant="secondary">
-                Don’t have the Earthdata Download installed?
-                <br />
-                <a href="/">Install the application now</a>
+            <Alert className="mt-3 mb-0 text-center" variant="secondary">
+              Don’t have the Earthdata Download installed?
+              <br />
+              <a
+                href={downloadLink}
+              >
+                Download for
                 {' '}
-                or
+                {operatingSystem}
                 {' '}
-                <a className="link link-external" href="/">learn more.</a>
-              </Alert>
-            */}
+              </a>
+              or
+              {' '}
+              <a className="link link--external" href="/earthdata-download">learn more.</a>
+            </Alert>
           </div>
         )}
       />
