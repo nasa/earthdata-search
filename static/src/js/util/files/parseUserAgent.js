@@ -1,7 +1,7 @@
 /**
  * Get the operating system of the client
  * @param {String} userAgent - A string containing the navigator.userAgent from browser
- * @return {String} The operating system from the client as a string being returned
+ * @return {(String|Null)} The operating system from the client as a string being returned
  */
 export const getOperatingSystem = (userAgent) => {
   const patterns = [
