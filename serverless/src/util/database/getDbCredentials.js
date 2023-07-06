@@ -1,18 +1,18 @@
-import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager'
+import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager'
 
 import { getSecretEnvironmentConfig } from '../../../../sharedUtils/config'
 import { getSecretsManagerConfig } from '../aws/getSecretsManagerConfig'
 
 let dbCredentials
-let secretsmanager
+let secretsManagerClient
 
 /**
  * Returns the decrypted database credentials from Secrets Manager
  */
 export const getDbCredentials = async () => {
   if (dbCredentials == null) {
-    if (secretsmanager == null) {
-      secretsmanager = new SecretsManagerClient(getSecretsManagerConfig())
+    if (secretsManagerClient == null) {
+      secretsManagerClient = new SecretsManagerClient(getSecretsManagerConfig())
     }
 
     if (process.env.NODE_ENV === 'development') {
@@ -29,7 +29,8 @@ export const getDbCredentials = async () => {
       SecretId: process.env.configSecretId
     }
 
-    const secretValue = await secretsmanager.send(params)
+    const command = new GetSecretValueCommand(params)
+    const secretValue = await secretsManagerClient.send(command)
 
     dbCredentials = JSON.parse(secretValue.SecretString)
   }

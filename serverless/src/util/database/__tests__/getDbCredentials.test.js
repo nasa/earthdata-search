@@ -48,8 +48,10 @@ describe('getDbCredentials', () => {
     })
 
     expect(client.send).toBeCalledTimes(1)
-    expect(client.send).toHaveBeenCalledWith(
-      { SecretId: 'test-DbPasswordSecret' }
-    )
+    expect(client.send).toHaveBeenCalledWith(expect.objectContaining({
+      input: {
+        SecretId: 'test-DbPasswordSecret'
+      }
+    }))
   })
 })
