@@ -22,7 +22,7 @@ export const startOrderStatusUpdateWorkflow = async (orderId, accessToken, order
     // }).promise()
 
     const client = new SFNClient(getStepFunctionsConfig())
-    const input = { 
+    const input = {
       stateMachineArn: process.env.updateOrderStatusStateMachineArn,
       input: JSON.stringify({
         id: orderId,

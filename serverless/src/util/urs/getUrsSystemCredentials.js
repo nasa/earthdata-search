@@ -26,7 +26,7 @@ export const getUrsSystemCredentials = async (earthdataEnvironment) => {
         password: cmrSystemPassword
       }
     }
-    
+
     const params = {
       SecretId: `UrsSystemPasswordSecret_${earthdataEnvironment}`
     }
