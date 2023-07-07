@@ -1,4 +1,4 @@
-import { SFNClient } from '@aws-sdk/client-sfn'
+import { SFNClient, StartExecutionCommand } from '@aws-sdk/client-sfn'
 
 import { getStepFunctionsConfig } from './aws/getStepFunctionsConfig'
 import { parseError } from '../../../sharedUtils/parseError'
@@ -10,18 +10,30 @@ import { parseError } from '../../../sharedUtils/parseError'
  */
 export const startOrderStatusUpdateWorkflow = async (orderId, accessToken, orderType) => {
   try {
-    const stepfunctions = new SFNClient(getStepFunctionsConfig())
+    // const stepfunctions = new SFNClient(getStepFunctionsConfig())
 
-    const stepFunctionResponse = await stepfunctions.startExecution({
+    // const stepFunctionResponse = await stepfunctions.startExecution({
+    //   stateMachineArn: process.env.updateOrderStatusStateMachineArn,
+    //   input: JSON.stringify({
+    //     id: orderId,
+    //     accessToken,
+    //     orderType
+    //   })
+    // }).promise()
+
+    const client = new SFNClient(getStepFunctionsConfig())
+    const input = { 
       stateMachineArn: process.env.updateOrderStatusStateMachineArn,
       input: JSON.stringify({
         id: orderId,
         accessToken,
         orderType
       })
-    }).promise()
+    }
+    const command = new StartExecutionCommand(input)
+    const response = await client.send(command)
 
-    console.log(`State Machine Invocation (Order ID: ${orderId}): `, stepFunctionResponse)
+    console.log(`State Machine Invocation (Order ID: ${orderId}): `, response)
   } catch (e) {
     parseError(e)
   }
