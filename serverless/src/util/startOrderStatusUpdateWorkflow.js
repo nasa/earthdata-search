@@ -10,17 +10,6 @@ import { parseError } from '../../../sharedUtils/parseError'
  */
 export const startOrderStatusUpdateWorkflow = async (orderId, accessToken, orderType) => {
   try {
-    // const stepfunctions = new SFNClient(getStepFunctionsConfig())
-
-    // const stepFunctionResponse = await stepfunctions.startExecution({
-    //   stateMachineArn: process.env.updateOrderStatusStateMachineArn,
-    //   input: JSON.stringify({
-    //     id: orderId,
-    //     accessToken,
-    //     orderType
-    //   })
-    // }).promise()
-
     const client = new SFNClient(getStepFunctionsConfig())
     const input = {
       stateMachineArn: process.env.updateOrderStatusStateMachineArn,
