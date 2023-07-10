@@ -65,9 +65,6 @@ beforeEach(() => {
 
   dbTracker = mockKnex.getTracker()
   dbTracker.install()
-
-  // SQSClient.mockClear()
-  // SendMessageCommand.mockClear()
 })
 
 afterEach(() => {
