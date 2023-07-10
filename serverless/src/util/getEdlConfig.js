@@ -1,4 +1,4 @@
-import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager'
+import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager'
 
 import {
   getEarthdataConfig,
@@ -8,7 +8,7 @@ import {
 import { getSecretsManagerConfig } from './aws/getSecretsManagerConfig'
 
 const clientConfig = {}
-let secretsmanager
+let secretsManagerClient
 
 /**
  * Configuration object used by the simple-oauth2 plugin
@@ -26,8 +26,8 @@ const oAuthConfig = (earthdataEnvironment) => ({
 export const getEdlConfig = async (earthdataEnvironment) => {
   const { [earthdataEnvironment]: environmentConfig } = clientConfig
   if (environmentConfig == null) {
-    if (secretsmanager == null) {
-      secretsmanager = new SecretsManagerClient(getSecretsManagerConfig())
+    if (secretsManagerClient == null) {
+      secretsManagerClient = new SecretsManagerClient(getSecretsManagerConfig())
     }
 
     if (process.env.NODE_ENV === 'development') {
@@ -47,7 +47,8 @@ export const getEdlConfig = async (earthdataEnvironment) => {
     }
 
     // If not running in development mode fetch secrets from AWS
-    const secretValue = await secretsmanager.send(params)
+    const command = new GetSecretValueCommand(params)
+    const secretValue = await secretsManagerClient.send(command)
 
     clientConfig[earthdataEnvironment] = JSON.parse(secretValue.SecretString)
   }

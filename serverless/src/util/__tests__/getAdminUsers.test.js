@@ -24,8 +24,10 @@ describe('getAdminUsers', () => {
     expect(response).toEqual(['testuser1', 'testuser2'])
 
     expect(client.send).toBeCalledTimes(1)
-    expect(client.send).toHaveBeenCalledWith(
-      { SecretId: 'EDSC_Admins' }
-    )
+    expect(client.send).toHaveBeenCalledWith(expect.objectContaining({
+      input: {
+        SecretId: 'EDSC_Admins'
+      }
+    }))
   })
 })

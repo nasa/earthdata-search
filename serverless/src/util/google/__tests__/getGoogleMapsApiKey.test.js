@@ -27,8 +27,10 @@ describe('getGoogleMapsApiKey', () => {
     })
 
     expect(client.send).toBeCalledTimes(1)
-    expect(client.send).toHaveBeenCalledWith(
-      { SecretId: 'GoogleMapsApiKey' }
-    )
+    expect(client.send).toHaveBeenCalledWith(expect.objectContaining({
+      input: {
+        SecretId: 'GoogleMapsApiKey'
+      }
+    }))
   })
 })

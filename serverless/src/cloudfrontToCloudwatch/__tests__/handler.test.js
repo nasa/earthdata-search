@@ -1,19 +1,26 @@
 /* eslint-disable no-tabs */
+import { mockClient } from 'aws-sdk-client-mock'
+import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3'
+
 import zlib from 'zlib'
 import util from 'util'
-
-import AWS from 'aws-sdk'
 
 import cloudfrontToCloudwatch from '../handler'
 
 // Promisify node method
 const gzip = util.promisify(zlib.gzip)
 
+const s3ClientMock = mockClient(S3Client)
+
 beforeEach(() => {
   jest.clearAllMocks()
 })
 
 describe('cloudfrontToCloudwatch', () => {
+  beforeEach(() => {
+    s3ClientMock.reset()
+  })
+
   test('takes no action when no events are provided', async () => {
     const consoleMock = jest.spyOn(console, 'log')
 
@@ -37,16 +44,9 @@ describe('cloudfrontToCloudwatch', () => {
 
     const consoleMock = jest.spyOn(console, 'log')
 
-    const s3GetObjectPromise = jest.fn().mockReturnValue({
-      promise: jest.fn().mockResolvedValue({
-        Body: zippedFile
-      })
+    s3ClientMock.on(GetObjectCommand).resolves({
+      Body: zippedFile
     })
-
-    AWS.S3 = jest.fn()
-      .mockImplementation(() => ({
-        getObject: s3GetObjectPromise
-      }))
 
     await cloudfrontToCloudwatch({
       Records: [{
@@ -60,11 +60,6 @@ describe('cloudfrontToCloudwatch', () => {
         }
       }]
     })
-
-    expect(s3GetObjectPromise.mock.calls[0]).toEqual([{
-      Bucket: 'test-bucket',
-      Key: 'test-object.gz'
-    }])
 
     expect(consoleMock).toBeCalledTimes(5)
     expect(consoleMock.mock.calls[0]).toEqual(['Processing 1 files(s)'])
@@ -73,15 +68,7 @@ describe('cloudfrontToCloudwatch', () => {
   test('catches errors correctly', async () => {
     const consoleMock = jest.spyOn(console, 'log')
 
-    const s3GetObjectPromise = jest.fn().mockReturnValue({
-      // eslint-disable-next-line no-promise-executor-return
-      promise: jest.fn().mockImplementation(() => new Promise((resolve, reject) => reject(new Error('Object not found.'))))
-    })
-
-    AWS.S3 = jest.fn()
-      .mockImplementation(() => ({
-        getObject: s3GetObjectPromise
-      }))
+    s3ClientMock.on(GetObjectCommand).rejects('Object not found.')
 
     await cloudfrontToCloudwatch({
       Records: [{
@@ -96,10 +83,10 @@ describe('cloudfrontToCloudwatch', () => {
       }]
     })
 
-    expect(s3GetObjectPromise.mock.calls[0]).toEqual([{
+    expect(s3ClientMock.call(0).args[0].input).toEqual({
       Bucket: 'test-bucket',
       Key: 'test-object.gz'
-    }])
+    })
 
     expect(consoleMock).toBeCalledTimes(2)
     expect(consoleMock.mock.calls[0]).toEqual(['Processing 1 files(s)'])

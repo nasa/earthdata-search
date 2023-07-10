@@ -1,18 +1,18 @@
-import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager'
+import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager'
 
 import { getSecretAdminUsers } from '../../../sharedUtils/config'
 import { getSecretsManagerConfig } from './aws/getSecretsManagerConfig'
 
 let adminUsers
-let secretsmanager
+let secretsManagerClient
 
 /**
  * Retrieve a list of users authorized to access the admin dashboard
  */
 export const getAdminUsers = async () => {
   if (adminUsers == null) {
-    if (secretsmanager == null) {
-      secretsmanager = new SecretsManagerClient(getSecretsManagerConfig())
+    if (secretsManagerClient == null) {
+      secretsManagerClient = new SecretsManagerClient(getSecretsManagerConfig())
     }
 
     if (process.env.NODE_ENV === 'development') {
@@ -25,7 +25,8 @@ export const getAdminUsers = async () => {
       SecretId: 'EDSC_Admins'
     }
 
-    const secretValue = await secretsmanager.send(params)
+    const command = new GetSecretValueCommand(params)
+    const secretValue = await secretsManagerClient.send(command)
 
     // Secrets Manager requires key/value pairs, so AWS converts an array to an indexed object
     adminUsers = Object.values(
