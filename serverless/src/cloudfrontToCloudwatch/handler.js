@@ -23,7 +23,9 @@ const cloudfrontToCloudwatch = async (event) => {
 
   console.log(`Processing ${s3Records.length} files(s)`)
 
-  s3Client = new S3Client({ Region: 'us-east-1' })
+  if (s3Client == null) {
+    s3Client = new S3Client()
+  }
 
   await s3Records.forEachAsync(async (record) => {
     const { s3: s3Record } = record
