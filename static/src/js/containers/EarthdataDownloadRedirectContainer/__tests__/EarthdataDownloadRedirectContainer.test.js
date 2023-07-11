@@ -35,7 +35,7 @@ describe('EarthdataDownloadRedirectContainer', () => {
       />
     )
 
-    expect(screen.getByText('Redirecting you to Earthdata Download')).toBeDefined()
+    expect(screen.getByText('Opening Earthdata Download to download your your files...')).toBeDefined()
     expect(screen.getByTestId('earthdata-download-redirect-button')).toHaveAttribute('href', 'earthdata-download://authCallback')
 
     expect(window.location.replace).toHaveBeenCalledTimes(1)
