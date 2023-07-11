@@ -262,12 +262,12 @@ export const TextWindowActions = ({
           <div className="d-flex flex-column align-items-center">
             <h3 className="font-weight-bolder h5 mt-3 text-center w-75">Opening Earthdata Download to download your your files...</h3>
             <EDSCIcon
-              className="mt-3 text-window-actions__modal-icon"
-              icon={FaDownload}
+              className="mt-4 text-window-actions__modal-icon"
+              icon={FaExternalLinkAlt}
               size="4rem"
             />
             <Spinner
-              className="mt-3"
+              className="mt-4"
               type="dots"
             />
             <div className="mt-4 text-muted text-center text--lg text-window-actions__modal-blurb">

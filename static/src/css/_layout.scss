@@ -47,6 +47,10 @@
       overflow-x: hidden;
       overflow-y: scroll;
     }
+
+    .route-wrapper--content-page-centered & {
+      justify-content: center;
+    }
   }
 
   &__content-nav {
