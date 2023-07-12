@@ -16,7 +16,8 @@ const portals = [
   'snwg',
   'soos',
   'standardproducts',
-  'suborbital'
+  'suborbital',
+  'hitide'
 ]
 
 const output = {}

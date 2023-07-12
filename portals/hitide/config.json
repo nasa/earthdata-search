@@ -1,0 +1,18 @@
+{
+  "moreInfoUrl": "https://hitide.podaac.earthdatacloud.nasa.gov/",
+  "pageTitle": "HiTIDE",
+  "parentConfig": "edsc",
+  "portalBrowser": true,
+  "query": {
+    "dataCenter": "NASA/JPL/PODAAC",
+    "hasGranulesOrCwic": null
+  },
+  "title": {
+    "primary": "HiTIDE",
+    "secondary": "High-level Tool for Interactive Data Extraction"
+  },
+  "ui": {
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
+  }
+}
