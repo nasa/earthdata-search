@@ -1,7 +1,7 @@
 {
   "hasStyles": true,
   "logo": {
-    "id": "hitide-logo",
+    "id": "podaac-logo",
     "link": "https://hitide.podaac.earthdatacloud.nasa.gov/",
     "title": "HiTIDE Home"
   },
@@ -15,5 +15,6 @@
   "ui": {
     "showOnlyGranulesCheckbox": false,
     "showNonEosdisCheckbox": false
-  }
+  },
+  "portalBrowser": true
 }
