@@ -50,7 +50,7 @@
     "@cypress/code-coverage": "^3.10.0",
     "@cypress/webpack-preprocessor": "^5.16.1",
     "@playwright/test": "^1.32.3",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^14.4.3",
     "@welldone-software/why-did-you-render": "^7.0.1",
