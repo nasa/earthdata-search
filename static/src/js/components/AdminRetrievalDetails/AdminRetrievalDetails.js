@@ -151,7 +151,6 @@ export const AdminRetrievalDetails = ({
                                       <tr data-testid="admin-retrieval-details__order-row" className="admin-retrieval-details__order-row" key={`${collectionId}-${orderId}`}>
                                         <td data-testid="admin-retrieval-details__requeue-order-td">
                                           <Button
-                                            data-testid="admin-retrieval-details__requeue-order-btn"
                                             type="button"
                                             bootstrapVariant="secondary"
                                             label="Requeue Order for Processing"
