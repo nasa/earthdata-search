@@ -1,7 +1,8 @@
 import React from 'react'
 import {
-  render, screen, fireEvent, getAllByRole
+  render, screen, getByRole, getAllByRole
 } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
 
@@ -115,7 +116,6 @@ describe('AdminRetrievalDetails component', () => {
           }]
         }
       })
-
       renderContainer(props)
 
       expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(0)).toHaveTextContent('edsc-test')
@@ -131,7 +131,6 @@ describe('AdminRetrievalDetails component', () => {
       expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(7)).toHaveTextContent('35')
       expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(8)).toHaveTextContent('2023-07-18T17:53:49.000Z')
       expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(9)).toHaveTextContent('2023-07-18T17:54:22.000Z')
-
       expect(screen.getAllByTestId('admin-retrieval-details__orders-table').length).toEqual(1)
       expect(screen.getAllByTestId('admin-retrieval-details__order-row').length).toEqual(2)
       expect(getAllByRole(screen.getAllByTestId('admin-retrieval-details__order-row').at(0), 'cell').at(1)).toHaveTextContent('5')
@@ -140,7 +139,8 @@ describe('AdminRetrievalDetails component', () => {
       expect(getAllByRole(screen.getAllByTestId('admin-retrieval-details__order-row').at(0), 'cell').at(4)).toHaveTextContent('creating')
     })
 
-    test('clicking on the Requeue button calls onRequeueOrder', () => {
+    test('clicking on the Requeue button calls onRequeueOrder', async () => {
+      const user = userEvent.setup()
       const { renderContainer, props } = setup({
         retrieval: {
           username: 'edsc-test',
@@ -169,8 +169,8 @@ describe('AdminRetrievalDetails component', () => {
         }
       })
 
-      renderContainer(props)
-      fireEvent.click(getAllByRole(screen.getAllByTestId('admin-retrieval-details__requeue-order-td').at(0), 'button').at(0))
+      const { container } = renderContainer(props)
+      await user.click(getByRole(container, 'button', { value: { text: /Requeue/ } }))
 
       expect(props.onRequeueOrder).toHaveBeenCalledTimes(1)
       expect(props.onRequeueOrder).toHaveBeenCalledWith(5)
