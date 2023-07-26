@@ -5,29 +5,12 @@ describe('getOpenSearchOsddLink', () => {
     expect(getOpenSearchOsddLink({})).toBe(undefined)
   })
 
-  test('returns undefined if no link exists', () => {
-    const links = [
-      {
-        length: '0.0KB',
-        rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
-        hreflang: 'en-US',
-        href: 'https://esatellus.service-now.com/csp?id=esa_simple_request'
-      },
-      {
-        length: '0.0KB',
-        rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
-        hreflang: 'en-US',
-        href: 'https://eoportal.org/web/eoportal/fedeo?parentIdentifier=EOP:ESA:EARTH-ONLINE&uid=CryoSat.products'
-      },
-      {
-        length: '0.0KB',
-        rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
-        hreflang: 'en-US',
-        href: 'https://fedeo.esa.int/opensearch/request/?httpAccept=application/vnd.iso.19139-2%2Bxml&parentIdentifier=EOP:ESA:EARTH-ONLINE&uid=CryoSat.products&recordSchema=iso19139-2'
-      }
-    ]
+  test('returns undefined when links is null', () => {
+    expect(getOpenSearchOsddLink({ links: null })).toBe(undefined)
+  })
 
-    expect(getOpenSearchOsddLink(links)).toBe(undefined)
+  test('returns undefined when relatedUrls is null', () => {
+    expect(getOpenSearchOsddLink({ relatedUrls: null })).toBe(undefined)
   })
 
   test('returns the OSDD link from the links', () => {
