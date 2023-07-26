@@ -33,18 +33,20 @@ export const AuthCallbackContainer = ({
 
     const params = parse(search, { ignoreQueryPrefix: true })
     const {
+      eddRedirect,
       jwt = '',
-      accessToken
+      accessToken,
+      redirect = '/'
     } = params
-    let { redirect = '/' } = params
 
     // If the redirect includes earthdata-download, redirect to the edd callback
-    if (redirect.includes('earthdata-download')) {
-      redirect += `&token=${accessToken}`
+    if (eddRedirect || redirect.includes('earthdata-download')) {
+      let eddRedirectUrl = eddRedirect || redirect
+      if (accessToken) eddRedirectUrl += `&token=${accessToken}`
 
       // Add the redirect information to the store
       onAddEarthdataDownloadRedirect({
-        redirect
+        redirect: eddRedirectUrl
       })
 
       // Redirect to the edd callback

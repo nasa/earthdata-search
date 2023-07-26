@@ -168,14 +168,18 @@ export class OrderStatusItem extends PureComponent {
     if (shortName) downloadId = `${shortName}_${versionId}`
 
     // Build the `getLinks` URL to tell EDD where to find the download links
-    const { apiHost } = getEnvironmentConfig()
+    const { apiHost, edscHost } = getEnvironmentConfig()
     const getLinksUrl = `${apiHost}/granule_links?id=${retrievalCollectionId}&flattenLinks=true&linkTypes=${linkType}&ee=${earthdataEnvironment}`
 
     // Build the authUrl to tell EDD how to authenticate the user
-    const returnUrl = 'earthdata-download://authCallback'
-    const authUrl = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnUrl)}`
+    const authReturnUrl = 'earthdata-download://authCallback'
+    const authUrl = `${apiHost}/login?ee=${earthdataEnvironment}&eddRedirect=${encodeURIComponent(authReturnUrl)}`
 
-    const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(getLinksUrl)}&downloadId=${downloadId}&token=Bearer ${authToken}&authUrl=${encodeURIComponent(authUrl)}`
+    // Build the eulaRedirectUrl to tell EDD how to get back after the user accepts a EULA
+    const eulaCallback = 'earthdata-download://eulaCallback'
+    const eulaRedirectUrl = `${edscHost}/auth_callback?eddRedirect=${encodeURIComponent(eulaCallback)}`
+
+    const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(getLinksUrl)}&downloadId=${downloadId}&token=Bearer ${authToken}&authUrl=${encodeURIComponent(authUrl)}&eulaRedirectUrl=${encodeURIComponent(eulaRedirectUrl)}`
 
     return link
   }
