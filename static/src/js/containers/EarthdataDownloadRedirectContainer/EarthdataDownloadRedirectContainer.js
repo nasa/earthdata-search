@@ -22,7 +22,7 @@ export const EarthdataDownloadRedirectContainer = ({
 
   return (
     <div className="container d-flex flex-column align-items-center text-center">
-      <h3 className="font-weight-bolder h5 mt-3 text-center w-75">Opening Earthdata Download to download your your files...</h3>
+      <h3 className="font-weight-bolder h5 mt-3 text-center w-75">Opening Earthdata Download to download your files...</h3>
       <EDSCIcon
         className="mt-4 text-window-actions__modal-icon"
         icon={FaExternalLinkAlt}
