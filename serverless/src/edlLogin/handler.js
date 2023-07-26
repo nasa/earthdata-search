@@ -11,7 +11,11 @@ import { getEdlConfig } from '../util/getEdlConfig'
 const edlLogin = async (event) => {
   const { queryStringParameters } = event
 
-  const { ee: earthdataEnvironment, state } = queryStringParameters
+  const { ee: earthdataEnvironment, eddRedirect } = queryStringParameters
+  let { state } = queryStringParameters
+
+  // In order to make EDD more reusable, it is going to pass a `eddRedirect` parameter which is what we send to EDL as `state`
+  if (!state) state = eddRedirect
 
   // The client id is part of our Earthdata Login credentials
   const edlConfig = await getEdlConfig(earthdataEnvironment)

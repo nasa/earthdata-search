@@ -80,7 +80,7 @@ describe('AuthCallbackContainer component', () => {
     expect(window.location.replace.mock.calls[0]).toEqual(['http://localhost:8080/search'])
   })
 
-  test('updates redux and redirects to earthdata-download-callback', () => {
+  test('updates redux and redirects to earthdata-download-callback for authCallback', () => {
     const setSpy = jest.spyOn(tinyCookie, 'set')
     delete window.location
     window.location = { replace: jest.fn() }
@@ -98,6 +98,27 @@ describe('AuthCallbackContainer component', () => {
     expect(props.onAddEarthdataDownloadRedirect).toHaveBeenCalledTimes(1)
     expect(props.onAddEarthdataDownloadRedirect).toHaveBeenCalledWith({
       redirect: 'earthdata-download://authCallback&token=mock-token'
+    })
+  })
+
+  test('updates redux and redirects to earthdata-download-callback for eulaCallback', () => {
+    const setSpy = jest.spyOn(tinyCookie, 'set')
+    delete window.location
+    window.location = { replace: jest.fn() }
+
+    const { props } = setup({
+      location: {
+        search: 'eddRedirect=earthdata-download%3A%2F%2FeulaCallback'
+      }
+    })
+
+    expect(setSpy).toHaveBeenCalledTimes(0)
+
+    expect(window.location.replace).toHaveBeenCalledTimes(0)
+
+    expect(props.onAddEarthdataDownloadRedirect).toHaveBeenCalledTimes(1)
+    expect(props.onAddEarthdataDownloadRedirect).toHaveBeenCalledWith({
+      redirect: 'earthdata-download://eulaCallback'
     })
   })
 
