@@ -61,8 +61,6 @@ describe('AdminRetrievalDetails component', () => {
         }
       })
 
-      // screen.debug(renderContainer(props), null, null)
-
       renderContainer(props)
 
       expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(0)).toHaveTextContent('edsc-test')
