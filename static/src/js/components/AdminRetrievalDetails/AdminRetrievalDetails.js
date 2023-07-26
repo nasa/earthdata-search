@@ -71,7 +71,6 @@ export const AdminRetrievalDetails = ({
                       id: collectionId,
                       collection_id: collectionConceptId,
                       data_center: collectionDataCenter,
-                      // updated_at: updatedAt
                       granule_count: collectionGranuleCount,
                       access_method: accessMethod,
                       created_at: createdAt,
