@@ -105,6 +105,10 @@ export const AdminRetrievalDetails = ({
                                 <span className="admin-retrieval-details__metadata-display-heading">Granule Count</span>
                                 <span data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content">{commafy(collectionGranuleCount)}</span>
                               </p>
+                            </div>
+                          </div>
+                          <div className="admin-retrieval-details__collection-heading-details">
+                            <div className="admin-retrieval-details__metadata-display">
                               <p className="admin-retrieval-details__metadata-display-item">
                                 <span className="admin-retrieval-details__metadata-display-heading">Created At</span>
                                 <span data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content">{createdAt}</span>
