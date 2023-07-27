@@ -44,7 +44,6 @@ export const AuthCallbackContainer = ({
       let redirectUrl
       if (eddRedirect) redirectUrl = new URL(eddRedirect)
       if (redirect && redirect !== '/') redirectUrl = new URL(redirect)
-      console.log('🚀 ~ file: AuthCallbackContainer.js:46 ~ useEffect ~ redirectUrl:', redirectUrl)
 
       if (
         redirectUrl
