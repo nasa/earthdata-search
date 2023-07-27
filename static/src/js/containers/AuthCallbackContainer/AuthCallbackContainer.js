@@ -39,6 +39,29 @@ export const AuthCallbackContainer = ({
       redirect = '/'
     } = params
 
+    // Verify that the redirect params are real URLs
+    try {
+      let redirectUrl
+      if (eddRedirect) redirectUrl = new URL(eddRedirect)
+      if (redirect && redirect !== '/') redirectUrl = new URL(redirect)
+      console.log('🚀 ~ file: AuthCallbackContainer.js:46 ~ useEffect ~ redirectUrl:', redirectUrl)
+
+      if (
+        redirectUrl
+        && redirectUrl.protocol !== 'http:'
+        && redirectUrl.protocol !== 'https:'
+        && redirectUrl.protocol !== 'earthdata-download:'
+      ) {
+        // The redirectUrl is not a valid protocol
+        console.log('The redirectUrl is not a valid protocol')
+        window.location.replace('/')
+        return
+      }
+    } catch (error) {
+      window.location.replace('/')
+      return
+    }
+
     // If the redirect includes earthdata-download, redirect to the edd callback
     if (eddRedirect || redirect.includes('earthdata-download')) {
       let eddRedirectUrl = eddRedirect || redirect

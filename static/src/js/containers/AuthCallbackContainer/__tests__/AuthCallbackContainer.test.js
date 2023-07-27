@@ -139,4 +139,38 @@ describe('AuthCallbackContainer component', () => {
     expect(window.location.replace.mock.calls.length).toBe(1)
     expect(window.location.replace.mock.calls[0]).toEqual(['/'])
   })
+
+  test('does not follow the redirect if the redirect param is not valid', () => {
+    const setSpy = jest.spyOn(tinyCookie, 'set')
+    delete window.location
+    window.location = { replace: jest.fn() }
+
+    setup({
+      location: {
+        search: '?redirect=javascript:alert(document.domain);'
+      }
+    })
+
+    expect(setSpy).toBeCalledTimes(0)
+
+    expect(window.location.replace.mock.calls.length).toBe(1)
+    expect(window.location.replace.mock.calls[0]).toEqual(['/'])
+  })
+
+  test('does not follow the redirect if the eddRedirect param is not valid', () => {
+    const setSpy = jest.spyOn(tinyCookie, 'set')
+    delete window.location
+    window.location = { replace: jest.fn() }
+
+    setup({
+      location: {
+        search: '?eddRedirect=javascript:alert(document.domain);'
+      }
+    })
+
+    expect(setSpy).toBeCalledTimes(0)
+
+    expect(window.location.replace.mock.calls.length).toBe(1)
+    expect(window.location.replace.mock.calls[0]).toEqual(['/'])
+  })
 })
