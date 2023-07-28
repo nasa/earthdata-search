@@ -47,7 +47,7 @@
     "postplaywright": "npx nyc report --reporter=json --reporter=lcov --reporter=clover --report-dir=playwright-coverage"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.10.0",
+    "@cypress/code-coverage": "^3.11.0",
     "@cypress/webpack-preprocessor": "^5.16.1",
     "@playwright/test": "^1.32.3",
     "@testing-library/jest-dom": "^5.17.0",
@@ -60,7 +60,7 @@
     "babel-plugin-istanbul": "^6.1.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "cookies": "^0.7.3",
-    "cypress": "^12.3.0",
+    "cypress": "^12.17.2",
     "cypress-file-upload": "^5.0.8",
     "enzyme": "^3.11.0",
     "istanbul-instrumenter-loader": "^3.0.1",
