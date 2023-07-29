@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Suspense, lazy } from 'react'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import { Switch, Route, Redirect } from 'react-router-dom'
@@ -10,16 +10,6 @@ import configureStore from './store/configureStore'
 import history from './util/history'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 
-import Admin from './routes/Admin/Admin'
-import EarthdataDownload from './routes/EarthdataDownload/EarthdataDownload'
-import ContactInfo from './routes/ContactInfo/ContactInfo'
-import Downloads from './routes/Downloads/Downloads'
-import EarthdataDownloadRedirect from './routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'
-import FooterContainer from './containers/FooterContainer/FooterContainer'
-import Preferences from './routes/Preferences/Preferences'
-import Project from './routes/Project/Project'
-import Search from './routes/Search/Search'
-import Subscriptions from './routes/Subscriptions/Subscriptions'
 
 import AboutCSDAModalContainer from './containers/AboutCSDAModalContainer/AboutCSDAModalContainer'
 import AboutCwicModalContainer from './containers/AboutCwicModalContainer/AboutCwicModalContainer'
@@ -34,7 +24,6 @@ import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerC
 import ErrorBoundary from './components/Errors/ErrorBoundary'
 import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
-import NotFound from './components/Errors/NotFound'
 import PortalContainer from './containers/PortalContainer/PortalContainer'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
@@ -42,6 +31,18 @@ import TooManyPointsModalContainer from './containers/TooManyPointsModalContaine
 import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 import EditSubscriptionModalContainer from './containers/EditSubscriptionModalContainer/EditSubscriptionModalContainer'
 import HistoryContainer from './containers/HistoryContainer/HistoryContainer'
+
+const Admin = lazy(() => import(/* webpackPrefetch: true */"./routes/Admin/Admin"))
+const EarthdataDownload = lazy(() => import(/* webpackPrefetch: true */"./routes/EarthdataDownload/EarthdataDownload"))
+const ContactInfo = lazy(() => import(/* webpackPrefetch: true */"./routes/ContactInfo/ContactInfo"))
+const Downloads = lazy(() => import(/* webpackPrefetch: true */"./routes/Downloads/Downloads"))
+const EarthdataDownloadRedirect = lazy(() => import(/* webpackPrefetch: true */"./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect"))
+const FooterContainer = lazy(() => import(/* webpackPrefetch: true */"./routes/FooterContainer/FooterContainer"))
+const Preferences = lazy(() => import(/* webpackPrefetch: true */"./routes/Preferences/Preferences"))
+const Project = lazy(() => import(/* webpackPrefetch: true */"./routes/Project/Project"))
+const Search = lazy(() => import(/* webpackPrefetch: true */"./routes/Preferences/Search"))
+const Subscriptions = lazy(() => import(/* webpackPrefetch: true */"./routes/Subscriptions/Subscriptions"))
+const NotFound = lazy(() => import('./components/Errors/NotFound'))
 
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
@@ -100,109 +101,115 @@ class App extends Component {
             <ConnectedRouter history={history}>
               <HistoryContainer />
               <MetricsEventsContainer />
-              <Switch>
-                <Route path={this.portalPaths('/')} component={PortalContainer} />
-              </Switch>
+              <Suspense fallback={<></>}>
+                <Switch>
+                  <Route path={this.portalPaths('/')} component={PortalContainer} />
+                </Switch>
+              </Suspense>
               <ErrorBannerContainer />
               <AuthTokenContainer>
                 <UrlQueryContainer>
                   <AppHeader />
-                  <Switch>
-                    <Route
-                      path="/admin"
-                      render={() => (
-                        <AuthRequiredContainer>
-                          <Admin />
-                        </AuthRequiredContainer>
-                      )}
-                    />
-                    <Route
-                      path={this.portalPaths('/contact-info')}
-                      render={() => (
-                        <AuthRequiredContainer>
-                          <ContactInfo />
-                        </AuthRequiredContainer>
-                      )}
-                    />
-                    <Route
-                      path={this.portalPaths('/earthdata-download')}
-                      render={() => (
-                        <EarthdataDownload />
-                      )}
-                    />
-                    <Route
-                      path={this.portalPaths('/preferences')}
-                      render={() => (
-                        <AuthRequiredContainer>
-                          <Preferences />
-                        </AuthRequiredContainer>
-                      )}
-                    />
-                    <Route
-                      path={this.portalPaths('/earthdata-download-callback')}
-                      render={() => (
-                        <EarthdataDownloadRedirect />
-                      )}
-                    />
-                    <Route
-                      path={this.portalPaths('/subscriptions')}
-                      render={() => (
-                        <AuthRequiredContainer>
-                          <Subscriptions />
-                        </AuthRequiredContainer>
-                      )}
-                    />
-                    <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
-                    <Redirect exact from="/data/status" to="/downloads" />
-                    <Route
-                      path={this.portalPaths('/downloads')}
-                      render={() => (
-                        <AuthRequiredContainer>
-                          <Downloads />
-                        </AuthRequiredContainer>
-                      )}
-                    />
-                    <Route path={this.portalPaths('/projects')} component={Project} />
-                    <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
-                    <Redirect exact from="/" to="/search" />
-                    <Route
-                      path={this.portalPaths('/search')}
-                      render={() => (
-                        <>
-                          <Search />
-                          <EdscMapContainer />
-                        </>
-                      )}
-                    />
-                    <Route
-                      exact
-                      path="/auth_callback"
-                      render={() => (
-                        <AuthCallbackContainer />
-                      )}
-                    />
-                    <Route component={NotFound} />
-                  </Switch>
+                  <Suspense fallback={<></>}>
+                    <Switch>
+                      <Route
+                        path="/admin"
+                        render={() => (
+                          <AuthRequiredContainer>
+                            <Admin />
+                          </AuthRequiredContainer>
+                        )}
+                      />
+                      <Route
+                        path={this.portalPaths('/contact-info')}
+                        render={() => (
+                          <AuthRequiredContainer>
+                            <ContactInfo />
+                          </AuthRequiredContainer>
+                        )}
+                      />
+                      <Route
+                        path={this.portalPaths('/earthdata-download')}
+                        render={() => (
+                          <EarthdataDownload />
+                        )}
+                      />
+                      <Route
+                        path={this.portalPaths('/preferences')}
+                        render={() => (
+                          <AuthRequiredContainer>
+                            <Preferences />
+                          </AuthRequiredContainer>
+                        )}
+                      />
+                      <Route
+                        path={this.portalPaths('/earthdata-download-callback')}
+                        render={() => (
+                          <EarthdataDownloadRedirect />
+                        )}
+                      />
+                      <Route
+                        path={this.portalPaths('/subscriptions')}
+                        render={() => (
+                          <AuthRequiredContainer>
+                            <Subscriptions />
+                          </AuthRequiredContainer>
+                        )}
+                      />
+                      <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
+                      <Redirect exact from="/data/status" to="/downloads" />
+                      <Route
+                        path={this.portalPaths('/downloads')}
+                        render={() => (
+                          <AuthRequiredContainer>
+                            <Downloads />
+                          </AuthRequiredContainer>
+                        )}
+                      />
+                      <Route path={this.portalPaths('/projects')} component={Project} />
+                      <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
+                      <Redirect exact from="/" to="/search" />
+                      <Route
+                        path={this.portalPaths('/search')}
+                        render={() => (
+                          <>
+                            <Search />
+                            <EdscMapContainer />
+                          </>
+                        )}
+                      />
+                      <Route
+                        exact
+                        path="/auth_callback"
+                        render={() => (
+                          <AuthCallbackContainer />
+                        )}
+                      />
+                      <Route component={NotFound} />
+                    </Switch>
+                  </Suspense>
                   <FooterContainer />
-                  <Switch>
-                    <Route path={this.portalPaths('/')}>
-                      <AboutCSDAModalContainer />
-                      <AboutCwicModalContainer />
-                      <EditSubscriptionModalContainer />
-                      <ChunkedOrderModalContainer />
-                      <DeprecatedParameterModalContainer />
-                      <KeyboardShortcutsModalContainer />
-                      <ShapefileDropzoneContainer />
-                      <ShapefileUploadModalContainer />
-                      <TooManyPointsModalContainer />
-                    </Route>
-                    <Route path={this.portalPaths('/projects')}>
-                      <AboutCSDAModalContainer />
-                    </Route>
-                    <Route path={this.portalPaths('/downloads')}>
-                      <AboutCSDAModalContainer />
-                    </Route>
-                  </Switch>
+                  <Suspense fallback={<></>}>
+                    <Switch>
+                      <Route path={this.portalPaths('/')}>
+                        <AboutCSDAModalContainer />
+                        <AboutCwicModalContainer />
+                        <EditSubscriptionModalContainer />
+                        <ChunkedOrderModalContainer />
+                        <DeprecatedParameterModalContainer />
+                        <KeyboardShortcutsModalContainer />
+                        <ShapefileDropzoneContainer />
+                        <ShapefileUploadModalContainer />
+                        <TooManyPointsModalContainer />
+                      </Route>
+                      <Route path={this.portalPaths('/projects')}>
+                        <AboutCSDAModalContainer />
+                      </Route>
+                      <Route path={this.portalPaths('/downloads')}>
+                        <AboutCSDAModalContainer />
+                      </Route>
+                    </Switch>
+                  </Suspense>
                 </UrlQueryContainer>
               </AuthTokenContainer>
             </ConnectedRouter>
