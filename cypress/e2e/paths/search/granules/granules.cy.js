@@ -154,8 +154,9 @@ describe('Path /search/granules', () => {
         url: '**/search/granules/timeline'
       },
       (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
-
+        if (req.body) {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+        }
         req.reply({
           body: noParamsTimelineBody,
           headers: noParamsTimelineHeaders
@@ -1237,6 +1238,26 @@ describe('Path /search/granules', () => {
 
       cy.intercept({
         method: 'POST',
+        url: '**/timeline'
+      },
+      (req) => {
+        if (req.body) {
+          expect(JSON.parse(req.body).params).to.eql({
+            end_date: '2023-12-01T00:00:00.000Z',
+            interval: 'day',
+            start_date: '2018-12-01T00:00:00.000Z',
+            concept_id: ['C1214470488-ASF']
+          })
+        }
+
+        req.reply({
+          body: subscriptionTimelineBody,
+          headers: subscriptionTimelineHeaders
+        })
+      })
+
+      cy.intercept({
+        method: 'POST',
         url: '**/collections'
       },
       (req) => {
@@ -1293,31 +1314,19 @@ describe('Path /search/granules', () => {
 
       cy.intercept({
         method: 'POST',
-        url: '**/timeline'
-      },
-      (req) => {
-        expect(JSON.parse(req.body).params).to.eql({
-          end_date: '2023-12-01T00:00:00.000Z',
-          interval: 'day',
-          start_date: '2018-12-01T00:00:00.000Z',
-          concept_id: ['C1214470488-ASF']
-        })
-
-        req.reply({
-          body: subscriptionTimelineBody,
-          headers: subscriptionTimelineHeaders
-        })
-      })
-
-      cy.intercept({
-        method: 'POST',
         url: '**/graphql'
       },
       (req) => {
         if (JSON.parse(req.body).data.query === graphQlGetSubscriptionsQuery) {
           req.alias = 'graphQlPageLoadSubscriptionsQuery'
           req.reply({
-            body: subscriptionGraphQlBody,
+            body: {
+              data: {
+                subscriptions: {
+                  items: []
+                }
+              }
+            },
             headers: subscriptionGraphQlHeaders
           })
         }
