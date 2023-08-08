@@ -272,7 +272,9 @@ describe('Facets Features Map Imagery component', () => {
     const customizableComp = screen.getByText('Customizable')
     expect(customizableComp).toBeInTheDocument()
     expect(customizableComp.children).toHaveLength(1)
-    await user.hover(customizableComp.children[0])
+    await waitFor(async () => {
+      await user.hover(customizableComp.children[0])
+    })
     const tooltip = screen.getByRole('tooltip')
     expect(tooltip).toBeInTheDocument()
     expect(getByText(tooltip, 'Include only collections that support customization (temporal, spatial, or variable subsetting, reformatting, etc.)')).toBeInTheDocument()
@@ -644,8 +646,6 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByRole('button', { name: /View All/i })).toBeNull()
 
     await user.click(getAllByRole(container, 'button').at(5))
-
-    await waitFor(() => { screen.getByRole('button', { name: /View All/i }) })
 
     expect(screen.getByRole('button', { name: /View All/i })).toBeInTheDocument()
 
