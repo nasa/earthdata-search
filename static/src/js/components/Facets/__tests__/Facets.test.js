@@ -1,14 +1,22 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import {
+  render, screen, getByText, getAllByText, getAllByRole
+} from '@testing-library/react'
+
+import userEvent from '@testing-library/user-event'
+
+import '@testing-library/jest-dom'
+
+import { kebabCase } from 'lodash'
 
 import Facets from '../Facets'
-import FacetsGroup from '../FacetsGroup'
 import * as facetUtils from '../../../util/facets'
 
-Enzyme.configure({ adapter: new Adapter() })
-
 function setup(overrideProps = {}) {
+  const onChangeCmrFacet = jest.fn()
+  const onChangeFeatureFacet = jest.fn()
+  const onTriggerViewAllFacets = jest.fn()
+
   const props = {
     facetsById: {
       Keywords: {
@@ -197,46 +205,104 @@ function setup(overrideProps = {}) {
         }
       }
     },
-    onChangeCmrFacet: jest.fn(),
-    onChangeFeatureFacet: jest.fn(),
-    onTriggerViewAllFacets: jest.fn(),
+    onChangeCmrFacet,
+    onChangeFeatureFacet,
+    onTriggerViewAllFacets,
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<Facets {...props} />)
+  const renderContainer = (props) => render(<Facets {...props} />)
 
   return {
-    enzymeWrapper,
-    props
+    renderContainer,
+    props,
+    onChangeCmrFacet,
+    onChangeFeatureFacet,
+    onTriggerViewAllFacets
   }
 }
 
-describe('Facets component', () => {
-  test('only renders enabled feature FacetsGroup', () => {
-    const { enzymeWrapper } = setup({
+describe('Facets Features Map Imagery component', () => {
+  test('only renders enabled feature FacetsGroup', async () => {
+    const { renderContainer, props } = setup({
       portal: {
         features: {
           featureFacets: {
             showMapImagery: true,
+            availableInEarthdataCloud: false,
             showCustomizable: false
           }
         }
       }
     })
 
-    const featuresGroup = enzymeWrapper.find(FacetsGroup).first()
-    expect(featuresGroup.props().facet.title).toEqual('Features')
-    expect(featuresGroup.props().facet.options).toEqual({ isOpen: true })
-    expect(featuresGroup.props().facet.children.length).toEqual(1)
-    expect(featuresGroup.props().facet.children[0]).toEqual({
-      applied: false,
-      title: 'Map Imagery',
-      type: 'feature'
+    const { container } = renderContainer(props)
+
+    const user = userEvent.setup()
+
+    const featuresContainer = getAllByText(container, 'Features')
+    expect(featuresContainer).toHaveLength(1)
+    expect(featuresContainer.at(0)).toBeInTheDocument()
+    expect(getByText(container, 'Map Imagery')).toBeInTheDocument()
+    await user.click(screen.getAllByRole('checkbox', { checked: false }).at(0))
+    expect(screen.getAllByRole('checkbox', { checked: true })).toHaveLength(1)
+  })
+
+  test('only renders enabled feature FacetsGroup', async () => {
+    const { renderContainer, props } = setup({
+      portal: {
+        features: {
+          featureFacets: {
+            showMapImagery: true,
+            availableInEarthdataCloud: false,
+            showCustomizable: true
+          }
+        }
+      }
     })
+
+    const { container } = renderContainer(props)
+
+    const user = userEvent.setup()
+
+    const featuresContainer = getAllByText(container, 'Features')
+    expect(featuresContainer).toHaveLength(1)
+    expect(featuresContainer.at(0)).toBeInTheDocument()
+    expect(screen.getByText('Map Imagery')).toBeInTheDocument()
+    const customizableComp = screen.getByText('Customizable')
+    expect(customizableComp).toBeInTheDocument()
+    expect(customizableComp.children).toHaveLength(1)
+    await user.hover(customizableComp.children[0])
+    const tooltip = screen.getByRole('tooltip')
+    expect(tooltip).toBeInTheDocument()
+    expect(getByText(tooltip, 'Include only collections that support customization (temporal, spatial, or variable subsetting, reformatting, etc.)')).toBeInTheDocument()
+  })
+
+  test('checkboxes get checked correctly in the feature FacetsGroup', async () => {
+    const { renderContainer, props } = setup({
+      portal: {
+        features: {
+          featureFacets: {
+            showMapImagery: true,
+            availableInEarthdataCloud: false,
+            showCustomizable: true
+          }
+        }
+      }
+    })
+
+    renderContainer(props)
+
+    const user = userEvent.setup()
+
+    expect(screen.getAllByRole('checkbox', { checked: false })).toHaveLength(2)
+    await user.click(screen.getAllByRole('checkbox', { checked: false }).at(0))
+    expect(screen.getAllByRole('checkbox', { checked: true })).toHaveLength(1)
+    expect(screen.getAllByRole('checkbox', { checked: false })).toHaveLength(1)
   })
 
   test('does not render features FacetsGroup if all feature facets are disabled', () => {
-    const { enzymeWrapper } = setup({
+    const { renderContainer, props } = setup({
       portal: {
         features: {
           featureFacets: {
@@ -247,230 +313,292 @@ describe('Facets component', () => {
       }
     })
 
-    const facetsGroups = enzymeWrapper.find(FacetsGroup)
-
-    expect(facetsGroups.first().props().facetCategory).not.toEqual('features')
+    renderContainer(props)
+    const featuresGroup = screen.queryByText('Features')
+    expect(featuresGroup).toBeNull()
   })
 
-  test('renders keywords FacetsGroup', () => {
-    const { enzymeWrapper } = setup()
+  test('renders keywords FacetsGroup and checks the opening and closing of the dropdown', async () => {
+    const { renderContainer, props } = setup()
 
-    const facetsGroup = enzymeWrapper.find(FacetsGroup).at(1)
+    const { container } = renderContainer(props)
 
-    expect(facetsGroup.props().facet.applied).toEqual(false)
-    expect(facetsGroup.props().facet.autocompleteType).toEqual('science_keywords')
-    expect(facetsGroup.props().facet.hasChildren).toEqual(true)
-    expect(facetsGroup.props().facet.options).toEqual({ liftSelectedFacets: true })
-    expect(facetsGroup.props().facet.title).toEqual('Keywords')
-    expect(facetsGroup.props().facet.totalSelected).toEqual(0)
-    expect(facetsGroup.props().facet.children).toEqual([{
-      applied: false,
-      count: 1,
-      has_children: false,
-      links: { apply: 'http://example.com/apply_keyword_link' },
-      title: 'Mock Keyword Facet',
-      type: 'filter'
-    }])
+    const testIndex = 0
+
+    const facetGroupText = Object.keys(props.facetsById)[testIndex]
+
+    const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
+
+    expect(facetGroup).toBeInTheDocument()
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
+
+    const user = userEvent.setup()
+    // clicking on the dropdown to show the different facet items
+    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+    await user.click(facetButton)
+    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    const childTitle = props.facetsById[facetGroupText].children[0].title
+    expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
+    expect(getAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(1)
+
+    // clicking again and making sure the facet items go away
+    await user.click(facetButton)
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
+    expect(screen.queryAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(0)
   })
 
-  test('renders platforms FacetsGroup', () => {
-    const { enzymeWrapper } = setup()
+  test('renders platforms FacetsGroup', async () => {
+    const { renderContainer, props } = setup()
 
-    const facetsGroup = enzymeWrapper.find(FacetsGroup).at(2)
+    const { container } = renderContainer(props)
 
-    expect(facetsGroup.props().facet.applied).toEqual(false)
-    expect(facetsGroup.props().facet.autocompleteType).toEqual('platform')
-    expect(facetsGroup.props().facet.hasChildren).toEqual(true)
-    expect(facetsGroup.props().facet.title).toEqual('Platforms')
-    expect(facetsGroup.props().facet.totalSelected).toEqual(0)
-    expect(facetsGroup.props().facet.children).toEqual([{
-      applied: false,
-      count: 1,
-      has_children: false,
-      links: { apply: 'http://example.com/apply_platform_link' },
-      title: 'Mock Platform Facet',
-      type: 'filter'
-    }])
+    const testIndex = 1
+
+    const facetGroupText = Object.keys(props.facetsById)[testIndex]
+
+    const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
+
+    expect(facetGroup).toBeInTheDocument()
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
+
+    const user = userEvent.setup()
+    // clicking on the dropdown to show the different facet items
+    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+    await user.click(facetButton)
+    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    const childTitle = props.facetsById[facetGroupText].children[0].title
+    expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
+    expect(getAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(1)
+
+    // clicking again and making sure the facet items go away
+    await user.click(facetButton)
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
+    expect(screen.queryAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(0)
   })
 
-  test('renders instruments FacetsGroup', () => {
-    const { enzymeWrapper } = setup()
+  test('renders instruments FacetsGroup', async () => {
+    const { renderContainer, props } = setup()
 
-    const facetsGroup = enzymeWrapper.find(FacetsGroup).at(3)
+    const { container } = renderContainer(props)
 
-    expect(facetsGroup.props().facet.applied).toEqual(false)
-    expect(facetsGroup.props().facet.autocompleteType).toEqual('instrument')
-    expect(facetsGroup.props().facet.hasChildren).toEqual(true)
-    expect(facetsGroup.props().facet.title).toEqual('Instruments')
-    expect(facetsGroup.props().facet.totalSelected).toEqual(0)
-    expect(facetsGroup.props().facet.children).toEqual([{
-      applied: false,
-      count: 1,
-      has_children: false,
-      links: { apply: 'http://example.com/apply_instrument_link' },
-      title: 'Mock Instrument Facet',
-      type: 'filter'
-    }])
+    const testIndex = 2
+
+    const facetGroupText = Object.keys(props.facetsById)[testIndex]
+
+    const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
+
+    expect(facetGroup).toBeInTheDocument()
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
+
+    const user = userEvent.setup()
+    // clicking on the dropdown to show the different facet items
+    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+    await user.click(facetButton)
+    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    const childTitle = props.facetsById[facetGroupText].children[0].title
+    expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
+    expect(getAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(1)
+
+    // clicking again and making sure the facet items go away
+    await user.click(facetButton)
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
+    expect(screen.queryAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(0)
   })
 
-  test('renders organizations FacetsGroup', () => {
-    const { enzymeWrapper } = setup()
+  test('renders organizations FacetsGroup', async () => {
+    const { renderContainer, props } = setup()
 
-    const facetsGroup = enzymeWrapper.find(FacetsGroup).at(4)
+    const { container } = renderContainer(props)
 
-    expect(facetsGroup.props().facet.applied).toEqual(false)
-    expect(facetsGroup.props().facet.autocompleteType).toEqual('organization')
-    expect(facetsGroup.props().facet.hasChildren).toEqual(true)
-    expect(facetsGroup.props().facet.title).toEqual('Organizations')
-    expect(facetsGroup.props().facet.totalSelected).toEqual(0)
-    expect(facetsGroup.props().facet.children).toEqual([{
-      applied: false,
-      count: 1,
-      has_children: false,
-      links: { apply: 'http://example.com/apply_organization_link' },
-      title: 'Mock Organization Facet',
-      type: 'filter'
-    }])
+    const testIndex = 3
+
+    const facetGroupText = Object.keys(props.facetsById)[testIndex]
+
+    const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
+
+    expect(facetGroup).toBeInTheDocument()
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
+
+    const user = userEvent.setup()
+    // clicking on the dropdown to show the different facet items
+    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+    await user.click(facetButton)
+    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    const childTitle = props.facetsById[facetGroupText].children[0].title
+    expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
+    expect(getAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(1)
+
+    // clicking again and making sure the facet items go away
+    await user.click(facetButton)
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
+    expect(screen.queryAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(0)
   })
 
-  test('renders projects FacetsGroup', () => {
-    const { enzymeWrapper } = setup()
+  test('renders projects FacetsGroup', async () => {
+    const { renderContainer, props } = setup()
 
-    const facetsGroup = enzymeWrapper.find(FacetsGroup).at(5)
+    const { container } = renderContainer(props)
 
-    expect(facetsGroup.props().facet.applied).toEqual(false)
-    expect(facetsGroup.props().facet.autocompleteType).toEqual('project')
-    expect(facetsGroup.props().facet.hasChildren).toEqual(true)
-    expect(facetsGroup.props().facet.title).toEqual('Projects')
-    expect(facetsGroup.props().facet.totalSelected).toEqual(0)
-    expect(facetsGroup.props().facet.children).toEqual([{
-      applied: false,
-      count: 1,
-      has_children: false,
-      links: { apply: 'http://example.com/apply_project_link' },
-      title: 'Mock Project Facet',
-      type: 'filter'
-    }])
+    const testIndex = 4
+
+    const facetGroupText = Object.keys(props.facetsById)[testIndex]
+
+    const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
+
+    expect(facetGroup).toBeInTheDocument()
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
+
+    const user = userEvent.setup()
+    // clicking on the dropdown to show the different facet items
+    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+    await user.click(facetButton)
+    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    // clicking again and making sure the facet items go away
+    await user.click(facetButton)
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
 
-  test('renders processing levels FacetsGroup', () => {
-    const { enzymeWrapper } = setup()
+  test('renders processing levels FacetsGroup', async () => {
+    const { renderContainer, props } = setup()
 
-    const facetsGroup = enzymeWrapper.find(FacetsGroup).at(6)
+    const { container } = renderContainer(props)
 
-    expect(facetsGroup.props().facet.applied).toEqual(false)
-    expect(facetsGroup.props().facet.autocompleteType).toEqual('processing_level_id')
-    expect(facetsGroup.props().facet.hasChildren).toEqual(true)
-    expect(facetsGroup.props().facet.title).toEqual('Processing Levels')
-    expect(facetsGroup.props().facet.totalSelected).toEqual(0)
-    expect(facetsGroup.props().facet.children).toEqual([{
-      applied: false,
-      count: 1,
-      has_children: false,
-      links: { apply: 'http://example.com/apply_processing_level_link' },
-      title: 'Mock Processing Level Facet',
-      type: 'filter'
-    }])
+    const testIndex = 5
+
+    const facetGroupText = Object.keys(props.facetsById)[testIndex]
+
+    const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
+
+    expect(facetGroup).toBeInTheDocument()
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
+
+    const user = userEvent.setup()
+    // clicking on the dropdown to show the different facet items
+    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+    await user.click(facetButton)
+    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    // clicking again and making sure the facet items go away
+    await user.click(facetButton)
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
 
-  test('renders data format FacetsGroup', () => {
-    const { enzymeWrapper } = setup()
+  test('renders data format FacetsGroup', async () => {
+    const { renderContainer, props } = setup()
 
-    const facetsGroup = enzymeWrapper.find(FacetsGroup).at(7)
+    const { container } = renderContainer(props)
 
-    expect(facetsGroup.props().facet.applied).toEqual(false)
-    expect(facetsGroup.props().facet.autocompleteType).toEqual('granule_data_format')
-    expect(facetsGroup.props().facet.hasChildren).toEqual(true)
-    expect(facetsGroup.props().facet.title).toEqual('Data Format')
-    expect(facetsGroup.props().facet.totalSelected).toEqual(0)
-    expect(facetsGroup.props().facet.children).toEqual([{
-      applied: false,
-      count: 1,
-      has_children: false,
-      links: { apply: 'http://example.com/apply_data_format_link' },
-      title: 'Mock Data Format Facet',
-      type: 'filter'
-    }])
+    const testIndex = 6
+
+    const facetGroupText = Object.keys(props.facetsById)[testIndex]
+
+    const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
+
+    expect(facetGroup).toBeInTheDocument()
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
+
+    const user = userEvent.setup()
+    // clicking on the dropdown to show the different facet items
+    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+    await user.click(facetButton)
+    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    // clicking again and making sure the facet items go away
+    await user.click(facetButton)
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
 
-  test('renders tiling system FacetsGroup', () => {
-    const { enzymeWrapper } = setup()
+  test('renders tiling system FacetsGroup', async () => {
+    const { renderContainer, props } = setup()
 
-    const facetsGroup = enzymeWrapper.find(FacetsGroup).at(8)
+    const { container } = renderContainer(props)
 
-    expect(facetsGroup.props().facet.applied).toEqual(false)
-    expect(facetsGroup.props().facet.autocompleteType).toEqual('two_d_coordinate_system_name')
-    expect(facetsGroup.props().facet.hasChildren).toEqual(true)
-    expect(facetsGroup.props().facet.title).toEqual('Tiling System')
-    expect(facetsGroup.props().facet.totalSelected).toEqual(0)
-    expect(facetsGroup.props().facet.children).toEqual([{
-      applied: false,
-      count: 1,
-      has_children: false,
-      links: { apply: 'http://example.com/apply_tiling_system_link' },
-      title: 'Mock Tiling System Facet',
-      type: 'filter'
-    }])
+    const testIndex = 7
+
+    const facetGroupText = Object.keys(props.facetsById)[testIndex]
+
+    const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
+
+    expect(facetGroup).toBeInTheDocument()
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
+
+    const user = userEvent.setup()
+    // clicking on the dropdown to show the different facet items
+    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+    await user.click(facetButton)
+    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    // clicking again and making sure the facet items go away
+    await user.click(facetButton)
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
 
-  test('renders horizontal data resolution FacetsGroup', () => {
-    const { enzymeWrapper } = setup()
+  test('renders horizontal data resolution FacetsGroup', async () => {
+    const { renderContainer, props } = setup()
 
-    const facetsGroup = enzymeWrapper.find(FacetsGroup).at(9)
+    const { container } = renderContainer(props)
 
-    expect(facetsGroup.props().facet.applied).toEqual(false)
-    expect(facetsGroup.props().facet.autocompleteType).toEqual('horizontal_data_resolution')
-    expect(facetsGroup.props().facet.hasChildren).toEqual(true)
-    expect(facetsGroup.props().facet.title).toEqual('Horizontal Data Resolution')
-    expect(facetsGroup.props().facet.totalSelected).toEqual(0)
-    expect(facetsGroup.props().facet.children).toEqual([{
-      applied: false,
-      count: 1,
-      has_children: false,
-      links: { apply: 'http://example.com/apply_horizontal_data_resolution_link' },
-      title: 'Mock Horizontal Data Resolution Facet',
-      type: 'filter'
-    }])
+    const testIndex = 8
+
+    const facetGroupText = Object.keys(props.facetsById)[testIndex]
+
+    const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
+
+    expect(facetGroup).toBeInTheDocument()
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
+
+    const user = userEvent.setup()
+    // clicking on the dropdown to show the different facet items
+    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+    await user.click(facetButton)
+    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    // clicking again and making sure the facet items go away
+    await user.click(facetButton)
+    expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
 
-  test('featureFacetHandler calls changeFeatureFacet', () => {
+  test('featureFacetHandler calls changeFeatureFacet', async () => {
     const mock = jest.spyOn(facetUtils, 'changeFeatureFacet').mockImplementationOnce(() => jest.fn())
 
-    const { enzymeWrapper, props } = setup()
+    const { renderContainer, props, onChangeFeatureFacet } = setup()
 
-    const facetsGroup = enzymeWrapper.find(FacetsGroup).at(0)
+    renderContainer(props)
 
-    facetsGroup.props().facet.changeHandler(
-      {},
-      {
-        destination: null,
-        title: 'Near Real Time'
-      }
-    )
+    const user = userEvent.setup()
+
+    const facetGroup = screen.getByRole('checkbox', { name: 'Customizable' })
+
+    await user.click(facetGroup)
 
     expect(mock).toBeCalledWith(
-      {},
+      expect.anything(),
       {
         destination: null,
-        title: 'Near Real Time'
+        title: 'Customizable'
       },
-      props.onChangeFeatureFacet
+      onChangeFeatureFacet
     )
   })
 
-  test('cmrFacetHandler calls changeCmrFacet', () => {
+  test('cmrFacetHandler calls changeCmrFacet', async () => {
     const mock = jest.spyOn(facetUtils, 'changeCmrFacet').mockImplementationOnce(() => jest.fn())
 
-    const { enzymeWrapper, props } = setup()
+    const { renderContainer, props, onChangeCmrFacet } = setup()
 
-    const facetsGroup = enzymeWrapper.find(FacetsGroup).at(1)
+    const { container } = renderContainer(props)
 
-    facetsGroup.props().facet.changeHandler(
-      {},
+    const user = userEvent.setup()
+
+    await user.click(getAllByRole(container, 'button').at(1))
+
+    const facetGroup = screen.getByRole('checkbox', { name: 'Mock Keyword Facet' })
+
+    await user.click(facetGroup)
+
+    expect(mock).toBeCalledWith(
+      expect.anything(),
       {
         destination: 'http://example.com/apply_keyword_link',
         title: 'Mock Keyword Facet'
       },
+      onChangeCmrFacet,
       {
         level: 0,
         type: 'science_keywords',
@@ -478,20 +606,51 @@ describe('Facets component', () => {
       },
       true
     )
+  })
 
-    expect(mock).toBeCalledWith(
-      {},
-      {
-        destination: 'http://example.com/apply_keyword_link',
-        title: 'Mock Keyword Facet'
-      },
-      props.onChangeCmrFacet,
-      {
-        level: 0,
-        type: 'science_keywords',
-        value: 'Mock Keyword Facet'
-      },
-      true
+  test('onTriggerViewAllFacets calls triggerViewAllFacets', async () => {
+    const children = []
+
+    for (let count = 1; count <= 50; count += 1) {
+      children.push({
+        applied: false,
+        count,
+        has_children: false,
+        links: {
+          apply: `http://example.com/apply_project_link_${count}`
+        },
+        title: `Mock Project ${count}`,
+        type: 'filter'
+      })
+    }
+
+    const { renderContainer, props, onTriggerViewAllFacets } = setup({
+      facetsById: {
+        Projects: {
+          applied: false,
+          children,
+          hasChildren: true,
+          title: 'Projects',
+          totalSelected: 0,
+          type: 'filter'
+        }
+      }
+    })
+
+    const { container } = renderContainer(props)
+
+    const user = userEvent.setup()
+
+    expect(screen.queryByRole('button', { name: /View All/i })).toBeNull()
+
+    await user.click(getAllByRole(container, 'button').at(5))
+
+    expect(screen.getByRole('button', { name: /View All/i })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /View All/i }))
+
+    expect(onTriggerViewAllFacets).toBeCalledWith(
+      'Projects'
     )
   })
 })
