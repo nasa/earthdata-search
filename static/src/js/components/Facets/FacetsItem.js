@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 import { kebabCase, uniqueId } from 'lodash'
 import classNames from 'classnames'
 
+import { Tooltip, OverlayTrigger } from 'react-bootstrap'
+import { FaQuestionCircle } from 'react-icons/fa'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
 import { generateFacetArgs } from '../../util/facets'
 
 import './FacetsItem.scss'
@@ -93,10 +97,26 @@ class FacetsItem extends Component {
             className="facets-item__checkbox"
             data-testid={`facet_item-${kebabCase(facet.title)}`}
             type="checkbox"
+            name={facet.title}
             checked={applied}
             onChange={this.onFacetChange.bind(this, changeHandlerArgs)}
           />
-          <span className="facets-item__title">{facet.title}</span>
+          <span className="facets-item__title">
+            {facet.title}
+            {facet.description
+            && (
+            <OverlayTrigger
+              placement="top"
+              overlay={(
+                <Tooltip style={{ width: '20rem' }}>
+                  {facet.description}
+                </Tooltip>
+              )}
+            >
+              <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
+            </OverlayTrigger>
+            )}
+          </span>
           { (!applied || !children) && <span className="facets-item__total">{facet.count}</span> }
         </label>
         { children && <ul className="facets-list">{children}</ul> }
@@ -117,7 +137,8 @@ FacetsItem.propTypes = {
     applied: PropTypes.bool,
     children: PropTypes.arrayOf(PropTypes.shape({})),
     count: PropTypes.number,
-    title: PropTypes.string
+    title: PropTypes.string,
+    description: PropTypes.string
   }).isRequired,
   facetCategory: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
