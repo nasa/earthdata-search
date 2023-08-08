@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  render, screen, getByText, getAllByText, getAllByRole
+  render, screen, waitFor, getByText, getAllByText, getAllByRole
 } from '@testing-library/react'
 
 import userEvent from '@testing-library/user-event'
@@ -644,6 +644,8 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByRole('button', { name: /View All/i })).toBeNull()
 
     await user.click(getAllByRole(container, 'button').at(5))
+
+    await waitFor(() => { screen.getByRole('button', { name: /View All/i }) })
 
     expect(screen.getByRole('button', { name: /View All/i })).toBeInTheDocument()
 
