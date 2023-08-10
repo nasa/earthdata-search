@@ -223,6 +223,7 @@ describe('buildAccessMethods', () => {
     expect(methods).toEqual({
       harmony0: {
         enableTemporalSubsetting: true,
+        enableSpatialSubsetting: true,
         hierarchyMappings: [
           {
             id: 'V100000-EDSC'

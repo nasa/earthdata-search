@@ -39,10 +39,18 @@ export class AccessMethod extends Component {
     const {
       accessMethods,
       selectedAccessMethod,
-      temporal
+      temporal,
+      spatial
     } = props
 
     const { isRecurring } = temporal
+    const {
+      boundingBox,
+      circle,
+      line,
+      point,
+      polygon
+    } = spatial
 
     const selectedMethod = accessMethods[selectedAccessMethod]
 
@@ -51,14 +59,23 @@ export class AccessMethod extends Component {
       enableTemporalSubsetting = !isRecurring
     } = selectedMethod || {}
 
+    const {
+      enableSpatialSubsetting = !(
+        boundingBox === undefined && circle === undefined
+        && line === undefined && point === undefined && polygon === undefined
+      )
+    } = selectedMethod || {}
+
     this.state = {
-      enableTemporalSubsetting
+      enableTemporalSubsetting,
+      enableSpatialSubsetting
     }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
     this.handleOutputFormatSelection = this.handleOutputFormatSelection.bind(this)
     this.handleOutputProjectionSelection = this.handleOutputProjectionSelection.bind(this)
     this.handleToggleTemporalSubsetting = this.handleToggleTemporalSubsetting.bind(this)
+    this.handleToggleSpatialSubsetting = this.handleToggleSpatialSubsetting.bind(this)
   }
 
   UNSAFE_componentWillReceiveProps() {
@@ -138,9 +155,29 @@ export class AccessMethod extends Component {
     })
   }
 
+  handleToggleSpatialSubsetting(event) {
+    const { metadata, onUpdateAccessMethod, selectedAccessMethod } = this.props
+    const { conceptId: collectionId } = metadata
+
+    const { target } = event
+    const { checked } = target
+
+    this.setState({ enableSpatialSubsetting: checked })
+
+    onUpdateAccessMethod({
+      collectionId,
+      method: {
+        [selectedAccessMethod]: {
+          enableSpatialSubsetting: checked
+        }
+      }
+    })
+  }
+
   render() {
     const {
-      enableTemporalSubsetting
+      enableTemporalSubsetting,
+      enableSpatialSubsetting
     } = this.state
 
     const {
@@ -263,6 +300,8 @@ export class AccessMethod extends Component {
       supportedOutputFormats = [],
       supportedOutputProjections = [],
       supportsTemporalSubsetting = false,
+      supportsShapefileSubsetting = false,
+      supportsBoundingBoxSubsetting = false,
       supportsVariableSubsetting = false
     } = selectedMethod || {}
 
@@ -314,6 +353,8 @@ export class AccessMethod extends Component {
 
     const isCustomizationAvailable = supportsVariableSubsetting
       || supportsTemporalSubsetting
+      || supportsShapefileSubsetting
+      || supportsBoundingBoxSubsetting
       || supportedOutputFormatOptions.length > 0
       || supportedOutputProjectionOptions.length > 0
       || (form && isActive)
@@ -323,6 +364,14 @@ export class AccessMethod extends Component {
       endDate = '',
       isRecurring = false
     } = temporal
+
+    const {
+      boundingBox,
+      circle,
+      line,
+      point,
+      polygon
+    } = spatial
 
     const temporalDateFormat = getTemporalDateFormat(isRecurring)
     const format = 'YYYY-MM-DDTHH:m:s.SSSZ'
@@ -361,6 +410,22 @@ export class AccessMethod extends Component {
     if (endDate && !startDate) {
       selectedTemporalDisplay = `Up to ${endDateDisplay}`
     }
+
+    let selectedSpatialDisplay
+
+    if (boundingBox) {
+      selectedSpatialDisplay = JSON.stringify(boundingBox)
+    } else if (circle) {
+      selectedSpatialDisplay = JSON.stringify(circle)
+    } else if (point) {
+      selectedSpatialDisplay = JSON.stringify(point)
+    } else if (line) {
+      selectedSpatialDisplay = JSON.stringify(line)
+    } else if (polygon) {
+      selectedSpatialDisplay = `${(polygon[0].split(',').length / 2) - 1} points`
+    }
+
+    console.log(`selectedSpatialDisplay: ${selectedSpatialDisplay}`)
 
     return (
       <div className="access-method">
@@ -459,6 +524,52 @@ export class AccessMethod extends Component {
                           <p className="access-method__section-status mb-0">
                             { /* eslint-disable-next-line max-len */}
                             No temporal range selected. Make a temporal selection to enable temporal subsetting.
+                          </p>
+                        )
+                      }
+                    </ProjectPanelSection>
+                  )
+                }
+                {
+                  (supportsShapefileSubsetting || supportsBoundingBoxSubsetting) && (
+                    <ProjectPanelSection
+                      customHeadingTag="h4"
+                      heading="Spatial Subsetting"
+                      intro="When enabled, spatial subsetting will trim the data to the selected area range."
+                      nested
+                    >
+                      {
+                        selectedSpatialDisplay
+                        && (
+                          <Form.Group controlId="input__spatial-subsetting" className="mb-0">
+                            <Form.Check
+                              id="input__spatial-subsetting"
+                              type="checkbox"
+                              label={(
+                                <span className={`mb-1 d-block ${(!(enableSpatialSubsetting) && 'text-muted')}`}>
+                                  Trim output granules to the selected spatial constraint
+                                </span>
+                              )}
+                              checked={enableSpatialSubsetting}
+                              onChange={this.handleToggleSpatialSubsetting}
+                            />
+                            {
+                              enableSpatialSubsetting && (
+                                <p className="access-method__section-status mt-2 mb-0">
+                                  Selected Area:
+                                  <br />
+                                  {selectedSpatialDisplay}
+                                </p>
+                              )
+                            }
+                          </Form.Group>
+                        )
+                      }
+                      {
+                        !selectedSpatialDisplay && (
+                          <p className="access-method__section-status mb-0">
+                            { /* eslint-disable-next-line max-len */}
+                            No spatial area selected. Make a spatial selection to enable spatial subsetting.
                           </p>
                         )
                       }
@@ -589,7 +700,13 @@ AccessMethod.propTypes = {
   onUpdateAccessMethod: PropTypes.func.isRequired,
   selectedAccessMethod: PropTypes.string,
   shapefileId: PropTypes.string,
-  spatial: PropTypes.shape({}),
+  spatial: PropTypes.shape({
+    boundingBox: PropTypes.arrayOf(PropTypes.string),
+    circle: PropTypes.arrayOf(PropTypes.string),
+    line: PropTypes.arrayOf(PropTypes.string),
+    point: PropTypes.arrayOf(PropTypes.string),
+    polygon: PropTypes.arrayOf(PropTypes.string)
+  }),
   temporal: PropTypes.shape({
     endDate: PropTypes.string,
     isRecurring: PropTypes.bool,
