@@ -150,6 +150,12 @@ const submitRetrieval = async (event, context) => {
           // Avoid having to deal with paging again, pull out the page
           // number from the order payload
           const { page_num: pageNum } = orderPayload
+          // Some CMR access-control calls downstream can take quite a long time
+          // if you give it too many granules at once, so lets delay each
+          // sqs entry by ORDER_DELAY_SECONDS value for each page. i.e. page 1
+          // will not wait, page 2 will wait ORDER_DELAY_SECONDS, page 3 will wait
+          // ORDER_DELAY_SECONDS times 2, etc.
+          const delay = (pageNum - 1) * parseInt(process.env.orderDelaySeconds, 10)
 
           try {
             const newOrderRecord = await retrievalDbTransaction('retrieval_orders')
@@ -168,8 +174,8 @@ const submitRetrieval = async (event, context) => {
                 id: newOrderRecord[0].id
               }),
               // Wait a few seconds before picking up the SQS job to ensure the database transaction
-              // has been committed
-              DelaySeconds: 3
+              // has been committed. Here we add the ORDER_DELAY_SECONDS as well.
+              DelaySeconds: 3 + delay
             })
           } catch (e) {
             parseError(e)

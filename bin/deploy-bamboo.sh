@@ -88,6 +88,7 @@ dockerRun() {
         -e "NODE_OPTIONS=--max_old_space_size=4096" \
         -e "OBFUSCATION_SPIN_SHAPEFILES=$bamboo_OBFUSCATION_SPIN_SHAPEFILES" \
         -e "OBFUSCATION_SPIN=$bamboo_OBFUSCATION_SPIN" \
+        -e "ORDER_DELAY_SECONDS=$bamboo_ORDER_DELAY_SECONDS" \
         -e "SUBNET_ID_A=$bamboo_SUBNET_ID_A" \
         -e "SUBNET_ID_B=$bamboo_SUBNET_ID_B" \
         -e "VPC_ID=$bamboo_VPC_ID" \
