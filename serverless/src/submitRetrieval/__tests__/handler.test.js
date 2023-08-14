@@ -43,6 +43,7 @@ beforeEach(() => {
   // Manage resetting ENV variables
   // TODO: This is causing problems with mocking knex but is noted as important for managing process.env
   // jest.resetModules()
+  process.env.orderDelaySeconds = 30
   process.env = { ...OLD_ENV }
   delete process.env.NODE_ENV
 })
@@ -140,6 +141,14 @@ describe('submitRetrieval', () => {
         query.response([{
           id: 5
         }])
+      } else if (step === 7) {
+        query.response([{
+          id: 5
+        }])
+      } else if (step === 8) {
+        query.response([{
+          id: 5
+        }])
       } else {
         query.response([])
       }
@@ -149,12 +158,17 @@ describe('submitRetrieval', () => {
       .mockImplementationOnce(() => [{
         page_num: 1,
         page_size: 2000
+      },{
+        page_num: 2,
+        page_size: 2000
+      },{
+        page_num: 3,
+        page_size: 2000
       }])
 
     const orderResponse = await submitRetrieval(echoOrderPayload, {})
 
     const { queries } = dbTracker.queries
-
     expect(queries[0].sql).toContain('BEGIN')
     expect(queries[1].method).toEqual('insert')
     expect(queries[2].method).toEqual('insert')
@@ -168,12 +182,28 @@ describe('submitRetrieval', () => {
     // add new access configuration
     expect(queries[4].method).toEqual('insert')
     expect(queries[5].method).toEqual('insert')
-    expect(queries[6].sql).toContain('COMMIT')
+    expect(queries[6].method).toEqual('insert')
+    expect(queries[7].method).toEqual('insert')
+    expect(queries[8].sql).toContain('COMMIT')
     expect(mockSend.mock.calls[0]).toEqual([{
       QueueUrl: 'http://example.com/echoQueue',
       Entries: [{
         DelaySeconds: 3,
         Id: '2-1',
+        MessageBody: JSON.stringify({
+          accessToken: '2e8e995e7511c2c6620336797b',
+          id: 5
+        })
+      },{
+        DelaySeconds: 33,
+        Id: '2-2',
+        MessageBody: JSON.stringify({
+          accessToken: '2e8e995e7511c2c6620336797b',
+          id: 5
+        })
+      },{
+        DelaySeconds: 63,
+        Id: '2-3',
         MessageBody: JSON.stringify({
           accessToken: '2e8e995e7511c2c6620336797b',
           id: 5
