@@ -158,10 +158,10 @@ describe('submitRetrieval', () => {
       .mockImplementationOnce(() => [{
         page_num: 1,
         page_size: 2000
-      },{
+      }, {
         page_num: 2,
         page_size: 2000
-      },{
+      }, {
         page_num: 3,
         page_size: 2000
       }])
@@ -194,14 +194,14 @@ describe('submitRetrieval', () => {
           accessToken: '2e8e995e7511c2c6620336797b',
           id: 5
         })
-      },{
+      }, {
         DelaySeconds: 33,
         Id: '2-2',
         MessageBody: JSON.stringify({
           accessToken: '2e8e995e7511c2c6620336797b',
           id: 5
         })
-      },{
+      }, {
         DelaySeconds: 63,
         Id: '2-3',
         MessageBody: JSON.stringify({
