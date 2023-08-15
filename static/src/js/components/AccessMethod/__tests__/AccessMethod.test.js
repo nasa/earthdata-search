@@ -918,6 +918,25 @@ describe('AccessMethod component', () => {
               }
             })
             expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
+            expect(enzymeWrapper.find('.access-method__section-status[data-testId="no-area-selected"]').exists()).toEqual(false)
+          })
+          test('no area selected shows up when not passing in a spatial value', () => {
+            const { enzymeWrapper } = setup({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsBoundingBoxSubsetting: true,
+                  enableSpatialSubsetting: false
+                }
+              },
+              metadata: {
+                conceptId: 'collectionId'
+              },
+              selectedAccessMethod: 'harmony0',
+              spatial: {}
+            })
+            expect(enzymeWrapper.find('.access-method__section-status[data-testId="no-area-selected"]').props().children).toEqual('No spatial area selected. Make a spatial selection to enable spatial subsetting.')
           })
           test('sets the checkbox unchecked for circle', () => {
             const { enzymeWrapper } = setup({

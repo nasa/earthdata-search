@@ -4,6 +4,7 @@ import { Alert, Form } from 'react-bootstrap'
 import moment from 'moment'
 
 import { pluralize } from '../../util/pluralize'
+import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
 
 import Button from '../Button/Button'
@@ -365,14 +366,6 @@ export class AccessMethod extends Component {
       isRecurring = false
     } = temporal
 
-    const {
-      boundingBox,
-      circle,
-      line,
-      point,
-      polygon
-    } = spatial
-
     const temporalDateFormat = getTemporalDateFormat(isRecurring)
     const format = 'YYYY-MM-DDTHH:m:s.SSSZ'
 
@@ -411,21 +404,7 @@ export class AccessMethod extends Component {
       selectedTemporalDisplay = `Up to ${endDateDisplay}`
     }
 
-    let selectedSpatialDisplay
-
-    if (boundingBox) {
-      selectedSpatialDisplay = JSON.stringify(boundingBox)
-    } else if (circle) {
-      selectedSpatialDisplay = JSON.stringify(circle)
-    } else if (point) {
-      selectedSpatialDisplay = JSON.stringify(point)
-    } else if (line) {
-      selectedSpatialDisplay = JSON.stringify(line)
-    } else if (polygon) {
-      selectedSpatialDisplay = `${(polygon[0].split(',').length / 2) - 1} points`
-    }
-
-    console.log(`selectedSpatialDisplay: ${selectedSpatialDisplay}`)
+    const selectedSpatialDisplay = createSpatialDisplay(spatial)
 
     return (
       <div className="access-method">
@@ -567,7 +546,7 @@ export class AccessMethod extends Component {
                       }
                       {
                         !selectedSpatialDisplay && (
-                          <p className="access-method__section-status mb-0">
+                          <p className="access-method__section-status mb-0" data-testId="no-area-selected">
                             { /* eslint-disable-next-line max-len */}
                             No spatial area selected. Make a spatial selection to enable spatial subsetting.
                           </p>

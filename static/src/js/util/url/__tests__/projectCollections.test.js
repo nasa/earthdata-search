@@ -430,7 +430,8 @@ describe('url#encodeUrlQuery', () => {
             collectionId1: {
               accessMethods: {
                 harmony: {
-                  enableTemporalSubsetting: false
+                  enableTemporalSubsetting: false,
+                  enableSpatialSubsetting: false
                 }
               },
               selectedAccessMethod: 'harmony'
@@ -441,6 +442,6 @@ describe('url#encodeUrlQuery', () => {
       }
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][ets]=f&pg[2][v]=f')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][ets]=f&pg[1][ess]=f&pg[2][v]=f')
   })
 })

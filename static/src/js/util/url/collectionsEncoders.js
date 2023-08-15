@@ -99,6 +99,24 @@ const encodeTemoralSubsetting = (projectCollection) => {
   return enableTemporalSubsetting ? 't' : 'f'
 }
 
+const encodeSpatialSubsetting = (projectCollection) => {
+  if (!projectCollection) return null
+
+  const {
+    accessMethods,
+    selectedAccessMethod
+  } = projectCollection
+
+  if (!accessMethods || !selectedAccessMethod) return null
+
+  const selectedMethod = accessMethods[selectedAccessMethod]
+  const {
+    enableSpatialSubsetting
+  } = selectedMethod
+
+  return enableSpatialSubsetting ? 't' : 'f'
+}
+
 const encodeOutputFormat = (projectCollection) => {
   if (!projectCollection) return null
 
@@ -315,6 +333,7 @@ export const encodeCollections = (props) => {
     // Encode enable temporal subsetting for harmony collections
     if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')) {
       pg.ets = encodeTemoralSubsetting(projectCollection)
+      pg.ess = encodeSpatialSubsetting(projectCollection)
     }
 
     // Encode selected output projection
