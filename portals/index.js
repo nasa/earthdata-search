@@ -10,6 +10,7 @@ const portals = [
   'example',
   'ghrc',
   'idn',
+  'obdaac',
   'ornldaac',
   'podaac',
   'podaac-cloud',

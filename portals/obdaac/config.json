@@ -1,0 +1,38 @@
+{
+  "features": {
+    "advancedSearch": false,
+    "authentication": false,
+    "featureFacets": {
+      "showAvailableInEarthdataCloud": false,
+      "showCustomizable": false,
+      "showMapImagery": false
+    }
+  },
+  "footer": {
+    "attributionText": "",
+    "displayVersion": false,
+    "primaryLinks": [
+      {
+        "href": "https://oceancolor.gsfc.nasa.gov/",
+        "title": "Ocean Color" 
+      },
+      {
+        "href": "https://oceandata.sci.gsfc.nasa.gov/",
+        "title": "Ocean Data" 
+      }
+    ],
+    "secondaryLinks": []
+  },
+  "pageTitle": "",
+  "portalBrowser": true,
+  "query": {},
+  "title": {
+    "primary": "Default"
+  },
+  "ui": {
+    "showNonEosdisCheckbox": true,
+    "showOnlyGranulesCheckbox": true,
+    "showTophat": false
+  },
+  "parentConfig": "default"
+}
