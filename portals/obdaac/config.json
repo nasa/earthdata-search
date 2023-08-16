@@ -1,6 +1,6 @@
 {
   "features": {
-    "advancedSearch": false,
+    "advancedSearch": true,
     "authentication": false,
     "featureFacets": {
       "showAvailableInEarthdataCloud": false,
@@ -27,10 +27,7 @@
   "pageTitle": "OBDAAC",
   "portalBrowser": true,
   "query": {
-    "data_center_h": [
-      "Ocean+Biology+Distributed+Active+Archive+Center+(OB.DAAC)",
-      "Ocean+Biology+Processing+Group+(OBPG)"
-    ],
+    "dataCenter": "OBPG",
     "hasGranulesOrCwic": null
   },
   "title": {
