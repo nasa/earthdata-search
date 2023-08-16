@@ -27,6 +27,11 @@
   "pageTitle": "OBDAAC",
   "portalBrowser": true,
   "query": {
+    "data_center_h": [
+      "Ocean+Biology+Distributed+Active+Archive+Center+(OB.DAAC)",
+      "Ocean+Biology+Processing+Group+(OBPG)"
+    ],
+    "hasGranulesOrCwic": null
   },
   "title": {
     "primary": "OBDAAC",
@@ -37,5 +42,5 @@
     "showOnlyGranulesCheckbox": true,
     "showTophat": false
   },
-  "parentConfig": "default"
+  "parentConfig": "edsc"
 }
