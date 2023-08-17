@@ -26,8 +26,7 @@
   "pageTitle": "OBDAAC",
   "portalBrowser": true,
   "query": {
-    "dataCenter": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC",
-    "hasGranulesOrCwic": null
+    "dataCenter": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC"
   },
   "title": {
     "primary": "OBDAAC",
