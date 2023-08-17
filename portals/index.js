@@ -14,6 +14,7 @@ const portals = [
   'ornldaac',
   'podaac',
   'podaac-cloud',
+  'seabass',
   'snwg',
   'soos',
   'standardproducts',
