@@ -22,8 +22,7 @@
     "pageTitle": "SeaBASS",
     "portalBrowser": true,
     "query": {
-      "dataCenter": "NASA/GSFC/SED/ESD/GCDC/SeaBASS",
-      "hasGranulesOrCwic": null
+      "dataCenter": "NASA/GSFC/SED/ESD/GCDC/SeaBASS"
     },
     "title": {
       "primary": "SeaBASS",
