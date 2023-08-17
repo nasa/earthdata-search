@@ -1,0 +1,39 @@
+{
+    "features": {
+      "advancedSearch": true,
+      "authentication": false,
+      "featureFacets": {
+        "showAvailableInEarthdataCloud": false,
+        "showCustomizable": false,
+        "showMapImagery": false
+      }
+    },
+    "footer": {
+      "displayVersion": false,
+      "primaryLinks": [
+        {
+          "href": "https://seabass.gsfc.nasa.gov/",
+          "title": "SeaBASS" 
+        }
+      ],
+      "secondaryLinks": []
+    },
+    "moreInfoUrl": "https://oceancolor.gsfc.nasa.gov/",
+    "pageTitle": "SeaBASS",
+    "portalBrowser": true,
+    "query": {
+      "dataCenter": "NASA/GSFC/SED/ESD/GCDC/SeaBASS",
+      "hasGranulesOrCwic": null
+    },
+    "title": {
+      "primary": "SeaBASS",
+      "secondary": "SeaWiFS Bio-optical Archive and Storage System"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": true,
+      "showOnlyGranulesCheckbox": true,
+      "showTophat": false
+    },
+    "parentConfig": "edsc"
+  }
+  
