@@ -12,18 +12,20 @@ export const createSpatialDisplay = (spatial) => {
     polygon
   } = spatial
 
-  const spatialVal = boundingBox || circle || line || point || polygon
+  const selectedShape = boundingBox || circle || line || point || polygon
 
-  if (spatialVal) {
-    const splitStr = spatialVal[0].split(',')
+  if (selectedShape) {
+    const splitStr = selectedShape[0].split(',')
 
-    if (boundingBox) {
-      return `SW: (${splitStr[1]}, ${splitStr[0]}) NE: (${splitStr[3]}, ${splitStr[2]})`
-    }
+    if (boundingBox) { return `SW: (${splitStr[1]}, ${splitStr[0]}) NE: (${splitStr[3]}, ${splitStr[2]})` }
     if (circle) { return `Center: (${splitStr[1]}, ${splitStr[0]}) Radius (m): ${splitStr[2]})` }
     if (point) { return `Point: (${splitStr[1]}, ${splitStr[0]})` }
     if (line) { return `Start: (${splitStr[1]}, ${splitStr[0]}) End: (${splitStr[3]}, ${splitStr[2]})` }
-    if (polygon) { return `${(polygon[0].split(',').length / 2) - 1} Points` }
+    if (polygon) {
+      const pointArray = splitStr.length
+      const pointCount = (pointArray / 2) - 1
+      return `${pointCount} Points`
+    }
   }
   return ''
 }
