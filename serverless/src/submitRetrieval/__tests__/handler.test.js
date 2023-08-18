@@ -143,11 +143,11 @@ describe('submitRetrieval', () => {
         }])
       } else if (step === 7) {
         query.response([{
-          id: 5
+          id: 6
         }])
       } else if (step === 8) {
         query.response([{
-          id: 5
+          id: 7
         }])
       } else {
         query.response([])
@@ -199,14 +199,14 @@ describe('submitRetrieval', () => {
         Id: '2-2',
         MessageBody: JSON.stringify({
           accessToken: '2e8e995e7511c2c6620336797b',
-          id: 5
+          id: 6
         })
       }, {
         DelaySeconds: 63,
         Id: '2-3',
         MessageBody: JSON.stringify({
           accessToken: '2e8e995e7511c2c6620336797b',
-          id: 5
+          id: 7
         })
       }]
     }])
