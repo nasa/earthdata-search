@@ -99,7 +99,7 @@
     "@babel/register": "^7.17.7",
     "@babel/runtime": "^7.17.9",
     "@edsc/echoforms": "^1.1.16",
-    "@edsc/geo-utils": "^1.0.3",
+    "@edsc/geo-utils": "^1.0.4",
     "@edsc/smart-handoffs": "^1.0.4",
     "@edsc/timeline": "^1.1.7",
     "@googlemaps/google-maps-services-js": "^3.3.13",
