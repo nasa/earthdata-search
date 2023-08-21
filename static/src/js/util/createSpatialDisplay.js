@@ -1,3 +1,5 @@
+import SpatialDisplay from '../components/SpatialDisplay/SpatialDisplay'
+
 /**
  * Returns a string displaying the spatial information.
  * @param {Object} spatial Object that holds the different spatial areas.
@@ -12,20 +14,33 @@ export const createSpatialDisplay = (spatial) => {
     polygon
   } = spatial
 
+  const sDisplay = new SpatialDisplay()
+
   const selectedShape = boundingBox || circle || line || point || polygon
 
   if (selectedShape) {
-    const splitStr = selectedShape[0].split(',')
+    if (boundingBox) {
+      const splitStr = sDisplay.transformBoundingBoxCoordinates(selectedShape[0])
+      console.log(splitStr)
+      return `SW: (${splitStr[0]}) NE: (${splitStr[1]})`
+    }
 
-    if (boundingBox) { return `SW: (${splitStr[1]}, ${splitStr[0]}) NE: (${splitStr[3]}, ${splitStr[2]})` }
+    if (circle) {
+      const splitStr = sDisplay.transformCircleCoordinates(selectedShape[0])
+      return `Center: (${splitStr[0]}) Radius (m): ${splitStr[1]})`
+    }
 
-    if (circle) { return `Center: (${splitStr[1]}, ${splitStr[0]}) Radius (m): ${splitStr[2]})` }
+    if (point) {
+      return `Point: (${sDisplay.transformSingleCoordinate(selectedShape[0])})`
+    }
 
-    if (point) { return `Point: (${splitStr[1]}, ${splitStr[0]})` }
-
-    if (line) { return `Start: (${splitStr[1]}, ${splitStr[0]}) End: (${splitStr[3]}, ${splitStr[2]})` }
+    if (line) {
+      const splitStr = sDisplay.transformBoundingBoxCoordinates(selectedShape[0])
+      return `Start: (${splitStr[0]}) End: (${splitStr[1]})`
+    }
 
     if (polygon) {
+      const splitStr = selectedShape[0].split(',')
       const pointArray = splitStr.length
       const pointCount = (pointArray / 2) - 1
       return `${pointCount} Points`

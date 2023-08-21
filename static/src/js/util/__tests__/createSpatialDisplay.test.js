@@ -21,7 +21,7 @@ describe('createSpatialDisplay', () => {
 
       const result = createSpatialDisplay(newSpatial)
 
-      expect(result).toEqual('SW: (-9.56677, 105.57422) NE: (-8.23114, 107.40234)')
+      expect(result).toEqual('SW: (-9.56677,105.57422) NE: (-8.23114,107.40234)')
     })
   })
   describe('circle', () => {
@@ -33,7 +33,7 @@ describe('createSpatialDisplay', () => {
 
       const result = createSpatialDisplay(newSpatial)
 
-      expect(result).toEqual('Center: (-9.56677, 105.57422) Radius (m): 14412)')
+      expect(result).toEqual('Center: (-9.56677,105.57422) Radius (m): 14412)')
     })
   })
   describe('line', () => {
@@ -45,7 +45,7 @@ describe('createSpatialDisplay', () => {
 
       const result = createSpatialDisplay(newSpatial)
 
-      expect(result).toEqual('Start: (-9.56677, 105.57422) End: (-7.12233, 106.22133)')
+      expect(result).toEqual('Start: (-9.56677,105.57422) End: (-7.12233,106.22133)')
     })
   })
   describe('point', () => {
@@ -57,7 +57,7 @@ describe('createSpatialDisplay', () => {
 
       const result = createSpatialDisplay(newSpatial)
 
-      expect(result).toEqual('Point: (-9.56677, 105.57422)')
+      expect(result).toEqual('Point: (-9.56677,105.57422)')
     })
   })
   describe('polygon', () => {

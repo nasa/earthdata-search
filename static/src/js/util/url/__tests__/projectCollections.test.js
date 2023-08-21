@@ -430,6 +430,35 @@ describe('url#encodeUrlQuery', () => {
             collectionId1: {
               accessMethods: {
                 harmony: {
+                  enableTemporalSubsetting: false
+                }
+              },
+              selectedAccessMethod: 'harmony'
+            },
+            collectionId2: {}
+          }
+        }
+      }
+    }
+
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][ets]=f&pg[2][v]=f')
+  })
+  test('correctly encodes enable spatial subsetting', () => {
+    const props = {
+      collectionsMetadata: {
+        collectionId1: {},
+        collectionId2: {}
+      },
+      hasGranulesOrCwic: true,
+      pathname: '/path/here',
+      focusedCollection: '',
+      project: {
+        collections: {
+          allIds: ['collectionId1', 'collectionId2'],
+          byId: {
+            collectionId1: {
+              accessMethods: {
+                harmony: {
                   enableTemporalSubsetting: false,
                   enableSpatialSubsetting: false
                 }
