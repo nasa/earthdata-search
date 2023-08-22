@@ -209,6 +209,12 @@ const decodedTemporalSubsetting = (pgParam) => {
   return enableTemporalSubsetting !== 'f'
 }
 
+const decodedSpatialSubsetting = (pgParam) => {
+  const { ess: enableSpatialSubsetting } = pgParam
+
+  return enableSpatialSubsetting !== 'f'
+}
+
 /**
  * Encodes a Collections object into an object
  * @param {Object} collectionsMetadata Collections object
@@ -394,6 +400,7 @@ export const decodeCollections = (params) => {
     let addedGranuleIds = []
     let addedIsOpenSearch
     let enableTemporalSubsetting
+    let enableSpatialSubsetting
     let isVisible = true
     let removedGranuleIds = []
     let removedIsOpenSearch
@@ -470,6 +477,7 @@ export const decodeCollections = (params) => {
       // Decode temporal subsetting for harmony collections
       if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')) {
         enableTemporalSubsetting = decodedTemporalSubsetting(pCollection)
+        enableSpatialSubsetting = decodedSpatialSubsetting(pCollection)
       }
 
       // Determine if the collection is a CWIC collection
@@ -500,10 +508,12 @@ export const decodeCollections = (params) => {
           || selectedOutputFormat
           || selectedOutputProjection
           || enableTemporalSubsetting !== undefined
+          || enableSpatialSubsetting !== undefined
         ) {
           projectById[collectionId].accessMethods = {
             [selectedAccessMethod]: {
               enableTemporalSubsetting,
+              enableSpatialSubsetting,
               selectedOutputFormat,
               selectedOutputProjection,
               selectedVariables: variableIds
