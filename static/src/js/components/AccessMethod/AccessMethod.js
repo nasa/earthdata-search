@@ -62,8 +62,11 @@ export class AccessMethod extends Component {
 
     const {
       enableSpatialSubsetting = !(
-        boundingBox === undefined && circle === undefined
-        && line === undefined && point === undefined && polygon === undefined
+        boundingBox === undefined
+         && circle === undefined
+         && line === undefined
+         && point === undefined
+         && polygon === undefined
       )
     } = selectedMethod || {}
 
