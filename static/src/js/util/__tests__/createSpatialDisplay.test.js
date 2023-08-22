@@ -1,4 +1,8 @@
-import createSpatialDisplay from '../createSpatialDisplay'
+import createSpatialDisplay, {
+  transformCircleCoordinates,
+  transformBoundingBoxCoordinates,
+  transformSingleCoordinate
+} from '../createSpatialDisplay'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -77,6 +81,85 @@ describe('createSpatialDisplay', () => {
       const result = createSpatialDisplay(spatial)
 
       expect(result).toEqual('')
+    })
+  })
+  describe('#transformBoundingBoxCoordinates', () => {
+    test('returns the input in the correct order', () => {
+      const input = '1,2,3,4'
+
+      const result = transformBoundingBoxCoordinates(input)
+
+      expect(result).toEqual(['2,1', '4,3'])
+    })
+
+    test('returns an array of empty values if no input was provided', () => {
+      const input = ''
+
+      const result = transformBoundingBoxCoordinates(input)
+
+      expect(result).toEqual(['', ''])
+    })
+  })
+
+  describe('#transformCircleCoordinates', () => {
+    test('returns the input in the correct order', () => {
+      const input = '45.60161,-94.60986,200'
+
+      const result = transformCircleCoordinates(input)
+
+      expect(result).toEqual(['-94.60986,45.60161', '200'])
+    })
+
+    test('returns an array of empty values if no input was provided', () => {
+      const input = ''
+
+      const result = transformCircleCoordinates(input)
+
+      expect(result).toEqual(['', ''])
+    })
+
+    test('returns an array of empty values if either latitude or longitude was not provided', () => {
+      const input = '0,,'
+
+      const result = transformCircleCoordinates(input)
+
+      expect(result).toEqual(['', ''])
+    })
+  })
+
+  describe('#transformSingleCoordinate', () => {
+    test('returns the input in the correct order', () => {
+      const input = '45.60161,-94.60986'
+
+      const result = transformSingleCoordinate(input)
+
+      expect(result).toEqual('-94.60986,45.60161')
+    })
+
+    test('returns an array of empty values if no input was provided', () => {
+      const input = ''
+
+      const result = transformSingleCoordinate(input)
+
+      console.log(result)
+
+      expect(result).toEqual('')
+    })
+
+    test('returns an array of empty values if either latitude or longitude was not provided', () => {
+      const input = '0,'
+
+      const result = transformSingleCoordinate(input)
+
+      expect(result).toEqual(',0')
+    })
+
+    test('returns an array of empty values if either latitude or longitude was not provided', () => {
+      const input = ',0'
+
+      const result = transformSingleCoordinate(input)
+
+      expect(result).toEqual('0,')
     })
   })
 })
