@@ -218,7 +218,7 @@ describe('url#decodeUrlParams', () => {
                 isVisible: true,
                 accessMethods: {
                   harmony: {
-                    enableSpatialSubsetting: true,
+                    enableSpatialSubsetting: false,
                     enableTemporalSubsetting: true,
                     selectedOutputFormat: undefined,
                     selectedOutputProjection: undefined,
@@ -250,7 +250,7 @@ describe('url#decodeUrlParams', () => {
         }
       }
 
-      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=t&pg[1][ess]=t')).toEqual(expectedResult)
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=t&pg[1][ess]=f')).toEqual(expectedResult)
     })
 
     test('decodes enable temporal subsetting correctly when not encoded', () => {
@@ -299,6 +299,103 @@ describe('url#decodeUrlParams', () => {
       }
 
       expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony')).toEqual(expectedResult)
+    })
+  })
+  describe('enable spatial subsetting flag', () => {
+    test('decodes enable spatial subsetting correctly when false', () => {
+      const expectedResult = {
+        ...emptyDecodedResult,
+        focusedCollection: '',
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {},
+                isVisible: true,
+                accessMethods: {
+                  harmony: {
+                    enableTemporalSubsetting: false,
+                    enableSpatialSubsetting: false,
+                    selectedOutputFormat: undefined,
+                    selectedOutputProjection: undefined,
+                    selectedVariables: undefined
+                  }
+                },
+                selectedAccessMethod: 'harmony'
+              },
+              collectionId2: {
+                granules: {},
+                isVisible: true,
+                selectedAccessMethod: undefined
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            ...emptyDecodedResult.query.collection,
+            byId: {
+              collectionId1: {
+                granules: {}
+              },
+              collectionId2: {
+                granules: {}
+              }
+            }
+          }
+        }
+      }
+
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=f&pg[1][ess]=f')).toEqual(expectedResult)
+    })
+
+    test('decodes enable spatial subsetting correctly when true', () => {
+      const expectedResult = {
+        ...emptyDecodedResult,
+        focusedCollection: '',
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {},
+                isVisible: true,
+                accessMethods: {
+                  harmony: {
+                    enableTemporalSubsetting: false,
+                    enableSpatialSubsetting: true,
+                    selectedOutputFormat: undefined,
+                    selectedOutputProjection: undefined,
+                    selectedVariables: undefined
+                  }
+                },
+                selectedAccessMethod: 'harmony'
+              },
+              collectionId2: {
+                granules: {},
+                isVisible: true,
+                selectedAccessMethod: undefined
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            ...emptyDecodedResult.query.collection,
+            byId: {
+              collectionId1: {
+                granules: {}
+              },
+              collectionId2: {
+                granules: {}
+              }
+            }
+          }
+        }
+      }
+
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=f&pg[1][ess]=t')).toEqual(expectedResult)
     })
   })
 })
