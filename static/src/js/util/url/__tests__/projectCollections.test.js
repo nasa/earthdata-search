@@ -171,7 +171,7 @@ describe('url#decodeUrlParams', () => {
                 accessMethods: {
                   harmony: {
                     enableTemporalSubsetting: false,
-                    enableSpatialSubsetting: false,
+                    enableSpatialSubsetting: true,
                     selectedOutputFormat: undefined,
                     selectedOutputProjection: undefined,
                     selectedVariables: undefined
@@ -202,7 +202,7 @@ describe('url#decodeUrlParams', () => {
         }
       }
 
-      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=f&pg[1][ess]=f')).toEqual(expectedResult)
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=f')).toEqual(expectedResult)
     })
 
     test('decodes enable temporal subsetting correctly when true', () => {
@@ -316,7 +316,7 @@ describe('url#decodeUrlParams', () => {
                 isVisible: true,
                 accessMethods: {
                   harmony: {
-                    enableTemporalSubsetting: false,
+                    enableTemporalSubsetting: true,
                     enableSpatialSubsetting: false,
                     selectedOutputFormat: undefined,
                     selectedOutputProjection: undefined,
@@ -348,7 +348,7 @@ describe('url#decodeUrlParams', () => {
         }
       }
 
-      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=f&pg[1][ess]=f')).toEqual(expectedResult)
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ess]=f')).toEqual(expectedResult)
     })
 
     test('decodes enable spatial subsetting correctly when true', () => {
