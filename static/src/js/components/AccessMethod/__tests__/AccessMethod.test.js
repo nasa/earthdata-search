@@ -898,8 +898,131 @@ describe('AccessMethod component', () => {
           expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(false)
         })
 
+        describe('when enableSpatialSubsetting is set to false', () => {
+          test('sets the checkbox unchecked for boundingBox', () => {
+            const { enzymeWrapper } = setup({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsBoundingBoxSubsetting: true,
+                  enableSpatialSubsetting: false
+                }
+              },
+              metadata: {
+                conceptId: 'collectionId'
+              },
+              selectedAccessMethod: 'harmony0',
+              spatial: {
+                boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
+              }
+            })
+            expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
+            expect(enzymeWrapper.find('.access-method__section-status[data-testId="no-area-selected"]').exists()).toEqual(false)
+          })
+          test('no area selected shows up when not passing in a spatial value', () => {
+            const { enzymeWrapper } = setup({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsBoundingBoxSubsetting: true,
+                  enableSpatialSubsetting: false
+                }
+              },
+              metadata: {
+                conceptId: 'collectionId'
+              },
+              selectedAccessMethod: 'harmony0',
+              spatial: {}
+            })
+            expect(enzymeWrapper.find('.access-method__section-status[data-testId="no-area-selected"]').props().children).toEqual('No spatial area selected. Make a spatial selection to enable spatial subsetting.')
+          })
+          test('sets the checkbox unchecked for circle', () => {
+            const { enzymeWrapper } = setup({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsBoundingBoxSubsetting: true,
+                  enableSpatialSubsetting: false
+                }
+              },
+              metadata: {
+                conceptId: 'collectionId'
+              },
+              selectedAccessMethod: 'harmony0',
+              spatial: {
+                circle: ['64.125,7.8161,983270-18.28125']
+              }
+            })
+            expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
+          })
+          test('sets the checkbox unchecked for point', () => {
+            const { enzymeWrapper } = setup({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsBoundingBoxSubsetting: true,
+                  enableSpatialSubsetting: false
+                }
+              },
+              metadata: {
+                conceptId: 'collectionId'
+              },
+              selectedAccessMethod: 'harmony0',
+              spatial: {
+                point: ['82.6875,-18.61541']
+              }
+            })
+            expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
+          })
+          test('sets the checkbox unchecked for line', () => {
+            const { enzymeWrapper } = setup({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsBoundingBoxSubsetting: true,
+                  enableSpatialSubsetting: false
+                }
+              },
+              metadata: {
+                conceptId: 'collectionId'
+              },
+              selectedAccessMethod: 'harmony0',
+              spatial: {
+                line: ['82.6875,-18.61541,83.1231, -16.11311']
+              }
+            })
+            expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
+          })
+          test('sets the checkbox unchecked for shapefile', () => {
+            const { enzymeWrapper } = setup({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsShapefileSubsetting: true,
+                  supportsBoundingBoxSubsetting: false,
+                  enableSpatialSubsetting: false
+                }
+              },
+              metadata: {
+                conceptId: 'collectionId'
+              },
+              selectedAccessMethod: 'harmony0',
+              spatial: {
+                polygon: ['104.625,-10.6875,103.11328,-10.89844,103.57031,-12.19922,105.32813,-13.11328,106.38281,-11.70703,105.75,-10.33594,104.625,-10.6875']
+              }
+            })
+            expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
+          })
+        })
+
         describe('when the user clicks the checkbox', () => {
-          test('sets the checkbox unchecked', () => {
+          test('sets the checkbox for temporal unchecked', () => {
             const { enzymeWrapper } = setup()
 
             const collectionId = 'collectionId'
@@ -931,6 +1054,38 @@ describe('AccessMethod component', () => {
             enzymeWrapper.update()
 
             expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(true)
+          })
+
+          test('sets the checkbox for spatial unchecked', () => {
+            const { enzymeWrapper } = setup()
+
+            const collectionId = 'collectionId'
+
+            enzymeWrapper.setProps({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsBoundingBoxSubsetting: true,
+                  enableSpatialSubsetting: false
+                }
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony0',
+              spatial: {
+                boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
+              }
+            })
+
+            const checkbox = enzymeWrapper.find('#input__spatial-subsetting')
+
+            checkbox.simulate('change', { target: { checked: true } })
+
+            enzymeWrapper.update()
+
+            expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(true)
           })
 
           test('calls onUpdateAccessMethod', () => {

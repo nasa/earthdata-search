@@ -219,7 +219,8 @@ describe('constructOrderPayload', () => {
             })
 
           const accessMethod = {
-            enableTemporalSubsetting: true
+            enableTemporalSubsetting: true,
+            enableSpatialSubsetting: true
           }
           const granuleParams = {
             temporal: '2020-01-01T01:36:52.273Z,'
@@ -324,7 +325,8 @@ describe('constructOrderPayload', () => {
             })
 
           const accessMethod = {
-            supportsShapefileSubsetting: true
+            supportsShapefileSubsetting: true,
+            enableSpatialSubsetting: true
           }
           const granuleParams = {}
           const accessToken = 'access-token'
@@ -357,7 +359,8 @@ describe('constructOrderPayload', () => {
             })
 
           const accessMethod = {
-            supportsShapefileSubsetting: true
+            supportsShapefileSubsetting: true,
+            enableSpatialSubsetting: true
           }
           const granuleParams = {
             point: ['-77, 34']
@@ -390,7 +393,8 @@ describe('constructOrderPayload', () => {
             })
 
           const accessMethod = {
-            supportsShapefileSubsetting: true
+            supportsShapefileSubsetting: true,
+            enableSpatialSubsetting: true
           }
           const granuleParams = {
             bounding_box: ['0,5,10,15']
@@ -423,7 +427,8 @@ describe('constructOrderPayload', () => {
             })
 
           const accessMethod = {
-            supportsShapefileSubsetting: true
+            supportsShapefileSubsetting: true,
+            enableSpatialSubsetting: true
           }
           const granuleParams = {
             circle: ['-77, 34, 20000']
@@ -456,7 +461,8 @@ describe('constructOrderPayload', () => {
             })
 
           const accessMethod = {
-            supportsShapefileSubsetting: true
+            supportsShapefileSubsetting: true,
+            enableSpatialSubsetting: true
           }
           const granuleParams = {
             polygon: ['-29.8125,39.86484,-23.0625,-19.74405,15.75,20.745,-29.8125,39.86484']
@@ -497,7 +503,8 @@ describe('constructOrderPayload', () => {
               neLat: 34.00000001,
               neLng: -76.99999999
             },
-            supportsBoundingBoxSubsetting: true
+            supportsBoundingBoxSubsetting: true,
+            enableSpatialSubsetting: true
           }
           const granuleParams = {
             point: ['-77, 34']
@@ -533,7 +540,8 @@ describe('constructOrderPayload', () => {
             })
 
           const accessMethod = {
-            supportsBoundingBoxSubsetting: true
+            supportsBoundingBoxSubsetting: true,
+            enableSpatialSubsetting: true
           }
           const granuleParams = {
             bounding_box: ['5,0,15,10']
@@ -575,7 +583,8 @@ describe('constructOrderPayload', () => {
               neLat: 34.1796630554143,
               neLng: -76.78328719787622
             },
-            supportsBoundingBoxSubsetting: true
+            supportsBoundingBoxSubsetting: true,
+            enableSpatialSubsetting: true
           }
           const granuleParams = {
             circle: ['-77, 34, 20000']
@@ -617,7 +626,8 @@ describe('constructOrderPayload', () => {
               neLat: 39.864840000000015,
               neLng: 15.749999999999988
             },
-            supportsBoundingBoxSubsetting: true
+            supportsBoundingBoxSubsetting: true,
+            enableSpatialSubsetting: true
           }
           const granuleParams = {
             polygon: ['-29.8125,39.86484,-23.0625,-19.74405,15.75,20.745,-29.8125,39.86484']
@@ -635,6 +645,51 @@ describe('constructOrderPayload', () => {
             'lon(-29.81249999999999:15.749999999999988)'
           ])
         })
+      })
+    })
+  })
+
+  describe('when only bounding subsetting is supported but disabled', () => {
+    describe('with a point (only need to test a point)', () => {
+      test('constructs a payload containing a bounding box representing the minimum bounding rectangle of the point', async () => {
+        nock(/cmr/)
+          .matchHeader('Authorization', 'Bearer access-token')
+          .get('/search/granules.json?point%5B%5D=-77%2C%2034')
+          .reply(200, {
+            feed: {
+              entry: [{
+                id: 'G10000001-EDSC'
+              }, {
+                id: 'G10000005-EDSC'
+              }]
+            }
+          })
+
+        const accessMethod = {
+          mbr: {
+            swLat: 33.99999999,
+            swLng: -77.00000001,
+            neLat: 34.00000001,
+            neLng: -76.99999999
+          },
+          supportsBoundingBoxSubsetting: true,
+          enableSpatialSubsetting: false
+        }
+        const granuleParams = {
+          point: ['-77, 34']
+        }
+        const accessToken = 'access-token'
+
+        const response = await constructOrderPayload({
+          accessMethod,
+          granuleParams,
+          accessToken
+        })
+
+        expect(response.getAll('subset')).not.toEqual([
+          'lat(33.99999999:34.00000001)',
+          'lon(-77.00000001:-76.99999999)'
+        ])
       })
     })
   })

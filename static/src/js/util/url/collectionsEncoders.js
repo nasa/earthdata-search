@@ -81,7 +81,7 @@ const encodeSelectedVariables = (projectCollection) => {
   return selectedVariables.join('!')
 }
 
-const encodeTemoralSubsetting = (projectCollection) => {
+const encodeTemporalSubsetting = (projectCollection) => {
   if (!projectCollection) return null
 
   const {
@@ -97,6 +97,24 @@ const encodeTemoralSubsetting = (projectCollection) => {
   } = selectedMethod
 
   return enableTemporalSubsetting ? 't' : 'f'
+}
+
+const encodeSpatialSubsetting = (projectCollection) => {
+  if (!projectCollection) return null
+
+  const {
+    accessMethods,
+    selectedAccessMethod
+  } = projectCollection
+
+  if (!accessMethods || !selectedAccessMethod) return null
+
+  const selectedMethod = accessMethods[selectedAccessMethod]
+  const {
+    enableSpatialSubsetting
+  } = selectedMethod
+
+  return enableSpatialSubsetting ? 't' : 'f'
 }
 
 const encodeOutputFormat = (projectCollection) => {
@@ -189,6 +207,12 @@ const decodedTemporalSubsetting = (pgParam) => {
   const { ets: enableTemporalSubsetting } = pgParam
 
   return enableTemporalSubsetting !== 'f'
+}
+
+const decodedSpatialSubsetting = (pgParam) => {
+  const { ess: enableSpatialSubsetting } = pgParam
+
+  return enableSpatialSubsetting !== 'f'
 }
 
 /**
@@ -314,7 +338,8 @@ export const encodeCollections = (props) => {
 
     // Encode enable temporal subsetting for harmony collections
     if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')) {
-      pg.ets = encodeTemoralSubsetting(projectCollection)
+      pg.ets = encodeTemporalSubsetting(projectCollection)
+      pg.ess = encodeSpatialSubsetting(projectCollection)
     }
 
     // Encode selected output projection
@@ -375,6 +400,7 @@ export const decodeCollections = (params) => {
     let addedGranuleIds = []
     let addedIsOpenSearch
     let enableTemporalSubsetting
+    let enableSpatialSubsetting
     let isVisible = true
     let removedGranuleIds = []
     let removedIsOpenSearch
@@ -451,6 +477,7 @@ export const decodeCollections = (params) => {
       // Decode temporal subsetting for harmony collections
       if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')) {
         enableTemporalSubsetting = decodedTemporalSubsetting(pCollection)
+        enableSpatialSubsetting = decodedSpatialSubsetting(pCollection)
       }
 
       // Determine if the collection is a CWIC collection
@@ -481,10 +508,12 @@ export const decodeCollections = (params) => {
           || selectedOutputFormat
           || selectedOutputProjection
           || enableTemporalSubsetting !== undefined
+          || enableSpatialSubsetting !== undefined
         ) {
           projectById[collectionId].accessMethods = {
             [selectedAccessMethod]: {
               enableTemporalSubsetting,
+              enableSpatialSubsetting,
               selectedOutputFormat,
               selectedOutputProjection,
               selectedVariables: variableIds
