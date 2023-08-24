@@ -218,7 +218,7 @@ describe('url#decodeUrlParams', () => {
                 isVisible: true,
                 accessMethods: {
                   harmony: {
-                    enableSpatialSubsetting: false,
+                    enableSpatialSubsetting: true,
                     enableTemporalSubsetting: true,
                     selectedOutputFormat: undefined,
                     selectedOutputProjection: undefined,
@@ -250,7 +250,7 @@ describe('url#decodeUrlParams', () => {
         }
       }
 
-      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=t&pg[1][ess]=f')).toEqual(expectedResult)
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=t')).toEqual(expectedResult)
     })
 
     test('decodes enable temporal subsetting correctly when not encoded', () => {
