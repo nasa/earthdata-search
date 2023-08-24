@@ -81,7 +81,7 @@ const encodeSelectedVariables = (projectCollection) => {
   return selectedVariables.join('!')
 }
 
-const encodeTemoralSubsetting = (projectCollection) => {
+const encodeTemporalSubsetting = (projectCollection) => {
   if (!projectCollection) return null
 
   const {
@@ -338,7 +338,7 @@ export const encodeCollections = (props) => {
 
     // Encode enable temporal subsetting for harmony collections
     if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')) {
-      pg.ets = encodeTemoralSubsetting(projectCollection)
+      pg.ets = encodeTemporalSubsetting(projectCollection)
       pg.ess = encodeSpatialSubsetting(projectCollection)
     }
 
