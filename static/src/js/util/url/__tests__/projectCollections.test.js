@@ -301,6 +301,7 @@ describe('url#decodeUrlParams', () => {
       expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony')).toEqual(expectedResult)
     })
   })
+
   describe('enable spatial subsetting flag', () => {
     test('decodes enable spatial subsetting correctly when false', () => {
       const expectedResult = {
@@ -397,6 +398,53 @@ describe('url#decodeUrlParams', () => {
 
       expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=f&pg[1][ess]=t')).toEqual(expectedResult)
     })
+  })
+  test('decodes enable spatial subsetting correctly when not encoded', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      focusedCollection: '',
+      project: {
+        collections: {
+          allIds: ['collectionId1', 'collectionId2'],
+          byId: {
+            collectionId1: {
+              granules: {},
+              isVisible: true,
+              accessMethods: {
+                harmony: {
+                  enableSpatialSubsetting: true,
+                  enableTemporalSubsetting: true,
+                  selectedOutputFormat: undefined,
+                  selectedOutputProjection: undefined,
+                  selectedVariables: undefined
+                }
+              },
+              selectedAccessMethod: 'harmony'
+            },
+            collectionId2: {
+              granules: {},
+              isVisible: true,
+              selectedAccessMethod: undefined
+            }
+          }
+        }
+      },
+      query: {
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          byId: {
+            collectionId1: {
+              granules: {}
+            },
+            collectionId2: {
+              granules: {}
+            }
+          }
+        }
+      }
+    }
+
+    expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony')).toEqual(expectedResult)
   })
 })
 
