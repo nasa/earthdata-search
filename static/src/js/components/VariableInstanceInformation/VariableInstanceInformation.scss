@@ -1,0 +1,21 @@
+.variable-instance-information {
+      &__direct-distribution-information-list {
+        padding-left: 1rem;  
+      }
+
+      &__list-item {
+        overflow-y: hidden;
+        list-style-position: inside;
+        margin-left: 1em;
+      }
+
+      &__instance-field-title {
+        font-weight: bold;
+        display:inline;
+      }
+
+      &__instance-field{
+        overflow: hidden;
+        // white-space: nowrap;
+      }
+}

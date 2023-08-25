@@ -572,6 +572,39 @@ describe('CollectionDetailsBody component', () => {
       })
     })
 
+    describe('Variable Instance data', () => {
+      test.only('renders correctly', () => {
+        const { enzymeWrapper } = setup({
+          variables: {
+            items: [
+              {
+                instanceInformation: {
+                  url: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name',
+                  format: 'Zarr',
+                  description: 'brief end user information goes here.',
+                  directDistributionInformation: {
+                    region: 'us-west-2',
+                    s3BucketAndObjectPrefixNames: [
+                      'test-aws-cache',
+                      'zarr/test-name'
+                    ],
+                    s3CredentialsApiEndpoint: 'https://api.test.earthdata.nasa.gov/s3credentials',
+                    s3CredentialsApiDocumentationUrl: 'https://test/information/documents?title=In-region%20Direct%20S3%20Zarr%20Cache%20Access'
+                  },
+                  chunkingInformation: 'Chunk size for this test example is 1MB. optimized for time series.'
+                }
+              }
+            ]
+          }
+        })
+
+        expect(enzymeWrapper.find('.collection-details-body__cloud-access__region').text()).toEqual('us-east-2')
+        expect(enzymeWrapper.find('.collection-details-body__cloud-access__bucket-name').text()).toEqual('TestBucketOrObjectPrefix')
+        expect(enzymeWrapper.find('.collection-details-body__cloud-access__api-link').props().href).toEqual('https://DAACCredentialEndpoint.org')
+        expect(enzymeWrapper.find('.collection-details-body__cloud-access__documentation-link').props().href).toEqual('https://DAACCredentialDocumentation.org')
+      })
+    })
+
     describe('"For Developers" Panel', () => {
       test('has the correct props', () => {
         const { enzymeWrapper } = setup()
