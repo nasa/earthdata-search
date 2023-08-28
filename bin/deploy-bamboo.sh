@@ -62,10 +62,10 @@ tmp
 EOF
 
 cat <<EOF > Dockerfile
-FROM node:14.18
+FROM node:18.16-bullseye
 COPY . /build
 WORKDIR /build
-RUN npm ci --production && npm run build
+RUN npm ci --omit=dev && npm run build
 EOF
 
 dockerTag=edsc-$bamboo_STAGE_NAME
