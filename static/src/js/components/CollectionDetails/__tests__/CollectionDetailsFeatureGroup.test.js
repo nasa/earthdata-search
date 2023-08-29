@@ -1,19 +1,18 @@
-import React from 'react'
-
-import {
-  act, render
-} from '@testing-library/react'
-
-import { createLayerComponent } from '@react-leaflet/core'
-
 import '@testing-library/jest-dom'
 
-import CollectionDetailsFeatureGroup from '../CollectionDetailsFeatureGroup'
+import { createLayer } from '../CollectionDetailsFeatureGroup'
+
+import { buildLayer } from '../../../util/map/layers'
 
 // Mock react-leaflet because it causes errors
 jest.mock('react-leaflet/core', () => (
   {
-    createLayerComponent: jest.fn().mockImplementation(() => {})
+    createLayerComponent: jest.fn().mockImplementation((children) => ({ children }))
+  }))
+
+jest.mock('../../../util/map/layers', () => (
+  {
+    buildLayer: jest.fn().mockImplementation((children) => ({ children }))
   }))
 
 const setup = (overrides) => {
@@ -67,16 +66,19 @@ const setup = (overrides) => {
     },
     ...overrideProps
   }
-  act(() => {
-    render(<CollectionDetailsFeatureGroup {...props} />)
-  })
+  return {
+    props
+
+  }
 }
-// TODO failing test fix
+
 describe('CollectionDetailsFeatureGroup component', () => {
   describe('when the feature group is loaded with metadata', () => {
-    test.skip('calls leaflet to create the layer component', () => {
-      setup()
-      expect(createLayerComponent).toHaveBeenCalledTimes(1)
+    test('calls leaflet to build the layer component', () => {
+      const { props } = setup()
+      const context = {}
+      createLayer(props, context)
+      expect(buildLayer).toHaveBeenCalled()
     })
   })
 })

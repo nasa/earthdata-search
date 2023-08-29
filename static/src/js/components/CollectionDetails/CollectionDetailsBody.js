@@ -148,9 +148,6 @@ export const CollectionDetailsBody = ({
     variables,
     versionId
   } = collectionMetadata
-  console.log('🚀 ~ file: CollectionDetailsBody.js:150 ~ spatial:', spatial)
-
-  console.log('🚀 ~ file: CollectionDetailsBody.js:143 ~ variables:', variables)
 
   if (!hasAllMetadata) {
     return (
@@ -172,7 +169,6 @@ export const CollectionDetailsBody = ({
   const reformattings = {}
 
   if (services) {
-    console.log('🚀 ~ file: CollectionDetailsBody.js:187 ~ services:', services)
     const { items } = services
 
     if (items) {
@@ -212,7 +208,6 @@ export const CollectionDetailsBody = ({
     if (items) {
       items.forEach((variable) => {
         const { instanceInformation } = variable
-        console.log('🚀 ~ file: CollectionDetailsBody.js:201 ~ items.forEach ~ variable:', variable.conceptId)
         if (instanceInformation) {
           const { conceptId } = variable
           const varInstanceInformation = buildVarInstanceInformation(conceptId, instanceInformation)

@@ -11,9 +11,7 @@ import '@testing-library/jest-dom'
 import CollectionDetailsBody from '../CollectionDetailsBody'
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
 
-// Mock react-leaflet because it causes errors
-jest.mock('react-leaflet', () => ({
-}))
+// TODO I saw this getting used in EDD  expect(container).toBeEmptyDOMElement()
 
 jest.mock('../CollectionDetailsMinimap', () => jest.fn(({ children }) => (
   <mock-CollectionDetailsMinimap data-testid="collection-details-body__minimap">
@@ -21,11 +19,14 @@ jest.mock('../CollectionDetailsMinimap', () => jest.fn(({ children }) => (
   </mock-CollectionDetailsMinimap>
 )))
 
-// Mock CollectionDetailsMinimap as a component
-// jest.mock('../CollectionDetailsMinimap', () => () => (<div> Mock minimap</div>))
+jest.mock('../../RelatedCollection/RelatedCollection', () => jest.fn(() => (
+  <mock-RelatedCollection>
+    Mock related collection
+  </mock-RelatedCollection>
+)))
 
 // Mock Related Collection component
-jest.mock('../../RelatedCollection/RelatedCollection', () => () => (<div> Mock related collection</div>))
+// jest.mock('../../RelatedCollection/RelatedCollection', () => () => (<div> Mock related collection</div>))
 
 const setup = (overrides) => {
   const {
@@ -104,11 +105,10 @@ describe('CollectionDetailsBody component', () => {
           hasAllMetadata: false
         }
       })
-      // TODO I couldn't find a way to not use the test Id here
       expect(screen.queryAllByTestId('collection-details-body__skeleton')).not.toBeNull()
     })
   })
-  // TODO There isn't a way to test this in react-testing-lib
+
   describe('when the details are loaded', () => {
     test('renders itself correctly', () => {
       const spatialMetadata = 'Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)'
@@ -333,6 +333,7 @@ describe('CollectionDetailsBody component', () => {
         expect(screen.getByText('1860-01-01 to 2050-12-31')).toBeInTheDocument()
       })
     })
+
     // TODO add data center test for coverage
     describe('Data center', () => {
       test('renders correctly', () => {
@@ -401,11 +402,8 @@ describe('CollectionDetailsBody component', () => {
           }
         })
         expect(screen.getByText('info@usap-dc.org')).toBeInTheDocument()
-        // expect(screen.getByText('DISTRIBUTOR')).toBeInTheDocument()
-        // expect(screen.getByText('ARCHIVER')).toBeInTheDocument()
-
-        // expect(screen.getByText('1860-01-01 to 2050-12-31')).toBeInTheDocument()
       })
+
       describe('when contact information is not email or facebook', () => {
         test('renders correctly', () => {
           const mockDataCenters = [
@@ -642,7 +640,6 @@ describe('CollectionDetailsBody component', () => {
             ]
           }
         })
-        screen.debug()
         expect(screen.getByText('Earth Science')).toBeInTheDocument()
         expect(screen.getByText('Atmosphere')).toBeInTheDocument()
         expect(screen.getByText('Atmospheric Chemistry')).toBeInTheDocument()
@@ -802,10 +799,11 @@ describe('CollectionDetailsBody component', () => {
         setup()
         const forDevelopersCollapsablePanel = screen.getByText('For Developers')
         await user.click(forDevelopersCollapsablePanel)
-        // expect(screen.getByText('For Developers'))
 
         // todo this is turning into `collapse-panel__button-primary` as the value
         // expect(screen.getByText('For Developers')).toHaveClass('collection-details-body__for-devs')
+        // expect(screen.getByTestId('collection-details-body__CollapsePanel')).toHaveClass('collection-details-body__for-devs')
+
         const developerListLinks = screen.getAllByRole('listitem')
         expect(screen.getAllByRole('listitem').length).toEqual(7)
 
@@ -814,13 +812,6 @@ describe('CollectionDetailsBody component', () => {
           expect(link.childNodes[0].href).not.toBeNull()
           return link
         })
-
-        // const children = enzymeWrapper.find(CollapsePanel).children()
-        // expect(enzymeWrapper.find(CollapsePanel).props().className).toEqual('collection-details-body__for-devs')
-        // expect(enzymeWrapper.find(CollapsePanel).props().header).toEqual('For Developers')
-        // expect(enzymeWrapper.find(CollapsePanel).props().panelClassName).toEqual('')
-        // expect(enzymeWrapper.find(CollapsePanel).props().scrollToBottom).toEqual(true)
-        // expect(children.find('.collection-details-body__dev-list a').length).toEqual(7)
       })
     })
 
@@ -893,12 +884,6 @@ describe('CollectionDetailsBody component', () => {
             }
           }
         })
-        // screen.debug()
-        // const relatedCollectionsList = screen.getByRole('heading', { name: 'You might also be interested in...' })
-        // const relatedCollectionsList = screen.getByText('You might also be interested in...')
-        //   .closest('list')
-
-        // console.log(relatedCollectionsList.length)
 
         const collectionDetailsBodyLists = screen.getAllByRole('list')
         // Related collections and required `For Developers` list
@@ -906,8 +891,6 @@ describe('CollectionDetailsBody component', () => {
 
         const relatedCollectionsListItems = collectionDetailsBodyLists[0].childNodes
         expect(relatedCollectionsListItems.length).toEqual(5)
-        // expect(screen.getAllByText('Mock related collection').length).toEqual(5)
-        // expect(enzymeWrapper.find('.collection-details-body__related-collections-list')).toBeDefined()
       })
 
       test('renders the 3 links', () => {

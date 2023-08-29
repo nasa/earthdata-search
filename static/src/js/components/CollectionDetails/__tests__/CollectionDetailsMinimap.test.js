@@ -1,29 +1,16 @@
 import React from 'react'
 
 import {
-  act, render, screen
+  act, render
 } from '@testing-library/react'
 
 import {
-  MapContainer,
-  ImageOverlay
+  MapContainer
 } from 'react-leaflet'
 
 import '@testing-library/jest-dom'
 
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
-
-// const mockedImageOverlay = jest.fn().mockImplementation(({ children }) => (
-//   <mock-ImageOverlay data-testid="ImageOverlay">
-//     {children}
-//   </mock-ImageOverlay>
-// ))
-
-// const mockedM = jest.fn().mockImplementation(({ children }) => (
-//   <mock-mockedMiniMap data-testid="ImageOverlay">
-//     {children}
-//   </mock-mockedMiniMap>
-// ))
 
 jest.mock('react-leaflet', () => (
   {
@@ -37,30 +24,6 @@ jest.mock('react-leaflet/ImageOverlay')
 jest.mock('../CollectionDetailsFeatureGroup', () => jest.fn(() => (
   <mock-MapContainer data-testid="MapContainer" />
 )))
-
-// https://react-leaflet.js.org/docs/start-introduction/
-// React does not render Leaflet layers to the DOM, this rendering is done by Leaflet itself. React only renders a <div> element when rendering the MapContainer component and the contents of UI layers components.
-
-//   //   MapContainer: () => {
-//   //     mockedMiniMap()
-//   //   },
-
-// //   ImageOverlay: () => {
-// //     mockedImageOverlay()
-// //   }
-// }))
-
-// jest.mock('react-leaflet/MapContainer', () => jest.fn(({ children }) => (
-//   <mock-MapContainer data-testid="MapContainer">
-//     {children}
-//   </mock-MapContainer>
-// )))
-
-// jest.mock('react-leaflet/ImageOverlay', () => jest.fn(({ children }) => (
-//   <mock-ImageOverlay data-testid="ImageOverlay">
-//     {children}
-//   </mock-ImageOverlay>
-// )))
 
 const setup = (overrides) => {
   const {
@@ -119,8 +82,8 @@ const setup = (overrides) => {
 }
 
 describe('CollectionDetailsBody component', () => {
-  describe('when the collection mini map is loaded with metadata', () => {
-    test('calls leaflet to render map with correct props', () => {
+  describe('when the collection details mini-map is loaded with metadata', () => {
+    test('calls leaflet to render the map container', () => {
       setup()
       expect(MapContainer).toHaveBeenCalledTimes(1)
     })
