@@ -496,63 +496,6 @@ export const CollectionDetailsBody = ({
                     />
                   </div>
                 </div>
-              // <div className="row collection-details-body__row collection-details-body__feature">
-              //   <div className="col col-12">
-              //     <div className="collection-details-body__feature-heading">
-              //       <h5 className="collection-details-body__feature-title">AWS Cloud</h5>
-              //       <p>Available for access in-region with AWS Cloud</p>
-              //     </div>
-              //     <div className="collection-details-body__cloud-access-content">
-              //       <dl className="collection-details-body__info">
-              //         <dt>Region</dt>
-              //         <dd
-              //           className="collection-details-body__cloud-access__region"
-              //           data-testid="collection-details-body__cloud-access__region"
-              //         >
-              //           {region}
-              //         </dd>
-              //         <dt>Bucket/Object Prefix</dt>
-              //         {
-              //           s3BucketAndObjectPrefixNames.length && (
-              //             s3BucketAndObjectPrefixNames.map((name, i) => {
-              //               const key = `${name}-${i}`
-              //               return (
-              //                 <dd
-              //                   key={key}
-              //                   className="collection-details-body__cloud-access__bucket-name"
-              //                   data-testid="collection-details-body__cloud-access__bucket-name"
-              //                 >
-              //                   {name}
-              //                 </dd>
-              //               )
-              //             })
-              //           )
-              //         }
-              //         <dt>AWS S3 Credentials</dt>
-              //         <dd className="collection-details-body__links collection-details-body__links--horizontal">
-              //           <a
-              //             className="link link--external collection-details-body__link collection-details-body__cloud-access__api-link"
-              //             data-testid="collection-details-body__cloud-access__api-link"
-              //             href={s3CredentialsApiEndpoint}
-              //             rel="noopener noreferrer"
-              //             target="_blank"
-              //           >
-              //             Get AWS S3 Credentials
-              //           </a>
-              //           <a
-              //             className="link link--separated link--external collection-details-body__link collection-details-body__cloud-access__documentation-link"
-              //             data-testid="collection-details-body__cloud-access__documentation-link"
-              //             href={s3CredentialsApiDocumentationUrl}
-              //             rel="noopener noreferrer"
-              //             target="_blank"
-              //           >
-              //             Documentation
-              //           </a>
-              //         </dd>
-              //       </dl>
-              //     </div>
-              //   </div>
-              // </div>
               )
             }
             {

@@ -8,17 +8,8 @@ import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
 
-// import Enzyme, { shallow } from 'enzyme'
-// import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-
-// import ArrowTags from '../../ArrowTags/ArrowTags'
-// import Button from '../../Button/Button'
-// import CollapsePanel from '../../CollapsePanel/CollapsePanel'
-
 import CollectionDetailsBody from '../CollectionDetailsBody'
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
-// import RelatedCollection from '../../RelatedCollection/RelatedCollection'
-// import SplitBadge from '../../SplitBadge/SplitBadge'
 
 // Mock react-leaflet because it causes errors
 jest.mock('react-leaflet', () => ({
@@ -35,76 +26,6 @@ jest.mock('../CollectionDetailsMinimap', () => jest.fn(({ children }) => (
 
 // Mock Related Collection component
 jest.mock('../../RelatedCollection/RelatedCollection', () => () => (<div> Mock related collection</div>))
-// Enzyme.configure({ adapter: new Adapter() })
-
-// function setup(overrides) {
-//   const {
-//     overrideMetadata = {},
-//     overrideProps = {}
-//   } = overrides || {}
-
-//   const props = {
-//     isActive: true,
-//     collectionMetadata: {
-//       hasAllMetadata: true,
-//       dataCenters: [],
-//       directDistributionInformation: {},
-//       scienceKeywords: [],
-//       nativeDataFormats: [],
-//       urls: {
-//         html: {
-//           title: 'HTML',
-//           href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.html'
-//         },
-//         native: {
-//           title: 'Native',
-//           href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.native'
-//         },
-//         atom: {
-//           title: 'ATOM',
-//           href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.atom'
-//         },
-//         echo10: {
-//           title: 'ECHO10',
-//           href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.echo10'
-//         },
-//         iso19115: {
-//           title: 'ISO19115',
-//           href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.iso19115'
-//         },
-//         dif: {
-//           title: 'DIF',
-//           href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.dif'
-//         },
-//         osdd: {
-//           title: 'OSDD',
-//           href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=edsc-prod&shortName=1860_1993_2050_NITROGEN_830&versionId=1&dataCenter=ORNL_DAAC'
-//         },
-//         granuleDatasource: {
-//           title: 'CMR',
-//           href: 'https://cmr.earthdata.nasa.gov/search/granules.json?echo_collection_id=C179003620-ORNL_DAAC'
-//         }
-//       },
-//       ...overrideMetadata
-//     },
-//     location: {
-//       pathname: '/search'
-//     },
-//     onFocusedCollectionChange: jest.fn(),
-//     onMetricsRelatedCollection: jest.fn(),
-//     onToggleRelatedUrlsModal: jest.fn(),
-//     ...overrideProps
-//   }
-
-//   const enzymeWrapper = shallow(<CollectionDetailsBody {...props} />)
-
-//   return {
-//     enzymeWrapper,
-//     props
-//   }
-// }
-
-// TODO Setup for react-testing-library
 
 const setup = (overrides) => {
   const {
@@ -241,39 +162,6 @@ describe('CollectionDetailsBody component', () => {
         expect(doiLink).toBeInTheDocument()
         expect(doiLink.href).toEqual('https://dx.doi.org/10.3334/ORNLDAAC/1569')
       })
-
-      // test('has the correct props', () => {
-      //   const { enzymeWrapper } = setup({
-      //     overrideMetadata: {
-      //       doi: {
-      //         doiLink: 'https://dx.doi.org/10.3334/ORNLDAAC/1569',
-      //         doiText: '10.3334/ORNLDAAC/1569'
-      //       }
-      //     }
-      //   })
-
-      //   expect(enzymeWrapper.find(SplitBadge).props()).toEqual({
-      //     className: null,
-      //     primary: 'DOI',
-      //     secondary: '10.3334/ORNLDAAC/1569',
-      //     variant: 'primary'
-      //   })
-      // })
-
-      // test('is wrapped in a link', () => {
-      //   const { enzymeWrapper } = setup({
-      //     overrideMetadata: {
-      //       doi: {
-      //         doiLink: 'https://dx.doi.org/10.3334/ORNLDAAC/1569',
-      //         doiText: '10.3334/ORNLDAAC/1569'
-      //       }
-      //     }
-      //   })
-
-      //   expect(enzymeWrapper.find('.collection-details-body__doi').props().href).toEqual(
-      //     'https://dx.doi.org/10.3334/ORNLDAAC/1569'
-      //   )
-      // })
     })
 
     describe('Associated DOIs', () => {
@@ -301,19 +189,6 @@ describe('CollectionDetailsBody component', () => {
         expect(doiLink2).toBeInTheDocument()
         expect(doiLink.href).toEqual('https://doi.org/10.1234/ParentDOIID1')
         expect(doiLink2.href).toEqual('https://doi.org/10.1234/ParentDOIID2')
-
-        // expect(enzymeWrapper.find('.collection-details-body__link').at(0).props().href).toEqual(
-        //   'https://doi.org/10.1234/ParentDOIID1'
-        // )
-        // expect(enzymeWrapper.find('.collection-details-body__link').at(0).text()).toEqual(
-        //   'DOI Title 1'
-        // )
-        // expect(enzymeWrapper.find('.collection-details-body__link').at(1).props().href).toEqual(
-        //   'https://doi.org/10.1234/ParentDOIID2'
-        // )
-        // expect(enzymeWrapper.find('.collection-details-body__link').at(1).text()).toEqual(
-        //   'DOI Title 2'
-        // )
       })
     })
 
@@ -427,17 +302,10 @@ describe('CollectionDetailsBody component', () => {
             ]
           }
         })
-        console.log('🚀 ~ file: CollectionDetailsBody.test.js:420 ~ test ~ onToggleRelatedUrlsModal:', onToggleRelatedUrlsModal)
+
         const relatedUrlLink = screen.getByRole('link', { name: 'Data Set Landing Page' })
         expect(relatedUrlLink).toBeInTheDocument()
         expect(relatedUrlLink.href).toEqual('https://doi.org/10.3334/ORNLDAAC/830')
-
-        // expect(enzymeWrapper.find('.collection-details-body__link').at(0).props().href).toEqual(
-        //   'https://doi.org/10.3334/ORNLDAAC/830'
-        // )
-        // expect(enzymeWrapper.find('.collection-details-body__link').at(0).text()).toEqual(
-        //   'Data Set Landing Page'
-        // )
 
         const viewAllRelatedByUrlsButton = screen.getByRole('button', { name: 'View All Related URLs' })
         expect(viewAllRelatedByUrlsButton.className).toEqual('button button--link link link--separated collection-details-body__link btn btn-link')
@@ -445,23 +313,10 @@ describe('CollectionDetailsBody component', () => {
         expect(onToggleRelatedUrlsModal).toHaveBeenCalledTimes(1)
         expect(onToggleRelatedUrlsModal).toHaveBeenCalledWith(true)
 
-        // expect(enzymeWrapper.find('.collection-details-body__link').at(1).find(Button).props().href).toEqual(null)
-        // expect(typeof enzymeWrapper.find('.collection-details-body__link').at(1).find(Button).props().onClick).toEqual('function')
-        // expect(enzymeWrapper.find('.collection-details-body__link').at(1).find(Button).props().bootstrapVariant).toEqual('link')
-
         // The .html url is the  `View More Info` link
-        const htmlLink = screen.getByRole('link', {
-          name: 'View More Info'
-        })
+        const htmlLink = screen.getByRole('link', { name: 'View More Info' })
         expect(htmlLink).toBeInTheDocument()
         expect(htmlLink.href).toEqual('https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.html')
-
-        // expect(enzymeWrapper.find('.collection-details-body__link').at(2).props().href).toEqual(
-        //   'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.html'
-        // )
-        // expect(enzymeWrapper.find('.collection-details-body__link').at(2).text()).toEqual(
-        //   'View More Info'
-        // )
       })
     })
 
@@ -476,10 +331,150 @@ describe('CollectionDetailsBody component', () => {
         })
 
         expect(screen.getByText('1860-01-01 to 2050-12-31')).toBeInTheDocument()
+      })
+    })
+    // TODO add data center test for coverage
+    describe('Data center', () => {
+      test('renders correctly', () => {
+        const mockDataCenters = [
+          {
+            roles: [
+              'DISTRIBUTOR'
+            ],
+            shortName: 'USAP-DC',
+            longName: 'United States Antarctic Program Data Center',
+            contactInformation: {
+              contactMechanisms: [
+                {
+                  type: 'Email',
+                  value: 'info@usap-dc.org'
+                }
+              ],
+              addresses: [
+                {
+                  country: 'United States'
+                }
+              ],
+              relatedUrls: [
+                {
+                  urlContentType: 'DataCenterURL',
+                  type: 'HOME PAGE',
+                  url: 'http://www.usap-dc.org/'
+                }
+              ]
+            },
+            contactPersons: [
+              {
+                roles: [
+                  'Data Center Contact'
+                ],
+                firstName: 'Data',
+                lastName: 'Manager',
+                contactInformation: {
+                  contactMechanisms: [
+                    {
+                      type: 'Email',
+                      value: 'info@usap-dc.org'
+                    }
+                  ],
+                  addresses: [
+                    {
+                      country: 'United States'
+                    }
+                  ],
+                  relatedUrls: [
+                    {
+                      urlContentType: 'DataContactURL',
+                      type: 'HOME PAGE',
+                      url: 'http://www.usap-dc.org/'
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
 
-        // expect(enzymeWrapper.find('.collection-details-body__info').find('dd').at(1).text()).toEqual(
-        //   '1860-01-01 to 2050-12-31'
-        // )
+        setup({
+          overrideMetadata: {
+            dataCenters: mockDataCenters
+          }
+        })
+        expect(screen.getByText('info@usap-dc.org')).toBeInTheDocument()
+        // expect(screen.getByText('DISTRIBUTOR')).toBeInTheDocument()
+        // expect(screen.getByText('ARCHIVER')).toBeInTheDocument()
+
+        // expect(screen.getByText('1860-01-01 to 2050-12-31')).toBeInTheDocument()
+      })
+      describe('when contact information is not email or facebook', () => {
+        test('renders correctly', () => {
+          const mockDataCenters = [
+            {
+              roles: [
+                'DISTRIBUTOR'
+              ],
+              shortName: 'USAP-DC',
+              longName: 'United States Antarctic Program Data Center',
+              contactInformation: {
+                contactMechanisms: [
+                  {
+                    type: 'Email',
+                    value: 'info@usap-dc.org'
+                  }
+                ],
+                addresses: [
+                  {
+                    country: 'United States'
+                  }
+                ],
+                relatedUrls: [
+                  {
+                    urlContentType: 'DataCenterURL',
+                    type: 'HOME PAGE',
+                    url: 'http://www.usap-dc.org/'
+                  }
+                ]
+              },
+              contactPersons: [
+                {
+                  roles: [
+                    'Data Center Contact'
+                  ],
+                  firstName: 'Data',
+                  lastName: 'Manager',
+                  contactInformation: {
+                    contactMechanisms: [
+                      {
+                        type: 'mock-contact-info-type',
+                        value: 'mock-contact-info-value'
+                      }
+                    ],
+                    addresses: [
+                      {
+                        country: 'United States'
+                      }
+                    ],
+                    relatedUrls: [
+                      {
+                        urlContentType: 'DataContactURL',
+                        type: 'HOME PAGE',
+                        url: 'http://www.usap-dc.org/'
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+
+          setup({
+            overrideMetadata: {
+              dataCenters: mockDataCenters
+            }
+          })
+
+          expect(screen.queryByText('mock-contact-info-value')).not.toBeInTheDocument()
+        })
       })
     })
 
@@ -594,17 +589,6 @@ describe('CollectionDetailsBody component', () => {
 
         expect(screen.getByText('XML, ASCII, ICARTT')).toBeInTheDocument()
         expect(screen.getByText('PNG, JPEG, TIFF')).toBeInTheDocument()
-
-        // const reformattingsDataElement = enzymeWrapper.find('.collection-details-body__info').find('dd').at(1)
-
-        // const format1 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(0)
-        // const format2 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(1)
-
-        // expect(format1.find('dt').text()).toEqual('HDF-EOS2<EDSCIcon />')
-        // expect(format2.find('dt').text()).toEqual('HDF-EOS5<EDSCIcon />')
-
-        // expect(format1.find('dd').text()).toEqual('XML, ASCII, ICARTT')
-        // expect(format2.find('dd').text()).toEqual('PNG, JPEG, TIFF')
       })
 
       test('does not render options not supported by EDSC', () => {
@@ -646,8 +630,6 @@ describe('CollectionDetailsBody component', () => {
 
         expect(screen.queryAllByText('HDF-EOS2').length).toEqual(0)
         expect(screen.queryAllByText('HDF-EOS5').length).toEqual(0)
-
-        // expect(enzymeWrapper.find('.collection-details-body__reformatting-item').exists()).toBeFalsy()
       })
     })
 
@@ -664,11 +646,6 @@ describe('CollectionDetailsBody component', () => {
         expect(screen.getByText('Earth Science')).toBeInTheDocument()
         expect(screen.getByText('Atmosphere')).toBeInTheDocument()
         expect(screen.getByText('Atmospheric Chemistry')).toBeInTheDocument()
-
-        // expect(enzymeWrapper.find('.collection-details-body__keywords').find(ArrowTags).props()).toEqual({
-        //   className: '',
-        //   tags: ['Earth Science', 'Atmosphere', 'Atmospheric Chemistry']
-        // })
       })
     })
 
@@ -681,8 +658,6 @@ describe('CollectionDetailsBody component', () => {
         })
         expect(screen.getByText('PDF')).toBeInTheDocument()
         expect(screen.getAllByText('PDF').length).toEqual(1)
-
-        // expect(enzymeWrapper.find('.collection-details-body__native-formats').text()).toEqual('PDF')
       })
     })
 
@@ -696,13 +671,9 @@ describe('CollectionDetailsBody component', () => {
 
         expect(screen.getByText('This data set provides global gridded estimates of atmospheric deposition of total inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and projections for the year 2050. The data set was generated using a global three-dimensional chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000). Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario data (IPCC, 1996; 2000) were used as input to the model.'))
           .toBeInTheDocument()
-
-        // expect(enzymeWrapper.find('.collection-details-body__abstract').text()).toEqual(
-        //   'This data set provides global gridded estimates of atmospheric deposition of total inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and projections for the year 2050. The data set was generated using a global three-dimensional chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000). Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario data (IPCC, 1996; 2000) were used as input to the model.'
-        // )
       })
     })
-    // todo why is this giving me lower case value on the DOM?
+    // TODO: why is this giving me lower case value on the DOM?
     describe('Direct Distribution Information', () => {
       test('renders correctly', () => {
         setup({
@@ -733,7 +704,7 @@ describe('CollectionDetailsBody component', () => {
         // expect(enzymeWrapper.find('.collection-details-body__cloud-access__documentation-link').props().href).toEqual('https://DAACCredentialDocumentation.org')
       })
     })
-    // TODO: I want to reuse each of the setups in a describe block instead of calling them each test
+
     describe('Variable Instance data', () => {
       describe('when the collection has variables with instance information', () => {
         const overrideMetadata = {
@@ -988,7 +959,6 @@ describe('CollectionDetailsBody component', () => {
           }
         })
         expect(screen.getAllByText('Mock related collection').length).toEqual(3)
-        // expect(enzymeWrapper.find(RelatedCollection).length).toEqual(3)
       })
     })
   })
