@@ -630,6 +630,7 @@ export class OrderStatusItem extends PureComponent {
                           retrievalId={retrievalId}
                           retrievalCollectionId={retrievalCollectionId}
                           showTextWindowActions={!isEsi}
+                          collectionIsCSDA={collectionIsCSDA}
                         />
                       </Tab>
                     )
