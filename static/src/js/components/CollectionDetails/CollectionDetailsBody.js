@@ -11,11 +11,12 @@ import Button from '../Button/Button'
 import CollapsePanel from '../CollapsePanel/CollapsePanel'
 import CollectionDetailsDataCenter from './CollectionDetailsDataCenter'
 import CollectionDetailsMinimap from './CollectionDetailsMinimap'
+import DirectDistributionInformation from './DirectDistributionInformation'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import RelatedCollection from '../RelatedCollection/RelatedCollection'
 import Skeleton from '../Skeleton/Skeleton'
 import SplitBadge from '../SplitBadge/SplitBadge'
-import VariableInstanceInformation from '../VariableInstanceInformation/VariableInstanceInformation'
+import VariableInstanceInformation from './VariableInstanceInformation'
 
 import { collectionDetailsSkeleton } from './skeleton'
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
@@ -78,23 +79,12 @@ const buildNativeFormatList = (nativeFormats) => {
   )
 }
 
-const buildVarInstanceInformation = (conceptId, instanceInformation) => {
-  console.log('🚀 ~ file: CollectionDetailsBody.js:82 ~ buildVarInstanceInformation ~ conceptId:', conceptId)
-  console.log('🚀 ~ file: CollectionDetailsBody.js:81 ~ buildVariableInstanceInformation ~ instanceInformation:', instanceInformation)
-  // const {
-  //   url, format, description, directDistributionInformation
-  // } = instanceInformation
-  return (
-    <VariableInstanceInformation
-      key={conceptId}
-      instanceInformation={instanceInformation}
-      // url={url}
-      // format={format}
-      // description={description}
-      // directDistributionInformation={directDistributionInformation}
-    />
-  )
-}
+const buildVarInstanceInformation = (conceptId, instanceInformation) => (
+  <VariableInstanceInformation
+    key={conceptId}
+    instanceInformation={instanceInformation}
+  />
+)
 
 const buildDoiLink = (doiLink, doiText) => {
   const DoiBadge = (
@@ -158,6 +148,7 @@ export const CollectionDetailsBody = ({
     variables,
     versionId
   } = collectionMetadata
+  console.log('🚀 ~ file: CollectionDetailsBody.js:150 ~ spatial:', spatial)
 
   console.log('🚀 ~ file: CollectionDetailsBody.js:143 ~ variables:', variables)
 
@@ -169,7 +160,8 @@ export const CollectionDetailsBody = ({
             shapes={collectionDetailsSkeleton}
             containerStyle={{
               height: '400px',
-              width: '100%'
+              width: '100%',
+              dataTestId: 'collection-details-body__skeleton'
             }}
           />
         </div>
@@ -236,10 +228,7 @@ export const CollectionDetailsBody = ({
   }
 
   const {
-    region,
-    s3BucketAndObjectPrefixNames = [],
-    s3CredentialsApiEndpoint,
-    s3CredentialsApiDocumentationUrl
+    region
   } = directDistributionInformation
 
   const {
@@ -496,63 +485,74 @@ export const CollectionDetailsBody = ({
             {(region || (variableInstancesInformation.length > 0)) && <h4 className="collection-details-body__cloud-access-title"> Cloud Access</h4>}
             {
               region && (
-                <div className="row collection-details-body__row collection-details-body__feature">
-                  <div className="col col-12">
-                    <div className="collection-details-body__feature-heading">
-                      <h5 className="collection-details-body__feature-title">AWS Cloud</h5>
-                      <p>Available for access in-region with AWS Cloud</p>
-                    </div>
-                    <div className="collection-details-body__cloud-access-content">
-                      <dl className="collection-details-body__info">
-                        <dt>Region</dt>
-                        <dd
-                          className="collection-details-body__cloud-access__region"
-                          data-testid="collection-details-body__cloud-access__region"
-                        >
-                          {region}
-                        </dd>
-                        <dt>Bucket/Object Prefix</dt>
-                        {
-                          s3BucketAndObjectPrefixNames.length && (
-                            s3BucketAndObjectPrefixNames.map((name, i) => {
-                              const key = `${name}-${i}`
-                              return (
-                                <dd
-                                  key={key}
-                                  className="collection-details-body__cloud-access__bucket-name"
-                                  data-testid="collection-details-body__cloud-access__bucket-name"
-                                >
-                                  {name}
-                                </dd>
-                              )
-                            })
-                          )
-                        }
-                        <dt>AWS S3 Credentials</dt>
-                        <dd className="collection-details-body__links collection-details-body__links--horizontal">
-                          <a
-                            className="link link--external collection-details-body__link collection-details-body__cloud-access__api-link"
-                            data-testid="collection-details-body__cloud-access__api-link"
-                            href={s3CredentialsApiEndpoint}
-                            rel="noopener noreferrer"
-                            target="_blank"
-                          >
-                            Get AWS S3 Credentials
-                          </a>
-                          <a
-                            className="link link--separated link--external collection-details-body__link collection-details-body__cloud-access__documentation-link"
-                            data-testid="collection-details-body__cloud-access__documentation-link"
-                            href={s3CredentialsApiDocumentationUrl}
-                            rel="noopener noreferrer"
-                            target="_blank"
-                          >
-                            Documentation
-                          </a>
-                        </dd>
-                      </dl>
-                    </div>
+                <div>
+                  <div className="collection-details-body__feature-heading">
+                    <h5 className="collection-details-body__feature-title">AWS Cloud</h5>
+                    <p>Available for access in-region with AWS Cloud</p>
+                  </div>
+                  <div className="collection-details-body__cloud-access-content">
+                    <DirectDistributionInformation
+                      directDistributionInformation={directDistributionInformation}
+                    />
                   </div>
                 </div>
+              // <div className="row collection-details-body__row collection-details-body__feature">
+              //   <div className="col col-12">
+              //     <div className="collection-details-body__feature-heading">
+              //       <h5 className="collection-details-body__feature-title">AWS Cloud</h5>
+              //       <p>Available for access in-region with AWS Cloud</p>
+              //     </div>
+              //     <div className="collection-details-body__cloud-access-content">
+              //       <dl className="collection-details-body__info">
+              //         <dt>Region</dt>
+              //         <dd
+              //           className="collection-details-body__cloud-access__region"
+              //           data-testid="collection-details-body__cloud-access__region"
+              //         >
+              //           {region}
+              //         </dd>
+              //         <dt>Bucket/Object Prefix</dt>
+              //         {
+              //           s3BucketAndObjectPrefixNames.length && (
+              //             s3BucketAndObjectPrefixNames.map((name, i) => {
+              //               const key = `${name}-${i}`
+              //               return (
+              //                 <dd
+              //                   key={key}
+              //                   className="collection-details-body__cloud-access__bucket-name"
+              //                   data-testid="collection-details-body__cloud-access__bucket-name"
+              //                 >
+              //                   {name}
+              //                 </dd>
+              //               )
+              //             })
+              //           )
+              //         }
+              //         <dt>AWS S3 Credentials</dt>
+              //         <dd className="collection-details-body__links collection-details-body__links--horizontal">
+              //           <a
+              //             className="link link--external collection-details-body__link collection-details-body__cloud-access__api-link"
+              //             data-testid="collection-details-body__cloud-access__api-link"
+              //             href={s3CredentialsApiEndpoint}
+              //             rel="noopener noreferrer"
+              //             target="_blank"
+              //           >
+              //             Get AWS S3 Credentials
+              //           </a>
+              //           <a
+              //             className="link link--separated link--external collection-details-body__link collection-details-body__cloud-access__documentation-link"
+              //             data-testid="collection-details-body__cloud-access__documentation-link"
+              //             href={s3CredentialsApiDocumentationUrl}
+              //             rel="noopener noreferrer"
+              //             target="_blank"
+              //           >
+              //             Documentation
+              //           </a>
+              //         </dd>
+              //       </dl>
+              //     </div>
+              //   </div>
+              // </div>
               )
             }
             {

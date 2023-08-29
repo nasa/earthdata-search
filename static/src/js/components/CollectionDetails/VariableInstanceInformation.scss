@@ -8,7 +8,9 @@
         list-style-position: inside;
         margin-left: 1em;
       }
-
+      &__definition-list-container{
+        margin-left: 1rem;
+      }
       &__instance-field-title {
         font-weight: bold;
         display:inline;

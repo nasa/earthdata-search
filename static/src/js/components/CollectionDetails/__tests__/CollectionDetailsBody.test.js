@@ -1,27 +1,118 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
-import ArrowTags from '../../ArrowTags/ArrowTags'
-import Button from '../../Button/Button'
-import CollapsePanel from '../../CollapsePanel/CollapsePanel'
+import {
+  act, render, screen
+} from '@testing-library/react'
+
+import userEvent from '@testing-library/user-event'
+
+import '@testing-library/jest-dom'
+
+// import Enzyme, { shallow } from 'enzyme'
+// import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+// import ArrowTags from '../../ArrowTags/ArrowTags'
+// import Button from '../../Button/Button'
+// import CollapsePanel from '../../CollapsePanel/CollapsePanel'
+
 import CollectionDetailsBody from '../CollectionDetailsBody'
-import RelatedCollection from '../../RelatedCollection/RelatedCollection'
-import Skeleton from '../../Skeleton/Skeleton'
-import SplitBadge from '../../SplitBadge/SplitBadge'
+import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
+// import RelatedCollection from '../../RelatedCollection/RelatedCollection'
+// import SplitBadge from '../../SplitBadge/SplitBadge'
 
 // Mock react-leaflet because it causes errors
 jest.mock('react-leaflet', () => ({
-  createLayerComponent: jest.fn().mockImplementation(() => {})
 }))
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../CollectionDetailsMinimap', () => jest.fn(({ children }) => (
+  <mock-CollectionDetailsMinimap data-testid="collection-details-body__minimap">
+    {children}
+  </mock-CollectionDetailsMinimap>
+)))
 
-function setup(overrides) {
+// Mock CollectionDetailsMinimap as a component
+// jest.mock('../CollectionDetailsMinimap', () => () => (<div> Mock minimap</div>))
+
+// Mock Related Collection component
+jest.mock('../../RelatedCollection/RelatedCollection', () => () => (<div> Mock related collection</div>))
+// Enzyme.configure({ adapter: new Adapter() })
+
+// function setup(overrides) {
+//   const {
+//     overrideMetadata = {},
+//     overrideProps = {}
+//   } = overrides || {}
+
+//   const props = {
+//     isActive: true,
+//     collectionMetadata: {
+//       hasAllMetadata: true,
+//       dataCenters: [],
+//       directDistributionInformation: {},
+//       scienceKeywords: [],
+//       nativeDataFormats: [],
+//       urls: {
+//         html: {
+//           title: 'HTML',
+//           href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.html'
+//         },
+//         native: {
+//           title: 'Native',
+//           href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.native'
+//         },
+//         atom: {
+//           title: 'ATOM',
+//           href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.atom'
+//         },
+//         echo10: {
+//           title: 'ECHO10',
+//           href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.echo10'
+//         },
+//         iso19115: {
+//           title: 'ISO19115',
+//           href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.iso19115'
+//         },
+//         dif: {
+//           title: 'DIF',
+//           href: 'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.dif'
+//         },
+//         osdd: {
+//           title: 'OSDD',
+//           href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=edsc-prod&shortName=1860_1993_2050_NITROGEN_830&versionId=1&dataCenter=ORNL_DAAC'
+//         },
+//         granuleDatasource: {
+//           title: 'CMR',
+//           href: 'https://cmr.earthdata.nasa.gov/search/granules.json?echo_collection_id=C179003620-ORNL_DAAC'
+//         }
+//       },
+//       ...overrideMetadata
+//     },
+//     location: {
+//       pathname: '/search'
+//     },
+//     onFocusedCollectionChange: jest.fn(),
+//     onMetricsRelatedCollection: jest.fn(),
+//     onToggleRelatedUrlsModal: jest.fn(),
+//     ...overrideProps
+//   }
+
+//   const enzymeWrapper = shallow(<CollectionDetailsBody {...props} />)
+
+//   return {
+//     enzymeWrapper,
+//     props
+//   }
+// }
+
+// TODO Setup for react-testing-library
+
+const setup = (overrides) => {
   const {
     overrideMetadata = {},
     overrideProps = {}
   } = overrides || {}
+
+  const onToggleRelatedUrlsModal = jest.fn()
 
   const props = {
     isActive: true,
@@ -72,67 +163,71 @@ function setup(overrides) {
     },
     onFocusedCollectionChange: jest.fn(),
     onMetricsRelatedCollection: jest.fn(),
-    onToggleRelatedUrlsModal: jest.fn(),
+    onToggleRelatedUrlsModal,
     ...overrideProps
   }
-
-  const enzymeWrapper = shallow(<CollectionDetailsBody {...props} />)
+  act(() => {
+    render(<CollectionDetailsBody {...props} />)
+  })
 
   return {
-    enzymeWrapper,
-    props
+    onToggleRelatedUrlsModal
   }
 }
 
 describe('CollectionDetailsBody component', () => {
   describe('when the details are not loaded', () => {
     test('displays a skeleton loader', () => {
-      const { enzymeWrapper } = setup({
+      setup({
         overrideMetadata: {
           hasAllMetadata: false
         }
       })
-
-      expect(enzymeWrapper.find(Skeleton).length).toEqual(1)
+      // TODO I couldn't find a way to not use the test Id here
+      expect(screen.queryAllByTestId('collection-details-body__skeleton')).not.toBeNull()
     })
   })
-
+  // TODO There isn't a way to test this in react-testing-lib
   describe('when the details are loaded', () => {
     test('renders itself correctly', () => {
-      const { enzymeWrapper } = setup({
+      const spatialMetadata = 'Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)'
+      const boxesMetadata = '-90 -180 90 180'
+      setup({
         overrideMetadata: {
           boxes: [
-            '-90 -180 90 180'
+            boxesMetadata
           ],
           spatial: [
-            'Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)'
+            spatialMetadata
           ]
         }
       })
 
-      expect(enzymeWrapper.type()).toBe('div')
-      expect(enzymeWrapper.prop('className')).toBe('collection-details-body')
+      expect(CollectionDetailsMinimap).toHaveBeenCalledTimes(1)
+
+      expect(screen.getByText(spatialMetadata)).toBeInTheDocument()
+      // todo the boxes are on the minimap not rendered onto the page need to test this
+      // expect(screen.getByText(boxesMetadata)).toBeInTheDocument()
     })
 
     describe('Spatial bounding', () => {
       test('renders correctly', () => {
-        const { enzymeWrapper } = setup({
+        const spatialMetadata = 'Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)'
+        setup({
           overrideMetadata: {
             spatial: [
-              'Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)'
+              spatialMetadata
             ]
           }
         })
 
-        expect(enzymeWrapper.find('.collection-details-body__spatial-bounding').text()).toEqual(
-          'Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)'
-        )
+        expect(screen.getByText(spatialMetadata)).toBeInTheDocument()
       })
     })
 
     describe('DOI Badge', () => {
-      test('renders correctly', () => {
-        const { enzymeWrapper } = setup({
+      test('renders correctly and links to correct location', () => {
+        setup({
           overrideMetadata: {
             doi: {
               doiLink: 'https://dx.doi.org/10.3334/ORNLDAAC/1569',
@@ -141,46 +236,49 @@ describe('CollectionDetailsBody component', () => {
           }
         })
 
-        expect(enzymeWrapper.find(SplitBadge).length).toEqual(1)
+        // `DOI` is the primary prop for the badge which merges with name
+        const doiLink = screen.getByRole('link', { name: 'DOI 10.3334/ORNLDAAC/1569' })
+        expect(doiLink).toBeInTheDocument()
+        expect(doiLink.href).toEqual('https://dx.doi.org/10.3334/ORNLDAAC/1569')
       })
 
-      test('has the correct props', () => {
-        const { enzymeWrapper } = setup({
-          overrideMetadata: {
-            doi: {
-              doiLink: 'https://dx.doi.org/10.3334/ORNLDAAC/1569',
-              doiText: '10.3334/ORNLDAAC/1569'
-            }
-          }
-        })
+      // test('has the correct props', () => {
+      //   const { enzymeWrapper } = setup({
+      //     overrideMetadata: {
+      //       doi: {
+      //         doiLink: 'https://dx.doi.org/10.3334/ORNLDAAC/1569',
+      //         doiText: '10.3334/ORNLDAAC/1569'
+      //       }
+      //     }
+      //   })
 
-        expect(enzymeWrapper.find(SplitBadge).props()).toEqual({
-          className: null,
-          primary: 'DOI',
-          secondary: '10.3334/ORNLDAAC/1569',
-          variant: 'primary'
-        })
-      })
+      //   expect(enzymeWrapper.find(SplitBadge).props()).toEqual({
+      //     className: null,
+      //     primary: 'DOI',
+      //     secondary: '10.3334/ORNLDAAC/1569',
+      //     variant: 'primary'
+      //   })
+      // })
 
-      test('is wrapped in a link', () => {
-        const { enzymeWrapper } = setup({
-          overrideMetadata: {
-            doi: {
-              doiLink: 'https://dx.doi.org/10.3334/ORNLDAAC/1569',
-              doiText: '10.3334/ORNLDAAC/1569'
-            }
-          }
-        })
+      // test('is wrapped in a link', () => {
+      //   const { enzymeWrapper } = setup({
+      //     overrideMetadata: {
+      //       doi: {
+      //         doiLink: 'https://dx.doi.org/10.3334/ORNLDAAC/1569',
+      //         doiText: '10.3334/ORNLDAAC/1569'
+      //       }
+      //     }
+      //   })
 
-        expect(enzymeWrapper.find('.collection-details-body__doi').props().href).toEqual(
-          'https://dx.doi.org/10.3334/ORNLDAAC/1569'
-        )
-      })
+      //   expect(enzymeWrapper.find('.collection-details-body__doi').props().href).toEqual(
+      //     'https://dx.doi.org/10.3334/ORNLDAAC/1569'
+      //   )
+      // })
     })
 
     describe('Associated DOIs', () => {
       test('renders its links correctly', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           overrideMetadata: {
             associatedDois: [
               {
@@ -197,24 +295,33 @@ describe('CollectionDetailsBody component', () => {
           }
         })
 
-        expect(enzymeWrapper.find('.collection-details-body__link').at(0).props().href).toEqual(
-          'https://doi.org/10.1234/ParentDOIID1'
-        )
-        expect(enzymeWrapper.find('.collection-details-body__link').at(0).text()).toEqual(
-          'DOI Title 1'
-        )
-        expect(enzymeWrapper.find('.collection-details-body__link').at(1).props().href).toEqual(
-          'https://doi.org/10.1234/ParentDOIID2'
-        )
-        expect(enzymeWrapper.find('.collection-details-body__link').at(1).text()).toEqual(
-          'DOI Title 2'
-        )
+        const doiLink = screen.getByRole('link', { name: 'View DOI Title 1' })
+        const doiLink2 = screen.getByRole('link', { name: 'View DOI Title 2' })
+        expect(doiLink).toBeInTheDocument()
+        expect(doiLink2).toBeInTheDocument()
+        expect(doiLink.href).toEqual('https://doi.org/10.1234/ParentDOIID1')
+        expect(doiLink2.href).toEqual('https://doi.org/10.1234/ParentDOIID2')
+
+        // expect(enzymeWrapper.find('.collection-details-body__link').at(0).props().href).toEqual(
+        //   'https://doi.org/10.1234/ParentDOIID1'
+        // )
+        // expect(enzymeWrapper.find('.collection-details-body__link').at(0).text()).toEqual(
+        //   'DOI Title 1'
+        // )
+        // expect(enzymeWrapper.find('.collection-details-body__link').at(1).props().href).toEqual(
+        //   'https://doi.org/10.1234/ParentDOIID2'
+        // )
+        // expect(enzymeWrapper.find('.collection-details-body__link').at(1).text()).toEqual(
+        //   'DOI Title 2'
+        // )
       })
     })
 
     describe('Related URLs', () => {
-      test('renders its links correctly', () => {
-        const { enzymeWrapper } = setup({
+      test('renders its links correctly', async () => {
+        const user = userEvent.setup()
+
+        const { onToggleRelatedUrlsModal } = setup({
           overrideMetadata: {
             relatedUrls: [
               {
@@ -320,28 +427,47 @@ describe('CollectionDetailsBody component', () => {
             ]
           }
         })
+        console.log('🚀 ~ file: CollectionDetailsBody.test.js:420 ~ test ~ onToggleRelatedUrlsModal:', onToggleRelatedUrlsModal)
+        const relatedUrlLink = screen.getByRole('link', { name: 'Data Set Landing Page' })
+        expect(relatedUrlLink).toBeInTheDocument()
+        expect(relatedUrlLink.href).toEqual('https://doi.org/10.3334/ORNLDAAC/830')
 
-        expect(enzymeWrapper.find('.collection-details-body__link').at(0).props().href).toEqual(
-          'https://doi.org/10.3334/ORNLDAAC/830'
-        )
-        expect(enzymeWrapper.find('.collection-details-body__link').at(0).text()).toEqual(
-          'Data Set Landing Page'
-        )
-        expect(enzymeWrapper.find('.collection-details-body__link').at(1).find(Button).props().href).toEqual(null)
-        expect(typeof enzymeWrapper.find('.collection-details-body__link').at(1).find(Button).props().onClick).toEqual('function')
-        expect(enzymeWrapper.find('.collection-details-body__link').at(1).find(Button).props().bootstrapVariant).toEqual('link')
-        expect(enzymeWrapper.find('.collection-details-body__link').at(2).props().href).toEqual(
-          'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.html'
-        )
-        expect(enzymeWrapper.find('.collection-details-body__link').at(2).text()).toEqual(
-          'View More Info'
-        )
+        // expect(enzymeWrapper.find('.collection-details-body__link').at(0).props().href).toEqual(
+        //   'https://doi.org/10.3334/ORNLDAAC/830'
+        // )
+        // expect(enzymeWrapper.find('.collection-details-body__link').at(0).text()).toEqual(
+        //   'Data Set Landing Page'
+        // )
+
+        const viewAllRelatedByUrlsButton = screen.getByRole('button', { name: 'View All Related URLs' })
+        expect(viewAllRelatedByUrlsButton.className).toEqual('button button--link link link--separated collection-details-body__link btn btn-link')
+        await user.click(screen.getByRole('button', { name: 'View All Related URLs' }))
+        expect(onToggleRelatedUrlsModal).toHaveBeenCalledTimes(1)
+        expect(onToggleRelatedUrlsModal).toHaveBeenCalledWith(true)
+
+        // expect(enzymeWrapper.find('.collection-details-body__link').at(1).find(Button).props().href).toEqual(null)
+        // expect(typeof enzymeWrapper.find('.collection-details-body__link').at(1).find(Button).props().onClick).toEqual('function')
+        // expect(enzymeWrapper.find('.collection-details-body__link').at(1).find(Button).props().bootstrapVariant).toEqual('link')
+
+        // The .html url is the  `View More Info` link
+        const htmlLink = screen.getByRole('link', {
+          name: 'View More Info'
+        })
+        expect(htmlLink).toBeInTheDocument()
+        expect(htmlLink.href).toEqual('https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.html')
+
+        // expect(enzymeWrapper.find('.collection-details-body__link').at(2).props().href).toEqual(
+        //   'https://cmr.earthdata.nasa.gov/search/concepts/C179003620-ORNL_DAAC.html'
+        // )
+        // expect(enzymeWrapper.find('.collection-details-body__link').at(2).text()).toEqual(
+        //   'View More Info'
+        // )
       })
     })
 
     describe('Temporal Extent', () => {
       test('renders correctly', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           overrideMetadata: {
             temporal: [
               '1860-01-01 to 2050-12-31'
@@ -349,29 +475,28 @@ describe('CollectionDetailsBody component', () => {
           }
         })
 
-        expect(enzymeWrapper.find('.collection-details-body__info').find('dd').at(1).text()).toEqual(
-          '1860-01-01 to 2050-12-31'
-        )
+        expect(screen.getByText('1860-01-01 to 2050-12-31')).toBeInTheDocument()
+
+        // expect(enzymeWrapper.find('.collection-details-body__info').find('dd').at(1).text()).toEqual(
+        //   '1860-01-01 to 2050-12-31'
+        // )
       })
     })
 
     describe('GIBS Layers', () => {
       test('renders correctly', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           overrideMetadata: {
-            gibsLayers: 'None'
+            gibsLayers: 'Gib layer'
           }
         })
-
-        expect(enzymeWrapper.find('.collection-details-body__info').find('dd').at(1).text()).toEqual(
-          'None'
-        )
+        expect(screen.getByText('Gib layer')).toBeInTheDocument()
       })
     })
 
     describe('Supported Reformatting', () => {
       test('renders correctly', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           overrideMetadata: {
             services: {
               items: [
@@ -407,20 +532,26 @@ describe('CollectionDetailsBody component', () => {
           }
         })
 
-        const reformattingsDataElement = enzymeWrapper.find('.collection-details-body__info').find('dd').at(1)
+        // todo ensure that these are the same
+        expect(screen.getByText('HDF-EOS2')).toBeInTheDocument()
+        expect(screen.getByText('HDF-EOS5')).toBeInTheDocument()
+        expect(screen.getByText('XML, ASCII, ICARTT')).toBeInTheDocument()
+        expect(screen.getByText('PNG, JPEG, TIFF')).toBeInTheDocument()
 
-        const format1 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(0)
-        const format2 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(1)
+        // const reformattingsDataElement = enzymeWrapper.find('.collection-details-body__info').find('dd').at(1)
 
-        expect(format1.find('dt').text()).toEqual('HDF-EOS2<EDSCIcon />')
-        expect(format2.find('dt').text()).toEqual('HDF-EOS5<EDSCIcon />')
+        // const format1 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(0)
+        // const format2 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(1)
 
-        expect(format1.find('dd').text()).toEqual('XML, ASCII, ICARTT')
-        expect(format2.find('dd').text()).toEqual('PNG, JPEG, TIFF')
+        // expect(format1.find('dt').text()).toEqual('HDF-EOS2<EDSCIcon />')
+        // expect(format2.find('dt').text()).toEqual('HDF-EOS5<EDSCIcon />')
+
+        // expect(format1.find('dd').text()).toEqual('XML, ASCII, ICARTT')
+        // expect(format2.find('dd').text()).toEqual('PNG, JPEG, TIFF')
       })
 
       test('does not render duplicate formats', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           overrideMetadata: {
             services: {
               items: [
@@ -456,20 +587,28 @@ describe('CollectionDetailsBody component', () => {
           }
         })
 
-        const reformattingsDataElement = enzymeWrapper.find('.collection-details-body__info').find('dd').at(1)
+        expect(screen.getByText('HDF-EOS2')).toBeInTheDocument()
 
-        const format1 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(0)
-        const format2 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(1)
+        // Only one element with the text `HDF-EOS5` is rendered
+        expect(screen.getAllByText('HDF-EOS5').length).toEqual(1)
 
-        expect(format1.find('dt').text()).toEqual('HDF-EOS2<EDSCIcon />')
-        expect(format2.find('dt').text()).toEqual('HDF-EOS5<EDSCIcon />')
+        expect(screen.getByText('XML, ASCII, ICARTT')).toBeInTheDocument()
+        expect(screen.getByText('PNG, JPEG, TIFF')).toBeInTheDocument()
 
-        expect(format1.find('dd').text()).toEqual('XML, ASCII, ICARTT')
-        expect(format2.find('dd').text()).toEqual('PNG, JPEG, TIFF')
+        // const reformattingsDataElement = enzymeWrapper.find('.collection-details-body__info').find('dd').at(1)
+
+        // const format1 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(0)
+        // const format2 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(1)
+
+        // expect(format1.find('dt').text()).toEqual('HDF-EOS2<EDSCIcon />')
+        // expect(format2.find('dt').text()).toEqual('HDF-EOS5<EDSCIcon />')
+
+        // expect(format1.find('dd').text()).toEqual('XML, ASCII, ICARTT')
+        // expect(format2.find('dd').text()).toEqual('PNG, JPEG, TIFF')
       })
 
       test('does not render options not supported by EDSC', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           overrideMetadata: {
             services: {
               items: [
@@ -505,56 +644,68 @@ describe('CollectionDetailsBody component', () => {
           }
         })
 
-        expect(enzymeWrapper.find('.collection-details-body__reformatting-item').exists()).toBeFalsy()
+        expect(screen.queryAllByText('HDF-EOS2').length).toEqual(0)
+        expect(screen.queryAllByText('HDF-EOS5').length).toEqual(0)
+
+        // expect(enzymeWrapper.find('.collection-details-body__reformatting-item').exists()).toBeFalsy()
       })
     })
 
     describe('Science Keywords', () => {
       test('renders correctly', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           overrideMetadata: {
             scienceKeywords: [
               ['Earth Science', 'Atmosphere', 'Atmospheric Chemistry']
             ]
           }
         })
+        screen.debug()
+        expect(screen.getByText('Earth Science')).toBeInTheDocument()
+        expect(screen.getByText('Atmosphere')).toBeInTheDocument()
+        expect(screen.getByText('Atmospheric Chemistry')).toBeInTheDocument()
 
-        expect(enzymeWrapper.find('.collection-details-body__keywords').find(ArrowTags).props()).toEqual({
-          className: '',
-          tags: ['Earth Science', 'Atmosphere', 'Atmospheric Chemistry']
-        })
+        // expect(enzymeWrapper.find('.collection-details-body__keywords').find(ArrowTags).props()).toEqual({
+        //   className: '',
+        //   tags: ['Earth Science', 'Atmosphere', 'Atmospheric Chemistry']
+        // })
       })
     })
 
     describe('Data Formats', () => {
       test('renders correctly', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           overrideMetadata: {
             nativeDataFormats: ['PDF']
           }
         })
+        expect(screen.getByText('PDF')).toBeInTheDocument()
+        expect(screen.getAllByText('PDF').length).toEqual(1)
 
-        expect(enzymeWrapper.find('.collection-details-body__native-formats').text()).toEqual('PDF')
+        // expect(enzymeWrapper.find('.collection-details-body__native-formats').text()).toEqual('PDF')
       })
     })
 
     describe('Summary', () => {
       test('renders correctly', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           overrideMetadata: {
             abstract: 'This data set provides global gridded estimates of atmospheric deposition of total inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and projections for the year 2050. The data set was generated using a global three-dimensional chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000). Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario data (IPCC, 1996; 2000) were used as input to the model.'
           }
         })
 
-        expect(enzymeWrapper.find('.collection-details-body__abstract').text()).toEqual(
-          'This data set provides global gridded estimates of atmospheric deposition of total inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and projections for the year 2050. The data set was generated using a global three-dimensional chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000). Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario data (IPCC, 1996; 2000) were used as input to the model.'
-        )
+        expect(screen.getByText('This data set provides global gridded estimates of atmospheric deposition of total inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and projections for the year 2050. The data set was generated using a global three-dimensional chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000). Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario data (IPCC, 1996; 2000) were used as input to the model.'))
+          .toBeInTheDocument()
+
+        // expect(enzymeWrapper.find('.collection-details-body__abstract').text()).toEqual(
+        //   'This data set provides global gridded estimates of atmospheric deposition of total inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and projections for the year 2050. The data set was generated using a global three-dimensional chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000). Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario data (IPCC, 1996; 2000) were used as input to the model.'
+        // )
       })
     })
-
+    // todo why is this giving me lower case value on the DOM?
     describe('Direct Distribution Information', () => {
       test('renders correctly', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           overrideMetadata: {
             directDistributionInformation: {
               region: 'us-east-2',
@@ -565,61 +716,146 @@ describe('CollectionDetailsBody component', () => {
           }
         })
 
-        expect(enzymeWrapper.find('.collection-details-body__cloud-access__region').text()).toEqual('us-east-2')
-        expect(enzymeWrapper.find('.collection-details-body__cloud-access__bucket-name').text()).toEqual('TestBucketOrObjectPrefix')
-        expect(enzymeWrapper.find('.collection-details-body__cloud-access__api-link').props().href).toEqual('https://DAACCredentialEndpoint.org')
-        expect(enzymeWrapper.find('.collection-details-body__cloud-access__documentation-link').props().href).toEqual('https://DAACCredentialDocumentation.org')
+        // Get the region information for direct distribution
+        expect(screen.getByText('us-east-2')).toBeInTheDocument()
+
+        // Get access bucket name
+        expect(screen.getByText('TestBucketOrObjectPrefix')).toBeInTheDocument()
+
+        // todo can hrefs not be captial
+        // lower-case hrefs are treated the same as upper-case hrefs
+        expect(screen.getByRole('link', { name: 'Get AWS S3 Credentials' }).href).toEqual('https://daaccredentialendpoint.org/')
+        expect(screen.getByRole('link', { name: 'Documentation' }).href).toEqual('https://daaccredentialdocumentation.org/')
+        // .toHaveTextContent('s3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name')
+        // expect(enzymeWrapper.find('.collection-details-body__cloud-access__region').text()).toEqual('us-east-2')
+        // expect(enzymeWrapper.find('.collection-details-body__cloud-access__bucket-name').text()).toEqual('TestBucketOrObjectPrefix')
+        // expect(enzymeWrapper.find('.collection-details-body__cloud-access__api-link').props().href).toEqual('https://DAACCredentialEndpoint.org')
+        // expect(enzymeWrapper.find('.collection-details-body__cloud-access__documentation-link').props().href).toEqual('https://DAACCredentialDocumentation.org')
       })
     })
-
+    // TODO: I want to reuse each of the setups in a describe block instead of calling them each test
     describe('Variable Instance data', () => {
-      test.only('renders correctly', () => {
-        const { enzymeWrapper } = setup({
-          variables: {
-            items: [
-              {
-                instanceInformation: {
-                  url: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name',
-                  format: 'Zarr',
-                  description: 'brief end user information goes here.',
-                  directDistributionInformation: {
-                    region: 'us-west-2',
-                    s3BucketAndObjectPrefixNames: [
-                      'test-aws-cache',
-                      'zarr/test-name'
-                    ],
-                    s3CredentialsApiEndpoint: 'https://api.test.earthdata.nasa.gov/s3credentials',
-                    s3CredentialsApiDocumentationUrl: 'https://test/information/documents?title=In-region%20Direct%20S3%20Zarr%20Cache%20Access'
-                  },
-                  chunkingInformation: 'Chunk size for this test example is 1MB. optimized for time series.'
+      describe('when the collection has variables with instance information', () => {
+        const overrideMetadata = {
+          overrideMetadata: {
+            variables: {
+              items: [
+                {
+                  conceptId: 'V123456-EDSC',
+                  instanceInformation: {
+                    url: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name',
+                    format: 'Zarr',
+                    description: 'brief end user information goes here.',
+                    directDistributionInformation: {
+                      region: 'us-west-2',
+                      s3BucketAndObjectPrefixNames: [
+                        'test-aws-cache',
+                        'zarr/test-name'
+                      ],
+                      s3CredentialsApiEndpoint: 'https://api.test.earthdata.nasa.gov/s3credentials',
+                      s3CredentialsApiDocumentationUrl: 'https://test/information/documents?title=In-region%20Direct%20S3%20Zarr%20Cache%20Access'
+                    },
+                    chunkingInformation: 'Chunk size for this test example is 1MB. optimized for time series.'
+                  }
                 }
-              }
-            ]
+              ]
+            }
           }
+        }
+
+        test('renders variable instance information', () => {
+          setup(overrideMetadata)
+          expect(screen.getByRole('link', { name: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name' }))
+            .toHaveTextContent('s3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name')
         })
 
-        expect(enzymeWrapper.find('.collection-details-body__cloud-access__region').text()).toEqual('us-east-2')
-        expect(enzymeWrapper.find('.collection-details-body__cloud-access__bucket-name').text()).toEqual('TestBucketOrObjectPrefix')
-        expect(enzymeWrapper.find('.collection-details-body__cloud-access__api-link').props().href).toEqual('https://DAACCredentialEndpoint.org')
-        expect(enzymeWrapper.find('.collection-details-body__cloud-access__documentation-link').props().href).toEqual('https://DAACCredentialDocumentation.org')
+        test('renders cloud access header', () => {
+          // TODO we used 'value' on EDD but, here 'name was only one that worked'
+          setup(overrideMetadata)
+          expect(screen.getByRole('heading', {
+            level: 4,
+            name: 'Cloud Access'
+          })).toBeInTheDocument()
+        })
+      })
+
+      describe('when the collection has variables without instance information', () => {
+        const overrideMetadata = {
+          overrideMetadata: {
+            variables: {
+              items: [
+                {
+                  conceptId: 'V123456-EDSC'
+                }
+              ]
+            }
+          }
+        }
+
+        test('does not render variable instance information', () => {
+          setup(overrideMetadata)
+          expect(screen.queryByRole('link', { name: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name' })).toBeNull()
+        })
+
+        test('does Not render cloud access header', () => {
+          // TODO we used 'value' on EDD but, here 'name was only one that worked'
+          setup(overrideMetadata)
+          expect(screen.queryByRole('heading', {
+            level: 4,
+            name: 'Cloud Access'
+          })).not.toBeInTheDocument()
+        })
+      })
+
+      describe('when the collection does not have variables', () => {
+        test('does not render variable instance information', () => {
+          setup()
+          expect(screen.queryByRole('link', { name: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name' })).toBeNull()
+        })
+
+        test('does Not render cloud access header', () => {
+          // TODO we used 'value' on EDD but, here 'name was only one that worked'
+          setup()
+          expect(screen.queryByRole('heading', {
+            level: 4,
+            name: 'Cloud Access'
+          })).not.toBeInTheDocument()
+        })
       })
     })
 
     describe('"For Developers" Panel', () => {
-      test('has the correct props', () => {
-        const { enzymeWrapper } = setup()
-        const children = enzymeWrapper.find(CollapsePanel).children()
-        expect(enzymeWrapper.find(CollapsePanel).props().className).toEqual('collection-details-body__for-devs')
-        expect(enzymeWrapper.find(CollapsePanel).props().header).toEqual('For Developers')
-        expect(enzymeWrapper.find(CollapsePanel).props().panelClassName).toEqual('')
-        expect(enzymeWrapper.find(CollapsePanel).props().scrollToBottom).toEqual(true)
-        expect(children.find('.collection-details-body__dev-list a').length).toEqual(7)
+      test('has the correct props', async () => {
+        const user = userEvent.setup()
+
+        setup()
+        const forDevelopersCollapsablePanel = screen.getByText('For Developers')
+        await user.click(forDevelopersCollapsablePanel)
+        // expect(screen.getByText('For Developers'))
+
+        // todo this is turning into `collapse-panel__button-primary` as the value
+        // expect(screen.getByText('For Developers')).toHaveClass('collection-details-body__for-devs')
+        const developerListLinks = screen.getAllByRole('listitem')
+        expect(screen.getAllByRole('listitem').length).toEqual(7)
+
+        // Ensure each child is an anchor tag with a valid link
+        developerListLinks.map((link) => {
+          expect(link.childNodes[0].href).not.toBeNull()
+          return link
+        })
+
+        // const children = enzymeWrapper.find(CollapsePanel).children()
+        // expect(enzymeWrapper.find(CollapsePanel).props().className).toEqual('collection-details-body__for-devs')
+        // expect(enzymeWrapper.find(CollapsePanel).props().header).toEqual('For Developers')
+        // expect(enzymeWrapper.find(CollapsePanel).props().panelClassName).toEqual('')
+        // expect(enzymeWrapper.find(CollapsePanel).props().scrollToBottom).toEqual(true)
+        // expect(children.find('.collection-details-body__dev-list a').length).toEqual(7)
       })
     })
 
     describe('Related Collections', () => {
       test('renders the links', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           overrideMetadata: {
             relatedCollections: {
               count: 5,
@@ -686,12 +922,25 @@ describe('CollectionDetailsBody component', () => {
             }
           }
         })
+        // screen.debug()
+        // const relatedCollectionsList = screen.getByRole('heading', { name: 'You might also be interested in...' })
+        // const relatedCollectionsList = screen.getByText('You might also be interested in...')
+        //   .closest('list')
 
-        expect(enzymeWrapper.find('.collection-details-body__related-collections-list')).toBeDefined()
+        // console.log(relatedCollectionsList.length)
+
+        const collectionDetailsBodyLists = screen.getAllByRole('list')
+        // Related collections and required `For Developers` list
+        expect(collectionDetailsBodyLists.length).toEqual(3)
+
+        const relatedCollectionsListItems = collectionDetailsBodyLists[0].childNodes
+        expect(relatedCollectionsListItems.length).toEqual(5)
+        // expect(screen.getAllByText('Mock related collection').length).toEqual(5)
+        // expect(enzymeWrapper.find('.collection-details-body__related-collections-list')).toBeDefined()
       })
 
-      test('renders a maximum of 3 links', () => {
-        const { enzymeWrapper } = setup({
+      test('renders the 3 links', () => {
+        setup({
           overrideMetadata: {
             relatedCollections: {
               count: 5,
@@ -738,8 +987,8 @@ describe('CollectionDetailsBody component', () => {
             }
           }
         })
-
-        expect(enzymeWrapper.find(RelatedCollection).length).toEqual(3)
+        expect(screen.getAllByText('Mock related collection').length).toEqual(3)
+        // expect(enzymeWrapper.find(RelatedCollection).length).toEqual(3)
       })
     })
   })

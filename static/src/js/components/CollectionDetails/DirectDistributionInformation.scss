@@ -1,0 +1,66 @@
+.direct-distribution-information {
+    &__definition-list-container{
+      margin-left: 1rem;
+    }
+    &__instance-field-title {
+      font-weight: bold;
+      display:inline;
+    }
+
+    &__info {
+        > dt {
+            font-size: 0.75rem;
+            font-weight: 400;
+        }
+        > dd {
+            font-size: 0.925rem;
+            font-weight: 700;
+            word-wrap: break-word;
+        }
+    }
+
+    &__cloud-access-content {
+    border: 1px solid $color__black--200;
+    padding: 1.25rem
+  }
+
+  &__cloud-access-title {
+    border-top: 1px solid $color__black--200;
+    padding-top: 1.25rem;
+  }
+
+  &__link {
+    display: block;
+    padding: 0;
+    white-space: nowrap;
+    font-weight: 700;
+    font-size: .925rem;
+    line-height: 1.5rem;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline !important;
+    }
+
+    .direct-distribution-information__links--horizontal & {
+      display: inline-block;
+      vertical-align: baseline;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:last-child {
+        padding-top: $spacer/8;
+      }
+
+      .button {
+        display: inline-block;
+
+        &__contents {
+          vertical-align: baseline;
+        }
+      }
+    }
+  }
+}
