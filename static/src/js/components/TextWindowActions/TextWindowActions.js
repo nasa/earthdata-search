@@ -33,6 +33,7 @@ import './TextWindowActions.scss'
  * @param {String} modalTitle - The title for the modal.
  * @param {Boolean} disableCopy - Disables the copy functionality.
  * @param {Boolean} disableSave - Disables the save functionality.
+ * @param {Boolean} disableEdd - Disables EDD button.
  */
 export const TextWindowActions = ({
   children,
