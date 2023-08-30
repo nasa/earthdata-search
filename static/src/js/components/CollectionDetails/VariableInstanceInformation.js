@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import './VariableInstanceInformation.scss'
 import DirectDistributionInformation from './DirectDistributionInformation'
@@ -38,6 +39,15 @@ export const VariableInstanceInformation = ({
 
     </div>
   )
+}
+
+VariableInstanceInformation.propTypes = {
+  instanceInformation: PropTypes.shape({
+    url: PropTypes.string,
+    format: PropTypes.string,
+    description: PropTypes.string,
+    directDistributionInformation: PropTypes.shape({})
+  }).isRequired
 }
 
 export default VariableInstanceInformation

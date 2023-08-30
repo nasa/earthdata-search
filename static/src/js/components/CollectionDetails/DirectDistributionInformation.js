@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import './DirectDistributionInformation.scss'
 
@@ -66,4 +67,14 @@ const DirectDistributionInformation = ({
     </div>
   )
 }
+
+DirectDistributionInformation.propTypes = {
+  directDistributionInformation: PropTypes.shape({
+    region: PropTypes.string,
+    s3BucketAndObjectPrefixNames: PropTypes.arrayOf(PropTypes.string),
+    s3CredentialsApiEndpoint: PropTypes.string,
+    s3CredentialsApiDocumentationUrl: PropTypes.string
+  }).isRequired
+}
+
 export default DirectDistributionInformation

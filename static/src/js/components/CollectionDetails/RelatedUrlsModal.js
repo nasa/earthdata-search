@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
@@ -8,29 +8,17 @@ import { pluralize } from '../../util/pluralize'
 
 import './RelatedUrlsModal.scss'
 
-export class RelatedUrlsModal extends Component {
-  constructor(props) {
-    super(props)
-    this.onModalClose = this.onModalClose.bind(this)
-  }
+export const RelatedUrlsModal = ({
+  collectionMetadata,
+  isOpen,
+  onToggleRelatedUrlsModal
+}) => {
+  const { relatedUrls = [] } = collectionMetadata
 
-  onModalClose() {
-    const { onToggleRelatedUrlsModal } = this.props
-    onToggleRelatedUrlsModal(false)
-  }
-
-  render() {
-    const {
-      collectionMetadata,
-      isOpen
-    } = this.props
-
-    const { relatedUrls = [] } = collectionMetadata
-
-    const body = (
-      // eslint-disable-next-line react/jsx-no-useless-fragment
-      <>
-        {
+  const body = (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
+      {
           relatedUrls && relatedUrls.map((category, i) => {
             if (category.urls.length) {
               const key = `modal_related_url_${i}`
@@ -55,21 +43,22 @@ export class RelatedUrlsModal extends Component {
             return null
           })
         }
-      </>
-    )
+    </>
+  )
 
-    return (
-      <EDSCModalContainer
-        className="related-urls"
-        title="Related URLs"
-        isOpen={isOpen}
-        id="related-urls"
-        size="lg"
-        onClose={this.onModalClose}
-        body={body}
-      />
-    )
-  }
+  return (
+    <EDSCModalContainer
+      className="related-urls"
+      title="Related URLs"
+      isOpen={isOpen}
+      id="related-urls"
+      size="lg"
+      onClose={() => {
+        onToggleRelatedUrlsModal(false)
+      }}
+      body={body}
+    />
+  )
 }
 
 RelatedUrlsModal.propTypes = {

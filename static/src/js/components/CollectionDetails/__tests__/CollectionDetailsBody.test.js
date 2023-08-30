@@ -127,7 +127,7 @@ describe('CollectionDetailsBody component', () => {
       expect(CollectionDetailsMinimap).toHaveBeenCalledTimes(1)
 
       expect(screen.getByText(spatialMetadata)).toBeInTheDocument()
-      // todo the boxes are on the minimap not rendered onto the page need to test this
+      // TODO: the boxes are on the minimap not rendered onto the page need to test this
       // expect(screen.getByText(boxesMetadata)).toBeInTheDocument()
     })
 
@@ -159,7 +159,6 @@ describe('CollectionDetailsBody component', () => {
 
         // `DOI` is the primary prop for the badge which merges with name
         const doiLink = screen.getByRole('link', { name: 'DOI 10.3334/ORNLDAAC/1569' })
-        expect(doiLink).toBeInTheDocument()
         expect(doiLink.href).toEqual('https://dx.doi.org/10.3334/ORNLDAAC/1569')
       })
     })
@@ -185,8 +184,7 @@ describe('CollectionDetailsBody component', () => {
 
         const doiLink = screen.getByRole('link', { name: 'View DOI Title 1' })
         const doiLink2 = screen.getByRole('link', { name: 'View DOI Title 2' })
-        expect(doiLink).toBeInTheDocument()
-        expect(doiLink2).toBeInTheDocument()
+
         expect(doiLink.href).toEqual('https://doi.org/10.1234/ParentDOIID1')
         expect(doiLink2.href).toEqual('https://doi.org/10.1234/ParentDOIID2')
       })
@@ -308,8 +306,11 @@ describe('CollectionDetailsBody component', () => {
         expect(relatedUrlLink.href).toEqual('https://doi.org/10.3334/ORNLDAAC/830')
 
         const viewAllRelatedByUrlsButton = screen.getByRole('button', { name: 'View All Related URLs' })
-        expect(viewAllRelatedByUrlsButton.className).toEqual('button button--link link link--separated collection-details-body__link btn btn-link')
+        expect(viewAllRelatedByUrlsButton.className)
+          .toEqual('button button--link link link--separated collection-details-body__link btn btn-link')
+
         await user.click(screen.getByRole('button', { name: 'View All Related URLs' }))
+
         expect(onToggleRelatedUrlsModal).toHaveBeenCalledTimes(1)
         expect(onToggleRelatedUrlsModal).toHaveBeenCalledWith(true)
 
@@ -738,7 +739,6 @@ describe('CollectionDetailsBody component', () => {
         })
 
         test('renders cloud access header', () => {
-          // TODO we used 'value' on EDD but, here 'name was only one that worked'
           setup(overrideMetadata)
           expect(screen.getByRole('heading', {
             level: 4,
@@ -766,7 +766,6 @@ describe('CollectionDetailsBody component', () => {
         })
 
         test('does Not render cloud access header', () => {
-          // TODO we used 'value' on EDD but, here 'name was only one that worked'
           setup(overrideMetadata)
           expect(screen.queryByRole('heading', {
             level: 4,
@@ -778,11 +777,13 @@ describe('CollectionDetailsBody component', () => {
       describe('when the collection does not have variables', () => {
         test('does not render variable instance information', () => {
           setup()
-          expect(screen.queryByRole('link', { name: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name' })).toBeNull()
+          expect(screen.queryByRole('link', {
+            name: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name'
+          }))
+            .toBeNull()
         })
 
         test('does Not render cloud access header', () => {
-          // TODO we used 'value' on EDD but, here 'name was only one that worked'
           setup()
           expect(screen.queryByRole('heading', {
             level: 4,

@@ -516,6 +516,7 @@ export const CollectionDetailsBody = ({
                       {
                         relatedCollectionsList.map((relatedCollection) => {
                           const { id } = relatedCollection
+
                           return (
                             <li
                               key={`related-collection--${id}`}
