@@ -143,6 +143,9 @@ const createGranuleGridLayer = (props, context) => {
 }
 
 const updateGranuleGridLayer = (instance, props, prevProps) => {
+  // If no props have changed since the last render, dont update the grid layers.
+  if (isEqual(props, prevProps)) return
+
   const layers = instance._layers // List of layers
 
   const {

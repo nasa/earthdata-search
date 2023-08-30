@@ -1,7 +1,12 @@
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React, {
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState
+} from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { difference, merge } from 'lodash'
+import { difference, isEqual, merge } from 'lodash'
 import 'proj4leaflet'
 import LRUCache from 'lrucache'
 
@@ -143,6 +148,9 @@ export const MapContainer = (props) => {
       projection: defaultProjection,
       zoom
     } = mapWithDefaults
+
+    if (isEqual(map, mapWithDefaults)) return
+
     setCenter([latitude, longitude])
     setZoom(zoom)
     setProjection(defaultProjection)
@@ -173,7 +181,7 @@ export const MapContainer = (props) => {
     })
   }
 
-  const handleProjectionSwitching = (projection) => {
+  const handleProjectionSwitching = useCallback((projection) => {
     const { onChangeMap, onMetricsMap } = props
 
     const Projection = Object.keys(projections).find(((key) => (
@@ -199,13 +207,14 @@ export const MapContainer = (props) => {
       projection,
       zoom
     }
+
     setCenter([latitude, longitude])
     setZoom(zoom)
     setProjection(projection)
 
     onMetricsMap(`Set Projection: ${Projection}`)
     onChangeMap({ ...map })
-  }
+  }, [projection])
 
   // Projection switching in leaflet is not supported. Here we render MapWrapper with a key of the projection prop.
   // So when the projection is changed in ProjectionSwitcher this causes the map to unmount and remount a new instance,
