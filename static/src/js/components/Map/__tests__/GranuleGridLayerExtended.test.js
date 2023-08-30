@@ -139,7 +139,7 @@ describe('GranuleGridLayerExtended class', () => {
       }
 
       const result = layer.getTileUrl(tilePoint, updateProps.granules[0])
-      expect(result).toEqual('https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_NDVI_16Day/default/2020-09-29/250m/0/0/0.png')
+      expect(result).toEqual('https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png')
     })
   })
 

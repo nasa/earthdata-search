@@ -25,8 +25,6 @@ let sqsClient
 export const getProjectionCapabilities = async (projection) => {
   const capabilitiesUrl = `https://gibs.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?SERVICE=WMTS&request=GetCapabilities`
 
-  console.log(`GIBS Capabilties URL: ${capabilitiesUrl}`)
-
   try {
     if (!sqsClient) {
       sqsClient = new SQSClient(getSqsConfig())
@@ -58,7 +56,9 @@ export const getProjectionCapabilities = async (projection) => {
         .where({ product: layer['ows:Identifier'] })
 
       const metadataLinks = layer['ows:Metadata'] || []
+      console.log('metadataLinks', metadataLinks)
       await metadataLinks.filter(Boolean).forEachAsync(async (link) => {
+        console.log('looking for a link')
         // Look for the v1.3 colormap link
         if (link['xlink:role'].includes('1.3')) {
           // If there is no previous record of this product, insert a new row into the database
@@ -73,6 +73,7 @@ export const getProjectionCapabilities = async (projection) => {
             console.log('knownColorMap', knownColorMap)
           }
 
+          console.log('sending message', JSON.stringify(knownColorMap))
           const sendMessageCommand = new SendMessageCommand({
             QueueUrl: process.env.colorMapQueueUrl,
             MessageBody: JSON.stringify(knownColorMap)

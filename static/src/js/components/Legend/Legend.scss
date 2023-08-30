@@ -1,0 +1,105 @@
+.legend {
+  position: relative;
+  border-radius: 0.125rem;
+  border: 1px solid rgba($color__black--300, 0.9);
+  overflow: hidden;
+  background-color: $color__white;
+  box-shadow: 0 0 10px rgba($color__black, 0.3);
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.2s ease;
+
+  .panels--hide-meta + .panels__focused-meta & {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__bar {
+    margin: 0.125rem;
+    display: block;
+    height: 1rem;
+    width: 15rem;
+    // border: 1px solid $color__black--300;
+    border-radius: 0.125rem;
+    opacity: 0;
+    visibility: visible;
+    transition: opacity 0.2s ease;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    &:hover {
+      cursor: crosshair;
+    }
+
+    .legend--is-colormap-rendered & {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &__labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    visibility: visible;
+    opacity: 1;
+    width: 100%;
+
+    .legend__bar:hover + .legend__meta & {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
+  &__label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: $color__black--600;
+    pointer-events: none;
+    letter-spacing: 0.01rem;
+  }
+
+  &__meta {
+    position: relative;
+    display: flex;
+    height: 1.5rem;
+    padding: 0.125rem 0.325rem;
+  }
+
+  &__focus {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    // justify-content: space-between;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    visibility: hidden;
+
+    .legend__bar:hover + .legend__meta & {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &__focus-label-color {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    border: 1px solid $color__black--300;
+    background-color: transparent;
+  }
+
+  &__focus-label {
+    display: block;
+    margin: 0;
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.01rem;
+    color: $color__black--600;
+    font-weight: 500;
+    transition: opacity 0.2s ease-in-out;
+  }
+}

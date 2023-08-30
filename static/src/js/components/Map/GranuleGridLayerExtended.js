@@ -239,11 +239,15 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     // * too large. This tag data will be replaced with the efforts associated with EDSC-2972.
     // ***
 
-    if (!this.multiOptions) return null
+    if (!this.gibsTag) return null
     const date = granule.timeStart != null ? granule.timeStart.substring(0, 10) : undefined
 
     let matched = false
-    this.multiOptions.forEach((optionSet) => {
+
+    this.gibsTag.forEach((optionSet, i) => {
+      // Only set up a tile for the first item in the gibs tag
+      if (i !== 0) return
+
       const newOptionSet = optionSet
       if (this.matches(granule, newOptionSet.match)) {
         let newResolution
@@ -837,7 +841,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       const { tags } = metadata
 
       if (tags) {
-        this.multiOptions = getValueForTag('gibs', tags)
+        this.gibsTag = getValueForTag('gibs', tags)
       }
     }
 
