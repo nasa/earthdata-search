@@ -467,8 +467,15 @@ describe('OrderStatusItem', () => {
 
       enzymeWrapper.find('.order-status-item__button').simulate('click')
 
-      const message = enzymeWrapper.find('.order-status-item__note')
+      const body = enzymeWrapper.find('.order-status-item__body')
+      const tabs = body.find('EDSCTabs')
+      expect(tabs.children().length).toEqual(2)
 
+      const linksTab = tabs.childAt(0)
+      expect(linksTab.props().title).toEqual('Download Files')
+      expect(linksTab.childAt(0).props().collectionIsCSDA).toEqual(true)
+
+      const message = enzymeWrapper.find('.order-status-item__note')
       expect(message.text()).toContain('This collection is made available through the NASA Commercial Smallsat Data Acquisition (CSDA) Program')
     })
 
