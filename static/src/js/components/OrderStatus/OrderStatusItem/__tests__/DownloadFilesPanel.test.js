@@ -79,13 +79,12 @@ describe('DownloadFilesPanel', () => {
       expect(windowActions.props().disableCopy).toEqual(true)
       expect(windowActions.props().disableSave).toEqual(true)
     })
-    test('hides the edd button', () => {
+    test('hides the download button', () => {
       const enzymeWrapper = shallow(
         <DownloadFilesPanel
           accessMethodType="ESI"
           earthdataEnvironment="prod"
           downloadLinks={['http://search.earthdata.nasa.gov', 'http://cmr.earthdata.nasa.gov']}
-          retrievalCollection={{}}
           retrievalId="1"
           granuleCount={10}
           granuleLinksIsLoading
