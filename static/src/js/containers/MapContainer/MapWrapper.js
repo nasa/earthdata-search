@@ -116,7 +116,12 @@ const MapWrapper = ({
 
   useEffect(() => {
     const getColorMap = async () => {
-      if (gibsLayer && gibsLayer.product && hasGibsLayerForProjection(gibsLayer, projection) && !colorMap[projection]) {
+      if (
+        gibsLayer
+        && gibsLayer.product
+        && hasGibsLayerForProjection(gibsLayer, projection)
+        && !colorMap[projection]
+      ) {
         try {
           const response = await fetch(`http://localhost:3001/dev/colormaps/${gibsLayer.product}`)
           const colorMapResponse = await response.json()

@@ -240,15 +240,17 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     // ***
 
     if (!this.gibsTag) return null
+
     const date = granule.timeStart != null ? granule.timeStart.substring(0, 10) : undefined
 
     let matched = false
 
-    this.gibsTag.forEach((optionSet, i) => {
-      // Only set up a tile for the first item in the gibs tag
-      if (i !== 0) return
+    // Select only the first layer until we are able to toggle between gibs layers.
+    const layers = [this.gibsTag[0]]
 
+    layers.forEach((optionSet) => {
       const newOptionSet = optionSet
+
       if (this.matches(granule, newOptionSet.match)) {
         let newResolution
         // let tileMatrixLimits
