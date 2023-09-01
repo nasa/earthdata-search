@@ -10,8 +10,6 @@ import cmrGranulesCollectionGraphQlBody from './__mocks__/cmr_granules/collectio
 import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
 import cmrGranulesCollectionGraphQlHeaders from './__mocks__/cmr_granules/graphql.headers.json'
 import cmrGranulesHeaders from './__mocks__/cmr_granules/granules.headers.json'
-import cmrGranulesTimelineBody from './__mocks__/cmr_granules/timeline.body.json'
-import cmrGranulesTimelineHeaders from './__mocks__/cmr_granules/timeline.headers.json'
 import commonBody from './__mocks__/common_collections.body.json'
 import commonHeaders from './__mocks__/common_collections.headers.json'
 import multipleShapesShapefileBody from './__mocks__/multiple_shapes_shapefile_collections.body.json'
