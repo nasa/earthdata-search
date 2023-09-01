@@ -56,9 +56,7 @@ export const getProjectionCapabilities = async (projection) => {
         .where({ product: layer['ows:Identifier'] })
 
       const metadataLinks = layer['ows:Metadata'] || []
-      console.log('metadataLinks', metadataLinks)
       await metadataLinks.filter(Boolean).forEachAsync(async (link) => {
-        console.log('looking for a link')
         // Look for the v1.3 colormap link
         if (link['xlink:role'].includes('1.3')) {
           // If there is no previous record of this product, insert a new row into the database
@@ -69,8 +67,6 @@ export const getProjectionCapabilities = async (projection) => {
                 product: layer['ows:Identifier'],
                 url: link['xlink:href']
               })
-
-            console.log('knownColorMap', knownColorMap)
           }
 
           console.log('sending message', JSON.stringify(knownColorMap))

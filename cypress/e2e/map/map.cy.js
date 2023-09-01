@@ -42,7 +42,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-4.75547&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-4.75606&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -62,13 +62,13 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?sp[0]=42.1875%2C-4.75547')
+        cy.url().should('include', '?sp[0]=42.1875%2C-4.75606')
 
         // draws a point on the map
         cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1000px, 451px, 0px); z-index: 451;')
 
         // populates the spatial display field
-        getByTestId('spatial-display_point').should('have.value', '-4.75547,42.1875')
+        getByTestId('spatial-display_point').should('have.value', '-4.75606,42.1875')
       })
     })
 
@@ -84,7 +84,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-4.75547&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-4.75606&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -101,13 +101,13 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?sp[0]=42.1875%2C-4.75547')
+        cy.url().should('include', '?sp[0]=42.1875%2C-4.75606')
 
         // draws a point on the map
         cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1000px, 451px, 0px); z-index: 451;')
 
         // populates the spatial display field
-        getByTestId('spatial-display_point').should('have.value', '-4.75547,42.1875')
+        getByTestId('spatial-display_point').should('have.value', '-4.75606,42.1875')
       })
     })
 
@@ -243,7 +243,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5157'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=42.1875,4.53021,156443&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=42.1875,4.5297,156444&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -276,14 +276,14 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?circle[0]=42.1875%2C4.53021%2C156443')
+        cy.url().should('include', '?circle[0]=42.1875%2C4.5297%2C156444')
 
         // draws a circle on the map
-        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M990,384.7851706933511a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 ')
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M990,384.78877260643276a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 ')
 
         // populates the spatial display field
-        getByTestId('spatial-display_circle-center').should('have.value', '4.53021,42.1875')
-        getByTestId('spatial-display_circle-radius').should('have.value', '156443')
+        getByTestId('spatial-display_circle-center').should('have.value', '4.5297,42.1875')
+        getByTestId('spatial-display_circle-radius').should('have.value', '156444')
       })
     })
 
@@ -299,7 +299,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5157'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=42.1875,4.53021,156443&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=42.1875,4.5297,156444&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -329,14 +329,14 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?circle[0]=42.1875%2C4.53021%2C156443')
+        cy.url().should('include', '?circle[0]=42.1875%2C4.5297%2C156444')
 
         // draws a circle on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M990,384.7851706933511a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 ')
 
         // populates the spatial display field
-        getByTestId('spatial-display_circle-center').should('have.value', '4.53021,42.1875')
-        getByTestId('spatial-display_circle-radius').should('have.value', '156443')
+        getByTestId('spatial-display_circle-center').should('have.value', '4.5297,42.1875')
+        getByTestId('spatial-display_circle-radius').should('have.value', '156444')
       })
     })
 
@@ -400,7 +400,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=42.1875,-18.82468,56.25,-4.75547&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=42.1875,-18.82541,56.25,-4.75606&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -426,14 +426,14 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?sb[0]=42.1875%2C-18.82468%2C56.25%2C-4.75547')
+        cy.url().should('include', '?sb[0]=42.1875%2C-18.82541%2C56.25%2C-4.75606')
 
         // draws a bounding box on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1000 551L1000 451L1100 451L1100 551L1000 551z')
 
         // populates the spatial display field
-        getByTestId('spatial-display_southwest-point').should('have.value', '-18.82468,42.1875')
-        getByTestId('spatial-display_northeast-point').should('have.value', '-4.75547,56.25')
+        getByTestId('spatial-display_southwest-point').should('have.value', '-18.82541,42.1875')
+        getByTestId('spatial-display_northeast-point').should('have.value', '-4.75606,56.25')
       })
     })
 
@@ -449,7 +449,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=42.1875,-18.82468,56.25,-4.75547&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=42.1875,-18.82541,56.25,-4.75606&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -472,14 +472,14 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?sb[0]=42.1875%2C-18.82468%2C56.25%2C-4.75547')
+        cy.url().should('include', '?sb[0]=42.1875%2C-18.82541%2C56.25%2C-4.75606')
 
         // draws a bounding box on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1000 551L1000 451L1100 451L1100 551L1000 551z')
 
         // populates the spatial display field
-        getByTestId('spatial-display_southwest-point').should('have.value', '-18.82468,42.1875')
-        getByTestId('spatial-display_northeast-point').should('have.value', '-4.75547,56.25')
+        getByTestId('spatial-display_southwest-point').should('have.value', '-18.82541,42.1875')
+        getByTestId('spatial-display_northeast-point').should('have.value', '-4.75606,56.25')
       })
     })
 
@@ -543,7 +543,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5160'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,-4.75547,42.1875,-18.82468,56.25,-18.82468,42.1875,-4.75547&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,-4.75606,42.1875,-18.82541,56.25,-18.82541,42.1875,-4.75606&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -573,7 +573,7 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?polygon[0]=42.1875%2C-4.75547%2C42.1875%2C-18.82468%2C56.25%2C-18.82468%2C42.1875%2C-4.75547')
+        cy.url().should('include', '?polygon[0]=42.1875%2C-4.75606%2C42.1875%2C-18.82541%2C56.25%2C-18.82541%2C42.1875%2C-4.75606')
 
         // draws a polygon on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1000 451L1100 551L1000 551L1000 451z')
@@ -596,7 +596,7 @@ describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5160'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,-4.75547,42.1875,-18.82468,56.25,-18.82468,42.1875,-4.75547&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,-4.75606,42.1875,-18.82541,56.25,-18.82541,42.1875,-4.75606&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           }]
         )
 
@@ -623,7 +623,7 @@ describe('Map interactions', () => {
         })
 
         // updates the URL
-        cy.url().should('include', '?polygon[0]=42.1875%2C-4.75547%2C42.1875%2C-18.82468%2C56.25%2C-18.82468%2C42.1875%2C-4.75547')
+        cy.url().should('include', '?polygon[0]=42.1875%2C-4.75606%2C42.1875%2C-18.82541%2C56.25%2C-18.82541%2C42.1875%2C-4.75606')
 
         // draws a polygon on the map
         cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1000 451L1100 551L1000 551L1000 451z')
@@ -1280,7 +1280,7 @@ describe('Map interactions', () => {
           cy.wait(`@${alias}`)
         })
 
-        cy.url().should('include', '?lat=14.702361586624422')
+        cy.url().should('include', '?lat=14.702499871288424')
       })
     })
 
@@ -1719,8 +1719,8 @@ describe('Map interactions', () => {
             // Zoom the map
             cy.get('.leaflet-control-zoom-in').click()
 
-            cy.get('.leaflet-interactive').eq(1).should('have.attr', 'd', 'M1282 458L1287 482L1319 475L1314 452L1282 458z')
-            cy.get('.granule-spatial-label-temporal').should('have.text', '2021-05-31 15:31:202021-05-31 15:31:48')
+            cy.get('.leaflet-interactive').eq(1).should('have.attr', 'd', 'M1287 465L1293 490L1324 483L1319 458L1287 465z')
+            cy.get('.granule-spatial-label-temporal').should('have.text', '2021-05-31 15:30:522021-05-31 15:31:22')
           })
         })
 
@@ -1734,7 +1734,7 @@ describe('Map interactions', () => {
 
         describe('when clicking the same granule again', () => {
           it('removes the stickied granule', () => {
-            cy.get('.map').click(1000, 450)
+            cy.get('.map').click(1000, 720)
 
             cy.get('.granule-spatial-label-temporal').should('not.exist')
           })

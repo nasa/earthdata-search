@@ -6,7 +6,7 @@ $headerHeight: 2rem;
   left: 0;
   bottom: 0;
   right: 0;
-  height: calc(100% - $headerHeight);
+  height: calc(100% - #{$headerHeight});
   width: 100%;
   display: flex;
   align-items: center;

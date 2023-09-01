@@ -14,6 +14,7 @@ import {
 
 import crsProjections from '../../util/map/crs'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
 import GranuleGridLayer from '../../components/Map/GranuleGridLayer'
@@ -25,6 +26,8 @@ import ZoomHome from '../../components/Map/ZoomHome'
 import MapEvents from './MapEvents'
 import Legend from '../../components/Legend/Legend'
 import projections from '../../util/map/projections'
+
+const { apiHost } = getEnvironmentConfig()
 
 const MapWrapper = ({
   authToken,
@@ -96,13 +99,7 @@ const MapWrapper = ({
     const { tags } = focusedCollectionMetadata
     const gibsTag = getValueForTag('gibs', tags)
 
-    setGibsLayer({
-      geographic: true,
-      arctic: false,
-      antarctic: false,
-      product: 'GHRSST_L4_MUR_Sea_Ice_Concentration'
-    })
-    setGibsLayer(gibsTag && gibsTag[0])
+    if (gibsTag) setGibsLayer(gibsTag[0])
   }, [focusedCollectionMetadata])
 
   // Check that we are in the correct projection
@@ -123,7 +120,7 @@ const MapWrapper = ({
         && !colorMap[projection]
       ) {
         try {
-          const response = await fetch(`http://localhost:3001/dev/colormaps/${gibsLayer.product}`)
+          const response = await fetch(`${apiHost}/colormaps/${gibsLayer.product}`)
           const colorMapResponse = await response.json()
 
           setColorMap({
@@ -232,11 +229,15 @@ const MapWrapper = ({
           />
         )
       }
-      <Control prepend position="topright">
-        <Legend
-          colorMap={colorMap[projection] || {}}
-        />
-      </Control>
+      {
+        (colorMap && colorMap[projection]) && (
+          <Control prepend position="topright">
+            <Legend
+              colorMap={colorMap[projection]}
+            />
+          </Control>
+        )
+      }
       <ScaleControl position="topright" />
       <ConnectedSpatialSelectionContainer mapProps={mapProps} />
       <GranuleGridLayer
