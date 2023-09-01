@@ -5,6 +5,40 @@ import hexToRgba from 'hex-to-rgba'
 import './Legend.scss'
 import classNames from 'classnames'
 
+/**
+ * Renders supported html entities when they are provided by the colormaps endpoint.
+ * @param {String} string - String that may contain an html entity.
+ * @returns {String}
+ */
+const replaceSupportedHtmlEntities = (string) => {
+  const supportedHtmlEntitiesToFragmentsMap = {
+    '&#60;': <>&#60;</>, // less-than
+    '&#61;': <>&#61;</>, // greater-than
+    '&#8804;': <>&#8804;</>, // less-than or equal to
+    '&#8805;': <>&#8805;</> // greater-than or equal to
+  }
+
+  let returnValue = string
+
+  Object.keys(supportedHtmlEntitiesToFragmentsMap).forEach((entity) => {
+    if (string.includes(entity)) {
+      returnValue = (
+        <>
+          {supportedHtmlEntitiesToFragmentsMap[entity]}
+          {` ${string.replace(entity, '')}`}
+        </>
+      )
+    }
+  })
+
+  return returnValue
+}
+
+/**
+ * Renders a legend on the map when a colormap is present
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.colorMap - The colormap information.
+ */
 export const Legend = ({
   colorMap = {}
 }) => {
@@ -98,31 +132,25 @@ export const Legend = ({
             ? (
               <div className="legend__focus">
                 <span className="legend__focus-label-color" style={{ backgroundColor: focusColor }} />
-                <span
-                  className="legend__focus-label"
-                  // eslint-disable-next-line react/no-danger
-                  dangerouslySetInnerHTML={{ __html: focusLabel }}
-                />
+                <span className="legend__focus-label">
+                  {replaceSupportedHtmlEntities(focusLabel)}
+                </span>
               </div>
             )
             : (
               <div className="legend__labels">
                 {
                   minLabel && (
-                    <span
-                      className="legend__label legend__label--min"
-                      // eslint-disable-next-line react/no-danger
-                      dangerouslySetInnerHTML={{ __html: minLabel }}
-                    />
+                    <span className="legend__label legend__label--min">
+                      {replaceSupportedHtmlEntities(minLabel)}
+                    </span>
                   )
                 }
                 {
                   maxLabel && (
-                    <span
-                      className="legend__label legend__label--max"
-                      // eslint-disable-next-line react/no-danger
-                      dangerouslySetInnerHTML={{ __html: maxLabel }}
-                    />
+                    <span className="legend__label legend__label--max">
+                      {replaceSupportedHtmlEntities(maxLabel)}
+                    </span>
                   )
                 }
               </div>

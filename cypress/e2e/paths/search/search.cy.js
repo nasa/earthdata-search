@@ -259,7 +259,6 @@ describe('Path /search', () => {
         getByTestId('spatial-display_point').should('have.value', '4.33676,65.44171')
 
         // Test leaflet has drawn the shape correctly
-        // cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1165px, 402px, 0px); z-index: 402;')
         cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1165px, 386px, 0px); z-index: 386;')
       })
     })
