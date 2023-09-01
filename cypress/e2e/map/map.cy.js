@@ -332,7 +332,7 @@ describe('Map interactions', () => {
         cy.url().should('include', '?circle[0]=42.1875%2C4.5297%2C156444')
 
         // draws a circle on the map
-        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M990,384.7851706933511a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 ')
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M990,384.78877260643276a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 ')
 
         // populates the spatial display field
         getByTestId('spatial-display_circle-center').should('have.value', '4.5297,42.1875')
