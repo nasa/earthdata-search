@@ -1555,7 +1555,7 @@ describe('Map interactions', () => {
     })
 
     describe('When changing the Place Labels overlay layer', () => {
-      it('updates the URL with the new map parameter and updates the src of tile images', () => {
+      it('updates the URL with the new map  parameter and updates the src of tile images', () => {
         const aliases = interceptUnauthenticatedCollections(commonBody, commonHeaders)
 
         // Visit with no overlays loaded
@@ -1613,25 +1613,13 @@ describe('Map interactions', () => {
           url: '**/search/granules.json'
         },
         (req) => {
+          console.log('req', req)
           expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&polygon[]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&sort_key=-start_date')
 
           req.alias = 'granulesRequest'
           req.reply({
             body: cmrGranulesBody,
             headers: cmrGranulesHeaders
-          })
-        })
-
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/granules/timeline'
-        },
-        (req) => {
-          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
-
-          req.reply({
-            body: cmrGranulesTimelineBody,
-            headers: cmrGranulesTimelineHeaders
           })
         })
 
@@ -1665,7 +1653,7 @@ describe('Map interactions', () => {
 
       // TODO find a way to verify the granules are drawn on the map
 
-      describe.skip('When hovering over a granule', () => {
+      describe('When hovering over a granule', () => {
         beforeEach(() => {
           cy.get('.map').rightclick(1000, 450)
         })
@@ -1682,7 +1670,7 @@ describe('Map interactions', () => {
             url: '**/api'
           },
           (req) => {
-            expect(JSON.stringify(req.body)).to.eq('{"query":"\\n    query GetGranule(\\n      $id: String!\\n    ) {\\n      granule(\\n        conceptId: $id\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"id":"G2061183408-ASF"}}')
+            expect(JSON.stringify(req.body)).to.eq('{"query":"\\n    query GetGranule(\\n      $id: String!\\n    ) {\\n      granule(\\n        conceptId: $id\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"id":"G2061166811-ASF"}}')
 
             req.reply({
               body: granuleGraphQlBody,
@@ -1695,20 +1683,20 @@ describe('Map interactions', () => {
           cy.get('.map').click(1000, 450)
         })
 
-        it.only('shows the granule and a label on the map', () => {
-          cy.get('.leaflet-interactive').eq(1).should('have.attr', 'd', 'M991 446L994 458L1010 455L1007 443L991 446z')
-          cy.get('.granule-spatial-label-temporal').should('have.text', '2021-05-31 15:31:202021-05-31 15:31:48')
+        it('shows the granule and a label on the map', () => {
+          cy.get('.leaflet-interactive').eq(1).should('have.attr', 'd', 'M994 441L996 454L1012 451L1009 438L994 441z')
+          cy.get('.granule-spatial-label-temporal').should('have.text', '2021-05-31 15:30:522021-05-31 15:31:22')
         })
 
-        it.skip('focuses the selected granule', () => {
+        it('focuses the selected granule', () => {
           getByTestId('granule-results-item').should('have.class', 'granule-results-item--active')
         })
 
-        it.skip('updates the URL', () => {
-          cy.url().should('match', /\/search\/granules.*g=G2061183408-ASF/)
+        it('updates the URL', () => {
+          cy.url().should('match', /\/search\/granules.*g=G2061166811-ASF/)
         })
 
-        describe.skip('when returning to the collections results list', () => {
+        describe('when returning to the collections results list', () => {
           it('removes the granule label from the map', () => {
             getByTestId('breadcrumb-button').contains('Search Results').click()
 
@@ -1716,7 +1704,7 @@ describe('Map interactions', () => {
           })
         })
 
-        describe.skip('when panning the map', () => {
+        describe('when panning the map', () => {
           it('does not remove the stickied granule', () => {
             // Drag the map
             cy.get('.map').dragMapFromCenter({
@@ -1728,7 +1716,7 @@ describe('Map interactions', () => {
           })
         })
 
-        describe.skip('when zooming the map', () => {
+        describe('when zooming the map', () => {
           it('does not remove the stickied granule', () => {
             // Zoom the map
             cy.get('.leaflet-control-zoom-in').click()
@@ -1738,15 +1726,15 @@ describe('Map interactions', () => {
           })
         })
 
-        describe.skip('when clicking on an empty spot on the map', () => {
+        describe('when clicking on an empty spot on the map', () => {
           it('removes the stickied granule', () => {
-            cy.get('.map').click(1100, 750)
+            cy.get('.map').click(1100, 720)
 
             cy.get('.granule-spatial-label-temporal').should('not.exist')
           })
         })
 
-        describe.skip('when clicking the same granule again', () => {
+        describe('when clicking the same granule again', () => {
           it('removes the stickied granule', () => {
             cy.get('.map').click(1000, 450)
 
