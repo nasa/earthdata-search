@@ -1709,7 +1709,7 @@ describe('Map interactions', () => {
               yMoveFactor: 1 / 8
             })
 
-            cy.get('.leaflet-interactive').eq(1).should('have.attr', 'd', 'M991 446L994 458L1010 455L1007 443L991 446z')
+            cy.get('.leaflet-interactive').eq(1).should('have.attr', 'd', 'M994 441L996 454L1012 451L1009 438L994 441z')
             cy.get('.granule-spatial-label-temporal').should('have.text', '2021-05-31 15:31:202021-05-31 15:31:48')
           })
         })
