@@ -49,7 +49,7 @@
   "devDependencies": {
     "@cypress/code-coverage": "^3.11.0",
     "@cypress/webpack-preprocessor": "^5.16.1",
-    "@playwright/test": "^1.32.3",
+    "@playwright/test": "^1.37.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^14.4.3",
