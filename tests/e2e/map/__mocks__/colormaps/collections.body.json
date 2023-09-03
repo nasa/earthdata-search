@@ -1,0 +1,523 @@
+{
+  "feed": {
+      "updated": "2023-09-03T17:21:22.174Z",
+      "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=C1996881146-POCLOUD*&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score",
+      "title": "ECHO dataset metadata",
+      "entry": [
+          {
+              "processing_level_id": "4",
+              "cloud_hosted": true,
+              "tags": {
+                  "edsc.extra.serverless.collection_capabilities": {
+                      "data": {
+                          "cloud_cover": false,
+                          "day_night_flag": false,
+                          "granule_online_access_flag": true,
+                          "orbit_calculated_spatial_domains": false,
+                          "updated_at": "2023-09-01T18:40:38.679Z"
+                      }
+                  },
+                  "edsc.extra.serverless.gibs": {
+                      "data": [
+                          {
+                              "antarctic": false,
+                              "group": "overlays",
+                              "product": "GHRSST_L4_MUR_Sea_Ice_Concentration",
+                              "antarctic_resolution": null,
+                              "updated_at": "2023-09-01T12:45:23.556Z",
+                              "arctic": false,
+                              "title": "Sea Ice Concentration (L4, MUR)",
+                              "source": "Multi-mission / GHRSST",
+                              "match": {
+                                  "time_start": ">=2002-06-01T00:00:00Z"
+                              },
+                              "geographic": true,
+                              "arctic_resolution": null,
+                              "format": "png",
+                              "geographic_resolution": "1km"
+                          },
+                          {
+                              "antarctic": false,
+                              "group": "overlays",
+                              "product": "GHRSST_L4_MUR_Sea_Surface_Temperature",
+                              "antarctic_resolution": null,
+                              "updated_at": "2023-09-01T12:45:23.556Z",
+                              "arctic": false,
+                              "title": "Sea Surface Temperature (L4, MUR)",
+                              "source": "Multi-mission / GHRSST",
+                              "match": {
+                                  "time_start": ">=2002-06-01T00:00:00Z"
+                              },
+                              "geographic": true,
+                              "arctic_resolution": null,
+                              "format": "png",
+                              "geographic_resolution": "1km"
+                          },
+                          {
+                              "antarctic": false,
+                              "group": "overlays",
+                              "product": "GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies",
+                              "antarctic_resolution": null,
+                              "updated_at": "2023-09-01T12:45:23.556Z",
+                              "arctic": false,
+                              "title": "Sea Surface Temperature Anomalies (L4, MUR)",
+                              "source": "Multi-mission / GHRSST",
+                              "match": {
+                                  "time_start": ">=2019-07-23T00:00:00Z"
+                              },
+                              "geographic": true,
+                              "arctic_resolution": null,
+                              "format": "png",
+                              "geographic_resolution": "1km"
+                          }
+                      ]
+                  },
+                  "edsc.extra.serverless.subset_service.opendap": {
+                      "data": {
+                          "updated_at": "2023-05-31T16:31:57.285Z",
+                          "id": "S2004184019-POCLOUD",
+                          "type": "OPeNDAP"
+                      }
+                  }
+              },
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2002-05-31T21:00:00.000Z",
+              "version_id": "4.1",
+              "updated": "2017-04-28T05:01:45.000Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "has_spatial_subsetting": true,
+              "has_transforms": false,
+              "associations": {
+                  "variables": [
+                      "V2262655973-POCLOUD",
+                      "V2112015425-POCLOUD",
+                      "V2028632047-POCLOUD",
+                      "V2112015422-POCLOUD",
+                      "V2028668049-POCLOUD",
+                      "V2028632042-POCLOUD",
+                      "V2112015420-POCLOUD",
+                      "V2028632044-POCLOUD"
+                  ],
+                  "services": [
+                      "S2164732315-XYZ_PROV",
+                      "S2004184019-POCLOUD",
+                      "S2009180097-POCLOUD",
+                      "S2606110201-XYZ_PROV"
+                  ],
+                  "tools": [
+                      "TL2108419875-POCLOUD",
+                      "TL2245207664-POCLOUD"
+                  ]
+              },
+              "has_variables": true,
+              "data_center": "POCLOUD",
+              "short_name": "MUR-JPL-L4-GLOB-v4.1",
+              "organizations": [
+                  "NASA/JPL/PODAAC",
+                  "NASA/JPL"
+              ],
+              "title": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "coordinate_system": "CARTESIAN",
+              "summary": "A Group for High Resolution Sea Surface Temperature (GHRSST) Level 4 sea surface temperature analysis produced as a retrospective dataset (four day latency) and near-real-time dataset (one day latency) at the JPL Physical Oceanography DAAC using wavelets as basis functions in an optimal interpolation approach on a global 0.01 degree grid. The version 4 Multiscale Ultrahigh Resolution (MUR) L4 analysis is based upon nighttime GHRSST L2P skin and subskin SST observations from several instruments including the NASA Advanced Microwave Scanning Radiometer-EOS (AMSR-E), the JAXA Advanced Microwave Scanning Radiometer 2 on GCOM-W1, the Moderate Resolution Imaging Spectroradiometers (MODIS) on the NASA Aqua and Terra platforms, the US Navy microwave WindSat radiometer, the Advanced Very High Resolution Radiometer (AVHRR) on several NOAA satellites, and in situ SST observations from the NOAA iQuam project. The ice concentration data are from the archives at the EUMETSAT Ocean and Sea Ice Satellite Application Facility (OSI SAF) High Latitude Processing Center and are also used for an improved SST parameterization for the high-latitudes.  The dataset also contains additional variables for some granules including a SST anomaly derived from a MUR climatology and the temporal distance to the nearest IR measurement for each pixel.This dataset is funded by the NASA MEaSUREs program ( http://earthdata.nasa.gov/our-community/community-data-system-programs/measures-projects ), and created by a team led by Dr. Toshio M. Chin from JPL. It adheres to the GHRSST Data Processing Specification (GDS) version 2 format specifications. Use the file global metadata \"history:\" attribute to determine if a granule is near-realtime or retrospective.",
+              "has_granules": true,
+              "service_features": {
+                  "opendap": {
+                      "has_formats": true,
+                      "has_variables": true,
+                      "has_transforms": false,
+                      "has_spatial_subsetting": true,
+                      "has_temporal_subsetting": true
+                  },
+                  "harmony": {
+                      "has_formats": true,
+                      "has_variables": true,
+                      "has_transforms": false,
+                      "has_spatial_subsetting": true,
+                      "has_temporal_subsetting": true
+                  },
+                  "esi": {
+                      "has_formats": false,
+                      "has_variables": false,
+                      "has_transforms": false,
+                      "has_spatial_subsetting": false,
+                      "has_temporal_subsetting": false
+                  }
+              },
+              "orbit_parameters": {},
+              "id": "C1996881146-POCLOUD",
+              "has_formats": true,
+              "score": 0.5,
+              "consortiums": [
+                  "GEOSS",
+                  "EOSDIS"
+              ],
+              "original_format": "UMM_JSON",
+              "granule_count": 7760,
+              "archive_center": "NASA/JPL/PODAAC",
+              "has_temporal_subsetting": true,
+              "browse_flag": true,
+              "platforms": [
+                  "Aqua",
+                  "CORIOLIS",
+                  "Terra",
+                  "NOAA-19",
+                  "GCOM-W1",
+                  "BUOYS"
+              ],
+              "association_details": {
+                  "variables": [
+                      {
+                          "concept_id": "V2262655973-POCLOUD"
+                      },
+                      {
+                          "concept_id": "V2112015425-POCLOUD"
+                      },
+                      {
+                          "concept_id": "V2028632047-POCLOUD"
+                      },
+                      {
+                          "concept_id": "V2112015422-POCLOUD"
+                      },
+                      {
+                          "concept_id": "V2028668049-POCLOUD"
+                      },
+                      {
+                          "concept_id": "V2028632042-POCLOUD"
+                      },
+                      {
+                          "concept_id": "V2112015420-POCLOUD"
+                      },
+                      {
+                          "concept_id": "V2028632044-POCLOUD"
+                      }
+                  ],
+                  "services": [
+                      {
+                          "concept_id": "S2164732315-XYZ_PROV"
+                      },
+                      {
+                          "concept_id": "S2004184019-POCLOUD"
+                      },
+                      {
+                          "concept_id": "S2009180097-POCLOUD"
+                      },
+                      {
+                          "concept_id": "S2606110201-XYZ_PROV"
+                      }
+                  ],
+                  "tools": [
+                      {
+                          "concept_id": "TL2108419875-POCLOUD"
+                      },
+                      {
+                          "concept_id": "TL2245207664-POCLOUD"
+                      }
+                  ]
+              },
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/MUR-JPL-L4-GLOB-v4.1.jpg"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+                      "hreflang": "en-US",
+                      "href": "https://soto.podaac.earthdatacloud.nasa.gov/?l=GHRSST_L4_MUR_Sea_Surface_Temperature,BlueMarble_ShadedRelief_Bathymetry,Coastlines_15m"
+                  }
+              ]
+          }
+      ],
+      "facets": {
+          "title": "Browse Collections",
+          "type": "group",
+          "has_children": true,
+          "children": [
+              {
+                  "title": "Keywords",
+                  "type": "group",
+                  "applied": false,
+                  "has_children": true,
+                  "children": [
+                      {
+                          "title": "Oceans",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Oceans"
+                          },
+                          "has_children": true
+                      }
+                  ]
+              },
+              {
+                  "title": "Platforms",
+                  "type": "group",
+                  "applied": false,
+                  "has_children": true,
+                  "children": [
+                      {
+                          "title": "Space-based Platforms",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platforms_h%5B0%5D%5Bbasis%5D=Space-based+Platforms"
+                          },
+                          "has_children": true
+                      },
+                      {
+                          "title": "Water-based Platforms",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platforms_h%5B0%5D%5Bbasis%5D=Water-based+Platforms"
+                          },
+                          "has_children": true
+                      }
+                  ]
+              },
+              {
+                  "title": "Instruments",
+                  "type": "group",
+                  "applied": false,
+                  "has_children": true,
+                  "children": [
+                      {
+                          "title": "AMSR2",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&instrument_h%5B%5D=AMSR2&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      },
+                      {
+                          "title": "AMSR-E",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&instrument_h%5B%5D=AMSR-E&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      },
+                      {
+                          "title": "AVHRR-3",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&instrument_h%5B%5D=AVHRR-3&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      },
+                      {
+                          "title": "DRIFTING BUOYS",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&instrument_h%5B%5D=DRIFTING+BUOYS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      },
+                      {
+                          "title": "MODIS",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&instrument_h%5B%5D=MODIS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      },
+                      {
+                          "title": "WindSat",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&instrument_h%5B%5D=WindSat&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      }
+                  ]
+              },
+              {
+                  "title": "Data Format",
+                  "type": "group",
+                  "applied": false,
+                  "has_children": true,
+                  "children": [
+                      {
+                          "title": "NetCDF",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=NetCDF&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      }
+                  ]
+              },
+              {
+                  "title": "Organizations",
+                  "type": "group",
+                  "applied": false,
+                  "has_children": true,
+                  "children": [
+                      {
+                          "title": "Jet Propulsion Laboratory (JPL)",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Jet+Propulsion+Laboratory+%28JPL%29&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      },
+                      {
+                          "title": "Physical Oceanography Distributed Active Archive Center (PO.DAAC)",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Physical+Oceanography+Distributed+Active+Archive+Center+%28PO.DAAC%29&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      }
+                  ]
+              },
+              {
+                  "title": "Projects",
+                  "type": "group",
+                  "applied": false,
+                  "has_children": true,
+                  "children": [
+                      {
+                          "title": "GHRSST",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&keyword=C1996881146-POCLOUD*&project_h%5B%5D=GHRSST&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      }
+                  ]
+              },
+              {
+                  "title": "Processing Levels",
+                  "type": "group",
+                  "applied": false,
+                  "has_children": true,
+                  "children": [
+                      {
+                          "title": "4 - Gridded Model Output",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=4+-+Gridded+Model+Output&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      }
+                  ]
+              },
+              {
+                  "title": "Horizontal Data Resolution",
+                  "type": "group",
+                  "applied": false,
+                  "has_children": true,
+                  "children": [
+                      {
+                          "title": "1 to 10 km",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&keyword=C1996881146-POCLOUD*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=1+to+10+km&include_facets=v2"
+                          },
+                          "has_children": false
+                      }
+                  ]
+              }
+          ]
+      }
+  }
+}

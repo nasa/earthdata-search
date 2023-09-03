@@ -8,6 +8,12 @@ import circleBody from './__mocks__/circle_collections.body.json'
 import cmrGranulesBody from './__mocks__/cmr_granules/granules.body.json'
 import cmrGranulesCollectionBody from './__mocks__/cmr_granules/collections.body.json'
 import cmrGranulesCollectionGraphQlBody from './__mocks__/cmr_granules/collection_graphql.body.json'
+import colormapBody from './__mocks__/colormaps/colormap.body.json'
+import colormapCollectionBody from './__mocks__/colormaps/collections.body.json'
+import colormapGranulesBody from './__mocks__/colormaps/granules.body.json'
+import colormapGranulesHeaders from './__mocks__/colormaps/granules.headers.json'
+import colormapCollectionGraphQlBody from './__mocks__/colormaps/collection_graphql.body.json'
+import colormapCollectionGraphQlHeaders from './__mocks__/colormaps/graphql.headers.json'
 import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
 import cmrGranulesCollectionGraphQlHeaders from './__mocks__/cmr_granules/graphql.headers.json'
 import cmrGranulesHeaders from './__mocks__/cmr_granules/granules.headers.json'
@@ -31,8 +37,11 @@ import antarcticShapefileBody from './__mocks__/antarctic_shapefile_collections.
 import uploadShapefile from '../../support/uploadShapefile'
 
 test.describe('Map interactions', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page }, testInfo) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+
+    // eslint-disable-next-line no-param-reassign
+    testInfo.snapshotPath = (name) => `${testInfo.file}-snapshots/${testInfo.project.name}/${name}`
   })
 
   test.describe('When drawing point spatial', () => {
@@ -1680,6 +1689,98 @@ test.describe('Map interactions', () => {
         await expect(
           page.getByTestId('filter-stack__spatial').locator('.filter-stack-item__error')
         ).toHaveText('This collection does not support polygon search. Your polygon has been converted to a bounding box.')
+      })
+    })
+  })
+
+  test.describe('When viewing granules with colormap data', () => {
+    test.beforeEach(async ({ page }) => {
+      const conceptId = 'C1996881146-POCLOUD'
+
+      await interceptUnauthenticatedCollections({
+        page,
+        body: commonBody,
+        headers: commonHeaders,
+        additionalRequests: [{
+          alias: 'cmrGranulesCollectionAlias',
+          body: colormapCollectionBody,
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': '1'
+          },
+          params: `has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=${conceptId}*&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score`
+        }],
+        includeDefault: false
+      })
+
+      await page.route(/search\/granules.json/, async (route) => {
+        const query = route.request().postData()
+
+        expect(query).toEqual(`echo_collection_id=${conceptId}&page_num=1&page_size=20`)
+
+        await route.fulfill({
+          json: colormapGranulesBody,
+          headers: colormapGranulesHeaders
+        })
+      })
+
+      await page.route(/api$/, async (route) => {
+        const query = route.request().postData()
+
+        expect(query).toEqual(graphQlGetCollection(conceptId))
+
+        await route.fulfill({
+          json: colormapCollectionGraphQlBody,
+          headers: colormapCollectionGraphQlHeaders
+        })
+      })
+
+      await page.route(/autocomplete/, async (route) => {
+        await route.fulfill({
+          json: { feed: { entry: [] } }
+        })
+      })
+
+      await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Ice_Concentration/, async (route) => {
+        await route.fulfill({
+          json: colormapBody
+        })
+      })
+
+      await page.goto('search/granules?p=C1996881146-POCLOUD')
+    })
+
+    test('displays the color map on the page', async ({ page }) => {
+      await expect(page).toHaveScreenshot('colormap-screenshot.png', {
+        clip: {
+          x: 1100,
+          y: 0,
+          width: 300,
+          height: 200
+        }
+      })
+    })
+
+    test.describe('when hovering over the colormap', () => {
+      test('displays color map data to the user', async ({ page }) => {
+        await page.locator('.map').hover({
+          position: {
+            x: 1250,
+            y: 25
+          }
+        })
+
+        await expect(page.getByTestId('legend')).toHaveText('44 – 45 %')
+
+        await expect(page).toHaveScreenshot('colormap-hover-screenshot.png', {
+          maxDiffPixelRatio: 0.001,
+          clip: {
+            x: 1100,
+            y: 0,
+            width: 300,
+            height: 200
+          }
+        })
       })
     })
   })
