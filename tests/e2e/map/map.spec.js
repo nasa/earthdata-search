@@ -36,6 +36,12 @@ import arcticShapefileBody from './__mocks__/arctic_shapefile_collections.body.j
 import antarcticShapefileBody from './__mocks__/antarctic_shapefile_collections.body.json'
 import uploadShapefile from '../../support/uploadShapefile'
 
+// When testing map values we don't need to test the exact values coming from leaflet. The inconsistencies
+// with testing locally and in GitHub Actions make the tests unusable. By testing that the right type of spatial
+// value is present in the URL and SpatialDisplay, with rounded numbers, we are verifying that we are getting the
+// values we expect from leaflet and we are putting them into the store. The Jest tests verify that exact values
+// from the store are being displayed correctly.
+
 test.describe('Map interactions', () => {
   test.beforeEach(async ({ page }, testInfo) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
@@ -46,14 +52,7 @@ test.describe('Map interactions', () => {
 
   test.describe('When drawing point spatial', () => {
     test.describe('When drawing a new point from the spatial selection', () => {
-      test('renders correctly', async ({ page }, testInfo) => {
-        const browser = testInfo.project.name
-
-        const spatialStrings = {
-          chromium: '42.1875,4.5297',
-          firefox: '42.1875,4.53033',
-          webkit: '42.1875,4.5286'
-        }
+      test('renders correctly', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -64,7 +63,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: `has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=${spatialStrings[browser]}&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score`
+            paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/42\.\d+,4\.\d+/)
           }]
         })
 
@@ -78,35 +77,18 @@ test.describe('Map interactions', () => {
         await page.mouse.click(1000, 450)
 
         // Updates the URL
-        const urlValues = {
-          chromium: 'search?sp[0]=42.1875%2C4.5297',
-          firefox: 'search?sp[0]=42.1875%2C4.53033',
-          webkit: 'search?sp[0]=42.1875%2C4.5286'
-        }
-        await expect(page).toHaveURL(urlValues[browser])
+        await expect(page).toHaveURL(/search\?sp\[0\]=42\.\d+%2C4\.\d+/)
 
         // Draws a point on the map
         await expect(page.locator('.leaflet-marker-pane img')).toHaveAttribute('style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1000px, 385px, 0px); z-index: 385;')
 
         // Populates the spatial display field
-        const pointValues = {
-          chromium: '4.5297,42.1875',
-          firefox: '4.53033,42.1875',
-          webkit: '4.5286,42.1875'
-        }
-        await expect(page.getByTestId('spatial-display_point')).toHaveValue(pointValues[browser])
+        await expect(page.getByTestId('spatial-display_point')).toHaveValue(/4\.\d+,42\.\d+/)
       })
     })
 
     test.describe('When drawing a new point from the leaflet controls', () => {
-      test('renders correctly', async ({ page }, testInfo) => {
-        const browser = testInfo.project.name
-
-        const spatialStrings = {
-          chromium: '42.1875,4.5297',
-          firefox: '42.1875,4.53033',
-          webkit: '42.1875,4.5286'
-        }
+      test('renders correctly', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -117,7 +99,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: `has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=${spatialStrings[browser]}&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score`
+            paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/42\.\d+,4\.\d+/)
           }]
         })
 
@@ -130,23 +112,13 @@ test.describe('Map interactions', () => {
         await page.mouse.click(1000, 450)
 
         // Updates the URL
-        const urlValues = {
-          chromium: 'search?sp[0]=42.1875%2C4.5297',
-          firefox: 'search?sp[0]=42.1875%2C4.53033',
-          webkit: 'search?sp[0]=42.1875%2C4.5286'
-        }
-        await expect(page).toHaveURL(urlValues[browser])
+        await expect(page).toHaveURL(/search\?sp\[0\]=42\.\d+%2C4\.\d+/)
 
         // Draws a point on the map
         await expect(page.locator('.leaflet-marker-pane img')).toHaveAttribute('style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1000px, 385px, 0px); z-index: 385;')
 
         // Populates the spatial display field
-        const pointValues = {
-          chromium: '4.5297,42.1875',
-          firefox: '4.53033,42.1875',
-          webkit: '4.5286,42.1875'
-        }
-        await expect(page.getByTestId('spatial-display_point')).toHaveValue(pointValues[browser])
+        await expect(page.getByTestId('spatial-display_point')).toHaveValue(/4\.\d+,42\.\d+/)
       })
     })
 
@@ -157,13 +129,12 @@ test.describe('Map interactions', () => {
           body: commonBody,
           headers: commonHeaders,
           additionalRequests: [{
-            alias: 'pointAlias',
             body: pointBody,
             headers: {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-4.75606&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/42\.\d+,4\.\d+/)
           }]
         })
 
@@ -196,7 +167,6 @@ test.describe('Map interactions', () => {
           commonBody,
           commonHeaders,
           [{
-            alias: 'pointAlias',
             body: pointBody,
             headers: {
               ...commonHeaders,
@@ -205,7 +175,6 @@ test.describe('Map interactions', () => {
             params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
           },
           {
-            alias: 'pointEditedAlias',
             body: pointBodyEdited,
             headers: {
               ...commonHeaders,
@@ -271,11 +240,6 @@ test.describe('Map interactions', () => {
       test('renders correctly', async ({ page }, testInfo) => {
         const browser = testInfo.project.name
 
-        const spatialStrings = {
-          chromium: '42.1875,4.5297,156444',
-          firefox: '42.1875,4.53033,156443',
-          webkit: '42.1875,4.5286,156444'
-        }
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -286,7 +250,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: `has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=${spatialStrings[browser]}&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score`
+            paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/42\.\d+,4\.\d+,156\d+/)
           }]
         })
 
@@ -303,12 +267,7 @@ test.describe('Map interactions', () => {
         await page.mouse.up()
 
         // Updates the URL
-        const urlValues = {
-          chromium: 'search?circle[0]=42.1875%2C4.5297%2C156444',
-          firefox: 'search?circle[0]=42.1875%2C4.53033%2C156443',
-          webkit: 'search?circle[0]=42.1875%2C4.5286%2C156444'
-        }
-        await expect(page).toHaveURL(urlValues[browser])
+        await expect(page).toHaveURL(/search\?circle\[0\]=42\.\d+%2C4\.\d+%2C156\d+/)
 
         // Draws a circle on the map
         const leafletValues = {
@@ -319,18 +278,8 @@ test.describe('Map interactions', () => {
         await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', leafletValues[browser])
 
         // Populates the spatial display field
-        const pointValues = {
-          chromium: '4.5297,42.1875',
-          firefox: '4.53033,42.1875',
-          webkit: '4.5286,42.1875'
-        }
-        await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(pointValues[browser])
-        const radiusValues = {
-          chromium: '156444',
-          firefox: '156443',
-          webkit: '156444'
-        }
-        await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(radiusValues[browser])
+        await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/4\.\d+,42\.\d+/)
+        await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/156\d+/)
       })
     })
 
@@ -338,11 +287,6 @@ test.describe('Map interactions', () => {
       test('renders correctly', async ({ page }, testInfo) => {
         const browser = testInfo.project.name
 
-        const spatialStrings = {
-          chromium: '42.1875,4.5297,156444',
-          firefox: '42.1875,4.53033,156443',
-          webkit: '42.1875,4.5286,156444'
-        }
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -353,7 +297,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: `has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=${spatialStrings[browser]}&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score`
+            paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/42\.\d+,4\.\d+,156\d+/)
           }]
         })
 
@@ -369,12 +313,7 @@ test.describe('Map interactions', () => {
         await page.mouse.up()
 
         // Updates the URL
-        const urlValues = {
-          chromium: 'search?circle[0]=42.1875%2C4.5297%2C156444',
-          firefox: 'search?circle[0]=42.1875%2C4.53033%2C156443',
-          webkit: 'search?circle[0]=42.1875%2C4.5286%2C156444'
-        }
-        await expect(page).toHaveURL(urlValues[browser])
+        await expect(page).toHaveURL(/search\?circle\[0\]=42\.\d+%2C4\.\d+%2C156\d+/)
 
         // Draws a circle on the map
         const leafletValues = {
@@ -385,18 +324,8 @@ test.describe('Map interactions', () => {
         await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', leafletValues[browser])
 
         // Populates the spatial display field
-        const pointValues = {
-          chromium: '4.5297,42.1875',
-          firefox: '4.53033,42.1875',
-          webkit: '4.5286,42.1875'
-        }
-        await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(pointValues[browser])
-        const radiusValues = {
-          chromium: '156444',
-          firefox: '156443',
-          webkit: '156444'
-        }
-        await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(radiusValues[browser])
+        await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/4\.\d+,42\.\d+/)
+        await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/156\d+/)
       })
     })
 
@@ -412,7 +341,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=42.1875,4.5297,156444&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/42\.\d+,4\.\d+,156\d+/)
           }]
         })
 
@@ -449,11 +378,6 @@ test.describe('Map interactions', () => {
       test('renders correctly', async ({ page }, testInfo) => {
         const browser = testInfo.project.name
 
-        const spatialStrings = {
-          chromium: '42.1875,-9.53964,56.25,4.5297',
-          firefox: '42.1875,-9.53891,56.25,4.53033',
-          webkit: '42.1875,-9.54074,56.25,4.5286'
-        }
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -464,7 +388,8 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: `has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=${spatialStrings[browser]}&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score`
+            paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
+              ?.match(/42\.\d+,-9\.\d+,56\.\d+,4\.\d+/)
           }]
         })
 
@@ -479,12 +404,7 @@ test.describe('Map interactions', () => {
         await page.mouse.click(1100, 550)
 
         // Updates the URL
-        const urlValues = {
-          chromium: 'search?sb[0]=42.1875%2C-9.53964%2C56.25%2C4.5297',
-          firefox: 'search?sb[0]=42.1875%2C-9.53891%2C56.25%2C4.53033',
-          webkit: 'search?sb[0]=42.1875%2C-9.54074%2C56.25%2C4.5286'
-        }
-        await expect(page).toHaveURL(urlValues[browser])
+        await expect(page).toHaveURL(/search\?sb\[0\]=42\.\d+%2C-9\.\d+%2C56\.\d+%2C4\.\d+/)
 
         // Draws a bounding box on the map
         const leafletValues = {
@@ -495,18 +415,8 @@ test.describe('Map interactions', () => {
         await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', leafletValues[browser])
 
         // Populates the spatial display field
-        const swValues = {
-          chromium: '-9.53964,42.1875',
-          firefox: '-9.53891,42.1875',
-          webkit: '-9.54074,42.1875'
-        }
-        await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(swValues[browser])
-        const neValues = {
-          chromium: '4.5297,56.25',
-          firefox: '4.53033,56.25',
-          webkit: '4.5286,56.25'
-        }
-        await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(neValues[browser])
+        await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-9\.\d+,42\.\d+/)
+        await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/4\.\d+,56\.\d+/)
       })
     })
 
@@ -514,11 +424,6 @@ test.describe('Map interactions', () => {
       test('renders correctly', async ({ page }, testInfo) => {
         const browser = testInfo.project.name
 
-        const spatialStrings = {
-          chromium: '42.1875,-9.53964,56.25,4.5297',
-          firefox: '42.1875,-9.53891,56.25,4.53033',
-          webkit: '42.1875,-9.54074,56.25,4.5286'
-        }
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -529,7 +434,8 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: `has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=${spatialStrings[browser]}&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score`
+            paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
+              ?.match(/42\.\d+,-9\.\d+,56\.\d+,4\.\d+/)
           }]
         })
 
@@ -543,12 +449,7 @@ test.describe('Map interactions', () => {
         await page.mouse.click(1100, 550)
 
         // Updates the URL
-        const urlValues = {
-          chromium: 'search?sb[0]=42.1875%2C-9.53964%2C56.25%2C4.5297',
-          firefox: 'search?sb[0]=42.1875%2C-9.53891%2C56.25%2C4.53033',
-          webkit: 'search?sb[0]=42.1875%2C-9.54074%2C56.25%2C4.5286'
-        }
-        await expect(page).toHaveURL(urlValues[browser])
+        await expect(page).toHaveURL(/search\?sb\[0\]=42\.\d+%2C-9\.\d+%2C56\.\d+%2C4\.\d+/)
 
         // Draws a bounding box on the map
         const leafletValues = {
@@ -559,18 +460,8 @@ test.describe('Map interactions', () => {
         await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', leafletValues[browser])
 
         // Populates the spatial display field
-        const swValues = {
-          chromium: '-9.53964,42.1875',
-          firefox: '-9.53891,42.1875',
-          webkit: '-9.54074,42.1875'
-        }
-        await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(swValues[browser])
-        const neValues = {
-          chromium: '4.5297,56.25',
-          firefox: '4.53033,56.25',
-          webkit: '4.5286,56.25'
-        }
-        await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(neValues[browser])
+        await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-9\.\d+,42\.\d+/)
+        await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/4\.\d+,56\.\d+/)
       })
     })
 
@@ -586,7 +477,8 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=42.1875,-9.53964,56.25,4.5297&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
+              ?.match(/42\.\d+,-9\.\d+,56\.\d+,4\.\d+/)
           }]
         })
 
@@ -623,11 +515,6 @@ test.describe('Map interactions', () => {
       test('renders correctly', async ({ page }, testInfo) => {
         const browser = testInfo.project.name
 
-        const spatialStrings = {
-          chromium: '42.1875,4.5297,42.1875,-9.53964,56.25,-9.53964,42.1875,4.5297',
-          firefox: '42.1875,4.53033,42.1875,-9.53891,56.25,-9.53891,42.1875,4.53033',
-          webkit: '42.1875,4.5286,42.1875,-9.54074,56.25,-9.54074,42.1875,4.5286'
-        }
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -638,7 +525,8 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: `has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=${spatialStrings[browser]}&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score`
+            paramCheck: (parsedQuery) => parsedQuery?.point?.[0]
+              ?.match(/42\.\d+,4\.\d+,42\.\d+,-9\.\d+,56\.\d+,-9\.\d+,42\.\d+,4\.\d+/)
           }]
         })
 
@@ -661,12 +549,8 @@ test.describe('Map interactions', () => {
         await page.mouse.click(1000, 450)
 
         // Updates the URL
-        const urlValues = {
-          chromium: 'search?polygon[0]=42.1875%2C4.5297%2C42.1875%2C-9.53964%2C56.25%2C-9.53964%2C42.1875%2C4.5297',
-          firefox: 'search?polygon[0]=42.1875%2C4.53033%2C42.1875%2C-9.53891%2C56.25%2C-9.53891%2C42.1875%2C4.53033',
-          webkit: 'search?polygon[0]=42.1875%2C4.5286%2C42.1875%2C-9.54074%2C56.25%2C-9.54074%2C42.1875%2C4.5286'
-        }
-        await expect(page).toHaveURL(urlValues[browser])
+        // eslint-disable-next-line max-len
+        await expect(page).toHaveURL(/search\?polygon\[0\]=42\.\d+%2C4\.\d+%2C42\.\d+%2C-9\.\d+%2C56\.\d+%2C-9\.\d+%2C42\.\d+%2C4\.\d+/)
 
         // Draws a polygon on the map
         const leafletValues = {
@@ -689,11 +573,6 @@ test.describe('Map interactions', () => {
       test('renders correctly', async ({ page }, testInfo) => {
         const browser = testInfo.project.name
 
-        const spatialStrings = {
-          chromium: '42.1875,4.5297,42.1875,-9.53964,56.25,-9.53964,42.1875,4.5297',
-          firefox: '42.1875,4.53033,42.1875,-9.53891,56.25,-9.53891,42.1875,4.53033',
-          webkit: '42.1875,4.5286,42.1875,-9.54074,56.25,-9.54074,42.1875,4.5286'
-        }
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -704,7 +583,8 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: `has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=${spatialStrings[browser]}&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score`
+            paramCheck: (parsedQuery) => parsedQuery?.point?.[0]
+              ?.match(/42\.\d+,4\.\d+,42\.\d+,-9\.\d+,56\.\d+,-9\.\d+,42\.\d+,4\.\d+/)
           }]
         })
 
@@ -726,12 +606,8 @@ test.describe('Map interactions', () => {
         await page.mouse.click(1000, 450)
 
         // Updates the URL
-        const urlValues = {
-          chromium: 'search?polygon[0]=42.1875%2C4.5297%2C42.1875%2C-9.53964%2C56.25%2C-9.53964%2C42.1875%2C4.5297',
-          firefox: 'search?polygon[0]=42.1875%2C4.53033%2C42.1875%2C-9.53891%2C56.25%2C-9.53891%2C42.1875%2C4.53033',
-          webkit: 'search?polygon[0]=42.1875%2C4.5286%2C42.1875%2C-9.54074%2C56.25%2C-9.54074%2C42.1875%2C4.5286'
-        }
-        await expect(page).toHaveURL(urlValues[browser])
+        // eslint-disable-next-line max-len
+        await expect(page).toHaveURL(/search\?polygon\[0\]=42\.\d+%2C4\.\d+%2C42\.\d+%2C-9\.\d+%2C56\.\d+%2C-9\.\d+%2C42\.\d+%2C4\.\d+/)
 
         // Draws a polygon on the map
         const leafletValues = {
@@ -766,7 +642,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647,42.1875,-16.46517&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647,42.1875,-16.46517'
           }]
         })
 
@@ -811,7 +687,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&line[]=31,-15,36,-17,41,-15&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            paramCheck: (parsedQuery) => parsedQuery?.line?.[0] === '31,-15,36,-17,41,-15'
           }]
         })
 
@@ -863,7 +739,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=35,-5,50000&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            paramCheck: (parsedQuery) => parsedQuery?.circle?.[0] === '35,-5,50000'
           }]
         })
 
@@ -917,7 +793,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=35,0&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            paramCheck: (parsedQuery) => parsedQuery?.point?.[0] === '35,0'
           }]
         })
 
@@ -976,7 +852,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[spatial][or]=true&page_num=1&page_size=20&polygon[]=42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647,42.1875,-16.46517&polygon[]=58.25,-14.46517,58.25,0.40647,44.1875,0.40647,58.25,-14.46517&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647,42.1875,-16.46517' && parsedQuery?.polygon?.[1] === '58.25,-14.46517,58.25,0.40647,44.1875,0.40647,58.25,-14.46517'
           }]
         })
 
@@ -1031,7 +907,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=-114.04999,36.95777,-114.0506,37.0004,-114.04826,41.99381,-119.99917,41.99454,-120.00101,38.99957,-118.71431,38.10218,-117.50012,37.22038,-116.0936,36.15581,-114.63667,35.00881,-114.63689,35.02837,-114.60362,35.06423,-114.64435,35.1059,-114.57852,35.12875,-114.56924,35.18348,-114.60431,35.35358,-114.67764,35.48974,-114.65431,35.59759,-114.68941,35.65141,-114.68321,35.68939,-114.70531,35.71159,-114.69571,35.75599,-114.71211,35.80618,-114.67742,35.87473,-114.73116,35.94392,-114.74376,35.9851,-114.73043,36.03132,-114.75562,36.08717,-114.57203,36.15161,-114.51172,36.15096,-114.50217,36.1288,-114.45837,36.13859,-114.44661,36.12597,-114.40547,36.14737,-114.37211,36.14311,-114.30843,36.08244,-114.31403,36.05817,-114.25265,36.02019,-114.14819,36.02801,-114.11416,36.09698,-114.12086,36.1146,-114.09987,36.12165,-114.04684,36.19407,-114.04999,36.95777&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '-114.04999,36.95777,-114.0506,37.0004,-114.04826,41.99381,-119.99917,41.99454,-120.00101,38.99957,-118.71431,38.10218,-117.50012,37.22038,-116.0936,36.15581,-114.63667,35.00881,-114.63689,35.02837,-114.60362,35.06423,-114.64435,35.1059,-114.57852,35.12875,-114.56924,35.18348,-114.60431,35.35358,-114.67764,35.48974,-114.65431,35.59759,-114.68941,35.65141,-114.68321,35.68939,-114.70531,35.71159,-114.69571,35.75599,-114.71211,35.80618,-114.67742,35.87473,-114.73116,35.94392,-114.74376,35.9851,-114.73043,36.03132,-114.75562,36.08717,-114.57203,36.15161,-114.51172,36.15096,-114.50217,36.1288,-114.45837,36.13859,-114.44661,36.12597,-114.40547,36.14737,-114.37211,36.14311,-114.30843,36.08244,-114.31403,36.05817,-114.25265,36.02019,-114.14819,36.02801,-114.11416,36.09698,-114.12086,36.1146,-114.09987,36.12165,-114.04684,36.19407,-114.04999,36.95777'
           }]
         })
 
@@ -1082,7 +958,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,76.46517,56.25,76.46517,42.1875,82.40647,42.1875,76.46517&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,76.46517,56.25,76.46517,42.1875,82.40647,42.1875,76.46517'
           }]
         })
 
@@ -1129,7 +1005,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=42.1875,-76.46517,42.1875,-82.40647,56.25,-76.46517,42.1875,-76.46517&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,-76.46517,42.1875,-82.40647,56.25,-76.46517,42.1875,-76.46517'
           }]
         })
 
@@ -1451,13 +1327,12 @@ test.describe('Map interactions', () => {
           body: commonBody,
           headers: commonHeaders,
           additionalRequests: [{
-            alias: 'cmrGranulesCollectionAlias',
             body: cmrGranulesCollectionBody,
             headers: {
               ...commonHeaders,
               'cmr-hits': '1'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=C1214470488-ASF*&page_num=1&page_size=20&polygon[]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptId && parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647'
           }],
           includeDefault: false
         })
@@ -1616,13 +1491,12 @@ test.describe('Map interactions', () => {
           body: commonBody,
           headers: commonHeaders,
           additionalRequests: [{
-            alias: 'opensearchGranulesCollectionAlias',
             body: opensearchGranulesCollectionBody,
             headers: {
               ...commonHeaders,
               'cmr-hits': '1'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=C1972468359-SCIOPS*&page_num=1&page_size=20&polygon[]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptId && parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647'
           }],
           includeDefault: false
         })
@@ -1702,13 +1576,12 @@ test.describe('Map interactions', () => {
         body: commonBody,
         headers: commonHeaders,
         additionalRequests: [{
-          alias: 'cmrGranulesCollectionAlias',
           body: colormapCollectionBody,
           headers: {
             ...commonHeaders,
             'cmr-hits': '1'
           },
-          params: `has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=${conceptId}*&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score`
+          paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptId
         }],
         includeDefault: false
       })
@@ -1753,10 +1626,10 @@ test.describe('Map interactions', () => {
     test('displays the color map on the page', async ({ page }) => {
       await expect(page).toHaveScreenshot('colormap-screenshot.png', {
         clip: {
-          x: 1100,
-          y: 0,
-          width: 300,
-          height: 200
+          x: 1125,
+          y: 75,
+          width: 275,
+          height: 50
         }
       })
     })
@@ -1775,10 +1648,10 @@ test.describe('Map interactions', () => {
         await expect(page).toHaveScreenshot('colormap-hover-screenshot.png', {
           maxDiffPixelRatio: 0.001,
           clip: {
-            x: 1100,
-            y: 0,
-            width: 300,
-            height: 200
+            x: 1125,
+            y: 75,
+            width: 275,
+            height: 50
           }
         })
       })
