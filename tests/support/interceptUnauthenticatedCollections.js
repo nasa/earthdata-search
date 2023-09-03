@@ -1,3 +1,5 @@
+import qs from 'qs'
+
 /**
  * Intercepts the default unauthenticated request and return the body and headers provided
  * @param {Object} body Response body to provide during the intercept
@@ -22,14 +24,16 @@ export const interceptUnauthenticatedCollections = async ({
     }
 
     if (additionalRequests.length) {
+      const parsedQuery = qs.parse(query, { ignoreQueryPrefix: true })
+
       await Promise.all(additionalRequests.map(async (additionalRequest) => {
         const {
           body: additionalBody,
           headers: additionalHeaders,
-          params
+          paramCheck
         } = additionalRequest
 
-        if (query === params) {
+        if (paramCheck(parsedQuery)) {
           await route.fulfill({
             json: additionalBody,
             headers: additionalHeaders
