@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import hexToRgba from 'hex-to-rgba'
+import classNames from 'classnames'
 
 import './Legend.scss'
-import classNames from 'classnames'
 
 /**
  * Renders supported html entities when they are provided by the colormaps endpoint.
@@ -119,7 +119,10 @@ export const Legend = ({
   ])
 
   return (
-    <div className={legendClassNames}>
+    <div
+      className={legendClassNames}
+      data-testid="legend"
+    >
       <canvas
         ref={barRef}
         className="legend__bar"

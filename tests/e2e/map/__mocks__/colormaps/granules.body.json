@@ -1,0 +1,2749 @@
+{
+  "feed": {
+      "updated": "2023-09-03T17:21:24.903Z",
+      "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C1996881146-POCLOUD&page_num=1&page_size=20&sort_key=-start_date",
+      "title": "ECHO granule metadata",
+      "entry": [
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-09-01T21:00:00.000Z",
+              "updated": "2023-09-03T09:52:40.436Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230902090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-09-02T21:00:00.000Z",
+              "id": "G2760902220-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "715.738525390625",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230902090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230902090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230902090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230902090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230902090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230902090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230902090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-31T21:00:00.000Z",
+              "updated": "2023-09-03T09:40:47.986Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230901090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-09-01T21:00:00.000Z",
+              "id": "G2760442306-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230901090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230901090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230901090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230901090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230901090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230901090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230901090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-30T21:00:00.000Z",
+              "updated": "2023-09-03T09:25:38.278Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230831090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-31T21:00:00.000Z",
+              "id": "G2759681779-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230831090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230831090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230831090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230831090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230831090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230831090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230831090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-29T21:00:00.000Z",
+              "updated": "2023-09-03T09:05:13.944Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230830090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-30T21:00:00.000Z",
+              "id": "G2759207195-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230830090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230830090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230830090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230830090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230830090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230830090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230830090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-28T21:00:00.000Z",
+              "updated": "2023-09-03T08:41:40.807Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230829090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-29T21:00:00.000Z",
+              "id": "G2758827113-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230829090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230829090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230829090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230829090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230829090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230829090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230829090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-27T21:00:00.000Z",
+              "updated": "2023-09-03T08:22:37.355Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230828090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-28T21:00:00.000Z",
+              "id": "G2758401608-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230828090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230828090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230828090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230828090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230828090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230828090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230828090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-26T21:00:00.000Z",
+              "updated": "2023-09-03T08:05:42.520Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230827090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-27T21:00:00.000Z",
+              "id": "G2757927728-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "727.6427049636841",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230827090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230827090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230827090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230827090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230827090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230827090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230827090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-25T21:00:00.000Z",
+              "updated": "2023-09-03T07:47:37.329Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230826090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-26T21:00:00.000Z",
+              "id": "G2757608387-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230826090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230826090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230826090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230826090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230826090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230826090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230826090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-24T21:00:00.000Z",
+              "updated": "2023-09-03T07:30:40.776Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230825090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-25T21:00:00.000Z",
+              "id": "G2757319284-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230825090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230825090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230825090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230825090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230825090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230825090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230825090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-23T21:00:00.000Z",
+              "updated": "2023-09-02T07:30:37.498Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230824090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-24T21:00:00.000Z",
+              "id": "G2756591795-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230824090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230824090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230824090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230824090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230824090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230824090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230824090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-22T21:00:00.000Z",
+              "updated": "2023-09-01T07:29:46.940Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230823090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-23T21:00:00.000Z",
+              "id": "G2756070010-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230823090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230823090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230823090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230823090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230823090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230823090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230823090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-21T21:00:00.000Z",
+              "updated": "2023-08-31T07:29:40.336Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230822090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-22T21:00:00.000Z",
+              "id": "G2755334828-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230822090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230822090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230822090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230822090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230822090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230822090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230822090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-20T21:00:00.000Z",
+              "updated": "2023-08-30T07:30:43.279Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230821090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-21T21:00:00.000Z",
+              "id": "G2754675976-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230821090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230821090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230821090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230821090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230821090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230821090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230821090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-19T21:00:00.000Z",
+              "updated": "2023-08-29T09:02:40.658Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230820090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-20T21:00:00.000Z",
+              "id": "G2754064746-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230820090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230820090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230820090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230820090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230820090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230820090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230820090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-18T21:00:00.000Z",
+              "updated": "2023-08-28T07:30:12.871Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230819090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-19T21:00:00.000Z",
+              "id": "G2753835851-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230819090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230819090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230819090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230819090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230819090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230819090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230819090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-17T21:00:00.000Z",
+              "updated": "2023-08-27T07:28:37.454Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230818090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-18T21:00:00.000Z",
+              "id": "G2753586359-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "712.0430173873901",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230818090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230818090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230818090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230818090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230818090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230818090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230818090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-16T21:00:00.000Z",
+              "updated": "2023-08-26T07:29:36.985Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230817090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-17T21:00:00.000Z",
+              "id": "G2753584472-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "9.059906005859375E-5",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230817090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230817090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230817090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230817090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230817090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230817090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230817090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-15T21:00:00.000Z",
+              "updated": "2023-08-25T07:29:44.551Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230816090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-16T21:00:00.000Z",
+              "id": "G2752456458-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "724.7236661911011",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230816090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230816090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230816090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230816090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230816090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230816090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230816090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-14T21:00:00.000Z",
+              "updated": "2023-08-24T07:30:41.714Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230815090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-15T21:00:00.000Z",
+              "id": "G2751480035-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "728.5973348617554",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230815090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230815090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230815090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230815090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230815090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230815090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230815090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          },
+          {
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "time_start": "2023-08-13T21:00:00.000Z",
+              "updated": "2023-08-23T07:30:40.576Z",
+              "dataset_id": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+              "data_center": "POCLOUD",
+              "title": "20230814090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1",
+              "coordinate_system": "CARTESIAN",
+              "day_night_flag": "UNSPECIFIED",
+              "time_end": "2023-08-14T21:00:00.000Z",
+              "id": "G2750795326-POCLOUD",
+              "original_format": "UMM_JSON",
+              "granule_size": "727.2888088226318",
+              "browse_flag": false,
+              "collection_concept_id": "C1996881146-POCLOUD",
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "title": "Download 20230814090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230814090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/20230814090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "Download 20230814090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230814090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "This link provides direct download access via S3 to the granule",
+                      "hreflang": "en-US",
+                      "href": "s3://podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/20230814090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc.md5"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                      "title": "OPeNDAP request URL",
+                      "hreflang": "en-US",
+                      "href": "https://opendap.earthdata.nasa.gov/collections/C1996881146-POCLOUD/granules/20230814090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://ghrsst.jpl.nasa.gov"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/data-readers"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://doi.org/10.1016/j.rse.2017.07.029"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                      "hreflang": "en-US",
+                      "href": "https://registry.opendata.aws/mur/#usageexa"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "http://www.ghrsst.org"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+                  },
+                  {
+                      "inherited": true,
+                      "length": "300.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "length": "700.0MB",
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD "
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+                  },
+                  {
+                      "inherited": true,
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                      "hreflang": "en-US",
+                      "href": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+                  }
+              ]
+          }
+      ]
+  }
+}
