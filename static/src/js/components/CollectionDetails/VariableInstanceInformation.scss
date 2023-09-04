@@ -1,22 +1,25 @@
 .variable-instance-information {
-      &__direct-distribution-information-list {
-        padding-left: 1rem;  
-      }
+    &__direct-distribution-information-list {
+      padding-left: 0;
+    }
 
-      &__list-item {
-        overflow-y: hidden;
-        list-style-position: inside;
-        margin-left: 1em;
-      }
-      &__definition-list-container{
-        margin-left: 1rem;
-      }
-      &__instance-field-title {
-        font-weight: bold;
-        display:inline;
-      }
+    &__list-item {
+      overflow-y: hidden;
+      list-style-position: inside;
+      margin-left: 10px;
+    }
 
-      &__instance-field{
-        overflow: hidden;
-      }
+    &__definition-list-container{
+      margin-left: 1rem;
+    }
+    
+    &__instance-field-title {
+      font-weight: bold;
+      display:inline;
+      padding-left: 0;
+    }
+
+    &__instance-field{
+      overflow: hidden;
+    }
 }
