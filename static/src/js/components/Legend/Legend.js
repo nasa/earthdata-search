@@ -119,10 +119,7 @@ export const Legend = ({
   ])
 
   return (
-    <div
-      className={legendClassNames}
-      data-testid="legend"
-    >
+    <div className={legendClassNames}>
       <canvas
         ref={barRef}
         className="legend__bar"
@@ -134,8 +131,15 @@ export const Legend = ({
           isFocused
             ? (
               <div className="legend__focus">
-                <span className="legend__focus-label-color" style={{ backgroundColor: focusColor }} />
-                <span className="legend__focus-label">
+                <span
+                  className="legend__focus-label-color"
+                  style={{ backgroundColor: focusColor }}
+                  data-testid="legend-label-color"
+                />
+                <span
+                  className="legend__focus-label"
+                  data-testid="legend-label"
+                >
                   {replaceSupportedHtmlEntities(focusLabel)}
                 </span>
               </div>
@@ -144,14 +148,20 @@ export const Legend = ({
               <div className="legend__labels">
                 {
                   minLabel && (
-                    <span className="legend__label legend__label--min">
+                    <span
+                      className="legend__label legend__label--min"
+                      data-testid="legend-label-min"
+                    >
                       {replaceSupportedHtmlEntities(minLabel)}
                     </span>
                   )
                 }
                 {
                   maxLabel && (
-                    <span className="legend__label legend__label--max">
+                    <span
+                      className="legend__label legend__label--max"
+                      data-testid="legend-label-max"
+                    >
                       {replaceSupportedHtmlEntities(maxLabel)}
                     </span>
                   )

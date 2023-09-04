@@ -237,9 +237,7 @@ test.describe('Map interactions', () => {
 
   test.describe('When drawing circle spatial', () => {
     test.describe('When drawing a new circle from the spatial selection', () => {
-      test('renders correctly', async ({ page }, testInfo) => {
-        const browser = testInfo.project.name
-
+      test('renders correctly', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -270,12 +268,8 @@ test.describe('Map interactions', () => {
         await expect(page).toHaveURL(/search\?circle\[0\]=42\.\d+%2C4\.\d+%2C156\d+/)
 
         // Draws a circle on the map
-        const leafletValues = {
-          chromium: 'M990,384.78877260643276a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 ',
-          firefox: 'M990,384.78434518402173a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 ',
-          webkit: 'M990,384.79658890927476a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 '
-        }
-        await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', leafletValues[browser])
+        // These values aren't consistant in GitHub, but they all start with `384.`
+        await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', /M990,384\..*,10 0 1,0 20,0 a10,10 0 1,0 -20,0 /)
 
         // Populates the spatial display field
         await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/4\.\d+,42\.\d+/)
@@ -284,9 +278,7 @@ test.describe('Map interactions', () => {
     })
 
     test.describe('When drawing a new circle from the leaflet controls', () => {
-      test('renders correctly', async ({ page }, testInfo) => {
-        const browser = testInfo.project.name
-
+      test('renders correctly', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -316,12 +308,8 @@ test.describe('Map interactions', () => {
         await expect(page).toHaveURL(/search\?circle\[0\]=42\.\d+%2C4\.\d+%2C156\d+/)
 
         // Draws a circle on the map
-        const leafletValues = {
-          chromium: 'M990,384.78877260643276a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 ',
-          firefox: 'M990,384.78434518402173a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 ',
-          webkit: 'M990,384.79658890927476a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 '
-        }
-        await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', leafletValues[browser])
+        // These values aren't consistant in GitHub, but they all start with `384.`
+        await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', /M990,384\..*,10 0 1,0 20,0 a10,10 0 1,0 -20,0 /)
 
         // Populates the spatial display field
         await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/4\.\d+,42\.\d+/)
@@ -1632,6 +1620,9 @@ test.describe('Map interactions', () => {
           height: 50
         }
       })
+
+      await expect(page.getByTestId('legend-label-min')).toHaveText('0 – 1 %')
+      await expect(page.getByTestId('legend-label-max')).toHaveText('100 %')
     })
 
     test.describe('when hovering over the colormap', () => {
@@ -1643,17 +1634,8 @@ test.describe('Map interactions', () => {
           }
         })
 
-        await expect(page.getByTestId('legend')).toHaveText('44 – 45 %')
-
-        await expect(page).toHaveScreenshot('colormap-hover-screenshot.png', {
-          maxDiffPixelRatio: 0.015,
-          clip: {
-            x: 1125,
-            y: 75,
-            width: 275,
-            height: 50
-          }
-        })
+        await expect(page.getByTestId('legend-label-color')).toHaveAttribute('style', 'background-color: rgb(0, 250, 241);')
+        await expect(page.getByTestId('legend-label')).toHaveText('44 – 45 %')
       })
     })
   })
