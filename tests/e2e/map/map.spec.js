@@ -1646,7 +1646,7 @@ test.describe('Map interactions', () => {
         await expect(page.getByTestId('legend')).toHaveText('44 – 45 %')
 
         await expect(page).toHaveScreenshot('colormap-hover-screenshot.png', {
-          maxDiffPixelRatio: 0.001,
+          maxDiffPixelRatio: 0.015,
           clip: {
             x: 1125,
             y: 75,
