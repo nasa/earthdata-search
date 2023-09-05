@@ -518,23 +518,12 @@ describe('CollectionDetailsBody component', () => {
             }
           }
         })
-
-        // todo ensure that these are the same
+        // Element types are implementation details not using `getByRole` here
+        // https://github.com/testing-library/dom-testing-library/issues/140
         expect(screen.getByText('HDF-EOS2')).toBeInTheDocument()
         expect(screen.getByText('HDF-EOS5')).toBeInTheDocument()
         expect(screen.getByText('XML, ASCII, ICARTT')).toBeInTheDocument()
         expect(screen.getByText('PNG, JPEG, TIFF')).toBeInTheDocument()
-
-        // const reformattingsDataElement = enzymeWrapper.find('.collection-details-body__info').find('dd').at(1)
-
-        // const format1 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(0)
-        // const format2 = reformattingsDataElement.find('.collection-details-body__reformatting-item').at(1)
-
-        // expect(format1.find('dt').text()).toEqual('HDF-EOS2<EDSCIcon />')
-        // expect(format2.find('dt').text()).toEqual('HDF-EOS5<EDSCIcon />')
-
-        // expect(format1.find('dd').text()).toEqual('XML, ASCII, ICARTT')
-        // expect(format2.find('dd').text()).toEqual('PNG, JPEG, TIFF')
       })
 
       test('does not render duplicate formats', () => {
@@ -735,6 +724,36 @@ describe('CollectionDetailsBody component', () => {
             level: 4,
             name: 'Cloud Access'
           })).toBeInTheDocument()
+        })
+      })
+
+      describe('when the collection has variables with instance information but, no `s3BucketAndObjectPrefixNames`', () => {
+        const overrideMetadata = {
+          overrideMetadata: {
+            variables: {
+              items: [
+                {
+                  conceptId: 'V123456-EDSC',
+                  instanceInformation: {
+                    url: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name',
+                    format: 'Zarr',
+                    description: 'brief end user information goes here.',
+                    directDistributionInformation: {
+                      region: 'us-west-2',
+                      s3CredentialsApiEndpoint: 'https://api.test.earthdata.nasa.gov/s3credentials',
+                      s3CredentialsApiDocumentationUrl: 'https://test/information/documents?title=In-region%20Direct%20S3%20Zarr%20Cache%20Access'
+                    },
+                    chunkingInformation: 'Chunk size for this test example is 1MB. optimized for time series.'
+                  }
+                }
+              ]
+            }
+          }
+        }
+
+        test('the `s3BucketAndObjectPrefixNames` field is not rendered', () => {
+          setup(overrideMetadata)
+          expect(screen.queryByText('S3 Bucket And Object Prefix Names:')).not.toBeInTheDocument()
         })
       })
 

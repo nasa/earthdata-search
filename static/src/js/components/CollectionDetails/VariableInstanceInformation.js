@@ -12,7 +12,7 @@ export const VariableInstanceInformation = ({
 
   const {
     region,
-    s3BucketAndObjectPrefixNames,
+    s3BucketAndObjectPrefixNames = [],
     s3CredentialsApiEndpoint,
     s3CredentialsApiDocumentationUrl
   } = directDistributionInformation
@@ -47,23 +47,23 @@ export const VariableInstanceInformation = ({
           {' '}
           {region}
         </li>
+        { s3BucketAndObjectPrefixNames.length > 0 && (
         <li className="variable-instance-information__list-item">
           <p className="variable-instance-information__instance-field-list-title">S3 Bucket And Object Prefix Names:</p>
           {' '}
           {
-                                s3BucketAndObjectPrefixNames.length && (
-                                  s3BucketAndObjectPrefixNames.map((name, i) => {
-                                    const key = `${name}-${i}`
-                                    return (
-                                      <a className="variable-instance-information__bucket-name" href={name} key={key}>
-                                        {name}
-                                        <br />
-                                      </a>
-                                    )
-                                  })
-                                )
-                              }
+              s3BucketAndObjectPrefixNames.map((name, i) => {
+                const key = `${name}-${i}`
+                return (
+                  <a className="variable-instance-information__bucket-name" href={name} key={key}>
+                    {name}
+                    <br />
+                  </a>
+                )
+              })
+          }
         </li>
+        )}
 
         <li className="variable-instance-information__list-item">
           <p className="variable-instance-information__instance-field-list-title">S3 Credentials API Endpoint:</p>
