@@ -23,9 +23,6 @@ jest.mock('../../RelatedCollection/RelatedCollection', () => jest.fn(() => (
   </mock-RelatedCollection>
 )))
 
-// Mock Related Collection component
-// jest.mock('../../RelatedCollection/RelatedCollection', () => () => (<div> Mock related collection</div>))
-
 const setup = (overrides) => {
   const {
     overrideMetadata = {},
@@ -788,7 +785,7 @@ describe('CollectionDetailsBody component', () => {
     })
 
     describe('"For Developers" Panel', () => {
-      test('has the correct props', async () => {
+      test('is populated with links being passed in', async () => {
         const user = userEvent.setup()
 
         setup()

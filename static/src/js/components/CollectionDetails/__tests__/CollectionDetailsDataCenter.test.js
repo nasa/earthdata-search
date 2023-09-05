@@ -1,13 +1,12 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { Card } from 'react-bootstrap'
+
+import {
+  act, render, screen
+} from '@testing-library/react'
 
 import CollectionDetailsDataCenter from '../CollectionDetailsDataCenter'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
+const setup = () => {
   const props = {
     dataCenter: {
       roles: [
@@ -41,22 +40,19 @@ function setup() {
     item: 0
   }
 
-  const enzymeWrapper = shallow(<CollectionDetailsDataCenter {...props} />)
+  act(() => {
+    render(<CollectionDetailsDataCenter {...props} />)
+  })
 
   return {
-    enzymeWrapper,
     props
   }
 }
 
 describe('CollectionDetails component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.type()).toBe(Card)
-    expect(enzymeWrapper.prop('className')).toEqual('collection-details-data-center')
-    expect(enzymeWrapper.prop('as')).toEqual('li')
-    expect(enzymeWrapper.prop('bg')).toEqual('light')
-    expect(enzymeWrapper.find(Card.Body).length).toEqual(1)
+    setup()
+    expect(screen.getAllByRole('listitem').length).toEqual(1)
+    expect(screen.getByText('ARCHIVER')).not.toBeNull()
   })
 })

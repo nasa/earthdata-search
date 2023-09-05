@@ -79,9 +79,8 @@ const buildNativeFormatList = (nativeFormats) => {
   )
 }
 
-const buildVarInstanceInformation = (conceptId, instanceInformation) => (
+const buildVarInstanceInformation = (instanceInformation) => (
   <VariableInstanceInformation
-    key={conceptId}
     instanceInformation={instanceInformation}
   />
 )
@@ -209,8 +208,7 @@ export const CollectionDetailsBody = ({
       items.forEach((variable) => {
         const { instanceInformation } = variable
         if (instanceInformation) {
-          const { conceptId } = variable
-          const varInstanceInformation = buildVarInstanceInformation(conceptId, instanceInformation)
+          const varInstanceInformation = buildVarInstanceInformation(instanceInformation)
           variableInstancesInformation.push(varInstanceInformation)
         }
       })
@@ -495,14 +493,21 @@ export const CollectionDetailsBody = ({
             }
             {
               (variableInstancesInformation.length > 0) && (
-                <div>
-                  <h5 className="collection-details-body__feature-title">
-                    Variable Instance
-                  </h5>
-                  <div className="collection-details-body__cloud-access-content">
-                    { variableInstancesInformation.map((variableInstance) => (variableInstance)) }
-                  </div>
-                </div>
+                <>
+                  { variableInstancesInformation.map((variableInstance, i) => {
+                    const key = `variable_instance_information_${i}`
+                    return (
+                      <div key={key}>
+                        <h5 className="collection-details-body__feature-title">
+                          Variable Instance
+                        </h5>
+                        <div className="collection-details-body__cloud-access-content">
+                          {variableInstance}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </>
               )
             }
           </div>
