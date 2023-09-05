@@ -12,6 +12,7 @@ import '@testing-library/jest-dom'
 
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
 
+// Mock react-leaflet because it causes errors
 jest.mock('react-leaflet', () => (
   {
     createLayerComponent: jest.fn().mockImplementation(() => {}),

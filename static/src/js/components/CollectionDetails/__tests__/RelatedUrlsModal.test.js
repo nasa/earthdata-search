@@ -3,6 +3,7 @@ import React from 'react'
 import {
   act, render, screen
 } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import RelatedUrlsModal from '../RelatedUrlsModal'
 
@@ -134,6 +135,9 @@ const setup = (overrides) => {
   act(() => {
     render(<RelatedUrlsModal {...props} />)
   })
+  return {
+    onToggleRelatedUrlsModal
+  }
 }
 
 describe('CollectionDetailsBody component', () => {
@@ -175,6 +179,15 @@ describe('CollectionDetailsBody component', () => {
       const collectionDetailsrelatedUrlsList = screen.queryAllByRole('list')
       expect(collectionDetailsrelatedUrlsList.length).toEqual(0)
     })
-    // TODO write a test to make sure that this modal closes
+    describe('when the clicking the close button on the modal', () => {
+      test('calls the `onToggleRelatedUrlsModal` function with false', async () => {
+        const { onToggleRelatedUrlsModal } = setup()
+        userEvent.setup()
+        const closeButton = screen.getByRole('button')
+        await userEvent.click(closeButton)
+        expect(screen.getByText('Related URLs')).toBeInTheDocument()
+        expect(onToggleRelatedUrlsModal).toHaveBeenCalledTimes(1)
+      })
+    })
   })
 })

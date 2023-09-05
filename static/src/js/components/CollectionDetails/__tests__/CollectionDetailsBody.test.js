@@ -328,7 +328,6 @@ describe('CollectionDetailsBody component', () => {
       })
     })
 
-    // TODO add data center test for coverage
     describe('Data center', () => {
       test('renders correctly', () => {
         const mockDataCenters = [
