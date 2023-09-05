@@ -95,6 +95,8 @@ const MapWrapper = ({
   const [gibsLayer, setGibsLayer] = useState('')
   const [colorMap, setColorMap] = useState({})
 
+  // TODO EDSC-3880 We can move the below state relating to colormaps into Redux which might help when eventually
+  // managaging multiple GIBS layers.
   useEffect(() => {
     const { tags } = focusedCollectionMetadata
     const gibsTag = getValueForTag('gibs', tags)
