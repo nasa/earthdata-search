@@ -1,6 +1,7 @@
 .variable-instance-information {
     &__direct-distribution-information-list {
       padding-left: 0;
+      list-style-type: none;
     }
 
     &__list-item {
@@ -17,6 +18,15 @@
       font-weight: bold;
       display:inline;
       padding-left: 0;
+    }
+
+    &__instance-field-list-title {
+      font-weight: bold;
+      display:inline;
+      padding-left: 0;
+      &:before {
+        content: "• "
+      }
     }
 
     &__instance-field{

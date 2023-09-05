@@ -8,7 +8,7 @@ const DirectDistributionInformation = ({
 }) => {
   const {
     region,
-    s3BucketAndObjectPrefixNames,
+    s3BucketAndObjectPrefixNames = [],
     s3CredentialsApiEndpoint,
     s3CredentialsApiDocumentationUrl
   } = directDistributionInformation

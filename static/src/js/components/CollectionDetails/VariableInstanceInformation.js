@@ -19,7 +19,6 @@ export const VariableInstanceInformation = ({
     s3CredentialsApiEndpoint,
     s3CredentialsApiDocumentationUrl
   } = directDistributionInformation
-  // TODO we need to handle if there are > 1 s3BucketAndObjectPrefixNames
   return (
     <div>
       <div className="variable-instance-information__instance-field">
@@ -46,24 +45,36 @@ export const VariableInstanceInformation = ({
       <p className="variable-instance-information__instance-field-title">Direct Distribution Information:</p>
       <ul className="variable-instance-information__direct-distribution-information-list">
         <li className="variable-instance-information__list-item">
-          <p className="variable-instance-information__instance-field-title">Region:</p>
+          <p className="variable-instance-information__instance-field-list-title">Region:</p>
           {' '}
           {region}
         </li>
         <li className="variable-instance-information__list-item">
-          <p className="variable-instance-information__instance-field-title">S3 Bucket And Object Prefix Names:</p>
+          <p className="variable-instance-information__instance-field-list-title">S3 Bucket And Object Prefix Names:</p>
           {' '}
-          <a href={s3BucketAndObjectPrefixNames}>{s3BucketAndObjectPrefixNames}</a>
+          {
+                                s3BucketAndObjectPrefixNames.length && (
+                                  s3BucketAndObjectPrefixNames.map((name, i) => {
+                                    const key = `${name}-${i}`
+                                    return (
+                                      <a className="variable-instance-information__bucket-name" href={name} key={key}>
+                                        {name}
+                                        <br />
+                                      </a>
+                                    )
+                                  })
+                                )
+                              }
         </li>
 
         <li className="variable-instance-information__list-item">
-          <p className="variable-instance-information__instance-field-title">S3 Credentials API Endpoint:</p>
+          <p className="variable-instance-information__instance-field-list-title">S3 Credentials API Endpoint:</p>
           {' '}
           <a href={s3CredentialsApiEndpoint}>{s3CredentialsApiEndpoint}</a>
         </li>
 
         <li className="variable-instance-information__list-item">
-          <p className="variable-instance-information__instance-field-title">S3 Credentials API Documentation URL:</p>
+          <p className="variable-instance-information__instance-field-list-title">S3 Credentials API Documentation URL:</p>
           {' '}
           <a href={s3CredentialsApiDocumentationUrl}>{s3CredentialsApiDocumentationUrl}</a>
         </li>

@@ -11,8 +11,6 @@ import '@testing-library/jest-dom'
 import CollectionDetailsBody from '../CollectionDetailsBody'
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
 
-// TODO I saw this getting used in EDD  expect(container).toBeEmptyDOMElement()
-
 jest.mock('../CollectionDetailsMinimap', () => jest.fn(({ children }) => (
   <mock-CollectionDetailsMinimap data-testid="collection-details-body__minimap">
     {children}
@@ -127,8 +125,6 @@ describe('CollectionDetailsBody component', () => {
       expect(CollectionDetailsMinimap).toHaveBeenCalledTimes(1)
 
       expect(screen.getByText(spatialMetadata)).toBeInTheDocument()
-      // TODO: the boxes are on the minimap not rendered onto the page need to test this
-      // expect(screen.getByText(boxesMetadata)).toBeInTheDocument()
     })
 
     describe('Spatial bounding', () => {
@@ -671,7 +667,7 @@ describe('CollectionDetailsBody component', () => {
           .toBeInTheDocument()
       })
     })
-    // TODO: why is this giving me lower case value on the DOM?
+
     describe('Direct Distribution Information', () => {
       test('renders correctly', () => {
         setup({
@@ -691,15 +687,8 @@ describe('CollectionDetailsBody component', () => {
         // Get access bucket name
         expect(screen.getByText('TestBucketOrObjectPrefix')).toBeInTheDocument()
 
-        // todo can hrefs not be captial
-        // lower-case hrefs are treated the same as upper-case hrefs
-        expect(screen.getByRole('link', { name: 'Get AWS S3 Credentials' }).href).toEqual('https://daaccredentialendpoint.org/')
-        expect(screen.getByRole('link', { name: 'Documentation' }).href).toEqual('https://daaccredentialdocumentation.org/')
-        // .toHaveTextContent('s3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name')
-        // expect(enzymeWrapper.find('.collection-details-body__cloud-access__region').text()).toEqual('us-east-2')
-        // expect(enzymeWrapper.find('.collection-details-body__cloud-access__bucket-name').text()).toEqual('TestBucketOrObjectPrefix')
-        // expect(enzymeWrapper.find('.collection-details-body__cloud-access__api-link').props().href).toEqual('https://DAACCredentialEndpoint.org')
-        // expect(enzymeWrapper.find('.collection-details-body__cloud-access__documentation-link').props().href).toEqual('https://DAACCredentialDocumentation.org')
+        expect(screen.getByRole('link', { name: 'Get AWS S3 Credentials' })).toHaveAttribute('href', 'https://DAACCredentialEndpoint.org')
+        expect(screen.getByRole('link', { name: 'Documentation' })).toHaveAttribute('href', 'https://DAACCredentialDocumentation.org')
       })
     })
 
@@ -736,6 +725,11 @@ describe('CollectionDetailsBody component', () => {
           setup(overrideMetadata)
           expect(screen.getByRole('link', { name: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name' }))
             .toHaveTextContent('s3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name')
+
+          expect(screen.getByRole('link', { name: 'zarr/test-name' }))
+            .toHaveTextContent('zarr/test-name')
+
+          expect(screen.getByText('brief end user information goes here.')).toBeInTheDocument()
         })
 
         test('renders cloud access header', () => {
@@ -798,12 +792,8 @@ describe('CollectionDetailsBody component', () => {
         const user = userEvent.setup()
 
         setup()
-        const forDevelopersCollapsablePanel = screen.getByText('For Developers')
+        const forDevelopersCollapsablePanel = screen.getByRole('button')
         await user.click(forDevelopersCollapsablePanel)
-
-        // todo this is turning into `collapse-panel__button-primary` as the value
-        // expect(screen.getByText('For Developers')).toHaveClass('collection-details-body__for-devs')
-        // expect(screen.getByTestId('collection-details-body__CollapsePanel')).toHaveClass('collection-details-body__for-devs')
 
         const developerListLinks = screen.getAllByRole('listitem')
         expect(screen.getAllByRole('listitem').length).toEqual(7)
@@ -894,7 +884,7 @@ describe('CollectionDetailsBody component', () => {
         expect(relatedCollectionsListItems.length).toEqual(5)
       })
 
-      test('renders the 3 links', () => {
+      test('renders a maximum of 3 links', () => {
         setup({
           overrideMetadata: {
             relatedCollections: {
