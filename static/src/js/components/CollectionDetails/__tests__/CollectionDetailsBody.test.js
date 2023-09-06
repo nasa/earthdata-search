@@ -802,13 +802,16 @@ describe('CollectionDetailsBody component', () => {
       })
     })
 
-    describe('"For Developers" Panel', () => {
+    describe('the "For Developers" Panel', () => {
       test('is populated with links being passed in', async () => {
         const user = userEvent.setup()
 
         setup()
-        const forDevelopersCollapsablePanel = screen.getByRole('button')
+        const forDevelopersCollapsablePanel = screen.getByRole('button', { expanded: false })
         await user.click(forDevelopersCollapsablePanel)
+
+        // If the collapsable button is clicked `aria-expanded` is set to true changing the icon
+        expect(screen.getByRole('button', { expanded: true })).toBeInTheDocument()
 
         const developerListLinks = screen.getAllByRole('listitem')
         expect(screen.getAllByRole('listitem').length).toEqual(7)
@@ -900,6 +903,7 @@ describe('CollectionDetailsBody component', () => {
       })
 
       test('renders a maximum of 3 links', () => {
+        // Limit 3 being set in static/src/js/actions/focusedCollection.js
         setup({
           overrideMetadata: {
             relatedCollections: {
