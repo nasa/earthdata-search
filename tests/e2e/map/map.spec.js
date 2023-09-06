@@ -8,11 +8,14 @@ import circleBody from './__mocks__/circle_collections.body.json'
 import cmrGranulesBody from './__mocks__/cmr_granules/granules.body.json'
 import cmrGranulesCollectionBody from './__mocks__/cmr_granules/collections.body.json'
 import cmrGranulesCollectionGraphQlBody from './__mocks__/cmr_granules/collection_graphql.body.json'
-import colormapBody from './__mocks__/colormaps/colormap.body.json'
-import colormapCollectionBody from './__mocks__/colormaps/collections.body.json'
-import colormapGranulesBody from './__mocks__/colormaps/granules.body.json'
+import colormapOneBody from './__mocks__/colormaps/colormap_1.body.json'
+import colormapTwoBody from './__mocks__/colormaps/colormap_2.body.json'
+import colormapCollectionsBody from './__mocks__/colormaps/collections.body.json'
+import colormapGranulesOneBody from './__mocks__/colormaps/granules_1.body.json'
+import colormapGranulesTwoBody from './__mocks__/colormaps/granules_2.body.json'
 import colormapGranulesHeaders from './__mocks__/colormaps/granules.headers.json'
-import colormapCollectionGraphQlBody from './__mocks__/colormaps/collection_graphql.body.json'
+import colormapCollectionOneGraphQlBody from './__mocks__/colormaps/collection_graphql_1.body.json'
+import colormapCollectionTwoGraphQlBody from './__mocks__/colormaps/collection_graphql_2.body.json'
 import colormapCollectionGraphQlHeaders from './__mocks__/colormaps/graphql.headers.json'
 import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
 import cmrGranulesCollectionGraphQlHeaders from './__mocks__/cmr_granules/graphql.headers.json'
@@ -691,7 +694,7 @@ test.describe('Map interactions', () => {
         // Upload the shapefile
         await uploadShapefile(page, 'multiple_shapes.geojson')
 
-        // Collapse the collection panel
+        // Collapse the collectionpanel
         await page.getByRole('button', { name: 'Collapse panel (])' }).click()
 
         // Select the line
@@ -1557,43 +1560,67 @@ test.describe('Map interactions', () => {
 
   test.describe('When viewing granules with colormap data', () => {
     test.beforeEach(async ({ page }) => {
-      const conceptId = 'C1996881146-POCLOUD'
+      const conceptIdOne = 'C1996881146-POCLOUD'
+      const conceptIdTwo = 'C1243477369-GES_DISC'
 
       await interceptUnauthenticatedCollections({
         page,
-        body: commonBody,
-        headers: commonHeaders,
-        additionalRequests: [{
-          body: colormapCollectionBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': '1'
-          },
-          paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptId
-        }],
-        includeDefault: false
+        body: colormapCollectionsBody,
+        headers: commonHeaders
+        // additionalRequests: [
+        //   {
+        //     body: colormapCollectionOneBody,
+        //     headers: {
+        //       ...commonHeaders,
+        //       'cmr-hits': '1'
+        //     },
+        //     paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptIdOne
+        //   },
+        //   {
+        //     body: colormapCollectionTwoBody,
+        //     headers: {
+        //       ...commonHeaders,
+        //       'cmr-hits': '1'
+        //     },
+        //     paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptIdTwo
+        //   }
+        // ]
       })
 
       await page.route(/search\/granules.json/, async (route) => {
         const query = route.request().postData()
 
-        expect(query).toEqual(`echo_collection_id=${conceptId}&page_num=1&page_size=20`)
+        if (query === `echo_collection_id=${conceptIdOne}&page_num=1&page_size=20`) {
+          await route.fulfill({
+            json: colormapGranulesOneBody,
+            headers: colormapGranulesHeaders
+          })
+        }
 
-        await route.fulfill({
-          json: colormapGranulesBody,
-          headers: colormapGranulesHeaders
-        })
+        if (query === `echo_collection_id=${conceptIdTwo}&page_num=1&page_size=20`) {
+          await route.fulfill({
+            json: colormapGranulesTwoBody,
+            headers: colormapGranulesHeaders
+          })
+        }
       })
 
       await page.route(/api$/, async (route) => {
         const query = route.request().postData()
 
-        expect(query).toEqual(graphQlGetCollection(conceptId))
+        if (query === graphQlGetCollection(conceptIdOne)) {
+          await route.fulfill({
+            json: colormapCollectionOneGraphQlBody,
+            headers: colormapCollectionGraphQlHeaders
+          })
+        }
 
-        await route.fulfill({
-          json: colormapCollectionGraphQlBody,
-          headers: colormapCollectionGraphQlHeaders
-        })
+        if (query === graphQlGetCollection(conceptIdTwo)) {
+          await route.fulfill({
+            json: colormapCollectionTwoGraphQlBody,
+            headers: colormapCollectionGraphQlHeaders
+          })
+        }
       })
 
       await page.route(/autocomplete/, async (route) => {
@@ -1604,7 +1631,13 @@ test.describe('Map interactions', () => {
 
       await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Ice_Concentration/, async (route) => {
         await route.fulfill({
-          json: colormapBody
+          json: colormapOneBody
+        })
+      })
+
+      await page.route(/colormaps\/AIRS_Prata_SO2_Index_Day/, async (route) => {
+        await route.fulfill({
+          json: colormapTwoBody
         })
       })
 
@@ -1636,6 +1669,56 @@ test.describe('Map interactions', () => {
 
         await expect(page.getByTestId('legend-label-color')).toHaveAttribute('style', 'background-color: rgb(0, 250, 241);')
         await expect(page.getByTestId('legend-label')).toHaveText('44 – 45 %')
+      })
+    })
+
+    test.describe('when returning to the search results page', () => {
+      test.beforeEach(async ({ page }) => {
+        await page.getByTestId('panel-group_granule-results')
+          .getByTestId('breadcrumb-button')
+          .click()
+      })
+
+      test('does not show the colormap', async ({ page }) => {
+        await expect(page.getByTestId('legend')).not.toBeInViewport()
+      })
+
+      test.describe('when visiting another collection with a colormap', () => {
+        test('displays a new colormap', async ({ page }) => {
+          await page.getByTestId('collection-result-item_C1243477369-GES_DISC').click()
+
+          await expect(page).toHaveScreenshot('colormap-2-screenshot.png', {
+            clip: {
+              x: 1125,
+              y: 75,
+              width: 275,
+              height: 50
+            }
+          })
+
+          await expect(page.getByTestId('legend-label-min')).toHaveText('0.00 – 0.12 DU')
+          await expect(page.getByTestId('legend-label-max')).toHaveText('500.00 DU')
+        })
+      })
+    })
+
+    test.describe('when switching the projection', () => {
+      test.beforeEach(async ({ page }) => {
+        await page.getByTestId('projection-switcher__arctic').click()
+      })
+
+      test('does not show the colormap', async ({ page }) => {
+        await expect(page.getByTestId('legend')).not.toBeInViewport()
+      })
+
+      test.describe('when switching back to the geographic projection', () => {
+        test.beforeEach(async ({ page }) => {
+          await page.getByTestId('projection-switcher__geo').click()
+        })
+
+        test('displays the colormap', async ({ page }) => {
+          await expect(page.getByTestId('legend')).toBeInViewport()
+        })
       })
     })
   })

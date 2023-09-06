@@ -119,7 +119,7 @@ export const Legend = ({
   ])
 
   return (
-    <div className={legendClassNames}>
+    <div className={legendClassNames} data-testid="legend">
       <canvas
         ref={barRef}
         className="legend__bar"
