@@ -93,7 +93,10 @@ export const MapContainer = (props) => {
   const { location } = router
   const { pathname } = location
   const isProjectPage = isPath(pathname, '/projects')
-  const isFocusedCollectionPage = isPath(pathname, '/search/granules')
+  const isFocusedCollectionPage = isPath(pathname, [
+    '/search/granules',
+    '/search/granules/collection-details'
+  ])
   const [map, setMap] = useState(mapProps)
   const imageryCache = useRef(LRUCache(400))
 
