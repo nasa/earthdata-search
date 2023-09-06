@@ -40,6 +40,7 @@ const MapWrapper = ({
   granules,
   granulesMetadata,
   imageryCache,
+  isFocusedCollectionPage,
   isProjectPage,
   mapProps,
   maxZoom,
@@ -115,22 +116,36 @@ const MapWrapper = ({
 
   useEffect(() => {
     const getColorMap = async () => {
+      const hasNoColormapForProjection = (
+        !colorMap[focusedCollectionId]
+        || (colorMap[focusedCollectionId] && !colorMap[focusedCollectionId][projection])
+      )
+
       if (
         gibsLayer
         && gibsLayer.product
         && hasGibsLayerForProjection(gibsLayer, projection)
-        && !colorMap[projection]
+        && hasNoColormapForProjection
       ) {
         try {
           const response = await fetch(`${apiHost}/colormaps/${gibsLayer.product}`)
           const colorMapResponse = await response.json()
 
           setColorMap({
-            [projection]: colorMapResponse,
-            ...colorMap
+            ...colorMap,
+            [focusedCollectionId]: {
+              ...colorMap[focusedCollectionId],
+              [projection]: colorMapResponse
+            }
           })
         } catch (error) {
-          setColorMap({})
+          setColorMap({
+            ...colorMap,
+            [focusedCollectionId]: {
+              ...colorMap[focusedCollectionId],
+              [projection]: null
+            }
+          })
         }
       }
     }
@@ -231,15 +246,17 @@ const MapWrapper = ({
           />
         )
       }
-      {
-        (colorMap && colorMap[projection]) && (
-          <Control prepend position="topright">
+      <Control prepend position="topright">
+        {
+          isFocusedCollectionPage
+          && colorMap[focusedCollectionId]
+          && colorMap[focusedCollectionId][projection] && (
             <Legend
-              colorMap={colorMap[projection]}
+              colorMap={colorMap[focusedCollectionId][projection]}
             />
-          </Control>
-        )
-      }
+          )
+        }
+      </Control>
       <ScaleControl position="topright" />
       <ConnectedSpatialSelectionContainer mapProps={mapProps} />
       <GranuleGridLayer
@@ -300,6 +317,7 @@ MapWrapper.propTypes = {
   granules: PropTypes.shape({}),
   granulesMetadata: PropTypes.shape({}).isRequired,
   imageryCache: PropTypes.shape({}).isRequired,
+  isFocusedCollectionPage: PropTypes.bool.isRequired,
   isProjectPage: PropTypes.bool.isRequired,
   map: PropTypes.shape({
     latitude: PropTypes.number,

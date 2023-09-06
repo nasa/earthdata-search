@@ -93,6 +93,7 @@ export const MapContainer = (props) => {
   const { location } = router
   const { pathname } = location
   const isProjectPage = isPath(pathname, '/projects')
+  const isFocusedCollectionPage = isPath(pathname, '/search/granules')
   const [map, setMap] = useState(mapProps)
   const imageryCache = useRef(LRUCache(400))
 
@@ -232,6 +233,7 @@ export const MapContainer = (props) => {
       granules={nonExcludedGranules}
       granulesMetadata={granulesMetadata}
       imageryCache={imageryCache.current}
+      isFocusedCollectionPage={isFocusedCollectionPage}
       isProjectPage={isProjectPage}
       mapProps={mapProps}
       maxZoom={maxZoom}
