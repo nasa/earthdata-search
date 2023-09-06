@@ -220,9 +220,7 @@ export const CollectionDetailsBody = ({
     formattedRelatedUrls = buildRelatedUrlsList(relatedUrls)
   }
 
-  const {
-    region
-  } = directDistributionInformation
+  const { region } = directDistributionInformation
 
   const {
     doiLink,

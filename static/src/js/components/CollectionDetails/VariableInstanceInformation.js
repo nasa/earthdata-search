@@ -18,7 +18,7 @@ export const VariableInstanceInformation = ({
   } = directDistributionInformation
 
   return (
-    <div>
+    <>
       <div className="variable-instance-information__instance-field">
         <p className="variable-instance-information__instance-field-title">URL:</p>
         {' '}
@@ -77,7 +77,7 @@ export const VariableInstanceInformation = ({
           <a href={s3CredentialsApiDocumentationUrl}>{s3CredentialsApiDocumentationUrl}</a>
         </li>
       </ul>
-    </div>
+    </>
   )
 }
 
