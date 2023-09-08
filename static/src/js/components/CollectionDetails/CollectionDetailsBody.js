@@ -9,14 +9,13 @@ import SimpleBar from 'simplebar-react'
 import ArrowTags from '../ArrowTags/ArrowTags'
 import Button from '../Button/Button'
 import CollapsePanel from '../CollapsePanel/CollapsePanel'
+import CollectionDetailsCloudAccessInstance from './CollectionDetailsCloudAccessInstance'
 import CollectionDetailsDataCenter from './CollectionDetailsDataCenter'
 import CollectionDetailsMinimap from './CollectionDetailsMinimap'
-import DirectDistributionInformation from './DirectDistributionInformation'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import RelatedCollection from '../RelatedCollection/RelatedCollection'
 import Skeleton from '../Skeleton/Skeleton'
 import SplitBadge from '../SplitBadge/SplitBadge'
-import VariableInstanceInformation from './VariableInstanceInformation'
 
 import { collectionDetailsSkeleton } from './skeleton'
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
@@ -80,7 +79,8 @@ const buildNativeFormatList = (nativeFormats) => {
 }
 
 const buildVarInstanceInformation = (instanceInformation) => (
-  <VariableInstanceInformation
+  <CollectionDetailsCloudAccessInstance
+    type="variable"
     instanceInformation={instanceInformation}
   />
 )
@@ -482,8 +482,8 @@ export const CollectionDetailsBody = ({
                     <p>Available for access in-region with AWS Cloud</p>
                   </div>
                   <div className="collection-details-body__cloud-access-content">
-                    <DirectDistributionInformation
-                      directDistributionInformation={directDistributionInformation}
+                    <CollectionDetailsCloudAccessInstance
+                      instanceInformation={{ directDistributionInformation }}
                     />
                   </div>
                 </div>

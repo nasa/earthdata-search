@@ -1,4 +1,4 @@
-.direct-distribution-information {
+.collection-details-cloud-access-direct-distribution-information {
     &__info {
         > dt {
             font-size: 0.75rem;
@@ -55,4 +55,38 @@
       }
     }
   }
+}
+
+.collection-details-cloud-access-variable {
+    &__direct-distribution-information-list {
+      list-style-type: none;
+      padding-left: .5rem;
+    }
+
+    &__list-item {
+      overflow-y: hidden;
+      list-style-position: inside;
+      margin-left: 10px;
+    }
+
+    &__definition-list-container{
+      margin-left: 1rem;
+    }
+    
+    &__instance-field-title {
+      font-weight: bold;  
+      display:inline;
+    }
+
+    &__instance-field-list-title {
+      font-weight: bold;
+      display:inline;
+      &:before {
+        content: "• "
+      }
+    }
+
+    &__instance-field{
+      overflow: hidden;
+    }
 }
