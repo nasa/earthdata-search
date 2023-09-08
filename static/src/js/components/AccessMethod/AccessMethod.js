@@ -430,7 +430,9 @@ export class AccessMethod extends Component {
                 : (
                   <RadioList
                     defaultValue={selectedAccessMethod}
-                    onChange={(methodName) => this.handleAccessMethodSelection(methodName)}
+                    onChange={(methodName) => {
+                      this.handleAccessMethodSelection(methodName)
+                    }}
                   >
                     {radioList}
                   </RadioList>
@@ -550,7 +552,7 @@ export class AccessMethod extends Component {
                       }
                       {
                         !selectedSpatialDisplay && (
-                          <p className="access-method__section-status mb-0" data-testId="no-area-selected">
+                          <p className="access-method__section-status mb-0">
                             { /* eslint-disable-next-line max-len */}
                             No spatial area selected. Make a spatial selection to enable spatial subsetting.
                           </p>
@@ -610,6 +612,7 @@ export class AccessMethod extends Component {
                         className="form-control form-control-sm"
                         onChange={this.handleOutputFormatSelection}
                         value={selectedOutputFormat}
+                        data-testid="access-methods__output-format-options"
                       >
                         {[
                           <option key="output-format-none" value="">None</option>,
@@ -631,6 +634,7 @@ export class AccessMethod extends Component {
                         className="form-control form-control-sm"
                         onChange={this.handleOutputProjectionSelection}
                         value={selectedOutputProjection}
+                        data-testid="access-methods__output-projection-options"
                       >
                         {[
                           <option key="output-projection-none" value="">None</option>,
