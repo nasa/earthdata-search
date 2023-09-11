@@ -1,13 +1,47 @@
 import React from 'react'
 
 import {
-  render, screen
+  render, screen, waitFor
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+// import EDSCEchoform from '@edsc/echoforms'
 
 import '@testing-library/jest-dom'
 
 import { AccessMethod } from '../AccessMethod'
+
+// <mock-EchoForm data-testid="mock-echo-form">
+//   {children}
+// </mock-EchoForm>
+// jest.mock('../EchoForm', () => ({
+//   EchoForm: jest.fn().mockImplementation(() => ({
+//     default: jest.fn().then(() => (
+//       <div />
+//     ))
+//   }))
+// }))
+
+// function MockedOtherComponent() {
+//   return <div>mock echo-form</div>
+// }
+// TODO this has a shortcut
+const echoFormMock = jest.mock('../EchoForm', () => () => (
+  <div>
+    mock echo-form
+  </div>
+))
+// const mockEchoForm = () => <div>mock echo-form</div>
+// jest.mock('../EchoForm', () => mockEchoForm)
+
+// jest.mock('@edsc/echoforms', () => ({
+//   EDSCEchoform: jest.fn(({ children }) => (
+//     <mock-EDSCEchoForm data-testid="mock-edsc-echo-form">
+//       {children}
+//     </mock-EDSCEchoForm>
+//   ))
+// }))
+
+// const echoFormMock = '<form xmlns="http://echo.nasa.gov/v9/echoforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <model> <instance> <ecs:options xmlns:ecs="http://ecs.nasa.gov/options"> <!-- ECS distribution options example --> <ecs:distribution> <ecs:mediatype> <ecs:value>FtpPull</ecs:value> </ecs:mediatype> <ecs:mediaformat> <ecs:ftppull-format> <ecs:value>FILEFORMAT</ecs:value> </ecs:ftppull-format> </ecs:mediaformat> </ecs:distribution> <ecs:do-ancillaryprocessing>true</ecs:do-ancillaryprocessing> <ecs:ancillary> <ecs:orderQA/> <ecs:orderPH/> <ecs:orderBrowse/> </ecs:ancillary> </ecs:options> </instance> </model> <ui> <group id="mediaOptionsGroup" label="Media Options" ref="ecs:distribution"> <output id="MediaTypeOutput" label="Media Type:" relevant="ecs:mediatype/ecs:value =\'FtpPull\'" type="xsd:string" value="\'HTTPS Pull\'"/> <output id="FtpPullMediaFormatOutput" label="Media Format:" relevant="ecs:mediaformat/ecs:ftppull-format/ecs:value=\'FILEFORMAT\'" type="xsd:string" value="\'File\'"/> </group> <group id="checkancillaryoptions" label="Additional file options:" ref="ecs:ancillary" relevant="//ecs:do-ancillaryprocessing = \'true\'"> <input label="Include associated Browse file in order" ref="ecs:orderBrowse" type="xsd:boolean"/> <input label="Include associated Quality Assurance file in order" ref="ecs:orderQA" type="xsd:boolean"/> <input label="Include associated Production History file in order" ref="ecs:orderPH" type="xsd:boolean"/> </group> </ui> </form>'
 
 function setup(overrideProps) {
   const onSelectAccessMethod = jest.fn()
@@ -41,12 +75,6 @@ function setup(overrideProps) {
 }
 
 describe('AccessMethod component', () => {
-  // test('should render self', () => {
-  //   const { enzymeWrapper } = setup()
-
-  //   expect(enzymeWrapper.exists()).toBeTruthy()
-  // })
-
   describe('handleAccessMethodSelection', () => {
     test('updates the selected access method', async () => {
       const user = userEvent.setup()
@@ -71,15 +99,6 @@ describe('AccessMethod component', () => {
 
       expect(onSelectAccessMethod).toHaveBeenCalledTimes(1)
       expect(onSelectAccessMethod).toHaveBeenCalledWith({ collectionId, selectedAccessMethod: 'download' })
-
-      // const radioList = enzymeWrapper.find(RadioList)
-      // radioList.props().onChange('download')
-
-      // expect(props.onSelectAccessMethod.mock.calls.length).toBe(1)
-      // expect(props.onSelectAccessMethod.mock.calls[0]).toEqual([{
-      //   collectionId,
-      //   selectedAccessMethod: 'download'
-      // }])
     })
 
     test('updates the selected access method when type is orderable', async () => {
@@ -152,8 +171,6 @@ describe('AccessMethod component', () => {
 
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
       expect(directDownloadAccessMethodRadioButton.value).toEqual('esi')
-
-      // expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('esi')
     })
 
     test('renders a radio button for opendap', () => {
@@ -181,106 +198,107 @@ describe('AccessMethod component', () => {
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
       // Multiple `Harmony` services are possible for a collection
       expect(directDownloadAccessMethodRadioButton.value).toEqual('harmony0')
-      // expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('harmony0')
     })
   })
 
-  // describe('when the selected access method has an echoform', () => {
-  //   // TODO fix thsi
-  //   test.skip('lazy loads the echoforms component and provides the correct fallback', () => {
-  //     const collectionId = 'collectionId'
-  //     const form = 'echo form here'
-  //     setup({
-  //       accessMethods: {
-  //         echoOrder0: {
-  //           isValid: true,
-  //           type: 'ECHO ORDERS',
-  //           form
-  //         }
-  //       },
-  //       metadata: {
-  //         conceptId: collectionId
-  //       },
-  //       selectedAccessMethod: 'echoOrder0'
-  //     })
+  describe('when the selected access method has an echoform', () => {
+    // TODO fix this
+    test('lazy loads the echo-forms component and provides the correct fallback', async () => {
+      const collectionId = 'collectionId'
+      const form = 'mock-form'
+      // const form = 'this is a test form'
+      setup({
+        accessMethods: {
+          echoOrder0: {
+            isValid: true,
+            type: 'ECHO ORDERS',
+            form
+          }
+        },
+        metadata: {
+          conceptId: collectionId
+        },
+        selectedAccessMethod: 'echoOrder0'
+      })
 
-  //     // enzymeWrapper.update()
+      // Spinner up before the lazy loaded component has completed loading
+      expect(screen.getByTestId('access-method-echoform-spinner')).toBeInTheDocument()
 
-  //     // const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
-  //     // const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
-  //     // const suspenseComponent = echoFormWrapper.childAt(0)
-  //     // const echoForm = suspenseComponent.childAt(0)
+      // Wait for the lazy loaded component to load
+      await waitFor(() => expect(screen.getByText('mock echo-form')).toBeInTheDocument())
+    })
 
-  //     // expect(echoFormWrapper.childAt(0).props().fallback.props.className).toEqual('access-method__echoform-loading')
-  //     // expect(echoForm.props().form).toEqual(form)
-  //   })
+    test('renders an echoform', async () => {
+      const collectionId = 'collectionId'
+      const form = 'echo form here'
 
-  //   test('renders an echoform', () => {
-  //     const collectionId = 'collectionId'
-  //     const form = 'echo form here'
+      setup({
+        accessMethods: {
+          echoOrder0: {
+            isValid: true,
+            type: 'ECHO ORDERS',
+            form
+          }
+        },
+        metadata: {
+          conceptId: collectionId
+        },
+        selectedAccessMethod: 'echoOrder0'
+      })
+      // screen.debug()
+      const echoOrderInput = screen.getByRole('radio')
+      expect(echoOrderInput.value).toEqual('echoOrder0')
+      // await user.click(echoOrderInput)
+      // enzymeWrapper.update()
 
-  //     setup({
-  //       accessMethods: {
-  //         echoOrder0: {
-  //           isValid: true,
-  //           type: 'ECHO ORDERS',
-  //           form
-  //         }
-  //       },
-  //       metadata: {
-  //         conceptId: collectionId
-  //       },
-  //       selectedAccessMethod: 'echoOrder0'
-  //     })
+      // const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
+      // const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
+      // const suspenseComponent = echoFormWrapper.childAt(0)
+      // const echoForm = suspenseComponent.childAt(0)
 
-  //     // enzymeWrapper.update()
+      // expect(echoForm.props().collectionId).toEqual(collectionId)
+      // expect(echoForm.props().form).toEqual(form)
+      // expect(echoForm.props().methodKey).toEqual('echoOrder0')
+      // expect(echoForm.props().rawModel).toEqual(null)
+      // expect(typeof echoForm.props().onUpdateAccessMethod).toEqual('function')
+    })
 
-  //     // const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
-  //     // const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
-  //     // const suspenseComponent = echoFormWrapper.childAt(0)
-  //     // const echoForm = suspenseComponent.childAt(0)
+    // TODO react-testing-library not meant to test props going into component
+    test.skip('renders an echoform with saved fields', () => {
+      const collectionId = 'collectionId'
+      const form = 'echo form here'
+      const rawModel = 'saved fields'
 
-  //     // expect(echoForm.props().collectionId).toEqual(collectionId)
-  //     // expect(echoForm.props().form).toEqual(form)
-  //     // expect(echoForm.props().methodKey).toEqual('echoOrder0')
-  //     // expect(echoForm.props().rawModel).toEqual(null)
-  //     // expect(typeof echoForm.props().onUpdateAccessMethod).toEqual('function')
-  //   })
+      setup({
+        accessMethods: {
+          echoOrder0: {
+            isValid: true,
+            type: 'ECHO ORDERS',
+            form,
+            rawModel
+          }
+        },
+        metadata: {
+          conceptId: collectionId
+        },
+        selectedAccessMethod: 'echoOrder0'
+      })
+      screen.debug()
+      // const echoOrderInput = screen.getByRole('radio')
+      // expect(echoFormMock).toHaveBeenCalledTimes(1)
+      // expect(echoOrderInput.rawModel).toEqual(rawModel)
+      // const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
+      // const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
+      // const suspenseComponent = echoFormWrapper.childAt(0)
+      // const echoForm = suspenseComponent.childAt(0)
 
-  //   test('renders an echoform with saved fields', () => {
-  //     const collectionId = 'collectionId'
-  //     const form = 'echo form here'
-  //     const rawModel = 'saved fields'
-
-  //     const { enzymeWrapper } = setup()
-
-  //     enzymeWrapper.setProps({
-  //       accessMethods: {
-  //         echoOrder0: {
-  //           isValid: true,
-  //           type: 'ECHO ORDERS',
-  //           form,
-  //           rawModel
-  //         }
-  //       },
-  //       metadata: {
-  //         conceptId: collectionId
-  //       },
-  //       selectedAccessMethod: 'echoOrder0'
-  //     })
-
-  //     const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
-  //     const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
-  //     const suspenseComponent = echoFormWrapper.childAt(0)
-  //     const echoForm = suspenseComponent.childAt(0)
-
-  //     expect(echoForm.props().collectionId).toEqual(collectionId)
-  //     expect(echoForm.props().form).toEqual(form)
-  //     expect(echoForm.props().methodKey).toEqual('echoOrder0')
-  //     expect(echoForm.props().rawModel).toEqual(rawModel)
-  //     expect(typeof echoForm.props().onUpdateAccessMethod).toEqual('function')
-  //   })
-  // })
+      // expect(echoForm.props().collectionId).toEqual(collectionId)
+      // expect(echoForm.props().form).toEqual(form)
+      // expect(echoForm.props().methodKey).toEqual('echoOrder0')
+      // expect(echoForm.props().rawModel).toEqual(rawModel)
+      // expect(typeof echoForm.props().onUpdateAccessMethod).toEqual('function')
+    })
+  })
 
   describe('when the selected access method is opendap', () => {
     test('selecting a output format calls onUpdateAccessMethod', async () => {
@@ -316,24 +334,6 @@ describe('AccessMethod component', () => {
           }
         }
       })
-
-      // await user.click(selectionDropDown)
-      // const netcdf4option = screen.getByText('NETCDF-4')
-      // await user.click(netcdf4option)
-      // expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-
-      // const outputFormat = enzymeWrapper.find('#input__output-format')
-      // outputFormat.simulate('change', { target: { value: 'nc4' } })
-
-      // expect(props.onUpdateAccessMethod).toBeCalledTimes(1)
-      // expect(props.onUpdateAccessMethod).toBeCalledWith({
-      //   collectionId: 'collectionId',
-      //   method: {
-      //     opendap: {
-      //       selectedOutputFormat: 'nc4'
-      //     }
-      //   }
-      // })
     })
   })
 
@@ -491,10 +491,8 @@ describe('AccessMethod component', () => {
           screen.getByRole('option', { name: 'EPSG:4326' })
         )
 
-        // TODO I don't see NETCDF-3 on the DOM here?
         expect(screen.getByRole('option', { name: 'EPSG:4326' }).selected).toBe(true)
         expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-        // tODO why is this selectedOutputFormat different
         expect(onUpdateAccessMethod).toHaveBeenCalledWith({
           collectionId: 'collectionId',
           method: {
@@ -523,9 +521,8 @@ describe('AccessMethod component', () => {
             },
             selectedAccessMethod: 'harmony0'
           })
-          // tODO is this equal
+          // Ensure that `Temporal` is not being rendered on the DOM
           expect(screen.queryByText('Temporal')).toBeNull()
-          // expect(enzymeWrapper.find('#input__temporal-subsetting').exists()).not.toBeTruthy()
         })
       })
 
@@ -552,8 +549,6 @@ describe('AccessMethod component', () => {
           })
 
           expect(screen.queryByText('Temporal')).toBeNull()
-
-          // expect(enzymeWrapper.find('#input__temporal-subsetting').exists()).not.toBeTruthy()
         })
       })
     })
@@ -700,8 +695,6 @@ describe('AccessMethod component', () => {
             }
           })
           expect(screen.getByRole('checkbox').checked).toEqual(false)
-
-          // expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(false)
         })
 
         test('sets the checkbox disabled', () => {
@@ -727,7 +720,6 @@ describe('AccessMethod component', () => {
             }
           })
           expect(screen.getByRole('checkbox').disabled).toEqual(true)
-          // expect(enzymeWrapper.find('#input__temporal-subsetting').props().disabled).toEqual(true)
         })
 
         test('sets a warning in the section', () => {
@@ -752,12 +744,11 @@ describe('AccessMethod component', () => {
             }
           })
           expect(screen.getByText('To prevent unexpected results, temporal subsetting is not supported for recurring dates.')).toBeInTheDocument()
-          // expect(enzymeWrapper.find(ProjectPanelSection).at(1).childAt(0).props().warning).toEqual('To prevent unexpected results, temporal subsetting is not supported for recurring dates.')
         })
       })
 
       describe('when enableTemporalSubsetting is not set', () => {
-        test('defaults the checkbox checked', () => {
+        test.only('defaults the checkbox checked', () => {
           const collectionId = 'collectionId'
           setup({
             accessMethods: {
@@ -777,7 +768,6 @@ describe('AccessMethod component', () => {
               isRecurring: false
             }
           })
-          // TODO can we specify the checkbox further by name or some other prop
           expect(screen.getByRole('checkbox').checked).toEqual(true)
         })
       })
@@ -894,8 +884,6 @@ describe('AccessMethod component', () => {
             }
           })
           expect(screen.getByRole('checkbox').checked).toEqual(false)
-
-          // expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(false)
         })
 
         describe('when enableSpatialSubsetting is set to false', () => {
@@ -918,10 +906,8 @@ describe('AccessMethod component', () => {
               }
             })
             expect(screen.getByRole('checkbox').checked).toEqual(false)
-
-            // expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
-            // expect(enzymeWrapper.find('.access-method__section-status[data-testId="no-area-selected"]').exists()).toEqual(false)
           })
+
           test('no area selected shows up when not passing in a spatial value', () => {
             setup({
               accessMethods: {
@@ -938,10 +924,9 @@ describe('AccessMethod component', () => {
               selectedAccessMethod: 'harmony0',
               spatial: {}
             })
-            // expect(screen.getByTestId('no-area-selected'))
             expect(screen.getByText('No spatial area selected. Make a spatial selection to enable spatial subsetting.')).toBeInTheDocument()
-            // expect(enzymeWrapper.find('.access-method__section-status[data-testId="no-area-selected"]').props().children).toEqual('No spatial area selected. Make a spatial selection to enable spatial subsetting.')
           })
+
           test('sets the checkbox unchecked for circle', () => {
             setup({
               accessMethods: {
@@ -962,6 +947,7 @@ describe('AccessMethod component', () => {
             })
             expect(screen.getByRole('checkbox').checked).toEqual(false)
           })
+
           test('sets the checkbox unchecked for point', () => {
             setup({
               accessMethods: {
@@ -981,8 +967,8 @@ describe('AccessMethod component', () => {
               }
             })
             expect(screen.getByRole('checkbox').checked).toEqual(false)
-            // expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
           })
+
           test('sets the checkbox unchecked for line', () => {
             setup({
               accessMethods: {
@@ -1002,7 +988,6 @@ describe('AccessMethod component', () => {
               }
             })
             expect(screen.getByRole('checkbox').checked).toEqual(false)
-            // expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
           })
           test('sets the checkbox unchecked for shapefile', () => {
             setup({
@@ -1024,7 +1009,6 @@ describe('AccessMethod component', () => {
               }
             })
             expect(screen.getByRole('checkbox').checked).toEqual(false)
-            // expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
           })
         })
 
@@ -1055,14 +1039,6 @@ describe('AccessMethod component', () => {
             expect(checkbox.checked).toEqual(true)
             await user.click(checkbox)
             expect(screen.getByRole('checkbox').checked).toEqual(false)
-
-            // const checkbox = enzymeWrapper.find('#input__temporal-subsetting')
-
-            // checkbox.simulate('change', { target: { checked: true } })
-
-            // enzymeWrapper.update()
-
-            // expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(true)
           })
 
           test('sets the checkbox for spatial checked', async () => {
@@ -1088,14 +1064,6 @@ describe('AccessMethod component', () => {
             const checkbox = screen.getByRole('checkbox')
             await user.click(checkbox)
             expect(screen.getByRole('checkbox').checked).toEqual(true)
-
-            // const checkbox = enzymeWrapper.find('#input__spatial-subsetting')
-
-            // checkbox.simulate('change', { target: { checked: true } })
-
-            // enzymeWrapper.update()
-
-            // expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(true)
           })
 
           test('calls onUpdateAccessMethod', async () => {

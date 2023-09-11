@@ -352,7 +352,7 @@ export class AccessMethod extends Component {
 
     const echoFormFallback = (
       <div className="access-method__echoform-loading">
-        <Spinner className="access-method__echoform-spinner" size="tiny" type="dots" />
+        <Spinner className="access-method__echoform-spinner" dataTestId="access-method-echoform-spinner" size="tiny" type="dots" />
       </div>
     )
 
@@ -430,9 +430,7 @@ export class AccessMethod extends Component {
                 : (
                   <RadioList
                     defaultValue={selectedAccessMethod}
-                    onChange={(methodName) => {
-                      this.handleAccessMethodSelection(methodName)
-                    }}
+                    onChange={(methodName) => { this.handleAccessMethodSelection(methodName) }}
                   >
                     {radioList}
                   </RadioList>
