@@ -50,15 +50,17 @@ describe('AccessMethodRadio component', () => {
     expect(screen.getByTestId('test-id')).toBeInTheDocument()
   })
 
-  // TODO I can test this with `querySelector`
-  // test('adds an htmlFor prop using the id', () => {
-  //   expect(enzymeWrapper.props().htmlFor).toBe('test-id')
-  // })
+  test('adds an htmlFor prop using the id', () => {
+    setup()
+    screen.debug()
+    const label = screen.getByTestId('test-id')
+    expect(label.htmlFor).toEqual('test-id')
+  })
 
   test('does not add the is-selected classname modifier', () => {
     setup()
-    const input = screen.getByTestId('test-id')
-    expect(input.className).not.toContain('access-method-radio--is-selected')
+    const label = screen.getByTestId('test-id')
+    expect(label.className).not.toContain('access-method-radio--is-selected')
   })
 
   test('displays the title', () => {
@@ -88,14 +90,12 @@ describe('AccessMethodRadio component', () => {
 
   describe('input element', () => {
     test('has a name property', () => {
-      // https://stackoverflow.com/questions/66633103/how-to-test-radio-button-in-react-testing-libraryuser-can-select-other-radio-bu
-      // expect(enzymeWrapper.find('input').props().name).toBe('test-id')
-      // There is a single radio button
       setup()
-      expect(screen.getByRole('radio', { value: 'test value' })).toBeInTheDocument()
+      const input = screen.getByRole('radio', { value: 'test value' })
+      expect(input.name).toEqual('test-id')
     })
-    // TODO is false the same as empty string here
     test('sets the checked property', () => {
+      // TODO is false the same as empty string here
       // expect(enzymeWrapper.find('input').props().checked).toBe('')
       setup()
       const radioButton = screen.getByRole('radio', { value: 'test value' })
@@ -147,8 +147,8 @@ describe('AccessMethodRadio component', () => {
   describe('when the access method is checked', () => {
     test('adds the is-selected classname modifier', () => {
       setup({ checked: true })
-      const input = screen.getByTestId('test-id')
-      expect(input.className).toContain('access-method-radio--is-selected')
+      const label = screen.getByTestId('test-id')
+      expect(label.className).toContain('access-method-radio--is-selected')
     })
 
     describe('input element', () => {

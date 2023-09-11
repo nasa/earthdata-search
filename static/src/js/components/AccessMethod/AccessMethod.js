@@ -430,7 +430,7 @@ export class AccessMethod extends Component {
                 : (
                   <RadioList
                     defaultValue={selectedAccessMethod}
-                    onChange={(methodName) => { this.handleAccessMethodSelection(methodName) }}
+                    onChange={(methodName) => this.handleAccessMethodSelection(methodName)}
                   >
                     {radioList}
                   </RadioList>
