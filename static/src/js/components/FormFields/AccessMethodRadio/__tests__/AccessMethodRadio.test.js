@@ -33,30 +33,33 @@ const setup = (overrideProps) => {
   }
 }
 
-// Setup DOM elements before each test
-// beforeEach(() => {
-//   const { onChange, onClick } = setup()
-// })
-
 describe('AccessMethodRadio component', () => {
-  // TODO I can som test these two with `querySelector`
-
-  test.skip('renders as a label', () => {
-    expect(screen.getByLabelText())
-  })
+  // TODO this is technically an implementation detail by react-test-library but, I could
+  // TODO: retrieve using query selector
+  // test.only('renders as a label', () => {
+  //   setup()
+  // const label = screen.getByTestId('test-id')
+  //   expect(screen.getByRole('menu'))
+  //   screen.debug()
+  // expect(screen.getByTestId('test-id')).toBeInTheDocument()
+  // expect(screen.getByLabelText())
+  // })
 
   test('has a test id', () => {
     setup()
     expect(screen.getByTestId('test-id')).toBeInTheDocument()
   })
 
+  // TODO I can test this with `querySelector`
   // test('adds an htmlFor prop using the id', () => {
   //   expect(enzymeWrapper.props().htmlFor).toBe('test-id')
   // })
 
-  // test('does not add the is-selected classname modifier', () => {
-  //   expect(enzymeWrapper.props().className).not.toContain('access-method-radio--is-selected')
-  // })
+  test('does not add the is-selected classname modifier', () => {
+    setup()
+    const input = screen.getByTestId('test-id')
+    expect(input.className).not.toContain('access-method-radio--is-selected')
+  })
 
   test('displays the title', () => {
     setup()
@@ -76,13 +79,11 @@ describe('AccessMethodRadio component', () => {
   test('displays the details', () => {
     setup()
     expect(screen.getByText('test details')).toBeInTheDocument()
-    // expect(enzymeWrapper.find('.access-method-radio__details').text()).toBe('test details')
   })
 
-  test('does not display the service name section since this is not a `Harmony` service', () => {
+  test('does not display the service name', () => {
     setup()
     expect(screen.queryAllByText('Service:').length).toBe(0)
-    // expect(enzymeWrapper.find('.access-method-radio__service-name').length).toBe(0)
   })
 
   describe('input element', () => {
@@ -94,15 +95,14 @@ describe('AccessMethodRadio component', () => {
       expect(screen.getByRole('radio', { value: 'test value' })).toBeInTheDocument()
     })
     // TODO is false the same as empty string here
-    test.skip('sets the checked property', () => {
+    test('sets the checked property', () => {
       // expect(enzymeWrapper.find('input').props().checked).toBe('')
       setup()
       const radioButton = screen.getByRole('radio', { value: 'test value' })
-      expect(radioButton.checked).toEqual('')
+      expect(radioButton.checked).toEqual(false)
     })
 
     test('fires the onChange callback', async () => {
-      // enzymeWrapper.find('input').simulate('change')
       const { onChange } = setup()
       const user = userEvent.setup()
       const radioButton = screen.getByRole('radio', { value: 'test value' })
@@ -121,8 +121,8 @@ describe('AccessMethodRadio component', () => {
 
   describe('fake input element', () => {
     test('does not display an icon', () => {
-      expect()
-      // expect(enzymeWrapper.find('.access-method-radio__radio-icon').length).toBe(0)
+      setup()
+      expect(screen.queryByTestId('edsc-icon')).toBeNull()
     })
   })
 
@@ -145,17 +145,16 @@ describe('AccessMethodRadio component', () => {
   })
 
   describe('when the access method is checked', () => {
-    // test('adds the is-selected classname modifier', () => {
-    //   expect(enzymeWrapper.props().className).toContain('access-method-radio--is-selected')
-    // })
+    test('adds the is-selected classname modifier', () => {
+      setup({ checked: true })
+      const input = screen.getByTestId('test-id')
+      expect(input.className).toContain('access-method-radio--is-selected')
+    })
 
     describe('input element', () => {
       test('sets the checked property', () => {
         setup({ checked: true })
-        // expect(enzymeWrapper.find('input').props().checked).toBe('checked')
         const radioButton = screen.getByRole('radio', { value: 'test value' })
-        // TODO why are these different values????
-        // expect(radioButton.checked).toEqual('checked')
         expect(radioButton.checked).toEqual(true)
         expect(screen.getByTestId('edsc-icon')).toBeInTheDocument()
       })
@@ -165,9 +164,25 @@ describe('AccessMethodRadio component', () => {
   describe('when a service name is provided', () => {
     test('does not display an icon', () => {
       setup({ serviceName: 'test service name' })
-      expect(screen.getByText('Service: test service name')).toBeInTheDocument()
       // The icon does not render
       expect(screen.queryByTestId('edsc-icon')).toBeNull()
+    })
+    test('displays the service name', () => {
+      setup({ serviceName: 'test service name' })
+      // The service name appears on the document under the More-Info-block
+      const renderedServiceNames = screen.getAllByText('Service: test service name')
+      // renders in the `More-Info` section
+      expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__more-info')
+      expect(renderedServiceNames.length).toEqual(1)
+    })
+    describe('when the `subtitle` is `Harmony`', () => {
+      test('service name appears on on customizable option does not appear in the more-info section', () => {
+        setup({ serviceName: 'test service name', subtitle: 'Harmony' })
+        const renderedServiceNames = screen.getAllByText('Service: test service name')
+        // renders in the `access-method-content` section
+        expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__header-secondary')
+        expect(renderedServiceNames.length).toEqual(1)
+      })
     })
   })
 })
