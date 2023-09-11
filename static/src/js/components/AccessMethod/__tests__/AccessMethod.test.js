@@ -4,44 +4,17 @@ import {
   render, screen, waitFor
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-// import EDSCEchoform from '@edsc/echoforms'
 
 import '@testing-library/jest-dom'
 
 import { AccessMethod } from '../AccessMethod'
 
-// <mock-EchoForm data-testid="mock-echo-form">
-//   {children}
-// </mock-EchoForm>
-// jest.mock('../EchoForm', () => ({
-//   EchoForm: jest.fn().mockImplementation(() => ({
-//     default: jest.fn().then(() => (
-//       <div />
-//     ))
-//   }))
-// }))
-
-// function MockedOtherComponent() {
-//   return <div>mock echo-form</div>
-// }
-// TODO this has a shortcut
-const echoFormMock = jest.mock('../EchoForm', () => () => (
+// Mock the suspended component
+jest.mock('../EchoForm', () => () => (
   <div>
     mock echo-form
   </div>
 ))
-// const mockEchoForm = () => <div>mock echo-form</div>
-// jest.mock('../EchoForm', () => mockEchoForm)
-
-// jest.mock('@edsc/echoforms', () => ({
-//   EDSCEchoform: jest.fn(({ children }) => (
-//     <mock-EDSCEchoForm data-testid="mock-edsc-echo-form">
-//       {children}
-//     </mock-EDSCEchoForm>
-//   ))
-// }))
-
-// const echoFormMock = '<form xmlns="http://echo.nasa.gov/v9/echoforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <model> <instance> <ecs:options xmlns:ecs="http://ecs.nasa.gov/options"> <!-- ECS distribution options example --> <ecs:distribution> <ecs:mediatype> <ecs:value>FtpPull</ecs:value> </ecs:mediatype> <ecs:mediaformat> <ecs:ftppull-format> <ecs:value>FILEFORMAT</ecs:value> </ecs:ftppull-format> </ecs:mediaformat> </ecs:distribution> <ecs:do-ancillaryprocessing>true</ecs:do-ancillaryprocessing> <ecs:ancillary> <ecs:orderQA/> <ecs:orderPH/> <ecs:orderBrowse/> </ecs:ancillary> </ecs:options> </instance> </model> <ui> <group id="mediaOptionsGroup" label="Media Options" ref="ecs:distribution"> <output id="MediaTypeOutput" label="Media Type:" relevant="ecs:mediatype/ecs:value =\'FtpPull\'" type="xsd:string" value="\'HTTPS Pull\'"/> <output id="FtpPullMediaFormatOutput" label="Media Format:" relevant="ecs:mediaformat/ecs:ftppull-format/ecs:value=\'FILEFORMAT\'" type="xsd:string" value="\'File\'"/> </group> <group id="checkancillaryoptions" label="Additional file options:" ref="ecs:ancillary" relevant="//ecs:do-ancillaryprocessing = \'true\'"> <input label="Include associated Browse file in order" ref="ecs:orderBrowse" type="xsd:boolean"/> <input label="Include associated Quality Assurance file in order" ref="ecs:orderQA" type="xsd:boolean"/> <input label="Include associated Production History file in order" ref="ecs:orderPH" type="xsd:boolean"/> </group> </ui> </form>'
 
 function setup(overrideProps) {
   const onSelectAccessMethod = jest.fn()
@@ -123,8 +96,7 @@ describe('AccessMethod component', () => {
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
       await user.click(directDownloadAccessMethodRadioButton)
       expect(onSelectAccessMethod).toHaveBeenCalledTimes(1)
-      // TODO comment why its esi0
-      // TODO find a collection to prove this
+
       // Multiple `ESI` services are possible for a collection
       expect(onSelectAccessMethod).toHaveBeenCalledWith({ collectionId, selectedAccessMethod: 'esi0' })
     })
@@ -141,7 +113,6 @@ describe('AccessMethod component', () => {
         }
       })
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
-      // TODO is there a more react-testing library way to do this
       expect(directDownloadAccessMethodRadioButton.value).toEqual('download')
     })
 
@@ -202,11 +173,9 @@ describe('AccessMethod component', () => {
   })
 
   describe('when the selected access method has an echoform', () => {
-    // TODO fix this
     test('lazy loads the echo-forms component and provides the correct fallback', async () => {
       const collectionId = 'collectionId'
       const form = 'mock-form'
-      // const form = 'this is a test form'
       setup({
         accessMethods: {
           echoOrder0: {
@@ -245,22 +214,8 @@ describe('AccessMethod component', () => {
         },
         selectedAccessMethod: 'echoOrder0'
       })
-      // screen.debug()
       const echoOrderInput = screen.getByRole('radio')
       expect(echoOrderInput.value).toEqual('echoOrder0')
-      // await user.click(echoOrderInput)
-      // enzymeWrapper.update()
-
-      // const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
-      // const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
-      // const suspenseComponent = echoFormWrapper.childAt(0)
-      // const echoForm = suspenseComponent.childAt(0)
-
-      // expect(echoForm.props().collectionId).toEqual(collectionId)
-      // expect(echoForm.props().form).toEqual(form)
-      // expect(echoForm.props().methodKey).toEqual('echoOrder0')
-      // expect(echoForm.props().rawModel).toEqual(null)
-      // expect(typeof echoForm.props().onUpdateAccessMethod).toEqual('function')
     })
 
     // TODO react-testing-library not meant to test props going into component
@@ -399,10 +354,8 @@ describe('AccessMethod component', () => {
           screen.getByTestId('access-methods__output-format-options'),
           screen.getByRole('option', { name: 'NETCDF-4' })
         )
-        // TODO I don't see NETCDF-3 on the DOM here?
         expect(screen.getByRole('option', { name: 'NETCDF-4' }).selected).toBe(true)
         expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-        // tODO why is this selectedOutputFormat different
         expect(onUpdateAccessMethod).toHaveBeenCalledWith({
           collectionId: 'collectionId',
           method: {
@@ -411,19 +364,6 @@ describe('AccessMethod component', () => {
             }
           }
         })
-
-        // const outputFormat = enzymeWrapper.find('#input__output-format')
-        // outputFormat.simulate('change', { target: { value: 'nc4' } })
-
-        // expect(props.onUpdateAccessMethod).toBeCalledTimes(1)
-        // expect(props.onUpdateAccessMethod).toBeCalledWith({
-        //   collectionId: 'collectionId',
-        //   method: {
-        //     harmony0: {
-        //       selectedOutputFormat: 'nc4'
-        //     }
-        //   }
-        // })
       })
     })
 
@@ -748,7 +688,7 @@ describe('AccessMethod component', () => {
       })
 
       describe('when enableTemporalSubsetting is not set', () => {
-        test.only('defaults the checkbox checked', () => {
+        test('defaults the checkbox checked', () => {
           const collectionId = 'collectionId'
           setup({
             accessMethods: {
