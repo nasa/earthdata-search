@@ -309,6 +309,7 @@ describe('GranuleGridLayerExtended class', () => {
           granules: updateProps.granules,
           isProjectPage: false,
           lightColor: 'rgb(46, 204, 113, 0.5)',
+          projection: 'epsg4326',
           removedGranuleIds: []
         })
       })
@@ -337,6 +338,7 @@ describe('GranuleGridLayerExtended class', () => {
           granules: updateProps.granules,
           isProjectPage: false,
           lightColor: 'rgb(46, 204, 113, 0.5)',
+          projection: 'epsg4326',
           removedGranuleIds: []
         })
       })
@@ -364,6 +366,7 @@ describe('GranuleGridLayerExtended class', () => {
           granules: updateProps.granules,
           isProjectPage: false,
           lightColor: 'rgb(46, 204, 113, 0.5)',
+          projection: 'epsg4326',
           removedGranuleIds: []
         })
       })
