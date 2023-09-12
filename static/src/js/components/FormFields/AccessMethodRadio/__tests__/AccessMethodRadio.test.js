@@ -167,6 +167,7 @@ describe('AccessMethodRadio component', () => {
       // The icon does not render
       expect(screen.queryByTestId('edsc-icon')).toBeNull()
     })
+
     test('displays the service name', () => {
       setup({ serviceName: 'test service name' })
       // The service name appears on the document under the More-Info-block

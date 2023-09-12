@@ -193,7 +193,7 @@ describe('AccessMethod component', () => {
       // Spinner up before the lazy loaded component has completed loading
       expect(screen.getByTestId('access-method-echoform-spinner')).toBeInTheDocument()
 
-      // Wait for the lazy loaded component to load
+      // Wait for the lazy loaded component to load with the mocked implementation
       await waitFor(() => expect(screen.getByText('mock echo-form')).toBeInTheDocument())
     })
 
