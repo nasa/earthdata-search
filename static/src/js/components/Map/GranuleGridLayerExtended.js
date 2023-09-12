@@ -303,7 +303,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     //   return null
     // }
 
-    if (!matched) { return false }
+    if (!matched) { return null }
 
     this.options.time = date
     if (this.options.granule) {
@@ -882,15 +882,16 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     )
 
     const {
+      addedGranuleIds,
+      collectionId,
       color,
       drawingNewLayer,
-      lightColor,
       focusedCollectionId,
       focusedGranuleId,
-      collectionId,
-      addedGranuleIds,
-      removedGranuleIds,
-      isProjectPage
+      isProjectPage,
+      lightColor,
+      projection,
+      removedGranuleIds
     } = this
 
     return this.setResults({
@@ -903,6 +904,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       granules,
       isProjectPage,
       lightColor,
+      projection,
       removedGranuleIds
     })
   }
