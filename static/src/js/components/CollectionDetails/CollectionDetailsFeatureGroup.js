@@ -2,7 +2,7 @@ import { createLayerComponent } from '@react-leaflet/core'
 
 import { buildLayer } from '../../util/map/layers'
 
-export const createLayer = (props, context) => {
+const createLayer = (props, context) => {
   const { metadata } = props
   const featureGroup = buildLayer({ color: '#54F7A3', fillOpacity: 0.4, weight: 1 }, metadata)
 

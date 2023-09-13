@@ -1,7 +1,9 @@
 import React from 'react'
 
 import {
-  act, render, screen
+  act,
+  render,
+  screen
 } from '@testing-library/react'
 
 import CollectionDetailsDataCenter from '../CollectionDetailsDataCenter'
@@ -55,6 +57,7 @@ describe('CollectionDetails component', () => {
       item: 0
     }
     setup(props)
+
     expect(screen.getAllByRole('listitem').length).toEqual(1)
     expect(screen.getByText('ARCHIVER')).not.toBeNull()
   })

@@ -1,25 +1,25 @@
 .collection-details-cloud-access-direct-distribution-information {
-    &__info {
-        > dt {
-            font-size: 0.75rem;
-            font-weight: 400;
-        }
-        > dd {
-            font-size: 0.925rem;
-            font-weight: 700;
-            word-wrap: break-word;
-        }
-    }
+  &__info {
+      > dt {
+          font-size: 0.75rem;
+          font-weight: 400;
+      }
+      > dd {
+          font-size: 0.925rem;
+          font-weight: 700;
+          word-wrap: break-word;
+      }
+  }
 
-    &__cloud-access-content {
-    border: 1px solid $color__black--200;
-    padding: 1.25rem
+  &__cloud-access-content {
+  border: 1px solid $color__black--200;
+  padding: 1.25rem
   }
 
   &__cloud-access-title {
     border-top: 1px solid $color__black--200;
     padding-top: 1.25rem;
-  }
+    }
 
   &__link {
     display: block;
@@ -58,35 +58,35 @@
 }
 
 .collection-details-cloud-access-variable {
-    &__direct-distribution-information-list {
-      list-style-type: none;
-      padding-left: .5rem;
-    }
+  &__direct-distribution-information-list {
+    list-style-type: none;
+    padding-left: .5rem;
+  }
 
-    &__list-item {
-      overflow-y: hidden;
-      list-style-position: inside;
-      margin-left: 10px;
-    }
+  &__list-item {
+    overflow-y: hidden;
+    list-style-position: inside;
+    margin-left: 10px;
+  }
 
-    &__definition-list-container{
-      margin-left: 1rem;
-    }
-    
-    &__instance-field-title {
-      font-weight: bold;  
-      display:inline;
-    }
+  &__definition-list-container {
+    margin-left: 1rem;
+  }
+  
+  &__instance-field-title {
+    font-weight: bold;  
+    display:inline;
+  }
 
-    &__instance-field-list-title {
-      font-weight: bold;
-      display:inline;
-      &:before {
-        content: "• "
-      }
+  &__instance-field-list-title {
+    font-weight: bold;
+    display:inline;
+    &:before {
+      content: '• ';
     }
+  }
 
-    &__instance-field{
-      overflow: hidden;
-    }
+  &__instance-field {
+    overflow: hidden;
+  }
 }

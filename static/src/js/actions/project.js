@@ -329,6 +329,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
             items {
               conceptId
               definition
+              instanceInformation
               longName
               name
               nativeId

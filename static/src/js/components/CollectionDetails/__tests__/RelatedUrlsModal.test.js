@@ -1,13 +1,14 @@
 import React from 'react'
-
 import {
-  act, render, screen
+  act,
+  render,
+  screen
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import RelatedUrlsModal from '../RelatedUrlsModal'
-
 import '@testing-library/jest-dom'
+
+import RelatedUrlsModal from '../RelatedUrlsModal'
 
 const setup = (overrides) => {
   const {
@@ -147,6 +148,7 @@ describe('CollectionDetailsBody component', () => {
       expect(screen.getByText('Related URLs')).toBeInTheDocument()
     })
   })
+
   describe('when the isOpen prop for the Modal is off', () => {
     test('calls leaflet to render map with correct props', () => {
       setup({
@@ -154,10 +156,13 @@ describe('CollectionDetailsBody component', () => {
           isOpen: false
         }
       })
+
       expect(screen.queryByText('Related URLs')).not.toBeInTheDocument()
+
       expect(screen.queryAllByText('Related URLs').length).toEqual(0)
     })
   })
+
   describe('when the related urls is empty', () => {
     test('calls leaflet to render map with correct props', () => {
       setup({
@@ -165,10 +170,13 @@ describe('CollectionDetailsBody component', () => {
           relatedUrls: []
         }
       })
+
       const collectionDetailsrelatedUrlsList = screen.queryAllByRole('list')
+
       expect(collectionDetailsrelatedUrlsList.length).toEqual(0)
     })
   })
+
   describe('when the related urls is null', () => {
     test('calls leaflet to render map with correct props', () => {
       setup({
@@ -176,15 +184,21 @@ describe('CollectionDetailsBody component', () => {
           relatedUrls: null
         }
       })
+
       const collectionDetailsrelatedUrlsList = screen.queryAllByRole('list')
+
       expect(collectionDetailsrelatedUrlsList.length).toEqual(0)
     })
+
     describe('when the clicking the close button on the modal', () => {
       test('calls the `onToggleRelatedUrlsModal` function with false', async () => {
         const { onToggleRelatedUrlsModal } = setup()
+
         userEvent.setup()
+
         const closeButton = screen.getByRole('button')
         await userEvent.click(closeButton)
+
         expect(screen.getByText('Related URLs')).toBeInTheDocument()
         expect(onToggleRelatedUrlsModal).toHaveBeenCalledTimes(1)
       })

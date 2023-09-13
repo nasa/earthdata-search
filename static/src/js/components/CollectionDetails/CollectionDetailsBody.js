@@ -204,9 +204,11 @@ export const CollectionDetailsBody = ({
   const variableInstancesInformation = []
   if (variables) {
     const { items } = variables
+
     if (items) {
       items.forEach((variable) => {
         const { instanceInformation } = variable
+
         if (instanceInformation) {
           const varInstanceInformation = buildVarInstanceInformation(instanceInformation)
           variableInstancesInformation.push(varInstanceInformation)

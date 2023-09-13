@@ -9,7 +9,10 @@ export const CollectionDetailsCloudAccessInstance = ({
 }) => {
   if (type === 'variable') {
     const {
-      url, format, description, directDistributionInformation
+      url,
+      format,
+      description,
+      directDistributionInformation
     } = instanceInformation
 
     const {
@@ -18,11 +21,11 @@ export const CollectionDetailsCloudAccessInstance = ({
       s3CredentialsApiEndpoint,
       s3CredentialsApiDocumentationUrl
     } = directDistributionInformation
+
     return (
       <>
         <div className="collection-details-cloud-access-variable__instance-field">
-          <p className="collection-details-cloud-access-variable__instance-field-title">URL:</p>
-          {' '}
+          <p className="collection-details-cloud-access-variable__instance-field-title">URL: </p>
           <a href={url}>
             {' '}
             {url}
@@ -30,28 +33,24 @@ export const CollectionDetailsCloudAccessInstance = ({
         </div>
 
         <div className="collection-details-cloud-access-variable__instance-field">
-          <p className="collection-details-cloud-access-variable__instance-field-title">Format:</p>
-          {' '}
+          <p className="collection-details-cloud-access-variable__instance-field-title">Format: </p>
           {format}
         </div>
 
         <div className="collection-details-cloud-access-variable__instance-field">
-          <p className="collection-details-cloud-access-variable__instance-field-title">Description:</p>
-          {' '}
+          <p className="collection-details-cloud-access-variable__instance-field-title">Description: </p>
           {description}
         </div>
 
-        <p className="collection-details-cloud-access-variable__instance-field-title">Direct Distribution Information:</p>
+        <p className="collection-details-cloud-access-variable__instance-field-title">Direct Distribution Information: </p>
         <ul className="collection-details-cloud-access-variable__direct-distribution-information-list">
           <li className="collection-details-cloud-access-variable__list-item">
-            <p className="collection-details-cloud-access-variable__instance-field-list-title">Region:</p>
-            {' '}
+            <p className="collection-details-cloud-access-variable__instance-field-list-title">Region: </p>
             {region}
           </li>
           { s3BucketAndObjectPrefixNames.length > 0 && (
             <li className="collection-details-cloud-access-variable__list-item">
-              <p className="collection-details-cloud-access-variable__instance-field-list-title">S3 Bucket And Object Prefix Names:</p>
-              {' '}
+              <p className="collection-details-cloud-access-variable__instance-field-list-title">S3 Bucket And Object Prefix Names: </p>
               {
                   s3BucketAndObjectPrefixNames.map((name, i) => {
                     const key = `${name}-${i}`
@@ -67,20 +66,19 @@ export const CollectionDetailsCloudAccessInstance = ({
           )}
 
           <li className="collection-details-cloud-access-variable__list-item">
-            <p className="collection-details-cloud-access-variable__instance-field-list-title">S3 Credentials API Endpoint:</p>
-            {' '}
+            <p className="collection-details-cloud-access-variable__instance-field-list-title">S3 Credentials API Endpoint: </p>
             <a href={s3CredentialsApiEndpoint}>{s3CredentialsApiEndpoint}</a>
           </li>
 
           <li className="collection-details-cloud-access-variable__list-item">
-            <p className="collection-details-cloud-access-variable__instance-field-list-title">S3 Credentials API Documentation URL:</p>
-            {' '}
+            <p className="collection-details-cloud-access-variable__instance-field-list-title">S3 Credentials API Documentation URL: </p>
             <a href={s3CredentialsApiDocumentationUrl}>{s3CredentialsApiDocumentationUrl}</a>
           </li>
         </ul>
       </>
     )
   }
+
   const { directDistributionInformation } = instanceInformation
   const {
     region,
@@ -88,6 +86,7 @@ export const CollectionDetailsCloudAccessInstance = ({
     s3CredentialsApiEndpoint,
     s3CredentialsApiDocumentationUrl
   } = directDistributionInformation
+
   return (
     <div>
       <dl className="direct-distribution-information__info">

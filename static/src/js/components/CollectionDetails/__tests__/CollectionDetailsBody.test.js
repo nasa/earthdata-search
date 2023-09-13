@@ -394,6 +394,7 @@ describe('CollectionDetailsBody component', () => {
             dataCenters: mockDataCenters
           }
         })
+
         expect(screen.getByText('info@usap-dc.org')).toBeInTheDocument()
       })
 
@@ -476,6 +477,7 @@ describe('CollectionDetailsBody component', () => {
             gibsLayers: 'Gib layer'
           }
         })
+
         expect(screen.getByText('Gib layer')).toBeInTheDocument()
       })
     })
@@ -635,6 +637,7 @@ describe('CollectionDetailsBody component', () => {
             nativeDataFormats: ['PDF']
           }
         })
+
         expect(screen.getByText('PDF')).toBeInTheDocument()
         expect(screen.getAllByText('PDF').length).toEqual(1)
       })
@@ -752,6 +755,7 @@ describe('CollectionDetailsBody component', () => {
 
         test('the `s3BucketAndObjectPrefixNames` field is not rendered', () => {
           setup(overrideMetadata)
+
           expect(screen.queryByText('S3 Bucket And Object Prefix Names:')).not.toBeInTheDocument()
         })
       })
@@ -951,6 +955,7 @@ describe('CollectionDetailsBody component', () => {
             }
           }
         })
+
         expect(screen.getAllByText('Mock related collection').length).toEqual(3)
       })
     })
