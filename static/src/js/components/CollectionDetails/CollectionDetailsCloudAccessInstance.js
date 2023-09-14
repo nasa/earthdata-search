@@ -30,43 +30,41 @@ export const CollectionDetailsCloudAccessInstance = ({
             {url}
           </a>
         </dd>
-
         <dt className="collection-details-cloud-access-variable__instance-field-title">Format</dt>
         <dd>
           {format}
         </dd>
-
         <dt className="collection-details-cloud-access-variable__instance-field-title">Description</dt>
         <dd>
           {description}
         </dd>
-
         <dt>Direct Distribution Information</dt>
         <dd>
           <dl className="collection-details-cloud-access-variable__direct-distribution-information-list">
             <dt className="collection-details-cloud-access-variable__instance-field-list-title">Region</dt>
             <dd>{region}</dd>
             {
-                s3BucketAndObjectPrefixNames.length > 0 && (
-                  <>
-                    <dt className="collection-details-cloud-access-variable__instance-field-list-title">S3 Bucket And Object Prefix Names</dt>
-                    <dd>
-                      <ul>
-                        {
-                            s3BucketAndObjectPrefixNames.map((name, i) => {
-                              const key = `${name}-${i}`
-                              return (
-                                <li className="collection-details-cloud-access-variable__instance-field-value text-break" href={name} key={key}>
-                                  {name}
-                                </li>
-                              )
-                            })
-                          }
-                      </ul>
-                    </dd>
-                  </>
-                )
-              }
+              s3BucketAndObjectPrefixNames.length > 0 && (
+                <>
+                  <dt className="collection-details-cloud-access-variable__instance-field-list-title">S3 Bucket And Object Prefix Names</dt>
+                  <dd>
+                    <ul>
+                      {
+                        s3BucketAndObjectPrefixNames.map((name, i) => {
+                          const key = `${name}-${i}`
+
+                          return (
+                            <li className="collection-details-cloud-access-variable__instance-field-value text-break" href={name} key={key}>
+                              {name}
+                            </li>
+                          )
+                        })
+                      }
+                    </ul>
+                  </dd>
+                </>
+              )
+            }
             <dt className="collection-details-cloud-access-variable__instance-field-list-title">S3 Credentials API Endpoint</dt>
             <dd>
               <a className="collection-details-cloud-access-variable__instance-field-value text-break" href={s3CredentialsApiEndpoint}>{s3CredentialsApiEndpoint}</a>
@@ -94,33 +92,30 @@ export const CollectionDetailsCloudAccessInstance = ({
       <dl className="direct-distribution-information__info">
         <dt>Region</dt>
         <dd
-          className="direct-distribution-information__cloud-access__region"
           data-testid="direct-distribution-information__cloud-access__region"
         >
           {region}
         </dd>
         <dt>Bucket/Object Prefix</dt>
         {
-                              s3BucketAndObjectPrefixNames.length && (
-                                s3BucketAndObjectPrefixNames.map((name, i) => {
-                                  const key = `${name}-${i}`
-                                  return (
-                                    <dd
-                                      key={key}
-                                      className="direct-distribution-information__cloud-access__bucket-name"
-                                      data-testid="direct-distribution-information__cloud-access__bucket-name"
-                                    >
-                                      {name}
-                                    </dd>
-                                  )
-                                })
-                              )
-                            }
+          s3BucketAndObjectPrefixNames.length && (
+            s3BucketAndObjectPrefixNames.map((name, i) => {
+              const key = `${name}-${i}`
+              return (
+                <dd
+                  key={key}
+                  data-testid="direct-distribution-information__cloud-access__bucket-name"
+                >
+                  {name}
+                </dd>
+              )
+            })
+          )
+        }
         <dt>AWS S3 Credentials</dt>
-        <dd className="direct-distribution-information__links direct-distribution-information__links--horizontal">
+        <dd className="direct-distribution-information__links--horizontal">
           <a
-            className="link link--external direct-distribution-information__link direct-distribution-information__cloud-access__api-link"
-            data-testid="direct-distribution-information__cloud-access__api-link"
+            className="link link--external direct-distribution-information__link"
             href={s3CredentialsApiEndpoint}
             rel="noopener noreferrer"
             target="_blank"
@@ -128,8 +123,7 @@ export const CollectionDetailsCloudAccessInstance = ({
             Get AWS S3 Credentials
           </a>
           <a
-            className="link link--separated link--external direct-distribution-information__link direct-distribution-information__cloud-access__documentation-link"
-            data-testid="direct-distribution-information__cloud-access__documentation-link"
+            className="link link--separated link--external direct-distribution-information__link"
             href={s3CredentialsApiDocumentationUrl}
             rel="noopener noreferrer"
             target="_blank"

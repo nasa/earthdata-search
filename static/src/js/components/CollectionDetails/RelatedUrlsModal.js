@@ -16,34 +16,29 @@ export const RelatedUrlsModal = ({
   const { relatedUrls = [] } = collectionMetadata
 
   const body = (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    <>
-      {
-          relatedUrls && relatedUrls.map((category, i) => {
-            if (category.urls.length) {
-              const key = `modal_related_url_${i}`
-              return (
-                <div key={key} className="related-urls-modal__group">
-                  <h4 className="related-urls-modal__group-title">{pluralize(category.label, category.urls)}</h4>
-                  {
-                  category.urls.map((url, j) => {
-                    const key = `modal_related_url_${i}-${j}`
-                    return (
-                      <ul key={key} className="related-urls-modal__url">
-                        <ArrowTags tags={[url.type, url.subtype]} />
-                        {/* eslint-disable-next-line react/jsx-no-target-blank */}
-                        <a className="related-urls-modal__link" href={url.url} target="_blank">{url.url}</a>
-                      </ul>
-                    )
-                  })
-                }
-                </div>
-              )
+    relatedUrls && relatedUrls.map((category, i) => {
+      if (category.urls.length) {
+        const key = `modal_related_url_${i}`
+        return (
+          <div key={key} className="related-urls-modal__group">
+            <h4 className="related-urls-modal__group-title">{pluralize(category.label, category.urls)}</h4>
+            {
+              category.urls.map((url, j) => {
+                const key = `modal_related_url_${i}-${j}`
+                return (
+                  <ul key={key} className="related-urls-modal__url">
+                    <ArrowTags tags={[url.type, url.subtype]} />
+                    {/* eslint-disable-next-line react/jsx-no-target-blank */}
+                    <a className="related-urls-modal__link" href={url.url} target="_blank">{url.url}</a>
+                  </ul>
+                )
+              })
             }
-            return null
-          })
-        }
-    </>
+          </div>
+        )
+      }
+      return null
+    })
   )
 
   return (

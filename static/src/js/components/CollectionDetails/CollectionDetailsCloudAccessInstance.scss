@@ -1,25 +1,16 @@
 .collection-details-cloud-access-direct-distribution-information {
   &__info {
-      > dt {
-          font-size: 0.75rem;
-          font-weight: 400;
-      }
-      > dd {
-          font-size: 0.925rem;
-          font-weight: 700;
-          word-wrap: break-word;
-      }
-  }
-
-  &__cloud-access-content {
-  border: 1px solid $color__black--200;
-  padding: 1.25rem
-  }
-
-  &__cloud-access-title {
-    border-top: 1px solid $color__black--200;
-    padding-top: 1.25rem;
+    > dt {
+      font-size: 0.75rem;
+      font-weight: 400;
     }
+
+    > dd {
+      font-size: 0.925rem;
+      font-weight: 700;
+      word-wrap: break-word;
+    }
+  }
 
   &__link {
     display: block;
@@ -63,7 +54,7 @@
   }
   
   &__instance-field-title {
-    display:inline;
+    display: inline;
     padding-right: 5px;
   }
 
@@ -72,7 +63,7 @@
   }
 
   &__instance-field-list-title {
-    display:inline;
+    display: inline;
     padding-right: 5px;
     white-space: nowrap;
     display: list-item;
