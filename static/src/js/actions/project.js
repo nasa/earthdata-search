@@ -38,6 +38,7 @@ import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { isCSDACollection } from '../util/isCSDACollection'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
 import { buildAccessMethods } from '../util/accessMethods/buildAccessMethods'
+import { mergeVariables } from '../util/mergeVariables'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 import SavedAccessConfigsRequest from '../util/request/savedAccessConfigsRequest'
@@ -295,6 +296,16 @@ export const getProjectCollections = () => async (dispatch, getState) => {
                   form
                 }
               }
+              variables {
+                items {
+                  conceptId
+                  definition
+                  longName
+                  name
+                  nativeId
+                  scienceKeywords
+                }
+              }
             }
           }
           granules {
@@ -354,11 +365,9 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       const {
         data: responseData
       } = response
-
       const { data } = responseData
       const { collections } = data
       const { items } = collections
-
       items.forEach((metadata) => {
         const {
           abstract,
@@ -386,6 +395,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           versionId
         } = metadata
 
+        const serviceVariables = services.items[0].variables
         const focusedMetadata = createFocusedCollectionMetadata(
           metadata,
           authToken,
@@ -418,7 +428,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           tilingIdentificationSystems,
           title,
           tools,
-          variables,
+          variables: mergeVariables(variables, serviceVariables),
           versionId,
           ...focusedMetadata
         })
