@@ -59,24 +59,12 @@
 
 .collection-details-cloud-access-variable {
   &__direct-distribution-information-list {
-    padding-left: .5rem;
-  }
-
-  &__list-item {
-    overflow-y: hidden;
-    list-style-position: inside;
-    margin-left: 10px;
-    white-space: nowrap;
-  }
-
-  &__definition-list-container {
-    margin-left: 1rem;
+    padding-left: 1.25rem;
   }
   
   &__instance-field-title {
     display:inline;
     padding-right: 5px;
-    float: left;
   }
 
   &__instance-field-value {
@@ -87,9 +75,6 @@
     display:inline;
     padding-right: 5px;
     white-space: nowrap;
-  }
-
-  &__instance-field {
-    overflow: hidden;
+    display: list-item;
   }
 }

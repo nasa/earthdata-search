@@ -714,8 +714,8 @@ describe('CollectionDetailsBody component', () => {
           expect(screen.getByRole('link', { name: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name' }))
             .toHaveTextContent('s3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name')
 
-          expect(screen.getByRole('link', { name: 'zarr/test-name' }))
-            .toHaveTextContent('zarr/test-name')
+          expect(screen.getByText('zarr/test-name'))
+            .toBeInTheDocument()
 
           expect(screen.getByText('brief end user information goes here.')).toBeInTheDocument()
         })
