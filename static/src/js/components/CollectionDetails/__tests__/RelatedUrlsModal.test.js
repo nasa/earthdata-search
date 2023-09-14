@@ -145,6 +145,7 @@ describe('CollectionDetailsBody component', () => {
   describe('when the relatedUrls Modal has relatedUrls', () => {
     test('calls leaflet to render map with correct props', () => {
       setup()
+
       expect(screen.getByText('Related URLs')).toBeInTheDocument()
     })
   })

@@ -59,7 +59,6 @@
 
 .collection-details-cloud-access-variable {
   &__direct-distribution-information-list {
-    list-style-type: none;
     padding-left: .5rem;
   }
 
@@ -67,6 +66,7 @@
     overflow-y: hidden;
     list-style-position: inside;
     margin-left: 10px;
+    white-space: nowrap;
   }
 
   &__definition-list-container {
@@ -74,16 +74,19 @@
   }
   
   &__instance-field-title {
-    font-weight: bold;  
     display:inline;
+    padding-right: 5px;
+    float: left;
+  }
+
+  &__instance-field-value {
+    white-space: normal;
   }
 
   &__instance-field-list-title {
-    font-weight: bold;
     display:inline;
-    &:before {
-      content: '• ';
-    }
+    padding-right: 5px;
+    white-space: nowrap;
   }
 
   &__instance-field {

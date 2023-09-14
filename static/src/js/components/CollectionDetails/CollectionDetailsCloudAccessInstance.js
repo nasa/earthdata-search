@@ -23,39 +23,44 @@ export const CollectionDetailsCloudAccessInstance = ({
     } = directDistributionInformation
 
     return (
-      <>
+      <dl>
         <div className="collection-details-cloud-access-variable__instance-field">
-          <p className="collection-details-cloud-access-variable__instance-field-title">URL: </p>
-          <a href={url}>
-            {' '}
-            {url}
-          </a>
+          <dt className="collection-details-cloud-access-variable__instance-field-title">URL:</dt>
+          <dd>
+            <a className="collection-details-cloud-access-variable__instance-field-value" href={url}>
+              {url}
+            </a>
+          </dd>
         </div>
 
         <div className="collection-details-cloud-access-variable__instance-field">
-          <p className="collection-details-cloud-access-variable__instance-field-title">Format: </p>
-          {format}
+          <dt className="collection-details-cloud-access-variable__instance-field-title">Format:</dt>
+          <dd>
+            {format}
+          </dd>
         </div>
 
         <div className="collection-details-cloud-access-variable__instance-field">
-          <p className="collection-details-cloud-access-variable__instance-field-title">Description: </p>
-          {description}
+          <dt className="collection-details-cloud-access-variable__instance-field-title">Description:</dt>
+          <dd>
+            {description}
+          </dd>
         </div>
 
-        <p className="collection-details-cloud-access-variable__instance-field-title">Direct Distribution Information: </p>
+        <dt>Direct Distribution Information:</dt>
         <ul className="collection-details-cloud-access-variable__direct-distribution-information-list">
           <li className="collection-details-cloud-access-variable__list-item">
-            <p className="collection-details-cloud-access-variable__instance-field-list-title">Region: </p>
+            <dt className="collection-details-cloud-access-variable__instance-field-list-title">Region:</dt>
             {region}
           </li>
           { s3BucketAndObjectPrefixNames.length > 0 && (
             <li className="collection-details-cloud-access-variable__list-item">
-              <p className="collection-details-cloud-access-variable__instance-field-list-title">S3 Bucket And Object Prefix Names: </p>
+              <dt className="collection-details-cloud-access-variable__instance-field-list-title">S3 Bucket And Object Prefix Names:</dt>
               {
                   s3BucketAndObjectPrefixNames.map((name, i) => {
                     const key = `${name}-${i}`
                     return (
-                      <a className="collection-details-cloud-access-variable__bucket-name" href={name} key={key}>
+                      <a className="collection-details-cloud-access-variable__instance-field-value" href={name} key={key}>
                         {name}
                         <br />
                       </a>
@@ -66,16 +71,16 @@ export const CollectionDetailsCloudAccessInstance = ({
           )}
 
           <li className="collection-details-cloud-access-variable__list-item">
-            <p className="collection-details-cloud-access-variable__instance-field-list-title">S3 Credentials API Endpoint: </p>
-            <a href={s3CredentialsApiEndpoint}>{s3CredentialsApiEndpoint}</a>
+            <dt className="collection-details-cloud-access-variable__instance-field-list-title">S3 Credentials API Endpoint:</dt>
+            <a className="collection-details-cloud-access-variable__instance-field-value" href={s3CredentialsApiEndpoint}>{s3CredentialsApiEndpoint}</a>
           </li>
 
           <li className="collection-details-cloud-access-variable__list-item">
-            <p className="collection-details-cloud-access-variable__instance-field-list-title">S3 Credentials API Documentation URL: </p>
-            <a href={s3CredentialsApiDocumentationUrl}>{s3CredentialsApiDocumentationUrl}</a>
+            <dt className="collection-details-cloud-access-variable__instance-field-list-title">S3 Credentials API Documentation URL:</dt>
+            <a className="collection-details-cloud-access-variable__instance-field-value" href={s3CredentialsApiDocumentationUrl}>{s3CredentialsApiDocumentationUrl}</a>
           </li>
         </ul>
-      </>
+      </dl>
     )
   }
 
