@@ -5,12 +5,14 @@
  * @return {object} - JSON object containing the new variables object
  */
 export const appendVariables = (baseVariables, targetVariables) => {
-  const keyName = targetVariables.items[0].type.toLowerCase()
-  const { variables } = targetVariables.items[0]
-  // eslint-disable-next-line no-param-reassign
-  baseVariables[keyName] = {
-    count: variables.items.length,
-    items: variables.items
-  }
+  targetVariables.items.forEach((item) => {
+    const keyName = item.type.toLowerCase()
+    const { variables } = item
+    // eslint-disable-next-line no-param-reassign
+    baseVariables[keyName] = {
+      count: variables.items.length,
+      items: variables.items
+    }
+  })
   return baseVariables
 }
