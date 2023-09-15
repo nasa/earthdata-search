@@ -16,7 +16,8 @@ export const RelatedUrlsModal = ({
   const { relatedUrls = [] } = collectionMetadata
 
   const body = (
-    <div>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
       {
         relatedUrls && relatedUrls.map((category, i) => {
           if (category.urls.length) {
@@ -42,7 +43,7 @@ export const RelatedUrlsModal = ({
           return null
         })
         }
-    </div>
+    </>
   )
 
   return (
