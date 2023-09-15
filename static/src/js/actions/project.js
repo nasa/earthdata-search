@@ -295,6 +295,17 @@ export const getProjectCollections = () => async (dispatch, getState) => {
                   form
                 }
               }
+              variables {
+                count
+                items {
+                  conceptId
+                  definition
+                  longName
+                  name
+                  nativeId
+                  scienceKeywords
+                }
+              }
             }
           }
           granules {
@@ -329,6 +340,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
             items {
               conceptId
               definition
+              instanceInformation
               longName
               name
               nativeId
@@ -353,11 +365,9 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       const {
         data: responseData
       } = response
-
       const { data } = responseData
       const { collections } = data
       const { items } = collections
-
       items.forEach((metadata) => {
         const {
           abstract,

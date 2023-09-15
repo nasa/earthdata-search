@@ -9,6 +9,7 @@ import SimpleBar from 'simplebar-react'
 import ArrowTags from '../ArrowTags/ArrowTags'
 import Button from '../Button/Button'
 import CollapsePanel from '../CollapsePanel/CollapsePanel'
+import CollectionDetailsCloudAccessInstance from './CollectionDetailsCloudAccessInstance'
 import CollectionDetailsDataCenter from './CollectionDetailsDataCenter'
 import CollectionDetailsMinimap from './CollectionDetailsMinimap'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -77,6 +78,13 @@ const buildNativeFormatList = (nativeFormats) => {
   )
 }
 
+const buildVarInstanceInformation = (instanceInformation) => (
+  <CollectionDetailsCloudAccessInstance
+    type="variable"
+    instanceInformation={instanceInformation}
+  />
+)
+
 const buildDoiLink = (doiLink, doiText) => {
   const DoiBadge = (
     <SplitBadge
@@ -136,6 +144,7 @@ export const CollectionDetailsBody = ({
     spatial,
     temporal,
     urls,
+    variables,
     versionId
   } = collectionMetadata
 
@@ -147,7 +156,8 @@ export const CollectionDetailsBody = ({
             shapes={collectionDetailsSkeleton}
             containerStyle={{
               height: '400px',
-              width: '100%'
+              width: '100%',
+              dataTestId: 'collection-details-body__skeleton'
             }}
           />
         </div>
@@ -191,17 +201,28 @@ export const CollectionDetailsBody = ({
     }
   }
 
+  const variableInstancesInformation = []
+  if (variables) {
+    const { items } = variables
+
+    if (items) {
+      items.forEach((variable) => {
+        const { instanceInformation } = variable
+
+        if (instanceInformation) {
+          const varInstanceInformation = buildVarInstanceInformation(instanceInformation)
+          variableInstancesInformation.push(varInstanceInformation)
+        }
+      })
+    }
+  }
+
   let formattedRelatedUrls = []
   if (relatedUrls && relatedUrls.length > 0) {
     formattedRelatedUrls = buildRelatedUrlsList(relatedUrls)
   }
 
-  const {
-    region,
-    s3BucketAndObjectPrefixNames = [],
-    s3CredentialsApiEndpoint,
-    s3CredentialsApiDocumentationUrl
-  } = directDistributionInformation
+  const { region } = directDistributionInformation
 
   const {
     doiLink,
@@ -453,68 +474,43 @@ export const CollectionDetailsBody = ({
               )
             }
           </div>
-          {
-            region && (
-              <div className="row collection-details-body__row collection-details-body__feature">
-                <div className="col col-12">
+          <div>
+            {(region || (variableInstancesInformation.length > 0)) && <h4 className="collection-details-body__cloud-access-title"> Cloud Access</h4>}
+            {
+              region && (
+                <div>
                   <div className="collection-details-body__feature-heading">
-                    <h4 className="collection-details-body__feature-title">Cloud Access</h4>
+                    <h5 className="collection-details-body__feature-title">AWS Cloud</h5>
                     <p>Available for access in-region with AWS Cloud</p>
                   </div>
-                  <dl className="collection-details-body__info">
-                    <dt>Region</dt>
-                    <dd
-                      className="collection-details-body__cloud-access__region"
-                      data-testid="collection-details-body__cloud-access__region"
-                    >
-                      {region}
-                    </dd>
-
-                    <dt>Bucket/Object Prefix</dt>
-                    {
-                      s3BucketAndObjectPrefixNames.length && (
-                        s3BucketAndObjectPrefixNames.map((name, i) => {
-                          const key = `${name}-${i}`
-
-                          return (
-                            <dd
-                              key={key}
-                              className="collection-details-body__cloud-access__bucket-name"
-                              data-testid="collection-details-body__cloud-access__bucket-name"
-                            >
-                              {name}
-                            </dd>
-                          )
-                        })
-                      )
-                    }
-
-                    <dt>AWS S3 Credentials</dt>
-                    <dd className="collection-details-body__links collection-details-body__links--horizontal">
-                      <a
-                        className="link link--external collection-details-body__link collection-details-body__cloud-access__api-link"
-                        data-testid="collection-details-body__cloud-access__api-link"
-                        href={s3CredentialsApiEndpoint}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        Get AWS S3 Credentials
-                      </a>
-                      <a
-                        className="link link--separated link--external collection-details-body__link collection-details-body__cloud-access__documentation-link"
-                        data-testid="collection-details-body__cloud-access__documentation-link"
-                        href={s3CredentialsApiDocumentationUrl}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        Documentation
-                      </a>
-                    </dd>
-                  </dl>
+                  <div className="collection-details-body__cloud-access-content">
+                    <CollectionDetailsCloudAccessInstance
+                      instanceInformation={{ directDistributionInformation }}
+                    />
+                  </div>
                 </div>
-              </div>
-            )
-          }
+              )
+            }
+            {
+              (variableInstancesInformation.length > 0) && (
+                <>
+                  { variableInstancesInformation.map((variableInstance, i) => {
+                    const key = `variable_instance_information_${i}`
+                    return (
+                      <div key={key}>
+                        <h5 className="collection-details-body__feature-title">
+                          Variable Instance
+                        </h5>
+                        <div className="collection-details-body__cloud-access-content">
+                          {variableInstance}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </>
+              )
+            }
+          </div>
           {
             !!(relatedCollectionsList.length && relatedCollectionsList.length > 0) && (
               <div className="row collection-details-body__row collection-details-body__feature">
