@@ -24,29 +24,29 @@ export const CollectionDetailsCloudAccessInstance = ({
 
     return (
       <dl>
-        <dt className="collection-details-cloud-access-variable__instance-field-title">URL</dt>
+        <dt className="collection-details-cloud-access-variable-instance-information__instance-field-title">URL</dt>
         <dd>
-          <a className="collection-details-cloud-access-variable__instance-field-value" href={url}>
+          <a className="collection-details-cloud-access-variable-instance-information__instance-field-value text-break" href={url}>
             {url}
           </a>
         </dd>
-        <dt className="collection-details-cloud-access-variable__instance-field-title">Format</dt>
+        <dt className="collection-details-cloud-access-variable-instance-information__instance-field-title">Format</dt>
         <dd>
           {format}
         </dd>
-        <dt className="collection-details-cloud-access-variable__instance-field-title">Description</dt>
+        <dt className="collection-details-cloud-access-variable-instance-information__instance-field-title">Description</dt>
         <dd>
           {description}
         </dd>
         <dt>Direct Distribution Information</dt>
         <dd>
-          <dl className="collection-details-cloud-access-variable__direct-distribution-information-list">
-            <dt className="collection-details-cloud-access-variable__instance-field-list-title">Region</dt>
+          <dl className="collection-details-cloud-access-variable-instance-information__direct-distribution-information-list">
+            <dt className="collection-details-cloud-access-variable-instance-information__instance-field-list-title">Region</dt>
             <dd>{region}</dd>
             {
               s3BucketAndObjectPrefixNames.length > 0 && (
                 <>
-                  <dt className="collection-details-cloud-access-variable__instance-field-list-title">S3 Bucket And Object Prefix Names</dt>
+                  <dt className="collection-details-cloud-access-variable-instance-information__instance-field-list-title">S3 Bucket And Object Prefix Names</dt>
                   <dd>
                     <ul>
                       {
@@ -54,7 +54,7 @@ export const CollectionDetailsCloudAccessInstance = ({
                           const key = `${name}-${i}`
 
                           return (
-                            <li className="collection-details-cloud-access-variable__instance-field-value text-break" href={name} key={key}>
+                            <li className="collection-details-cloud-access-variable-instance-information__instance-field-value text-break" href={name} key={key}>
                               {name}
                             </li>
                           )
@@ -65,13 +65,13 @@ export const CollectionDetailsCloudAccessInstance = ({
                 </>
               )
             }
-            <dt className="collection-details-cloud-access-variable__instance-field-list-title">S3 Credentials API Endpoint</dt>
+            <dt className="collection-details-cloud-access-variable-instance-information__instance-field-list-title">S3 Credentials API Endpoint</dt>
             <dd>
-              <a className="collection-details-cloud-access-variable__instance-field-value text-break" href={s3CredentialsApiEndpoint}>{s3CredentialsApiEndpoint}</a>
+              <a className="collection-details-cloud-access-variable-instance-information__instance-field-value text-break" href={s3CredentialsApiEndpoint}>{s3CredentialsApiEndpoint}</a>
             </dd>
-            <dt className="collection-details-cloud-access-variable__instance-field-list-title">S3 Credentials API Documentation URL</dt>
+            <dt className="collection-details-cloud-access-variable-instance-information__instance-field-list-title">S3 Credentials API Documentation URL</dt>
             <dd>
-              <a className="collection-details-cloud-access-variable__instance-field-value text-break" href={s3CredentialsApiDocumentationUrl}>{s3CredentialsApiDocumentationUrl}</a>
+              <a className="collection-details-cloud-access-variable-instance-information__instance-field-value text-break" href={s3CredentialsApiDocumentationUrl}>{s3CredentialsApiDocumentationUrl}</a>
             </dd>
           </dl>
         </dd>
@@ -89,7 +89,7 @@ export const CollectionDetailsCloudAccessInstance = ({
 
   return (
     <div>
-      <dl className="direct-distribution-information__info">
+      <dl className="collection-details-cloud-access-direct-distribution-information__info">
         <dt>Region</dt>
         <dd
           data-testid="direct-distribution-information__cloud-access__region"
@@ -115,7 +115,7 @@ export const CollectionDetailsCloudAccessInstance = ({
         <dt>AWS S3 Credentials</dt>
         <dd className="direct-distribution-information__links--horizontal">
           <a
-            className="link link--external direct-distribution-information__link"
+            className="link link--external collection-details-cloud-access-direct-distribution-information__link"
             href={s3CredentialsApiEndpoint}
             rel="noopener noreferrer"
             target="_blank"
@@ -123,7 +123,7 @@ export const CollectionDetailsCloudAccessInstance = ({
             Get AWS S3 Credentials
           </a>
           <a
-            className="link link--separated link--external direct-distribution-information__link"
+            className="link link--separated link--external collection-details-cloud-access-direct-distribution-information__link"
             href={s3CredentialsApiDocumentationUrl}
             rel="noopener noreferrer"
             target="_blank"

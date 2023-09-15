@@ -1,13 +1,13 @@
 .collection-details-cloud-access-direct-distribution-information {
   &__info {
     > dt {
-      font-size: 0.75rem;
-      font-weight: 400;
+      font-size: 0.925rem;
+      font-weight: 700;
     }
 
     > dd {
       font-size: 0.925rem;
-      font-weight: 700;
+      font-weight: 400;
       word-wrap: break-word;
     }
   }
@@ -48,7 +48,7 @@
   }
 }
 
-.collection-details-cloud-access-variable {
+.collection-details-cloud-access-variable-instance-information {
   &__direct-distribution-information-list {
     padding-left: 1.25rem;
   }
