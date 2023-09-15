@@ -38,7 +38,6 @@ import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { isCSDACollection } from '../util/isCSDACollection'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
 import { buildAccessMethods } from '../util/accessMethods/buildAccessMethods'
-import { appendVariables } from '../util/appendVariables'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 import SavedAccessConfigsRequest from '../util/request/savedAccessConfigsRequest'
@@ -297,6 +296,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
                 }
               }
               variables {
+                count
                 items {
                   conceptId
                   definition
@@ -427,7 +427,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           tilingIdentificationSystems,
           title,
           tools,
-          variables: appendVariables(variables, services),
+          variables,
           versionId,
           ...focusedMetadata
         })

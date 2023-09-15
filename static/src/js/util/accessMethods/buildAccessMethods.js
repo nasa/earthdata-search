@@ -17,8 +17,7 @@ import { supportsVariableSubsetting } from './supportsVariableSubsetting'
 export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
   const {
     granules = {},
-    services = {},
-    variables: associatedVariables = {}
+    services = {}
   } = collectionMetadata
   const accessMethods = {}
   let harmonyIndex = 0
@@ -35,9 +34,9 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         longName,
         maxItemsPerOrder,
         name,
-        supportedReformattings
+        supportedReformattings,
+        variables: associatedVariables
       } = serviceItem
-
       // Only process service types that EDSC supports
       const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony']
       if (!supportedServiceTypes.includes(serviceType.toLowerCase())) return
@@ -86,7 +85,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           hierarchyMappings,
           keywordMappings,
           variables
-        } = getVariables(associatedVariables.opendap)
+        } = getVariables(associatedVariables)
 
         const outputFormats = []
 
@@ -117,7 +116,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           hierarchyMappings,
           keywordMappings,
           variables
-        } = getVariables(associatedVariables.harmony)
+        } = getVariables(associatedVariables)
         const {
           supportedOutputProjections
         } = serviceItem
