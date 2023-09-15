@@ -38,7 +38,7 @@ import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { isCSDACollection } from '../util/isCSDACollection'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
 import { buildAccessMethods } from '../util/accessMethods/buildAccessMethods'
-import { mergeVariables } from '../util/mergeVariables'
+import { appendVariables } from '../util/appendVariables'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 import SavedAccessConfigsRequest from '../util/request/savedAccessConfigsRequest'
@@ -395,7 +395,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           versionId
         } = metadata
 
-        const serviceVariables = services.items[0].variables
         const focusedMetadata = createFocusedCollectionMetadata(
           metadata,
           authToken,
@@ -428,7 +427,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           tilingIdentificationSystems,
           title,
           tools,
-          variables: mergeVariables(variables, serviceVariables),
+          variables: appendVariables(variables, services),
           versionId,
           ...focusedMetadata
         })

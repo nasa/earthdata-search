@@ -20,9 +20,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     services = {},
     variables: associatedVariables = {}
   } = collectionMetadata
-
   const accessMethods = {}
-
   let harmonyIndex = 0
 
   const { items: serviceItems = null } = services
@@ -88,7 +86,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           hierarchyMappings,
           keywordMappings,
           variables
-        } = getVariables(associatedVariables)
+        } = getVariables(associatedVariables.opendap)
 
         const outputFormats = []
 
@@ -114,14 +112,12 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           variables
         }
       }
-
       if (serviceType.toLowerCase() === 'harmony') {
         const {
           hierarchyMappings,
           keywordMappings,
           variables
-        } = getVariables(associatedVariables)
-
+        } = getVariables(associatedVariables.harmony)
         const {
           supportedOutputProjections
         } = serviceItem
