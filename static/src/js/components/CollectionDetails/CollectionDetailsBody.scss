@@ -71,6 +71,11 @@
     }
   }
 
+  &__cloud-access-title {
+    border-top: 1px solid $color__black--200;
+    padding-top: 1.25rem;
+  }
+
   &__link {
     display: block;
     padding: 0;
@@ -193,7 +198,11 @@
     font-size: 1rem;
     margin-bottom: 0.75rem;
     padding-top: 1.25rem;
-    border-top: 1px solid $color__black--200;
+  }
+
+  &__cloud-access-content {
+    border: 1px solid $color__black--200;
+    padding: 1.25rem
   }
 
   &__related-collections-list {
