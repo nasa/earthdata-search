@@ -1334,7 +1334,7 @@ export const updateProps = {
 export const pathsWithHolesResult = [[{
   poly: [{ x: -144, y: 18 }, { x: -153, y: 18 }, { x: -162, y: 18 }, { x: -161, y: 9 }, { x: -160, y: 0 }, { x: -151, y: 0 }, { x: -142, y: 0 }, { x: -143, y: 9 }, { x: -144, y: 18 }],
   index: 0,
-  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_NDVI_16Day/default/2020-09-29/250m/0/0/0.png',
+  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
     producerGranuleId: 'MOD13Q1.A2020273.h09v09.006.2020291073948.hdf',
     timeStart: '2020-09-29T00:00:00.000Z',
@@ -1392,7 +1392,7 @@ export const pathsWithHolesResult = [[{
 }], [{
   poly: [{ x: -162, y: 18 }, { x: -171, y: 18 }, { x: -181, y: 18 }, { x: -179, y: 9 }, { x: -178, y: 0 }, { x: -169, y: 0 }, { x: -159, y: 0 }, { x: -161, y: 9 }, { x: -162, y: 18 }],
   index: 1,
-  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_NDVI_16Day/default/2020-09-29/250m/0/0/0.png',
+  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
     producerGranuleId: 'MOD13Q1.A2020273.h08v09.006.2020291074020.hdf',
     timeStart: '2020-09-29T00:00:00.000Z',
@@ -1450,7 +1450,7 @@ export const pathsWithHolesResult = [[{
 }], [{
   poly: [{ x: -159, y: 0 }, { x: -169, y: 0 }, { x: -178, y: 0 }, { x: -179, y: -9 }, { x: -181, y: -18 }, { x: -171, y: -18 }, { x: -162, y: -18 }, { x: -161, y: -9 }, { x: -159, y: 0 }],
   index: 2,
-  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_NDVI_16Day/default/2020-09-29/250m/0/0/0.png',
+  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
     producerGranuleId: 'MOD13Q1.A2020273.h08v08.006.2020291074011.hdf',
     timeStart: '2020-09-29T00:00:00.000Z',
@@ -1510,7 +1510,7 @@ export const pathsWithHolesResult = [[{
 export const pathsResult = [{
   poly: [{ x: -144, y: 18 }, { x: -153, y: 18 }, { x: -162, y: 18 }, { x: -161, y: 9 }, { x: -160, y: 0 }, { x: -151, y: 0 }, { x: -142, y: 0 }, { x: -143, y: 9 }, { x: -144, y: 18 }],
   index: 0,
-  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_NDVI_16Day/default/2020-09-29/250m/0/0/0.png',
+  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
     producerGranuleId: 'MOD13Q1.A2020273.h09v09.006.2020291073948.hdf',
     timeStart: '2020-09-29T00:00:00.000Z',
@@ -1568,7 +1568,7 @@ export const pathsResult = [{
 }, {
   poly: [{ x: -162, y: 18 }, { x: -171, y: 18 }, { x: -181, y: 18 }, { x: -179, y: 9 }, { x: -178, y: 0 }, { x: -169, y: 0 }, { x: -159, y: 0 }, { x: -161, y: 9 }, { x: -162, y: 18 }],
   index: 1,
-  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_NDVI_16Day/default/2020-09-29/250m/0/0/0.png',
+  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
     producerGranuleId: 'MOD13Q1.A2020273.h08v09.006.2020291074020.hdf',
     timeStart: '2020-09-29T00:00:00.000Z',
@@ -1626,7 +1626,7 @@ export const pathsResult = [{
 }, {
   poly: [{ x: -159, y: 0 }, { x: -169, y: 0 }, { x: -178, y: 0 }, { x: -179, y: -9 }, { x: -181, y: -18 }, { x: -171, y: -18 }, { x: -162, y: -18 }, { x: -161, y: -9 }, { x: -159, y: 0 }],
   index: 2,
-  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_NDVI_16Day/default/2020-09-29/250m/0/0/0.png',
+  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
     producerGranuleId: 'MOD13Q1.A2020273.h08v08.006.2020291074011.hdf',
     timeStart: '2020-09-29T00:00:00.000Z',

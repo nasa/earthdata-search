@@ -1,0 +1,436 @@
+{
+    "data": {
+        "collection": {
+            "abstract": "\nWARNING: On 2021/09/23 the EOS Aqua executed a Deep Space Maneuver (DSM). In the DSM, the spacecraft is turned such that the normal Earth field of regard is deep space.\n\nThe thermal impact of the DSM caused a shift of the centroids of spectral response functions (SRF) of about 1% of the width of the SRF, equivalent to a frequency shift of 9 parts per million. This shift is reflected in the “spectral_freq” parameter (observed frequencies) in the L1b v5 files for each 6 minute granule. The magnitude of the effect on brightness temperatures (BT) depends on the spectral gradient of each channel. Maximum BT shifts are approximately +- 0.5 K, although many channels experience far smaller BT shifts. Approximately 1803 channels have BT shifts of less than 0.1 K and 575 channels are now shifted in BT by more than 0.1 K, while 231 of these channels have BT shifts greater than 0.2 K.\n\nUsers of the L1b v5 product who are concerned that these shifts may impact their science investigations and applications are encouraged to switch to the AIRS L1c v6.7.4 product, which, among many other improvements, converts the spectra to a fixed frequency grid.          END OF WARNING.\n\n\n\nThe Atmospheric Infrared Sounder (AIRS) is a grating spectrometer (R = 1200) aboard the second Earth Observing System (EOS) polar-orbiting platform, EOS Aqua. In combination with the Advanced Microwave Sounding Unit (AMSU) and the Humidity Sounder for Brazil (HSB), AIRS constitutes an innovative atmospheric sounding group of visible, infrared, and microwave sensors. The AIRS Infrared (IR) level 1B data set contains AIRS calibrated and geolocated radiances in milliWatts/m^2/cm^-1/steradian for 2378 infrared channels in the 3.74 to 15.4 micron region of t he spectrum. The AIRS instrument is co-aligned with AMSU-A so that successive blocks of 3 x 3 AIRS footprints are contained within one AMSU-A footprint. The AIRIBRAD_005 products are stored in files (often referred to as \"granules\") that contain 6 minutes of data, 90 footprints across track by 135 lines along track.",
+            "archiveAndDistributionInformation": {
+                "fileDistributionInformation": [
+                    {
+                        "formatType": "Native",
+                        "media": [
+                            "Online Archive"
+                        ],
+                        "format": "HDF-EOS",
+                        "fees": "None"
+                    }
+                ]
+            },
+            "associatedDois": null,
+            "boxes": [
+                "-90 -180 90 180"
+            ],
+            "cloudHosted": true,
+            "conceptId": "C1243477369-GES_DISC",
+            "coordinateSystem": "CARTESIAN",
+            "dataCenter": "GES_DISC",
+            "dataCenters": [
+                {
+                    "roles": [
+                        "ARCHIVER"
+                    ],
+                    "shortName": "NASA/GSFC/SED/ESD/GCDC/GESDISC",
+                    "longName": "Goddard Earth Sciences Data and Information Services Center (formerly Goddard DAAC), Global Change Data Center, Earth Sciences Division, Science and Exploration Directorate, Goddard Space Flight Center, NASA",
+                    "contactInformation": {
+                        "relatedUrls": [
+                            {
+                                "urlContentType": "DataCenterURL",
+                                "type": "HOME PAGE",
+                                "url": "https://disc.gsfc.nasa.gov/",
+                                "description": "NASA GES DISC Website"
+                            }
+                        ]
+                    },
+                    "contactGroups": [
+                        {
+                            "roles": [
+                                "Data Center Contact"
+                            ],
+                            "groupName": "GES DISC HELP DESK SUPPORT GROUP",
+                            "contactInformation": {
+                                "addresses": [
+                                    {
+                                        "streetAddresses": [
+                                            "Goddard Earth Sciences Data and Information Services Center",
+                                            "Code 610.2",
+                                            "NASA Goddard Space Flight Center"
+                                        ],
+                                        "city": "Greenbelt",
+                                        "stateProvince": "MD",
+                                        "postalCode": "20771",
+                                        "country": "USA"
+                                    }
+                                ],
+                                "contactMechanisms": [
+                                    {
+                                        "type": "Telephone",
+                                        "value": "301-614-5224"
+                                    },
+                                    {
+                                        "type": "Fax",
+                                        "value": "301-614-5268"
+                                    },
+                                    {
+                                        "type": "Email",
+                                        "value": "gsfc-dl-help-disc@mail.nasa.gov"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            "directDistributionInformation": {
+                "region": "us-west-2",
+                "s3CredentialsApiEndpoint": "https://data.gesdisc.earthdata.nasa.gov/s3credentials",
+                "s3CredentialsApiDocumentationUrl": "https://data.gesdisc.earthdata.nasa.gov/s3credentialsREADME",
+                "s3BucketAndObjectPrefixNames": [
+                    "s3://gesdisc-cumulus-prod-protected/Aqua_AIRS_Level1/AIRIBRAD.005/"
+                ]
+            },
+            "doi": {
+                "doi": "10.5067/YZEXEVN4JGGJ"
+            },
+            "duplicateCollections": {
+                "count": 0,
+                "items": []
+            },
+            "hasGranules": true,
+            "lines": null,
+            "nativeDataFormats": [
+                "HDF-EOS"
+            ],
+            "points": null,
+            "polygons": null,
+            "relatedUrls": [
+                {
+                    "description": "Sample image of AIRIBRAD",
+                    "url": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/AIRIBRAD_005.jpeg",
+                    "urlContentType": "VisualizationURL",
+                    "type": "GET RELATED VISUALIZATION"
+                },
+                {
+                    "url": "https://disc.gsfc.nasa.gov/datacollection/AIRIBRAD_005.html",
+                    "description": "Access the dataset landing page from the GES DISC website.",
+                    "type": "DATA SET LANDING PAGE",
+                    "urlContentType": "CollectionURL"
+                },
+                {
+                    "url": "https://airsl1.gesdisc.eosdis.nasa.gov/data/Aqua_AIRS_Level1/AIRIBRAD.005/",
+                    "description": "Access the data via HTTPS.",
+                    "subtype": "DATA TREE",
+                    "type": "GET DATA",
+                    "urlContentType": "DistributionURL"
+                },
+                {
+                    "url": "https://airsl1.gesdisc.eosdis.nasa.gov/opendap/Aqua_AIRS_Level1/AIRIBRAD.005/contents.html",
+                    "description": "Access the data via the OPeNDAP protocol.",
+                    "subtype": "OPENDAP DATA",
+                    "type": "USE SERVICE API",
+                    "urlContentType": "DistributionURL"
+                },
+                {
+                    "url": "https://search.earthdata.nasa.gov/search?q=AIRIBRAD+005",
+                    "description": "Use the Earthdata Search to find and retrieve data sets across multiple data centers.",
+                    "subtype": "Earthdata Search",
+                    "type": "GET DATA",
+                    "urlContentType": "DistributionURL"
+                },
+                {
+                    "url": "https://airs.jpl.nasa.gov/index.html",
+                    "description": "AIRS home page at NASA/JPL. General information on the AIRS instrument suite, algorithms, and other AIRS-related activities can be found.",
+                    "type": "PROJECT HOME PAGE",
+                    "urlContentType": "CollectionURL"
+                },
+                {
+                    "url": "https://disc.gsfc.nasa.gov/information/documents?title=AIRS%20Documentation",
+                    "description": "AIRS Documentation Page",
+                    "type": "VIEW RELATED INFORMATION",
+                    "urlContentType": "PublicationURL"
+                },
+                {
+                    "url": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/AIRS/3.3_ScienceDataProductDocumentation/3.3.4_ProductGenerationAlgorithms/README.AIRIBRAD.pdf",
+                    "description": "README Document",
+                    "subtype": "READ-ME",
+                    "type": "VIEW RELATED INFORMATION",
+                    "urlContentType": "PublicationURL"
+                },
+                {
+                    "url": "https://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/AIRS/3.7_ScienceDataProductValidation/V5_CalVal_Status_Summary.pdf",
+                    "description": "Summary of validation status of products",
+                    "subtype": "GENERAL DOCUMENTATION",
+                    "type": "VIEW RELATED INFORMATION",
+                    "urlContentType": "PublicationURL"
+                },
+                {
+                    "url": "https://eospso.gsfc.nasa.gov/sites/default/files/atbd/AIRS_L1B_ATBD_Part_1.pdf",
+                    "description": "ATBD Documentation",
+                    "subtype": "ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)",
+                    "type": "VIEW RELATED INFORMATION",
+                    "urlContentType": "PublicationURL"
+                }
+            ],
+            "relatedCollections": {
+                "count": 682,
+                "items": [
+                    {
+                        "id": "C1233768981-GES_DISC",
+                        "title": "AIRS/Aqua L1B Near Real Time (NRT) Infrared (IR) quality assurance subset V005 (AIRIBQAP_NRT) at GES DISC"
+                    },
+                    {
+                        "id": "C1243477368-GES_DISC",
+                        "title": "AIRS/Aqua L1B Infrared (IR) quality assurance subset V005 (AIRIBQAP) at GES DISC"
+                    },
+                    {
+                        "id": "C1233768982-GES_DISC",
+                        "title": "AIRS/Aqua L1B Near Real Time (NRT) Infrared (IR) geolocated and calibrated radiances V005 (AIRIBRAD_NRT) at GES DISC"
+                    }
+                ]
+            },
+            "scienceKeywords": [
+                {
+                    "category": "EARTH SCIENCE",
+                    "topic": "ATMOSPHERE",
+                    "term": "AEROSOLS",
+                    "variableLevel1": "DUST/ASH/SMOKE"
+                },
+                {
+                    "category": "EARTH SCIENCE",
+                    "topic": "ATMOSPHERE",
+                    "term": "ATMOSPHERIC CHEMISTRY",
+                    "variableLevel1": "SULFUR COMPOUNDS",
+                    "variableLevel2": "SULFUR DIOXIDE"
+                },
+                {
+                    "category": "EARTH SCIENCE",
+                    "topic": "SPECTRAL/ENGINEERING",
+                    "term": "INFRARED WAVELENGTHS",
+                    "variableLevel1": "INFRARED RADIANCE"
+                }
+            ],
+            "shortName": "AIRIBRAD",
+            "spatialExtent": {
+                "granuleSpatialRepresentation": "CARTESIAN",
+                "horizontalSpatialDomain": {
+                    "geometry": {
+                        "coordinateSystem": "CARTESIAN",
+                        "boundingRectangles": [
+                            {
+                                "westBoundingCoordinate": -180,
+                                "northBoundingCoordinate": 90,
+                                "eastBoundingCoordinate": 180,
+                                "southBoundingCoordinate": -90
+                            }
+                        ]
+                    }
+                }
+            },
+            "tags": {
+                "edsc.extra.gibs": {
+                    "data": [
+                        {
+                            "geo_resolution": "2km",
+                            "format": "png",
+                            "antarctic": false,
+                            "group": "overlays",
+                            "arctic_resolution": null,
+                            "geo": true,
+                            "source": "Aqua / AIRS",
+                            "arctic": false,
+                            "title": "Sulfur Dioxide (Night, Prata Algorithm)",
+                            "resolution": "2km",
+                            "antarctic_resolution": null,
+                            "product": "AIRS_Prata_SO2_Index_Night",
+                            "maxNativeZoom": 5,
+                            "match": {
+                                "time_start": ">=2012-05-08T00:00:00Z",
+                                "day_night_flag": "NIGHT"
+                            }
+                        },
+                        {
+                            "geo_resolution": "2km",
+                            "format": "png",
+                            "antarctic": false,
+                            "group": "overlays",
+                            "arctic_resolution": null,
+                            "geo": true,
+                            "source": "Aqua / AIRS",
+                            "arctic": false,
+                            "title": "Sulfur Dioxide (Day, Prata Algorithm)",
+                            "resolution": "2km",
+                            "antarctic_resolution": null,
+                            "product": "AIRS_Prata_SO2_Index_Day",
+                            "maxNativeZoom": 5,
+                            "match": {
+                                "time_start": ">=2012-05-08T00:00:00Z",
+                                "day_night_flag": "DAY"
+                            }
+                        }
+                    ]
+                },
+                "edsc.extra.serverless.gibs": {
+                    "data": [
+                        {
+                            "antarctic": false,
+                            "group": "overlays",
+                            "product": "AIRS_Prata_SO2_Index_Day",
+                            "antarctic_resolution": null,
+                            "updated_at": "2023-09-06T12:45:23.596Z",
+                            "arctic": false,
+                            "title": "Sulfur Dioxide (Day, Prata Algorithm)",
+                            "source": "Aqua / AIRS",
+                            "match": {
+                                "time_start": ">=2012-05-08T00:00:00Z",
+                                "day_night_flag": "day"
+                            },
+                            "geographic": true,
+                            "arctic_resolution": null,
+                            "format": "png",
+                            "geographic_resolution": "2km"
+                        },
+                        {
+                            "antarctic": false,
+                            "group": "overlays",
+                            "product": "AIRS_Prata_SO2_Index_Night",
+                            "antarctic_resolution": null,
+                            "updated_at": "2023-09-06T12:45:23.596Z",
+                            "arctic": false,
+                            "title": "Sulfur Dioxide (Night, Prata Algorithm)",
+                            "source": "Aqua / AIRS",
+                            "match": {
+                                "time_start": ">=2012-05-08T00:00:00Z",
+                                "day_night_flag": "night"
+                            },
+                            "geographic": true,
+                            "arctic_resolution": null,
+                            "format": "png",
+                            "geographic_resolution": "2km"
+                        }
+                    ]
+                },
+                "edsc.extra.serverless.collection_capabilities": {
+                    "data": {
+                        "cloud_cover": false,
+                        "day_night_flag": true,
+                        "granule_online_access_flag": true,
+                        "orbit_calculated_spatial_domains": false,
+                        "updated_at": "2023-09-06T12:22:23.083Z"
+                    }
+                },
+                "edsc.portal.cwic.collections": {}
+            },
+            "temporalExtents": [
+                {
+                    "rangeDateTimes": [
+                        {
+                            "beginningDateTime": "2002-08-30T00:00:00.000Z"
+                        }
+                    ],
+                    "endsAtPresentFlag": true
+                }
+            ],
+            "tilingIdentificationSystems": null,
+            "title": "AIRS/Aqua L1B Infrared (IR) geolocated and calibrated radiances V005 (AIRIBRAD) at GES DISC at GES DISC",
+            "versionId": "005",
+            "services": {
+                "count": 0,
+                "items": null
+            },
+            "granules": {
+                "count": 1815023,
+                "items": [
+                    {
+                        "conceptId": "G1260316900-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260316868-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260316903-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260316897-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260320627-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260320597-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260316893-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260316885-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260316881-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260320623-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260320620-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260316888-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260316876-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260316857-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260316852-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260316872-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260265742-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260279785-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260279834-GES_DISC",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1260279307-GES_DISC",
+                        "onlineAccessFlag": true
+                    }
+                ]
+            },
+            "subscriptions": {
+                "count": 0,
+                "items": []
+            },
+            "tools": {
+                "count": 0,
+                "items": null
+            },
+            "variables": {
+                "count": 0,
+                "items": null
+            }
+        }
+    }
+}

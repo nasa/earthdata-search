@@ -42,7 +42,11 @@ describe('adminGetRetrievals', () => {
         user_id: 1,
         username: 'edsc-test',
         cid: 1,
-        access_method: {},
+        access_method: {
+          type: 'download'
+        },
+        created_at: '2023-07-18T17:53:49.698Z',
+        updated_at: '2023-07-18T17:54:51.000Z',
         collection_id: 'C10000005-EDSC',
         granule_count: 25,
         oid: 1,
@@ -57,7 +61,11 @@ describe('adminGetRetrievals', () => {
         user_id: 1,
         username: 'edsc-test',
         cid: 1,
-        access_method: {},
+        access_method: {
+          type: 'download'
+        },
+        created_at: '2023-07-18T17:54:49.698Z',
+        updated_at: '2023-07-18T17:55:51.000Z',
         collection_id: 'C10000005-EDSC',
         granule_count: 25,
         oid: 2,
@@ -72,7 +80,11 @@ describe('adminGetRetrievals', () => {
         user_id: 1,
         username: 'edsc-test',
         cid: 2,
-        access_method: {},
+        access_method: {
+          type: 'download'
+        },
+        created_at: '2023-07-18T17:56:49.698Z',
+        updated_at: '2023-07-18T17:57:51.000Z',
         collection_id: 'C10000010-EDSC',
         granule_count: 50,
         oid: 1,
@@ -105,7 +117,11 @@ describe('adminGetRetrievals', () => {
       collections: [
         {
           id: 1,
-          access_method: {},
+          access_method: {
+            type: 'download'
+          },
+          created_at: '2023-07-18T17:53:49.698Z',
+          updated_at: '2023-07-18T17:54:51.000Z',
           collection_id: 'C10000005-EDSC',
           granule_count: 25,
           data_center: 'EDSC',
@@ -127,7 +143,11 @@ describe('adminGetRetrievals', () => {
         },
         {
           id: 2,
-          access_method: {},
+          access_method: {
+            type: 'download'
+          },
+          created_at: '2023-07-18T17:56:49.698Z',
+          updated_at: '2023-07-18T17:57:51.000Z',
           collection_id: 'C10000010-EDSC',
           granule_count: 50,
           data_center: 'EDSC',
@@ -155,7 +175,9 @@ describe('adminGetRetrievals', () => {
         user_id: 1,
         username: 'edsc-test',
         cid: null,
-        access_method: {},
+        access_method: {
+          type: null
+        },
         collection_id: null,
         granule_count: null,
         oid: null,
@@ -170,7 +192,9 @@ describe('adminGetRetrievals', () => {
         user_id: 1,
         username: 'edsc-test',
         cid: null,
-        access_method: {},
+        access_method: {
+          type: null
+        },
         collection_id: null,
         granule_count: null,
         oid: null,
@@ -185,7 +209,9 @@ describe('adminGetRetrievals', () => {
         user_id: 1,
         username: 'edsc-test',
         cid: null,
-        access_method: {},
+        access_method: {
+          type: null
+        },
         collection_id: null,
         granule_count: null,
         oid: null,
@@ -229,7 +255,11 @@ describe('adminGetRetrievals', () => {
         user_id: 1,
         username: 'edsc-test',
         cid: 1,
-        access_method: {},
+        access_method: {
+          type: 'download'
+        },
+        created_at: '2023-07-18T17:53:49.698Z',
+        updated_at: '2023-07-18T17:54:51.000Z',
         collection_id: 'C10000005-EDSC',
         granule_count: 25,
         oid: null,
@@ -244,7 +274,11 @@ describe('adminGetRetrievals', () => {
         user_id: 1,
         username: 'edsc-test',
         cid: 1,
-        access_method: {},
+        access_method: {
+          type: 'download'
+        },
+        created_at: '2023-07-18T17:54:49.698Z',
+        updated_at: '2023-07-18T17:55:51.000Z',
         collection_id: 'C10000005-EDSC',
         granule_count: 25,
         oid: null,
@@ -259,7 +293,11 @@ describe('adminGetRetrievals', () => {
         user_id: 1,
         username: 'edsc-test',
         cid: 2,
-        access_method: {},
+        access_method: {
+          type: 'download'
+        },
+        created_at: '2023-07-18T17:56:49.698Z',
+        updated_at: '2023-07-18T17:57:51.000Z',
         collection_id: 'C10000010-EDSC',
         granule_count: 50,
         oid: null,
@@ -292,7 +330,11 @@ describe('adminGetRetrievals', () => {
       collections: [
         {
           id: 1,
-          access_method: {},
+          access_method: {
+            type: 'download'
+          },
+          created_at: '2023-07-18T17:53:49.698Z',
+          updated_at: '2023-07-18T17:54:51.000Z',
           collection_id: 'C10000005-EDSC',
           granule_count: 25,
           data_center: 'EDSC',
@@ -301,7 +343,11 @@ describe('adminGetRetrievals', () => {
         },
         {
           id: 2,
-          access_method: {},
+          access_method: {
+            type: 'download'
+          },
+          created_at: '2023-07-18T17:56:49.698Z',
+          updated_at: '2023-07-18T17:57:51.000Z',
           collection_id: 'C10000010-EDSC',
           granule_count: 50,
           data_center: 'EDSC',

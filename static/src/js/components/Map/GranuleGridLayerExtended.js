@@ -239,12 +239,18 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     // * too large. This tag data will be replaced with the efforts associated with EDSC-2972.
     // ***
 
-    if (!this.multiOptions) return null
+    if (!this.gibsTag) return null
+
     const date = granule.timeStart != null ? granule.timeStart.substring(0, 10) : undefined
 
     let matched = false
-    this.multiOptions.forEach((optionSet) => {
+
+    // Select only the first layer until we are able to toggle between gibs layers.
+    const layers = [this.gibsTag[0]]
+
+    layers.forEach((optionSet) => {
       const newOptionSet = optionSet
+
       if (this.matches(granule, newOptionSet.match)) {
         let newResolution
         // let tileMatrixLimits
@@ -297,7 +303,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     //   return null
     // }
 
-    if (!matched) { return false }
+    if (!matched) { return null }
 
     this.options.time = date
     if (this.options.granule) {
@@ -837,7 +843,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       const { tags } = metadata
 
       if (tags) {
-        this.multiOptions = getValueForTag('gibs', tags)
+        this.gibsTag = getValueForTag('gibs', tags)
       }
     }
 
@@ -876,15 +882,16 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     )
 
     const {
+      addedGranuleIds,
+      collectionId,
       color,
       drawingNewLayer,
-      lightColor,
       focusedCollectionId,
       focusedGranuleId,
-      collectionId,
-      addedGranuleIds,
-      removedGranuleIds,
-      isProjectPage
+      isProjectPage,
+      lightColor,
+      projection,
+      removedGranuleIds
     } = this
 
     return this.setResults({
@@ -897,6 +904,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       granules,
       isProjectPage,
       lightColor,
+      projection,
       removedGranuleIds
     })
   }

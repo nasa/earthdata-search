@@ -44,6 +44,7 @@ export const constructOrderPayload = async ({
 
   const {
     enableTemporalSubsetting,
+    enableSpatialSubsetting,
     mbr,
     selectedOutputFormat,
     selectedOutputProjection,
@@ -68,7 +69,7 @@ export const constructOrderPayload = async ({
     temporal
   } = granuleParams
 
-  if (supportsShapefileSubsetting) {
+  if (supportsShapefileSubsetting && enableSpatialSubsetting) {
     if (shapefile) {
       try {
         // GeoJSON polygon points must be in CCW order, so we need to make sure that is true before sending the shapefile
@@ -173,7 +174,7 @@ export const constructOrderPayload = async ({
     }
   }
 
-  if (supportsBoundingBoxSubsetting) {
+  if (supportsBoundingBoxSubsetting && enableSpatialSubsetting) {
     if (boundingBox.length > 0) {
       const [swCoord, neCoord] = pointStringToLatLng(boundingBox[0])
 

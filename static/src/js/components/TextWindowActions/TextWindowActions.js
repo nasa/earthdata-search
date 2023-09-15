@@ -33,6 +33,7 @@ import './TextWindowActions.scss'
  * @param {String} modalTitle - The title for the modal.
  * @param {Boolean} disableCopy - Disables the copy functionality.
  * @param {Boolean} disableSave - Disables the save functionality.
+ * @param {Boolean} disableEdd - Disables EDD button.
  */
 export const TextWindowActions = ({
   children,
@@ -260,7 +261,7 @@ export const TextWindowActions = ({
         size="md"
         body={(
           <div className="d-flex flex-column align-items-center">
-            <h3 className="font-weight-bolder h5 mt-3 text-center w-75">Opening Earthdata Download to download your your files...</h3>
+            <h3 className="font-weight-bolder h5 mt-3 text-center w-75">Opening Earthdata Download to download your files...</h3>
             <EDSCIcon
               className="mt-4 text-window-actions__modal-icon"
               icon={FaExternalLinkAlt}
@@ -305,7 +306,7 @@ export const TextWindowActions = ({
               </a>
               or
               {' '}
-              <a className="link link--external" href="/earthdata-download">learn more.</a>
+              <a className="link link--external" href="https://nasa.github.io/earthdata-download/" target="_blank" rel="nofollow noreferrer">learn more.</a>
             </Alert>
           </div>
         )}

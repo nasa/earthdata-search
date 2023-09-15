@@ -25,8 +25,6 @@ let sqsClient
 export const getProjectionCapabilities = async (projection) => {
   const capabilitiesUrl = `https://gibs.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?SERVICE=WMTS&request=GetCapabilities`
 
-  console.log(`GIBS Capabilties URL: ${capabilitiesUrl}`)
-
   try {
     if (!sqsClient) {
       sqsClient = new SQSClient(getSqsConfig())
@@ -69,10 +67,9 @@ export const getProjectionCapabilities = async (projection) => {
                 product: layer['ows:Identifier'],
                 url: link['xlink:href']
               })
-
-            console.log('knownColorMap', knownColorMap)
           }
 
+          console.log('sending message', JSON.stringify(knownColorMap))
           const sendMessageCommand = new SendMessageCommand({
             QueueUrl: process.env.colorMapQueueUrl,
             MessageBody: JSON.stringify(knownColorMap)

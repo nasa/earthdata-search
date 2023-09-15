@@ -17,6 +17,7 @@ import TextWindowActions from '../../TextWindowActions/TextWindowActions'
  * @param {Boolean} arg0.granuleLinksIsLoading - A flag set when the granule links are loading.
  * @param {Boolean} arg0.percentDoneDownloadLinks - Percentage of the download links that have been fetched.
  * @param {Boolean} arg0.showTextWindowActions - A flag set when the text window actions should be set.
+ * @param {Boolean} arg0.collectionIsCSDA - A flag set when the collection is CSDA.
 */
 export const DownloadFilesPanel = ({
   accessMethodType,
@@ -26,7 +27,8 @@ export const DownloadFilesPanel = ({
   percentDoneDownloadLinks,
   retrievalId,
   eddLink,
-  showTextWindowActions
+  showTextWindowActions,
+  collectionIsCSDA
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}.txt`
 
@@ -58,6 +60,7 @@ export const DownloadFilesPanel = ({
         modalTitle="Download Files"
         disableCopy={!showTextWindowActions}
         disableSave={!showTextWindowActions}
+        disableEdd={collectionIsCSDA}
       >
         <ul className="download-links-panel__list">
           {
@@ -84,6 +87,7 @@ export const DownloadFilesPanel = ({
 DownloadFilesPanel.defaultProps = {
   percentDoneDownloadLinks: null,
   showTextWindowActions: true,
+  collectionIsCSDA: false,
   eddLink: null
 }
 
@@ -97,7 +101,8 @@ DownloadFilesPanel.propTypes = {
   granuleCount: PropTypes.number.isRequired,
   granuleLinksIsLoading: PropTypes.bool.isRequired,
   percentDoneDownloadLinks: PropTypes.string,
-  showTextWindowActions: PropTypes.bool
+  showTextWindowActions: PropTypes.bool,
+  collectionIsCSDA: PropTypes.bool
 }
 
 export default DownloadFilesPanel

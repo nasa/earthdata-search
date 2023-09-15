@@ -80,7 +80,7 @@ describe('AuthCallbackContainer component', () => {
     expect(window.location.replace.mock.calls[0]).toEqual(['http://localhost:8080/search'])
   })
 
-  test('updates redux and redirects to earthdata-download-callback', () => {
+  test('updates redux and redirects to earthdata-download-callback for authCallback', () => {
     const setSpy = jest.spyOn(tinyCookie, 'set')
     delete window.location
     window.location = { replace: jest.fn() }
@@ -101,6 +101,27 @@ describe('AuthCallbackContainer component', () => {
     })
   })
 
+  test('updates redux and redirects to earthdata-download-callback for eulaCallback', () => {
+    const setSpy = jest.spyOn(tinyCookie, 'set')
+    delete window.location
+    window.location = { replace: jest.fn() }
+
+    const { props } = setup({
+      location: {
+        search: 'eddRedirect=earthdata-download%3A%2F%2FeulaCallback'
+      }
+    })
+
+    expect(setSpy).toHaveBeenCalledTimes(0)
+
+    expect(window.location.replace).toHaveBeenCalledTimes(0)
+
+    expect(props.onAddEarthdataDownloadRedirect).toHaveBeenCalledTimes(1)
+    expect(props.onAddEarthdataDownloadRedirect).toHaveBeenCalledWith({
+      redirect: 'earthdata-download://eulaCallback'
+    })
+  })
+
   test('clears the auth cookie and redirects to root path if values are not set', () => {
     const setSpy = jest.spyOn(tinyCookie, 'set')
     delete window.location
@@ -114,6 +135,40 @@ describe('AuthCallbackContainer component', () => {
 
     expect(setSpy).toBeCalledTimes(1)
     expect(setSpy).toBeCalledWith('authToken', '')
+
+    expect(window.location.replace.mock.calls.length).toBe(1)
+    expect(window.location.replace.mock.calls[0]).toEqual(['/'])
+  })
+
+  test('does not follow the redirect if the redirect param is not valid', () => {
+    const setSpy = jest.spyOn(tinyCookie, 'set')
+    delete window.location
+    window.location = { replace: jest.fn() }
+
+    setup({
+      location: {
+        search: '?redirect=javascript:alert(document.domain);'
+      }
+    })
+
+    expect(setSpy).toBeCalledTimes(0)
+
+    expect(window.location.replace.mock.calls.length).toBe(1)
+    expect(window.location.replace.mock.calls[0]).toEqual(['/'])
+  })
+
+  test('does not follow the redirect if the eddRedirect param is not valid', () => {
+    const setSpy = jest.spyOn(tinyCookie, 'set')
+    delete window.location
+    window.location = { replace: jest.fn() }
+
+    setup({
+      location: {
+        search: '?eddRedirect=javascript:alert(document.domain);'
+      }
+    })
+
+    expect(setSpy).toBeCalledTimes(0)
 
     expect(window.location.replace.mock.calls.length).toBe(1)
     expect(window.location.replace.mock.calls[0]).toEqual(['/'])

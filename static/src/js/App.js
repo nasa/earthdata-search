@@ -11,7 +11,6 @@ import history from './util/history'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 
 import Admin from './routes/Admin/Admin'
-import EarthdataDownload from './routes/EarthdataDownload/EarthdataDownload'
 import ContactInfo from './routes/ContactInfo/ContactInfo'
 import Downloads from './routes/Downloads/Downloads'
 import EarthdataDownloadRedirect from './routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'
@@ -122,12 +121,6 @@ class App extends Component {
                         <AuthRequiredContainer>
                           <ContactInfo />
                         </AuthRequiredContainer>
-                      )}
-                    />
-                    <Route
-                      path={this.portalPaths('/earthdata-download')}
-                      render={() => (
-                        <EarthdataDownload />
                       )}
                     />
                     <Route

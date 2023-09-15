@@ -365,5 +365,26 @@ describe('TextWindowActions component', () => {
         })
       })
     })
+    describe('when disabling the edd button', () => {
+      const { enzymeWrapper } = setup({
+        disableEdd: true
+      })
+
+      test('hides the edd button', () => {
+        expect(enzymeWrapper.find('.text-window-actions__action--edd').length).toEqual(0)
+      })
+
+      describe('when the modal is open', () => {
+        const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
+        expandButton.simulate('click')
+
+        const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
+        expect(linksModal.props().isOpen).toEqual(true)
+
+        test('hides the edd button', () => {
+          expect(enzymeWrapper.find('.text-window-actions__modal-action--edd').length).toEqual(0)
+        })
+      })
+    })
   })
 })

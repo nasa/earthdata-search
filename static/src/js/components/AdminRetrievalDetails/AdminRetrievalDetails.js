@@ -45,17 +45,17 @@ export const AdminRetrievalDetails = ({
           <Row className="admin-retrieval-details__metadata-display mb-2">
             <Col className="admin-retrieval-details__metadata-display-item">
               <span className="admin-retrieval-details__metadata-display-heading">Owner</span>
-              <span className="admin-retrieval-details__metadata-display-content">{username}</span>
+              <span data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content">{username}</span>
             </Col>
             <Col className="admin-retrieval-details__metadata-display-item">
               <span className="admin-retrieval-details__metadata-display-heading">Obfuscated ID</span>
-              <span className="admin-retrieval-details__metadata-display-content">{obfuscatedId}</span>
+              <span data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content">{obfuscatedId}</span>
             </Col>
           </Row>
           <Row className="admin-retrieval-details__metadata-display mb-2">
             <Col className="admin-retrieval-details__metadata-display-item">
               <span className="admin-retrieval-details__metadata-display-heading">Source Path</span>
-              <a className="admin-retrieval-details__metadata-display-content" href={sourcePath} target="_blank" rel="noopener noreferrer">
+              <a data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content" href={sourcePath} target="_blank" rel="noopener noreferrer">
                 {sourcePath}
               </a>
             </Col>
@@ -64,7 +64,7 @@ export const AdminRetrievalDetails = ({
         <Col sm="auto">
           {
             collections.length > 0 && (
-              <section className="admin-retrieval-details__collections">
+              <section data-testid="admin-retrieval-details__collections" className="admin-retrieval-details__collections">
                 {
                   collections.map((collection) => {
                     const {
@@ -72,6 +72,9 @@ export const AdminRetrievalDetails = ({
                       collection_id: collectionConceptId,
                       data_center: collectionDataCenter,
                       granule_count: collectionGranuleCount,
+                      access_method: accessMethod,
+                      created_at: createdAt,
+                      updated_at: updatedAt,
                       orders
                     } = collection
 
@@ -79,24 +82,40 @@ export const AdminRetrievalDetails = ({
                       <article className="admin-retrieval-details__collection" key={collectionId}>
                         <header className="admin-retrieval-details__collection-header">
                           <span className="admin-retrieval-details__metadata-display-heading">Concept ID</span>
-                          <h3 className="admin-retrieval-details__collection-heading">{collectionConceptId}</h3>
+                          <h3 data-testid="admin-retrieval-details__collection-heading" className="admin-retrieval-details__collection-heading">{collectionConceptId}</h3>
                           <div className="admin-retrieval-details__collection-heading-details">
                             <div className="admin-retrieval-details__metadata-display">
                               <p className="admin-retrieval-details__metadata-display-item">
                                 <span className="admin-retrieval-details__metadata-display-heading">Retrieval Collection ID</span>
-                                <span className="admin-retrieval-details__metadata-display-content">{collectionId}</span>
+                                <span data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content">{collectionId}</span>
+                              </p>
+                              <p className="admin-retrieval-details__metadata-display-item">
+                                <span className="admin-retrieval-details__metadata-display-heading">Type</span>
+                                <span data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content">{accessMethod.type}</span>
                               </p>
                               <p className="admin-retrieval-details__metadata-display-item">
                                 <span className="admin-retrieval-details__metadata-display-heading">Data Provider</span>
-                                <span className="admin-retrieval-details__metadata-display-content">{collectionDataCenter}</span>
+                                <span data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content">{collectionDataCenter}</span>
                               </p>
                               <p className="admin-retrieval-details__metadata-display-item">
                                 <span className="admin-retrieval-details__metadata-display-heading">Order Count</span>
-                                <span className="admin-retrieval-details__metadata-display-content">{orders.length}</span>
+                                <span data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content">{orders.length}</span>
                               </p>
                               <p className="admin-retrieval-details__metadata-display-item">
                                 <span className="admin-retrieval-details__metadata-display-heading">Granule Count</span>
-                                <span className="admin-retrieval-details__metadata-display-content">{commafy(collectionGranuleCount)}</span>
+                                <span data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content">{commafy(collectionGranuleCount)}</span>
+                              </p>
+                            </div>
+                          </div>
+                          <div className="admin-retrieval-details__collection-heading-details">
+                            <div className="admin-retrieval-details__metadata-display">
+                              <p className="admin-retrieval-details__metadata-display-item">
+                                <span className="admin-retrieval-details__metadata-display-heading">Created At</span>
+                                <span data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content">{createdAt}</span>
+                              </p>
+                              <p className="admin-retrieval-details__metadata-display-item">
+                                <span className="admin-retrieval-details__metadata-display-heading">Updated At</span>
+                                <span data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content">{updatedAt}</span>
                               </p>
                             </div>
                           </div>
@@ -109,7 +128,7 @@ export const AdminRetrievalDetails = ({
 
                         {
                           orders.length > 0 && (
-                            <Table className="admin-retrieval-details__orders-table" striped variant="light">
+                            <Table data-testid="admin-retrieval-details__orders-table" className="admin-retrieval-details__orders-table" striped variant="light">
                               <thead>
                                 <tr>
                                   <th width="10%">Actions</th>
@@ -132,10 +151,9 @@ export const AdminRetrievalDetails = ({
                                     } = order
 
                                     return (
-                                      <tr className="admin-retrieval-details__order-row" key={`${collectionId}-${orderId}`}>
-                                        <td>
+                                      <tr data-testid="admin-retrieval-details__order-row" className="admin-retrieval-details__order-row" key={`${collectionId}-${orderId}`}>
+                                        <td data-testid="admin-retrieval-details__requeue-order-td">
                                           <Button
-                                            dataTestId="admin-retrieval-details__requeue-order"
                                             type="button"
                                             bootstrapVariant="secondary"
                                             label="Requeue Order for Processing"

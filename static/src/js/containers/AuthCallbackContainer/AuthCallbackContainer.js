@@ -33,18 +33,42 @@ export const AuthCallbackContainer = ({
 
     const params = parse(search, { ignoreQueryPrefix: true })
     const {
+      eddRedirect,
       jwt = '',
-      accessToken
+      accessToken,
+      redirect = '/'
     } = params
-    let { redirect = '/' } = params
+
+    // Verify that the redirect params are real URLs
+    try {
+      let redirectUrl
+      if (eddRedirect) redirectUrl = new URL(eddRedirect)
+      if (redirect && redirect !== '/') redirectUrl = new URL(redirect)
+
+      if (
+        redirectUrl
+        && redirectUrl.protocol !== 'http:'
+        && redirectUrl.protocol !== 'https:'
+        && redirectUrl.protocol !== 'earthdata-download:'
+      ) {
+        // The redirectUrl is not a valid protocol
+        console.log('The redirectUrl is not a valid protocol')
+        window.location.replace('/')
+        return
+      }
+    } catch (error) {
+      window.location.replace('/')
+      return
+    }
 
     // If the redirect includes earthdata-download, redirect to the edd callback
-    if (redirect.includes('earthdata-download')) {
-      redirect += `&token=${accessToken}`
+    if (eddRedirect || redirect.includes('earthdata-download')) {
+      let eddRedirectUrl = eddRedirect || redirect
+      if (accessToken) eddRedirectUrl += `&token=${accessToken}`
 
       // Add the redirect information to the store
       onAddEarthdataDownloadRedirect({
-        redirect
+        redirect: eddRedirectUrl
       })
 
       // Redirect to the edd callback

@@ -259,7 +259,7 @@ describe('Path /search', () => {
         getByTestId('spatial-display_point').should('have.value', '4.33676,65.44171')
 
         // Test leaflet has drawn the shape correctly
-        cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1165px, 402px, 0px); z-index: 402;')
+        cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1165px, 386px, 0px); z-index: 386;')
       })
     })
 
@@ -297,7 +297,7 @@ describe('Path /search', () => {
         getByTestId('spatial-display_polygon').should('have.text', '3 Points')
 
         // Test leaflet has drawn the shape correctly
-        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1161 423L1122 499L1257 518L1161 423z')
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1161 407L1122 483L1257 502L1161 407z')
       })
     })
 
@@ -336,7 +336,7 @@ describe('Path /search', () => {
         getByTestId('spatial-display_circle-radius').should('have.value', '100000')
 
         // Test leaflet has drawn the shape correctly
-        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1136.1837511111112,417.20238222222224a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 ')
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1136.1837511111112,401.20238222222224a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 ')
       })
     })
 
@@ -375,7 +375,7 @@ describe('Path /search', () => {
         getByTestId('spatial-display_northeast-point').should('have.value', '26.17555,32.8678')
 
         // Test leaflet has drawn the shape correctly
-        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M736 426L736 247L934 247L934 426L736 426z')
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M736 410L736 231L934 231L934 410L736 410z')
       })
     })
 
@@ -431,7 +431,7 @@ describe('Path /search', () => {
         getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
 
         // Test leaflet has drawn the shape correctly
-        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1161 423L1122 499L1257 518L1161 423z')
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1161 407L1122 483L1257 502L1161 407z')
       })
     })
   })

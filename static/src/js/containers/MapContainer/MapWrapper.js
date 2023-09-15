@@ -1,5 +1,11 @@
-import React, { useLayoutEffect } from 'react'
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState
+} from 'react'
 import PropTypes from 'prop-types'
+import Control from 'react-leaflet-custom-control'
 import {
   MapContainer as LeafletMapContainer,
   LayersControl,
@@ -7,6 +13,8 @@ import {
 } from 'react-leaflet'
 
 import crsProjections from '../../util/map/crs'
+import { getValueForTag } from '../../../../../sharedUtils/tags'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
 import GranuleGridLayer from '../../components/Map/GranuleGridLayer'
@@ -16,38 +24,46 @@ import ProjectionSwitcher from '../../components/Map/ProjectionSwitcher'
 import ShapefileLayer from '../../components/Map/ShapefileLayer'
 import ZoomHome from '../../components/Map/ZoomHome'
 import MapEvents from './MapEvents'
+import Legend from '../../components/Legend/Legend'
+import projections from '../../util/map/projections'
 
-const MapWrapper = (props) => {
-  const {
-    authToken,
-    base,
-    center,
-    collectionsMetadata,
-    drawingNewLayer,
-    focusedCollectionId,
-    focusedGranuleId,
-    granules,
-    granulesMetadata,
-    imageryCache,
-    isProjectPage,
-    mapProps,
-    maxZoom,
-    onChangeFocusedGranule,
-    onChangeMap,
-    onChangeProjection,
-    onExcludeGranule,
-    onFetchShapefile,
-    onMetricsMap,
-    onSaveShapefile,
-    onShapefileErrored,
-    onToggleTooManyPointsModal,
-    onUpdateShapefile,
-    overlays,
-    project,
-    projection,
-    shapefile,
-    zoom
-  } = props
+const { apiHost } = getEnvironmentConfig()
+
+const MapWrapper = ({
+  authToken,
+  base,
+  center,
+  collectionsMetadata,
+  drawingNewLayer,
+  focusedCollectionId,
+  focusedGranuleId,
+  granules,
+  granulesMetadata,
+  imageryCache,
+  isFocusedCollectionPage,
+  isProjectPage,
+  mapProps,
+  maxZoom,
+  onChangeFocusedGranule,
+  onChangeMap,
+  onChangeProjection,
+  onExcludeGranule,
+  onFetchShapefile,
+  onMetricsMap,
+  onSaveShapefile,
+  onShapefileErrored,
+  onToggleTooManyPointsModal,
+  onUpdateShapefile,
+  overlays,
+  project,
+  projection,
+  shapefile,
+  zoom
+}) => {
+  // eslint-disable-next-line arrow-body-style
+  const focusedCollectionMetadata = useMemo(() => {
+    return collectionsMetadata[focusedCollectionId] || {}
+  }, [focusedCollectionId, collectionsMetadata])
 
   /**
    * Sets the height of the leaflet controls. This is needed so they do not
@@ -57,13 +73,12 @@ const MapWrapper = (props) => {
     if (!document) return
 
     const leafletControlContainer = document.querySelector('.leaflet-control-container')
-    const appHeader = document.querySelector('.app-header')
     const routeWrapper = document.querySelector('.route-wrapper')
 
     // If the control container and the route wrapper are defined, set the leaflet controls to
     // the same height as the route wrapper.
-    if (leafletControlContainer && routeWrapper && appHeader) {
-      leafletControlContainer.style.height = `${routeWrapper.clientHeight + appHeader.clientHeight}px`
+    if (leafletControlContainer && routeWrapper) {
+      leafletControlContainer.style.height = `${routeWrapper.clientHeight}px`
     }
   }
 
@@ -77,6 +92,66 @@ const MapWrapper = (props) => {
       window.removeEventListener('resize', resizeLeafletControls)
     }
   }, [])
+
+  const [gibsLayer, setGibsLayer] = useState('')
+  const [colorMap, setColorMap] = useState({})
+
+  // TODO EDSC-3880 We can move the below state relating to colormaps into Redux which might help when eventually
+  // managaging multiple GIBS layers.
+  useEffect(() => {
+    const { tags } = focusedCollectionMetadata
+    const gibsTag = getValueForTag('gibs', tags)
+
+    if (gibsTag) setGibsLayer(gibsTag[0])
+  }, [focusedCollectionMetadata])
+
+  // Check that we are in the correct projection
+
+  const hasGibsLayerForProjection = (gibsLayer, projection) => {
+    if (projection === projections.arctic && gibsLayer.arctic) return true
+    if (projection === projections.geographic && gibsLayer.geographic) return true
+    if (projection === projections.antarctic && gibsLayer.antarctic) return true
+    return false
+  }
+
+  useEffect(() => {
+    const getColorMap = async () => {
+      const hasNoColormapForProjection = (
+        !colorMap[focusedCollectionId]
+        || (colorMap[focusedCollectionId] && !colorMap[focusedCollectionId][projection])
+      )
+
+      if (
+        gibsLayer
+        && gibsLayer.product
+        && hasGibsLayerForProjection(gibsLayer, projection)
+        && hasNoColormapForProjection
+      ) {
+        try {
+          const response = await fetch(`${apiHost}/colormaps/${gibsLayer.product}`)
+          const colorMapResponse = await response.json()
+
+          setColorMap({
+            ...colorMap,
+            [focusedCollectionId]: {
+              ...colorMap[focusedCollectionId],
+              [projection]: colorMapResponse
+            }
+          })
+        } catch (error) {
+          setColorMap({
+            ...colorMap,
+            [focusedCollectionId]: {
+              ...colorMap[focusedCollectionId],
+              [projection]: null
+            }
+          })
+        }
+      }
+    }
+
+    getColorMap()
+  }, [gibsLayer, projection])
 
   return (
     <LeafletMapContainer
@@ -171,7 +246,18 @@ const MapWrapper = (props) => {
           />
         )
       }
-      <ScaleControl position="bottomright" />
+      <Control prepend position="topright">
+        {
+          isFocusedCollectionPage
+          && colorMap[focusedCollectionId]
+          && colorMap[focusedCollectionId][projection] && (
+            <Legend
+              colorMap={colorMap[focusedCollectionId][projection]}
+            />
+          )
+        }
+      </Control>
+      <ScaleControl position="topright" />
       <ConnectedSpatialSelectionContainer mapProps={mapProps} />
       <GranuleGridLayer
         collectionsMetadata={collectionsMetadata}
@@ -231,6 +317,7 @@ MapWrapper.propTypes = {
   granules: PropTypes.shape({}),
   granulesMetadata: PropTypes.shape({}).isRequired,
   imageryCache: PropTypes.shape({}).isRequired,
+  isFocusedCollectionPage: PropTypes.bool.isRequired,
   isProjectPage: PropTypes.bool.isRequired,
   map: PropTypes.shape({
     latitude: PropTypes.number,

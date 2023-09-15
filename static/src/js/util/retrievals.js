@@ -30,6 +30,7 @@ const permittedCollectionMetadataFields = [
 ]
 const permittedAccessMethodFields = [
   'enableTemporalSubsetting',
+  'enableSpatialSubsetting',
   'maxItemsPerOrder',
   'mbr',
   'model',

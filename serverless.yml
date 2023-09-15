@@ -2,7 +2,7 @@ service: earthdata-search
 
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs18.x
   versionFunctions: false
   stage: ${opt:stage, 'dev'}
   region: us-east-1
@@ -31,6 +31,8 @@ provider:
 
     obfuscationSpin: ${self:custom.variables.obfuscationSpin}
     obfuscationSpinShapefiles: ${self:custom.variables.obfuscationSpinShapefiles}
+
+    orderDelaySeconds: ${self:custom.variables.orderDelaySeconds}
 
     configSecretId:
       Fn::ImportValue: ${self:provider.stage}-DbPasswordSecret
@@ -123,6 +125,7 @@ custom:
     # Default values for environment variables used to set environment variables
     obfuscationSpin: ${env:OBFUSCATION_SPIN, ''}
     obfuscationSpinShapefiles: ${env:OBFUSCATION_SPIN_SHAPEFILES, ''}
+    orderDelaySeconds: ${env:ORDER_DELAY_SECONDS, '1'}
     geocodingService: ${env:GEOCODING_SERVICE, 'nominatim'}
     geocodingIncludePolygons: ${env:GEOCODING_INCLUDE_POLYGONS, 'false'}
 

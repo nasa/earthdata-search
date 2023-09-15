@@ -444,60 +444,6 @@ describe('SpatialDisplay component', () => {
     })
   })
 
-  describe('#transformBoundingBoxCoordinates', () => {
-    test('returns the input in the correct order', () => {
-      const { enzymeWrapper } = setup()
-
-      const input = '1,2,3,4'
-
-      const result = enzymeWrapper.instance().transformBoundingBoxCoordinates(input)
-
-      expect(result).toEqual(['2,1', '4,3'])
-    })
-
-    test('returns an array of empty values if no input was provided', () => {
-      const { enzymeWrapper } = setup()
-
-      const input = ''
-
-      const result = enzymeWrapper.instance().transformBoundingBoxCoordinates(input)
-
-      expect(result).toEqual(['', ''])
-    })
-  })
-
-  describe('#transformCircleCoordinates', () => {
-    test('returns the input in the correct order', () => {
-      const { enzymeWrapper } = setup()
-
-      const input = '45.60161,-94.60986,200'
-
-      const result = enzymeWrapper.instance().transformCircleCoordinates(input)
-
-      expect(result).toEqual(['-94.60986,45.60161', '200'])
-    })
-
-    test('returns an array of empty values if no input was provided', () => {
-      const { enzymeWrapper } = setup()
-
-      const input = ''
-
-      const result = enzymeWrapper.instance().transformCircleCoordinates(input)
-
-      expect(result).toEqual(['', ''])
-    })
-
-    test('returns an array of empty values if either latitude or longitude was not provided', () => {
-      const { enzymeWrapper } = setup()
-
-      const input = '0,,'
-
-      const result = enzymeWrapper.instance().transformCircleCoordinates(input)
-
-      expect(result).toEqual(['', ''])
-    })
-  })
-
   describe('#onFocusSpatialSearch', () => {
     test('focusing the point field sets the manuallyEntering state', () => {
       const { enzymeWrapper } = setup()

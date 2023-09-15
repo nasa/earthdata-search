@@ -338,7 +338,7 @@ describe('OrderStatusItem', () => {
       expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
       expect(linksTab.childAt(0).props().percentDoneDownloadLinks).toEqual('50')
       expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
-      expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=shortName_versionId&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26state%3Dearthdata-download%253A%252F%252FauthCallback')
+      expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=shortName_versionId&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')
@@ -428,7 +428,7 @@ describe('OrderStatusItem', () => {
       expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
       expect(linksTab.childAt(0).props().percentDoneDownloadLinks).toEqual('50')
       expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
-      expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=shortName_versionId&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26state%3Dearthdata-download%253A%252F%252FauthCallback')
+      expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=shortName_versionId&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')
@@ -439,7 +439,7 @@ describe('OrderStatusItem', () => {
       expect(browseTab.props().title).toEqual('Browse Imagery')
       expect(browseTab.childAt(0).props().granuleCount).toEqual(100)
       expect(browseTab.childAt(0).props().browseUrls).toEqual(['http://example.com'])
-      expect(browseTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Dbrowse%26ee%3Dprod&downloadId=shortName_versionId&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26state%3Dearthdata-download%253A%252F%252FauthCallback')
+      expect(browseTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Dbrowse%26ee%3Dprod&downloadId=shortName_versionId&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
     })
   })
 
@@ -467,8 +467,15 @@ describe('OrderStatusItem', () => {
 
       enzymeWrapper.find('.order-status-item__button').simulate('click')
 
-      const message = enzymeWrapper.find('.order-status-item__note')
+      const body = enzymeWrapper.find('.order-status-item__body')
+      const tabs = body.find('EDSCTabs')
+      expect(tabs.children().length).toEqual(2)
 
+      const linksTab = tabs.childAt(0)
+      expect(linksTab.props().title).toEqual('Download Files')
+      expect(linksTab.childAt(0).props().collectionIsCSDA).toEqual(true)
+
+      const message = enzymeWrapper.find('.order-status-item__note')
       expect(message.text()).toContain('This collection is made available through the NASA Commercial Smallsat Data Acquisition (CSDA) Program')
     })
 
@@ -581,7 +588,7 @@ describe('OrderStatusItem', () => {
       expect(linksTab.props().title).toEqual('Download Files')
       expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
       expect(linksTab.childAt(0).props().downloadLinks).toEqual(['http://example.com'])
-      expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=shortName_versionId&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26state%3Dearthdata-download%253A%252F%252FauthCallback')
+      expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=shortName_versionId&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')
@@ -1913,7 +1920,7 @@ describe('OrderStatusItem', () => {
         expect(linksTab.childAt(0).props().downloadLinks).toEqual([
           'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
         ])
-        expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=testDataset_1&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26state%3Dearthdata-download%253A%252F%252FauthCallback')
+        expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=testDataset_1&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
 
         const stacLinksTab = tabs.childAt(1)
         expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
