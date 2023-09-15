@@ -1,9 +1,8 @@
 /**
- * Returns a JSON object that is the result of two variable objects being merged
- * and ignores items with duplicate conceptIds.
- * @param {object} variables1 - JSON object of a list of variables.
- * @param {object} variables2 - JSON object of a list of variables.
- * @return {object} - JSON object containing the merged list variables
+ * Returns a JSON object that is the result of one JSON object being appended to a base object with its type as the key.
+ * @param {object} baseVariables - JSON object of a list of variables.
+ * @param {object} targetVariables - JSON object of a list of variables to be appended to the parent list.
+ * @return {object} - JSON object containing the new variables object
  */
 export const appendVariables = (baseVariables, targetVariables) => {
   const keyName = targetVariables.items[0].type.toLowerCase()
