@@ -8,10 +8,12 @@ export const appendVariables = (baseVariables, targetVariables) => {
   targetVariables.items.forEach((item) => {
     const keyName = item.type.toLowerCase()
     const { variables } = item
-    // eslint-disable-next-line no-param-reassign
-    baseVariables[keyName] = {
-      count: variables.items.length,
-      items: variables.items
+    if (variables.items) {
+      // eslint-disable-next-line no-param-reassign
+      baseVariables[keyName] = {
+        count: variables.items.length,
+        items: variables.items
+      }
     }
   })
   return baseVariables
