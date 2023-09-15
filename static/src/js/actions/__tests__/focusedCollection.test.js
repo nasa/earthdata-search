@@ -13,6 +13,8 @@ import {
 } from '../focusedCollection'
 
 import {
+  SET_COLOR_MAPS_LOADING,
+  ERRORED_COLOR_MAPS,
   INITIALIZE_COLLECTION_GRANULES_QUERY,
   INITIALIZE_COLLECTION_GRANULES_RESULTS,
   TOGGLE_SPATIAL_POLYGON_WARNING,
@@ -162,8 +164,8 @@ describe('getFocusedCollection', () => {
         expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
       })
 
-      describe('when the requested collection is cwic and a polygon search is active', () => {
-        test('should toggle the polygon warning, update the focusedCollection and call getSearchGranules', async () => {
+      describe('when the requested collection is cwic and a polygon search is active and we try and retrieve a non existant gibs tag', () => {
+        test('should toggle the polygon warning, update the focusedCollection and call SET_COLOR_MAPS_LOADING and call ERRORED_COLOR_MAPS call getSearchGranules', async () => {
           jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
             cmrHost: 'https://cmr.example.com',
             graphQlHost: 'https://graphql.example.com',
@@ -180,7 +182,12 @@ describe('getFocusedCollection', () => {
                   versionId: 'VersionID',
                   hasGranules: false,
                   tags: {
-                    'org.ceos.wgiss.cwic.granules.prod': {}
+                    'org.ceos.wgiss.cwic.granules.prod': {},
+                    'edsc.extra.serverless.gibs': {
+                      data: [
+                        { product: 'AMSR2_Cloud_Liquid_Water_Day' }
+                      ]
+                    }
                   },
                   tools: {
                     items: null
@@ -194,6 +201,102 @@ describe('getFocusedCollection', () => {
 
           const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
           getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
+
+          const store = mockStore({
+            authToken: '',
+            focusedCollection: 'C10000000000-EDSC',
+            metadata: {
+              collections: {
+                'C10000000000-EDSC': {
+                  isOpenSearch: true
+                }
+              },
+              colormaps: {
+                AMSR2_Cloud_Liquid_Water_Day: {
+                  isLoading: false,
+                  isLoaded: false,
+                  isErrored: true,
+                  jsondata: {}
+                }
+              }
+            },
+            query: {
+              collection: {
+                spatial: {
+                  polygon: '-77,38,-77,38,-76,38,-77,38'
+                }
+              }
+            },
+            searchResults: {}
+          })
+
+          await store.dispatch(getFocusedCollection()).then(() => {
+            const storeActions = store.getActions()
+            expect(storeActions[0]).toEqual({
+              type: TOGGLE_SPATIAL_POLYGON_WARNING,
+              payload: true
+            })
+            expect(storeActions[1]).toEqual({
+              type: SET_COLOR_MAPS_LOADING,
+              payload: {
+                product: 'AMSR2_Cloud_Liquid_Water_Day'
+              }
+            })
+            expect(storeActions[2]).toEqual({
+              type: ERRORED_COLOR_MAPS,
+              payload: {
+                product: 'AMSR2_Cloud_Liquid_Water_Day'
+              }
+            })
+            expect(storeActions[3]).toEqual({
+              type: UPDATE_COLLECTION_METADATA,
+              payload: [
+                expect.objectContaining({
+                  id: 'C10000000000-EDSC'
+                })
+              ]
+            })
+          })
+
+          expect(relevancyMock).toHaveBeenCalledTimes(1)
+          expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
+        })
+
+        test('Same test as above but no gibs tags, ensure it is not called', async () => {
+          jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+            cmrHost: 'https://cmr.example.com',
+            graphQlHost: 'https://graphql.example.com',
+            opensearchRoot: 'https://cmr.example.com'
+          }))
+
+          nock(/graph/)
+            .post(/api/)
+            .reply(200, {
+              data: {
+                collection: {
+                  conceptId: 'C10000000000-EDSC',
+                  shortName: 'id_1',
+                  versionId: 'VersionID',
+                  hasGranules: false,
+                  tags: {
+                    'org.ceos.wgiss.cwic.granules.prod': {},
+                    'edsc.extra.serverless.bibs': {}
+                  },
+                  tools: {
+                    items: null
+                  }
+                }
+              }
+            })
+
+          const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
+          relevancyMock.mockImplementationOnce(() => jest.fn())
+
+          const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+          getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
+
+          const getColorMapMock = jest.spyOn(actions, 'getColorMap')
+          getColorMapMock.mockImplementationOnce(() => jest.fn())
 
           const store = mockStore({
             authToken: '',
@@ -233,6 +336,7 @@ describe('getFocusedCollection', () => {
           })
 
           expect(relevancyMock).toHaveBeenCalledTimes(1)
+          expect(getColorMapMock).toHaveBeenCalledTimes(0)
           expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
         })
       })
