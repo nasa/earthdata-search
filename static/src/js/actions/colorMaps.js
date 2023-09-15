@@ -1,4 +1,4 @@
-import { getEnvironmentConfig } from '../../../../sharedUtils/config'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 import {
   ERRORED_COLOR_MAPS,
@@ -6,7 +6,9 @@ import {
   SET_COLOR_MAPS_LOADING
 } from '../constants/actionTypes'
 
-const { apiHost } = getEnvironmentConfig()
+import ColorMapRequest from '../util/request/colorMapRequest'
+
+import { handleError } from './errors'
 
 export const setColorMapsErrored = (payload) => ({
   type: ERRORED_COLOR_MAPS,
@@ -23,20 +25,29 @@ export const setColorMapsLoading = (payload) => ({
   payload
 })
 
-export const getColorMap = (payload) => async (dispatch) => {
+export const getColorMap = (payload) => (dispatch, getState) => {
   const { product } = payload
 
-  dispatch(setColorMapsLoading({ product }))
-  try {
-    const response = await fetch(`${apiHost}/colormaps/${product}`)
-    if (response.status === 200) {
-      const json = await response.json()
+  const state = getState()
 
-      dispatch(setColorMapsLoaded({ product, jsondata: json }))
-    } else {
+  const { authToken } = state
+  const earthdataEnvironment = getEarthdataEnvironment(state)
+
+  dispatch(setColorMapsLoading({ product }))
+  const requestObject = new ColorMapRequest(authToken, earthdataEnvironment)
+  requestObject.getColorMap(product)
+    .then((response) => {
+      const { data } = response
+      dispatch(setColorMapsLoaded({ product, jsondata: data }))
+    })
+    .catch((error) => {
+      dispatch(handleError({
+        error,
+        action: 'getColorMap',
+        resource: 'colormaps',
+        verb: 'submitting',
+        requestObject
+      }))
       dispatch(setColorMapsErrored({ product }))
-    }
-  } catch (error) {
-    dispatch(setColorMapsErrored({ product }))
-  }
+    })
 }

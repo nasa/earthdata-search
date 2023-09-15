@@ -109,7 +109,6 @@ const MapWrapper = ({
     colorMapState = colormapsMetadata[product] || {}
   }
 
-  console.log(colorMapState)
   const { jsondata: colorMap } = colorMapState
 
   return (
