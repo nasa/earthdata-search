@@ -111,7 +111,8 @@ describe('mapStateToProps', () => {
     const store = {
       authToken: 'mock-token',
       metadata: {
-        collections: {}
+        collections: {},
+        colormaps: {}
       },
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleId',
@@ -129,6 +130,7 @@ describe('mapStateToProps', () => {
     const expectedState = {
       authToken: 'mock-token',
       collectionsMetadata: {},
+      colormapsMetadata: {},
       drawingNewLayer: false,
       focusedCollectionId: 'collectionId',
       focusedGranuleId: 'granuleId',
