@@ -141,8 +141,6 @@ describe('createSpatialDisplay', () => {
 
       const result = transformSingleCoordinate(input)
 
-      console.log(result)
-
       expect(result).toEqual('')
     })
 
