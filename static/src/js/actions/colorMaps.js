@@ -8,8 +8,6 @@ import {
 
 import ColorMapRequest from '../util/request/colorMapRequest'
 
-import { handleError } from './errors'
-
 export const setColorMapsErrored = (payload) => ({
   type: ERRORED_COLOR_MAPS,
   payload
@@ -25,29 +23,23 @@ export const setColorMapsLoading = (payload) => ({
   payload
 })
 
-export const getColorMap = (payload) => (dispatch, getState) => {
+export const getColorMap = (payload) => async (dispatch, getState) => {
   const { product } = payload
 
   const state = getState()
 
   const { authToken } = state
   const earthdataEnvironment = getEarthdataEnvironment(state)
-
   dispatch(setColorMapsLoading({ product }))
+
   const requestObject = new ColorMapRequest(authToken, earthdataEnvironment)
-  requestObject.getColorMap(product)
+
+  await requestObject.getColorMap(product)
     .then((response) => {
       const { data } = response
       dispatch(setColorMapsLoaded({ product, jsondata: data }))
     })
-    .catch((error) => {
-      dispatch(handleError({
-        error,
-        action: 'getColorMap',
-        resource: 'colormaps',
-        verb: 'submitting',
-        requestObject
-      }))
-      dispatch(setColorMapsErrored({ product }))
+    .catch(async () => {
+      await dispatch(setColorMapsErrored({ product }))
     })
 }
