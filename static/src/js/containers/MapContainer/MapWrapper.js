@@ -90,8 +90,6 @@ const MapWrapper = ({
     }
   }, [])
 
-  // TODO EDSC-3880 We can move the below state relating to colormaps into Redux which might help when eventually
-  // managaging multiple GIBS layers.
   const { tags } = focusedCollectionMetadata
   const [gibsTag] = getValueForTag('gibs', tags) || []
 
