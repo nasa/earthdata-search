@@ -30,8 +30,8 @@ const testCollectionResults = (cmrHits) => {
  * @param {String} bucketName The AWS bucket the data resides in
  */
 const testCollectionCloudAccessDetails = (region, bucketName) => {
-  getByTestId('collection-details-body__cloud-access__region').should('have.text', region)
-  getByTestId('collection-details-body__cloud-access__bucket-name').should('have.text', bucketName)
+  getByTestId('direct-distribution-information__cloud-access__region').should('have.text', region)
+  getByTestId('direct-distribution-information__cloud-access__bucket-name').should('have.text', bucketName)
 }
 
 /**

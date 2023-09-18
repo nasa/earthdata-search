@@ -114,7 +114,7 @@ describe('TreeNode', () => {
     expect(treeNode.allItems['Parent 2/item3'].value).toEqual('item3')
   })
 
-  test('selecting an indeterminateparents selects all children', () => {
+  test('selecting an indeterminate parents selects all children', () => {
     const selectedVariables = ['item1', 'item2']
 
     const treeNode = new TreeNode({
