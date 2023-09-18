@@ -231,7 +231,6 @@ describe('getFocusedCollection', () => {
 
           await store.dispatch(getFocusedCollection()).then(() => {
             const storeActions = store.getActions()
-            console.log(store)
 
             expect(storeActions[0]).toEqual({
               type: TOGGLE_SPATIAL_POLYGON_WARNING,

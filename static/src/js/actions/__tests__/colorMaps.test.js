@@ -62,7 +62,6 @@ describe('getColorMaps with error', () => {
     await store.dispatch(getColorMap({ product }))
 
     const storeActions = store.getActions()
-    console.log(storeActions)
 
     expect(storeActions[0]).toEqual({
       type: SET_COLOR_MAPS_LOADING,
