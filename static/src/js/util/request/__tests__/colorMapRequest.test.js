@@ -14,7 +14,7 @@ beforeEach(() => {
 describe('ColorMapRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
     const token = '123'
-    const request = new RetrievalRequest(token)
+    const request = new ColorMapRequest(token)
 
     expect(request.authenticated).toBeTruthy()
     expect(request.authToken).toEqual(token)
@@ -24,11 +24,11 @@ describe('ColorMapRequest#constructor', () => {
 
 describe('ColorMap#transformResponse', () => {
   beforeEach(() => {
-    jest.spyOn(RetrievalRequest.prototype, 'handleUnauthorized').mockImplementation()
+    jest.spyOn(ColorMapRequest.prototype, 'handleUnauthorized').mockImplementation()
   })
 
   test('returns data if response is not successful', () => {
-    const request = new RetrievalRequest()
+    const request = new ColorMapRequest()
 
     const data = {
       statusCode: 404
@@ -47,7 +47,7 @@ describe('ColorMap#getColorMap', () => {
 
     const getMock = jest.spyOn(Request.prototype, 'get').mockImplementation()
 
-    request.getColorMap("AMSR2_Cloud_Liquid_Water_Day")
+    request.getColorMap('AMSR2_Cloud_Liquid_Water_Day')
 
     expect(getMock).toBeCalledTimes(1)
     expect(getMock).toBeCalledWith('colormaps/AMSR2_Cloud_Liquid_Water_Day')
