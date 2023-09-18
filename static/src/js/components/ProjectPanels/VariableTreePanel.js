@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import Button from '../Button/Button'
 import ProjectPanelSection from './ProjectPanelSection'
@@ -30,13 +31,27 @@ export const VariableTreePanel = (props) => {
   } = selectedMethod
   if (!variables) return null
 
+  const hierarchyButtonClasses = classNames([
+    'variable-tree-panel__tree-switcher-button',
+    {
+      'variable-tree-panel__tree-switcher-button--is-active': treeView === 'hierarchy'
+    }
+  ])
+
+  const scienceKeywordButtonClasses = classNames([
+    'variable-tree-panel__tree-switcher-button',
+    {
+      'variable-tree-panel__tree-switcher-button--is-active': treeView === 'scienceKeyword'
+    }
+  ])
+
   const browseBy = (
     <div className="variable-tree-panel__tree-switcher">
       <span>Browse by:</span>
       <div className="variable-tree-panel__tree-switcher-buttons">
         <Button
-          className="variable-tree-panel__tree-switcher-button"
-          disabled={treeView === 'hierarchy'}
+          bootstrapSize="sm"
+          className={hierarchyButtonClasses}
           label="Hierarchy"
           type="button"
           onClick={() => setTreeView('hierarchy')}
@@ -44,8 +59,8 @@ export const VariableTreePanel = (props) => {
           Hierarchy
         </Button>
         <Button
-          className="variable-tree-panel__tree-switcher-button"
-          disabled={treeView === 'scienceKeyword'}
+          bootstrapSize="sm"
+          className={scienceKeywordButtonClasses}
           label="Science Keyword"
           type="button"
           onClick={() => setTreeView('scienceKeyword')}
