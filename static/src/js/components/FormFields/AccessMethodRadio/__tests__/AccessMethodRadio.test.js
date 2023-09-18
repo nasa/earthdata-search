@@ -34,16 +34,11 @@ const setup = (overrideProps) => {
 }
 
 describe('AccessMethodRadio component', () => {
-  // TODO this is technically an implementation detail by react-test-library but, I could
-  // TODO: retrieve using query selector
-  // test.only('renders as a label', () => {
-  //   setup()
-  // const label = screen.getByTestId('test-id')
-  //   expect(screen.getByRole('menu'))
-  //   screen.debug()
-  // expect(screen.getByTestId('test-id')).toBeInTheDocument()
-  // expect(screen.getByLabelText())
-  // })
+  test('renders as a label', () => {
+    setup()
+    const label = screen.getByTestId('test-id')
+    expect(label.nodeName).toEqual('LABEL')
+  })
 
   test('has a test id', () => {
     setup()
@@ -95,8 +90,6 @@ describe('AccessMethodRadio component', () => {
       expect(input.name).toEqual('test-id')
     })
     test('sets the checked property', () => {
-      // TODO is false the same as empty string here
-      // expect(enzymeWrapper.find('input').props().checked).toBe('')
       setup()
       const radioButton = screen.getByRole('radio', { value: 'test value' })
       expect(radioButton.checked).toEqual(false)
