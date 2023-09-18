@@ -184,8 +184,8 @@ describe('VariableTreePanel', () => {
       const switcher = enzymeWrapper.find('.variable-tree-panel__tree-switcher')
 
       // Switcher is visible with Hierarchy disabled and Science Keyword enabled
-      expect(switcher.find(Button).at(0).props().disabled).toBeTruthy()
-      expect(switcher.find(Button).at(1).props().disabled).toBeFalsy()
+      expect(switcher.find(Button).at(0).props().className).toContain('is-active')
+      expect(switcher.find(Button).at(1).props().className).not.toContain('is-active')
 
       const tree = enzymeWrapper.find(Tree)
 
@@ -254,8 +254,8 @@ describe('VariableTreePanel', () => {
       let switcher = enzymeWrapper.find('.variable-tree-panel__tree-switcher')
 
       // Switcher is visible with Hierarchy enabled and Science Keyword disabled
-      expect(switcher.find(Button).at(0).props().disabled).toBeFalsy()
-      expect(switcher.find(Button).at(1).props().disabled).toBeTruthy()
+      expect(switcher.find(Button).at(0).props().className).not.toContain('is-active')
+      expect(switcher.find(Button).at(1).props().className).toContain('is-active')
 
       let tree = enzymeWrapper.find(Tree)
 
@@ -278,8 +278,8 @@ describe('VariableTreePanel', () => {
       switcher = enzymeWrapper.find('.variable-tree-panel__tree-switcher')
 
       // Switcher is visible with Hierarchy disabled and Science Keyword enabled
-      expect(switcher.find(Button).at(0).props().disabled).toBeTruthy()
-      expect(switcher.find(Button).at(1).props().disabled).toBeFalsy()
+      expect(switcher.find(Button).at(0).props().className).toContain('is-active')
+      expect(switcher.find(Button).at(1).props().className).not.toContain('is-active')
 
       tree = enzymeWrapper.find(Tree)
 

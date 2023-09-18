@@ -1,30 +1,38 @@
 .variable-tree-panel {
   &__tree-switcher {
     display: flex;
-    margin-left: 0.5rem;
-    margin-bottom: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
     align-items: center;
     font-size: 0.875rem;
   }
 
   &__tree-switcher-buttons {
-    background-color: $color__black--200;
+    // background-color: $color__black--200;
+    display: flex;
     margin-left: 0.5rem;
     border-radius: .125rem;
   }
 
   &__tree-switcher-button {
-    text-align: left;
-    background-color: transparent;
-    margin: 0.25rem;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    margin-right: 0.5rem;
     color: $color__black--500;
-    &:disabled {
-      background-color: $color__black--100;
+    background-color: $color__black--100;
+
+    &:hover,
+    &:focus {
+      background-color: $color__black--200;
+    }
+
+    &--is-active {
+      background-color: $color__black--200;
       color: $color__black--700;
-      opacity: 1;
-      cursor: pointer;
+
+      &:hover,
+      &:focus {
+        background-color: $color__black--200;
+        color: $color__black--700;
+      }
     }
   }
 
