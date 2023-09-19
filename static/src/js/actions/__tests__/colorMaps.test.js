@@ -2,7 +2,11 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import { SET_COLOR_MAPS_LOADED, SET_COLOR_MAPS_LOADING, ERRORED_COLOR_MAPS } from '../../constants/actionTypes'
+import actions from '..'
+
+import {
+  SET_COLOR_MAPS_LOADED, SET_COLOR_MAPS_LOADING, ERRORED_COLOR_MAPS, ADD_ERROR
+} from '../../constants/actionTypes'
 
 import {
   setColorMapsErrored,
@@ -52,25 +56,49 @@ describe('setColorMapsLoading', () => {
 
 describe('getColorMaps with error', () => {
   test('should call all the SET_COLOR_MAPS_LOADING and ERRORED_COLOR_MAPS actions when there is an error', async () => {
-    const store = mockStore()
-    const product = 'AIRS_Prata_SO2_Index_Day'
+    const handleErrorMock = jest.spyOn(actions, 'handleError')
 
     nock(/localhost/)
       .get(/colormaps\/AIRS_Prata_SO2_Index_Day/)
       .reply(500)
 
-    await store.dispatch(getColorMap({ product }))
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
 
-    const storeActions = store.getActions()
+    const store = mockStore({})
+    const product = 'AIRS_Prata_SO2_Index_Day'
 
-    expect(storeActions[0]).toEqual({
-      type: SET_COLOR_MAPS_LOADING,
-      payload: { product }
-    })
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
-    expect(storeActions[1]).toEqual({
-      type: ERRORED_COLOR_MAPS,
-      payload: { product }
+    await store.dispatch(getColorMap({ product })).then(() => {
+      const storeActions = store.getActions()
+
+      expect(storeActions[0]).toEqual({
+        type: SET_COLOR_MAPS_LOADING,
+        payload: { product }
+      })
+
+      expect(storeActions[1]).toEqual({
+        type: ERRORED_COLOR_MAPS,
+        payload: { product }
+      })
+
+      expect(storeActions[2]).toEqual({
+        type: ADD_ERROR,
+        payload: expect.objectContaining({
+          title: 'Error retrieving colormaps',
+          message: 'Unknown Error'
+        })
+      })
+
+      expect(handleErrorMock).toHaveBeenCalledTimes(1)
+      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+        action: 'getColorMap',
+        resource: 'colormaps'
+      }))
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })

@@ -7,6 +7,7 @@ import {
 } from '../constants/actionTypes'
 
 import ColorMapRequest from '../util/request/colorMapRequest'
+import actions from './index'
 
 export const setColorMapsErrored = (payload) => ({
   type: ERRORED_COLOR_MAPS,
@@ -39,7 +40,13 @@ export const getColorMap = (payload) => async (dispatch, getState) => {
       const { data } = response
       dispatch(setColorMapsLoaded({ product, jsondata: data }))
     })
-    .catch(async () => {
-      await dispatch(setColorMapsErrored({ product }))
+    .catch((error) => {
+      dispatch(setColorMapsErrored({ product }))
+      dispatch(actions.handleError({
+        error,
+        action: 'getColorMap',
+        resource: 'colormaps',
+        requestObject
+      }))
     })
 }
