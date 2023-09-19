@@ -9,14 +9,18 @@ import '@testing-library/jest-dom'
 
 import { AccessMethod } from '../AccessMethod'
 
-// Mock the suspended component
-jest.mock('../EchoForm', () => () => (
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
+const mockEchoForm = jest.fn(() => (
   <div>
     mock echo-form
   </div>
 ))
+jest.mock('../EchoForm', () => mockEchoForm)
 
-function setup(overrideProps) {
+const setup = (overrideProps) => {
   const onSelectAccessMethod = jest.fn()
   const onSetActivePanel = jest.fn()
   const onUpdateAccessMethod = jest.fn()
@@ -72,6 +76,26 @@ describe('AccessMethod component', () => {
 
       expect(onSelectAccessMethod).toHaveBeenCalledTimes(1)
       expect(onSelectAccessMethod).toHaveBeenCalledWith({ collectionId, selectedAccessMethod: 'download' })
+    })
+
+    describe('handleAccessMethodSelection', () => {
+      test('when there is no access method', async () => {
+        const collectionId = 'collectionId'
+        setup({
+          accessMethods: {
+          },
+          metadata: {
+            conceptId: collectionId,
+            granule_count: 10000
+          },
+          granuleMetadata: {
+            hits: 3800
+          }
+        })
+
+        const noAccessMethodAlert = screen.getByText('No access methods exist for this collection.')
+        expect(noAccessMethodAlert).toBeInTheDocument()
+      })
     })
 
     test('updates the selected access method when type is orderable', async () => {
@@ -218,10 +242,9 @@ describe('AccessMethod component', () => {
       expect(echoOrderInput.value).toEqual('echoOrder0')
     })
 
-    // TODO react-testing-library not meant to test props going into component
-    test.skip('renders an echoform with saved fields', () => {
+    test('renders an echoform with saved fields', async () => {
       const collectionId = 'collectionId'
-      const form = 'echo form here'
+      const form = 'echo-form-mock'
       const rawModel = 'saved fields'
 
       setup({
@@ -238,20 +261,21 @@ describe('AccessMethod component', () => {
         },
         selectedAccessMethod: 'echoOrder0'
       })
-      screen.debug()
-      // const echoOrderInput = screen.getByRole('radio')
-      // expect(echoFormMock).toHaveBeenCalledTimes(1)
-      // expect(echoOrderInput.rawModel).toEqual(rawModel)
-      // const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
-      // const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
-      // const suspenseComponent = echoFormWrapper.childAt(0)
-      // const echoForm = suspenseComponent.childAt(0)
 
-      // expect(echoForm.props().collectionId).toEqual(collectionId)
-      // expect(echoForm.props().form).toEqual(form)
-      // expect(echoForm.props().methodKey).toEqual('echoOrder0')
-      // expect(echoForm.props().rawModel).toEqual(rawModel)
-      // expect(typeof echoForm.props().onUpdateAccessMethod).toEqual('function')
+      await waitFor(() => expect(mockEchoForm).toHaveBeenCalledTimes(1))
+
+      // Needed JSON.stringify to compare object references
+      expect(JSON.stringify(mockEchoForm.mock.calls[0][0])).toEqual(JSON.stringify({
+        collectionId: 'collectionId',
+        form: 'echo-form-mock',
+        methodKey: 'echoOrder0',
+        onUpdateAccessMethod: jest.fn(),
+        rawModel: 'saved fields',
+        shapefileId: null,
+        spatial: {},
+        temporal: {},
+        ursProfile: {}
+      }, {}))
     })
   })
 
@@ -273,7 +297,6 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'opendap'
       })
 
-      // `screen.getByRole('combobox')` was not finding the `select` element
       await user.selectOptions(
         screen.getByTestId('access-methods__output-format-options'),
         screen.getByRole('option', { name: 'NETCDF-4' })
@@ -349,7 +372,6 @@ describe('AccessMethod component', () => {
           },
           selectedAccessMethod: 'harmony0'
         })
-        // `screen.getByRole('combobox')` was not finding the `select` element
         await user.selectOptions(
           screen.getByTestId('access-methods__output-format-options'),
           screen.getByRole('option', { name: 'NETCDF-4' })
@@ -929,6 +951,7 @@ describe('AccessMethod component', () => {
             })
             expect(screen.getByRole('checkbox').checked).toEqual(false)
           })
+
           test('sets the checkbox unchecked for shapefile', () => {
             setup({
               accessMethods: {
@@ -1037,22 +1060,40 @@ describe('AccessMethod component', () => {
       })
     })
     describe('when a service name is passed in', () => {
-      test('the service name is display on the panel without needing to click `More Info`', () => {
-        const collectionId = 'collectionId'
-        const serviceName = 'harmony-service-name'
-        setup({
-          accessMethods: {
-            harmony0: {
-              isValid: true,
-              type: 'Harmony',
-              name: serviceName
+      describe('when the service type is `OPeNDAP`', () => {
+        test('the service name is rendered on the panel without needing to click `More Info`', () => {
+          const serviceName = 'opendap-service-name'
+          setup({
+            accessMethods: {
+              opendap: {
+                isValid: true,
+                type: 'OPeNDAP',
+                name: serviceName
+              }
             }
-          },
-          metadata: {
-            conceptId: collectionId
-          }
+          })
+
+          expect(screen.getByText('OPeNDAP (opendap-service-name)')).toBeInTheDocument()
         })
-        expect(screen.getByText('Service: harmony-service-name')).toBeInTheDocument()
+      })
+      describe('when the service type is `Harmony`', () => {
+        test('the service name is rendered on the panel without needing to click `More Info`', () => {
+          const collectionId = 'collectionId'
+          const serviceName = 'harmony-service-name'
+          setup({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                name: serviceName
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            }
+          })
+          expect(screen.getByText('Harmony (harmony-service-name)')).toBeInTheDocument()
+        })
       })
     })
   })
