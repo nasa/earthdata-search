@@ -6,8 +6,8 @@ import * as metricsMap from '../../../middleware/metrics/actions'
 
 // Mock react-leaflet because it causes errors
 jest.mock('react-leaflet', () => ({
-  createLayerComponent: jest.fn().mockImplementation(() => {}),
-  createControlComponent: jest.fn().mockImplementation(() => {})
+  createLayerComponent: jest.fn().mockImplementation(() => { }),
+  createControlComponent: jest.fn().mockImplementation(() => { })
 }))
 
 beforeEach(() => {

@@ -3,9 +3,8 @@
  * @param {Object} state Current state of Redux
  */
 export const getColormapsMetadata = (state) => {
-    const { metadata = {} } = state
-    const { colormaps = {} } = metadata
-  
-    return colormaps
-  }
-  
+  const { metadata = {} } = state
+  const { colormaps = {} } = metadata
+
+  return colormaps
+}
