@@ -102,6 +102,7 @@ const MapWrapper = ({
   }
 
   let colorMapState = {}
+
   if (gibsTag && hasGibsLayerForProjection(gibsTag, projection)) {
     const { product } = gibsTag
     colorMapState = colormapsMetadata[product] || {}
@@ -204,9 +205,7 @@ const MapWrapper = ({
       }
       <Control prepend position="topright">
         {
-          isFocusedCollectionPage
-          && !isEmpty(colorMap)
-          && (
+          (isFocusedCollectionPage && !isEmpty(colorMap)) && (
             <Legend
               colorMap={colorMap}
             />

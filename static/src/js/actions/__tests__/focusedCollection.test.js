@@ -161,7 +161,7 @@ describe('getFocusedCollection', () => {
         expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
       })
 
-      describe('when the requested collection is cwic and a polygon search is active and we try and retrieve an existing gibs tag', () => {
+      describe('when the requested collection is cwic and a polygon search is active and a GIBS tag exists', () => {
         test('should toggle the polygon warning, update the focusedCollection and call SET_COLOR_MAPS_LOADING and call ERRORED_COLOR_MAPS call getSearchGranules', async () => {
           jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
             cmrHost: 'https://cmr.example.com',
