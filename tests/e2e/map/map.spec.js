@@ -364,7 +364,7 @@ test.describe('Map interactions', () => {
       })
     })
 
-    test.describe.skip('When editing a circle', () => { })
+    test.describe.skip('When editing a circle', () => {})
   })
 
   test.describe('When drawing bounding box spatial', () => {
