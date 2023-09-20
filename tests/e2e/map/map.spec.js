@@ -361,7 +361,7 @@ test.describe('Map interactions', () => {
       })
     })
 
-    test.describe.skip('When editing a circle', () => {})
+    test.describe.skip('When editing a circle', () => { })
   })
 
   test.describe('When drawing bounding box spatial', () => {
@@ -498,7 +498,7 @@ test.describe('Map interactions', () => {
       })
     })
 
-    test.describe.skip('When editing a bounding box', () => {})
+    test.describe.skip('When editing a bounding box', () => { })
   })
 
   test.describe('When drawing polygon spatial', () => {
@@ -617,7 +617,7 @@ test.describe('Map interactions', () => {
       })
     })
 
-    test.describe.skip('When editing a polygon', () => {})
+    test.describe.skip('When editing a polygon', () => { })
   })
 
   test.describe('When uploading a shapefile', () => {
@@ -1629,7 +1629,7 @@ test.describe('Map interactions', () => {
         })
       })
 
-      await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Ice_Concentration/, async (route) => {
+      await page.route(/colormaps\/GHRSST_Sea_Surface_Temperature/, async (route) => {
         await route.fulfill({
           json: colormapOneBody
         })
