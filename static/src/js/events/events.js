@@ -1,5 +1,4 @@
 import EventEmitter from 'events'
-import $ from 'jquery'
 
 const emitter = new EventEmitter()
 
@@ -9,9 +8,9 @@ emitter.setMaxListeners(0)
 emitter.on('error.global', (error = true) => {
   const { body } = document
   if (error) {
-    $(body).addClass('body--has-error')
+    body.classList.add('body--has-error')
   } else {
-    $(body).removeClass('body--has-error')
+    body.classList.remove('body--has-error')
   }
 })
 
