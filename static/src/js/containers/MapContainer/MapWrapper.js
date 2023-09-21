@@ -12,7 +12,7 @@ import {
 
 import { isEmpty } from 'lodash'
 import crsProjections from '../../util/map/crs'
-import hasGibsLayerForProjection from '../../util/map/projections'
+import hasGibsLayerForProjection, { hasGibsLayerForProjection } from '../../util/map/projections'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 
 import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
@@ -24,7 +24,6 @@ import ShapefileLayer from '../../components/Map/ShapefileLayer'
 import ZoomHome from '../../components/Map/ZoomHome'
 import MapEvents from './MapEvents'
 import Legend from '../../components/Legend/Legend'
-import projections from '../../util/map/projections'
 
 const MapWrapper = ({
   authToken,
@@ -104,7 +103,7 @@ const MapWrapper = ({
   }
 
   let colorMapState = {}
-  
+
   // Check that we are in the correct projection
   if (gibsTag && hasGibsLayerForProjection(gibsTag, projection)) {
     const { product } = gibsTag
