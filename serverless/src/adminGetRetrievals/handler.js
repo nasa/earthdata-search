@@ -34,12 +34,14 @@ const adminGetRetrievals = async (event, context) => {
     const dbConnection = await getDbConnection()
 
     const retrievalResponse = await dbConnection('retrievals')
-      .select('retrievals.id',
+      .select(
+        'retrievals.id',
         'retrievals.jsondata',
         'retrievals.environment',
         'retrievals.created_at',
         'users.id as user_id',
-        'users.urs_id as username')
+        'users.urs_id as username'
+      )
       .select(dbConnection.raw('count(*) OVER() as total'))
       .join('users', { 'retrievals.user_id': 'users.id' })
       .orderBy(...sortKeyMap[sortKey])
@@ -71,11 +73,11 @@ const adminGetRetrievals = async (event, context) => {
         results
       })
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

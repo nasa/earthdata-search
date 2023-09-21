@@ -40,7 +40,8 @@ export default async function getRetrieval(event, context) {
     const dbConnection = await getDbConnection()
 
     const retrievalResponse = await dbConnection('retrievals')
-      .select('jsondata',
+      .select(
+        'jsondata',
         'retrievals.jsondata',
         'retrievals.token',
         'retrievals.environment',
@@ -52,7 +53,8 @@ export default async function getRetrieval(event, context) {
         'retrieval_collections.collection_metadata',
         'retrieval_collections.granule_count',
         'retrieval_collections.granule_params',
-        'users.urs_id')
+        'users.urs_id'
+      )
       .join('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
       .where({
@@ -68,15 +70,18 @@ export default async function getRetrieval(event, context) {
       const {
         created_at: createdAt,
         jsondata,
-        id
+        id: retrievalId
       } = retrievalObject
 
       // Gather the additional links before we massage the data below
       const links = Object.values(retrievalResponse).map((collection) => {
         const { collection_metadata: collectionMetadata = {} } = collection
-        const { dataset_id: datasetId, links = [] } = collectionMetadata
+        const {
+          dataset_id: datasetId,
+          links: collectionMetadataLinks = []
+        } = collectionMetadata
 
-        const metadataLinks = links.filter((link = {}) => isLinkType('metadata', link.rel))
+        const metadataLinks = collectionMetadataLinks.filter((link = {}) => isLinkType('metadata', link.rel))
 
         // Prevent redundant links
         const uniqueMetadataLinks = metadataLinks.filter(
@@ -90,13 +95,13 @@ export default async function getRetrieval(event, context) {
       }).filter((linkList) => linkList.links.length > 0)
 
       const collections = {}
-      if (id) {
+      if (retrievalId) {
         collections.byId = keyBy(retrievalResponse, (row) => row.id)
 
         // Strip the body of each collection down to only necessary data instead of the entire result row
         Object.keys(collections.byId).forEach((collection) => {
           const {
-            id,
+            id: rowId,
             access_method: accessMethod,
             collection_id: collectionId,
             collection_metadata: collectionMetadata,
@@ -105,7 +110,7 @@ export default async function getRetrieval(event, context) {
             urs_id: ursId
           } = collections.byId[collection]
 
-          const obfuscatedId = obfuscateId(id)
+          const obfuscatedId = obfuscateId(rowId)
 
           const { type } = accessMethod
           const accessMethodKey = type.toLowerCase().replace(/ /g, '_')
@@ -116,7 +121,7 @@ export default async function getRetrieval(event, context) {
             collections[accessMethodKey] = []
           }
 
-          collections[accessMethodKey].push(id)
+          collections[accessMethodKey].push(rowId)
 
           collections.byId[collection] = {
             access_method: accessMethod,
@@ -124,7 +129,7 @@ export default async function getRetrieval(event, context) {
             collection_metadata: collectionMetadata,
             granule_count: granuleCount,
             granule_params: granuleParams,
-            id,
+            id: rowId,
             retrieval_collection_id: obfuscatedId,
             retrieval_id: providedRetrieval, // Ensure the obfuscated id is returned
             urs_id: ursId
@@ -152,11 +157,11 @@ export default async function getRetrieval(event, context) {
       headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [`Retrieval '${providedRetrieval}' not found.`] })
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

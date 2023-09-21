@@ -113,8 +113,8 @@ const edlCallback = async (event, context) => {
 
       await sqsClient.send(sqsCommand)
     }
-  } catch (e) {
-    parseError(e)
+  } catch (error) {
+    parseError(error)
 
     const queryParams = {
       ee: earthdataEnvironment,

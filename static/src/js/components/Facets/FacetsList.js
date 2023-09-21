@@ -22,8 +22,8 @@ const FacetsList = (props) => {
   } = props
 
   // Return a list of facet components to be displayed
-  const buildFacetList = (facets, limit = null) => facets.map((child, i) => {
-    if (i < limit || limit === null) {
+  const buildFacetList = (facetsArray, limit = null) => facetsArray.map((child, index) => {
+    if (index < limit || limit === null) {
       const uid = uniqueId('facet-item_')
       const startingLevel = 0
 
@@ -77,8 +77,10 @@ const FacetsList = (props) => {
               letter={letter}
             />))
         }
+
         sortedList.push(buildFacetList(alphabetizedList[letter]))
       }
+
       // If we have passed in a sortBy property, we want to wrap each section in its own <ul>
       return sortBy ? <ul key={key} className="facets-list">{sortedList}</ul> : sortedList
     })

@@ -31,6 +31,7 @@ const buildHumanizedQueryDisplay = (key, value) => {
     const startValue = `Start: ${start}`
     const endValue = `End: ${end}`
     const tooltipText = `${startValue}\n${endValue}`
+
     return (
       <div
         className="subscriptions-query-list__query-list-item-value"
@@ -54,14 +55,14 @@ const buildHumanizedQueryDisplay = (key, value) => {
           value.map(
             // Display the coordinates like [[1, 1], [2, 2], ...]
             (coordinates) => {
-              const value = coordinates.map(
+              const coordinateValue = coordinates.map(
                 (coordinate) => (
                   `[${coordinate.join(', ')}]`
                 )
               ).join(', ')
 
               return (
-                <div key={value} title={value}>{value}</div>
+                <div key={coordinateValue} title={coordinateValue}>{coordinateValue}</div>
               )
             }
           )
@@ -74,20 +75,23 @@ const buildHumanizedQueryDisplay = (key, value) => {
   if (key === 'boundingBox') {
     return (
       <div>
-        {value.map(
-          (boundingBox) => {
-            const [sw, ne] = boundingBox
-            const swValue = `SW: ${sw.join(', ')}`
-            const neValue = `NE: ${ne.join(', ')}`
-            const tooltipText = `${swValue}\n${neValue}`
-            return (
-              <div key={boundingBox} title={tooltipText}>
-                <div>{swValue}</div>
-                <div>{neValue}</div>
-              </div>
-            )
-          }
-        )}
+        {
+          value.map(
+            (boundingBox) => {
+              const [sw, ne] = boundingBox
+              const swValue = `SW: ${sw.join(', ')}`
+              const neValue = `NE: ${ne.join(', ')}`
+              const tooltipText = `${swValue}\n${neValue}`
+
+              return (
+                <div key={boundingBox} title={tooltipText}>
+                  <div>{swValue}</div>
+                  <div>{neValue}</div>
+                </div>
+              )
+            }
+          )
+        }
       </div>
     )
   }
@@ -96,20 +100,23 @@ const buildHumanizedQueryDisplay = (key, value) => {
   if (key === 'circle') {
     return (
       <div className="subscriptions-query-list__query-list-item-value">
-        {value.map(
-          (circle) => {
-            const [x, y, radius] = circle
-            const centerValue = `Center: ${x}, ${y}`
-            const radValue = `Radius (m): ${radius}`
-            const tooltipValue = `${centerValue}\n${radValue}`
-            return (
-              <div key={circle} title={tooltipValue}>
-                <div>{centerValue}</div>
-                <div>{radValue}</div>
-              </div>
-            )
-          }
-        )}
+        {
+          value.map(
+            (circle) => {
+              const [x, y, radius] = circle
+              const centerValue = `Center: ${x}, ${y}`
+              const radValue = `Radius (m): ${radius}`
+              const tooltipValue = `${centerValue}\n${radValue}`
+
+              return (
+                <div key={circle} title={tooltipValue}>
+                  <div>{centerValue}</div>
+                  <div>{radValue}</div>
+                </div>
+              )
+            }
+          )
+        }
       </div>
     )
   }
@@ -118,14 +125,17 @@ const buildHumanizedQueryDisplay = (key, value) => {
   if (hierarcicalKeys.includes(key)) {
     return (
       <div className="subscriptions-query-list__query-list-item-value">
-        {value.map((hierarchy) => {
-          const hierarchyValue = hierarchy.join(' > ')
-          return (
-            <div key={hierarchy} title={hierarchyValue}>
-              {hierarchy.join(' > ')}
-            </div>
-          )
-        })}
+        {
+          value.map((hierarchy) => {
+            const hierarchyValue = hierarchy.join(' > ')
+
+            return (
+              <div key={hierarchy} title={hierarchyValue}>
+                {hierarchy.join(' > ')}
+              </div>
+            )
+          })
+        }
       </div>
     )
   }
@@ -150,13 +160,13 @@ export const SubscriptionsQueryList = ({
 }) => {
   const humanReadableQueryList = queryToHumanizedList(query, subscriptionType)
 
-  const handleCheckboxChange = (e) => {
-    const { id } = e.target
+  const handleCheckboxChange = (event) => {
+    const { id } = event.target
 
     const [, idWithoutType] = id.split(`${subscriptionType}-`)
     onUpdateSubscriptionDisabledFields({
       [subscriptionType]: {
-        [idWithoutType]: !e.target.checked
+        [idWithoutType]: !event.target.checked
       }
     })
   }
@@ -201,9 +211,7 @@ export const SubscriptionsQueryList = ({
     if (showCheckboxes) {
       return (
         <label htmlFor={`${subscriptionType}-${key}`}>
-          {
-            queryListItem
-          }
+          {queryListItem}
         </label>
       )
     }
@@ -216,9 +224,7 @@ export const SubscriptionsQueryList = ({
       {
         humanReadableQueryList.map(({ key, humanizedKey, humanizedValue }) => (
           <li key={key} className="subscriptions-query-list__query-list-item">
-            {
-              buildName(key, humanizedKey, humanizedValue)
-            }
+            {buildName(key, humanizedKey, humanizedValue)}
           </li>
         ))
       }

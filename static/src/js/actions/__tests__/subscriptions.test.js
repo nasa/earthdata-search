@@ -121,7 +121,11 @@ describe('createSubscription', () => {
         }&${
           stringify({
             polygon: ['-18,-78,-13,-74,-16,-73,-22,-77,-18,-78']
-          }, { encode: false, indices: false, arrayFormat: 'brackets' })}`
+          }, {
+            encode: false,
+            indices: false,
+            arrayFormat: 'brackets'
+          })}`
 
         // Mock the request if the the variables match
         return collectionConceptId === 'collectionId'
@@ -229,7 +233,11 @@ describe('createSubscription', () => {
         }&${
           stringify({
             polygon: ['-18,-78,-13,-74,-16,-73,-22,-77,-18,-78']
-          }, { encode: false, indices: false, arrayFormat: 'brackets' })
+          }, {
+            encode: false,
+            indices: false,
+            arrayFormat: 'brackets'
+          })
         }`
 
         // Mock the request if the the variables match
@@ -294,6 +302,7 @@ describe('createSubscription', () => {
         cmrHost: 'https://cmr.example.com',
         graphQlHost: 'https://graphql.example.com'
       }))
+
       const addToastMock = jest.spyOn(addToast, 'addToast')
       jest.spyOn(actions, 'getGranuleSubscriptions').mockImplementationOnce(() => jest.fn())
 
@@ -318,7 +327,11 @@ describe('createSubscription', () => {
           }&${
             stringify({
               polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
-            }, { encode: false, indices: false, arrayFormat: 'brackets' })
+            }, {
+              encode: false,
+              indices: false,
+              arrayFormat: 'brackets'
+            })
           }`
 
           // Mock the request if the the variables match
@@ -536,21 +549,26 @@ describe('getSubscriptions', () => {
             type: UPDATE_SUBSCRIPTION_RESULTS,
             payload: []
           })
+
           expect(storeActions[1]).toEqual({
             type: LOADING_SUBSCRIPTIONS
           })
+
           expect(storeActions[2]).toEqual({
             type: STARTED_SUBSCRIPTIONS_TIMER
           })
+
           expect(storeActions[3]).toEqual({
             type: FINISHED_SUBSCRIPTIONS_TIMER
           })
+
           expect(storeActions[4]).toEqual({
             type: LOADED_SUBSCRIPTIONS,
             payload: {
               loaded: true
             }
           })
+
           expect(storeActions[5]).toEqual({
             type: UPDATE_SUBSCRIPTION_RESULTS,
             payload: [
@@ -597,18 +615,22 @@ describe('getSubscriptions', () => {
           expect(storeActions[0]).toEqual({
             type: LOADING_SUBSCRIPTIONS
           })
+
           expect(storeActions[1]).toEqual({
             type: STARTED_SUBSCRIPTIONS_TIMER
           })
+
           expect(storeActions[2]).toEqual({
             type: FINISHED_SUBSCRIPTIONS_TIMER
           })
+
           expect(storeActions[3]).toEqual({
             type: LOADED_SUBSCRIPTIONS,
             payload: {
               loaded: true
             }
           })
+
           expect(storeActions[4]).toEqual({
             type: UPDATE_SUBSCRIPTION_RESULTS,
             payload: []
@@ -686,6 +708,7 @@ describe('deleteSubscription', () => {
       cmrHost: 'https://cmr.example.com',
       graphQlHost: 'https://graphql.example.com'
     }))
+
     const addToastMock = jest.spyOn(addToast, 'addToast')
 
     nock(/localhost/)
@@ -721,6 +744,7 @@ describe('deleteSubscription', () => {
       cmrHost: 'https://cmr.example.com',
       graphQlHost: 'https://graphql.example.com'
     }))
+
     const addToastMock = jest.spyOn(addToast, 'addToast')
 
     nock(/localhost/)
@@ -757,6 +781,7 @@ describe('deleteSubscription', () => {
         type: REMOVE_SUBSCRIPTION,
         payload: 'SUB1000-EDSC'
       })
+
       expect(storeActions[1]).toEqual({
         type: DELETE_COLLECTION_SUBSCRIPTION,
         payload: {
@@ -830,6 +855,7 @@ describe('updateSubscription', () => {
       cmrHost: 'https://cmr.example.com',
       graphQlHost: 'https://graphql.example.com'
     }))
+
     const addToastMock = jest.spyOn(addToast, 'addToast')
     const getGranuleSubscriptionsMock = jest.spyOn(actions, 'getGranuleSubscriptions').mockImplementationOnce(() => jest.fn())
 
@@ -920,6 +946,7 @@ describe('updateSubscription', () => {
       cmrHost: 'https://cmr.example.com',
       graphQlHost: 'https://graphql.example.com'
     }))
+
     const addToastMock = jest.spyOn(addToast, 'addToast')
     const getSubscriptionsMock = jest.spyOn(actions, 'getSubscriptions').mockImplementationOnce(() => jest.fn())
 
@@ -991,6 +1018,7 @@ describe('updateSubscription', () => {
       cmrHost: 'https://cmr.example.com',
       graphQlHost: 'https://graphql.example.com'
     }))
+
     const addToastMock = jest.spyOn(addToast, 'addToast')
     const getSubscriptionsMock = jest.spyOn(actions, 'getSubscriptions').mockImplementationOnce(() => jest.fn())
 

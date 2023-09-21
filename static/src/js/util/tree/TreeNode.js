@@ -175,17 +175,17 @@ export class TreeNode {
    * @param {String|Boolean} value Checked value (true/false/'indeterminate')
    */
   determineChecked(value) {
-    // parentChecked used to determine checked value with cascading during initial render
+    // `parentChecked` used to determine checked value with cascading during initial render
     if (this.parent && this.parentChecked === true) {
       return true
     }
 
-    // if this is a leaf, and a value does exist, return that value
+    // If this is a leaf, and a value does exist, return that value
     if (this.isLeaf && value != null) {
       return value
     }
 
-    // determine if this node should be checked based on children all checked or some checked
+    // Determine if this node should be checked based on children all checked or some checked
     if (this.allChildrenChecked()) {
       return true
     }

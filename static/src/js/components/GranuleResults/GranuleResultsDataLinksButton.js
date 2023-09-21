@@ -22,11 +22,11 @@ import './GranuleResultsDataLinksButton.scss'
 export const CustomDataLinksToggle = React.forwardRef(({
   onClick
 }, ref) => {
-  const handleClick = (e) => {
-    onClick(e)
+  const handleClick = (event) => {
+    onClick(event)
 
-    e.preventDefault()
-    e.stopPropagation()
+    event.preventDefault()
+    event.stopPropagation()
   }
 
   return (
@@ -79,19 +79,22 @@ export const GranuleResultsDataLinksButton = ({
           href={dataLink.href}
           target="_blank"
           title="Download file"
-          onClick={(e) => {
-            e.stopPropagation()
-            onMetricsDataAccess({
-              type: 'single_granule_download',
-              collections: [{
-                collectionId
-              }]
-            })
-            addToast(`Initiated download of file: ${dataLinkTitle}`, {
-              appearance: 'success',
-              autoDismiss: true
-            })
-          }}
+          onClick={
+            (event) => {
+              event.stopPropagation()
+              onMetricsDataAccess({
+                type: 'single_granule_download',
+                collections: [{
+                  collectionId
+                }]
+              })
+
+              addToast(`Initiated download of file: ${dataLinkTitle}`, {
+                appearance: 'success',
+                autoDismiss: true
+              })
+            }
+          }
         >
           {dataLinkTitle}
           <FaDownload className="granule-results-data-links-button__icon granule-results-data-links-button__icon--download" />
@@ -128,18 +131,20 @@ export const GranuleResultsDataLinksButton = ({
                   <span className="granule-results-data-links-button__menu-panel-label granule-results-data-links-button__menu-panel-label--align">
                     {'Bucket/Object Prefix: '}
                   </span>
-                  {s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, i) => (
-                    <React.Fragment key={`${region}_${bucketAndObjPrefix}`}>
-                      <CopyableText
-                        className="granule-results-data-links-button__menu-panel-value"
-                        text={bucketAndObjPrefix}
-                        label="Copy to clipboard"
-                        successMessage="Copied the AWS S3 Bucket/Object Prefix"
-                        failureMessage="Could not copy the AWS S3 Bucket/Object Prefix"
-                      />
-                      {i !== s3BucketAndObjectPrefixNames.length - 1 && ', '}
-                    </React.Fragment>
-                  ))}
+                  {
+                    s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, i) => (
+                      <React.Fragment key={`${region}_${bucketAndObjPrefix}`}>
+                        <CopyableText
+                          className="granule-results-data-links-button__menu-panel-value"
+                          text={bucketAndObjPrefix}
+                          label="Copy to clipboard"
+                          successMessage="Copied the AWS S3 Bucket/Object Prefix"
+                          failureMessage="Could not copy the AWS S3 Bucket/Object Prefix"
+                        />
+                        {i !== s3BucketAndObjectPrefixNames.length - 1 && ', '}
+                      </React.Fragment>
+                    ))
+                  }
                 </div>
                 <div className="granule-results-data-links-button__menu-panel-heading-row">
                   <span className="granule-results-data-links-button__menu-panel-label">
@@ -182,14 +187,16 @@ export const GranuleResultsDataLinksButton = ({
                   text={s3LinkTitle}
                   successMessage={() => `Copied AWS S3 path for: ${s3LinkTitle}`}
                   failureMessage={() => `Could not copy AWS S3 path for: ${s3LinkTitle}`}
-                  onClick={() => {
-                    onMetricsDataAccess({
-                      type: 'single_granule_s3_access',
-                      collections: [{
-                        collectionId
-                      }]
-                    })
-                  }}
+                  onClick={
+                    () => {
+                      onMetricsDataAccess({
+                        type: 'single_granule_s3_access',
+                        collections: [{
+                          collectionId
+                        }]
+                      })
+                    }
+                  }
                 />
               )
             })
@@ -199,7 +206,7 @@ export const GranuleResultsDataLinksButton = ({
     }
 
     return (
-      <Dropdown onClick={(e) => { e.stopPropagation() }} drop="right">
+      <Dropdown onClick={(event) => { event.stopPropagation() }} drop="right">
         <Dropdown.Toggle as={CustomDataLinksToggle} />
         {
           ReactDOM.createPortal(
@@ -213,12 +220,14 @@ export const GranuleResultsDataLinksButton = ({
                     <EDSCTabs padding={false}>
                       <Tab
                         className="granule-results-data-links-button__menu-panel"
-                        title={(
-                          <span className="granule-results-data-links-button__tab-text">
-                            <FaDownload className="granule-results-data-links-button__tab-icon" />
-                            Download Files
-                          </span>
-                        )}
+                        title={
+                          (
+                            <span className="granule-results-data-links-button__tab-text">
+                              <FaDownload className="granule-results-data-links-button__tab-icon" />
+                              Download Files
+                            </span>
+                          )
+                        }
                         eventKey="download-files"
                         tabIndex={0}
                       >
@@ -228,12 +237,14 @@ export const GranuleResultsDataLinksButton = ({
                       </Tab>
                       <Tab
                         className="granule-results-data-links-button__menu-panel"
-                        title={(
-                          <span className="granule-results-data-links-button__tab-text">
-                            <FaCloud className="granule-results-data-links-button__tab-icon" />
-                            AWS S3 Access
-                          </span>
-                        )}
+                        title={
+                          (
+                            <span className="granule-results-data-links-button__tab-text">
+                              <FaCloud className="granule-results-data-links-button__tab-icon" />
+                              AWS S3 Access
+                            </span>
+                          )
+                        }
                         eventKey="aws-s3-access"
                         tabIndex={0}
                       >
@@ -281,12 +292,14 @@ export const GranuleResultsDataLinksButton = ({
         icon={FaDownload}
         variant={buttonVariant}
         href={dataLinks[0].href}
-        onClick={() => onMetricsDataAccess({
-          type: 'single_granule_download',
-          collections: [{
-            collectionId
-          }]
-        })}
+        onClick={
+          () => onMetricsDataAccess({
+            type: 'single_granule_download',
+            collections: [{
+              collectionId
+            }]
+          })
+        }
         rel="noopener noreferrer"
         label="Download single granule data"
         target="_blank"
@@ -302,7 +315,7 @@ export const GranuleResultsDataLinksButton = ({
       icon={FaDownload}
       label="No download link available"
       disabled
-      onClick={(e) => e.preventDefault()}
+      onClick={(event) => event.preventDefault()}
     />
   )
 }

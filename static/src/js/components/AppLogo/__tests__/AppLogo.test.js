@@ -24,6 +24,7 @@ describe('AppLogo component', () => {
     jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
       defaultPortal: 'edsc'
     }))
+
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find('.app-logo__site-meatball').props().to).toEqual({ pathname: '/search' })

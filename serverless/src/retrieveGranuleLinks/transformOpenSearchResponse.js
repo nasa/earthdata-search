@@ -102,7 +102,7 @@ const transformOpenSearchResponse = (data) => {
         date: temporal,
         id,
         summary,
-        title,
+        title: granuleTitle,
         updated
       } = granule
 
@@ -148,9 +148,9 @@ const transformOpenSearchResponse = (data) => {
         }
       }
 
-      if (title) {
-        if (typeof title === 'object' && title !== null) {
-          const { '#text': text } = title
+      if (granuleTitle) {
+        if (typeof granuleTitle === 'object' && granuleTitle !== null) {
+          const { '#text': text } = granuleTitle
 
           updatedGranule.title = text
         }

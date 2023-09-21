@@ -2,10 +2,7 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import {
-  REMOVE_RETRIEVAL_HISTORY,
-  SET_RETRIEVAL_LOADING
-} from '../../constants/actionTypes'
+import { REMOVE_RETRIEVAL_HISTORY, SET_RETRIEVAL_LOADING } from '../../constants/actionTypes'
 
 import {
   submitRetrieval,
@@ -37,7 +34,7 @@ describe('submitRetrieval', () => {
         id: 7
       })
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: 'mockToken',
       earthdataEnvironment: 'prod',
@@ -90,7 +87,7 @@ describe('submitRetrieval', () => {
       shapefile: {}
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(submitRetrieval()).then(() => {
       expect(store.getActions().length).toEqual(4)
 
@@ -136,7 +133,7 @@ describe('submitRetrieval', () => {
         id: 7
       })
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: 'mockToken',
       earthdataEnvironment: 'prod',
@@ -189,7 +186,7 @@ describe('submitRetrieval', () => {
       shapefile: {}
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(submitRetrieval()).then(() => {
       expect(store.getActions()[3]).toEqual({
         payload: {
@@ -270,7 +267,7 @@ describe('submitRetrieval', () => {
           id: 7
         })
 
-      // mockStore with initialState
+      // MockStore with initialState
       const store = mockStore({
         authToken: 'mockToken',
         earthdataEnvironment: 'prod',
@@ -323,7 +320,7 @@ describe('submitRetrieval', () => {
         shapefile: {}
       })
 
-      // call the dispatch
+      // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
         expect(store.getActions().length).toEqual(4)
 
@@ -348,7 +345,7 @@ describe('submitRetrieval', () => {
           id: 7
         })
 
-      // mockStore with initialState
+      // MockStore with initialState
       const store = mockStore({
         authToken: 'mockToken',
         earthdataEnvironment: 'prod',
@@ -404,7 +401,7 @@ describe('submitRetrieval', () => {
         shapefile: {}
       })
 
-      // call the dispatch
+      // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
         expect(store.getActions().length).toEqual(4)
 
@@ -429,7 +426,7 @@ describe('submitRetrieval', () => {
           id: 7
         })
 
-      // mockStore with initialState
+      // MockStore with initialState
       const store = mockStore({
         authToken: 'mockToken',
         earthdataEnvironment: 'prod',
@@ -485,7 +482,7 @@ describe('submitRetrieval', () => {
         shapefile: {}
       })
 
-      // call the dispatch
+      // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
         expect(store.getActions().length).toEqual(4)
 
@@ -510,7 +507,7 @@ describe('submitRetrieval', () => {
           id: 7
         })
 
-      // mockStore with initialState
+      // MockStore with initialState
       const store = mockStore({
         authToken: 'mockToken',
         earthdataEnvironment: 'prod',
@@ -563,7 +560,7 @@ describe('submitRetrieval', () => {
         shapefile: {}
       })
 
-      // call the dispatch
+      // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
         expect(store.getActions().length).toEqual(4)
 
@@ -588,7 +585,7 @@ describe('submitRetrieval', () => {
           id: 7
         })
 
-      // mockStore with initialState
+      // MockStore with initialState
       const store = mockStore({
         authToken: 'mockToken',
         earthdataEnvironment: 'prod',
@@ -642,7 +639,7 @@ describe('submitRetrieval', () => {
         shapefile: {}
       })
 
-      // call the dispatch
+      // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
         expect(store.getActions().length).toEqual(4)
 
@@ -740,7 +737,7 @@ describe('fetchRetrieval', () => {
         }]
       })
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: 'mockToken',
       metadata: {
@@ -783,12 +780,13 @@ describe('fetchRetrieval', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(fetchRetrieval(7)).then(() => {
       expect(store.getActions().length).toEqual(2)
       expect(store.getActions()[0]).toEqual({
         type: SET_RETRIEVAL_LOADING
       })
+
       expect(store.getActions()[1]).toEqual({
         payload: {
           collections: {
@@ -940,13 +938,13 @@ describe('deleteRetrieval', () => {
       .delete(/2057964173/)
       .reply(204)
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: 'mockToken',
       retrievalHistory: []
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(deleteRetrieval('2057964173')).then(() => {
       expect(store.getActions().length).toEqual(1)
       expect(store.getActions()[0]).toEqual({

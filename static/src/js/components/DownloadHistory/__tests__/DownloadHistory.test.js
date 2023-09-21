@@ -73,7 +73,11 @@ describe('DownloadHistory component', () => {
       })
       expect(enzymeWrapper.find(Table).length).toBe(1)
       expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({ pathname: '/downloads/8069076', search: '' })
+      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({
+        pathname: '/downloads/8069076',
+        search: ''
+      })
+
       expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('1 collection')
     })
 
@@ -95,7 +99,11 @@ describe('DownloadHistory component', () => {
       })
       expect(enzymeWrapper.find(Table).length).toBe(1)
       expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({ pathname: '/downloads/8069076', search: '' })
+      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({
+        pathname: '/downloads/8069076',
+        search: ''
+      })
+
       expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('Collection Title')
     })
 
@@ -119,7 +127,11 @@ describe('DownloadHistory component', () => {
       })
       expect(enzymeWrapper.find(Table).length).toBe(1)
       expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({ pathname: '/downloads/8069076', search: '' })
+      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({
+        pathname: '/downloads/8069076',
+        search: ''
+      })
+
       expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('Collection Title and 1 other collection')
     })
 
@@ -174,7 +186,11 @@ describe('DownloadHistory component', () => {
 
       expect(enzymeWrapper.find(Table).length).toBe(1)
       expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({ pathname: '/downloads/8069076', search: '' })
+      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({
+        pathname: '/downloads/8069076',
+        search: ''
+      })
+
       expect(enzymeWrapper.find(PortalLinkContainer).prop('portalId')).toEqual('test')
       expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('Collection Title')
     })
@@ -204,6 +220,7 @@ describe('DownloadHistory component', () => {
         pathname: '/downloads/8069076',
         search: '?ee=uat'
       })
+
       expect(enzymeWrapper.find(PortalLinkContainer).prop('portalId')).toEqual('test')
       expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('Collection Title')
     })

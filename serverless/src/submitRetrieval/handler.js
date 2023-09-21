@@ -93,7 +93,10 @@ const submitRetrieval = async (event, context) => {
       // Save Access Configuration
       const existingAccessConfig = await retrievalDbTransaction('access_configurations')
         .select('id')
-        .where({ user_id: userId, collection_id: id })
+        .where({
+          user_id: userId,
+          collection_id: id
+        })
 
       const accessMethodWithoutSpatial = removeSpatialFromAccessMethod(accessMethod)
 
@@ -102,7 +105,10 @@ const submitRetrieval = async (event, context) => {
           .update({
             access_method: accessMethodWithoutSpatial
           })
-          .where({ user_id: userId, collection_id: id })
+          .where({
+            user_id: userId,
+            collection_id: id
+          })
       } else {
         await retrievalDbTransaction('access_configurations')
           .insert({
@@ -177,8 +183,8 @@ const submitRetrieval = async (event, context) => {
               // has been committed. Here we add the ORDER_DELAY_SECONDS as well.
               DelaySeconds: 3 + delay
             })
-          } catch (e) {
-            parseError(e)
+          } catch (error) {
+            parseError(error)
           }
 
           if (!process.env.IS_OFFLINE) {
@@ -216,14 +222,14 @@ const submitRetrieval = async (event, context) => {
       headers: defaultResponseHeaders,
       body: JSON.stringify(response)
     }
-  } catch (e) {
+  } catch (error) {
     // On error rollback our transaction
     retrievalDbTransaction.rollback()
 
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

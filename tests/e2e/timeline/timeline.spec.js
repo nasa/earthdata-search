@@ -29,33 +29,39 @@ test.describe('Timeline spec', () => {
         headers: collectionFixture.headers
       })
     })
+
     await page.route(/graphql/, async (route) => {
       await route.fulfill({
         json: collectionsGraphJson.body,
         headers: authHeaders
       })
     })
+
     await page.route(/timeline/, async (route) => {
       await route.fulfill({
         json: timeline.body,
         headers: authHeaders
       })
     })
+
     await page.route(/dqs/, async (route) => {
       await route.fulfill({
         json: []
       })
     })
+
     await page.route(/providers/, async (route) => {
       await route.fulfill({
         json: providers.body
       })
     })
+
     await page.route(/access_methods/, async (route) => {
       await route.fulfill({
         json: accessMethods.body
       })
     })
+
     await page.route(/granules$/, async (route) => {
       await route.fulfill({
         json: granules.body,

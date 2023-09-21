@@ -70,7 +70,13 @@ describe('storeUserData', () => {
     expect(queries[1].bindings).toEqual([
       'test',
       'urs_user',
-      { user: { uid: 'urs_user', first_name: 'urs', last_name: 'user' } },
+      {
+        user: {
+          uid: 'urs_user',
+          first_name: 'urs',
+          last_name: 'user'
+        }
+      },
       1
     ])
   })

@@ -19,6 +19,7 @@ export const getGranuleIds = ({
   if (isOpenSearch) {
     granuleIds = allIds.filter((id) => {
       const hashedId = murmurhash3(id).toString()
+
       return excludedGranuleIds.indexOf(hashedId) === -1
     })
   } else {

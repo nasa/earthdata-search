@@ -20,6 +20,7 @@ describe('supportsShapefileSubsetting', () => {
         expect(response).toBeFalsy()
       })
     })
+
     describe('when GeoJSON is supported', () => {
       test('returns true', () => {
         const response = supportsShapefileSubsetting({

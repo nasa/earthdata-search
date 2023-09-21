@@ -46,6 +46,7 @@ describe('OverrideTemporalModal component', () => {
           }
         }
       })
+
       expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
     })
   })
@@ -64,6 +65,7 @@ describe('OverrideTemporalModal component', () => {
           }
         }
       })
+
       expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
     })
   })

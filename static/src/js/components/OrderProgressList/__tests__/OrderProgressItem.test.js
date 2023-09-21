@@ -30,13 +30,9 @@ function setup(overrideProps) {
 }
 
 describe('OrderProgressItem component', () => {
-  const { enzymeWrapper } = setup()
-
-  test('is displayed', () => {
-    expect(enzymeWrapper).toBeDefined()
-  })
-
   test('shows the correct order metadata', () => {
+    const { enzymeWrapper } = setup()
+
     expect(enzymeWrapper.find('.order-progress-item__title').text()).toEqual('Order ID: 5000000333461')
     expect(enzymeWrapper.find('.order-progress-item__processed').text()).toEqual('81 of 81 granule(s) processed (100%)')
     expect(enzymeWrapper.find(ProgressBar).prop('now')).toEqual(100)

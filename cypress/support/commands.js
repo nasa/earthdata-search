@@ -51,6 +51,7 @@ Cypress.Commands.add(
       clientX: center.x,
       clientY: center.y
     })
+
     canvas.dispatchEvent(
       new MouseEvent('mousedown', {
         clientX: center.x,
@@ -80,6 +81,7 @@ Cypress.Commands.add(
       clientX: center.x + rect.width * xMoveFactor,
       clientY: center.y + rect.height * yMoveFactor
     })
+
     canvas.dispatchEvent(
       new MouseEvent('mousemove', {
         clientX: center.x + rect.width * xMoveFactor,
@@ -94,6 +96,7 @@ Cypress.Commands.add(
       clientX: center.x + rect.width * xMoveFactor,
       clientY: center.y + rect.height * yMoveFactor
     })
+
     requestAnimationFrame(() => {
       canvas.dispatchEvent(
         new MouseEvent('mouseup', {

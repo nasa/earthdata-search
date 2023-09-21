@@ -1,7 +1,9 @@
 import React from 'react'
 
 import {
-  act, render, screen
+  act,
+  render,
+  screen
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -88,6 +90,7 @@ describe('AccessMethodRadio component', () => {
       const input = screen.getByRole('radio', { value: 'test value' })
       expect(input.name).toEqual('test-id')
     })
+
     test('sets the checked property', () => {
       setup()
       const radioButton = screen.getByRole('radio', { value: 'test value' })
@@ -162,50 +165,74 @@ describe('AccessMethodRadio component', () => {
 
     test('displays the service name', () => {
       const harmonyDetails = 'details: The service-name-is-passed-as-prop'
-      setup({ serviceName: 'test service name', details: harmonyDetails })
+      setup({
+        serviceName: 'test service name',
+        details: harmonyDetails
+      })
+
       // The service name is passed in through the `details` prop
       const renderedServiceNames = screen.getAllByText(harmonyDetails)
-      // renders in the `More-Info` section
+      // Renders in the `More-Info` section
       expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__more-info')
       expect(renderedServiceNames.length).toEqual(1)
     })
+
     describe('when the `subtitle` is `Harmony`', () => {
       test('service name appears on on customizable option primary title', () => {
-        setup({ serviceName: 'test service name', subtitle: 'Harmony' })
+        setup({
+          serviceName: 'test service name',
+          subtitle: 'Harmony'
+        })
+
         const renderedServiceNames = screen.getAllByText('test service name')
-        // renders in the `access-method-content` section
+        // Renders in the `access-method-content` section
         expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__header-secondary')
         expect(renderedServiceNames.length).toEqual(1)
       })
 
       test('Hovering over the service name opens a tooltip', async () => {
         const user = userEvent.setup()
-        setup({ serviceName: 'test service name', subtitle: 'Harmony' })
+        setup({
+          serviceName: 'test service name',
+          subtitle: 'Harmony'
+        })
+
         const renderedServiceName = screen.getByText('test service name')
         await act(async () => {
           await user.hover(renderedServiceName)
         })
+
         // Tooltip is being styled and rendered
         const tooltipMessage = screen.getByText('Service')
         expect(tooltipMessage.className).toEqual('tooltip__secondary-text')
       })
     })
+
     describe('when the `subtitle` is `OPeNDAP`', () => {
       test('service name appears on on customizable option primary title', () => {
-        setup({ serviceName: 'test service name', subtitle: 'OPeNDAP' })
+        setup({
+          serviceName: 'test service name',
+          subtitle: 'OPeNDAP'
+        })
+
         const renderedServiceNames = screen.getAllByText('test service name')
-        // renders in the `access-method-content` section
+        // Renders in the `access-method-content` section
         expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__header-secondary')
         expect(renderedServiceNames.length).toEqual(1)
       })
 
       test('Hovering over the service name opens a tooltip', async () => {
         const user = userEvent.setup()
-        setup({ serviceName: 'test service name', subtitle: 'OPeNDAP' })
+        setup({
+          serviceName: 'test service name',
+          subtitle: 'OPeNDAP'
+        })
+
         const renderedServiceName = screen.getByText('test service name')
         await act(async () => {
           await user.hover(renderedServiceName)
         })
+
         // Tooltip is being styled and rendered
         const tooltipMessage = screen.getByText('Service')
         expect(tooltipMessage.className).toEqual('tooltip__secondary-text')

@@ -25,7 +25,7 @@ export const usePortalLogo = (portalId) => {
       const logo = await import(`../../../../portals/${portalId}/images/logo.png`)
       const { default: imgSrc } = logo
       setPortalLogoSrc(imgSrc)
-    } catch (e) {
+    } catch (error) {
       // If the import fails, set the state to an empty string.
       setPortalLogoSrc('')
     }

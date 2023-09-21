@@ -40,7 +40,7 @@ export const prepareTimelineParams = (state) => {
 
     conceptIds = projectIds
   } else if (focusedCollection !== '') {
-    // if we aren't on the project page, we want to query the focusedCollection
+    // If we aren't on the project page, we want to query the focusedCollection
     conceptIds.push(focusedCollection)
   }
 

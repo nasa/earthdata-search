@@ -2,7 +2,10 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
-import { GranuleResultsHighlightsContainer, mapStateToProps } from '../GranuleResultsHighlightsContainer'
+import {
+  GranuleResultsHighlightsContainer,
+  mapStateToProps
+} from '../GranuleResultsHighlightsContainer'
 import GranuleResultsHighlights from '../../../components/GranuleResultsHighlights/GranuleResultsHighlights'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -82,6 +85,7 @@ describe('GranuleResultsHighlightsContainer component', () => {
     expect(enzymeWrapper.find(GranuleResultsHighlights).props().granules).toEqual([{
       mock: 'data'
     }])
+
     expect(enzymeWrapper.find(GranuleResultsHighlights).props().granuleCount).toEqual(1)
     expect(enzymeWrapper.find(GranuleResultsHighlights).props().visibleGranules).toEqual(1)
     expect(enzymeWrapper.find(GranuleResultsHighlights).props().location).toEqual({ search: '' })

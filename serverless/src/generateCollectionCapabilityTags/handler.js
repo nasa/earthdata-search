@@ -55,7 +55,10 @@ const generateCollectionCapabilityTags = async (input) => {
   const response = await axios({
     method: 'post',
     url: collectionSearchUrl,
-    data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
+    data: stringify(cmrParams, {
+      indices: false,
+      arrayFormat: 'brackets'
+    }),
     headers: {
       'Client-Id': getClientId().background,
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -94,7 +97,10 @@ const generateCollectionCapabilityTags = async (input) => {
   await collectionsWithGranules.forEachAsync(async (collection) => {
     const { id } = collection
 
-    const tagData = await getCollectionCapabilities({ cmrToken, collection })
+    const tagData = await getCollectionCapabilities({
+      cmrToken,
+      collection
+    })
 
     associationPayload.push({
       'concept-id': id,

@@ -83,7 +83,15 @@ export const ProjectCollectionsList = (props) => {
   })
 
   return (
-    <SimpleBar className="project-collections-list" style={{ height: '100%', overflowX: 'hidden' }}>
+    <SimpleBar
+      className="project-collections-list"
+      style={
+        {
+          height: '100%',
+          overflowX: 'hidden'
+        }
+      }
+    >
       {
         projectIsEmpty && (
           <p className="project-collections-list__notice">

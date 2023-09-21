@@ -15,11 +15,12 @@ export const getBoundingBox = (xmlDocument) => {
   xpath.useNamespaces(namespaces)('//*[contains(name(),\'boundingbox\')]', doc).forEach((boxElement) => {
     const box = {}
 
-    Object.values(boxElement.childNodes).forEach((boxElement) => {
-      if (boxElement.firstChild) {
-        const firstChildValue = boxElement.firstChild.nodeValue
-        if (boxElement && firstChildValue && boxElement.localName !== 'display') {
-          box[boxElement.localName] = firstChildValue
+    Object.values(boxElement.childNodes).forEach((element) => {
+      if (element.firstChild) {
+        const firstChildValue = element.firstChild.nodeValue
+
+        if (element && firstChildValue && element.localName !== 'display') {
+          box[element.localName] = firstChildValue
         }
       }
     })

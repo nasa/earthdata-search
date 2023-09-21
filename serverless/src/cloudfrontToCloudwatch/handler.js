@@ -61,8 +61,8 @@ const cloudfrontToCloudwatch = async (event) => {
           console.log(line)
         }
       })
-    } catch (e) {
-      parseError(e)
+    } catch (error) {
+      parseError(error)
     }
   })
 }

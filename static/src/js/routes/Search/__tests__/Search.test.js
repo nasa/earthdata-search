@@ -2,7 +2,11 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
-import { Search, mapDispatchToProps, mapStateToProps } from '../Search'
+import {
+  Search,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../Search'
 import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import AdvancedSearchModalContainer from '../../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 

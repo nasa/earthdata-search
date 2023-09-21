@@ -46,7 +46,10 @@ const setup = () => {
     )
   })
 
-  return { history, props }
+  return {
+    history,
+    props
+  }
 }
 
 describe('PortalList component', () => {

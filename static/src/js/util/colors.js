@@ -22,6 +22,7 @@ export const lightColors = {
  */
 export const getColorByIndex = (index, lighten) => {
   if (lighten) return Object.values(lightColors)[index % Object.keys(lightColors).length]
+
   return Object.values(colors)[index % Object.keys(colors).length]
 }
 

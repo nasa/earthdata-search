@@ -27,6 +27,7 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
         dataCenter.roles && (
           dataCenter.roles.map((role, i) => {
             const key = `data_center_role_${item}-${i}`
+
             return (
               <Badge
                 key={key}
@@ -70,6 +71,7 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
                       </p>
                     )
                   }
+
                   return null
                 })
               )
@@ -92,6 +94,7 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
                           </React.Fragment>
                         )
                       }
+
                       if (contact.type !== 'Email' && contact.type !== 'Facebook') {
                         return (
                           <React.Fragment key={key}>
@@ -102,6 +105,7 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
                           </React.Fragment>
                         )
                       }
+
                       return null
                     })
                   }
@@ -112,7 +116,9 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
         )
       }
       {
-        !dataCenter.contactInformation && <p data-testid="collection-details-data-center__no-contact-info">No contact information for this data center.</p>
+        !dataCenter.contactInformation && (
+          <p data-testid="collection-details-data-center__no-contact-info">No contact information for this data center.</p>
+        )
       }
     </Card.Body>
   </Card>

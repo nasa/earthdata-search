@@ -51,26 +51,30 @@ export const EDSCImage = ({
       className={`${imageClasses} ${className}`}
       data-testid={dataTestId}
     >
-      {(!isLoaded && !isErrored) && (
-        <Spinner
-          className="edsc-image__spinner"
-          type="dots"
-          size="small"
-          dataTestId="edsc-image-spinner"
-        />
-      )}
-      {!isErrored && (
-        <img
-          className="edsc-image__image"
-          alt={alt}
-          height={height}
-          width={width}
-          src={src}
-          srcSet={srcSet}
-          onLoad={onImageLoad}
-          onError={onImageError}
-        />
-      )}
+      {
+        (!isLoaded && !isErrored) && (
+          <Spinner
+            className="edsc-image__spinner"
+            type="dots"
+            size="small"
+            dataTestId="edsc-image-spinner"
+          />
+        )
+      }
+      {
+        !isErrored && (
+          <img
+            className="edsc-image__image"
+            alt={alt}
+            height={height}
+            width={width}
+            src={src}
+            srcSet={srcSet}
+            onLoad={onImageLoad}
+            onError={onImageError}
+          />
+        )
+      }
     </div>
   )
 }

@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, SpatialSelectionContainer } from '../SpatialSelectionContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  SpatialSelectionContainer
+} from '../SpatialSelectionContainer'
 import SpatialSelection from '../../../components/SpatialSelection/SpatialSelection'
 import * as metrics from '../../../middleware/metrics/actions'
 

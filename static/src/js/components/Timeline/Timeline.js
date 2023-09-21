@@ -1,4 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, {
+  useEffect,
+  useState,
+  useRef
+} from 'react'
 import PropTypes from 'prop-types'
 import EDSCTimeline from '@edsc/timeline'
 import classNames from 'classnames'
@@ -58,11 +62,11 @@ export const Timeline = ({
       endDate: temporalEnd,
       startDate: temporalStart
     } = temporalSearch
-    const { query } = timeline
+    const { query: newQuery } = timeline
     const {
       end: focusedEnd,
       start: focusedStart
-    } = query
+    } = newQuery
 
     if (
       showOverrideModal
@@ -132,7 +136,7 @@ export const Timeline = ({
     const endDate = new Date(timelineEnd)
     const startDate = new Date(timelineStart)
 
-    const query = {
+    const newQuery = {
       center: newCenter,
       endDate: endDate.toISOString(),
       interval: getObjectKeyByValue(timelineIntervals, zoom.toString()),
@@ -141,7 +145,7 @@ export const Timeline = ({
 
     // TODO moving the timeline is causing a new timeline request - should only call if the timelineRange is changed
 
-    onChangeTimelineQuery(query)
+    onChangeTimelineQuery(newQuery)
     setCenter(newCenter)
   }
 
@@ -152,10 +156,14 @@ export const Timeline = ({
     onMetricsTimeline('Created Temporal')
 
     if (temporalStart && temporalEnd) {
-      // if focused exists and we are on the project page, show the modal
+      // If focused exists and we are on the project page, show the modal
       if (showOverrideModal) {
-        const { query } = timeline
-        const { start: focusStart, end: focusEnd } = query
+        const { query: timelineQuery } = timeline
+        const {
+          start: focusStart,
+          end: focusEnd
+        } = timelineQuery
+
         if (focusStart && focusEnd) {
           onToggleOverrideTemporalModal(true)
         }
@@ -199,7 +207,7 @@ export const Timeline = ({
     if (focusedStart && focusedEnd) {
       timelineQuery.center = center
 
-      // if temporalSearch exists and we are on the project page, show the modal
+      // If temporalSearch exists and we are on the project page, show the modal
       if (showOverrideModal) {
         if (Object.keys(temporalSearch).length > 0) {
           onToggleOverrideTemporalModal(true)
@@ -211,8 +219,11 @@ export const Timeline = ({
     }
 
     if (!showOverrideModal || !focusedStart || !focusedEnd) {
-      const { query } = timeline
-      const { end: oldEnd, start: oldStart } = query
+      const { query: existingQuery } = timeline
+      const {
+        end: oldEnd,
+        start: oldStart
+      } = existingQuery
 
       // If the timeline doesn't have focus, don't bother trying to remove focus
       let shouldUpdateQuery = true
@@ -246,7 +257,6 @@ export const Timeline = ({
       dataValue.title = title
 
       dataValue.intervals = values.map((value) => {
-        // const [start, end, count] = value
         const [start, end] = value
 
         // TODO: Change the format of the intervals to an object at some point
@@ -262,8 +272,8 @@ export const Timeline = ({
   /**
    * Pulls the focused interval out of the timeline query
    */
-  const setupFocused = ({ query }) => {
-    const { end, start } = query
+  const setupFocused = ({ query: timelineQuery }) => {
+    const { end, start } = timelineQuery
 
     if (!end && !start) return {}
 
@@ -285,14 +295,17 @@ export const Timeline = ({
     if (endDate) end = new Date(endDate).getTime()
     if (startDate) start = new Date(startDate).getTime()
 
-    return { end, start }
+    return {
+      end,
+      start
+    }
   }
 
   /**
    * Converts the zoom level in the timeline query into a format used by the timeline
    */
-  const setupZoom = ({ query }) => {
-    const { interval = 'month' } = query
+  const setupZoom = ({ query: timelineQuery }) => {
+    const { interval = 'month' } = timelineQuery
 
     return parseInt(timelineIntervals[interval], 10)
   }

@@ -11,7 +11,11 @@ jest.mock('../../../components/PortalBrowserModal/PortalBrowserModal', () => ({
   ))
 }))
 
-import { PortalBrowserModalContainer, mapDispatchToProps, mapStateToProps } from '../PortalBrowserModalContainer'
+import {
+  PortalBrowserModalContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../PortalBrowserModalContainer'
 import { PortalBrowserModal } from '../../../components/PortalBrowserModal/PortalBrowserModal'
 
 describe('mapDispatchToProps', () => {

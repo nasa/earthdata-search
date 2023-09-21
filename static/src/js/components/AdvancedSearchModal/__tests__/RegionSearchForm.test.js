@@ -48,21 +48,27 @@ describe('RegionSearchForm component', () => {
   })
 
   describe('when not searched or selected', () => {
-    const { enzymeWrapper } = setup()
-
     test('renders the regionType select', () => {
+      const { enzymeWrapper } = setup()
+
       expect(enzymeWrapper.find(Form.Control).at(0).prop('name')).toEqual('endpoint')
     })
 
     test('renders the searchValue input', () => {
+      const { enzymeWrapper } = setup()
+
       expect(enzymeWrapper.find(Form.Control).at(1).prop('name')).toEqual('keyword')
     })
 
     test('renders the exactMatch input', () => {
+      const { enzymeWrapper } = setup()
+
       expect(enzymeWrapper.find(Form.Check).at(0).prop('name')).toEqual('exact')
     })
 
     test('renders the submit', () => {
+      const { enzymeWrapper } = setup()
+
       expect(enzymeWrapper.find(Button).at(0).prop('label')).toEqual('Search')
     })
 
@@ -145,8 +151,10 @@ describe('RegionSearchForm component', () => {
 
       expect(enzymeWrapper.find('.region-search__selected-region')
         .length).toEqual(1)
+
       expect(enzymeWrapper.find('.region-search__selected-region-id')
         .text()).toEqual('HUC 12341231235')
+
       expect(enzymeWrapper.find('.region-search__selected-region-name')
         .text()).toEqual('(Upper Cayote Creek)')
     })

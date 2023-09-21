@@ -10,7 +10,7 @@ export const collectionResultsTotal = [
 ]
 
 export const collectionResultsItemSkeleton = [
-  // image box
+  // Image box
   {
     shape: 'rectangle',
     top: 2,
@@ -77,7 +77,7 @@ export const collectionResultsItemSkeleton = [
     width: '210px',
     radius: 3
   },
-  // side buttons
+  // Side buttons
   {
     shape: 'rectangle',
     top: 2,

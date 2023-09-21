@@ -7,10 +7,11 @@
  */
 export const addToast = (content, options) => {
   try {
-    // the add method referenced from the ToastProvider in App.js
+    // The add method referenced from the ToastProvider in App.js
     const { add } = window.reactToastProvider.current
     if (!add) {
       console.error('Add toast method not available.')
+
       return
     }
 

@@ -1,7 +1,5 @@
 import orderReducer from '../retrieval'
-import {
-  UPDATE_RETRIEVAL
-} from '../../constants/actionTypes'
+import { UPDATE_RETRIEVAL } from '../../constants/actionTypes'
 
 const initialState = {
   id: null,

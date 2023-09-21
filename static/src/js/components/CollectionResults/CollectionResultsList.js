@@ -21,6 +21,7 @@ import './CollectionResultsList.scss'
  */
 const innerElementType = forwardRef(({ children, ...rest }, ref) => {
   const { style } = rest
+
   return (
     <ul
       className="collection-results-list__list"
@@ -83,9 +84,13 @@ export const CollectionResultsList = ({
     }
   }, [listRef.current])
 
-  // setSize sets the size in the sizeMap to the height passed from the item.
+  // `setSize` sets the size in the sizeMap to the height passed from the item.
   const setSize = useCallback((index, size) => {
-    sizeMap.current = { ...sizeMap.current, [index]: size }
+    sizeMap.current = {
+      ...sizeMap.current,
+      [index]: size
+    }
+
     // Reset the items after the index of the item.
     listRef.current.resetAfterIndex(index, true)
   }, [])
@@ -96,7 +101,14 @@ export const CollectionResultsList = ({
 
   return (
     <div className="collection-results-list">
-      <AutoSizer style={{ position: 'relative', height: '100%', width: '100%' }}>
+      <AutoSizer style={
+        {
+          position: 'relative',
+          height: '100%',
+          width: '100%'
+        }
+      }
+      >
         {
           ({ height, width }) => (
             <InfiniteLoader
@@ -109,26 +121,30 @@ export const CollectionResultsList = ({
               {
                 ({ onItemsRendered, ref }) => (
                   <List
-                    ref={(list) => {
-                      ref(list)
-                      listRef.current = list
-                    }}
+                    ref={
+                      (list) => {
+                        ref(list)
+                        listRef.current = list
+                      }
+                    }
                     height={height}
                     width={width}
                     innerElementType={innerElementType}
                     itemCount={itemCount}
                     itemSize={getSize}
-                    itemData={{
-                      windowHeight: height,
-                      windowWidth: width,
-                      collectionsMetadata,
-                      onAddProjectCollection,
-                      onRemoveCollectionFromProject,
-                      onViewCollectionGranules,
-                      onViewCollectionDetails,
-                      isItemLoaded,
-                      setSize
-                    }}
+                    itemData={
+                      {
+                        windowHeight: height,
+                        windowWidth: width,
+                        collectionsMetadata,
+                        onAddProjectCollection,
+                        onRemoveCollectionFromProject,
+                        onViewCollectionGranules,
+                        onViewCollectionDetails,
+                        isItemLoaded,
+                        setSize
+                      }
+                    }
                     onItemsRendered={
                       (data) => {
                         const {

@@ -122,7 +122,10 @@ describe('layers util', () => {
         points: ['-77 34']
       }
 
-      expect(getPoints(metadata)).toEqual([{ lat: -77, lng: 34 }])
+      expect(getPoints(metadata)).toEqual([{
+        lat: -77,
+        lng: 34
+      }])
     })
 
     test('returns an empty array if no points exist', () => {
@@ -139,11 +142,26 @@ describe('layers util', () => {
       const expectedResult = [
         [
           [
-            { lat: -10, lng: -162.4683 },
-            { lat: -10.013, lng: -151.7155 },
-            { lat: -0.0009, lng: -149.4309 },
-            { lat: 0.015, lng: -160.0162 },
-            { lat: -10, lng: -162.4683 }
+            {
+              lat: -10,
+              lng: -162.4683
+            },
+            {
+              lat: -10.013,
+              lng: -151.7155
+            },
+            {
+              lat: -0.0009,
+              lng: -149.4309
+            },
+            {
+              lat: 0.015,
+              lng: -160.0162
+            },
+            {
+              lat: -10,
+              lng: -162.4683
+            }
           ]
         ]
       ]
@@ -165,9 +183,18 @@ describe('layers util', () => {
 
       const expectedResult = [
         [
-          { lat: -10, lng: -162.4683 },
-          { lat: -10.013, lng: -151.7155 },
-          { lat: -0.0009, lng: -149.4309 }
+          {
+            lat: -10,
+            lng: -162.4683
+          },
+          {
+            lat: -10.013,
+            lng: -151.7155
+          },
+          {
+            lat: -0.0009,
+            lng: -149.4309
+          }
         ]
       ]
 
@@ -187,19 +214,46 @@ describe('layers util', () => {
 
       const displayLines = [
         [
-          { lat: -13.82617, lng: -179.9929199 },
-          { lat: -13.83186160484635, lng: -180 }
+          {
+            lat: -13.82617,
+            lng: -179.9929199
+          },
+          {
+            lat: -13.83186160484635,
+            lng: -180
+          }
         ],
         [
-          { lat: -13.83186160484635, lng: 180 },
-          { lat: -14.6191406, lng: 179.0206604 },
-          { lat: -14.6336308, lng: 179.0071869 },
-          { lat: -14.6506786, lng: 178.9971924 },
-          { lat: -12.314806812874746, lng: 180 }
+          {
+            lat: -13.83186160484635,
+            lng: 180
+          },
+          {
+            lat: -14.6191406,
+            lng: 179.0206604
+          },
+          {
+            lat: -14.6336308,
+            lng: 179.0071869
+          },
+          {
+            lat: -14.6506786,
+            lng: 178.9971924
+          },
+          {
+            lat: -12.314806812874746,
+            lng: 180
+          }
         ],
         [
-          { lat: -12.314806812874746, lng: -180 },
-          { lat: -9.5883198, lng: -178.8294983 }
+          {
+            lat: -12.314806812874746,
+            lng: -180
+          },
+          {
+            lat: -9.5883198,
+            lng: -178.8294983
+          }
         ]
       ]
       expect(getLines(metadata)).toEqual(displayLines)
@@ -214,11 +268,26 @@ describe('layers util', () => {
 
       const expectedResult = [
         [
-          { lat: -81.15, lng: 141.81 },
-          { lat: -81.15, lng: 180 },
-          { lat: 81.15, lng: 180 },
-          { lat: 81.15, lng: 141.81 },
-          { lat: -81.15, lng: 141.81 }
+          {
+            lat: -81.15,
+            lng: 141.81
+          },
+          {
+            lat: -81.15,
+            lng: 180
+          },
+          {
+            lat: 81.15,
+            lng: 180
+          },
+          {
+            lat: 81.15,
+            lng: 141.81
+          },
+          {
+            lat: -81.15,
+            lng: 141.81
+          }
         ]
       ]
 
@@ -247,7 +316,10 @@ describe('layers util', () => {
       buildLayer({}, metadata)
 
       expect(circleMarkerMock).toBeCalledTimes(1)
-      expect(circleMarkerMock).toBeCalledWith({ lat: -77, lng: 34 }, {})
+      expect(circleMarkerMock).toBeCalledWith({
+        lat: -77,
+        lng: 34
+      }, {})
     })
 
     describe('with polygon spatial', () => {
@@ -264,11 +336,26 @@ describe('layers util', () => {
         expect(polygon).toBeCalledTimes(1)
         expect(polygon).toBeCalledWith([
           [
-            { lat: -10, lng: -162.4683 },
-            { lat: -10.013, lng: -151.7155 },
-            { lat: -0.0009, lng: -149.4309 },
-            { lat: 0.015, lng: -160.0162 },
-            { lat: -10, lng: -162.4683 }]
+            {
+              lat: -10,
+              lng: -162.4683
+            },
+            {
+              lat: -10.013,
+              lng: -151.7155
+            },
+            {
+              lat: -0.0009,
+              lng: -149.4309
+            },
+            {
+              lat: 0.015,
+              lng: -160.0162
+            },
+            {
+              lat: -10,
+              lng: -162.4683
+            }]
         ])
       })
 
@@ -284,11 +371,26 @@ describe('layers util', () => {
         expect(sphericalPolygonMock).toBeCalledTimes(1)
         expect(sphericalPolygonMock).toBeCalledWith([
           [
-            { lat: -10, lng: -162.4683 },
-            { lat: -10.013, lng: -151.7155 },
-            { lat: -0.0009, lng: -149.4309 },
-            { lat: 0.015, lng: -160.0162 },
-            { lat: -10, lng: -162.4683 }]
+            {
+              lat: -10,
+              lng: -162.4683
+            },
+            {
+              lat: -10.013,
+              lng: -151.7155
+            },
+            {
+              lat: -0.0009,
+              lng: -149.4309
+            },
+            {
+              lat: 0.015,
+              lng: -160.0162
+            },
+            {
+              lat: -10,
+              lng: -162.4683
+            }]
         ], {})
       })
     })
@@ -304,9 +406,18 @@ describe('layers util', () => {
 
       expect(polylineMock).toBeCalledTimes(1)
       expect(polylineMock).toBeCalledWith([
-        { lat: -10, lng: -162.4683 },
-        { lat: -10.013, lng: -151.7155 },
-        { lat: -0.0009, lng: -149.4309 }
+        {
+          lat: -10,
+          lng: -162.4683
+        },
+        {
+          lat: -10.013,
+          lng: -151.7155
+        },
+        {
+          lat: -0.0009,
+          lng: -149.4309
+        }
       ], {})
     })
 
@@ -322,11 +433,26 @@ describe('layers util', () => {
 
       expect(polygonMock).toBeCalledTimes(1)
       expect(polygonMock).toBeCalledWith([
-        { lat: -81.15, lng: 141.81 },
-        { lat: -81.15, lng: 180 },
-        { lat: 81.15, lng: 180 },
-        { lat: 81.15, lng: 141.81 },
-        { lat: -81.15, lng: 141.81 }
+        {
+          lat: -81.15,
+          lng: 141.81
+        },
+        {
+          lat: -81.15,
+          lng: 180
+        },
+        {
+          lat: 81.15,
+          lng: 180
+        },
+        {
+          lat: 81.15,
+          lng: 141.81
+        },
+        {
+          lat: -81.15,
+          lng: 141.81
+        }
       ], {})
     })
 
@@ -342,11 +468,26 @@ describe('layers util', () => {
 
       expect(sphericalPolygonMock).toBeCalledTimes(1)
       expect(sphericalPolygonMock).toBeCalledWith([
-        { lat: -81.15, lng: 141.81 },
-        { lat: -81.15, lng: 180 },
-        { lat: 81.15, lng: 180 },
-        { lat: 81.15, lng: 141.81 },
-        { lat: -81.15, lng: 141.81 }
+        {
+          lat: -81.15,
+          lng: 141.81
+        },
+        {
+          lat: -81.15,
+          lng: 180
+        },
+        {
+          lat: 81.15,
+          lng: 180
+        },
+        {
+          lat: 81.15,
+          lng: 141.81
+        },
+        {
+          lat: -81.15,
+          lng: 141.81
+        }
       ], {})
     })
   })

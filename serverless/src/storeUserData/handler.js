@@ -43,7 +43,10 @@ const storeUserData = async (event, context) => {
         'refresh_token',
         'expires_at'
       ])
-      .where({ user_id: userId, environment })
+      .where({
+        user_id: userId,
+        environment
+      })
       .orderBy('created_at', 'DESC')
 
     let ursUserData // URS user Profile
@@ -63,8 +66,8 @@ const storeUserData = async (event, context) => {
 
         // If we successfully retrieved URS data add the response to the database payload
         userPayload.urs_profile = ursUserData
-      } catch (e) {
-        parseError(e, { logPrefix: '[StoreUserData Error] (URS Profile)' })
+      } catch (error) {
+        parseError(error, { logPrefix: '[StoreUserData Error] (URS Profile)' })
       }
 
       const dbResponse = await dbConnection('users').update({ ...userPayload }).where({ id: userId })

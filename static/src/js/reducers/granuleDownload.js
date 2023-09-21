@@ -1,4 +1,8 @@
-import { UPDATE_GRANULE_LINKS, SET_GRANULE_LINKS_LOADING, SET_GRANULE_LINKS_LOADED } from '../constants/actionTypes'
+import {
+  UPDATE_GRANULE_LINKS,
+  SET_GRANULE_LINKS_LOADING,
+  SET_GRANULE_LINKS_LOADED
+} from '../constants/actionTypes'
 
 const initialState = {
   isLoading: false,
@@ -44,6 +48,7 @@ const updateGranuleDownloadParamsReducer = (state = initialState, action = {}) =
         }
       }
     }
+
     case SET_GRANULE_LINKS_LOADING: {
       return {
         ...state,
@@ -51,6 +56,7 @@ const updateGranuleDownloadParamsReducer = (state = initialState, action = {}) =
         isLoaded: false
       }
     }
+
     case SET_GRANULE_LINKS_LOADED: {
       return {
         ...state,
@@ -58,6 +64,7 @@ const updateGranuleDownloadParamsReducer = (state = initialState, action = {}) =
         isLoaded: true
       }
     }
+
     default:
       return state
   }

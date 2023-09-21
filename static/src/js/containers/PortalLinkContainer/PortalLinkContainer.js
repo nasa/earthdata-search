@@ -63,9 +63,13 @@ export const PortalLinkContainer = (props) => {
       search: search ? `?${search}` : search
     }
   }
+
   const { search } = objectTo
 
-  const params = parse(search, { parseArrays: false, ignoreQueryPrefix: true })
+  const params = parse(search, {
+    parseArrays: false,
+    ignoreQueryPrefix: true
+  })
 
   // Determine what the newPortalId should be
   const newPortalId = getPortalId()
@@ -91,9 +95,12 @@ export const PortalLinkContainer = (props) => {
 
     // If the updatePath prop was true, call onChangePath
     if (updatePath) {
-      const { pathname, search } = newTo
+      const {
+        pathname,
+        search: newSearch
+      } = newTo
 
-      onChangePath(`${pathname}${search}`)
+      onChangePath(`${pathname}${newSearch}`)
     }
   }
 
@@ -101,13 +108,6 @@ export const PortalLinkContainer = (props) => {
     // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button#answer-49439893
     const {
       history,
-      location,
-      to,
-      match,
-      portal,
-      staticContext,
-      target,
-      onClick,
       ...rest
     } = props
 
@@ -115,10 +115,12 @@ export const PortalLinkContainer = (props) => {
       <Button
         type="button"
         {...rest}
-        onClick={(event) => {
-          onClickWithChangePath(event)
-          history.push(newTo)
-        }}
+        onClick={
+          (event) => {
+            onClickWithChangePath(event)
+            history.push(newTo)
+          }
+        }
       />
     )
   }

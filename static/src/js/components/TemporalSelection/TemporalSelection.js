@@ -99,31 +99,6 @@ export class TemporalSelection extends Component {
     return value
   }
 
-  // recurringSliderValues() {
-  //   const { temporal } = this.props
-
-  //   const {
-  //     startDate,
-  //     endDate
-  //   } = temporal
-
-  //   const { minimumTemporalDate } = getApplicationConfig()
-
-  //   try {
-  //     return {
-  //       min: startDate.getFullYear(),
-  //       max: endDate.getFullYear()
-  //     }
-  //   } catch (e) {
-  //     console.log(e)
-
-  //     return {
-  //       min: moment(minimumTemporalDate).year(),
-  //       max: new Date().getFullYear()
-  //     }
-  //   }
-  // }
-
   render() {
     const {
       allowRecurring,
@@ -234,9 +209,7 @@ export class TemporalSelection extends Component {
               </Alert>
               <Alert
                 variant="danger"
-                show={
-                  validation.invalidStartDate || validation.invalidEndDate
-                }
+                show={validation.invalidStartDate || validation.invalidEndDate}
               >
                 Invalid
                 {` ${validation.invalidStartDate ? 'start' : 'end'} `}
@@ -277,10 +250,12 @@ export class TemporalSelection extends Component {
                 minValue={minimumTemporalDate.year()}
                 maxValue={parseInt(new Date().getFullYear(), 10)}
                 formatLabel={() => null}
-                value={{
-                  min: sliderStartDate.year(),
-                  max: moment(temporal.endDate || undefined).year()
-                }}
+                value={
+                  {
+                    min: sliderStartDate.year(),
+                    max: moment(temporal.endDate || undefined).year()
+                  }
+                }
                 onChange={(value) => onChangeRecurring(value)}
               />
             </Form.Group>

@@ -6,7 +6,6 @@ const uploadShapefile = async (page, filename) => {
 
   await page.route(/convert/, async (route) => {
     await route.fulfill({
-      // json: buffer,
       body: buffer,
       headers: { 'content-type': 'application/json; charset=utf-8' }
     })
@@ -19,6 +18,7 @@ const uploadShapefile = async (page, filename) => {
     // Convert the buffer to a hex array
     const file = new File([data.toString('hex')], 'test.geojson', { type: 'application/json' })
     dt.items.add(file)
+
     return dt
   }, buffer)
 

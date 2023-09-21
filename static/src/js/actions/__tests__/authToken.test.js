@@ -4,7 +4,11 @@ import nock from 'nock'
 import * as tinyCookie from 'tiny-cookie'
 
 import { UPDATE_AUTH } from '../../constants/actionTypes'
-import { logout, updateAuthToken, updateAuthTokenFromHeaders } from '../authToken'
+import {
+  logout,
+  updateAuthToken,
+  updateAuthTokenFromHeaders
+} from '../authToken'
 
 const mockStore = configureMockStore([thunk])
 
@@ -31,13 +35,13 @@ describe('updateAuthTokenFromHeaders', () => {
       'jwt-token': token
     }
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: '',
       earthdataEnvironment: 'prod'
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(updateAuthTokenFromHeaders(payload))
 
     const storeActions = store.getActions()
@@ -48,13 +52,13 @@ describe('updateAuthTokenFromHeaders', () => {
   })
 
   test('should not remove the authToken if a header token is not available', () => {
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: 'authToken-token',
       earthdataEnvironment: 'prod'
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(updateAuthTokenFromHeaders({}))
 
     const storeActions = store.getActions()

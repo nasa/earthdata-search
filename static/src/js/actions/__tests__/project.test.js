@@ -335,6 +335,7 @@ describe('getProjectCollections', () => {
         methods: {}
       }
     })
+
     expect(storeActions[1]).toEqual({
       type: ADD_ACCESS_METHODS,
       payload: {
@@ -342,6 +343,7 @@ describe('getProjectCollections', () => {
         methods: {}
       }
     })
+
     expect(storeActions[2]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
@@ -533,6 +535,7 @@ describe('getProjectCollections', () => {
         title: 'Error retrieving saved access configurations'
       })
     })
+
     expect(storeActions[1]).toEqual({
       type: ADD_ACCESS_METHODS,
       payload: {
@@ -540,6 +543,7 @@ describe('getProjectCollections', () => {
         methods: {}
       }
     })
+
     expect(storeActions[2]).toEqual({
       type: ADD_ACCESS_METHODS,
       payload: {
@@ -547,6 +551,7 @@ describe('getProjectCollections', () => {
         methods: {}
       }
     })
+
     expect(storeActions[3]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
@@ -658,6 +663,7 @@ describe('getProjectCollections', () => {
           methods: {}
         }
       })
+
       expect(storeActions[1]).toEqual({
         type: ADD_ACCESS_METHODS,
         payload: {
@@ -665,6 +671,7 @@ describe('getProjectCollections', () => {
           methods: {}
         }
       })
+
       expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [

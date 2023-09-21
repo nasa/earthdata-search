@@ -16,8 +16,8 @@ export class AdminRetrievalsForm extends Component {
     this.onChange = this.onChange.bind(this)
   }
 
-  onBlur(e) {
-    e.preventDefault()
+  onBlur(event) {
+    event.preventDefault()
   }
 
   onChange({ target }) {
@@ -25,8 +25,8 @@ export class AdminRetrievalsForm extends Component {
     this.setState({ retrievalId: value })
   }
 
-  onFormSubmit(e) {
-    e.preventDefault()
+  onFormSubmit(event) {
+    event.preventDefault()
 
     const { retrievalId } = this.state
     const { onAdminViewRetrieval } = this.props

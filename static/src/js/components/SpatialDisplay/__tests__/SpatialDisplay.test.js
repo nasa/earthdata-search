@@ -362,11 +362,23 @@ describe('SpatialDisplay component', () => {
 
       enzymeWrapper.setState({ manuallyEntering: 'rectangle' })
 
-      enzymeWrapper.instance().onChangeBoundingBoxSearch({ target: { value: '10,20', name: 'swPoint' } })
+      enzymeWrapper.instance().onChangeBoundingBoxSearch({
+        target: {
+          value: '10,20',
+          name: 'swPoint'
+        }
+      })
+
       expect(enzymeWrapper.state().boundingBoxSearch).toEqual(['10,20', ''])
       expect(enzymeWrapper.state().error).toEqual('')
 
-      enzymeWrapper.instance().onChangeBoundingBoxSearch({ target: { value: '30,40', name: 'nePoint' } })
+      enzymeWrapper.instance().onChangeBoundingBoxSearch({
+        target: {
+          value: '30,40',
+          name: 'nePoint'
+        }
+      })
+
       expect(enzymeWrapper.state().boundingBoxSearch).toEqual(['10,20', '30,40'])
       expect(enzymeWrapper.state().error).toEqual('')
     })

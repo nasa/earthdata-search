@@ -23,9 +23,9 @@ function setup(overrideProps) {
 }
 
 describe('EDSCAlert component', () => {
-  const { enzymeWrapper } = setup()
-
   test('should render the alert', () => {
+    const { enzymeWrapper } = setup()
+
     expect(enzymeWrapper.type()).toEqual(Alert)
     expect(enzymeWrapper.prop('className')).toContain('edsc-alert')
   })

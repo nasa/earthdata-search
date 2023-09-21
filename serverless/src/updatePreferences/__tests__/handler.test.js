@@ -12,7 +12,10 @@ let dbTracker
 beforeEach(() => {
   jest.clearAllMocks()
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: 1, username: 'testuser' }))
+  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({
+    id: 1,
+    username: 'testuser'
+  }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
@@ -95,6 +98,7 @@ describe('updatePreferences', () => {
     dbTracker.on('query', (query) => {
       query.reject('Unknown Error')
     })
+
     const preferences = {
       panelState: 'default',
       collectionListView: 'default',

@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, OrderStatusContainer } from '../OrderStatusContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  OrderStatusContainer
+} from '../OrderStatusContainer'
 import OrderStatus from '../../../components/OrderStatus/OrderStatus'
 import * as metricsActions from '../../../middleware/metrics/actions'
 
@@ -162,8 +166,10 @@ describe('OrderStatusContainer component', () => {
       expect(enzymeWrapper.find(OrderStatus).props().authToken).toEqual(props.authToken)
       expect(enzymeWrapper.find(OrderStatus).props().onFetchRetrieval)
         .toEqual(props.onFetchRetrieval)
+
       expect(enzymeWrapper.find(OrderStatus).props().onFetchRetrievalCollection)
         .toEqual(props.onFetchRetrievalCollection)
+
       expect(enzymeWrapper.find(OrderStatus).props().onChangePath).toEqual(props.onChangePath)
       expect(enzymeWrapper.find(OrderStatus).props().retrieval).toEqual(props.retrieval)
     })

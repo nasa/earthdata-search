@@ -59,6 +59,7 @@ export const getSystemToken = async () => {
       })
     } catch (error) {
       console.log('Error retrieving token', error)
+
       return null
     }
 
@@ -83,5 +84,6 @@ export const getSystemToken = async () => {
 
   // If the token is less than a day old, return the token
   console.log('Retrieved existing system token')
+
   return token
 }

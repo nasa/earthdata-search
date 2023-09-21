@@ -128,7 +128,7 @@ export default class OpenSearchGranuleRequest extends Request {
           date: temporal,
           id,
           summary,
-          title,
+          title: granuleTitle,
           updated
         } = granule
 
@@ -174,9 +174,9 @@ export default class OpenSearchGranuleRequest extends Request {
           }
         }
 
-        if (title) {
-          if (typeof title === 'object' && title !== null) {
-            const { '#text': text } = title
+        if (granuleTitle) {
+          if (typeof granuleTitle === 'object' && granuleTitle !== null) {
+            const { '#text': text } = granuleTitle
 
             updatedGranule.title = text
           }
@@ -224,14 +224,14 @@ export default class OpenSearchGranuleRequest extends Request {
           hits: totalResults
         }
       }
-    } catch (e) {
+    } catch (error) {
       const { errors = [] } = data
       if (errors.length > 0) {
         return data
       }
 
       return {
-        errors: [e]
+        errors: [error]
       }
     }
   }

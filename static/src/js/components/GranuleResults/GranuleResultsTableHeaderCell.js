@@ -44,8 +44,8 @@ const GranuleResultsTableHeaderCell = (props) => {
 
   const { value } = cell
 
-  const handleFilterClick = (id) => {
-    let granuleId = id
+  const handleFilterClick = (newGranuleId) => {
+    let granuleId = newGranuleId
 
     if (isOpenSearch) granuleId = murmurhash3(id).toString()
 
@@ -75,15 +75,17 @@ const GranuleResultsTableHeaderCell = (props) => {
                   title="Add granule"
                   icon={FaPlus}
                   iconSize="0.75rem"
-                  onClick={(e) => {
-                    onAddGranuleToProjectCollection({
-                      collectionId,
-                      granuleId: id
-                    })
+                  onClick={
+                    (event) => {
+                      onAddGranuleToProjectCollection({
+                        collectionId,
+                        granuleId: id
+                      })
 
-                    // Prevent event bubbling up to the granule focus event.
-                    e.stopPropagation()
-                  }}
+                      // Prevent event bubbling up to the granule focus event.
+                      event.stopPropagation()
+                    }
+                  }
                 />
               )
               : (
@@ -94,15 +96,17 @@ const GranuleResultsTableHeaderCell = (props) => {
                   title="Remove granule"
                   icon={FaMinus}
                   iconSize="0.75rem"
-                  onClick={(e) => {
-                    onRemoveGranuleFromProjectCollection({
-                      collectionId,
-                      granuleId: id
-                    })
+                  onClick={
+                    (event) => {
+                      onRemoveGranuleFromProjectCollection({
+                        collectionId,
+                        granuleId: id
+                      })
 
-                    // Prevent event bubbling up to the granule focus event.
-                    e.stopPropagation()
-                  }}
+                      // Prevent event bubbling up to the granule focus event.
+                      event.stopPropagation()
+                    }
+                  }
                 />
               )
           }
@@ -123,13 +127,17 @@ const GranuleResultsTableHeaderCell = (props) => {
           className="granule-results-table__granule-action granule-results-table__more-actions-dropdown"
         >
           <LinkContainer
-            onClick={() => {
-              onFocusedGranuleChange(id)
-            }}
-            to={{
-              pathname: '/search/granules/granule-details',
-              search: location.search
-            }}
+            onClick={
+              () => {
+                onFocusedGranuleChange(id)
+              }
+            }
+            to={
+              {
+                pathname: '/search/granules/granule-details',
+                search: location.search
+              }
+            }
           >
             <MoreActionsDropdownItem
               title="View details"
@@ -139,10 +147,12 @@ const GranuleResultsTableHeaderCell = (props) => {
           <MoreActionsDropdownItem
             title="Filter granule"
             icon={FaTimesCircle}
-            onClick={(e) => {
-              handleFilterClick(id)
-              e.stopPropagation()
-            }}
+            onClick={
+              (event) => {
+                handleFilterClick(id)
+                event.stopPropagation()
+              }
+            }
           />
         </MoreActionsDropdown>
       </div>

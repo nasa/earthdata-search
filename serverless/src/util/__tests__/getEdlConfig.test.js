@@ -52,7 +52,7 @@ describe('getEdlConfig', () => {
 
     jest.clearAllMocks()
 
-    // call getEdlConfig again for a different value to ensure the cached value isn't being passed for the new env
+    // Call getEdlConfig again for a different value to ensure the cached value isn't being passed for the new env
     const uatResponse = await getEdlConfig('uat')
 
     expect(uatResponse).toEqual({

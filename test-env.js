@@ -20,7 +20,7 @@ const { error } = console
 
 const consoleError = function errorOverride(message) {
   // eslint-disable-next-line prefer-rest-params
-  error.apply(console, arguments) // keep default behaviour
+  error.apply(console, arguments) // Keep default behaviour
   throw (message instanceof Error ? message : new Error(message))
 }
 

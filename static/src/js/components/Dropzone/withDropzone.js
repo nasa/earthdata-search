@@ -48,12 +48,14 @@ export const withDropzone = (WrappedComponent) => {
       this.dropzone.on('success', (file, response) => {
         this.onSuccess(file, response, this.dropzone)
       })
+
       if (onRemovedFile) this.dropzone.on('removedfile', this.onRemovedFile)
       if (onError) {
         this.dropzone.on('error', (file) => {
           this.onError(file)
         })
       }
+
       eventEmitter.on(`${eventScope}.dropzoneOpen`, this.onDropzoneOpen)
     }
 
@@ -140,6 +142,7 @@ export const withDropzone = (WrappedComponent) => {
         },
         className
       ])
+
       return ReactDOM.createPortal(
         <WrappedComponent
           ref={this.childRef}

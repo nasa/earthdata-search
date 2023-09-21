@@ -80,7 +80,10 @@ describe('GranuleResultsTableHeaderCell component', () => {
     })
 
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledTimes(1)
-    expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledWith({ collectionId: 'collectionId', granuleId: 'one' })
+    expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledWith({
+      collectionId: 'collectionId',
+      granuleId: 'one'
+    })
   })
 
   test('clicking the remove from granule button calls onExcludeGranule with a hashed id for CWIC collections', () => {
@@ -104,7 +107,10 @@ describe('GranuleResultsTableHeaderCell component', () => {
     })
 
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledTimes(1)
-    expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledWith({ collectionId: 'collectionId', granuleId: '2257684172' })
+    expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledWith({
+      collectionId: 'collectionId',
+      granuleId: '2257684172'
+    })
   })
 
   test('renders the add button under PortalFeatureContainer', () => {

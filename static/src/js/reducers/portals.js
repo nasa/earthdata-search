@@ -11,6 +11,7 @@ const portalsReducer = (state = initialState, action = {}) => {
 
       return portal
     }
+
     default:
       return state
   }

@@ -68,16 +68,17 @@ const getContactInfo = async (event, context) => {
       headers: defaultResponseHeaders,
       body: JSON.stringify(contactInfoData)
     }
-  } catch (e) {
+  } catch (error) {
     console.log({
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     })
+
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

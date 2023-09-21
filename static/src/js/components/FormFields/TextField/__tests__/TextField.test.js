@@ -33,7 +33,13 @@ describe('TextField component', () => {
     const { enzymeWrapper, props } = setup()
     const input = enzymeWrapper.find('input')
 
-    input.simulate('change', { target: { name: 'testName', value: 'new value' } })
+    input.simulate('change', {
+      target: {
+        name: 'testName',
+        value: 'new value'
+      }
+    })
+
     expect(props.onChange.mock.calls.length).toBe(1)
     expect(props.onChange.mock.calls[0]).toEqual(['testName', 'new value'])
   })

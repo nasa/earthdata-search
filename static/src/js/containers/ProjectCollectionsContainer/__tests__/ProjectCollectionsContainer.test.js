@@ -5,7 +5,11 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import projections from '../../../util/map/projections'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, ProjectCollectionsContainer } from '../ProjectCollectionsContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  ProjectCollectionsContainer
+} from '../ProjectCollectionsContainer'
 import ProjectCollections from '../../../components/ProjectCollections/ProjectCollections'
 import * as metricsDataAccess from '../../../middleware/metrics/actions'
 
@@ -211,14 +215,17 @@ describe('ProjectCollectionsContainer component', () => {
         }
       }
     })
+
     expect(enzymeWrapper.find(ProjectCollections).props().projectCollectionsMetadata).toEqual({
       collectionId: {
         mock: 'data'
       }
     })
+
     expect(enzymeWrapper.find(ProjectCollections).props().projectCollectionsIds).toEqual(
       ['collectionId']
     )
+
     expect(typeof enzymeWrapper.find(ProjectCollections).props().onRemoveCollectionFromProject).toEqual('function')
   })
 })

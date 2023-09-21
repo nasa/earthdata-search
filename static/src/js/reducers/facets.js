@@ -22,6 +22,7 @@ const facetsReducer = (state = initialState, action = {}) => {
         isLoaded: false
       }
     }
+
     case LOADED_FACETS: {
       return {
         ...state,
@@ -29,6 +30,7 @@ const facetsReducer = (state = initialState, action = {}) => {
         isLoaded: action.payload.loaded
       }
     }
+
     case UPDATE_FACETS: {
       const byId = {}
       const allIds = []
@@ -44,6 +46,7 @@ const facetsReducer = (state = initialState, action = {}) => {
         allIds
       }
     }
+
     default:
       return state
   }

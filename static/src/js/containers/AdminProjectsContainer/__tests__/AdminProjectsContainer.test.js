@@ -4,7 +4,11 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
 import AdminProjects from '../../../components/AdminProjects/AdminProjects'
-import { AdminProjectsContainer, mapDispatchToProps, mapStateToProps } from '../AdminProjectsContainer'
+import {
+  AdminProjectsContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../AdminProjectsContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 

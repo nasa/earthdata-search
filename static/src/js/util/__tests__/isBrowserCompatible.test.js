@@ -14,6 +14,7 @@ describe('isBrowserCompatible', () => {
         name: 'ie',
         versionNumber: 10
       }))
+
       const result = isBrowserCompatible()
 
       expect(result).toEqual(false)
@@ -27,6 +28,7 @@ describe('isBrowserCompatible', () => {
         name: 'ie',
         versionNumber: 10
       }))
+
       const result = isBrowserCompatible()
 
       expect(result).toEqual(false)
@@ -40,6 +42,7 @@ describe('isBrowserCompatible', () => {
         name: 'chrome',
         versionNumber: 50
       }))
+
       const result = isBrowserCompatible()
 
       expect(result).toEqual(true)

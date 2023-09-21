@@ -6,6 +6,7 @@ import { getApplicationConfig } from '../../../../sharedUtils/config'
  */
 export const limitDecimalPoints = (latLng) => {
   const { defaultSpatialDecimalSize } = getApplicationConfig()
+
   return latLng.map((point) => Number(parseFloat(point).toFixed(defaultSpatialDecimalSize)))
 }
 
@@ -15,5 +16,6 @@ export const limitDecimalPoints = (latLng) => {
  */
 export const limitLatLngDecimalPoints = (latLngs) => latLngs.map((latLng) => {
   const points = latLng.split(',')
+
   return limitDecimalPoints(points).join(',')
 })

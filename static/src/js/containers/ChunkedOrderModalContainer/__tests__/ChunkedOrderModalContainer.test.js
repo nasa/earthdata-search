@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { ChunkedOrderModalContainer, mapDispatchToProps, mapStateToProps } from '../ChunkedOrderModalContainer'
+import {
+  ChunkedOrderModalContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../ChunkedOrderModalContainer'
 import ChunkedOrderModal from '../../../components/ChunkedOrderModal/ChunkedOrderModal'
 
 Enzyme.configure({ adapter: new Adapter() })

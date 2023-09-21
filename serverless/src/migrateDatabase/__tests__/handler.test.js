@@ -27,6 +27,7 @@ beforeEach(() => {
   jest.spyOn(getDbConnectionConfig, 'getDbConnectionConfig').mockImplementation(() => ({
     client: 'pg'
   }))
+
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     const dbCon = knex({
       client: 'pg',

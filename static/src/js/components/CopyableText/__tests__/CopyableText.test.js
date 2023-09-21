@@ -102,6 +102,7 @@ describe('CopyableText', () => {
               writeText: () => {}
             }
           })
+
           const addToastMock = jest.spyOn(addToast, 'addToast')
 
           const { enzymeWrapper } = setup({
@@ -126,6 +127,7 @@ describe('CopyableText', () => {
                 writeText: () => {}
               }
             })
+
             const addToastMock = jest.spyOn(addToast, 'addToast')
 
             const { enzymeWrapper } = setup({
@@ -182,6 +184,7 @@ describe('CopyableText', () => {
               writeText: () => {}
             }
           })
+
           const addToastMock = jest.spyOn(addToast, 'addToast')
 
           const { enzymeWrapper } = setup({
@@ -306,6 +309,7 @@ describe('CopyableText', () => {
             writeText: () => {}
           }
         })
+
         jest.spyOn(navigator.clipboard, 'writeText')
 
         const { enzymeWrapper } = setup({
@@ -330,6 +334,7 @@ describe('CopyableText', () => {
               writeText: () => {}
             }
           })
+
           jest.spyOn(navigator.clipboard, 'writeText')
 
           const { enzymeWrapper } = setup({
@@ -354,6 +359,7 @@ describe('CopyableText', () => {
               writeText: () => {}
             }
           })
+
           jest.spyOn(navigator.clipboard, 'writeText')
 
           const textToCopyMock = jest.fn(() => 'Some other text to copy')
@@ -378,6 +384,7 @@ describe('CopyableText', () => {
               writeText: () => {}
             }
           })
+
           jest.spyOn(navigator.clipboard, 'writeText')
 
           const textToCopyMock = jest.fn(({ text }) => `Some other text to copy: ${text}`)

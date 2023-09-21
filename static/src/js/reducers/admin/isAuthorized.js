@@ -7,6 +7,7 @@ const adminIsAuthorizedReducer = (state = initialState, action = {}) => {
     case SET_ADMIN_IS_AUTHORIZED: {
       return action.payload
     }
+
     default:
       return state
   }

@@ -67,12 +67,14 @@ describe('ProjectCollectionsList component', () => {
     expect(enzymeWrapper.find(ProjectCollectionItem).first().props().collectionMetadata).toEqual({
       mock: 'data 1'
     })
+
     expect(typeof enzymeWrapper.find(ProjectCollectionItem).first().props().onRemoveCollectionFromProject).toEqual('function')
 
     expect(enzymeWrapper.find(ProjectCollectionItem).last().props().collectionId).toEqual('collectionId2')
     expect(enzymeWrapper.find(ProjectCollectionItem).last().props().collectionMetadata).toEqual({
       mock: 'data 2'
     })
+
     expect(typeof enzymeWrapper.find(ProjectCollectionItem).last().props().onRemoveCollectionFromProject).toEqual('function')
   })
 })

@@ -91,7 +91,7 @@ export const getProjectionCapabilities = async (projection) => {
       statusCode: gibsResponse.status,
       body: JSON.stringify(colormapProducts)
     }
-  } catch (e) {
-    return parseError(e)
+  } catch (error) {
+    return parseError(error)
   }
 }

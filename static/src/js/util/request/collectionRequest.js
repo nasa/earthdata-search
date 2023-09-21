@@ -6,7 +6,9 @@ import {
 } from '../../../../../sharedUtils/config'
 
 import { collectionRequestPermittedCmrKeys } from '../../../../../sharedConstants/permittedCmrKeys'
-import { collectionRequestNonIndexedCmrKeys } from '../../../../../sharedConstants/nonIndexedCmrKeys'
+import {
+  collectionRequestNonIndexedCmrKeys
+} from '../../../../../sharedConstants/nonIndexedCmrKeys'
 
 import { hasTag } from '../../../../../sharedUtils/tags'
 import { isCSDACollection } from '../isCSDACollection'

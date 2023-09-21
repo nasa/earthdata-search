@@ -24,7 +24,7 @@ export const encodeTimeline = (timelineQuery, pathname) => {
   const encodedEnd = end ? end / 1000 : ''
 
   const encodedString = [center / 1000, timelineIntervals[interval], encodedStart, encodedEnd].join('!')
-  // if there is no center, return an empty string
+  // If there is no center, return an empty string
   if (encodedString[0] === '!') return ''
 
   return {

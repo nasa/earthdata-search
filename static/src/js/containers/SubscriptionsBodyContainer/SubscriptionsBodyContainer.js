@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {
-  withRouter
-} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions/index'
 
-import { getCollectionSubscriptionQueryObj, getGranuleSubscriptionQueryObj } from '../../selectors/query'
+import {
+  getCollectionSubscriptionQueryObj,
+  getGranuleSubscriptionQueryObj
+} from '../../selectors/query'
 import { getFocusedCollectionSubscriptions } from '../../selectors/collectionMetadata'
 import {
   getCollectionSubscriptionDisabledFields,

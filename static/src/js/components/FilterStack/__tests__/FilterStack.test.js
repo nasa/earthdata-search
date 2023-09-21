@@ -41,7 +41,10 @@ describe('FilterStack component', () => {
 
   test('renders with the correct css when not visible', () => {
     const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({ isOpen: true, children: 'Hello!' })
+    enzymeWrapper.setProps({
+      isOpen: true,
+      children: 'Hello!'
+    })
 
     expect(enzymeWrapper.hasClass('filter-stack--is-open')).toBe(true)
   })

@@ -1,7 +1,9 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import { graphQlGetCollection } from '../../support/graphQlGetCollection'
-import { interceptUnauthenticatedCollections } from '../../support/interceptUnauthenticatedCollections'
+import {
+  interceptUnauthenticatedCollections
+} from '../../support/interceptUnauthenticatedCollections'
 
 import boundingBoxBody from './__mocks__/bounding_box_collections.body.json'
 import circleBody from './__mocks__/circle_collections.body.json'
@@ -163,10 +165,9 @@ test.describe('Map interactions', () => {
       })
     })
 
-    // This isn't working because cypress is unable to drag the edit icons for the leaflet-draw shape
     test.describe.skip('When editing a point', () => {
       test.skip('renders correctly', async ({ page }) => {
-        const aliases = interceptUnauthenticatedCollections(
+        await interceptUnauthenticatedCollections(
           commonBody,
           commonHeaders,
           [{
@@ -195,45 +196,47 @@ test.describe('Map interactions', () => {
           cy.contains('Point').click()
         })
 
-        // Add the point to the map
-        cy.get('.map').click(1000, 450)
+        // Need to rewrite this in playwright if we try to add it back in
+        // // Add the point to the map
+        // cy.get('.map').click(1000, 450)
 
-        // Edit the point
-        cy.get('.leaflet-draw-edit-edit').click()
+        // // Edit the point
+        // cy.get('.leaflet-draw-edit-edit').click()
 
-        cy.get('.leaflet-edit-marker-selected')
-          .trigger('pointerdown', {
-            pointerId: 1,
-            clientX: 1000,
-            clientY: 450,
-            force: true
-          })
-          .trigger('pointermove', {
-            pointerId: 1,
-            clientX: 1200,
-            clientY: 450,
-            force: true
-          })
-          .trigger('pointerup', {
-            pointerId: 1,
-            force: true
-          })
-        cy.get('.leaflet-draw-actions').within(() => {
-          cy.contains('Save').click()
-        })
+        // cy.get('.leaflet-edit-marker-selected')
+        //   .trigger('pointerdown', {
+        //     pointerId: 1,
+        //     clientX: 1000,
+        //     clientY: 450,
+        //     force: true
+        //   })
+        //   .trigger('pointermove', {
+        //     pointerId: 1,
+        //     clientX: 1200,
+        //     clientY: 450,
+        //     force: true
+        //   })
+        //   .trigger('pointerup', {
+        //     pointerId: 1,
+        //     force: true
+        //   })
 
-        aliases.forEach((alias) => {
-          cy.wait(`@${alias}`)
-        })
+        // cy.get('.leaflet-draw-actions').within(() => {
+        //   cy.contains('Save').click()
+        // })
 
-        // updates the URL
-        cy.url().should('include', '?sp[0]=42%2C-2')
+        // aliases.forEach((alias) => {
+        //   cy.wait(`@${alias}`)
+        // })
 
-        // draws a point on the map
-        cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(700px, 433px, 0px); z-index: 433;')
+        // // Updates the URL
+        // cy.url().should('include', '?sp[0]=42%2C-2')
 
-        // populates the spatial display field
-        await page.getByTestId('spatial-display_point').should('have.value', '-2,42')
+        // // Draws a point on the map
+        // cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(700px, 433px, 0px); z-index: 433;')
+
+        // // Populates the spatial display field
+        // await page.getByTestId('spatial-display_point').should('have.value', '-2,42')
       })
     })
   })
@@ -556,6 +559,7 @@ test.describe('Map interactions', () => {
           page.getByTestId('filter-stack__spatial')
             .locator('.filter-stack-item__secondary-title')
         ).toHaveText('Polygon')
+
         await expect(page.getByTestId('spatial-display_polygon')).toHaveText('3 Points')
       })
     })
@@ -613,6 +617,7 @@ test.describe('Map interactions', () => {
           page.getByTestId('filter-stack__spatial')
             .locator('.filter-stack-item__secondary-title')
         ).toHaveText('Polygon')
+
         await expect(page.getByTestId('spatial-display_polygon')).toHaveText('3 Points')
       })
     })
@@ -661,6 +666,7 @@ test.describe('Map interactions', () => {
           page.getByTestId('filter-stack__spatial')
             .locator('.filter-stack-item__secondary-title')
         ).toHaveText('Shape File')
+
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
       })
@@ -713,6 +719,7 @@ test.describe('Map interactions', () => {
           page.getByTestId('filter-stack__spatial')
             .locator('.filter-stack-item__secondary-title')
         ).toHaveText('Shape File')
+
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
       })
@@ -765,6 +772,7 @@ test.describe('Map interactions', () => {
           page.getByTestId('filter-stack__spatial')
             .locator('.filter-stack-item__secondary-title')
         ).toHaveText('Shape File')
+
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
       })
@@ -826,6 +834,7 @@ test.describe('Map interactions', () => {
           page.getByTestId('filter-stack__spatial')
             .locator('.filter-stack-item__secondary-title')
         ).toHaveText('Shape File')
+
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
       })
@@ -881,6 +890,7 @@ test.describe('Map interactions', () => {
           page.getByTestId('filter-stack__spatial')
             .locator('.filter-stack-item__secondary-title')
         ).toHaveText('Shape File')
+
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('2 shapes selected')
       })
@@ -932,6 +942,7 @@ test.describe('Map interactions', () => {
           page.getByTestId('filter-stack__spatial')
             .locator('.filter-stack-item__secondary-title')
         ).toHaveText('Shape File')
+
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
       })
@@ -979,6 +990,7 @@ test.describe('Map interactions', () => {
           page.getByTestId('filter-stack__spatial')
             .locator('.filter-stack-item__secondary-title')
         ).toHaveText('Shape File')
+
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
       })
@@ -1026,6 +1038,7 @@ test.describe('Map interactions', () => {
           page.getByTestId('filter-stack__spatial')
             .locator('.filter-stack-item__secondary-title')
         ).toHaveText('Shape File')
+
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
       })
@@ -1152,7 +1165,11 @@ test.describe('Map interactions', () => {
         await page.goto('/')
 
         // Change the base layer
-        await page.getByRole('button', { name: 'Layers', exact: true }).hover({ force: true })
+        await page.getByRole('button', {
+          name: 'Layers',
+          exact: true
+        }).hover({ force: true })
+
         await page.getByRole('radio', { name: 'Corrected Reflectance (True Color)' }).click()
         await page.getByRole('radio', { name: 'Blue Marble' }).click()
 
@@ -1180,7 +1197,11 @@ test.describe('Map interactions', () => {
         await page.goto('/')
 
         // Change the base layer
-        await page.getByRole('button', { name: 'Layers', exact: true }).hover({ force: true })
+        await page.getByRole('button', {
+          name: 'Layers',
+          exact: true
+        }).hover({ force: true })
+
         await page.getByRole('radio', { name: 'Corrected Reflectance (True Color)' }).click()
 
         await expect(page).toHaveURL('search?base=trueColor')
@@ -1207,7 +1228,11 @@ test.describe('Map interactions', () => {
         await page.goto('/')
 
         // Change the base layer
-        await page.getByRole('button', { name: 'Layers', exact: true }).hover({ force: true })
+        await page.getByRole('button', {
+          name: 'Layers',
+          exact: true
+        }).hover({ force: true })
+
         await page.getByRole('radio', { name: 'Land / Water Map' }).click()
 
         await expect(page).toHaveURL('search?base=landWaterMap')
@@ -1235,7 +1260,11 @@ test.describe('Map interactions', () => {
         await page.goto('/search?overlays=false')
 
         // Add the overlay layer
-        await page.getByRole('button', { name: 'Layers', exact: true }).hover({ force: true })
+        await page.getByRole('button', {
+          name: 'Layers',
+          exact: true
+        }).hover({ force: true })
+
         await page.getByRole('checkbox', { name: 'Borders and Roads' }).click()
 
         await expect(page).toHaveURL('search?overlays=referenceFeatures')
@@ -1263,7 +1292,11 @@ test.describe('Map interactions', () => {
         await page.goto('/search?overlays=false')
 
         // Add the overlay layer
-        await page.getByRole('button', { name: 'Layers', exact: true }).hover({ force: true })
+        await page.getByRole('button', {
+          name: 'Layers',
+          exact: true
+        }).hover({ force: true })
+
         await page.getByRole('checkbox', { name: 'Coastlines' }).click()
 
         await expect(page).toHaveURL('search?overlays=coastlines')
@@ -1291,7 +1324,11 @@ test.describe('Map interactions', () => {
         await page.goto('/search?overlays=false')
 
         // Add the overlay layer
-        await page.getByRole('button', { name: 'Layers', exact: true }).hover({ force: true })
+        await page.getByRole('button', {
+          name: 'Layers',
+          exact: true
+        }).hover({ force: true })
+
         await page.getByRole('checkbox', { name: 'Place Labels' }).click()
 
         await expect(page).toHaveURL('search?overlays=referenceLabels')
@@ -1567,24 +1604,6 @@ test.describe('Map interactions', () => {
         page,
         body: colormapCollectionsBody,
         headers: commonHeaders
-        // additionalRequests: [
-        //   {
-        //     body: colormapCollectionOneBody,
-        //     headers: {
-        //       ...commonHeaders,
-        //       'cmr-hits': '1'
-        //     },
-        //     paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptIdOne
-        //   },
-        //   {
-        //     body: colormapCollectionTwoBody,
-        //     headers: {
-        //       ...commonHeaders,
-        //       'cmr-hits': '1'
-        //     },
-        //     paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptIdTwo
-        //   }
-        // ]
       })
 
       await page.route(/search\/granules.json/, async (route) => {

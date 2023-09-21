@@ -44,11 +44,13 @@ const TemporalSelectionDropdownMenu = ({
   return ReactDOM.createPortal(
     <Dropdown.Menu
       className="temporal-selection-dropdown-menu"
-      popperConfig={{
-        preventOverflow: {
-          boundariesElement: 'window'
+      popperConfig={
+        {
+          preventOverflow: {
+            boundariesElement: 'window'
+          }
         }
-      }}
+      }
     >
       <TemporalSelection
         controlId="temporal-selection-dropdown"

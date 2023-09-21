@@ -18,12 +18,14 @@ const panelsReducer = (state = initialState, action = {}) => {
         isOpen: action.payload
       }
     }
+
     case PANELS_SET_PANEL: {
       return {
         ...state,
         activePanel: action.payload
       }
     }
+
     case PANELS_SET_PANEL_GROUP: {
       const { activePanel } = state
       const panelStateParts = activePanel.split('.')
@@ -34,6 +36,7 @@ const panelsReducer = (state = initialState, action = {}) => {
         activePanel: panelStateParts.join('.')
       }
     }
+
     case PANELS_SET_PANEL_SECTION: {
       const { activePanel } = state
       const panelStateParts = activePanel.split('.')
@@ -44,6 +47,7 @@ const panelsReducer = (state = initialState, action = {}) => {
         activePanel: panelStateParts.join('.')
       }
     }
+
     default:
       return state
   }

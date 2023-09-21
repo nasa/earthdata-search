@@ -3,7 +3,11 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { createControlComponent } from '@react-leaflet/core'
 import { Control } from 'leaflet'
-import { FaPlus, FaMinus, FaHome } from 'react-icons/fa'
+import {
+  FaPlus,
+  FaMinus,
+  FaHome
+} from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import projections from '../../util/map/projections'
@@ -11,8 +15,8 @@ import projections from '../../util/map/projections'
 /*
  * Prevents the default events.
 */
-const preventDefault = (e) => {
-  e.preventDefault()
+const preventDefault = (event) => {
+  event.preventDefault()
 }
 
 /*
@@ -61,10 +65,11 @@ class ZoomExtended extends Control.Zoom {
       options.zoomHomeTitle,
       'leaflet-control-zoom-home',
       container,
-      ((_this) => (e) => _this.zoomHome(e))(this)
+      ((_this) => (event) => _this.zoomHome(event))(this)
     )
 
     container.insertBefore(home, this._zoomOutButton)
+
     return container
   }
 
@@ -72,8 +77,8 @@ class ZoomExtended extends Control.Zoom {
     map.off('zoomend', this.onZoomEnd)
   }
 
-  onZoomEnd(e) {
-    const { target: map } = e
+  onZoomEnd(event) {
+    const { target: map } = event
     const { _controlContainer: controlContainer } = map
     const zoomInButton = controlContainer.querySelector('.leaflet-control-zoom-in')
     const zoomOutButton = controlContainer.querySelector('.leaflet-control-zoom-out')

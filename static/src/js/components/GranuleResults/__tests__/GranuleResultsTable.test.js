@@ -51,18 +51,22 @@ describe('GranuleResultsTable component', () => {
       Header: 'Granule',
       accessor: 'title'
     }))
+
     expect(columns[1]).toEqual(expect.objectContaining({
       Header: 'Image',
       accessor: 'granuleThumbnail'
     }))
+
     expect(columns[2]).toEqual(expect.objectContaining({
       Header: 'Start',
       accessor: 'timeStart'
     }))
+
     expect(columns[3]).toEqual(expect.objectContaining({
       Header: 'End',
       accessor: 'timeEnd'
     }))
+
     expect(columns[4]).toEqual(expect.objectContaining({
       Header: 'Day/Night',
       accessor: 'dayNightFlag'

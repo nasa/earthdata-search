@@ -8,5 +8,6 @@ export const prepareExposeHeaders = (headers) => {
   const { 'access-control-expose-headers': exposeHeaders = '' } = headers
   const exposeHeadersList = exposeHeaders.split(',').filter(Boolean)
   exposeHeadersList.push('jwt-token')
+
   return exposeHeadersList.join(', ')
 }

@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import L from 'leaflet'
 import { gcInterpolate } from '@edsc/geo-utils'
 
@@ -24,20 +23,16 @@ const projectLatLngPath = (latLngs, proj, interpolateFn, tolerance = 1, maxDepth
 
   const points = ((() => {
     const result = []
-    newLatLngs.forEach((ll) => result.push(proj(ll)))
+    newLatLngs.forEach((latLng) => result.push(proj(latLng)))
+
     return result
   })())
-  // for ll in latLngs
-  //  if Math.abs(ll.lat) == 90
-  //    console.log ll.toString(), '->', proj(ll).toString()
 
   const interpolatedLatLngs = [newLatLngs.shift()]
   const interpolatedPoints = [points.shift()]
 
   let depth0 = 0
   let depth1 = 0
-
-  // let maxDepthReached = false
 
   while (newLatLngs.length > 0) {
     const ll0 = interpolatedLatLngs[interpolatedLatLngs.length - 1]
@@ -50,14 +45,8 @@ const projectLatLngPath = (latLngs, proj, interpolateFn, tolerance = 1, maxDepth
     const p = proj(ll)
     const depth = Math.max(depth0, depth1) + 1
 
-    // if depth == 1
-    //  console.log '0:', ll0.toString(), '->', p0.toString()
-    //  console.log 'M:', ll.toString(), '->', p.toString()
-    //  console.log '1:', ll1.toString(), '->', p1.toString()
-
     const d = L.LineUtil.pointToSegmentDistance(p, p0, p1)
     if ((d < tolerance) || (depth >= maxDepth)) {
-      // if (depth >= maxDepth) { maxDepthReached = true }
       interpolatedLatLngs.push(ll, newLatLngs.shift())
       interpolatedPoints.push(p, points.shift())
       depth0 = depth1
@@ -69,16 +58,13 @@ const projectLatLngPath = (latLngs, proj, interpolateFn, tolerance = 1, maxDepth
     }
   }
 
-  // if (maxDepthReached && config.debug) {
-  //   console.log('Max interpolation depth reached.') //  Interpolated shape has #{interpolatedPoints.length} points."
-  // }
-
   return interpolatedPoints
 }
 
 const projectPath = (map, latlngs, fn = 'geodetic', tolerance = 1, maxDepth = 10) => {
   let newFn = fn
   if (newFn === 'geodetic') { newFn = interpolateGeodetic }
+
   if (newFn === 'cartesian') { newFn = interpolateCartesian }
 
   const proj = (ll) => {
@@ -94,6 +80,7 @@ const projectPath = (map, latlngs, fn = 'geodetic', tolerance = 1, maxDepth = 10
     const result = map.latLngToLayerPoint.call(map, newLl)
     result.x = Math.max(Math.min(result.x, MAX_RES), -MAX_RES)
     result.y = Math.max(Math.min(result.y, MAX_RES), -MAX_RES)
+
     return result
   }
 
@@ -107,7 +94,7 @@ function projectLatlngs(latlngs, result, projectedBounds) {
   const flat = latlngs[0] instanceof L.LatLng
 
   if (latlngs[0] !== latlngs[latlngs.length - 1]) {
-    // the first and last latlngs don't match, make them match
+    // The first and last latlngs don't match, make them match
     latlngs.push(latlngs[0])
   }
 
@@ -118,24 +105,29 @@ function projectLatlngs(latlngs, result, projectedBounds) {
     // use projectPath to interpolate the latlngs into the "great circle"
     // path between the two points. returns layer points so we don't have
     // to do that conversion like the original method
+    // eslint-disable-next-line no-underscore-dangle
     const path = projectPath(this._map, latlngs, this._interpolationFn)
     path.forEach((point, index) => {
       ring[index] = point
       projectedBounds.extend(point)
     })
+
     result.push(ring)
   } else {
     latlngs.forEach((latlng) => {
+      // eslint-disable-next-line no-underscore-dangle
       this._projectLatlngs(latlng, result, projectedBounds)
     })
   }
 }
 
 // Override methods
+/* eslint-disable no-underscore-dangle */
 L.Polygon.prototype._projectLatlngs = projectLatlngs
 
 // Give shapes an appropriate interpolation function.  Polygons use geodetic, rectangles cartesian
 L.Polyline.prototype._interpolationFn = interpolateGeodetic
 L.Rectangle.prototype._interpolationFn = interpolateCartesian
+/* eslint-enable no-underscore-dangle */
 
 export default projectPath

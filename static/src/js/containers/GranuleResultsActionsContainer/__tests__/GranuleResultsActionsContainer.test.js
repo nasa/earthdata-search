@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, GranuleResultsActionsContainer } from '../GranuleResultsActionsContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  GranuleResultsActionsContainer
+} from '../GranuleResultsActionsContainer'
 import GranuleResultsActions from '../../../components/GranuleResults/GranuleResultsActions'
 
 Enzyme.configure({ adapter: new Adapter() })

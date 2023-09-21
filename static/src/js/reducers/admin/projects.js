@@ -38,7 +38,10 @@ const processResults = (results) => {
     allIds.push(obfuscatedId)
   })
 
-  return { byId, allIds }
+  return {
+    byId,
+    allIds
+  }
 }
 
 const adminProjectsReducer = (state = initialState, action = {}) => {
@@ -50,6 +53,7 @@ const adminProjectsReducer = (state = initialState, action = {}) => {
         isLoading: false
       }
     }
+
     case SET_ADMIN_PROJECTS_LOADING: {
       return {
         ...state,
@@ -57,6 +61,7 @@ const adminProjectsReducer = (state = initialState, action = {}) => {
         isLoading: true
       }
     }
+
     case SET_ADMIN_PROJECTS: {
       const { byId, allIds } = processResults(action.payload)
 
@@ -66,6 +71,7 @@ const adminProjectsReducer = (state = initialState, action = {}) => {
         allIds
       }
     }
+
     case SET_ADMIN_PROJECT_LOADED: {
       const id = action.payload
 
@@ -81,6 +87,7 @@ const adminProjectsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case SET_ADMIN_PROJECT_LOADING: {
       const id = action.payload
 
@@ -96,6 +103,7 @@ const adminProjectsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case SET_ADMIN_PROJECT: {
       const {
         obfuscated_id: id
@@ -114,6 +122,7 @@ const adminProjectsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case SET_ADMIN_PROJECTS_PAGINATION: {
       const {
         page_num: pageNum,
@@ -133,12 +142,14 @@ const adminProjectsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case UPDATE_ADMIN_PROJECTS_SORT_KEY: {
       return {
         ...state,
         sortKey: action.payload
       }
     }
+
     case UPDATE_ADMIN_PROJECTS_PAGE_NUM: {
       return {
         ...state,
@@ -148,6 +159,7 @@ const adminProjectsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     default:
       return state
   }

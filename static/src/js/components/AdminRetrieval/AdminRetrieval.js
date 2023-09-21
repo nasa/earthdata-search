@@ -10,20 +10,22 @@ export const AdminRetrieval = ({
 }) => (
   <AdminPage
     pageTitle="Retrieval Details"
-    breadcrumbs={[
-      {
-        name: 'Admin',
-        href: '/admin'
-      },
-      {
-        name: 'Retrievals',
-        href: '/admin/retrievals'
-      },
-      {
-        name: 'Retrieval Details',
-        active: true
-      }
-    ]}
+    breadcrumbs={
+      [
+        {
+          name: 'Admin',
+          href: '/admin'
+        },
+        {
+          name: 'Retrievals',
+          href: '/admin/retrievals'
+        },
+        {
+          name: 'Retrieval Details',
+          active: true
+        }
+      ]
+    }
   >
     <AdminRetrievalDetails
       retrieval={retrieval}

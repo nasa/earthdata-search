@@ -9,6 +9,7 @@ jest.mock('../PanelSection', () => ({
     </mock-PanelSection>
   ))
 }))
+
 jest.mock('../PanelGroup', () => ({
   PanelGroup: jest.fn(({ children }) => (
     <mock-PanelGroup data-testid="PanelGroup">
@@ -16,6 +17,7 @@ jest.mock('../PanelGroup', () => ({
     </mock-PanelGroup>
   ))
 }))
+
 jest.mock('../PanelItem', () => ({
   PanelItem: jest.fn(({ children }) => (
     <mock-PanelItem data-testid="PanelItem">
@@ -111,6 +113,7 @@ describe('Panels component', () => {
       }),
       {}
     )
+
     expect(PanelSection).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
@@ -133,6 +136,7 @@ describe('Panels component', () => {
       }),
       {}
     )
+
     expect(PanelGroup).toHaveBeenNthCalledWith(
       6,
       expect.objectContaining({
@@ -144,6 +148,7 @@ describe('Panels component', () => {
       }),
       {}
     )
+
     expect(PanelGroup).toHaveBeenNthCalledWith(
       7,
       expect.objectContaining({
@@ -155,6 +160,7 @@ describe('Panels component', () => {
       }),
       {}
     )
+
     expect(PanelGroup).toHaveBeenNthCalledWith(
       8,
       expect.objectContaining({
@@ -173,11 +179,13 @@ describe('Panels component', () => {
       { children: 'Panel 0.0.0 Content' },
       {}
     )
+
     expect(PanelItem).toHaveBeenNthCalledWith(
       2,
       { children: 'Panel 0.0.1 Content' },
       {}
     )
+
     expect(PanelItem).toHaveBeenNthCalledWith(
       3,
       {
@@ -186,6 +194,7 @@ describe('Panels component', () => {
       },
       {}
     )
+
     expect(PanelItem).toHaveBeenNthCalledWith(
       4,
       {
@@ -194,16 +203,19 @@ describe('Panels component', () => {
       },
       {}
     )
+
     expect(PanelItem).toHaveBeenNthCalledWith(
       5,
       { children: 'Panel 1.0.1 Content' },
       {}
     )
+
     expect(PanelItem).toHaveBeenNthCalledWith(
       6,
       { children: 'Panel 1.1.0 Content' },
       {}
     )
+
     expect(PanelItem).toHaveBeenNthCalledWith(
       7,
       { children: 'Panel 1.1.1 Content' },
@@ -228,6 +240,7 @@ describe('Panels component', () => {
         }),
         {}
       )
+
       expect(PanelSection).toHaveBeenNthCalledWith(
         6,
         expect.objectContaining({
@@ -250,6 +263,7 @@ describe('Panels component', () => {
         }),
         {}
       )
+
       expect(PanelGroup).toHaveBeenNthCalledWith(
         10,
         expect.objectContaining({
@@ -261,6 +275,7 @@ describe('Panels component', () => {
         }),
         {}
       )
+
       expect(PanelGroup).toHaveBeenNthCalledWith(
         11,
         expect.objectContaining({
@@ -272,6 +287,7 @@ describe('Panels component', () => {
         }),
         {}
       )
+
       expect(PanelGroup).toHaveBeenNthCalledWith(
         12,
         expect.objectContaining({
@@ -303,6 +319,7 @@ describe('Panels component', () => {
         }),
         {}
       )
+
       expect(PanelSection).toHaveBeenNthCalledWith(
         6,
         expect.objectContaining({
@@ -325,6 +342,7 @@ describe('Panels component', () => {
         }),
         {}
       )
+
       expect(PanelGroup).toHaveBeenNthCalledWith(
         10,
         expect.objectContaining({
@@ -336,6 +354,7 @@ describe('Panels component', () => {
         }),
         {}
       )
+
       expect(PanelGroup).toHaveBeenNthCalledWith(
         11,
         expect.objectContaining({
@@ -347,6 +366,7 @@ describe('Panels component', () => {
         }),
         {}
       )
+
       expect(PanelGroup).toHaveBeenNthCalledWith(
         12,
         expect.objectContaining({
@@ -378,6 +398,7 @@ describe('Panels component', () => {
         }),
         {}
       )
+
       expect(PanelSection).toHaveBeenNthCalledWith(
         6,
         expect.objectContaining({
@@ -400,6 +421,7 @@ describe('Panels component', () => {
         }),
         {}
       )
+
       expect(PanelGroup).toHaveBeenNthCalledWith(
         10,
         expect.objectContaining({
@@ -411,6 +433,7 @@ describe('Panels component', () => {
         }),
         {}
       )
+
       expect(PanelGroup).toHaveBeenNthCalledWith(
         11,
         expect.objectContaining({
@@ -422,6 +445,7 @@ describe('Panels component', () => {
         }),
         {}
       )
+
       expect(PanelGroup).toHaveBeenNthCalledWith(
         12,
         expect.objectContaining({

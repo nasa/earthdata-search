@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { ContactInfoContainer, mapDispatchToProps, mapStateToProps } from '../ContactInfoContainer'
+import {
+  ContactInfoContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../ContactInfoContainer'
 import ContactInfo from '../../../components/ContactInfo/ContactInfo'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -73,6 +77,7 @@ describe('ContactInfoContainer component', () => {
       cmrPreferences: { mock: 'cmr' },
       ursProfile: { mock: 'urs' }
     })
+
     expect(typeof enzymeWrapper.find(ContactInfo).props().onUpdateNotificationLevel).toEqual('function')
   })
 })

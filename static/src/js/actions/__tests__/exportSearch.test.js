@@ -51,6 +51,7 @@ describe('exportSearch', () => {
         removeChild: jest.fn()
       }
     }))
+
     document.body.appendChild = jest.fn()
 
     nock(/localhost/)
@@ -61,16 +62,23 @@ describe('exportSearch', () => {
         }
       ])
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: ''
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(exportSearch('csv')).then(() => {
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: EXPORT_STARTED, payload: 'csv' })
-      expect(storeActions[1]).toEqual({ type: EXPORT_FINISHED, payload: 'csv' })
+      expect(storeActions[0]).toEqual({
+        type: EXPORT_STARTED,
+        payload: 'csv'
+      })
+
+      expect(storeActions[1]).toEqual({
+        type: EXPORT_FINISHED,
+        payload: 'csv'
+      })
 
       expect(createObjectMock).toHaveBeenCalledTimes(1)
     })
@@ -86,6 +94,7 @@ describe('exportSearch', () => {
         removeChild: jest.fn()
       }
     }))
+
     document.body.appendChild = jest.fn()
 
     nock(/localhost/)
@@ -96,16 +105,23 @@ describe('exportSearch', () => {
         }
       ])
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: ''
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(exportSearch('json')).then(() => {
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: EXPORT_STARTED, payload: 'json' })
-      expect(storeActions[1]).toEqual({ type: EXPORT_FINISHED, payload: 'json' })
+      expect(storeActions[0]).toEqual({
+        type: EXPORT_STARTED,
+        payload: 'json'
+      })
+
+      expect(storeActions[1]).toEqual({
+        type: EXPORT_FINISHED,
+        payload: 'json'
+      })
 
       expect(createObjectMock).toHaveBeenCalledTimes(1)
     })
@@ -128,8 +144,15 @@ describe('exportSearch', () => {
 
     await store.dispatch(exportSearch('json')).then(() => {
       const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({ type: EXPORT_STARTED, payload: 'json' })
-      expect(storeActions[1]).toEqual({ type: EXPORT_FINISHED, payload: 'json' })
+      expect(storeActions[0]).toEqual({
+        type: EXPORT_STARTED,
+        payload: 'json'
+      })
+
+      expect(storeActions[1]).toEqual({
+        type: EXPORT_FINISHED,
+        payload: 'json'
+      })
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })

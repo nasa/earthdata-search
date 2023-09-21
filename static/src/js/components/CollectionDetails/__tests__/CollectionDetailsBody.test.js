@@ -1,7 +1,9 @@
 import React from 'react'
 
 import {
-  act, render, screen
+  act,
+  render,
+  screen
 } from '@testing-library/react'
 
 import userEvent from '@testing-library/user-event'
@@ -100,6 +102,7 @@ describe('CollectionDetailsBody component', () => {
           hasAllMetadata: false
         }
       })
+
       expect(screen.queryAllByTestId('collection-details-body__skeleton')).not.toBeNull()
     })
   })
@@ -519,6 +522,7 @@ describe('CollectionDetailsBody component', () => {
             }
           }
         })
+
         // Element types are implementation details not using `getByRole` here
         // https://github.com/testing-library/dom-testing-library/issues/140
         expect(screen.getByText('HDF-EOS2')).toBeInTheDocument()
@@ -624,6 +628,7 @@ describe('CollectionDetailsBody component', () => {
             ]
           }
         })
+
         expect(screen.getByText('Earth Science')).toBeInTheDocument()
         expect(screen.getByText('Atmosphere')).toBeInTheDocument()
         expect(screen.getByText('Atmospheric Chemistry')).toBeInTheDocument()
@@ -823,6 +828,7 @@ describe('CollectionDetailsBody component', () => {
         // Ensure each child is an anchor tag with a valid link
         developerListLinks.map((link) => {
           expect(link.childNodes[0].href).not.toBeNull()
+
           return link
         })
       })

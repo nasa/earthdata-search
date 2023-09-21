@@ -64,11 +64,11 @@ export default async function replaceCwicWithOpenSearch(event, context) {
         fixedRecords
       })
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

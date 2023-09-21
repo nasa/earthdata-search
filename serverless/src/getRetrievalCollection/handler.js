@@ -84,14 +84,14 @@ const getRetrievalCollection = async (event, context) => {
       // for those orders, we can check that here by checking any of the values
       if (retrievalOrderId) {
         orders = retrievalCollectionResponse.map(({
-          retrieval_order_id: id,
+          retrieval_order_id: retrievalOrderRowId,
           type,
           order_number: orderNumber,
           order_information: orderInformation,
           state,
           error
         }) => ({
-          id,
+          id: retrievalOrderRowId,
           type,
           order_number: orderNumber,
           order_information: orderInformation,
@@ -124,11 +124,11 @@ const getRetrievalCollection = async (event, context) => {
       headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [`Retrieval Collection '${providedRetrievalCollectionId}' not found.`] })
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

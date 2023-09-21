@@ -75,6 +75,7 @@ export const prepareCollectionParams = (state) => {
     serviceType.push('opendap')
     serviceType.push('harmony')
   }
+
   if (featureFacets.mapImagery) tagKey.push(tagName('gibs'))
   let cloudHosted
   if (featureFacets.availableInEarthdataCloud) cloudHosted = true

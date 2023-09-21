@@ -99,6 +99,7 @@ describe('getSearchGranules', () => {
         type: STARTED_GRANULES_TIMER,
         payload: 'collectionId'
       })
+
       expect(storeActions[1]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
@@ -106,18 +107,22 @@ describe('getSearchGranules', () => {
           results: []
         }
       })
+
       expect(storeActions[2]).toEqual({
         type: LOADING_GRANULES,
         payload: 'collectionId'
       })
+
       expect(storeActions[3]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
+
       expect(storeActions[4]).toEqual({
         type: FINISHED_GRANULES_TIMER,
         payload: 'collectionId'
       })
+
       expect(storeActions[5]).toEqual({
         type: LOADED_GRANULES,
         payload: {
@@ -125,6 +130,7 @@ describe('getSearchGranules', () => {
           loaded: true
         }
       })
+
       expect(storeActions[6]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [
@@ -134,6 +140,7 @@ describe('getSearchGranules', () => {
           }
         ]
       })
+
       expect(storeActions[7]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
@@ -200,6 +207,7 @@ describe('getSearchGranules', () => {
         type: STARTED_GRANULES_TIMER,
         payload: 'collectionId'
       })
+
       expect(storeActions[1]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
@@ -207,18 +215,22 @@ describe('getSearchGranules', () => {
           results: []
         }
       })
+
       expect(storeActions[2]).toEqual({
         type: LOADING_GRANULES,
         payload: 'collectionId'
       })
+
       expect(storeActions[3]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
+
       expect(storeActions[4]).toEqual({
         type: FINISHED_GRANULES_TIMER,
         payload: 'collectionId'
       })
+
       expect(storeActions[5]).toEqual({
         type: LOADED_GRANULES,
         payload: {
@@ -226,6 +238,7 @@ describe('getSearchGranules', () => {
           loaded: true
         }
       })
+
       expect(storeActions[6]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [
@@ -235,6 +248,7 @@ describe('getSearchGranules', () => {
           }
         ]
       })
+
       expect(storeActions[7]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
@@ -298,6 +312,7 @@ describe('getSearchGranules', () => {
         type: STARTED_GRANULES_TIMER,
         payload: 'collectionId'
       })
+
       expect(storeActions[1]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
@@ -305,22 +320,27 @@ describe('getSearchGranules', () => {
           results: []
         }
       })
+
       expect(storeActions[2]).toEqual({
         type: LOADING_GRANULES,
         payload: 'collectionId'
       })
+
       expect(storeActions[3]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
+
       expect(storeActions[4]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: true
       })
+
       expect(storeActions[5]).toEqual({
         type: FINISHED_GRANULES_TIMER,
         payload: 'collectionId'
       })
+
       expect(storeActions[6]).toEqual({
         type: LOADED_GRANULES,
         payload: {
@@ -328,6 +348,7 @@ describe('getSearchGranules', () => {
           loaded: true
         }
       })
+
       expect(storeActions[7]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [{
@@ -336,6 +357,7 @@ describe('getSearchGranules', () => {
           browse_flag: false
         }]
       })
+
       expect(storeActions[8]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
@@ -403,6 +425,7 @@ describe('getSearchGranules', () => {
         type: STARTED_GRANULES_TIMER,
         payload: 'collectionId'
       })
+
       expect(storeActions[1]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
@@ -410,22 +433,27 @@ describe('getSearchGranules', () => {
           results: []
         }
       })
+
       expect(storeActions[2]).toEqual({
         type: LOADING_GRANULES,
         payload: 'collectionId'
       })
+
       expect(storeActions[3]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
+
       expect(storeActions[4]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: true
       })
+
       expect(storeActions[5]).toEqual({
         type: FINISHED_GRANULES_TIMER,
         payload: 'collectionId'
       })
+
       expect(storeActions[6]).toEqual({
         type: LOADED_GRANULES,
         payload: {
@@ -433,6 +461,7 @@ describe('getSearchGranules', () => {
           loaded: true
         }
       })
+
       expect(storeActions[7]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [{
@@ -448,6 +477,7 @@ describe('getSearchGranules', () => {
           updated: '2020-06-09T23:59:59Z'
         }]
       })
+
       expect(storeActions[8]).toEqual({
         type: UPDATE_GRANULE_RESULTS,
         payload: {
@@ -575,18 +605,22 @@ describe('getProjectGranules', () => {
         type: STARTED_PROJECT_GRANULES_TIMER,
         payload: 'C10000000000-EDSC'
       })
+
       expect(storeActions[1]).toEqual({
         type: PROJECT_GRANULES_LOADING,
         payload: 'C10000000000-EDSC'
       })
+
       expect(storeActions[2]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
+
       expect(storeActions[3]).toEqual({
         type: FINISHED_PROJECT_GRANULES_TIMER,
         payload: 'C10000000000-EDSC'
       })
+
       expect(storeActions[4]).toEqual({
         type: PROJECT_GRANULES_LOADED,
         payload: {
@@ -594,6 +628,7 @@ describe('getProjectGranules', () => {
           loaded: true
         }
       })
+
       expect(storeActions[5]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [
@@ -603,6 +638,7 @@ describe('getProjectGranules', () => {
           }
         ]
       })
+
       expect(storeActions[6]).toEqual({
         type: UPDATE_PROJECT_GRANULE_RESULTS,
         payload: {
@@ -680,18 +716,22 @@ describe('getProjectGranules', () => {
         type: STARTED_PROJECT_GRANULES_TIMER,
         payload: 'C10000000000-EDSC'
       })
+
       expect(storeActions[1]).toEqual({
         type: PROJECT_GRANULES_LOADING,
         payload: 'C10000000000-EDSC'
       })
+
       expect(storeActions[2]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
+
       expect(storeActions[3]).toEqual({
         type: FINISHED_PROJECT_GRANULES_TIMER,
         payload: 'C10000000000-EDSC'
       })
+
       expect(storeActions[4]).toEqual({
         type: PROJECT_GRANULES_LOADED,
         payload: {
@@ -699,6 +739,7 @@ describe('getProjectGranules', () => {
           loaded: true
         }
       })
+
       expect(storeActions[5]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [
@@ -708,6 +749,7 @@ describe('getProjectGranules', () => {
           }
         ]
       })
+
       expect(storeActions[6]).toEqual({
         type: UPDATE_PROJECT_GRANULE_RESULTS,
         payload: {
@@ -782,22 +824,27 @@ describe('getProjectGranules', () => {
         type: STARTED_PROJECT_GRANULES_TIMER,
         payload: 'C10000000000-EDSC'
       })
+
       expect(storeActions[1]).toEqual({
         type: PROJECT_GRANULES_LOADING,
         payload: 'C10000000000-EDSC'
       })
+
       expect(storeActions[2]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
+
       expect(storeActions[3]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: true
       })
+
       expect(storeActions[4]).toEqual({
         type: FINISHED_PROJECT_GRANULES_TIMER,
         payload: 'C10000000000-EDSC'
       })
+
       expect(storeActions[5]).toEqual({
         type: PROJECT_GRANULES_LOADED,
         payload: {
@@ -805,6 +852,7 @@ describe('getProjectGranules', () => {
           loaded: true
         }
       })
+
       expect(storeActions[6]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [{
@@ -813,6 +861,7 @@ describe('getProjectGranules', () => {
           browse_flag: false
         }]
       })
+
       expect(storeActions[7]).toEqual({
         type: UPDATE_PROJECT_GRANULE_RESULTS,
         payload: {
@@ -958,18 +1007,22 @@ describe('getProjectGranules', () => {
         type: STARTED_PROJECT_GRANULES_TIMER,
         payload: 'C10000000000-EDSC'
       })
+
       expect(storeActions[1]).toEqual({
         type: PROJECT_GRANULES_LOADING,
         payload: 'C10000000000-EDSC'
       })
+
       expect(storeActions[2]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false
       })
+
       expect(storeActions[3]).toEqual({
         type: FINISHED_PROJECT_GRANULES_TIMER,
         payload: 'C10000000000-EDSC'
       })
+
       expect(storeActions[4]).toEqual({
         type: PROJECT_GRANULES_LOADED,
         payload: {
@@ -977,6 +1030,7 @@ describe('getProjectGranules', () => {
           loaded: true
         }
       })
+
       expect(storeActions[5]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [
@@ -986,6 +1040,7 @@ describe('getProjectGranules', () => {
           }
         ]
       })
+
       expect(storeActions[6]).toEqual({
         type: UPDATE_PROJECT_GRANULE_RESULTS,
         payload: {
@@ -1115,6 +1170,7 @@ describe('fetchGranuleLinks', () => {
           download: []
         }
       })
+
     const store = mockStore({
       authToken: 'token'
     })
@@ -1149,6 +1205,7 @@ describe('fetchGranuleLinks', () => {
       },
       type: UPDATE_GRANULE_LINKS
     })
+
     expect(storeActions[1]).toEqual({
       payload: {
         id: 3,
@@ -1238,6 +1295,7 @@ describe('fetchGranuleLinks', () => {
       },
       type: UPDATE_GRANULE_LINKS
     })
+
     expect(storeActions[1]).toEqual({
       payload: {
         id: 3,
@@ -1275,6 +1333,7 @@ describe('fetchGranuleLinks', () => {
           browse: []
         }
       })
+
     const store = mockStore({
       authToken: 'token'
     })
@@ -1336,6 +1395,7 @@ describe('fetchGranuleLinks', () => {
           browse: []
         }
       })
+
     const store = mockStore({
       authToken: 'token'
     })
@@ -1487,8 +1547,12 @@ describe('applyGranuleFilters', () => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         type: UPDATE_GRANULE_FILTERS,
-        payload: { collectionId: 'C100000-EDSC', pageNum: 2 }
+        payload: {
+          collectionId: 'C100000-EDSC',
+          pageNum: 2
+        }
       })
+
       expect(storeActions[1]).toEqual({
         type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
       })
@@ -1547,8 +1611,12 @@ describe('applyGranuleFilters', () => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         type: UPDATE_GRANULE_FILTERS,
-        payload: { collectionId: 'C100000-EDSC', pageNum: 2 }
+        payload: {
+          collectionId: 'C100000-EDSC',
+          pageNum: 2
+        }
       })
+
       expect(storeActions[1]).toEqual({
         type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
       })

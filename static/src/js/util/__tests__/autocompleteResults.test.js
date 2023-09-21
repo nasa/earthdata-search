@@ -23,7 +23,10 @@ describe('buildHierarchy', () => {
   })
 
   test('correctly returns the value when hierarchy is present and child is requested', () => {
-    const hierarchy = buildHierarchy({ fields: 'grand parent:parent:child', includeLeaf: true })
+    const hierarchy = buildHierarchy({
+      fields: 'grand parent:parent:child',
+      includeLeaf: true
+    })
 
     expect(hierarchy).toEqual([
       'grand parent',
