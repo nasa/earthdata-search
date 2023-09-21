@@ -29,7 +29,7 @@
                             {
                                 "antarctic": false,
                                 "group": "overlays",
-                                "product": "GHRSST_Sea_Ice_Concentration",
+                                "product": "GHRSST_L4_MUR_Sea_Ice_Concentration",
                                 "antarctic_resolution": null,
                                 "updated_at": "2023-09-06T12:45:23.598Z",
                                 "arctic": false,
@@ -46,7 +46,7 @@
                             {
                                 "antarctic": false,
                                 "group": "overlays",
-                                "product": "GHRSST_Sea_Ice_Concentration",
+                                "product": "GHRSST_L4_MUR_Sea_Surface_Temperature",
                                 "antarctic_resolution": null,
                                 "updated_at": "2023-09-06T12:45:23.598Z",
                                 "arctic": false,
@@ -63,7 +63,7 @@
                             {
                                 "antarctic": false,
                                 "group": "overlays",
-                                "product": "GHRSST_Sea_Ice_Concentration_Anomalies",
+                                "product": "GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies",
                                 "antarctic_resolution": null,
                                 "updated_at": "2023-09-06T12:45:23.598Z",
                                 "arctic": false,
@@ -292,7 +292,7 @@
                     {
                         "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
                         "hreflang": "en-US",
-                        "href": "https://soto.podaac.earthdatacloud.nasa.gov/?l=GHRSST_Sea_Ice_Concentration,BlueMarble_ShadedRelief_Bathymetry,Coastlines_15m"
+                        "href": "https://soto.podaac.earthdatacloud.nasa.gov/?l=GHRSST_L4_MUR_Sea_Surface_Temperature,BlueMarble_ShadedRelief_Bathymetry,Coastlines_15m"
                     }
                 ]
             },
