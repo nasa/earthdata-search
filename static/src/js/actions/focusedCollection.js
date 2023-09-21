@@ -178,6 +178,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           items {
             conceptId
             definition
+            instanceInformation
             longName
             name
             nativeId
