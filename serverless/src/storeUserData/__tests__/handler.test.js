@@ -82,7 +82,7 @@ describe('storeUserData', () => {
   })
 
   test('logs error if URS data is not fetched properly', async () => {
-    const parseErrorMock = jest.spyOn(parseError, 'parseError').mockImplementation(() => { })
+    const parseErrorMock = jest.spyOn(parseError, 'parseError').mockImplementation(() => {})
     jest.spyOn(getUrsUserData, 'getUrsUserData').mockImplementation(() => { throw new Error('mock error') })
 
     dbTracker.on('query', (query, step) => {
