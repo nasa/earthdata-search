@@ -12,6 +12,7 @@ import {
 
 import { isEmpty } from 'lodash'
 import crsProjections from '../../util/map/crs'
+import hasGibsLayerForProjection from '../../util/map/projections'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 
 import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
@@ -93,16 +94,9 @@ const MapWrapper = ({
   const { tags } = focusedCollectionMetadata
   const [gibsTag] = getValueForTag('gibs', tags) || []
 
-  // Check that we are in the correct projection
-  const hasGibsLayerForProjection = (gibsLayer, projection) => {
-    if (projection === projections.arctic && gibsLayer.arctic) return true
-    if (projection === projections.geographic && gibsLayer.geographic) return true
-    if (projection === projections.antarctic && gibsLayer.antarctic) return true
-    return false
-  }
-
   let colorMapState = {}
-
+  
+  // Check that we are in the correct projection
   if (gibsTag && hasGibsLayerForProjection(gibsTag, projection)) {
     const { product } = gibsTag
     colorMapState = colormapsMetadata[product] || {}
