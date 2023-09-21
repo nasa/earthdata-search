@@ -152,7 +152,6 @@
     "html-webpack-partials-plugin": "^0.8.0",
     "html-webpack-plugin": "^5.5.0",
     "jest-canvas-mock": "^2.5.2",
-    "jquery": "^3.6.0",
     "jsonwebtoken": "^9.0.0",
     "knex": "^2.4.0",
     "leaflet": "^1.9.3",
