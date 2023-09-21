@@ -11,8 +11,9 @@ import {
 } from 'react-leaflet'
 
 import { isEmpty } from 'lodash'
+
 import crsProjections from '../../util/map/crs'
-import { hasGibsLayerForProjection } from '../../util/map/projections'
+import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 
 import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
