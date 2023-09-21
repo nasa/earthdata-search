@@ -1648,7 +1648,7 @@ test.describe('Map interactions', () => {
         })
       })
 
-      await page.route(/colormaps\/GHRSST_Sea_Surface_Temperature/, async (route) => {
+      await page.route(/colormaps\/GHRSST_Sea_Ice_Concentration/, async (route) => {
         await route.fulfill({
           json: colormapOneBody
         })

@@ -178,7 +178,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           items {
             conceptId
             definition
-            instanceInformation
             longName
             name
             nativeId
@@ -236,10 +235,12 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         // If there are, check to see if the colormaps associated with the productids in the tags exists.
         // If they don't we call an action to pull the colorMaps and add them to the metadata.colormaps
         const gibsTags = tags ? getValueForTag('gibs', tags) : []
-        gibsTags.data.forEach((tag) => {
-          const { product } = tag
-          dispatch(actions.getColorMap({ product }))
-        })
+        if (gibsTags) {
+          gibsTags.forEach((tag) => {
+            const { product } = tag
+            dispatch(actions.getColorMap({ product }))
+          })
+        }
 
         // Formats the metadata returned from graphql for use throughout the application
         const focusedMetadata = createFocusedCollectionMetadata(
