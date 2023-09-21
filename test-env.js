@@ -2,7 +2,6 @@
  * Set up globals
  */
 // jQuery
-import $ from 'jquery'
 import nock from 'nock'
 import enableHooks from 'jest-react-hooks-shallow'
 
