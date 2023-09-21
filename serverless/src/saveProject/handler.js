@@ -105,11 +105,11 @@ const saveProject = async (event, context) => {
         project_id: obfuscateId(newProjectId)
       })
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

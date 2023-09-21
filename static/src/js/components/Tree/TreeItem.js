@@ -5,7 +5,11 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { difference } from 'lodash'
-import { FaInfoCircle, FaFolder, FaFolderOpen } from 'react-icons/fa'
+import {
+  FaInfoCircle,
+  FaFolder,
+  FaFolderOpen
+} from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -54,31 +58,32 @@ export const TreeItem = ({
 
   /**
    * Recursively returns all child values from the give TreeNode item
-   * @param {Object} item TreeNode item
+   * @param {Object} treeNodeItem TreeNode item
    */
-  const getChildValues = (item) => {
+  const getChildValues = (treeNodeItem) => {
     const values = []
 
-    Array.from(item.children).forEach((child) => values.push(...getChildValues(child)))
+    Array.from(treeNodeItem.children).forEach((child) => values.push(...getChildValues(child)))
 
     return [
       ...values,
-      item.value
+      treeNodeItem.value
     ]
   }
 
   /**
    * Handle a change in the checkbox
-   * @param {Object} e event object
+   * @param {Object} event event object
    */
-  const handleChange = (e) => {
-    const { checked } = e.target
+  const handleChange = (event) => {
+    const { checked: newChecked } = event.target
 
     // If the item is being checked, or is current indeterminate (next state will be checked)
     // call item.setChecked to have the Tree determine the new selectedVariables.
-    if (checked || item.checked === 'indeterminate') {
-      item.setChecked(checked)
+    if (newChecked || item.checked === 'indeterminate') {
+      item.setChecked(newChecked)
       onChange()
+
       return
     }
 
@@ -129,37 +134,43 @@ export const TreeItem = ({
       <div
         className="tree-item__header"
       >
-        { isParent && (
-          <button
-            className="tree-item__parent-button"
-            type="button"
-            onClick={onToggleExpanded}
-          >
-            {
-              isClosed
-                ? (
-                  <EDSCIcon
-                    icon={FaFolder}
-                    context={{
-                      style: {
-                        width: '1.25em'
+        {
+          isParent && (
+            <button
+              className="tree-item__parent-button"
+              type="button"
+              onClick={onToggleExpanded}
+            >
+              {
+                isClosed
+                  ? (
+                    <EDSCIcon
+                      icon={FaFolder}
+                      context={
+                        {
+                          style: {
+                            width: '1.25em'
+                          }
+                        }
                       }
-                    }}
-                  />
-                )
-                : (
-                  <EDSCIcon
-                    icon={FaFolderOpen}
-                    context={{
-                      style: {
-                        width: '1.25em'
+                    />
+                  )
+                  : (
+                    <EDSCIcon
+                      icon={FaFolderOpen}
+                      context={
+                        {
+                          style: {
+                            width: '1.25em'
+                          }
+                        }
                       }
-                    }}
-                  />
-                )
-            }
-          </button>
-        )}
+                    />
+                  )
+              }
+            </button>
+          )
+        }
         <input
           id={fullValue}
           className="tree-item__checkbox"
@@ -184,11 +195,13 @@ export const TreeItem = ({
                 >
                   <EDSCIcon
                     icon={FaInfoCircle}
-                    context={{
-                      style: {
-                        width: '1.25em'
+                    context={
+                      {
+                        style: {
+                          width: '1.25em'
+                        }
                       }
-                    }}
+                    }
                   />
                 </button>
               )
@@ -199,9 +212,7 @@ export const TreeItem = ({
           </div>
         </label>
       </div>
-      {
-        isExpanded && childItems()
-      }
+      {isExpanded && childItems()}
     </div>
   )
 }

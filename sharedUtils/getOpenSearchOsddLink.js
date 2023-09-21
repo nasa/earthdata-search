@@ -40,19 +40,20 @@ export const getOpenSearchOsddLink = (metadata) => {
 
       if (urlContentType === 'DistributionURL' && subtype === 'OpenSearch') {
         value = url
+
         return
       }
 
       if (contentType === 'DistributionURL' && urls.length > 0) {
         const foundUrl = urls.find((distributionURL) => {
-          const { subtype } = distributionURL
+          const { subtype: subtypeValue } = distributionURL
 
-          return subtype === 'OpenSearch'
+          return subtypeValue === 'OpenSearch'
         })
 
         if (foundUrl) {
-          const { url } = foundUrl
-          value = url
+          const { url: urlValue } = foundUrl
+          value = urlValue
         }
       }
     })

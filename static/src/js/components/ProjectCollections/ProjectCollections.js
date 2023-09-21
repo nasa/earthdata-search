@@ -104,9 +104,9 @@ export class ProjectCollections extends Component {
       const { byId = {} } = collectionsQuery
       const { [collectionId]: collectionSearch = {} } = byId
       const { granules = {} } = collectionSearch
-      const { isLoading } = granules
+      const { isLoading: granulesIsLoading } = granules
 
-      return isLoading
+      return granulesIsLoading
     })
 
     return (

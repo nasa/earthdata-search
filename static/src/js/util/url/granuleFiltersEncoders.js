@@ -34,6 +34,7 @@ export const encodeGranuleFilters = (granuleFilters) => {
   if (equatorCrossingDate) {
     pg.ecd = encodeTemporal(granuleFilters.equatorCrossingDate)
   }
+
   if (sortKey) pg.gsk = sortKey
   if (tilingSystem) {
     pg.ts = tilingSystem

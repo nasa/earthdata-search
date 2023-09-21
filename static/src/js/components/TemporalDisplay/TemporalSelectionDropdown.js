@@ -139,8 +139,8 @@ const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
         startDate: newStartDate.toISOString(),
         endDate: newEndDate.toISOString()
       })
-    } catch (e) {
-      console.log(e)
+    } catch (error) {
+      console.log(error)
     }
   }
 

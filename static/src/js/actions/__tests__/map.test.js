@@ -33,12 +33,12 @@ describe('changeMap', () => {
       }
     }
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       map: {}
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(changeMap({ ...newMap }))
 
     const storeActions = store.getActions()

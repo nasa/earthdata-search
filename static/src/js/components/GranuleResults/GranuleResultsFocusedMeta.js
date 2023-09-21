@@ -52,32 +52,40 @@ const GranuleResultsFocusedMeta = ({
   const onClickPreviousButton = () => {
     if (activeBrowseImageIndex > 0) {
       setActiveBrowseImageIndex(activeBrowseImageIndex - 1)
+
       return
     }
+
     setActiveBrowseImageIndex(browseThumbnails.length - 1)
   }
 
   const onClickNextButton = () => {
     if (activeBrowseImageIndex < browseThumbnails.length - 1) {
       setActiveBrowseImageIndex(activeBrowseImageIndex + 1)
+
       return
     }
+
     setActiveBrowseImageIndex(0)
   }
 
   const onClickModalPreviousButton = () => {
     if (activeModalBrowseImageIndex > 0) {
       setActiveModalBrowseImageIndex(activeModalBrowseImageIndex - 1)
+
       return
     }
+
     setActiveModalBrowseImageIndex(browseThumbnails.length - 1)
   }
 
   const onClickModalNextButton = () => {
     if (activeModalBrowseImageIndex < browseThumbnails.length - 1) {
       setActiveModalBrowseImageIndex(activeModalBrowseImageIndex + 1)
+
       return
     }
+
     setActiveModalBrowseImageIndex(0)
   }
 
@@ -111,34 +119,39 @@ const GranuleResultsFocusedMeta = ({
       rootClose
       onToggle={onBrowseImageSelectionPopoverToggle}
       show={showBrowseImageSelectionPopover}
-      overlay={(
-        <Popover className="granule-results-focused-meta__list-popover">
-          <ListGroup
-            className="granule-results-focused-meta__list"
-            data-testid="granule-results-focused-meta-list"
-          >
-            {
-              browseThumbnails.map(({ href, description }, i) => {
-                const filename = href.split('/').pop()
-                return (
-                  <ListGroup.Item
-                    className="granule-results-focused-meta__list-item"
-                    as="button"
-                    key={href}
-                    active={activeBrowseImageIndex === i}
-                    onClick={() => {
-                      setActiveBrowseImageIndex(i)
-                      setShowBrowseImageSelectionPopover(false)
-                    }}
-                  >
-                    {description || filename}
-                  </ListGroup.Item>
-                )
-              })
-            }
-          </ListGroup>
-        </Popover>
-      )}
+      overlay={
+        (
+          <Popover className="granule-results-focused-meta__list-popover">
+            <ListGroup
+              className="granule-results-focused-meta__list"
+              data-testid="granule-results-focused-meta-list"
+            >
+              {
+                browseThumbnails.map(({ href, description }, i) => {
+                  const filename = href.split('/').pop()
+
+                  return (
+                    <ListGroup.Item
+                      className="granule-results-focused-meta__list-item"
+                      as="button"
+                      key={href}
+                      active={activeBrowseImageIndex === i}
+                      onClick={
+                        () => {
+                          setActiveBrowseImageIndex(i)
+                          setShowBrowseImageSelectionPopover(false)
+                        }
+                      }
+                    >
+                      {description || filename}
+                    </ListGroup.Item>
+                  )
+                })
+              }
+            </ListGroup>
+          </Popover>
+        )
+      }
     >
       {browseImageSelectionButton}
     </OverlayTrigger>
@@ -151,34 +164,39 @@ const GranuleResultsFocusedMeta = ({
       rootClose
       onToggle={setShowModalImageSelectionPopover}
       show={showModalImageSelectionPopover}
-      overlay={(
-        <Popover className="granule-results-focused-meta__list-popover">
-          <ListGroup
-            className="granule-results-focused-meta__list"
-            data-testid="granule-results-focused-meta-modal-popover-list"
-          >
-            {
-              browseThumbnails.map(({ href, description }, i) => {
-                const filename = href.split('/').pop()
-                return (
-                  <ListGroup.Item
-                    className="granule-results-focused-meta__list-item"
-                    as="button"
-                    key={href}
-                    active={activeModalBrowseImageIndex === i}
-                    onClick={() => {
-                      setActiveModalBrowseImageIndex(i)
-                      setShowModalImageSelectionPopover(false)
-                    }}
-                  >
-                    {description || filename}
-                  </ListGroup.Item>
-                )
-              })
-            }
-          </ListGroup>
-        </Popover>
-      )}
+      overlay={
+        (
+          <Popover className="granule-results-focused-meta__list-popover">
+            <ListGroup
+              className="granule-results-focused-meta__list"
+              data-testid="granule-results-focused-meta-modal-popover-list"
+            >
+              {
+                browseThumbnails.map(({ href, description }, i) => {
+                  const filename = href.split('/').pop()
+
+                  return (
+                    <ListGroup.Item
+                      className="granule-results-focused-meta__list-item"
+                      as="button"
+                      key={href}
+                      active={activeModalBrowseImageIndex === i}
+                      onClick={
+                        () => {
+                          setActiveModalBrowseImageIndex(i)
+                          setShowModalImageSelectionPopover(false)
+                        }
+                      }
+                    >
+                      {description || filename}
+                    </ListGroup.Item>
+                  )
+                })
+              }
+            </ListGroup>
+          </Popover>
+        )
+      }
     >
       {browseImageSelectionButton}
     </OverlayTrigger>
@@ -208,15 +226,17 @@ const GranuleResultsFocusedMeta = ({
         delay={300}
         show={!hideTitleTooltip && showTitleTooltip}
         onToggle={onTitleTooltipToggle}
-        overlay={(
-          <Tooltip
-            id="tooltip__granule-results-actions__download-all-button"
-            className="tooltip--nowrap"
-            data-testid="granule-results-focused-meta-tooltip"
-          >
-            {activeTitle}
-          </Tooltip>
-        )}
+        overlay={
+          (
+            <Tooltip
+              id="tooltip__granule-results-actions__download-all-button"
+              className="tooltip--nowrap"
+              data-testid="granule-results-focused-meta-tooltip"
+            >
+              {activeTitle}
+            </Tooltip>
+          )
+        }
       >
         <div data-testid="granule-results-focused-meta-overlay-wrapper">
           {
@@ -314,10 +334,11 @@ const GranuleResultsFocusedMeta = ({
         size="md"
         subtitle={activeModalTitle}
         dataTestId="granule-results-focused-meta-modal"
-        body={(
-          <>
-            <div className="granule-results-focused-meta__full-container">
-              {
+        body={
+          (
+            <>
+              <div className="granule-results-focused-meta__full-container">
+                {
                   focusedGranuleId && browseThumbnails.map(({
                     href,
                     description = ''
@@ -350,50 +371,51 @@ const GranuleResultsFocusedMeta = ({
                     )
                   })
                 }
-            </div>
-            {
-              (browseThumbnails.length && browseThumbnails.length > 1) && (
-                <nav className="granule-results-focused-meta__modal-primary-actions">
-                  <div className="granule-results-focused-meta__modal-nav-primary">
-                    <Button
-                      className="granule-results-focused-meta__image-nav-button"
-                      type="button"
-                      icon={FaChevronLeft}
-                      label="Previous browse image"
-                      onClick={() => onClickModalPreviousButton()}
-                    />
-                    <Button
-                      className="granule-results-focused-meta__image-nav-button"
-                      type="button"
-                      icon={FaChevronRight}
-                      label="Next browse image"
-                      onClick={() => onClickModalNextButton()}
-                    />
-                    <span className="granule-results-focused-meta__pagination">
-                      {`${activeModalBrowseImageIndex + 1}/${browseThumbnails.length}`}
-                    </span>
-                    {modalBrowseImageSelectionPopover}
-                  </div>
-                  {
-                    activeModalHref && (
-                      <div className="granule-results-focused-meta__modal-nav-secondary">
-                        <Button
-                          className="granule-results-focused-meta__image-nav-button"
-                          type="button"
-                          target="__blank"
-                          rel="noopener noreferrer"
-                          icon={FaDownload}
-                          label="Download browse image"
-                          href={activeModalHref}
-                        />
-                      </div>
-                    )
-                  }
-                </nav>
-              )
-            }
-          </>
-        )}
+              </div>
+              {
+                (browseThumbnails.length && browseThumbnails.length > 1) && (
+                  <nav className="granule-results-focused-meta__modal-primary-actions">
+                    <div className="granule-results-focused-meta__modal-nav-primary">
+                      <Button
+                        className="granule-results-focused-meta__image-nav-button"
+                        type="button"
+                        icon={FaChevronLeft}
+                        label="Previous browse image"
+                        onClick={() => onClickModalPreviousButton()}
+                      />
+                      <Button
+                        className="granule-results-focused-meta__image-nav-button"
+                        type="button"
+                        icon={FaChevronRight}
+                        label="Next browse image"
+                        onClick={() => onClickModalNextButton()}
+                      />
+                      <span className="granule-results-focused-meta__pagination">
+                        {`${activeModalBrowseImageIndex + 1}/${browseThumbnails.length}`}
+                      </span>
+                      {modalBrowseImageSelectionPopover}
+                    </div>
+                    {
+                      activeModalHref && (
+                        <div className="granule-results-focused-meta__modal-nav-secondary">
+                          <Button
+                            className="granule-results-focused-meta__image-nav-button"
+                            type="button"
+                            target="__blank"
+                            rel="noopener noreferrer"
+                            icon={FaDownload}
+                            label="Download browse image"
+                            href={activeModalHref}
+                          />
+                        </div>
+                      )
+                    }
+                  </nav>
+                )
+              }
+            </>
+          )
+        }
       />
     </>
   )

@@ -23,9 +23,11 @@ describe('S3LinksPanel', () => {
           retrievalId="1"
           granuleCount={100}
           granuleLinksIsLoading={false}
-          directDistributionInformation={{
-            region: 'aws-region'
-          }}
+          directDistributionInformation={
+            {
+              region: 'aws-region'
+            }
+          }
         />
       )
 
@@ -43,9 +45,11 @@ describe('S3LinksPanel', () => {
           retrievalId="1"
           granuleCount={100}
           granuleLinksIsLoading={false}
-          directDistributionInformation={{
-            region: 'aws-region'
-          }}
+          directDistributionInformation={
+            {
+              region: 'aws-region'
+            }
+          }
         />
       )
 

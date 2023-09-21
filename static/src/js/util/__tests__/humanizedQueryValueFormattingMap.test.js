@@ -124,19 +124,22 @@ describe('humanizedQueryValueFormattingMap', () => {
         sub_category: 'sub_category',
         short_name: 'short_name'
       }])
+
       expect(formatFacetHierarchyMock).toHaveBeenCalledTimes(1)
-      expect(formatFacetHierarchyMock).toHaveBeenCalledWith([{
-        basis: 'basis',
-        category: 'category',
-        sub_category: 'sub_category',
-        short_name: 'short_name'
-      }],
-      [
-        'basis',
-        'category',
-        'sub_category',
-        'short_name'
-      ])
+      expect(formatFacetHierarchyMock).toHaveBeenCalledWith(
+        [{
+          basis: 'basis',
+          category: 'category',
+          sub_category: 'sub_category',
+          short_name: 'short_name'
+        }],
+        [
+          'basis',
+          'category',
+          'sub_category',
+          'short_name'
+        ]
+      )
     })
   })
 
@@ -182,23 +185,26 @@ describe('humanizedQueryValueFormattingMap', () => {
         variable_level_3: 'variable_level_3',
         detailed_variable: 'detailed_variable'
       }])
+
       expect(formatFacetHierarchyMock).toHaveBeenCalledTimes(1)
-      expect(formatFacetHierarchyMock).toHaveBeenCalledWith([{
-        topic: 'topic',
-        term: 'term',
-        variable_level_1: 'variable_level_1',
-        variable_level_2: 'variable_level_2',
-        variable_level_3: 'variable_level_3',
-        detailed_variable: 'detailed_variable'
-      }],
-      [
-        'topic',
-        'term',
-        'variable_level_1',
-        'variable_level_2',
-        'variable_level_3',
-        'detailed_variable'
-      ])
+      expect(formatFacetHierarchyMock).toHaveBeenCalledWith(
+        [{
+          topic: 'topic',
+          term: 'term',
+          variable_level_1: 'variable_level_1',
+          variable_level_2: 'variable_level_2',
+          variable_level_3: 'variable_level_3',
+          detailed_variable: 'detailed_variable'
+        }],
+        [
+          'topic',
+          'term',
+          'variable_level_1',
+          'variable_level_2',
+          'variable_level_3',
+          'detailed_variable'
+        ]
+      )
     })
   })
 

@@ -45,6 +45,7 @@ const subscriptionsReducer = (state = initialState, action = {}) => {
         isLoaded: false
       }
     }
+
     case LOADED_SUBSCRIPTIONS: {
       return {
         ...state,
@@ -52,20 +53,24 @@ const subscriptionsReducer = (state = initialState, action = {}) => {
         isLoaded: action.payload.loaded
       }
     }
+
     case STARTED_SUBSCRIPTIONS_TIMER: {
       return {
         ...state,
         timerStart: Date.now()
       }
     }
+
     case FINISHED_SUBSCRIPTIONS_TIMER: {
       const { timerStart } = state
+
       return {
         ...state,
         timerStart: null,
         loadTime: Date.now() - timerStart
       }
     }
+
     case UPDATE_COLLECTION_SUBSCRIPTION: {
       const { payload } = action
       const { conceptId } = payload
@@ -84,6 +89,7 @@ const subscriptionsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case UPDATE_SUBSCRIPTION_RESULTS: {
       const byId = processResults(action.payload)
 
@@ -93,6 +99,7 @@ const subscriptionsReducer = (state = initialState, action = {}) => {
         byId
       }
     }
+
     case ERRORED_SUBSCRIPTIONS: {
       const [firstError] = action.payload
 
@@ -104,6 +111,7 @@ const subscriptionsReducer = (state = initialState, action = {}) => {
         byId: {}
       }
     }
+
     case REMOVE_SUBSCRIPTION: {
       const conceptId = action.payload
 
@@ -117,6 +125,7 @@ const subscriptionsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case UPDATE_SUBSCRIPTION_DISABLED_FIELDS: {
       return {
         ...state,
@@ -132,6 +141,7 @@ const subscriptionsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case REMOVE_SUBSCRIPTION_DISABLED_FIELDS: {
       return {
         ...state,
@@ -140,6 +150,7 @@ const subscriptionsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     default:
       return state
   }

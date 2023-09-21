@@ -17,6 +17,7 @@ test.describe('Authentication', () => {
       json: collectionFixture.body,
       headers: collectionFixture.headers
     }))
+
     await page.route(/graphql/, (route) => route.fulfill({
       body: getSubscriptionsGraphQlBody,
       headers: graphQlHeaders

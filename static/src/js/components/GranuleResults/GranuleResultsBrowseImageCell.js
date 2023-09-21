@@ -52,6 +52,7 @@ export const GranuleResultsBrowseImageCell = ({ row }) => {
         )
       }
     }
+
     return element
   }
 

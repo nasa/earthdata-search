@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, TimelineContainer } from '../TimelineContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  TimelineContainer
+} from '../TimelineContainer'
 import Timeline from '../../../components/Timeline/Timeline'
 import * as metricsTimeline from '../../../middleware/metrics/actions'
 

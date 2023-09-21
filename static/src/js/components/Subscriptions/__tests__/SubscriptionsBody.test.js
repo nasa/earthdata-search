@@ -200,8 +200,10 @@ describe('SubscriptionsBody component', () => {
 
           expect(enzymeWrapper.find('.subscriptions-body__list').children().length)
             .toEqual(2)
+
           expect(enzymeWrapper.find(SubscriptionsListItem).at(0).props().subscription)
             .toEqual(subOne)
+
           expect(enzymeWrapper.find(SubscriptionsListItem).at(1).props().subscription)
             .toEqual(subTwo)
         })
@@ -272,8 +274,10 @@ describe('SubscriptionsBody component', () => {
 
         expect(enzymeWrapper.find('.subscriptions-body__list').children().length)
           .toEqual(2)
+
         expect(enzymeWrapper.find(SubscriptionsListItem).at(0).props().subscription)
           .toEqual(subOne)
+
         expect(enzymeWrapper.find(SubscriptionsListItem).at(1).props().subscription)
           .toEqual(subTwo)
       })

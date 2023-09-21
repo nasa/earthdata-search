@@ -24,8 +24,8 @@ export const AccessMethodRadio = ({
 }) => {
   const [moreInfoActive, setMoreInfoActive] = useState(false)
 
-  const onMoreDetailsClick = (e) => {
-    e.stopPropagation()
+  const onMoreDetailsClick = (event) => {
+    event.stopPropagation()
     setMoreInfoActive(!moreInfoActive)
   }
 
@@ -35,6 +35,7 @@ export const AccessMethodRadio = ({
       'access-method-radio--is-selected': checked
     }
   ])
+
   return (
     <label
       className={labelClassName}

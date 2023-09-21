@@ -22,11 +22,13 @@ export function parseSpatial(str) {
   }
 
   const len = coords.length - 1
+
   return (() => {
     const result = []
     for (let i = 0, end = len; i < end; i += 2) {
       result.push(new L.LatLng(coords[i], coords[i + 1]))
     }
+
     return result
   })()
 }
@@ -38,6 +40,7 @@ export function getPoints(metadata = {}) {
     const merged = []
     points = merged.concat(...metadata.points.map(parseSpatial))
   }
+
   return points
 }
 
@@ -47,8 +50,10 @@ export function getPolygons(metadata = {}) {
   let polygons = []
   if (metadataPolygons && metadataPolygons !== null) {
     polygons = metadataPolygons.map((p) => p.map((s) => parseSpatial(s)))
+
     return polygons
   }
+
   return polygons
 }
 
@@ -73,22 +78,36 @@ export function getLines(metadata = {}) {
       const { lat, lng } = point
 
       if (lng > 170 && prevLng < -170) {
-        // calculate intersect with antimeridian using y = mx + b formula
-        const m = (lat - prevLat) / (lng - 360 - prevLng) // calculate slope or m
-        const x = -180 - prevLng // distance from previous point to antimeridian
-        const y = m * x + prevLat // prevLat is equal to b in formula
+        // Calculate intersect with antimeridian using y = mx + b formula
+        const m = (lat - prevLat) / (lng - 360 - prevLng) // Calculate slope or m
+        const x = -180 - prevLng // Distance from previous point to antimeridian
+        const y = m * x + prevLat // PrevLat is equal to b in formula
 
-        points.push(L.latLng({ lat: y, lng: -180 }))
+        points.push(L.latLng({
+          lat: y,
+          lng: -180
+        }))
+
         displayLines.push(points)
-        points = [L.latLng({ lat: y, lng: 180 }), point]
+        points = [L.latLng({
+          lat: y,
+          lng: 180
+        }), point]
       } else if (lng < -170 && prevLng > 170) {
-        const m = (lat - prevLat) / (lng + 360 - prevLng) // calculate slope or m
-        const x = 180 - prevLng // distance from previous point to antimeridian
+        const m = (lat - prevLat) / (lng + 360 - prevLng) // Calculate slope or m
+        const x = 180 - prevLng // Distance from previous point to antimeridian
         const y = m * x + prevLat
 
-        points.push(L.latLng({ lat: y, lng: 180 }))
+        points.push(L.latLng({
+          lat: y,
+          lng: 180
+        }))
+
         displayLines.push(points)
-        points = [L.latLng({ lat: y, lng: -180 }), point]
+        points = [L.latLng({
+          lat: y,
+          lng: -180
+        }), point]
       } else {
         points.push(point)
       }
@@ -130,6 +149,7 @@ export function getRectangles(metadata = {}) {
       })
     }
   }
+
   return rects
 }
 
@@ -161,6 +181,7 @@ export const buildLayer = (options, metadata) => {
       } else {
         polyLayer = new L.sphericalPolygon(polygon, options)
       }
+
       layer.addLayer(polyLayer)
 
       const bounds = L.latLngBounds(polygon)
@@ -190,6 +211,7 @@ export const buildLayer = (options, metadata) => {
       } else {
         shape = new L.sphericalPolygon(rect, options)
       }
+
       layer.addLayer(shape)
 
       const bounds = L.latLngBounds(rect)

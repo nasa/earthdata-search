@@ -58,7 +58,10 @@ describe('retrieveGranuleLinks', () => {
 
     dbTracker.on('query', (query) => {
       query.response([{
-        access_method: { type: 'download', isValid: true },
+        access_method: {
+          type: 'download',
+          isValid: true
+        },
         collection_id: 'C1214470488-ASF',
         granule_params: {
           exclude: {},
@@ -124,7 +127,10 @@ describe('retrieveGranuleLinks', () => {
 
     dbTracker.on('query', (query) => {
       query.response([{
-        access_method: { type: 'download', isValid: true },
+        access_method: {
+          type: 'download',
+          isValid: true
+        },
         collection_id: 'C1214470488-ASF',
         granule_params: {
           exclude: {},
@@ -161,7 +167,10 @@ describe('retrieveGranuleLinks', () => {
     expect(fetchOpenSearchLinksMock).toHaveBeenCalledTimes(1)
     expect(fetchOpenSearchLinksMock).toHaveBeenCalledWith({
       collectionId: 'C1214470488-ASF',
-      collectionMetadata: { isOpenSearch: true, mock: 'metadata' },
+      collectionMetadata: {
+        isOpenSearch: true,
+        mock: 'metadata'
+      },
       granuleParams: {
         concept_id: [],
         echo_collection_id: 'C1214470488-ASF',
@@ -188,7 +197,10 @@ describe('retrieveGranuleLinks', () => {
 
     dbTracker.on('query', (query) => {
       query.response([{
-        access_method: { type: 'OPeNDAP', isValid: true },
+        access_method: {
+          type: 'OPeNDAP',
+          isValid: true
+        },
         collection_id: 'C1214470488-ASF',
         granule_params: {
           exclude: {},
@@ -223,7 +235,10 @@ describe('retrieveGranuleLinks', () => {
 
     expect(fetchOpendapLinksMock).toHaveBeenCalledTimes(1)
     expect(fetchOpendapLinksMock).toHaveBeenCalledWith({
-      accessMethod: { isValid: true, type: 'OPeNDAP' },
+      accessMethod: {
+        isValid: true,
+        type: 'OPeNDAP'
+      },
       collectionId: 'C1214470488-ASF',
       earthdataEnvironment: 'prod',
       event: {
@@ -258,7 +273,10 @@ describe('retrieveGranuleLinks', () => {
 
     dbTracker.on('query', (query) => {
       query.response([{
-        access_method: { type: 'Harmony', isValid: true },
+        access_method: {
+          type: 'Harmony',
+          isValid: true
+        },
         collection_id: 'C1214470488-ASF',
         granule_params: {
           exclude: {},

@@ -24,6 +24,7 @@ export const formatDefaultSubscriptionName = (queryObj, subscriptionType) => {
   if (subscriptionType === 'collection') {
     defaultSubscriptionName = `Dataset Search Subscription (${defaultSubscriptionName})`
   }
+
   if (subscriptionType === 'granule') {
     defaultSubscriptionName = `Granule Search Subscription (${defaultSubscriptionName})`
   }

@@ -11,6 +11,7 @@ describe('deleteSystemToken', () => {
       username: 'edsc',
       password: 'mocked-password'
     }))
+
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
 
     nock('http://example.com')

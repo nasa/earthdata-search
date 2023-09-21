@@ -19,15 +19,15 @@ export const EchoForm = ({
   onUpdateAccessMethod
 }) => {
   // Get the MBR of the spatial for prepopulated values
-  const getMbr = (spatial) => {
+  const getMbr = (spatialObject) => {
     const {
       boundingBox = [],
       circle = [],
       point = [],
       polygon = []
-    } = spatial
+    } = spatialObject
 
-    // if there is no spatial, return undefined
+    // If there is no spatial, return undefined
     if (!point[0] && !boundingBox[0] && !polygon[0] && !circle[0]) return undefined
 
     const {
@@ -54,11 +54,11 @@ export const EchoForm = ({
   const formatDate = (date) => moment.utc(date).format('YYYY-MM-DDTHH:mm:ss')
 
   // Get the temporal prepopulated values
-  const getTemporalPrepopulateValues = (temporal) => {
+  const getTemporalPrepopulateValues = (temporalObject) => {
     const {
       endDate,
       startDate
-    } = temporal
+    } = temporalObject
 
     if (endDate || startDate) {
       return {
@@ -73,8 +73,8 @@ export const EchoForm = ({
     }
   }
 
-  const getEmailPrepopulateValues = (ursProfile) => {
-    const { email_address: emailAddress } = ursProfile
+  const getEmailPrepopulateValues = (ursProfileObject) => {
+    const { email_address: emailAddress } = ursProfileObject
 
     return {
       EMAIL: emailAddress

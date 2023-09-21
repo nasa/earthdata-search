@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 import { isEmpty, isEqual } from 'lodash'
 import Autosuggest from 'react-autosuggest'
 import {
-  FaEraser, FaChevronUp, FaBars, FaSlidersH
+  FaEraser,
+  FaChevronUp,
+  FaBars,
+  FaSlidersH
 } from 'react-icons/fa'
 
 import Button from '../Button/Button'
@@ -19,8 +22,7 @@ import TemporalSelectionDropdownContainer
   from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
 import AutocompleteDisplayContainer
   from '../../containers/AutocompleteDisplayContainer/AutocompleteDisplayContainer'
-import FilterStack
-  from '../FilterStack/FilterStack'
+import FilterStack from '../FilterStack/FilterStack'
 import Spinner from '../Spinner/Spinner'
 import AutocompleteSuggestion from '../AutocompleteSuggestion/AutocompleteSuggestion'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
@@ -73,8 +75,8 @@ class SearchForm extends Component {
     window.removeEventListener('keyup', this.onWindowKeyUp)
   }
 
-  onFormSubmit(e) {
-    e.preventDefault()
+  onFormSubmit(event) {
+    event.preventDefault()
 
     const {
       keywordSearch: propsKeyword,
@@ -142,13 +144,13 @@ class SearchForm extends Component {
     onToggleAdvancedSearchModal(true)
   }
 
-  onWindowKeyUp(e) {
+  onWindowKeyUp(event) {
     const { inputRef, keyboardShortcuts } = this
 
     const focusElement = () => inputRef.current.input.focus()
 
     triggerKeyboardShortcut({
-      event: e,
+      event,
       shortcutKey: keyboardShortcuts.focusSearchInput,
       shortcutCallback: focusElement
     })
@@ -207,6 +209,7 @@ class SearchForm extends Component {
       selectedSuggestion,
       query
     } = opts
+
     return (
       // eslint-disable-next-line react/jsx-props-no-spreading
       <div {...containerProps} className="search-form__suggestions-container">
@@ -308,26 +311,28 @@ class SearchForm extends Component {
               onSuggestionsClearRequested={onClearAutocompleteSuggestions}
               getSuggestionValue={this.getSuggestionValue}
               // eslint-disable-next-line arrow-body-style
-              renderSuggestionsContainer={(opts) => {
-                return this.renderSuggestionsContainer({
+              renderSuggestionsContainer={
+                (opts) => this.renderSuggestionsContainer({
                   ...opts,
                   isLoading,
                   isLoaded,
                   selectedSuggestion
                 })
-              }}
+              }
               renderSuggestion={this.renderSuggestion}
               onSuggestionSelected={this.selectSuggestion}
               onSuggestionHighlighted={this.onSuggestionHighlighted}
               shouldRenderSuggestions={this.shouldRenderSuggestions}
-              inputProps={{
-                name: 'keywordSearch',
-                'data-testid': 'keyword-search-input',
-                className: 'search-form__input',
-                placeholder: 'Search for collections or topics',
-                value: keywordSearch,
-                onChange: this.onAutoSuggestChange
-              }}
+              inputProps={
+                {
+                  name: 'keywordSearch',
+                  'data-testid': 'keyword-search-input',
+                  className: 'search-form__input',
+                  placeholder: 'Search for collections or topics',
+                  value: keywordSearch,
+                  onChange: this.onAutoSuggestChange
+                }
+              }
             />
           </form>
           <Button

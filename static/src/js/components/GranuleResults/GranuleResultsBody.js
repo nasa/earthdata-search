@@ -55,8 +55,10 @@ const GranuleResultsBody = ({
       const { id: focusedId } = focusedGranule
 
       setHoveredGranuleId(focusedId)
+
       return
     }
+
     setHoveredGranuleId(null)
   })
 
@@ -108,6 +110,7 @@ const GranuleResultsBody = ({
       allGranulesInProject = true
     }
   }
+
   /**
   * Takes the granule id and returns whether or not a granule is in the project.
   * @param {String} granuleId - The granule id.
@@ -119,6 +122,7 @@ const GranuleResultsBody = ({
       // Check to see if the granuleId provided has been specifically removed
       return removedGranuleIds.indexOf(granuleId) === -1
     }
+
     // Otherwise, check to see if all granules are in project or that the granuleId
     // provided has been specifically added
     return allGranulesInProject || addedGranuleIds.indexOf(granuleId) > -1

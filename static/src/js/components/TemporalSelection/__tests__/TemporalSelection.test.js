@@ -104,7 +104,6 @@ describe('TemporalSelection component', () => {
       }
     })
 
-    // expect(enzymeWrapper.find('.temporal-selection-dropdown__button--apply').prop('disabled')).toBe(true)
     expect(props.onInvalid).toBeCalledTimes(1)
   })
 

@@ -2,8 +2,9 @@ import { getByTestId } from '../../../../support/getByTestId'
 import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
 import { graphQlGetCollections } from '../../../../support/graphQlGetCollections'
 import { graphQlGetSubscriptionsQuery } from '../../../../support/graphQlGetSubscriptionsQuery'
-import { interceptUnauthenticatedCollections }
-  from '../../../../support/interceptUnauthenticatedCollections'
+import {
+  interceptUnauthenticatedCollections
+} from '../../../../support/interceptUnauthenticatedCollections'
 
 import { commafy } from '../../../../../static/src/js/util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
@@ -133,48 +134,55 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
 
-        req.reply({
-          body: noParamsGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
-
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        if (req.body) {
-          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+          req.reply({
+            body: noParamsGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
         }
-        req.reply({
-          body: noParamsTimelineBody,
-          headers: noParamsTimelineHeaders
-        })
-      })
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          if (req.body) {
+            expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+          }
 
-        req.reply({
-          body: noParamsGraphQlBody,
-          headers: noParamsGraphQlHeaders
-        })
-      })
+          req.reply({
+            body: noParamsTimelineBody,
+            headers: noParamsTimelineHeaders
+          })
+        }
+      )
+
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+
+          req.reply({
+            body: noParamsGraphQlBody,
+            headers: noParamsGraphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules?p=C1214470488-ASF')
 
@@ -193,47 +201,53 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1')
 
-        req.reply({
-          body: readableGranuleNameGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: readableGranuleNameGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
-        req.reply({
-          body: readableGranuleNameTimelineBody,
-          headers: readableGranuleNameTimelineHeaders
-        })
-      })
+          req.reply({
+            body: readableGranuleNameTimelineBody,
+            headers: readableGranuleNameTimelineHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-        req.reply({
-          body: readableGranuleNameGraphQlBody,
-          headers: readableGranuleNameGraphQlHeaders
-        })
-      })
+          req.reply({
+            body: readableGranuleNameGraphQlBody,
+            headers: readableGranuleNameGraphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules?p=C1214470488-ASF&pg[0][id]=S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1')
 
@@ -253,47 +267,53 @@ describe('Path /search/granules', () => {
 
         interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/granules.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/granules.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z')
 
-          req.reply({
-            body: temporalGranulesBody,
-            headers: {
-              ...commonGranulesHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: temporalGranulesBody,
+              headers: {
+                ...commonGranulesHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/granules/timeline'
-        },
-        (req) => {
-          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/granules/timeline'
+          },
+          (req) => {
+            expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
-          req.reply({
-            body: temporalTimelineBody,
-            headers: temporalTimelineHeaders
-          })
-        })
+            req.reply({
+              body: temporalTimelineBody,
+              headers: temporalTimelineHeaders
+            })
+          }
+        )
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/api'
-        },
-        (req) => {
-          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/api'
+          },
+          (req) => {
+            expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-          req.reply({
-            body: temporalGraphQlBody,
-            headers: temporalGraphQlHeaders
-          })
-        })
+            req.reply({
+              body: temporalGraphQlBody,
+              headers: temporalGraphQlHeaders
+            })
+          }
+        )
 
         cy.visit('/search/granules?p=C1214470488-ASF&pg[0][qt]=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z')
 
@@ -316,47 +336,53 @@ describe('Path /search/granules', () => {
 
         interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/granules.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2000-01-20T00:00:00.000Z,2020-01-31T23:59:59.999Z,1,31')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/granules.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2000-01-20T00:00:00.000Z,2020-01-31T23:59:59.999Z,1,31')
 
-          req.reply({
-            body: recurringTemporalGranulesBody,
-            headers: {
-              ...commonGranulesHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: recurringTemporalGranulesBody,
+              headers: {
+                ...commonGranulesHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/granules/timeline'
-        },
-        (req) => {
-          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/granules/timeline'
+          },
+          (req) => {
+            expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
-          req.reply({
-            body: temporalTimelineBody,
-            headers: temporalTimelineHeaders
-          })
-        })
+            req.reply({
+              body: temporalTimelineBody,
+              headers: temporalTimelineHeaders
+            })
+          }
+        )
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/api'
-        },
-        (req) => {
-          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/api'
+          },
+          (req) => {
+            expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-          req.reply({
-            body: temporalGraphQlBody,
-            headers: temporalGraphQlHeaders
-          })
-        })
+            req.reply({
+              body: temporalGraphQlBody,
+              headers: temporalGraphQlHeaders
+            })
+          }
+        )
 
         cy.visit('/search/granules?p=C1214470488-ASF&pg[0][qt]=2000-01-20T00:00:00.000Z,2020-01-31T23:59:59.999Z,1,31')
 
@@ -382,47 +408,53 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('browse_only=true&echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('browse_only=true&echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
 
-        req.reply({
-          body: browseOnlyGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: browseOnlyGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
-        req.reply({
-          body: browseOnlyTimelineBody,
-          headers: browseOnlyTimelineHeaders
-        })
-      })
+          req.reply({
+            body: browseOnlyTimelineBody,
+            headers: browseOnlyTimelineHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-        req.reply({
-          body: browseOnlyGraphQlBody,
-          headers: browseOnlyGraphQlHeaders
-        })
-      })
+          req.reply({
+            body: browseOnlyGraphQlBody,
+            headers: browseOnlyGraphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules?p=C1214470488-ASF&pg[0][bo]=true')
 
@@ -442,47 +474,53 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&online_only=true&page_num=1&page_size=20')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&online_only=true&page_num=1&page_size=20')
 
-        req.reply({
-          body: onlineOnlyGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: onlineOnlyGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
-        req.reply({
-          body: onlineOnlyTimelineBody,
-          headers: onlineOnlyTimelineHeaders
-        })
-      })
+          req.reply({
+            body: onlineOnlyTimelineBody,
+            headers: onlineOnlyTimelineHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-        req.reply({
-          body: onlineOnlyGraphQlBody,
-          headers: onlineOnlyGraphQlHeaders
-        })
-      })
+          req.reply({
+            body: onlineOnlyGraphQlBody,
+            headers: onlineOnlyGraphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules?p=C1214470488-ASF&pg[0][oo]=true')
 
@@ -502,47 +540,53 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&orbit_number[min]=30000&orbit_number[max]=30005&page_num=1&page_size=20')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&orbit_number[min]=30000&orbit_number[max]=30005&page_num=1&page_size=20')
 
-        req.reply({
-          body: orbitNumberGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: orbitNumberGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
-        req.reply({
-          body: orbitNumberTimelineBody,
-          headers: orbitNumberTimelineHeaders
-        })
-      })
+          req.reply({
+            body: orbitNumberTimelineBody,
+            headers: orbitNumberTimelineHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-        req.reply({
-          body: orbitNumberGraphQlBody,
-          headers: orbitNumberGraphQlHeaders
-        })
-      })
+          req.reply({
+            body: orbitNumberGraphQlBody,
+            headers: orbitNumberGraphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules?p=C1214470488-ASF&pg[0][on][min]=30000&pg[0][on][max]=30005')
 
@@ -562,47 +606,53 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1251101828-GES_DISC&equator_crossing_longitude[min]=-5&equator_crossing_longitude[max]=5&page_num=1&page_size=20')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('echo_collection_id=C1251101828-GES_DISC&equator_crossing_longitude[min]=-5&equator_crossing_longitude[max]=5&page_num=1&page_size=20')
 
-        req.reply({
-          body: equatorialCrossingLongitudeGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: equatorialCrossingLongitudeGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1251101828-GES_DISC')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1251101828-GES_DISC')
 
-        req.reply({
-          body: equatorialCrossingLongitudeTimelineBody,
-          headers: equatorialCrossingLongitudeTimelineHeaders
-        })
-      })
+          req.reply({
+            body: equatorialCrossingLongitudeTimelineBody,
+            headers: equatorialCrossingLongitudeTimelineHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-        req.reply({
-          body: equatorialCrossingLongitudeGraphQlBody,
-          headers: equatorialCrossingLongitudeGraphQlHeaders
-        })
-      })
+          req.reply({
+            body: equatorialCrossingLongitudeGraphQlBody,
+            headers: equatorialCrossingLongitudeGraphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules?p=C1251101828-GES_DISC&pg[0][ecl][min]=-5&pg[0][ecl][max]=5')
 
@@ -622,47 +672,53 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1251101828-GES_DISC&equator_crossing_date=2021-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z&page_num=1&page_size=20')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('echo_collection_id=C1251101828-GES_DISC&equator_crossing_date=2021-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z&page_num=1&page_size=20')
 
-        req.reply({
-          body: equatorialCrossingDateGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: equatorialCrossingDateGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1251101828-GES_DISC')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1251101828-GES_DISC')
 
-        req.reply({
-          body: equatorialCrossingDateTimelineBody,
-          headers: equatorialCrossingDateTimelineHeaders
-        })
-      })
+          req.reply({
+            body: equatorialCrossingDateTimelineBody,
+            headers: equatorialCrossingDateTimelineHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-        req.reply({
-          body: equatorialCrossingDateGraphQlBody,
-          headers: equatorialCrossingDateGraphQlHeaders
-        })
-      })
+          req.reply({
+            body: equatorialCrossingDateGraphQlBody,
+            headers: equatorialCrossingDateGraphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules?p=C1251101828-GES_DISC&pg[0][ecd]=2021-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z')
 
@@ -682,47 +738,53 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-end_date')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-end_date')
 
-        req.reply({
-          body: sortKeyGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: sortKeyGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
-        req.reply({
-          body: sortKeyTimelineBody,
-          headers: sortKeyTimelineHeaders
-        })
-      })
+          req.reply({
+            body: sortKeyTimelineBody,
+            headers: sortKeyTimelineHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-        req.reply({
-          body: sortKeyGraphQlBody,
-          headers: sortKeyGraphQlHeaders
-        })
-      })
+          req.reply({
+            body: sortKeyGraphQlBody,
+            headers: sortKeyGraphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules?p=C1214470488-ASF&pg[0][gsk]=-end_date')
 
@@ -742,47 +804,53 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('cloud_cover=10,15&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('cloud_cover=10,15&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
 
-        req.reply({
-          body: cloudCoverGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: cloudCoverGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
 
-        req.reply({
-          body: cloudCoverTimelineBody,
-          headers: cloudCoverTimelineHeaders
-        })
-      })
+          req.reply({
+            body: cloudCoverTimelineBody,
+            headers: cloudCoverTimelineHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-        req.reply({
-          body: cloudCoverGraphQlBody,
-          headers: cloudCoverGraphQlHeaders
-        })
-      })
+          req.reply({
+            body: cloudCoverGraphQlBody,
+            headers: cloudCoverGraphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules?p=C194001210-LPDAAC_ECS&pg[0][cc][min]=10&pg[0][cc][max]=15')
 
@@ -802,47 +870,53 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('day_night_flag=BOTH&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('day_night_flag=BOTH&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
 
-        req.reply({
-          body: dayNightGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: dayNightGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
 
-        req.reply({
-          body: dayNightTimelineBody,
-          headers: dayNightTimelineHeaders
-        })
-      })
+          req.reply({
+            body: dayNightTimelineBody,
+            headers: dayNightTimelineHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-        req.reply({
-          body: dayNightGraphQlBody,
-          headers: dayNightGraphQlHeaders
-        })
-      })
+          req.reply({
+            body: dayNightGraphQlBody,
+            headers: dayNightGraphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules?p=C194001210-LPDAAC_ECS&pg[0][dnf]=BOTH')
 
@@ -861,47 +935,53 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&two_d_coordinate_system[name]=MODIS Tile SIN&two_d_coordinate_system[coordinates]=0-0:0-0,15-15:15-15')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&two_d_coordinate_system[name]=MODIS Tile SIN&two_d_coordinate_system[coordinates]=0-0:0-0,15-15:15-15')
 
-        req.reply({
-          body: gridCoordsGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: gridCoordsGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
 
-        req.reply({
-          body: gridCoordsTimelineBody,
-          headers: gridCoordsTimelineHeaders
-        })
-      })
+          req.reply({
+            body: gridCoordsTimelineBody,
+            headers: gridCoordsTimelineHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-        req.reply({
-          body: gridCoordsGraphQlBody,
-          headers: gridCoordsGraphQlHeaders
-        })
-      })
+          req.reply({
+            body: gridCoordsGraphQlBody,
+            headers: gridCoordsGraphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules?p=C194001210-LPDAAC_ECS&pg[0][ts]=MODIS Tile SIN&pg[0][gc]=0-0:0-0,15-15:15-15')
 
@@ -919,60 +999,68 @@ describe('Path /search/granules', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 317
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/collections.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/collections.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-        req.reply({
-          body: timelineCollectionsBody,
-          headers: timelineCollectionsHeaders
-        })
-      })
+          req.reply({
+            body: timelineCollectionsBody,
+            headers: timelineCollectionsHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z')
 
-        req.reply({
-          body: timelineGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: timelineGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2015-02-02T00:00:00.000Z&interval=hour&start_date=2014-12-04T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2015-02-02T00:00:00.000Z&interval=hour&start_date=2014-12-04T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
 
-        req.reply({
-          body: timelineTimelineBody,
-          headers: timelineTimelineHeaders
-        })
-      })
+          req.reply({
+            body: timelineTimelineBody,
+            headers: timelineTimelineHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-        req.reply({
-          body: timelineGraphQlBody,
-          headers: timelineGraphQlHeaders
-        })
-      })
+          req.reply({
+            body: timelineGraphQlBody,
+            headers: timelineGraphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules?p=C194001210-LPDAAC_ECS&ot=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z&tl=1420268129.401!2!1420243200!1420329599.999')
 
@@ -996,56 +1084,63 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&sort_key=-start_date')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&sort_key=-start_date')
 
-        req.reply({
-          body: focusedGranuleGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: focusedGranuleGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
 
-        req.reply({
-          body: focusedGranuleTimelineBody,
-          headers: focusedGranuleTimelineHeaders
-        })
-      })
+          req.reply({
+            body: focusedGranuleTimelineBody,
+            headers: focusedGranuleTimelineHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
         // If these requests change and are failing tests, console.log req.body to see the actual request being called
-        if (JSON.stringify(req.body) === graphQlGetCollection(conceptId)) {
-          req.alias = 'graphQlCollectionQuery'
-          req.reply({
-            body: focusedGranuleCollectionGraphQlBody,
-            headers: focusedGranuleGraphQlHeaders
-          })
+          if (JSON.stringify(req.body) === graphQlGetCollection(conceptId)) {
+            req.alias = 'graphQlCollectionQuery'
+            req.reply({
+              body: focusedGranuleCollectionGraphQlBody,
+              headers: focusedGranuleGraphQlHeaders
+            })
+          }
+
+          if (JSON.stringify(req.body) === '{"query":"\\n    query GetGranule(\\n      $id: String!\\n    ) {\\n      granule(\\n        conceptId: $id\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"id":"G2058417402-LPDAAC_ECS"}}') {
+            req.alias = 'graphQlGranuleQuery'
+            req.reply({
+              body: focusedGranuleGranuleGraphQlBody,
+              headers: focusedGranuleGraphQlHeaders
+            })
+          }
         }
-        if (JSON.stringify(req.body) === '{"query":"\\n    query GetGranule(\\n      $id: String!\\n    ) {\\n      granule(\\n        conceptId: $id\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"id":"G2058417402-LPDAAC_ECS"}}') {
-          req.alias = 'graphQlGranuleQuery'
-          req.reply({
-            body: focusedGranuleGranuleGraphQlBody,
-            headers: focusedGranuleGraphQlHeaders
-          })
-        }
-      })
+      )
 
       cy.visit('/search/granules?p=C194001210-LPDAAC_ECS&pg[0][gsk]=-start_date&g=G2058417402-LPDAAC_ECS')
       cy.wait('@graphQlCollectionQuery')
@@ -1068,45 +1163,50 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        if (req.body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20') {
-          req.alias = 'granulesQuery'
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          if (req.body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20') {
+            req.alias = 'granulesQuery'
+            req.reply({
+              body: projectGranuleGranulesBody,
+              headers: {
+                ...commonGranulesHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+
+          if (req.body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=1&concept_id[]=G2058417402-LPDAAC_ECS') {
+            req.alias = 'projectGranulesQuery'
+            req.reply({
+              body: projectGranuleProjectGranuleBody,
+              headers: {
+                ...commonGranulesHeaders,
+                'cmr-hits': '1'
+              }
+            })
+          }
+        }
+      )
+
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+
           req.reply({
-            body: projectGranuleGranulesBody,
-            headers: {
-              ...commonGranulesHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
+            body: projectGranuleTimelineBody,
+            headers: projectGranuleTimelineHeaders
           })
         }
-        if (req.body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=1&concept_id[]=G2058417402-LPDAAC_ECS') {
-          req.alias = 'projectGranulesQuery'
-          req.reply({
-            body: projectGranuleProjectGranuleBody,
-            headers: {
-              ...commonGranulesHeaders,
-              'cmr-hits': '1'
-            }
-          })
-        }
-      })
-
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
-
-        req.reply({
-          body: projectGranuleTimelineBody,
-          headers: projectGranuleTimelineHeaders
-        })
-      })
+      )
 
       cy.intercept(
         'POST',
@@ -1115,27 +1215,31 @@ describe('Path /search/granules', () => {
           body: {}
         }
       )
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
+
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
         // If these requests change and are failing tests, console.log req.body to see the actual request being called
-        if (JSON.stringify(req.body) === graphQlGetCollection(conceptId)) {
-          req.alias = 'graphQlCollectionQuery'
-          req.reply({
-            body: projectGranuleCollectionGraphQlBody,
-            headers: projectGranuleGraphQlHeaders
-          })
+          if (JSON.stringify(req.body) === graphQlGetCollection(conceptId)) {
+            req.alias = 'graphQlCollectionQuery'
+            req.reply({
+              body: projectGranuleCollectionGraphQlBody,
+              headers: projectGranuleGraphQlHeaders
+            })
+          }
+
+          if (JSON.stringify(req.body) === graphQlGetCollections('C194001210-LPDAAC_ECS')) {
+            req.alias = 'graphQlCollectionsQuery'
+            req.reply({
+              body: projectGranuleCollectionsGraphQlBody,
+              headers: projectGranuleGraphQlHeaders
+            })
+          }
         }
-        if (JSON.stringify(req.body) === graphQlGetCollections('C194001210-LPDAAC_ECS')) {
-          req.alias = 'graphQlCollectionsQuery'
-          req.reply({
-            body: projectGranuleCollectionsGraphQlBody,
-            headers: projectGranuleGraphQlHeaders
-          })
-        }
-      })
+      )
 
       cy.visit('/search/granules?p=C194001210-LPDAAC_ECS!C194001210-LPDAAC_ECS&pg[1][a]=2058417402!LPDAAC_ECS')
       cy.wait('@graphQlCollectionQuery')
@@ -1159,34 +1263,38 @@ describe('Path /search/granules', () => {
 
       interceptUnauthenticatedCollections(collectionsBody, collectionsHeaders)
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
 
-        req.reply({
-          body: projectCollectionGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: projectCollectionGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules/timeline'
-      },
-      (req) => {
-        expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules/timeline'
+        },
+        (req) => {
+          expect(req.body).to.eq('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
 
-        req.reply({
-          body: projectCollectionTimelineBody,
-          headers: projectCollectionTimelineHeaders
-        })
-      })
+          req.reply({
+            body: projectCollectionTimelineBody,
+            headers: projectCollectionTimelineHeaders
+          })
+        }
+      )
 
       cy.intercept(
         'POST',
@@ -1195,27 +1303,31 @@ describe('Path /search/granules', () => {
           body: {}
         }
       )
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
+
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
         // If these requests change and are failing tests, console.log req.body to see the actual request being called
-        if (JSON.stringify(req.body) === graphQlGetCollection(conceptId)) {
-          req.alias = 'graphQlCollectionQuery'
-          req.reply({
-            body: projectCollectionCollectionGraphQlBody,
-            headers: projectCollectionGraphQlHeaders
-          })
+          if (JSON.stringify(req.body) === graphQlGetCollection(conceptId)) {
+            req.alias = 'graphQlCollectionQuery'
+            req.reply({
+              body: projectCollectionCollectionGraphQlBody,
+              headers: projectCollectionGraphQlHeaders
+            })
+          }
+
+          if (JSON.stringify(req.body) === graphQlGetCollections('C194001210-LPDAAC_ECS')) {
+            req.alias = 'graphQlCollectionsQuery'
+            req.reply({
+              body: projectCollectionCollectionsGraphQlBody,
+              headers: projectCollectionGraphQlHeaders
+            })
+          }
         }
-        if (JSON.stringify(req.body) === graphQlGetCollections('C194001210-LPDAAC_ECS')) {
-          req.alias = 'graphQlCollectionsQuery'
-          req.reply({
-            body: projectCollectionCollectionsGraphQlBody,
-            headers: projectCollectionGraphQlHeaders
-          })
-        }
-      })
+      )
 
       cy.visit('/search/granules?p=C194001210-LPDAAC_ECS!C194001210-LPDAAC_ECS')
       cy.wait('@graphQlCollectionQuery')
@@ -1236,109 +1348,119 @@ describe('Path /search/granules', () => {
       const cmrHits = 1059170
       cy.login()
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/timeline'
-      },
-      (req) => {
-        if (req.body) {
-          expect(JSON.parse(req.body).params).to.eql({
-            end_date: '2023-12-01T00:00:00.000Z',
-            interval: 'day',
-            start_date: '2018-12-01T00:00:00.000Z',
-            concept_id: ['C1214470488-ASF']
-          })
-        }
-
-        req.reply({
-          body: subscriptionTimelineBody,
-          headers: subscriptionTimelineHeaders
-        })
-      })
-
-      cy.intercept({
-        method: 'POST',
-        url: '**/collections'
-      },
-      (req) => {
-        expect(JSON.parse(req.body).params).to.eql({
-          consortium: [],
-          has_granules_or_cwic: true,
-          include_facets: 'v2',
-          include_granule_counts: true,
-          include_has_granules: true,
-          include_tags: 'edsc.*,opensearch.granule.osdd',
-          options: {},
-          page_num: 1,
-          page_size: 20,
-          point: ['-77.04119,38.80585'],
-          service_type: [],
-          sort_key: [
-            'has_granules_or_cwic',
-            '-usage_score'
-          ],
-          tag_key: []
-        })
-
-        req.reply({
-          body: collectionsBody,
-          headers: collectionsHeaders
-        })
-      })
-
-      cy.intercept({
-        method: 'POST',
-        url: '**/granules'
-      },
-      (req) => {
-        expect(JSON.parse(req.body).params).to.eql({
-          echo_collection_id: 'C1214470488-ASF',
-          options: {},
-          page_num: 1,
-          page_size: 20,
-          concept_id: [],
-          point: ['-77.04119,38.80585'],
-          exclude: {},
-          sort_key: '-start_date',
-          two_d_coordinate_system: {}
-        })
-
-        req.reply({
-          body: subscriptionGranulesBody,
-          headers: {
-            ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/timeline'
+        },
+        (req) => {
+          if (req.body) {
+            expect(JSON.parse(req.body).params).to.eql({
+              end_date: '2023-12-01T00:00:00.000Z',
+              interval: 'day',
+              start_date: '2018-12-01T00:00:00.000Z',
+              concept_id: ['C1214470488-ASF']
+            })
           }
-        })
-      })
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/graphql'
-      },
-      (req) => {
-        if (JSON.parse(req.body).data.query === graphQlGetSubscriptionsQuery) {
-          req.alias = 'graphQlPageLoadSubscriptionsQuery'
           req.reply({
-            body: {
-              data: {
-                subscriptions: {
-                  items: []
+            body: subscriptionTimelineBody,
+            headers: subscriptionTimelineHeaders
+          })
+        }
+      )
+
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/collections'
+        },
+        (req) => {
+          expect(JSON.parse(req.body).params).to.eql({
+            consortium: [],
+            has_granules_or_cwic: true,
+            include_facets: 'v2',
+            include_granule_counts: true,
+            include_has_granules: true,
+            include_tags: 'edsc.*,opensearch.granule.osdd',
+            options: {},
+            page_num: 1,
+            page_size: 20,
+            point: ['-77.04119,38.80585'],
+            service_type: [],
+            sort_key: [
+              'has_granules_or_cwic',
+              '-usage_score'
+            ],
+            tag_key: []
+          })
+
+          req.reply({
+            body: collectionsBody,
+            headers: collectionsHeaders
+          })
+        }
+      )
+
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/granules'
+        },
+        (req) => {
+          expect(JSON.parse(req.body).params).to.eql({
+            echo_collection_id: 'C1214470488-ASF',
+            options: {},
+            page_num: 1,
+            page_size: 20,
+            concept_id: [],
+            point: ['-77.04119,38.80585'],
+            exclude: {},
+            sort_key: '-start_date',
+            two_d_coordinate_system: {}
+          })
+
+          req.reply({
+            body: subscriptionGranulesBody,
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
+
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/graphql'
+        },
+        (req) => {
+          if (JSON.parse(req.body).data.query === graphQlGetSubscriptionsQuery) {
+            req.alias = 'graphQlPageLoadSubscriptionsQuery'
+            req.reply({
+              body: {
+                data: {
+                  subscriptions: {
+                    items: []
+                  }
                 }
-              }
-            },
-            headers: subscriptionGraphQlHeaders
-          })
-        }
+              },
+              headers: subscriptionGraphQlHeaders
+            })
+          }
 
-        if (JSON.parse(req.body).data.query === JSON.parse(graphQlGetCollection(conceptId)).query) {
-          req.alias = 'graphQlCollectionQuery'
-          req.reply({
-            body: subscriptionGraphQlBody,
-            headers: graphQlHeaders
-          })
+          if (
+            JSON.parse(req.body).data.query === JSON.parse(graphQlGetCollection(conceptId)).query
+          ) {
+            req.alias = 'graphQlCollectionQuery'
+            req.reply({
+              body: subscriptionGraphQlBody,
+              headers: graphQlHeaders
+            })
+          }
         }
-      })
+      )
 
       cy.visit('/search/granules?p=C1214470488-ASF&pg[0][gsk]=-start_date&sp[0]=-77.04119,38.80585')
       cy.wait('@graphQlPageLoadSubscriptionsQuery')

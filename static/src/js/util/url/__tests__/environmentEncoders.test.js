@@ -1,9 +1,6 @@
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 
-import {
-  decodeEarthdataEnvironment,
-  encodeEarthdataEnvironment
-} from '../environmentEncoders'
+import { decodeEarthdataEnvironment, encodeEarthdataEnvironment } from '../environmentEncoders'
 
 describe('encodeEarthdataEnvironment', () => {
   describe('when no value is provided', () => {

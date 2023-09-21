@@ -152,7 +152,12 @@ describe('TreeItem component', () => {
   })
 
   test('adds the level modifier classname', () => {
-    const { enzymeWrapper } = setup({ item: { ...defaultItem, level: 2 } })
+    const { enzymeWrapper } = setup({
+      item: {
+        ...defaultItem,
+        level: 2
+      }
+    })
     expect(enzymeWrapper.props().className).toEqual(expect.stringContaining('tree-item--child-2'))
   })
 

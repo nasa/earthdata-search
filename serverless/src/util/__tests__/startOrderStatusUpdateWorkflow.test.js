@@ -56,6 +56,9 @@ describe('startOrderStatusUpdateWorkflow', () => {
     }))
 
     expect(consoleMock).toHaveBeenCalledTimes(1)
-    expect(consoleMock).toHaveBeenCalledWith('State Machine Invocation (Order ID: 1): ', { executionArn: 'mockArn', startDate: 12345 })
+    expect(consoleMock).toHaveBeenCalledWith('State Machine Invocation (Order ID: 1): ', {
+      executionArn: 'mockArn',
+      startDate: 12345
+    })
   })
 })

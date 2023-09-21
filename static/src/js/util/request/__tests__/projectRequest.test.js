@@ -64,7 +64,10 @@ describe('ProjectRequest#save', () => {
 
     const postMock = jest.spyOn(Request.prototype, 'post').mockImplementation()
 
-    const params = { path: '/search', name: 'test project' }
+    const params = {
+      path: '/search',
+      name: 'test project'
+    }
     request.save(params)
 
     expect(postMock).toBeCalledTimes(1)

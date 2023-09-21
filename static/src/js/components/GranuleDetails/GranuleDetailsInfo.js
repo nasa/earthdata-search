@@ -11,9 +11,7 @@ export const GranuleDetailsInfo = ({ granuleMetadata }) => (
       className="granule-details-info__content"
       data-testid="granule-details-info__content"
     >
-      {
-        granuleMetadata && JSON.stringify(granuleMetadata, null, 2)
-      }
+      {granuleMetadata && JSON.stringify(granuleMetadata, null, 2)}
       {
         !granuleMetadata && (
           <Spinner

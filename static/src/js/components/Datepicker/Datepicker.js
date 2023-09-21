@@ -74,12 +74,14 @@ class Datepicker extends PureComponent {
         className="datetime"
         closeOnSelect
         dateFormat={format}
-        inputProps={{
-          id,
-          placeholder: format,
-          autoComplete: 'off',
-          className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`
-        }}
+        inputProps={
+          {
+            id,
+            placeholder: format,
+            autoComplete: 'off',
+            className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`
+          }
+        }
         isValidDate={isValidDate}
         onBlur={onBlur}
         onChange={onChange}

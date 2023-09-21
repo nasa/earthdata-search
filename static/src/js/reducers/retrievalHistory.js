@@ -19,6 +19,7 @@ const retrievalHistoryReducer = (state = initialState, action = {}) => {
         isLoading: true
       }
     }
+
     case SET_RETRIEVAL_HISTORY: {
       return {
         ...state,
@@ -29,6 +30,7 @@ const retrievalHistoryReducer = (state = initialState, action = {}) => {
         ]
       }
     }
+
     case REMOVE_RETRIEVAL_HISTORY: {
       const { history } = state
       const index = findIndex(history, (r) => r.id === action.payload)
@@ -41,6 +43,7 @@ const retrievalHistoryReducer = (state = initialState, action = {}) => {
         ]
       }
     }
+
     default:
       return state
   }

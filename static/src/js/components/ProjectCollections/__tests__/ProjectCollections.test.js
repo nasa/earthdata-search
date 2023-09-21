@@ -93,6 +93,7 @@ describe('ProjectCollectionsList component', () => {
     expect(enzymeWrapper.find(ProjectHeader).length).toBe(1)
     expect(enzymeWrapper.find(ProjectHeader).props().collectionsQuery)
       .toEqual(props.collectionsQuery)
+
     expect(enzymeWrapper.find(ProjectHeader).props().project).toEqual({
       collections: {
         allIds: ['collectionId1', 'collectionId2'],
@@ -112,6 +113,7 @@ describe('ProjectCollectionsList component', () => {
         }
       }
     })
+
     expect(enzymeWrapper.find(ProjectHeader).props().savedProject).toEqual({
       projectId: 1,
       name: 'test name'
@@ -126,6 +128,7 @@ describe('ProjectCollectionsList component', () => {
         mock: 'data 2'
       }
     })
+
     expect(enzymeWrapper.find(ProjectCollectionsList).props().project).toEqual({
       collections: {
         allIds: ['collectionId1', 'collectionId2'],
@@ -158,6 +161,7 @@ describe('ProjectCollectionsList component', () => {
         jest.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
           ...validAccessMethod
         }))
+
         const { enzymeWrapper } = setup()
 
         const message = enzymeWrapper.find('.project-collections__footer-message')
@@ -172,6 +176,7 @@ describe('ProjectCollectionsList component', () => {
           ...validAccessMethod,
           valid: false
         }))
+
         const { enzymeWrapper } = setup()
 
         const message = enzymeWrapper.find('.project-collections__footer-message')
@@ -187,6 +192,7 @@ describe('ProjectCollectionsList component', () => {
           valid: false,
           needsCustomization: true
         }))
+
         const { enzymeWrapper } = setup()
 
         const message = enzymeWrapper.find('.project-collections__footer-message')
@@ -202,6 +208,7 @@ describe('ProjectCollectionsList component', () => {
           valid: false,
           tooManyGranules: true
         }))
+
         const { enzymeWrapper } = setup()
 
         const message = enzymeWrapper.find('.project-collections__footer-message')
@@ -217,6 +224,7 @@ describe('ProjectCollectionsList component', () => {
           valid: false,
           noGranules: true
         }))
+
         const { enzymeWrapper } = setup()
 
         const message = enzymeWrapper.find('.project-collections__footer-message')
@@ -231,6 +239,7 @@ describe('ProjectCollectionsList component', () => {
       jest.spyOn(isProjectValid, 'isProjectValid').mockImplementation(() => ({
         ...validAccessMethod
       }))
+
       const { enzymeWrapper } = setup()
 
       const button = enzymeWrapper.find(Button)
@@ -243,6 +252,7 @@ describe('ProjectCollectionsList component', () => {
         ...validAccessMethod,
         valid: false
       }))
+
       const { enzymeWrapper } = setup()
 
       const button = enzymeWrapper.find(Button)
@@ -278,8 +288,15 @@ describe('ProjectCollectionsList component', () => {
       })
 
       expect(props.onMetricsDataAccess).toBeCalledTimes(2) // 2 collections
-      expect(props.onMetricsDataAccess).toBeCalledWith({ collections: [{ collectionId: 'collectionId1' }], type: 'data_access_init' })
-      expect(props.onMetricsDataAccess).toBeCalledWith({ collections: [{ collectionId: 'collectionId2' }], type: 'data_access_init' })
+      expect(props.onMetricsDataAccess).toBeCalledWith({
+        collections: [{ collectionId: 'collectionId1' }],
+        type: 'data_access_init'
+      })
+
+      expect(props.onMetricsDataAccess).toBeCalledWith({
+        collections: [{ collectionId: 'collectionId2' }],
+        type: 'data_access_init'
+      })
 
       expect(enzymeWrapper.instance().sentDataAccessMetrics).toBeTruthy()
     })

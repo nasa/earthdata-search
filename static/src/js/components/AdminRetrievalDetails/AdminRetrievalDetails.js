@@ -158,9 +158,11 @@ export const AdminRetrievalDetails = ({
                                             bootstrapVariant="secondary"
                                             label="Requeue Order for Processing"
                                             bootstrapSize="sm"
-                                            onClick={() => {
-                                              onRequeueOrder(orderId)
-                                            }}
+                                            onClick={
+                                              () => {
+                                                onRequeueOrder(orderId)
+                                              }
+                                            }
                                           >
                                             Requeue
                                           </Button>

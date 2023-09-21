@@ -62,18 +62,18 @@ const FilterStackItem = (props) => {
                     </div>
                     <div className="filter-stack-item__header-secondary">
                       {
-                          onRemove && (
-                            <Button
-                              variant="naked"
-                              className="filter-stack-item__action-button"
-                              label={`Remove ${title.toLowerCase()} filter`}
-                              icon={FaTrash}
-                              onClick={() => { onRemove() }}
-                            >
-                              Remove
-                            </Button>
-                          )
-                        }
+                        onRemove && (
+                          <Button
+                            variant="naked"
+                            className="filter-stack-item__action-button"
+                            label={`Remove ${title.toLowerCase()} filter`}
+                            icon={FaTrash}
+                            onClick={() => { onRemove() }}
+                          >
+                            Remove
+                          </Button>
+                        )
+                      }
                     </div>
                   </header>
                   <div className="filter-stack-item__body-contents">

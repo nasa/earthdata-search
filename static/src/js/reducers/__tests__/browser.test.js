@@ -1,7 +1,5 @@
 import browserReducer from '../browser'
-import {
-  UPDATE_BROWSER_VERSION
-} from '../../constants/actionTypes'
+import { UPDATE_BROWSER_VERSION } from '../../constants/actionTypes'
 
 const initialState = {}
 

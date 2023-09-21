@@ -5,7 +5,10 @@ import { withRouter } from 'react-router-dom'
 import { min } from 'lodash'
 
 import { getCollectionsQuery } from '../../selectors/query'
-import { getFocusedCollectionGranuleMetadata, getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
+import {
+  getFocusedCollectionGranuleMetadata,
+  getFocusedCollectionGranuleResults
+} from '../../selectors/collectionResults'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 import { getGranuleIds } from '../../util/getGranuleIds'

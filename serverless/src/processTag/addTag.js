@@ -57,8 +57,8 @@ export const addTag = async ({
       const { entry = [] } = feed
 
       collections = entry
-    } catch (e) {
-      parseError(e, { reThrowError: true })
+    } catch (error) {
+      parseError(error, { reThrowError: true })
     }
 
     // If collections were returned from the search, examine their metadata and
@@ -77,19 +77,27 @@ export const addTag = async ({
 
         // If the product already exists in the collections tag data
         // overwrite it with the newer data otherwise append it
-        const existingTagDataIndex = data.findIndex((data) => data.product === tagData.product)
+        const existingTagDataIndex = data.findIndex(
+          (dataObject) => dataObject.product === tagData.product
+        )
         if (existingTagDataIndex !== -1) {
           collectionTagData[existingTagDataIndex] = tagData
         } else {
           collectionTagData.push(tagData)
         }
 
-        return { 'concept-id': collection.id, data: collectionTagData }
+        return {
+          'concept-id': collection.id,
+          data: collectionTagData
+        }
       })
     } else if (tagData) {
       const collectionTagData = [].concat(tagData)
 
-      associationData = collections.map((collection) => ({ 'concept-id': collection.id, data: collectionTagData }))
+      associationData = collections.map((collection) => ({
+        'concept-id': collection.id,
+        data: collectionTagData
+      }))
     } else {
       associationData = collections.map((collection) => ({ 'concept-id': collection.id }))
     }
@@ -119,8 +127,8 @@ export const addTag = async ({
         // Log each (potential) error
         errors.forEach((error) => console.log(error))
       })
-    } catch (e) {
-      parseError(e, { reThrowError: true })
+    } catch (error) {
+      parseError(error, { reThrowError: true })
     }
 
     return associationData
@@ -140,8 +148,8 @@ export const addTag = async ({
       },
       data: searchCriteria
     })
-  } catch (e) {
-    parseError(e, { reThrowError: true })
+  } catch (error) {
+    parseError(error, { reThrowError: true })
   }
 
   return true

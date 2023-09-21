@@ -21,6 +21,7 @@ const savedProjectsReducer = (state = initialState, action = {}) => {
         isLoading: true
       }
     }
+
     case SET_SAVED_PROJECTS: {
       return {
         ...state,
@@ -31,6 +32,7 @@ const savedProjectsReducer = (state = initialState, action = {}) => {
         isLoading: false
       }
     }
+
     case REMOVE_SAVED_PROJECT: {
       const { projects } = state
 
@@ -44,6 +46,7 @@ const savedProjectsReducer = (state = initialState, action = {}) => {
         ]
       }
     }
+
     default:
       return state
   }

@@ -1,4 +1,4 @@
-// more minimal version of https://github.com/olahol/scrollParent.js/blob/master/scrollParent.js
+// More minimal version of https://github.com/olahol/scrollParent.js/blob/master/scrollParent.js
 const regex = /(auto|scroll)/
 
 const style = (node, prop) => getComputedStyle(node, null).getPropertyValue(prop)
@@ -13,6 +13,7 @@ const scrollParent = (node) => {
   if (!node || node === document.body) {
     return document.body
   }
+
   return scroll(node) ? node : scrollParent(node.parentNode)
 }
 

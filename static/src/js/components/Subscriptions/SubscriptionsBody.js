@@ -6,7 +6,10 @@ import { FaBell, FaPlus } from 'react-icons/fa'
 import { Form } from 'react-bootstrap'
 import snakecaseKeys from 'snakecase-keys'
 
-import { collectionRequestNonIndexedCmrKeys, granuleRequestNonIndexedCmrKeys } from '../../../../../sharedConstants/nonIndexedCmrKeys'
+import {
+  collectionRequestNonIndexedCmrKeys,
+  granuleRequestNonIndexedCmrKeys
+} from '../../../../../sharedConstants/nonIndexedCmrKeys'
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
 import { queryToHumanizedList } from '../../util/queryToHumanizedList'
 import pluralize from '../../util/pluralize'
@@ -135,12 +138,16 @@ export const SubscriptionsBody = ({
                             {
                               hasExactlyMatchingGranuleQuery
                               && exactlyMatchingSubscriptions.map((exactlyMatchingQuery) => {
-                                const { conceptId, name } = exactlyMatchingQuery
+                                const {
+                                  conceptId,
+                                  name: queryName
+                                } = exactlyMatchingQuery
+
                                 return (
                                   <div key={conceptId} className="subscriptions-body__warning-item">
                                     The subscription
                                     {' '}
-                                    <strong>{name}</strong>
+                                    <strong>{queryName}</strong>
                                     {' '}
                                     matches the current search query.
                                     {' '}
@@ -177,19 +184,21 @@ export const SubscriptionsBody = ({
                     label="Create Subscription"
                     spinner={submittingNewSubscription}
                     icon={FaPlus}
-                    onClick={async () => {
-                      setSubmittingNewSubscription(true)
+                    onClick={
+                      async () => {
+                        setSubmittingNewSubscription(true)
 
-                      // If the user hasn't provided a name, use the default name from the placeholder
-                      let subscriptionName = name
+                        // If the user hasn't provided a name, use the default name from the placeholder
+                        let subscriptionName = name
 
-                      if (!subscriptionName) {
-                        subscriptionName = placeholderName
+                        if (!subscriptionName) {
+                          subscriptionName = placeholderName
+                        }
+
+                        await onCreateSubscription(subscriptionName, subscriptionType)
+                        setSubmittingNewSubscription(false)
                       }
-
-                      await onCreateSubscription(subscriptionName, subscriptionType)
-                      setSubmittingNewSubscription(false)
-                    }}
+                    }
                   >
                     Create Subscription
                   </Button>
@@ -240,25 +249,26 @@ export const SubscriptionsBody = ({
             }
           </ul>
           {
-              subscriptions.length > 0 && (
-                <div className="subscriptions-body__list-footer">
-                  <PortalLinkContainer
-                    className="subscriptions-body__view-all-subscriptions"
-                    to="/subscriptions"
-                    type="button"
-                    bootstrapVariant="light"
-                    label="View All Subscriptions"
-                  >
-                    View All Subscriptions
-                  </PortalLinkContainer>
-                </div>
-              )
-            }
+            subscriptions.length > 0 && (
+              <div className="subscriptions-body__list-footer">
+                <PortalLinkContainer
+                  className="subscriptions-body__view-all-subscriptions"
+                  to="/subscriptions"
+                  type="button"
+                  bootstrapVariant="light"
+                  label="View All Subscriptions"
+                >
+                  View All Subscriptions
+                </PortalLinkContainer>
+              </div>
+            )
+          }
         </div>
       </div>
     </div>
   )
 }
+
 SubscriptionsBody.propTypes = {
   query: PropTypes.shape({
     hasGranulesOrCwic: PropTypes.bool

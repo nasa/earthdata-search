@@ -78,10 +78,12 @@ export const GranuleResultsListItem = memo(({
       >
         <Skeleton
           className="granule-results-item"
-          containerStyle={{
-            height: '140px',
-            width: '100%'
-          }}
+          containerStyle={
+            {
+              height: '140px',
+              width: '100%'
+            }
+          }
           shapes={granuleListItem}
         />
       </li>

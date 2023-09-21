@@ -39,7 +39,10 @@ export const buildHierarchy = ({ fields, includeLeaf = false }) => {
 export const buildHierarchicalAutocompleteTitle = ({ type, value, fields }) => {
   let hierarchy = ''
 
-  const parents = buildHierarchy({ fields, includeLeaf: true })
+  const parents = buildHierarchy({
+    fields,
+    includeLeaf: true
+  })
 
   // Parents will have a value if a value was provided in the `fields` field
   // and we're requesting to include the leaf node which will match the `value` field

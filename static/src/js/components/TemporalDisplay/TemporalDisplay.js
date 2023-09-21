@@ -33,10 +33,15 @@ export const TemporalDisplay = memo(({
   })
 
   useEffect(() => {
-    const { endDate, startDate, isRecurring } = temporalSearch
-    setEndDate(endDate)
-    setStartDate(startDate)
-    setIsRecurring(isRecurring)
+    const {
+      endDate: newEndDate,
+      startDate: newStartDate,
+      isRecurring: newIsRecurring
+    } = temporalSearch
+
+    setEndDate(newEndDate)
+    setStartDate(newStartDate)
+    setIsRecurring(newIsRecurring)
   }, [temporalSearch])
 
   if (!startDate && !endDate) {
@@ -80,6 +85,8 @@ export const TemporalDisplay = memo(({
     </FilterStackItem>
   )
 })
+
+TemporalDisplay.displayName = 'TemporalDisplay'
 
 TemporalDisplay.defaultProps = {
   temporalSearch: {}

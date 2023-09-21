@@ -1,13 +1,7 @@
-import {
-  UPDATE_SAVED_PROJECT,
-  LOCATION_CHANGE
-} from '../constants/actionTypes'
+import { UPDATE_SAVED_PROJECT, LOCATION_CHANGE } from '../constants/actionTypes'
 
 import { isPath } from '../util/isPath'
-import {
-  urlPathsWithoutUrlParams,
-  isSavedProjectsPage
-} from '../util/url/url'
+import { urlPathsWithoutUrlParams, isSavedProjectsPage } from '../util/url/url'
 
 const initialState = {
   projectId: null,
@@ -31,6 +25,7 @@ const savedProjectReducer = (state = initialState, action = {}) => {
         path
       }
     }
+
     case LOCATION_CHANGE: {
       // If we are navigating to downloads, contact info, or saved projects,
       // forget about the current saved project
@@ -45,6 +40,7 @@ const savedProjectReducer = (state = initialState, action = {}) => {
 
       return state
     }
+
     default:
       return state
   }

@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { FacetsModalContainer, mapDispatchToProps, mapStateToProps } from '../FacetsModalContainer'
+import {
+  FacetsModalContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../FacetsModalContainer'
 import FacetsModal from '../../../components/Facets/FacetsModal'
 
 Enzyme.configure({ adapter: new Adapter() })

@@ -367,13 +367,27 @@ export const buildGranuleSearchParams = (params) => {
  * @returns {Object} An object containing the various URLs
  */
 export const createEcho10MetadataUrls = (granuleId, earthdataEnvironment) => {
-  // TODO: This should eventually support authentication by appending the token information @high
   const metadataUrlTypes = [
-    { ext: 'atom', title: 'ATOM' },
-    { ext: 'echo10', title: 'ECHO 10' },
-    { ext: 'iso19115', title: 'ISO 19115' },
-    { ext: 'native', title: 'Native' },
-    { ext: 'umm_json', title: 'UMM-G' }
+    {
+      ext: 'atom',
+      title: 'ATOM'
+    },
+    {
+      ext: 'echo10',
+      title: 'ECHO 10'
+    },
+    {
+      ext: 'iso19115',
+      title: 'ISO 19115'
+    },
+    {
+      ext: 'native',
+      title: 'Native'
+    },
+    {
+      ext: 'umm_json',
+      title: 'UMM-G'
+    }
   ]
 
   const metadataUrls = {}

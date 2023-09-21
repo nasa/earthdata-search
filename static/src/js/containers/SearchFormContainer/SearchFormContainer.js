@@ -97,6 +97,7 @@ export const SearchFormContainer = (props) => {
     if (isPlainObject(filter)) {
       return !isEmpty(filter)
     }
+
     return !!filter
   })
 

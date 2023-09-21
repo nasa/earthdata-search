@@ -1,4 +1,8 @@
-import { getCollectionSubscriptionQueryString, getFocusedCollectionGranuleQuery, getGranuleSubscriptionQueryString } from '../query'
+import {
+  getCollectionSubscriptionQueryString,
+  getFocusedCollectionGranuleQuery,
+  getGranuleSubscriptionQueryString
+} from '../query'
 
 describe('getFocusedCollectionGranuleQuery selector', () => {
   test('returns the granule query', () => {

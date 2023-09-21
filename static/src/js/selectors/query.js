@@ -2,14 +2,24 @@ import snakecaseKeys from 'snakecase-keys'
 import { createSelector } from 'reselect'
 
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
-import { buildGranuleSearchParams, extractGranuleSearchParams, prepareGranuleParams } from '../util/granules'
+import {
+  buildGranuleSearchParams,
+  extractGranuleSearchParams,
+  prepareGranuleParams
+} from '../util/granules'
 import { prepareSubscriptionQuery, removeDisabledFieldsFromQuery } from '../util/subscriptions'
 import { prepKeysForCmr } from '../../../../sharedUtils/prepKeysForCmr'
-import { collectionRequestNonIndexedCmrKeys, granuleRequestNonIndexedCmrKeys } from '../../../../sharedConstants/nonIndexedCmrKeys'
+import {
+  collectionRequestNonIndexedCmrKeys,
+  granuleRequestNonIndexedCmrKeys
+} from '../../../../sharedConstants/nonIndexedCmrKeys'
 
 import { getFocusedCollectionId } from './focusedCollection'
 import { getFocusedCollectionMetadata } from './collectionMetadata'
-import { getCollectionSubscriptionDisabledFields, getGranuleSubscriptionDisabledFields } from './subscriptions'
+import {
+  getCollectionSubscriptionDisabledFields,
+  getGranuleSubscriptionDisabledFields
+} from './subscriptions'
 
 /**
  * Retrieve current collection query information from Redux

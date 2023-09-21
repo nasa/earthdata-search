@@ -24,8 +24,7 @@ import AdvancedSearchModalContainer
 import CollectionDetailsHighlightsContainer
   from '../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'
 import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
-import FacetsModalContainer
-  from '../../containers/FacetsModalContainer/FacetsModalContainer'
+import FacetsModalContainer from '../../containers/FacetsModalContainer/FacetsModalContainer'
 import GranuleResultsHighlightsContainer
   from '../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'
 import GranuleFiltersContainer
@@ -35,12 +34,10 @@ import PortalBrowserModalContainer
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
-import SearchPanelsContainer
-  from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
+import SearchPanelsContainer from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
 import SearchSidebarHeaderContainer
   from '../../containers/SearchSidebarHeaderContainer/SearchSidebarHeaderContainer'
-import SidebarContainer
-  from '../../containers/SidebarContainer/SidebarContainer'
+import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
@@ -115,12 +112,14 @@ export const Search = ({
     <SidebarSection
       sectionTitle="Filter Granules"
       titleIcon={FaFilter}
-      headerAction={{
-        title: 'Clear Filters',
-        onClick: () => {
-          setGranuleFiltersNeedReset(true)
+      headerAction={
+        {
+          title: 'Clear Filters',
+          onClick: () => {
+            setGranuleFiltersNeedReset(true)
+          }
         }
-      }}
+      }
     >
       <GranuleFiltersContainer
         granuleFiltersNeedsReset={granuleFiltersNeedsReset}
@@ -171,11 +170,14 @@ export const Search = ({
                 Browse Portals
                 <OverlayTrigger
                   placement="top"
-                  overlay={(
-                    <Tooltip style={{ width: '20rem' }}>
-                      Enable a portal in order to refine the data available within Earthdata Search
-                    </Tooltip>
-                  )}
+                  overlay={
+                    (
+                      <Tooltip style={{ width: '20rem' }}>
+                        {/* eslint-disable-next-line max-len */}
+                        Enable a portal in order to refine the data available within Earthdata Search
+                      </Tooltip>
+                    )
+                  }
                 >
                   <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
                 </OverlayTrigger>

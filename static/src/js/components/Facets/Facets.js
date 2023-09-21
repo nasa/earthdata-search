@@ -50,6 +50,7 @@ const Facets = (props) => {
       type: 'feature'
     })
   }
+
   if (showCustomizable) {
     featuresFacet.children.push({
       applied: featureFacets.customizable,
@@ -58,6 +59,7 @@ const Facets = (props) => {
       type: 'feature'
     })
   }
+
   if (showMapImagery) {
     featuresFacet.children.push({
       applied: featureFacets.mapImagery,

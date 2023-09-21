@@ -157,10 +157,12 @@ describe('fetchAdminProject', () => {
         type: SET_ADMIN_PROJECT_LOADING,
         payload: id
       })
+
       expect(storeActions[1]).toEqual({
         type: SET_ADMIN_PROJECT_LOADED,
         payload: id
       })
+
       expect(storeActions[2]).toEqual({
         type: SET_ADMIN_PROJECT,
         payload: data
@@ -204,13 +206,16 @@ describe('fetchAdminProjects', () => {
       expect(storeActions[0]).toEqual({
         type: SET_ADMIN_PROJECTS_LOADING
       })
+
       expect(storeActions[1]).toEqual({
         type: SET_ADMIN_PROJECTS_LOADED
       })
+
       expect(storeActions[2]).toEqual({
         type: SET_ADMIN_PROJECTS_PAGINATION,
         payload: data.pagination
       })
+
       expect(storeActions[3]).toEqual({
         type: SET_ADMIN_PROJECTS,
         payload: data.results
@@ -261,7 +266,7 @@ describe('updateAdminProjectsSortKey', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(updateAdminProjectsSortKey(sortKey))
 
     // Is updateFeatureFacet called with the right payload
@@ -292,7 +297,7 @@ describe('updateAdminProjectsPageNum', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(updateAdminProjectsPageNum(pageNum))
 
     // Is updateFeatureFacet called with the right payload

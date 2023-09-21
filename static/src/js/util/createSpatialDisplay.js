@@ -37,6 +37,7 @@ export const transformCircleCoordinates = (circleCoordinates) => {
 
   if (lat && lng) {
     const coordinate = [lat, lng]
+
     return [transformSingleCoordinate(coordinate.join(',')), radius]
   }
 
@@ -63,11 +64,13 @@ export const createSpatialDisplay = (spatial) => {
     if (boundingBox) {
       const splitStr = transformBoundingBoxCoordinates(selectedShape[0])
       console.log(splitStr)
+
       return `SW: (${splitStr[0]}) NE: (${splitStr[1]})`
     }
 
     if (circle) {
       const splitStr = transformCircleCoordinates(selectedShape[0])
+
       return `Center: (${splitStr[0]}) Radius (m): ${splitStr[1]})`
     }
 
@@ -77,6 +80,7 @@ export const createSpatialDisplay = (spatial) => {
 
     if (line) {
       const splitStr = transformBoundingBoxCoordinates(selectedShape[0])
+
       return `Start: (${splitStr[0]}) End: (${splitStr[1]})`
     }
 
@@ -84,9 +88,11 @@ export const createSpatialDisplay = (spatial) => {
       const splitStr = selectedShape[0].split(',')
       const pointArray = splitStr.length
       const pointCount = (pointArray / 2) - 1
+
       return `${pointCount} Points`
     }
   }
+
   return ''
 }
 

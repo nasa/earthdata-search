@@ -68,32 +68,34 @@ describe('OrderStatusItem', () => {
   describe('Auto-refresh', () => {
     describe('when mounted', () => {
       test('should start a timer', () => {
-        const { enzymeWrapper, props, shouldRefreshMock } = setup({
-          type: 'echo_orders',
-          collection: {
-            id: 1,
-            collection_id: 'TEST_COLLECTION_111',
-            retrieval_id: '54',
-            collection_metadata: {
-              id: 'TEST_COLLECTION_111',
-              dataset_id: 'Test Dataset ID'
-            },
-            access_method: {
-              type: 'ECHO ORDERS'
-            },
-            orders: [{
+        const { enzymeWrapper, props, shouldRefreshMock } = setup(
+          {
+            type: 'echo_orders',
+            collection: {
               id: 1,
-              state: 'processing',
-              order_information: {
-                requestStatus: {
-                  status: 'processing'
+              collection_id: 'TEST_COLLECTION_111',
+              retrieval_id: '54',
+              collection_metadata: {
+                id: 'TEST_COLLECTION_111',
+                dataset_id: 'Test Dataset ID'
+              },
+              access_method: {
+                type: 'ECHO ORDERS'
+              },
+              orders: [{
+                id: 1,
+                state: 'processing',
+                order_information: {
+                  requestStatus: {
+                    status: 'processing'
+                  }
                 }
-              }
-            }],
-            isLoaded: true
-          }
-        },
-        true)
+              }],
+              isLoaded: true
+            }
+          },
+          true
+        )
 
         jest.spyOn(global, 'setInterval')
 
@@ -937,6 +939,7 @@ describe('OrderStatusItem', () => {
           'https://e4ftl01.cr.usgs.gov/ops/esir/50250.html',
           'https://e4ftl01.cr.usgs.gov/ops/esir/50250.zip'
         ])
+
         expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
 
         const statusTab = tabs.childAt(1)
@@ -1796,6 +1799,7 @@ describe('OrderStatusItem', () => {
         expect(linksTab.childAt(0).props().downloadLinks).toEqual([
           'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
         ])
+
         expect(linksTab.childAt(0).props().eddLink).toEqual(null)
 
         const stacLinksTab = tabs.childAt(1)
@@ -1920,6 +1924,7 @@ describe('OrderStatusItem', () => {
         expect(linksTab.childAt(0).props().downloadLinks).toEqual([
           'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
         ])
+
         expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=testDataset_1&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
 
         const stacLinksTab = tabs.childAt(1)

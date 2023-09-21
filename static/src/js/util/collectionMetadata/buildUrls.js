@@ -13,12 +13,30 @@ export const buildUrls = (json, authToken, earthdataEnvironment) => {
   const collectionShortName = encodeURI(providedCollectionShortName)
 
   const cmrMetadataUrlFormats = [
-    { ext: 'html', title: 'HTML' },
-    { ext: 'native', title: 'Native' },
-    { ext: 'atom', title: 'ATOM' },
-    { ext: 'echo10', title: 'ECHO10' },
-    { ext: 'iso19115', title: 'ISO19115' },
-    { ext: 'dif', title: 'DIF' }
+    {
+      ext: 'html',
+      title: 'HTML'
+    },
+    {
+      ext: 'native',
+      title: 'Native'
+    },
+    {
+      ext: 'atom',
+      title: 'ATOM'
+    },
+    {
+      ext: 'echo10',
+      title: 'ECHO10'
+    },
+    {
+      ext: 'iso19115',
+      title: 'ISO19115'
+    },
+    {
+      ext: 'dif',
+      title: 'DIF'
+    }
   ]
 
   const eartdataConfig = getEarthdataConfig(earthdataEnvironment)

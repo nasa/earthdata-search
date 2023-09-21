@@ -363,24 +363,33 @@ class ProjectPanels extends PureComponent {
         if (hasDataQualitySummary && hasDuplicateCollection) {
           return 'Important data quality and availability information'
         }
+
         if (hasDataQualitySummary) {
           return 'Important data quality information'
         }
+
         if (hasDuplicateCollection) {
           return 'Important data availability information'
         }
+
         return ''
       })()
 
       if (hasDuplicateCollection) {
         const duplicateCollectionId = duplicateCollections[0]
 
-        const params = parse(location.search, { parseArrays: false, ignoreQueryPrefix: true })
+        const params = parse(location.search, {
+          parseArrays: false,
+          ignoreQueryPrefix: true
+        })
 
-        // adding duplicateCollectionId to the front makes it the focused collection
+        // Adding duplicateCollectionId to the front makes it the focused collection
         const p = [duplicateCollectionId, ...projectIds].join('!')
 
-        const newSearch = stringify({ ...params, p })
+        const newSearch = stringify({
+          ...params,
+          p
+        })
 
         collectionDataQualitySummaries = [...collectionDataQualitySummaries, {
           id: 'duplicate-collection',
@@ -389,10 +398,12 @@ class ProjectPanels extends PureComponent {
               <>
                 <span>This dataset is hosted in the Earthdata Cloud. The dataset is also </span>
                 <PortalLinkContainer
-                  to={{
-                    pathname: '/search/granules',
-                    search: newSearch
-                  }}
+                  to={
+                    {
+                      pathname: '/search/granules',
+                      search: newSearch
+                    }
+                  }
                   onClick={() => { onChangePath(`/search/granules${newSearch}`) }}
                 >
                   hosted in a NASA datacenter
@@ -404,10 +415,12 @@ class ProjectPanels extends PureComponent {
               <>
                 <span>This dataset is hosted inside a NASA datacenter. The dataset is also </span>
                 <PortalLinkContainer
-                  to={{
-                    pathname: '/search/granules',
-                    search: newSearch
-                  }}
+                  to={
+                    {
+                      pathname: '/search/granules',
+                      search: newSearch
+                    }
+                  }
                   onClick={() => { onChangePath(`/search/granules${newSearch}`) }}
                 >
                   hosted in the Earthdata Cloud
@@ -521,48 +534,56 @@ class ProjectPanels extends PureComponent {
         <PanelGroup
           key={`${collectionId}_edit-options`}
           primaryHeading="Edit Options"
-          headerMessage={(
-            collectionIsCSDA && (
-              <Col className="search-panels__note">
-                {'This collection is made available through the '}
-                <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
-                {' for NASA funded researchers. Access to the data will require additional authentication. '}
-                <Button
-                  className="search-panels__header-message-link"
-                  dataTestId="search-panels__csda-modal-button"
-                  onClick={() => onToggleAboutCSDAModal(true)}
-                  variant="link"
-                  bootstrapVariant="link"
-                  icon={FaQuestionCircle}
-                  label="More details"
-                >
-                  More Details
-                </Button>
-              </Col>
+          headerMessage={
+            (
+              collectionIsCSDA && (
+                <Col className="search-panels__note">
+                  {'This collection is made available through the '}
+                  <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                  {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                  <Button
+                    className="search-panels__header-message-link"
+                    dataTestId="search-panels__csda-modal-button"
+                    onClick={() => onToggleAboutCSDAModal(true)}
+                    variant="link"
+                    bootstrapVariant="link"
+                    icon={FaQuestionCircle}
+                    label="More details"
+                  >
+                    More Details
+                  </Button>
+                </Col>
+              )
             )
-          )}
-          breadcrumbs={[
-            {
-              title,
-              onClick: () => this.onChangePanel(`1.${index}.0`)
-            }
-          ]}
-          moreActionsDropdownItems={[
-            {
-              title: 'View Project Granules',
-              icon: FaMap,
-              onClick: () => this.onChangePanel(`1.${index}.0`)
-            }
-          ]}
+          }
+          breadcrumbs={
+            [
+              {
+                title,
+                onClick: () => this.onChangePanel(`1.${index}.0`)
+              }
+            ]
+          }
+          moreActionsDropdownItems={
+            [
+              {
+                title: 'View Project Granules',
+                icon: FaMap,
+                onClick: () => this.onChangePanel(`1.${index}.0`)
+              }
+            ]
+          }
           footer={editOptionsFooter}
         >
           <PanelItem
-            header={(
-              <DataQualitySummary
-                dataQualitySummaries={collectionDataQualitySummaries}
-                dataQualityHeader={dataQualityHeader}
-              />
-            )}
+            header={
+              (
+                <DataQualitySummary
+                  dataQualitySummaries={collectionDataQualitySummaries}
+                  dataQualityHeader={dataQualityHeader}
+                />
+              )
+            }
           >
             <AccessMethod
               accessMethods={accessMethods}
@@ -607,35 +628,39 @@ class ProjectPanels extends PureComponent {
       panelSectionCollectionDetails.push(
         <PanelGroup
           key={`${collectionId}_collection-details`}
-          moreActionsDropdownItems={[
-            {
-              title: 'Edit Project Options',
-              icon: FaCog,
-              onClick: () => this.onChangePanel(`0.${index}.0`)
-            }
-          ]}
+          moreActionsDropdownItems={
+            [
+              {
+                title: 'Edit Project Options',
+                icon: FaCog,
+                onClick: () => this.onChangePanel(`0.${index}.0`)
+              }
+            ]
+          }
           primaryHeading={title}
           headerMetaPrimaryText={projectGranulesHeaderMetaPrimaryText}
-          headerMessage={(
-            collectionIsCSDA && (
-              <Col className="search-panels__note">
-                {'This collection is made available through the '}
-                <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
-                {' for NASA funded researchers. Access to the data will require additional authentication. '}
-                <Button
-                  className="search-panels__header-message-link"
-                  dataTestId="search-panels__csda-modal-button"
-                  onClick={() => onToggleAboutCSDAModal(true)}
-                  variant="link"
-                  bootstrapVariant="link"
-                  icon={FaQuestionCircle}
-                  label="More details"
-                >
-                  More Details
-                </Button>
-              </Col>
+          headerMessage={
+            (
+              collectionIsCSDA && (
+                <Col className="search-panels__note">
+                  {'This collection is made available through the '}
+                  <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                  {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                  <Button
+                    className="search-panels__header-message-link"
+                    dataTestId="search-panels__csda-modal-button"
+                    onClick={() => onToggleAboutCSDAModal(true)}
+                    variant="link"
+                    bootstrapVariant="link"
+                    icon={FaQuestionCircle}
+                    label="More details"
+                  >
+                    More Details
+                  </Button>
+                </Col>
+              )
             )
-          )}
+          }
         >
           <PanelItem scrollable={false}>
             <CollectionDetails

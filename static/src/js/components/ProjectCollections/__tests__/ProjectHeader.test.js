@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-  render,
-  screen
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
 import ProjectHeader from '../ProjectHeader'
@@ -19,7 +16,10 @@ const setup = (overrideProps) => {
               isLoading: false,
               isLoaded: true,
               hits: 1,
-              totalSize: { size: '4.0', unit: 'MB' },
+              totalSize: {
+                size: '4.0',
+                unit: 'MB'
+              },
               singleGranuleSize: 4
             }
           }
@@ -78,7 +78,7 @@ describe('ProjectHeader component', () => {
       const skeleton = screen.getByTestId('project-header__skeleton')
 
       expect(skeletons.length).toEqual(1)
-      expect(skeleton.querySelectorAll('div').length).toEqual(4) // top-level skeleton__inner div + 3 children divs
+      expect(skeleton.querySelectorAll('div').length).toEqual(4) // Top-level skeleton__inner div + 3 children divs
     })
   })
 
@@ -108,7 +108,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 1,
-                  totalSize: { size: '4.0', unit: 'MB' },
+                  totalSize: {
+                    size: '4.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 4
                 }
               },
@@ -117,7 +120,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 5,
-                  totalSize: { size: '5.0', unit: 'MB' },
+                  totalSize: {
+                    size: '5.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 5
                 }
               }
@@ -152,7 +158,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 1,
-                  totalSize: { size: '4.0', unit: 'MB' },
+                  totalSize: {
+                    size: '4.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 4
                 }
               },
@@ -161,7 +170,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 5,
-                  totalSize: { size: '5.0', unit: 'MB' },
+                  totalSize: {
+                    size: '5.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 5
                 }
               }
@@ -187,7 +199,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 1,
-                  totalSize: { size: '4.0', unit: 'MB' },
+                  totalSize: {
+                    size: '4.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 4
                 }
               },
@@ -196,7 +211,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 3,
-                  totalSize: { size: '5.0', unit: 'MB' },
+                  totalSize: {
+                    size: '5.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 5,
                   addedGranuleIds: [1, 2, 3]
                 }
@@ -224,7 +242,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 1,
-                  totalSize: { size: '4.0', unit: 'MB' },
+                  totalSize: {
+                    size: '4.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 4
                 }
               },
@@ -233,7 +254,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 3,
-                  totalSize: { size: '5.0', unit: 'MB' },
+                  totalSize: {
+                    size: '5.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 5
                 }
               }
@@ -260,7 +284,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 1,
-                  totalSize: { size: '4.0', unit: 'MB' },
+                  totalSize: {
+                    size: '4.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 4
                 }
               },
@@ -269,7 +296,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 3,
-                  totalSize: { size: '5.0', unit: 'MB' },
+                  totalSize: {
+                    size: '5.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 5,
                   removedGranuleIds: [2]
                 }
@@ -297,7 +327,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 1,
-                  totalSize: { size: '4.0', unit: 'MB' },
+                  totalSize: {
+                    size: '4.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 4
                 }
               },
@@ -306,7 +339,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 3,
-                  totalSize: { size: '5.0', unit: 'MB' },
+                  totalSize: {
+                    size: '5.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 5,
                   removedGranuleIds: [1, 2]
                 }
@@ -334,7 +370,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 1,
-                  totalSize: { size: '4.0', unit: 'MB' },
+                  totalSize: {
+                    size: '4.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 4
                 }
               },
@@ -343,7 +382,10 @@ describe('ProjectHeader component', () => {
                   isLoading: false,
                   isLoaded: true,
                   hits: 3,
-                  totalSize: { size: '5.0', unit: 'MB' },
+                  totalSize: {
+                    size: '5.0',
+                    unit: 'MB'
+                  },
                   singleGranuleSize: 5
                 }
               }
@@ -440,7 +482,7 @@ describe('ProjectHeader component', () => {
 
       expect(textbox.value).toBe('test project')
 
-      // user is editing the textbox value after clicking edit button
+      // User is editing the textbox value after clicking edit button
       await user.keyboard('{a}')
 
       expect(textbox.value).toBe('test projecta')

@@ -20,6 +20,7 @@ export const constructLayerTagData = (layer) => {
   if (layer.startDate) {
     match.time_start = `>=${layer.startDate}`
   }
+
   if (layer.endDate) {
     match.time_end = `<=${layer.endDate}`
   }
@@ -36,7 +37,6 @@ export const constructLayerTagData = (layer) => {
     match,
     product: id,
     group,
-    // maxNativeZoom: 5,
     title,
     source: subtitle,
     format: format.split('/').pop(),

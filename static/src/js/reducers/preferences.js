@@ -43,12 +43,14 @@ const preferencesReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case SET_PREFERENCES_IS_SUBMITTING: {
       return {
         ...state,
         isSubmitting: payload
       }
     }
+
     default:
       return state
   }

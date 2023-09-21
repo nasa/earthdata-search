@@ -1,8 +1,6 @@
 import actions from './index'
 
-import {
-  UPDATE_FOCUSED_GRANULE
-} from '../constants/actionTypes'
+import { UPDATE_FOCUSED_GRANULE } from '../constants/actionTypes'
 
 import { createEcho10MetadataUrls } from '../util/granules'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
@@ -81,12 +79,12 @@ export const getFocusedGranule = () => (dispatch, getState) => {
   const response = graphQlRequestObject.search(graphQuery, {
     id: focusedGranuleId
   })
-    .then((response) => {
+    .then((responseObject) => {
       const payload = []
 
       const {
         data: responseData
-      } = response
+      } = responseObject
 
       const { data } = responseData
       const { granule } = data

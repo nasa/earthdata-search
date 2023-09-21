@@ -130,6 +130,7 @@ export const GranuleResultsTable = ({
     if (isFocusedGranule || isHoveredGranule) classNames.push('granule-results-table__tr--active')
     if (isCollectionInProject && isInProject) classNames.push('granule-results-table__tr--emphisized')
     if (isCollectionInProject && !isInProject) classNames.push('granule-results-table__tr--deemphisized')
+
     return classNames
   })
 
@@ -137,6 +138,7 @@ export const GranuleResultsTable = ({
     let rowTitle = 'Focus granule on map'
 
     if (isFocusedGranule) rowTitle = 'Unfocus granule on map'
+
     return rowTitle
   })
 

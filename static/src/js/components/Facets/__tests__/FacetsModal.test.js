@@ -55,6 +55,7 @@ describe('FacetsModal component', () => {
           selectedCategory: 'Test Category'
         }
       })
+
       expect(enzymeWrapper.prop('isOpen')).toEqual(false)
     })
   })
@@ -151,6 +152,7 @@ describe('FacetsModal component', () => {
         },
         isOpen: true
       })
+
       enzymeWrapper.instance().onModalClose()
       expect(props.onToggleFacetsModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleFacetsModal).toHaveBeenCalledWith(false)
@@ -185,6 +187,7 @@ describe('FacetsModal component', () => {
         },
         isOpen: true
       })
+
       enzymeWrapper.instance().onApplyClick()
       expect(props.onApplyViewAllFacets).toHaveBeenCalledTimes(1)
     })
@@ -218,6 +221,7 @@ describe('FacetsModal component', () => {
         },
         isOpen: true
       })
+
       const { changeHandler } = enzymeWrapper.prop('body').props
       changeHandler({}, { destination: '' })
       expect(props.onChangeViewAllFacet).toHaveBeenCalledTimes(1)

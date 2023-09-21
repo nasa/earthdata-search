@@ -20,7 +20,10 @@ describe('getGranuleIds', () => {
 
     const excludedGranuleIds = ['id2']
 
-    expect(getGranuleIds({ allIds, excludedGranuleIds })).toEqual(['id1', 'id3'])
+    expect(getGranuleIds({
+      allIds,
+      excludedGranuleIds
+    })).toEqual(['id1', 'id3'])
   })
 
   test('returns cwic granule ids when excluded ids exists', () => {

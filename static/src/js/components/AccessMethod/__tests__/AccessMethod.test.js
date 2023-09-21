@@ -1,7 +1,9 @@
 import React from 'react'
 
 import {
-  render, screen, waitFor
+  render,
+  screen,
+  waitFor
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -75,7 +77,10 @@ describe('AccessMethod component', () => {
       await user.click(directDownloadAccessMethodRadioButton)
 
       expect(onSelectAccessMethod).toHaveBeenCalledTimes(1)
-      expect(onSelectAccessMethod).toHaveBeenCalledWith({ collectionId, selectedAccessMethod: 'download' })
+      expect(onSelectAccessMethod).toHaveBeenCalledWith({
+        collectionId,
+        selectedAccessMethod: 'download'
+      })
     })
 
     describe('handleAccessMethodSelection', () => {
@@ -122,7 +127,10 @@ describe('AccessMethod component', () => {
       expect(onSelectAccessMethod).toHaveBeenCalledTimes(1)
 
       // Multiple `ESI` services are possible for a collection
-      expect(onSelectAccessMethod).toHaveBeenCalledWith({ collectionId, selectedAccessMethod: 'esi0' })
+      expect(onSelectAccessMethod).toHaveBeenCalledWith({
+        collectionId,
+        selectedAccessMethod: 'esi0'
+      })
     })
   })
 
@@ -136,6 +144,7 @@ describe('AccessMethod component', () => {
           }
         }
       })
+
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
       expect(directDownloadAccessMethodRadioButton.value).toEqual('download')
     })
@@ -177,6 +186,7 @@ describe('AccessMethod component', () => {
           }
         }
       })
+
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
       expect(directDownloadAccessMethodRadioButton.value).toEqual('opendap')
     })
@@ -190,6 +200,7 @@ describe('AccessMethod component', () => {
           }
         }
       })
+
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
       // Multiple `Harmony` services are possible for a collection
       expect(directDownloadAccessMethodRadioButton.value).toEqual('harmony0')
@@ -238,6 +249,7 @@ describe('AccessMethod component', () => {
         },
         selectedAccessMethod: 'echoOrder0'
       })
+
       const echoOrderInput = screen.getByRole('radio')
       expect(echoOrderInput.value).toEqual('echoOrder0')
     })
@@ -331,6 +343,7 @@ describe('AccessMethod component', () => {
           },
           selectedAccessMethod: 'harmony0'
         })
+
         expect(screen.getByText('No customization options are available for the selected access method.')).toBeInTheDocument()
         expect(screen.queryByTestId('access-methods__output-format-options')).toBeNull()
       })
@@ -352,6 +365,7 @@ describe('AccessMethod component', () => {
           },
           selectedAccessMethod: 'harmony0'
         })
+
         expect(screen.getByText('Choose from output format options like GeoTIFF, NETCDF, and other file types.')).toBeInTheDocument()
         expect(screen.queryByTestId('access-methods__output-format-options')).toBeInTheDocument()
       })
@@ -376,6 +390,7 @@ describe('AccessMethod component', () => {
           screen.getByTestId('access-methods__output-format-options'),
           screen.getByRole('option', { name: 'NETCDF-4' })
         )
+
         expect(screen.getByRole('option', { name: 'NETCDF-4' }).selected).toBe(true)
         expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
         expect(onUpdateAccessMethod).toHaveBeenCalledWith({
@@ -483,6 +498,7 @@ describe('AccessMethod component', () => {
             },
             selectedAccessMethod: 'harmony0'
           })
+
           // Ensure that `Temporal` is not being rendered on the DOM
           expect(screen.queryByText('Temporal')).toBeNull()
         })
@@ -532,6 +548,7 @@ describe('AccessMethod component', () => {
             },
             selectedAccessMethod: 'harmony0'
           })
+
           expect(screen.getByText('No temporal range selected. Make a temporal selection to enable temporal subsetting.')).toBeInTheDocument()
         })
       })
@@ -557,6 +574,7 @@ describe('AccessMethod component', () => {
               isRecurring: false
             }
           })
+
           // One single temporal subsetting selection
           expect(screen.getAllByRole('checkbox').length).toEqual(1)
         })
@@ -581,6 +599,7 @@ describe('AccessMethod component', () => {
               isRecurring: false
             }
           })
+
           expect(screen.getByText('Selected Range:2008-06-27 00:00:00 to 2021-08-01 23:59:59')).toBeInTheDocument()
         })
 
@@ -604,6 +623,7 @@ describe('AccessMethod component', () => {
                 isRecurring: false
               }
             })
+
             expect(screen.getByText('Selected Range:2008-06-27 00:00:00 ongoing')).toBeInTheDocument()
           })
 
@@ -627,6 +647,7 @@ describe('AccessMethod component', () => {
                   isRecurring: false
                 }
               })
+
               expect(screen.getByText('Selected Range:Up to 2008-06-27 00:00:00')).toBeInTheDocument()
             })
           })
@@ -656,6 +677,7 @@ describe('AccessMethod component', () => {
               isRecurring: true
             }
           })
+
           expect(screen.getByRole('checkbox').checked).toEqual(false)
         })
 
@@ -681,6 +703,7 @@ describe('AccessMethod component', () => {
               isRecurring: true
             }
           })
+
           expect(screen.getByRole('checkbox').disabled).toEqual(true)
         })
 
@@ -705,6 +728,7 @@ describe('AccessMethod component', () => {
               isRecurring: true
             }
           })
+
           expect(screen.getByText('To prevent unexpected results, temporal subsetting is not supported for recurring dates.')).toBeInTheDocument()
         })
       })
@@ -730,6 +754,7 @@ describe('AccessMethod component', () => {
               isRecurring: false
             }
           })
+
           expect(screen.getByRole('checkbox').checked).toEqual(true)
         })
       })
@@ -756,6 +781,7 @@ describe('AccessMethod component', () => {
               isRecurring: false
             }
           })
+
           expect(screen.getByRole('checkbox').checked).toEqual(true)
         })
 
@@ -783,6 +809,7 @@ describe('AccessMethod component', () => {
                 isRecurring: false
               }
             })
+
             const checkbox = screen.getByRole('checkbox')
 
             // Ensure `checkbox` is false first
@@ -819,7 +846,10 @@ describe('AccessMethod component', () => {
 
             await user.click(checkbox)
             expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-            expect(onUpdateAccessMethod).toHaveBeenCalledWith({ collectionId: 'collectionId', method: { harmony0: { enableTemporalSubsetting: false } } })
+            expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+              collectionId: 'collectionId',
+              method: { harmony0: { enableTemporalSubsetting: false } }
+            })
           })
         })
       })
@@ -845,6 +875,7 @@ describe('AccessMethod component', () => {
               isRecurring: false
             }
           })
+
           expect(screen.getByRole('checkbox').checked).toEqual(false)
         })
 
@@ -867,6 +898,7 @@ describe('AccessMethod component', () => {
                 boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
               }
             })
+
             expect(screen.getByRole('checkbox').checked).toEqual(false)
           })
 
@@ -886,6 +918,7 @@ describe('AccessMethod component', () => {
               selectedAccessMethod: 'harmony0',
               spatial: {}
             })
+
             expect(screen.getByText('No spatial area selected. Make a spatial selection to enable spatial subsetting.')).toBeInTheDocument()
           })
 
@@ -907,6 +940,7 @@ describe('AccessMethod component', () => {
                 circle: ['64.125,7.8161,983270-18.28125']
               }
             })
+
             expect(screen.getByRole('checkbox').checked).toEqual(false)
           })
 
@@ -928,6 +962,7 @@ describe('AccessMethod component', () => {
                 point: ['82.6875,-18.61541']
               }
             })
+
             expect(screen.getByRole('checkbox').checked).toEqual(false)
           })
 
@@ -949,6 +984,7 @@ describe('AccessMethod component', () => {
                 line: ['82.6875,-18.61541,83.1231, -16.11311']
               }
             })
+
             expect(screen.getByRole('checkbox').checked).toEqual(false)
           })
 
@@ -971,6 +1007,7 @@ describe('AccessMethod component', () => {
                 polygon: ['104.625,-10.6875,103.11328,-10.89844,103.57031,-12.19922,105.32813,-13.11328,106.38281,-11.70703,105.75,-10.33594,104.625,-10.6875']
               }
             })
+
             expect(screen.getByRole('checkbox').checked).toEqual(false)
           })
         })
@@ -998,6 +1035,7 @@ describe('AccessMethod component', () => {
                 isRecurring: false
               }
             })
+
             const checkbox = screen.getByRole('checkbox')
             expect(checkbox.checked).toEqual(true)
             await user.click(checkbox)
@@ -1024,6 +1062,7 @@ describe('AccessMethod component', () => {
                 boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
               }
             })
+
             const checkbox = screen.getByRole('checkbox')
             await user.click(checkbox)
             expect(screen.getByRole('checkbox').checked).toEqual(true)
@@ -1054,11 +1093,15 @@ describe('AccessMethod component', () => {
             const checkbox = screen.getByRole('checkbox')
             await user.click(checkbox)
             expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-            expect(onUpdateAccessMethod).toHaveBeenCalledWith({ collectionId: 'collectionId', method: { harmony0: { enableTemporalSubsetting: false } } })
+            expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+              collectionId: 'collectionId',
+              method: { harmony0: { enableTemporalSubsetting: false } }
+            })
           })
         })
       })
     })
+
     describe('when a service name is passed in', () => {
       describe('when the service type is `OPeNDAP`', () => {
         test('the service name is rendered on the panel without needing to click `More Info`', () => {
@@ -1076,6 +1119,7 @@ describe('AccessMethod component', () => {
           expect(screen.getByText('opendap-service-name')).toBeInTheDocument()
         })
       })
+
       describe('when the service type is `Harmony`', () => {
         test('the service name is rendered on the panel without needing to click `More Info`', () => {
           const collectionId = 'collectionId'
@@ -1092,6 +1136,7 @@ describe('AccessMethod component', () => {
               conceptId: collectionId
             }
           })
+
           expect(screen.getByText('harmony-service-name')).toBeInTheDocument()
         })
       })

@@ -64,14 +64,14 @@ const deleteProject = async (event, context) => {
       },
       body: JSON.stringify({ errors: [`Project '${providedProjectId}' not found.`] })
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: {
         ...defaultResponseHeaders,
         'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
       },
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

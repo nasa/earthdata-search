@@ -112,7 +112,7 @@ const StaticCommonConfig = {
   },
   plugins: [
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
+      NODE_ENV: 'development', // Use 'development' unless process.env.NODE_ENV is defined
       DEBUG: false
     }),
     new webpack.ProvidePlugin({
@@ -148,7 +148,10 @@ const StaticCommonConfig = {
       }]),
     new CopyWebpackPlugin({
       patterns: [
-        { from: './static/src/public', to: './' }
+        {
+          from: './static/src/public',
+          to: './'
+        }
       ]
     }),
     new webpack.ProvidePlugin({

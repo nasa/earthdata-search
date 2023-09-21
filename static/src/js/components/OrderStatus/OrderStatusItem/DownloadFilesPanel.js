@@ -66,6 +66,7 @@ export const DownloadFilesPanel = ({
           {
             downloadLinks.map((link, i) => {
               const key = `link_${i}`
+
               return (
                 <li key={key}>
                   <a href={link}>{link}</a>

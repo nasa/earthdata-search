@@ -106,11 +106,11 @@ const MapWrapper = ({
   }, [focusedCollectionMetadata])
 
   // Check that we are in the correct projection
+  const hasGibsLayerForProjection = (gibsLayerValue, projectionValue) => {
+    if (projectionValue === projections.arctic && gibsLayerValue.arctic) return true
+    if (projectionValue === projections.geographic && gibsLayerValue.geographic) return true
+    if (projectionValue === projections.antarctic && gibsLayerValue.antarctic) return true
 
-  const hasGibsLayerForProjection = (gibsLayer, projection) => {
-    if (projection === projections.arctic && gibsLayer.arctic) return true
-    if (projection === projections.geographic && gibsLayer.geographic) return true
-    if (projection === projections.antarctic && gibsLayer.antarctic) return true
     return false
   }
 

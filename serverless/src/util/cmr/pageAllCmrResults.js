@@ -41,7 +41,10 @@ export const pageAllCmrResults = async ({
     const response = await wrappedAxios({
       method: 'post',
       url: `${cmrHost}/${path}`,
-      data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
+      data: stringify(cmrParams, {
+        indices: false,
+        arrayFormat: 'brackets'
+      }),
       headers: {
         'Client-Id': getClientId().background,
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -76,7 +79,10 @@ export const pageAllCmrResults = async ({
         const additionalCmrResponse = await wrappedAxios({
           method: 'post',
           url: `${cmrHost}/${path}`,
-          data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
+          data: stringify(cmrParams, {
+            indices: false,
+            arrayFormat: 'brackets'
+          }),
           headers: {
             'Client-Id': getClientId().background,
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -85,19 +91,19 @@ export const pageAllCmrResults = async ({
           }
         })
 
-        const { config } = additionalCmrResponse
-        const { elapsedTime } = config
+        const { config: configObject } = additionalCmrResponse
+        const { elapsedTime: newElapsedTime } = configObject
 
-        console.log(`Request for page ${cmrParams.page_num} of cmr results to ${path} successfully completed in ${elapsedTime} ms`)
+        console.log(`Request for page ${cmrParams.page_num} of cmr results to ${path} successfully completed in ${newElapsedTime} ms`)
 
         allResults.push(...readCmrResults(path, additionalCmrResponse))
       })
     }
 
     return allResults
-  } catch (e) {
-    parseError(e)
+  } catch (error) {
+    parseError(error)
 
-    return e
+    return error
   }
 }

@@ -42,10 +42,10 @@ const migrateDatabase = async (event) => {
       statusCode: 200,
       body: JSON.stringify({ message: 'No migrations to run!' })
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

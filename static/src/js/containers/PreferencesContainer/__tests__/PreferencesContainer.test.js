@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, PreferencesContainer } from '../PreferencesContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  PreferencesContainer
+} from '../PreferencesContainer'
 import Preferences from '../../../components/Preferences/Preferences'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -58,6 +62,7 @@ describe('PreferencesContainer component', () => {
     expect(enzymeWrapper.find(Preferences).props().preferences).toEqual({
       panelState: 'default'
     })
+
     expect(typeof enzymeWrapper.find(Preferences).props().onUpdatePreferences).toEqual('function')
   })
 })

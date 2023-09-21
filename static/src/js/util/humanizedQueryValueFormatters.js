@@ -8,6 +8,7 @@ import moment from 'moment'
  */
 export const formatBoolean = (value) => {
   if (value) return undefined
+
   return value
 }
 
@@ -40,6 +41,7 @@ export const formatPoints = (value) => castArray(value).map(
  */
 export const formatCircle = (value) => castArray(value).map((circle) => {
   const [y, x, radius] = circle.split(',')
+
   return [x, y, radius]
 })
 
@@ -50,6 +52,7 @@ export const formatCircle = (value) => castArray(value).map((circle) => {
  */
 export const formatTemporal = (value) => {
   const [start, end, recurringStart, recurringEnd] = value.split(',')
+
   return [
     start ? `${moment.utc(start).format('YYYY-MM-DD HH:mm:ss')}` : undefined,
     end ? `${moment.utc(end).format('YYYY-MM-DD HH:mm:ss')}` : undefined,
@@ -72,6 +75,7 @@ export const formatFacetHierarchy = (value, order) => value.map(
       if (!variable[level]) return
       hierarchy.push(variable[level])
     })
+
     return hierarchy
   }
 )

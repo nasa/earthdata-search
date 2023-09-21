@@ -49,10 +49,13 @@ export const PortalContainer = ({
       // If the pathname doesn't exist after replacing the portalPath, set it to /search
       if (!newPathname) newPathname = '/search'
 
-      const params = parse(search, { parseArrays: false, ignoreQueryPrefix: true })
+      const newParams = parse(search, {
+        parseArrays: false,
+        ignoreQueryPrefix: true
+      })
 
       newSearch = stringify({
-        ...params,
+        ...newParams,
         portal: portalId
       }, {
         addQueryPrefix: true
@@ -65,6 +68,7 @@ export const PortalContainer = ({
         pathname: newPathname,
         search: newSearch
       })
+
       // Reset the store based on the new URL
       onChangePath(`${newPathname}${newSearch}`)
     }

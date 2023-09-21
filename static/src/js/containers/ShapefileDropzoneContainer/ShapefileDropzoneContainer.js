@@ -40,12 +40,9 @@ const dropzoneOptions = {
   paramName: 'upload',
   createImageThumbnails: false,
   acceptedFiles: '.zip,.kml,.kmz,.json,.geojson,.rss,.georss,.xml',
-  // fallback() { // TODO: Implement a fallback for unsupported browser. May not be an issue with our browser support.
-  //   onToggleShapefileUploadModal(true)
-  // },
   parallelUploads: 1,
   uploadMultiple: false,
-  previewTemplate: '<div>' // remove the dropzone preview
+  previewTemplate: '<div>' // Remove the dropzone preview
 }
 
 export const ShapefileDropzoneContainer = ({
@@ -59,41 +56,49 @@ export const ShapefileDropzoneContainer = ({
   <ShapefileDropzone
     dropzoneOptions={dropzoneOptions}
     eventScope="shapefile"
-    onSending={(file) => {
+    onSending={
+      (file) => {
       // Remove existing spatial from the store
-      onRemoveSpatialFilter()
+        onRemoveSpatialFilter()
 
-      onShapefileLoading(file)
-    }}
-    onSuccess={(file, resp, dropzoneEl) => {
-      const { name, size } = file
-      const fileSize = dropzoneEl.filesize(size).replace(/<{1}[^<>]{1,}>{1}/g, '')
+        onShapefileLoading(file)
+      }
+    }
+    onSuccess={
+      (file, resp, dropzoneEl) => {
+        const { name, size } = file
+        const fileSize = dropzoneEl.filesize(size).replace(/<{1}[^<>]{1,}>{1}/g, '')
 
-      dropzoneEl.removeFile(file)
+        dropzoneEl.removeFile(file)
 
-      eventEmitter.emit('shapefile.success', file, resp)
+        eventEmitter.emit('shapefile.success', file, resp)
 
-      onToggleShapefileUploadModal(false)
+        onToggleShapefileUploadModal(false)
 
-      onSaveShapefile({
-        authToken,
-        file: resp,
-        filename: name,
-        size: fileSize
-      })
-    }}
-    onError={(file) => {
-      onToggleShapefileUploadModal(false)
-
-      if (file.name.match('.*shp')) {
-        onShapefileErrored({
-          type: 'upload_shape'
+        onSaveShapefile({
+          authToken,
+          file: resp,
+          filename: name,
+          size: fileSize
         })
       }
-    }}
-    onRemovedFile={(file, resp) => {
-      eventEmitter.emit('shapefile.removedfile', file, resp)
-    }}
+    }
+    onError={
+      (file) => {
+        onToggleShapefileUploadModal(false)
+
+        if (file.name.match('.*shp')) {
+          onShapefileErrored({
+            type: 'upload_shape'
+          })
+        }
+      }
+    }
+    onRemovedFile={
+      (file, resp) => {
+        eventEmitter.emit('shapefile.removedfile', file, resp)
+      }
+    }
   />
 )
 

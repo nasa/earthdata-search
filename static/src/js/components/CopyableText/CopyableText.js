@@ -96,17 +96,20 @@ export const CopyableText = ({
     <Button
       variant="naked"
       className={classes}
-      onClick={(e) => {
-        e.stopPropagation()
+      onClick={
+        (event) => {
+          event.stopPropagation()
 
-        copyStringToClipBoard({
-          failureMessage,
-          successMessage,
-          text,
-          textToCopy
-        })
-        if (onClick) onClick(e)
-      }}
+          copyStringToClipBoard({
+            failureMessage,
+            successMessage,
+            text,
+            textToCopy
+          })
+
+          if (onClick) onClick(event)
+        }
+      }
       label={label}
       icon={FaRegCopy}
       iconPosition="right"

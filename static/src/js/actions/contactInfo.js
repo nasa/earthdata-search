@@ -38,8 +38,8 @@ export const fetchContactInfo = () => (dispatch, getState) => {
   const requestObject = new ContactInfoRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.fetch()
-    .then((response) => {
-      const { data } = response
+    .then((responseObject) => {
+      const { data } = responseObject
       const {
         cmr_preferences: cmrPreferences,
         urs_profile: ursProfile
@@ -74,8 +74,8 @@ export const updateNotificationLevel = (level) => (dispatch, getState) => {
   const requestObject = new ContactInfoRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.updateNotificationLevel({ preferences })
-    .then((response) => {
-      const { data } = response
+    .then((responseObject) => {
+      const { data } = responseObject
 
       dispatch(updateContactInfo({
         cmrPreferences: data

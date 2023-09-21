@@ -20,7 +20,10 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getCollectionsMetadata } from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
-import { getCollectionSubscriptionQueryString, getGranuleSubscriptionQueryString } from '../selectors/query'
+import {
+  getCollectionSubscriptionQueryString,
+  getGranuleSubscriptionQueryString
+} from '../selectors/query'
 
 import { addToast } from '../util/addToast'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
@@ -125,6 +128,7 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
     const collectionId = getFocusedCollectionId(state)
     params.collectionConceptId = collectionId
   }
+
   params.query = subscriptionQuery
 
   try {
@@ -167,6 +171,7 @@ export const getSubscriptions = (
   if (clearSubscriptions) {
     dispatch(updateSubscriptionResults([]))
   }
+
   const state = getState()
 
   const {
@@ -226,6 +231,7 @@ export const getSubscriptions = (
     dispatch(onSubscriptionsLoaded({
       loaded: true
     }))
+
     dispatch(updateSubscriptionResults(items))
   } catch (error) {
     dispatch(finishSubscriptionsTimer())

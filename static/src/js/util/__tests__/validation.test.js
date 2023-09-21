@@ -1,4 +1,8 @@
-import { nullableValue, nullableTemporal, dateOutsideRange } from '../validation'
+import {
+  nullableValue,
+  nullableTemporal,
+  dateOutsideRange
+} from '../validation'
 
 describe('#nullableValue', () => {
   test('returns null for an empty string', () => {

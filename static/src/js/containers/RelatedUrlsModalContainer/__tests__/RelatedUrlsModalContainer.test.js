@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, RelatedUrlsModalContainer } from '../RelatedUrlsModalContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  RelatedUrlsModalContainer
+} from '../RelatedUrlsModalContainer'
 import { RelatedUrlsModal } from '../../../components/CollectionDetails/RelatedUrlsModal'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -67,6 +71,7 @@ describe('RelatedUrlsModalContainer component', () => {
     expect(enzymeWrapper.find(RelatedUrlsModal).props().collectionMetadata).toEqual({
       some: 'metadata'
     })
+
     expect(enzymeWrapper.find(RelatedUrlsModal).props().isOpen).toEqual(true)
     expect(typeof enzymeWrapper.find(RelatedUrlsModal).props().onToggleRelatedUrlsModal).toEqual('function')
   })

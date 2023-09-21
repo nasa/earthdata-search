@@ -118,13 +118,16 @@ const submitCmrOrderingOrder = async (event, context) => {
       const { createOrder } = data
       const { id: orderId, state } = createOrder
 
-      await dbConnection('retrieval_orders').update({ order_number: orderId, state }).where({ id })
+      await dbConnection('retrieval_orders').update({
+        order_number: orderId,
+        state
+      }).where({ id })
 
       // Start the order status check workflow
       const { type } = accessMethod
       await startOrderStatusUpdateWorkflow(id, accessToken, type)
-    } catch (e) {
-      const parsedErrorMessage = parseError(e, { asJSON: false })
+    } catch (error) {
+      const parsedErrorMessage = parseError(error, { asJSON: false })
 
       const [errorMessage] = parsedErrorMessage
 

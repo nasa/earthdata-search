@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useState
-} from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import validator from '@rjsf/validator-ajv8'
@@ -33,8 +30,9 @@ const PreferencesForm = (props) => {
   }, [formDataProps])
 
   const onChange = (data) => {
-    const { formData } = data
-    setFormData(formData)
+    const { formData: newFormData } = data
+
+    setFormData(newFormData)
   }
 
   const fields = {
@@ -43,9 +41,9 @@ const PreferencesForm = (props) => {
     radio: PreferencesRadioField
   }
 
-  const validate = (formData, errors) => {
+  const validate = (formDataObject, errors) => {
     // Projections that aren't geographic have a zoom limit of 4
-    if (formData.mapView.projection !== 'epsg4326' && formData.mapView.zoom > 4) {
+    if (formDataObject.mapView.projection !== 'epsg4326' && formDataObject.mapView.zoom > 4) {
       errors.mapView.zoom.addError('should be less than or equal to 4')
     }
 

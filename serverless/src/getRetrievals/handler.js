@@ -33,12 +33,14 @@ export default async function getRetrievals(event, context) {
     const dbConnection = await getDbConnection()
 
     const retrievalResponse = await dbConnection('retrievals')
-      .select('jsondata',
+      .select(
+        'jsondata',
         'retrievals.id',
         'retrievals.environment',
         'retrievals.created_at',
         'retrieval_collections.collection_metadata',
-        'users.urs_id')
+        'users.urs_id'
+      )
       .join('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
       .where({
@@ -65,6 +67,7 @@ export default async function getRetrievals(event, context) {
         collection_metadata: collectionMetadata = {}
       }) => {
         const { title } = collectionMetadata
+
         return { title }
       })
 
@@ -83,11 +86,11 @@ export default async function getRetrievals(event, context) {
       headers: defaultResponseHeaders,
       body: JSON.stringify(Object.values(sortBy(retrievalsResponse, 'created_at')).reverse())
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

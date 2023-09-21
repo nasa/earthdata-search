@@ -2,6 +2,7 @@
 export const formatRelatedUrl = (url) => {
   if (!url) return undefined
   if (url.search(/^(http|https):\/\//g) > -1) return url
+
   return `http://${url}`
 }
 
@@ -22,6 +23,7 @@ export const sortRelatedUrls = (a, b) => {
   if (subType1 < subType2) return -1
   if (url1 > url2) return 1
   if (url1 < url2) return -1
+
   return false
 }
 
@@ -79,20 +81,32 @@ export const buildRelatedUrls = (json) => {
 
     // Add the neccesary highlighed URLs
     if (relatedUrl.urlContentType === 'CollectionURL' && relatedUrl.type === 'DATA SET LANDING PAGE') {
-      highlightedUrls.urls.push({ ...relatedUrl, highlightedType: 'Data Set Landing Page' })
+      highlightedUrls.urls.push({
+        ...relatedUrl,
+        highlightedType: 'Data Set Landing Page'
+      })
     }
 
     if (relatedUrl.urlContentType === 'PublicationURL' && relatedUrl.type === 'VIEW RELATED INFORMATION') {
       if (relatedUrl.subtype === 'DATA QUALITY') {
-        highlightedUrls.urls.push({ ...relatedUrl, highlightedType: 'QA' })
+        highlightedUrls.urls.push({
+          ...relatedUrl,
+          highlightedType: 'QA'
+        })
       }
 
       if (relatedUrl.subtype === 'ALGORITHM THEORETICAL BASIS DOCUMENT') {
-        highlightedUrls.urls.push({ ...relatedUrl, highlightedType: 'ATBD' })
+        highlightedUrls.urls.push({
+          ...relatedUrl,
+          highlightedType: 'ATBD'
+        })
       }
 
       if (relatedUrl.subtype === 'USER\'S GUIDE') {
-        highlightedUrls.urls.push({ ...relatedUrl, highlightedType: 'User\'s Guide' })
+        highlightedUrls.urls.push({
+          ...relatedUrl,
+          highlightedType: 'User\'s Guide'
+        })
       }
     }
 

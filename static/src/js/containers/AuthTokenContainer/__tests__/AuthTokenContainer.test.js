@@ -64,6 +64,7 @@ describe('AuthTokenContainer component', () => {
   test('should call onUpdateAuthToken when mounted', () => {
     jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
       if (param === 'authToken') return 'token'
+
       return ''
     })
 

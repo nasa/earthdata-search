@@ -1,9 +1,6 @@
 import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager'
 
-import {
-  getEarthdataConfig,
-  getSecretEarthdataConfig
-} from '../../../sharedUtils/config'
+import { getEarthdataConfig, getSecretEarthdataConfig } from '../../../sharedUtils/config'
 
 import { getSecretsManagerConfig } from './aws/getSecretsManagerConfig'
 

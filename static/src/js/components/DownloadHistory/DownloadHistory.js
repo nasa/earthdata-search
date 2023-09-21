@@ -119,10 +119,12 @@ export class DownloadHistory extends Component {
                           <td>
                             <PortalLinkContainer
                               portalId={portalId}
-                              to={{
-                                pathname: `/downloads/${id}`,
-                                search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-                              }}
+                              to={
+                                {
+                                  pathname: `/downloads/${id}`,
+                                  search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+                                }
+                              }
                             >
                               {this.retrievalDescription(collections)}
                             </PortalLinkContainer>

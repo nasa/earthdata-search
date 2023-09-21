@@ -141,10 +141,12 @@ export const PanelGroupHeader = ({
                       icon={icon}
                       label={title}
                       onClick={onClick}
-                      to={{
-                        pathname,
-                        search
-                      }}
+                      to={
+                        {
+                          pathname,
+                          search
+                        }
+                      }
                       dataTestId="breadcrumb-button"
                     >
                       {title}
@@ -167,11 +169,13 @@ export const PanelGroupHeader = ({
             ? (
               <Skeleton
                 className="panel-group-header__heading panel-group-header__heading--skeleton"
-                containerStyle={{
-                  display: 'inline-block',
-                  height: '1.25rem',
-                  width: '100%'
-                }}
+                containerStyle={
+                  {
+                    display: 'inline-block',
+                    height: '1.25rem',
+                    width: '100%'
+                  }
+                }
                 shapes={titleSkeleton}
               />
             )
@@ -230,10 +234,12 @@ export const PanelGroupHeader = ({
                     item = (
                       <PortalLinkContainer
                         key={`${key}_portal-link`}
-                        to={{
-                          pathname,
-                          search
-                        }}
+                        to={
+                          {
+                            pathname,
+                            search
+                          }
+                        }
                       >
                         {item}
                       </PortalLinkContainer>
@@ -267,7 +273,12 @@ export const PanelGroupHeader = ({
                   ? (
                     <Skeleton
                       className="panel-group-header__heading-meta-skeleton"
-                      containerStyle={{ height: '18px', width: '213px' }}
+                      containerStyle={
+                        {
+                          height: '18px',
+                          width: '213px'
+                        }
+                      }
                       shapes={headerMetaSkeleton}
                     />
                   )

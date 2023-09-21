@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { CollectionDetailsHighlightsContainer, mapDispatchToProps, mapStateToProps } from '../CollectionDetailsHighlightsContainer'
+import {
+  CollectionDetailsHighlightsContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../CollectionDetailsHighlightsContainer'
 import CollectionDetailsHighlights from '../../../components/CollectionDetailsHighlights/CollectionDetailsHighlights'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -73,9 +77,11 @@ describe('CollectionDetailsHighlightsContainer component', () => {
       isLoaded: true,
       isLoading: false
     })
+
     expect(enzymeWrapper.find(CollectionDetailsHighlights).props().location).toEqual({
       search: ''
     })
+
     expect(typeof enzymeWrapper.find(CollectionDetailsHighlights).props().onToggleRelatedUrlsModal)
       .toEqual('function')
   })

@@ -21,17 +21,21 @@ const advancedSearchReducer = (state = initialState, action = {}) => {
         ...payload
       }
     }
+
     case TOGGLE_DRAWING_NEW_LAYER: {
       return initialState
     }
+
     case RESTORE_FROM_URL: {
       const { advancedSearch = initialState } = action.payload
 
       return advancedSearch
     }
+
     case CLEAR_FILTERS: {
       return initialState
     }
+
     default:
       return state
   }

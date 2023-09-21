@@ -63,7 +63,10 @@ const processTag = async (event, context) => {
           data: stringify({
             ...condition,
             include_tags: tagName
-          }, { indices: false, arrayFormat: 'brackets' }),
+          }, {
+            indices: false,
+            arrayFormat: 'brackets'
+          }),
           headers: {
             'Client-Id': getClientId().background,
             'Content-Type': 'application/x-www-form-urlencoded',

@@ -1,4 +1,8 @@
-import { find, isEqual, remove } from 'lodash'
+import {
+  find,
+  isEqual,
+  remove
+} from 'lodash'
 
 import {
   UPDATE_SELECTED_FEATURE_FACET,

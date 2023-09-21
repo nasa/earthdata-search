@@ -45,7 +45,7 @@ export const isAccessMethodValid = (projectCollection, collectionMetadata) => {
     }
   }
 
-  // check the access method isValid flag
+  // Check the access method isValid flag
   const {
     accessMethods = {},
     selectedAccessMethod

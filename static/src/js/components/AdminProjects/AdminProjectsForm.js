@@ -16,8 +16,8 @@ export class AdminProjectsForm extends Component {
     this.onChange = this.onChange.bind(this)
   }
 
-  onBlur(e) {
-    e.preventDefault()
+  onBlur(event) {
+    event.preventDefault()
   }
 
   onChange({ target }) {
@@ -25,8 +25,8 @@ export class AdminProjectsForm extends Component {
     this.setState({ projectId: value })
   }
 
-  onFormSubmit(e) {
-    e.preventDefault()
+  onFormSubmit(event) {
+    event.preventDefault()
 
     const { projectId } = this.state
     const { onAdminViewProject } = this.props

@@ -6,5 +6,6 @@
  */
 export const convertRemsToPixels = (rem) => {
   if (!window || !document) return 16
+
   return rem * parseFloat(getComputedStyle(document.documentElement).fontSize)
 }

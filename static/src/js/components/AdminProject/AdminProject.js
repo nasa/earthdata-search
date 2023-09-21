@@ -7,20 +7,22 @@ import { AdminPage } from '../AdminPage/AdminPage'
 export const AdminProject = ({ project }) => (
   <AdminPage
     pageTitle="Project Details"
-    breadcrumbs={[
-      {
-        name: 'Admin',
-        href: '/admin'
-      },
-      {
-        name: 'Projects',
-        href: '/admin/projects'
-      },
-      {
-        name: 'Project Details',
-        active: true
-      }
-    ]}
+    breadcrumbs={
+      [
+        {
+          name: 'Admin',
+          href: '/admin'
+        },
+        {
+          name: 'Projects',
+          href: '/admin/projects'
+        },
+        {
+          name: 'Project Details',
+          active: true
+        }
+      ]
+    }
   >
     <AdminProjectDetails
       project={project}

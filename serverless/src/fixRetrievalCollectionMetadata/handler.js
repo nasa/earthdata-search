@@ -60,11 +60,11 @@ export default async function fixRetrievalCollectionMetadata(event, context) {
         fixedRecords
       })
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

@@ -24,8 +24,8 @@ export const removeTag = async (tagName, searchCriteria, cmrToken) => {
       },
       data: searchCriteria
     })
-  } catch (e) {
-    parseError(e)
+  } catch (error) {
+    parseError(error)
 
     return false
   }

@@ -3,7 +3,11 @@ import { render, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, PortalContainer } from '../PortalContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  PortalContainer
+} from '../PortalContainer'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 function setup(overrideProps) {

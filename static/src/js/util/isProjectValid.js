@@ -26,10 +26,10 @@ export const isProjectValid = (project, collectionsMetadata) => {
 
     Object.keys(validAccessMethod).forEach((key) => {
       if (key === 'valid') {
-        // if the valid key goes false, remember it is false
+        // If the valid key goes false, remember it is false
         valid[key] = !valid[key] ? valid[key] : newValid[key]
       } else {
-        // if the other keys go true, remember they are true
+        // If the other keys go true, remember they are true
         valid[key] = valid[key] || newValid[key]
       }
     })

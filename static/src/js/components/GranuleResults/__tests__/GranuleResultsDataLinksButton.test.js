@@ -5,7 +5,10 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import { Dropdown } from 'react-bootstrap'
 
 import * as addToast from '../../../util/addToast'
-import { GranuleResultsDataLinksButton, CustomDataLinksToggle } from '../GranuleResultsDataLinksButton'
+import {
+  GranuleResultsDataLinksButton,
+  CustomDataLinksToggle
+} from '../GranuleResultsDataLinksButton'
 import Button from '../../Button/Button'
 import CopyableText from '../../CopyableText/CopyableText'
 

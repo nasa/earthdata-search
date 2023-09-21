@@ -100,11 +100,11 @@ const regionSearch = async (event) => {
         results: filteredResponse
       })
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

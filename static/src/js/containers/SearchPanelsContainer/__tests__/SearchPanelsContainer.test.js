@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, SearchPanelsContainer } from '../SearchPanelsContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  SearchPanelsContainer
+} from '../SearchPanelsContainer'
 import SearchPanels from '../../../components/SearchPanels/SearchPanels'
 import * as metricsCollectionSortChange from '../../../middleware/metrics/actions'
 
@@ -237,6 +241,7 @@ describe('SearchPanelsContainer component', () => {
       activePanel: '0.0.0',
       isOpen: false
     })
+
     expect(searchPanels.props().match).toEqual({ url: '/search' })
     expect(searchPanels.props().portal).toEqual({
       test: 'portal'

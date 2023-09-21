@@ -204,14 +204,14 @@ export const timing = (action) => {
   const { payload } = action
   const {
     url,
-    timing
+    timing: timingValue
   } = payload
 
   dataLayer.push({
     event: 'timing',
     timingEventCategory: 'ajax',
     timingEventVar: url,
-    timingEventValue: timing
+    timingEventValue: timingValue
   })
 }
 

@@ -112,12 +112,14 @@ describe('applyViewAllFacets', () => {
       type: TOGGLE_VIEW_ALL_FACETS_MODAL,
       payload: false
     })
+
     expect(storeActions[1]).toEqual({
       type: UPDATE_COLLECTION_QUERY,
       payload: {
         pageNum: 1
       }
     })
+
     expect(storeActions[2]).toEqual({
       type: UPDATE_SELECTED_CMR_FACET,
       payload: {
@@ -241,7 +243,7 @@ describe('getViewAllFacets', () => {
       .post(/collections/)
       .reply(200, stubResponse, { 'cmr-hits': 1 })
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: '',
       searchResults: {
@@ -265,7 +267,7 @@ describe('getViewAllFacets', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(getViewAllFacets('Instruments')).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
@@ -274,16 +276,19 @@ describe('getViewAllFacets', () => {
           selectedCategory: 'Instruments'
         }
       })
+
       expect(storeActions[1]).toEqual({
         type: TOGGLE_VIEW_ALL_FACETS_MODAL,
         payload: true
       })
+
       expect(storeActions[2]).toEqual({
         type: LOADED_VIEW_ALL_FACETS,
         payload: {
           loaded: true
         }
       })
+
       expect(storeActions[3]).toEqual({
         type: UPDATE_VIEW_ALL_FACETS,
         payload: facetsPayload
@@ -299,7 +304,7 @@ describe('getViewAllFacets', () => {
         'jwt-token': 'token'
       })
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: 'token',
       searchResults: {
@@ -323,7 +328,7 @@ describe('getViewAllFacets', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(getViewAllFacets('Instruments')).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
@@ -332,16 +337,19 @@ describe('getViewAllFacets', () => {
           selectedCategory: 'Instruments'
         }
       })
+
       expect(storeActions[1]).toEqual({
         type: TOGGLE_VIEW_ALL_FACETS_MODAL,
         payload: true
       })
+
       expect(storeActions[2]).toEqual({
         type: LOADED_VIEW_ALL_FACETS,
         payload: {
           loaded: true
         }
       })
+
       expect(storeActions[3]).toEqual({
         type: UPDATE_VIEW_ALL_FACETS,
         payload: facetsPayload
@@ -360,7 +368,7 @@ describe('getViewAllFacets', () => {
       .post(/error_logger/)
       .reply(200)
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: '',
       searchResults: {
@@ -384,7 +392,7 @@ describe('getViewAllFacets', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(getViewAllFacets('Instruments')).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
@@ -393,19 +401,23 @@ describe('getViewAllFacets', () => {
           selectedCategory: 'Instruments'
         }
       })
+
       expect(storeActions[1]).toEqual({
         type: TOGGLE_VIEW_ALL_FACETS_MODAL,
         payload: true
       })
+
       expect(storeActions[2]).toEqual({
         type: ERRORED_VIEW_ALL_FACETS
       })
+
       expect(storeActions[3]).toEqual({
         type: LOADED_VIEW_ALL_FACETS,
         payload: {
           loaded: false
         }
       })
+
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
@@ -424,7 +436,7 @@ describe('triggerViewAllFacets', () => {
         }
       }, { 'cmr-hits': 0 })
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: '',
       searchResults: {
@@ -445,7 +457,7 @@ describe('triggerViewAllFacets', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(triggerViewAllFacets('Instruments'))
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
@@ -454,6 +466,7 @@ describe('triggerViewAllFacets', () => {
         instrument_h: ['1 Test facet', 'Test facet 2']
       }
     })
+
     expect(storeActions[1]).toEqual({
       type: LOADING_VIEW_ALL_FACETS,
       payload: {
@@ -476,7 +489,7 @@ describe('changeViewAllFacet', () => {
         }
       }, { 'cmr-hits': 0 })
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       searchResults: {
         collections: {},
@@ -496,7 +509,7 @@ describe('changeViewAllFacet', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     const newFacets = { instrument_h: ['1 Test facet', 'Test facet 2', 'And another'] }
     store.dispatch(changeViewAllFacet({
       params: newFacets,
@@ -515,6 +528,7 @@ describe('changeViewAllFacet', () => {
         science_keywords_h: undefined
       }
     })
+
     expect(storeActions[1]).toEqual({
       type: LOADING_VIEW_ALL_FACETS,
       payload: {
