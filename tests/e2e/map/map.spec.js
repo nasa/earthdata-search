@@ -1629,13 +1629,32 @@ test.describe('Map interactions', () => {
         })
       })
 
-      await page.route(/colormaps\/GHRSST_Sea_Ice_Concentration/, async (route) => {
+      await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Ice_Concentration/, async (route) => {
         await route.fulfill({
           json: colormapOneBody
         })
       })
 
+      await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Surface_Temperature/, async (route) => {
+        await route.fulfill({
+          json: colormapOneBody
+        })
+      })
+
+      await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies/,
+        async (route) => {
+          await route.fulfill({
+            json: colormapOneBody
+          })
+        })
+
       await page.route(/colormaps\/AIRS_Prata_SO2_Index_Day/, async (route) => {
+        await route.fulfill({
+          json: colormapTwoBody
+        })
+      })
+
+      await page.route(/colormaps\/AIRS_Prata_SO2_Index_Night/, async (route) => {
         await route.fulfill({
           json: colormapTwoBody
         })
