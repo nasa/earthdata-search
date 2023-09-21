@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { isEmpty } from 'lodash'
-import $ from 'jquery'
 import { FaChevronLeft } from 'react-icons/fa'
 
 import SimpleBar from 'simplebar-react'
@@ -54,8 +53,9 @@ export class PanelItem extends Component {
   handleScroll() {
     const { panelItemRef } = this
     const panelInner = panelItemRef.querySelector('.simplebar-content-wrapper')
+
     this.setState({
-      hasScrolled: $(panelInner).scrollTop() > 20
+      hasScrolled: panelInner.scrollTop > 20
     })
   }
 
