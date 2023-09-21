@@ -170,18 +170,18 @@ describe('AccessMethodRadio component', () => {
       expect(renderedServiceNames.length).toEqual(1)
     })
     describe('when the `subtitle` is `Harmony`', () => {
-      test('service name appears on on customizable option does not appear in the more-info section', () => {
+      test('service name appears on on customizable option primary title', () => {
         setup({ serviceName: 'test service name', subtitle: 'Harmony' })
-        const renderedServiceNames = screen.getAllByText('Harmony (test service name)')
+        const renderedServiceNames = screen.getAllByText('test service name')
         // renders in the `access-method-content` section
         expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__header-primary')
         expect(renderedServiceNames.length).toEqual(1)
       })
     })
     describe('when the `subtitle` is `OPeNDAP`', () => {
-      test('service name appears on on customizable option does not appear in the more-info section', () => {
+      test('service name appears on on customizable option primary title', () => {
         setup({ serviceName: 'test service name', subtitle: 'OPeNDAP' })
-        const renderedServiceNames = screen.getAllByText('OPeNDAP (test service name)')
+        const renderedServiceNames = screen.getAllByText('test service name')
         // renders in the `access-method-content` section
         expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__header-primary')
         expect(renderedServiceNames.length).toEqual(1)

@@ -55,12 +55,20 @@ export const AccessMethodRadio = ({
       <div className="access-method-radio__content">
         <header className="access-method-radio__header">
           <div className="access-method-radio__header-primary">
-            <h4 className="access-method-radio__title">
-              {title}
-            </h4>
-            <span className="access-method-radio__subtitle">
-              {serviceName && subtitle ? (`${subtitle} (${serviceName})`) : subtitle }
+            <span className="access-method-radio__primary-titles">
+              <h4 className="access-method-radio__title">
+                {title}
+              </h4>
+              <span className="access-method-radio__subtitle">
+                {subtitle}
+              </span>
             </span>
+            { serviceName
+           && (
+           <span className="access-method-radio__primary-service-name">
+             {serviceName}
+           </span>
+           )}
           </div>
           <div className="access-method-radio__header-secondary">
             <span className="access-method-radio__description">

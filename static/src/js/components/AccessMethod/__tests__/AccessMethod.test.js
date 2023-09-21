@@ -1073,7 +1073,7 @@ describe('AccessMethod component', () => {
             }
           })
 
-          expect(screen.getByText('OPeNDAP (opendap-service-name)')).toBeInTheDocument()
+          expect(screen.getByText('opendap-service-name')).toBeInTheDocument()
         })
       })
       describe('when the service type is `Harmony`', () => {
@@ -1092,7 +1092,7 @@ describe('AccessMethod component', () => {
               conceptId: collectionId
             }
           })
-          expect(screen.getByText('Harmony (harmony-service-name)')).toBeInTheDocument()
+          expect(screen.getByText('harmony-service-name')).toBeInTheDocument()
         })
       })
     })
