@@ -5,7 +5,10 @@ import thunk from 'redux-thunk'
 import actions from '..'
 
 import {
-  SET_COLOR_MAPS_LOADED, SET_COLOR_MAPS_LOADING, ERRORED_COLOR_MAPS, ADD_ERROR
+  SET_COLOR_MAPS_LOADED,
+  SET_COLOR_MAPS_LOADING,
+  ERRORED_COLOR_MAPS,
+  ADD_ERROR
 } from '../../constants/actionTypes'
 
 import {
