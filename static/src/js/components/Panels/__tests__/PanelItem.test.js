@@ -1,9 +1,9 @@
 import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event'
 
 import PanelItem from '../PanelItem'
-import userEvent from '@testing-library/user-event'
 
 describe('PanelItem component', () => {
   describe('when provided a string as children', () => {
@@ -133,7 +133,7 @@ describe('PanelItem component', () => {
         </PanelItem>
       )
 
-      expect(screen.queryByRole('button', { name: "Back" })).toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: 'Back' })).toBeInTheDocument()
     })
 
     describe('when text is provided to the backButtonOptions', () => {
@@ -149,7 +149,7 @@ describe('PanelItem component', () => {
           </PanelItem>
         )
 
-        expect(screen.queryByRole('button', { name: "Back to Previous Step" })).toBeInTheDocument()
+        expect(screen.queryByRole('button', { name: 'Back to Previous Step' })).toBeInTheDocument()
       })
     })
 

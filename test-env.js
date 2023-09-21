@@ -5,9 +5,6 @@
 import nock from 'nock'
 import enableHooks from 'jest-react-hooks-shallow'
 
-global.$ = $
-global.jQuery = $
-
 // Google Tag Manager dataLayer
 global.dataLayer = {
   push: jest.fn()
