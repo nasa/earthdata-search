@@ -26,10 +26,10 @@ export const AuthTokenContainer = ({
   useEffect(() => {
     const jwtToken = get('authToken')
 
-    onUpdateAuthToken(jwtToken || '')
     onSetPreferencesFromJwt(jwtToken)
     onSetContactInfoFromJwt(jwtToken)
     onSetUserFromJwt(jwtToken)
+    onUpdateAuthToken(jwtToken || '')
   }, [])
 
   return children
