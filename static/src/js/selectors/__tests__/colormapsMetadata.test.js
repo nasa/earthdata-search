@@ -3,7 +3,7 @@ import {
 } from '../colormapsMetadata'
 
 describe('getColormapsMetadata selector', () => {
-  test('returns the granule results', () => {
+  test('checks that the metadata returned is formatted correctly.', () => {
     const state = {
       metadata: {
         colormaps: {
