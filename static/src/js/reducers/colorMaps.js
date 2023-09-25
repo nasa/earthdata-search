@@ -17,7 +17,7 @@ const colorMapsReducer = (state = initialState, action = {}) => {
           isLoading: false,
           isLoaded: false,
           isErrored: true,
-          jsondata: {}
+          colorMapData: {}
         }
       }
     }
@@ -29,19 +29,19 @@ const colorMapsReducer = (state = initialState, action = {}) => {
           isLoading: true,
           isLoaded: false,
           isErrored: false,
-          jsondata: {}
+          colorMapData: {}
         }
       }
     }
     case SET_COLOR_MAPS_LOADED: {
-      const { product, jsondata } = action.payload
+      const { product, colorMapData } = action.payload
       return {
         ...state,
         [product]: {
           isLoading: false,
           isLoaded: true,
           isErrored: false,
-          jsondata
+          colorMapData
         }
       }
     }

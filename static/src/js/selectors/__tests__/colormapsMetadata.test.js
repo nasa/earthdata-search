@@ -11,7 +11,7 @@ describe('getColormapsMetadata selector', () => {
             isLoaded: true,
             isErrored: false,
             isLoading: false,
-            jsondata: { scale: {} }
+            colorMapData: { scale: {} }
           }
         }
       }
@@ -22,7 +22,7 @@ describe('getColormapsMetadata selector', () => {
         isLoaded: true,
         isErrored: false,
         isLoading: false,
-        jsondata: { scale: {} }
+        colorMapData: { scale: {} }
       }
     })
   })

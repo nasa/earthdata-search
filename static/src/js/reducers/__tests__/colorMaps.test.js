@@ -31,7 +31,7 @@ describe('SET_COLOR_MAPS_LOADING', () => {
         isLoading: true,
         isErrored: false,
         isLoaded: false,
-        jsondata: {}
+        colorMapData: {}
       }
     }
 
@@ -45,7 +45,7 @@ describe('SET_COLOR_MAPS_LOADED', () => {
 
     const action = {
       type: SET_COLOR_MAPS_LOADED,
-      payload: { product, jsondata: { hello: 1 } }
+      payload: { product, colorMapData: { hello: 1 } }
     }
 
     const expectedState = {
@@ -54,7 +54,7 @@ describe('SET_COLOR_MAPS_LOADED', () => {
         isLoading: false,
         isErrored: false,
         isLoaded: true,
-        jsondata: { hello: 1 }
+        colorMapData: { hello: 1 }
       }
     }
 
@@ -77,7 +77,7 @@ describe('SET_COLOR_MAPS_ERRORED', () => {
         isLoading: false,
         isErrored: true,
         isLoaded: false,
-        jsondata: {}
+        colorMapData: {}
       }
     }
 
