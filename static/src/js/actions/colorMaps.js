@@ -29,11 +29,10 @@ export const getColorMap = (payload) => async (dispatch, getState) => {
 
   const state = getState()
 
-  const { authToken } = state
   const earthdataEnvironment = getEarthdataEnvironment(state)
   dispatch(setColorMapsLoading({ product }))
 
-  const requestObject = new ColorMapRequest(authToken, earthdataEnvironment)
+  const requestObject = new ColorMapRequest(earthdataEnvironment)
 
   await requestObject.getColorMap(product)
     .then((response) => {
