@@ -161,8 +161,8 @@ describe('getFocusedCollection', () => {
         expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
       })
 
-      describe('when the requested collection is cwic and a polygon search is active and a GIBS tag exists', () => {
-        test('should toggle the polygon warning, update the focusedCollection and call SET_COLOR_MAPS_LOADING and call ERRORED_COLOR_MAPS call getSearchGranules', async () => {
+      describe('when the requested collection is cwic and a polygon search is active and we try and retrieve an existing gibs tag', () => {
+        test('should toggle the polygon warning, update the focusedCollection and call getSearchGranules', async () => {
           jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
             cmrHost: 'https://cmr.example.com',
             graphQlHost: 'https://graphql.example.com',
@@ -179,12 +179,7 @@ describe('getFocusedCollection', () => {
                   versionId: 'VersionID',
                   hasGranules: false,
                   tags: {
-                    'org.ceos.wgiss.cwic.granules.prod': {},
-                    'edsc.extra.serverless.gibs': {
-                      data: [
-                        { product: 'AIRS_Prata_SO2_Index_Day' }
-                      ]
-                    }
+                    'org.ceos.wgiss.cwic.granules.prod': {}
                   },
                   tools: {
                     items: null
@@ -222,12 +217,6 @@ describe('getFocusedCollection', () => {
             searchResults: {}
           })
 
-          nock(/localhost/)
-            .get(/colormaps\/AIRS_Prata_SO2_Index_Day/)
-            .reply(200, {
-              scale: {}
-            })
-
           await store.dispatch(getFocusedCollection()).then(() => {
             const storeActions = store.getActions()
 
@@ -246,7 +235,7 @@ describe('getFocusedCollection', () => {
           })
 
           expect(relevancyMock).toHaveBeenCalledTimes(1)
-          expect(getColorMapMock).toHaveBeenCalledTimes(1)
+          expect(getColorMapMock).toHaveBeenCalledTimes(0)
           expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
         })
       })
@@ -268,8 +257,7 @@ describe('getFocusedCollection', () => {
                   versionId: 'VersionID',
                   hasGranules: false,
                   tags: {
-                    'org.ceos.wgiss.cwic.granules.prod': {},
-                    'edsc.extra.serverless.bibs': {}
+                    'org.ceos.wgiss.cwic.granules.prod': {}
                   },
                   tools: {
                     items: null
@@ -327,6 +315,94 @@ describe('getFocusedCollection', () => {
           expect(getColorMapMock).toHaveBeenCalledTimes(0)
           expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
         })
+      })
+    })
+
+    describe('when the requested collection and we try and retrieve an existing gibs tag', () => {
+      test('Test that getColorMap works when a gibs tag is returned in the graphql call (call SET_COLOR_MAPS_LOADING and call ERRORED_COLOR_MAPS)', async () => {
+        jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+          cmrHost: 'https://cmr.example.com',
+          graphQlHost: 'https://graphql.example.com',
+          opensearchRoot: 'https://cmr.example.com'
+        }))
+
+        nock(/graph/)
+          .post(/api/)
+          .reply(200, {
+            data: {
+              collection: {
+                conceptId: 'C10000000000-EDSC',
+                shortName: 'id_1',
+                versionId: 'VersionID',
+                hasGranules: false,
+                tags: {
+                  'edsc.extra.serverless.gibs': {
+                    data: [
+                      { product: 'AIRS_Prata_SO2_Index_Day' }
+                    ]
+                  }
+                },
+                tools: {
+                  items: null
+                }
+              }
+            }
+          })
+
+        const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
+        relevancyMock.mockImplementationOnce(() => jest.fn())
+
+        const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+        getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
+
+        const getColorMapMock = jest.spyOn(actions, 'getColorMap')
+        getColorMapMock.mockImplementationOnce(() => jest.fn())
+
+        const store = mockStore({
+          authToken: '',
+          focusedCollection: 'C10000000000-EDSC',
+          metadata: {
+            collections: {
+              'C10000000000-EDSC': {
+                isOpenSearch: true
+              }
+            }
+          },
+          query: {
+            collection: {
+              spatial: {
+                polygon: '-77,38,-77,38,-76,38,-77,38'
+              }
+            }
+          },
+          searchResults: {}
+        })
+
+        nock(/localhost/)
+          .get(/colormaps\/AIRS_Prata_SO2_Index_Day/)
+          .reply(200, {
+            scale: {}
+          })
+
+        await store.dispatch(getFocusedCollection()).then(() => {
+          const storeActions = store.getActions()
+          expect(storeActions[0]).toEqual({
+            type: TOGGLE_SPATIAL_POLYGON_WARNING,
+            payload: true
+          })
+          expect(storeActions[1]).toEqual({
+            type: UPDATE_COLLECTION_METADATA,
+            payload: [
+              expect.objectContaining({
+                id: 'C10000000000-EDSC'
+              })
+            ]
+          })
+        })
+
+        expect(relevancyMock).toHaveBeenCalledTimes(1)
+        expect(getColorMapMock).toHaveBeenCalledTimes(1)
+        expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
       })
     })
 
