@@ -8,6 +8,16 @@ import {
   updateAdminRetrievalsSortKey,
   updateAdminRetrievalsPageNum
 } from './admin/retrievals'
+
+import {
+  adminViewMetricsRetrieval,
+  fetchAdminMetricsRetrievals,
+  fetchAdminMetricsRetrieval,
+  requeueMetricsOrder,
+  updateAdminMetricsRetrievalsSortKey,
+  updateAdminMetricsRetrievalsPageNum
+} from './admin/retrievalMetrics'
+
 import {
   adminViewProject,
   fetchAdminProjects,
@@ -308,6 +318,14 @@ const actions = {
   updateAccessMethod,
   updateAdminRetrievalsPageNum,
   updateAdminRetrievalsSortKey,
+  // todo new actions
+  adminViewMetricsRetrieval,
+  fetchAdminMetricsRetrievals,
+  fetchAdminMetricsRetrieval,
+  requeueMetricsOrder,
+  updateAdminMetricsRetrievalsSortKey,
+  updateAdminMetricsRetrievalsPageNum,
+  // todo new actions
   updateAdvancedSearch,
   updateAuthToken,
   updateBrowserVersion,

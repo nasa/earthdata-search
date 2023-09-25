@@ -3,7 +3,7 @@ import knex from 'knex'
 
 import { getDbConnectionConfig } from './getDbConnectionConfig'
 
-// Initalize a variable to be set once
+// Initialize a variable to be set once
 let dbConnection
 
 /**

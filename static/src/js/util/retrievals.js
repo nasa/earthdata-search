@@ -73,8 +73,8 @@ export const prepareRetrievalParams = (state) => {
       granules,
       selectedAccessMethod
     } = projectCollection
-
-    const { hits: granuleCount } = granules
+    // todo what if there are no links on the granule
+    const { hits: granuleCount, links = [] } = granules
 
     const { [collectionId]: collectionMetadata } = collectionsMetadata
 
@@ -82,6 +82,9 @@ export const prepareRetrievalParams = (state) => {
 
     returnValue.id = collectionId
     returnValue.granule_count = granuleCount
+
+    returnValue.granule_link_count = links.length
+
     returnValue.collection_metadata = pick(collectionMetadata, permittedCollectionMetadataFields)
 
     const extractedGranuleParams = extractProjectCollectionGranuleParams(state, collectionId)

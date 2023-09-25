@@ -1,6 +1,6 @@
 import { fetchCmrLinks } from './fetchCmrLinks'
 import { fetchOpenSearchLinks } from './fetchOpenSearchLinks'
-
+// TODO can I just call this method that already exists
 /**
  * Fetches download access method links from CMR or OpenSearch
  * @param {Object} params

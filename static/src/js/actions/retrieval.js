@@ -25,6 +25,7 @@ export const updateRetrieval = (retrievalData) => ({
 /**
  * Submit data representing a Retrieval to be stored in the database
  */
+// todo this is where we fill in new column
 export const submitRetrieval = () => (dispatch, getState) => {
   const state = getState()
 

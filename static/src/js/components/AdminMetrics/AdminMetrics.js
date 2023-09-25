@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 import { AdminRetrievalDetails } from '../AdminRetrievalDetails/AdminRetrievalDetails'
 import { AdminPage } from '../AdminPage/AdminPage'
 
-export const AdminRetrieval = ({
+export const AdminMetrics = ({
   retrieval,
   onRequeueOrder
 }) => {
-  console.log('🚀 ~ file: AdminRetrieval.js:11 ~ retrieval:', retrieval)
+  console.log('🚀 ~ file: AdminMetrics.js:11 ~ retrieval:', retrieval)
   return (
     <AdminPage
       pageTitle="Retrieval Details"
@@ -35,13 +35,13 @@ export const AdminRetrieval = ({
   )
 }
 
-AdminRetrieval.defaultProps = {
+AdminMetrics.defaultProps = {
   retrieval: {}
 }
 
-AdminRetrieval.propTypes = {
+AdminMetrics.propTypes = {
   retrieval: PropTypes.shape({}),
   onRequeueOrder: PropTypes.func.isRequired
 }
 
-export default AdminRetrieval
+export default AdminMetrics
