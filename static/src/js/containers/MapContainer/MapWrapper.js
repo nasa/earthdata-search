@@ -111,7 +111,7 @@ const MapWrapper = ({
     colorMapState = colormapsMetadata[product] || {}
   }
 
-  const { jsondata: colorMap } = colorMapState
+  const { colorMapData: colorMap } = colorMapState
 
   return (
     <LeafletMapContainer
