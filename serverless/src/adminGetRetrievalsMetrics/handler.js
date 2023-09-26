@@ -1,5 +1,5 @@
 import { getDbConnection } from '../util/database/getDbConnection'
-import { obfuscateId } from '../util/obfuscation/obfuscateId'
+// import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 
@@ -23,12 +23,28 @@ const adminGetRetrievalsMetrics = async (event, context) => {
 
   try {
     const { queryStringParameters = {} } = event
-    // todo set page size somehow
+    console.log('🚀 ~ file: handler.js:26 ~ adminGetRetrievalsMetrics ~ queryStringParameters:', queryStringParameters)
     const {
-      page_num: pageNum = 1,
-      page_size: pageSize = 20,
-      sort_key: sortKey = '-created_at'
+      // page_num: pageNum = 1,
+      // page_size: pageSize = 20,
+      // sort_key: sortKey = '-created_at'
+      start_date: startDate,
+      end_date: endDate
     } = queryStringParameters || {}
+
+    let filterStartDate
+    if (!startDate) {
+      filterStartDate = '2009-01-01T00:00:00Z'
+    } else {
+      filterStartDate = startDate
+    }
+
+    let filterEndDate
+    if (!endDate) {
+      filterEndDate = '2029-01-01T00:00:00Z'
+    } else {
+      filterEndDate = endDate
+    }
 
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
@@ -43,34 +59,37 @@ const adminGetRetrievalsMetrics = async (event, context) => {
       .select(dbConnection.raw('SUM(retrieval_collections.granule_count) AS total_granules_retrieved'))
       .select(dbConnection.raw('MAX(retrieval_collections.granule_link_count) AS max_granule_link_count'))
       .select(dbConnection.raw('MIN(retrieval_collections.granule_link_count) AS min_granule_link_count'))
+      .where('retrieval_collections.created_at', '>=', filterStartDate)
+      .where('retrieval_collections.created_at', '<', filterEndDate)
       .groupBy('access_method_type')
       .orderBy('total_times_access_method_used')
 
-    console.log('🚀 ~ file: handler.js:85 ~ adminGetRetrievalsMetrics ~ retrievalResponse:', retrievalResponse)
-    const [firstResponseRow] = retrievalResponse
+    // const [firstResponseRow] = retrievalResponse
+    console.log('🚀 ~ file: handler.js:39 ~ adminGetRetrievalsMetrics ~ retrievalResponse:', retrievalResponse)
 
-    const { total } = firstResponseRow
+    // const { total } = firstResponseRow
 
-    const pagination = {
-      page_num: parseInt(pageNum, 10),
-      page_size: parseInt(pageSize, 10),
-      page_count: Math.ceil(total / pageSize),
-      total_results: parseInt(total, 10)
-    }
+    // const pagination = {
+    //   page_num: parseInt(pageNum, 10),
+    //   page_size: parseInt(pageSize, 10),
+    //   page_count: Math.ceil(total / pageSize),
+    //   total_results: parseInt(total, 10)
+    // }
 
-    const results = retrievalResponse.map((retrieval) => ({
-      ...retrieval,
-      obfuscated_id: obfuscateId(retrieval.id)
-    }))
+    // const results = retrievalResponse.map((retrieval) => ({
+    //   ...retrieval,
+    //   obfuscated_id: obfuscateId(retrieval.id)
+    // }))
 
     return {
       isBase64Encoded: false,
       statusCode: 200,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({
-        pagination,
-        results
-      })
+      body: JSON.stringify({ results: retrievalResponse })
+      // body: JSON.stringify({
+      //   pagination,
+      //   results
+      // })
     }
   } catch (e) {
     return {

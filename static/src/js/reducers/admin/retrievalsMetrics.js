@@ -1,21 +1,23 @@
 import {
-  SET_ADMIN_METRICS_RETRIEVAL,
+  // SET_ADMIN_METRICS_RETRIEVAL,
   SET_ADMIN_METRICS_RETRIEVALS,
-  SET_ADMIN_METRICS_RETRIEVAL_LOADED,
+  // SET_ADMIN_METRICS_RETRIEVAL_LOADED,
   SET_ADMIN_METRICS_RETRIEVALS_LOADING,
   SET_ADMIN_METRICS_RETRIEVALS_LOADED,
-  SET_ADMIN_METRICS_RETRIEVAL_LOADING,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_SORT_KEY,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_PAGE_NUM,
-  SET_ADMIN_METRICS_RETRIEVALS_PAGINATION
+  UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE,
+  UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE
+  // SET_ADMIN_METRICS_RETRIEVAL_LOADING,
+  // UPDATE_ADMIN_METRICS_RETRIEVALS_SORT_KEY,
+  // UPDATE_ADMIN_METRICS_RETRIEVALS_PAGE_NUM,
+  // SET_ADMIN_METRICS_RETRIEVALS_PAGINATION
 } from '../../constants/actionTypes'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 const { defaultCmrPageSize } = getApplicationConfig()
 
 const initialState = {
-  allIds: [],
-  byId: {},
+  allAccessMethodTypes: [],
+  accessMethodType: {},
   isLoading: false,
   isLoaded: false,
   sortKey: '',
@@ -24,21 +26,23 @@ const initialState = {
     pageNum: 1,
     pageCount: null,
     totalResults: null
-  }
+  },
+  startDate: '',
+  endDate: ''
 }
 
 const processResults = (results) => {
-  const byId = {}
-  const allIds = []
+  const byAccessMethodType = {}
+  const allAccessMethodTypes = []
 
   results.forEach((result) => {
-    const { obfuscated_id: obfuscatedId } = result
+    const { access_method_type: accessMethodType } = result
 
-    byId[obfuscatedId] = result
-    allIds.push(obfuscatedId)
+    byAccessMethodType[accessMethodType] = result
+    allAccessMethodTypes.push(accessMethodType)
   })
 
-  return { byId, allIds }
+  return { byAccessMethodType, allAccessMethodTypes }
 }
 
 const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
@@ -58,96 +62,110 @@ const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
       }
     }
     case SET_ADMIN_METRICS_RETRIEVALS: {
-      const { byId, allIds } = processResults(action.payload)
+      const { byAccessMethodType, allAccessMethodTypes } = processResults(action.payload)
+      return {
+        ...state,
+        byAccessMethodType,
+        allAccessMethodTypes
+      }
+    }
 
+    case UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE: {
       return {
         ...state,
-        byId,
-        allIds
+        startDate: action.payload
       }
     }
-    case SET_ADMIN_METRICS_RETRIEVAL_LOADED: {
-      const id = action.payload
 
+    case UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE: {
       return {
         ...state,
-        byId: {
-          ...state.byId,
-          [id]: {
-            ...state.byId[id],
-            isLoading: false,
-            isLoaded: true
-          }
-        }
+        endDate: action.payload
       }
     }
-    case SET_ADMIN_METRICS_RETRIEVAL_LOADING: {
-      const id = action.payload
 
-      return {
-        ...state,
-        byId: {
-          ...state.byId,
-          [id]: {
-            ...state.byId[id],
-            isLoading: true,
-            isLoaded: false
-          }
-        }
-      }
-    }
-    case SET_ADMIN_METRICS_RETRIEVAL: {
-      const {
-        obfuscated_id: id
-      } = action.payload
+    // case SET_ADMIN_METRICS_RETRIEVAL_LOADED: {
+    //   const id = action.payload
 
-      return {
-        ...state,
-        byId: {
-          ...state.byId,
-          [id]: {
-            ...state.byId[id],
-            ...action.payload,
-            isLoading: false,
-            isLoaded: true
-          }
-        }
-      }
-    }
-    case SET_ADMIN_METRICS_RETRIEVALS_PAGINATION: {
-      const {
-        page_num: pageNum,
-        page_size: pageSize,
-        page_count: pageCount,
-        total_results: totalResults
-      } = action.payload
+    //   return {
+    //     ...state,
+    //     accessMethodType: {
+    //       ...state.accessMethodType,
+    //       [id]: {
+    //         ...state.accessMethodType[id],
+    //         isLoading: false,
+    //         isLoaded: true
+    //       }
+    //     }
+    //   }
+    // }
+    // case SET_ADMIN_METRICS_RETRIEVAL_LOADING: {
+    //   const id = action.payload
 
-      return {
-        ...state,
-        pagination: {
-          ...state.pagination,
-          pageNum,
-          pageSize,
-          pageCount,
-          totalResults
-        }
-      }
-    }
-    case UPDATE_ADMIN_METRICS_RETRIEVALS_SORT_KEY: {
-      return {
-        ...state,
-        sortKey: action.payload
-      }
-    }
-    case UPDATE_ADMIN_METRICS_RETRIEVALS_PAGE_NUM: {
-      return {
-        ...state,
-        pagination: {
-          ...state.pagination,
-          pageNum: action.payload
-        }
-      }
-    }
+    //   return {
+    //     ...state,
+    //     accessMethodType: {
+    //       ...state.accessMethodType,
+    //       [id]: {
+    //         ...state.accessMethodType[id],
+    //         isLoading: true,
+    //         isLoaded: false
+    //       }
+    //     }
+    //   }
+    // }
+    // case SET_ADMIN_METRICS_RETRIEVAL: {
+    //   const {
+    //     access_method_type: accessMethodType
+    //   } = action.payload
+
+    //   return {
+    //     ...state,
+    //     accessMethodType: {
+    //       ...state.accessMethodType,
+    //       [accessMethodType]: {
+    //         ...state.accessMethodType[accessMethodType],
+    //         ...action.payload,
+    //         isLoading: false,
+    //         isLoaded: true
+    //       }
+    //     }
+    //   }
+    // }
+    // case SET_ADMIN_METRICS_RETRIEVALS_PAGINATION: {
+    //   const {
+    //     page_num: pageNum,
+    //     page_size: pageSize,
+    //     page_count: pageCount,
+    //     total_results: totalResults
+    //   } = action.payload
+
+    //   return {
+    //     ...state,
+    //     pagination: {
+    //       ...state.pagination,
+    //       pageNum,
+    //       pageSize,
+    //       pageCount,
+    //       totalResults
+    //     }
+    //   }
+    // }
+    // case UPDATE_ADMIN_METRICS_RETRIEVALS_SORT_KEY: {
+    //   return {
+    //     ...state,
+    //     sortKey: action.payload
+    //   }
+    // }
+    // case UPDATE_ADMIN_METRICS_RETRIEVALS_PAGE_NUM: {
+    //   return {
+    //     ...state,
+    //     pagination: {
+    //       ...state.pagination,
+    //       pageNum: action.payload
+    //     }
+    //   }
+    // }
     default:
       return state
   }

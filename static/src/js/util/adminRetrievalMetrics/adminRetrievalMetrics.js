@@ -5,24 +5,25 @@
  */
 // todo fix the doc-string
 export const adminRetrievalMetrics = (retrievals) => {
-  console.log('🚀 ~ file: adminRetrievalMetrics.js:8 ~ adminRetrievalMetrics ~ retrievals:', retrievals)
-  const { byId } = retrievals
+  // console.log('🚀 ~ file: adminRetrievalMetrics.js:8 ~ adminRetrievalMetrics ~ retrievals:', retrievals)
+  // const { byId } = retrievals
 
-  // Get the number of times each retrieval has been used
-  const metrics = {}
+  // // Get the number of times each retrieval has been used
+  // const metrics = {}
 
-  const retrievedCollection = Object.keys(byId)
+  // const retrievedCollection = Object.keys(byId)
 
-  retrievedCollection.forEach((id) => {
-    const retrieval = byId[id]
-    const { access_method_type: accessMethodType } = retrieval
+  // retrievedCollection.forEach((id) => {
+  //   const retrieval = byId[id]
+  //   const { access_method_type: accessMethodType } = retrieval
 
-    if (metrics[accessMethodType]) {
-      metrics[accessMethodType] += 1
-    } else {
-      metrics[accessMethodType] = 1
-    }
-  })
+  //   if (metrics[accessMethodType]) {
+  //     metrics[accessMethodType] += 1
+  //   } else {
+  //     metrics[accessMethodType] = 1
+  //   }
+  // })
+  console.log('skip function for now')
 
   // data.forEach(item => {
   //   const accessMethodType = item.access_method_type;

@@ -11,71 +11,71 @@ import 'rc-pagination/assets/index.css'
 import './AdminRetrievalsMetricsList.scss'
 
 export const AdminRetrievalsMetricsList = ({
-  historyPush,
-  retrievals,
-  onUpdateAdminRetrievalsSortKey,
-  onUpdateAdminRetrievalsPageNum
+  // historyPush,
+  retrievals
+  // onUpdateAdminRetrievalsSortKey,
+  // onUpdateAdminRetrievalsPageNum
 }) => {
   const {
-    allIds,
-    byId,
-    pagination,
-    sortKey
+    allAccessMethodTypes,
+    byAccessMethodType
+    // ,
+    // pagination,
+    // sortKey
   } = retrievals
   console.log('🚀 ~ file: AdminRetrievalsMetricsList.js:25 ~ retrievals:', retrievals)
 
-  const {
-    pageNum,
-    pageSize,
-    totalResults
-  } = pagination
+  // const {
+  //   pageNum,
+  //   pageSize,
+  //   totalResults
+  // } = pagination
 
-  const handleSort = (value) => {
-    onUpdateAdminRetrievalsSortKey(value)
-  }
+  // const handleSort = (value) => {
+  //   onUpdateAdminRetrievalsSortKey(value)
+  // }
 
-  const handlePageChange = (pageNum) => {
-    onUpdateAdminRetrievalsPageNum(pageNum)
-  }
+  // const handlePageChange = (pageNum) => {
+  //   onUpdateAdminRetrievalsPageNum(pageNum)
+  // }
 
-  const onSetUsernameSort = () => {
-    if (sortKey.indexOf('username') < 0) {
-      handleSort('-username')
-    }
-    if (sortKey === '+username') {
-      handleSort('')
-    }
-    if (sortKey === '-username') {
-      handleSort('+username')
-    }
-  }
+  // const onSetUsernameSort = () => {
+  //   if (sortKey.indexOf('username') < 0) {
+  //     handleSort('-username')
+  //   }
+  //   if (sortKey === '+username') {
+  //     handleSort('')
+  //   }
+  //   if (sortKey === '-username') {
+  //     handleSort('+username')
+  //   }
+  // }
 
-  const onSetCreatedSort = () => {
-    if (sortKey.indexOf('created_at') < 0) {
-      handleSort('-created_at')
-    }
-    if (sortKey === '+created_at') {
-      handleSort('')
-    }
-    if (sortKey === '-created_at') {
-      handleSort('+created_at')
-    }
-  }
+  // const onSetCreatedSort = () => {
+  //   if (sortKey.indexOf('created_at') < 0) {
+  //     handleSort('-created_at')
+  //   }
+  //   if (sortKey === '+created_at') {
+  //     handleSort('')
+  //   }
+  //   if (sortKey === '-created_at') {
+  //     handleSort('+created_at')
+  //   }
+  // }
 
   return (
     <>
       <Table className="admin-retrievals-list__table" striped bordered>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Obfuscated ID</th>
-            <th
+            {/* <th>ID</th> */}
+            {/* <th
               className="admin-retrievals-list__interactive  admin-retrievals-list__table-head-cell--sortable"
-              onClick={() => onSetUsernameSort()}
+              // onClick={() => onSetUsernameSort()}
               role="button"
-            >
-              User/NAMEISED!!
-              {
+            > */}
+              {/* User/NAMEISED!! */}
+              {/* {
                 sortKey === '+username' && (
                   <EDSCIcon icon={FaCaretUp} className="admin-retrievals-list__sortable-icon" />
                 )
@@ -84,62 +84,51 @@ export const AdminRetrievalsMetricsList = ({
                 sortKey === '-username' && (
                   <EDSCIcon icon={FaCaretDown} className="admin-retrievals-list__sortable-icon" />
                 )
-              }
-            </th>
-            <th
-              className="admin-retrievals-list__interactive admin-retrievals-list__table-head-cell--sortable"
-              onClick={() => onSetCreatedSort()}
-              role="button"
-            >
-              Created
-              {
-                sortKey === '+created_at' && (
-                  <EDSCIcon icon={FaCaretUp} className="admin-retrievals-list__sortable-icon" />
-                )
-              }
-              {
-                sortKey === '-created_at' && (
-                  <EDSCIcon icon={FaCaretDown} className="admin-retrievals-list__sortable-icon" />
-                )
-              }
-            </th>
+              } */}
+            {/* </th> */}
+            <th>Data Access Type</th>
+            <th>Total Times Access Method Used</th>
+            <th>Average Granule Count</th>
+            <th>Total Granules Retrieved</th>
+            <th>Max Granule Link Count</th>
+            <th>Minimum Granule Link Count</th>
           </tr>
         </thead>
         <tbody>
           {
-            allIds.map((obfuscatedId) => {
-              const retrieval = byId[obfuscatedId]
+            allAccessMethodTypes.map((dataRetrievalType) => {
+              const retrieval = byAccessMethodType[dataRetrievalType]
 
               const {
-                created_at: createdAt,
-                id,
-                username
+                total_times_access_method_used: totalTimesAccessMethodUsed,
+                average_granule_count: averageGranuleCount,
+                total_granules_retrieved: totalGranulesRetrieved,
+                max_granule_link_count: maxGranuleLinkCount,
+                min_granule_link_count: minGranuleLinkCount
               } = retrieval
 
               return (
                 <tr
                   className="admin-retrievals-list__interactive"
-                  key={obfuscatedId}
-                  onClick={() => {
-                    historyPush(`/admin/retrievals/${obfuscatedId}`)
-                  }}
+                  key={dataRetrievalType}
+                  // onClick={() => {
+                  //   historyPush(`/admin/retrievals/${obfuscatedId}`)
+                // }}
                   role="button"
                 >
-                  <td>
-                    {id}
-                  </td>
-                  <td>
-                    {obfuscatedId}
-                  </td>
-                  <td>{username}</td>
-                  <td>{createdAt}</td>
+                  <td>{dataRetrievalType}</td>
+                  <td>{totalTimesAccessMethodUsed}</td>
+                  <td>{averageGranuleCount}</td>
+                  <td>{totalGranulesRetrieved}</td>
+                  <td>{maxGranuleLinkCount}</td>
+                  <td>{minGranuleLinkCount}</td>
                 </tr>
               )
             })
           }
         </tbody>
       </Table>
-      <div className="admin-retrievals-list__pagination-wrapper">
+      {/* <div className="admin-retrievals-list__pagination-wrapper">
         <Pagination
           className="admin-retrievals-list__pagination"
           current={pageNum}
@@ -148,29 +137,24 @@ export const AdminRetrievalsMetricsList = ({
           onChange={handlePageChange}
           locale={localeInfo}
         />
-      </div>
+      </div> */}
     </>
   )
 }
 
-AdminRetrievalsMetricsList.defaultProps = {
-  retrievals: {}
-}
+// AdminRetrievalsMetricsList.defaultProps = {
+//   retrievals: {}
+// }
 
-AdminRetrievalsMetricsList.propTypes = {
-  historyPush: PropTypes.func.isRequired,
-  retrievals: PropTypes.shape({
-    allIds: PropTypes.arrayOf(PropTypes.string),
-    byId: PropTypes.shape({}),
-    pagination: PropTypes.shape({
-      pageNum: PropTypes.number,
-      pageSize: PropTypes.number,
-      totalResults: PropTypes.number
-    }),
-    sortKey: PropTypes.string
-  }),
-  onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
-  onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired
-}
+// AdminRetrievalsMetricsList.propTypes = {
+//   // historyPush: PropTypes.func.isRequired,
+//   retrievals: PropTypes.shape({
+//     allAccessMethodTypes: PropTypes.arrayOf(PropTypes.string),
+//     accessMethodType: PropTypes.shape({})
+//   })
+//   // ,
+//   // onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
+//   // onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired
+// }
 
 export default AdminRetrievalsMetricsList

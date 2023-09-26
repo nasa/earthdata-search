@@ -10,12 +10,13 @@ import {
 } from './admin/retrievals'
 
 import {
-  adminViewMetricsRetrieval,
+  // adminViewMetricsRetrieval,
   fetchAdminMetricsRetrievals,
-  fetchAdminMetricsRetrieval,
-  requeueMetricsOrder,
-  updateAdminMetricsRetrievalsSortKey,
-  updateAdminMetricsRetrievalsPageNum
+  // fetchAdminMetricsRetrieval,
+  // requeueMetricsOrder,
+  updateAdminMetricsRetrievalsStartDate,
+  updateAdminMetricsRetrievalsEndDate
+  // updateAdminMetricsRetrievalsPageNum
 } from './admin/retrievalMetrics'
 
 import {
@@ -319,12 +320,13 @@ const actions = {
   updateAdminRetrievalsPageNum,
   updateAdminRetrievalsSortKey,
   // todo new actions
-  adminViewMetricsRetrieval,
+  // adminViewMetricsRetrieval,
   fetchAdminMetricsRetrievals,
-  fetchAdminMetricsRetrieval,
-  requeueMetricsOrder,
-  updateAdminMetricsRetrievalsSortKey,
-  updateAdminMetricsRetrievalsPageNum,
+  // fetchAdminMetricsRetrieval,
+  // requeueMetricsOrder,
+  updateAdminMetricsRetrievalsStartDate,
+  updateAdminMetricsRetrievalsEndDate,
+  // updateAdminMetricsRetrievalsPageNum,
   // todo new actions
   updateAdvancedSearch,
   updateAuthToken,

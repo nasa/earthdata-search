@@ -16,7 +16,7 @@ const getSavedAccessConfigs = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
   const { defaultResponseHeaders } = getApplicationConfig()
-
+  // todo example of passing parameter to the sql query
   try {
     const { body, headers } = event
 
