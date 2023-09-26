@@ -13,8 +13,7 @@ function setup() {
     className: 'test-wrap-class',
     children: <div className="test-child-wrap">Im a child!</div>,
     header: 'test-header-text',
-    panelClassName: 'test-panel-class',
-    scrollToBottom: false
+    panelClassName: 'test-panel-class'
   }
 
   const enzymeWrapper = shallow(<CollapsePanel {...props} />)
