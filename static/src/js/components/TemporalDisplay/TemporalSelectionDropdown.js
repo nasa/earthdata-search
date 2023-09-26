@@ -1,6 +1,5 @@
-import React, { PureComponent } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { isEqual } from 'lodash'
 import moment from 'moment'
 
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -21,101 +20,55 @@ import './TemporalSelectionDropdown.scss'
  * Component representing the temporal selection dropdown
  * @extends PureComponent
  */
-export default class TemporalSelectionDropdown extends PureComponent {
-  constructor(props) {
-    super(props)
+// export default class TemporalSelectionDropdown extends PureComponent {
+const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
+  const {
+    startDate = '',
+    endDate = '',
+    recurringDayStart = '',
+    recurringDayEnd = '',
+    isRecurring = false
+  } = temporalSearch
 
-    const {
-      temporalSearch
-    } = this.props
+  const [open, setOpen] = useState(false)
+  const [disabled, setDisabled] = useState(false)
+  const [temporal, setTemporal] = useState({
+    startDate,
+    endDate,
+    recurringDayStart,
+    recurringDayEnd,
+    isRecurring
+  })
 
-    const {
-      startDate = '',
-      endDate = '',
-      recurringDayStart = '',
-      recurringDayEnd = '',
-      isRecurring = false
-    } = temporalSearch
+  useEffect(() => {
+    setTemporal(temporalSearch)
+  }, [temporalSearch])
 
-    this.state = {
-      open: false,
-      disabled: false,
-      temporal: {
-        endDate,
-        startDate,
-        recurringDayStart,
-        recurringDayEnd,
-        isRecurring
-      }
-    }
-
-    this.onApplyClick = this.onApplyClick.bind(this)
-    this.onClearClick = this.onClearClick.bind(this)
-    this.onRecurringToggle = this.onRecurringToggle.bind(this)
-    this.onChangeRecurring = this.onChangeRecurring.bind(this)
-    this.onToggleClick = this.onToggleClick.bind(this)
-    this.onDropdownToggle = this.onDropdownToggle.bind(this)
-    this.setEndDate = this.setEndDate.bind(this)
-    this.setStartDate = this.setStartDate.bind(this)
-    this.onValid = this.onValid.bind(this)
-    this.onInvalid = this.onInvalid.bind(this)
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const {
-      temporalSearch
-    } = this.props
-
-    const {
-      startDate,
-      endDate,
-      recurringDayStart,
-      recurringDayEnd,
-      isRecurring
-    } = nextProps.temporalSearch
-
-    if (!isEqual(temporalSearch, nextProps.temporalSearch)) {
-      this.setState({
-        temporal: {
-          startDate,
-          endDate,
-          recurringDayStart,
-          recurringDayEnd,
-          isRecurring
-        }
-      })
-    }
+  /**
+   * Toggles state of open
+   */
+  const onToggleOpen = () => {
+    setOpen(!open)
   }
 
   /**
    * Opens or closes the dropdown depending on the current state
    */
-  onDropdownToggle() {
-    const { open } = this.state
-
-    this.setState({
-      open: !open
-    })
+  const onDropdownToggle = () => {
+    onToggleOpen()
   }
 
   /**
    * Opens or closes the dropdown depending on the current state
-   */
-  onToggleClick() {
-    const { open } = this.state
-
-    this.setState({
-      open: !open
-    })
+  */
+  const onToggleClick = () => {
+    onToggleOpen()
   }
 
   /**
    * Sets the current start and end dates values in the Redux store
    */
-  onApplyClick() {
-    const { onChangeQuery } = this.props
-
-    const { temporal } = this.state
+  const onApplyClick = () => {
     const {
       startDate,
       endDate,
@@ -139,28 +92,21 @@ export default class TemporalSelectionDropdown extends PureComponent {
       }
     })
 
-    this.setState({
-      open: false
-    })
+    setOpen(false)
   }
 
   /**
    * Clears the current temporal values internally and within the Redux store
    */
-  onClearClick() {
-    this.setState({
-      temporal: {
-        startDate: '',
-        endDate: '',
-        recurringDayStart: '',
-        recurringDayEnd: '',
-        isRecurring: false
-      },
-      open: false
+  const onClearClick = () => {
+    setTemporal({
+      startDate: '',
+      endDate: '',
+      recurringDayStart: '',
+      recurringDayEnd: '',
+      isRecurring: false
     })
-
-    const { onChangeQuery } = this.props
-
+    setOpen(false)
     onChangeQuery({
       collection: {
         temporal: {}
@@ -171,29 +117,20 @@ export default class TemporalSelectionDropdown extends PureComponent {
   /**
    * Shows or hides the recurring temporal slider depending on the current state
    */
-  onRecurringToggle(e) {
-    const {
-      temporal
-    } = this.state
+  const onRecurringToggle = (e) => {
+    const { target } = e
+    const { checked: isChecked } = target
 
-    const isChecked = e.target.checked
-
-    this.setState({
-      temporal: {
-        ...temporal,
-        isRecurring: isChecked
-      }
+    setTemporal({
+      ...temporal,
+      isRecurring: isChecked
     })
   }
 
   /**
    * Shows or hides the recurring temporal slider depending on the current state
    */
-  onChangeRecurring(value) {
-    const {
-      temporal
-    } = this.state
-
+  const onChangeRecurring = (value) => {
     try {
       const { startDate, endDate } = temporal
       const newStartDate = moment(startDate || undefined).utc()
@@ -212,12 +149,10 @@ export default class TemporalSelectionDropdown extends PureComponent {
         second: '59'
       })
 
-      this.setState({
-        temporal: {
-          ...temporal,
-          startDate: newStartDate.toISOString(),
-          endDate: newEndDate.toISOString()
-        }
+      setTemporal({
+        ...temporal,
+        startDate: newStartDate.toISOString(),
+        endDate: newEndDate.toISOString()
       })
     } catch (e) {
       console.log(e)
@@ -227,30 +162,22 @@ export default class TemporalSelectionDropdown extends PureComponent {
   /**
    * Disables the submit button
    */
-  onInvalid() {
-    this.setState({
-      disabled: true
-    })
+  const onInvalid = () => {
+    setDisabled(true)
   }
 
   /**
    * Disables the submit button
    */
-  onValid() {
-    this.setState({
-      disabled: false
-    })
+  const onValid = () => {
+    setDisabled(false)
   }
 
   /**
    * Set the startDate prop
    * @param {moment} startDate - The moment object representing the startDate
    */
-  setStartDate(startDate) {
-    const {
-      temporal
-    } = this.state
-
+  const setStartDate = (startDate) => {
     const { isRecurring } = temporal
 
     if (isRecurring) {
@@ -262,12 +189,10 @@ export default class TemporalSelectionDropdown extends PureComponent {
       startDate.year(startDateObject.year())
     }
 
-    this.setState({
-      temporal: {
-        ...temporal,
-        // eslint-disable-next-line no-underscore-dangle
-        startDate: startDate.isValid() ? startDate.toISOString() : startDate._i
-      }
+    setTemporal({
+      ...temporal,
+      // eslint-disable-next-line no-underscore-dangle
+      startDate: startDate.isValid() ? startDate.toISOString() : startDate._i
     })
   }
 
@@ -275,11 +200,7 @@ export default class TemporalSelectionDropdown extends PureComponent {
    * Set the endDate prop
    * @param {moment} endDate - The moment object representing the endDate
    */
-  setEndDate(endDate) {
-    const {
-      temporal
-    } = this.state
-
+  const setEndDate = (endDate) => {
     const { isRecurring } = temporal
 
     if (isRecurring) {
@@ -291,49 +212,35 @@ export default class TemporalSelectionDropdown extends PureComponent {
       endDate.year(endDateObject.year())
     }
 
-    this.setState({
-      temporal: {
-        ...temporal,
-        // eslint-disable-next-line no-underscore-dangle
-        endDate: endDate.isValid() ? endDate.toISOString() : endDate._i
-      }
+    setTemporal({
+      ...temporal,
+      // eslint-disable-next-line no-underscore-dangle
+      endDate: endDate.isValid() ? endDate.toISOString() : endDate._i
     })
   }
 
-  render() {
-    const {
-      disabled,
-      open,
-      temporal
-    } = this.state
-
-    const {
-      onChangeQuery
-    } = this.props
-
-    return (
-      <Dropdown show={open} className="temporal-selection-dropdown" onToggle={this.onDropdownToggle}>
-        <TemporalSelectionDropdownToggle onToggleClick={this.onToggleClick} />
-        {
-          open && (
-            <TemporalSelectionDropdownMenu
-              disabled={disabled}
-              onApplyClick={this.onApplyClick}
-              onChangeQuery={onChangeQuery}
-              onChangeRecurring={this.onChangeRecurring}
-              onClearClick={this.onClearClick}
-              onInvalid={this.onInvalid}
-              onRecurringToggle={this.onRecurringToggle}
-              onValid={this.onValid}
-              setEndDate={this.setEndDate}
-              setStartDate={this.setStartDate}
-              temporal={temporal}
-            />
-          )
-        }
-      </Dropdown>
-    )
-  }
+  return (
+    <Dropdown show={open} className="temporal-selection-dropdown" data-testid="mytestid" onToggle={onDropdownToggle}>
+      <TemporalSelectionDropdownToggle onToggleClick={onToggleClick} />
+      {
+        open && (
+          <TemporalSelectionDropdownMenu
+            disabled={disabled}
+            onApplyClick={onApplyClick}
+            onChangeQuery={onChangeQuery}
+            onChangeRecurring={onChangeRecurring}
+            onClearClick={onClearClick}
+            onInvalid={onInvalid}
+            onRecurringToggle={onRecurringToggle}
+            onValid={onValid}
+            setEndDate={setEndDate}
+            setStartDate={setStartDate}
+            temporal={temporal}
+          />
+        )
+      }
+    </Dropdown>
+  )
 }
 
 TemporalSelectionDropdown.defaultProps = {
@@ -350,3 +257,5 @@ TemporalSelectionDropdown.propTypes = {
     startDate: PropTypes.string
   })
 }
+
+export default TemporalSelectionDropdown
