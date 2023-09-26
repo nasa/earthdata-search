@@ -550,7 +550,6 @@ export const CollectionDetailsBody = ({
       <CollapsePanel
         className="collection-details-body__for-devs"
         header="For Developers"
-        scrollToBottom
       >
         <div className="row">
           <div className="col-auto">

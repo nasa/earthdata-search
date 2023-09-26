@@ -1,111 +1,148 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import $ from 'jquery'
+import {
+  render,
+  screen,
+  createEvent,
+  fireEvent
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import '@testing-library/jest-dom'
 
 import FacetsModalNav from '../FacetsModalNav'
 
-Enzyme.configure({ adapter: new Adapter() })
+const activeLetters = [
+  '#',
+  'A',
+  'D',
+  'Z'
+]
 
-function setup(type) {
-  const props = {
-    activeLetters: [],
-    modalInnerRef: {
-      current: $('<div><span id="number"></span></div>')
-    }
-  }
+const scrollIntoViewMock = jest.fn()
 
-  if (type === 'active') {
-    props.activeLetters = [
-      '#',
-      'A',
-      'D',
-      'Z'
-    ]
-  }
+const headingMocks = [
+  document.createElement('h2'),
+  document.createElement('h2')
+]
+headingMocks[0].id = 'facet-modal__number'
+headingMocks[0].scrollIntoView = scrollIntoViewMock
 
-  const enzymeWrapper = shallow(<FacetsModalNav {...props} />)
+headingMocks[1].id = 'facet-modal__B'
+headingMocks[1].scrollIntoView = scrollIntoViewMock
 
-  return {
-    enzymeWrapper,
-    props
-  }
+const mockDiv = document.createElement('div')
+mockDiv.appendChild(headingMocks[0])
+mockDiv.appendChild(headingMocks[1])
+
+const modalInnerRefMock = {
+  current: mockDiv
 }
 
 describe('FacetsModalNav component', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   describe('renders correctly', () => {
     test('when rendering an empty list', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper).toBeDefined()
-      expect(enzymeWrapper.hasClass('facets-modal-nav')).toEqual(true)
-      expect(enzymeWrapper.text()).toEqual('Jump:')
-      expect(enzymeWrapper.find('.facets-modal-nav__list').length).toEqual(0)
+      render(<FacetsModalNav activeLetters={[]} modalInnerRef={modalInnerRefMock} />)
+
+      expect(screen.queryByText('Jump:')).toBeInTheDocument()
+      expect(screen.queryAllByRole('link').length).toEqual(0)
     })
 
-    test('when rendering a list with active links', () => {
-      const { enzymeWrapper } = setup('active')
-      expect(enzymeWrapper).toBeDefined()
-      expect(enzymeWrapper.hasClass('facets-modal-nav')).toEqual(true)
-      expect(enzymeWrapper.find('.facets-modal-nav__list').length).toEqual(1)
-      expect(enzymeWrapper.text()).toEqual('Jump:#ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-      expect(enzymeWrapper.find('a.facets-modal-nav__entry').length).toEqual(4)
-      expect(enzymeWrapper.find('a.facets-modal-nav__entry').at(0).text()).toEqual('#')
-      expect(enzymeWrapper.find('a.facets-modal-nav__entry').at(1).text()).toEqual('A')
-      expect(enzymeWrapper.find('a.facets-modal-nav__entry').at(2).text()).toEqual('D')
-      expect(enzymeWrapper.find('a.facets-modal-nav__entry').at(3).text()).toEqual('Z')
+    describe('when rendering a list with active letters', () => {
+      test('renders the renders the alphabet', () => {
+        render(<FacetsModalNav activeLetters={activeLetters} modalInnerRef={modalInnerRefMock} />)
+
+        const nav = screen.queryByRole('navigation')
+
+        expect(nav.textContent).toContain('Jump:')
+        expect(nav.textContent).toContain('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+      })
+
+      test('renders the active links', () => {
+        render(<FacetsModalNav activeLetters={activeLetters} modalInnerRef={modalInnerRefMock} />)
+
+        const links = screen.queryAllByRole('link')
+
+        expect(links.length).toEqual(4)
+        expect(links[0].textContent).toBe('#')
+        expect(links[1].textContent).toBe('A')
+        expect(links[2].textContent).toBe('D')
+        expect(links[3].textContent).toBe('Z')
+      })
     })
 
     describe('when clicking an active list item', () => {
-      test('prevents the default link action', () => {
-        const { enzymeWrapper } = setup('active')
-        const preventDefaultMock = jest.fn()
-        const link = enzymeWrapper.find('a.facets-modal-nav__entry').at(0)
+      test('prevents the default link action', async () => {
+        render(<FacetsModalNav activeLetters={activeLetters} modalInnerRef={modalInnerRefMock} />)
 
-        link.simulate('click', { target: $('<a href="#number"></a>')[0], preventDefault: preventDefaultMock })
-        expect(preventDefaultMock).toHaveBeenCalledTimes(1)
-        jest.clearAllMocks()
+        const link = screen.queryByRole('link', { name: '#' })
+        const clickEvent = createEvent.click(link)
+
+        fireEvent(link, clickEvent)
+
+        expect(clickEvent.defaultPrevented).toEqual(true)
       })
 
-      test('finds the right element to scroll to', () => {
-        const { enzymeWrapper } = setup('active')
-        const find = jest.spyOn($.fn, 'find')
-        const link = enzymeWrapper.find('a.facets-modal-nav__entry').at(0)
+      describe('when the link href does not exist in the ref', () => {
+        test('does not scroll to any element', async () => {
+          const user = userEvent.setup()
 
-        link.simulate('click', { target: $('<a href="#number"></a>')[0], preventDefault: () => { } })
-        expect(find).toHaveBeenCalledWith('#number')
-        jest.clearAllMocks()
+          render(<FacetsModalNav activeLetters={activeLetters} modalInnerRef={modalInnerRefMock} />)
+
+          const link = screen.queryByRole('link', { name: 'A' })
+          await user.click(link)
+
+          expect(scrollIntoViewMock).toHaveBeenCalledTimes(0)
+        })
       })
 
-      test('triggers the animate function', () => {
-        const { enzymeWrapper } = setup('active')
-        const animateMock = jest.spyOn($.fn, 'animate')
-        const link = enzymeWrapper.find('a.facets-modal-nav__entry').at(0)
+      describe('when scrollIntoView is supported', () => {
+        test('finds the right element to scroll to', async () => {
+          const user = userEvent.setup()
 
-        link.simulate('click', { target: $('<a href="#number"></a>')[0], preventDefault: () => {} })
-        expect(animateMock).toHaveBeenCalledTimes(1)
-        jest.clearAllMocks()
+          render(<FacetsModalNav activeLetters={activeLetters} modalInnerRef={modalInnerRefMock} />)
+
+          const link = screen.queryByRole('link', { name: '#' })
+          await user.click(link)
+
+          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1)
+        })
       })
 
-      test('does not scroll to invalid link', () => {
-        const { enzymeWrapper } = setup('active')
-        const animateMock = jest.spyOn($.fn, 'animate')
-        const link = enzymeWrapper.find('a.facets-modal-nav__entry').at(1)
+      describe('when scrollIntoView is not supported', () => {
+        test('finds the right element to scroll to', async () => {
+          const user = userEvent.setup()
 
-        link.simulate('click', { target: $('<a href="#nothing"></a>')[0], preventDefault: () => { } })
-        expect(animateMock).toHaveBeenCalledTimes(0)
-        jest.clearAllMocks()
+          const originalScrollIntoView = headingMocks[0].scrollIntoView
+
+          delete headingMocks[0].scrollIntoView
+
+          render(<FacetsModalNav activeLetters={activeLetters} modalInnerRef={modalInnerRefMock} />)
+
+          const link = screen.queryByRole('link', { name: '#' })
+          await user.click(link)
+
+          expect(scrollIntoViewMock).toHaveBeenCalledTimes(0)
+          expect(mockDiv.scrollTop).toEqual(-55)
+
+          headingMocks[0].scrollIntoView = originalScrollIntoView
+        })
       })
-    })
 
-    describe('when clicking an inactive list item', () => {
-      test('does not fire any scroll event', () => {
-        const { enzymeWrapper } = setup('active')
-        const animateMock = jest.spyOn($.fn, 'animate')
-        const span = enzymeWrapper.find('.facets-modal-nav__entry--inactive').at(0)
+      describe('when clicking an inactive list item', () => {
+        test('does not fire any scroll event', () => {
+          const user = userEvent.setup()
 
-        span.simulate('click', { target: $('<span></span>')[0], preventDefault: () => { } })
-        expect(animateMock).toHaveBeenCalledTimes(0)
-        jest.clearAllMocks()
+          render(<FacetsModalNav activeLetters={activeLetters} modalInnerRef={modalInnerRefMock} />)
+
+          const span = screen.queryByText('B')
+
+          user.click(span)
+
+          expect(scrollIntoViewMock).toHaveBeenCalledTimes(0)
+        })
       })
     })
   })
