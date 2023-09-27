@@ -47,7 +47,7 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('when clicked toggles the state of show ', async () => {
     const user = userEvent.setup()
-    const { unmount } = setup({})
+    setup({})
 
     const btn = screen.getByRole('button')
     expect(btn).toBeInTheDocument()
@@ -59,13 +59,12 @@ describe('TemporalSelectionDropdown component', () => {
     const startLabel = screen.getByText(/Start/i)
 
     expect(startLabel).toBeInTheDocument()
-    unmount()
   })
 
   test('sets the start date correctly when an valid date is passed', async () => {
     const user = userEvent.setup()
 
-    const { unmount } = setup()
+    setup()
 
     await waitFor(async () => {
       await user.click(screen.getByRole('button'))
@@ -79,14 +78,12 @@ describe('TemporalSelectionDropdown component', () => {
 
     expect(inputs[0].value).toBe(startTestObj)
     expect(inputs[1].value).not.toBe(startTestObj)
-
-    unmount()
   })
 
   test('sets the end date correctly when an valid date is passed', async () => {
     const user = userEvent.setup()
 
-    const { unmount } = setup()
+    setup()
 
     await waitFor(async () => {
       await user.click(screen.getByRole('button'))
@@ -100,14 +97,12 @@ describe('TemporalSelectionDropdown component', () => {
 
     expect(inputs[0].value).not.toBe(endTestObj)
     expect(inputs[1].value).toBe(endTestObj)
-
-    unmount()
   })
 
   test('sets the state correctly with an invalid start date', async () => {
     const user = userEvent.setup()
 
-    const { unmount } = setup()
+    setup()
 
     await waitFor(async () => {
       await user.click(screen.getByRole('button'))
@@ -132,7 +127,6 @@ describe('TemporalSelectionDropdown component', () => {
 
     expect(inputs[0].value).toBe(validStartDate)
     expect(inputs[1].value).toBe(validEndDate.format('YYYY-MM-DD HH:mm:ss'))
-    unmount()
   })
 
   test('clears the values onClearClick', async () => {
