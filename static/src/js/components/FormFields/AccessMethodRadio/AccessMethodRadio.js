@@ -63,14 +63,17 @@ export const AccessMethodRadio = ({
                 {subtitle}
               </span>
             </span>
-            { serviceName
-           && (
-           <span className="access-method-radio__primary-service-name">
-             {serviceName}
-           </span>
-           )}
+            {
+              serviceName && (
+                <div className="access-method-radio__header-secondary">
+                  <span className="access-method-radio__primary-service-name" title={`Service: ${serviceName}`}>
+                    {serviceName}
+                  </span>
+                </div>
+              )
+            }
           </div>
-          <div className="access-method-radio__header-secondary">
+          <div className="access-method-radio__header-content">
             <span className="access-method-radio__description">
               {description}
             </span>
@@ -96,14 +99,6 @@ export const AccessMethodRadio = ({
           <span className="access-method-radio__details">
             {details}
           </span>
-          {
-            serviceName && (
-              <span className="access-method-radio__service-name">
-                {'Service: '}
-                {serviceName}
-              </span>
-            )
-          }
         </div>
       </CSSTransition>
     </label>

@@ -214,6 +214,8 @@ export class AccessMethod extends Component {
 
       const { type, name } = accessMethod
 
+      console.log('name', name)
+
       let id = null
       let title = null
       let subtitle = null
@@ -261,7 +263,7 @@ export class AccessMethod extends Component {
           title = 'Customize'
           subtitle = 'Harmony'
           description = 'Select options like variables, transformations, and output formats for in-region cloud access.'
-          details = 'The requested data will be processed using the Harmony service and stored in the cloud for analysis.'
+          details = `The requested data will be processed using the ${name} service and stored in the cloud for analysis.`
           break
         }
         default:

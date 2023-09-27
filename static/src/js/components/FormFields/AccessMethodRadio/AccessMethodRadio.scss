@@ -66,11 +66,26 @@
   &__header-primary {
     vertical-align: baseline;
     margin-bottom: 0.25rem;
-    white-space: nowrap;
     display: flex;
+    flex-direction: row;
+    align-items: baseline;
   }
 
   &__header-secondary {
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    width: 17rem;
+    background: $color__black--200;
+    color: $color__black--900;
+    border-radius: 1rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+    margin-left: 0.25rem;
+    padding: 0.075rem 0.5rem;
+  }
+
+  &__header-content {
     margin-bottom: 0.325rem;
   }
 
@@ -102,15 +117,21 @@
   }
 
   &__primary-titles {
+    display: flex;
+    align-items: baseline;
     flex-grow: 1;
   }
 
 
   &__primary-service-name {
-    padding-left: 10px;
+    display: block;
+    padding: 0 0.125rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     color: $color__black--500;
   }
-  
+
 
   &__description {
     margin: 0;
@@ -211,11 +232,12 @@
   &__details {
     display: block;
     font-size: 0.825rem;
+    word-break: break-word;
   }
 
   &__service-name {
     display: block;
-    margin-top: 0.75rem;
     font-size: 0.825rem;
+    word-break: break-all;
   }
 }
