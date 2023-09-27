@@ -20,7 +20,6 @@ import './TemporalSelectionDropdown.scss'
  * Component representing the temporal selection dropdown
  * @extends PureComponent
  */
-// export default class TemporalSelectionDropdown extends PureComponent {
 const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
   const {
     startDate = '',

@@ -205,8 +205,8 @@ describe('TemporalSelectionDropdown component', () => {
       collection: {
         temporal: {
           isRecurring: false,
-          startDate: moment.utc(validStartDate).toISOString(),
-          endDate: moment.utc(validEndDate).toISOString()
+          startDate: validStartDate,
+          endDate: validEndDate
         }
       }
     })
