@@ -145,8 +145,8 @@ describe('TemporalSelectionDropdown component', () => {
     const { getByRole, getAllByRole } = setup({
       onChangeQuery: onChangeQueryMock,
       temporalSearch: {
-        endDate: moment.utc(validEndDate).toISOString(),
-        startDate: moment.utc(validStartDate).toISOString()
+        endDate: validEndDate,
+        startDate: validStartDate
       }
     })
 
