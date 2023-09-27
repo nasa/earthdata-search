@@ -32,19 +32,19 @@ const adminGetRetrievalsMetrics = async (event, context) => {
       end_date: endDate
     } = queryStringParameters || {}
 
-    let filterStartDate
-    if (!startDate) {
-      filterStartDate = '2009-01-01T00:00:00Z'
-    } else {
-      filterStartDate = startDate
-    }
+    // let filterStartDate
+    // if (!startDate) {
+    //   filterStartDate = '2009-01-01T00:00:00Z'
+    // } else {
+    //   filterStartDate = startDate
+    // }
 
-    let filterEndDate
-    if (!endDate) {
-      filterEndDate = '2029-01-01T00:00:00Z'
-    } else {
-      filterEndDate = endDate
-    }
+    // let filterEndDate
+    // if (!endDate) {
+    //   filterEndDate = '2029-01-01T00:00:00Z'
+    // } else {
+    //   filterEndDate = endDate
+    // }
 
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
@@ -59,37 +59,52 @@ const adminGetRetrievalsMetrics = async (event, context) => {
       .select(dbConnection.raw('SUM(retrieval_collections.granule_count) AS total_granules_retrieved'))
       .select(dbConnection.raw('MAX(retrieval_collections.granule_link_count) AS max_granule_link_count'))
       .select(dbConnection.raw('MIN(retrieval_collections.granule_link_count) AS min_granule_link_count'))
-      .where('retrieval_collections.created_at', '>=', filterStartDate)
-      .where('retrieval_collections.created_at', '<', filterEndDate)
+      .modify((queryBuilder) => {
+        if (startDate) {
+          queryBuilder.where('retrieval_collections.created_at', '>=', startDate)
+        }
+      })
+      .modify((queryBuilder) => {
+        if (endDate) {
+          queryBuilder.where('retrieval_collections.created_at', '<', endDate)
+        }
+      })
       .groupBy('access_method_type')
       .orderBy('total_times_access_method_used')
 
     // const [firstResponseRow] = retrievalResponse
     console.log('🚀 ~ file: handler.js:39 ~ adminGetRetrievalsMetrics ~ retrievalResponse:', retrievalResponse)
+    // Get the list of retrievals which contain > 1 collection
+    // todo be careful with the alias
+    const multCollectionResponse = await dbConnection('retrieval_collections')
+      .select('retrieval_collections.retrieval_id as retrieval_id')
+      .modify((queryBuilder) => {
+        if (startDate) {
+          queryBuilder.where('retrieval_collections.created_at', '>=', startDate)
+        }
+      })
+      .modify((queryBuilder) => {
+        if (endDate) {
+          queryBuilder.where('retrieval_collections.created_at', '<', endDate)
+        }
+      })
+      .count('*')
+      .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
+      .groupBy('retrieval_id')
+      .havingRaw('COUNT(*) > ?', [1])
 
-    // const { total } = firstResponseRow
-
-    // const pagination = {
-    //   page_num: parseInt(pageNum, 10),
-    //   page_size: parseInt(pageSize, 10),
-    //   page_count: Math.ceil(total / pageSize),
-    //   total_results: parseInt(total, 10)
-    // }
-
-    // const results = retrievalResponse.map((retrieval) => ({
-    //   ...retrieval,
-    //   obfuscated_id: obfuscateId(retrieval.id)
-    // }))
+    console.log('🥶 ~ file: handler.js:81 ~ adminGetRetrievalsMetrics ~ multCollectionResponse:', multCollectionResponse)
 
     return {
       isBase64Encoded: false,
       statusCode: 200,
       headers: defaultResponseHeaders,
-      body: JSON.stringify({ results: retrievalResponse })
-      // body: JSON.stringify({
-      //   pagination,
-      //   results
-      // })
+      body: JSON.stringify({
+        results: {
+          retrievalResponse,
+          multCollectionResponse
+        }
+      })
     }
   } catch (e) {
     return {

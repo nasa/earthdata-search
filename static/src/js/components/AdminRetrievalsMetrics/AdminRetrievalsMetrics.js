@@ -1,5 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, {
+  useState
+} from 'react'
+
+// import PropTypes from 'prop-types'
 import { Row, Col } from 'react-bootstrap'
 
 import { AdminPage } from '../AdminPage/AdminPage'
@@ -18,22 +21,27 @@ export const AdminRetrievalsMetrics = ({
   onUpdateAdminMetricsRetrievalsEndDate,
   retrievals
 }) => {
-  // todo this function will need to requery the database with specific datetimes
+  const [endDate, setEndDate] = useState('')
+  const [startDate, setStartDate] = useState('')
+
   const onChangeQuery = (event) => {
     const { collection } = event
 
     const { temporal } = collection
 
     const { startDate, endDate } = temporal
+
+    // Update `redux` stores
     onUpdateAdminMetricsRetrievalsStartDate(startDate)
     onUpdateAdminMetricsRetrievalsEndDate(endDate)
-    // todo leave comment
-    // pass the `startDate` and `endDate` as filters in the event
-    // const temporalFilter = { startDate, endDate }
-    const newRetrievalValues = onFetchAdminRetrievals()
-    console.log('🚀 ~ file: AdminRetrievalsMetrics.js:24 ~ onChangeQuery ~ newRetrievalValues:', newRetrievalValues)
-  }
 
+    // Only query database if a temporal filter is selected
+    if (startDate || endDate) {
+      setStartDate(startDate)
+      setEndDate(endDate)
+      onFetchAdminRetrievals()
+    }
+  }
   // adminRetrievalMetrics(retrievals)
   return (
     <AdminPage
@@ -49,12 +57,40 @@ export const AdminRetrievalsMetrics = ({
         }
       ]}
     >
+      <Row className="justify-content-start mb-2">
+        <Col sm="auto">
+          {
+            (startDate || endDate)
+              ? (
+                <>
+                  <h3>
+                    Current temporal filters
+                  </h3>
+                  <div>
+                    <br />
+                    {' Start Date: '}
+                    {startDate}
+                    <br />
+                    {'End Date: '}
+                    {endDate}
+                  </div>
+                </>
+              )
+              : (
+                <p>
+                  Enter a value for the temporal filter
+                </p>
+              )
+          }
+        </Col>
+      </Row>
+
       <Row className="justify-content-end mb-2">
         <Col sm="auto">
           {/* <AdminRetrievalsMetricsForm
             onAdminViewRetrieval={onAdminViewRetrieval}
           /> */}
-          <TemporalSelectionDropdown onChangeQuery={onChangeQuery} />
+          <TemporalSelectionDropdown onChangeQuery={onChangeQuery} allowRecurring={false} />
         </Col>
       </Row>
       <Row>

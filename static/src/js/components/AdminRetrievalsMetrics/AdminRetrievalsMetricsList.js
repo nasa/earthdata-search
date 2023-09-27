@@ -1,11 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import Pagination from 'rc-pagination'
-import localeInfo from 'rc-pagination/lib/locale/en_US'
+// import PropTypes from 'prop-types'
+// import Pagination from 'rc-pagination'
+// import localeInfo from 'rc-pagination/lib/locale/en_US'
 import { Table } from 'react-bootstrap'
-import { FaCaretUp, FaCaretDown } from 'react-icons/fa'
+// import { FaCaretUp, FaCaretDown } from 'react-icons/fa'
 
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
+// import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import 'rc-pagination/assets/index.css'
 import './AdminRetrievalsMetricsList.scss'
@@ -18,7 +18,8 @@ export const AdminRetrievalsMetricsList = ({
 }) => {
   const {
     allAccessMethodTypes,
-    byAccessMethodType
+    byAccessMethodType,
+    multCollectionResponse
     // ,
     // pagination,
     // sortKey
@@ -74,8 +75,8 @@ export const AdminRetrievalsMetricsList = ({
               // onClick={() => onSetUsernameSort()}
               role="button"
             > */}
-              {/* User/NAMEISED!! */}
-              {/* {
+            {/* User/NAMEISED!! */}
+            {/* {
                 sortKey === '+username' && (
                   <EDSCIcon icon={FaCaretUp} className="admin-retrievals-list__sortable-icon" />
                 )
@@ -120,24 +121,62 @@ export const AdminRetrievalsMetricsList = ({
                   <td>{totalTimesAccessMethodUsed}</td>
                   <td>{averageGranuleCount}</td>
                   <td>{totalGranulesRetrieved}</td>
-                  <td>{maxGranuleLinkCount}</td>
-                  <td>{minGranuleLinkCount}</td>
+                  {
+                    maxGranuleLinkCount
+                      ? (
+                        <td>
+                          {maxGranuleLinkCount}
+                        </td>
+                      )
+                      : (
+                        <td> N/A </td>
+                      )
+                  }
+                  {
+                    minGranuleLinkCount
+                      ? (
+                        <td>
+                          {minGranuleLinkCount}
+                        </td>
+                      )
+                      : (
+                        <td> N/A </td>
+                      )
+                  }
                 </tr>
               )
             })
           }
         </tbody>
       </Table>
-      {/* <div className="admin-retrievals-list__pagination-wrapper">
-        <Pagination
-          className="admin-retrievals-list__pagination"
-          current={pageNum}
-          total={totalResults}
-          pageSize={pageSize}
-          onChange={handlePageChange}
-          locale={localeInfo}
-        />
-      </div> */}
+      <Table>
+        <thead>
+          <tr>
+            <th>Retrievals that included multiple collections</th>
+            <th>Number of collections in a retrieval</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            multCollectionResponse.map((retrieval) => {
+              const { retrieval_id: retreivalId, count } = retrieval
+              return (
+                <tr
+                  className="admin-retrievals-list__interactive"
+                  key={retreivalId}
+                >
+                  <td>
+                    {retreivalId}
+                  </td>
+                  <td>
+                    {count}
+                  </td>
+                </tr>
+              )
+            })
+          }
+        </tbody>
+      </Table>
     </>
   )
 }

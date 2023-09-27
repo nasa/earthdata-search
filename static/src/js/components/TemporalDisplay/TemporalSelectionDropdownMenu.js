@@ -23,7 +23,8 @@ const TemporalSelectionDropdownMenu = ({
   onValid,
   setEndDate,
   setStartDate,
-  temporal
+  temporal,
+  allowRecurring
 }) => {
   const classes = {
     btnApply: classNames(
@@ -53,6 +54,7 @@ const TemporalSelectionDropdownMenu = ({
       }
     >
       <TemporalSelection
+        allowRecurring={allowRecurring}
         controlId="temporal-selection-dropdown"
         temporal={temporal}
         format={temporalDateFormat}
@@ -86,6 +88,10 @@ const TemporalSelectionDropdownMenu = ({
     </Dropdown.Menu>,
     document.getElementById('root')
   )
+}
+
+TemporalSelectionDropdownMenu.defaultProps = {
+  allowRecurring: true
 }
 
 TemporalSelectionDropdownMenu.propTypes = {

@@ -216,35 +216,51 @@ const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
     })
   }
 
-  return (
-    <Dropdown show={open} className="temporal-selection-dropdown" onToggle={onToggleOpen}>
-      <TemporalSelectionDropdownToggle onToggleClick={onToggleOpen} />
-      {
-        open && (
-          <TemporalSelectionDropdownMenu
-            disabled={disabled}
-            onApplyClick={onApplyClick}
-            onChangeQuery={onChangeQuery}
-            onChangeRecurring={onChangeRecurring}
-            onClearClick={onClearClick}
-            onInvalid={onInvalid}
-            onRecurringToggle={onRecurringToggle}
-            onValid={onValid}
-            setEndDate={setEndDate}
-            setStartDate={setStartDate}
-            temporal={temporal}
-          />
-        )
-      }
-    </Dropdown>
-  )
+  render() {
+    const {
+      disabled,
+      open,
+      temporal
+    } = this.state
+
+    const {
+      onChangeQuery,
+      allowRecurring
+    } = this.props
+
+    return (
+      <Dropdown show={open} className="temporal-selection-dropdown" onToggle={this.onDropdownToggle}>
+        <TemporalSelectionDropdownToggle onToggleClick={this.onToggleClick} />
+        {
+          open && (
+            <TemporalSelectionDropdownMenu
+              disabled={disabled}
+              onApplyClick={this.onApplyClick}
+              onChangeQuery={onChangeQuery}
+              onChangeRecurring={this.onChangeRecurring}
+              onClearClick={this.onClearClick}
+              onInvalid={this.onInvalid}
+              onRecurringToggle={this.onRecurringToggle}
+              onValid={this.onValid}
+              setEndDate={this.setEndDate}
+              setStartDate={this.setStartDate}
+              temporal={temporal}
+              allowRecurring={allowRecurring}
+            />
+          )
+        }
+      </Dropdown>
+    )
+  }
 }
 
 TemporalSelectionDropdown.defaultProps = {
-  temporalSearch: {}
+  temporalSearch: {},
+  allowRecurring: true
 }
 
 TemporalSelectionDropdown.propTypes = {
+  allowRecurring: PropTypes.bool,
   onChangeQuery: PropTypes.func.isRequired,
   temporalSearch: PropTypes.shape({
     endDate: PropTypes.string,

@@ -18,6 +18,7 @@ const { defaultCmrPageSize } = getApplicationConfig()
 const initialState = {
   allAccessMethodTypes: [],
   accessMethodType: {},
+  multCollectionResponse: [],
   isLoading: false,
   isLoaded: false,
   sortKey: '',
@@ -32,17 +33,17 @@ const initialState = {
 }
 
 const processResults = (results) => {
+  const { retrievalResponse, multCollectionResponse } = results
   const byAccessMethodType = {}
   const allAccessMethodTypes = []
+  retrievalResponse.forEach((response) => {
+    const { access_method_type: accessMethodType } = response
 
-  results.forEach((result) => {
-    const { access_method_type: accessMethodType } = result
-
-    byAccessMethodType[accessMethodType] = result
+    byAccessMethodType[accessMethodType] = response
     allAccessMethodTypes.push(accessMethodType)
   })
 
-  return { byAccessMethodType, allAccessMethodTypes }
+  return { byAccessMethodType, allAccessMethodTypes, multCollectionResponse }
 }
 
 const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
@@ -62,11 +63,16 @@ const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
       }
     }
     case SET_ADMIN_METRICS_RETRIEVALS: {
-      const { byAccessMethodType, allAccessMethodTypes } = processResults(action.payload)
+      const {
+        byAccessMethodType,
+        allAccessMethodTypes,
+        multCollectionResponse
+      } = processResults(action.payload)
       return {
         ...state,
         byAccessMethodType,
-        allAccessMethodTypes
+        allAccessMethodTypes,
+        multCollectionResponse
       }
     }
 

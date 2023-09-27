@@ -9,7 +9,8 @@ import AdminRetrievalsMetrics from '../../components/AdminRetrievalsMetrics/Admi
 export const mapStateToProps = (state) => ({
   retrievals: state.admin.metricsRetrievals,
   retrievalsLoading: state.admin.metricsRetrievals.isLoading,
-  retrievalsLoaded: state.admin.metricsRetrievals.isLoaded
+  retrievalsLoaded: state.admin.metricsRetrievals.isLoaded,
+  currentStartDate: state.admin.startDate
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -37,7 +38,7 @@ export class AdminRetrievalsMetricsContainer extends Component {
       onFetchAdminMetricsRetrievals
     } = this.props
 
-    onFetchAdminMetricsRetrievals()
+    // onFetchAdminMetricsRetrievals()
   }
 
   render() {
