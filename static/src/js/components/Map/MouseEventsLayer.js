@@ -1,8 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-
 import L from 'leaflet'
 import { createLayerComponent } from '@react-leaflet/core'
-import $ from 'jquery'
 
 import { eventEmitter } from '../../events/events'
 
@@ -58,12 +56,8 @@ class MouseEventsLayerExtended extends L.Layer {
     const hoverPoint = this._hoverPoint
     const { abs } = Math
 
-    const $target = $(e.originalEvent.target)
-    if ($target.closest('.geojson-help, .leaflet-popup-pane').length > 0) {
-      this._clearHoverTimeout()
-      eventEmitter.emit('map.mouseout', e)
-    }
     eventEmitter.emit('map.mousemove', e)
+
     if ((hoverPoint == null)
       || ((abs(point.x - hoverPoint.x) + abs(point.y - hoverPoint.y)) > HOVER_SENSITIVITY_PX)) {
       // Allow the mouse to move slightly without triggering another hover event

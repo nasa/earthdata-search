@@ -152,8 +152,6 @@ const StaticCommonConfig = {
       ]
     }),
     new webpack.ProvidePlugin({
-      jQuery: 'jquery',
-      $: 'jquery',
       process: 'process/browser.js',
       Buffer: ['buffer', 'Buffer']
     }),
