@@ -51,20 +51,6 @@ const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
   }
 
   /**
-   * Opens or closes the dropdown depending on the current state
-   */
-  const onDropdownToggle = () => {
-    onToggleOpen()
-  }
-
-  /**
-   * Opens or closes the dropdown depending on the current state
-  */
-  const onToggleClick = () => {
-    onToggleOpen()
-  }
-
-  /**
    * Sets the current start and end dates values in the Redux store
    */
   const onApplyClick = () => {
@@ -219,8 +205,8 @@ const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
   }
 
   return (
-    <Dropdown show={open} className="temporal-selection-dropdown" data-testid="mytestid" onToggle={onDropdownToggle}>
-      <TemporalSelectionDropdownToggle onToggleClick={onToggleClick} />
+    <Dropdown show={open} className="temporal-selection-dropdown" onToggle={onToggleOpen}>
+      <TemporalSelectionDropdownToggle onToggleClick={onToggleOpen} />
       {
         open && (
           <TemporalSelectionDropdownMenu
