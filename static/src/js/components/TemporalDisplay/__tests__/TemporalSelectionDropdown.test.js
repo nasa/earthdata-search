@@ -189,8 +189,8 @@ describe('TemporalSelectionDropdown component', () => {
 
     const inputs = screen.getAllByRole('textbox')
 
-    fireEvent.change(inputs[0], { target: { value: moment.utc(validStartDate).toISOString() } })
-    fireEvent.change(inputs[1], { target: { value: moment.utc(validEndDate).toISOString() } })
+    fireEvent.change(inputs[0], { target: { value: validStartDate } })
+    fireEvent.change(inputs[1], { target: { value: validEndDate } })
 
     expect(inputs[0].value).toBe(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
     expect(inputs[1].value).toBe(moment.utc(validEndDate).format('YYYY-MM-DD HH:mm:ss'))
