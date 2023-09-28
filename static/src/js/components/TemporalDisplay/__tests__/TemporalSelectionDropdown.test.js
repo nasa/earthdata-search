@@ -123,7 +123,7 @@ describe('TemporalSelectionDropdown component', () => {
     expect(screen.getByText(/Invalid start date/i)).toBeInTheDocument()
 
     fireEvent.change(inputs[0], { target: { value: validStartDate } })
-    fireEvent.change(inputs[1], { target: { value: validEndDate.toISOString() } })
+    fireEvent.change(inputs[1], { target: { value: validEndDate } })
 
     expect(inputs[0].value).toBe(validStartDate)
     expect(inputs[1].value).toBe(validEndDate)
