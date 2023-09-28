@@ -7,20 +7,15 @@ import { Row, Col } from 'react-bootstrap'
 
 import { AdminPage } from '../AdminPage/AdminPage'
 import { AdminRetrievalsMetricsList } from './AdminRetrievalsMetricsList'
-// import { AdminRetrievalsMetricsForm } from './AdminRetrievalsMetricsForm'
-// import { adminRetrievalMetrics } from '../../util/adminRetrievalMetrics/adminRetrievalMetrics'
 import TemporalSelectionDropdown from '../TemporalDisplay/TemporalSelectionDropdown'
 
 export const AdminRetrievalsMetrics = ({
-  // historyPush,
-  // onAdminViewRetrieval,
-  // onUpdateAdminRetrievalsSortKey,
-  // onUpdateAdminRetrievalsPageNum,
-  onFetchAdminRetrievals,
+  onFetchAdminMetricsRetrievals,
   onUpdateAdminMetricsRetrievalsStartDate,
   onUpdateAdminMetricsRetrievalsEndDate,
   retrievals
 }) => {
+  console.log('🚀 ~ file: AdminRetrievalsMetrics.js:18 ~ retrievals:', retrievals)
   const [endDate, setEndDate] = useState('')
   const [startDate, setStartDate] = useState('')
 
@@ -39,7 +34,7 @@ export const AdminRetrievalsMetrics = ({
     if (startDate || endDate) {
       setStartDate(startDate)
       setEndDate(endDate)
-      onFetchAdminRetrievals()
+      onFetchAdminMetricsRetrievals()
     }
   }
   // adminRetrievalMetrics(retrievals)

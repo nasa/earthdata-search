@@ -22,6 +22,7 @@ const setup = () => {
   const onUpdateAdminMetricsRetrievalsStartDate = jest.fn()
   const onUpdateAdminMetricsRetrievalsEndDate = jest.fn()
 
+  // https://testing-library.com/docs/example-react-router/
   render(<AdminRetrievalsMetricsContainer />, { wrapper: BrowserRouter })
 
   return {
