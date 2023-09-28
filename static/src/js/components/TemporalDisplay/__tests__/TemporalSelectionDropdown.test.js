@@ -112,7 +112,7 @@ describe('TemporalSelectionDropdown component', () => {
 
     const invalidDate = '2012-01-efss 12:00:00'
     const validStartDate = moment.utc('2012-01-01 12:00:00').format('YYYY-MM-DD HH:mm:ss')
-    const validEndDate = moment.utc('2012-01-02 12:00:00')
+    const validEndDate = moment.utc('2012-01-02 12:00:00').format('YYYY-MM-DD HH:mm:ss')
 
     try {
       fireEvent.change(inputs[0], { target: { value: invalidDate } })
@@ -126,7 +126,7 @@ describe('TemporalSelectionDropdown component', () => {
     fireEvent.change(inputs[1], { target: { value: validEndDate.toISOString() } })
 
     expect(inputs[0].value).toBe(validStartDate)
-    expect(inputs[1].value).toBe(validEndDate.format('YYYY-MM-DD HH:mm:ss'))
+    expect(inputs[1].value).toBe(validEndDate)
   })
 
   test('clears the values onClearClick', async () => {
