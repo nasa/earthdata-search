@@ -185,7 +185,9 @@ describe('AccessMethodRadio component', () => {
         await act(async () => {
           await user.hover(renderedServiceName)
         })
-        expect(screen.getByText('Service: test service name')).toBeInTheDocument()
+        // Tooltip is being styled and rendered
+        const tooltipMessage = screen.getByText('Service')
+        expect(tooltipMessage.className).toEqual('tooltip__secondary-text')
       })
     })
     describe('when the `subtitle` is `OPeNDAP`', () => {
@@ -204,7 +206,9 @@ describe('AccessMethodRadio component', () => {
         await act(async () => {
           await user.hover(renderedServiceName)
         })
-        expect(screen.getByText('Service: test service name')).toBeInTheDocument()
+        // Tooltip is being styled and rendered
+        const tooltipMessage = screen.getByText('Service')
+        expect(tooltipMessage.className).toEqual('tooltip__secondary-text')
       })
     })
   })
