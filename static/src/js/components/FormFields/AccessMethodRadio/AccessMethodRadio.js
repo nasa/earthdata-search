@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { CSSTransition } from 'react-transition-group'
 import { FaCheck } from 'react-icons/fa'
 
@@ -65,11 +67,22 @@ export const AccessMethodRadio = ({
             </span>
             {
               serviceName && (
-                <div className="access-method-radio__header-secondary">
-                  <span className="access-method-radio__primary-service-name" title={`Service: ${serviceName}`}>
-                    {serviceName}
-                  </span>
-                </div>
+                <OverlayTrigger
+                  placement="top"
+                  overlay={(
+                    <Tooltip>
+                      Service:
+                      {' '}
+                      {serviceName}
+                    </Tooltip>
+                )}
+                >
+                  <div className="access-method-radio__header-secondary">
+                    <span className="access-method-radio__primary-service-name">
+                      {serviceName}
+                    </span>
+                  </div>
+                </OverlayTrigger>
               )
             }
           </div>

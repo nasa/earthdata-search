@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {
-  render, screen
+  act, render, screen
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -47,7 +47,6 @@ describe('AccessMethodRadio component', () => {
 
   test('adds an htmlFor prop using the id', () => {
     setup()
-    screen.debug()
     const label = screen.getByTestId('test-id')
     expect(label.htmlFor).toEqual('test-id')
   })
@@ -162,9 +161,10 @@ describe('AccessMethodRadio component', () => {
     })
 
     test('displays the service name', () => {
-      setup({ serviceName: 'test service name' })
-      // The service name appears on the document under the More-Info-block
-      const renderedServiceNames = screen.getAllByText('Service: test service name')
+      const harmonyDetails = 'details: The service-name-is-passed-as-prop'
+      setup({ serviceName: 'test service name', details: harmonyDetails })
+      // The service name is passed in through the `details` prop
+      const renderedServiceNames = screen.getAllByText(harmonyDetails)
       // renders in the `More-Info` section
       expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__more-info')
       expect(renderedServiceNames.length).toEqual(1)
@@ -174,8 +174,18 @@ describe('AccessMethodRadio component', () => {
         setup({ serviceName: 'test service name', subtitle: 'Harmony' })
         const renderedServiceNames = screen.getAllByText('test service name')
         // renders in the `access-method-content` section
-        expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__header-primary')
+        expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__header-secondary')
         expect(renderedServiceNames.length).toEqual(1)
+      })
+
+      test('Hovering over the service name opens a tooltip', async () => {
+        const user = userEvent.setup()
+        setup({ serviceName: 'test service name', subtitle: 'Harmony' })
+        const renderedServiceName = screen.getByText('test service name')
+        await act(async () => {
+          await user.hover(renderedServiceName)
+        })
+        expect(screen.getByText('Service: test service name')).toBeInTheDocument()
       })
     })
     describe('when the `subtitle` is `OPeNDAP`', () => {
@@ -183,8 +193,18 @@ describe('AccessMethodRadio component', () => {
         setup({ serviceName: 'test service name', subtitle: 'OPeNDAP' })
         const renderedServiceNames = screen.getAllByText('test service name')
         // renders in the `access-method-content` section
-        expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__header-primary')
+        expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__header-secondary')
         expect(renderedServiceNames.length).toEqual(1)
+      })
+
+      test('Hovering over the service name opens a tooltip', async () => {
+        const user = userEvent.setup()
+        setup({ serviceName: 'test service name', subtitle: 'OPeNDAP' })
+        const renderedServiceName = screen.getByText('test service name')
+        await act(async () => {
+          await user.hover(renderedServiceName)
+        })
+        expect(screen.getByText('Service: test service name')).toBeInTheDocument()
       })
     })
   })

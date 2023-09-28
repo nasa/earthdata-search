@@ -214,8 +214,6 @@ export class AccessMethod extends Component {
 
       const { type, name } = accessMethod
 
-      console.log('name', name)
-
       let id = null
       let title = null
       let subtitle = null
