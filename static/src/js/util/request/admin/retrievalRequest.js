@@ -10,9 +10,7 @@ export default class RetrievalRequest extends Request {
   }
 
   all(params) {
-    const fullList = this.get('admin/retrievals', params)
-    // console.log('🚀 ~ file: retrievalRequest.js:14 ~ RetrievalRequest ~ all ~ fullList:', fullList)
-    return fullList
+    return this.get('admin/retrievals', params)
   }
 
   fetch(id) {

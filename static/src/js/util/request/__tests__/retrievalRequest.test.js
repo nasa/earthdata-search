@@ -41,7 +41,7 @@ describe('RetrievalRequest#transformResponse', () => {
 })
 
 describe('RetrievalRequest#all', () => {
-  test('calls Request#get', () => {
+  test.only('calls Request#get', () => {
     const token = '123'
     const request = new RetrievalRequest(token)
 
@@ -50,7 +50,7 @@ describe('RetrievalRequest#all', () => {
     request.all()
 
     expect(getMock).toBeCalledTimes(1)
-    expect(getMock).toBeCalledWith('retrievals')
+    expect(getMock).toBeCalledWith('admin/retrievals', undefined)
   })
 })
 

@@ -3,7 +3,7 @@ import mockKnex from 'mock-knex'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getVerifiedJwtToken from '../../util/getVerifiedJwtToken'
-import adminGetRetrievals from '../handler'
+import adminGetRetrievalsMetrics from '../handler'
 
 let dbTracker
 
@@ -33,135 +33,331 @@ afterEach(() => {
   dbTracker.uninstall()
 })
 
-describe('adminGetRetrievals', () => {
-  test('correctly retrieves retrievals', async () => {
-    dbTracker.on('query', (query) => {
-      query.response([{
-        id: 1,
-        jsondata: {},
-        environment: 'prod',
-        created_at: '2019-08-25T11:58:14.390Z',
-        user_id: 1,
-        username: 'edsc-test',
-        total: '3'
-      }, {
-        id: 2,
-        jsondata: {},
-        environment: 'prod',
-        created_at: '2019-08-25T11:59:14.390Z',
-        user_id: 1,
-        username: 'edsc-test',
-        total: '3'
-      }, {
-        id: 3,
-        jsondata: {},
-        environment: 'prod',
-        created_at: '2019-08-25T12:00:14.390Z',
-        user_id: 1,
-        username: 'edsc-test',
-        total: '3'
-      }])
+describe('adminGetRetrievalsMetrics', () => {
+  test('correctly retrieves retrievalsMetrics', async () => {
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response([
+          {
+            access_method_type: 'ESI',
+            total_times_access_method_used: '1',
+            average_granule_count: '3',
+            average_granule_link_count: '0',
+            total_granules_retrieved: '3',
+            max_granule_link_count: 0,
+            min_granule_link_count: 0
+          },
+          {
+            access_method_type: 'Harmony',
+            total_times_access_method_used: '1',
+            average_granule_count: '59416',
+            average_granule_link_count: null,
+            total_granules_retrieved: '59416',
+            max_granule_link_count: null,
+            min_granule_link_count: null
+          },
+          {
+            access_method_type: 'OPeNDAP',
+            total_times_access_method_used: '2',
+            average_granule_count: '1',
+            average_granule_link_count: null,
+            total_granules_retrieved: '2',
+            max_granule_link_count: null,
+            min_granule_link_count: null
+          },
+          {
+            access_method_type: 'ECHO ORDERS',
+            total_times_access_method_used: '3',
+            average_granule_count: '7',
+            average_granule_link_count: null,
+            total_granules_retrieved: '22',
+            max_granule_link_count: null,
+            min_granule_link_count: null
+          },
+          {
+            access_method_type: 'download',
+            total_times_access_method_used: '121',
+            average_granule_count: '208',
+            average_granule_link_count: '33',
+            total_granules_retrieved: '25218',
+            max_granule_link_count: 167,
+            min_granule_link_count: 0
+          }
+        ])
+      } else {
+        query.response([
+          {
+            retrieval_id: 112,
+            count: '2'
+          },
+          {
+            retrieval_id: 5,
+            count: '2'
+          },
+          {
+            retrieval_id: 74,
+            count: '3'
+          },
+          {
+            retrieval_id: 110,
+            count: '2'
+          }
+        ])
+      }
     })
 
-    const retrievalResponse = await adminGetRetrievals({
+    const retrievalResponse = await adminGetRetrievalsMetrics({
       queryStringParameters: null
     }, {})
 
     const { queries } = dbTracker.queries
 
+    // Ensure sql does not contain temporal filter for `start_date`
     expect(queries[0].method).toEqual('select')
+    expect(queries[1].sql).not.toContain('created_at')
+
+    // Ensure sql does not contain temporal filter for `end_date`
+    expect(queries[1].method).toEqual('select')
+    expect(queries[1].sql).not.toContain('created_at')
 
     const { body, statusCode } = retrievalResponse
 
     const responseObj = {
-      pagination: {
-        page_num: 1,
-        page_size: 20,
-        page_count: 1,
-        total_results: 3
-      },
-      results: [
-        {
-          id: 1,
-          jsondata: {},
-          environment: 'prod',
-          created_at: '2019-08-25T11:58:14.390Z',
-          user_id: 1,
-          username: 'edsc-test',
-          total: '3',
-          obfuscated_id: '4517239960'
-        },
-        {
-          id: 2,
-          jsondata: {},
-          environment: 'prod',
-          created_at: '2019-08-25T11:59:14.390Z',
-          user_id: 1,
-          username: 'edsc-test',
-          total: '3',
-          obfuscated_id: '7023641925'
-        },
-        {
-          id: 3,
-          jsondata: {},
-          environment: 'prod',
-          created_at: '2019-08-25T12:00:14.390Z',
-          user_id: 1,
-          username: 'edsc-test',
-          total: '3',
-          obfuscated_id: '2057964173'
-        }
-      ]
+      results: {
+        retrievalResponse: [
+          {
+            access_method_type: 'ESI',
+            total_times_access_method_used: '1',
+            average_granule_count: '3',
+            average_granule_link_count: '0',
+            total_granules_retrieved: '3',
+            max_granule_link_count: 0,
+            min_granule_link_count: 0
+          },
+          {
+            access_method_type: 'Harmony',
+            total_times_access_method_used: '1',
+            average_granule_count: '59416',
+            average_granule_link_count: null,
+            total_granules_retrieved: '59416',
+            max_granule_link_count: null,
+            min_granule_link_count: null
+          },
+          {
+            access_method_type: 'OPeNDAP',
+            total_times_access_method_used: '2',
+            average_granule_count: '1',
+            average_granule_link_count: null,
+            total_granules_retrieved: '2',
+            max_granule_link_count: null,
+            min_granule_link_count: null
+          },
+          {
+            access_method_type: 'ECHO ORDERS',
+            total_times_access_method_used: '3',
+            average_granule_count: '7',
+            average_granule_link_count: null,
+            total_granules_retrieved: '22',
+            max_granule_link_count: null,
+            min_granule_link_count: null
+          },
+          {
+            access_method_type: 'download',
+            total_times_access_method_used: '121',
+            average_granule_count: '208',
+            average_granule_link_count: '33',
+            total_granules_retrieved: '25218',
+            max_granule_link_count: 167,
+            min_granule_link_count: 0
+          }
+        ],
+        multCollectionResponse: [
+          {
+            retrieval_id: 112,
+            count: '2'
+          },
+          {
+            retrieval_id: 5,
+            count: '2'
+          },
+          {
+            retrieval_id: 74,
+            count: '3'
+          },
+          {
+            retrieval_id: 110,
+            count: '2'
+          }
+        ]
+      }
     }
     expect(body).toEqual(JSON.stringify(responseObj))
     expect(statusCode).toEqual(200)
   })
 
-  test('correctly retrieves retrievals when paging params are provided', async () => {
-    dbTracker.on('query', (query) => {
-      query.response([{
-        id: 2,
-        jsondata: {},
-        environment: 'prod',
-        created_at: '2019-08-25T11:59:14.390Z',
-        user_id: 1,
-        username: 'edsc-test',
-        total: '3'
-      }])
+  test('correctly retrieves retrievals metrics when temporal filter params are provided', async () => {
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response([
+          {
+            access_method_type: 'ESI',
+            total_times_access_method_used: '1',
+            average_granule_count: '3',
+            average_granule_link_count: '0',
+            total_granules_retrieved: '3',
+            max_granule_link_count: 0,
+            min_granule_link_count: 0
+          },
+          {
+            access_method_type: 'Harmony',
+            total_times_access_method_used: '1',
+            average_granule_count: '59416',
+            average_granule_link_count: null,
+            total_granules_retrieved: '59416',
+            max_granule_link_count: null,
+            min_granule_link_count: null
+          },
+          {
+            access_method_type: 'OPeNDAP',
+            total_times_access_method_used: '2',
+            average_granule_count: '1',
+            average_granule_link_count: null,
+            total_granules_retrieved: '2',
+            max_granule_link_count: null,
+            min_granule_link_count: null
+          },
+          {
+            access_method_type: 'ECHO ORDERS',
+            total_times_access_method_used: '3',
+            average_granule_count: '7',
+            average_granule_link_count: null,
+            total_granules_retrieved: '22',
+            max_granule_link_count: null,
+            min_granule_link_count: null
+          },
+          {
+            access_method_type: 'download',
+            total_times_access_method_used: '121',
+            average_granule_count: '208',
+            average_granule_link_count: '33',
+            total_granules_retrieved: '25218',
+            max_granule_link_count: 167,
+            min_granule_link_count: 0
+          }
+        ])
+      } else {
+        query.response([
+          {
+            retrieval_id: 112,
+            count: '2'
+          },
+          {
+            retrieval_id: 5,
+            count: '2'
+          },
+          {
+            retrieval_id: 74,
+            count: '3'
+          },
+          {
+            retrieval_id: 110,
+            count: '2'
+          }
+        ])
+      }
     })
 
-    const retrievalResponse = await adminGetRetrievals({
+    const retrievalResponse = await adminGetRetrievalsMetrics({
       queryStringParameters: {
-        page_num: 2,
-        page_size: 1
+        start_date: '2020-01-29T00:00:00.000Z',
+        end_date: '2023-09-27T23:59:59.999Z'
       }
     }, {})
 
     const { queries } = dbTracker.queries
 
+    // Ensure first sql call contains temporal filter for `start_date` and `end_date`
     expect(queries[0].method).toEqual('select')
+    expect(queries[0].sql).toContain('created_at')
+    expect(queries[0].sql).toContain('>=')
+    expect(queries[0].sql).toContain('<')
+
+    // Ensure second sql call contains temporal filter for `start_date` and `end_date`
+    expect(queries[1].method).toEqual('select')
+    expect(queries[1].sql).toContain('created_at')
+    expect(queries[1].sql).toContain('>=')
+    expect(queries[1].sql).toContain('<')
 
     const { body, statusCode } = retrievalResponse
 
     const responseObj = {
-      pagination: {
-        page_num: 2,
-        page_size: 1,
-        page_count: 3,
-        total_results: 3
-      },
-      results: [
-        {
-          id: 2,
-          jsondata: {},
-          environment: 'prod',
-          created_at: '2019-08-25T11:59:14.390Z',
-          user_id: 1,
-          username: 'edsc-test',
-          total: '3',
-          obfuscated_id: '7023641925'
-        }
-      ]
+      results: {
+        retrievalResponse: [
+          {
+            access_method_type: 'ESI',
+            total_times_access_method_used: '1',
+            average_granule_count: '3',
+            average_granule_link_count: '0',
+            total_granules_retrieved: '3',
+            max_granule_link_count: 0,
+            min_granule_link_count: 0
+          },
+          {
+            access_method_type: 'Harmony',
+            total_times_access_method_used: '1',
+            average_granule_count: '59416',
+            average_granule_link_count: null,
+            total_granules_retrieved: '59416',
+            max_granule_link_count: null,
+            min_granule_link_count: null
+          },
+          {
+            access_method_type: 'OPeNDAP',
+            total_times_access_method_used: '2',
+            average_granule_count: '1',
+            average_granule_link_count: null,
+            total_granules_retrieved: '2',
+            max_granule_link_count: null,
+            min_granule_link_count: null
+          },
+          {
+            access_method_type: 'ECHO ORDERS',
+            total_times_access_method_used: '3',
+            average_granule_count: '7',
+            average_granule_link_count: null,
+            total_granules_retrieved: '22',
+            max_granule_link_count: null,
+            min_granule_link_count: null
+          },
+          {
+            access_method_type: 'download',
+            total_times_access_method_used: '121',
+            average_granule_count: '208',
+            average_granule_link_count: '33',
+            total_granules_retrieved: '25218',
+            max_granule_link_count: 167,
+            min_granule_link_count: 0
+          }
+        ],
+        multCollectionResponse: [
+          {
+            retrieval_id: 112,
+            count: '2'
+          },
+          {
+            retrieval_id: 5,
+            count: '2'
+          },
+          {
+            retrieval_id: 74,
+            count: '3'
+          },
+          {
+            retrieval_id: 110,
+            count: '2'
+          }
+        ]
+      }
     }
     expect(body).toEqual(JSON.stringify(responseObj))
     expect(statusCode).toEqual(200)
@@ -172,10 +368,11 @@ describe('adminGetRetrievals', () => {
       query.reject('Unknown Error')
     })
 
-    const retrievalResponse = await adminGetRetrievals({}, {})
+    const retrievalResponse = await adminGetRetrievalsMetrics({}, {})
 
     const { queries } = dbTracker.queries
 
+    // If the first query fails exit
     expect(queries[0].method).toEqual('select')
 
     const { statusCode } = retrievalResponse

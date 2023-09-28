@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 import AdminRetrievalsMetrics from '../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics'
-
+// todo need to decide what to do with the currentStartDate stuff
 export const mapStateToProps = (state) => ({
   retrievals: state.admin.metricsRetrievals,
   retrievalsLoading: state.admin.metricsRetrievals.isLoading,

@@ -61,7 +61,8 @@ describe('retrievals', () => {
                 }
               },
               granules: {
-                hits: 100
+                hits: 100,
+                links: [{ url: 'mocklink1' }, { url: 'mockLink2' }]
               },
               selectedAccessMethod: 'harmony0'
             }
@@ -108,6 +109,8 @@ describe('retrievals', () => {
           versionId: 'mock version'
         },
         granule_count: 100,
+        // todo add case for if the links are empty
+        granule_link_count: 2,
         granule_params: {
           boundingBox: undefined,
           browseOnly: undefined,

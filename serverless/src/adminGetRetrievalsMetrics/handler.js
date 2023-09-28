@@ -1,14 +1,6 @@
 import { getDbConnection } from '../util/database/getDbConnection'
-// import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
-
-// const sortKeyMap = {
-//   '-created_at': ['retrievals.created_at', 'desc'],
-//   '+created_at': ['retrievals.created_at', 'asc'],
-//   '-username': ['users.urs_id', 'desc'],
-//   '+username': ['users.urs_id', 'asc']
-// }
 
 /**
  * Retrieve all the retrieval metrics for the authenticated user
@@ -23,34 +15,17 @@ const adminGetRetrievalsMetrics = async (event, context) => {
 
   try {
     const { queryStringParameters = {} } = event
-    console.log('🚀 ~ file: handler.js:26 ~ adminGetRetrievalsMetrics ~ queryStringParameters:', queryStringParameters)
     const {
-      // page_num: pageNum = 1,
-      // page_size: pageSize = 20,
-      // sort_key: sortKey = '-created_at'
       start_date: startDate,
       end_date: endDate
     } = queryStringParameters || {}
-
-    // let filterStartDate
-    // if (!startDate) {
-    //   filterStartDate = '2009-01-01T00:00:00Z'
-    // } else {
-    //   filterStartDate = startDate
-    // }
-
-    // let filterEndDate
-    // if (!endDate) {
-    //   filterEndDate = '2029-01-01T00:00:00Z'
-    // } else {
-    //   filterEndDate = endDate
-    // }
 
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
 
     // `jsonExtract` parses fields in `jsonb` columns
     // https://knexjs.org/guide/query-builder.html#jsonextract
+    // Fetch metrics on `retrieval_collections`
     const retrievalResponse = await dbConnection('retrieval_collections')
       .jsonExtract('access_method', '$.type', 'access_method_type')
       .count('* as total_times_access_method_used')
@@ -72,10 +47,7 @@ const adminGetRetrievalsMetrics = async (event, context) => {
       .groupBy('access_method_type')
       .orderBy('total_times_access_method_used')
 
-    // const [firstResponseRow] = retrievalResponse
-    console.log('🚀 ~ file: handler.js:39 ~ adminGetRetrievalsMetrics ~ retrievalResponse:', retrievalResponse)
-    // Get the list of retrievals which contain > 1 collection
-    // todo be careful with the alias
+    // Fetch the list of `retrievals` which contained > 1 collections
     const multCollectionResponse = await dbConnection('retrieval_collections')
       .select('retrieval_collections.retrieval_id as retrieval_id')
       .modify((queryBuilder) => {
@@ -92,8 +64,6 @@ const adminGetRetrievalsMetrics = async (event, context) => {
       .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
       .groupBy('retrieval_id')
       .havingRaw('COUNT(*) > ?', [1])
-
-    console.log('🥶 ~ file: handler.js:81 ~ adminGetRetrievalsMetrics ~ multCollectionResponse:', multCollectionResponse)
 
     return {
       isBase64Encoded: false,

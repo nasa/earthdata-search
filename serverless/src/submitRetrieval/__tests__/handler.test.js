@@ -80,7 +80,8 @@ describe('submitRetrieval', () => {
             url: 'https://n5eil09e.ecs.edsc.org/egi/request'
           },
           collection_metadata: {},
-          granule_count: 27
+          granule_count: 27,
+          granule_link_count: 17
         }])
       } else if (step === 4) {
         query.response({
@@ -134,7 +135,8 @@ describe('submitRetrieval', () => {
         url: 'https://n5eil09e.ecs.edsc.org/egi/request'
       },
       collection_metadata: {},
-      granule_count: 27
+      granule_count: 27,
+      granule_link_count: 17
     }
     dbTracker.on('query', (query, step) => {
       if (step === 2) {

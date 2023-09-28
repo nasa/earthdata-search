@@ -10,9 +10,10 @@ export default class MetricsRetrievalsRequest extends Request {
   }
 
   all(params) {
-    const fullList = this.get('admin/retrievalsMetrics', params)
-    console.log('🚀 ~ file: retrievalRequest.js:14 ~ RetrievalRequest ~ all ~ fullList:', fullList)
-    return fullList
+    // const fullList = this.get('admin/retrievalsMetrics', params)
+    // console.log('🚀 ~ file: retrievalRequest.js:14 ~ RetrievalRequest ~ all ~ fullList:', fullList)
+    // return fullList
+    return this.get('admin/retrievalsMetrics', params)
   }
 
   // fetch(id) {

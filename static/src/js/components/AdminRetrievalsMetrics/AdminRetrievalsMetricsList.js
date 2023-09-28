@@ -152,8 +152,8 @@ export const AdminRetrievalsMetricsList = ({
       <Table>
         <thead>
           <tr>
-            <th>Retrievals that included multiple collections</th>
-            <th>Number of collections in a retrieval</th>
+            <th>Retrieval-id for retrievals that included multiple collections </th>
+            <th>Number of collections in the retrieval</th>
           </tr>
         </thead>
         <tbody>
