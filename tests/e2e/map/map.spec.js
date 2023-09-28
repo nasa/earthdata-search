@@ -10,6 +10,9 @@ import cmrGranulesCollectionBody from './__mocks__/cmr_granules/collections.body
 import cmrGranulesCollectionGraphQlBody from './__mocks__/cmr_granules/collection_graphql.body.json'
 import colormapOneBody from './__mocks__/colormaps/colormap_1.body.json'
 import colormapTwoBody from './__mocks__/colormaps/colormap_2.body.json'
+import colormapThreeBody from './__mocks__/colormaps/colormap_3.body.json'
+import colormapFourBody from './__mocks__/colormaps/colormap_4.body.json'
+import colormapFiveBody from './__mocks__/colormaps/colormap_5.body.json'
 import colormapCollectionsBody from './__mocks__/colormaps/collections.body.json'
 import colormapGranulesOneBody from './__mocks__/colormaps/granules_1.body.json'
 import colormapGranulesTwoBody from './__mocks__/colormaps/granules_2.body.json'
@@ -361,7 +364,7 @@ test.describe('Map interactions', () => {
       })
     })
 
-    test.describe.skip('When editing a circle', () => {})
+    test.describe.skip('When editing a circle', () => { })
   })
 
   test.describe('When drawing bounding box spatial', () => {
@@ -498,7 +501,7 @@ test.describe('Map interactions', () => {
       })
     })
 
-    test.describe.skip('When editing a bounding box', () => {})
+    test.describe.skip('When editing a bounding box', () => { })
   })
 
   test.describe('When drawing polygon spatial', () => {
@@ -617,7 +620,7 @@ test.describe('Map interactions', () => {
       })
     })
 
-    test.describe.skip('When editing a polygon', () => {})
+    test.describe.skip('When editing a polygon', () => { })
   })
 
   test.describe('When uploading a shapefile', () => {
@@ -1635,9 +1638,28 @@ test.describe('Map interactions', () => {
         })
       })
 
+      await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Surface_Temperature/, async (route) => {
+        await route.fulfill({
+          json: colormapThreeBody
+        })
+      })
+
+      await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies/,
+        async (route) => {
+          await route.fulfill({
+            json: colormapFourBody
+          })
+        })
+
       await page.route(/colormaps\/AIRS_Prata_SO2_Index_Day/, async (route) => {
         await route.fulfill({
           json: colormapTwoBody
+        })
+      })
+
+      await page.route(/colormaps\/AIRS_Prata_SO2_Index_Night/, async (route) => {
+        await route.fulfill({
+          json: colormapFiveBody
         })
       })
 
