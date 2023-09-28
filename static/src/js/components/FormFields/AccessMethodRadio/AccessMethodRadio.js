@@ -71,8 +71,7 @@ export const AccessMethodRadio = ({
                   placement="top"
                   overlay={(
                     <Tooltip>
-                      Service:
-                      {' '}
+                      <span className="tooltip__secondary-text">Service</span>
                       {serviceName}
                     </Tooltip>
                 )}
