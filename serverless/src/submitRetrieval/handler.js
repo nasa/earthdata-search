@@ -59,7 +59,7 @@ const submitRetrieval = async (event, context) => {
         token: accessToken,
         jsondata: jsonData
       })
-      // todo edge case if the granuleLinkConut is 0?
+
     await collections.forEachAsync(async (collection) => {
       const {
         id,

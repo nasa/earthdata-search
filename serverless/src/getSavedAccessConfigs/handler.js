@@ -16,6 +16,7 @@ const getSavedAccessConfigs = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
   const { defaultResponseHeaders } = getApplicationConfig()
+
   try {
     const { body, headers } = event
 
