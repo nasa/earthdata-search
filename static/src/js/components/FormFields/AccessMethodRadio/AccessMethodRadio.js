@@ -70,12 +70,14 @@ export const AccessMethodRadio = ({
               serviceName && (
                 <OverlayTrigger
                   placement="top"
-                  overlay={(
-                    <Tooltip>
-                      <span className="tooltip__secondary-text">Service</span>
-                      {serviceName}
-                    </Tooltip>
-                )}
+                  overlay={
+                    (
+                      <Tooltip>
+                        <span className="tooltip__secondary-text">Service</span>
+                        {serviceName}
+                      </Tooltip>
+                    )
+                  }
                 >
                   <div className="access-method-radio__header-secondary">
                     <span className="access-method-radio__primary-service-name">
