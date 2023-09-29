@@ -265,7 +265,6 @@ export class TemporalSelection extends Component {
     )
   }
 }
-// todo set the temporal select `allowRecurring` to false for admin
 TemporalSelection.defaultProps = {
   allowRecurring: true,
   format: 'YYYY-MM-DD HH:mm:ss',

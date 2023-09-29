@@ -7,33 +7,30 @@ import { AdminPage } from '../AdminPage/AdminPage'
 export const AdminRetrieval = ({
   retrieval,
   onRequeueOrder
-}) => {
-  console.log('🚀 ~ file: AdminRetrieval.js:11 ~ retrieval:', retrieval)
-  return (
-    <AdminPage
-      pageTitle="Retrieval Details"
-      breadcrumbs={[
-        {
-          name: 'Admin',
-          href: '/admin'
-        },
-        {
-          name: 'Retrievals',
-          href: '/admin/retrievals'
-        },
-        {
-          name: 'Retrieval Details',
-          active: true
-        }
-      ]}
-    >
-      <AdminRetrievalDetails
-        retrieval={retrieval}
-        onRequeueOrder={onRequeueOrder}
-      />
-    </AdminPage>
-  )
-}
+}) => (
+  <AdminPage
+    pageTitle="Retrieval Details"
+    breadcrumbs={[
+      {
+        name: 'Admin',
+        href: '/admin'
+      },
+      {
+        name: 'Retrievals',
+        href: '/admin/retrievals'
+      },
+      {
+        name: 'Retrieval Details',
+        active: true
+      }
+    ]}
+  >
+    <AdminRetrievalDetails
+      retrieval={retrieval}
+      onRequeueOrder={onRequeueOrder}
+    />
+  </AdminPage>
+)
 
 AdminRetrieval.defaultProps = {
   retrieval: {}
