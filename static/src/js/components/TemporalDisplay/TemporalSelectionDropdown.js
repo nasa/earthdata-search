@@ -55,20 +55,20 @@ const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
    */
   const onApplyClick = () => {
     const {
-      startDate,
-      endDate,
-      isRecurring
+      endDate: existingEndDate,
+      isRecurring: existingIsRecurring,
+      startDate: existingStartDate
     } = temporal
 
     const newTemporal = {
-      startDate,
-      endDate,
-      isRecurring
+      startDate: existingStartDate,
+      endDate: existingEndDate,
+      isRecurring: existingIsRecurring
     }
 
-    if (isRecurring) {
-      newTemporal.recurringDayStart = moment(startDate).utc().dayOfYear()
-      newTemporal.recurringDayEnd = moment(endDate).utc().dayOfYear()
+    if (existingIsRecurring) {
+      newTemporal.recurringDayStart = moment(existingStartDate).utc().dayOfYear()
+      newTemporal.recurringDayEnd = moment(existingEndDate).utc().dayOfYear()
     }
 
     onChangeQuery({
@@ -91,7 +91,9 @@ const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
       recurringDayEnd: '',
       isRecurring: false
     })
+
     setOpen(false)
+
     onChangeQuery({
       collection: {
         temporal: {}
@@ -117,8 +119,12 @@ const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
    */
   const onChangeRecurring = (value) => {
     try {
-      const { startDate, endDate } = temporal
-      const newStartDate = moment(startDate || undefined).utc()
+      const {
+        startDate: existingStartDate,
+        endDate: existingEndDate
+      } = temporal
+
+      const newStartDate = moment(existingStartDate || undefined).utc()
       newStartDate.set({
         year: value.min,
         hour: '00',
@@ -126,7 +132,7 @@ const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
         second: '00'
       })
 
-      const newEndDate = moment(endDate || undefined).utc()
+      const newEndDate = moment(existingEndDate || undefined).utc()
       newEndDate.set({
         year: value.max,
         hour: '23',
@@ -160,47 +166,53 @@ const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
 
   /**
    * Set the startDate prop
-   * @param {moment} startDate - The moment object representing the startDate
+   * @param {moment} newStartDate - The moment object representing the startDate
    */
-  const setStartDate = (startDate) => {
-    const { isRecurring } = temporal
+  const setStartDate = (newStartDate) => {
+    const {
+      isRecurring: existingIsRecurring,
+      startDate: existingStartDate
+    } = temporal
 
-    if (isRecurring) {
+    if (existingIsRecurring) {
       const applicationConfig = getApplicationConfig()
       const { temporalDateFormatFull } = applicationConfig
 
-      const startDateObject = moment(temporal.startDate, temporalDateFormatFull)
+      const startDateObject = moment(existingStartDate, temporalDateFormatFull)
 
-      startDate.year(startDateObject.year())
+      newStartDate.year(startDateObject.year())
     }
 
     setTemporal({
       ...temporal,
       // eslint-disable-next-line no-underscore-dangle
-      startDate: startDate.isValid() ? startDate.toISOString() : startDate._i
+      startDate: newStartDate.isValid() ? newStartDate.toISOString() : newStartDate._i
     })
   }
 
   /**
    * Set the endDate prop
-   * @param {moment} endDate - The moment object representing the endDate
+   * @param {moment} newEndDate - The moment object representing the endDate
    */
-  const setEndDate = (endDate) => {
-    const { isRecurring } = temporal
+  const setEndDate = (newEndDate) => {
+    const {
+      endDate: existingEndDate,
+      isRecurring: existingIsRecurring
+    } = temporal
 
-    if (isRecurring) {
+    if (existingIsRecurring) {
       const applicationConfig = getApplicationConfig()
       const { temporalDateFormatFull } = applicationConfig
 
-      const endDateObject = moment(temporal.endDate, temporalDateFormatFull)
+      const endDateObject = moment(existingEndDate, temporalDateFormatFull)
 
-      endDate.year(endDateObject.year())
+      newEndDate.year(endDateObject.year())
     }
 
     setTemporal({
       ...temporal,
       // eslint-disable-next-line no-underscore-dangle
-      endDate: endDate.isValid() ? endDate.toISOString() : endDate._i
+      endDate: newEndDate.isValid() ? newEndDate.toISOString() : newEndDate._i
     })
   }
 
