@@ -261,8 +261,7 @@ export class AccessMethod extends Component {
           title = 'Customize'
           subtitle = 'Harmony'
           description = 'Select options like variables, transformations, and output formats for in-region cloud access.'
-          details = 'The requested data will be processed using the Harmony service and stored in the cloud for analysis.'
-
+          details = `The requested data will be processed using the ${name} service and stored in the cloud for analysis.`
           break
         }
         default:
@@ -351,7 +350,7 @@ export class AccessMethod extends Component {
 
     const echoFormFallback = (
       <div className="access-method__echoform-loading">
-        <Spinner className="access-method__echoform-spinner" size="tiny" type="dots" />
+        <Spinner className="access-method__echoform-spinner" dataTestId="access-method-echoform-spinner" size="tiny" type="dots" />
       </div>
     )
 
@@ -549,7 +548,7 @@ export class AccessMethod extends Component {
                       }
                       {
                         !selectedSpatialDisplay && (
-                          <p className="access-method__section-status mb-0" data-testId="no-area-selected">
+                          <p className="access-method__section-status mb-0">
                             { /* eslint-disable-next-line max-len */}
                             No spatial area selected. Make a spatial selection to enable spatial subsetting.
                           </p>
@@ -609,6 +608,7 @@ export class AccessMethod extends Component {
                         className="form-control form-control-sm"
                         onChange={this.handleOutputFormatSelection}
                         value={selectedOutputFormat}
+                        data-testid="access-methods__output-format-options"
                       >
                         {[
                           <option key="output-format-none" value="">None</option>,
@@ -630,6 +630,7 @@ export class AccessMethod extends Component {
                         className="form-control form-control-sm"
                         onChange={this.handleOutputProjectionSelection}
                         value={selectedOutputProjection}
+                        data-testid="access-methods__output-projection-options"
                       >
                         {[
                           <option key="output-projection-none" value="">None</option>,

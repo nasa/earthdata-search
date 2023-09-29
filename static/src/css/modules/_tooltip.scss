@@ -44,6 +44,12 @@
     padding-bottom: 0.325rem;
     border-bottom: 1px solid rgba($color__white, 0.15);
   }
+
+  &__secondary-text {
+    font-size: 0.675rem;
+    color: $color__black--300;
+    display: block;
+  }
 }
 
 /* Account for the addition of the 1px border on tooltip content */

@@ -1,15 +1,30 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import {
+  render, screen, waitFor
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
+import '@testing-library/jest-dom'
 
 import { AccessMethod } from '../AccessMethod'
-import AccessMethodRadio from '../../FormFields/AccessMethodRadio/AccessMethodRadio'
-import RadioList from '../../FormFields/RadioList/RadioList'
-import ProjectPanelSection from '../../ProjectPanels/ProjectPanelSection'
 
-Enzyme.configure({ adapter: new Adapter() })
+beforeEach(() => {
+  jest.clearAllMocks()
+})
 
-function setup(overrideProps) {
+const mockEchoForm = jest.fn(() => (
+  <div>
+    mock echo-form
+  </div>
+))
+jest.mock('../EchoForm', () => mockEchoForm)
+
+const setup = (overrideProps) => {
+  const onSelectAccessMethod = jest.fn()
+  const onSetActivePanel = jest.fn()
+  const onUpdateAccessMethod = jest.fn()
+
   const props = {
     accessMethods: {},
     index: 0,
@@ -20,34 +35,28 @@ function setup(overrideProps) {
     temporal: {},
     ursProfile: {},
     overrideTemporal: {},
-    onSelectAccessMethod: jest.fn(),
-    onSetActivePanel: jest.fn(),
-    onUpdateAccessMethod: jest.fn(),
+    onSelectAccessMethod,
+    onSetActivePanel,
+    onUpdateAccessMethod,
     selectedAccessMethod: '',
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<AccessMethod {...props} />)
+  render(<AccessMethod {...props} />)
 
   return {
-    enzymeWrapper,
-    props
+    onSelectAccessMethod,
+    onSetActivePanel,
+    onUpdateAccessMethod
   }
 }
 
 describe('AccessMethod component', () => {
-  test('should render self', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.exists()).toBeTruthy()
-  })
-
   describe('handleAccessMethodSelection', () => {
-    test('updates the selected access method', () => {
-      const { enzymeWrapper, props } = setup()
-
+    test('updates the selected access method', async () => {
+      const user = userEvent.setup()
       const collectionId = 'collectionId'
-      enzymeWrapper.setProps({
+      const { onSelectAccessMethod } = setup({
         accessMethods: {
           download: {
             isValid: true,
@@ -62,22 +71,37 @@ describe('AccessMethod component', () => {
           hits: 3800
         }
       })
+      const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
+      await user.click(directDownloadAccessMethodRadioButton)
 
-      const radioList = enzymeWrapper.find(RadioList)
-      radioList.props().onChange('download')
-
-      expect(props.onSelectAccessMethod.mock.calls.length).toBe(1)
-      expect(props.onSelectAccessMethod.mock.calls[0]).toEqual([{
-        collectionId,
-        selectedAccessMethod: 'download'
-      }])
+      expect(onSelectAccessMethod).toHaveBeenCalledTimes(1)
+      expect(onSelectAccessMethod).toHaveBeenCalledWith({ collectionId, selectedAccessMethod: 'download' })
     })
 
-    test('updates the selected access method when type is orderable', () => {
-      const { enzymeWrapper, props } = setup()
+    describe('handleAccessMethodSelection', () => {
+      test('when there is no access method', async () => {
+        const collectionId = 'collectionId'
+        setup({
+          accessMethods: {
+          },
+          metadata: {
+            conceptId: collectionId,
+            granule_count: 10000
+          },
+          granuleMetadata: {
+            hits: 3800
+          }
+        })
 
+        const noAccessMethodAlert = screen.getByText('No access methods exist for this collection.')
+        expect(noAccessMethodAlert).toBeInTheDocument()
+      })
+    })
+
+    test('updates the selected access method when type is orderable', async () => {
+      const user = userEvent.setup()
       const collectionId = 'collectionId'
-      enzymeWrapper.setProps({
+      const { onSelectAccessMethod } = setup({
         accessMethods: {
           esi0: {
             isValid: true,
@@ -93,22 +117,18 @@ describe('AccessMethod component', () => {
         }
       })
 
-      const radioList = enzymeWrapper.find(RadioList)
-      radioList.props().onChange('esi0')
+      const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
+      await user.click(directDownloadAccessMethodRadioButton)
+      expect(onSelectAccessMethod).toHaveBeenCalledTimes(1)
 
-      expect(props.onSelectAccessMethod.mock.calls.length).toBe(1)
-      expect(props.onSelectAccessMethod.mock.calls[0]).toEqual([{
-        collectionId,
-        selectedAccessMethod: 'esi0'
-      }])
+      // Multiple `ESI` services are possible for a collection
+      expect(onSelectAccessMethod).toHaveBeenCalledWith({ collectionId, selectedAccessMethod: 'esi0' })
     })
   })
 
   describe('radio button display', () => {
     test('renders a radio button for download', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
+      setup({
         accessMethods: {
           download: {
             isValid: true,
@@ -116,14 +136,12 @@ describe('AccessMethod component', () => {
           }
         }
       })
-
-      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('download')
+      const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
+      expect(directDownloadAccessMethodRadioButton.value).toEqual('download')
     })
 
     test('renders a radio button for echo orders', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
+      setup({
         accessMethods: {
           echoOrder0: {
             isValid: true,
@@ -132,13 +150,12 @@ describe('AccessMethod component', () => {
         }
       })
 
-      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('echoOrder0')
+      const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
+      expect(directDownloadAccessMethodRadioButton.value).toEqual('echoOrder0')
     })
 
     test('renders a radio button for esi', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
+      setup({
         accessMethods: {
           esi: {
             isValid: true,
@@ -147,13 +164,12 @@ describe('AccessMethod component', () => {
         }
       })
 
-      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('esi')
+      const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
+      expect(directDownloadAccessMethodRadioButton.value).toEqual('esi')
     })
 
     test('renders a radio button for opendap', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
+      setup({
         accessMethods: {
           opendap: {
             isValid: true,
@@ -161,14 +177,12 @@ describe('AccessMethod component', () => {
           }
         }
       })
-
-      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('opendap')
+      const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
+      expect(directDownloadAccessMethodRadioButton.value).toEqual('opendap')
     })
 
     test('renders a radio button for harmony', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
+      setup({
         accessMethods: {
           harmony0: {
             isValid: true,
@@ -176,19 +190,17 @@ describe('AccessMethod component', () => {
           }
         }
       })
-
-      expect(enzymeWrapper.find(AccessMethodRadio).props().value).toEqual('harmony0')
+      const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
+      // Multiple `Harmony` services are possible for a collection
+      expect(directDownloadAccessMethodRadioButton.value).toEqual('harmony0')
     })
   })
 
   describe('when the selected access method has an echoform', () => {
-    test('lazy loads the echoforms component and provides the correct fallback', () => {
+    test('lazy loads the echo-forms component and provides the correct fallback', async () => {
       const collectionId = 'collectionId'
-      const form = 'echo form here'
-
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
+      const form = 'mock-form'
+      setup({
         accessMethods: {
           echoOrder0: {
             isValid: true,
@@ -202,24 +214,18 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'echoOrder0'
       })
 
-      enzymeWrapper.update()
+      // Spinner up before the lazy loaded component has completed loading
+      expect(screen.getByTestId('access-method-echoform-spinner')).toBeInTheDocument()
 
-      const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
-      const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
-      const suspenseComponent = echoFormWrapper.childAt(0)
-      const echoForm = suspenseComponent.childAt(0)
-
-      expect(echoFormWrapper.childAt(0).props().fallback.props.className).toEqual('access-method__echoform-loading')
-      expect(echoForm.props().form).toEqual(form)
+      // Wait for the lazy loaded component to load with the mocked implementation
+      await waitFor(() => expect(screen.getByText('mock echo-form')).toBeInTheDocument())
     })
 
-    test('renders an echoform', () => {
+    test('renders an echoform', async () => {
       const collectionId = 'collectionId'
       const form = 'echo form here'
 
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
+      setup({
         accessMethods: {
           echoOrder0: {
             isValid: true,
@@ -232,29 +238,16 @@ describe('AccessMethod component', () => {
         },
         selectedAccessMethod: 'echoOrder0'
       })
-
-      enzymeWrapper.update()
-
-      const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
-      const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
-      const suspenseComponent = echoFormWrapper.childAt(0)
-      const echoForm = suspenseComponent.childAt(0)
-
-      expect(echoForm.props().collectionId).toEqual(collectionId)
-      expect(echoForm.props().form).toEqual(form)
-      expect(echoForm.props().methodKey).toEqual('echoOrder0')
-      expect(echoForm.props().rawModel).toEqual(null)
-      expect(typeof echoForm.props().onUpdateAccessMethod).toEqual('function')
+      const echoOrderInput = screen.getByRole('radio')
+      expect(echoOrderInput.value).toEqual('echoOrder0')
     })
 
-    test('renders an echoform with saved fields', () => {
+    test('renders an echoform with saved fields', async () => {
       const collectionId = 'collectionId'
-      const form = 'echo form here'
+      const form = 'echo-form-mock'
       const rawModel = 'saved fields'
 
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
+      setup({
         accessMethods: {
           echoOrder0: {
             isValid: true,
@@ -269,26 +262,28 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'echoOrder0'
       })
 
-      const customizationSection = enzymeWrapper.find(ProjectPanelSection).at(1)
-      const echoFormWrapper = customizationSection.find(ProjectPanelSection).at(1)
-      const suspenseComponent = echoFormWrapper.childAt(0)
-      const echoForm = suspenseComponent.childAt(0)
+      await waitFor(() => expect(mockEchoForm).toHaveBeenCalledTimes(1))
 
-      expect(echoForm.props().collectionId).toEqual(collectionId)
-      expect(echoForm.props().form).toEqual(form)
-      expect(echoForm.props().methodKey).toEqual('echoOrder0')
-      expect(echoForm.props().rawModel).toEqual(rawModel)
-      expect(typeof echoForm.props().onUpdateAccessMethod).toEqual('function')
+      // Needed JSON.stringify to compare object references
+      expect(JSON.stringify(mockEchoForm.mock.calls[0][0])).toEqual(JSON.stringify({
+        collectionId: 'collectionId',
+        form: 'echo-form-mock',
+        methodKey: 'echoOrder0',
+        onUpdateAccessMethod: jest.fn(),
+        rawModel: 'saved fields',
+        shapefileId: null,
+        spatial: {},
+        temporal: {},
+        ursProfile: {}
+      }, {}))
     })
   })
 
   describe('when the selected access method is opendap', () => {
-    test('selecting a output format calls onUpdateAccessMethod', () => {
-      const { enzymeWrapper, props } = setup()
-
+    test('selecting a output format calls onUpdateAccessMethod', async () => {
+      const user = userEvent.setup()
       const collectionId = 'collectionId'
-
-      enzymeWrapper.setProps({
+      const { onUpdateAccessMethod } = setup({
         accessMethods: {
           opendap: {
             isValid: true,
@@ -302,11 +297,14 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'opendap'
       })
 
-      const outputFormat = enzymeWrapper.find('#input__output-format')
-      outputFormat.simulate('change', { target: { value: 'nc4' } })
+      await user.selectOptions(
+        screen.getByTestId('access-methods__output-format-options'),
+        screen.getByRole('option', { name: 'NETCDF-4' })
+      )
 
-      expect(props.onUpdateAccessMethod).toBeCalledTimes(1)
-      expect(props.onUpdateAccessMethod).toBeCalledWith({
+      expect(screen.getByRole('option', { name: 'NETCDF-4' }).selected).toBe(true)
+      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+      expect(onUpdateAccessMethod).toHaveBeenCalledWith({
         collectionId: 'collectionId',
         method: {
           opendap: {
@@ -319,12 +317,9 @@ describe('AccessMethod component', () => {
 
   describe('when the selected access method is harmony', () => {
     describe('when supportedOutputFormats does not exist', () => {
-      test('displays outputFormat field', () => {
-        const { enzymeWrapper } = setup()
-
+      test('does not display outputFormat field', () => {
         const collectionId = 'collectionId'
-
-        enzymeWrapper.setProps({
+        setup({
           accessMethods: {
             harmony0: {
               isValid: true,
@@ -336,18 +331,15 @@ describe('AccessMethod component', () => {
           },
           selectedAccessMethod: 'harmony0'
         })
-
-        expect(enzymeWrapper.find('#input__output-format').exists()).toBeFalsy()
+        expect(screen.getByText('No customization options are available for the selected access method.')).toBeInTheDocument()
+        expect(screen.queryByTestId('access-methods__output-format-options')).toBeNull()
       })
     })
 
     describe('when supportedOutputFormats exist', () => {
       test('displays outputFormat field', () => {
-        const { enzymeWrapper } = setup()
-
         const collectionId = 'collectionId'
-
-        enzymeWrapper.setProps({
+        setup({
           accessMethods: {
             harmony0: {
               isValid: true,
@@ -360,16 +352,14 @@ describe('AccessMethod component', () => {
           },
           selectedAccessMethod: 'harmony0'
         })
-
-        expect(enzymeWrapper.find('#input__output-format').exists()).toBeTruthy()
+        expect(screen.getByText('Choose from output format options like GeoTIFF, NETCDF, and other file types.')).toBeInTheDocument()
+        expect(screen.queryByTestId('access-methods__output-format-options')).toBeInTheDocument()
       })
 
-      test('selecting a output format calls onUpdateAccessMethod', () => {
-        const { enzymeWrapper, props } = setup()
-
+      test('selecting a output format calls onUpdateAccessMethod', async () => {
+        const user = userEvent.setup()
         const collectionId = 'collectionId'
-
-        enzymeWrapper.setProps({
+        const { onUpdateAccessMethod } = setup({
           accessMethods: {
             harmony0: {
               isValid: true,
@@ -382,29 +372,27 @@ describe('AccessMethod component', () => {
           },
           selectedAccessMethod: 'harmony0'
         })
-
-        const outputFormat = enzymeWrapper.find('#input__output-format')
-        outputFormat.simulate('change', { target: { value: 'nc4' } })
-
-        expect(props.onUpdateAccessMethod).toBeCalledTimes(1)
-        expect(props.onUpdateAccessMethod).toBeCalledWith({
+        await user.selectOptions(
+          screen.getByTestId('access-methods__output-format-options'),
+          screen.getByRole('option', { name: 'NETCDF-4' })
+        )
+        expect(screen.getByRole('option', { name: 'NETCDF-4' }).selected).toBe(true)
+        expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+        expect(onUpdateAccessMethod).toHaveBeenCalledWith({
           collectionId: 'collectionId',
           method: {
             harmony0: {
-              selectedOutputFormat: 'nc4'
+              selectedOutputFormat: 'application/x-netcdf4'
             }
           }
         })
       })
     })
 
-    describe('when supportedOutputProjections does not exist', () => {
-      test('displays outputFormat field', () => {
-        const { enzymeWrapper } = setup()
-
+    describe('when supportedOutputProjections do not exist', () => {
+      test('does not display outputFormat field', () => {
         const collectionId = 'collectionId'
-
-        enzymeWrapper.setProps({
+        setup({
           accessMethods: {
             harmony0: {
               isValid: true,
@@ -417,17 +405,15 @@ describe('AccessMethod component', () => {
           selectedAccessMethod: 'harmony0'
         })
 
-        expect(enzymeWrapper.find('#input__output-projection').exists()).toBeFalsy()
+        expect(screen.getByText('No customization options are available for the selected access method.')).toBeInTheDocument()
+        expect(screen.queryByTestId('access-methods__output-projection-options')).toBeNull()
       })
     })
 
     describe('when supportedOutputProjections exist', () => {
       test('displays outputProjection field', () => {
-        const { enzymeWrapper } = setup()
-
         const collectionId = 'collectionId'
-
-        enzymeWrapper.setProps({
+        setup({
           accessMethods: {
             harmony0: {
               isValid: true,
@@ -441,15 +427,14 @@ describe('AccessMethod component', () => {
           selectedAccessMethod: 'harmony0'
         })
 
-        expect(enzymeWrapper.find('#input__output-projection').exists()).toBeTruthy()
+        expect(screen.getByText('Choose a desired output projection from supported EPSG Codes.')).toBeInTheDocument()
+        expect(screen.queryByTestId('access-methods__output-projection-options')).toBeInTheDocument()
       })
 
-      test('selecting a output projection calls onUpdateAccessMethod', () => {
-        const { enzymeWrapper, props } = setup()
-
+      test('selecting a output projection calls onUpdateAccessMethod', async () => {
+        const user = userEvent.setup()
         const collectionId = 'collectionId'
-
-        enzymeWrapper.setProps({
+        const { onUpdateAccessMethod } = setup({
           accessMethods: {
             harmony0: {
               isValid: true,
@@ -463,11 +448,14 @@ describe('AccessMethod component', () => {
           selectedAccessMethod: 'harmony0'
         })
 
-        const outputFormat = enzymeWrapper.find('#input__output-projection')
-        outputFormat.simulate('change', { target: { value: 'EPSG:4326' } })
+        await user.selectOptions(
+          screen.getByTestId('access-methods__output-projection-options'),
+          screen.getByRole('option', { name: 'EPSG:4326' })
+        )
 
-        expect(props.onUpdateAccessMethod).toBeCalledTimes(1)
-        expect(props.onUpdateAccessMethod).toBeCalledWith({
+        expect(screen.getByRole('option', { name: 'EPSG:4326' }).selected).toBe(true)
+        expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+        expect(onUpdateAccessMethod).toHaveBeenCalledWith({
           collectionId: 'collectionId',
           method: {
             harmony0: {
@@ -481,11 +469,8 @@ describe('AccessMethod component', () => {
     describe('when temporal subsetting is not supported', () => {
       describe('when a temporal range is not set', () => {
         test('does not display the temporal subsetting input', () => {
-          const { enzymeWrapper } = setup()
-
           const collectionId = 'collectionId'
-
-          enzymeWrapper.setProps({
+          setup({
             accessMethods: {
               harmony0: {
                 isValid: true,
@@ -498,18 +483,15 @@ describe('AccessMethod component', () => {
             },
             selectedAccessMethod: 'harmony0'
           })
-
-          expect(enzymeWrapper.find('#input__temporal-subsetting').exists()).not.toBeTruthy()
+          // Ensure that `Temporal` is not being rendered on the DOM
+          expect(screen.queryByText('Temporal')).toBeNull()
         })
       })
 
       describe('when a temporal range is set', () => {
         test('does not display the temporal subsetting input', () => {
-          const { enzymeWrapper } = setup()
-
           const collectionId = 'collectionId'
-
-          enzymeWrapper.setProps({
+          setup({
             accessMethods: {
               harmony0: {
                 isValid: true,
@@ -528,7 +510,7 @@ describe('AccessMethod component', () => {
             }
           })
 
-          expect(enzymeWrapper.find('#input__temporal-subsetting').exists()).not.toBeTruthy()
+          expect(screen.queryByText('Temporal')).toBeNull()
         })
       })
     })
@@ -536,11 +518,8 @@ describe('AccessMethod component', () => {
     describe('when temporal subsetting is supported', () => {
       describe('when a temporal range is not set', () => {
         test('displays a message about temporal subsetting', () => {
-          const { enzymeWrapper } = setup()
-
           const collectionId = 'collectionId'
-
-          enzymeWrapper.setProps({
+          setup({
             accessMethods: {
               harmony0: {
                 isValid: true,
@@ -553,18 +532,14 @@ describe('AccessMethod component', () => {
             },
             selectedAccessMethod: 'harmony0'
           })
-
-          expect(enzymeWrapper.find('.access-method__section-status').text()).toContain('No temporal range selected.')
+          expect(screen.getByText('No temporal range selected. Make a temporal selection to enable temporal subsetting.')).toBeInTheDocument()
         })
       })
 
       describe('when a temporal range is set', () => {
         test('displays a checkbox input', () => {
-          const { enzymeWrapper } = setup()
-
           const collectionId = 'collectionId'
-
-          enzymeWrapper.setProps({
+          setup({
             accessMethods: {
               harmony0: {
                 isValid: true,
@@ -582,16 +557,13 @@ describe('AccessMethod component', () => {
               isRecurring: false
             }
           })
-
-          expect(enzymeWrapper.find('#input__temporal-subsetting').length).toEqual(1)
+          // One single temporal subsetting selection
+          expect(screen.getAllByRole('checkbox').length).toEqual(1)
         })
 
         test('displays the correct selected temporal range', () => {
-          const { enzymeWrapper } = setup()
-
           const collectionId = 'collectionId'
-
-          enzymeWrapper.setProps({
+          setup({
             accessMethods: {
               harmony0: {
                 isValid: true,
@@ -609,17 +581,13 @@ describe('AccessMethod component', () => {
               isRecurring: false
             }
           })
-
-          expect(enzymeWrapper.find('.access-method__section-status').text()).toContain('Selected Range:2008-06-27 00:00:00 to 2021-08-01 23:59:59')
+          expect(screen.getByText('Selected Range:2008-06-27 00:00:00 to 2021-08-01 23:59:59')).toBeInTheDocument()
         })
 
         describe('when only an start date is set', () => {
           test('displays the correct selected temporal range', () => {
-            const { enzymeWrapper } = setup()
-
             const collectionId = 'collectionId'
-
-            enzymeWrapper.setProps({
+            setup({
               accessMethods: {
                 harmony0: {
                   isValid: true,
@@ -636,17 +604,13 @@ describe('AccessMethod component', () => {
                 isRecurring: false
               }
             })
-
-            expect(enzymeWrapper.find('.access-method__section-status').text()).toContain('Selected Range:2008-06-27 00:00:00 ongoing')
+            expect(screen.getByText('Selected Range:2008-06-27 00:00:00 ongoing')).toBeInTheDocument()
           })
 
           describe('when only an end date is set', () => {
             test('displays the correct selected temporal range', () => {
-              const { enzymeWrapper } = setup()
-
               const collectionId = 'collectionId'
-
-              enzymeWrapper.setProps({
+              setup({
                 accessMethods: {
                   harmony0: {
                     isValid: true,
@@ -663,8 +627,7 @@ describe('AccessMethod component', () => {
                   isRecurring: false
                 }
               })
-
-              expect(enzymeWrapper.find('.access-method__section-status').text()).toContain('Selected Range:Up to 2008-06-27 00:00:00')
+              expect(screen.getByText('Selected Range:Up to 2008-06-27 00:00:00')).toBeInTheDocument()
             })
           })
         })
@@ -672,7 +635,8 @@ describe('AccessMethod component', () => {
 
       describe('when the temporal selection is recurring', () => {
         test('sets the checkbox unchecked', () => {
-          const { enzymeWrapper } = setup({
+          const collectionId = 'collectionId'
+          setup({
             accessMethods: {
               harmony0: {
                 isValid: true,
@@ -681,7 +645,7 @@ describe('AccessMethod component', () => {
               }
             },
             metadata: {
-              conceptId: 'collectionId'
+              conceptId: collectionId
             },
             selectedAccessMethod: 'harmony0',
             temporal: {
@@ -692,12 +656,12 @@ describe('AccessMethod component', () => {
               isRecurring: true
             }
           })
-
-          expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(false)
+          expect(screen.getByRole('checkbox').checked).toEqual(false)
         })
 
         test('sets the checkbox disabled', () => {
-          const { enzymeWrapper } = setup({
+          const collectionId = 'collectionId'
+          setup({
             accessMethods: {
               harmony0: {
                 isValid: true,
@@ -706,7 +670,7 @@ describe('AccessMethod component', () => {
               }
             },
             metadata: {
-              conceptId: 'collectionId'
+              conceptId: collectionId
             },
             selectedAccessMethod: 'harmony0',
             temporal: {
@@ -717,12 +681,11 @@ describe('AccessMethod component', () => {
               isRecurring: true
             }
           })
-
-          expect(enzymeWrapper.find('#input__temporal-subsetting').props().disabled).toEqual(true)
+          expect(screen.getByRole('checkbox').disabled).toEqual(true)
         })
 
         test('sets a warning in the section', () => {
-          const { enzymeWrapper } = setup({
+          setup({
             accessMethods: {
               harmony0: {
                 isValid: true,
@@ -742,18 +705,14 @@ describe('AccessMethod component', () => {
               isRecurring: true
             }
           })
-
-          expect(enzymeWrapper.find(ProjectPanelSection).at(1).childAt(0).props().warning).toEqual('To prevent unexpected results, temporal subsetting is not supported for recurring dates.')
+          expect(screen.getByText('To prevent unexpected results, temporal subsetting is not supported for recurring dates.')).toBeInTheDocument()
         })
       })
 
       describe('when enableTemporalSubsetting is not set', () => {
         test('defaults the checkbox checked', () => {
-          const { enzymeWrapper } = setup()
-
           const collectionId = 'collectionId'
-
-          enzymeWrapper.setProps({
+          setup({
             accessMethods: {
               harmony0: {
                 isValid: true,
@@ -771,18 +730,14 @@ describe('AccessMethod component', () => {
               isRecurring: false
             }
           })
-
-          expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(true)
+          expect(screen.getByRole('checkbox').checked).toEqual(true)
         })
       })
 
       describe('when enableTemporalSubsetting is set to true', () => {
         test('sets the checkbox checked', () => {
-          const { enzymeWrapper } = setup()
-
           const collectionId = 'collectionId'
-
-          enzymeWrapper.setProps({
+          setup({
             accessMethods: {
               harmony0: {
                 isValid: true,
@@ -801,17 +756,46 @@ describe('AccessMethod component', () => {
               isRecurring: false
             }
           })
-
-          expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(true)
+          expect(screen.getByRole('checkbox').checked).toEqual(true)
         })
 
         describe('when the user clicks the checkbox', () => {
-          test('sets the checkbox checked', () => {
-            const { enzymeWrapper } = setup()
-
+          test('sets the checkbox checked', async () => {
+            const user = userEvent.setup()
             const collectionId = 'collectionId'
+            // `enableTemporalSubsetting` must be set to false here to prevent `checked` form being true
+            setup({
+              accessMethods: {
+                harmony0: {
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsTemporalSubsetting: true,
+                  enableTemporalSubsetting: false
+                }
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony0',
+              temporal: {
+                startDate: '2008-06-27T00:00:00.979Z',
+                endDate: '2021-08-01T23:59:59.048Z',
+                isRecurring: false
+              }
+            })
+            const checkbox = screen.getByRole('checkbox')
 
-            enzymeWrapper.setProps({
+            // Ensure `checkbox` is false first
+            expect(checkbox.checked).toEqual(false)
+
+            await user.click(checkbox)
+            expect(checkbox.checked).toEqual(true)
+          })
+
+          test('calls onUpdateAccessMethod', async () => {
+            const collectionId = 'collectionId'
+            const user = userEvent.setup()
+            const { onUpdateAccessMethod } = setup({
               accessMethods: {
                 harmony0: {
                   isValid: true,
@@ -831,51 +815,18 @@ describe('AccessMethod component', () => {
               }
             })
 
-            const checkbox = enzymeWrapper.find('#input__temporal-subsetting')
+            const checkbox = screen.getByRole('checkbox')
 
-            checkbox.simulate('change', { target: { checked: false } })
-
-            enzymeWrapper.update()
-
-            expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(false)
-          })
-
-          test('calls onUpdateAccessMethod', () => {
-            const { enzymeWrapper, props } = setup({
-              accessMethods: {
-                harmony0: {
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsTemporalSubsetting: true,
-                  enableTemporalSubsetting: true
-                }
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony0',
-              temporal: {
-                startDate: '2008-06-27T00:00:00.979Z',
-                endDate: '2021-08-01T23:59:59.048Z',
-                isRecurring: false
-              }
-            })
-
-            const checkbox = enzymeWrapper.find('#input__temporal-subsetting')
-
-            checkbox.simulate('change', { target: { checked: false } })
-
-            enzymeWrapper.update()
-
-            expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-            expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({ collectionId: 'collectionId', method: { harmony0: { enableTemporalSubsetting: false } } })
+            await user.click(checkbox)
+            expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+            expect(onUpdateAccessMethod).toHaveBeenCalledWith({ collectionId: 'collectionId', method: { harmony0: { enableTemporalSubsetting: false } } })
           })
         })
       })
 
       describe('when enableTemporalSubsetting is set to false', () => {
         test('sets the checkbox unchecked', () => {
-          const { enzymeWrapper } = setup({
+          setup({
             accessMethods: {
               harmony0: {
                 isValid: true,
@@ -894,13 +845,12 @@ describe('AccessMethod component', () => {
               isRecurring: false
             }
           })
-
-          expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(false)
+          expect(screen.getByRole('checkbox').checked).toEqual(false)
         })
 
         describe('when enableSpatialSubsetting is set to false', () => {
           test('sets the checkbox unchecked for boundingBox', () => {
-            const { enzymeWrapper } = setup({
+            setup({
               accessMethods: {
                 harmony0: {
                   isValid: true,
@@ -917,11 +867,11 @@ describe('AccessMethod component', () => {
                 boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
               }
             })
-            expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
-            expect(enzymeWrapper.find('.access-method__section-status[data-testId="no-area-selected"]').exists()).toEqual(false)
+            expect(screen.getByRole('checkbox').checked).toEqual(false)
           })
+
           test('no area selected shows up when not passing in a spatial value', () => {
-            const { enzymeWrapper } = setup({
+            setup({
               accessMethods: {
                 harmony0: {
                   isValid: true,
@@ -936,10 +886,11 @@ describe('AccessMethod component', () => {
               selectedAccessMethod: 'harmony0',
               spatial: {}
             })
-            expect(enzymeWrapper.find('.access-method__section-status[data-testId="no-area-selected"]').props().children).toEqual('No spatial area selected. Make a spatial selection to enable spatial subsetting.')
+            expect(screen.getByText('No spatial area selected. Make a spatial selection to enable spatial subsetting.')).toBeInTheDocument()
           })
+
           test('sets the checkbox unchecked for circle', () => {
-            const { enzymeWrapper } = setup({
+            setup({
               accessMethods: {
                 harmony0: {
                   isValid: true,
@@ -956,10 +907,11 @@ describe('AccessMethod component', () => {
                 circle: ['64.125,7.8161,983270-18.28125']
               }
             })
-            expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
+            expect(screen.getByRole('checkbox').checked).toEqual(false)
           })
+
           test('sets the checkbox unchecked for point', () => {
-            const { enzymeWrapper } = setup({
+            setup({
               accessMethods: {
                 harmony0: {
                   isValid: true,
@@ -976,10 +928,11 @@ describe('AccessMethod component', () => {
                 point: ['82.6875,-18.61541']
               }
             })
-            expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
+            expect(screen.getByRole('checkbox').checked).toEqual(false)
           })
+
           test('sets the checkbox unchecked for line', () => {
-            const { enzymeWrapper } = setup({
+            setup({
               accessMethods: {
                 harmony0: {
                   isValid: true,
@@ -996,10 +949,11 @@ describe('AccessMethod component', () => {
                 line: ['82.6875,-18.61541,83.1231, -16.11311']
               }
             })
-            expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
+            expect(screen.getByRole('checkbox').checked).toEqual(false)
           })
+
           test('sets the checkbox unchecked for shapefile', () => {
-            const { enzymeWrapper } = setup({
+            setup({
               accessMethods: {
                 harmony0: {
                   isValid: true,
@@ -1017,17 +971,15 @@ describe('AccessMethod component', () => {
                 polygon: ['104.625,-10.6875,103.11328,-10.89844,103.57031,-12.19922,105.32813,-13.11328,106.38281,-11.70703,105.75,-10.33594,104.625,-10.6875']
               }
             })
-            expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(false)
+            expect(screen.getByRole('checkbox').checked).toEqual(false)
           })
         })
 
         describe('when the user clicks the checkbox', () => {
-          test('sets the checkbox for temporal unchecked', () => {
-            const { enzymeWrapper } = setup()
-
+          test('sets the checkbox for temporal unchecked', async () => {
+            const user = userEvent.setup()
             const collectionId = 'collectionId'
-
-            enzymeWrapper.setProps({
+            setup({
               accessMethods: {
                 harmony0: {
                   isValid: true,
@@ -1046,22 +998,16 @@ describe('AccessMethod component', () => {
                 isRecurring: false
               }
             })
-
-            const checkbox = enzymeWrapper.find('#input__temporal-subsetting')
-
-            checkbox.simulate('change', { target: { checked: true } })
-
-            enzymeWrapper.update()
-
-            expect(enzymeWrapper.find('#input__temporal-subsetting').props().checked).toEqual(true)
+            const checkbox = screen.getByRole('checkbox')
+            expect(checkbox.checked).toEqual(true)
+            await user.click(checkbox)
+            expect(screen.getByRole('checkbox').checked).toEqual(false)
           })
 
-          test('sets the checkbox for spatial unchecked', () => {
-            const { enzymeWrapper } = setup()
-
+          test('sets the checkbox for spatial checked', async () => {
+            const user = userEvent.setup()
             const collectionId = 'collectionId'
-
-            enzymeWrapper.setProps({
+            setup({
               accessMethods: {
                 harmony0: {
                   isValid: true,
@@ -1078,22 +1024,15 @@ describe('AccessMethod component', () => {
                 boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
               }
             })
-
-            const checkbox = enzymeWrapper.find('#input__spatial-subsetting')
-
-            checkbox.simulate('change', { target: { checked: true } })
-
-            enzymeWrapper.update()
-
-            expect(enzymeWrapper.find('#input__spatial-subsetting').props().checked).toEqual(true)
+            const checkbox = screen.getByRole('checkbox')
+            await user.click(checkbox)
+            expect(screen.getByRole('checkbox').checked).toEqual(true)
           })
 
-          test('calls onUpdateAccessMethod', () => {
-            const { enzymeWrapper, props } = setup()
-
+          test('calls onUpdateAccessMethod', async () => {
+            const user = userEvent.setup()
             const collectionId = 'collectionId'
-
-            enzymeWrapper.setProps({
+            const { onUpdateAccessMethod } = setup({
               accessMethods: {
                 harmony0: {
                   isValid: true,
@@ -1112,16 +1051,48 @@ describe('AccessMethod component', () => {
                 isRecurring: false
               }
             })
-
-            const checkbox = enzymeWrapper.find('#input__temporal-subsetting')
-
-            checkbox.simulate('change', { target: { checked: true } })
-
-            enzymeWrapper.update()
-
-            expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-            expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({ collectionId: 'collectionId', method: { harmony0: { enableTemporalSubsetting: true } } })
+            const checkbox = screen.getByRole('checkbox')
+            await user.click(checkbox)
+            expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+            expect(onUpdateAccessMethod).toHaveBeenCalledWith({ collectionId: 'collectionId', method: { harmony0: { enableTemporalSubsetting: false } } })
           })
+        })
+      })
+    })
+    describe('when a service name is passed in', () => {
+      describe('when the service type is `OPeNDAP`', () => {
+        test('the service name is rendered on the panel without needing to click `More Info`', () => {
+          const serviceName = 'opendap-service-name'
+          setup({
+            accessMethods: {
+              opendap: {
+                isValid: true,
+                type: 'OPeNDAP',
+                name: serviceName
+              }
+            }
+          })
+
+          expect(screen.getByText('opendap-service-name')).toBeInTheDocument()
+        })
+      })
+      describe('when the service type is `Harmony`', () => {
+        test('the service name is rendered on the panel without needing to click `More Info`', () => {
+          const collectionId = 'collectionId'
+          const serviceName = 'harmony-service-name'
+          setup({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                name: serviceName
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            }
+          })
+          expect(screen.getByText('harmony-service-name')).toBeInTheDocument()
         })
       })
     })
