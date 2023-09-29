@@ -83,9 +83,7 @@ export const prepareRetrievalParams = (state) => {
 
     returnValue.id = collectionId
     returnValue.granule_count = granuleCount
-
     returnValue.granule_link_count = links.length
-
     returnValue.collection_metadata = pick(collectionMetadata, permittedCollectionMetadataFields)
 
     const extractedGranuleParams = extractProjectCollectionGranuleParams(state, collectionId)

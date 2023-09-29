@@ -1,19 +1,10 @@
 import {
-  // SET_ADMIN_METRICS_RETRIEVAL,
   SET_ADMIN_METRICS_RETRIEVALS,
-  // SET_ADMIN_METRICS_RETRIEVAL_LOADED,
   SET_ADMIN_METRICS_RETRIEVALS_LOADING,
   SET_ADMIN_METRICS_RETRIEVALS_LOADED,
   UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE,
   UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE
-  // SET_ADMIN_METRICS_RETRIEVAL_LOADING,
-  // UPDATE_ADMIN_METRICS_RETRIEVALS_SORT_KEY,
-  // UPDATE_ADMIN_METRICS_RETRIEVALS_PAGE_NUM,
-  // SET_ADMIN_METRICS_RETRIEVALS_PAGINATION
 } from '../../constants/actionTypes'
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
-
-const { defaultCmrPageSize } = getApplicationConfig()
 
 const initialState = {
   allAccessMethodTypes: [],
@@ -21,13 +12,6 @@ const initialState = {
   multCollectionResponse: [],
   isLoading: false,
   isLoaded: false,
-  sortKey: '',
-  pagination: {
-    pageSize: defaultCmrPageSize,
-    pageNum: 1,
-    pageCount: null,
-    totalResults: null
-  },
   startDate: '',
   endDate: ''
 }
@@ -89,89 +73,6 @@ const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
         endDate: action.payload
       }
     }
-
-    // case SET_ADMIN_METRICS_RETRIEVAL_LOADED: {
-    //   const id = action.payload
-
-    //   return {
-    //     ...state,
-    //     accessMethodType: {
-    //       ...state.accessMethodType,
-    //       [id]: {
-    //         ...state.accessMethodType[id],
-    //         isLoading: false,
-    //         isLoaded: true
-    //       }
-    //     }
-    //   }
-    // }
-    // case SET_ADMIN_METRICS_RETRIEVAL_LOADING: {
-    //   const id = action.payload
-
-    //   return {
-    //     ...state,
-    //     accessMethodType: {
-    //       ...state.accessMethodType,
-    //       [id]: {
-    //         ...state.accessMethodType[id],
-    //         isLoading: true,
-    //         isLoaded: false
-    //       }
-    //     }
-    //   }
-    // }
-    // case SET_ADMIN_METRICS_RETRIEVAL: {
-    //   const {
-    //     access_method_type: accessMethodType
-    //   } = action.payload
-
-    //   return {
-    //     ...state,
-    //     accessMethodType: {
-    //       ...state.accessMethodType,
-    //       [accessMethodType]: {
-    //         ...state.accessMethodType[accessMethodType],
-    //         ...action.payload,
-    //         isLoading: false,
-    //         isLoaded: true
-    //       }
-    //     }
-    //   }
-    // }
-    // case SET_ADMIN_METRICS_RETRIEVALS_PAGINATION: {
-    //   const {
-    //     page_num: pageNum,
-    //     page_size: pageSize,
-    //     page_count: pageCount,
-    //     total_results: totalResults
-    //   } = action.payload
-
-    //   return {
-    //     ...state,
-    //     pagination: {
-    //       ...state.pagination,
-    //       pageNum,
-    //       pageSize,
-    //       pageCount,
-    //       totalResults
-    //     }
-    //   }
-    // }
-    // case UPDATE_ADMIN_METRICS_RETRIEVALS_SORT_KEY: {
-    //   return {
-    //     ...state,
-    //     sortKey: action.payload
-    //   }
-    // }
-    // case UPDATE_ADMIN_METRICS_RETRIEVALS_PAGE_NUM: {
-    //   return {
-    //     ...state,
-    //     pagination: {
-    //       ...state.pagination,
-    //       pageNum: action.payload
-    //     }
-    //   }
-    // }
     default:
       return state
   }

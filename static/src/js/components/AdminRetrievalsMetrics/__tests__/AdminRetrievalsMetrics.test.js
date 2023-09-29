@@ -55,7 +55,8 @@ describe('AdminRetrievals component', () => {
   test('renders itself correctly', () => {
     setup()
     // todo should I test each table header its just static HTML code though
-    expect(screen.getByText('Enter a value for the temporal filter')).toBeInTheDocument()
+    expect(screen.getByText('Enter a value for the temporal filter'))
+      .toBeInTheDocument()
     screen.debug()
     // const { enzymeWrapper } = setup()
 

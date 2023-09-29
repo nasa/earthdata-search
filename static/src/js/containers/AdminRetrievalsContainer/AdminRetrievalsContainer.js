@@ -45,7 +45,6 @@ export class AdminRetrievalsContainer extends Component {
       onUpdateAdminRetrievalsPageNum,
       retrievals
     } = this.props
-    console.log('🤮 ~ file: AdminRetrievalsContainer.js:48 ~ AdminRetrievalsContainer ~ render ~ retrievals:', retrievals)
 
     const {
       push: historyPush

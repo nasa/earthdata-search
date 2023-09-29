@@ -1,92 +1,24 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
-// import Pagination from 'rc-pagination'
-// import localeInfo from 'rc-pagination/lib/locale/en_US'
+
 import { Table } from 'react-bootstrap'
-// import { FaCaretUp, FaCaretDown } from 'react-icons/fa'
-
-// import EDSCIcon from '../EDSCIcon/EDSCIcon'
-
 import 'rc-pagination/assets/index.css'
 import './AdminRetrievalsMetricsList.scss'
 
 export const AdminRetrievalsMetricsList = ({
-  // historyPush,
   retrievals
-  // onUpdateAdminRetrievalsSortKey,
-  // onUpdateAdminRetrievalsPageNum
 }) => {
   const {
     allAccessMethodTypes,
     byAccessMethodType,
     multCollectionResponse
-    // ,
-    // pagination,
-    // sortKey
   } = retrievals
-  console.log('🚀 ~ file: AdminRetrievalsMetricsList.js:25 ~ retrievals:', retrievals)
-
-  // const {
-  //   pageNum,
-  //   pageSize,
-  //   totalResults
-  // } = pagination
-
-  // const handleSort = (value) => {
-  //   onUpdateAdminRetrievalsSortKey(value)
-  // }
-
-  // const handlePageChange = (pageNum) => {
-  //   onUpdateAdminRetrievalsPageNum(pageNum)
-  // }
-
-  // const onSetUsernameSort = () => {
-  //   if (sortKey.indexOf('username') < 0) {
-  //     handleSort('-username')
-  //   }
-  //   if (sortKey === '+username') {
-  //     handleSort('')
-  //   }
-  //   if (sortKey === '-username') {
-  //     handleSort('+username')
-  //   }
-  // }
-
-  // const onSetCreatedSort = () => {
-  //   if (sortKey.indexOf('created_at') < 0) {
-  //     handleSort('-created_at')
-  //   }
-  //   if (sortKey === '+created_at') {
-  //     handleSort('')
-  //   }
-  //   if (sortKey === '-created_at') {
-  //     handleSort('+created_at')
-  //   }
-  // }
 
   return (
     <>
-      <Table className="admin-retrievals-list__table" striped bordered>
+      <Table striped bordered>
         <thead>
           <tr>
-            {/* <th>ID</th> */}
-            {/* <th
-              className="admin-retrievals-list__interactive  admin-retrievals-list__table-head-cell--sortable"
-              // onClick={() => onSetUsernameSort()}
-              role="button"
-            > */}
-            {/* User/NAMEISED!! */}
-            {/* {
-                sortKey === '+username' && (
-                  <EDSCIcon icon={FaCaretUp} className="admin-retrievals-list__sortable-icon" />
-                )
-              }
-              {
-                sortKey === '-username' && (
-                  <EDSCIcon icon={FaCaretDown} className="admin-retrievals-list__sortable-icon" />
-                )
-              } */}
-            {/* </th> */}
             <th>Data Access Type</th>
             <th>Total Times Access Method Used</th>
             <th>Average Granule Count</th>
@@ -110,12 +42,8 @@ export const AdminRetrievalsMetricsList = ({
 
               return (
                 <tr
-                  className="admin-retrievals-list__interactive"
+                  className="admin-retrievals-metrics-list__table-row"
                   key={dataRetrievalType}
-                  // onClick={() => {
-                  //   historyPush(`/admin/retrievals/${obfuscatedId}`)
-                // }}
-                  role="button"
                 >
                   <td>{dataRetrievalType}</td>
                   <td>{totalTimesAccessMethodUsed}</td>
@@ -149,20 +77,20 @@ export const AdminRetrievalsMetricsList = ({
           }
         </tbody>
       </Table>
-      <Table>
+      <Table bordered>
         <thead>
           <tr>
             <th>Retrieval-id for retrievals that included multiple collections </th>
             <th>Number of collections in the retrieval</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="admin-retrievals-metrics-list__table-body">
           {
             multCollectionResponse.map((retrieval) => {
               const { retrieval_id: retreivalId, count } = retrieval
               return (
                 <tr
-                  className="admin-retrievals-list__interactive"
+                  className="admin-retrievals-metrics-list__table-row"
                   key={retreivalId}
                 >
                   <td>
@@ -174,7 +102,7 @@ export const AdminRetrievalsMetricsList = ({
                 </tr>
               )
             })
-          }
+            }
         </tbody>
       </Table>
     </>
