@@ -404,7 +404,7 @@ export const CollectionResultsItem = forwardRef(({
                             className="collection-results-item__tooltip collection-results-item__tooltip--csda"
                           >
                             Commercial Smallsat Data Acquisition Program
-                            <span className="collection-results-item__tooltip-secondary">
+                            <span className="tooltip__secondary-text">
                               (Additional authentication required)
                             </span>
                           </Tooltip>

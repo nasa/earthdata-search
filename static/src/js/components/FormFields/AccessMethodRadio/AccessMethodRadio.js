@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { CSSTransition } from 'react-transition-group'
 import { FaCheck } from 'react-icons/fa'
 
@@ -55,14 +57,35 @@ export const AccessMethodRadio = ({
       <div className="access-method-radio__content">
         <header className="access-method-radio__header">
           <div className="access-method-radio__header-primary">
-            <h4 className="access-method-radio__title">
-              {title}
-            </h4>
-            <span className="access-method-radio__subtitle">
-              {subtitle}
+            <span className="access-method-radio__primary-titles">
+              <h4 className="access-method-radio__title">
+                {title}
+              </h4>
+              <span className="access-method-radio__subtitle">
+                {subtitle}
+              </span>
             </span>
+            {
+              serviceName && (
+                <OverlayTrigger
+                  placement="top"
+                  overlay={(
+                    <Tooltip>
+                      <span className="tooltip__secondary-text">Service</span>
+                      {serviceName}
+                    </Tooltip>
+                )}
+                >
+                  <div className="access-method-radio__header-secondary">
+                    <span className="access-method-radio__primary-service-name">
+                      {serviceName}
+                    </span>
+                  </div>
+                </OverlayTrigger>
+              )
+            }
           </div>
-          <div className="access-method-radio__header-secondary">
+          <div className="access-method-radio__header-content">
             <span className="access-method-radio__description">
               {description}
             </span>
@@ -88,14 +111,6 @@ export const AccessMethodRadio = ({
           <span className="access-method-radio__details">
             {details}
           </span>
-          {
-            serviceName && (
-              <span className="access-method-radio__service-name">
-                {'Service: '}
-                {serviceName}
-              </span>
-            )
-          }
         </div>
       </CSSTransition>
     </label>

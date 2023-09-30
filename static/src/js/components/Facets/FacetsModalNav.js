@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import $ from 'jquery'
 
 import { alphabet } from '../../util/alphabetic-list'
 
@@ -14,13 +13,28 @@ export class FacetsModalNav extends Component {
   }
 
   onNavItemClick = (e) => {
+    // Prevent the default behavior, which closes the modal when a navigation item is clicked
     e.preventDefault()
-    const modalContainer = $(this.modalInnerRef.current)
-    const headingElement = modalContainer.find(`${$(e.target).attr('href')}`)
-    if (!headingElement[0]) return
-    modalContainer.animate({
-      scrollTop: headingElement[0].offsetTop - 55
-    })
+
+    // Get the ID of the heading that corresponds to the link and find that in the modal content
+    const headingElement = this.modalInnerRef.current.querySelector(e.target.getAttribute('href'))
+
+    // Bail out if no heading exists for the current ID
+    if (!headingElement) return
+
+    if (headingElement.scrollIntoView) {
+      // If scrollIntoView is supported, use that to scroll to the container
+      headingElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+    } else {
+      // If scrollIntoView is not supported, set the scrollTop on the inner modal container to move the item into position
+      const modalContainer = this.modalInnerRef.current
+      const navigationBuffer = 55
+
+      modalContainer.scrollTop = headingElement.offsetTop - navigationBuffer
+    }
   }
 
   render() {

@@ -43,7 +43,7 @@ describe('MetricsEventsContainer component', () => {
       el.innerHTML = 'some test html'
 
       enzymeWrapper.instance().metricsClick({
-        currentTarget: el
+        target: el
       })
 
       expect(enzymeWrapper.props().onMetricsClick).toHaveBeenCalledTimes(1)
@@ -62,7 +62,7 @@ describe('MetricsEventsContainer component', () => {
       el.innerHTML = 'some test html'
 
       enzymeWrapper.instance().metricsClick({
-        currentTarget: el
+        target: el
       })
 
       expect(enzymeWrapper.props().onMetricsClick).toHaveBeenCalledTimes(1)

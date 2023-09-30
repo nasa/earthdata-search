@@ -1,57 +1,37 @@
-import React, { Component, Children } from 'react'
+import React, { Children, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import Radio from '../Radio/Radio'
 import AccessMethodRadio from '../AccessMethodRadio/AccessMethodRadio'
 
-export class RadioList extends Component {
-  constructor(props) {
-    super(props)
+export const RadioList = ({ defaultValue, onChange, children }) => {
+  const [selected, setSelected] = useState(defaultValue)
 
-    this.state = {
-      selected: props.defaultValue
-    }
+  useEffect(() => {
+    setSelected(defaultValue)
+  }, [defaultValue])
 
-    this.onChange = this.onChange.bind(this)
+  const onPropsChange = (e) => {
+    const { target } = e
+    const { value } = target
+
+    onChange(value)
+
+    setSelected(value)
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { defaultValue: nextDefaultValue } = nextProps
-    const { defaultValue } = this.props
+  return (
+    <div className="radio-list">
+      {Children.map(children, (child) => {
+        const { props, type } = child
+        if (type !== Radio && type !== AccessMethodRadio) return null
 
-    if (nextDefaultValue !== defaultValue) {
-      this.setState({
-        selected: nextDefaultValue
-      })
-    }
-  }
-
-  onChange(e) {
-    const { onChange: propsOnChange } = this.props
-
-    propsOnChange(e.target.value)
-
-    this.setState({
-      selected: e.target.value
-    })
-  }
-
-  render() {
-    const { children } = this.props
-    const { selected } = this.state
-    const radios = Children.map(children, (child) => {
-      if (child.type !== Radio && child.type !== AccessMethodRadio) return null
-      const { props } = child
-      return React.cloneElement(child,
-        { onChange: this.onChange, checked: selected === props.value })
-    })
-
-    return (
-      <div className="radio-list">
-        {radios}
-      </div>
-    )
-  }
+        return React.cloneElement(child,
+          // eslint-disable-next-line react/prop-types
+          { onChange: onPropsChange, checked: selected === props.value })
+      })}
+    </div>
+  )
 }
 
 RadioList.defaultProps = {
