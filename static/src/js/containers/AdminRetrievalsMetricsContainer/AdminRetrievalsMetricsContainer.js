@@ -1,17 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 import AdminRetrievalsMetrics from '../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics'
 
-// todo need to decide what to do with the currentStartDate stuff
 export const mapStateToProps = (state) => ({
   retrievals: state.admin.metricsRetrievals,
   retrievalsLoading: state.admin.metricsRetrievals.isLoading,
-  retrievalsLoaded: state.admin.metricsRetrievals.isLoaded,
-  currentStartDate: state.admin.startDate
+  retrievalsLoaded: state.admin.metricsRetrievals.isLoaded
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -41,17 +39,16 @@ export const AdminRetrievalsMetricsContainer = ({
   />
 )
 
-// AdminRetrievalsMetricsContainer.defaultProps = {
-//   retrievals: {}
-// }
+AdminRetrievalsMetricsContainer.defaultProps = {
+  retrievals: {}
+}
 
-// AdminRetrievalsMetricsContainer.propTypes = {
-//   onAdminViewMetricsRetrieval: PropTypes.func.isRequired,
-//   onFetchAdminMetricsRetrievals: PropTypes.func.isRequired,
-//   onUpdateAdminMetricsRetrievalsEndDate: PropTypes.func.isRequired,
-//   onUpdateAdminMetricsRetrievalsEndDate: PropTypes.func.isRequired,
-//   retrievals: PropTypes.shape({})
-// }
+AdminRetrievalsMetricsContainer.propTypes = {
+  onFetchAdminMetricsRetrievals: PropTypes.func.isRequired,
+  onUpdateAdminMetricsRetrievalsEndDate: PropTypes.func.isRequired,
+  onUpdateAdminMetricsRetrievalsStartDate: PropTypes.func.isRequired,
+  retrievals: PropTypes.shape({})
+}
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(AdminRetrievalsMetricsContainer)

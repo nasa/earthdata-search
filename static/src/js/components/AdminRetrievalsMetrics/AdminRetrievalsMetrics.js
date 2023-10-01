@@ -2,7 +2,7 @@ import React, {
   useState
 } from 'react'
 
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { Row, Col } from 'react-bootstrap'
 
 import { AdminPage } from '../AdminPage/AdminPage'
@@ -37,7 +37,7 @@ export const AdminRetrievalsMetrics = ({
       onFetchAdminMetricsRetrievals()
     }
   }
-  // adminRetrievalMetrics(retrievals)
+
   return (
     <AdminPage
       pageTitle="Retrieval Metrics"
@@ -57,19 +57,20 @@ export const AdminRetrievalsMetrics = ({
           {
             (startDate || endDate)
               ? (
-                <>
+                <div>
                   <h3>
                     Current temporal filters
                   </h3>
-                  <div>
-                    <br />
-                    {' Start Date: '}
+                  <h5>
+                    Start Date:
                     {startDate}
-                    <br />
-                    {'End Date: '}
+                  </h5>
+                  <br />
+                  <h5>
+                    End Date:
                     {endDate}
-                  </div>
-                </>
+                  </h5>
+                </div>
               )
               : (
                 <p>
@@ -79,21 +80,17 @@ export const AdminRetrievalsMetrics = ({
           }
         </Col>
       </Row>
-
       <Row className="justify-content-end mb-2">
         <Col sm="auto">
-          {/* <AdminRetrievalsMetricsForm
-            onAdminViewRetrieval={onAdminViewRetrieval}
-          /> */}
-          <TemporalSelectionDropdown onChangeQuery={onChangeQuery} allowRecurring={false} />
+          <TemporalSelectionDropdown
+            onChangeQuery={onChangeQuery}
+            allowRecurring={false}
+          />
         </Col>
       </Row>
       <Row>
         <Col>
           <AdminRetrievalsMetricsList
-            // historyPush={historyPush}
-            // onUpdateAdminRetrievalsSortKey={onUpdateAdminRetrievalsSortKey}
-            // onUpdateAdminRetrievalsPageNum={onUpdateAdminRetrievalsPageNum}
             retrievals={retrievals}
           />
         </Col>
@@ -102,16 +99,15 @@ export const AdminRetrievalsMetrics = ({
   )
 }
 
-// AdminRetrievalsMetrics.defaultProps = {
-//   retrievals: {}
-// }
+AdminRetrievalsMetrics.defaultProps = {
+  retrievals: {}
+}
 
-// AdminRetrievalsMetrics.propTypes = {
-//   historyPush: PropTypes.func.isRequired,
-//   onAdminViewRetrieval: PropTypes.func.isRequired,
-//   onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
-//   onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired,
-//   retrievals: PropTypes.shape({})
-// }
+AdminRetrievalsMetrics.propTypes = {
+  onFetchAdminMetricsRetrievals: PropTypes.func.isRequired,
+  onUpdateAdminMetricsRetrievalsStartDate: PropTypes.func.isRequired,
+  onUpdateAdminMetricsRetrievalsEndDate: PropTypes.func.isRequired,
+  retrievals: PropTypes.shape({})
+}
 
 export default AdminRetrievalsMetrics

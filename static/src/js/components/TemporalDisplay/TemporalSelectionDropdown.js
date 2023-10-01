@@ -20,7 +20,11 @@ import './TemporalSelectionDropdown.scss'
  * Component representing the temporal selection dropdown
  * @extends PureComponent
  */
-const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
+const TemporalSelectionDropdown = ({
+  temporalSearch,
+  onChangeQuery,
+  allowRecurring
+}) => {
   const {
     startDate = '',
     endDate = '',
@@ -216,47 +220,34 @@ const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
     })
   }
 
-  render() {
-    const {
-      disabled,
-      open,
-      temporal
-    } = this.state
-
-    const {
-      onChangeQuery,
-      allowRecurring
-    } = this.props
-
-    return (
-      <Dropdown show={open} className="temporal-selection-dropdown" onToggle={this.onDropdownToggle}>
-        <TemporalSelectionDropdownToggle onToggleClick={this.onToggleClick} />
-        {
-          open && (
-            <TemporalSelectionDropdownMenu
-              disabled={disabled}
-              onApplyClick={this.onApplyClick}
-              onChangeQuery={onChangeQuery}
-              onChangeRecurring={this.onChangeRecurring}
-              onClearClick={this.onClearClick}
-              onInvalid={this.onInvalid}
-              onRecurringToggle={this.onRecurringToggle}
-              onValid={this.onValid}
-              setEndDate={this.setEndDate}
-              setStartDate={this.setStartDate}
-              temporal={temporal}
-              allowRecurring={allowRecurring}
-            />
-          )
-        }
-      </Dropdown>
-    )
-  }
+  return (
+    <Dropdown show={open} className="temporal-selection-dropdown" onToggle={onToggleOpen}>
+      <TemporalSelectionDropdownToggle onToggleClick={onToggleOpen} />
+      {
+        open && (
+          <TemporalSelectionDropdownMenu
+            allowRecurring={allowRecurring}
+            disabled={disabled}
+            onApplyClick={onApplyClick}
+            onChangeQuery={onChangeQuery}
+            onChangeRecurring={onChangeRecurring}
+            onClearClick={onClearClick}
+            onInvalid={onInvalid}
+            onRecurringToggle={onRecurringToggle}
+            onValid={onValid}
+            setEndDate={setEndDate}
+            setStartDate={setStartDate}
+            temporal={temporal}
+          />
+        )
+      }
+    </Dropdown>
+  )
 }
 
 TemporalSelectionDropdown.defaultProps = {
-  temporalSearch: {},
-  allowRecurring: true
+  allowRecurring: true,
+  temporalSearch: {}
 }
 
 TemporalSelectionDropdown.propTypes = {

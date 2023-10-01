@@ -25,11 +25,6 @@ const setup = (overrideProps) => {
   }
 
   render(<AdminRetrievalsMetricsList {...props} />)
-
-  // return {
-  //   enzymeWrapper,
-  //   props
-  // }
 }
 
 describe('AdminRetrievalsList component', () => {
@@ -58,7 +53,7 @@ describe('AdminRetrievalsList component', () => {
   })
 
   // todo how to test that the table entries equal something
-  test.skip('renders the collections table when collections are provided', () => {
+  test('renders the collections table when collections are provided', () => {
     setup({
       retrievals: {
         allAccessMethodTypes: [
@@ -147,20 +142,6 @@ describe('AdminRetrievalsList component', () => {
         }
       }
     })
-    const rows = screen.getAllByRole('cell')
-    const fieldValue = screen.getByRole('row', { name: 'ESI 1 3 3 N/A N/A/' })
-    // console.log('🚀 ~ file: AdminRetrievalsMetricsList.test.js:153 ~ test.only ~ fieldValue:', fieldValue)
-
-    screen.debug()
-    expect(rows.length).toEqual(7)
-
-    // expect(enzymeWrapper.find('.admin-retrievals-list__table').length).toBe(1)
-    // expect(enzymeWrapper.find('.admin-retrievals-list__pagination-wrapper').length).toBe(1)
-
-    // expect(enzymeWrapper.find('.admin-retrievals-list__table tbody tr').length).toBe(1)
-    // expect(enzymeWrapper.find('.admin-retrievals-list__table tbody tr td').at(0).text()).toEqual('64')
-    // expect(enzymeWrapper.find('.admin-retrievals-list__table tbody tr td').at(1).text()).toEqual('1109324645')
-    // expect(enzymeWrapper.find('.admin-retrievals-list__table tbody tr td').at(2).text()).toEqual('edsc-test')
-    // expect(enzymeWrapper.find('.admin-retrievals-list__table tbody tr td').at(3).text()).toEqual('2019-08-25T11:59:14.390Z')
+    screen.getByText('25218')
   })
 })

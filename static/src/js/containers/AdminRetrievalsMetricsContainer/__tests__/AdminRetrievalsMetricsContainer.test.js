@@ -13,23 +13,19 @@ import AdminRetrievalsMetrics from '../../../components/AdminRetrievalsMetrics/A
 import { AdminRetrievalsMetricsContainer, mapDispatchToProps, mapStateToProps } from '../AdminRetrievalsMetricsContainer'
 
 jest.mock('../../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics', () => jest.fn(
-  () => <mock-Admin-Retrieval-Metrics>Mock Admin Retrieval Metrics</mock-Admin-Retrieval-Metrics>
+  () => <mock-Admin-Retrievals-Metrics>Mock Admin Retrievals Metrics</mock-Admin-Retrievals-Metrics>
 ))
 
 const setup = () => {
-  // todo these const functions aren't really needed right now
-  const onFetchAdminMetricsRetrievals = jest.fn()
-  const onUpdateAdminMetricsRetrievalsStartDate = jest.fn()
-  const onUpdateAdminMetricsRetrievalsEndDate = jest.fn()
+  const props = {
+    onFetchAdminMetricsRetrievals: jest.fn(),
+    onUpdateAdminMetricsRetrievalsStartDate: jest.fn(),
+    onUpdateAdminMetricsRetrievalsEndDate: jest.fn(),
+    retrievals: {}
+  }
 
   // https://testing-library.com/docs/example-react-router/
-  render(<AdminRetrievalsMetricsContainer />, { wrapper: BrowserRouter })
-
-  return {
-    onFetchAdminMetricsRetrievals,
-    onUpdateAdminMetricsRetrievalsStartDate,
-    onUpdateAdminMetricsRetrievalsEndDate
-  }
+  render(<AdminRetrievalsMetricsContainer {...props} />, { wrapper: BrowserRouter })
 }
 
 describe('mapDispatchToProps', () => {
@@ -63,7 +59,7 @@ describe('mapDispatchToProps', () => {
   })
   // todo this test needs to be improved/refined
   describe('mapStateToProps', () => {
-    test.skip('returns the correct state', () => {
+    test('returns the correct state', () => {
       const store = {
         admin: {
           metricsRetrievals: {
@@ -78,8 +74,8 @@ describe('mapDispatchToProps', () => {
           isLoading: false,
           isLoaded: false
         },
-        retrievalsLoading: false,
-        retrievalsLoaded: false
+        metricRetrievalsLoading: false,
+        metricRetrievalsLoaded: false
       }
 
       expect(mapStateToProps(store)).toEqual(expectedState)
@@ -91,6 +87,6 @@ describe('AdminRetrievalsContainer component', () => {
   test('render AdminRetrievals with the correct props', () => {
     setup()
     expect(AdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
-    expect(screen.getByText('Mock Admin Retrieval Metrics')).toBeInTheDocument()
+    expect(screen.getByText('Mock Admin Retrievals Metrics')).toBeInTheDocument()
   })
 })
