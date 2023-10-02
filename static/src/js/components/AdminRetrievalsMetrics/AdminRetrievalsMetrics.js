@@ -14,7 +14,7 @@ export const AdminRetrievalsMetrics = ({
   onUpdateAdminMetricsRetrievalsEndDate,
   retrievals
 }) => {
-  const [temporalFilterendDate, setTemporalFilterEndDate] = useState('')
+  const [temporalFilterEndDate, setTemporalFilterEndDate] = useState('')
   const [temporalFilterStartDate, setTemporalFilterStartDate] = useState('')
 
   const onChangeQuery = (event) => {
@@ -46,7 +46,7 @@ export const AdminRetrievalsMetrics = ({
       <Row className="justify-content-start mb-2">
         <Col sm="auto">
           {
-            (temporalFilterendDate || temporalFilterStartDate)
+            (temporalFilterEndDate || temporalFilterStartDate)
               ? (
                 <div>
                   <h3>
@@ -59,7 +59,7 @@ export const AdminRetrievalsMetrics = ({
                   <br />
                   <h5>
                     End Date:
-                    {temporalFilterendDate}
+                    {temporalFilterEndDate}
                   </h5>
                 </div>
               )

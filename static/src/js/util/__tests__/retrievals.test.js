@@ -109,7 +109,6 @@ describe('retrievals', () => {
           versionId: 'mock version'
         },
         granule_count: 100,
-        // todo add case for if the links are empty
         granule_link_count: 2,
         granule_params: {
           boundingBox: undefined,

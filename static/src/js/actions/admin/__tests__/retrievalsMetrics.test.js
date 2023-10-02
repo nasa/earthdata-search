@@ -92,7 +92,7 @@ describe('updateAdminRetrievalsMetricsStartDate', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(updateAdminMetricsRetrievalsStartDate(startDate))
 
     const storeActions = store.getActions()
@@ -114,7 +114,7 @@ describe('updateAdminRetrievalsMetricsEndDate', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(updateAdminMetricsRetrievalsEndDate(endDate))
 
     const storeActions = store.getActions()
@@ -149,9 +149,11 @@ describe('fetchAdminRetrfetchAdminMetricsRetrievalsievals', () => {
       expect(storeActions[0]).toEqual({
         type: SET_ADMIN_METRICS_RETRIEVALS_LOADING
       })
+
       expect(storeActions[1]).toEqual({
         type: SET_ADMIN_METRICS_RETRIEVALS_LOADED
       })
+
       expect(storeActions[2]).toEqual({
         type: SET_ADMIN_METRICS_RETRIEVALS,
         payload: data.results

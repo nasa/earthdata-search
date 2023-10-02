@@ -16,7 +16,8 @@ describe('RetrievalRequest#constructor', () => {
     expect(request.baseUrl).toEqual('http://localhost:3000')
   })
 })
-// todo what is this doing with transform response below
+
+// Todo what is this doing with transform response below
 describe('RetrievalRequest#transformResponse', () => {
   beforeEach(() => {
     jest.spyOn(MetricsRetrievalsRequest.prototype, 'handleUnauthorized').mockImplementation()
