@@ -26,7 +26,7 @@ beforeEach(() => {
   jest.restoreAllMocks()
 })
 
-describe('setAdminRetrieval', () => {
+describe('setAdminMetricsRetrievals', () => {
   test('should create an action to set the admin retrievals metrics data', () => {
     const payload = {
       mock: 'data'
@@ -41,7 +41,7 @@ describe('setAdminRetrieval', () => {
   })
 })
 
-describe('setAdminRetrievals', () => {
+describe('setAdminMetricsRetrievals', () => {
   test('should create an action to update the admin retrievals metrics list', () => {
     const payload = [
       {
@@ -61,7 +61,7 @@ describe('setAdminRetrievals', () => {
   })
 })
 
-describe('setAdminRetrievalsLoading', () => {
+describe('setAdminMetricsRetrievalsLoading', () => {
   test('should create an action to update the admin metric retrievals loading state', () => {
     const expectedAction = {
       type: SET_ADMIN_METRICS_RETRIEVALS_LOADING

@@ -49,7 +49,7 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith('start-date')
   })
 
-  test('onUpdateAdminRetrievalsSortKey calls actions.updateAdminMetricsRetrievalsEndDate', () => {
+  test('onUpdateAdminRetrievalsEndDate calls actions.updateAdminMetricsRetrievalsEndDate', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateAdminMetricsRetrievalsEndDate')
 
@@ -84,8 +84,8 @@ describe('mapDispatchToProps', () => {
   })
 })
 
-describe('AdminRetrievalsContainer component', () => {
-  test('render AdminRetrievals with the correct props', () => {
+describe('AdminRetrievalsMetricsContainer component', () => {
+  test('render AdminRetrievalsMetrics with the correct props', () => {
     setup()
     expect(AdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
     expect(screen.getByText('Mock Admin Retrievals Metrics')).toBeInTheDocument()

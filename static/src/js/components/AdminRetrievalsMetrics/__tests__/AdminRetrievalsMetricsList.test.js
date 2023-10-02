@@ -147,11 +147,11 @@ describe('AdminRetrievalsList component', () => {
     })
 
     // Values render on the table
-    expect(screen.getByText('25218')).toBeInTheDocument()
-    expect(screen.getByText('download')).toBeInTheDocument()
-    expect(screen.getByText('121')).toBeInTheDocument()
+    expect(screen.getByRole('cell', { name: '25218' })).toBeInTheDocument()
+    expect(screen.getByRole('cell', { name: 'download' })).toBeInTheDocument()
+    expect(screen.getByRole('cell', { name: '121' })).toBeInTheDocument()
 
     // Values which were `null` fill in as `N/A`
-    expect(screen.getAllByText(/N\/A/).length).toBe(7)
+    expect(screen.getAllByRole('cell', { name: /N\/A/ }).length).toBe(7)
   })
 })

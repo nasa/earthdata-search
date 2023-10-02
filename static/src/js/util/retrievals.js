@@ -73,6 +73,7 @@ export const prepareRetrievalParams = (state) => {
       granules,
       selectedAccessMethod
     } = projectCollection
+
     const { hits: granuleCount, links = [] } = granules
 
     const { [collectionId]: collectionMetadata } = collectionsMetadata

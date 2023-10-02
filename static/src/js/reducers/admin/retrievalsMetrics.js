@@ -20,6 +20,7 @@ const processResults = (results) => {
   const { retrievalResponse, multCollectionResponse } = results
   const byAccessMethodType = {}
   const allAccessMethodTypes = []
+
   retrievalResponse.forEach((response) => {
     const { access_method_type: accessMethodType } = response
 
