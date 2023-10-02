@@ -13,7 +13,6 @@ export const AdminRetrievalsMetricsList = ({
     byAccessMethodType,
     multCollectionResponse
   } = metricsRetrievals
-  console.log('🚀 ~ file: AdminRetrievalsMetricsList.js:16 ~ metricsRetrievals:', metricsRetrievals)
 
   return (
     <>

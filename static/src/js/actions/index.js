@@ -315,11 +315,9 @@ const actions = {
   updateAccessMethod,
   updateAdminRetrievalsPageNum,
   updateAdminRetrievalsSortKey,
-  // Todo new actions
   fetchAdminMetricsRetrievals,
   updateAdminMetricsRetrievalsStartDate,
   updateAdminMetricsRetrievalsEndDate,
-  // Todo new actions
   updateAdvancedSearch,
   updateAuthToken,
   updateBrowserVersion,

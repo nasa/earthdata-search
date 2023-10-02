@@ -38,12 +38,9 @@ const setup = () => {
     metricsRetrievals
   }
 
-  // TODO  why is this needed as a wrapper exactly?
   // https://testing-library.com/docs/example-react-router/
   render(<AdminRetrievalsMetrics {...props} />, { wrapper: BrowserRouter })
 
-  // Render(<AdminRetrievalsMetrics retrievals={retrievals} />)
-  // todo double check this
   return {
     onFetchAdminMetricsRetrievals,
     onUpdateAdminMetricsRetrievalsStartDate,
@@ -58,7 +55,6 @@ describe('AdminRetrievals component', () => {
   })
 
   describe('when filtering temporally', () => {
-    // Todo explain why these are necessary
     beforeAll(() => {
       ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
     })
