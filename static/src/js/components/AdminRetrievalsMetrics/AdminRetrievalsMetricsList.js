@@ -6,13 +6,14 @@ import 'rc-pagination/assets/index.css'
 import './AdminRetrievalsMetricsList.scss'
 
 export const AdminRetrievalsMetricsList = ({
-  retrievals
+  metricsRetrievals
 }) => {
   const {
     allAccessMethodTypes,
     byAccessMethodType,
     multCollectionResponse
-  } = retrievals
+  } = metricsRetrievals
+  console.log('🚀 ~ file: AdminRetrievalsMetricsList.js:16 ~ metricsRetrievals:', metricsRetrievals)
 
   return (
     <>
@@ -61,7 +62,7 @@ export const AdminRetrievalsMetricsList = ({
                       )
                   }
                   {
-                    minGranuleLinkCount
+                    (minGranuleLinkCount || minGranuleLinkCount === 0)
                       ? (
                         <td>
                           {minGranuleLinkCount}
@@ -111,11 +112,11 @@ export const AdminRetrievalsMetricsList = ({
 }
 
 AdminRetrievalsMetricsList.defaultProps = {
-  retrievals: {}
+  metricsRetrievals: {}
 }
 
 AdminRetrievalsMetricsList.propTypes = {
-  retrievals: PropTypes.shape({
+  metricsRetrievals: PropTypes.shape({
     allAccessMethodTypes: PropTypes.arrayOf(PropTypes.string),
     byAccessMethodType: PropTypes.shape({}),
     multCollectionResponse: PropTypes.arrayOf(PropTypes.shape({}))

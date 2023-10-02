@@ -7,7 +7,7 @@ import actions from '../../actions'
 import AdminRetrievalsMetrics from '../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics'
 
 export const mapStateToProps = (state) => ({
-  retrievals: state.admin.metricsRetrievals,
+  metricsRetrievals: state.admin.metricsRetrievals,
   retrievalsLoading: state.admin.metricsRetrievals.isLoading,
   retrievalsLoaded: state.admin.metricsRetrievals.isLoaded
 })
@@ -29,25 +29,25 @@ export const AdminRetrievalsMetricsContainer = ({
   onFetchAdminMetricsRetrievals,
   onUpdateAdminMetricsRetrievalsStartDate,
   onUpdateAdminMetricsRetrievalsEndDate,
-  retrievals
+  metricsRetrievals
 }) => (
   <AdminRetrievalsMetrics
     onFetchAdminMetricsRetrievals={onFetchAdminMetricsRetrievals}
     onUpdateAdminMetricsRetrievalsStartDate={onUpdateAdminMetricsRetrievalsStartDate}
     onUpdateAdminMetricsRetrievalsEndDate={onUpdateAdminMetricsRetrievalsEndDate}
-    retrievals={retrievals}
+    metricsRetrievals={metricsRetrievals}
   />
 )
 
 AdminRetrievalsMetricsContainer.defaultProps = {
-  retrievals: {}
+  metricsRetrievals: {}
 }
 
 AdminRetrievalsMetricsContainer.propTypes = {
   onFetchAdminMetricsRetrievals: PropTypes.func.isRequired,
   onUpdateAdminMetricsRetrievalsEndDate: PropTypes.func.isRequired,
   onUpdateAdminMetricsRetrievalsStartDate: PropTypes.func.isRequired,
-  retrievals: PropTypes.shape({})
+  metricsRetrievals: PropTypes.shape({})
 }
 
 export default withRouter(

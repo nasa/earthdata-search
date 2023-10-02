@@ -7,7 +7,7 @@ import { AdminRetrievalsMetricsList } from '../AdminRetrievalsMetricsList'
 
 const setup = (overrideProps) => {
   const props = {
-    retrievals: {
+    metricsRetrievals: {
       isLoaded: true,
       isLoading: false,
       accessMethodType: {},
@@ -58,7 +58,7 @@ describe('AdminRetrievalsList component', () => {
   // Todo how to test that the table entries equal something
   test('renders the collections table when collections are provided', () => {
     setup({
-      retrievals: {
+      metricsRetrievals: {
         allAccessMethodTypes: [
           'ESI',
           'Harmony',
@@ -146,6 +146,12 @@ describe('AdminRetrievalsList component', () => {
       }
     })
 
-    screen.getByText('25218')
+    // Values render on the table
+    expect(screen.getByText('25218')).toBeInTheDocument()
+    expect(screen.getByText('download')).toBeInTheDocument()
+    expect(screen.getByText('121')).toBeInTheDocument()
+
+    // Values which were `null` fill in as `N/A`
+    expect(screen.getAllByText(/N\/A/).length).toBe(7)
   })
 })

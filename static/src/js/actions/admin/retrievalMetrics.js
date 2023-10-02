@@ -12,9 +12,9 @@ import actions from '../index'
 
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
-export const setAdminMetricRetrievals = (retrievals) => ({
+export const setAdminMetricRetrievals = (metricsRetrievals) => ({
   type: SET_ADMIN_METRICS_RETRIEVALS,
-  payload: retrievals
+  payload: metricsRetrievals
 })
 
 export const setAdminMetricRetrievalsLoading = () => ({
@@ -54,11 +54,6 @@ export const fetchAdminMetricsRetrievals = () => (dispatch, getState) => {
       const {
         results
       } = data
-      // Todo this is what is parsing the response from the lambda function
-      console.log('🚀 ~ file: retrievalMetrics.js:125 ~ .then ~ data:', data)
-
-      console.log('🚀 ~ file: retrievalMetrics.js:125 ~ .then ~ results:', results)
-
       dispatch(setAdminMetricRetrievalsLoaded())
       dispatch(setAdminMetricRetrievals(results))
     })

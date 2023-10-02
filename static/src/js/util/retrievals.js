@@ -73,9 +73,7 @@ export const prepareRetrievalParams = (state) => {
       granules,
       selectedAccessMethod
     } = projectCollection
-    // Todo what if there are no links on the granule
     const { hits: granuleCount, links = [] } = granules
-    console.log('🚀 ~ file: retrievals.js:78 ~ projectCollectionsIds.forEach ~ links:', links)
 
     const { [collectionId]: collectionMetadata } = collectionsMetadata
 

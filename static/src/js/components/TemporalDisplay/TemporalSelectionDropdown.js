@@ -21,9 +21,9 @@ import './TemporalSelectionDropdown.scss'
  * @extends PureComponent
  */
 const TemporalSelectionDropdown = ({
-  temporalSearch,
+  allowRecurring,
   onChangeQuery,
-  allowRecurring
+  temporalSearch
 }) => {
   const {
     startDate = '',

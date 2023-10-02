@@ -17,7 +17,6 @@ describe('RetrievalRequest#constructor', () => {
   })
 })
 
-// Todo what is this doing with transform response below
 describe('RetrievalRequest#transformResponse', () => {
   beforeEach(() => {
     jest.spyOn(MetricsRetrievalsRequest.prototype, 'handleUnauthorized').mockImplementation()

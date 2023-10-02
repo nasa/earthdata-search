@@ -12,7 +12,7 @@ export const AdminRetrievalsMetrics = ({
   onFetchAdminMetricsRetrievals,
   onUpdateAdminMetricsRetrievalsStartDate,
   onUpdateAdminMetricsRetrievalsEndDate,
-  retrievals
+  metricsRetrievals
 }) => {
   const [temporalFilterEndDate, setTemporalFilterEndDate] = useState('')
   const [temporalFilterStartDate, setTemporalFilterStartDate] = useState('')
@@ -82,7 +82,7 @@ export const AdminRetrievalsMetrics = ({
       <Row>
         <Col>
           <AdminRetrievalsMetricsList
-            retrievals={retrievals}
+            metricsRetrievals={metricsRetrievals}
           />
         </Col>
       </Row>
@@ -91,14 +91,14 @@ export const AdminRetrievalsMetrics = ({
 }
 
 AdminRetrievalsMetrics.defaultProps = {
-  retrievals: {}
+  metricsRetrievals: {}
 }
 
 AdminRetrievalsMetrics.propTypes = {
   onFetchAdminMetricsRetrievals: PropTypes.func.isRequired,
   onUpdateAdminMetricsRetrievalsStartDate: PropTypes.func.isRequired,
   onUpdateAdminMetricsRetrievalsEndDate: PropTypes.func.isRequired,
-  retrievals: PropTypes.shape({})
+  metricsRetrievals: PropTypes.shape({})
 }
 
 export default AdminRetrievalsMetrics

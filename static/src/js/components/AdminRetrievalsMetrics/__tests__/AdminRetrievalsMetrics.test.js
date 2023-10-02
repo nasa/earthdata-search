@@ -16,7 +16,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { AdminRetrievalsMetrics } from '../AdminRetrievalsMetrics'
 
 const setup = () => {
-  const retrievals = {
+  const metricsRetrievals = {
     isLoaded: true,
     isLoading: false,
     accessMethodType: {},
@@ -35,7 +35,7 @@ const setup = () => {
     onFetchAdminMetricsRetrievals,
     onUpdateAdminMetricsRetrievalsStartDate,
     onUpdateAdminMetricsRetrievalsEndDate,
-    retrievals
+    metricsRetrievals
   }
 
   // TODO  why is this needed as a wrapper exactly?

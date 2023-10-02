@@ -59,7 +59,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith('end-date')
   })
 
-  // Todo this test needs to be improved/refined
   describe('mapStateToProps', () => {
     test('returns the correct state', () => {
       const store = {
@@ -72,7 +71,7 @@ describe('mapDispatchToProps', () => {
       }
 
       const expectedState = {
-        retrievals: {
+        metricsRetrievals: {
           isLoading: false,
           isLoaded: false
         },
