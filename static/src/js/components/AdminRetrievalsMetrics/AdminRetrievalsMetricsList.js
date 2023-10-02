@@ -1,5 +1,5 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import { Table } from 'react-bootstrap'
 import 'rc-pagination/assets/index.css'
@@ -88,6 +88,7 @@ export const AdminRetrievalsMetricsList = ({
           {
             multCollectionResponse.map((retrieval) => {
               const { retrieval_id: retreivalId, count } = retrieval
+
               return (
                 <tr
                   className="admin-retrievals-metrics-list__table-row"
@@ -102,26 +103,23 @@ export const AdminRetrievalsMetricsList = ({
                 </tr>
               )
             })
-            }
+          }
         </tbody>
       </Table>
     </>
   )
 }
 
-// AdminRetrievalsMetricsList.defaultProps = {
-//   retrievals: {}
-// }
+AdminRetrievalsMetricsList.defaultProps = {
+  retrievals: {}
+}
 
-// AdminRetrievalsMetricsList.propTypes = {
-//   // historyPush: PropTypes.func.isRequired,
-//   retrievals: PropTypes.shape({
-//     allAccessMethodTypes: PropTypes.arrayOf(PropTypes.string),
-//     accessMethodType: PropTypes.shape({})
-//   })
-//   // ,
-//   // onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
-//   // onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired
-// }
+AdminRetrievalsMetricsList.propTypes = {
+  retrievals: PropTypes.shape({
+    allAccessMethodTypes: PropTypes.arrayOf(PropTypes.string),
+    byAccessMethodType: PropTypes.shape({}),
+    multCollectionResponse: PropTypes.arrayOf(PropTypes.shape({}))
+  })
+}
 
 export default AdminRetrievalsMetricsList

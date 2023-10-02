@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-  render,
-  screen
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import '@testing-library/jest-dom'
 
@@ -35,24 +32,30 @@ describe('AdminRetrievalsList component', () => {
     // Retrieval metrics table
     expect(screen.getByRole('columnheader', { name: 'Data Access Type' }))
       .toBeInTheDocument()
+
     expect(screen.getByRole('columnheader', { name: 'Total Times Access Method Used' }))
       .toBeInTheDocument()
+
     expect(screen.getByRole('columnheader', { name: 'Average Granule Count' }))
       .toBeInTheDocument()
+
     expect(screen.getByRole('columnheader', { name: 'Total Granules Retrieved' }))
       .toBeInTheDocument()
+
     expect(screen.getByRole('columnheader', { name: 'Max Granule Link Count' }))
       .toBeInTheDocument()
 
     // Retrieval use table
     expect(screen.getByRole('columnheader', { name: 'Minimum Granule Link Count' }))
       .toBeInTheDocument()
+
     expect(screen.getByRole('columnheader', { name: 'Retrieval-id for retrievals that included multiple collections' }))
       .toBeInTheDocument()
+
     expect(screen.getByRole('columnheader', { name: 'Number of collections in the retrieval' }))
   })
 
-  // todo how to test that the table entries equal something
+  // Todo how to test that the table entries equal something
   test('renders the collections table when collections are provided', () => {
     setup({
       retrievals: {
@@ -142,6 +145,7 @@ describe('AdminRetrievalsList component', () => {
         }
       }
     })
+
     screen.getByText('25218')
   })
 })

@@ -49,13 +49,12 @@ export const fetchAdminMetricsRetrievals = () => (dispatch, getState) => {
   }
 
   const response = requestObject.all(requestOpts)
-    .then((response) => {
-      const { data } = response
+    .then((responseData) => {
+      const { data } = responseData
       const {
-        // pagination,
         results
       } = data
-      // todo this is what is parsing the response from the lambda function
+      // Todo this is what is parsing the response from the lambda function
       console.log('🚀 ~ file: retrievalMetrics.js:125 ~ .then ~ data:', data)
 
       console.log('🚀 ~ file: retrievalMetrics.js:125 ~ .then ~ results:', results)

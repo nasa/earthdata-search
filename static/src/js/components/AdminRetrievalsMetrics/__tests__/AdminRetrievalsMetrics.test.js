@@ -15,14 +15,6 @@ import { BrowserRouter } from 'react-router-dom'
 
 import { AdminRetrievalsMetrics } from '../AdminRetrievalsMetrics'
 
-// import { AdminPage } from '../../AdminPage/AdminPage'
-// import { AdminRetrievalsMetricsList } from '../AdminRetrievalsMetricsList'
-
-// jest.mock('../../AdminPage/AdminPage')
-// jest.mock('../../AdminPage/AdminPage', () => jest.fn(
-//   () => <mock-Admin-Retrieval-Metrics>Mock Admin Retrieval Metrics</mock-Admin-Retrieval-Metrics>
-// ))
-
 const setup = () => {
   const retrievals = {
     isLoaded: true,
@@ -50,7 +42,7 @@ const setup = () => {
   // https://testing-library.com/docs/example-react-router/
   render(<AdminRetrievalsMetrics {...props} />, { wrapper: BrowserRouter })
 
-  // render(<AdminRetrievalsMetrics retrievals={retrievals} />)
+  // Render(<AdminRetrievalsMetrics retrievals={retrievals} />)
   // todo double check this
   return {
     onFetchAdminMetricsRetrievals,
@@ -62,17 +54,11 @@ const setup = () => {
 describe('AdminRetrievals component', () => {
   test('renders itself correctly', () => {
     setup()
-    // todo should I test each table header its just static HTML code though
-    expect(screen.getByText('Enter a value for the temporal filter'))
-      .toBeInTheDocument()
-    screen.debug()
-    // const { enzymeWrapper } = setup()
-
-    // expect(enzymeWrapper.find(AdminPage).length).toBe(1)
-    // expect(enzymeWrapper.find(AdminRetrievalsMetricsList).length).toBe(1)
+    expect(screen.getByText('Enter a value for the temporal filter')).toBeInTheDocument()
   })
+
   describe('when filtering temporally', () => {
-    // todo explain why these are necessary
+    // Todo explain why these are necessary
     beforeAll(() => {
       ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
     })
@@ -81,7 +67,7 @@ describe('AdminRetrievals component', () => {
       ReactDOM.createPortal.mockClear()
     })
 
-    test.only('clicking on the temporal filter modal opens it', async () => {
+    test('clicking on the temporal filter modal opens it', async () => {
       const user = userEvent.setup()
       const {
         onFetchAdminMetricsRetrievals,

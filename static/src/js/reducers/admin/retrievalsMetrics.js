@@ -27,7 +27,11 @@ const processResults = (results) => {
     allAccessMethodTypes.push(accessMethodType)
   })
 
-  return { byAccessMethodType, allAccessMethodTypes, multCollectionResponse }
+  return {
+    byAccessMethodType,
+    allAccessMethodTypes,
+    multCollectionResponse
+  }
 }
 
 const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
@@ -39,6 +43,7 @@ const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
         isLoading: false
       }
     }
+
     case SET_ADMIN_METRICS_RETRIEVALS_LOADING: {
       return {
         ...state,
@@ -46,12 +51,14 @@ const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
         isLoading: true
       }
     }
+
     case SET_ADMIN_METRICS_RETRIEVALS: {
       const {
         byAccessMethodType,
         allAccessMethodTypes,
         multCollectionResponse
       } = processResults(action.payload)
+
       return {
         ...state,
         byAccessMethodType,
@@ -73,6 +80,7 @@ const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
         endDate: action.payload
       }
     }
+
     default:
       return state
   }

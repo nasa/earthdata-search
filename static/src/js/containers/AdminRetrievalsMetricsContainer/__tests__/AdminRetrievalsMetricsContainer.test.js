@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-  render,
-  screen
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import '@testing-library/jest-dom'
 
@@ -10,7 +7,11 @@ import { BrowserRouter } from 'react-router-dom'
 
 import actions from '../../../actions'
 import AdminRetrievalsMetrics from '../../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics'
-import { AdminRetrievalsMetricsContainer, mapDispatchToProps, mapStateToProps } from '../AdminRetrievalsMetricsContainer'
+import {
+  AdminRetrievalsMetricsContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../AdminRetrievalsMetricsContainer'
 
 jest.mock('../../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics', () => jest.fn(
   () => <mock-Admin-Retrievals-Metrics>Mock Admin Retrievals Metrics</mock-Admin-Retrievals-Metrics>
@@ -57,7 +58,8 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('end-date')
   })
-  // todo this test needs to be improved/refined
+
+  // Todo this test needs to be improved/refined
   describe('mapStateToProps', () => {
     test('returns the correct state', () => {
       const store = {
@@ -70,12 +72,12 @@ describe('mapDispatchToProps', () => {
       }
 
       const expectedState = {
-        metricsRetrievals: {
+        retrievals: {
           isLoading: false,
           isLoaded: false
         },
-        metricRetrievalsLoading: false,
-        metricRetrievalsLoaded: false
+        retrievalsLoading: false,
+        retrievalsLoaded: false
       }
 
       expect(mapStateToProps(store)).toEqual(expectedState)

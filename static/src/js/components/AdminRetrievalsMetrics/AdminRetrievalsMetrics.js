@@ -1,6 +1,4 @@
-import React, {
-  useState
-} from 'react'
+import React, { useState } from 'react'
 
 import PropTypes from 'prop-types'
 import { Row, Col } from 'react-bootstrap'
@@ -8,6 +6,7 @@ import { Row, Col } from 'react-bootstrap'
 import { AdminPage } from '../AdminPage/AdminPage'
 import { AdminRetrievalsMetricsList } from './AdminRetrievalsMetricsList'
 import TemporalSelectionDropdown from '../TemporalDisplay/TemporalSelectionDropdown'
+import setTemporalFilters from './setTemporalFilters'
 
 export const AdminRetrievalsMetrics = ({
   onFetchAdminMetricsRetrievals,
@@ -15,47 +14,39 @@ export const AdminRetrievalsMetrics = ({
   onUpdateAdminMetricsRetrievalsEndDate,
   retrievals
 }) => {
-  console.log('🚀 ~ file: AdminRetrievalsMetrics.js:18 ~ retrievals:', retrievals)
-  const [endDate, setEndDate] = useState('')
-  const [startDate, setStartDate] = useState('')
+  const [temporalFilterendDate, setTemporalFilterEndDate] = useState('')
+  const [temporalFilterStartDate, setTemporalFilterStartDate] = useState('')
 
   const onChangeQuery = (event) => {
-    const { collection } = event
-
-    const { temporal } = collection
-
-    const { startDate, endDate } = temporal
-
-    // Update `redux` stores
-    onUpdateAdminMetricsRetrievalsStartDate(startDate)
-    onUpdateAdminMetricsRetrievalsEndDate(endDate)
-
-    // Only query database if a temporal filter is selected
-    if (startDate || endDate) {
-      setStartDate(startDate)
-      setEndDate(endDate)
-      onFetchAdminMetricsRetrievals()
-    }
+    setTemporalFilters(event, {
+      onUpdateAdminMetricsRetrievalsStartDate,
+      onUpdateAdminMetricsRetrievalsEndDate,
+      setTemporalFilterStartDate,
+      setTemporalFilterEndDate,
+      onFetchAdminMetricsRetrievals
+    })
   }
 
   return (
     <AdminPage
       pageTitle="Retrieval Metrics"
-      breadcrumbs={[
-        {
-          name: 'Admin',
-          href: '/admin'
-        },
-        {
-          name: 'Retrievals Metrics',
-          active: true
-        }
-      ]}
+      breadcrumbs={
+        [
+          {
+            name: 'Admin',
+            href: '/admin'
+          },
+          {
+            name: 'Retrievals Metrics',
+            active: true
+          }
+        ]
+      }
     >
       <Row className="justify-content-start mb-2">
         <Col sm="auto">
           {
-            (startDate || endDate)
+            (temporalFilterendDate || temporalFilterStartDate)
               ? (
                 <div>
                   <h3>
@@ -63,12 +54,12 @@ export const AdminRetrievalsMetrics = ({
                   </h3>
                   <h5>
                     Start Date:
-                    {startDate}
+                    {temporalFilterStartDate}
                   </h5>
                   <br />
                   <h5>
                     End Date:
-                    {endDate}
+                    {temporalFilterendDate}
                   </h5>
                 </div>
               )
