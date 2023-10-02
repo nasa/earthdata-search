@@ -65,9 +65,9 @@ export const getRegions = () => (dispatch, getState) => {
   const requestObject = new RegionRequest(earthdataEnvironment)
 
   const response = requestObject.search(regionParams)
-    .then((response) => {
+    .then((responseObject) => {
       const payload = {}
-      const { data } = response
+      const { data } = responseObject
       const { hits, results } = data
 
       payload.hits = hits
@@ -78,19 +78,21 @@ export const getRegions = () => (dispatch, getState) => {
       dispatch(onRegionsLoaded({
         loaded: true
       }))
+
       dispatch(updateRegionResults(payload))
     })
     .catch((error) => {
       dispatch(finishRegionsTimer())
 
-      const { response } = error
-      const { data } = response
+      const { response: responseObject } = error
+      const { data } = responseObject
       const { errors } = data
 
       dispatch(onRegionsErrored(errors))
       dispatch(onRegionsLoaded({
         loaded: false
       }))
+
       dispatch(actions.handleError({
         error,
         action: 'getRegions',

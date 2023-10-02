@@ -9,6 +9,7 @@ const earthdataEnvironmentReducer = (state = deployedEnvironment(), action = {})
 
       return earthdataEnvironment
     }
+
     default:
       return state
   }

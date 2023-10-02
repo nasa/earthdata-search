@@ -27,6 +27,7 @@ const CollectionResultsTableHeaderCell = (props) => {
   } = customProps
 
   const { value } = cell
+
   return (
     <>
       <Button
@@ -34,10 +35,12 @@ const CollectionResultsTableHeaderCell = (props) => {
         variant="naked"
         label={value}
         title={value}
-        onClick={(e) => {
-          onViewCollectionGranules(collectionId)
-          e.stopPropagation()
-        }}
+        onClick={
+          (event) => {
+            onViewCollectionGranules(collectionId)
+            event.stopPropagation()
+          }
+        }
       >
         <h4 className="collection-results-table__collection-name">
           {value}
@@ -50,10 +53,12 @@ const CollectionResultsTableHeaderCell = (props) => {
           variant="naked"
           label="View collection details"
           title="View collection details"
-          onClick={(e) => {
-            onViewCollectionDetails(collectionId)
-            e.stopPropagation()
-          }}
+          onClick={
+            (event) => {
+              onViewCollectionDetails(collectionId)
+              event.stopPropagation()
+            }
+          }
         />
         <PortalFeatureContainer authentication>
           {
@@ -65,10 +70,12 @@ const CollectionResultsTableHeaderCell = (props) => {
                   variant="naked"
                   label="Add collection to the current project"
                   title="Add collection to the current project"
-                  onClick={(e) => {
-                    onAddProjectCollection(collectionId)
-                    e.stopPropagation()
-                  }}
+                  onClick={
+                    (event) => {
+                      onAddProjectCollection(collectionId)
+                      event.stopPropagation()
+                    }
+                  }
                 />
               ) : (
                 <Button
@@ -77,10 +84,12 @@ const CollectionResultsTableHeaderCell = (props) => {
                   variant="naked"
                   label="Remove collection from the current project"
                   title="Remove collection from the current project"
-                  onClick={(e) => {
-                    onRemoveCollectionFromProject(collectionId)
-                    e.stopPropagation()
-                  }}
+                  onClick={
+                    (event) => {
+                      onRemoveCollectionFromProject(collectionId)
+                      event.stopPropagation()
+                    }
+                  }
                 />
               )
           }

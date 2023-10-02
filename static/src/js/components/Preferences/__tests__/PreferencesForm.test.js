@@ -10,7 +10,7 @@ import uiSchema from '../../../../../../schemas/sitePreferencesUISchema.json'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-const props = {
+const defaultProps = {
   preferences: {
     preferences: {
       panelState: 'default',
@@ -23,20 +23,20 @@ const props = {
 }
 
 function setup() {
-  const enzymeWrapper = shallow(<PreferencesForm {...props} />)
+  const enzymeWrapper = shallow(<PreferencesForm {...defaultProps} />)
 
   return {
     enzymeWrapper,
-    props
+    props: defaultProps
   }
 }
 
 function setupMount() {
-  const enzymeWrapper = mount(<PreferencesForm {...props} />)
+  const enzymeWrapper = mount(<PreferencesForm {...defaultProps} />)
 
   return {
     enzymeWrapper,
-    props
+    props: defaultProps
   }
 }
 
@@ -112,6 +112,7 @@ describe('PreferencesForm component', () => {
         }
       }
     })
+
     const form = enzymeWrapper.find(Form)
 
     form.simulate('change', {

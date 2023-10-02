@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, ProjectPanelsContainer } from '../ProjectPanelsContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  ProjectPanelsContainer
+} from '../ProjectPanelsContainer'
 import ProjectPanels from '../../../components/ProjectPanels/ProjectPanels'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -256,11 +260,13 @@ describe('ProjectPanelsContainer component', () => {
         mock: 'data'
       }
     })
+
     expect(enzymeWrapper.find(ProjectPanels).props().project).toEqual({
       collections: {
         allIds: ['collectionId']
       }
     })
+
     expect(typeof enzymeWrapper.find(ProjectPanels).props().onSetActivePanel).toEqual('function')
     expect(typeof enzymeWrapper.find(ProjectPanels).props().onTogglePanels).toEqual('function')
     expect(enzymeWrapper.find(ProjectPanels).props().panels).toEqual({

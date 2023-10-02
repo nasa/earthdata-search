@@ -9,6 +9,7 @@ import { availablePortals } from '../../../../portals'
  */
 export const isDefaultPortal = (portalId) => {
   const defaultPortalId = getApplicationConfig().defaultPortal
+
   return portalId === defaultPortalId
 }
 
@@ -23,10 +24,12 @@ export const buildConfig = (json) => {
   if (parentConfig) {
     const { [parentConfig]: parentJson } = availablePortals
     const parent = buildConfig(parentJson)
+
     return merge(cloneDeep(parent), json)
   }
 
   // If the config doesn't have a parent, merge the current config into the default portal config
   const { default: defaultJson } = availablePortals
+
   return merge(cloneDeep(defaultJson), json)
 }

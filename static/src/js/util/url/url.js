@@ -33,7 +33,10 @@ export const queryParamsFromUrlString = (url) => url.split(/[?#]/)[1]
  * @param {Object} params Object with encoded URL parameters
  */
 export const stringify = (params) => qs.stringify(
-  cleanDeep(params, { emptyObjects: false, undefinedValues: false }),
+  cleanDeep(params, {
+    emptyObjects: false,
+    undefinedValues: false
+  }),
   {
     addQueryPrefix: true,
     encoder: (str) => str.toString().replace(/ /g, '%20').replace(/,/g, '%2C').replace(/:/g, '%3A')
@@ -44,31 +47,131 @@ export const stringify = (params) => qs.stringify(
  * Mapping of URL Shortened Keys to their redux store keys
  */
 const urlDefs = {
-  earthdataEnvironment: { shortKey: 'ee', encode: encodeEarthdataEnvironment, decode: decodeEarthdataEnvironment },
-  focusedGranule: { shortKey: 'g', encode: encodeString, decode: decodeString },
-  keywordSearch: { shortKey: 'q', encode: encodeString, decode: decodeString },
-  pointSearch: { shortKey: 'sp', encode: encodeArray, decode: decodeArray },
-  boundingBoxSearch: { shortKey: 'sb', encode: encodeArray, decode: decodeArray },
-  polygonSearch: { shortKey: 'polygon', encode: encodeArray, decode: decodeArray },
-  lineSearch: { shortKey: 'line', encode: encodeArray, decode: decodeArray },
-  circleSearch: { shortKey: 'circle', encode: encodeArray, decode: decodeArray },
-  temporalSearch: { shortKey: 'qt', encode: encodeTemporal, decode: decodeTemporal },
-  overrideTemporalSearch: { shortKey: 'ot', encode: encodeTemporal, decode: decodeTemporal },
-  featureFacets: { shortKey: 'ff', encode: encodeFeatures, decode: decodeFeatures },
-  twoDCoordinateSystemNameFacets: { shortKey: 's2n', encode: encodeFacets, decode: decodeFacets },
-  horizontalDataResolutionRangeFacets: { shortKey: 'hdr', encode: encodeFacets, decode: decodeFacets },
-  instrumentFacets: { shortKey: 'fi', encode: encodeFacets, decode: decodeFacets },
-  organizationFacets: { shortKey: 'fdc', encode: encodeFacets, decode: decodeFacets },
-  projectFacets: { shortKey: 'fpj', encode: encodeFacets, decode: decodeFacets },
-  processingLevelFacets: { shortKey: 'fl', encode: encodeFacets, decode: decodeFacets },
-  latency: { shortKey: 'lf', encode: encodeFacets, decode: decodeFacets },
-  granuleDataFormatFacets: { shortKey: 'gdf', encode: encodeFacets, decode: decodeFacets },
-  shapefileId: { shortKey: 'sf', encode: encodeString, decode: encodeString },
-  selectedFeatures: { shortKey: 'sfs', encode: encodeArray, decode: decodeArray },
-  tagKey: { shortKey: 'tag_key', encode: encodeString, decode: decodeString },
-  hasGranulesOrCwic: { shortKey: 'ac', encode: encodeHasGranulesOrCwic, decode: decodeHasGranulesOrCwic },
-  autocompleteSelected: { shortKey: 'as', encode: encodeAutocomplete, decode: decodeAutocomplete },
-  onlyEosdisCollections: { shortKey: 'oe', encode: encodeBoolean, decode: decodeBoolean }
+  earthdataEnvironment: {
+    shortKey: 'ee',
+    encode: encodeEarthdataEnvironment,
+    decode: decodeEarthdataEnvironment
+  },
+  focusedGranule: {
+    shortKey: 'g',
+    encode: encodeString,
+    decode: decodeString
+  },
+  keywordSearch: {
+    shortKey: 'q',
+    encode: encodeString,
+    decode: decodeString
+  },
+  pointSearch: {
+    shortKey: 'sp',
+    encode: encodeArray,
+    decode: decodeArray
+  },
+  boundingBoxSearch: {
+    shortKey: 'sb',
+    encode: encodeArray,
+    decode: decodeArray
+  },
+  polygonSearch: {
+    shortKey: 'polygon',
+    encode: encodeArray,
+    decode: decodeArray
+  },
+  lineSearch: {
+    shortKey: 'line',
+    encode: encodeArray,
+    decode: decodeArray
+  },
+  circleSearch: {
+    shortKey: 'circle',
+    encode: encodeArray,
+    decode: decodeArray
+  },
+  temporalSearch: {
+    shortKey: 'qt',
+    encode: encodeTemporal,
+    decode: decodeTemporal
+  },
+  overrideTemporalSearch: {
+    shortKey: 'ot',
+    encode: encodeTemporal,
+    decode: decodeTemporal
+  },
+  featureFacets: {
+    shortKey: 'ff',
+    encode: encodeFeatures,
+    decode: decodeFeatures
+  },
+  twoDCoordinateSystemNameFacets: {
+    shortKey: 's2n',
+    encode: encodeFacets,
+    decode: decodeFacets
+  },
+  horizontalDataResolutionRangeFacets: {
+    shortKey: 'hdr',
+    encode: encodeFacets,
+    decode: decodeFacets
+  },
+  instrumentFacets: {
+    shortKey: 'fi',
+    encode: encodeFacets,
+    decode: decodeFacets
+  },
+  organizationFacets: {
+    shortKey: 'fdc',
+    encode: encodeFacets,
+    decode: decodeFacets
+  },
+  projectFacets: {
+    shortKey: 'fpj',
+    encode: encodeFacets,
+    decode: decodeFacets
+  },
+  processingLevelFacets: {
+    shortKey: 'fl',
+    encode: encodeFacets,
+    decode: decodeFacets
+  },
+  latency: {
+    shortKey: 'lf',
+    encode: encodeFacets,
+    decode: decodeFacets
+  },
+  granuleDataFormatFacets: {
+    shortKey: 'gdf',
+    encode: encodeFacets,
+    decode: decodeFacets
+  },
+  shapefileId: {
+    shortKey: 'sf',
+    encode: encodeString,
+    decode: encodeString
+  },
+  selectedFeatures: {
+    shortKey: 'sfs',
+    encode: encodeArray,
+    decode: decodeArray
+  },
+  tagKey: {
+    shortKey: 'tag_key',
+    encode: encodeString,
+    decode: decodeString
+  },
+  hasGranulesOrCwic: {
+    shortKey: 'ac',
+    encode: encodeHasGranulesOrCwic,
+    decode: decodeHasGranulesOrCwic
+  },
+  autocompleteSelected: {
+    shortKey: 'as',
+    encode: encodeAutocomplete,
+    decode: decodeAutocomplete
+  },
+  onlyEosdisCollections: {
+    shortKey: 'oe',
+    encode: encodeBoolean,
+    decode: decodeBoolean
+  }
 }
 
 /**
@@ -78,6 +181,7 @@ const urlDefs = {
  */
 const decodeHelp = (params, paramName) => {
   const value = params[urlDefs[paramName].shortKey]
+
   return urlDefs[paramName].decode(value)
 }
 
@@ -88,7 +192,10 @@ const decodeHelp = (params, paramName) => {
  */
 export const decodeUrlParams = (paramString) => {
   // Decode the paramString
-  const params = qs.parse(paramString, { ignoreQueryPrefix: true, parseArrays: false })
+  const params = qs.parse(paramString, {
+    ignoreQueryPrefix: true,
+    parseArrays: false
+  })
 
   // Create an array of any deprectated parameters that appear in the params
   const deprecatedUrlParams = Object.entries(params)
@@ -273,5 +380,6 @@ export const urlPathsWithoutUrlParams = [
  */
 export const isSavedProjectsPage = (location) => {
   const { pathname, search } = location
+
   return isPath(pathname, '/projects') && search === ''
 }

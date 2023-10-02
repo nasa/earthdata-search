@@ -18,6 +18,7 @@ const SplitBadge = ({
       [`${className}`]: className
     }
   )
+
   return (
     <Badge className={classes} variant={variant}>
       <span className="split-badge__primary">

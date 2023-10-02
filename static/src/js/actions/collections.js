@@ -1,10 +1,7 @@
 import { isCancel } from 'axios'
 
 import CollectionRequest from '../util/request/collectionRequest'
-import {
-  buildCollectionSearchParams,
-  prepareCollectionParams
-} from '../util/collections'
+import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { handleError } from './errors'
 
 import {
@@ -174,8 +171,8 @@ export const getCollections = () => (dispatch, getState) => {
   cancelToken = requestObject.getCancelToken()
 
   const response = requestObject.search(buildCollectionSearchParams(collectionParams))
-    .then((response) => {
-      const { data, headers } = response
+    .then((responseObject) => {
+      const { data, headers } = responseObject
 
       const cmrHits = parseInt(headers['cmr-hits'], 10)
 
@@ -222,9 +219,11 @@ export const getCollections = () => (dispatch, getState) => {
       dispatch(onCollectionsLoaded({
         loaded: false
       }))
+
       dispatch(onFacetsLoaded({
         loaded: false
       }))
+
       dispatch(handleError({
         error,
         action: 'getCollections',

@@ -42,13 +42,9 @@ export const DownloadScriptPanel = ({
           </p>
           <p>
             <strong>Windows: </strong>
-            {
-              'The file can be executed within Windows by first installing a Unix-like command line utility such as '
-            }
+            {'The file can be executed within Windows by first installing a Unix-like command line utility such as '}
             <a href="https://www.cygwin.com/">Cygwin</a>
-            {
-              '. After installing Cygwin (or a similar utility), run the line \'chmod 777 download.sh\' from the utility\'s command line, and then execute by typing \'./download.sh\'.'
-            }
+            {'. After installing Cygwin (or a similar utility), run the line \'chmod 777 download.sh\' from the utility\'s command line, and then execute by typing \'./download.sh\'.'}
           </p>
           <span className="order-status-item__status-text">
             {
@@ -60,24 +56,26 @@ export const DownloadScriptPanel = ({
         </div>
         <TextWindowActions
           id={`script-${retrievalId}`}
-          fileContents={generateDownloadScript(
-            downloadLinks,
-            retrievalCollection,
-            earthdataEnvironment
-          )}
+          fileContents={
+            generateDownloadScript(
+              downloadLinks,
+              retrievalCollection,
+              earthdataEnvironment
+            )
+          }
           fileName={downloadFileName}
-          clipboardContents={generateDownloadScript(
-            downloadLinks,
-            retrievalCollection,
-            earthdataEnvironment
-          )}
+          clipboardContents={
+            generateDownloadScript(
+              downloadLinks,
+              retrievalCollection,
+              earthdataEnvironment
+            )
+          }
           modalTitle="Download Script"
           disableEdd
         >
           <pre className="download-links-panel__pre">
-            {
-              generateDownloadScript(downloadLinks, retrievalCollection, earthdataEnvironment)
-            }
+            {generateDownloadScript(downloadLinks, retrievalCollection, earthdataEnvironment)}
           </pre>
         </TextWindowActions>
       </>

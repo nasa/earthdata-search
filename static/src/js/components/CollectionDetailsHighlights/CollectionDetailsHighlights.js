@@ -131,6 +131,7 @@ export const CollectionDetailsHighlights = ({
               ) : (
                 temporal && temporal.map((entry, i) => {
                   const key = `temporal_entry_${i}`
+
                   return <span key={key}>{entry}</span>
                 })
               )
@@ -155,7 +156,12 @@ export const CollectionDetailsHighlights = ({
                     (isLoading && !isLoaded) ? (
                       <Skeleton
                         shapes={collectionDetailsParagraph}
-                        containerStyle={{ height: '4.125rem', width: '100%' }}
+                        containerStyle={
+                          {
+                            height: '4.125rem',
+                            width: '100%'
+                          }
+                        }
                         variant="dark"
                       />
                     ) : (
@@ -172,10 +178,12 @@ export const CollectionDetailsHighlights = ({
       <div className="collection-details-highlights__footer">
         <PortalLinkContainer
           className="collection-details-header__title-link collection-details-header__title-link-icon"
-          to={{
-            pathname: '/search/granules/collection-details',
-            search: location.search
-          }}
+          to={
+            {
+              pathname: '/search/granules/collection-details',
+              search: location.search
+            }
+          }
         >
           View More Collection Details
         </PortalLinkContainer>

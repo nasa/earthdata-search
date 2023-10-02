@@ -35,6 +35,7 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
         key: 'tagKey-edsc.extra.serverless.gibs',
         humanizedKey: 'Include only datasets with map imagery'
       })
+
       subscriptionsQueryTemp.tagKey = castArray(subscriptionsQueryTemp.tagKey).filter((tagKey) => tagKey !== 'edsc.extra.serverless.gibs')
     }
 
@@ -44,14 +45,15 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
         key: 'serviceType',
         humanizedKey: 'Include only datasets that support customization'
       })
+
       subscriptionsQueryTemp.serviceType = []
     }
   }
 
   const keysToFilter = [
-    // hasGranulesOrCwic is the default, so it should not be displayed
+    // `hasGranulesOrCwic` is the default, so it should not be displayed
     'hasGranulesOrCwic',
-    // options are derrived from a users query and should not be displayed
+    // `options` are derrived from a users query and should not be displayed
     'options',
     'consortium'
   ]

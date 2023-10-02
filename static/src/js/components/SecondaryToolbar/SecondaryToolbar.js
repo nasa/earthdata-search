@@ -126,8 +126,11 @@ class SecondaryToolbar extends Component {
 
     const { apiHost } = getEnvironmentConfig()
 
-    // remove focused collection from back button params
-    const params = parse(location.search, { parseArrays: false, ignoreQueryPrefix: true })
+    // Remove focused collection from back button params
+    const params = parse(location.search, {
+      parseArrays: false,
+      ignoreQueryPrefix: true
+    })
     let { p = '' } = params
     p = p.replace(/^[^!]*/, '')
 
@@ -143,10 +146,12 @@ class SecondaryToolbar extends Component {
         icon={FaArrowCircleLeft}
         label="Back to Search"
         dataTestId="back-to-search-button"
-        to={{
-          pathname: '/search',
-          search: newSearch
-        }}
+        to={
+          {
+            pathname: '/search',
+            search: newSearch
+          }
+        }
         updatePath
       >
         Back to Search
@@ -162,19 +167,22 @@ class SecondaryToolbar extends Component {
         bootstrapVariant="light"
         icon={FaArrowCircleLeft}
         label="Back to Project"
-        to={{
-          pathname: '/projects',
-          search: source
-        }}
+        to={
+          {
+            pathname: '/projects',
+            search: source
+          }
+        }
         updatePath
       >
         Back to Project
       </PortalLinkContainer>
     )
 
-    const buildProjectLink = (loggedIn) => {
-      if (!loggedIn) {
+    const buildProjectLink = (isLoggedIn) => {
+      if (!isLoggedIn) {
         const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
+
         return (
           <Button
             className="secondary-toolbar__project"
@@ -186,13 +194,16 @@ class SecondaryToolbar extends Component {
           </Button>
         )
       }
+
       return (
         <PortalLinkContainer
           type="button"
-          to={{
-            pathname: '/projects',
-            search: location.search
-          }}
+          to={
+            {
+              pathname: '/projects',
+              search: location.search
+            }
+          }
           className="secondary-toolbar__project"
           bootstrapVariant="light"
           label="View Project"
@@ -257,10 +268,12 @@ class SecondaryToolbar extends Component {
             </Dropdown.Item>
           </LinkContainer>
           <LinkContainer
-            to={{
-              pathname: '/downloads',
-              search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-            }}
+            to={
+              {
+                pathname: '/downloads',
+                search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+              }
+            }
           >
             <Dropdown.Item
               className="secondary-toolbar__downloads"
@@ -350,23 +363,13 @@ class SecondaryToolbar extends Component {
 
     return (
       <nav className="secondary-toolbar">
-        {
-          isPath(location.pathname, ['/projects']) && backToSearchLink
-        }
-        {
-          isDownloadPathWithId(location.pathname) && backToProjectLink
-        }
+        {isPath(location.pathname, ['/projects']) && backToSearchLink}
+        {isDownloadPathWithId(location.pathname) && backToProjectLink}
         <PortalFeatureContainer authentication>
           <>
-            {
-              showViewProjectLink && projectLink
-            }
-            {
-              showSaveProjectDropdown && saveProjectDropdown
-            }
-            {
-              !loggedIn ? loginLink : loggedInDropdown
-            }
+            {showViewProjectLink && projectLink}
+            {showSaveProjectDropdown && saveProjectDropdown}
+            {!loggedIn ? loginLink : loggedInDropdown}
           </>
         </PortalFeatureContainer>
       </nav>

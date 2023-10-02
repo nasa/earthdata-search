@@ -153,8 +153,8 @@ class SpatialDisplay extends Component {
     onRemoveSpatialFilter()
   }
 
-  onChangePointSearch(e) {
-    const { value = '' } = e.target
+  onChangePointSearch(event) {
+    const { value = '' } = event.target
 
     const trimmedValue = this.trimCoordinate(value)
     const point = transformSingleCoordinate(trimmedValue)
@@ -165,8 +165,8 @@ class SpatialDisplay extends Component {
     })
   }
 
-  onSubmitPointSearch(e) {
-    if (e.type === 'blur' || e.key === 'Enter') {
+  onSubmitPointSearch(event) {
+    if (event.type === 'blur' || event.key === 'Enter') {
       eventEmitter.emit('map.drawCancel')
 
       const { pointSearch, error } = this.state
@@ -188,17 +188,17 @@ class SpatialDisplay extends Component {
       }
     }
 
-    e.preventDefault()
+    event.preventDefault()
   }
 
-  onChangeBoundingBoxSearch(e) {
+  onChangeBoundingBoxSearch(event) {
     const { boundingBoxSearch } = this.state
     const [swPoint, nePoint] = boundingBoxSearch
 
     const {
       name,
       value = ''
-    } = e.target
+    } = event.target
 
     const trimmedValue = this.trimCoordinate(value)
     let newSearch
@@ -223,8 +223,8 @@ class SpatialDisplay extends Component {
     })
   }
 
-  onSubmitBoundingBoxSearch(e) {
-    if (e.type === 'blur' || e.key === 'Enter') {
+  onSubmitBoundingBoxSearch(event) {
+    if (event.type === 'blur' || event.key === 'Enter') {
       const { boundingBoxSearch, error } = this.state
       const { onChangeQuery } = this.props
 
@@ -247,14 +247,14 @@ class SpatialDisplay extends Component {
       }
     }
 
-    e.preventDefault()
+    event.preventDefault()
   }
 
-  onChangeCircleCenter(e) {
+  onChangeCircleCenter(event) {
     const { circleSearch } = this.state
     const [, radius] = circleSearch
 
-    const { value = '' } = e.target
+    const { value = '' } = event.target
 
     const trimmedValue = this.trimCoordinate(value)
     const newSearch = [trimmedValue, radius]
@@ -265,11 +265,11 @@ class SpatialDisplay extends Component {
     })
   }
 
-  onChangeCircleRadius(e) {
+  onChangeCircleRadius(event) {
     const { circleSearch } = this.state
     const [center] = circleSearch
 
-    const { value = '' } = e.target
+    const { value = '' } = event.target
 
     if (this.isValidRadius(value)) {
       const newSearch = [center, value]
@@ -281,8 +281,8 @@ class SpatialDisplay extends Component {
     }
   }
 
-  onSubmitCircleSearch(e) {
-    if (e.type === 'blur' || e.key === 'Enter') {
+  onSubmitCircleSearch(event) {
+    if (event.type === 'blur' || event.key === 'Enter') {
       const { circleSearch, error } = this.state
       const [center, radius] = circleSearch
       const { onChangeQuery } = this.props
@@ -306,7 +306,7 @@ class SpatialDisplay extends Component {
       }
     }
 
-    e.preventDefault()
+    event.preventDefault()
   }
 
   /**
@@ -360,6 +360,7 @@ class SpatialDisplay extends Component {
    */
   validateBoundingBoxCoordinates(boundingBox) {
     const [swPoint, nePoint] = boundingBox
+
     return this.validateCoordinate(swPoint) + this.validateCoordinate(nePoint)
   }
 
@@ -369,6 +370,7 @@ class SpatialDisplay extends Component {
    */
   validateCircleCoordinates(circle) {
     const [center] = circle
+
     return this.validateCoordinate(center)
   }
 
@@ -433,7 +435,7 @@ class SpatialDisplay extends Component {
     if (((shapefileError || shapefileLoading || shapefileLoaded || shapefileId)
       && !drawingNewLayer)
       || drawingNewLayer === 'shapefile') {
-      // if (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
+      // If (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
       // render the shapefile display
       entry = (
         <SpatialDisplayEntry>

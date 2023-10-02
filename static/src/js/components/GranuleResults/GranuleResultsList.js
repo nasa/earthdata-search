@@ -51,7 +51,14 @@ export const GranuleResultsList = ({
   visibleMiddleIndex
 }) => (
   <div className="granule-results-list">
-    <AutoSizer style={{ position: 'relative', height: '100%', width: '100%' }}>
+    <AutoSizer style={
+      {
+        position: 'relative',
+        height: '100%',
+        width: '100%'
+      }
+    }
+    >
       {
         ({ height, width }) => (
           <GranuleResultsListBody

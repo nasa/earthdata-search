@@ -159,10 +159,12 @@ describe('fetchAdminRetrieval', () => {
         type: SET_ADMIN_RETRIEVAL_LOADING,
         payload: id
       })
+
       expect(storeActions[1]).toEqual({
         type: SET_ADMIN_RETRIEVAL_LOADED,
         payload: id
       })
+
       expect(storeActions[2]).toEqual({
         type: SET_ADMIN_RETRIEVAL,
         payload: data
@@ -244,13 +246,16 @@ describe('fetchAdminRetrievals', () => {
       expect(storeActions[0]).toEqual({
         type: SET_ADMIN_RETRIEVALS_LOADING
       })
+
       expect(storeActions[1]).toEqual({
         type: SET_ADMIN_RETRIEVALS_LOADED
       })
+
       expect(storeActions[2]).toEqual({
         type: SET_ADMIN_RETRIEVALS_PAGINATION,
         payload: data.pagination
       })
+
       expect(storeActions[3]).toEqual({
         type: SET_ADMIN_RETRIEVALS,
         payload: data.results
@@ -343,7 +348,7 @@ describe('updateAdminRetrievalsSortKey', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(updateAdminRetrievalsSortKey(sortKey))
 
     // Is updateFeatureFacet called with the right payload
@@ -374,7 +379,7 @@ describe('updateAdminRetrievalsPageNum', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(updateAdminRetrievalsPageNum(pageNum))
 
     // Is updateFeatureFacet called with the right payload

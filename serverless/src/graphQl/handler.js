@@ -66,11 +66,11 @@ const graphQl = async (event, context) => {
       },
       body: JSON.stringify(responseData)
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

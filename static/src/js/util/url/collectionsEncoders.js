@@ -37,9 +37,9 @@ const decodedGranules = (key, granules) => {
   }
 
   if (keys.indexOf(key) > -1) {
-    const { [key]: decodedGranules } = granules
+    const { [key]: decodedGranulesValue } = granules
 
-    const granulesList = decodedGranules.split('!')
+    const granulesList = decodedGranulesValue.split('!')
     const provider = granulesList.pop()
     const granuleIds = granulesList.map((granuleId) => `G${granuleId}-${provider}`)
 
@@ -50,8 +50,8 @@ const decodedGranules = (key, granules) => {
   }
 
   if (keys.indexOf(`c${key}`) > -1) {
-    const { [`c${key}`]: decodedGranules } = granules
-    const granuleIds = decodedGranules.split('!')
+    const { [`c${key}`]: decodedGranulesValue } = granules
+    const granuleIds = decodedGranulesValue.split('!')
 
     result = {
       isOpenSearch: true,
@@ -236,7 +236,7 @@ export const encodeCollections = (props) => {
     allIds: projectIds = []
   } = projectCollections
 
-  // pParameter - focusedCollection!projectCollection1!projectCollection2
+  // `pParameter` - focusedCollection!projectCollection1!projectCollection2
   const pParameter = [
     focusedCollection,
     ...projectIds
@@ -249,7 +249,7 @@ export const encodeCollections = (props) => {
   // If there isn't a focusedCollection or any projectIds, we don't need to continue
   if (pParameter === '') return ''
 
-  // pgParameter - excluded granules and granule filters based on pParameter collections
+  // `pgParameter` - excluded granules and granule filters based on pParameter collections
   const pgParameter = []
 
   ids.forEach((collectionId, index) => {
@@ -279,7 +279,7 @@ export const encodeCollections = (props) => {
       selectedAccessMethod
     } = projectCollection
 
-    // excludedGranules
+    // `excludedGranules`
     let encodedExcludedGranules
     const excludedKey = isOpenSearch ? 'cx' : 'x'
 
@@ -324,7 +324,10 @@ export const encodeCollections = (props) => {
 
     // Add the granule encoded granule filters
     if (granuleQuery) {
-      pg = { ...pg, ...encodeGranuleFilters(granuleQuery) }
+      pg = {
+        ...pg,
+        ...encodeGranuleFilters(granuleQuery)
+      }
     }
 
     // Encode selected access method
@@ -532,7 +535,7 @@ export const decodeCollections = (params) => {
     }
   })
 
-  // if no decoded collections information exists, return undefined for collections
+  // If no decoded collections information exists, return undefined for collections
   if (projectIds.length > 0) {
     project = {
       collections: {

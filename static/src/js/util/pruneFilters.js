@@ -14,7 +14,7 @@ export const pruneFilters = (filters) => (
       if (filters[key]) {
         newObj[key] = filters[key]
       }
-    } else if (Object.values(filters[key]).some((key) => !!key)) {
+    } else if (Object.values(filters[key]).some((filterKey) => !!filterKey)) {
       // Otherwise, only add an object if it contains at least one truthy value
       newObj[key] = filters[key]
     }

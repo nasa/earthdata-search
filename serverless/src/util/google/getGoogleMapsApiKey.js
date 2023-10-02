@@ -16,9 +16,11 @@ export const getGoogleMapsApiKey = async (earthdataEnvironment) => {
     }
 
     if (process.env.NODE_ENV === 'development') {
-      const { googleMapsApiKey } = getSecretEarthdataConfig(earthdataEnvironment)
+      const {
+        googleMapsApiKey: googleMapsApiKeyValue
+      } = getSecretEarthdataConfig(earthdataEnvironment)
 
-      return googleMapsApiKey
+      return googleMapsApiKeyValue
     }
 
     // If not running in development mode fetch secrets from AWS

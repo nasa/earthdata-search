@@ -39,7 +39,7 @@ describe('cloudfrontToCloudwatch', () => {
 2020-04-02	13:54:30	IAD79-C2	10647	000.111.222.333	POST	test.cloudfront.net	/collections/json	200	https://example.com	Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_14_6)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/80.0.3987.149%20Safari/537.36	-	-	Miss	N0Pjfke7DKz2yOeFgIDlHiTyQMyEZm2NoHkuUgBPA4XCUkBd6RQ7aw==	test.cloudfront.net	https	662	6.308	-	TLSv1.2	ECDHE-RSA-AES128-GCM-SHA256	Miss	HTTP/2.0	-	-	18129	6.308	Miss	application/json	-	-	-
 `
 
-    // gzip the test file contents
+    // Gzip the test file contents
     const zippedFile = await gzip(Buffer.from(testFileContents))
 
     const consoleMock = jest.spyOn(console, 'log')

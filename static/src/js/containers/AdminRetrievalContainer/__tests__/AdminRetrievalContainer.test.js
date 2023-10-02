@@ -9,7 +9,11 @@ jest.mock('../../../components/AdminRetrieval/AdminRetrieval', () => jest.fn(({ 
 
 import actions from '../../../actions'
 import AdminRetrieval from '../../../components/AdminRetrieval/AdminRetrieval'
-import { AdminRetrievalContainer, mapDispatchToProps, mapStateToProps } from '../AdminRetrievalContainer'
+import {
+  AdminRetrievalContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../AdminRetrievalContainer'
 
 describe('mapDispatchToProps', () => {
   test('onFetchAdminRetrieval calls actions.fetchAdminRetrieval', () => {
@@ -78,6 +82,7 @@ describe('AdminRetrievalContainer component', () => {
       retrieval: undefined,
       onRequeueOrder: onRequeueOrderMock
     }, {})
+
     expect(AdminRetrieval).toHaveBeenCalledWith({
       retrieval: 'mock-retrieval',
       onRequeueOrder: onRequeueOrderMock

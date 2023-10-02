@@ -14,7 +14,10 @@ const mockInvalidBounds = {}
 
 const mockBoundsIsValid = jest.fn(() => true)
 
-const mockBoundsGetCenter = jest.fn(() => ({ lat: 77, lng: -86 }))
+const mockBoundsGetCenter = jest.fn(() => ({
+  lat: 77,
+  lng: -86
+}))
 
 const mockValidBounds = {
   isValid: mockBoundsIsValid,
@@ -45,7 +48,10 @@ describe('#panBoundsToCenter', () => {
       expect(mockBoundsGetCenter).toHaveBeenCalled()
       expect(mockBoundsGetCenter).toHaveBeenCalledWith()
       expect(mockMapFlyTo).toHaveBeenCalled()
-      expect(mockMapFlyTo).toHaveBeenCalledWith({ lat: 77, lng: -86 })
+      expect(mockMapFlyTo).toHaveBeenCalledWith({
+        lat: 77,
+        lng: -86
+      })
     })
   })
 })

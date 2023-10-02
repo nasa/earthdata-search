@@ -10,5 +10,6 @@ exports.up = (pgm) => {
       default: '{}'
     }
   })
+
   pgm.dropColumns('users', ['echo_preferences', 'echo_profile', 'echo_id'])
 }

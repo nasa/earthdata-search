@@ -11,8 +11,14 @@ const mockMap = {}
 const mockInvalidFeatureGroup = {}
 
 const mockGetBounds = jest.fn(() => ([
-  { lat: 77, lng: -86 },
-  { lat: 79, lng: -89 }
+  {
+    lat: 77,
+    lng: -86
+  },
+  {
+    lat: 79,
+    lng: -89
+  }
 ]))
 
 const mockValidFeatureGroup = {

@@ -7,11 +7,13 @@ const focusedCollectionReducer = (state = initialState, action = {}) => {
     case UPDATE_FOCUSED_COLLECTION: {
       return action.payload
     }
+
     case RESTORE_FROM_URL: {
       const { focusedCollection = '' } = action.payload
 
       return focusedCollection
     }
+
     default:
       return state
   }

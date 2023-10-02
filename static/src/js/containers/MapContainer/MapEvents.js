@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect } from 'react'
+import PropTypes from 'prop-types'
 import { useMap, useMapEvents } from 'react-leaflet'
 
 const MapEvents = (props) => {
@@ -32,8 +33,6 @@ const MapEvents = (props) => {
   }, [mapProps])
 
   const handleOverlayChange = (event) => {
-    const { onChangeMap } = props
-
     const enabled = event.type === 'overlayadd'
     switch (event.name) {
       case 'Borders and Roads *':
@@ -84,6 +83,22 @@ const MapEvents = (props) => {
   })
 
   return null
+}
+
+MapEvents.defaultProps = {
+  onChangeMap: null,
+  onMetricsMap: null
+}
+
+MapEvents.propTypes = {
+  mapProps: PropTypes.shape({
+    latitude: PropTypes.number,
+    longitude: PropTypes.number,
+    zoom: PropTypes.number
+  }).isRequired,
+  overlays: PropTypes.shape({}).isRequired,
+  onChangeMap: PropTypes.func,
+  onMetricsMap: PropTypes.func
 }
 
 export default MapEvents

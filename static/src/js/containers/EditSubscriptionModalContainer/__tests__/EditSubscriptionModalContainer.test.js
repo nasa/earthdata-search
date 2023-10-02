@@ -3,8 +3,14 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, EditSubscriptionModalContainer } from '../EditSubscriptionModalContainer'
-import { EditSubscriptionModal } from '../../../components/EditSubscriptionModal/EditSubscriptionModal'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  EditSubscriptionModalContainer
+} from '../EditSubscriptionModalContainer'
+import {
+  EditSubscriptionModal
+} from '../../../components/EditSubscriptionModal/EditSubscriptionModal'
 
 Enzyme.configure({ adapter: new Adapter() })
 

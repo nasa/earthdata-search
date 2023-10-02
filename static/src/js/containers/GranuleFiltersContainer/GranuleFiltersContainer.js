@@ -12,8 +12,7 @@ import handleFormSubmit from './handleFormSubmit'
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
-import GranuleFiltersForm
-  from '../../components/GranuleFilters/GranuleFiltersForm'
+import GranuleFiltersForm from '../../components/GranuleFilters/GranuleFiltersForm'
 
 export const mapStateToProps = (state) => ({
   collectionMetadata: getFocusedCollectionMetadata(state),

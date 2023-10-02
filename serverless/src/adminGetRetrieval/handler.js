@@ -23,7 +23,8 @@ const adminGetRetrieval = async (event, context) => {
     const dbConnection = await getDbConnection()
 
     const retrievalResponse = await dbConnection('retrievals')
-      .select('retrievals.id',
+      .select(
+        'retrievals.id',
         'retrievals.jsondata',
         'users.id as user_id',
         'users.urs_id as username',
@@ -38,7 +39,8 @@ const adminGetRetrieval = async (event, context) => {
         'retrieval_orders.order_number',
         'retrieval_orders.order_information',
         'retrieval_orders.type',
-        'users.urs_id')
+        'users.urs_id'
+      )
       .select(dbConnection.raw("retrieval_collections.collection_metadata -> 'title' as title"))
       .select(dbConnection.raw("retrieval_collections.collection_metadata -> 'data_center' as data_center"))
       .leftOuterJoin('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
@@ -121,11 +123,11 @@ const adminGetRetrieval = async (event, context) => {
       headers: defaultResponseHeaders,
       body: JSON.stringify(formattedResponse)
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

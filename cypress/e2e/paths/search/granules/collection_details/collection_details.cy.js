@@ -166,81 +166,89 @@ describe('Path /search/granules/collection-details', () => {
 
       cy.login()
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/collections'
-      },
-      (req) => {
-        expect(JSON.parse(req.body).params).to.eql({
-          consortium: [],
-          include_facets: 'v2',
-          include_granule_counts: true,
-          include_has_granules: true,
-          include_tags: 'edsc.*,opensearch.granule.osdd',
-          options: {},
-          page_num: 1,
-          page_size: 20,
-          service_type: [],
-          sort_key: [
-            '-usage_score'
-          ],
-          tag_key: []
-        })
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/collections'
+        },
+        (req) => {
+          expect(JSON.parse(req.body).params).to.eql({
+            consortium: [],
+            include_facets: 'v2',
+            include_granule_counts: true,
+            include_has_granules: true,
+            include_tags: 'edsc.*,opensearch.granule.osdd',
+            options: {},
+            page_num: 1,
+            page_size: 20,
+            service_type: [],
+            sort_key: [
+              '-usage_score'
+            ],
+            tag_key: []
+          })
 
-        req.reply({
-          body: collectionsBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
-
-      cy.intercept({
-        method: 'POST',
-        url: '**/granules'
-      },
-      (req) => {
-        expect(JSON.parse(req.body).params).to.eql({
-          concept_id: [],
-          echo_collection_id: 'C1240222820-ECHO_REST',
-          exclude: {},
-          options: {},
-          page_num: 1,
-          page_size: 20,
-          two_d_coordinate_system: {}
-        })
-
-        req.reply({
-          body: associatedDoisGranulesBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': granuleHits.toString()
-          }
-        })
-      })
-
-      cy.intercept({
-        method: 'POST',
-        url: '**/graphql'
-      },
-      (req) => {
-        if (JSON.parse(req.body).data.query === graphQlGetSubscriptionsQuery) {
-          req.alias = 'graphQlSubscriptionsQuery'
           req.reply({
-            body: getSubscriptionsGraphQlBody,
-            headers: graphQlHeaders
+            body: collectionsBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
           })
         }
+      )
 
-        if (JSON.parse(req.body).data.query === JSON.parse(graphQlGetCollection(conceptId)).query) {
-          req.alias = 'graphQlCollectionQuery'
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/granules'
+        },
+        (req) => {
+          expect(JSON.parse(req.body).params).to.eql({
+            concept_id: [],
+            echo_collection_id: 'C1240222820-ECHO_REST',
+            exclude: {},
+            options: {},
+            page_num: 1,
+            page_size: 20,
+            two_d_coordinate_system: {}
+          })
+
           req.reply({
-            body: assocatedDoisGraphQlBody,
-            headers: graphQlHeaders
+            body: associatedDoisGranulesBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': granuleHits.toString()
+            }
           })
         }
-      })
+      )
+
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/graphql'
+        },
+        (req) => {
+          if (JSON.parse(req.body).data.query === graphQlGetSubscriptionsQuery) {
+            req.alias = 'graphQlSubscriptionsQuery'
+            req.reply({
+              body: getSubscriptionsGraphQlBody,
+              headers: graphQlHeaders
+            })
+          }
+
+          if (
+            JSON.parse(req.body).data.query === JSON.parse(graphQlGetCollection(conceptId)).query
+          ) {
+            req.alias = 'graphQlCollectionQuery'
+            req.reply({
+              body: assocatedDoisGraphQlBody,
+              headers: graphQlHeaders
+            })
+          }
+        }
+      )
 
       cy.visit('/search/granules/collection-details?p=C1240222820-ECHO_REST&ee=uat&ac=true')
       cy.wait('@graphQlSubscriptionsQuery')
@@ -275,62 +283,70 @@ describe('Path /search/granules/collection-details', () => {
       const cmrHits = 8180
       const granuleHits = 6338
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/collections.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/collections.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-        req.reply({
-          body: collectionsBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: collectionsBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
 
-        req.reply({
-          body: reformattingsGranulesBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': granuleHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: reformattingsGranulesBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': granuleHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-        req.reply({
-          body: reformattingGraphQlBody,
-          headers: graphQlHeaders
-        })
-      })
+          req.reply({
+            body: reformattingGraphQlBody,
+            headers: graphQlHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/graphql'
-      },
-      (req) => {
-        expect(JSON.parse(req.body).data.query).to.eql(graphQlGetSubscriptionsQuery)
-        req.reply({
-          body: getSubscriptionsGraphQlBody,
-          headers: graphQlHeaders
-        })
-      })
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/graphql'
+        },
+        (req) => {
+          expect(JSON.parse(req.body).data.query).to.eql(graphQlGetSubscriptionsQuery)
+          req.reply({
+            body: getSubscriptionsGraphQlBody,
+            headers: graphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
 
@@ -389,62 +405,70 @@ describe('Path /search/granules/collection-details', () => {
       const cmrHits = 8180
       const granuleHits = 6338
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/collections.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/collections.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-        req.reply({
-          body: collectionsBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: collectionsBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/granules.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/granules.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
 
-        req.reply({
-          body: reformattingsGranulesBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': granuleHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: reformattingsGranulesBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': granuleHits.toString()
+            }
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/api'
-      },
-      (req) => {
-        expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/api'
+        },
+        (req) => {
+          expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
 
-        req.reply({
-          body: reformattingGraphQlBody,
-          headers: graphQlHeaders
-        })
-      })
+          req.reply({
+            body: reformattingGraphQlBody,
+            headers: graphQlHeaders
+          })
+        }
+      )
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/graphql'
-      },
-      (req) => {
-        expect(JSON.parse(req.body).data.query).to.eql(graphQlGetSubscriptionsQuery)
-        req.reply({
-          body: getSubscriptionsGraphQlBody,
-          headers: graphQlHeaders
-        })
-      })
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/graphql'
+        },
+        (req) => {
+          expect(JSON.parse(req.body).data.query).to.eql(graphQlGetSubscriptionsQuery)
+          req.reply({
+            body: getSubscriptionsGraphQlBody,
+            headers: graphQlHeaders
+          })
+        }
+      )
 
       cy.visit('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
 

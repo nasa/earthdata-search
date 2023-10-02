@@ -52,7 +52,7 @@ describe('processPartialShapefile', () => {
 
       expect(queries.length).toEqual(1)
 
-      expect(queries[0].method).toEqual('first') // shapefiles
+      expect(queries[0].method).toEqual('first') // Shapefiles
 
       expect(shapefile).toEqual('mock shapefile')
     })
@@ -94,8 +94,8 @@ describe('processPartialShapefile', () => {
 
         expect(queries.length).toEqual(2)
 
-        expect(queries[0].method).toEqual('first') // shapefiles
-        expect(queries[1].method).toEqual('first') // shapefiles (limited shapefile query)
+        expect(queries[0].method).toEqual('first') // Shapefiles
+        expect(queries[1].method).toEqual('first') // Shapefiles (limited shapefile query)
 
         expect(shapefile).toEqual('limited mock shapefile')
 
@@ -133,16 +133,16 @@ describe('processPartialShapefile', () => {
 
         expect(queries.length).toEqual(3)
 
-        expect(queries[0].method).toEqual('first') // shapefiles
-        expect(queries[1].method).toEqual('first') // shapefiles (limited shapefile query)
-        expect(queries[2].method).toEqual('insert') // save limited shapefile
+        expect(queries[0].method).toEqual('first') // Shapefiles
+        expect(queries[1].method).toEqual('first') // Shapefiles (limited shapefile query)
+        expect(queries[2].method).toEqual('insert') // Save limited shapefile
         expect(queries[2].bindings).toEqual([
-          'limited mock shapefile', // new file
-          '959220857ddbb3b2398ac31a58765df6', // file_hash
-          'Limited-MockFile.geojson', // filename
-          1084815579, // parent_shapefile_id
-          '["1"]', // selectedFeatures
-          1 // user_id
+          'limited mock shapefile', // New file
+          '959220857ddbb3b2398ac31a58765df6', // File_hash
+          'Limited-MockFile.geojson', // Filename
+          1084815579, // Parent_shapefile_id
+          '["1"]', // SelectedFeatures
+          1 // User_id
         ])
 
         expect(shapefile).toEqual('limited mock shapefile')

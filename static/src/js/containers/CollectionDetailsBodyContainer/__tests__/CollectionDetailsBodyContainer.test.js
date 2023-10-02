@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { CollectionDetailsBodyContainer, mapDispatchToProps, mapStateToProps } from '../CollectionDetailsBodyContainer'
+import {
+  CollectionDetailsBodyContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../CollectionDetailsBodyContainer'
 import CollectionDetailsBody from '../../../components/CollectionDetails/CollectionDetailsBody'
 
 // Mock react-leaflet because it causes errors

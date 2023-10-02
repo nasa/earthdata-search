@@ -19,11 +19,13 @@ beforeEach(() => {
   window.addEventListener = jest.fn((event, cb) => {
     windowEventMap[event] = cb
   })
+
   window.removeEventListener = jest.fn()
 
   document.addEventListener = jest.fn((event, cb) => {
     documentEventMap[event] = cb
   })
+
   document.removeEventListener = jest.fn()
 })
 

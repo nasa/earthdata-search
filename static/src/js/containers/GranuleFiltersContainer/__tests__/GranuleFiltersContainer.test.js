@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, GranuleFiltersContainer } from '../GranuleFiltersContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  GranuleFiltersContainer
+} from '../GranuleFiltersContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -134,6 +138,7 @@ describe('GranuleFiltersContainer component', () => {
       expect(granuleFiltersFormProps.portal).toEqual(props.portal)
       expect(granuleFiltersFormProps.excludedGranuleIds)
         .toEqual(props.granuleQuery.excludedGranuleIds)
+
       expect(granuleFiltersFormProps.onUndoExcludeGranule).toEqual(props.onUndoExcludeGranule)
     })
 

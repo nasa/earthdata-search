@@ -12,6 +12,7 @@ export const PanelSection = ({ children, isActive, isOpen }) => {
       'panel-section--is-active': isActive
     }
   ])
+
   return (
     <section className={className}>
       {children}

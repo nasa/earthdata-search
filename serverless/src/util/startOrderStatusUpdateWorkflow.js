@@ -23,7 +23,7 @@ export const startOrderStatusUpdateWorkflow = async (orderId, accessToken, order
     const response = await client.send(command)
 
     console.log(`State Machine Invocation (Order ID: ${orderId}): `, response)
-  } catch (e) {
-    parseError(e)
+  } catch (error) {
+    parseError(error)
   }
 }

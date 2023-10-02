@@ -7,7 +7,7 @@
 export const pick = (providedObj = {}, keys = []) => {
   let obj = null
 
-  // if `null` is provided the default parameter will not be
+  // If `null` is provided the default parameter will not be
   // set so we'll handle it manually
   if (providedObj == null) {
     obj = {}

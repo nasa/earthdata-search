@@ -12,6 +12,7 @@ jest.mock('../../../containers/SearchFormContainer/SearchFormContainer', () => j
     {children}
   </mock-SearchFormContainer>
 )))
+
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children }) => (
   <mock-PortalLinkContainer data-testid="PortalLinkContainer">
     {children}

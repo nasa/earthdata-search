@@ -50,6 +50,7 @@ describe('CollectionResultsList component', () => {
     enzymeWrapper.find('.collection-results-item__link').simulate('click', {
       stopPropagation: stopPropagationMock
     })
+
     expect(props.onViewCollectionGranules).toHaveBeenCalledTimes(1)
     expect(props.onViewCollectionGranules).toHaveBeenCalledWith('collectionId1')
     expect(stopPropagationMock).toHaveBeenCalledTimes(1)
@@ -107,6 +108,7 @@ describe('CollectionResultsList component', () => {
         key: 'A',
         stopPropagation: stopPropagationMock
       })
+
       expect(props.onViewCollectionGranules).toHaveBeenCalledTimes(0)
       expect(stopPropagationMock).toHaveBeenCalledTimes(1)
     })
@@ -118,6 +120,7 @@ describe('CollectionResultsList component', () => {
         key: 'Enter',
         stopPropagation: stopPropagationMock
       })
+
       expect(props.onViewCollectionGranules).toHaveBeenCalledTimes(1)
       expect(props.onViewCollectionGranules).toHaveBeenCalledWith('collectionId1')
       expect(stopPropagationMock).toHaveBeenCalledTimes(1)
@@ -128,10 +131,13 @@ describe('CollectionResultsList component', () => {
     const { enzymeWrapper } = setup()
     expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().src)
       .toEqual('http://some.test.com/thumbnail/url.jpg')
+
     expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().alt)
       .toEqual('Thumbnail for Test Collection')
+
     expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().height)
       .toEqual(85)
+
     expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().width)
       .toEqual(85)
   })
@@ -320,16 +326,6 @@ describe('CollectionResultsList component', () => {
       })
 
       describe('spatial subsetting icon', () => {
-        const { enzymeWrapper } = setup({
-          collectionMetadata: {
-            ...collectionListItemProps.collectionMetadata,
-            hasSpatialSubsetting: true
-          }
-        })
-        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
-        const featureItem = metaContainer.find('#feature-icon-list-view__customize')
-        expect(featureItem).toBeDefined()
-
         test('renders the metadata correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
@@ -346,16 +342,6 @@ describe('CollectionResultsList component', () => {
       })
 
       describe('variables icon', () => {
-        const { enzymeWrapper } = setup({
-          collectionMetadata: {
-            ...collectionListItemProps.collectionMetadata,
-            hasVariables: true
-          }
-        })
-        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
-        const featureItem = metaContainer.find('#feature-icon-list-view__customize')
-        expect(featureItem).toBeDefined()
-
         test('renders the metadata correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
@@ -373,16 +359,6 @@ describe('CollectionResultsList component', () => {
       })
 
       describe('transforms icon', () => {
-        const { enzymeWrapper } = setup({
-          collectionMetadata: {
-            ...collectionListItemProps.collectionMetadata,
-            hasTransforms: true
-          }
-        })
-        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
-        const featureItem = metaContainer.find('#feature-icon-list-view__customize')
-        expect(featureItem).toBeDefined()
-
         test('renders the metadata correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
@@ -400,16 +376,6 @@ describe('CollectionResultsList component', () => {
       })
 
       describe('formats icon', () => {
-        const { enzymeWrapper } = setup({
-          collectionMetadata: {
-            ...collectionListItemProps.collectionMetadata,
-            hasFormats: true
-          }
-        })
-        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
-        const featureItem = metaContainer.find('#feature-icon-list-view__customize')
-        expect(featureItem).toBeDefined()
-
         test('renders the metadata correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
@@ -427,16 +393,6 @@ describe('CollectionResultsList component', () => {
       })
 
       describe('temporal subsetting icon', () => {
-        const { enzymeWrapper } = setup({
-          collectionMetadata: {
-            ...collectionListItemProps.collectionMetadata,
-            hasTemporalSubsetting: true
-          }
-        })
-        const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
-        const featureItem = metaContainer.find('#feature-icon-list-view__customize')
-        expect(featureItem).toBeDefined()
-
         test('renders the metadata correctly', () => {
           const { enzymeWrapper } = setup({
             collectionMetadata: {
@@ -462,6 +418,7 @@ describe('CollectionResultsList component', () => {
       enzymeWrapper.find('.collection-results-item__action--collection-details').simulate('click', {
         stopPropagation: stopPropagationMock
       })
+
       expect(props.onViewCollectionDetails).toHaveBeenCalledTimes(1)
       expect(props.onViewCollectionDetails).toHaveBeenCalledWith('collectionId1')
       expect(stopPropagationMock).toHaveBeenCalledTimes(1)

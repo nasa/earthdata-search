@@ -7,6 +7,7 @@
  */
 export const isLinkType = (linkType, link = '') => {
   if (link.indexOf(`${linkType}#`) > -1) return true
+
   return false
 }
 

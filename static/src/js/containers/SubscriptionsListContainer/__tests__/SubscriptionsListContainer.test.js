@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, SubscriptionsListContainer } from '../SubscriptionsListContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  SubscriptionsListContainer
+} from '../SubscriptionsListContainer'
 import SubscriptionsList from '../../../components/SubscriptionsList/SubscriptionsList'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -111,6 +115,7 @@ describe('SubscriptionsListContainer component', () => {
       timerStart: null,
       loadTime: 1265
     })
+
     expect(typeof props.onFetchSubscriptions).toEqual('function')
   })
 })

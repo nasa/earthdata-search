@@ -17,6 +17,7 @@ export class EditSubscriptionModal extends Component {
       shouldUpdateQuery: false,
       isSubmitting: false
     }
+
     this.onModalClose = this.onModalClose.bind(this)
     this.onSubscriptionNameChange = this.onSubscriptionNameChange.bind(this)
     this.onUpdateQueryToggleChange = this.onUpdateQueryToggleChange.bind(this)
@@ -41,7 +42,7 @@ export class EditSubscriptionModal extends Component {
 
     if (subscriptionType === 'granule') {
       subscription = granuleSubscriptions.find(
-        (subscription) => subscription.conceptId === subscriptionConceptIdFromProps
+        (subscriptionObject) => subscriptionObject.conceptId === subscriptionConceptIdFromProps
       )
     } else {
       const { byId: subscriptionsById } = subscriptions
@@ -61,18 +62,21 @@ export class EditSubscriptionModal extends Component {
     this.setState({
       isSubmitting: true
     })
+
     await onUpdateSubscription({
       subscription,
       shouldUpdateQuery
     })
+
     this.setState({
       isSubmitting: false
     })
+
     this.onModalClose()
   }
 
-  onSubscriptionNameChange(e) {
-    const { target } = e
+  onSubscriptionNameChange(event) {
+    const { target } = event
     const { value } = target
 
     this.setState((state) => (
@@ -86,8 +90,8 @@ export class EditSubscriptionModal extends Component {
     ))
   }
 
-  onUpdateQueryToggleChange(e) {
-    const { target } = e
+  onUpdateQueryToggleChange(event) {
+    const { target } = event
     const { checked } = target
     this.setState({
       shouldUpdateQuery: checked
@@ -126,9 +130,11 @@ export class EditSubscriptionModal extends Component {
             id="update-subscription-name"
             type="text"
             value={name}
-            onChange={(e) => {
-              this.onSubscriptionNameChange(e)
-            }}
+            onChange={
+              (event) => {
+                this.onSubscriptionNameChange(event)
+              }
+            }
             onBlur={this.onSubscriptionNameChange}
             onKeyUp={this.onSubscriptionNameChange}
           />

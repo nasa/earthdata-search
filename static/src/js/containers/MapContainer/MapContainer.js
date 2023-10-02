@@ -6,7 +6,11 @@ import React, {
 } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { difference, isEqual, merge } from 'lodash'
+import {
+  difference,
+  isEqual,
+  merge
+} from 'lodash'
 import 'proj4leaflet'
 import LRUCache from 'lrucache'
 
@@ -108,11 +112,11 @@ export const MapContainer = (props) => {
     latitude,
     longitude,
     overlays,
-    projection: defaultProjection,
+    projection: propsProjection,
     zoom: zoomProps
   } = map
 
-  const [projection, setProjection] = useState(defaultProjection)
+  const [projection, setProjection] = useState(propsProjection)
   const [center, setCenter] = useState([latitude, longitude])
   const [zoom, setZoom] = useState(zoomProps)
 
@@ -150,16 +154,16 @@ export const MapContainer = (props) => {
     )
 
     const {
-      latitude,
-      longitude,
+      latitude: defaultLatitude,
+      longitude: defaultLongitude,
       projection: defaultProjection,
-      zoom
+      zoom: defaultZoom
     } = mapWithDefaults
 
     if (isEqual(map, mapWithDefaults)) return
 
-    setCenter([latitude, longitude])
-    setZoom(zoom)
+    setCenter([defaultLatitude, defaultLongitude])
+    setZoom(defaultZoom)
     setProjection(defaultProjection)
 
     setMap(mapWithDefaults)
@@ -176,6 +180,7 @@ export const MapContainer = (props) => {
     if (isOpenSearch) {
       granuleIds = allGranuleIds.filter((id) => {
         const hashedId = murmurhash3(id).toString()
+
         return excludedGranuleIds.indexOf(hashedId) === -1
       })
     } else {
@@ -188,39 +193,43 @@ export const MapContainer = (props) => {
     })
   }
 
-  const handleProjectionSwitching = useCallback((projection) => {
-    const { onChangeMap, onMetricsMap } = props
+  const handleProjectionSwitching = useCallback((newProjection) => {
+    const {
+      onChangeMap: callbackOnChangeMap,
+      onMetricsMap: callbackOnMetricsMap
+    } = props
 
     const Projection = Object.keys(projections).find(((key) => (
-      projections[key] === projection
+      projections[key] === newProjection
     )))
 
-    let latitude = 0
-    const longitude = 0
-    let zoom = 2
+    let newLatitude = 0
+    const newLongitude = 0
+    let newZoom = 2
 
-    if (projection === projections.arctic) {
-      latitude = 90
-      zoom = 0
+    if (newProjection === projections.arctic) {
+      newLatitude = 90
+      newZoom = 0
     }
 
-    if (projection === projections.antarctic) {
-      latitude = -90
-      zoom = 0
-    }
-    const map = {
-      latitude,
-      longitude,
-      projection,
-      zoom
+    if (newProjection === projections.antarctic) {
+      newLatitude = -90
+      newZoom = 0
     }
 
-    setCenter([latitude, longitude])
-    setZoom(zoom)
-    setProjection(projection)
+    const newMap = {
+      latitude: newLatitude,
+      longitude: newLongitude,
+      projection: newProjection,
+      zoom: newZoom
+    }
 
-    onMetricsMap(`Set Projection: ${Projection}`)
-    onChangeMap({ ...map })
+    setCenter([newLatitude, newLongitude])
+    setZoom(newZoom)
+    setProjection(newProjection)
+
+    callbackOnMetricsMap(`Set Projection: ${Projection}`)
+    callbackOnChangeMap({ ...newMap })
   }, [projection])
 
   // Projection switching in leaflet is not supported. Here we render MapWrapper with a key of the projection prop.

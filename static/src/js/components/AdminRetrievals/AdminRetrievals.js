@@ -15,16 +15,18 @@ export const AdminRetrievals = ({
 }) => (
   <AdminPage
     pageTitle="Retrievals"
-    breadcrumbs={[
-      {
-        name: 'Admin',
-        href: '/admin'
-      },
-      {
-        name: 'Retrievals',
-        active: true
-      }
-    ]}
+    breadcrumbs={
+      [
+        {
+          name: 'Admin',
+          href: '/admin'
+        },
+        {
+          name: 'Retrievals',
+          active: true
+        }
+      ]
+    }
   >
     <Row className="justify-content-end mb-2">
       <Col sm="auto">

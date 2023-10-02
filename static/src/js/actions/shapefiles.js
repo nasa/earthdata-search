@@ -46,11 +46,15 @@ export const saveShapefile = (data) => (dispatch, getState) => {
     file
   } = data
 
-  dispatch(updateShapefile({ file, shapefileName, shapefileSize }))
+  dispatch(updateShapefile({
+    file,
+    shapefileName,
+    shapefileSize
+  }))
 
   const response = requestObject.save(data)
-    .then((response) => {
-      const { shapefile_id: shapefileId } = response.data
+    .then((responseObject) => {
+      const { shapefile_id: shapefileId } = responseObject.data
 
       dispatch(updateShapefile({ shapefileId }))
     })
@@ -86,8 +90,8 @@ export const fetchShapefile = (shapefileId) => (dispatch, getState) => {
   const requestObject = new ShapefileRequest(earthdataEnvironment)
 
   const response = requestObject.fetch(shapefileId)
-    .then((response) => {
-      dispatch(updateShapefile(response.data))
+    .then((responseObject) => {
+      dispatch(updateShapefile(responseObject.data))
     })
     .catch((error) => {
       dispatch(handleError({

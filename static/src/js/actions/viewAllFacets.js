@@ -73,23 +73,24 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
   dispatch(onViewAllFacetsLoading(category))
   dispatch(toggleFacetsModal(true))
 
-  // onViewAllFacetsLoading changes the state, use getState() again here to ensure the
+  // `onViewAllFacetsLoading` changes the state, use getState() again here to ensure the
   // collection request has the updated state
   const collectionParams = prepareCollectionParams(getState())
 
   const requestObject = new CollectionRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.search(buildCollectionSearchParams(collectionParams))
-    .then((response) => {
+    .then((searchResponse) => {
       const payload = {}
 
       payload.selectedCategory = category
-      payload.facets = response.data.feed.facets.children || []
-      payload.hits = parseInt(response.headers['cmr-hits'], 10)
+      payload.facets = searchResponse.data.feed.facets.children || []
+      payload.hits = parseInt(searchResponse.headers['cmr-hits'], 10)
 
       dispatch(onViewAllFacetsLoaded({
         loaded: true
       }))
+
       dispatch(updateViewAllFacets(payload))
     })
     .catch((error) => {

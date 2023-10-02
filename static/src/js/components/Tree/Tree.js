@@ -1,5 +1,8 @@
 import React, {
-  useState, useRef, useEffect, useCallback
+  useState,
+  useRef,
+  useEffect,
+  useCallback
 } from 'react'
 import PropTypes from 'prop-types'
 import { isEqual } from 'lodash'
@@ -75,7 +78,7 @@ export const Tree = ({
   }
 
   /**
-   * onChange callback from TreeItem, update the form model
+   * `onChange` callback from TreeItem, update the form model
    */
   const onChange = () => {
     updateSelectedVariables()

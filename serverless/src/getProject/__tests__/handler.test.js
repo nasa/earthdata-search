@@ -55,7 +55,10 @@ describe('getProject', () => {
 
     const result = await getProject(event, {})
 
-    const expectedBody = JSON.stringify({ name, path })
+    const expectedBody = JSON.stringify({
+      name,
+      path
+    })
 
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('first')

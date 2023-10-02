@@ -9,10 +9,7 @@ import {
   getTimeline,
   changeTimelineQuery
 } from '../timeline'
-import {
-  UPDATE_TIMELINE_INTERVALS,
-  UPDATE_TIMELINE_QUERY
-} from '../../constants/actionTypes'
+import { UPDATE_TIMELINE_INTERVALS, UPDATE_TIMELINE_QUERY } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
@@ -57,7 +54,7 @@ describe('getTimeline', () => {
         ]
       }])
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: '',
       browser: {
@@ -84,7 +81,7 @@ describe('getTimeline', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(getTimeline()).then(() => {
       // Is updateTimelineIntervals called with the right payload
       const storeActions = store.getActions()
@@ -123,7 +120,7 @@ describe('getTimeline', () => {
         'jwt-token': 'token'
       })
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: 'token',
       browser: {
@@ -150,7 +147,7 @@ describe('getTimeline', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(getTimeline()).then(() => {
       // Is updateTimelineIntervals called with the right payload
       const storeActions = store.getActions()
@@ -249,7 +246,7 @@ describe('changeTimelineQuery', () => {
       interval: 'day'
     }
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       browser: {
         name: 'browser name'
@@ -260,11 +257,11 @@ describe('changeTimelineQuery', () => {
       }
     })
 
-    // mock getTimeline
+    // Mock getTimeline
     const getTimelineMock = jest.spyOn(actions, 'getTimeline')
     getTimelineMock.mockImplementation(() => jest.fn())
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(changeTimelineQuery({ newQuery }))
 
     const storeActions = store.getActions()
@@ -275,7 +272,7 @@ describe('changeTimelineQuery', () => {
       }
     })
 
-    // was getTimeline called
+    // Was getTimeline called
     expect(getTimelineMock).toHaveBeenCalledTimes(1)
   })
 })

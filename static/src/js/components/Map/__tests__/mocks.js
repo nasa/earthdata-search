@@ -1332,7 +1332,34 @@ export const updateProps = {
 }
 
 export const pathsWithHolesResult = [[{
-  poly: [{ x: -144, y: 18 }, { x: -153, y: 18 }, { x: -162, y: 18 }, { x: -161, y: 9 }, { x: -160, y: 0 }, { x: -151, y: 0 }, { x: -142, y: 0 }, { x: -143, y: 9 }, { x: -144, y: 18 }],
+  poly: [{
+    x: -144,
+    y: 18
+  }, {
+    x: -153,
+    y: 18
+  }, {
+    x: -162,
+    y: 18
+  }, {
+    x: -161,
+    y: 9
+  }, {
+    x: -160,
+    y: 0
+  }, {
+    x: -151,
+    y: 0
+  }, {
+    x: -142,
+    y: 0
+  }, {
+    x: -143,
+    y: 9
+  }, {
+    x: -144,
+    y: 18
+  }],
   index: 0,
   url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
@@ -1354,35 +1381,85 @@ export const pathsWithHolesResult = [[{
     collectionConceptId: 'C194001241-LPDAAC_ECS',
     onlineAccessFlag: true,
     links: [{
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', type: 'application/x-hdfeos', title: 'MOD13Q1.A2020273.h09v09.006.2020291073948.hdf. MimeType: application/x-hdfeos', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h09v09.006.2020291073948.hdf'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      type: 'application/x-hdfeos',
+      title: 'MOD13Q1.A2020273.h09v09.006.2020291073948.hdf. MimeType: application/x-hdfeos',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h09v09.006.2020291073948.hdf'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', type: 'text/html', title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)', hreflang: 'en-US', href: 'https://opendap.cr.usgs.gov/opendap/hyrax//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h09v09.006.2020291073948.hdf'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      type: 'text/html',
+      title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
+      hreflang: 'en-US',
+      href: 'https://opendap.cr.usgs.gov/opendap/hyrax//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h09v09.006.2020291073948.hdf'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#', type: 'image/jpeg', title: 'This Browse file may be downloaded directly from this link (BROWSE)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h09v09.006.2020291073948.1.jpg'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+      type: 'image/jpeg',
+      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h09v09.006.2020291073948.1.jpg'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#', type: 'image/jpeg', title: 'This Browse file may be downloaded directly from this link (BROWSE)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h09v09.006.2020291073948.2.jpg'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+      type: 'image/jpeg',
+      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h09v09.006.2020291073948.2.jpg'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', type: 'text/xml', title: 'This Metadata file may be downloaded directly from this link (EXTENDED METADATA)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h09v09.006.2020291073948.hdf.xml'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      type: 'text/xml',
+      title: 'This Metadata file may be downloaded directly from this link (EXTENDED METADATA)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h09v09.006.2020291073948.hdf.xml'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://doi.org/10.5067/MODIS/MOD13Q1.006'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://doi.org/10.5067/MODIS/MOD13Q1.006'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov/MOLT/MOD13Q1.006/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov/MOLT/MOD13Q1.006/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'http://earthexplorer.usgs.gov/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'http://earthexplorer.usgs.gov/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://search.earthdata.nasa.gov/search?q=C194001241-LPDAAC_ECS'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://search.earthdata.nasa.gov/search?q=C194001241-LPDAAC_ECS'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.006/contents.html'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.006/contents.html'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/documents/103/MOD13_User_Guide_V6.pdf'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/documents/103/MOD13_User_Guide_V6.pdf'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/documents/104/MOD13_ATBD.pdf'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/documents/104/MOD13_ATBD.pdf'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MOD13Q1'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MOD13Q1'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
     }],
     isOpenSearch: false,
     formattedTemporal: ['2020-09-29 00:00:00', '2020-10-14 23:59:59'],
@@ -1390,7 +1467,34 @@ export const pathsWithHolesResult = [[{
     browseUrl: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h09v09.006.2020291073948.1.jpg'
   }
 }], [{
-  poly: [{ x: -162, y: 18 }, { x: -171, y: 18 }, { x: -181, y: 18 }, { x: -179, y: 9 }, { x: -178, y: 0 }, { x: -169, y: 0 }, { x: -159, y: 0 }, { x: -161, y: 9 }, { x: -162, y: 18 }],
+  poly: [{
+    x: -162,
+    y: 18
+  }, {
+    x: -171,
+    y: 18
+  }, {
+    x: -181,
+    y: 18
+  }, {
+    x: -179,
+    y: 9
+  }, {
+    x: -178,
+    y: 0
+  }, {
+    x: -169,
+    y: 0
+  }, {
+    x: -159,
+    y: 0
+  }, {
+    x: -161,
+    y: 9
+  }, {
+    x: -162,
+    y: 18
+  }],
   index: 1,
   url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
@@ -1412,35 +1516,85 @@ export const pathsWithHolesResult = [[{
     collectionConceptId: 'C194001241-LPDAAC_ECS',
     onlineAccessFlag: true,
     links: [{
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', type: 'application/x-hdfeos', title: 'MOD13Q1.A2020273.h08v09.006.2020291074020.hdf. MimeType: application/x-hdfeos', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v09.006.2020291074020.hdf'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      type: 'application/x-hdfeos',
+      title: 'MOD13Q1.A2020273.h08v09.006.2020291074020.hdf. MimeType: application/x-hdfeos',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v09.006.2020291074020.hdf'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', type: 'text/html', title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)', hreflang: 'en-US', href: 'https://opendap.cr.usgs.gov/opendap/hyrax//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v09.006.2020291074020.hdf'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      type: 'text/html',
+      title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
+      hreflang: 'en-US',
+      href: 'https://opendap.cr.usgs.gov/opendap/hyrax//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v09.006.2020291074020.hdf'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#', type: 'image/jpeg', title: 'This Browse file may be downloaded directly from this link (BROWSE)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v09.006.2020291074020.1.jpg'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+      type: 'image/jpeg',
+      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v09.006.2020291074020.1.jpg'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#', type: 'image/jpeg', title: 'This Browse file may be downloaded directly from this link (BROWSE)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v09.006.2020291074020.2.jpg'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+      type: 'image/jpeg',
+      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v09.006.2020291074020.2.jpg'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', type: 'text/xml', title: 'This Metadata file may be downloaded directly from this link (EXTENDED METADATA)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v09.006.2020291074020.hdf.xml'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      type: 'text/xml',
+      title: 'This Metadata file may be downloaded directly from this link (EXTENDED METADATA)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v09.006.2020291074020.hdf.xml'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://doi.org/10.5067/MODIS/MOD13Q1.006'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://doi.org/10.5067/MODIS/MOD13Q1.006'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov/MOLT/MOD13Q1.006/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov/MOLT/MOD13Q1.006/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'http://earthexplorer.usgs.gov/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'http://earthexplorer.usgs.gov/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://search.earthdata.nasa.gov/search?q=C194001241-LPDAAC_ECS'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://search.earthdata.nasa.gov/search?q=C194001241-LPDAAC_ECS'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.006/contents.html'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.006/contents.html'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/documents/103/MOD13_User_Guide_V6.pdf'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/documents/103/MOD13_User_Guide_V6.pdf'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/documents/104/MOD13_ATBD.pdf'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/documents/104/MOD13_ATBD.pdf'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MOD13Q1'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MOD13Q1'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
     }],
     isOpenSearch: false,
     formattedTemporal: ['2020-09-29 00:00:00', '2020-10-14 23:59:59'],
@@ -1448,7 +1602,34 @@ export const pathsWithHolesResult = [[{
     browseUrl: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v09.006.2020291074020.1.jpg'
   }
 }], [{
-  poly: [{ x: -159, y: 0 }, { x: -169, y: 0 }, { x: -178, y: 0 }, { x: -179, y: -9 }, { x: -181, y: -18 }, { x: -171, y: -18 }, { x: -162, y: -18 }, { x: -161, y: -9 }, { x: -159, y: 0 }],
+  poly: [{
+    x: -159,
+    y: 0
+  }, {
+    x: -169,
+    y: 0
+  }, {
+    x: -178,
+    y: 0
+  }, {
+    x: -179,
+    y: -9
+  }, {
+    x: -181,
+    y: -18
+  }, {
+    x: -171,
+    y: -18
+  }, {
+    x: -162,
+    y: -18
+  }, {
+    x: -161,
+    y: -9
+  }, {
+    x: -159,
+    y: 0
+  }],
   index: 2,
   url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
@@ -1470,35 +1651,85 @@ export const pathsWithHolesResult = [[{
     collectionConceptId: 'C194001241-LPDAAC_ECS',
     onlineAccessFlag: true,
     links: [{
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', type: 'application/x-hdfeos', title: 'MOD13Q1.A2020273.h08v08.006.2020291074011.hdf. MimeType: application/x-hdfeos', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v08.006.2020291074011.hdf'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      type: 'application/x-hdfeos',
+      title: 'MOD13Q1.A2020273.h08v08.006.2020291074011.hdf. MimeType: application/x-hdfeos',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v08.006.2020291074011.hdf'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', type: 'text/html', title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)', hreflang: 'en-US', href: 'https://opendap.cr.usgs.gov/opendap/hyrax//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v08.006.2020291074011.hdf'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      type: 'text/html',
+      title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
+      hreflang: 'en-US',
+      href: 'https://opendap.cr.usgs.gov/opendap/hyrax//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v08.006.2020291074011.hdf'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#', type: 'image/jpeg', title: 'This Browse file may be downloaded directly from this link (BROWSE)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v08.006.2020291074011.1.jpg'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+      type: 'image/jpeg',
+      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v08.006.2020291074011.1.jpg'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#', type: 'image/jpeg', title: 'This Browse file may be downloaded directly from this link (BROWSE)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v08.006.2020291074011.2.jpg'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+      type: 'image/jpeg',
+      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v08.006.2020291074011.2.jpg'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', type: 'text/xml', title: 'This Metadata file may be downloaded directly from this link (EXTENDED METADATA)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v08.006.2020291074011.hdf.xml'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      type: 'text/xml',
+      title: 'This Metadata file may be downloaded directly from this link (EXTENDED METADATA)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v08.006.2020291074011.hdf.xml'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://doi.org/10.5067/MODIS/MOD13Q1.006'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://doi.org/10.5067/MODIS/MOD13Q1.006'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov/MOLT/MOD13Q1.006/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov/MOLT/MOD13Q1.006/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'http://earthexplorer.usgs.gov/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'http://earthexplorer.usgs.gov/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://search.earthdata.nasa.gov/search?q=C194001241-LPDAAC_ECS'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://search.earthdata.nasa.gov/search?q=C194001241-LPDAAC_ECS'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.006/contents.html'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.006/contents.html'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/documents/103/MOD13_User_Guide_V6.pdf'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/documents/103/MOD13_User_Guide_V6.pdf'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/documents/104/MOD13_ATBD.pdf'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/documents/104/MOD13_ATBD.pdf'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MOD13Q1'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MOD13Q1'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
     }],
     isOpenSearch: false,
     formattedTemporal: ['2020-09-29 00:00:00', '2020-10-14 23:59:59'],
@@ -1508,7 +1739,34 @@ export const pathsWithHolesResult = [[{
 }]]
 
 export const pathsResult = [{
-  poly: [{ x: -144, y: 18 }, { x: -153, y: 18 }, { x: -162, y: 18 }, { x: -161, y: 9 }, { x: -160, y: 0 }, { x: -151, y: 0 }, { x: -142, y: 0 }, { x: -143, y: 9 }, { x: -144, y: 18 }],
+  poly: [{
+    x: -144,
+    y: 18
+  }, {
+    x: -153,
+    y: 18
+  }, {
+    x: -162,
+    y: 18
+  }, {
+    x: -161,
+    y: 9
+  }, {
+    x: -160,
+    y: 0
+  }, {
+    x: -151,
+    y: 0
+  }, {
+    x: -142,
+    y: 0
+  }, {
+    x: -143,
+    y: 9
+  }, {
+    x: -144,
+    y: 18
+  }],
   index: 0,
   url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
@@ -1530,35 +1788,85 @@ export const pathsResult = [{
     collectionConceptId: 'C194001241-LPDAAC_ECS',
     onlineAccessFlag: true,
     links: [{
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', type: 'application/x-hdfeos', title: 'MOD13Q1.A2020273.h09v09.006.2020291073948.hdf. MimeType: application/x-hdfeos', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h09v09.006.2020291073948.hdf'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      type: 'application/x-hdfeos',
+      title: 'MOD13Q1.A2020273.h09v09.006.2020291073948.hdf. MimeType: application/x-hdfeos',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h09v09.006.2020291073948.hdf'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', type: 'text/html', title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)', hreflang: 'en-US', href: 'https://opendap.cr.usgs.gov/opendap/hyrax//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h09v09.006.2020291073948.hdf'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      type: 'text/html',
+      title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
+      hreflang: 'en-US',
+      href: 'https://opendap.cr.usgs.gov/opendap/hyrax//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h09v09.006.2020291073948.hdf'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#', type: 'image/jpeg', title: 'This Browse file may be downloaded directly from this link (BROWSE)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h09v09.006.2020291073948.1.jpg'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+      type: 'image/jpeg',
+      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h09v09.006.2020291073948.1.jpg'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#', type: 'image/jpeg', title: 'This Browse file may be downloaded directly from this link (BROWSE)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h09v09.006.2020291073948.2.jpg'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+      type: 'image/jpeg',
+      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h09v09.006.2020291073948.2.jpg'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', type: 'text/xml', title: 'This Metadata file may be downloaded directly from this link (EXTENDED METADATA)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h09v09.006.2020291073948.hdf.xml'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      type: 'text/xml',
+      title: 'This Metadata file may be downloaded directly from this link (EXTENDED METADATA)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h09v09.006.2020291073948.hdf.xml'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://doi.org/10.5067/MODIS/MOD13Q1.006'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://doi.org/10.5067/MODIS/MOD13Q1.006'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov/MOLT/MOD13Q1.006/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov/MOLT/MOD13Q1.006/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'http://earthexplorer.usgs.gov/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'http://earthexplorer.usgs.gov/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://search.earthdata.nasa.gov/search?q=C194001241-LPDAAC_ECS'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://search.earthdata.nasa.gov/search?q=C194001241-LPDAAC_ECS'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.006/contents.html'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.006/contents.html'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/documents/103/MOD13_User_Guide_V6.pdf'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/documents/103/MOD13_User_Guide_V6.pdf'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/documents/104/MOD13_ATBD.pdf'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/documents/104/MOD13_ATBD.pdf'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MOD13Q1'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MOD13Q1'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
     }],
     isOpenSearch: false,
     formattedTemporal: ['2020-09-29 00:00:00', '2020-10-14 23:59:59'],
@@ -1566,7 +1874,34 @@ export const pathsResult = [{
     browseUrl: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h09v09.006.2020291073948.1.jpg'
   }
 }, {
-  poly: [{ x: -162, y: 18 }, { x: -171, y: 18 }, { x: -181, y: 18 }, { x: -179, y: 9 }, { x: -178, y: 0 }, { x: -169, y: 0 }, { x: -159, y: 0 }, { x: -161, y: 9 }, { x: -162, y: 18 }],
+  poly: [{
+    x: -162,
+    y: 18
+  }, {
+    x: -171,
+    y: 18
+  }, {
+    x: -181,
+    y: 18
+  }, {
+    x: -179,
+    y: 9
+  }, {
+    x: -178,
+    y: 0
+  }, {
+    x: -169,
+    y: 0
+  }, {
+    x: -159,
+    y: 0
+  }, {
+    x: -161,
+    y: 9
+  }, {
+    x: -162,
+    y: 18
+  }],
   index: 1,
   url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
@@ -1588,35 +1923,85 @@ export const pathsResult = [{
     collectionConceptId: 'C194001241-LPDAAC_ECS',
     onlineAccessFlag: true,
     links: [{
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', type: 'application/x-hdfeos', title: 'MOD13Q1.A2020273.h08v09.006.2020291074020.hdf. MimeType: application/x-hdfeos', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v09.006.2020291074020.hdf'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      type: 'application/x-hdfeos',
+      title: 'MOD13Q1.A2020273.h08v09.006.2020291074020.hdf. MimeType: application/x-hdfeos',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v09.006.2020291074020.hdf'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', type: 'text/html', title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)', hreflang: 'en-US', href: 'https://opendap.cr.usgs.gov/opendap/hyrax//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v09.006.2020291074020.hdf'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      type: 'text/html',
+      title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
+      hreflang: 'en-US',
+      href: 'https://opendap.cr.usgs.gov/opendap/hyrax//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v09.006.2020291074020.hdf'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#', type: 'image/jpeg', title: 'This Browse file may be downloaded directly from this link (BROWSE)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v09.006.2020291074020.1.jpg'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+      type: 'image/jpeg',
+      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v09.006.2020291074020.1.jpg'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#', type: 'image/jpeg', title: 'This Browse file may be downloaded directly from this link (BROWSE)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v09.006.2020291074020.2.jpg'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+      type: 'image/jpeg',
+      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v09.006.2020291074020.2.jpg'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', type: 'text/xml', title: 'This Metadata file may be downloaded directly from this link (EXTENDED METADATA)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v09.006.2020291074020.hdf.xml'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      type: 'text/xml',
+      title: 'This Metadata file may be downloaded directly from this link (EXTENDED METADATA)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v09.006.2020291074020.hdf.xml'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://doi.org/10.5067/MODIS/MOD13Q1.006'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://doi.org/10.5067/MODIS/MOD13Q1.006'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov/MOLT/MOD13Q1.006/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov/MOLT/MOD13Q1.006/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'http://earthexplorer.usgs.gov/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'http://earthexplorer.usgs.gov/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://search.earthdata.nasa.gov/search?q=C194001241-LPDAAC_ECS'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://search.earthdata.nasa.gov/search?q=C194001241-LPDAAC_ECS'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.006/contents.html'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.006/contents.html'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/documents/103/MOD13_User_Guide_V6.pdf'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/documents/103/MOD13_User_Guide_V6.pdf'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/documents/104/MOD13_ATBD.pdf'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/documents/104/MOD13_ATBD.pdf'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MOD13Q1'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MOD13Q1'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
     }],
     isOpenSearch: false,
     formattedTemporal: ['2020-09-29 00:00:00', '2020-10-14 23:59:59'],
@@ -1624,7 +2009,34 @@ export const pathsResult = [{
     browseUrl: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v09.006.2020291074020.1.jpg'
   }
 }, {
-  poly: [{ x: -159, y: 0 }, { x: -169, y: 0 }, { x: -178, y: 0 }, { x: -179, y: -9 }, { x: -181, y: -18 }, { x: -171, y: -18 }, { x: -162, y: -18 }, { x: -161, y: -9 }, { x: -159, y: 0 }],
+  poly: [{
+    x: -159,
+    y: 0
+  }, {
+    x: -169,
+    y: 0
+  }, {
+    x: -178,
+    y: 0
+  }, {
+    x: -179,
+    y: -9
+  }, {
+    x: -181,
+    y: -18
+  }, {
+    x: -171,
+    y: -18
+  }, {
+    x: -162,
+    y: -18
+  }, {
+    x: -161,
+    y: -9
+  }, {
+    x: -159,
+    y: 0
+  }],
   index: 2,
   url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
@@ -1646,35 +2058,85 @@ export const pathsResult = [{
     collectionConceptId: 'C194001241-LPDAAC_ECS',
     onlineAccessFlag: true,
     links: [{
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', type: 'application/x-hdfeos', title: 'MOD13Q1.A2020273.h08v08.006.2020291074011.hdf. MimeType: application/x-hdfeos', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v08.006.2020291074011.hdf'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      type: 'application/x-hdfeos',
+      title: 'MOD13Q1.A2020273.h08v08.006.2020291074011.hdf. MimeType: application/x-hdfeos',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v08.006.2020291074011.hdf'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', type: 'text/html', title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)', hreflang: 'en-US', href: 'https://opendap.cr.usgs.gov/opendap/hyrax//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v08.006.2020291074011.hdf'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      type: 'text/html',
+      title: 'This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)',
+      hreflang: 'en-US',
+      href: 'https://opendap.cr.usgs.gov/opendap/hyrax//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v08.006.2020291074011.hdf'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#', type: 'image/jpeg', title: 'This Browse file may be downloaded directly from this link (BROWSE)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v08.006.2020291074011.1.jpg'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+      type: 'image/jpeg',
+      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v08.006.2020291074011.1.jpg'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#', type: 'image/jpeg', title: 'This Browse file may be downloaded directly from this link (BROWSE)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v08.006.2020291074011.2.jpg'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#',
+      type: 'image/jpeg',
+      title: 'This Browse file may be downloaded directly from this link (BROWSE)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2020.10.17/BROWSE.MOD13Q1.A2020273.h08v08.006.2020291074011.2.jpg'
     }, {
-      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', type: 'text/xml', title: 'This Metadata file may be downloaded directly from this link (EXTENDED METADATA)', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v08.006.2020291074011.hdf.xml'
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      type: 'text/xml',
+      title: 'This Metadata file may be downloaded directly from this link (EXTENDED METADATA)',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov//DP106/MOLT/MOD13Q1.006/2020.09.29/MOD13Q1.A2020273.h08v08.006.2020291074011.hdf.xml'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://doi.org/10.5067/MODIS/MOD13Q1.006'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://doi.org/10.5067/MODIS/MOD13Q1.006'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://e4ftl01.cr.usgs.gov/MOLT/MOD13Q1.006/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://e4ftl01.cr.usgs.gov/MOLT/MOD13Q1.006/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'http://earthexplorer.usgs.gov/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'http://earthexplorer.usgs.gov/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://search.earthdata.nasa.gov/search?q=C194001241-LPDAAC_ECS'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://search.earthdata.nasa.gov/search?q=C194001241-LPDAAC_ECS'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#', hreflang: 'en-US', href: 'https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.006/contents.html'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/metadata#',
+      hreflang: 'en-US',
+      href: 'https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.006/contents.html'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/documents/103/MOD13_User_Guide_V6.pdf'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/documents/103/MOD13_User_Guide_V6.pdf'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://lpdaac.usgs.gov/documents/104/MOD13_ATBD.pdf'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://lpdaac.usgs.gov/documents/104/MOD13_ATBD.pdf'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#', hreflang: 'en-US', href: 'https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MOD13Q1'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/documentation#',
+      hreflang: 'en-US',
+      href: 'https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MOD13Q1'
     }, {
-      inherited: true, rel: 'http://esipfed.org/ns/fedsearch/1.1/data#', hreflang: 'en-US', href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
+      inherited: true,
+      rel: 'http://esipfed.org/ns/fedsearch/1.1/data#',
+      hreflang: 'en-US',
+      href: 'https://lpdaacsvc.cr.usgs.gov/appeears/'
     }],
     isOpenSearch: false,
     formattedTemporal: ['2020-09-29 00:00:00', '2020-10-14 23:59:59'],

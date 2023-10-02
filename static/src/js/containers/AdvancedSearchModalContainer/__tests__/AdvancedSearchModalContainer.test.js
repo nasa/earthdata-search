@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { AdvancedSearchModalContainer, mapDispatchToProps, mapStateToProps } from '../AdvancedSearchModalContainer'
+import {
+  AdvancedSearchModalContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../AdvancedSearchModalContainer'
 import { AdvancedSearchModal } from '../../../components/AdvancedSearchModal/AdvancedSearchModal'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -103,18 +107,25 @@ describe('AdvancedSearchModalContainer component', () => {
 
     expect(enzymeWrapper.find(AdvancedSearchModal).length)
       .toBe(1)
+
     expect(enzymeWrapper.find(AdvancedSearchModal).props().isOpen)
       .toEqual(true)
+
     expect(enzymeWrapper.find(AdvancedSearchModal).props().onToggleAdvancedSearchModal)
       .toEqual(props.onToggleAdvancedSearchModal)
+
     expect(enzymeWrapper.find(AdvancedSearchModal).props().advancedSearch)
       .toEqual(props.advancedSearch)
+
     expect(enzymeWrapper.find(AdvancedSearchModal).props().resetForm)
       .toEqual(props.resetForm)
+
     expect(enzymeWrapper.find(AdvancedSearchModal).props().onChangeRegionQuery)
       .toEqual(props.onChangeRegionQuery)
+
     expect(enzymeWrapper.find(AdvancedSearchModal).props().onChangeQuery)
       .toEqual(props.onChangeQuery)
+
     expect(enzymeWrapper.find(AdvancedSearchModal).props().validateForm)
       .toEqual(props.validateForm)
   })

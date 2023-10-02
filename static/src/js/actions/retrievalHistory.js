@@ -39,8 +39,8 @@ export const fetchRetrievalHistory = () => (dispatch, getState) => {
   const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.all()
-    .then((response) => {
-      const { data } = response
+    .then((responseObject) => {
+      const { data } = responseObject
 
       dispatch(setRetrievalHistory(data))
     })

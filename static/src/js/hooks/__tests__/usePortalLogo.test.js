@@ -1,6 +1,10 @@
 import React from 'react'
 import { act } from 'react-dom/test-utils'
-import { render, screen, waitFor } from '@testing-library/react'
+import {
+  render,
+  screen,
+  waitFor
+} from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import usePortalLogo from '../usePortalLogo'
@@ -8,8 +12,10 @@ import usePortalLogo from '../usePortalLogo'
 jest.mock('../../../../../portals/podaac/images/logo.png', () => ('podaac_logo_path'))
 jest.mock('../../../../../portals/soos/images/logo.png', () => ('soos_logo_path'))
 
+// eslint-disable-next-line react/prop-types
 const TestComponent = ({ portalId }) => {
   const result = usePortalLogo(portalId)
+
   return <div data-testid="test-component">{result}</div>
 }
 

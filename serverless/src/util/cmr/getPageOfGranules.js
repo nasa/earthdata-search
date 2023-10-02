@@ -35,7 +35,10 @@ export const getPageOfGranules = async (cmrToken, collectionId, pageSize = 20) =
   const cmrResponse = await wrappedAxios({
     method: 'post',
     url: granuleSearchUrl,
-    data: stringify(cmrParams, { indices: false, arrayFormat: 'brackets' }),
+    data: stringify(cmrParams, {
+      indices: false,
+      arrayFormat: 'brackets'
+    }),
     headers: {
       'Client-Id': getClientId().background,
       'Content-Type': 'application/x-www-form-urlencoded',

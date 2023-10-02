@@ -1,8 +1,5 @@
 import granuleMetadataReducer from '../granuleMetadata'
-import {
-  ADD_GRANULE_METADATA,
-  UPDATE_GRANULE_METADATA
-} from '../../constants/actionTypes'
+import { ADD_GRANULE_METADATA, UPDATE_GRANULE_METADATA } from '../../constants/actionTypes'
 
 const initialState = {}
 

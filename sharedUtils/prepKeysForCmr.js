@@ -17,6 +17,10 @@ export const prepKeysForCmr = (queryParams, nonIndexedKeys = []) => {
 
   return [
     stringify(indexedAttrs, { encode: false }),
-    stringify(nonIndexedAttrs, { encode: false, indices: false, arrayFormat: 'brackets' })
+    stringify(nonIndexedAttrs, {
+      encode: false,
+      indices: false,
+      arrayFormat: 'brackets'
+    })
   ].filter(Boolean).join('&')
 }

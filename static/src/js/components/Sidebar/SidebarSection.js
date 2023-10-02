@@ -102,10 +102,12 @@ const SidebarSection = (props) => {
                           item = (
                             <PortalLinkContainer
                               key={`${key}_portal-link`}
-                              to={{
-                                pathname,
-                                search
-                              }}
+                              to={
+                                {
+                                  pathname,
+                                  search
+                                }
+                              }
                             >
                               {item}
                             </PortalLinkContainer>

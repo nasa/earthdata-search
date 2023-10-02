@@ -28,6 +28,7 @@ describe('createSpatialDisplay', () => {
       expect(result).toEqual('SW: (-9.56677,105.57422) NE: (-8.23114,107.40234)')
     })
   })
+
   describe('circle', () => {
     test('returns the correct values', () => {
       const newSpatial = {
@@ -40,6 +41,7 @@ describe('createSpatialDisplay', () => {
       expect(result).toEqual('Center: (-9.56677,105.57422) Radius (m): 14412)')
     })
   })
+
   describe('line', () => {
     test('returns the correct values', () => {
       const newSpatial = {
@@ -52,6 +54,7 @@ describe('createSpatialDisplay', () => {
       expect(result).toEqual('Start: (-9.56677,105.57422) End: (-7.12233,106.22133)')
     })
   })
+
   describe('point', () => {
     test('returns the correct values', () => {
       const newSpatial = {
@@ -64,6 +67,7 @@ describe('createSpatialDisplay', () => {
       expect(result).toEqual('Point: (-9.56677,105.57422)')
     })
   })
+
   describe('polygon', () => {
     test('returns the correct values', () => {
       const newSpatial = {
@@ -76,6 +80,7 @@ describe('createSpatialDisplay', () => {
       expect(result).toEqual('16 Points')
     })
   })
+
   describe('empty', () => {
     test('returns the correct values', () => {
       const result = createSpatialDisplay(spatial)
@@ -83,6 +88,7 @@ describe('createSpatialDisplay', () => {
       expect(result).toEqual('')
     })
   })
+
   describe('#transformBoundingBoxCoordinates', () => {
     test('returns the input in the correct order', () => {
       const input = '1,2,3,4'

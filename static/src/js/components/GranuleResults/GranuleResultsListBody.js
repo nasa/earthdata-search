@@ -35,10 +35,12 @@ const innerElementType = forwardRef(({ children, ...rest }, ref) => {
       className="granule-results-list__list"
       data-testid="granule-results-list"
       ref={ref}
-      style={{
-        ...style,
-        height: style.height + remInPixels
-      }}
+      style={
+        {
+          ...style,
+          height: style.height + remInPixels
+        }
+      }
     >
       {children}
     </ul>
@@ -139,7 +141,7 @@ export const GranuleResultsListBody = ({
     }
   }, [listRef.current])
 
-  // setRowHeight sets the size in the sizeMap to the height passed from the item.
+  // `setRowHeight` sets the size in the sizeMap to the height passed from the item.
   const setRowHeight = useCallback((rowIndex, columnIndex, size) => {
     if (!sizeMap.current[rowIndex]) sizeMap.current[rowIndex] = []
 
@@ -150,7 +152,10 @@ export const GranuleResultsListBody = ({
     sizeMap.current[rowIndex][columnIndex] = size || 127
 
     // Reset the items after the index of the item.
-    listRef.current.resetAfterIndices({ rowIndex, columnIndex: 0 }, true)
+    listRef.current.resetAfterIndices({
+      rowIndex,
+      columnIndex: 0
+    }, true)
   }, [])
 
   // At the default size, granule result items will render at 127px tall, so
@@ -158,12 +163,13 @@ export const GranuleResultsListBody = ({
   const getRowHeight = useCallback((rowIndex) => {
     if (isEmpty(sizeMap.current) || !sizeMap.current[rowIndex]) return 127
 
-    const height = Math.max(...sizeMap.current[rowIndex])
+    const rowHeight = Math.max(...sizeMap.current[rowIndex])
 
     if (rowIndex === itemCount - 1) {
-      return height + (remInPixels * 4)
+      return rowHeight + (remInPixels * 4)
     }
-    return height + remInPixels
+
+    return rowHeight + remInPixels
   }, [itemCount])
 
   return (
@@ -177,10 +183,12 @@ export const GranuleResultsListBody = ({
       {
         ({ onItemsRendered, ref }) => (
           <Grid
-            ref={(list) => {
-              ref(list)
-              listRef.current = list
-            }}
+            ref={
+              (list) => {
+                ref(list)
+                listRef.current = list
+              }
+            }
             columnCount={numColumns}
             columnWidth={() => (width / numColumns) - (remInPixels / numColumns)}
             height={height}
@@ -188,45 +196,49 @@ export const GranuleResultsListBody = ({
             rowHeight={getRowHeight}
             width={width}
             innerElementType={innerElementType}
-            itemData={{
-              collectionId,
-              directDistributionInformation,
-              excludedGranuleIds,
-              getRowHeight,
-              granules,
-              isCollectionInProject,
-              isOpenSearch,
-              isGranuleInProject,
-              isItemLoaded,
-              location,
-              numColumns,
-              onAddGranuleToProjectCollection,
-              onExcludeGranule,
-              onFocusedGranuleChange,
-              onMetricsDataAccess,
-              onRemoveGranuleFromProjectCollection,
-              setRowHeight,
-              windowHeight: height,
-              windowWidth: width
-            }}
-            onItemsRendered={(gridProps) => {
-              // onItemsRendered needs to know which items are visible in the list
-              const overscanStartIndex = gridProps.overscanRowStartIndex * numColumns
-              const overscanStopIndex = gridProps.overscanRowStopIndex * numColumns
-              const visibleStartIndex = gridProps.visibleRowStartIndex * numColumns
-              const visibleStopIndex = gridProps.visibleRowStopIndex * numColumns
+            itemData={
+              {
+                collectionId,
+                directDistributionInformation,
+                excludedGranuleIds,
+                getRowHeight,
+                granules,
+                isCollectionInProject,
+                isOpenSearch,
+                isGranuleInProject,
+                isItemLoaded,
+                location,
+                numColumns,
+                onAddGranuleToProjectCollection,
+                onExcludeGranule,
+                onFocusedGranuleChange,
+                onMetricsDataAccess,
+                onRemoveGranuleFromProjectCollection,
+                setRowHeight,
+                windowHeight: height,
+                windowWidth: width
+              }
+            }
+            onItemsRendered={
+              (gridProps) => {
+              // OnItemsRendered needs to know which items are visible in the list
+                const overscanStartIndex = gridProps.overscanRowStartIndex * numColumns
+                const overscanStopIndex = gridProps.overscanRowStopIndex * numColumns
+                const visibleStartIndex = gridProps.visibleRowStartIndex * numColumns
+                const visibleStopIndex = gridProps.visibleRowStopIndex * numColumns
 
-              const middleIndex = Math.round((visibleStartIndex + visibleStopIndex) / 2)
+                const middleIndex = Math.round((visibleStartIndex + visibleStopIndex) / 2)
 
-              if (middleIndex) setVisibleMiddleIndex(middleIndex)
+                if (middleIndex) setVisibleMiddleIndex(middleIndex)
 
-              onItemsRendered({
-                overscanStartIndex,
-                overscanStopIndex,
-                visibleStartIndex,
-                visibleStopIndex
-              })
-            }}
+                onItemsRendered({
+                  overscanStartIndex,
+                  overscanStopIndex,
+                  visibleStartIndex,
+                  visibleStopIndex
+                })
+              }
+            }
           >
             {GranuleResultsListItem}
           </Grid>

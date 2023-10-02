@@ -2,10 +2,7 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import {
-  SET_RETRIEVAL_HISTORY,
-  SET_RETRIEVAL_HISTORY_LOADING
-} from '../../constants/actionTypes'
+import { SET_RETRIEVAL_HISTORY, SET_RETRIEVAL_HISTORY_LOADING } from '../../constants/actionTypes'
 
 import { fetchRetrievalHistory } from '../retrievalHistory'
 
@@ -31,18 +28,19 @@ describe('fetchRetrievalHistory', () => {
         }
       ])
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: 'mockToken',
       earthdataEnvironment: 'prod'
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(fetchRetrievalHistory()).then(() => {
       expect(store.getActions().length).toEqual(2)
       expect(store.getActions()[0]).toEqual({
         type: SET_RETRIEVAL_HISTORY_LOADING
       })
+
       expect(store.getActions()[1]).toEqual({
         payload: [
           {

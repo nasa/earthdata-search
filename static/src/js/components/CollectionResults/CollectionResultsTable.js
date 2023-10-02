@@ -1,7 +1,11 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
-import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import {
+  Badge,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap'
 import { FaCheck, FaInfoCircle } from 'react-icons/fa'
 import { commafy } from '../../util/commafy'
 
@@ -84,6 +88,7 @@ export const CollectionResultsTable = ({
     },
     {
       Header: 'Granules',
+      /* eslint-disable react/no-unstable-nested-components, react/prop-types */
       Cell: ({ cell }) => (
         <div className="edsc-table-cell" title={commafy(cell.value)}>
           {commafy(cell.value)}
@@ -117,11 +122,13 @@ export const CollectionResultsTable = ({
         <OverlayTrigger
           id="collection-results-table-header--map-imagery"
           placement="top"
-          overlay={(
-            <Tooltip id="collection-results-table-header-tooltip--earthdata-cloud">
-              Available in the Earthdata Cloud
-            </Tooltip>
-            )}
+          overlay={
+            (
+              <Tooltip id="collection-results-table-header-tooltip--earthdata-cloud">
+                Available in the Earthdata Cloud
+              </Tooltip>
+            )
+          }
         >
           <span>
             <span className="mr-1">Earthdata Cloud</span>
@@ -145,11 +152,13 @@ export const CollectionResultsTable = ({
         <OverlayTrigger
           id="collection-results-table-header--map-imagery"
           placement="top"
-          overlay={(
-            <Tooltip id="collection-results-table-header-tooltip--map-imagery">
-              Supports advanced map visualizations using the GIBS tile service
-            </Tooltip>
-            )}
+          overlay={
+            (
+              <Tooltip id="collection-results-table-header-tooltip--map-imagery">
+                Supports advanced map visualizations using the GIBS tile service
+              </Tooltip>
+            )
+          }
         >
           <span>
             <span className="mr-1">Map Imagery</span>
@@ -173,13 +182,15 @@ export const CollectionResultsTable = ({
         <OverlayTrigger
           id="collection-results-table-header--map-imagery"
           placement="top"
-          overlay={(
-            <Tooltip id="collection-results-table-header-tooltip--map-imagery">
-              Data is available soon after being
-              {' '}
-              acquired by the instrument on the satellite
-            </Tooltip>
-            )}
+          overlay={
+            (
+              <Tooltip id="collection-results-table-header-tooltip--map-imagery">
+                Data is available soon after being
+                {' '}
+                acquired by the instrument on the satellite
+              </Tooltip>
+            )
+          }
         >
           <span>
             <span className="mr-1">Near Real Time</span>
@@ -275,6 +286,7 @@ export const CollectionResultsTable = ({
         centerContent: true
       }
     }
+    /* eslint-enable */
   ])
 
   return (

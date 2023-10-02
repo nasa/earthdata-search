@@ -125,8 +125,8 @@ const submitHarmonyOrder = async (event, context) => {
         // Start the order status check workflow
         await startOrderStatusUpdateWorkflow(id, accessToken, type)
       }
-    } catch (e) {
-      const parsedErrorMessage = parseError(e, { asJSON: false })
+    } catch (error) {
+      const parsedErrorMessage = parseError(error, { asJSON: false })
 
       const [errorMessage] = parsedErrorMessage
 

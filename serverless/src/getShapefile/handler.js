@@ -70,11 +70,11 @@ const getShapefile = async (event, context) => {
       headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [`Shapefile '${providedShapefileId}' not found.`] })
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

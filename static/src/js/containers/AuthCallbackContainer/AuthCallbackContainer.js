@@ -54,10 +54,12 @@ export const AuthCallbackContainer = ({
         // The redirectUrl is not a valid protocol
         console.log('The redirectUrl is not a valid protocol')
         window.location.replace('/')
+
         return
       }
     } catch (error) {
       window.location.replace('/')
+
       return
     }
 

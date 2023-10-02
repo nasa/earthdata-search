@@ -66,6 +66,7 @@ describe('SubscriptionsQueryList component', () => {
 
       expect(enzymeWrapper.find('.subscriptions-query-list__query-list').text())
         .toContain('Start: 2000-01-01 10:00:00')
+
       expect(enzymeWrapper.find('.subscriptions-query-list__query-list').text())
         .toContain('End: 2010-03-10 12:00:00')
     })
@@ -82,6 +83,7 @@ describe('SubscriptionsQueryList component', () => {
 
       expect(enzymeWrapper.find('.subscriptions-query-list__query-list').text())
         .toContain('SW: 1, 2')
+
       expect(enzymeWrapper.find('.subscriptions-query-list__query-list').text())
         .toContain('NE: 3, 4')
     })
@@ -98,6 +100,7 @@ describe('SubscriptionsQueryList component', () => {
 
       expect(enzymeWrapper.find('.subscriptions-query-list__query-list').text())
         .toContain('Center: 1, 2')
+
       expect(enzymeWrapper.find('.subscriptions-query-list__query-list').text())
         .toContain('Radius (m): 3')
     })
@@ -165,6 +168,7 @@ describe('SubscriptionsQueryList component', () => {
 
       expect(enzymeWrapper.find('.subscriptions-query-list__query-list-item__checkbox').exists())
         .toBeTruthy()
+
       expect(enzymeWrapper.find('.subscriptions-query-list__query-list-item__checkbox').props().checked)
         .toBeTruthy()
     })
@@ -184,6 +188,7 @@ describe('SubscriptionsQueryList component', () => {
 
       expect(enzymeWrapper.find('.subscriptions-query-list__query-list-item__checkbox').exists())
         .toBeTruthy()
+
       expect(enzymeWrapper.find('.subscriptions-query-list__query-list-item__checkbox').props().checked)
         .toBeFalsy()
     })
@@ -200,7 +205,12 @@ describe('SubscriptionsQueryList component', () => {
 
       const checkbox = enzymeWrapper.find('.subscriptions-query-list__query-list-item__checkbox')
 
-      checkbox.simulate('change', { target: { id: 'collection-keyword', checked: false } })
+      checkbox.simulate('change', {
+        target: {
+          id: 'collection-keyword',
+          checked: false
+        }
+      })
 
       expect(props.onUpdateSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
       expect(props.onUpdateSubscriptionDisabledFields).toHaveBeenCalledWith({

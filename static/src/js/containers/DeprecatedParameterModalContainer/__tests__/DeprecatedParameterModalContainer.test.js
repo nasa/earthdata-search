@@ -3,8 +3,14 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, DeprecatedParameterModalContainer } from '../DeprecatedParameterModalContainer'
-import { DeprecatedParameterModal } from '../../../components/DeprecatedParameterModal/DeprecatedParameterModal'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  DeprecatedParameterModalContainer
+} from '../DeprecatedParameterModalContainer'
+import {
+  DeprecatedParameterModal
+} from '../../../components/DeprecatedParameterModal/DeprecatedParameterModal'
 
 Enzyme.configure({ adapter: new Adapter() })
 

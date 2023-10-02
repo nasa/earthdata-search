@@ -8,6 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 const TestChild = (props) => {
   const { title } = props
+
   return (
     <div key={title} className="test-classname">
       Child

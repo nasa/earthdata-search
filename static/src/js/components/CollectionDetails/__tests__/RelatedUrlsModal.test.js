@@ -135,6 +135,7 @@ const setup = (overrides) => {
   act(() => {
     render(<RelatedUrlsModal {...props} />)
   })
+
   return {
     onToggleRelatedUrlsModal
   }

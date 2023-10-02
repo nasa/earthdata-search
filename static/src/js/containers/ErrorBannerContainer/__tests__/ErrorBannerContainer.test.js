@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { ErrorBannerContainer, mapDispatchToProps, mapStateToProps } from '../ErrorBannerContainer'
+import {
+  ErrorBannerContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../ErrorBannerContainer'
 import Banner from '../../../components/Banner/Banner'
 import { displayNotificationType } from '../../../constants/enums'
 

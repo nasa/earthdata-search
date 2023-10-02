@@ -1,153 +1,242 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import {
+  act,
+  render,
+  screen
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
+import '@testing-library/jest-dom'
+
 import AccessMethodRadio from '../AccessMethodRadio'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
+const setup = (overrideProps) => {
+  const onChange = jest.fn()
+  const onClick = jest.fn()
   const props = {
     id: 'test-id',
     description: 'test description',
     details: 'test details',
     value: 'test value',
     checked: false,
-    onChange: jest.fn(),
-    onClick: jest.fn(),
+    onChange,
+    onClick,
     title: 'test title',
     subtitle: 'test subtitle',
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<AccessMethodRadio {...props} />)
+  render(<AccessMethodRadio {...props} />)
 
   return {
-    enzymeWrapper,
-    props
+    onChange,
+    onClick
   }
 }
 
 describe('AccessMethodRadio component', () => {
-  const { enzymeWrapper, props } = setup()
-
   test('renders as a label', () => {
-    expect(enzymeWrapper.type()).toBe('label')
+    setup()
+    const label = screen.getByTestId('test-id')
+    expect(label.nodeName).toEqual('LABEL')
   })
 
   test('has a test id', () => {
-    expect(enzymeWrapper.props()['data-testid']).toBe('test-id')
+    setup()
+    expect(screen.getByTestId('test-id')).toBeInTheDocument()
   })
 
   test('adds an htmlFor prop using the id', () => {
-    expect(enzymeWrapper.props().htmlFor).toBe('test-id')
+    setup()
+    const label = screen.getByTestId('test-id')
+    expect(label.htmlFor).toEqual('test-id')
   })
 
   test('does not add the is-selected classname modifier', () => {
-    expect(enzymeWrapper.props().className).not.toContain('access-method-radio--is-selected')
+    setup()
+    const label = screen.getByTestId('test-id')
+    expect(label.className).not.toContain('access-method-radio--is-selected')
   })
 
   test('displays the title', () => {
-    expect(enzymeWrapper.find('.access-method-radio__title').text()).toBe('test title')
+    setup()
+    expect(screen.getByText('test title')).toBeInTheDocument()
   })
 
   test('displays the subtitle', () => {
-    expect(enzymeWrapper.find('.access-method-radio__subtitle').text()).toBe('test subtitle')
+    setup()
+    expect(screen.getByText('test subtitle')).toBeInTheDocument()
   })
 
   test('displays the description', () => {
-    expect(enzymeWrapper.find('.access-method-radio__description').text()).toBe('test description')
+    setup()
+    expect(screen.getByText('test description')).toBeInTheDocument()
   })
 
   test('displays the details', () => {
-    expect(enzymeWrapper.find('.access-method-radio__details').text()).toBe('test details')
+    setup()
+    expect(screen.getByText('test details')).toBeInTheDocument()
   })
 
-  test('does not display the service name section', () => {
-    expect(enzymeWrapper.find('.access-method-radio__service-name').length).toBe(0)
+  test('does not display the service name', () => {
+    setup()
+    expect(screen.queryAllByText('Service:').length).toBe(0)
   })
 
   describe('input element', () => {
     test('has a name property', () => {
-      expect(enzymeWrapper.find('input').props().name).toBe('test-id')
-    })
-
-    test('has a value property', () => {
-      expect(enzymeWrapper.find('input').props().value).toBe('test value')
+      setup()
+      const input = screen.getByRole('radio', { value: 'test value' })
+      expect(input.name).toEqual('test-id')
     })
 
     test('sets the checked property', () => {
-      expect(enzymeWrapper.find('input').props().checked).toBe('')
+      setup()
+      const radioButton = screen.getByRole('radio', { value: 'test value' })
+      expect(radioButton.checked).toEqual(false)
     })
 
-    test('fires the onChange callback', () => {
-      enzymeWrapper.find('input').simulate('change')
-
-      const { onChange } = props
-
+    test('fires the onChange callback', async () => {
+      const { onChange } = setup()
+      const user = userEvent.setup()
+      const radioButton = screen.getByRole('radio', { value: 'test value' })
+      await user.click(radioButton)
       expect(onChange).toHaveBeenCalledTimes(1)
     })
 
-    test('fires the onClick callback', () => {
-      enzymeWrapper.find('input').simulate('click')
-
-      const { onClick } = props
-
+    test('fires the onClick callback', async () => {
+      const { onClick } = setup()
+      const user = userEvent.setup()
+      const radioButton = screen.getByRole('radio', { value: 'test value' })
+      await user.click(radioButton)
       expect(onClick).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('fake input element', () => {
     test('does not display an icon', () => {
-      expect(enzymeWrapper.find('.access-method-radio__radio-icon').length).toBe(0)
+      setup()
+      expect(screen.queryByTestId('edsc-icon')).toBeNull()
     })
   })
 
   describe('more info section', () => {
     test('does not display by default', () => {
-      expect(enzymeWrapper.find('CSSTransition').props().in).toBe(false)
+      setup()
+      expect(screen.getByText('More Info')).toBeInTheDocument()
     })
 
-    test('displays when the more info button is clicked', () => {
-      const stopPropagationMock = jest.fn()
+    test('displays when the more info button is clicked', async () => {
+      const { onClick } = setup()
+      const user = userEvent.setup()
+      const moreInfoButton = screen.getByRole('button')
+      await user.click(moreInfoButton)
+      expect(screen.getByText('Less Info')).toBeInTheDocument()
 
-      enzymeWrapper.find('button').simulate('click', {
-        stopPropagation: stopPropagationMock
-      })
-
-      expect(enzymeWrapper.find('CSSTransition').props().in).toBe(true)
-      expect(stopPropagationMock).toHaveBeenCalledTimes(1)
+      // Ensure outer `onClick` is not being called
+      expect(onClick).toHaveBeenCalledTimes(0)
     })
   })
 
   describe('when the access method is checked', () => {
-    const { enzymeWrapper } = setup({
-      checked: true
-    })
-
     test('adds the is-selected classname modifier', () => {
-      expect(enzymeWrapper.props().className).toContain('access-method-radio--is-selected')
+      setup({ checked: true })
+      const label = screen.getByTestId('test-id')
+      expect(label.className).toContain('access-method-radio--is-selected')
     })
 
     describe('input element', () => {
       test('sets the checked property', () => {
-        expect(enzymeWrapper.find('input').props().checked).toBe('checked')
-      })
-    })
-
-    describe('fake input element', () => {
-      test('displays an icon', () => {
-        expect(enzymeWrapper.find('.access-method-radio__radio-icon').length).toBe(1)
+        setup({ checked: true })
+        const radioButton = screen.getByRole('radio', { value: 'test value' })
+        expect(radioButton.checked).toEqual(true)
+        expect(screen.getByTestId('edsc-icon')).toBeInTheDocument()
       })
     })
   })
 
   describe('when a service name is provided', () => {
-    const { enzymeWrapper } = setup({
-      serviceName: 'test service name'
+    test('does not display an icon', () => {
+      setup({ serviceName: 'test service name' })
+      // The icon does not render
+      expect(screen.queryByTestId('edsc-icon')).toBeNull()
     })
 
-    test('does not display an icon', () => {
-      expect(enzymeWrapper.find('.access-method-radio__service-name').text()).toBe('Service: test service name')
+    test('displays the service name', () => {
+      const harmonyDetails = 'details: The service-name-is-passed-as-prop'
+      setup({
+        serviceName: 'test service name',
+        details: harmonyDetails
+      })
+
+      // The service name is passed in through the `details` prop
+      const renderedServiceNames = screen.getAllByText(harmonyDetails)
+      // Renders in the `More-Info` section
+      expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__more-info')
+      expect(renderedServiceNames.length).toEqual(1)
+    })
+
+    describe('when the `subtitle` is `Harmony`', () => {
+      test('service name appears on on customizable option primary title', () => {
+        setup({
+          serviceName: 'test service name',
+          subtitle: 'Harmony'
+        })
+
+        const renderedServiceNames = screen.getAllByText('test service name')
+        // Renders in the `access-method-content` section
+        expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__header-secondary')
+        expect(renderedServiceNames.length).toEqual(1)
+      })
+
+      test('Hovering over the service name opens a tooltip', async () => {
+        const user = userEvent.setup()
+        setup({
+          serviceName: 'test service name',
+          subtitle: 'Harmony'
+        })
+
+        const renderedServiceName = screen.getByText('test service name')
+        await act(async () => {
+          await user.hover(renderedServiceName)
+        })
+
+        // Tooltip is being styled and rendered
+        const tooltipMessage = screen.getByText('Service')
+        expect(tooltipMessage.className).toEqual('tooltip__secondary-text')
+      })
+    })
+
+    describe('when the `subtitle` is `OPeNDAP`', () => {
+      test('service name appears on on customizable option primary title', () => {
+        setup({
+          serviceName: 'test service name',
+          subtitle: 'OPeNDAP'
+        })
+
+        const renderedServiceNames = screen.getAllByText('test service name')
+        // Renders in the `access-method-content` section
+        expect(renderedServiceNames[0].closest('div').className).toEqual('access-method-radio__header-secondary')
+        expect(renderedServiceNames.length).toEqual(1)
+      })
+
+      test('Hovering over the service name opens a tooltip', async () => {
+        const user = userEvent.setup()
+        setup({
+          serviceName: 'test service name',
+          subtitle: 'OPeNDAP'
+        })
+
+        const renderedServiceName = screen.getByText('test service name')
+        await act(async () => {
+          await user.hover(renderedServiceName)
+        })
+
+        // Tooltip is being styled and rendered
+        const tooltipMessage = screen.getByText('Service')
+        expect(tooltipMessage.className).toEqual('tooltip__secondary-text')
+      })
     })
   })
 })

@@ -127,6 +127,7 @@ describe('Skeleton component', () => {
         top: '0.75rem',
         width: '12.5rem'
       })
+
       expect(items.at(1).prop('style')).toEqual({
         borderRadius: '0.1875rem',
         height: '0.75rem',

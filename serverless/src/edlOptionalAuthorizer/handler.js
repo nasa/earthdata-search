@@ -19,10 +19,10 @@ const edlOptionalAuthorizer = async (event) => {
 
   const { authorization: authorizationToken = '' } = downcaseKeys(headers)
 
-  // resourcePath contains the path assigned to the lambda being requested
+  // `resourcePath` contains the path assigned to the lambda being requested
   const { resourcePath } = requestContext
 
-  // authorizationToken comes in as `Bearer asdf.qwer.hjkl` but we only need the actual token
+  // `authorizationToken` comes in as `Bearer asdf.qwer.hjkl` but we only need the actual token
   const tokenParts = authorizationToken.split(' ')
   const jwtToken = tokenParts[1]
 

@@ -46,55 +46,69 @@ describe('CollectionResultsTable component', () => {
       Header: 'Collection',
       accessor: 'datasetId'
     }))
+
     expect(columns[1]).toEqual(expect.objectContaining({
       Header: 'Version',
       accessor: 'versionId'
     }))
+
     expect(columns[2]).toEqual(expect.objectContaining({
       Header: 'Start',
       accessor: 'temporalStart'
     }))
+
     expect(columns[3]).toEqual(expect.objectContaining({
       Header: 'End',
       accessor: 'temporalEnd'
     }))
+
     expect(columns[4]).toEqual(expect.objectContaining({
       Header: 'Granules',
       accessor: 'granuleCount'
     }))
+
     expect(columns[5]).toEqual(expect.objectContaining({
       Header: 'Provider',
       accessor: 'displayOrganization'
     }))
+
     expect(columns[6]).toEqual(expect.objectContaining({
       Header: 'Short Name',
       accessor: 'shortName'
     }))
+
     expect(columns[7]).toEqual(expect.objectContaining({
       accessor: 'cloudHosted'
     }))
+
     expect(columns[8]).toEqual(expect.objectContaining({
       accessor: 'hasMapImagery'
     }))
+
     expect(columns[9]).toEqual(expect.objectContaining({
       accessor: 'isNrt'
     }))
+
     expect(columns[10]).toEqual(expect.objectContaining({
       Header: 'Spatial Subsetting',
       accessor: 'hasSpatialSubsetting'
     }))
+
     expect(columns[11]).toEqual(expect.objectContaining({
       Header: 'Temporal Subsetting',
       accessor: 'hasTemporalSubsetting'
     }))
+
     expect(columns[12]).toEqual(expect.objectContaining({
       Header: 'Variable Subsetting',
       accessor: 'hasVariables'
     }))
+
     expect(columns[13]).toEqual(expect.objectContaining({
       Header: 'Transformation',
       accessor: 'hasTransforms'
     }))
+
     expect(columns[14]).toEqual(expect.objectContaining({
       Header: 'Reformatting',
       accessor: 'hasFormats'

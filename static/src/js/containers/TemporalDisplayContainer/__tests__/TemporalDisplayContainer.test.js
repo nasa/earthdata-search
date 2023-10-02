@@ -4,7 +4,11 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
 import TemporalDisplay from '../../../components/TemporalDisplay/TemporalDisplay'
-import { mapDispatchToProps, mapStateToProps, TemporalDisplayContainer } from '../TemporalDisplayContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  TemporalDisplayContainer
+} from '../TemporalDisplayContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 

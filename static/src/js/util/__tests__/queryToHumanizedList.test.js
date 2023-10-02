@@ -83,7 +83,10 @@ describe('queryToHumanizedList', () => {
   test('returns a humanized param for facets', () => {
     const query = {
       hasGranulesOrCwic: true,
-      scienceKeywordsH: [{ topic: 'Oceans', term: 'Ocean Temperature' }]
+      scienceKeywordsH: [{
+        topic: 'Oceans',
+        term: 'Ocean Temperature'
+      }]
     }
 
     const subscriptionType = 'collection'

@@ -1,10 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { sortBy } from 'lodash'
-import {
-  Row,
-  Col
-} from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 
 import { locationPropType } from '../../util/propTypes/location'
 import { availablePortals } from '../../../../../portals'
@@ -61,10 +58,12 @@ export const PortalList = ({
                 type="button"
                 label={`Visit the ${primaryTitle} Portal`}
                 newPortal={portal}
-                to={{
-                  pathname: newPathname,
-                  search: location.search
-                }}
+                to={
+                  {
+                    pathname: newPathname,
+                    search: location.search
+                  }
+                }
                 onClick={onModalClose}
                 updatePath
                 dataTestId={`portal-list-item-${portalId}`}
@@ -126,9 +125,11 @@ export const PortalList = ({
                             href={moreInfoUrl}
                             target="_blank"
                             rel="noreferrer"
-                            onClick={(event) => {
-                              event.stopPropagation()
-                            }}
+                            onClick={
+                              (event) => {
+                                event.stopPropagation()
+                              }
+                            }
                             title={`Find more information about ${displayTitle}`}
                           >
                             More Info

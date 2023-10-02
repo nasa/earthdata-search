@@ -56,6 +56,7 @@ const collectionsResultsReducer = (state = initialState, action = {}) => {
         isLoaded: false
       }
     }
+
     case LOADED_COLLECTIONS: {
       return {
         ...state,
@@ -63,20 +64,24 @@ const collectionsResultsReducer = (state = initialState, action = {}) => {
         isLoaded: action.payload.loaded
       }
     }
+
     case STARTED_COLLECTIONS_TIMER: {
       return {
         ...state,
         timerStart: Date.now()
       }
     }
+
     case FINISHED_COLLECTIONS_TIMER: {
       const { timerStart } = state
+
       return {
         ...state,
         timerStart: null,
         loadTime: Date.now() - timerStart
       }
     }
+
     case UPDATE_COLLECTION_RESULTS: {
       const { payload } = action
       const { hits, keyword, results } = payload
@@ -90,6 +95,7 @@ const collectionsResultsReducer = (state = initialState, action = {}) => {
         allIds
       }
     }
+
     case ADD_MORE_COLLECTION_RESULTS: {
       const allIds = processResults(action.payload.results)
 
@@ -101,6 +107,7 @@ const collectionsResultsReducer = (state = initialState, action = {}) => {
         ]
       }
     }
+
     case INITIALIZE_COLLECTION_GRANULES_RESULTS: {
       const collectionId = action.payload
 
@@ -118,6 +125,7 @@ const collectionsResultsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case STARTED_GRANULES_TIMER: {
       const { payload: collectionId } = action
 
@@ -143,6 +151,7 @@ const collectionsResultsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case FINISHED_GRANULES_TIMER: {
       const collectionId = action.payload
 
@@ -166,6 +175,7 @@ const collectionsResultsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case RESET_GRANULE_RESULTS: {
       const collectionId = action.payload
 
@@ -182,6 +192,7 @@ const collectionsResultsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case LOADING_GRANULES: {
       const collectionId = action.payload
 
@@ -200,6 +211,7 @@ const collectionsResultsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case LOADED_GRANULES: {
       const { collectionId, loaded } = action.payload
 
@@ -218,6 +230,7 @@ const collectionsResultsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case UPDATE_GRANULE_RESULTS: {
       const {
         collectionId,
@@ -248,6 +261,7 @@ const collectionsResultsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case ADD_MORE_GRANULE_RESULTS: {
       const {
         collectionId,
@@ -278,6 +292,7 @@ const collectionsResultsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     default:
       return state
   }

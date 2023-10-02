@@ -19,6 +19,7 @@ afterEach(() => {
   delete global.google_optimize
 })
 
+// eslint-disable-next-line react/prop-types
 const TestComponent = ({ experimentId }) => {
   const variant = useExperiment(experimentId)
 
@@ -156,9 +157,11 @@ describe('useExperiment', () => {
           beforeEach(() => {
             process.env.NODE_ENV = 'development'
           })
+
           afterEach(() => {
             process.env.NODE_ENV = nodeEnv
           })
+
           test('generates a warning', async () => {
             // When trying to test without this mocked, the setInterval would not run
             window.setInterval = jest.fn((func) => func())
@@ -181,9 +184,11 @@ describe('useExperiment', () => {
         beforeEach(() => {
           process.env.NODE_ENV = 'production'
         })
+
         afterEach(() => {
           process.env.NODE_ENV = nodeEnv
         })
+
         test('does not generate a warning', async () => {
           // When trying to test without this mocked, the setInterval would not run
           window.setInterval = jest.fn((func) => func())

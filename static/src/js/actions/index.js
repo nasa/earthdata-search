@@ -15,9 +15,7 @@ import {
   updateAdminProjectsSortKey,
   updateAdminProjectsPageNum
 } from './admin/projects'
-import {
-  updateAdvancedSearch
-} from './advancedSearch'
+import { updateAdvancedSearch } from './advancedSearch'
 import {
   getCollections,
   clearFocusedCollectionGranuleFilters,
@@ -53,14 +51,8 @@ import {
   updateGranuleMetadata,
   updateGranuleResults
 } from './granules'
-import {
-  logout,
-  updateAuthToken
-} from './authToken'
-import {
-  changeTimelineQuery,
-  getTimeline
-} from './timeline'
+import { logout, updateAuthToken } from './authToken'
+import { changeTimelineQuery, getTimeline } from './timeline'
 import {
   changeCollectionPageNum,
   changeGranulePageNum,
@@ -139,9 +131,7 @@ import {
   updateProjectGranuleParams,
   setDataQualitySummaries
 } from './project'
-import {
-  getRegions
-} from './regions'
+import { getRegions } from './regions'
 import {
   fetchRetrieval,
   submitRetrieval,
@@ -157,7 +147,11 @@ import {
   updateShapefile
 } from './shapefiles'
 import { fetchRetrievalCollection } from './retrievalCollection'
-import { deleteSavedProject, updateProjectName, updateSavedProject } from './savedProject'
+import {
+  deleteSavedProject,
+  updateProjectName,
+  updateSavedProject
+} from './savedProject'
 import { fetchSavedProjects, setSavedProjects } from './savedProjects'
 import { handleAlert } from './alerts'
 import { handleError, removeError } from './errors'

@@ -2,7 +2,10 @@ import React, { PureComponent } from 'react'
 import { PropTypes } from 'prop-types'
 import { Dropdown } from 'react-bootstrap'
 import {
-  FaCrop, FaMapMarker, FaCircle, FaFile
+  FaCrop,
+  FaMapMarker,
+  FaCircle,
+  FaFile
 } from 'react-icons/fa'
 
 import { eventEmitter } from '../../events/events'

@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import { Link } from 'react-router-dom'
 
-import { mapDispatchToProps, mapStateToProps, PortalLinkContainer } from '../PortalLinkContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  PortalLinkContainer
+} from '../PortalLinkContainer'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import actions from '../../../actions'
 

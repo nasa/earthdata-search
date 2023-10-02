@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { DownloadHistoryContainer, mapDispatchToProps, mapStateToProps } from '../DownloadHistoryContainer'
+import {
+  DownloadHistoryContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../DownloadHistoryContainer'
 import { DownloadHistory } from '../../../components/DownloadHistory/DownloadHistory'
 
 Enzyme.configure({ adapter: new Adapter() })

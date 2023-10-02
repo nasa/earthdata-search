@@ -15,8 +15,15 @@ beforeEach(() => {
   jest.clearAllMocks()
 
   // The AutoSizer requires that the offsetHeight and offsetWidth properties are set
-  Object.defineProperty(HTMLElement.prototype, 'offsetHeight', { configurable: true, value: 500 })
-  Object.defineProperty(HTMLElement.prototype, 'offsetWidth', { configurable: true, value: 800 })
+  Object.defineProperty(HTMLElement.prototype, 'offsetHeight', {
+    configurable: true,
+    value: 500
+  })
+
+  Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
+    configurable: true,
+    value: 800
+  })
 
   window.getComputedStyle = jest.fn(() => ({ fontSize: 16 }))
 })

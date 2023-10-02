@@ -85,7 +85,7 @@ describe('saveShapefile', () => {
       size: '42 KB'
     }
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       earthdataEnvironment: 'prod',
       query: {
@@ -104,7 +104,7 @@ describe('saveShapefile', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(saveShapefile(data)).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
@@ -114,6 +114,7 @@ describe('saveShapefile', () => {
           shapefileSize: '42 KB'
         }
       })
+
       expect(storeActions[1]).toEqual({
         type: UPDATE_SHAPEFILE,
         payload: {
@@ -152,6 +153,7 @@ describe('saveShapefile', () => {
           shapefileSize: '42 KB'
         }
       })
+
       expect(storeActions[1]).toEqual({
         type: UPDATE_SHAPEFILE,
         payload: {
@@ -160,6 +162,7 @@ describe('saveShapefile', () => {
           shapefileSize: undefined
         }
       })
+
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
@@ -174,7 +177,7 @@ describe('saveShapefile', () => {
           selectedFeatures: []
         })
 
-      // mockStore with initialState
+      // MockStore with initialState
       const store = mockStore({
         earthdataEnvironment: 'prod',
         query: {
@@ -193,12 +196,13 @@ describe('saveShapefile', () => {
         }
       })
 
-      // call the dispatch
+      // Call the dispatch
       await store.dispatch(fetchShapefile('1')).then(() => {
         const storeActions = store.getActions()
         expect(storeActions[0]).toEqual({
           type: LOADING_SHAPEFILE
         })
+
         expect(storeActions[1]).toEqual({
           type: UPDATE_SHAPEFILE,
           payload: {

@@ -8,6 +8,7 @@ const getConfig = () => {
   try {
     // eslint-disable-next-line global-require, import/no-unresolved
     const overrideConfig = require('../overrideStatic.config.json')
+
     return merge(staticConfig, overrideConfig)
   } catch (error) {
     return staticConfig

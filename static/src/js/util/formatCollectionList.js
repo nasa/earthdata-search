@@ -54,8 +54,8 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
           temporalRange = `${dateStart} ongoing`
           temporalStart = dateStart
           temporalEnd = 'ongoing'
-        } catch (e) {
-          parseError(e)
+        } catch (error) {
+          parseError(error)
         }
       }
 
@@ -65,8 +65,8 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
 
           temporalRange = `Up to ${dateEnd}`
           temporalEnd = dateEnd
-        } catch (e) {
-          parseError(e)
+        } catch (error) {
+          parseError(error)
         }
       }
 
@@ -76,8 +76,8 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
           const dateEnd = new Date(timeEnd).toISOString().split('T')[0]
 
           temporalRange = `${dateStart} to ${dateEnd}`
-        } catch (e) {
-          parseError(e)
+        } catch (error) {
+          parseError(error)
         }
       }
     }

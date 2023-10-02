@@ -228,6 +228,7 @@ describe('ProjectCollectionItem component', () => {
           }
         }
       })
+
       expect(enzymeWrapper.find('.project-collections-item__status--invalid').length).toEqual(0)
     })
   })

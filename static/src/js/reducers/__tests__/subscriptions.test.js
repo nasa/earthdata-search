@@ -69,7 +69,10 @@ describe('FINISHED_SUBSCRIPTIONS_TIMER', () => {
       loadTime: 5
     }
 
-    expect(subscriptionsReducer({ ...initialState, timerStart: start }, action))
+    expect(subscriptionsReducer({
+      ...initialState,
+      timerStart: start
+    }, action))
       .toEqual(expectedState)
   })
 })

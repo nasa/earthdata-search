@@ -29,10 +29,12 @@ export class DeprecatedParameterModal extends Component {
     const body = (
       <>
         <p>
-          {`Occasionally, we need to make changes to our supported URL parameters.
+          {
+            `Occasionally, we need to make changes to our supported URL parameters.
           We've updated the URL in your browser, so you don't need to do anything.
           If you've used a bookmark to navigate here, consider updating the bookmark
-          to use the new URL.`}
+          to use the new URL.`
+          }
         </p>
         {
           deprecatedUrlParams.length !== 0 && (

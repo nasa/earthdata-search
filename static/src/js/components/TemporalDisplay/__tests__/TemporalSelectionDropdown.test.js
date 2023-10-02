@@ -1,147 +1,210 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import moment from 'moment'
+import ReactDOM from 'react-dom'
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import '@testing-library/jest-dom'
 
-import Dropdown from 'react-bootstrap/Dropdown'
+import moment from 'moment'
 
 import TemporalSelectionDropdown from '../TemporalSelectionDropdown'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
+const setup = (overrideProps) => {
   const props = {
-    temporalSearch: {},
-    onChangeQuery: jest.fn()
+    temporalSearch: {
+      endDate: '',
+      startDate: '',
+      isRecurring: false
+    },
+    onChangeQuery: jest.fn(),
+    ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<TemporalSelectionDropdown {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+  return render(
+    <TemporalSelectionDropdown {...props} />
+  )
 }
 
 describe('TemporalSelectionDropdown component', () => {
+  beforeAll(() => {
+    ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+  })
+
+  afterEach(() => {
+    ReactDOM.createPortal.mockClear()
+  })
+
   test('on load should be closed on inital render', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find(Dropdown).prop('show')).toBe(false)
+    setup()
+
+    expect(screen.queryByRole('button')).toBeInTheDocument()
+    expect(screen.queryByLabelText('Start')).not.toBeInTheDocument()
   })
 
-  test('when clicked toggles the state of show ', () => {
-    const { enzymeWrapper } = setup()
+  test('when clicked toggles the state of show ', async () => {
+    const user = userEvent.setup()
+    setup({})
 
-    enzymeWrapper.instance().onToggleClick()
-    expect(enzymeWrapper.find(Dropdown).prop('show')).toBe(true)
+    const btn = screen.getByRole('button')
+    expect(btn).toBeInTheDocument()
+
+    await waitFor(async () => {
+      await user.click(btn)
+    })
+
+    const startLabel = screen.getByText(/Start/i)
+
+    expect(startLabel).toBeInTheDocument()
   })
 
-  test('sets the start date correctly when an valid date is passed', () => {
-    const { enzymeWrapper } = setup()
-    const testObj = moment.utc('2012-01-01 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
+  test('sets the start date correctly when an valid date is passed', async () => {
+    const user = userEvent.setup()
 
-    enzymeWrapper.instance().setStartDate(testObj)
-    expect(enzymeWrapper.state().temporal.startDate).toEqual('2012-01-01T12:00:00.000Z')
+    setup()
+
+    await waitFor(async () => {
+      await user.click(screen.getByRole('button'))
+    })
+
+    const inputs = screen.getAllByRole('textbox')
+
+    const startTestObj = moment.utc('2012-01-01 12:00:00', true).format('YYYY-MM-DD HH:mm:ss')
+
+    fireEvent.change(inputs[0], { target: { value: startTestObj } })
+
+    expect(inputs[0].value).toBe(startTestObj)
+    expect(inputs[1].value).not.toBe(startTestObj)
   })
 
-  test('sets the end date correctly when an valid date is passed', () => {
-    const { enzymeWrapper } = setup()
-    const testObj = moment.utc('2012-01-01 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
+  test('sets the end date correctly when an valid date is passed', async () => {
+    const user = userEvent.setup()
 
-    enzymeWrapper.instance().setEndDate(testObj)
-    expect(enzymeWrapper.state().temporal.endDate).toEqual('2012-01-01T12:00:00.000Z')
+    setup()
+
+    await waitFor(async () => {
+      await user.click(screen.getByRole('button'))
+    })
+
+    const inputs = screen.getAllByRole('textbox')
+
+    const endTestObj = moment.utc('2015-01-01 12:00:00', true).format('YYYY-MM-DD HH:mm:ss')
+
+    fireEvent.change(inputs[1], { target: { value: endTestObj } })
+
+    expect(inputs[0].value).not.toBe(endTestObj)
+    expect(inputs[1].value).toBe(endTestObj)
   })
 
-  test('sets the state correctly with an invalid start date', () => {
-    const { enzymeWrapper } = setup()
-    const invalidDate = moment('2012-01-efss 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
-    const validStartDate = moment.utc('2012-01-01 12:00:00').toISOString()
-    const validEndDate = moment.utc('2012-01-02 12:00:00').toISOString()
+  test('sets the state correctly with an invalid start date', async () => {
+    const user = userEvent.setup()
 
-    enzymeWrapper.setState({ temporal: { startDate: validStartDate, endDate: validEndDate } })
-    enzymeWrapper.instance().setStartDate(invalidDate)
-    expect(enzymeWrapper.state().temporal.startDate).toBe('2012-01-efss 12:00:00')
-    expect(enzymeWrapper.state().temporal.endDate).toBe('2012-01-02T12:00:00.000Z')
+    setup()
+
+    await waitFor(async () => {
+      await user.click(screen.getByRole('button'))
+    })
+
+    const inputs = screen.getAllByRole('textbox')
+
+    const invalidDate = '2012-01-efss 12:00:00'
+    const validStartDate = moment.utc('2012-01-01 12:00:00').format('YYYY-MM-DD HH:mm:ss')
+    const validEndDate = moment.utc('2012-01-02 12:00:00').format('YYYY-MM-DD HH:mm:ss')
+
+    try {
+      fireEvent.change(inputs[0], { target: { value: invalidDate } })
+    } catch (e) {
+      console.log(e)
+    }
+
+    expect(screen.getByText(/Invalid start date/i)).toBeInTheDocument()
+
+    fireEvent.change(inputs[0], { target: { value: validStartDate } })
+    fireEvent.change(inputs[1], { target: { value: validEndDate } })
+
+    expect(inputs[0].value).toBe(validStartDate)
+    expect(inputs[1].value).toBe(validEndDate)
   })
 
-  test('sets the state correctly with an invalid end date', () => {
-    const { enzymeWrapper } = setup()
-    const invalidDate = moment('2012-01-efss 12:00:00', 'YYYY-MM-DD HH:mm:ss', true)
-    const validStartDate = moment.utc('2012-01-01 12:00:00').toISOString()
-    const validEndDate = moment.utc('2012-01-02 12:00:00').toISOString()
-
-    enzymeWrapper.setState({ temporal: { startDate: validStartDate, endDate: validEndDate } })
-    enzymeWrapper.instance().setEndDate(invalidDate)
-    expect(enzymeWrapper.state().temporal.startDate).toBe('2012-01-01T12:00:00.000Z')
-    expect(enzymeWrapper.state().temporal.endDate).toBe('2012-01-efss 12:00:00')
-  })
-
-  test('clears the values onClearClick', () => {
-    const { enzymeWrapper } = setup()
+  test('clears the values onClearClick', async () => {
     const onChangeQueryMock = jest.fn()
-    enzymeWrapper.setProps({
+    const user = userEvent.setup()
+
+    const validEndDate = '2019-03-30T00:00:00.000Z'
+    const validStartDate = '2019-03-29T00:00:00.000Z'
+
+    const { getByRole, getAllByRole } = setup({
       onChangeQuery: onChangeQueryMock,
       temporalSearch: {
-        endDate: '2019-03-30T00:00:00.000Z',
-        startDate: '2019-03-29T00:00:00.000Z'
+        endDate: validEndDate,
+        startDate: validStartDate
       }
     })
-    enzymeWrapper.setState({ open: true })
 
-    enzymeWrapper.instance().onClearClick()
-
-    expect(onChangeQueryMock).toHaveBeenCalledWith({
-      collection: {
-        temporal: {}
-      }
+    await waitFor(async () => {
+      await user.click(getByRole('button'))
     })
+
+    const inputs = getAllByRole('textbox')
+    expect(inputs[0].value).toBe(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
+    expect(inputs[1].value).toBe(moment.utc(validEndDate).format('YYYY-MM-DD HH:mm:ss'))
+
+    const clearBtn = getAllByRole('button', { name: 'Clear' })[2]
+    await waitFor(async () => {
+      await user.click(clearBtn)
+    })
+
+    await waitFor(async () => {
+      await user.click(getByRole('button'))
+    })
+
+    const updatedInputs = getAllByRole('textbox')
+    expect(updatedInputs[0].value).toBe('')
+    expect(updatedInputs[1].value).toBe('')
+
     expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
-    expect(enzymeWrapper.state()).toEqual({
-      disabled: false,
-      open: false,
-      temporal: {
-        startDate: '',
-        endDate: '',
-        recurringDayEnd: '',
-        recurringDayStart: '',
-        isRecurring: false
-      }
-    })
   })
 
-  test('applies the values onApplyClick', () => {
-    const { enzymeWrapper } = setup()
+  test('applies the values onApplyClick', async () => {
     const onChangeQueryMock = jest.fn()
-    enzymeWrapper.setProps({
-      onChangeQuery: onChangeQueryMock,
-      temporalSearch: {}
-    })
-    enzymeWrapper.setState({
-      open: true,
-      temporal: {
-        endDate: '2019-03-30T00:00:00.000Z',
-        startDate: '2019-03-29T00:00:00.000Z'
-      }
+    const user = userEvent.setup()
+
+    setup({
+      onChangeQuery: onChangeQueryMock
     })
 
-    enzymeWrapper.instance().onApplyClick()
+    const validEndDate = '2019-03-30T00:00:00.000Z'
+    const validStartDate = '2019-03-29T00:00:00.000Z'
+
+    fireEvent.click(screen.getByRole('button'))
+
+    const inputs = screen.getAllByRole('textbox')
+
+    fireEvent.change(inputs[0], { target: { value: validStartDate } })
+    fireEvent.change(inputs[1], { target: { value: validEndDate } })
+
+    expect(inputs[0].value).toBe(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
+    expect(inputs[1].value).toBe(moment.utc(validEndDate).format('YYYY-MM-DD HH:mm:ss'))
+
+    const applyBtn = screen.getByRole('button', { name: 'Apply' })
+
+    await waitFor(async () => {
+      await user.click(applyBtn)
+    })
 
     expect(onChangeQueryMock).toHaveBeenCalledWith({
       collection: {
         temporal: {
-          endDate: '2019-03-30T00:00:00.000Z',
-          startDate: '2019-03-29T00:00:00.000Z'
+          isRecurring: false,
+          startDate: validStartDate,
+          endDate: validEndDate
         }
       }
     })
+
     expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
-    expect(enzymeWrapper.state()).toEqual({
-      open: false,
-      temporal: {
-        endDate: '2019-03-30T00:00:00.000Z',
-        startDate: '2019-03-29T00:00:00.000Z'
-      },
-      disabled: false
-    })
   })
 })

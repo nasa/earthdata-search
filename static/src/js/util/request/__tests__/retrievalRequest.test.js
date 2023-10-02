@@ -89,7 +89,11 @@ describe('RetrievalRequest#submit', () => {
 
     const postMock = jest.spyOn(Request.prototype, 'post').mockImplementation()
 
-    const params = { collections: [], environment: 'sit', json_data: {} }
+    const params = {
+      collections: [],
+      environment: 'sit',
+      json_data: {}
+    }
     request.submit(params)
 
     expect(postMock).toBeCalledTimes(1)

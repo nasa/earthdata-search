@@ -65,8 +65,8 @@ export const fetchAdminProject = (id) => (dispatch, getState) => {
 
   const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
   const response = requestObject.adminFetch(id)
-    .then((response) => {
-      const { data } = response
+    .then((responseObject) => {
+      const { data } = responseObject
 
       dispatch(setAdminProjectLoaded(id))
       dispatch(setAdminProject(data))
@@ -113,12 +113,15 @@ export const fetchAdminProjects = () => (dispatch, getState) => {
   if (sortKey) requestOpts.sort_key = sortKey
 
   const response = requestObject.adminAll(requestOpts)
-    .then((response) => {
-      const { data } = response
-      const { pagination, results } = data
+    .then((responseObject) => {
+      const { data } = responseObject
+      const {
+        pagination: newPagination,
+        results
+      } = data
 
       dispatch(setAdminProjectsLoaded())
-      dispatch(setAdminProjectsPagination(pagination))
+      dispatch(setAdminProjectsPagination(newPagination))
       dispatch(setAdminProjects(results))
     })
     .catch((error) => {

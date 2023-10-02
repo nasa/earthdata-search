@@ -29,10 +29,10 @@ export const CustomToggle = React.forwardRef(({
   title,
   ...props
 }, ref) => {
-  const handleClick = (e) => {
-    e.preventDefault()
+  const handleClick = (event) => {
+    event.preventDefault()
 
-    onClick(e)
+    onClick(event)
   }
 
   const buttonClasses = classNames(
@@ -44,7 +44,7 @@ export const CustomToggle = React.forwardRef(({
   )
 
   // Default the event handlers to the onClick
-  let buttonEventHandlers = { onClick: (e) => handleClick(e) }
+  let buttonEventHandlers = { onClick: (event) => handleClick(event) }
 
   // If openOnHover is set and the handler functions are defined, set the event handlers
   if (
@@ -53,8 +53,8 @@ export const CustomToggle = React.forwardRef(({
     && typeof handleClose === 'function'
   ) {
     buttonEventHandlers = {
-      onMouseIn: (e) => handleOpen(e),
-      onMouseOut: (e) => handleClose(e)
+      onMouseIn: (event) => handleOpen(event),
+      onMouseOut: (event) => handleClose(event)
     }
   }
 
@@ -69,17 +69,21 @@ export const CustomToggle = React.forwardRef(({
       {...props}
       /* eslint-enable */
     >
-      {icon && (
-        <EDSCIcon
-          size="0.875rem"
-          icon={icon}
-          className="custom-toggle__icon"
-        />
-      )}
+      {
+        icon && (
+          <EDSCIcon
+            size="0.875rem"
+            icon={icon}
+            className="custom-toggle__icon"
+          />
+        )
+      }
       {children}
     </button>
   )
 })
+
+CustomToggle.displayName = 'CustomToggle'
 
 CustomToggle.defaultProps = {
   children: null,

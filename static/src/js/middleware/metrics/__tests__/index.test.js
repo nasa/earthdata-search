@@ -23,7 +23,11 @@ const createStore = () => {
 
   const invoke = (action) => metricsMiddleware(store)(next)(action)
 
-  return { store, next, invoke }
+  return {
+    store,
+    next,
+    invoke
+  }
 }
 
 describe('metrics middleware', () => {

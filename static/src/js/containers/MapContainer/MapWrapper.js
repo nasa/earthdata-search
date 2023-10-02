@@ -114,6 +114,11 @@ const MapWrapper = ({
       zoomControl={false}
       attributionControl={false}
       zoomAnimation={false}
+      style={
+        {
+          position: 'absolute'
+        }
+      }
     >
       <LayersControl
         position="bottomright"

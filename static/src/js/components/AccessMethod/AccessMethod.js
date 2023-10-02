@@ -1,4 +1,8 @@
-import React, { Component, lazy, Suspense } from 'react'
+import React, {
+  Component,
+  lazy,
+  Suspense
+} from 'react'
 import PropTypes from 'prop-types'
 import { Alert, Form } from 'react-bootstrap'
 import moment from 'moment'
@@ -14,10 +18,7 @@ import RadioList from '../FormFields/RadioList/RadioList'
 import Spinner from '../Spinner/Spinner'
 
 import './AccessMethod.scss'
-import {
-  ousFormatMapping,
-  harmonyFormatMapping
-} from '../../../../../sharedUtils/outputFormatMaps'
+import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
 
 const EchoForm = lazy(() => import('./EchoForm'))
 
@@ -229,6 +230,7 @@ export class AccessMethod extends Component {
 
           break
         }
+
         case 'ECHO ORDERS': {
           id = `${collectionId}_access-method__customize_${methodKey}`
           title = 'Stage For Delivery'
@@ -238,6 +240,7 @@ export class AccessMethod extends Component {
 
           break
         }
+
         case 'ESI': {
           id = `${collectionId}_access-method__customize_${methodKey}`
           title = 'Customize'
@@ -247,6 +250,7 @@ export class AccessMethod extends Component {
 
           break
         }
+
         case 'OPeNDAP': {
           id = `${collectionId}_access-method__opendap_${methodKey}`
           title = 'Customize'
@@ -256,15 +260,16 @@ export class AccessMethod extends Component {
 
           break
         }
+
         case 'Harmony': {
           id = `${collectionId}_access-method__harmony_${methodKey}`
           title = 'Customize'
           subtitle = 'Harmony'
           description = 'Select options like variables, transformations, and output formats for in-region cloud access.'
-          details = 'The requested data will be processed using the Harmony service and stored in the cloud for analysis.'
-
+          details = `The requested data will be processed using the ${name} service and stored in the cloud for analysis.`
           break
         }
+
         default:
           break
       }
@@ -351,7 +356,7 @@ export class AccessMethod extends Component {
 
     const echoFormFallback = (
       <div className="access-method__echoform-loading">
-        <Spinner className="access-method__echoform-spinner" size="tiny" type="dots" />
+        <Spinner className="access-method__echoform-spinner" dataTestId="access-method-echoform-spinner" size="tiny" type="dots" />
       </div>
     )
 
@@ -480,11 +485,13 @@ export class AccessMethod extends Component {
                             <Form.Check
                               id="input__temporal-subsetting"
                               type="checkbox"
-                              label={(
-                                <span className={`mb-1 d-block ${!enableTemporalSubsetting && 'text-muted'}`}>
-                                  Trim output granules to the selected temporal constraint
-                                </span>
-                              )}
+                              label={
+                                (
+                                  <span className={`mb-1 d-block ${!enableTemporalSubsetting && 'text-muted'}`}>
+                                    Trim output granules to the selected temporal constraint
+                                  </span>
+                                )
+                              }
                               checked={enableTemporalSubsetting}
                               disabled={isRecurring}
                               onChange={this.handleToggleTemporalSubsetting}
@@ -527,11 +534,13 @@ export class AccessMethod extends Component {
                             <Form.Check
                               id="input__spatial-subsetting"
                               type="checkbox"
-                              label={(
-                                <span className={`mb-1 d-block ${(!(enableSpatialSubsetting) && 'text-muted')}`}>
-                                  Trim output granules to the selected spatial constraint
-                                </span>
-                              )}
+                              label={
+                                (
+                                  <span className={`mb-1 d-block ${(!(enableSpatialSubsetting) && 'text-muted')}`}>
+                                    Trim output granules to the selected spatial constraint
+                                  </span>
+                                )
+                              }
                               checked={enableSpatialSubsetting}
                               onChange={this.handleToggleSpatialSubsetting}
                             />
@@ -549,7 +558,7 @@ export class AccessMethod extends Component {
                       }
                       {
                         !selectedSpatialDisplay && (
-                          <p className="access-method__section-status mb-0" data-testId="no-area-selected">
+                          <p className="access-method__section-status mb-0">
                             { /* eslint-disable-next-line max-len */}
                             No spatial area selected. Make a spatial selection to enable spatial subsetting.
                           </p>
@@ -566,30 +575,32 @@ export class AccessMethod extends Component {
                       intro="Use science keywords to subset your collection granules by measurements and variables."
                       nested
                     >
-                        {
-                          selectedVariables.length > 0 && (
-                            <p className="access-method__section-status">
-                              {`${selectedVariables.length} ${pluralize('variable', selectedVariables.length)} selected`}
-                            </p>
-                          )
-                        }
+                      {
+                        selectedVariables.length > 0 && (
+                          <p className="access-method__section-status">
+                            {`${selectedVariables.length} ${pluralize('variable', selectedVariables.length)} selected`}
+                          </p>
+                        )
+                      }
 
-                        {
-                          selectedVariables.length === 0 && (
-                            <p className="access-method__section-status">
-                              No variables selected. All variables will be included in download.
-                            </p>
-                          )
-                        }
+                      {
+                        selectedVariables.length === 0 && (
+                          <p className="access-method__section-status">
+                            No variables selected. All variables will be included in download.
+                          </p>
+                        )
+                      }
                       <Button
                         type="button"
                         bootstrapVariant="primary"
                         label="Edit Variables"
                         bootstrapSize="sm"
-                        onClick={() => {
-                          onSetActivePanel(`0.${index}.1`)
-                          onTogglePanels(true)
-                        }}
+                        onClick={
+                          () => {
+                            onSetActivePanel(`0.${index}.1`)
+                            onTogglePanels(true)
+                          }
+                        }
                       >
                         Edit Variables
                       </Button>
@@ -609,11 +620,14 @@ export class AccessMethod extends Component {
                         className="form-control form-control-sm"
                         onChange={this.handleOutputFormatSelection}
                         value={selectedOutputFormat}
+                        data-testid="access-methods__output-format-options"
                       >
-                        {[
-                          <option key="output-format-none" value="">None</option>,
-                          ...supportedOutputFormatOptions
-                        ]}
+                        {
+                          [
+                            <option key="output-format-none" value="">None</option>,
+                            ...supportedOutputFormatOptions
+                          ]
+                        }
                       </select>
                     </ProjectPanelSection>
                   )
@@ -630,11 +644,14 @@ export class AccessMethod extends Component {
                         className="form-control form-control-sm"
                         onChange={this.handleOutputProjectionSelection}
                         value={selectedOutputProjection}
+                        data-testid="access-methods__output-projection-options"
                       >
-                        {[
-                          <option key="output-projection-none" value="">None</option>,
-                          ...supportedOutputProjectionOptions
-                        ]}
+                        {
+                          [
+                            <option key="output-projection-none" value="">None</option>,
+                            ...supportedOutputProjectionOptions
+                          ]
+                        }
                       </select>
                     </ProjectPanelSection>
                   )

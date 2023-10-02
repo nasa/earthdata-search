@@ -1,7 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
-import { FaTrash, FaInfoCircle, FaEdit } from 'react-icons/fa'
+import {
+  FaTrash,
+  FaInfoCircle,
+  FaEdit
+} from 'react-icons/fa'
 import camelcaseKeys from 'camelcase-keys'
 import moment from 'moment'
 
@@ -65,18 +69,20 @@ export const SubscriptionsListItem = ({
           bootstrapVariant="light"
           bootstrapSize="sm"
           label="Details"
-          onClick={(e) => e.preventDefault()}
+          onClick={(event) => event.preventDefault()}
           tooltipId={`subscription-list-item--${conceptId}`}
           overlayClass="subscriptions-list-item__tooltip tooltip--wide"
-          tooltip={(
-            <>
-              <h5 className="tooltip__tooltip-heading">Filters</h5>
-              <SubscriptionsQueryList
-                query={camelcaseKeys(parsedQuery)}
-                subscriptionType={subscriptionType}
-              />
-            </>
-          )}
+          tooltip={
+            (
+              <>
+                <h5 className="tooltip__tooltip-heading">Filters</h5>
+                <SubscriptionsQueryList
+                  query={camelcaseKeys(parsedQuery)}
+                  subscriptionType={subscriptionType}
+                />
+              </>
+            )
+          }
         >
           Details
         </Button>
@@ -90,13 +96,15 @@ export const SubscriptionsListItem = ({
             || (exactlyMatchingSubscriptions.length > 0 && !isMatchingSubscription)
           }
           label="Edit Subscription"
-          onClick={() => {
-            onToggleEditSubscriptionModal({
-              isOpen: true,
-              subscriptionConceptId: conceptId,
-              type: subscriptionType
-            })
-          }}
+          onClick={
+            () => {
+              onToggleEditSubscriptionModal({
+                isOpen: true,
+                subscriptionConceptId: conceptId,
+                type: subscriptionType
+              })
+            }
+          }
         >
           Edit
         </Button>

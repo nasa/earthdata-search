@@ -18,7 +18,7 @@ describe('handleAlert', () => {
       .post(/alert_logger/)
       .reply(200)
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({})
 
     await store.dispatch(handleAlert({

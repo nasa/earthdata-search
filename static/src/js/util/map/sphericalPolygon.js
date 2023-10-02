@@ -1,10 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import L from 'leaflet'
 import 'leaflet-draw'
-import {
-  dividePolygon,
-  makeCounterClockwise
-} from '@edsc/geo-utils'
+import { dividePolygon, makeCounterClockwise } from '@edsc/geo-utils'
 
 L.SphericalPolygon = L.Polygon.extend({
   includes: [L.LayerGroup.prototype, L.FeatureGroup.prototype],
@@ -15,6 +12,7 @@ L.SphericalPolygon = L.Polygon.extend({
   initialize(latlngs, options) {
     this._layers = {}
     this._options = L.extend({}, this.options, options)
+
     return this.setLatLngs(latlngs)
   },
 
@@ -30,6 +28,7 @@ L.SphericalPolygon = L.Polygon.extend({
     } else {
       newLatLngs = latlngs
     }
+
     const leafletLatLngs = (newLatLngs.map((latlng) => L.latLng(latlng)))
 
     this._latlngs = leafletLatLngs.concat()
@@ -69,6 +68,7 @@ L.SphericalPolygon = L.Polygon.extend({
     const newLatLng = L.latLng(latlng)
     this._latlngs.push(newLatLng)
     this._bounds.extend(newLatLng)
+
     return this.redraw()
   },
 
@@ -85,6 +85,7 @@ L.SphericalPolygon = L.Polygon.extend({
     this._options = this.options
     L.setOptions(this._interiors, L.extend({}, this._options, { stroke: false }))
     L.setOptions(this._boundaries, L.extend({}, this._options, { fill: false }))
+
     return this.redraw()
   },
 
@@ -92,7 +93,9 @@ L.SphericalPolygon = L.Polygon.extend({
     if (this.options.previousOptions) {
       this.options.previousOptions = this._options
     }
+
     this._interiors.setStyle(L.extend({}, style, { stroke: false }))
+
     return this._boundaries.setStyle(L.extend({}, style, { fill: false }))
   },
 
@@ -106,7 +109,11 @@ L.sphericalPolygon = (latlngs, options) => new L.SphericalPolygon(latlngs, optio
 // Monkey-patch _removeLayer.  The original doesn't handle event propagation
 // from FeatureGroups, and SphericalPolygons are FeatureGroups
 const originalRemove = L.EditToolbar.Delete.prototype._removeLayer
-L.EditToolbar.Delete.prototype._removeLayer = function removeLayer(e) {
-  if (e.target != null ? e.target._boundaries : undefined) { e.layer = e.target }
-  return originalRemove.call(this, e)
+L.EditToolbar.Delete.prototype._removeLayer = function removeLayer(event) {
+  if (event.target != null ? event.target._boundaries : undefined) {
+    // eslint-disable-next-line no-param-reassign
+    event.layer = event.target
+  }
+
+  return originalRemove.call(this, event)
 }

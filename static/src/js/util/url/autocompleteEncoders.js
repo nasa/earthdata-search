@@ -37,10 +37,14 @@ export const decodeAutocomplete = (params) => {
       // Split the fields and pop the last element (which represents the leaf node)
       const value = fields.split(':').slice(-1)
 
-      // slice returns an array, select the element
+      // `slice` returns an array, select the element
       const [selectedValue] = value
 
-      values.push({ type: key, fields: items[index], value: selectedValue })
+      values.push({
+        type: key,
+        fields: items[index],
+        value: selectedValue
+      })
     })
   })
 

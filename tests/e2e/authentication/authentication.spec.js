@@ -13,14 +13,19 @@ const expectedCollectionCount = 6
 test.describe('Authentication', () => {
   test.beforeEach(async ({ page }) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route(/collections/, (route) => route.fulfill({
-      json: collectionFixture.body,
-      headers: collectionFixture.headers
-    }))
-    await page.route(/graphql/, (route) => route.fulfill({
-      body: getSubscriptionsGraphQlBody,
-      headers: graphQlHeaders
-    }))
+    await page.route(/collections/, async (route) => {
+      await route.fulfill({
+        json: collectionFixture.body,
+        headers: collectionFixture.headers
+      })
+    })
+
+    await page.route(/graphql/, async (route) => {
+      await route.fulfill({
+        json: getSubscriptionsGraphQlBody,
+        headers: graphQlHeaders
+      })
+    })
   })
 
   test.afterEach(async ({ context }) => {

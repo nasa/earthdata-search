@@ -31,6 +31,7 @@ export const EDSCIcon = ({
 
   if (typeof icon === 'string') {
     iconClassNames = `${iconClassNames} edsc-icon--simple`
+
     return (
       <i
         className={iconClassNames}

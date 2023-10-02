@@ -38,6 +38,7 @@ export const getStartingLetters = (facets) => {
     if (isNumber(firstLetter)) firstLetter = '#'
     if (!firstLetters.includes(firstLetter)) firstLetters.push(firstLetter)
   })
+
   return firstLetters
 }
 
@@ -153,6 +154,7 @@ export const categoryNameToCMRParam = (name) => {
     'Tiling System': 'two-d-coordinate-system-name',
     Latency: 'latency'
   }
+
   return categoryMap[name]
 }
 
