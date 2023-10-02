@@ -22,7 +22,10 @@ const conceptMetadata = async (event) => {
   } = await getAccessTokenFromJwtToken(jwtToken, earthdataEnvironment)
 
   // Access tokens used in the URL still require the client id
-  const conceptUrl = `${desiredPath}?${stringify({ ...parsedQueryParams, token: `${accessToken}` }, { encode: false })}`
+  const conceptUrl = `${desiredPath}?${stringify({
+    ...parsedQueryParams,
+    token: `${accessToken}`
+  }, { encode: false })}`
 
   return {
     statusCode: 307,

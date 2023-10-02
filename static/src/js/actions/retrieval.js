@@ -1,9 +1,6 @@
 import { push } from 'connected-react-router'
 
-import {
-  SET_RETRIEVAL_LOADING,
-  UPDATE_RETRIEVAL
-} from '../constants/actionTypes'
+import { SET_RETRIEVAL_LOADING, UPDATE_RETRIEVAL } from '../constants/actionTypes'
 
 import { addToast } from '../util/addToast'
 import RetrievalRequest from '../util/request/retrievalRequest'
@@ -58,13 +55,15 @@ export const submitRetrieval = () => (dispatch, getState) => {
       selectedType = 'download'
     } else if (type === 'ECHO ORDERS') {
       const { optionDefinition } = selectedMethod
-      const { name } = optionDefinition
-      selectedService = name
+      const { name: serviceName } = optionDefinition
+
+      selectedService = serviceName
       selectedType = 'order'
     } else if (type === 'ESI') {
       const { optionDefinition } = selectedMethod
-      const { name } = optionDefinition
-      selectedService = name
+      const { name: serviceName } = optionDefinition
+
+      selectedService = serviceName
       selectedType = 'esi'
     } else if (type === 'OPeNDAP') {
       selectedService = 'OPeNDAP'
@@ -91,8 +90,9 @@ export const submitRetrieval = () => (dispatch, getState) => {
   const orderParams = prepareRetrievalParams(state)
 
   const response = requestObject.submit(orderParams)
-    .then((response) => {
-      const { id: retrievalId } = response.data
+    .then((responseObject) => {
+      const { data } = responseObject
+      const { id: retrievalId } = data
 
       dispatch(submittedProject())
 
@@ -130,8 +130,8 @@ export const fetchRetrieval = (id) => (dispatch, getState) => {
   const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.fetch(id)
-    .then((response) => {
-      const { data } = response
+    .then((responseObject) => {
+      const { data } = responseObject
       const { collections } = data
 
       const updatedCollections = {
@@ -202,7 +202,7 @@ export const deleteRetrieval = (id) => (dispatch, getState) => {
       })
 
     return response
-  } catch (e) {
+  } catch (error) {
     return null
   }
 }

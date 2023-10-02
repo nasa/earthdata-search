@@ -9,10 +9,7 @@ import { getBoundingBox } from '../util/echoForms/getBoundingBox'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEmail } from '../util/echoForms/getEmail'
-import {
-  getEnvironmentConfig,
-  getEarthdataConfig
-} from '../../../sharedUtils/config'
+import { getEnvironmentConfig, getEarthdataConfig } from '../../../sharedUtils/config'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getNameValuePairsForProjections } from '../util/echoForms/getNameValuePairsForProjections'
 import { getNameValuePairsForResample } from '../util/echoForms/getNameValuePairsForResample'
@@ -209,12 +206,15 @@ const submitCatalogRestOrder = async (event, context) => {
       const { order } = agentResponse
       const { orderId } = order
 
-      await dbConnection('retrieval_orders').update({ order_number: orderId, state: 'initialized' }).where({ id })
+      await dbConnection('retrieval_orders').update({
+        order_number: orderId,
+        state: 'initialized'
+      }).where({ id })
 
       // Start the order status check workflow
       await startOrderStatusUpdateWorkflow(id, accessToken, type)
-    } catch (e) {
-      let [errorMessage] = parseError(e, { asJSON: false })
+    } catch (error) {
+      let [errorMessage] = parseError(error, { asJSON: false })
 
       // If the current state is `creating` then we don't want to throw a timeout error in the UI because the
       // job will run a second time through the SQS queue

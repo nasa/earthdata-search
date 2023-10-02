@@ -1,7 +1,4 @@
-import {
-  countSelectedFacets,
-  getStartingLetters
-} from '../util/facets'
+import { countSelectedFacets, getStartingLetters } from '../util/facets'
 
 import {
   LOADING_VIEW_ALL_FACETS,
@@ -31,6 +28,7 @@ const viewAllFacetsReducer = (state = initialState, action = {}) => {
         isLoaded: false
       }
     }
+
     case LOADED_VIEW_ALL_FACETS: {
       return {
         ...state,
@@ -38,6 +36,7 @@ const viewAllFacetsReducer = (state = initialState, action = {}) => {
         isLoaded: action.payload.loaded
       }
     }
+
     case UPDATE_VIEW_ALL_FACETS: {
       const byId = {}
       const allIds = []
@@ -57,11 +56,14 @@ const viewAllFacetsReducer = (state = initialState, action = {}) => {
         hits: action.payload.hits
       }
     }
+
     case TOGGLE_VIEW_ALL_FACETS_MODAL: {
       // Clear out the results when the modal is closed
       if (action.payload !== false) return state
+
       return initialState
     }
+
     default:
       return state
   }

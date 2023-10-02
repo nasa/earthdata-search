@@ -113,6 +113,7 @@ describe('ContactInfo component', () => {
         value: 'INFO'
       }
     })
+
     expect(enzymeWrapper.state()).toEqual({ notificationLevel: 'INFO' })
   })
 

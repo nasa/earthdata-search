@@ -46,7 +46,7 @@ describe('addError', () => {
 
     let storeActions = store.getActions()
 
-    // no action should be pushed
+    // No action should be pushed
     expect(storeActions.length).toEqual(0)
     expect(addToastMock).toHaveBeenCalledTimes(1)
     expect(addToastMock).toHaveBeenCalledWith(toastPayload.message, {

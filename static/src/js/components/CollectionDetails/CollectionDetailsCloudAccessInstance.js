@@ -101,6 +101,7 @@ export const CollectionDetailsCloudAccessInstance = ({
           s3BucketAndObjectPrefixNames.length && (
             s3BucketAndObjectPrefixNames.map((name, i) => {
               const key = `${name}-${i}`
+
               return (
                 <dd
                   key={key}

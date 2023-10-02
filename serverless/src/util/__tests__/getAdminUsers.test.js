@@ -15,6 +15,7 @@ jest.mock('@aws-sdk/client-secrets-manager', () => {
     }))
   }
 })
+
 const client = new SecretsManagerClient()
 
 describe('getAdminUsers', () => {

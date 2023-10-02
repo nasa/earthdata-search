@@ -11,6 +11,7 @@ export const getBrowseUrls = (granules) => {
     // Find the correct link from the list within the metadata
     return linkMetadata.filter((link) => {
       const { inherited, rel } = link
+
       return rel.includes('/browse#') && !inherited
     })
   }).filter(Boolean)

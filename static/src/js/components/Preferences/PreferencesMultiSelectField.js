@@ -30,6 +30,7 @@ class PreferencesMultiSelectField extends Component {
         formData: values
       }, () => {
         const { formData } = this.state
+
         return onChange(formData)
       })
     }
@@ -82,7 +83,7 @@ class PreferencesMultiSelectField extends Component {
                   </option>
                 )
               })
-          }
+            }
           </Form.Control>
         </div>
       </div>

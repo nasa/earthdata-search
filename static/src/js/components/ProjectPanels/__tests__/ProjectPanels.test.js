@@ -208,6 +208,7 @@ describe('ProjectPanels component', () => {
           }
         }
       })
+
       enzymeWrapper.instance().onCheckboxChange({ target: { checked: true } }, 'all', 'collectionId')
 
       expect(enzymeWrapper.state().selectedVariables).toEqual({
@@ -235,6 +236,7 @@ describe('ProjectPanels component', () => {
           }
         }
       })
+
       enzymeWrapper.instance().onCheckboxChange({ target: { checked: false } }, 'all', 'collectionId')
 
       expect(enzymeWrapper.state().selectedVariables).toEqual({
@@ -266,6 +268,7 @@ describe('ProjectPanels component', () => {
           }
         }
       })
+
       enzymeWrapper.instance().onCheckboxChange({ target: { checked: true } }, 'variableId1', 'collectionId')
 
       expect(enzymeWrapper.state().selectedVariables).toEqual({
@@ -300,6 +303,7 @@ describe('ProjectPanels component', () => {
           }
         }
       })
+
       enzymeWrapper.instance().onCheckboxChange({ target: { checked: false } }, 'variableId1', 'collectionId')
 
       expect(enzymeWrapper.state().selectedVariables).toEqual({

@@ -33,17 +33,19 @@ export const AdminProjectsList = ({
     onUpdateAdminProjectsSortKey(value)
   }
 
-  const handlePageChange = (pageNum) => {
-    onUpdateAdminProjectsPageNum(pageNum)
+  const handlePageChange = (newPageNum) => {
+    onUpdateAdminProjectsPageNum(newPageNum)
   }
 
   const onSetUsernameSort = () => {
     if (sortKey.indexOf('username') < 0) {
       handleSort('-username')
     }
+
     if (sortKey === '+username') {
       handleSort('')
     }
+
     if (sortKey === '-username') {
       handleSort('+username')
     }
@@ -53,9 +55,11 @@ export const AdminProjectsList = ({
     if (sortKey.indexOf('created_at') < 0) {
       handleSort('-created_at')
     }
+
     if (sortKey === '+created_at') {
       handleSort('')
     }
+
     if (sortKey === '-created_at') {
       handleSort('+created_at')
     }
@@ -119,9 +123,11 @@ export const AdminProjectsList = ({
                 <tr
                   className="admin-projects-list__interactive"
                   key={obfuscatedId}
-                  onClick={() => {
-                    historyPush(`/admin/projects/${obfuscatedId}`)
-                  }}
+                  onClick={
+                    () => {
+                      historyPush(`/admin/projects/${obfuscatedId}`)
+                    }
+                  }
                   role="button"
                 >
                   <td>

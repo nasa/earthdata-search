@@ -122,7 +122,7 @@ describe('deleteAutocompleteValue', () => {
 
 describe('cancelAutocomplete', () => {
   test('sets autocomplete as loaded when cancelled', () => {
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: ''
     })
@@ -151,12 +151,12 @@ describe('fetchAutocomplete', () => {
         }
       })
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: ''
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(fetchAutocomplete({ value: 'test value' })).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({ type: LOADING_AUTOCOMPLETE })
@@ -164,6 +164,7 @@ describe('fetchAutocomplete', () => {
         type: LOADED_AUTOCOMPLETE,
         payload: { loaded: true }
       })
+
       expect(storeActions[2]).toEqual({
         type: UPDATE_AUTOCOMPLETE_SUGGESTIONS,
         payload: {
@@ -202,6 +203,7 @@ describe('fetchAutocomplete', () => {
         type: LOADED_AUTOCOMPLETE,
         payload: { loaded: false }
       })
+
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
@@ -303,6 +305,7 @@ describe('selectAutocompleteSuggestion', () => {
     nock(/localhost/)
       .post(/autocomplete_logger/)
       .reply(200)
+
     const changeQueryMock = jest.spyOn(actions, 'changeQuery')
     changeQueryMock.mockImplementation(() => jest.fn())
 
@@ -329,14 +332,20 @@ describe('selectAutocompleteSuggestion', () => {
         instrument_h: 'mock value'
       }
     })
+
     expect(storeActions[1]).toEqual({
       type: UPDATE_AUTOCOMPLETE_SELECTED,
       payload: data
     })
 
-    // was getCollections called
+    // Was getCollections called
     expect(changeQueryMock).toHaveBeenCalledTimes(1)
-    expect(changeQueryMock).toHaveBeenCalledWith({ collection: { pageNum: 1, keyword: '' } })
+    expect(changeQueryMock).toHaveBeenCalledWith({
+      collection: {
+        pageNum: 1,
+        keyword: ''
+      }
+    })
   })
 })
 
@@ -362,12 +371,13 @@ describe('removeAutocompleteValue', () => {
         instrument_h: 'mock value'
       }
     })
+
     expect(storeActions[1]).toEqual({
       type: DELETE_AUTOCOMPLETE_VALUE,
       payload: data
     })
 
-    // was getCollections called
+    // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
   })
 })

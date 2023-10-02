@@ -4,7 +4,11 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
 import * as EventEmitter from '../../../events/events'
-import { mapDispatchToProps, mapStateToProps, ShapefileDropzoneContainer } from '../ShapefileDropzoneContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  ShapefileDropzoneContainer
+} from '../ShapefileDropzoneContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -218,12 +222,14 @@ describe('ShapefileDropzoneContainer component', () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
       eventEmitterEmitMock.mockImplementation(() => jest.fn())
 
-      enzymeWrapper.find('WithDropzone').props().onRemovedFile({
-        name: 'test-file.shp'
-      },
-      {
-        test: 'test-response'
-      })
+      enzymeWrapper.find('WithDropzone').props().onRemovedFile(
+        {
+          name: 'test-file.shp'
+        },
+        {
+          test: 'test-response'
+        }
+      )
 
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(

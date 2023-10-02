@@ -55,12 +55,14 @@ test.describe('History', () => {
           headers: graphQlHeaders
         })
       }
+
       if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
         await route.fulfill({
           json: granulesGraphQlBody,
           headers: graphQlHeaders
         })
       }
+
       if (query === JSON.parse(graphQlGetProjectCollections(conceptId)).query) {
         await route.fulfill({
           json: getCollectionsGraphQlBody,

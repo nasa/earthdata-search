@@ -1,9 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Route,
-  Switch
-} from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { isEqual } from 'lodash'
 import { Badge, Col } from 'react-bootstrap'
 import {
@@ -38,10 +35,8 @@ import GranuleResultsActionsContainer
   from '../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
 import SubscriptionsBodyContainer
   from '../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer'
-import PortalFeatureContainer
-  from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
-import PortalLinkContainer
-  from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import Button from '../Button/Button'
 import Panels from '../Panels/Panels'
@@ -292,6 +287,7 @@ class SearchPanels extends PureComponent {
           sortKey
         }
       })
+
       onMetricsCollectionSortChange({ value })
     }
 
@@ -379,10 +375,12 @@ class SearchPanels extends PureComponent {
                 title={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
                 badge={collectionSubscriptions.length ? `${collectionSubscriptions.length}` : false}
                 naked
-                to={{
-                  pathname: '/search/subscriptions',
-                  search: location.search
-                }}
+                to={
+                  {
+                    pathname: '/search/subscriptions',
+                    search: location.search
+                  }
+                }
               >
                 Subscriptions
               </PortalLinkContainer>
@@ -461,41 +459,45 @@ class SearchPanels extends PureComponent {
         key="granule-results-panel"
         dataTestId="panel-group_granule-results"
         handoffLinks={handoffLinks}
-        headerMessage={(
-          <>
-            {consortiumInfo}
+        headerMessage={
+          (
+            <>
+              {consortiumInfo}
+              {
+                collectionIsCSDA && (
+                  <Col className="search-panels__note">
+                    {'This collection is made available through the '}
+                    <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                    {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                    <Button
+                      className="search-panels__header-message-link"
+                      dataTestId="search-panels__csda-modal-button"
+                      onClick={() => onToggleAboutCSDAModal(true)}
+                      variant="link"
+                      bootstrapVariant="link"
+                      icon={FaQuestionCircle}
+                      label="More details"
+                    >
+                      More Details
+                    </Button>
+                  </Col>
+                )
+              }
+            </>
+          )
+        }
+        breadcrumbs={
+          [
             {
-              collectionIsCSDA && (
-                <Col className="search-panels__note">
-                  {'This collection is made available through the '}
-                  <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
-                  {' for NASA funded researchers. Access to the data will require additional authentication. '}
-                  <Button
-                    className="search-panels__header-message-link"
-                    dataTestId="search-panels__csda-modal-button"
-                    onClick={() => onToggleAboutCSDAModal(true)}
-                    variant="link"
-                    bootstrapVariant="link"
-                    icon={FaQuestionCircle}
-                    label="More details"
-                  >
-                    More Details
-                  </Button>
-                </Col>
-              )
+              title: `Search Results (${commafy(collectionHits)} Collections)`,
+              link: {
+                pathname: '/search',
+                search: location.search
+              },
+              onClick: () => onFocusedCollectionChange('')
             }
-          </>
-        )}
-        breadcrumbs={[
-          {
-            title: `Search Results (${commafy(collectionHits)} Collections)`,
-            link: {
-              pathname: '/search',
-              search: location.search
-            },
-            onClick: () => onFocusedCollectionChange('')
-          }
-        ]}
+          ]
+        }
         footer={(
           <GranuleResultsActionsContainer />
         )}
@@ -519,17 +521,19 @@ class SearchPanels extends PureComponent {
         viewsArray={granulesViewsArray}
         headerMetaPrimaryLoading={initialGranulesLoading}
         headerMetaPrimaryText={granuleResultsHeaderMetaPrimaryText}
-        moreActionsDropdownItems={[
-          {
-            title: 'Collection Details',
-            icon: FaInfoCircle,
-            link: {
-              pathname: '/search/granules/collection-details',
-              search: location.search
-            }
-          },
-          ...subscriptionsMoreActionsItem
-        ]}
+        moreActionsDropdownItems={
+          [
+            {
+              title: 'Collection Details',
+              icon: FaInfoCircle,
+              link: {
+                pathname: '/search/granules/collection-details',
+                search: location.search
+              }
+            },
+            ...subscriptionsMoreActionsItem
+          ]
+        }
         onPanelClose={this.onPanelClose}
       >
         <PanelItem scrollable={false}>
@@ -544,28 +548,32 @@ class SearchPanels extends PureComponent {
         dataTestId="panel-group_granules-collections-results"
         primaryHeading={collectionTitle}
         headerLoading={initialCollectionsLoading}
-        breadcrumbs={[
-          {
-            title: `Search Results (${commafy(collectionHits)} ${pluralize('Collection', collectionHits)})`,
-            link: {
-              pathname: '/search',
-              search: location.search
-            },
-            onClick: () => onFocusedCollectionChange('')
-          }
-        ]}
-        handoffLinks={handoffLinks}
-        moreActionsDropdownItems={[
-          {
-            title: 'Granules',
-            icon: FaMap,
-            link: {
-              pathname: '/search/granules',
-              search: location.search
+        breadcrumbs={
+          [
+            {
+              title: `Search Results (${commafy(collectionHits)} ${pluralize('Collection', collectionHits)})`,
+              link: {
+                pathname: '/search',
+                search: location.search
+              },
+              onClick: () => onFocusedCollectionChange('')
             }
-          },
-          ...subscriptionsMoreActionsItem
-        ]}
+          ]
+        }
+        handoffLinks={handoffLinks}
+        moreActionsDropdownItems={
+          [
+            {
+              title: 'Granules',
+              icon: FaMap,
+              link: {
+                pathname: '/search/granules',
+                search: location.search
+              }
+            },
+            ...subscriptionsMoreActionsItem
+          ]
+        }
         onPanelClose={this.onPanelClose}
       >
         <PanelItem scrollable={false}>
@@ -580,44 +588,48 @@ class SearchPanels extends PureComponent {
         dataTestId="panel-group_granule-details"
         primaryHeading={granuleTitle}
         headerLoading={!granuleTitle}
-        breadcrumbs={[
-          {
-            title: 'Search Results',
-            link: {
-              pathname: '/search',
-              search: location.search
+        breadcrumbs={
+          [
+            {
+              title: 'Search Results',
+              link: {
+                pathname: '/search',
+                search: location.search
+              },
+              onClick: () => onFocusedCollectionChange('')
             },
-            onClick: () => onFocusedCollectionChange('')
-          },
-          {
-            title: collectionTitle,
-            link: {
-              pathname: '/search/granules',
-              search: location.search
+            {
+              title: collectionTitle,
+              link: {
+                pathname: '/search/granules',
+                search: location.search
+              },
+              options: {
+                shrink: true
+              }
+            }
+          ]
+        }
+        moreActionsDropdownItems={
+          [
+            {
+              title: 'Granules',
+              icon: FaMap,
+              link: {
+                pathname: '/search/granules',
+                search: location.search
+              }
             },
-            options: {
-              shrink: true
+            {
+              title: 'Collection Details',
+              icon: FaInfoCircle,
+              link: {
+                pathname: '/search/granules/collection-details',
+                search: location.search
+              }
             }
-          }
-        ]}
-        moreActionsDropdownItems={[
-          {
-            title: 'Granules',
-            icon: FaMap,
-            link: {
-              pathname: '/search/granules',
-              search: location.search
-            }
-          },
-          {
-            title: 'Collection Details',
-            icon: FaInfoCircle,
-            link: {
-              pathname: '/search/granules/collection-details',
-              search: location.search
-            }
-          }
-        ]}
+          ]
+        }
         onPanelClose={this.onPanelClose}
       >
         <PanelItem>
@@ -630,44 +642,48 @@ class SearchPanels extends PureComponent {
       <PanelGroup
         key="granule-subscriptions-panel"
         primaryHeading="Granule Subscriptions"
-        breadcrumbs={[
-          {
-            title: 'Search Results',
-            link: {
-              pathname: '/search',
-              search: location.search
+        breadcrumbs={
+          [
+            {
+              title: 'Search Results',
+              link: {
+                pathname: '/search',
+                search: location.search
+              },
+              onClick: () => onFocusedCollectionChange('')
             },
-            onClick: () => onFocusedCollectionChange('')
-          },
-          {
-            title: collectionTitle,
-            link: {
-              pathname: '/search/granules',
-              search: location.search
+            {
+              title: collectionTitle,
+              link: {
+                pathname: '/search/granules',
+                search: location.search
+              },
+              options: {
+                shrink: true
+              }
+            }
+          ]
+        }
+        moreActionsDropdownItems={
+          [
+            {
+              title: 'Granules',
+              icon: FaMap,
+              link: {
+                pathname: '/search/granules',
+                search: location.search
+              }
             },
-            options: {
-              shrink: true
+            {
+              title: 'Collection Details',
+              icon: FaInfoCircle,
+              link: {
+                pathname: '/search/granules/collection-details',
+                search: location.search
+              }
             }
-          }
-        ]}
-        moreActionsDropdownItems={[
-          {
-            title: 'Granules',
-            icon: FaMap,
-            link: {
-              pathname: '/search/granules',
-              search: location.search
-            }
-          },
-          {
-            title: 'Collection Details',
-            icon: FaInfoCircle,
-            link: {
-              pathname: '/search/granules/collection-details',
-              search: location.search
-            }
-          }
-        ]}
+          ]
+        }
         onPanelClose={this.onPanelClose}
       >
         <PanelItem>
@@ -684,16 +700,18 @@ class SearchPanels extends PureComponent {
       <PanelGroup
         key="collection-subscriptions-panel"
         primaryHeading="Dataset Search Subscriptions"
-        breadcrumbs={[
-          {
-            title: 'Search Results',
-            link: {
-              pathname: '/search',
-              search: location.search
-            },
-            onClick: () => onFocusedCollectionChange('')
-          }
-        ]}
+        breadcrumbs={
+          [
+            {
+              title: 'Search Results',
+              link: {
+                pathname: '/search',
+                search: location.search
+              },
+              onClick: () => onFocusedCollectionChange('')
+            }
+          ]
+        }
         onPanelClose={this.onPanelClose}
       >
         <PanelItem>
@@ -720,8 +738,10 @@ class SearchPanels extends PureComponent {
               // be active at any given time. activePanel will be equal to whichever path
               // is set after "/search"
 
-              const { match = {} } = props
-              const { params = {} } = match
+              const {
+                match: propsMatch = {}
+              } = props
+              const { params = {} } = propsMatch
               const { activePanel: activePanelFromProps = '' } = params
               let activePanel = '0.0.0'
               let appTitle = ''
@@ -796,18 +816,22 @@ class SearchPanels extends PureComponent {
                     activePanel={activePanel}
                     draggable
                     panelState={panelState}
-                    focusedMeta={(
-                      <div className="search-panels__focused-meta">
-                        <Switch>
-                          <Route
-                            path="/search/granules"
-                            render={() => (
-                              <GranuleResultsFocusedMetaContainer />
-                            )}
-                          />
-                        </Switch>
-                      </div>
-                    )}
+                    focusedMeta={
+                      (
+                        <div className="search-panels__focused-meta">
+                          <Switch>
+                            <Route
+                              path="/search/granules"
+                              render={
+                                () => (
+                                  <GranuleResultsFocusedMetaContainer />
+                                )
+                              }
+                            />
+                          </Switch>
+                        </div>
+                      )
+                    }
                   >
                     <PanelSection>
                       {panelSection}

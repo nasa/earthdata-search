@@ -82,6 +82,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case ERRORED_PROJECT_GRANULES: {
       const collectionId = action.payload
 
@@ -109,6 +110,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case FINISHED_PROJECT_GRANULES_TIMER: {
       const collectionId = action.payload
 
@@ -146,6 +148,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case PROJECT_GRANULES_LOADED: {
       const { collectionId, loaded } = action.payload
 
@@ -183,6 +186,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case PROJECT_GRANULES_LOADING: {
       const collectionId = action.payload
 
@@ -210,6 +214,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case ADD_MORE_PROJECT_GRANULE_RESULTS: {
       const {
         collectionId,
@@ -254,6 +259,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case UPDATE_PROJECT_GRANULE_RESULTS: {
       const {
         collectionId,
@@ -302,6 +308,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case UPDATE_PROJECT_GRANULE_PARAMS: {
       const { collectionId, pageNum } = action.payload
 
@@ -329,6 +336,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case ADD_GRANULE_TO_PROJECT_COLLECTION: {
       const { collectionId, granuleId } = action.payload
 
@@ -400,6 +408,7 @@ const projectReducer = (state = initialState, action = {}) => {
 
       return state
     }
+
     case REMOVE_GRANULE_FROM_PROJECT_COLLECTION: {
       const { collectionId, granuleId } = action.payload
 
@@ -472,6 +481,7 @@ const projectReducer = (state = initialState, action = {}) => {
 
       return state
     }
+
     case ADD_COLLECTION_TO_PROJECT: {
       const collectionId = action.payload
 
@@ -499,6 +509,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case REMOVE_COLLECTION_FROM_PROJECT: {
       const collectionId = action.payload
 
@@ -531,6 +542,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case RESTORE_FROM_URL: {
       const { project } = action.payload
 
@@ -539,6 +551,7 @@ const projectReducer = (state = initialState, action = {}) => {
         ...project
       }
     }
+
     case SELECT_ACCESS_METHOD: {
       const {
         collectionId,
@@ -562,6 +575,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case ADD_ACCESS_METHODS: {
       const {
         collectionId,
@@ -601,6 +615,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case UPDATE_ACCESS_METHOD: {
       const { collectionId, method } = action.payload
 
@@ -634,6 +649,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case SUBMITTING_PROJECT: {
       return {
         ...state,
@@ -641,6 +657,7 @@ const projectReducer = (state = initialState, action = {}) => {
         isSubmitting: true
       }
     }
+
     case SUBMITTED_PROJECT: {
       return {
         ...state,
@@ -648,6 +665,7 @@ const projectReducer = (state = initialState, action = {}) => {
         isSubmitting: false
       }
     }
+
     case TOGGLE_COLLECTION_VISIBILITY: {
       return {
         ...state,
@@ -664,6 +682,7 @@ const projectReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     default:
       return state
   }

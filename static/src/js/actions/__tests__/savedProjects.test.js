@@ -2,10 +2,7 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import {
-  SET_SAVED_PROJECTS,
-  SET_SAVED_PROJECTS_LOADING
-} from '../../constants/actionTypes'
+import { SET_SAVED_PROJECTS, SET_SAVED_PROJECTS_LOADING } from '../../constants/actionTypes'
 import {
   fetchSavedProjects,
   setSavedProjects,
@@ -74,6 +71,7 @@ describe('fetchSavedProjects', () => {
       expect(storeActions[0]).toEqual({
         type: SET_SAVED_PROJECTS_LOADING
       })
+
       expect(storeActions[1]).toEqual({
         payload: [{
           name,

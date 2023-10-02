@@ -44,6 +44,7 @@ export const removeDisabledFieldsFromQuery = (query, disabledFields) => {
       const [, tagValue] = key.split('-')
 
       tags = tags.filter((value) => value !== tagValue)
+
       return
     }
 
@@ -52,6 +53,7 @@ export const removeDisabledFieldsFromQuery = (query, disabledFields) => {
       const [, cosortiumValue] = key.split('-')
 
       consortiums = consortiums.filter((value) => value !== cosortiumValue)
+
       return
     }
 

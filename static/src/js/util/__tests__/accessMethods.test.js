@@ -106,7 +106,7 @@ describe('isAccessMethodValid', () => {
       selectedAccessMethod: 'download'
     }
 
-    const collection = {
+    const collectionWithTags = {
       tags: {
         'edsc.limited_collections': {
           data: {
@@ -116,7 +116,7 @@ describe('isAccessMethodValid', () => {
       }
     }
 
-    expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+    expect(isAccessMethodValid(projectCollection, collectionWithTags)).toEqual({
       ...validAccessMethod,
       valid: true
     })
@@ -156,7 +156,7 @@ describe('isAccessMethodValid', () => {
       selectedAccessMethod: 'download'
     }
 
-    const collection = {
+    const collectionWithTags = {
       tags: {
         'edsc.limited_collections': {
           data: {
@@ -166,7 +166,7 @@ describe('isAccessMethodValid', () => {
       }
     }
 
-    expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+    expect(isAccessMethodValid(projectCollection, collectionWithTags)).toEqual({
       ...validAccessMethod,
       valid: false,
       tooManyGranules: true
@@ -187,7 +187,7 @@ describe('isAccessMethodValid', () => {
       selectedAccessMethod: 'download'
     }
 
-    const collection = {
+    const collectionWithTags = {
       tags: {
         'edsc.limited_collections': {
           data: {
@@ -197,7 +197,7 @@ describe('isAccessMethodValid', () => {
       }
     }
 
-    expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+    expect(isAccessMethodValid(projectCollection, collectionWithTags)).toEqual({
       ...validAccessMethod,
       valid: false,
       noGranules: true
@@ -220,7 +220,7 @@ describe('isAccessMethodValid', () => {
         selectedAccessMethod: 'download'
       }
 
-      const collection = {
+      const collectionWithTags = {
         tags: {
           'edsc.limited_collections': {
             data: {
@@ -230,7 +230,7 @@ describe('isAccessMethodValid', () => {
         }
       }
 
-      expect(isAccessMethodValid(projectCollection, collection)).toEqual(validAccessMethod)
+      expect(isAccessMethodValid(projectCollection, collectionWithTags)).toEqual(validAccessMethod)
     })
 
     test('returns false if the added granule count is over the limit', () => {
@@ -248,7 +248,7 @@ describe('isAccessMethodValid', () => {
         selectedAccessMethod: 'download'
       }
 
-      const collection = {
+      const collectionWithTags = {
         tags: {
           'edsc.limited_collections': {
             data: {
@@ -258,7 +258,7 @@ describe('isAccessMethodValid', () => {
         }
       }
 
-      expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+      expect(isAccessMethodValid(projectCollection, collectionWithTags)).toEqual({
         ...validAccessMethod,
         valid: false,
         tooManyGranules: true
@@ -282,7 +282,7 @@ describe('isAccessMethodValid', () => {
         selectedAccessMethod: 'download'
       }
 
-      const collection = {
+      const collectionWithTags = {
         tags: {
           'edsc.limited_collections': {
             data: {
@@ -292,7 +292,7 @@ describe('isAccessMethodValid', () => {
         }
       }
 
-      expect(isAccessMethodValid(projectCollection, collection)).toEqual(validAccessMethod)
+      expect(isAccessMethodValid(projectCollection, collectionWithTags)).toEqual(validAccessMethod)
     })
 
     test('returns false if the count is over the limit', () => {
@@ -310,7 +310,7 @@ describe('isAccessMethodValid', () => {
         selectedAccessMethod: 'download'
       }
 
-      const collection = {
+      const collectionWithTags = {
         tags: {
           'edsc.limited_collections': {
             data: {
@@ -320,7 +320,7 @@ describe('isAccessMethodValid', () => {
         }
       }
 
-      expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+      expect(isAccessMethodValid(projectCollection, collectionWithTags)).toEqual({
         ...validAccessMethod,
         valid: false,
         tooManyGranules: true

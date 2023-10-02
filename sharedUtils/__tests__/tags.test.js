@@ -1,5 +1,9 @@
 import * as appConfig from '../config'
-import { tagName, getValueForTag, hasTag } from '../tags'
+import {
+  tagName,
+  getValueForTag,
+  hasTag
+} from '../tags'
 
 beforeEach(() => {
   jest.clearAllMocks()

@@ -21,6 +21,7 @@ class AdvancedSearchDisplay extends PureComponent {
       if (isObject(value)) {
         return !isEmpty(value)
       }
+
       return !!value
     }).length
 
@@ -32,23 +33,27 @@ class AdvancedSearchDisplay extends PureComponent {
       <FilterStackItem
         icon={FaSlidersH}
         title="Advanced Search"
-        onRemove={() => {
-          onUpdateAdvancedSearch({})
-          onChangeQuery({
-            collection: {
-              spatial: {}
-            }
-          })
-        }}
+        onRemove={
+          () => {
+            onUpdateAdvancedSearch({})
+            onChangeQuery({
+              collection: {
+                spatial: {}
+              }
+            })
+          }
+        }
       >
         <FilterStackContents
-          body={(
-            <AdvancedSearchDisplayEntry>
-              <span className="advanced-search-display__text">
-                {valueToDisplay}
-              </span>
-            </AdvancedSearchDisplayEntry>
-          )}
+          body={
+            (
+              <AdvancedSearchDisplayEntry>
+                <span className="advanced-search-display__text">
+                  {valueToDisplay}
+                </span>
+              </AdvancedSearchDisplayEntry>
+            )
+          }
           title="Advanced Search"
         />
       </FilterStackItem>

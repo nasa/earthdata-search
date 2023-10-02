@@ -52,6 +52,7 @@ describe('CustomToggle component', () => {
     button.simulate('click', {
       preventDefault: () => { }
     })
+
     expect(props.onClick.mock.calls.length).toBe(1)
   })
 

@@ -14,20 +14,21 @@ export const computeHierarchyMappings = (variables) => {
     // If the name isn't hierarchical, push the variableId onto calculatedMappings
     if (!name.includes('/')) {
       calculatedMappings.push({ id: variableId })
+
       return
     }
 
     const nameParts = name.split('/').filter(Boolean)
 
-    // newObject is the source of all the data in the new variable object
+    // `newObject` is the source of all the data in the new variable object
     const newObject = {}
 
-    // workingObject holds onto the part of the full object that is currently being processed
+    // `workingObject` holds onto the part of the full object that is currently being processed
     let workingObject = newObject
 
     // Loop through each part of the hierarchical name
     // Find a matching object in calculatedMappings, or create a new one
-    nameParts.forEach((name, nameIndex) => {
+    nameParts.forEach((namePart, nameIndex) => {
       // If we are at the very end of nameParts, don't process it (that info is returned from the variable on the client-side)
       if (nameIndex === nameParts.length - 1) return
 
@@ -37,12 +38,12 @@ export const computeHierarchyMappings = (variables) => {
 
       // Search for a object with a label matching the current name
       const foundIndex = objectToSearch.findIndex((mapping) => (
-        mapping.label === name
+        mapping.label === namePart
       ))
 
       // If a name was not found
       if (foundIndex === -1) {
-        workingObject.label = name
+        workingObject.label = namePart
 
         // If at the end - 1 of the name parts loop, the children needs to be the variableId.
         // end - 1 because the last name isn't important, the client-side gets that info from the variable
@@ -68,7 +69,7 @@ export const computeHierarchyMappings = (variables) => {
         // If at the end - 1 of the name parts loop, the children needs to be the variableId.
         // end - 1 because the last name isn't important, the client-side gets that info from the variable
         if (nameIndex === nameParts.length - 2) {
-          // concat the variableId with any existing children
+          // Concat the variableId with any existing children
           workingObject.children = workingObject.children.concat({ id: variableId })
         } else {
           // Check to see if the next name is found in the current workingObject.children

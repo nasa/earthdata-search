@@ -3,8 +3,14 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { KeyboardShortcutsModalContainer, mapDispatchToProps, mapStateToProps } from '../KeyboardShortcutsModalContainer'
-import { KeyboardShortcutsModal } from '../../../components/KeyboardShortcutsModal/KeyboardShortcutsModal'
+import {
+  KeyboardShortcutsModalContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../KeyboardShortcutsModalContainer'
+import {
+  KeyboardShortcutsModal
+} from '../../../components/KeyboardShortcutsModal/KeyboardShortcutsModal'
 
 Enzyme.configure({ adapter: new Adapter() })
 

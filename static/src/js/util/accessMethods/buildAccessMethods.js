@@ -54,7 +54,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           const {
             conceptId: orderOptionConceptId,
             form,
-            name
+            name: orderOptionName
           } = orderOptionItem
 
           const method = {
@@ -63,7 +63,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
             url: urlValue,
             optionDefinition: {
               conceptId: orderOptionConceptId,
-              name
+              name: orderOptionName
             },
             form,
             formDigest: generateFormDigest(form)
@@ -111,6 +111,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           variables
         }
       }
+
       if (serviceType.toLowerCase() === 'harmony') {
         const {
           hierarchyMappings,

@@ -129,6 +129,7 @@ describe('DatepickerContainer component', () => {
       expect(onSubmit).toHaveBeenCalledTimes(1)
       expect(moment.isMoment(onSubmit.mock.calls[0][0]))
         .toEqual(true)
+
       expect(onSubmit.mock.calls[0][0].isValid())
         .toEqual(false)
     })
@@ -143,6 +144,7 @@ describe('DatepickerContainer component', () => {
       expect(onSubmit).toHaveBeenCalledTimes(1)
       expect(moment.isMoment(onSubmit.mock.calls[0][0]))
         .toEqual(true)
+
       expect(onSubmit.mock.calls[0][0].isValid())
         .toEqual(false)
     })
@@ -157,6 +159,7 @@ describe('DatepickerContainer component', () => {
       expect(onSubmit).toHaveBeenCalledTimes(1)
       expect(moment.isMoment(onSubmit.mock.calls[0][0]))
         .toEqual(true)
+
       expect(onSubmit.mock.calls[0][0].toISOString())
         .toEqual('1988-09-03T09:00:00.000Z')
     })
@@ -173,6 +176,7 @@ describe('DatepickerContainer component', () => {
         expect(onSubmit).toHaveBeenCalledTimes(1)
         expect(moment.isMoment(onSubmit.mock.calls[0][0]))
           .toEqual(true)
+
         expect(onSubmit.mock.calls[0][0].toISOString())
           .toEqual('1988-09-03T00:00:00.000Z')
       })
@@ -188,6 +192,7 @@ describe('DatepickerContainer component', () => {
         expect(onSubmit).toHaveBeenCalledTimes(1)
         expect(moment.isMoment(onSubmit.mock.calls[0][0]))
           .toEqual(true)
+
         expect(onSubmit.mock.calls[0][0].toISOString())
           .toEqual('1988-09-03T23:59:59.999Z')
       })

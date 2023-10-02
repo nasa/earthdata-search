@@ -5,9 +5,18 @@
  */
 export const getOperatingSystem = (userAgent) => {
   const patterns = [
-    { name: 'Windows', pattern: /Windows\s(?:NT\s)?([^\s;)]+)/ },
-    { name: 'Mac OS', pattern: /Macintosh.*?([^\s;)]+)/ },
-    { name: 'Linux', pattern: /Linux(?:\si686|\samd64)?(?:\su;)?\s?([^\s;)]+)/ }
+    {
+      name: 'Windows',
+      pattern: /Windows\s(?:NT\s)?([^\s;)]+)/
+    },
+    {
+      name: 'Mac OS',
+      pattern: /Macintosh.*?([^\s;)]+)/
+    },
+    {
+      name: 'Linux',
+      pattern: /Linux(?:\si686|\samd64)?(?:\su;)?\s?([^\s;)]+)/
+    }
   ]
   let operatingSystem = null
 
@@ -18,5 +27,6 @@ export const getOperatingSystem = (userAgent) => {
       if (operatingSystem === 'Mac OS') operatingSystem = 'macOS'
     }
   })
+
   return operatingSystem
 }

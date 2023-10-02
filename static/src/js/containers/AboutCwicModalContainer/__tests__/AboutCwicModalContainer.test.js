@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, AboutCwicModalContainer } from '../AboutCwicModalContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  AboutCwicModalContainer
+} from '../AboutCwicModalContainer'
 import { AboutCwicModal } from '../../../components/AboutCwicModal/AboutCwicModal'
 
 Enzyme.configure({ adapter: new Adapter() })

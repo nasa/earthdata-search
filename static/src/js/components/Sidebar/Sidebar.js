@@ -22,9 +22,11 @@ const Sidebar = ({
         { headerChildren }
         <SimpleBar
           className="sidebar__content"
-          style={{
-            height: '100%'
-          }}
+          style={
+            {
+              height: '100%'
+            }
+          }
         >
           {children}
         </SimpleBar>

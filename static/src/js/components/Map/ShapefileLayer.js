@@ -134,7 +134,7 @@ class ShapefileLayerExtended extends L.Layer {
         })
       }
 
-      // geojson type file
+      // Geojson type file
       if (type === 'MultiPolygon') {
         featureIndexesToRemove.push(featureIndex)
         geometry.coordinates.forEach((coordinate) => {
@@ -150,7 +150,7 @@ class ShapefileLayerExtended extends L.Layer {
       }
     })
 
-    // remove MultiPolygon features from geojson files
+    // Remove MultiPolygon features from geojson files
     featureIndexesToRemove.reverse().forEach((index) => {
       geojson.features.splice(index, 1)
     })
@@ -170,7 +170,7 @@ class ShapefileLayerExtended extends L.Layer {
     if (this.fileHash === newHash.digest().toHex()) return
 
     this.selectedLayers = selectedFeatures
-    // look through response and separate all MultiPolygon types into their own polygon
+    // Look through response and separate all MultiPolygon types into their own polygon
     this.separateMultiPolygons(response)
 
     // Add an id field to each feature unless it already has one
@@ -214,6 +214,7 @@ class ShapefileLayerExtended extends L.Layer {
         } else {
           featureLatLngs = featureLayer.getLatLngs().flat()
         }
+
         allLatsArctic = featureLatLngs.every((latlng) => latlng.lat > 45)
         allLatsAntarctic = featureLatLngs.every((latlng) => latlng.lat < -45)
 
@@ -267,6 +268,7 @@ class ShapefileLayerExtended extends L.Layer {
       // Change projection to arctic
       this.onChangeProjection(projections.arctic)
     }
+
     if (allLatsAntarctic) {
       // Change projection to arctic
       this.onChangeProjection(projections.antarctic)
@@ -283,6 +285,7 @@ class ShapefileLayerExtended extends L.Layer {
     if (!layer) {
       layer = event.target
     }
+
     const { feature } = layer
     const { edscId: layerId } = feature
 
@@ -294,7 +297,10 @@ class ShapefileLayerExtended extends L.Layer {
 
       // Remove the drawing from the map (also removes the spatial search)
       const { map } = this
-      map.fire('draw:deleted', { isShapefile: true, layerId })
+      map.fire('draw:deleted', {
+        isShapefile: true,
+        layerId
+      })
     } else {
       // Add the layerId to this.selectedLayers
       this.selectedLayers.push(layerId)
@@ -340,6 +346,7 @@ class ShapefileLayerExtended extends L.Layer {
         radius,
         ...this.options.selection
       })
+
       layerType = 'circle'
     } else if (sourceLayer.getLatLng != null) {
       // Point
@@ -359,6 +366,7 @@ class ShapefileLayerExtended extends L.Layer {
         layer,
         layerType
       })
+
       map.fire('draw:drawstop')
     }
   }
@@ -373,6 +381,7 @@ class ShapefileLayerExtended extends L.Layer {
     let prev = newLatLngs[newLatLngs.length - 1]
     newLatLngs.forEach((latlng) => {
       if (!isEqual(latlng, prev)) { result.push(latlng) }
+
       prev = latlng
     })
 
@@ -381,7 +390,10 @@ class ShapefileLayerExtended extends L.Layer {
     if (newLatLngs.length > MAX_POLYGON_SIZE) {
       const points = ((() => {
         const result1 = []
-        newLatLngs.forEach((latlng) => result1.push({ x: latlng.lng, y: latlng.lat }))
+        newLatLngs.forEach((latlng) => result1.push({
+          x: latlng.lng,
+          y: latlng.lat
+        }))
 
         return result1
       })())
@@ -392,7 +404,10 @@ class ShapefileLayerExtended extends L.Layer {
         result = L.LineUtil.simplify(points, tolerance += 0.01)
       }
 
-      newLatLngs = (result.map((point) => ({ lat: point.y, lng: point.x })))
+      newLatLngs = (result.map((point) => ({
+        lat: point.y,
+        lng: point.x
+      })))
     }
 
     // Remove redundancies
@@ -400,6 +415,7 @@ class ShapefileLayerExtended extends L.Layer {
     prev = newLatLngs[newLatLngs.length - 1]
     newLatLngs.forEach((latlng) => {
       if (!isEqual(latlng, prev)) { result.push(latlng) }
+
       prev = latlng
     })
 
@@ -409,7 +425,11 @@ class ShapefileLayerExtended extends L.Layer {
 
 const createLayer = (props, context) => {
   const layer = new ShapefileLayerExtended(props)
-  return { instance: layer, context }
+
+  return {
+    instance: layer,
+    context
+  }
 }
 
 const updateLayer = (instance, props) => {

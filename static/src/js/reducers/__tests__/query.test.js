@@ -65,9 +65,6 @@ describe('UPDATE_COLLECTION_QUERY', () => {
   })
 
   test('does not overwrite existing values', () => {
-    const initialState = {
-      collection: { keyword: 'old keyword' }
-    }
     const payload = {
       spatial: {
         point: '0,0'
@@ -86,7 +83,9 @@ describe('UPDATE_COLLECTION_QUERY', () => {
       }
     }
 
-    expect(queryReducer(initialState, action)).toEqual(expectedState)
+    expect(queryReducer({
+      collection: { keyword: 'old keyword' }
+    }, action)).toEqual(expectedState)
   })
 })
 

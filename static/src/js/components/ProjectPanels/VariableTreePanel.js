@@ -79,9 +79,7 @@ export const VariableTreePanel = (props) => {
 
   return (
     <ProjectPanelSection heading="Variable Selection">
-      {
-        keywordMappings.length > 0 && hierarchyMappings.length > 0 && browseBy
-      }
+      {keywordMappings.length > 0 && hierarchyMappings.length > 0 && browseBy}
       <Tree
         key={treeView}
         collectionId={collectionId}

@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, GranuleResultsBodyContainer } from '../GranuleResultsBodyContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  GranuleResultsBodyContainer
+} from '../GranuleResultsBodyContainer'
 import GranuleResultsBody from '../../../components/GranuleResults/GranuleResultsBody'
 import * as metricsDataAccess from '../../../middleware/metrics/actions'
 
@@ -147,6 +151,7 @@ describe('GranuleResultsBodyContainer component', () => {
     expect(enzymeWrapper.find(GranuleResultsBody).props().granuleQuery).toEqual({
       pageNum: 1
     })
+
     expect(enzymeWrapper.find(GranuleResultsBody).props().granulesMetadata).toEqual({})
     expect(enzymeWrapper.find(GranuleResultsBody).props().granuleSearchResults).toEqual({})
     expect(enzymeWrapper.find(GranuleResultsBody).props().isOpenSearch).toEqual(false)

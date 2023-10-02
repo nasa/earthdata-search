@@ -34,7 +34,7 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
     // Pull the secret used to encrypt our jwtTokens
     const { secret } = getSecretEarthdataConfig(earthdataEnvironment)
 
-    return jwt.verify(jwtToken, secret, async (verifyError, decodedJwtToken) => {
+    return jwt.verify(jwtToken, secret, async (verifyError, verifiedJwtToken) => {
       if (verifyError) {
         // This suggests that the token has been tampered with
         console.log(`JWT Token Invalid. ${verifyError}`)
@@ -45,7 +45,7 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
       const {
         id: userId,
         username
-      } = decodedJwtToken
+      } = verifiedJwtToken
 
       // Retrieve the authenticated users' access tokens from the database
       const existingUserTokens = await dbConnection('user_tokens')
@@ -55,7 +55,10 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
           'refresh_token',
           'expires_at'
         ])
-        .where({ user_id: userId, environment: earthdataEnvironment })
+        .where({
+          user_id: userId,
+          environment: earthdataEnvironment
+        })
         .orderBy('created_at', 'DESC')
 
       if (existingUserTokens.length === 0) {
@@ -83,7 +86,10 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
         try {
           // Remove all tokens for this user in the current environment
           await dbConnection('user_tokens')
-            .where({ user_id: userId, environment: earthdataEnvironment })
+            .where({
+              user_id: userId,
+              environment: earthdataEnvironment
+            })
             .del()
 
           const refreshedToken = await oauthToken.refresh()
@@ -92,16 +98,16 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
 
           const { token } = refreshedToken
           const {
-            access_token: accessToken,
-            refresh_token: refreshToken,
-            expires_at: expiresAt
+            access_token: refreshedAccessToken,
+            refresh_token: refreshedRefreshToken,
+            expires_at: refreshedExpiresAt
           } = token
 
           await dbConnection('user_tokens').insert({
             user_id: userId,
-            access_token: accessToken,
-            refresh_token: refreshToken,
-            expires_at: expiresAt,
+            access_token: refreshedAccessToken,
+            refresh_token: refreshedRefreshToken,
+            expires_at: refreshedExpiresAt,
             environment: earthdataEnvironment
           })
         } catch (error) {
@@ -114,8 +120,8 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
       // If successful, return the username associated with the token
       return username
     })
-  } catch (e) {
-    parseError(e)
+  } catch (error) {
+    parseError(error)
 
     return false
   }

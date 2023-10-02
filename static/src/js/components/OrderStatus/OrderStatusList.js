@@ -40,9 +40,8 @@ export const OrderStatusList = ({
               onFetchRetrieval={onFetchRetrieval}
               onFetchRetrievalCollection={onFetchRetrievalCollection}
               onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
-              onFetchRetrievalCollectionGranuleBrowseLinks={
-                onFetchRetrievalCollectionGranuleBrowseLinks
-              }
+              // eslint-disable-next-line max-len
+              onFetchRetrievalCollectionGranuleBrowseLinks={onFetchRetrievalCollectionGranuleBrowseLinks}
               onToggleAboutCSDAModal={onToggleAboutCSDAModal}
             />
           )

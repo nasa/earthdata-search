@@ -38,7 +38,10 @@ const processResults = (results) => {
     allIds.push(obfuscatedId)
   })
 
-  return { byId, allIds }
+  return {
+    byId,
+    allIds
+  }
 }
 
 const adminRetrievalsReducer = (state = initialState, action = {}) => {
@@ -50,6 +53,7 @@ const adminRetrievalsReducer = (state = initialState, action = {}) => {
         isLoading: false
       }
     }
+
     case SET_ADMIN_RETRIEVALS_LOADING: {
       return {
         ...state,
@@ -57,6 +61,7 @@ const adminRetrievalsReducer = (state = initialState, action = {}) => {
         isLoading: true
       }
     }
+
     case SET_ADMIN_RETRIEVALS: {
       const { byId, allIds } = processResults(action.payload)
 
@@ -66,6 +71,7 @@ const adminRetrievalsReducer = (state = initialState, action = {}) => {
         allIds
       }
     }
+
     case SET_ADMIN_RETRIEVAL_LOADED: {
       const id = action.payload
 
@@ -81,6 +87,7 @@ const adminRetrievalsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case SET_ADMIN_RETRIEVAL_LOADING: {
       const id = action.payload
 
@@ -96,6 +103,7 @@ const adminRetrievalsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case SET_ADMIN_RETRIEVAL: {
       const {
         obfuscated_id: id
@@ -114,6 +122,7 @@ const adminRetrievalsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case SET_ADMIN_RETRIEVALS_PAGINATION: {
       const {
         page_num: pageNum,
@@ -133,12 +142,14 @@ const adminRetrievalsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case UPDATE_ADMIN_RETRIEVALS_SORT_KEY: {
       return {
         ...state,
         sortKey: action.payload
       }
     }
+
     case UPDATE_ADMIN_RETRIEVALS_PAGE_NUM: {
       return {
         ...state,
@@ -148,6 +159,7 @@ const adminRetrievalsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     default:
       return state
   }

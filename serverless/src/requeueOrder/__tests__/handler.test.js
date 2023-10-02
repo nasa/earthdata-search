@@ -11,7 +11,11 @@ const OLD_ENV = process.env
 
 jest.mock('@aws-sdk/client-sqs', () => {
   const mSQS = { send: jest.fn() }
-  return { SQSClient: jest.fn(() => mSQS), SendMessageBatchCommand: jest.fn() }
+
+  return {
+    SQSClient: jest.fn(() => mSQS),
+    SendMessageBatchCommand: jest.fn()
+  }
 })
 
 export const orderPayload = {

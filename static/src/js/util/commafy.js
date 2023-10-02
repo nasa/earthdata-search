@@ -10,6 +10,7 @@ export const commafy = (number) => {
   const num = `${number}`
   const parts = num.toString().split('.')
   parts[0] = parts[0].replace(commaRegex, ',')
+
   return parts.join('.')
 }
 

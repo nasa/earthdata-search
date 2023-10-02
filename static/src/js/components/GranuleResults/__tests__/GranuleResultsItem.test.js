@@ -288,7 +288,7 @@ function setup(type, overrideProps) {
   }
 
   if (type === 'static-coverage') {
-    // timeStart and timeEnd are intentionally left out in order to
+    // `timeStart` and timeEnd are intentionally left out in order to
     // mimic what is passed to GranuleResultsItem when the app is running
     props = {
       ...defaultProps,
@@ -476,7 +476,10 @@ describe('GranuleResultsItem component', () => {
 
         removeButton.simulate('click')
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
-        expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: 'granuleId' }])
+        expect(props.onExcludeGranule.mock.calls[0]).toEqual([{
+          collectionId: 'collectionId',
+          granuleId: 'granuleId'
+        }])
 
         expect(removeButton.props().title).toEqual('Filter granule')
       })
@@ -489,7 +492,10 @@ describe('GranuleResultsItem component', () => {
 
         removeButton.simulate('click')
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
-        expect(props.onExcludeGranule.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: '170417722' }])
+        expect(props.onExcludeGranule.mock.calls[0]).toEqual([{
+          collectionId: 'collectionId',
+          granuleId: '170417722'
+        }])
 
         expect(removeButton.props().title).toEqual('Filter granule')
       })
@@ -552,7 +558,11 @@ describe('GranuleResultsItem component', () => {
 
       addButton.simulate('click', mockEvent)
       expect(props.onAddGranuleToProjectCollection.mock.calls.length).toBe(1)
-      expect(props.onAddGranuleToProjectCollection.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: 'granuleId' }])
+      expect(props.onAddGranuleToProjectCollection.mock.calls[0]).toEqual([{
+        collectionId: 'collectionId',
+        granuleId: 'granuleId'
+      }])
+
       expect(mockEvent.stopPropagation.mock.calls.length).toBe(1)
       expect(mockEvent.stopPropagation.mock.calls[0]).toEqual([])
     })
@@ -574,7 +584,11 @@ describe('GranuleResultsItem component', () => {
 
       removeButton.simulate('click', mockEvent)
       expect(props.onRemoveGranuleFromProjectCollection.mock.calls.length).toBe(1)
-      expect(props.onRemoveGranuleFromProjectCollection.mock.calls[0]).toEqual([{ collectionId: 'collectionId', granuleId: 'granuleId' }])
+      expect(props.onRemoveGranuleFromProjectCollection.mock.calls[0]).toEqual([{
+        collectionId: 'collectionId',
+        granuleId: 'granuleId'
+      }])
+
       expect(mockEvent.stopPropagation.mock.calls.length).toBe(1)
       expect(mockEvent.stopPropagation.mock.calls[0]).toEqual([])
     })

@@ -45,8 +45,8 @@ export const MoreActionsDropdown = ({
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
     <div
       className={moreActionClasses}
-      onClick={(e) => e.stopPropagation()}
-      onKeyPress={(e) => e.stopPropagation()}
+      onClick={(event) => event.stopPropagation()}
+      onKeyPress={(event) => event.stopPropagation()}
     >
       <Dropdown className="more-actions-dropdown__dropdown">
         <Dropdown.Toggle

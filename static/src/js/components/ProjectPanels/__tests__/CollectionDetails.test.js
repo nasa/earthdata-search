@@ -64,20 +64,25 @@ function setup(overrideProps) {
 }
 
 describe('CollectionDetails component', () => {
-  const { enzymeWrapper } = setup()
-
   test('renders a div', () => {
+    const { enzymeWrapper } = setup()
+
     expect(enzymeWrapper.type()).toBe('div')
     expect(enzymeWrapper.props().className).toEqual('collection-details')
   })
 
   test('renders the granules', () => {
+    const { enzymeWrapper } = setup()
+
     expect(enzymeWrapper.find('.collection-details__item').length).toEqual(2)
   })
 
   describe('onMouseEnter', () => {
     test('focuses the granule', () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+
+      const { enzymeWrapper } = setup()
+
       const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
 
       item.simulate('mouseenter')
@@ -94,6 +99,9 @@ describe('CollectionDetails component', () => {
   describe('onMouseLeave', () => {
     test('unfocuses the granule', () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+
+      const { enzymeWrapper } = setup()
+
       const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
 
       item.simulate('mouseleave')
@@ -110,6 +118,9 @@ describe('CollectionDetails component', () => {
   describe('onClick', () => {
     test('focuses the granule', () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+
+      const { enzymeWrapper } = setup()
+
       const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
 
       item.simulate('click')
@@ -126,6 +137,9 @@ describe('CollectionDetails component', () => {
   describe('onKeyPress', () => {
     test('focuses the granule', () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+
+      const { enzymeWrapper } = setup()
+
       const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
 
       item.simulate('keypress')
@@ -177,6 +191,7 @@ describe('CollectionDetails component', () => {
       jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         defaultPortal: 'edsc'
       }))
+
       const { enzymeWrapper } = setup()
 
       const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
@@ -265,7 +280,10 @@ describe('CollectionDetails component', () => {
       button.props().onClick()
 
       expect(props.onChangeProjectGranulePageNum).toHaveBeenCalledTimes(1)
-      expect(props.onChangeProjectGranulePageNum).toHaveBeenCalledWith({ collectionId: 'COLL-1', pageNum: 2 })
+      expect(props.onChangeProjectGranulePageNum).toHaveBeenCalledWith({
+        collectionId: 'COLL-1',
+        pageNum: 2
+      })
     })
   })
 })

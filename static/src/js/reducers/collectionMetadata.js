@@ -55,6 +55,7 @@ const collectionMetadataReducer = (state = initialState, action = {}) => {
         ...newState
       }
     }
+
     case UPDATE_GRANULE_SUBSCRIPTIONS: {
       const { payload } = action
       const { collectionId, subscriptions } = payload
@@ -69,6 +70,7 @@ const collectionMetadataReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case DELETE_COLLECTION_SUBSCRIPTION: {
       const { payload } = action
       const { collectionConceptId, conceptId } = payload
@@ -79,6 +81,7 @@ const collectionMetadataReducer = (state = initialState, action = {}) => {
 
       const newSubscriptionItems = currentSubscriptions.filter((subscription) => {
         const { conceptId: subscriptionConceptId } = subscription
+
         return subscriptionConceptId !== conceptId
       })
 
@@ -94,6 +97,7 @@ const collectionMetadataReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case UPDATE_GRANULE_SUBSCRIPTION: {
       const { payload } = action
       const { collectionConceptId, conceptId, query } = payload
@@ -110,6 +114,7 @@ const collectionMetadataReducer = (state = initialState, action = {}) => {
             query
           }
         }
+
         return subscription
       })
 
@@ -124,6 +129,7 @@ const collectionMetadataReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case RESTORE_FROM_URL: {
       const { collections } = action.payload
 
@@ -132,6 +138,7 @@ const collectionMetadataReducer = (state = initialState, action = {}) => {
         ...collections
       }
     }
+
     default:
       return state
   }

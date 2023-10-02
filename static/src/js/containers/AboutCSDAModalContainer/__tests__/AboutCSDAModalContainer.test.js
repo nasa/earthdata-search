@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, AboutCSDAModalContainer } from '../AboutCSDAModalContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  AboutCSDAModalContainer
+} from '../AboutCSDAModalContainer'
 import { AboutCSDAModal } from '../../../components/AboutCSDAModal/AboutCSDAModal'
 
 Enzyme.configure({ adapter: new Adapter() })

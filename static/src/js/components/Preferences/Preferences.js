@@ -1,7 +1,4 @@
-import React, {
-  lazy,
-  Suspense
-} from 'react'
+import React, { lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
 
 import Spinner from '../Spinner/Spinner'
@@ -16,11 +13,13 @@ const PreferencesForm = lazy(() => import('./PreferencesForm'))
 const Preferences = ({ preferences, onUpdatePreferences }) => (
   <div className="preferences">
     <Suspense
-      fallback={(
-        <div className="preferences__loading">
-          <Spinner type="dots" size="small" />
-        </div>
-      )}
+      fallback={
+        (
+          <div className="preferences__loading">
+            <Spinner type="dots" size="small" />
+          </div>
+        )
+      }
     >
       <PreferencesForm
         preferences={preferences}

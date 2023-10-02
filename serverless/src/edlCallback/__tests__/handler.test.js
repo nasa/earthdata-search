@@ -51,6 +51,7 @@ beforeEach(() => {
       id: 'clientId'
     }
   }))
+
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
       client: 'pg',

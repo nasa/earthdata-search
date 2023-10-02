@@ -39,6 +39,7 @@ export class FacetsModalNav extends Component {
 
   render() {
     const { activeLetters } = this.props
+
     return (
       <nav className="facets-modal-nav">
         <span className="facets-modal-nav__heading">Jump:</span>
@@ -48,6 +49,7 @@ export class FacetsModalNav extends Component {
               {
                 alphabet.map((letter) => {
                   const linkSymbol = letter === '#' ? 'number' : letter
+
                   return (
                     <li key={`active_letter_${letter}`} className="facets-modal-nav__list-item">
                       {

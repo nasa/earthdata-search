@@ -93,11 +93,11 @@ const saveContactInfo = async (event) => {
       headers: defaultResponseHeaders,
       body: JSON.stringify(updateUser)
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

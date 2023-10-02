@@ -94,6 +94,7 @@ export const CollectionResultsItem = forwardRef(({
   const getConsortiumTooltipText = (consortium) => {
     let tooltip = ''
     if (consortiumMeta[consortium]) tooltip = consortiumMeta[consortium]
+
     return tooltip
   }
 
@@ -102,10 +103,12 @@ export const CollectionResultsItem = forwardRef(({
   const addToProjectButton = (
     <Button
       className="collection-results-item__action collection-results-item__action--add"
-      onClick={(e) => {
-        onAddProjectCollection(collectionId)
-        e.stopPropagation()
-      }}
+      onClick={
+        (event) => {
+          onAddProjectCollection(collectionId)
+          event.stopPropagation()
+        }
+      }
       variant="light"
       bootstrapVariant="light"
       bootstrapSize="sm"
@@ -118,10 +121,12 @@ export const CollectionResultsItem = forwardRef(({
   const removeFromProjectButton = (
     <Button
       className="collection-results-item__action collection-results-item__action--remove"
-      onClick={(e) => {
-        onRemoveCollectionFromProject(collectionId)
-        e.stopPropagation()
-      }}
+      onClick={
+        (event) => {
+          onRemoveCollectionFromProject(collectionId)
+          event.stopPropagation()
+        }
+      }
       variant="light"
       bootstrapVariant="light"
       bootstrapSize="sm"
@@ -142,16 +147,21 @@ export const CollectionResultsItem = forwardRef(({
         role="button"
         tabIndex="0"
         className="collection-results-item__link"
-        onKeyPress={(e) => {
-          if (e.key === 'Enter') {
-            onViewCollectionGranules(collectionId)
+        onKeyPress={
+          (event) => {
+            if (event.key === 'Enter') {
+              onViewCollectionGranules(collectionId)
+            }
+
+            event.stopPropagation()
           }
-          e.stopPropagation()
-        }}
-        onClick={(e) => {
-          onViewCollectionGranules(collectionId)
-          e.stopPropagation()
-        }}
+        }
+        onClick={
+          (event) => {
+            onViewCollectionGranules(collectionId)
+            event.stopPropagation()
+          }
+        }
         data-testid={`collection-result-item_${collectionId}`}
       >
         <div className="collection-results-item__body">
@@ -202,134 +212,138 @@ export const CollectionResultsItem = forwardRef(({
                       icon={FaCogs}
                       label="Customize"
                       tooltipClassName="collection-results-item__tooltip text-align-left"
-                      metadata={(
-                        <>
-                          {
-                            hasSpatialSubsetting && (
-                              <EDSCIcon
-                                className="collection-results-item__icon svg fa-globe-svg"
-                                title="A white globe icon"
-                                icon={FaGlobe}
-                                size="0.675rem"
-                              />
-                            )
-                          }
-                          {
-                            hasTemporalSubsetting && (
-                              <EDSCIcon
-                                className="collection-results-item__icon svg fa-clock-svg"
-                                title="A white clock icon"
-                                icon={FaClock}
-                                size="0.675rem"
-                              />
-                            )
-                          }
-                          {
-                            hasVariables && (
-                              <EDSCIcon
-                                className="collection-results-item__icon svg fa-tags-svg"
-                                title="A white tags icon"
-                                icon={FaTags}
-                                size="0.675rem"
-                              />
-                            )
-                          }
-                          {
-                            hasTransforms && (
-                              <EDSCIcon
-                                className="collection-results-item__icon svg fa-sliders-svg"
-                                title="A white horizontal sliders icon"
-                                icon={FaSlidersH}
-                                size="0.675rem"
-                              />
-                            )
-                          }
-                          {
-                            hasFormats && (
-                              <EDSCIcon
-                                className="collection-results-item__icon svg fa-file-svg"
-                                title="A white file icon"
-                                icon={FaFileAlt}
-                                size="0.675rem"
-                              />
-                            )
-                          }
-                        </>
-                      )}
-                      tooltipContent={(
-                        <>
-                          <div>
-                            Supports customization:
-                          </div>
-                          <ul className="collection-results-item__tooltip-feature-list">
+                      metadata={
+                        (
+                          <>
                             {
                               hasSpatialSubsetting && (
-                                <li>
-                                  <EDSCIcon
-                                    className="collection-results-item__tooltip-feature-icon"
-                                    title="A white globe icon"
-                                    size="0.725rem"
-                                    icon={FaGlobe}
-                                  />
-                                  Spatial subsetting
-                                </li>
+                                <EDSCIcon
+                                  className="collection-results-item__icon svg fa-globe-svg"
+                                  title="A white globe icon"
+                                  icon={FaGlobe}
+                                  size="0.675rem"
+                                />
                               )
                             }
                             {
                               hasTemporalSubsetting && (
-                                <li>
-                                  <EDSCIcon
-                                    className="collection-results-item__tooltip-feature-icon"
-                                    title="A white clock icon"
-                                    size="0.725rem"
-                                    icon={FaClock}
-                                  />
-                                  Temporal subsetting
-                                </li>
+                                <EDSCIcon
+                                  className="collection-results-item__icon svg fa-clock-svg"
+                                  title="A white clock icon"
+                                  icon={FaClock}
+                                  size="0.675rem"
+                                />
                               )
                             }
                             {
                               hasVariables && (
-                                <li>
-                                  <EDSCIcon
-                                    className="collection-results-item__tooltip-feature-icon"
-                                    title="A white tags icon"
-                                    size="0.725rem"
-                                    icon={FaTags}
-                                  />
-                                  Variable subsetting
-                                </li>
+                                <EDSCIcon
+                                  className="collection-results-item__icon svg fa-tags-svg"
+                                  title="A white tags icon"
+                                  icon={FaTags}
+                                  size="0.675rem"
+                                />
                               )
                             }
                             {
                               hasTransforms && (
-                                <li>
-                                  <EDSCIcon
-                                    className="collection-results-item__tooltip-feature-icon"
-                                    title="A white horizontal sliders icon"
-                                    size="0.725rem"
-                                    icon={FaSlidersH}
-                                  />
-                                  Transformation
-                                </li>
+                                <EDSCIcon
+                                  className="collection-results-item__icon svg fa-sliders-svg"
+                                  title="A white horizontal sliders icon"
+                                  icon={FaSlidersH}
+                                  size="0.675rem"
+                                />
                               )
                             }
                             {
                               hasFormats && (
-                                <li>
-                                  <EDSCIcon
-                                    className="collection-results-item__tooltip-feature-icon"
-                                    title="A white file icon"
-                                    size="0.725rem"
-                                    icon={FaFileAlt}
-                                  />
-                                  Reformatting
-                                </li>
+                                <EDSCIcon
+                                  className="collection-results-item__icon svg fa-file-svg"
+                                  title="A white file icon"
+                                  icon={FaFileAlt}
+                                  size="0.675rem"
+                                />
                               )
                             }
-                          </ul>
-                        </>
-                      )}
+                          </>
+                        )
+                      }
+                      tooltipContent={
+                        (
+                          <>
+                            <div>
+                              Supports customization:
+                            </div>
+                            <ul className="collection-results-item__tooltip-feature-list">
+                              {
+                                hasSpatialSubsetting && (
+                                  <li>
+                                    <EDSCIcon
+                                      className="collection-results-item__tooltip-feature-icon"
+                                      title="A white globe icon"
+                                      size="0.725rem"
+                                      icon={FaGlobe}
+                                    />
+                                    Spatial subsetting
+                                  </li>
+                                )
+                              }
+                              {
+                                hasTemporalSubsetting && (
+                                  <li>
+                                    <EDSCIcon
+                                      className="collection-results-item__tooltip-feature-icon"
+                                      title="A white clock icon"
+                                      size="0.725rem"
+                                      icon={FaClock}
+                                    />
+                                    Temporal subsetting
+                                  </li>
+                                )
+                              }
+                              {
+                                hasVariables && (
+                                  <li>
+                                    <EDSCIcon
+                                      className="collection-results-item__tooltip-feature-icon"
+                                      title="A white tags icon"
+                                      size="0.725rem"
+                                      icon={FaTags}
+                                    />
+                                    Variable subsetting
+                                  </li>
+                                )
+                              }
+                              {
+                                hasTransforms && (
+                                  <li>
+                                    <EDSCIcon
+                                      className="collection-results-item__tooltip-feature-icon"
+                                      title="A white horizontal sliders icon"
+                                      size="0.725rem"
+                                      icon={FaSlidersH}
+                                    />
+                                    Transformation
+                                  </li>
+                                )
+                              }
+                              {
+                                hasFormats && (
+                                  <li>
+                                    <EDSCIcon
+                                      className="collection-results-item__tooltip-feature-icon"
+                                      title="A white file icon"
+                                      size="0.725rem"
+                                      icon={FaFileAlt}
+                                    />
+                                    Reformatting
+                                  </li>
+                                )
+                              }
+                            </ul>
+                          </>
+                        )
+                      }
                     />
                   )
                 }
@@ -398,17 +412,19 @@ export const CollectionResultsItem = forwardRef(({
                       <OverlayTrigger
                         className="collection-results-item__tooltip-container"
                         placement="top"
-                        overlay={(
-                          <Tooltip
-                            id="tooltip__csda-badge"
-                            className="collection-results-item__tooltip collection-results-item__tooltip--csda"
-                          >
-                            Commercial Smallsat Data Acquisition Program
-                            <span className="collection-results-item__tooltip-secondary">
-                              (Additional authentication required)
-                            </span>
-                          </Tooltip>
-                            )}
+                        overlay={
+                          (
+                            <Tooltip
+                              id="tooltip__csda-badge"
+                              className="collection-results-item__tooltip collection-results-item__tooltip--csda"
+                            >
+                              Commercial Smallsat Data Acquisition Program
+                              <span className="tooltip__secondary-text">
+                                (Additional authentication required)
+                              </span>
+                            </Tooltip>
+                          )
+                        }
                       >
                         <li className="collection-results-item__attribution-list-item">
                           <span className="collection-results-item__list-text collection-results-item__list-text--tooltip">
@@ -433,13 +449,15 @@ export const CollectionResultsItem = forwardRef(({
                           <OverlayTrigger
                             className="collection-results-item__tooltip-container"
                             placement="top"
-                            overlay={(
-                              <Tooltip
-                                className={`collection-results-item__tooltip collection-results-item__tooltip--${consortium}`}
-                              >
-                                {consortiumTooltip}
-                              </Tooltip>
-                            )}
+                            overlay={
+                              (
+                                <Tooltip
+                                  className={`collection-results-item__tooltip collection-results-item__tooltip--${consortium}`}
+                                >
+                                  {consortiumTooltip}
+                                </Tooltip>
+                              )
+                            }
                           >
                             <span className="collection-results-item__list-text collection-results-item__list-text--tooltip">{consortiumDisplay}</span>
                           </OverlayTrigger>
@@ -476,10 +494,12 @@ export const CollectionResultsItem = forwardRef(({
               <div className="collection-results-item__actions">
                 <Button
                   className="collection-results-item__action collection-results-item__action--collection-details"
-                  onClick={(e) => {
-                    onViewCollectionDetails(collectionId)
-                    e.stopPropagation()
-                  }}
+                  onClick={
+                    (event) => {
+                      onViewCollectionDetails(collectionId)
+                      event.stopPropagation()
+                    }
+                  }
                   label="View collection details"
                   title="View collection details"
                   bootstrapSize="sm"
@@ -488,12 +508,8 @@ export const CollectionResultsItem = forwardRef(({
                 />
                 <PortalFeatureContainer authentication>
                   <>
-                    {
-                      isCollectionInProject && removeFromProjectButton
-                    }
-                    {
-                      !isCollectionInProject && addToProjectButton
-                    }
+                    {isCollectionInProject && removeFromProjectButton}
+                    {!isCollectionInProject && addToProjectButton}
                   </>
                 </PortalFeatureContainer>
               </div>

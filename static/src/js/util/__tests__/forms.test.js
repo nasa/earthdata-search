@@ -1,8 +1,6 @@
 import * as Yup from 'yup'
 
-import {
-  getValidationSchema
-} from '../forms'
+import { getValidationSchema } from '../forms'
 
 jest.mock('yup', () => {
   const shapeMock = jest.fn()
@@ -60,6 +58,7 @@ describe('getValidationSchema', () => {
         nestedField1: validationMock1,
         nestedField2: validationMock2
       }])
+
       expect(Yup.object().shape.mock.calls[1]).toEqual([
         {
           testField: undefined

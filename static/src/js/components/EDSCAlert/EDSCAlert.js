@@ -22,6 +22,7 @@ export const EDSCAlert = ({
     },
     className
   ])
+
   return (
     <Alert
       className={alertClassName}

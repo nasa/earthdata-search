@@ -110,7 +110,10 @@ describe('SecondaryToolbar component', () => {
         const downloadLink = enzymeWrapper.find('.secondary-toolbar__downloads')
         const linkContainer = downloadLink.parents(LinkContainer)
 
-        expect(linkContainer.props().to).toEqual({ pathname: '/downloads', search: '?ee=uat' })
+        expect(linkContainer.props().to).toEqual({
+          pathname: '/downloads',
+          search: '?ee=uat'
+        })
       })
 
       test('does not add the ee param if the earthdataEnvironment is the deployed environment', () => {
@@ -119,7 +122,10 @@ describe('SecondaryToolbar component', () => {
         const downloadLink = enzymeWrapper.find('.secondary-toolbar__downloads')
         const linkContainer = downloadLink.parents(LinkContainer)
 
-        expect(linkContainer.props().to).toEqual({ pathname: '/downloads', search: '' })
+        expect(linkContainer.props().to).toEqual({
+          pathname: '/downloads',
+          search: ''
+        })
       })
     })
   })

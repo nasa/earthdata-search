@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Form as FormikForm } from 'formik'
-import { Col, Form, Row } from 'react-bootstrap'
+import {
+  Col,
+  Form,
+  Row
+} from 'react-bootstrap'
 import RegionSearch from './RegionSearch'
 
 import './AdvancedSearchForm.scss'
@@ -58,6 +62,7 @@ export class AdvancedSearchForm extends Component {
               text,
               type
             } = field
+
             return (
               <div className="advanced-search-form" key={name}>
                 <Row>

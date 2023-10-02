@@ -34,6 +34,7 @@ export const pointStringToLatLng = (pointString) => {
   if (pointParts.length > 4) {
     const latLngs = result.map((point) => {
       const [lngString, latString] = point.split(',')
+
       return {
         lat: parseFloat(latString),
         lng: parseFloat(lngString)

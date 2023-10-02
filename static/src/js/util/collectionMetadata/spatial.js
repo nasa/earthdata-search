@@ -1,10 +1,11 @@
 import { castArray } from 'lodash'
 
-const degrees = (degrees) => {
-  if (degrees % 1 !== 0) {
-    return `${degrees}\xB0`
+const degrees = (value) => {
+  if (value % 1 !== 0) {
+    return `${value}\xB0`
   }
-  return `${parseFloat(degrees).toFixed(1)}\xB0`
+
+  return `${parseFloat(value).toFixed(1)}\xB0`
 }
 
 export const buildSpatial = (json) => {

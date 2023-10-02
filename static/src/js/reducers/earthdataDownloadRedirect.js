@@ -7,6 +7,7 @@ const earthdataDownloadRedirectReducer = (state = initialState, action = {}) => 
     case ADD_EARTHDATA_DOWNLOAD_REDIRECT: {
       return action.payload
     }
+
     default:
       return state
   }

@@ -39,8 +39,8 @@ export const fetchSavedProjects = () => (dispatch, getState) => {
   const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.all()
-    .then((response) => {
-      const { data } = response
+    .then((responseObject) => {
+      const { data } = responseObject
 
       dispatch(setSavedProjects(data))
     })

@@ -66,8 +66,8 @@ export const fetchAdminRetrieval = (id) => (dispatch, getState) => {
 
   const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
   const response = requestObject.fetch(id)
-    .then((response) => {
-      const { data } = response
+    .then((responseObject) => {
+      const { data } = responseObject
 
       dispatch(setAdminRetrievalLoaded(id))
       dispatch(setAdminRetrieval(data))
@@ -114,12 +114,15 @@ export const fetchAdminRetrievals = () => (dispatch, getState) => {
   if (sortKey) requestOpts.sort_key = sortKey
 
   const response = requestObject.all(requestOpts)
-    .then((response) => {
-      const { data } = response
-      const { pagination, results } = data
+    .then((responseObject) => {
+      const { data } = responseObject
+      const {
+        pagination: newPagination,
+        results
+      } = data
 
       dispatch(setAdminRetrievalsLoaded())
-      dispatch(setAdminRetrievalsPagination(pagination))
+      dispatch(setAdminRetrievalsPagination(newPagination))
       dispatch(setAdminRetrievals(results))
     })
     .catch((error) => {

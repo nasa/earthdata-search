@@ -20,6 +20,7 @@ const retrievalReducer = (state = initialState, action = {}) => {
         isLoading: true
       }
     }
+
     case UPDATE_RETRIEVAL: {
       return {
         ...state,
@@ -28,6 +29,7 @@ const retrievalReducer = (state = initialState, action = {}) => {
         isLoaded: true
       }
     }
+
     case SET_RETRIEVAL_COLLECTION_LOADING: {
       const {
         id
@@ -47,6 +49,7 @@ const retrievalReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case UPDATE_RETRIEVAL_COLLECTION: {
       const {
         id
@@ -68,6 +71,7 @@ const retrievalReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     default:
       return state
   }

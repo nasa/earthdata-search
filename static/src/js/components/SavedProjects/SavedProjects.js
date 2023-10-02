@@ -55,6 +55,7 @@ export class SavedProjects extends Component {
  */
   projectTo(path, id) {
     const [pathname] = path.split('?')
+
     return `${pathname}?projectId=${id}`
   }
 
@@ -132,31 +133,33 @@ export class SavedProjects extends Component {
                               <OverlayTrigger
                                 trigger="click"
                                 placement="top"
-                                overlay={(
-                                  <Popover
-                                    id={`popover-basic-${id}`}
-                                    className="saved-projects__share-popover"
-                                  >
-                                    <Popover.Title>
-                                      Share Project
-                                    </Popover.Title>
-                                    <Popover.Content>
-                                      <p>
-                                        Share your project by copying the URL
-                                        below and sending it to others.
-                                      </p>
-                                      <Form>
-                                        <Form.Group className="mb-0">
-                                          <Form.Control
-                                            className="saved-projects__share-input"
-                                            readOnly
-                                            value={sharePath}
-                                          />
-                                        </Form.Group>
-                                      </Form>
-                                    </Popover.Content>
-                                  </Popover>
-                                )}
+                                overlay={
+                                  (
+                                    <Popover
+                                      id={`popover-basic-${id}`}
+                                      className="saved-projects__share-popover"
+                                    >
+                                      <Popover.Title>
+                                        Share Project
+                                      </Popover.Title>
+                                      <Popover.Content>
+                                        <p>
+                                          Share your project by copying the URL
+                                          below and sending it to others.
+                                        </p>
+                                        <Form>
+                                          <Form.Group className="mb-0">
+                                            <Form.Control
+                                              className="saved-projects__share-input"
+                                              readOnly
+                                              value={sharePath}
+                                            />
+                                          </Form.Group>
+                                        </Form>
+                                      </Popover.Content>
+                                    </Popover>
+                                  )
+                                }
                               >
                                 <Button
                                   className="saved-projects__button saved-projects__button--share"

@@ -7,7 +7,11 @@ import React, {
   useRef
 } from 'react'
 import PropTypes from 'prop-types'
-import { useTable, useBlockLayout, useRowState } from 'react-table'
+import {
+  useTable,
+  useBlockLayout,
+  useRowState
+} from 'react-table'
 import { isEmpty } from 'lodash'
 import classNames from 'classnames'
 import AutoSizer from 'react-virtualized-auto-sizer'
@@ -30,6 +34,7 @@ const EDSCTableContext = createContext()
  */
 const innerElementType = forwardRef(({ children, ...rest }, ref) => {
   const { style } = rest
+
   return (
     <EDSCTableContext.Consumer>
       {
@@ -51,40 +56,63 @@ const innerElementType = forwardRef(({ children, ...rest }, ref) => {
           return (
             <>
               <div className="edsc-table__thead">
-                {headerGroups.map((headerGroup) => {
-                  const {
-                    key,
-                    style,
-                    ...rest
-                  } = headerGroup.getHeaderGroupProps()
+                {
+                  headerGroups.map((headerGroup) => {
+                    const {
+                      key,
+                      style: headerGroupStyle,
+                      ...headerGroupRest
+                    } = headerGroup.getHeaderGroupProps()
 
-                  const trStyle = {
-                    ...style,
-                    width: actualWidth
-                  }
+                    const trStyle = {
+                      ...headerGroupStyle,
+                      width: actualWidth
+                    }
 
-                  return (
-                    <div key={key} {...rest} style={trStyle} className="edsc-table__tr">
-                      {headerGroup.headers.map((column) => {
-                        const { key, ...rest } = column.getHeaderProps()
-                        const { customProps = {} } = column
-                        const thClassNames = classNames([
-                          'edsc-table__th',
-                          {
-                            [`${customProps.headerClassName}`]: customProps.headerClassName
-                          }
-                        ])
-                        return (
-                          <div key={key} {...rest} className={thClassNames}>
-                            {column.render('Header')}
-                          </div>
-                        )
-                      })}
-                    </div>
-                  )
-                })}
+                    return (
+                      <div
+                        key={key}
+                        {...headerGroupRest}
+                        style={trStyle}
+                        className="edsc-table__tr"
+                      >
+                        {
+                          headerGroup.headers.map((column) => {
+                            const {
+                              key: headerKey,
+                              ...headerRest
+                            } = column.getHeaderProps()
+
+                            const { customProps = {} } = column
+                            const thClassNames = classNames([
+                              'edsc-table__th',
+                              {
+                                [`${customProps.headerClassName}`]: customProps.headerClassName
+                              }
+                            ])
+
+                            return (
+                              <div
+                                key={headerKey}
+                                {...headerRest}
+                                className={thClassNames}
+                              >
+                                {column.render('Header')}
+                              </div>
+                            )
+                          })
+                        }
+                      </div>
+                    )
+                  })
+                }
               </div>
-              <div ref={ref} {...tableBodyRest} style={tableBodyStyle} className="edsc-table__tbody">
+              <div
+                ref={ref}
+                {...tableBodyRest}
+                style={tableBodyStyle}
+                className="edsc-table__tbody"
+              >
                 {children}
               </div>
             </>
@@ -209,10 +237,12 @@ const EDSCTable = ({
     <div
       className="edsc-table__tr"
       role="row"
-      style={{
-        ...style,
-        display: 'flex'
-      }}
+      style={
+        {
+          ...style,
+          display: 'flex'
+        }
+      }
     >
       {
         columns.map((column, i) => {
@@ -228,12 +258,19 @@ const EDSCTable = ({
               key={key}
               className={tdClasses}
               role="cell"
-              style={{
-                width: `${column.width}px`
-              }}
+              style={
+                {
+                  width: `${column.width}px`
+                }
+              }
             >
               <Skeleton
-                containerStyle={{ height: '18px', width: `${column.width * 0.8}px` }}
+                containerStyle={
+                  {
+                    height: '18px',
+                    width: `${column.width * 0.8}px`
+                  }
+                }
                 shapes={rowContentLarge}
               />
             </div>
@@ -244,14 +281,18 @@ const EDSCTable = ({
   )
 
   const Row = useCallback(
-    ({ data, index, style }) => {
+    ({
+      data: rowData,
+      index,
+      style
+    }) => {
       const {
-        isItemLoaded
-      } = data
+        isItemLoaded: isRowItemLoaded
+      } = rowData
 
       const row = rows[index]
 
-      if (!isItemLoaded(index)) {
+      if (!isRowItemLoaded(index)) {
         return buildSkeletonRow({
           ...style,
           width: lastRowStyle.width
@@ -285,7 +326,7 @@ const EDSCTable = ({
       // text is currently selected and bail out if that's the case.
       let textSelectionFlag = false
 
-      const enhancedOnRowMouseUp = (e, row) => {
+      const enhancedOnRowMouseUp = (event, clickedRow) => {
         textSelectionFlag = false
 
         // Check the window to see if any text is currently selected.
@@ -293,62 +334,73 @@ const EDSCTable = ({
           textSelectionFlag = true
         }
 
-        if (onRowMouseUp) onRowMouseUp(e, row)
+        if (onRowMouseUp) onRowMouseUp(event, clickedRow)
       }
 
-      const enhancedOnRowClick = (e, row) => {
+      const enhancedOnRowClick = (event, clickedRow) => {
         // Only fire the click event on the row if no text is currently selected
         if (textSelectionFlag) return
-        onRowClick(e, row)
+        onRowClick(event, clickedRow)
       }
 
       // These events will be spread on to the row div element, ommiting the events
       // where callbacks have not been defined.
       const rowEvents = {
-        onClick: (onRowClick ? (e) => enhancedOnRowClick(e, row) : undefined),
-        onMouseLeave: (onRowMouseLeave ? (e) => onRowMouseLeave(e, row) : undefined),
-        onMouseEnter: (onRowMouseEnter ? (e) => onRowMouseEnter(e, row) : undefined),
-        onMouseUp: (onRowMouseUp || onRowClick ? (e) => enhancedOnRowMouseUp(e, row) : undefined),
-        onFocus: (onRowFocus ? (e) => onRowFocus(e, row) : undefined),
-        onBlur: (onRowBlur ? (e) => onRowBlur(e, row) : undefined)
+        onClick: (onRowClick ? (event) => enhancedOnRowClick(event, row) : undefined),
+        onMouseLeave: (onRowMouseLeave ? (event) => onRowMouseLeave(event, row) : undefined),
+        onMouseEnter: (onRowMouseEnter ? (event) => onRowMouseEnter(event, row) : undefined),
+        onMouseUp: (onRowMouseUp || onRowClick
+          ? (event) => enhancedOnRowMouseUp(event, row) : undefined),
+        onFocus: (onRowFocus ? (event) => onRowFocus(event, row) : undefined),
+        onBlur: (onRowBlur ? (event) => onRowBlur(event, row) : undefined)
       }
 
       const focusableProps = onRowClick
         ? {
           tabIndex: 0,
-          onKeyPress: (e) => onRowClick(e, row)
+          onKeyPress: (event) => onRowClick(event, row)
         } : {}
 
       return (
         <React.Fragment key={key}>
           <div
             {...rowRest}
-            style={{ ...rowStyle, width: '100%' }}
+            style={
+              {
+                ...rowStyle,
+                width: '100%'
+              }
+            }
             className={rowClasses}
             data-testid={rowTestId}
             {...rowEvents}
             {...focusableProps}
             {...rowTitleFromState}
           >
-            {row.cells.map((cell) => {
-              const { key, ...rest } = cell.getCellProps()
-              const { column } = cell
-              const { customProps = {} } = column
+            {
+              row.cells.map((cell) => {
+                const {
+                  key: cellKey,
+                  ...rest
+                } = cell.getCellProps()
+                const { column } = cell
+                const { customProps = {} } = column
 
-              const tdClassNames = classNames([
-                'edsc-table__td',
-                {
-                  [`${customProps.cellClassName}`]: customProps.cellClassName,
-                  'edsc-table__td--centered': customProps.centerContent
-                }
-              ])
+                const tdClassNames = classNames([
+                  'edsc-table__td',
+                  {
+                    [`${customProps.cellClassName}`]: customProps.cellClassName,
+                    'edsc-table__td--centered': customProps.centerContent
+                  }
+                ])
 
-              return (
-                <div key={key} {...rest} className={tdClassNames}>
-                  {cell.render('Cell')}
-                </div>
-              )
-            })}
+                return (
+                  <div key={cellKey} {...rest} className={tdClassNames}>
+                    {cell.render('Cell')}
+                  </div>
+                )
+              })
+            }
           </div>
         </React.Fragment>
       )
@@ -360,17 +412,26 @@ const EDSCTable = ({
 
   return (
     <div {...tableProps} id={id} className={tableClassName}>
-      <AutoSizer style={{ position: 'relative', height: '100%', width: '100%' }}>
+      <AutoSizer style={
+        {
+          position: 'relative',
+          height: '100%',
+          width: '100%'
+        }
+      }
+      >
         {
           ({ height, width }) => (
-            // eslint-disable-next-line react/jsx-no-constructed-context-values
-            <EDSCTableContext.Provider value={{
-              headerGroups,
-              height,
-              width,
-              totalColumnsWidth,
-              getTableBodyProps
-            }}
+            <EDSCTableContext.Provider value={
+              // eslint-disable-next-line react/jsx-no-constructed-context-values
+              {
+                headerGroups,
+                height,
+                width,
+                totalColumnsWidth,
+                getTableBodyProps
+              }
+            }
             >
               <InfiniteLoader
                 ref={infiniteLoaderRef}
@@ -382,34 +443,40 @@ const EDSCTable = ({
                 {
                   ({ onItemsRendered, ref }) => (
                     <List
-                      ref={(list) => {
-                        ref(list)
-                        listRef.current = list
-                      }}
-                      style={{
-                        overflow: 'scroll'
-                      }}
+                      ref={
+                        (list) => {
+                          ref(list)
+                          listRef.current = list
+                        }
+                      }
+                      style={
+                        {
+                          overflow: 'scroll'
+                        }
+                      }
                       height={height}
                       innerElementType={innerElementType}
                       itemCount={itemCount}
                       itemSize={60}
                       width={width}
                       onItemsRendered={
-                        (data) => {
+                        (windowData) => {
                           const {
                             visibleStartIndex,
                             visibleStopIndex
-                          } = data
+                          } = windowData
 
                           const middleIndex = Math.round((visibleStartIndex + visibleStopIndex) / 2)
 
                           if (middleIndex) setVisibleMiddleIndex(middleIndex)
-                          onItemsRendered(data)
+                          onItemsRendered(windowData)
                         }
                       }
-                      itemData={{
-                        isItemLoaded
-                      }}
+                      itemData={
+                        {
+                          isItemLoaded
+                        }
+                      }
                     >
                       {Row}
                     </List>

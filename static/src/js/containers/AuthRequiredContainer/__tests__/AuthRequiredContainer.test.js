@@ -50,6 +50,7 @@ describe('AuthRequiredContainer component', () => {
   test('should redirect if there is no auth cookie', () => {
     jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
       if (param === 'authToken') return null
+
       return null
     })
 
@@ -65,6 +66,7 @@ describe('AuthRequiredContainer component', () => {
   test('should render children if there is an auth cookie', () => {
     jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
       if (param === 'authToken') return 'token'
+
       return null
     })
 
@@ -76,6 +78,7 @@ describe('AuthRequiredContainer component', () => {
     test('should not redirect if there is no auth cookie', () => {
       jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
         if (param === 'authToken') return null
+
         return null
       })
 
@@ -91,6 +94,7 @@ describe('AuthRequiredContainer component', () => {
     test('should not render the children', () => {
       jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
         if (param === 'authToken') return null
+
         return null
       })
 

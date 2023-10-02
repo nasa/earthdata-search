@@ -22,6 +22,7 @@ export const useRemsToPixels = () => {
 
   useEffect(() => {
     window.addEventListener('resize', updateRemInPixels)
+
     return () => window.removeEventListener('resize', updateRemInPixels)
   }, [])
 

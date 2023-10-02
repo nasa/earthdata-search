@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
+import { isEmpty } from 'lodash'
 
 import actions from '../../actions/index'
 import { getUrsProfile } from '../../selectors/contactInfo'
@@ -42,10 +43,10 @@ export const SecondaryToolbarContainer = (props) => {
 
   useEffect(() => {
     // If we have a authToken, but no ursProfile, request the contact info
-    if (authToken && !(ursProfile && ursProfile.first_name)) {
+    if (authToken && isEmpty(ursProfile)) {
       onFetchContactInfo()
     }
-  }, [authToken])
+  }, [authToken, ursProfile])
 
   return (
     <SecondaryToolbar
@@ -76,6 +77,7 @@ SecondaryToolbarContainer.propTypes = {
     first_name: PropTypes.string
   }).isRequired
 }
+
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(SecondaryToolbarContainer)
 )

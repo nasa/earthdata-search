@@ -57,18 +57,20 @@ export const S3LinksPanel = ({
                 </div>
                 <div className="order-status-item__direct-distribution-item">
                   Bucket/Object Prefix
-                  {s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, i) => (
-                    <React.Fragment key={`${region}_${bucketAndObjPrefix}`}>
-                      <CopyableText
-                        className="order-status-item__direct-distribution-item-value"
-                        text={bucketAndObjPrefix}
-                        label="Copy to clipboard"
-                        successMessage="Copied the AWS S3 Bucket/Object Prefix"
-                        failureMessage="Could not copy the AWS S3 Bucket/Object Prefix"
-                      />
-                      {i !== s3BucketAndObjectPrefixNames.length - 1 && ', '}
-                    </React.Fragment>
-                  ))}
+                  {
+                    s3BucketAndObjectPrefixNames.map((bucketAndObjPrefix, i) => (
+                      <React.Fragment key={`${region}_${bucketAndObjPrefix}`}>
+                        <CopyableText
+                          className="order-status-item__direct-distribution-item-value"
+                          text={bucketAndObjPrefix}
+                          label="Copy to clipboard"
+                          successMessage="Copied the AWS S3 Bucket/Object Prefix"
+                          failureMessage="Could not copy the AWS S3 Bucket/Object Prefix"
+                        />
+                        {i !== s3BucketAndObjectPrefixNames.length - 1 && ', '}
+                      </React.Fragment>
+                    ))
+                  }
                 </div>
                 <div className="order-status-item__direct-distribution-item">
                   AWS S3 Credentials

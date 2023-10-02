@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, SpatialDisplayContainer } from '../SpatialDisplayContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  SpatialDisplayContainer
+} from '../SpatialDisplayContainer'
 import SpatialDisplay from '../../../components/SpatialDisplay/SpatialDisplay'
 
 Enzyme.configure({ adapter: new Adapter() })

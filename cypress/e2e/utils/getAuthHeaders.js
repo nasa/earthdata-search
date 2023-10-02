@@ -5,6 +5,7 @@ import { getEnvironmentConfig } from '../../../sharedUtils/config'
  */
 export const getAuthHeaders = () => {
   const { jwtToken } = getEnvironmentConfig('test')
+
   return {
     'jwt-token': jwtToken
   }

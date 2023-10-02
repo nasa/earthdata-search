@@ -55,6 +55,7 @@ export const GranuleResultsHighlights = ({
             {
               [1, 2, 3].map((item, i) => {
                 const key = `granule_loader_${i}`
+
                 return (
                   <Skeleton
                     key={key}
@@ -122,10 +123,12 @@ export const GranuleResultsHighlights = ({
         <div className="granule-results-highlights__footer">
           <PortalLinkContainer
             className="granule-results-header__title-link granule-results-header__title-link-icon"
-            to={{
-              pathname: '/search/granules',
-              search: location.search
-            }}
+            to={
+              {
+                pathname: '/search/granules',
+                search: location.search
+              }
+            }
           >
             <EDSCIcon icon={FaMap} />
             {' View Granules'}

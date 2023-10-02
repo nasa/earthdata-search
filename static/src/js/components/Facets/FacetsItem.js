@@ -66,6 +66,7 @@ class FacetsItem extends Component {
       children = facet.children.map((child) => {
         const nextUid = uniqueId('facet-item_')
         const nextLevel = level + 1
+
         return (
           <FacetsItem
             autocompleteType={autocompleteType}
@@ -103,19 +104,23 @@ class FacetsItem extends Component {
           />
           <span className="facets-item__title">
             {facet.title}
-            {facet.description
+            {
+              facet.description
             && (
-            <OverlayTrigger
-              placement="top"
-              overlay={(
-                <Tooltip style={{ width: '20rem' }}>
-                  {facet.description}
-                </Tooltip>
-              )}
-            >
-              <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
-            </OverlayTrigger>
-            )}
+              <OverlayTrigger
+                placement="top"
+                overlay={
+                  (
+                    <Tooltip style={{ width: '20rem' }}>
+                      {facet.description}
+                    </Tooltip>
+                  )
+                }
+              >
+                <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
+              </OverlayTrigger>
+            )
+            }
           </span>
           { (!applied || !children) && <span className="facets-item__total">{facet.count}</span> }
         </label>

@@ -12,10 +12,7 @@ import {
   FaTimesCircle
 } from 'react-icons/fa'
 
-import {
-  projectCollectionItemHeader,
-  projectCollectionItemFooter
-} from './skeleton'
+import { projectCollectionItemHeader, projectCollectionItemFooter } from './skeleton'
 
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { convertSize } from '../../util/project'
@@ -109,10 +106,12 @@ const ProjectCollectionItem = ({
         {
           !title ? (
             <Skeleton
-              containerStyle={{
-                height: '40px',
-                width: '100%'
-              }}
+              containerStyle={
+                {
+                  height: '40px',
+                  width: '100%'
+                }
+              }
               shapes={projectCollectionItemHeader}
             />
           ) : (
@@ -122,11 +121,13 @@ const ProjectCollectionItem = ({
                 variant="naked"
                 bootstrapVariant="link"
                 label={`${title} Collection Details`}
-                onClick={() => {
-                  onTogglePanels(true)
-                  onUpdateFocusedCollection(conceptId)
-                  onSetActivePanelSection('1')
-                }}
+                onClick={
+                  () => {
+                    onTogglePanels(true)
+                    onUpdateFocusedCollection(conceptId)
+                    onSetActivePanelSection('1')
+                  }
+                }
               >
                 <h3 className="project-collections-item__title">
                   {title}
@@ -137,22 +138,24 @@ const ProjectCollectionItem = ({
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-remove"
                   icon={FaTimesCircle}
                   title="Remove"
-                  onClick={() => {
-                    onRemoveCollectionFromProject(collectionId)
+                  onClick={
+                    () => {
+                      onRemoveCollectionFromProject(collectionId)
 
-                    // If removing the first collection in the list
-                    if (index === 0) {
-                      let panelSectionToSelect = activePanelSection
+                      // If removing the first collection in the list
+                      if (index === 0) {
+                        let panelSectionToSelect = activePanelSection
 
-                      // If this is the last collection in the project reset the active panel
-                      if (collectionCount === 1) panelSectionToSelect = 0
+                        // If this is the last collection in the project reset the active panel
+                        if (collectionCount === 1) panelSectionToSelect = 0
 
-                      onSetActivePanel(`${panelSectionToSelect}.0.0`)
-                    } else {
+                        onSetActivePanel(`${panelSectionToSelect}.0.0`)
+                      } else {
                       // Select the previous collection in the list
-                      onSetActivePanel(`${activePanelSection}.${index - 1}.0`)
+                        onSetActivePanel(`${activePanelSection}.${index - 1}.0`)
+                      }
                     }
-                  }}
+                  }
                 />
                 <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-collection-details"
@@ -208,11 +211,13 @@ const ProjectCollectionItem = ({
                 bootstrapVariant="link"
                 icon={FaCog}
                 label="Edit options"
-                onClick={() => {
-                  onUpdateFocusedCollection(conceptId)
-                  onSetActivePanelSection('0')
-                  onTogglePanels(true)
-                }}
+                onClick={
+                  () => {
+                    onUpdateFocusedCollection(conceptId)
+                    onSetActivePanelSection('0')
+                    onTogglePanels(true)
+                  }
+                }
               >
                 Edit Options
               </Button>
@@ -220,10 +225,12 @@ const ProjectCollectionItem = ({
           </>
         ) : (
           <Skeleton
-            containerStyle={{
-              height: '40px',
-              width: '100%'
-            }}
+            containerStyle={
+              {
+                height: '40px',
+                width: '100%'
+              }
+            }
             shapes={projectCollectionItemFooter}
           />
         )

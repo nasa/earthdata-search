@@ -22,14 +22,14 @@ const useExperiment = (experimentId) => {
       // provided `get` function to retrieve a variant id for the current session.
       const intervalId = setInterval(() => {
         if (window.google_optimize !== undefined) {
-          const variant = window.google_optimize.get(experimentId)
+          const newVariant = window.google_optimize.get(experimentId)
 
-          if (!variant && process.env.NODE_ENV === 'development') {
+          if (!newVariant && process.env.NODE_ENV === 'development') {
             console.warn(`No Google Optimize variant found for experiment "${experimentId}". Make sure you are using a valid Experiment ID.`)
           }
 
           // Set the returned state to the current variant id and stop the interval.
-          setVariant(variant)
+          setVariant(newVariant)
           clearInterval(intervalId)
         }
       }, 100)

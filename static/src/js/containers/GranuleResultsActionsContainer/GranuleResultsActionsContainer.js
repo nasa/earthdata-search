@@ -1,16 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {
-  withRouter
-} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
-import { getFocusedCollectionMetadata, getFocusedCollectionSubscriptions } from '../../selectors/collectionMetadata'
+import {
+  getFocusedCollectionMetadata,
+  getFocusedCollectionSubscriptions
+} from '../../selectors/collectionMetadata'
 import { getFocusedProjectCollection } from '../../selectors/project'
 import { getGranuleLimit } from '../../util/collectionMetadata/granuleLimit'
 

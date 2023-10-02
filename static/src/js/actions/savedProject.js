@@ -50,16 +50,16 @@ export const updateProjectName = (name) => (dispatch, getState) => {
     path: realPath,
     projectId: savedProjectId
   })
-    .then((response) => {
-      const { data } = response
+    .then((responseObject) => {
+      const { data } = responseObject
       const {
         project_id: projectId,
-        path
+        path: pathData
       } = data
 
       dispatch(updateSavedProject({
         name,
-        path,
+        path: pathData,
         projectId
       }))
 

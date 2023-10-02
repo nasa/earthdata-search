@@ -48,11 +48,11 @@ describe('changeQuery', () => {
       }
     }
 
-    // mock getCollections
+    // Mock getCollections
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
     getCollectionsMock.mockImplementation(() => jest.fn())
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       focusedCollection: '',
       query: {
@@ -69,7 +69,7 @@ describe('changeQuery', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(actions.changeQuery({ ...newQuery }))
 
     const storeActions = store.getActions()
@@ -84,11 +84,12 @@ describe('changeQuery', () => {
         temporal: {}
       }
     })
+
     expect(storeActions[1]).toEqual({
       type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
     })
 
-    // was getCollections called
+    // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
   })
 
@@ -103,13 +104,13 @@ describe('changeQuery', () => {
       }
     }
 
-    // mock getCollections
+    // Mock getCollections
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
     getCollectionsMock.mockImplementation(() => jest.fn())
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
     getSearchGranulesMock.mockImplementation(() => jest.fn())
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       focusedCollection: 'C10000-EDSC',
       query: {
@@ -126,7 +127,7 @@ describe('changeQuery', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(actions.changeQuery({ ...newQuery }))
 
     const storeActions = store.getActions()
@@ -141,6 +142,7 @@ describe('changeQuery', () => {
         temporal: {}
       }
     })
+
     expect(storeActions[1]).toEqual({
       type: UPDATE_GRANULE_SEARCH_QUERY,
       payload: {
@@ -148,11 +150,12 @@ describe('changeQuery', () => {
         pageNum: 1
       }
     })
+
     expect(storeActions[2]).toEqual({
       type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
     })
 
-    // was getCollections called
+    // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
     expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
   })
@@ -168,7 +171,7 @@ describe('changeQuery', () => {
       }
     }
 
-    // mock getCollections
+    // Mock getCollections
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
     getCollectionsMock.mockImplementation(() => jest.fn())
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
@@ -176,7 +179,7 @@ describe('changeQuery', () => {
     const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
     getProjectGranulesMock.mockImplementation(() => jest.fn())
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       focusedCollection: 'C10000-EDSC',
       query: {
@@ -197,7 +200,7 @@ describe('changeQuery', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(actions.changeQuery({ ...newQuery }))
 
     const storeActions = store.getActions()
@@ -212,6 +215,7 @@ describe('changeQuery', () => {
         temporal: {}
       }
     })
+
     expect(storeActions[1]).toEqual({
       type: UPDATE_GRANULE_SEARCH_QUERY,
       payload: {
@@ -219,11 +223,12 @@ describe('changeQuery', () => {
         pageNum: 1
       }
     })
+
     expect(storeActions[2]).toEqual({
       type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
     })
 
-    // was getCollections called
+    // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
     expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
     expect(getProjectGranulesMock).toHaveBeenCalledTimes(1)
@@ -242,7 +247,7 @@ describe('changeProjectQuery', () => {
       }
     }
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       focusedCollection: '',
       query: {
@@ -263,7 +268,7 @@ describe('changeProjectQuery', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(actions.changeProjectQuery({ ...newQuery }))
 
     const storeActions = store.getActions()
@@ -284,18 +289,18 @@ describe('changeCollectionPageNum', () => {
   test('should update the collection query and call getCollections', () => {
     const pageNum = 2
 
-    // mock getCollections
+    // Mock getCollections
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
     getCollectionsMock.mockImplementation(() => jest.fn())
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       query: {
         collection: { pageNum: 1 }
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(actions.changeCollectionPageNum(pageNum))
 
     const storeActions = store.getActions()
@@ -306,7 +311,7 @@ describe('changeCollectionPageNum', () => {
       }
     })
 
-    // was getCollections called
+    // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
   })
 })
@@ -316,11 +321,11 @@ describe('changeGranulePageNum', () => {
     const collectionId = 'collectionId'
     const pageNum = 2
 
-    // mock getSearchGranules
+    // Mock getSearchGranules
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
     getSearchGranulesMock.mockImplementation(() => jest.fn())
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       metadata: {
         collections: {
@@ -344,8 +349,11 @@ describe('changeGranulePageNum', () => {
       }
     })
 
-    // call the dispatch
-    store.dispatch(actions.changeGranulePageNum({ collectionId, pageNum }))
+    // Call the dispatch
+    store.dispatch(actions.changeGranulePageNum({
+      collectionId,
+      pageNum
+    }))
 
     // Is updateGranuleQuery called with the right payload
     const storeActions = store.getActions()
@@ -357,7 +365,7 @@ describe('changeGranulePageNum', () => {
       }
     })
 
-    // was getCollections called
+    // Was getCollections called
     expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
   })
 
@@ -365,11 +373,11 @@ describe('changeGranulePageNum', () => {
     const collectionId = 'collectionId'
     const pageNum = 2
 
-    // mock getSearchGranules
+    // Mock getSearchGranules
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
     getSearchGranulesMock.mockImplementation(() => jest.fn())
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       metadata: {
         collections: {
@@ -393,8 +401,11 @@ describe('changeGranulePageNum', () => {
       }
     })
 
-    // call the dispatch
-    store.dispatch(actions.changeGranulePageNum({ collectionId, pageNum }))
+    // Call the dispatch
+    store.dispatch(actions.changeGranulePageNum({
+      collectionId,
+      pageNum
+    }))
 
     // Is updateGranuleQuery called with the right payload
     const storeActions = store.getActions()
@@ -410,7 +421,7 @@ describe('changeGranulePageNum', () => {
 
 describe('removeSpatialFilter', () => {
   test('should remove the spatial query', () => {
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       query: {
         collection: {
@@ -431,7 +442,7 @@ describe('removeSpatialFilter', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(actions.removeSpatialFilter())
 
     const storeActions = store.getActions()
@@ -443,13 +454,16 @@ describe('removeSpatialFilter', () => {
         spatial: {}
       }
     })
+
     expect(storeActions[1]).toEqual({
       type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
     })
+
     expect(storeActions[2]).toEqual({
       type: TOGGLE_DRAWING_NEW_LAYER,
       payload: false
     })
+
     expect(storeActions[3]).toEqual({
       type: CLEAR_SHAPEFILE
     })
@@ -458,7 +472,7 @@ describe('removeSpatialFilter', () => {
 
 describe('removeTemporalFilter', () => {
   test('should remove the temporal query', () => {
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       query: {
         collection: {
@@ -480,7 +494,7 @@ describe('removeTemporalFilter', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(actions.removeTemporalFilter())
 
     const storeActions = store.getActions()
@@ -502,14 +516,14 @@ describe('changeRegionQuery', () => {
       keyword: 'test value'
     }
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({})
 
-    // mock getRegionsMock
+    // Mock getRegionsMock
     const getRegionsMock = jest.spyOn(actions, 'getRegions')
     getRegionsMock.mockImplementation(() => jest.fn())
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(actions.changeRegionQuery(query))
     const storeActions = store.getActions()
 
@@ -518,14 +532,14 @@ describe('changeRegionQuery', () => {
       payload: query
     })
 
-    // was getCollections called
+    // Was getCollections called
     expect(getRegionsMock).toHaveBeenCalledTimes(1)
   })
 })
 
 describe('clearFilters', () => {
   test('clears the query and calls getCollections', () => {
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       router: {
         location: {
@@ -534,7 +548,7 @@ describe('clearFilters', () => {
       }
     })
 
-    // mock getCollections
+    // Mock getCollections
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
     getCollectionsMock.mockImplementation(() => jest.fn())
 
@@ -547,7 +561,7 @@ describe('clearFilters', () => {
     const getTimelineMock = jest.spyOn(actions, 'getTimeline')
     getTimelineMock.mockImplementation(() => jest.fn())
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(actions.clearFilters())
     const storeActions = store.getActions()
 
@@ -555,7 +569,7 @@ describe('clearFilters', () => {
       type: CLEAR_FILTERS
     })
 
-    // was getCollections called
+    // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
     expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
     expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
@@ -563,7 +577,7 @@ describe('clearFilters', () => {
   })
 
   test('does not call getGranules on the collections page', () => {
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       router: {
         location: {
@@ -572,7 +586,7 @@ describe('clearFilters', () => {
       }
     })
 
-    // mock getCollections
+    // Mock getCollections
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
     getCollectionsMock.mockImplementation(() => jest.fn())
 
@@ -585,7 +599,7 @@ describe('clearFilters', () => {
     const getTimelineMock = jest.spyOn(actions, 'getTimeline')
     getTimelineMock.mockImplementation(() => jest.fn())
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(actions.clearFilters())
     const storeActions = store.getActions()
 
@@ -593,7 +607,7 @@ describe('clearFilters', () => {
       type: CLEAR_FILTERS
     })
 
-    // was getCollections called
+    // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
     expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
     expect(getSearchGranulesMock).toHaveBeenCalledTimes(0)

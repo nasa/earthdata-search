@@ -52,7 +52,7 @@ export const RadioSettingDropdown = ({
     'dropdown-menu--condensed'
   )
 
-  const onWindowMouseMove = useCallback((e) => {
+  const onWindowMouseMove = useCallback((event) => {
     const elements = [
       wrapperRef.current,
       menuRef.current,
@@ -62,8 +62,8 @@ export const RadioSettingDropdown = ({
     // If the toggle is active or focused, check the cursor position to determine
     // if the dropdown should remain open.
     if (dropdownActive) {
-      const xPos = e.clientX
-      const yPos = e.clientY
+      const xPos = event.clientX
+      const yPos = event.clientY
 
       const {
         top: toggleTop,
@@ -85,7 +85,7 @@ export const RadioSettingDropdown = ({
     const shouldShowDropdown = elements.some((element) => {
       if (!element) return false
 
-      return element === e.target || element.contains(e.target)
+      return element === event.target || element.contains(event.target)
     })
 
     if (shouldShowDropdown) {
@@ -141,34 +141,39 @@ export const RadioSettingDropdown = ({
               data-testid={`${id}__menu`}
               ref={menuRef}
               className={menuClasses}
-              popperConfig={{
-                modifiers: [{
-                  name: 'offset',
-                  options: {
-                    offset: [menuOffsetX, 0]
-                  }
-                }]
-              }}
+              popperConfig={
+                {
+                  modifiers: [{
+                    name: 'offset',
+                    options: {
+                      offset: [menuOffsetX, 0]
+                    }
+                  }]
+                }
+              }
             >
               {
-                settings.length > 0 && settings.map((setting, i) => {
+                settings.length > 0 && settings.map((setting, index) => {
                   const {
-                    label,
+                    label: settingLabel,
                     icon,
                     isActive = false,
                     inProgress,
                     onClick
                   } = setting
 
-                  const key = `${label}_${i}`
+                  const key = `${settingLabel}_${index}`
+
                   return (
                     <RadioSettingDropdownItem
                       key={key}
-                      title={`${label}`}
-                      onClick={(e) => {
-                        onClick()
-                        e.stopPropagation()
-                      }}
+                      title={`${settingLabel}`}
+                      onClick={
+                        (event) => {
+                          onClick()
+                          event.stopPropagation()
+                        }
+                      }
                       icon={icon}
                       isActive={isActive}
                       inProgress={inProgress}

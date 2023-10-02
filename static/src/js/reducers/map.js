@@ -26,6 +26,7 @@ const mapReducer = (state = initialState, action = {}) => {
         ...action.payload
       }
     }
+
     case RESTORE_FROM_URL: {
       const { map } = action.payload
 
@@ -36,6 +37,7 @@ const mapReducer = (state = initialState, action = {}) => {
         ...map
       }
     }
+
     default:
       return state
   }

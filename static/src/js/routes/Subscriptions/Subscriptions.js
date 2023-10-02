@@ -7,6 +7,7 @@ import SubscriptionsListContainer from '../../containers/SubscriptionsListContai
 
 export const Subscriptions = () => {
   const { edscHost } = getEnvironmentConfig()
+
   return (
     <>
       <Helmet>

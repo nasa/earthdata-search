@@ -65,6 +65,7 @@ export const EDSCModal = ({
       'edsc-modal__header--is-empty': !title
     }
   ])
+
   return (
     <Modal
       dialogClassName={modalClassNames}
@@ -164,7 +165,9 @@ export const EDSCModal = ({
         )
       }
       {
-        subtitle && <p className="edsc-modal__subtitle">{subtitle}</p>
+        subtitle && (
+          <p className="edsc-modal__subtitle">{subtitle}</p>
+        )
       }
     </Modal>
   )

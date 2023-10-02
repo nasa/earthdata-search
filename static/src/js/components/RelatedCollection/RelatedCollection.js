@@ -30,20 +30,25 @@ export const RelatedCollection = ({
     <PortalLinkContainer
       className={className}
       type="link"
-      onClick={() => {
-        onMetricsRelatedCollection({
-          collectionId: id,
-          type: 'view'
-        })
-        onFocusedCollectionChange(id)
-      }}
-      to={{
-        pathname: '/search/granules',
-        search: stringify({
-          ...params,
-          p
-        })
-      }}
+      onClick={
+        () => {
+          onMetricsRelatedCollection({
+            collectionId: id,
+            type: 'view'
+          })
+
+          onFocusedCollectionChange(id)
+        }
+      }
+      to={
+        {
+          pathname: '/search/granules',
+          search: stringify({
+            ...params,
+            p
+          })
+        }
+      }
     >
       {title}
     </PortalLinkContainer>

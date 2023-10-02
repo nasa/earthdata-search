@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { AutocompleteDisplayContainer, mapDispatchToProps, mapStateToProps } from '../AutocompleteDisplayContainer'
+import {
+  AutocompleteDisplayContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../AutocompleteDisplayContainer'
 import AutocompleteDisplay from '../../../components/AutocompleteDisplay/AutocompleteDisplay'
 
 Enzyme.configure({ adapter: new Adapter() })

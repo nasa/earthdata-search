@@ -98,6 +98,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_OVERRIDE_TEMPORAL_MODAL: {
       return {
         ...state,
@@ -106,6 +107,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_PORTAL_BROWSER_MODAL: {
       return {
         ...state,
@@ -114,6 +116,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_RELATED_URLS_MODAL: {
       return {
         ...state,
@@ -122,8 +125,10 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_DRAWING_NEW_LAYER: {
       const { map } = state
+
       return {
         ...state,
         map: {
@@ -132,6 +137,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_SECONDARY_OVERLAY_PANEL: {
       return {
         ...state,
@@ -140,6 +146,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_ADVANCED_SEARCH_MODAL: {
       return {
         ...state,
@@ -148,6 +155,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_SHAPEFILE_UPLOAD_MODAL: {
       return {
         ...state,
@@ -156,6 +164,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_TOO_MANY_POINTS_MODAL: {
       return {
         ...state,
@@ -164,6 +173,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_CHUNKED_ORDER_MODAL: {
       return {
         ...state,
@@ -172,6 +182,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_ABOUT_CSDA_MODAL: {
       return {
         ...state,
@@ -180,6 +191,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_ABOUT_CWIC_MODAL: {
       return {
         ...state,
@@ -188,8 +200,10 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_EDIT_SUBSCRIPTION_MODAL: {
       const { isOpen, subscriptionConceptId, type } = action.payload
+
       return {
         ...state,
         editSubscriptionModal: {
@@ -199,6 +213,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_SPATIAL_POLYGON_WARNING: {
       return {
         ...state,
@@ -207,6 +222,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_KEYBOARD_SHORTCUTS_MODAL: {
       return {
         ...state,
@@ -215,6 +231,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_TIMELINE: {
       return {
         ...state,
@@ -223,6 +240,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case EXPORT_STARTED: {
       return {
         ...state,
@@ -234,6 +252,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case EXPORT_FINISHED: {
       return {
         ...state,
@@ -245,6 +264,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case TOGGLE_DEPRECATED_PARAMETER_MODAL: {
       const { payload: displayModal } = action
       const { deprecatedParameterModal } = state
@@ -262,6 +282,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case RESTORE_FROM_URL: {
       const { payload } = action
       const { deprecatedUrlParams } = payload
@@ -279,6 +300,7 @@ const uiReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     default:
       return state
   }
