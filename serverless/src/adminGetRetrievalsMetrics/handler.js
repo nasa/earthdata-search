@@ -9,7 +9,6 @@ import { parseError } from '../../../sharedUtils/parseError'
  */
 const adminGetRetrievalsMetrics = async (event, context) => {
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
-  // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
   const { defaultResponseHeaders } = getApplicationConfig()
 
