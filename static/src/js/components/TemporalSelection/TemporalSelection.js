@@ -265,6 +265,7 @@ export class TemporalSelection extends Component {
     )
   }
 }
+
 TemporalSelection.defaultProps = {
   allowRecurring: true,
   format: 'YYYY-MM-DD HH:mm:ss',

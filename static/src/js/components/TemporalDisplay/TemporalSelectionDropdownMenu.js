@@ -13,6 +13,7 @@ import TemporalSelection from '../TemporalSelection/TemporalSelection'
 import './TemporalSelectionDropdownMenu.scss'
 
 const TemporalSelectionDropdownMenu = ({
+  allowRecurring,
   disabled,
   onApplyClick,
   onClearClick,
@@ -23,8 +24,7 @@ const TemporalSelectionDropdownMenu = ({
   onValid,
   setEndDate,
   setStartDate,
-  temporal,
-  allowRecurring
+  temporal
 }) => {
   const classes = {
     btnApply: classNames(
