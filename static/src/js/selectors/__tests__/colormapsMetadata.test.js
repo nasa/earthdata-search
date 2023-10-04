@@ -1,6 +1,4 @@
-import {
-  getColormapsMetadata
-} from '../colormapsMetadata'
+import { getColormapsMetadata } from '../colormapsMetadata'
 
 describe('getColormapsMetadata selector', () => {
   test('checks that the metadata returned is formatted correctly.', () => {

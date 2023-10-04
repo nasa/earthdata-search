@@ -10,7 +10,9 @@ const initialState = {}
 
 describe('INITIAL_STATE', () => {
   test('is correct', () => {
-    const action = { type: 'dummy_action' }
+    const action = {
+      type: 'dummy_action'
+    }
 
     expect(colorMapsReducer(undefined, action)).toEqual(initialState)
   })
@@ -45,7 +47,10 @@ describe('SET_COLOR_MAPS_LOADED', () => {
 
     const action = {
       type: SET_COLOR_MAPS_LOADED,
-      payload: { product, colorMapData: { hello: 1 } }
+      payload: {
+        product,
+        colorMapData: { hello: 1 }
+      }
     }
 
     const expectedState = {

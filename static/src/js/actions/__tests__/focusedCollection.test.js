@@ -314,6 +314,7 @@ describe('getFocusedCollection', () => {
             type: TOGGLE_SPATIAL_POLYGON_WARNING,
             payload: true
           })
+
           expect(storeActions[1]).toEqual({
             type: UPDATE_COLLECTION_METADATA,
             payload: [

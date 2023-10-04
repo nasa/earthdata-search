@@ -128,7 +128,10 @@ describe('getColorMaps without errors', () => {
 
     expect(storeActions[1]).toEqual({
       type: SET_COLOR_MAPS_LOADED,
-      payload: { product, colorMapData: { scale: {} } }
+      payload: {
+        product,
+        colorMapData: { scale: {} }
+      }
     })
   })
 })

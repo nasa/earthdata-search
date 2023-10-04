@@ -22,6 +22,7 @@ describe('hasGibsLayerForProjection test', () => {
     expect(hasGibsLayerForProjection(gibsLayer, 'epsg3413')).toBeTruthy()
   })
 })
+
 describe('hasGibsLayerForProjection test for geographic/antarctic values', () => {
   test('returns true with valid geographic value', () => {
     const gibsLayer = {

@@ -37,7 +37,10 @@ export const getColorMap = (payload) => async (dispatch, getState) => {
   await requestObject.getColorMap(product)
     .then((response) => {
       const { data } = response
-      dispatch(setColorMapsLoaded({ product, colorMapData: data }))
+      dispatch(setColorMapsLoaded({
+        product,
+        colorMapData: data
+      }))
     })
     .catch((error) => {
       dispatch(setColorMapsErrored({ product }))

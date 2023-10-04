@@ -10,6 +10,7 @@ const colorMapsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case ERRORED_COLOR_MAPS: {
       const { product } = action.payload
+
       return {
         ...state,
         [product]: {
@@ -21,8 +22,10 @@ const colorMapsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case SET_COLOR_MAPS_LOADING: {
       const { product } = action.payload
+
       return {
         ...state,
         [product]: {
@@ -33,8 +36,10 @@ const colorMapsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case SET_COLOR_MAPS_LOADED: {
       const { product, colorMapData } = action.payload
+
       return {
         ...state,
         [product]: {
@@ -45,6 +50,7 @@ const colorMapsReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     default:
       return state
   }

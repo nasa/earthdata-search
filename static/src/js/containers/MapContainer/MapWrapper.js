@@ -1,7 +1,4 @@
-import React, {
-  useLayoutEffect,
-  useMemo
-} from 'react'
+import React, { useLayoutEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import Control from 'react-leaflet-custom-control'
 import {
