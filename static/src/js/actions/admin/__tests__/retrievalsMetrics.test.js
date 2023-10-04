@@ -125,7 +125,7 @@ describe('updateAdminRetrievalsMetricsEndDate', () => {
   })
 })
 
-describe('fetchAdminRetrfetchAdminMetricsRetrievalsievals', () => {
+describe('fetchAdminMetricsRetrievals', () => {
   test('fetches the list of admin metrics retrievals', async () => {
     const data = {
       results: [{ mock: 'data' }]

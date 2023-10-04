@@ -68,7 +68,6 @@ export class Admin extends Component {
                 <Route exact path={`${path}/retrievals/:id`} component={AdminRetrievalContainer} />
                 <Route exact path={`${path}/projects`} component={AdminProjectsContainer} />
                 <Route exact path={`${path}/projects/:id`} component={AdminProjectContainer} />
-                <Route exact path={`${path}/projects/:id`} component={AdminProjectContainer} />
                 <Route exact path={`${path}/retrievalsMetrics`} component={AdminRetrievalsMetricsContainer} />
               </Switch>
             </div>

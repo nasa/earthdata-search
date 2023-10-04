@@ -277,12 +277,14 @@ describe('adminGetRetrievalsMetrics', () => {
     const { queries } = dbTracker.queries
 
     // Ensure first sql call contains temporal filter for `start_date` and `end_date`
+    expect(queries[0].sql).toEqual('select jsonb_path_query("access_method", $1) as "access_method_type", count(*) as "total_times_access_method_used", ROUND(AVG(retrieval_collections.granule_count)) AS average_granule_count, ROUND(AVG(retrieval_collections.granule_link_count)) AS average_granule_link_count, SUM(retrieval_collections.granule_count) AS total_granules_retrieved, MAX(retrieval_collections.granule_link_count) AS max_granule_link_count, MIN(retrieval_collections.granule_link_count) AS min_granule_link_count from "retrieval_collections" where "retrieval_collections"."created_at" >= $2 and "retrieval_collections"."created_at" < $3 group by "access_method_type" order by "total_times_access_method_used" asc')
     expect(queries[0].method).toEqual('select')
     expect(queries[0].sql).toContain('created_at')
     expect(queries[0].sql).toContain('>=')
     expect(queries[0].sql).toContain('<')
 
     // Ensure second sql call contains temporal filter for `start_date` and `end_date`
+    expect(queries[1].sql).toEqual('select "retrieval_collections"."retrieval_id" as "retrieval_id", count(*) from "retrieval_collections" inner join "retrievals" on "retrieval_collections"."retrieval_id" = "retrievals"."id" where "retrieval_collections"."created_at" >= $1 and "retrieval_collections"."created_at" < $2 group by "retrieval_id" having COUNT(*) > $3')
     expect(queries[1].method).toEqual('select')
     expect(queries[1].sql).toContain('created_at')
     expect(queries[1].sql).toContain('>=')

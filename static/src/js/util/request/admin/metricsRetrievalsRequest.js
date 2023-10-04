@@ -12,8 +12,4 @@ export default class MetricsRetrievalsRequest extends Request {
   all(params) {
     return this.get('admin/retrievalsMetrics', params)
   }
-
-  isAuthorized() {
-    return this.get('admin/is_authorized')
-  }
 }
