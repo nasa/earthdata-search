@@ -162,8 +162,8 @@ describe('getFocusedCollection', () => {
         expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
       })
 
-      describe('when the requested collection is cwic and a polygon search is active and we try and retrieve a non existant gibs tag', () => {
-        test('Same test as above but no gibs tags, ensure it is not called', async () => {
+      describe('Testing focusedColection does not retrieve a non existant gibs tag', () => {
+        test('Checking getColorMap does not get called', async () => {
           jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
             cmrHost: 'https://cmr.example.com',
             graphQlHost: 'https://graphql.example.com',
@@ -242,8 +242,8 @@ describe('getFocusedCollection', () => {
       })
     })
 
-    describe('when the requested collection and we try and retrieve an existing gibs tag', () => {
-      test('Test that getColorMap works when a gibs tag is returned in the graphql call (call SET_COLOR_MAPS_LOADING and call ERRORED_COLOR_MAPS)', async () => {
+    describe('When the collection has a gibs tag', () => {
+      test('calls getColorMap', async () => {
         jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
           cmrHost: 'https://cmr.example.com',
           graphQlHost: 'https://graphql.example.com',
