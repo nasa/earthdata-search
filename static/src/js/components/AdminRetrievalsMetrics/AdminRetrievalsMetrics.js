@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import PropTypes from 'prop-types'
 import { Row, Col } from 'react-bootstrap'
 
@@ -52,6 +51,7 @@ export const AdminRetrievalsMetrics = ({
                   <h3>
                     Current temporal filters
                   </h3>
+                  <br />
                   <h5>
                     Start Date:
                     {temporalFilterStartDate}

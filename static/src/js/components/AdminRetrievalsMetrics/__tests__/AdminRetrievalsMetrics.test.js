@@ -71,7 +71,7 @@ describe('AdminRetrievals component', () => {
         onUpdateAdminMetricsRetrievalsEndDate
       } = setup()
 
-      const temporalFilterButton = screen.getByRole('button', { id: 'temporal-selection-dropdown' })
+      const temporalFilterButton = screen.getByRole('button')
       await waitFor(async () => {
         await user.click(temporalFilterButton)
       })
