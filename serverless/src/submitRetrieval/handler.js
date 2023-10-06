@@ -66,6 +66,7 @@ const submitRetrieval = async (event, context) => {
         access_method: accessMethod,
         collection_metadata: collectionMetadata,
         granule_count: granuleCount = 0,
+        granule_link_count: granuleLinkCount = 0,
         granule_params: granuleParams
       } = collection
 
@@ -79,7 +80,8 @@ const submitRetrieval = async (event, context) => {
           'collection_id',
           'collection_metadata',
           'granule_params',
-          'granule_count'
+          'granule_count',
+          'granule_link_count'
         ])
         .insert({
           retrieval_id: retrievalRecord[0].id,
@@ -87,7 +89,8 @@ const submitRetrieval = async (event, context) => {
           collection_id: id,
           collection_metadata: collectionMetadata,
           granule_params: snakeGranuleParams,
-          granule_count: granuleCount
+          granule_count: granuleCount,
+          granule_link_count: granuleLinkCount
         })
 
       // Save Access Configuration

@@ -8,6 +8,13 @@ import {
   updateAdminRetrievalsSortKey,
   updateAdminRetrievalsPageNum
 } from './admin/retrievals'
+
+import {
+  fetchAdminMetricsRetrievals,
+  updateAdminMetricsRetrievalsStartDate,
+  updateAdminMetricsRetrievalsEndDate
+} from './admin/retrievalMetrics'
+
 import {
   adminViewProject,
   fetchAdminProjects,
@@ -308,6 +315,9 @@ const actions = {
   updateAccessMethod,
   updateAdminRetrievalsPageNum,
   updateAdminRetrievalsSortKey,
+  fetchAdminMetricsRetrievals,
+  updateAdminMetricsRetrievalsStartDate,
+  updateAdminMetricsRetrievalsEndDate,
   updateAdvancedSearch,
   updateAuthToken,
   updateBrowserVersion,
