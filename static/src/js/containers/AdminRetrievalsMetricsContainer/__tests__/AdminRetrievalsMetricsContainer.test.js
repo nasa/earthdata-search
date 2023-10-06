@@ -87,6 +87,7 @@ describe('mapDispatchToProps', () => {
 describe('AdminRetrievalsMetricsContainer component', () => {
   test('render AdminRetrievalsMetrics with the correct props', () => {
     setup()
+
     expect(AdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
     expect(screen.getByText('Mock Admin Retrievals Metrics')).toBeInTheDocument()
   })

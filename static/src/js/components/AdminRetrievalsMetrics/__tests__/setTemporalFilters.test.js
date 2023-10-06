@@ -33,7 +33,7 @@ describe('setTemporalFilters', () => {
     }
 
     setTemporalFilters(mockEvent, eventHandlers)
-    // Test redux` store functions are called
+    // Test redux store functions are called
     expect(onUpdateAdminMetricsRetrievalsStartDate).toHaveBeenCalledTimes(1)
     expect(onUpdateAdminMetricsRetrievalsStartDate).toHaveBeenCalledWith(mockStartDate)
 
@@ -51,7 +51,7 @@ describe('setTemporalFilters', () => {
     expect(onFetchAdminMetricsRetrievals).toHaveBeenCalledTimes(1)
   })
 
-  test('if `startDate is not provided', () => {
+  test('if `startDate` is not provided', () => {
     const mockEndDate = 'mock-date'
     const mockEvent = {
       collection: {
@@ -74,7 +74,7 @@ describe('setTemporalFilters', () => {
     expect(onFetchAdminMetricsRetrievals).toHaveBeenCalledTimes(1)
   })
 
-  test('if `endDate is not provided', () => {
+  test('if `endDate` is not provided', () => {
     const mockStartDate = 'mock-date'
     const mockEvent = {
       collection: {
@@ -97,7 +97,7 @@ describe('setTemporalFilters', () => {
     expect(onFetchAdminMetricsRetrievals).toHaveBeenCalledTimes(1)
   })
 
-  test('when neither the startDate or the endDate are passed', () => {
+  test('when neither the `startDate` or the `endDate` are passed', () => {
     const mockEvent = {
       collection: {
         temporal: {
