@@ -74,7 +74,21 @@ export const prepareRetrievalParams = (state) => {
       selectedAccessMethod
     } = projectCollection
 
-    const { hits: granuleCount, links = [] } = granules
+    const {
+      hits: granuleCount,
+      allIds: allGranuleIds,
+      byId: byGranuleId
+    } = granules
+
+    let totalGranuleLinks = 0
+
+    allGranuleIds.forEach((granuleId) => {
+      const { links = [] } = byGranuleId[granuleId]
+      if (links.length > 0) {
+        const totalLinksByGranuleId = links.length
+        totalGranuleLinks += totalLinksByGranuleId
+      }
+    })
 
     const { [collectionId]: collectionMetadata } = collectionsMetadata
 
@@ -82,7 +96,7 @@ export const prepareRetrievalParams = (state) => {
 
     returnValue.id = collectionId
     returnValue.granule_count = granuleCount
-    returnValue.granule_link_count = links.length
+    returnValue.granule_link_count = totalGranuleLinks
     returnValue.collection_metadata = pick(collectionMetadata, permittedCollectionMetadataFields)
 
     const extractedGranuleParams = extractProjectCollectionGranuleParams(state, collectionId)
