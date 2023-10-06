@@ -1,17 +1,11 @@
-import React, {
-  Children,
-  useState,
-  useEffect
-} from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-
-import Radio from '../Radio/Radio'
-import AccessMethodRadio from '../AccessMethodRadio/AccessMethodRadio'
 
 export const RadioList = ({
   defaultValue,
   onChange,
-  children
+  radioList,
+  renderRadio
 }) => {
   const [selected, setSelected] = useState(defaultValue)
 
@@ -30,24 +24,7 @@ export const RadioList = ({
 
   return (
     <div className="radio-list">
-      {
-        Children.map(children, (child) => {
-          const { props, type } = child
-
-          if (type !== Radio && type !== AccessMethodRadio) return null
-
-          return React.cloneElement(
-            child,
-            {
-              onChange: onPropsChange,
-              // Disabling the rule, but we shouldn't be using Children
-              // https://react.dev/reference/react/Children
-              // eslint-disable-next-line react/prop-types
-              checked: selected === props.value
-            }
-          )
-        })
-      }
+      {radioList.map((radio) => renderRadio(radio, onPropsChange, selected))}
     </div>
   )
 }
@@ -58,7 +35,8 @@ RadioList.defaultProps = {
 }
 
 RadioList.propTypes = {
-  children: PropTypes.node.isRequired,
+  radioList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  renderRadio: PropTypes.func.isRequired,
   defaultValue: PropTypes.string,
   onChange: PropTypes.func
 }
