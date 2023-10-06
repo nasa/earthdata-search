@@ -76,8 +76,8 @@ export const prepareRetrievalParams = (state) => {
 
     const {
       hits: granuleCount,
-      allIds: allGranuleIds,
-      byId: byGranuleId
+      allIds: allGranuleIds = [],
+      byId: byGranuleId = {}
     } = granules
 
     let totalGranuleLinks = 0
