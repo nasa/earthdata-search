@@ -69,10 +69,11 @@ Earthdata Search uses PostgreSQL in production on AWS RDS. If you don't already 
 
 Start the PostgreSQL server:
     
-    # Intel Macs
-    pg_ctl -D /usr/local/var/postgresql\@14/ start
-    # Apple Silicon
-    pg_ctl -D /opt/homebrew/var/postgresql\@14/ start
+    # If you have never used brew services before:
+    brew tap homebrew/services
+    
+    # Start the server:
+    brew services start postgresql
 
 If you decide to install via Homebrew you'll need to create the default user.
 
