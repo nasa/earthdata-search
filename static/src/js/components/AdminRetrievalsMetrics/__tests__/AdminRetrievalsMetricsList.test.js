@@ -27,7 +27,7 @@ const setup = (overrideProps) => {
 describe('AdminRetrievalsList component', () => {
   test('renders itself correctly', () => {
     setup()
-    expect(screen.getAllByRole('columnheader').length).toEqual(8)
+    expect(screen.getAllByRole('columnheader').length).toEqual(9)
 
     // Retrieval metrics table
     expect(screen.getByRole('columnheader', { name: 'Data Access Type' }))
@@ -40,6 +40,9 @@ describe('AdminRetrievalsList component', () => {
       .toBeInTheDocument()
 
     expect(screen.getByRole('columnheader', { name: 'Total Granules Retrieved' }))
+      .toBeInTheDocument()
+
+    expect(screen.getByRole('columnheader', { name: 'Average Granule Link Count' }))
       .toBeInTheDocument()
 
     expect(screen.getByRole('columnheader', { name: 'Max Granule Link Count' }))
@@ -55,7 +58,6 @@ describe('AdminRetrievalsList component', () => {
     expect(screen.getByRole('columnheader', { name: 'Number of collections in the retrieval' }))
   })
 
-  // Todo how to test that the table entries equal something
   test('renders the collections table when collections are provided', () => {
     setup({
       metricsRetrievals: {
@@ -112,7 +114,7 @@ describe('AdminRetrievalsList component', () => {
             average_granule_count: '59416',
             average_granule_link_count: null,
             total_granules_retrieved: '59416',
-            max_granule_link_count: null,
+            max_granule_link_count: 143,
             min_granule_link_count: null
           },
           OPeNDAP: {
@@ -148,10 +150,11 @@ describe('AdminRetrievalsList component', () => {
 
     // Values render on the table
     expect(screen.getByRole('cell', { name: '25218' })).toBeInTheDocument()
+    expect(screen.getByRole('cell', { name: '143' })).toBeInTheDocument()
     expect(screen.getByRole('cell', { name: 'download' })).toBeInTheDocument()
     expect(screen.getByRole('cell', { name: '121' })).toBeInTheDocument()
 
     // Values which were `null` fill in as `N/A`
-    expect(screen.getAllByRole('cell', { name: /N\/A/ }).length).toBe(7)
+    expect(screen.getAllByRole('cell', { name: /N\/A/ }).length).toBe(9)
   })
 })

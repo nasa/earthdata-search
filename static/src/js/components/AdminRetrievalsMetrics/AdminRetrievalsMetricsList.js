@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Table } from 'react-bootstrap'
-import 'rc-pagination/assets/index.css'
 import './AdminRetrievalsMetricsList.scss'
 
 export const AdminRetrievalsMetricsList = ({
@@ -23,6 +22,7 @@ export const AdminRetrievalsMetricsList = ({
             <th>Total Times Access Method Used</th>
             <th>Average Granule Count</th>
             <th>Total Granules Retrieved</th>
+            <th>Average Granule Link Count</th>
             <th>Max Granule Link Count</th>
             <th>Minimum Granule Link Count</th>
           </tr>
@@ -35,6 +35,7 @@ export const AdminRetrievalsMetricsList = ({
               const {
                 total_times_access_method_used: totalTimesAccessMethodUsed,
                 average_granule_count: averageGranuleCount,
+                average_granule_link_count: averageGranuleLinkCount,
                 total_granules_retrieved: totalGranulesRetrieved,
                 max_granule_link_count: maxGranuleLinkCount,
                 min_granule_link_count: minGranuleLinkCount
@@ -49,6 +50,17 @@ export const AdminRetrievalsMetricsList = ({
                   <td>{totalTimesAccessMethodUsed}</td>
                   <td>{averageGranuleCount}</td>
                   <td>{totalGranulesRetrieved}</td>
+                  {
+                    (averageGranuleLinkCount || averageGranuleLinkCount === 0)
+                      ? (
+                        <td>
+                          {averageGranuleLinkCount}
+                        </td>
+                      )
+                      : (
+                        <td> N/A </td>
+                      )
+                  }
                   {
                     maxGranuleLinkCount
                       ? (
