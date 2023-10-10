@@ -311,6 +311,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               browseFlag
               conceptId
               onlineAccessFlag
+              links
             }
           }
           subscriptions (

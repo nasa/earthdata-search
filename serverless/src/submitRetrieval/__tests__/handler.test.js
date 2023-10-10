@@ -80,7 +80,8 @@ describe('submitRetrieval', () => {
             url: 'https://n5eil09e.ecs.edsc.org/egi/request'
           },
           collection_metadata: {},
-          granule_count: 27
+          granule_count: 27,
+          granule_link_count: 17
         }])
       } else if (step === 4) {
         query.response({
@@ -103,7 +104,7 @@ describe('submitRetrieval', () => {
     expect(queries[1].method).toEqual('insert')
     expect(queries[2].method).toEqual('insert')
     // Granule_params should be snaked cased before inserting into db
-    expect(queries[2].bindings[4]).toEqual(JSON.stringify({
+    expect(queries[2].bindings[5]).toEqual(JSON.stringify({
       echo_collection_id: 'C10000005-EDSC',
       bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
     }))
@@ -134,7 +135,8 @@ describe('submitRetrieval', () => {
         url: 'https://n5eil09e.ecs.edsc.org/egi/request'
       },
       collection_metadata: {},
-      granule_count: 27
+      granule_count: 27,
+      granule_link_count: 17
     }
     dbTracker.on('query', (query, step) => {
       if (step === 2) {
@@ -181,7 +183,7 @@ describe('submitRetrieval', () => {
     expect(queries[1].method).toEqual('insert')
     expect(queries[2].method).toEqual('insert')
     // Granule_params should be snaked cased before inserting into db
-    expect(queries[2].bindings[4]).toEqual(JSON.stringify({
+    expect(queries[2].bindings[5]).toEqual(JSON.stringify({
       echo_collection_id: 'C10000005-EDSC',
       bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
     }))
