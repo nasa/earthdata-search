@@ -2,10 +2,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import { SET_USER } from '../../constants/actionTypes'
-import {
-  setUser,
-  setUserFromJwt
-} from '../user'
+import { setUser, setUserFromJwt } from '../user'
 import { testJwtToken } from './mocks'
 
 const mockStore = configureMockStore([thunk])

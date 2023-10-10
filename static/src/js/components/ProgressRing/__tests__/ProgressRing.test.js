@@ -23,23 +23,29 @@ beforeEach(() => {
 })
 
 describe('ProgressRing component', () => {
-  const { enzymeWrapper } = setup()
-
   test('should render an svg progress ring', () => {
+    const { enzymeWrapper } = setup()
+
     expect(enzymeWrapper.find('.progress-ring__ring').type()).toEqual('svg')
   })
 
   test('should add the correct classname', () => {
+    const { enzymeWrapper } = setup()
+
     expect(enzymeWrapper.find('.progress-ring').props().className).toEqual('progress-ring')
   })
 
   describe('when no size is provided', () => {
     test('should render an svg at the correct size', () => {
+      const { enzymeWrapper } = setup()
+
       expect(enzymeWrapper.find('.progress-ring__ring').props().width).toEqual(16)
       expect(enzymeWrapper.find('.progress-ring__ring').props().height).toEqual(16)
     })
 
     test('should render the inner circle at the correct size', () => {
+      const { enzymeWrapper } = setup()
+
       expect(enzymeWrapper.find('.progress-ring__progress').props().cx).toEqual(8)
       expect(enzymeWrapper.find('.progress-ring__progress').props().cx).toEqual(8)
       expect(enzymeWrapper.find('.progress-ring__progress').props().r).toEqual(5)

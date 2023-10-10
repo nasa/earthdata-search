@@ -177,26 +177,26 @@ export const GranuleFiltersForm = (props) => {
   }
 
   // Blur the field and submit the form. Should be used on text fields.
-  const submitOnBlur = (e) => {
-    handleBlur(e)
-    handleSubmit(e)
+  const submitOnBlur = (event) => {
+    handleBlur(event)
+    handleSubmit(event)
   }
 
   // Submit the form when the enter key is pressed. Should be used on text fields.
-  const submitOnKeypress = (e) => {
+  const submitOnKeypress = (event) => {
     const {
       key = ''
-    } = e
+    } = event
     if (key === 'Enter') {
-      handleBlur(e)
-      handleSubmit(e)
+      handleBlur(event)
+      handleSubmit(event)
     }
   }
 
   // Change the field and submit the form. Should be used on checkboxes or selects.
-  const submitOnChange = (e) => {
-    handleChange(e)
-    handleSubmit(e)
+  const submitOnChange = (event) => {
+    handleChange(event)
+    handleSubmit(event)
   }
 
   return (
@@ -209,9 +209,7 @@ export const GranuleFiltersForm = (props) => {
                 <span className="granule-filters-form__item-meta">
                   { excludedGranuleIds.length }
                   {' '}
-                  {
-                    pluralize('Granule', excludedGranuleIds.length)
-                  }
+                  {pluralize('Granule', excludedGranuleIds.length)}
                   {' Filtered'}
                 </span>
                 <Button
@@ -242,27 +240,29 @@ export const GranuleFiltersForm = (props) => {
                   </Form.Label>
                   <OverlayTrigger
                     placement="bottom"
-                    overlay={(
-                      <Tooltip
-                        id="tooltip__granule-search"
-                        className="tooltip--large tooltip--ta-left tooltip--wide"
-                      >
-                        <strong>Wildcards:</strong>
-                        {' '}
-                        <ul className="m-0">
-                          <li>
-                            * (asterisk) matches any number of characters
-                          </li>
-                          <li>
-                            ? (question mark) matches exactly one character.
-                          </li>
-                        </ul>
-                        <br />
-                        <strong>Delimiters:</strong>
-                        {' '}
-                        Separate multiple granule IDs by commas.
-                      </Tooltip>
-                    )}
+                    overlay={
+                      (
+                        <Tooltip
+                          id="tooltip__granule-search"
+                          className="tooltip--large tooltip--ta-left tooltip--wide"
+                        >
+                          <strong>Wildcards:</strong>
+                          {' '}
+                          <ul className="m-0">
+                            <li>
+                              * (asterisk) matches any number of characters
+                            </li>
+                            <li>
+                              ? (question mark) matches exactly one character.
+                            </li>
+                          </ul>
+                          <br />
+                          <strong>Delimiters:</strong>
+                          {' '}
+                          Separate multiple granule IDs by commas.
+                        </Tooltip>
+                      )
+                    }
                   >
                     <Form.Control
                       name="readableGranuleName"
@@ -302,23 +302,27 @@ export const GranuleFiltersForm = (props) => {
                     size="sm"
                     as="select"
                     value={tilingSystem}
-                    onChange={(e) => {
+                    onChange={
+                      (event) => {
                       // Call the default change handler
-                      handleChange(e)
+                        handleChange(event)
 
-                      const { target = {} } = e
-                      const { value = '' } = target
+                        const { target = {} } = event
+                        const { value = '' } = target
 
-                      // If the tiling system is empty clear the grid coordinates
-                      if (value === '') {
-                        setFieldValue('gridCoords', '')
+                        // If the tiling system is empty clear the grid coordinates
+                        if (value === '') {
+                          setFieldValue('gridCoords', '')
+                        }
                       }
-                    }}
+                    }
                   >
-                    {[
-                      <option key="tiling-system-none" value="">None</option>,
-                      ...tilingSystemOptions
-                    ]}
+                    {
+                      [
+                        <option key="tiling-system-none" value="">None</option>,
+                        ...tilingSystemOptions
+                      ]
+                    }
                   </Form.Control>
                 </Form.Group>
                 {
@@ -374,72 +378,80 @@ export const GranuleFiltersForm = (props) => {
                 format={temporalDateFormat}
                 temporal={temporal}
                 validate={false}
-                onRecurringToggle={(e) => {
-                  const isChecked = e.target.checked
+                onRecurringToggle={
+                  (event) => {
+                    const isChecked = event.target.checked
 
-                  setFieldValue('temporal.isRecurring', isChecked)
-                  setFieldTouched('temporal.isRecurring', isChecked)
+                    setFieldValue('temporal.isRecurring', isChecked)
+                    setFieldTouched('temporal.isRecurring', isChecked)
 
-                  setTimeout(() => {
+                    setTimeout(() => {
+                      handleSubmit()
+                    }, 0)
+                  }
+                }
+                onChangeRecurring={
+                  (value) => {
+                    const { temporal: newTemporal } = values
+
+                    const newStartDate = moment(newTemporal.startDate || undefined).utc()
+                    newStartDate.set({
+                      year: value.min,
+                      hour: '00',
+                      minute: '00',
+                      second: '00'
+                    })
+
+                    const newEndDate = moment(newTemporal.endDate || undefined).utc()
+                    newEndDate.set({
+                      year: value.max,
+                      hour: '23',
+                      minute: '59',
+                      second: '59'
+                    })
+
+                    setFieldValue('temporal.startDate', newStartDate.toISOString())
+                    setFieldTouched('temporal.startDate')
+
+                    setFieldValue('temporal.endDate', newEndDate.toISOString())
+                    setFieldTouched('temporal.endDate')
+
+                    setFieldValue('temporal.recurringDayStart', newStartDate.dayOfYear())
+                    setFieldValue('temporal.recurringDayEnd', newEndDate.dayOfYear())
+
                     handleSubmit()
-                  }, 0)
-                }}
-                onChangeRecurring={(value) => {
-                  const { temporal } = values
-
-                  const newStartDate = moment(temporal.startDate || undefined).utc()
-                  newStartDate.set({
-                    year: value.min,
-                    hour: '00',
-                    minute: '00',
-                    second: '00'
-                  })
-
-                  const newEndDate = moment(temporal.endDate || undefined).utc()
-                  newEndDate.set({
-                    year: value.max,
-                    hour: '23',
-                    minute: '59',
-                    second: '59'
-                  })
-
-                  setFieldValue('temporal.startDate', newStartDate.toISOString())
-                  setFieldTouched('temporal.startDate')
-
-                  setFieldValue('temporal.endDate', newEndDate.toISOString())
-                  setFieldTouched('temporal.endDate')
-
-                  setFieldValue('temporal.recurringDayStart', newStartDate.dayOfYear())
-                  setFieldValue('temporal.recurringDayEnd', newEndDate.dayOfYear())
-
-                  handleSubmit()
-                }}
-                onSubmitStart={(startDate) => {
-                  // eslint-disable-next-line no-underscore-dangle
-                  const value = startDate.isValid() ? startDate.toISOString() : startDate._i
-                  setFieldValue('temporal.startDate', value)
-                  setFieldTouched('temporal.startDate')
-
-                  const { temporal } = values
-                  if (temporal.isRecurring) {
-                    setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
                   }
-
-                  handleSubmit()
-                }}
-                onSubmitEnd={(endDate) => {
+                }
+                onSubmitStart={
+                  (startDate) => {
                   // eslint-disable-next-line no-underscore-dangle
-                  const value = endDate.isValid() ? endDate.toISOString() : endDate._i
-                  setFieldValue('temporal.endDate', value)
-                  setFieldTouched('temporal.endDate')
+                    const value = startDate.isValid() ? startDate.toISOString() : startDate._i
+                    setFieldValue('temporal.startDate', value)
+                    setFieldTouched('temporal.startDate')
 
-                  const { temporal } = values
-                  if (temporal.isRecurring) {
-                    setFieldValue('temporal.recurringDayEnd', endDate.dayOfYear())
+                    const { temporal: newTemporal } = values
+                    if (newTemporal.isRecurring) {
+                      setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
+                    }
+
+                    handleSubmit()
                   }
+                }
+                onSubmitEnd={
+                  (endDate) => {
+                  // eslint-disable-next-line no-underscore-dangle
+                    const value = endDate.isValid() ? endDate.toISOString() : endDate._i
+                    setFieldValue('temporal.endDate', value)
+                    setFieldTouched('temporal.endDate')
 
-                  handleSubmit()
-                }}
+                    const { temporal: newTemporal } = values
+                    if (newTemporal.isRecurring) {
+                      setFieldValue('temporal.recurringDayEnd', endDate.dayOfYear())
+                    }
+
+                    handleSubmit()
+                  }
+                }
               />
             </Form.Control>
             {
@@ -673,8 +685,10 @@ export const GranuleFiltersForm = (props) => {
                             onChange={handleChange}
                             onBlur={submitOnBlur}
                             onKeyPress={submitOnKeypress}
-                            isInvalid={equatorCrossingLongitudeTouched.min
-                              && !!equatorCrossingLongitudeError.min}
+                            isInvalid={
+                              equatorCrossingLongitudeTouched.min
+                              && !!equatorCrossingLongitudeError.min
+                            }
                           />
                           {
                             equatorCrossingLongitudeTouched.min && (
@@ -704,8 +718,10 @@ export const GranuleFiltersForm = (props) => {
                             onChange={handleChange}
                             onBlur={submitOnBlur}
                             onKeyPress={submitOnKeypress}
-                            isInvalid={equatorCrossingLongitudeTouched.max
-                              && !!equatorCrossingLongitudeError.max}
+                            isInvalid={
+                              equatorCrossingLongitudeTouched.max
+                              && !!equatorCrossingLongitudeError.max
+                            }
                           />
                           {
                             equatorCrossingLongitudeTouched.max && (
@@ -739,24 +755,28 @@ export const GranuleFiltersForm = (props) => {
                             format={temporalDateFormat}
                             temporal={equatorCrossingDate}
                             validate={false}
-                            onSubmitStart={(startDate) => {
-                              const value = startDate.isValid()
+                            onSubmitStart={
+                              (startDate) => {
+                                const value = startDate.isValid()
                                 // eslint-disable-next-line no-underscore-dangle
-                                ? startDate.toISOString() : startDate._i
-                              setFieldValue('equatorCrossingDate.startDate', value)
-                              setFieldTouched('equatorCrossingDate.startDate')
+                                  ? startDate.toISOString() : startDate._i
+                                setFieldValue('equatorCrossingDate.startDate', value)
+                                setFieldTouched('equatorCrossingDate.startDate')
 
-                              handleSubmit()
-                            }}
-                            onSubmitEnd={(endDate) => {
-                              const value = endDate.isValid()
-                              // eslint-disable-next-line no-underscore-dangle
-                                ? endDate.toISOString() : endDate._i
-                              setFieldValue('equatorCrossingDate.endDate', value)
-                              setFieldTouched('equatorCrossingDate.endDate')
+                                handleSubmit()
+                              }
+                            }
+                            onSubmitEnd={
+                              (endDate) => {
+                                const value = endDate.isValid()
+                                // eslint-disable-next-line no-underscore-dangle
+                                  ? endDate.toISOString() : endDate._i
+                                setFieldValue('equatorCrossingDate.endDate', value)
+                                setFieldTouched('equatorCrossingDate.endDate')
 
-                              handleSubmit()
-                            }}
+                                handleSubmit()
+                              }
+                            }
                           />
                         </Form.Control>
                         {

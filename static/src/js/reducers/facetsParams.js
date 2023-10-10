@@ -33,6 +33,7 @@ export const cmrFacetsReducer = (state = initialCmrState, action = {}) => {
         ...payload
       }
     }
+
     case RESTORE_FROM_URL: {
       const { cmrFacets } = payload
 
@@ -41,6 +42,7 @@ export const cmrFacetsReducer = (state = initialCmrState, action = {}) => {
         ...cmrFacets
       }
     }
+
     case ADD_CMR_FACET: {
       const [key] = Object.keys(payload)
 
@@ -54,6 +56,7 @@ export const cmrFacetsReducer = (state = initialCmrState, action = {}) => {
         ]
       }
     }
+
     case REMOVE_CMR_FACET: {
       const [key] = Object.keys(payload)
       const value = payload[key]
@@ -68,9 +71,11 @@ export const cmrFacetsReducer = (state = initialCmrState, action = {}) => {
         ]
       }
     }
+
     case CLEAR_FILTERS: {
       return initialCmrState
     }
+
     default:
       return state
   }
@@ -84,6 +89,7 @@ export const featureFacetsReducer = (state = initialFeatureState, action = {}) =
         ...action.payload
       }
     }
+
     case RESTORE_FROM_URL: {
       const { featureFacets } = action.payload
 
@@ -92,9 +98,11 @@ export const featureFacetsReducer = (state = initialFeatureState, action = {}) =
         ...featureFacets
       }
     }
+
     case CLEAR_FILTERS: {
       return initialFeatureState
     }
+
     default:
       return state
   }
@@ -108,16 +116,20 @@ export const viewAllFacetsReducer = (state = initialViewAllState, action = {}) =
         ...action.payload
       }
     }
+
     case TOGGLE_VIEW_ALL_FACETS_MODAL: {
       // Clear out the results when the modal is closed
       if (action.payload !== false) return state
+
       return initialViewAllState
     }
+
     case COPY_CMR_FACETS_TO_VIEW_ALL: {
       return {
         ...action.payload
       }
     }
+
     default:
       return state
   }

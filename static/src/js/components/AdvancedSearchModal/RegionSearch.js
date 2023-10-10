@@ -100,7 +100,7 @@ export class RegionSearch extends Component {
       <Formik
         initialValues={initialValues}
         validationSchema={() => Yup.object().shape(validation)}
-        onSubmit={(values) => this.onSearchSubmit(values)}
+        onSubmit={(newValues) => this.onSearchSubmit(newValues)}
       >
         {
           // eslint-disable-next-line arrow-body-style

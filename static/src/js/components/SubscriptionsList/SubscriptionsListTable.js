@@ -99,33 +99,39 @@ export const SubscriptionsListTable = ({
                   <td className="subscriptions-list-table__actions">
                     <OverlayTrigger
                       placement="top"
-                      overlay={(
-                        <Tooltip
-                          id={`tooltip__subscription-info__${conceptId}`}
-                          className="subscriptions-list-table__tooltip tooltip--wide tooltip--ta-left"
-                        >
-                          <>
-                            <h5 className="tooltip__tooltip-heading">Filters</h5>
-                            <SubscriptionsQueryList
-                              query={parsedQuery}
-                              subscriptionType={subscriptionType}
-                            />
-                          </>
-                        </Tooltip>
-                      )}
+                      overlay={
+                        (
+                          <Tooltip
+                            id={`tooltip__subscription-info__${conceptId}`}
+                            className="subscriptions-list-table__tooltip tooltip--wide tooltip--ta-left"
+                          >
+                            <>
+                              <h5 className="tooltip__tooltip-heading">Filters</h5>
+                              <SubscriptionsQueryList
+                                query={parsedQuery}
+                                subscriptionType={subscriptionType}
+                              />
+                            </>
+                          </Tooltip>
+                        )
+                      }
                     >
                       <EDSCIcon icon={FaInfoCircle} className="subscriptions-list__button" />
                     </OverlayTrigger>
                     <PortalLinkContainer
                       className="subscriptions-list__button subscriptions-list__button--edit"
                       type="button"
-                      to={{
-                        pathname: subscriptionType === 'granule' ? '/search/granules/subscriptions' : '/search/subscriptions',
-                        search: subscriptionType === 'granule' ? `?p=${collectionConceptId}` : ''
-                      }}
-                      onClick={() => {
-                        if (subscriptionType === 'granule') onFocusedCollectionChange(collectionConceptId)
-                      }}
+                      to={
+                        {
+                          pathname: subscriptionType === 'granule' ? '/search/granules/subscriptions' : '/search/subscriptions',
+                          search: subscriptionType === 'granule' ? `?p=${collectionConceptId}` : ''
+                        }
+                      }
+                      onClick={
+                        () => {
+                          if (subscriptionType === 'granule') onFocusedCollectionChange(collectionConceptId)
+                        }
+                      }
                       variant="naked"
                       icon={FaEdit}
                       label="Edit Subscription"

@@ -137,20 +137,25 @@ class ContactInfo extends Component {
             Receive delayed access notifications
           </label>
           {' '}
-          { emptyPreferences ? <Spinner className="contact-info-form__preferences-spinner" size="x-tiny" type="dots" inline />
-            : (
-              <select
-                id="notificationLevel"
-                onChange={this.handleNotificationLevelChange}
-                value={notificationLevel}
-              >
-                <option value="VERBOSE">Always</option>
-                <option value="DETAIL">When requests change state</option>
-                <option value="INFO">When requests reach a completed or failed state</option>
-                <option value="CRITICAL">When requests fail</option>
-                <option value="NONE">Never</option>
-              </select>
-            )}
+          {
+            emptyPreferences
+              ? (
+                <Spinner className="contact-info-form__preferences-spinner" size="x-tiny" type="dots" inline />
+              )
+              : (
+                <select
+                  id="notificationLevel"
+                  onChange={this.handleNotificationLevelChange}
+                  value={notificationLevel}
+                >
+                  <option value="VERBOSE">Always</option>
+                  <option value="DETAIL">When requests change state</option>
+                  <option value="INFO">When requests reach a completed or failed state</option>
+                  <option value="CRITICAL">When requests fail</option>
+                  <option value="NONE">Never</option>
+                </select>
+              )
+          }
         </div>
 
         <Button

@@ -1,6 +1,11 @@
 import React from 'react'
 import {
-  render, screen, waitFor, getByText, getAllByText, getAllByRole
+  render,
+  screen,
+  waitFor,
+  getByText,
+  getAllByText,
+  getAllByRole
 } from '@testing-library/react'
 
 import userEvent from '@testing-library/user-event'
@@ -211,7 +216,7 @@ function setup(overrideProps = {}) {
     ...overrideProps
   }
 
-  const renderContainer = (props) => render(<Facets {...props} />)
+  const renderContainer = (renderProps) => render(<Facets {...renderProps} />)
 
   return {
     renderContainer,
@@ -275,6 +280,7 @@ describe('Facets Features Map Imagery component', () => {
     await waitFor(async () => {
       await user.hover(customizableComp.children[0])
     })
+
     const tooltip = screen.getByRole('tooltip')
     expect(tooltip).toBeInTheDocument()
     expect(getByText(tooltip, 'Include only collections that support customization (temporal, spatial, or variable subsetting, reformatting, etc.)')).toBeInTheDocument()
@@ -335,7 +341,7 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // clicking on the dropdown to show the different facet items
+    // Clicking on the dropdown to show the different facet items
     const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
@@ -343,7 +349,7 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
     expect(getAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(1)
 
-    // clicking again and making sure the facet items go away
+    // Clicking again and making sure the facet items go away
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
     expect(screen.queryAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(0)
@@ -364,7 +370,7 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // clicking on the dropdown to show the different facet items
+    // Clicking on the dropdown to show the different facet items
     const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
@@ -372,7 +378,7 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
     expect(getAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(1)
 
-    // clicking again and making sure the facet items go away
+    // Clicking again and making sure the facet items go away
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
     expect(screen.queryAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(0)
@@ -393,7 +399,7 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // clicking on the dropdown to show the different facet items
+    // Clicking on the dropdown to show the different facet items
     const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
@@ -401,7 +407,7 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
     expect(getAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(1)
 
-    // clicking again and making sure the facet items go away
+    // Clicking again and making sure the facet items go away
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
     expect(screen.queryAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(0)
@@ -422,7 +428,7 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // clicking on the dropdown to show the different facet items
+    // Clicking on the dropdown to show the different facet items
     const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
@@ -430,7 +436,7 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
     expect(getAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(1)
 
-    // clicking again and making sure the facet items go away
+    // Clicking again and making sure the facet items go away
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
     expect(screen.queryAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(0)
@@ -451,11 +457,11 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // clicking on the dropdown to show the different facet items
+    // Clicking on the dropdown to show the different facet items
     const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    // clicking again and making sure the facet items go away
+    // Clicking again and making sure the facet items go away
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
@@ -475,11 +481,11 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // clicking on the dropdown to show the different facet items
+    // Clicking on the dropdown to show the different facet items
     const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    // clicking again and making sure the facet items go away
+    // Clicking again and making sure the facet items go away
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
@@ -499,11 +505,11 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // clicking on the dropdown to show the different facet items
+    // Clicking on the dropdown to show the different facet items
     const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    // clicking again and making sure the facet items go away
+    // Clicking again and making sure the facet items go away
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
@@ -523,11 +529,11 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // clicking on the dropdown to show the different facet items
+    // Clicking on the dropdown to show the different facet items
     const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    // clicking again and making sure the facet items go away
+    // Clicking again and making sure the facet items go away
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
@@ -547,11 +553,11 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // clicking on the dropdown to show the different facet items
+    // Clicking on the dropdown to show the different facet items
     const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    // clicking again and making sure the facet items go away
+    // Clicking again and making sure the facet items go away
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })

@@ -1,8 +1,5 @@
 import * as applicationConfig from '../config'
-import {
-  getUmmGranuleVersionHeader,
-  getUmmServiceVersionHeader
-} from '../ummVersionHeader'
+import { getUmmGranuleVersionHeader, getUmmServiceVersionHeader } from '../ummVersionHeader'
 
 beforeEach(() => {
   jest.clearAllMocks()

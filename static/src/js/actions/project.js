@@ -1,7 +1,4 @@
-import {
-  isEmpty,
-  intersection
-} from 'lodash'
+import { isEmpty, intersection } from 'lodash'
 
 import actions from './index'
 
@@ -314,6 +311,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               browseFlag
               conceptId
               onlineAccessFlag
+              links
             }
           }
           subscriptions (
@@ -359,12 +357,12 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     pageSize: filteredIds.length,
     subscriberId: username
   })
-    .then((response) => {
+    .then((responseObject) => {
       const payload = []
 
       const {
         data: responseData
-      } = response
+      } = responseObject
       const { data } = responseData
       const { collections } = data
       const { items } = collections
@@ -508,7 +506,10 @@ export const addGranuleToProjectCollection = (payload) => (dispatch, getState) =
     payload
   })
 
-  dispatch(actions.updateProjectGranuleParams({ collectionId, pageNum: 1 }))
+  dispatch(actions.updateProjectGranuleParams({
+    collectionId,
+    pageNum: 1
+  }))
 
   dispatch(actions.getProjectGranules())
 }
@@ -549,7 +550,10 @@ export const removeGranuleFromProjectCollection = (payload) => (dispatch, getSta
 
     // Updates the project collection granule query resetting the page number
     // to one for the subsequent request
-    dispatch(actions.updateProjectGranuleParams({ collectionId, pageNum: 1 }))
+    dispatch(actions.updateProjectGranuleParams({
+      collectionId,
+      pageNum: 1
+    }))
 
     // Request granules with the updated parameters
     dispatch(actions.getProjectGranules())

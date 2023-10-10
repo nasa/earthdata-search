@@ -30,7 +30,10 @@ const processResults = (results) => {
     allIds.push(id)
   })
 
-  return { byId, allIds }
+  return {
+    byId,
+    allIds
+  }
 }
 
 const regionResultsReducer = (state = initialState, action = {}) => {
@@ -42,6 +45,7 @@ const regionResultsReducer = (state = initialState, action = {}) => {
         isLoaded: false
       }
     }
+
     case LOADED_REGIONS: {
       return {
         ...state,
@@ -49,20 +53,24 @@ const regionResultsReducer = (state = initialState, action = {}) => {
         isLoaded: action.payload.loaded
       }
     }
+
     case STARTED_REGIONS_TIMER: {
       return {
         ...state,
         timerStart: Date.now()
       }
     }
+
     case FINISHED_REGIONS_TIMER: {
       const { timerStart } = state
+
       return {
         ...state,
         timerStart: null,
         loadTime: Date.now() - timerStart
       }
     }
+
     case UPDATE_REGION_RESULTS: {
       const { byId, allIds } = processResults(action.payload.results)
 
@@ -75,6 +83,7 @@ const regionResultsReducer = (state = initialState, action = {}) => {
         allIds
       }
     }
+
     case ERRORED_REGIONS: {
       const [message] = action.payload
 
@@ -86,6 +95,7 @@ const regionResultsReducer = (state = initialState, action = {}) => {
         allIds: []
       }
     }
+
     default:
       return state
   }

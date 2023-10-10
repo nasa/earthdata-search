@@ -32,6 +32,7 @@ TemporalDisplayEntry.defaultProps = {
   endDate: {},
   isRecurring: false
 }
+
 TemporalDisplayEntry.propTypes = {
   startDate: PropTypes.shape({}),
   endDate: PropTypes.shape({}),

@@ -87,6 +87,7 @@ export class FooterContainer extends Component {
 
     const primaryLinks = () => primaryLinksArray.map((link) => {
       const { href, title } = link
+
       return (
         <FooterLink
           key={href}
@@ -98,6 +99,7 @@ export class FooterContainer extends Component {
 
     const secondaryLinks = () => secondaryLinksArray.map((link) => {
       const { href, title } = link
+
       return (
         <FooterLink
           key={href}

@@ -17,6 +17,7 @@ export const getDbConnectionConfig = async () => {
 
     if (process.env.NODE_ENV === 'development') {
       const { dbHost, dbName, dbPort } = getEnvironmentConfig()
+
       return {
         ...configObject,
         host: dbHost,

@@ -3,9 +3,12 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, OverrideTemporalModalContainer } from '../OverrideTemporalModalContainer'
-import OverrideTemporalModal
-  from '../../../components/OverrideTemporalModal/OverrideTemporalModal'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  OverrideTemporalModalContainer
+} from '../OverrideTemporalModalContainer'
+import OverrideTemporalModal from '../../../components/OverrideTemporalModal/OverrideTemporalModal'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -84,6 +87,7 @@ describe('OverrideTemporalModalContainer component', () => {
     expect(enzymeWrapper.find(OverrideTemporalModal).props().timeline).toEqual({})
     expect(typeof enzymeWrapper.find(OverrideTemporalModal)
       .props().onChangeQuery).toEqual('function')
+
     expect(typeof enzymeWrapper.find(OverrideTemporalModal)
       .props().onToggleOverrideTemporalModal).toEqual('function')
   })

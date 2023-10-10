@@ -23,6 +23,7 @@ const shapefileReducer = (state = initialState, action = {}) => {
         ...initialState
       }
     }
+
     case UPDATE_SHAPEFILE: {
       return {
         ...state,
@@ -32,6 +33,7 @@ const shapefileReducer = (state = initialState, action = {}) => {
         ...action.payload
       }
     }
+
     case LOADING_SHAPEFILE: {
       const { payload = {} } = action
       const {
@@ -46,9 +48,11 @@ const shapefileReducer = (state = initialState, action = {}) => {
         shapefileName: name
       }
     }
+
     case ERRORED_SHAPEFILE: {
       const { payload } = action
       const { type } = payload
+
       return {
         isErrored: {
           type
@@ -57,6 +61,7 @@ const shapefileReducer = (state = initialState, action = {}) => {
         isLoading: false
       }
     }
+
     case RESTORE_FROM_URL: {
       const { shapefile } = action.payload
 
@@ -65,9 +70,11 @@ const shapefileReducer = (state = initialState, action = {}) => {
         ...shapefile
       }
     }
+
     case CLEAR_FILTERS: {
       return initialState
     }
+
     default:
       return state
   }

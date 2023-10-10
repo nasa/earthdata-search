@@ -8,6 +8,7 @@ export const computeKeyword = (state) => {
   const { collection } = query
   const { keyword } = collection
   if (keyword) return keyword
+
   return null
 }
 
@@ -28,6 +29,7 @@ export const computeSpatialType = (state) => {
   if (boundingBox) return 'Bounding Box'
   if (polygon) return 'Polygon'
   if (point) return 'Point'
+
   return null
 }
 
@@ -45,6 +47,7 @@ export const computeTemporalType = (state) => {
     if (temporal.recurring) return 'Recurring Temporal'
     if (temporal.startDate || temporal.endDate) return 'Standard Temporal'
   }
+
   return null
 }
 
@@ -57,6 +60,7 @@ export const computeCollectionsViewed = (state) => {
   const { focusedCollection } = state
 
   if (focusedCollection) return focusedCollection
+
   return null
 }
 
@@ -71,6 +75,7 @@ export const computeCollectionsAdded = (state) => {
   const { allIds } = projectCollections
 
   if (allIds.length) return allIds[allIds.length - 1]
+
   return null
 }
 
@@ -127,5 +132,6 @@ export const computeFacets = (state) => {
   })
 
   if (facets.length) return `${facets.join(' ')} `
+
   return null
 }

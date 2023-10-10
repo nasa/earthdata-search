@@ -87,7 +87,10 @@ describe('submitHarmonyOrder', () => {
       if (step === 1) {
         query.response([{
           id: '1',
-          jsondata: { source: '?sf=1', shapefileId: 1 },
+          jsondata: {
+            source: '?sf=1',
+            shapefileId: 1
+          },
           collection_id: 'C100000-EDSC',
           access_method: {
             enableTemporalSubsetting: true,
@@ -180,7 +183,11 @@ describe('submitHarmonyOrder', () => {
         query.response([{
           user_id: 1,
           id: '1',
-          jsondata: { source: '?sf=1&sfs[0]=1', shapefileId: 1, selectedFeatures: ['1'] },
+          jsondata: {
+            source: '?sf=1&sfs[0]=1',
+            shapefileId: 1,
+            selectedFeatures: ['1']
+          },
           collection_id: 'C100000-EDSC',
           access_method: {
             enableTemporalSubsetting: true,
@@ -226,19 +233,20 @@ describe('submitHarmonyOrder', () => {
 
     const { queries } = dbTracker.queries
 
-    expect(queries[0].method).toEqual('first') // retrievals
-    expect(queries[1].method).toEqual('first') // shapefiles
-    expect(queries[2].method).toEqual('first') // shapefiles (limited shapefile query)
-    expect(queries[3].method).toEqual('insert') // save limited shapefile
+    expect(queries[0].method).toEqual('first') // Retrievals
+    expect(queries[1].method).toEqual('first') // Shapefiles
+    expect(queries[2].method).toEqual('first') // Shapefiles (limited shapefile query)
+    expect(queries[3].method).toEqual('insert') // Save limited shapefile
     expect(queries[3].bindings).toEqual([
-      'limited mock shapefile', // new file
-      '959220857ddbb3b2398ac31a58765df6', // file_hash
-      'Limited-MockFile.geojson', // filename
-      1084815579, // parent_shapefile_id
-      '["1"]', // selectedFeatures
-      1 // user_id
+      'limited mock shapefile', // New file
+      '959220857ddbb3b2398ac31a58765df6', // File_hash
+      'Limited-MockFile.geojson', // Filename
+      1084815579, // Parent_shapefile_id
+      '["1"]', // SelectedFeatures
+      1 // User_id
     ])
-    expect(queries[4].method).toEqual('update') // update retrieval orders
+
+    expect(queries[4].method).toEqual('update') // Update retrieval orders
 
     expect(createLimitedShapefileMock).toHaveBeenCalledTimes(1)
     expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token', 'Harmony')
@@ -274,7 +282,10 @@ describe('submitHarmonyOrder', () => {
       if (step === 1) {
         query.response([{
           id: '1',
-          jsondata: { source: '?sf=1', shapefileId: 1 },
+          jsondata: {
+            source: '?sf=1',
+            shapefileId: 1
+          },
           collection_id: 'C100000-EDSC',
           access_method: {
             enableTemporalSubsetting: true,
@@ -315,9 +326,7 @@ describe('submitHarmonyOrder', () => {
     })
 
     const context = {}
-    await expect(submitHarmonyOrder(
-      mockHarmonyOrder, context
-    )).rejects.toThrow('Error: You are not authorized to access the requested resource')
+    await expect(submitHarmonyOrder(mockHarmonyOrder, context)).rejects.toThrow('Error: You are not authorized to access the requested resource')
 
     const { queries } = dbTracker.queries
 

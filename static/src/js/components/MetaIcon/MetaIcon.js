@@ -60,14 +60,16 @@ export const MetaIcon = ({
     return (
       <OverlayTrigger
         placement={placement}
-        overlay={(
-          <Tooltip
-            id={id}
-            className={`meta-icon__tooltip ${tooltipClassName}`}
-          >
-            {tooltipContent}
-          </Tooltip>
-        )}
+        overlay={
+          (
+            <Tooltip
+              id={id}
+              className={`meta-icon__tooltip ${tooltipClassName}`}
+            >
+              {tooltipContent}
+            </Tooltip>
+          )
+        }
       >
         {component}
       </OverlayTrigger>

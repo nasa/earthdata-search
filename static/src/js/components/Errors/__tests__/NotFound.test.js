@@ -32,6 +32,7 @@ describe('NotFound component', () => {
         search: ''
       }
     })
+
     expect(screen.getByRole('heading', { name: /Sorry! The page you were looking for does not exist./i })).toBeInTheDocument()
     expect(loggerMock).toBeCalledTimes(1)
     expect(loggerMock).toHaveBeenCalledWith({

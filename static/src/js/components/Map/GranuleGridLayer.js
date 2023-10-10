@@ -1,10 +1,5 @@
-/* eslint-disable no-underscore-dangle */
 import L from 'leaflet'
-import {
-  difference,
-  isEqual
-} from 'lodash'
-
+import { difference, isEqual } from 'lodash'
 import { createLayerComponent } from '@react-leaflet/core'
 
 import { getColorByIndex } from '../../util/colors'
@@ -41,16 +36,20 @@ const getLayerData = (props) => {
     } = projectCollections
 
     projectIds.forEach((collectionId, index) => {
-      const { granules, isVisible } = projectById[collectionId]
+      const {
+        granules: projectCollectionGranules,
+        isVisible
+      } = projectById[collectionId]
       const { [collectionId]: metadata = {} } = collectionsMetadata
 
-      if (!granules) return
-      granules.byId = {}
+      if (!projectCollectionGranules) return
 
-      const { allIds = [] } = granules
+      projectCollectionGranules.byId = {}
+
+      const { allIds = [] } = projectCollectionGranules
       allIds.forEach((granuleId) => {
         if (granulesMetadata[granuleId]) {
-          granules.byId[granuleId] = granulesMetadata[granuleId]
+          projectCollectionGranules.byId[granuleId] = granulesMetadata[granuleId]
         }
       })
 
@@ -60,7 +59,7 @@ const getLayerData = (props) => {
         lightColor: getColorByIndex(index, true),
         metadata,
         isVisible,
-        granules
+        granules: projectCollectionGranules
       }
     })
   } else if (focusedCollectionId && focusedCollectionId !== '') {
@@ -139,13 +138,18 @@ const createGranuleGridLayer = (props, context) => {
 
   // Save the list of layers and create a feature group for the layers
   const featureGroup = new L.FeatureGroup(layers)
-  return { instance: featureGroup, context }
+
+  return {
+    instance: featureGroup,
+    context
+  }
 }
 
 const updateGranuleGridLayer = (instance, props, prevProps) => {
   // If no props have changed since the last render, dont update the grid layers.
   if (isEqual(props, prevProps)) return
 
+  // eslint-disable-next-line no-underscore-dangle
   const layers = instance._layers // List of layers
 
   const {
@@ -176,8 +180,12 @@ const updateGranuleGridLayer = (instance, props, prevProps) => {
   // Nothing should be drawn, remove any existing layers
   if (layerDataCollectionIds.length === 0) {
     Object.values(layers).forEach((layer) => {
+      // eslint-disable-next-line no-underscore-dangle
       if (layer._granuleFocusLayer) layer._granuleFocusLayer.onRemove(instance._map)
+
+      // eslint-disable-next-line no-underscore-dangle
       if (layer._granuleStickyLayer) layer._granuleStickyLayer.onRemove(instance._map)
+
       instance.removeLayer(layer)
     })
   } else if (layerDataCollectionIds.length < Object.keys(prevLayerData).length) {
@@ -304,7 +312,7 @@ const updateGranuleGridLayer = (instance, props, prevProps) => {
       }
     } else {
       // A layer doesn't exist for this collection yet, maybe we just added a focusedCollectionId, so create a new layer
-      const layer = new GranuleGridLayerExtended({
+      const newLayer = new GranuleGridLayerExtended({
         addedGranuleIds,
         collectionId,
         color,
@@ -325,15 +333,15 @@ const updateGranuleGridLayer = (instance, props, prevProps) => {
       })
 
       if (focusedCollectionId === collectionId) {
-        layer.setZIndex(layerBuffer + 2)
+        newLayer.setZIndex(layerBuffer + 2)
       } else {
-        layer.setZIndex(layerBuffer + 1)
+        newLayer.setZIndex(layerBuffer + 1)
       }
 
-      layer.getLayerData = getLayerData
+      newLayer.getLayerData = getLayerData
 
       // Add the layer to the feature group
-      layer.addTo(instance)
+      newLayer.addTo(instance)
     }
   })
 }

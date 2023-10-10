@@ -1,10 +1,7 @@
 import axios from 'axios'
 import Request from './request'
 
-import {
-  getEnvironmentConfig,
-  getEarthdataConfig
-} from '../../../../../sharedUtils/config'
+import { getEnvironmentConfig, getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { getClientId } from '../../../../../sharedUtils/getClientId'
 
 export default class GraphQlRequest extends Request {

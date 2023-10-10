@@ -24,6 +24,7 @@ class PreferencesRadioField extends Component {
         formData: event.target.value
       }, () => {
         const { formData } = this.state
+
         return onChange(formData)
       })
     }

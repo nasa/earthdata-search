@@ -15,23 +15,23 @@ describe('util#removeSpatialFromAccessMethod', () => {
   })
 
   test('does not remove spatial from non-ESI access methods', () => {
-    const accessMethod = {
+    const value = {
       type: 'download',
       isValid: true
     }
 
-    const result = removeSpatialFromAccessMethod(accessMethod)
+    const result = removeSpatialFromAccessMethod(value)
 
-    expect(result).toEqual(accessMethod)
+    expect(result).toEqual(value)
   })
 
   test('does not remove spatial when model and rawModel do not exist', () => {
-    const accessMethod = {
+    const value = {
       type: 'ESI'
     }
 
-    const result = removeSpatialFromAccessMethod(accessMethod)
+    const result = removeSpatialFromAccessMethod(value)
 
-    expect(result).toEqual(accessMethod)
+    expect(result).toEqual(value)
   })
 })

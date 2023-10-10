@@ -72,8 +72,10 @@ export default class GranuleRequest extends CmrRequest {
         granule.links.some((link) => {
           if (link.rel.indexOf('browse') > -1) {
             browseUrl = link.href
+
             return true
           }
+
           return false
         })
 

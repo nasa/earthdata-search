@@ -116,11 +116,11 @@ const exportSearch = async (event, context) => {
       },
       body: returnBody
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

@@ -2,7 +2,10 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
-import { EarthdataDownloadRedirectContainer, mapStateToProps } from '../EarthdataDownloadRedirectContainer'
+import {
+  EarthdataDownloadRedirectContainer,
+  mapStateToProps
+} from '../EarthdataDownloadRedirectContainer'
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
@@ -29,9 +32,11 @@ describe('EarthdataDownloadRedirectContainer', () => {
 
     render(
       <EarthdataDownloadRedirectContainer
-        earthdataDownloadRedirect={{
-          redirect: 'earthdata-download://authCallback'
-        }}
+        earthdataDownloadRedirect={
+          {
+            redirect: 'earthdata-download://authCallback'
+          }
+        }
       />
     )
 

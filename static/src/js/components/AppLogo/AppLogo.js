@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-  Route,
-  Switch
-} from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
@@ -15,9 +12,11 @@ const AppLogo = () => (
         <PortalLinkContainer
           className="app-logo__site-meatball"
           title="Earthdata Search Home"
-          to={{
-            pathname: '/search'
-          }}
+          to={
+            {
+              pathname: '/search'
+            }
+          }
           updatePath
         >
           <span className="visually-hidden">
@@ -27,9 +26,11 @@ const AppLogo = () => (
       </h1>
       <PortalLinkContainer
         className="app-logo__site-name"
-        to={{
-          pathname: '/search'
-        }}
+        to={
+          {
+            pathname: '/search'
+          }
+        }
         updatePath
       >
         <span className="app-logo__site-name-ent app-logo__site-name-ent--e">Earthdata</span>

@@ -206,11 +206,11 @@ const autocomplete = async (event) => {
     console.log(`Autocomplete Params: ${JSON.stringify(params)}, Results: ${results.body}`)
 
     return results
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

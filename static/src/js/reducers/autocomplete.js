@@ -26,12 +26,14 @@ const autocompleteReducer = (state = initialState, action = {}) => {
   switch (type) {
     case LOADED_AUTOCOMPLETE: {
       const { loaded } = payload
+
       return {
         ...state,
         isLoaded: loaded,
         isLoading: false
       }
     }
+
     case LOADING_AUTOCOMPLETE: {
       return {
         ...state,
@@ -39,18 +41,21 @@ const autocompleteReducer = (state = initialState, action = {}) => {
         isLoading: true
       }
     }
+
     case CLEAR_AUTOCOMPLETE_SELECTED: {
       return {
         ...state,
         selected: []
       }
     }
+
     case CLEAR_AUTOCOMPLETE_SUGGESTIONS: {
       return {
         ...state,
         isLoaded: false
       }
     }
+
     case UPDATE_AUTOCOMPLETE_SUGGESTIONS: {
       const { params, suggestions } = payload
 
@@ -68,6 +73,7 @@ const autocompleteReducer = (state = initialState, action = {}) => {
         suggestions: nonSelectedSuggestions
       }
     }
+
     case UPDATE_AUTOCOMPLETE_SELECTED: {
       const { suggestion } = payload
 
@@ -80,6 +86,7 @@ const autocompleteReducer = (state = initialState, action = {}) => {
         ]
       }
     }
+
     case DELETE_AUTOCOMPLETE_VALUE: {
       const {
         level,
@@ -94,9 +101,10 @@ const autocompleteReducer = (state = initialState, action = {}) => {
           type: itemType,
           value: itemValue
         } = item
-        // if the autocompleteType is science_keywords, check the correct level of keyword for the autocomplete
+        // If the autocompleteType is science_keywords, check the correct level of keyword for the autocomplete
         if (autocompleteType === 'science_keywords' && level != null) {
           const parts = fields.split(':')
+
           return parts[level] === autocompleteValue
         }
 
@@ -111,6 +119,7 @@ const autocompleteReducer = (state = initialState, action = {}) => {
         ]
       }
     }
+
     case RESTORE_FROM_URL: {
       const { autocompleteSelected = [] } = payload
 
@@ -119,9 +128,11 @@ const autocompleteReducer = (state = initialState, action = {}) => {
         selected: autocompleteSelected
       }
     }
+
     case CLEAR_FILTERS: {
       return initialState
     }
+
     default:
       return state
   }

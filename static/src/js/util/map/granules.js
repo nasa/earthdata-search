@@ -5,6 +5,7 @@ function pairs(array) {
   for (let i = 0; i < len; i += 1) {
     results.push([array[i], array[(i + 1) % len]])
   }
+
   return results
 }
 
@@ -14,6 +15,7 @@ export function isClockwise(path) {
   pairs(path).forEach(([p0, p1]) => {
     sum += (p1.x - p0.x) * (p1.y + p0.y)
   })
+
   return sum > 0
 }
 
@@ -23,6 +25,7 @@ export function isClockwiseLatLng(path) {
   pairs(path).forEach(([p0, p1]) => {
     sum += (p1.lng - p0.lng) * (p1.lat + p0.lat)
   })
+
   return sum > 0
 }
 
@@ -32,6 +35,7 @@ export function addPath(ctx, path) {
 
   if ((poly != null) || (line != null)) {
     if (poly == null) { poly = line }
+
     const len = poly.length
     if (len < 2) { return }
 

@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, TemporalSelectionDropdownContainer } from '../TemporalSelectionDropdownContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  TemporalSelectionDropdownContainer
+} from '../TemporalSelectionDropdownContainer'
 import TemporalSelectionDropdown from '../../../components/TemporalDisplay/TemporalSelectionDropdown'
 
 Enzyme.configure({ adapter: new Adapter() })

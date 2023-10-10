@@ -118,6 +118,7 @@ describe('setPreferencesFromJwt', () => {
       type: SET_PREFERENCES,
       payload: preferences
     })
+
     expect(storeActions[1]).toEqual({
       type: UPDATE_MAP,
       payload: {
@@ -147,11 +148,13 @@ describe('updatePreferences', () => {
 
     nock(/localhost/)
       .post(/preferences/)
-      .reply(200,
+      .reply(
+        200,
         JSON.stringify({ preferences }),
         {
           'jwt-token': 'token'
-        })
+        }
+      )
 
     const store = mockStore({
       authToken: 'token'
@@ -163,18 +166,22 @@ describe('updatePreferences', () => {
         type: SET_PREFERENCES_IS_SUBMITTING,
         payload: true
       })
+
       expect(storeActions[1]).toEqual({
         type: UPDATE_AUTH,
         payload: 'token'
       })
+
       expect(storeActions[2]).toEqual({
         type: SET_PREFERENCES,
         payload: preferences
       })
+
       expect(storeActions[3]).toEqual({
         type: SET_PREFERENCES_IS_SUBMITTING,
         payload: false
       })
+
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][0]).toBe('Preferences saved!')
       expect(addToastMock.mock.calls[0][1].appearance).toBe('success')

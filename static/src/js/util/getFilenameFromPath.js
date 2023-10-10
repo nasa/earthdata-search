@@ -5,5 +5,6 @@
  */
 export const getFilenameFromPath = (path) => {
   if (!path) return ''
+
   return path.substring(path.lastIndexOf('/') + 1)
 }

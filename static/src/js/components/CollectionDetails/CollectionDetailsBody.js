@@ -2,7 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { uniq } from 'lodash'
 
-import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import {
+  Badge,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap'
 import { FaQuestionCircle, FaArrowRight } from 'react-icons/fa'
 import SimpleBar from 'simplebar-react'
 
@@ -55,6 +59,7 @@ const buildScienceKeywordList = (scienceKeywords) => {
       {
         scienceKeywords.map((keywordGroup, i) => {
           const key = `science_keyword_${i}`
+
           return (
             <li key={key}>
               <ArrowTags tags={keywordGroup} />
@@ -100,12 +105,14 @@ const buildDoiLink = (doiLink, doiText) => {
       </a>
     )
   }
+
   return DoiBadge
 }
 
 const buildForDeveloperLink = (linkData, token) => {
   const link = linkData
   if (token) link.href = `link.href&${token}`
+
   return (
     <li>
       <a href={link.href}>{link.title}</a>
@@ -154,11 +161,13 @@ export const CollectionDetailsBody = ({
         <div className="collection-details-body__content">
           <Skeleton
             shapes={collectionDetailsSkeleton}
-            containerStyle={{
-              height: '400px',
-              width: '100%',
-              dataTestId: 'collection-details-body__skeleton'
-            }}
+            containerStyle={
+              {
+                height: '400px',
+                width: '100%',
+                dataTestId: 'collection-details-body__skeleton'
+              }
+            }
           />
         </div>
       </div>
@@ -237,9 +246,11 @@ export const CollectionDetailsBody = ({
     <div className="collection-details-body">
       <SimpleBar
         className="collection-details-body__simplebar"
-        scrollableNodeProps={{
-          className: 'collection-details-body__simplebar-content'
-        }}
+        scrollableNodeProps={
+          {
+            className: 'collection-details-body__simplebar-content'
+          }
+        }
       >
         <div className="collection-details-body__content">
           <div className="row collection-details-body__row">
@@ -247,9 +258,7 @@ export const CollectionDetailsBody = ({
               <div className="collection-details-body__tags">
                 <Badge className="collection-details-header__short-name mr-2" variant="light" data-testid="collection-details-header__short-name">{shortName}</Badge>
                 <Badge className="collection-details-header__version-id mr-2" variant="info" data-testid="collection-details-header__version-id">{`Version ${versionId}`}</Badge>
-                {
-                  doiText && buildDoiLink(doiLink, doiText)
-                }
+                {doiText && buildDoiLink(doiLink, doiText)}
               </div>
               {
                 associatedDois && associatedDois.length > 0 && (
@@ -263,18 +272,18 @@ export const CollectionDetailsBody = ({
                         associatedDois.map((associatedDoi) => {
                           const {
                             authority,
-                            doi,
+                            doi: doiValue,
                             title
                           } = associatedDoi
 
                           return (
                             <a
-                              key={doi}
+                              key={doiValue}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="link collection-details-body__link"
                               title={`View ${title}`}
-                              href={`${authority}${doi}`}
+                              href={`${authority}${doiValue}`}
                             >
                               {title}
                             </a>
@@ -329,6 +338,7 @@ export const CollectionDetailsBody = ({
                       {
                         temporal.map((entry, i) => {
                           const key = `temporal_entry_${i}`
+
                           return <span key={key}>{entry}</span>
                         })
                       }
@@ -344,9 +354,7 @@ export const CollectionDetailsBody = ({
                   >
                     <dt>{`Native ${pluralize('Format', nativeDataFormats.length)}`}</dt>
                     <dd>
-                      {
-                        nativeDataFormats.length > 0 && buildNativeFormatList(nativeDataFormats)
-                      }
+                      {nativeDataFormats.length > 0 && buildNativeFormatList(nativeDataFormats)}
                     </dd>
                   </dl>
                 )
@@ -362,16 +370,18 @@ export const CollectionDetailsBody = ({
                       <span className="collection-details-body__heading-tooltip">
                         <OverlayTrigger
                           placement="right"
-                          overlay={(
-                            <Tooltip
-                              id="tooltip_supported-reformatting"
-                              className="collection-details-body__tooltip tooltip--large tooltip--ta-left"
-                            >
-                              In addition to their native format, some data products can be
-                              reformatted to additional formats. If reformatting is desired,
-                              reformatting options can be set prior to downloading the data.
-                            </Tooltip>
-                          )}
+                          overlay={
+                            (
+                              <Tooltip
+                                id="tooltip_supported-reformatting"
+                                className="collection-details-body__tooltip tooltip--large tooltip--ta-left"
+                              >
+                                In addition to their native format, some data products can be
+                                reformatted to additional formats. If reformatting is desired,
+                                reformatting options can be set prior to downloading the data.
+                              </Tooltip>
+                            )
+                          }
                         >
                           <EDSCIcon icon={FaQuestionCircle} size="0.625rem" />
                         </OverlayTrigger>
@@ -387,6 +397,7 @@ export const CollectionDetailsBody = ({
                           } = reformattings
 
                           const key = `input-format__${supportedInputFormat}-${i}`
+
                           return (
                             <dl
                               key={key}
@@ -424,12 +435,8 @@ export const CollectionDetailsBody = ({
               >
                 <dt>Science Keywords</dt>
                 <dd>
-                  {
-                    scienceKeywords.length === 0 && <span>Not Available</span>
-                  }
-                  {
-                    scienceKeywords.length > 0 && buildScienceKeywordList(scienceKeywords)
-                  }
+                  {scienceKeywords.length === 0 && <span>Not Available</span>}
+                  {scienceKeywords.length > 0 && buildScienceKeywordList(scienceKeywords)}
                 </dd>
               </dl>
             </div>
@@ -465,6 +472,7 @@ export const CollectionDetailsBody = ({
                   {
                     dataCenters.map((dataCenter, i) => {
                       const key = `data_center_${i}`
+
                       return (
                         <CollectionDetailsDataCenter key={key} item={i} dataCenter={dataCenter} />
                       )
@@ -494,19 +502,22 @@ export const CollectionDetailsBody = ({
             {
               (variableInstancesInformation.length > 0) && (
                 <>
-                  { variableInstancesInformation.map((variableInstance, i) => {
-                    const key = `variable_instance_information_${i}`
-                    return (
-                      <div key={key}>
-                        <h5 className="collection-details-body__feature-title">
-                          Variable Instance
-                        </h5>
-                        <div className="collection-details-body__cloud-access-content">
-                          {variableInstance}
+                  {
+                    variableInstancesInformation.map((variableInstance, i) => {
+                      const key = `variable_instance_information_${i}`
+
+                      return (
+                        <div key={key}>
+                          <h5 className="collection-details-body__feature-title">
+                            Variable Instance
+                          </h5>
+                          <div className="collection-details-body__cloud-access-content">
+                            {variableInstance}
+                          </div>
                         </div>
-                      </div>
-                    )
-                  })}
+                      )
+                    })
+                  }
                 </>
               )
             }
@@ -544,7 +555,7 @@ export const CollectionDetailsBody = ({
                 </div>
               </div>
             )
-           }
+          }
         </div>
       </SimpleBar>
       <CollapsePanel

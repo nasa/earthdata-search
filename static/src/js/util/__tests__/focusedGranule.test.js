@@ -1,6 +1,4 @@
-import {
-  getFocusedGranuleObject
-} from '../focusedGranule'
+import { getFocusedGranuleObject } from '../focusedGranule'
 
 describe('getFocusedGranuleObject', () => {
   describe('when no granules are provided', () => {

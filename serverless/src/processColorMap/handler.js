@@ -18,6 +18,7 @@ const xmlParser = new XMLParser({
  */
 const componentToHex = (component) => {
   const hex = parseInt(component, 10).toString(16)
+
   return hex.length === 1 ? `0${hex}` : hex
 }
 
@@ -140,7 +141,7 @@ const processColorMap = async (event, context) => {
 
               scaleValues.push(v)
             })
-          } catch (e) {
+          } catch (error) {
             throw Error(`Invalid value: ${value.toString()}`)
           }
 

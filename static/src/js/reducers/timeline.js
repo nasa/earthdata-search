@@ -30,6 +30,7 @@ const timelineReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case UPDATE_TIMELINE_QUERY: {
       const { query: oldQuery } = state
       const { payload } = action
@@ -42,6 +43,7 @@ const timelineReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case RESTORE_FROM_URL: {
       const { timeline = initialState.query } = action.payload
 
@@ -53,6 +55,7 @@ const timelineReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     default:
       return state
   }

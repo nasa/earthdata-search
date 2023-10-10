@@ -95,10 +95,12 @@ export class PanelItem extends Component {
           className="panel-item__back-button"
           icon={FaChevronLeft}
           label={backButtonText}
-          onClick={() => {
-            onChangePanel(location)
-            if (callback && typeof callback === 'function') callback()
-          }}
+          onClick={
+            () => {
+              onChangePanel(location)
+              if (callback && typeof callback === 'function') callback()
+            }
+          }
         >
           {backButtonText}
         </Button>
@@ -118,9 +120,7 @@ export class PanelItem extends Component {
     const renderChildren = () => {
       const contents = (
         <>
-          {
-            typeof children === 'string' && children
-          }
+          {typeof children === 'string' && children}
           {
             typeof children !== 'string' && (
               React.cloneElement(children, {
@@ -136,10 +136,12 @@ export class PanelItem extends Component {
         return (
           <SimpleBar
             className="panel-item__content"
-            scrollableNodeProps={{
-              className: 'panel-item__simplebar-content',
-              ref: this.scrollableNodeRef
-            }}
+            scrollableNodeProps={
+              {
+                className: 'panel-item__simplebar-content',
+                ref: this.scrollableNodeRef
+              }
+            }
           >
             {contents}
           </SimpleBar>
@@ -156,17 +158,21 @@ export class PanelItem extends Component {
     return (
       <div
         className={className}
-        ref={(panelItem) => {
-          this.panelItemRef = panelItem
-        }}
+        ref={
+          (panelItem) => {
+            this.panelItemRef = panelItem
+          }
+        }
       >
         {
           (header || backButton) && (
             <header className="panel-item__header">
               {header && <div className="panel-item__header-body">{header}</div>}
-              {backButton && (
-                <div className="panel-item__header-nav">{backButton}</div>
-              )}
+              {
+                backButton && (
+                  <div className="panel-item__header-nav">{backButton}</div>
+                )
+              }
             </header>
           )
         }

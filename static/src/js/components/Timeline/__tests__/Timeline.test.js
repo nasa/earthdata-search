@@ -18,7 +18,10 @@ function setup(overrideProps) {
     },
     collectionMetadata: {},
     temporalSearch: {},
-    timeline: { intervals: {}, query: {} },
+    timeline: {
+      intervals: {},
+      query: {}
+    },
     showOverrideModal: false,
     pathname: '/search/granules',
     onChangeQuery: jest.fn(),
@@ -44,6 +47,7 @@ beforeEach(() => {
   window.addEventListener = jest.fn((event, cb) => {
     windowEventMap[event] = cb
   })
+
   window.removeEventListener = jest.fn()
 
   // MockDate is used here to overwrite the js Date object. This allows us to
@@ -183,7 +187,10 @@ describe('handleTemporalSet', () => {
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({ temporalStart, temporalEnd })
+    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({
+      temporalStart,
+      temporalEnd
+    })
 
     expect(props.onChangeQuery.mock.calls.length).toBe(1)
     expect(props.onChangeQuery.mock.calls[0]).toEqual([{
@@ -228,7 +235,10 @@ describe('handleTemporalSet', () => {
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({ temporalStart, temporalEnd })
+    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({
+      temporalStart,
+      temporalEnd
+    })
 
     expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(1)
   })
@@ -241,7 +251,10 @@ describe('handleTemporalSet', () => {
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({ temporalStart, temporalEnd })
+    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({
+      temporalStart,
+      temporalEnd
+    })
 
     expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
   })
@@ -265,7 +278,10 @@ describe('handleTemporalSet', () => {
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({ temporalStart, temporalEnd })
+    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({
+      temporalStart,
+      temporalEnd
+    })
 
     expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
   })
@@ -278,7 +294,10 @@ describe('handleFocusedSet', () => {
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedSet')({ focusedStart, focusedEnd })
+    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedSet')({
+      focusedStart,
+      focusedEnd
+    })
 
     expect(props.onChangeTimelineQuery.mock.calls.length).toBe(1)
     expect(props.onChangeTimelineQuery.mock.calls[0]).toEqual([{
@@ -313,7 +332,10 @@ describe('handleFocusedSet', () => {
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedSet')({ focusedStart, focusedEnd })
+    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedSet')({
+      focusedStart,
+      focusedEnd
+    })
 
     expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(1)
   })
@@ -327,7 +349,10 @@ describe('handleFocusedSet', () => {
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedSet')({ focusedStart, focusedEnd })
+    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedSet')({
+      focusedStart,
+      focusedEnd
+    })
 
     expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
   })
@@ -345,7 +370,10 @@ describe('handleFocusedSet', () => {
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedSet')({ focusedStart, focusedEnd })
+    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedSet')({
+      focusedStart,
+      focusedEnd
+    })
 
     expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
   })

@@ -190,7 +190,10 @@ export const fetchGranuleLinks = (
   try {
     while (!finished) {
       // eslint-disable-next-line no-await-in-loop
-      response = await requestObject.fetchLinks(stringify(params, { addQueryPrefix: true, arrayFormat: 'repeat' }))
+      response = await requestObject.fetchLinks(stringify(params, {
+        addQueryPrefix: true,
+        arrayFormat: 'repeat'
+      }))
 
       const { data } = response
       const {
@@ -347,16 +350,16 @@ export const getSearchGranules = () => (dispatch, getState) => {
   }
 
   const response = requestObject.search(searchParams)
-    .then((response) => {
+    .then((responseObject) => {
       const payload = populateGranuleResults({
         collectionId,
         isOpenSearch,
-        response
+        response: responseObject
       })
 
       dispatch(finishGranulesTimer(collectionId))
 
-      const { data } = response
+      const { data } = responseObject
       const { feed } = data
       const { entry } = feed
 
@@ -499,21 +502,22 @@ export const getProjectGranules = () => (dispatch, getState) => {
 
       pageSize = Math.min(maxCmrPageSize, granuleConceptIds.length)
     }
+
     searchParams.pageSize = pageSize
 
     projectGranuleCancelTokens[collectionId] = requestObject.getCancelToken()
 
     const response = requestObject.search(searchParams)
-      .then((response) => {
+      .then((responseObject) => {
         const payload = populateGranuleResults({
           collectionId,
           isOpenSearch,
-          response
+          response: responseObject
         })
 
         dispatch(finishProjectGranulesTimer(collectionId))
 
-        const { data } = response
+        const { data } = responseObject
         const { feed } = data
         const { entry } = feed
 
@@ -565,7 +569,10 @@ export const applyGranuleFilters = (granuleFilters) => (dispatch, getState) => {
     dispatch(actions.clearFocusedCollectionGranuleFilters())
   } else {
     // Apply granule filters, ensuring to reset the page number to 1 as this results in a new search
-    dispatch(actions.updateFocusedCollectionGranuleFilters({ pageNum: 1, ...granuleFilters }))
+    dispatch(actions.updateFocusedCollectionGranuleFilters({
+      pageNum: 1,
+      ...granuleFilters
+    }))
   }
 
   // If there is a focused collection, and it is in the project also update the project granules

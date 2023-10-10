@@ -23,9 +23,9 @@ export class MetricsEventsContainer extends Component {
     document.body.removeEventListener('click', this.metricsClick)
   }
 
-  metricsClick(e) {
+  metricsClick(event) {
     const { onMetricsClick } = this.props
-    const { target } = e
+    const { target } = event
 
     const clickableParent = target.closest('a, button')
 

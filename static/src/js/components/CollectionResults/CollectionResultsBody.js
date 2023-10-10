@@ -46,8 +46,16 @@ const CollectionResultsBody = ({
   } = collectionsSearch
 
   const collectionList = useMemo(() => formatCollectionList(
-    collectionsSearch, collectionsMetadata, projectCollectionsIds, browser
-  ), [isLoading, collectionsMetadata, collectionIds, projectCollectionsIds])
+    collectionsSearch,
+    collectionsMetadata,
+    projectCollectionsIds,
+    browser
+  ), [
+    isLoading,
+    collectionsMetadata,
+    collectionIds,
+    projectCollectionsIds
+  ])
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)
 

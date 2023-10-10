@@ -143,6 +143,7 @@ class DatepickerContainer extends Component {
     if (isValidISO) {
       value = moment.utc(value).format(format)
     }
+
     return (
       <Datepicker
         id={id}

@@ -1,4 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, {
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import PropTypes from 'prop-types'
 import hexToRgba from 'hex-to-rgba'
 import classNames from 'classnames'
@@ -12,10 +16,10 @@ import './Legend.scss'
  */
 const replaceSupportedHtmlEntities = (string) => {
   const supportedHtmlEntitiesToFragmentsMap = {
-    '&#60;': <>&#60;</>, // less-than
-    '&#61;': <>&#61;</>, // greater-than
-    '&#8804;': <>&#8804;</>, // less-than or equal to
-    '&#8805;': <>&#8805;</> // greater-than or equal to
+    '&#60;': <>&#60;</>, // Less-than
+    '&#61;': <>&#61;</>, // Greater-than
+    '&#8804;': <>&#8804;</>, // Less-than or equal to
+    '&#8805;': <>&#8805;</> // Greater-than or equal to
   }
 
   let returnValue = string
@@ -123,8 +127,8 @@ export const Legend = ({
       <canvas
         ref={barRef}
         className="legend__bar"
-        onMouseMove={(e) => onMouseMove(e)}
-        onMouseLeave={(e) => onMouseLeave(e)}
+        onMouseMove={(event) => onMouseMove(event)}
+        onMouseLeave={(event) => onMouseLeave(event)}
       />
       <div className="legend__meta">
         {

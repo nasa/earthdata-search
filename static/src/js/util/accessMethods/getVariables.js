@@ -38,5 +38,9 @@ export const getVariables = (data) => {
   const keywordMappings = computeKeywordMappings(items)
   const variables = computeVariables(items)
 
-  return { hierarchyMappings, keywordMappings, variables }
+  return {
+    hierarchyMappings,
+    keywordMappings,
+    variables
+  }
 }

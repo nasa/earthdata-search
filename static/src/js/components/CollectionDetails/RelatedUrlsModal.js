@@ -22,27 +22,30 @@ export const RelatedUrlsModal = ({
         relatedUrls && relatedUrls.map((category, i) => {
           if (category.urls.length) {
             const key = `modal_related_url_${i}`
+
             return (
               <div key={key} className="related-urls-modal__group">
                 <h4 className="related-urls-modal__group-title">{pluralize(category.label, category.urls)}</h4>
                 {
-                category.urls.map((url, j) => {
-                  const key = `modal_related_url_${i}-${j}`
-                  return (
-                    <ul key={key} className="related-urls-modal__url">
-                      <ArrowTags tags={[url.type, url.subtype]} />
-                      {/* eslint-disable-next-line react/jsx-no-target-blank */}
-                      <a className="related-urls-modal__link" href={url.url} target="_blank">{url.url}</a>
-                    </ul>
-                  )
-                })
-              }
+                  category.urls.map((url, j) => {
+                    const urlKey = `modal_related_url_${i}-${j}`
+
+                    return (
+                      <ul key={urlKey} className="related-urls-modal__url">
+                        <ArrowTags tags={[url.type, url.subtype]} />
+                        {/* eslint-disable-next-line react/jsx-no-target-blank */}
+                        <a className="related-urls-modal__link" href={url.url} target="_blank">{url.url}</a>
+                      </ul>
+                    )
+                  })
+                }
               </div>
             )
           }
+
           return null
         })
-        }
+      }
     </>
   )
 
@@ -53,9 +56,11 @@ export const RelatedUrlsModal = ({
       isOpen={isOpen}
       id="related-urls"
       size="lg"
-      onClose={() => {
-        onToggleRelatedUrlsModal(false)
-      }}
+      onClose={
+        () => {
+          onToggleRelatedUrlsModal(false)
+        }
+      }
       body={body}
     />
   )

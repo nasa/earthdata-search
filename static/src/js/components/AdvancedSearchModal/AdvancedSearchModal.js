@@ -51,13 +51,13 @@ export class AdvancedSearchModal extends Component {
     window.removeEventListener('keyup', this.onWindowKeyUp)
   }
 
-  onApplyClick(e) {
+  onApplyClick(event) {
     const {
       handleSubmit,
       onToggleAdvancedSearchModal
     } = this.props
 
-    handleSubmit(e)
+    handleSubmit(event)
     onToggleAdvancedSearchModal(false)
   }
 
@@ -69,7 +69,7 @@ export class AdvancedSearchModal extends Component {
     this.resetAndClose()
   }
 
-  onWindowKeyUp(e) {
+  onWindowKeyUp(event) {
     const { keyboardShortcuts } = this
 
     const {
@@ -80,7 +80,7 @@ export class AdvancedSearchModal extends Component {
     const toggleModal = () => onToggleAdvancedSearchModal(!isOpen)
 
     triggerKeyboardShortcut({
-      event: e,
+      event,
       shortcutKey: keyboardShortcuts.toggleAdvancedSearchInput,
       shortcutCallback: toggleModal
     })

@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Col,
-  Row
-} from 'react-bootstrap'
+import { Col, Row } from 'react-bootstrap'
 import classNames from 'classnames'
 import { FaChevronLeft } from 'react-icons/fa'
 
@@ -68,9 +65,11 @@ export class RegionSearch extends Component {
               variant="naked"
               icon={FaChevronLeft}
               label="Back to Feature"
-              onClick={() => {
-                setModalOverlay(null)
-              }}
+              onClick={
+                () => {
+                  setModalOverlay(null)
+                }
+              }
             >
               Back to Feature
             </Button>
@@ -95,9 +94,11 @@ export class RegionSearch extends Component {
                   variant="link"
                   bootstrapVariant="link"
                   label="Try again"
-                  onClick={() => {
-                    setModalOverlay(null)
-                  }}
+                  onClick={
+                    () => {
+                      setModalOverlay(null)
+                    }
+                  }
                 >
                   Try again
                 </Button>
@@ -117,9 +118,11 @@ export class RegionSearch extends Component {
                   variant="link"
                   bootstrapVariant="link"
                   label="Try again"
-                  onClick={() => {
-                    setModalOverlay(null)
-                  }}
+                  onClick={
+                    () => {
+                      setModalOverlay(null)
+                    }
+                  }
                 >
                   Try again
                 </Button>
@@ -144,6 +147,7 @@ export class RegionSearch extends Component {
                       regionResultIds.map((resId) => {
                         const result = regionResultsById[resId]
                         const { name, id, type } = result
+
                         return (
                           <Button
                             key={id}

@@ -9,7 +9,7 @@ export const handleFormSubmit = (values, { props, setSubmitting }) => {
 
   let granuleFilters = { ...values }
 
-  // readableGranuleName needs to be sent as an array, split on the ','
+  // `readableGranuleName` needs to be sent as an array, split on the ','
   if (readableGranuleName) {
     granuleFilters = {
       ...granuleFilters,

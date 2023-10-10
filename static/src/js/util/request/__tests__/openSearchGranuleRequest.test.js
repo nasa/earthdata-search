@@ -1,3 +1,5 @@
+import nock from 'nock'
+
 import OpenSearchGranuleRequest from '../openSearchGranuleRequest'
 import {
   multipleCwicGranulesResponse,
@@ -14,9 +16,9 @@ beforeEach(() => {
 describe('OpenSearchGranuleRequest#transformRequest', () => {
   describe('when logged out', () => {
     test('returns a basic example result correctly transformed', () => {
-      const cwicRequest = new OpenSearchGranuleRequest()
+      const openSearchGranulesRequest = new OpenSearchGranuleRequest()
 
-      const transformedData = cwicRequest.transformRequest({
+      const transformedData = openSearchGranulesRequest.transformRequest({
         echoCollectionId: 'TEST_COLLECTION_ID'
       }, {})
 
@@ -27,10 +29,10 @@ describe('OpenSearchGranuleRequest#transformRequest', () => {
 
   describe('when logged in', () => {
     test('returns a basic example result correctly transformed', () => {
-      const cwicRequest = new OpenSearchGranuleRequest('authToken')
-      cwicRequest.startTime = 1576855756
+      const openSearchGranulesRequest = new OpenSearchGranuleRequest('authToken')
+      openSearchGranulesRequest.startTime = 1576855756
 
-      const transformedData = cwicRequest.transformRequest({
+      const transformedData = openSearchGranulesRequest.transformRequest({
         echoCollectionId: 'TEST_COLLECTION_ID'
       }, {})
 
@@ -42,9 +44,10 @@ describe('OpenSearchGranuleRequest#transformRequest', () => {
 
 describe('OpenSearchGranuleRequest#transformResponse', () => {
   test('formats single granule results correctly', () => {
-    const cwicRequest = new OpenSearchGranuleRequest()
+    const openSearchGranulesRequest = new OpenSearchGranuleRequest()
 
-    const transformedResponse = cwicRequest.transformResponse(singleCwicGranuleResponse)
+    const transformedResponse = openSearchGranulesRequest
+      .transformResponse(singleCwicGranuleResponse)
 
     const { feed } = transformedResponse
     expect(Object.keys(feed)).toEqual(expect.arrayContaining(['entry', 'hits']))
@@ -55,9 +58,10 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
   })
 
   test('appends additional keys to each granule necessary to match CMR', () => {
-    const cwicRequest = new OpenSearchGranuleRequest()
+    const openSearchGranulesRequest = new OpenSearchGranuleRequest()
 
-    const transformedResponse = cwicRequest.transformResponse(singleCwicGranuleResponse)
+    const transformedResponse = openSearchGranulesRequest
+      .transformResponse(singleCwicGranuleResponse)
 
     const { feed } = transformedResponse
     const { entry } = feed
@@ -67,9 +71,10 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
   })
 
   test('formats multi-granule results correctly', () => {
-    const cwicRequest = new OpenSearchGranuleRequest()
+    const openSearchGranulesRequest = new OpenSearchGranuleRequest()
 
-    const transformedResponse = cwicRequest.transformResponse(multipleCwicGranulesResponse)
+    const transformedResponse = openSearchGranulesRequest
+      .transformResponse(multipleCwicGranulesResponse)
 
     const { feed } = transformedResponse
     expect(Object.keys(feed)).toEqual(expect.arrayContaining(['entry', 'hits']))
@@ -86,12 +91,13 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
       }
     }))
 
-    const cwicRequest = new OpenSearchGranuleRequest()
-    cwicRequest.xmlParser = {
+    const openSearchGranulesRequest = new OpenSearchGranuleRequest()
+    openSearchGranulesRequest.xmlParser = {
       parse: mockParse
     }
 
-    const transformedResponse = cwicRequest.transformResponse(multipleCwicGranulesResponse)
+    const transformedResponse = openSearchGranulesRequest
+      .transformResponse(multipleCwicGranulesResponse)
 
     const { feed } = transformedResponse
     expect(Object.keys(feed)).toEqual(expect.arrayContaining(['entry', 'hits']))
@@ -104,9 +110,9 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
 
   describe('sets the full browse image correctly', () => {
     test('when the granule has no link', () => {
-      const cwicRequest = new OpenSearchGranuleRequest()
+      const openSearchGranulesRequest = new OpenSearchGranuleRequest()
 
-      const transformedResponse = cwicRequest
+      const transformedResponse = openSearchGranulesRequest
         .transformResponse(singleCwicGranuleResponse)
 
       const { feed } = transformedResponse
@@ -116,9 +122,9 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
     })
 
     test('when the granule has a link', () => {
-      const cwicRequest = new OpenSearchGranuleRequest()
+      const openSearchGranulesRequest = new OpenSearchGranuleRequest()
 
-      const transformedResponse = cwicRequest
+      const transformedResponse = openSearchGranulesRequest
         .transformResponse(singleCwicGranuleResponseWithImage)
 
       const { feed } = transformedResponse
@@ -128,9 +134,9 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
     })
 
     test('when the granule has a string link', () => {
-      const cwicRequest = new OpenSearchGranuleRequest()
+      const openSearchGranulesRequest = new OpenSearchGranuleRequest()
 
-      const transformedResponse = cwicRequest
+      const transformedResponse = openSearchGranulesRequest
         .transformResponse(singleCwicGranuleResponseWithImageStringLink)
 
       const { feed } = transformedResponse
@@ -142,40 +148,26 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
 })
 
 describe('OpenSearchGranuleRequest#search', () => {
-  // beforeEach(() => {
-  //   jest.clearAllMocks()
-  // })
+  test('all transformations are called', async () => {
+    nock(/localhost/)
+      .post(/opensearch/)
+      .reply(200, singleCwicGranuleResponse)
 
-  // TODO: Test that when we call our search method that the transformations actually get called
-  // test('all transformations are called', async () => {
-  //   nock('/localhost/')
-  //     .post(/cwic/)
-  //     .reply(200, {
-  //       feed: {
-  //         updated: '2019-03-27T20:21:14.705Z',
-  //         entry: [{
-  //           mockCollectionData: 'goes here'
-  //         }]
-  //       }
-  //     })
+    const openSearchGranulesRequest = new OpenSearchGranuleRequest()
 
-  //   const cwicRequest = new OpenSearchGranuleRequest()
+    openSearchGranulesRequest.transformRequest = jest.fn(() => {})
 
-  //   const transformRequestMock = jest.spyOn(cwicRequest, 'transformRequest')
-  //     .mockImplementation(() => jest.fn(() => '{}'))
+    const expectedResponse = {
+      feed: {
+        entry: [],
+        hits: 0
+      }
+    }
+    openSearchGranulesRequest.transformResponse = jest.fn(() => expectedResponse)
 
-  //   const expectedResponse = {
-  //     feed: {
-  //       entry: [],
-  //       hits: 0
-  //     }
-  //   }
-  //   const transformResponseMock = jest.spyOn(cwicRequest, 'transformResponse')
-  //     .mockImplementation(() => jest.fn(() => expectedResponse))
+    await openSearchGranulesRequest.search({})
 
-  //   cwicRequest.search({})
-
-  //   expect(transformRequestMock).toHaveBeenCalledTimes(1)
-  //   expect(transformResponseMock).toHaveBeenCalledTimes(1)
-  // })
+    expect(openSearchGranulesRequest.transformRequest).toHaveBeenCalledTimes(1)
+    expect(openSearchGranulesRequest.transformResponse).toHaveBeenCalledTimes(1)
+  })
 })

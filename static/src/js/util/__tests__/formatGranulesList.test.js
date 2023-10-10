@@ -102,9 +102,7 @@ describe('granule map events', () => {
     granule.handleMouseEnter()
 
     expect(eventEmitterEmitMock).toBeCalledTimes(1)
-    expect(eventEmitterEmitMock).toBeCalledWith(
-      'map.layer.C1219248410-LANCEMODIS.focusgranule', { granule: granulesMetadata['G1924512983-LANCEMODIS'] }
-    )
+    expect(eventEmitterEmitMock).toBeCalledWith('map.layer.C1219248410-LANCEMODIS.focusgranule', { granule: granulesMetadata['G1924512983-LANCEMODIS'] })
 
     jest.clearAllMocks()
 
@@ -134,9 +132,7 @@ describe('granule map events', () => {
     granule.handleClick()
 
     expect(eventEmitterEmitMock).toBeCalledTimes(1)
-    expect(eventEmitterEmitMock).toBeCalledWith(
-      'map.layer.C1219248410-LANCEMODIS.stickygranule', { granule: granulesMetadata['G1924512983-LANCEMODIS'] }
-    )
+    expect(eventEmitterEmitMock).toBeCalledWith('map.layer.C1219248410-LANCEMODIS.stickygranule', { granule: granulesMetadata['G1924512983-LANCEMODIS'] })
   })
 
   test('clicking on a focused granule removes that granule as sticky on the map', () => {
@@ -219,7 +215,10 @@ describe('granule metadata', () => {
         browseFlag: false
       }
     }
-    const { granulesList } = setup({ granuleIds, granulesMetadata })
+    const { granulesList } = setup({
+      granuleIds,
+      granulesMetadata
+    })
 
     expect(granulesList[0].title).toEqual(granulesMetadata['http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=C1597928934-NOAA_NCEI:GHRSST-VIIRS_N20-OSPO-L2P.20181201112000-OSPO-L2P_GHRSST-SSTsubskin-VIIRS_N20-ACSPO_V2.60-v02.0-fv01.0.nc'].title)
   })

@@ -1,10 +1,15 @@
-import { castArray, flattenDeep, isPlainObject } from 'lodash'
+import {
+  castArray,
+  flattenDeep,
+  isPlainObject
+} from 'lodash'
 
 // Returns the date in YYYY-MM-DD format by splitting an ISO string
 export const getDaysFromIsoDate = (date = '') => {
   if (date !== '') {
     return date.split('T')[0]
   }
+
   return ''
 }
 
@@ -19,6 +24,7 @@ export const parseTemporal = (metadata, temporal) => {
   // Single date times are found on the SingleDateTime key
   if (temporalRangeType === 'SingleDateTime') {
     const date = getDaysFromIsoDate(temporal.singleDateTime)
+
     return endsAtPresentFlag ? `${date} ongoing` : date
   }
 

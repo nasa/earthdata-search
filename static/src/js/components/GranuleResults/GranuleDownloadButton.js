@@ -31,20 +31,22 @@ export const GranuleDownloadButton = (props) => {
     return (
       <OverlayTrigger
         placement="bottom"
-        overlay={(
-          <Tooltip
-            id="tooltip__granule-results-actions__download-all-button"
-            className="tooltip--large tooltip--ta-left tooltip--wide"
-          >
-            Due to significant processing times, orders for this collection are limited to
-            {' '}
-            {commafy(granuleLimit)}
-            {' '}
-            granules. Please narrow your search before downloading.
-            Contact the data provider with questions.
-            You can find contact information by clicking on the information icon.
-          </Tooltip>
-        )}
+        overlay={
+          (
+            <Tooltip
+              id="tooltip__granule-results-actions__download-all-button"
+              className="tooltip--large tooltip--ta-left tooltip--wide"
+            >
+              Due to significant processing times, orders for this collection are limited to
+              {' '}
+              {commafy(granuleLimit)}
+              {' '}
+              granules. Please narrow your search before downloading.
+              Contact the data provider with questions.
+              You can find contact information by clicking on the information icon.
+            </Tooltip>
+          )
+        }
       >
         <div>
           <Button
@@ -65,7 +67,10 @@ export const GranuleDownloadButton = (props) => {
     )
   }
 
-  const params = parse(location.search, { ignoreQueryPrefix: true, parseArrays: false })
+  const params = parse(location.search, {
+    ignoreQueryPrefix: true,
+    parseArrays: false
+  })
   let { p = '', pg = {} } = params
 
   // If the collection is not already in the project we need to add it to the project and update the url to represent that
@@ -98,22 +103,26 @@ export const GranuleDownloadButton = (props) => {
   return (
     <PortalLinkContainer
       className="granule-results-actions__download-all"
-      onClick={() => {
-        onAddProjectCollection(focusedCollectionId)
-        onChangePath(`/projects${stringify({
-          ...params,
-          p,
-          pg
-        })}`)
-      }}
-      to={{
-        pathname: '/projects',
-        search: stringify({
-          ...params,
-          p,
-          pg
-        })
-      }}
+      onClick={
+        () => {
+          onAddProjectCollection(focusedCollectionId)
+          onChangePath(`/projects${stringify({
+            ...params,
+            p,
+            pg
+          })}`)
+        }
+      }
+      to={
+        {
+          pathname: '/projects',
+          search: stringify({
+            ...params,
+            p,
+            pg
+          })
+        }
+      }
     >
       <Button
         badge={badge}

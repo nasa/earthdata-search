@@ -23,11 +23,14 @@ export const SidebarFiltersItem = ({
       'sidebar-filters-item--no-padding': !hasPadding
     }
   ])
+
   return (
     <li className={className}>
       <header className="sidebar-filters-item__header">
         {
-          heading && <h3 className="sidebar-filters-item__heading">{heading}</h3>
+          heading && (
+            <h3 className="sidebar-filters-item__heading">{heading}</h3>
+          )
         }
         {
           description && (

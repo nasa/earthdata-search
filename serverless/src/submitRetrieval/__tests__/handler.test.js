@@ -2,7 +2,11 @@ import knex from 'knex'
 import mockKnex from 'mock-knex'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import submitRetrieval from '../handler'
-import { orderPayload, echoOrderPayload, badOrderPayload } from './mocks'
+import {
+  orderPayload,
+  echoOrderPayload,
+  badOrderPayload
+} from './mocks'
 import * as generateRetrievalPayloads from '../generateRetrievalPayloads'
 import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
 
@@ -23,7 +27,10 @@ jest.mock('@aws-sdk/client-sqs', () => ({
 beforeEach(() => {
   jest.clearAllMocks()
 
-  jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({ access_token: '2e8e995e7511c2c6620336797b', user_id: 1 }))
+  jest.spyOn(getAccessTokenFromJwtToken, 'getAccessTokenFromJwtToken').mockImplementation(() => ({
+    access_token: '2e8e995e7511c2c6620336797b',
+    user_id: 1
+  }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
@@ -73,7 +80,8 @@ describe('submitRetrieval', () => {
             url: 'https://n5eil09e.ecs.edsc.org/egi/request'
           },
           collection_metadata: {},
-          granule_count: 27
+          granule_count: 27,
+          granule_link_count: 17
         }])
       } else if (step === 4) {
         query.response({
@@ -95,14 +103,15 @@ describe('submitRetrieval', () => {
     expect(queries[0].sql).toContain('BEGIN')
     expect(queries[1].method).toEqual('insert')
     expect(queries[2].method).toEqual('insert')
-    // granule_params should be snaked cased before inserting into db
-    expect(queries[2].bindings[4]).toEqual(JSON.stringify({
+    // Granule_params should be snaked cased before inserting into db
+    expect(queries[2].bindings[5]).toEqual(JSON.stringify({
       echo_collection_id: 'C10000005-EDSC',
       bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
     }))
-    // retrieve saved access configuration
+
+    // Retrieve saved access configuration
     expect(queries[3].method).toEqual('select')
-    // add new access configuration
+    // Add new access configuration
     expect(queries[4].method).toEqual('insert')
     expect(queries[5].sql).toContain('COMMIT')
 
@@ -126,7 +135,8 @@ describe('submitRetrieval', () => {
         url: 'https://n5eil09e.ecs.edsc.org/egi/request'
       },
       collection_metadata: {},
-      granule_count: 27
+      granule_count: 27,
+      granule_link_count: 17
     }
     dbTracker.on('query', (query, step) => {
       if (step === 2) {
@@ -172,14 +182,15 @@ describe('submitRetrieval', () => {
     expect(queries[0].sql).toContain('BEGIN')
     expect(queries[1].method).toEqual('insert')
     expect(queries[2].method).toEqual('insert')
-    // granule_params should be snaked cased before inserting into db
-    expect(queries[2].bindings[4]).toEqual(JSON.stringify({
+    // Granule_params should be snaked cased before inserting into db
+    expect(queries[2].bindings[5]).toEqual(JSON.stringify({
       echo_collection_id: 'C10000005-EDSC',
       bounding_box: '23.607421875,5.381262277997806,27.7965087890625,14.973184553280502'
     }))
-    // retrieve saved access configuration
+
+    // Retrieve saved access configuration
     expect(queries[3].method).toEqual('select')
-    // add new access configuration
+    // Add new access configuration
     expect(queries[4].method).toEqual('insert')
     expect(queries[5].method).toEqual('insert')
     expect(queries[6].method).toEqual('insert')

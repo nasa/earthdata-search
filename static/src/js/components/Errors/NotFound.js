@@ -10,6 +10,7 @@ export const NotFound = ({
 }) => {
   useEffect(() => {
     eventEmitter.emit('error.global', true)
+
     return () => {
       eventEmitter.emit('error.global', false)
     }

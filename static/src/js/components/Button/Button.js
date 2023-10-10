@@ -103,37 +103,45 @@ export const Button = React.forwardRef(({
       data-testid={dataTestId}
       download={download}
     >
-      {(!spinner && icon && iconPosition === 'left') && (
-        <EDSCIcon
-          className={iconClasses}
-          icon={icon}
-          size={iconSize}
-        />
-      )}
+      {
+        (!spinner && icon && iconPosition === 'left') && (
+          <EDSCIcon
+            className={iconClasses}
+            icon={icon}
+            size={iconSize}
+          />
+        )
+      }
       <span className="button__contents">
-        { spinner
-          ? (
-            <span>
-              <Spinner type="dots" color="white" size="tiny" inline />
-            </span>
-          )
-          : children}
+        {
+          spinner
+            ? (
+              <span>
+                <Spinner type="dots" color="white" size="tiny" inline />
+              </span>
+            )
+            : children
+        }
       </span>
-      {(!spinner && icon && iconPosition === 'right') && (
-        <EDSCIcon
-          className={iconClasses}
-          icon={icon}
-          size={iconSize}
-        />
-      )}
-      {badge && (
-        <Badge
-          className={badgeClasses}
-          variant={badgeVariant === null ? 'secondary' : badgeVariant}
-        >
-          {badge}
-        </Badge>
-      )}
+      {
+        (!spinner && icon && iconPosition === 'right') && (
+          <EDSCIcon
+            className={iconClasses}
+            icon={icon}
+            size={iconSize}
+          />
+        )
+      }
+      {
+        badge && (
+          <Badge
+            className={badgeClasses}
+            variant={badgeVariant === null ? 'secondary' : badgeVariant}
+          >
+            {badge}
+          </Badge>
+        )
+      }
     </Btn>
   )
   if (tooltip && tooltipId) {
@@ -148,8 +156,11 @@ export const Button = React.forwardRef(({
       </OverlayTrigger>
     )
   }
+
   return button
 })
+
+Button.displayName = 'Button'
 
 Button.defaultProps = {
   as: 'button',

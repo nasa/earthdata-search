@@ -43,6 +43,7 @@ const queryReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case INITIALIZE_COLLECTION_GRANULES_QUERY: {
       const { collectionId, granuleSortPreference } = action.payload
 
@@ -74,6 +75,7 @@ const queryReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     // Updates the granule search query, throwing out all existing values
     case UPDATE_GRANULE_FILTERS: {
       const { payload } = action
@@ -102,6 +104,7 @@ const queryReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     // Updates the granule search query, keeping existing values
     case UPDATE_GRANULE_SEARCH_QUERY: {
       const { payload } = action
@@ -132,6 +135,7 @@ const queryReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case EXCLUDE_GRANULE_ID: {
       const { collectionId, granuleId } = action.payload
 
@@ -162,6 +166,7 @@ const queryReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case UNDO_EXCLUDE_GRANULE_ID: {
       const collectionId = action.payload
 
@@ -190,6 +195,7 @@ const queryReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case UPDATE_REGION_QUERY: {
       return {
         ...state,
@@ -199,6 +205,7 @@ const queryReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case RESTORE_FROM_URL: {
       const { query } = action.payload
 
@@ -218,9 +225,11 @@ const queryReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     case CLEAR_FILTERS: {
       return initialState
     }
+
     default:
       return state
   }

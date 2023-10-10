@@ -22,6 +22,7 @@ export const Well = ({
     variant ? `well--${variant}` : null,
     className ? `well--${className}` : null
   ])
+
   return (
     <section className={classes}>
       <header>

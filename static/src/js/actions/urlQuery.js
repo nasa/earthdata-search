@@ -149,7 +149,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   if (
     pathname === '/'
     || pathname.includes('/search')
-    // matches /portal/<id>, which we redirect to /portal/<id>/search but needs to trigger these actions
+    // Matches /portal/<id>, which we redirect to /portal/<id>/search but needs to trigger these actions
     || pathname.match(/\/portal\/\w*/)
   ) {
     dispatch(actions.getCollections())
@@ -307,5 +307,6 @@ export const changeUrl = (options) => (dispatch, getState) => {
       newPathname
     }))
   }
+
   return null
 }

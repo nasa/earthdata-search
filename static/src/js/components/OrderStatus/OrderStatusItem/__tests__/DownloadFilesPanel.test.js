@@ -79,6 +79,7 @@ describe('DownloadFilesPanel', () => {
       expect(windowActions.props().disableCopy).toEqual(true)
       expect(windowActions.props().disableSave).toEqual(true)
     })
+
     test('hides the download button', () => {
       const enzymeWrapper = shallow(
         <DownloadFilesPanel

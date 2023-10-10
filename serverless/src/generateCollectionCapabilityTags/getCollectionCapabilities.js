@@ -62,8 +62,8 @@ export const getCollectionCapabilities = async ({
       ).length > 0,
       updated_at: new Date().toISOString()
     }
-  } catch (e) {
-    parseError(e)
+  } catch (error) {
+    parseError(error)
 
     // In the event of an error set all capabilities to false
     return {

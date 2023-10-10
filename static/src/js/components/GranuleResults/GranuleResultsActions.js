@@ -154,10 +154,12 @@ const GranuleResultsActions = ({
                 title={subscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
                 badge={subscriptions.length ? `${subscriptions.length}` : false}
                 naked
-                to={{
-                  pathname: '/search/granules/subscriptions',
-                  search: location.search
-                }}
+                to={
+                  {
+                    pathname: '/search/granules/subscriptions',
+                    search: location.search
+                  }
+                }
               >
                 Subscriptions
               </PortalLinkContainer>
@@ -204,12 +206,8 @@ const GranuleResultsActions = ({
         </div>
         <PortalFeatureContainer authentication>
           <>
-            {
-              isCollectionInProject && !tooManyGranules && removeFromProjectButton
-            }
-            {
-              !isCollectionInProject && !tooManyGranules && addToProjectButton
-            }
+            {isCollectionInProject && !tooManyGranules && removeFromProjectButton}
+            {!isCollectionInProject && !tooManyGranules && addToProjectButton}
           </>
         </PortalFeatureContainer>
       </div>

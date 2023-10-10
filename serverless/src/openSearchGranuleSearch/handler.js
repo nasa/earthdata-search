@@ -51,9 +51,9 @@ const openSearchGranuleSearch = async (event) => {
   console.log(`Completed OSDD request with status ${openSearchUrlResponse.statusCode}.`)
 
   if (openSearchUrlResponse.statusCode !== 200) {
-    const { body } = openSearchUrlResponse
+    const { body: jsonBody } = openSearchUrlResponse
 
-    const parsedResponse = JSON.parse(body)
+    const parsedResponse = JSON.parse(jsonBody)
 
     return {
       isBase64Encoded: false,
@@ -98,8 +98,8 @@ const openSearchGranuleSearch = async (event) => {
       },
       body: data
     }
-  } catch (e) {
-    const { code, config } = e
+  } catch (error) {
+    const { code, config } = error
     const { timeout } = config
 
     // Handle timeouts specifically so that we can use a more human
@@ -120,7 +120,7 @@ const openSearchGranuleSearch = async (event) => {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

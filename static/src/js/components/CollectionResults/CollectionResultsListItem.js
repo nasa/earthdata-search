@@ -56,13 +56,15 @@ export const CollectionResultsListItem = memo(({
         style={style}
       >
         <Skeleton
-          containerStyle={{
-            height: '140px',
-            width: '100%',
-            borderBottomWidth: '1px',
-            borderBottomStyle: 'solid',
-            borderBottomColor: '#dcdee0'
-          }}
+          containerStyle={
+            {
+              height: '140px',
+              width: '100%',
+              borderBottomWidth: '1px',
+              borderBottomStyle: 'solid',
+              borderBottomColor: '#dcdee0'
+            }
+          }
           shapes={collectionResultsItemSkeleton}
         />
       </li>

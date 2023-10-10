@@ -1,9 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import {
-  render,
-  screen
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import 'jest-canvas-mock'
 
 import Legend from '../Legend'

@@ -134,11 +134,11 @@ export default class Request {
       url,
       data,
       transformRequest: [
-        (data, headers) => this.transformRequest(data, headers),
+        (requestData, headers) => this.transformRequest(requestData, headers),
         ...axios.defaults.transformRequest
       ],
       transformResponse: axios.defaults.transformResponse.concat(
-        (data, headers) => this.transformResponse(data, headers)
+        (responseData, headers) => this.transformResponse(responseData, headers)
       ),
       cancelToken: this.cancelToken.token
     })
@@ -165,7 +165,7 @@ export default class Request {
       cancelToken: this.cancelToken.token
     }
 
-    // transformRequest which adds authentication headers is only
+    // TransformRequest which adds authentication headers is only
     // applicable for request methods 'PUT', 'POST', and 'PATCH'
     if (this.authenticated) {
       requestOptions = {
@@ -209,7 +209,7 @@ export default class Request {
       )
     }
 
-    // transformRequest which adds authentication headers is only
+    // TransformRequest which adds authentication headers is only
     // applicable for request methods 'PUT', 'POST', and 'PATCH'
     if (this.authenticated) {
       requestOptions = {
@@ -256,6 +256,7 @@ export default class Request {
 
       if (pathname.startsWith('/admin')) {
         window.location.href = getEnvironmentConfig().edscHost
+
         return
       }
 

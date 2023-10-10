@@ -114,7 +114,10 @@ describe('processTag', () => {
 
     const addTagMock = jest.spyOn(addTag, 'addTag').mockImplementation(() => jest.fn())
 
-    const tagData = { concept_id: 'C10000001-EDSC', data: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' }
+    const tagData = {
+      concept_id: 'C10000001-EDSC',
+      data: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+    }
 
     const event = {
       Records: [
@@ -136,7 +139,10 @@ describe('processTag', () => {
     expect(addTagMock).toBeCalledWith({
       tagName: 'edsc.extra.gibs',
       searchCriteria: {},
-      tagData: { concept_id: 'C10000001-EDSC', data: 'AMSUA_NOAA15_Brightness_Temp_Channel_6' },
+      tagData: {
+        concept_id: 'C10000001-EDSC',
+        data: 'AMSUA_NOAA15_Brightness_Temp_Channel_6'
+      },
       requireGranules: false,
       append: true,
       cmrToken: 'mocked-system-token'

@@ -65,12 +65,12 @@ describe('fetchContactInfo', () => {
         urs_profile: { mock: 'urs' }
       })
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: 'mockToken'
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(fetchContactInfo()).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({

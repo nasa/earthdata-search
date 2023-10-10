@@ -4,7 +4,11 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
 import AdvancedSearchDisplay from '../../../components/AdvancedSearchDisplay/AdvancedSearchDisplay'
-import { AdvancedSearchDisplayContainer, mapDispatchToProps, mapStateToProps } from '../AdvancedSearchDisplayContainer'
+import {
+  AdvancedSearchDisplayContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../AdvancedSearchDisplayContainer'
 
 Enzyme.configure({ adapter: new Adapter() })
 

@@ -8,7 +8,7 @@ beforeEach(() => {
 
 describe('relevancyLogger', () => {
   beforeEach(() => {
-    // mock the date so the timestamp log is predictable
+    // Mock the date so the timestamp log is predictable
     MockDate.set(Date.now())
   })
 

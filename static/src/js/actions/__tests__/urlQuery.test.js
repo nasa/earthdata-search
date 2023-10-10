@@ -4,10 +4,7 @@ import thunk from 'redux-thunk'
 
 import actions from '../index'
 
-import {
-  UPDATE_SAVED_PROJECT,
-  RESTORE_FROM_URL
-} from '../../constants/actionTypes'
+import { UPDATE_SAVED_PROJECT, RESTORE_FROM_URL } from '../../constants/actionTypes'
 
 import * as urlQuery from '../urlQuery'
 
@@ -396,37 +393,35 @@ describe('changePath', () => {
     await store.dispatch(urlQuery.changePath(newPath))
 
     expect(updateStoreMock).toBeCalledTimes(1)
-    expect(updateStoreMock).toBeCalledWith(
-      expect.objectContaining({
-        featureFacets: {
-          availableInEarthdataCloud: false,
-          customizable: false,
-          mapImagery: false,
-          nearRealTime: false
-        },
-        focusedCollection: 'C00001-EDSC',
-        map: {},
-        query: {
-          collection: {
-            byId: {
-              'C00001-EDSC': {
-                granules: {
-                  pageNum: 1
-                }
+    expect(updateStoreMock).toBeCalledWith(expect.objectContaining({
+      featureFacets: {
+        availableInEarthdataCloud: false,
+        customizable: false,
+        mapImagery: false,
+        nearRealTime: false
+      },
+      focusedCollection: 'C00001-EDSC',
+      map: {},
+      query: {
+        collection: {
+          byId: {
+            'C00001-EDSC': {
+              granules: {
+                pageNum: 1
               }
-            },
-            hasGranulesOrCwic: true,
-            overrideTemporal: {},
-            pageNum: 1,
-            spatial: {},
-            temporal: {}
-          }
-        },
-        shapefile: {
-          shapefileId: ''
+            }
+          },
+          hasGranulesOrCwic: true,
+          overrideTemporal: {},
+          pageNum: 1,
+          spatial: {},
+          temporal: {}
         }
-      }), '/search'
-    )
+      },
+      shapefile: {
+        shapefileId: ''
+      }
+    }), '/search')
 
     expect(getCollectionsMock).toBeCalledTimes(1)
     expect(getTimelineMock).toBeCalledTimes(1)
@@ -921,6 +916,7 @@ describe('changeUrl', () => {
             },
             type: '@@router/CALL_HISTORY_METHOD'
           })
+
           expect(storeActions[1]).toEqual({
             payload: {
               projectId: 2,

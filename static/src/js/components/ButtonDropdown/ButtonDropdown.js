@@ -66,6 +66,8 @@ export const ButtonDropdown = memo(({
   )
 })
 
+ButtonDropdown.displayName = 'ButtonDropdown'
+
 ButtonDropdown.defaultProps = {
   children: null,
   className: null,

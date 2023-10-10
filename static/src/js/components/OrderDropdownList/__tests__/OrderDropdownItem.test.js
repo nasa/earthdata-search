@@ -41,10 +41,13 @@ describe('OrderDropdownItem component', () => {
     expect(enzymeWrapper.find('.order-dropdown-item__list-item').length).toEqual(2)
     expect(enzymeWrapper.find('.order-dropdown-item__list-item').at(0).find('.order-dropdown-item__link').text())
       .toEqual('https://n5eil02u.ecs.nsidc.org/esir/5000000333461.html')
+
     expect(enzymeWrapper.find('.order-dropdown-item__list-item').at(0).find('.order-dropdown-item__link').prop('href'))
       .toEqual('https://n5eil02u.ecs.nsidc.org/esir/5000000333461.html')
+
     expect(enzymeWrapper.find('.order-dropdown-item__list-item').at(1).find('.order-dropdown-item__link').text())
       .toEqual('https://n5eil02u.ecs.nsidc.org/esir/5000000333461.zip')
+
     expect(enzymeWrapper.find('.order-dropdown-item__list-item').at(1).find('.order-dropdown-item__link').prop('href'))
       .toEqual('https://n5eil02u.ecs.nsidc.org/esir/5000000333461.zip')
   })

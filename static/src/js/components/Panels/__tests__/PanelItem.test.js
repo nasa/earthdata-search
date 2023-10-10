@@ -1,5 +1,9 @@
 import React from 'react'
-import { fireEvent, render, screen } from '@testing-library/react'
+import {
+  fireEvent,
+  render,
+  screen
+} from '@testing-library/react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 
@@ -124,10 +128,12 @@ describe('PanelItem component', () => {
     test('renders the button', () => {
       render(
         <PanelItem
-          backButtonOptions={{
-            callback: () => {},
-            location: '0.0.1'
-          }}
+          backButtonOptions={
+            {
+              callback: () => {},
+              location: '0.0.1'
+            }
+          }
         >
           I am some content
         </PanelItem>
@@ -140,10 +146,12 @@ describe('PanelItem component', () => {
       test('renders the custom text', () => {
         render(
           <PanelItem
-            backButtonOptions={{
-              location: '0.0.1',
-              text: 'Previous Step'
-            }}
+            backButtonOptions={
+              {
+                location: '0.0.1',
+                text: 'Previous Step'
+              }
+            }
           >
             I am some content
           </PanelItem>
@@ -163,11 +171,13 @@ describe('PanelItem component', () => {
           render(
             <PanelItem
               onChangePanel={onChangePanelMock}
-              backButtonOptions={{
-                callback: backButtonCallbackMock,
-                location: '0.0.1',
-                text: 'Previous Step'
-              }}
+              backButtonOptions={
+                {
+                  callback: backButtonCallbackMock,
+                  location: '0.0.1',
+                  text: 'Previous Step'
+                }
+              }
             >
               I am some content
             </PanelItem>
@@ -187,11 +197,13 @@ describe('PanelItem component', () => {
         render(
           <PanelItem
             onChangePanel={onChangePanelMock}
-            backButtonOptions={{
-              callback: backButtonCallbackMock,
-              location: '0.0.1',
-              text: 'Previous Step'
-            }}
+            backButtonOptions={
+              {
+                callback: backButtonCallbackMock,
+                location: '0.0.1',
+                text: 'Previous Step'
+              }
+            }
           >
             I am some content
           </PanelItem>

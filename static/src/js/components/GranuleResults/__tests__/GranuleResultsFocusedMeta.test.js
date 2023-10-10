@@ -16,10 +16,12 @@ describe('GranuleResultsFocusedMeta component', () => {
       render(
         <GranuleResultsFocusedMeta
           earthdataEnvironment="prod"
-          focusedGranuleMetadata={{
-            browseFlag: false,
-            title: '1234 Test'
-          }}
+          focusedGranuleMetadata={
+            {
+              browseFlag: false,
+              title: '1234 Test'
+            }
+          }
           focusedGranuleId="G-1234-TEST"
         />
       )
@@ -35,14 +37,16 @@ describe('GranuleResultsFocusedMeta component', () => {
       render(
         <GranuleResultsFocusedMeta
           earthdataEnvironment="prod"
-          focusedGranuleMetadata={{
-            browseFlag: false,
-            links: [{
-              href: 'http://test.com/test.jpg',
-              rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-            }],
-            title: '1234 Test'
-          }}
+          focusedGranuleMetadata={
+            {
+              browseFlag: false,
+              links: [{
+                href: 'http://test.com/test.jpg',
+                rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+              }],
+              title: '1234 Test'
+            }
+          }
           focusedGranuleId="G-1234-TEST"
         />
       )
@@ -58,14 +62,16 @@ describe('GranuleResultsFocusedMeta component', () => {
       render(
         <GranuleResultsFocusedMeta
           earthdataEnvironment="prod"
-          focusedGranuleMetadata={{
-            browseFlag: true,
-            links: [{
-              href: 'http://test.com/test.jpg',
-              rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-            }],
-            title: '1234 Test'
-          }}
+          focusedGranuleMetadata={
+            {
+              browseFlag: true,
+              links: [{
+                href: 'http://test.com/test.jpg',
+                rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+              }],
+              title: '1234 Test'
+            }
+          }
           focusedGranuleId="G-1234-TEST"
         />
       )
@@ -82,14 +88,16 @@ describe('GranuleResultsFocusedMeta component', () => {
         render(
           <GranuleResultsFocusedMeta
             earthdataEnvironment="prod"
-            focusedGranuleMetadata={{
-              browseFlag: true,
-              links: [{
-                href: 'http://test.com/test.jpg',
-                rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-              }],
-              title: '1234 Test'
-            }}
+            focusedGranuleMetadata={
+              {
+                browseFlag: true,
+                links: [{
+                  href: 'http://test.com/test.jpg',
+                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                }],
+                title: '1234 Test'
+              }
+            }
             focusedGranuleId="G-1234-TEST"
           />
         )
@@ -109,14 +117,16 @@ describe('GranuleResultsFocusedMeta component', () => {
         render(
           <GranuleResultsFocusedMeta
             earthdataEnvironment="prod"
-            focusedGranuleMetadata={{
-              browseFlag: true,
-              links: [{
-                href: 'http://test.com/test.jpg',
-                rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-              }],
-              title: '1234 Test'
-            }}
+            focusedGranuleMetadata={
+              {
+                browseFlag: true,
+                links: [{
+                  href: 'http://test.com/test.jpg',
+                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                }],
+                title: '1234 Test'
+              }
+            }
             focusedGranuleId="G-1234-TEST"
           />
         )
@@ -141,22 +151,24 @@ describe('GranuleResultsFocusedMeta component', () => {
         render(
           <GranuleResultsFocusedMeta
             earthdataEnvironment="prod"
-            focusedGranuleMetadata={{
-              browseFlag: true,
-              links: [{
-                href: 'http://test.com/test.jpg',
-                rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-              },
+            focusedGranuleMetadata={
               {
-                href: 'http://test.com/test-2.jpg',
-                rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-              },
-              {
-                href: 'http://test.com/test-3.jpg',
-                rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-              }],
-              title: '1234 Test'
-            }}
+                browseFlag: true,
+                links: [{
+                  href: 'http://test.com/test.jpg',
+                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                },
+                {
+                  href: 'http://test.com/test-2.jpg',
+                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                },
+                {
+                  href: 'http://test.com/test-3.jpg',
+                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                }],
+                title: '1234 Test'
+              }
+            }
             focusedGranuleId="G-1234-TEST"
           />
         )
@@ -179,22 +191,24 @@ describe('GranuleResultsFocusedMeta component', () => {
           render(
             <GranuleResultsFocusedMeta
               earthdataEnvironment="prod"
-              focusedGranuleMetadata={{
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
+              focusedGranuleMetadata={
                 {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-3.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
-              }}
+                  browseFlag: true,
+                  links: [{
+                    href: 'http://test.com/test.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-2.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-3.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  }],
+                  title: '1234 Test'
+                }
+              }
               focusedGranuleId="G-1234-TEST"
             />
           )
@@ -218,22 +232,24 @@ describe('GranuleResultsFocusedMeta component', () => {
           render(
             <GranuleResultsFocusedMeta
               earthdataEnvironment="prod"
-              focusedGranuleMetadata={{
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
+              focusedGranuleMetadata={
                 {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-3.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
-              }}
+                  browseFlag: true,
+                  links: [{
+                    href: 'http://test.com/test.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-2.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-3.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  }],
+                  title: '1234 Test'
+                }
+              }
               focusedGranuleId="G-1234-TEST"
             />
           )
@@ -261,25 +277,28 @@ describe('GranuleResultsFocusedMeta component', () => {
           render(
             <GranuleResultsFocusedMeta
               earthdataEnvironment="prod"
-              focusedGranuleMetadata={{
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
+              focusedGranuleMetadata={
                 {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-3.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
-              }}
+                  browseFlag: true,
+                  links: [{
+                    href: 'http://test.com/test.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-2.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-3.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  }],
+                  title: '1234 Test'
+                }
+              }
               focusedGranuleId="G-1234-TEST"
             />
           )
+
           const nextButton = screen.queryByLabelText('Next browse image thumbnail')
 
           await user.click(nextButton)
@@ -300,22 +319,24 @@ describe('GranuleResultsFocusedMeta component', () => {
           render(
             <GranuleResultsFocusedMeta
               earthdataEnvironment="prod"
-              focusedGranuleMetadata={{
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
+              focusedGranuleMetadata={
                 {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-3.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
-              }}
+                  browseFlag: true,
+                  links: [{
+                    href: 'http://test.com/test.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-2.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-3.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  }],
+                  title: '1234 Test'
+                }
+              }
               focusedGranuleId="G-1234-TEST"
             />
           )
@@ -342,22 +363,24 @@ describe('GranuleResultsFocusedMeta component', () => {
           render(
             <GranuleResultsFocusedMeta
               earthdataEnvironment="prod"
-              focusedGranuleMetadata={{
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
+              focusedGranuleMetadata={
                 {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-3.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
-              }}
+                  browseFlag: true,
+                  links: [{
+                    href: 'http://test.com/test.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-2.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-3.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  }],
+                  title: '1234 Test'
+                }
+              }
               focusedGranuleId="G-1234-TEST"
             />
           )
@@ -390,21 +413,24 @@ describe('GranuleResultsFocusedMeta component', () => {
           render(
             <GranuleResultsFocusedMeta
               earthdataEnvironment="prod"
-              focusedGranuleMetadata={{
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
+              focusedGranuleMetadata={
                 {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
-              }}
+                  browseFlag: true,
+                  links: [{
+                    href: 'http://test.com/test.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-2.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  }],
+                  title: '1234 Test'
+                }
+              }
               focusedGranuleId="G-1234-TEST"
             />
           )
+
           const nextButton = screen.queryByLabelText('Next browse image thumbnail')
 
           await user.click(nextButton)
@@ -426,21 +452,24 @@ describe('GranuleResultsFocusedMeta component', () => {
           render(
             <GranuleResultsFocusedMeta
               earthdataEnvironment="prod"
-              focusedGranuleMetadata={{
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
+              focusedGranuleMetadata={
                 {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
-              }}
+                  browseFlag: true,
+                  links: [{
+                    href: 'http://test.com/test.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-2.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  }],
+                  title: '1234 Test'
+                }
+              }
               focusedGranuleId="G-1234-TEST"
             />
           )
+
           const prevButton = screen.queryByLabelText('Previous browse image thumbnail')
 
           await user.click(prevButton)
@@ -461,22 +490,24 @@ describe('GranuleResultsFocusedMeta component', () => {
           render(
             <GranuleResultsFocusedMeta
               earthdataEnvironment="prod"
-              focusedGranuleMetadata={{
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
+              focusedGranuleMetadata={
                 {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-3.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
-              }}
+                  browseFlag: true,
+                  links: [{
+                    href: 'http://test.com/test.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-2.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-3.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  }],
+                  title: '1234 Test'
+                }
+              }
               focusedGranuleId="G-1234-TEST"
             />
           )
@@ -502,22 +533,24 @@ describe('GranuleResultsFocusedMeta component', () => {
             render(
               <GranuleResultsFocusedMeta
                 earthdataEnvironment="prod"
-                focusedGranuleMetadata={{
-                  browseFlag: true,
-                  links: [{
-                    href: 'http://test.com/test.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
+                focusedGranuleMetadata={
                   {
-                    href: 'http://test.com/test-2.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-3.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  }],
-                  title: '1234 Test'
-                }}
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-3.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }
+                }
                 focusedGranuleId="G-1234-TEST"
               />
             )
@@ -542,22 +575,24 @@ describe('GranuleResultsFocusedMeta component', () => {
             render(
               <GranuleResultsFocusedMeta
                 earthdataEnvironment="prod"
-                focusedGranuleMetadata={{
-                  browseFlag: true,
-                  links: [{
-                    href: 'http://test.com/test.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
+                focusedGranuleMetadata={
                   {
-                    href: 'http://test.com/test-2.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-3.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  }],
-                  title: '1234 Test'
-                }}
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-3.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }
+                }
                 focusedGranuleId="G-1234-TEST"
               />
             )
@@ -587,22 +622,24 @@ describe('GranuleResultsFocusedMeta component', () => {
             render(
               <GranuleResultsFocusedMeta
                 earthdataEnvironment="prod"
-                focusedGranuleMetadata={{
-                  browseFlag: true,
-                  links: [{
-                    href: 'http://test.com/test.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
+                focusedGranuleMetadata={
                   {
-                    href: 'http://test.com/test-2.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-3.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  }],
-                  title: '1234 Test'
-                }}
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-3.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }
+                }
                 focusedGranuleId="G-1234-TEST"
               />
             )
@@ -634,22 +671,24 @@ describe('GranuleResultsFocusedMeta component', () => {
             render(
               <GranuleResultsFocusedMeta
                 earthdataEnvironment="prod"
-                focusedGranuleMetadata={{
-                  browseFlag: true,
-                  links: [{
-                    href: 'http://test.com/test.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
+                focusedGranuleMetadata={
                   {
-                    href: 'http://test.com/test-2.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-3.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  }],
-                  title: '1234 Test'
-                }}
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-3.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }
+                }
                 focusedGranuleId="G-1234-TEST"
               />
             )
@@ -687,21 +726,24 @@ describe('GranuleResultsFocusedMeta component', () => {
             render(
               <GranuleResultsFocusedMeta
                 earthdataEnvironment="prod"
-                focusedGranuleMetadata={{
-                  browseFlag: true,
-                  links: [{
-                    href: 'http://test.com/test.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
+                focusedGranuleMetadata={
                   {
-                    href: 'http://test.com/test-2.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  }],
-                  title: '1234 Test'
-                }}
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }
+                }
                 focusedGranuleId="G-1234-TEST"
               />
             )
+
             const expandButton = screen.getByLabelText('Expand browse image')
 
             await user.click(expandButton)
@@ -728,21 +770,24 @@ describe('GranuleResultsFocusedMeta component', () => {
             render(
               <GranuleResultsFocusedMeta
                 earthdataEnvironment="prod"
-                focusedGranuleMetadata={{
-                  browseFlag: true,
-                  links: [{
-                    href: 'http://test.com/test.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
+                focusedGranuleMetadata={
                   {
-                    href: 'http://test.com/test-2.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  }],
-                  title: '1234 Test'
-                }}
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }
+                }
                 focusedGranuleId="G-1234-TEST"
               />
             )
+
             const expandButton = screen.getByLabelText('Expand browse image')
 
             await user.click(expandButton)

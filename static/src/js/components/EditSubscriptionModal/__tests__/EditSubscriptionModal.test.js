@@ -54,6 +54,7 @@ describe('EditSubscriptionModal component', () => {
         },
         subscriptionConceptId: 'SUB1'
       })
+
       const modalBody = mount(enzymeWrapper.props().body)
       expect(modalBody.find(Form.Control).props().value).toEqual('Original Name')
     })
@@ -71,6 +72,7 @@ describe('EditSubscriptionModal component', () => {
         },
         subscriptionConceptId: 'SUB1'
       })
+
       const modalBody = mount(enzymeWrapper.props().body)
       expect(modalBody.find(Form.Check).props().checked).toEqual(false)
     })
@@ -88,6 +90,7 @@ describe('EditSubscriptionModal component', () => {
         subscriptionConceptId: 'SUB1',
         subscriptionType: 'granule'
       })
+
       const modalBody = mount(enzymeWrapper.props().body)
       expect(modalBody.find(Form.Control).props().value).toEqual('Original Name (Granule)')
     })
@@ -103,6 +106,7 @@ describe('EditSubscriptionModal component', () => {
         subscriptionConceptId: 'SUB1',
         subscriptionType: 'granule'
       })
+
       const modalBody = mount(enzymeWrapper.props().body)
       expect(modalBody.find(Form.Check).props().checked).toEqual(false)
     })
@@ -123,6 +127,7 @@ describe('EditSubscriptionModal component', () => {
         },
         subscriptionConceptId: 'SUB1'
       })
+
       await enzymeWrapper.instance().onSubscriptionEditSubmit()
 
       expect(props.onUpdateSubscription).toHaveBeenCalledTimes(1)
@@ -134,6 +139,7 @@ describe('EditSubscriptionModal component', () => {
           nativeId: 'mock-guid'
         }
       })
+
       expect(props.onToggleEditSubscriptionModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleEditSubscriptionModal).toHaveBeenCalledWith({
         isOpen: false,

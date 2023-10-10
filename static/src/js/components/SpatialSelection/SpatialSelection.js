@@ -77,6 +77,7 @@ L.Draw.Tooltip.prototype.updateContent = function updateContent(content) {
       subtext: content.subtext
     }
   }
+
   return originalUpdateContent.call(this, newContent)
 }
 
@@ -221,6 +222,7 @@ const SpatialSelection = (props) => {
         latLngs.push(parseFloat(radius).toFixed(0))
         break
       }
+
       default:
         return null
     }
@@ -234,7 +236,9 @@ const SpatialSelection = (props) => {
         let [lon, lat] = Array.from(coord.split(','))
         lon = parseFloat(lon)
         while (lon < -180) { lon += 360 }
+
         while (lon > 180) { lon -= 360 }
+
         lat = parseFloat(lat)
         lat = Math.min(90, lat)
         lat = Math.max(-90, lat)
@@ -343,7 +347,7 @@ const SpatialSelection = (props) => {
       onChangeQuery
     } = props
 
-    // only remove selected spatial
+    // Only remove selected spatial
     if (isShapefile) {
       // Find the layer that needs to be removed
       const layerIndex = drawnLayers.current.findIndex(
@@ -535,7 +539,7 @@ const SpatialSelection = (props) => {
   }) => {
     if (featureGroup) {
       const shape = rectangle
-      // southwest longitude should not be greater than northeast
+      // Southwest longitude should not be greater than northeast
       if (shape[0].lng > shape[1].lng) {
         shape[1].lng += 360
       }
@@ -592,7 +596,10 @@ const SpatialSelection = (props) => {
 
       drawnLayers.current = [
         ...drawnLayers.current.slice(0, foundLayerIndex),
-        { ...drawnLayers.current[foundLayerIndex], layerMbr: rect },
+        {
+          ...drawnLayers.current[foundLayerIndex],
+          layerMbr: rect
+        },
         ...drawnLayers.current.slice(foundLayerIndex + 1)
       ]
     }
@@ -639,6 +646,7 @@ const SpatialSelection = (props) => {
       )
       const latLngs = points.map((point) => {
         const [lng, lat] = point.split(',')
+
         return new L.LatLng(lat, lng)
       })
       const line = new L.Polyline(latLngs, options)
@@ -683,6 +691,7 @@ const SpatialSelection = (props) => {
         layerPoints,
         layerType: 'circle'
       }]
+
       setLayer(circle, shouldCenter)
     }
   }
@@ -692,12 +701,12 @@ const SpatialSelection = (props) => {
     if (featureGroupRef.current === null) return
 
     const {
-      shapefile
+      shapefile: propsShapefile
     } = props
 
     // Don't draw a shape if a shapefile is present. ShapefileLayer.js will draw it
-    const { shapefileId } = shapefile
-    if (shapefileId) return
+    const { shapefileId: propsShapefileId } = propsShapefile
+    if (propsShapefileId) return
 
     const {
       regionSearch = {}
@@ -804,14 +813,14 @@ const SpatialSelection = (props) => {
 
     if (!newDrawingFound) {
       if (drawnLayers.current.length > 0 && featureGroupRef.current.removeLayer) {
-        // remove all drawn layers
+        // Remove all drawn layers
         drawnLayers.current.forEach((drawnLayer) => {
           const { layer, layerMbr } = drawnLayer
           featureGroupRef.current.removeLayer(layer)
           if (layerMbr) featureGroupRef.current.removeLayer(layerMbr)
         })
 
-        // remove the layerMbr from all drawnLayers
+        // Remove the layerMbr from all drawnLayers
         drawnLayers.current = drawnLayers.current.map((layer) => ({
           ...layer,
           layerMbr: null
@@ -838,8 +847,9 @@ const SpatialSelection = (props) => {
           drawnMbrFound.forEach(
             (drawnMbr) => featureGroupRef.current.removeLayer(drawnMbr.layerMbr)
           )
+
           if (drawnLayers.current.length > 0) {
-            // remove the layerMbr from all drawnLayers
+            // Remove the layerMbr from all drawnLayers
             drawnLayers.current = drawnLayers.current.map((layer) => ({
               ...layer,
               layerMbr: null
@@ -851,7 +861,7 @@ const SpatialSelection = (props) => {
       if (featureGroupRef.current.removeLayer) {
         drawnMbrFound.forEach((drawnMbr) => featureGroupRef.current.removeLayer(drawnMbr.layerMbr))
 
-        // remove the layerMbr from all drawnLayers
+        // Remove the layerMbr from all drawnLayers
         drawnLayers.current = drawnLayers.current.map((layer) => ({
           ...layer,
           layerMbr: null
@@ -869,7 +879,7 @@ const SpatialSelection = (props) => {
   ])
 
   const draw = useMemo(() => {
-    let draw = {
+    let drawOptions = {
       circle: {
         drawError: errorOptions,
         shapeOptions: colorOptions
@@ -886,7 +896,7 @@ const SpatialSelection = (props) => {
       }
     }
     if (isProjectPage) {
-      draw = {
+      drawOptions = {
         circle: false,
         circlemarker: false,
         marker: false,
@@ -896,11 +906,11 @@ const SpatialSelection = (props) => {
       }
     }
 
-    return draw
+    return drawOptions
   }, [isProjectPage])
 
   const edit = useMemo(() => {
-    let edit = {
+    let editOptions = {
       selectedPathOptions: {
         opacity: 0.6,
         dashArray: '10, 10',
@@ -909,13 +919,13 @@ const SpatialSelection = (props) => {
     }
 
     if (isProjectPage || shapefileId) {
-      edit = {
+      editOptions = {
         edit: false,
         remove: false
       }
     }
 
-    return edit
+    return editOptions
   }, [isProjectPage, shapefileId])
 
   const controls = useMemo(() => (

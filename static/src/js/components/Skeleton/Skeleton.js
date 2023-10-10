@@ -13,6 +13,7 @@ import './Skeleton.scss'
 const normalizeSizeValues = (obj) => mapValues(obj, (value) => {
   if (isNumber(value)) return `${value / 16}rem`
   if (isString(value) && value.indexOf('px') > -1) return `${parseInt(value, 10) / 16}rem`
+
   return value
 })
 
@@ -39,19 +40,22 @@ export const Skeleton = ({
         <div
           key={key}
           className={`skeleton__item skeleton__item-${i}`}
-          style={{
-            top: styles.top,
-            left: styles.left,
-            right: styles.right,
-            width: styles.width,
-            height: styles.height,
-            borderRadius: styles.radius
-          }}
+          style={
+            {
+              top: styles.top,
+              left: styles.left,
+              right: styles.right,
+              width: styles.width,
+              height: styles.height,
+              borderRadius: styles.radius
+            }
+          }
         >
           <span className="skeleton__item-inner" />
         </div>
       )
     }
+
     return item
   })
 

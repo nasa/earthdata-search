@@ -13,6 +13,7 @@ import TemporalSelection from '../TemporalSelection/TemporalSelection'
 import './TemporalSelectionDropdownMenu.scss'
 
 const TemporalSelectionDropdownMenu = ({
+  allowRecurring,
   disabled,
   onApplyClick,
   onClearClick,
@@ -44,13 +45,16 @@ const TemporalSelectionDropdownMenu = ({
   return ReactDOM.createPortal(
     <Dropdown.Menu
       className="temporal-selection-dropdown-menu"
-      popperConfig={{
-        preventOverflow: {
-          boundariesElement: 'window'
+      popperConfig={
+        {
+          preventOverflow: {
+            boundariesElement: 'window'
+          }
         }
-      }}
+      }
     >
       <TemporalSelection
+        allowRecurring={allowRecurring}
         controlId="temporal-selection-dropdown"
         temporal={temporal}
         format={temporalDateFormat}
@@ -84,6 +88,10 @@ const TemporalSelectionDropdownMenu = ({
     </Dropdown.Menu>,
     document.getElementById('root')
   )
+}
+
+TemporalSelectionDropdownMenu.defaultProps = {
+  allowRecurring: true
 }
 
 TemporalSelectionDropdownMenu.propTypes = {
