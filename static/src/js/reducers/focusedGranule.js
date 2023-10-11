@@ -7,11 +7,13 @@ const focusedGranuleReducer = (state = initialState, action = {}) => {
     case UPDATE_FOCUSED_GRANULE: {
       return action.payload
     }
+
     case RESTORE_FROM_URL: {
       const { focusedGranule = '' } = action.payload
 
       return focusedGranule
     }
+
     default:
       return state
   }

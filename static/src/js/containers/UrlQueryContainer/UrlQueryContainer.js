@@ -110,6 +110,7 @@ export class UrlQueryContainer extends PureComponent {
         this.setState({
           currentPath: nextPath
         })
+
         if (nextPath !== '') {
           onChangeUrl(nextPath)
         }
@@ -119,6 +120,7 @@ export class UrlQueryContainer extends PureComponent {
 
   render() {
     const { children } = this.props
+
     return children
   }
 }

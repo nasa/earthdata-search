@@ -25,23 +25,35 @@ beforeEach(() => {
 })
 
 describe('EDSCTabs component', () => {
-  const { enzymeWrapper } = setup({
-    children: [
-      'Test children'
-    ]
-  })
-
-  const tabs = enzymeWrapper.find(Tabs)
-
   test('should have the correct classname', () => {
+    const { enzymeWrapper } = setup({
+      children: [
+        'Test children'
+      ]
+    })
+
     expect(enzymeWrapper.find('.edsc-tabs').length).toEqual(1)
   })
 
   test('should render the tabs', () => {
+    const { enzymeWrapper } = setup({
+      children: [
+        'Test children'
+      ]
+    })
+
+    const tabs = enzymeWrapper.find(Tabs)
+
     expect(tabs.length).toEqual(1)
   })
 
   test('should render its children', () => {
+    const { enzymeWrapper } = setup({
+      children: [
+        'Test children'
+      ]
+    })
+
     expect(enzymeWrapper.find('.edsc-tabs').type()).toEqual('div')
   })
 

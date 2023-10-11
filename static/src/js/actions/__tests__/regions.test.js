@@ -84,7 +84,7 @@ describe('getRegions', () => {
         }]
       })
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: 'token',
       searchResults: {
@@ -111,7 +111,7 @@ describe('getRegions', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(getRegions()).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({ type: LOADING_REGIONS })
@@ -172,7 +172,11 @@ describe('getRegions', () => {
       expect(storeActions[0]).toEqual({ type: LOADING_REGIONS })
       expect(storeActions[1]).toEqual({ type: STARTED_REGIONS_TIMER })
       expect(storeActions[2]).toEqual({ type: FINISHED_REGIONS_TIMER })
-      expect(storeActions[3]).toEqual({ type: ERRORED_REGIONS, payload: errorPayload.errors })
+      expect(storeActions[3]).toEqual({
+        type: ERRORED_REGIONS,
+        payload: errorPayload.errors
+      })
+
       expect(storeActions[4]).toEqual({
         type: LOADED_REGIONS,
         payload: { loaded: false }

@@ -46,11 +46,11 @@ export const getSupportedGibsLayers = async () => {
       return
     }
 
-    Object.keys(projections).forEach((key) => {
-      const projection = projections[key]
+    Object.keys(projections).forEach((projectionKey) => {
+      const projection = projections[projectionKey]
 
       if (!supportedProjections.includes(projection.source)) {
-        delete projections[key]
+        delete projections[projectionKey]
       }
     })
 

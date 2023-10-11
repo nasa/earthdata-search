@@ -43,7 +43,10 @@ export class ChunkedOrderModal extends Component {
     } = this.props
 
     // Remove focused collection from back button params
-    const params = parse(location.search, { ignoreQueryPrefix: true, parseArrays: false })
+    const params = parse(location.search, {
+      ignoreQueryPrefix: true,
+      parseArrays: false
+    })
     let { p = '' } = params
     p = p.replace(/^[^!]*/, '')
 
@@ -55,13 +58,15 @@ export class ChunkedOrderModal extends Component {
         icon={FaArrowCircleLeft}
         label="Refine your search"
         onClick={() => onToggleChunkedOrderModal(false)}
-        to={{
-          pathname: '/search',
-          search: stringify({
-            ...params,
-            p
-          })
-        }}
+        to={
+          {
+            pathname: '/search',
+            search: stringify({
+              ...params,
+              p
+            })
+          }
+        }
       >
         Refine your search
       </PortalLinkContainer>

@@ -33,17 +33,19 @@ export const AdminRetrievalsList = ({
     onUpdateAdminRetrievalsSortKey(value)
   }
 
-  const handlePageChange = (pageNum) => {
-    onUpdateAdminRetrievalsPageNum(pageNum)
+  const handlePageChange = (newPageNum) => {
+    onUpdateAdminRetrievalsPageNum(newPageNum)
   }
 
   const onSetUsernameSort = () => {
     if (sortKey.indexOf('username') < 0) {
       handleSort('-username')
     }
+
     if (sortKey === '+username') {
       handleSort('')
     }
+
     if (sortKey === '-username') {
       handleSort('+username')
     }
@@ -53,9 +55,11 @@ export const AdminRetrievalsList = ({
     if (sortKey.indexOf('created_at') < 0) {
       handleSort('-created_at')
     }
+
     if (sortKey === '+created_at') {
       handleSort('')
     }
+
     if (sortKey === '-created_at') {
       handleSort('+created_at')
     }
@@ -119,9 +123,11 @@ export const AdminRetrievalsList = ({
                 <tr
                   className="admin-retrievals-list__interactive"
                   key={obfuscatedId}
-                  onClick={() => {
-                    historyPush(`/admin/retrievals/${obfuscatedId}`)
-                  }}
+                  onClick={
+                    () => {
+                      historyPush(`/admin/retrievals/${obfuscatedId}`)
+                    }
+                  }
                   role="button"
                 >
                   <td>

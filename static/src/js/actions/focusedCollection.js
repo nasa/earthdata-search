@@ -1,9 +1,6 @@
 import actions from './index'
 
-import {
-  UPDATE_FOCUSED_COLLECTION,
-  UPDATE_GRANULE_SUBSCRIPTIONS
-} from '../constants/actionTypes'
+import { UPDATE_FOCUSED_COLLECTION, UPDATE_GRANULE_SUBSCRIPTIONS } from '../constants/actionTypes'
 
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
 import { eventEmitter } from '../events/events'
@@ -180,6 +177,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           items {
             conceptId
             definition
+            instanceInformation
             longName
             name
             nativeId
@@ -195,12 +193,12 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     includeTags: defaultCmrSearchTags.join(','),
     subscriberId: username
   })
-    .then((response) => {
+    .then((responseObject) => {
       const payload = []
 
       const {
         data: responseData
-      } = response
+      } = responseObject
 
       const { data } = responseData
       const { collection } = data
@@ -318,6 +316,7 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
   if (collectionId == null) {
     collectionConceptId = getFocusedCollectionId(state)
   }
+
   const username = getUsername(state)
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
@@ -344,12 +343,12 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
       type: 'granule'
     }
   })
-    .then((response) => {
-      parseGraphQLError(response)
+    .then((responseObject) => {
+      parseGraphQLError(responseObject)
 
       const {
         data: responseData
-      } = response.data
+      } = responseObject.data
 
       const { subscriptions } = responseData
 
@@ -402,7 +401,10 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
   } else {
     // Initialize a nested query element in Redux for the new focused collection
     const granuleSortPreference = getGranuleSortPreference(state)
-    dispatch(actions.initializeCollectionGranulesQuery({ collectionId, granuleSortPreference }))
+    dispatch(actions.initializeCollectionGranulesQuery({
+      collectionId,
+      granuleSortPreference
+    }))
 
     // Initialize a nested search results element in Redux for the new focused collection
     dispatch(actions.initializeCollectionGranulesResults(collectionId))

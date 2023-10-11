@@ -18,6 +18,12 @@ import FilterStackItem from '../FilterStack/FilterStackItem'
 import FilterStackContents from '../FilterStack/FilterStackContents'
 import SpatialDisplayEntry from './SpatialDisplayEntry'
 
+import {
+  transformCircleCoordinates,
+  transformBoundingBoxCoordinates,
+  transformSingleCoordinate
+} from '../../util/createSpatialDisplay'
+
 import './SpatialDisplay.scss'
 
 const { defaultSpatialDecimalSize } = getApplicationConfig()
@@ -59,8 +65,8 @@ class SpatialDisplay extends Component {
 
     this.setState({
       error: '',
-      boundingBoxSearch: this.transformBoundingBoxCoordinates(boundingBoxSearch[0]),
-      circleSearch: this.transformCircleCoordinates(circleSearch[0]),
+      boundingBoxSearch: transformBoundingBoxCoordinates(boundingBoxSearch[0]),
+      circleSearch: transformCircleCoordinates(circleSearch[0]),
       pointSearch: pointSearch[0],
       polygonSearch: polygonSearch[0],
       shapefile
@@ -88,14 +94,14 @@ class SpatialDisplay extends Component {
 
       ([state.pointSearch] = nextProps.pointSearch)
       state.error = this.validateCoordinate(
-        this.transformSingleCoordinate(nextProps.pointSearch[0])
+        transformSingleCoordinate(nextProps.pointSearch[0])
       )
     }
 
     if (boundingBoxSearch[0] !== nextProps.boundingBoxSearch[0]) {
       shouldUpdateState = true
 
-      const points = this.transformBoundingBoxCoordinates(nextProps.boundingBoxSearch[0])
+      const points = transformBoundingBoxCoordinates(nextProps.boundingBoxSearch[0])
 
       state.boundingBoxSearch = points
 
@@ -121,7 +127,7 @@ class SpatialDisplay extends Component {
     if (circleSearch[0] !== nextProps.circleSearch[0]) {
       shouldUpdateState = true
 
-      const points = this.transformCircleCoordinates(nextProps.circleSearch[0])
+      const points = transformCircleCoordinates(nextProps.circleSearch[0])
       state.circleSearch = points
     }
 
@@ -147,11 +153,11 @@ class SpatialDisplay extends Component {
     onRemoveSpatialFilter()
   }
 
-  onChangePointSearch(e) {
-    const { value = '' } = e.target
+  onChangePointSearch(event) {
+    const { value = '' } = event.target
 
     const trimmedValue = this.trimCoordinate(value)
-    const point = this.transformSingleCoordinate(trimmedValue)
+    const point = transformSingleCoordinate(trimmedValue)
 
     this.setState({
       pointSearch: point,
@@ -159,8 +165,8 @@ class SpatialDisplay extends Component {
     })
   }
 
-  onSubmitPointSearch(e) {
-    if (e.type === 'blur' || e.key === 'Enter') {
+  onSubmitPointSearch(event) {
+    if (event.type === 'blur' || event.key === 'Enter') {
       eventEmitter.emit('map.drawCancel')
 
       const { pointSearch, error } = this.state
@@ -182,17 +188,17 @@ class SpatialDisplay extends Component {
       }
     }
 
-    e.preventDefault()
+    event.preventDefault()
   }
 
-  onChangeBoundingBoxSearch(e) {
+  onChangeBoundingBoxSearch(event) {
     const { boundingBoxSearch } = this.state
     const [swPoint, nePoint] = boundingBoxSearch
 
     const {
       name,
       value = ''
-    } = e.target
+    } = event.target
 
     const trimmedValue = this.trimCoordinate(value)
     let newSearch
@@ -217,8 +223,8 @@ class SpatialDisplay extends Component {
     })
   }
 
-  onSubmitBoundingBoxSearch(e) {
-    if (e.type === 'blur' || e.key === 'Enter') {
+  onSubmitBoundingBoxSearch(event) {
+    if (event.type === 'blur' || event.key === 'Enter') {
       const { boundingBoxSearch, error } = this.state
       const { onChangeQuery } = this.props
 
@@ -233,7 +239,7 @@ class SpatialDisplay extends Component {
           onChangeQuery({
             collection: {
               spatial: {
-                boundingBox: [this.transformBoundingBoxCoordinates(boundingBoxSearch.join(',')).join(',')]
+                boundingBox: [transformBoundingBoxCoordinates(boundingBoxSearch.join(',')).join(',')]
               }
             }
           })
@@ -241,14 +247,14 @@ class SpatialDisplay extends Component {
       }
     }
 
-    e.preventDefault()
+    event.preventDefault()
   }
 
-  onChangeCircleCenter(e) {
+  onChangeCircleCenter(event) {
     const { circleSearch } = this.state
     const [, radius] = circleSearch
 
-    const { value = '' } = e.target
+    const { value = '' } = event.target
 
     const trimmedValue = this.trimCoordinate(value)
     const newSearch = [trimmedValue, radius]
@@ -259,11 +265,11 @@ class SpatialDisplay extends Component {
     })
   }
 
-  onChangeCircleRadius(e) {
+  onChangeCircleRadius(event) {
     const { circleSearch } = this.state
     const [center] = circleSearch
 
-    const { value = '' } = e.target
+    const { value = '' } = event.target
 
     if (this.isValidRadius(value)) {
       const newSearch = [center, value]
@@ -275,8 +281,8 @@ class SpatialDisplay extends Component {
     }
   }
 
-  onSubmitCircleSearch(e) {
-    if (e.type === 'blur' || e.key === 'Enter') {
+  onSubmitCircleSearch(event) {
+    if (event.type === 'blur' || event.key === 'Enter') {
       const { circleSearch, error } = this.state
       const [center, radius] = circleSearch
       const { onChangeQuery } = this.props
@@ -292,7 +298,7 @@ class SpatialDisplay extends Component {
           onChangeQuery({
             collection: {
               spatial: {
-                circle: [[this.transformCircleCoordinates(circleSearch.join(','))].join(',')]
+                circle: [[transformCircleCoordinates(circleSearch.join(','))].join(',')]
               }
             }
           })
@@ -300,7 +306,7 @@ class SpatialDisplay extends Component {
       }
     }
 
-    e.preventDefault()
+    event.preventDefault()
   }
 
   /**
@@ -354,6 +360,7 @@ class SpatialDisplay extends Component {
    */
   validateBoundingBoxCoordinates(boundingBox) {
     const [swPoint, nePoint] = boundingBox
+
     return this.validateCoordinate(swPoint) + this.validateCoordinate(nePoint)
   }
 
@@ -363,53 +370,8 @@ class SpatialDisplay extends Component {
    */
   validateCircleCoordinates(circle) {
     const [center] = circle
+
     return this.validateCoordinate(center)
-  }
-
-  /**
-   * Turns '1,2' into '2,1' for leaflet
-   * @param {String} coordinateString A single coordinate representing a point on a map
-   */
-  transformSingleCoordinate(coordinateString) {
-    if (!coordinateString) return ''
-
-    return coordinateString.split(',').reverse().join(',').replace(/\s/g, '')
-  }
-
-  /**
-   * Turns '1,2,3,4' into ['2,1', '4,3'] for leaflet
-   * @param {String} boundingBoxCoordinates A set of two points representing a bounding box
-   */
-  transformBoundingBoxCoordinates(boundingBoxCoordinates) {
-    // Returns empty strings by default as input fields cannot be set to undefined
-    return boundingBoxCoordinates
-      ? boundingBoxCoordinates
-        .match(/[^,]+,[^,]+/g)
-        .map((pointStr) => this.transformSingleCoordinate(pointStr))
-      : ['', '']
-  }
-
-  /**
-   * Turns '1,2,3' into ['2,1', '3'] for leaflet
-   * @param {String} circleCoordinates A center point and radius
-   */
-  transformCircleCoordinates(circleCoordinates) {
-    if (!circleCoordinates) return ['', '']
-
-    const points = circleCoordinates.split(',')
-
-    const [
-      lat = '',
-      lng = '',
-      radius = ''
-    ] = points
-
-    if (lat && lng) {
-      const coordinate = [lat, lng]
-      return [this.transformSingleCoordinate(coordinate.join(',')), radius]
-    }
-
-    return ['', '']
   }
 
   /**
@@ -473,7 +435,7 @@ class SpatialDisplay extends Component {
     if (((shapefileError || shapefileLoading || shapefileLoaded || shapefileId)
       && !drawingNewLayer)
       || drawingNewLayer === 'shapefile') {
-      // if (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
+      // If (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
       // render the shapefile display
       entry = (
         <SpatialDisplayEntry>
@@ -562,7 +524,7 @@ class SpatialDisplay extends Component {
                   placeholder="lat, lon (e.g. 44.2, 130)"
                   sm="auto"
                   size="sm"
-                  value={this.transformSingleCoordinate(pointSearch)}
+                  value={transformSingleCoordinate(pointSearch)}
                   onChange={this.onChangePointSearch}
                   onBlur={this.onSubmitPointSearch}
                   onKeyUp={this.onSubmitPointSearch}

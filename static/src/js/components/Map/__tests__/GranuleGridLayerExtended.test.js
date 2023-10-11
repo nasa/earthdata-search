@@ -7,7 +7,11 @@ import * as LayerUtils from '../../../util/map/layers'
 
 import { GranuleGridLayerExtended } from '../GranuleGridLayerExtended'
 
-import { pathsResult, pathsWithHolesResult, updateProps } from './mocks'
+import {
+  pathsResult,
+  pathsWithHolesResult,
+  updateProps
+} from './mocks'
 
 function setup(overrideProps = {}) {
   const layer = new GranuleGridLayerExtended({
@@ -139,7 +143,7 @@ describe('GranuleGridLayerExtended class', () => {
       }
 
       const result = layer.getTileUrl(tilePoint, updateProps.granules[0])
-      expect(result).toEqual('https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_NDVI_16Day/default/2020-09-29/250m/0/0/0.png')
+      expect(result).toEqual('https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png')
     })
   })
 
@@ -188,16 +192,43 @@ describe('GranuleGridLayerExtended class', () => {
 
       const boundary = {
         poly: [
-          { x: -320, y: 352 }, { x: 192, y: 352 }, { x: 192, y: -160 }, { x: -320, y: -160 }
+          {
+            x: -320,
+            y: 352
+          }, {
+            x: 192,
+            y: 352
+          }, {
+            x: 192,
+            y: -160
+          }, {
+            x: -320,
+            y: -160
+          }
         ]
       }
-      const nwPoint = { x: -320, y: -160 }
+      const nwPoint = {
+        x: -320,
+        y: -160
+      }
       expect(drawClippedPathsMock).toBeCalledTimes(1)
       expect(drawClippedPathsMock).toBeCalledWith(
         canvases.outline,
         {
           poly: [
-            { x: -320, y: 352 }, { x: 192, y: 352 }, { x: 192, y: -160 }, { x: -320, y: -160 }
+            {
+              x: -320,
+              y: 352
+            }, {
+              x: 192,
+              y: 352
+            }, {
+              x: 192,
+              y: -160
+            }, {
+              x: -320,
+              y: -160
+            }
           ]
         },
         pathsWithHolesResult,
@@ -227,6 +258,7 @@ describe('GranuleGridLayerExtended class', () => {
         pathsWithHolesResult.concat().reverse(),
         nwPoint
       )
+
       jest.useRealTimers()
 
       layer.onRemove(map)
@@ -246,6 +278,7 @@ describe('GranuleGridLayerExtended class', () => {
       layer._container = {
         setAttribute: setAttributeMock
       }
+
       const setFocusMock = jest.fn()
       layer.setFocus = setFocusMock
 
@@ -309,6 +342,7 @@ describe('GranuleGridLayerExtended class', () => {
           granules: updateProps.granules,
           isProjectPage: false,
           lightColor: 'rgb(46, 204, 113, 0.5)',
+          projection: 'epsg4326',
           removedGranuleIds: []
         })
       })
@@ -337,6 +371,7 @@ describe('GranuleGridLayerExtended class', () => {
           granules: updateProps.granules,
           isProjectPage: false,
           lightColor: 'rgb(46, 204, 113, 0.5)',
+          projection: 'epsg4326',
           removedGranuleIds: []
         })
       })
@@ -364,6 +399,7 @@ describe('GranuleGridLayerExtended class', () => {
           granules: updateProps.granules,
           isProjectPage: false,
           lightColor: 'rgb(46, 204, 113, 0.5)',
+          projection: 'epsg4326',
           removedGranuleIds: []
         })
       })
@@ -482,6 +518,7 @@ describe('GranuleGridLayerExtended class', () => {
               const div = document.createElement('div')
               div.className = 'granule-grid-layer-extended__panel-list-remove'
               div.dataset.granuleId = 'granuleId'
+
               return div
             })
           }
@@ -512,6 +549,7 @@ describe('GranuleGridLayerExtended class', () => {
               const div = document.createElement('div')
 
               parent.appendChild(div)
+
               return div
             })
           }
@@ -536,6 +574,7 @@ describe('GranuleGridLayerExtended class', () => {
           target: {
             closest: jest.fn().mockImplementation(() => {
               const div = document.createElement('div')
+
               return div
             })
           }
@@ -546,6 +585,7 @@ describe('GranuleGridLayerExtended class', () => {
       expect(eventEmitterMock.mock.calls[0]).toEqual([
         'map.layer.C194001241-LPDAAC_ECS.focusgranule', { granule: { mock: 'granule' } }
       ])
+
       expect(eventEmitterMock.mock.calls[1]).toEqual([
         'map.layer.C194001241-LPDAAC_ECS.stickygranule', { granule: { mock: 'granule' } }
       ])
@@ -567,6 +607,7 @@ describe('GranuleGridLayerExtended class', () => {
           target: {
             closest: jest.fn().mockImplementation(() => {
               const div = document.createElement('div')
+
               return div
             })
           }
@@ -577,6 +618,7 @@ describe('GranuleGridLayerExtended class', () => {
       expect(eventEmitterMock.mock.calls[0]).toEqual([
         'map.layer.C194001241-LPDAAC_ECS.focusgranule', { granule: null }
       ])
+
       expect(eventEmitterMock.mock.calls[1]).toEqual([
         'map.layer.C194001241-LPDAAC_ECS.stickygranule', { granule: null }
       ])

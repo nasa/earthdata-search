@@ -4,9 +4,7 @@ import { connect } from 'react-redux'
 import { withFormik } from 'formik'
 
 import actions from '../../actions'
-import {
-  getValidationSchema
-} from '../../util/forms'
+import { getValidationSchema } from '../../util/forms'
 
 import AdvancedSearchModal from '../../components/AdvancedSearchModal/AdvancedSearchModal'
 
@@ -92,6 +90,7 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
   enableReinitialize: true,
   validationSchema: (props) => {
     const { fields } = props
+
     return getValidationSchema(fields, 'advancedSearch')
   },
   mapPropsToValues: (props) => {

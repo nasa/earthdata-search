@@ -96,13 +96,16 @@ export const fetchAutocomplete = (data) => (dispatch, getState) => {
   }
 
   const response = requestObject.search(params)
-    .then((response) => {
-      const { data } = response
-      const { feed } = data
+    .then((responseObject) => {
+      const { data: dataObject } = responseObject
+      const { feed } = dataObject
       const { entry } = feed
 
       dispatch(onAutocompleteLoaded({ loaded: true }))
-      dispatch(updateAutocompleteSuggestions({ params, suggestions: entry }))
+      dispatch(updateAutocompleteSuggestions({
+        params,
+        suggestions: entry
+      }))
     })
     .catch((error) => {
       if (isCancel(error)) return
@@ -190,7 +193,12 @@ export const selectAutocompleteSuggestion = (data) => (dispatch) => {
   if (cmrFacet) dispatch(actions.addCmrFacet(cmrFacet))
 
   dispatch(updateAutocompleteSelected(data))
-  dispatch(actions.changeQuery({ collection: { pageNum: 1, keyword: '' } }))
+  dispatch(actions.changeQuery({
+    collection: {
+      pageNum: 1,
+      keyword: ''
+    }
+  }))
 }
 
 /**

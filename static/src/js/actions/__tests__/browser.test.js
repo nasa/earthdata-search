@@ -4,13 +4,9 @@ import MockedBrowserDetect from 'browser-detect'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import {
-  updateBrowserVersion
-} from '../browser'
+import { updateBrowserVersion } from '../browser'
 
-import {
-  UPDATE_BROWSER_VERSION
-} from '../../constants/actionTypes'
+import { UPDATE_BROWSER_VERSION } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 

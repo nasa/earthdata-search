@@ -27,7 +27,7 @@ beforeEach(() => {
 
 const store = configureStore()
 
-// use shallowMount, unless we require instance properties like refs
+// Use shallowMount, unless we require instance properties like refs
 function setup(overrideProps, useShallow = true) {
   const props = {
     advancedSearch: {},
@@ -60,6 +60,7 @@ function setup(overrideProps, useShallow = true) {
   // Allow the rendered component to affect the document scope
   const container = document.createElement('div')
   document.body.appendChild(container)
+
   return {
     enzymeWrapper: mount(
       <Provider store={store}>

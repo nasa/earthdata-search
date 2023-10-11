@@ -1,6 +1,9 @@
 import React from 'react'
 import {
-  render, screen, getByRole, getAllByRole
+  render,
+  screen,
+  getByRole,
+  getAllByRole
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -18,7 +21,7 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  const renderContainer = (props) => render(<AdminRetrievalDetails {...props} />)
+  const renderContainer = (renderProps) => render(<AdminRetrievalDetails {...renderProps} />)
 
   return {
     renderContainer,

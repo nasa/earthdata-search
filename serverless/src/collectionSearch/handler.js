@@ -40,11 +40,11 @@ const collectionSearch = async (event) => {
       requestId,
       earthdataEnvironment
     })
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

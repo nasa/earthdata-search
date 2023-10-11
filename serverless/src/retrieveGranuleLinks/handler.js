@@ -49,13 +49,14 @@ const retrieveGranuleLinks = async (event, context) => {
     const dbConnection = await getDbConnection()
 
     const [retrievalCollectionResponse] = await dbConnection('retrieval_collections')
-      .select('retrieval_collections.access_method',
+      .select(
+        'retrieval_collections.access_method',
         'retrieval_collections.collection_id',
         'retrieval_collections.granule_params',
         'retrieval_collections.collection_metadata',
         'retrieval_orders.order_information',
-        // TODO EDD-6 retrieving the latest user token, is there a way we can refresh this token before using it here
-        'user_tokens.access_token')
+        'user_tokens.access_token'
+      )
       .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
       .leftOuterJoin('retrieval_orders', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
@@ -127,7 +128,6 @@ const retrieveGranuleLinks = async (event, context) => {
         cursor: newCursor,
         done,
         links: flattenGranuleLinks(links, linkTypes, flattenLinks)
-        // TODO EDD-6 EDD needs the user's access_token
       })
     }
   } catch (error) {

@@ -9,7 +9,11 @@ import { PropTypes } from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import abbreviate from 'number-abbreviate'
 import classNames from 'classnames'
-import { FaInfoCircle, FaCheck, FaEdit } from 'react-icons/fa'
+import {
+  FaInfoCircle,
+  FaCheck,
+  FaEdit
+} from 'react-icons/fa'
 
 import { commafy } from '../../util/commafy'
 import { convertSizeToMB, convertSize } from '../../util/project'
@@ -60,6 +64,7 @@ export const ProjectHeader = memo(({
     if (isEditingName) {
       focusTextField()
     }
+
     renderInput()
   }, [isEditingName])
 
@@ -79,11 +84,11 @@ export const ProjectHeader = memo(({
     }
   })
 
-  const handleNameKeyPress = ((e) => {
-    if (e.key === 'Enter') {
+  const handleNameKeyPress = ((event) => {
+    if (event.key === 'Enter') {
       handleEditClick()
-      e.stopPropagation()
-      e.preventDefault()
+      event.stopPropagation()
+      event.preventDefault()
     }
   })
 
@@ -231,16 +236,18 @@ export const ProjectHeader = memo(({
 
               <OverlayTrigger
                 placement="right"
-                overlay={(
-                  <Tooltip
-                    className="tooltip--large tooltip--ta-left tooltip--wide"
-                  >
-                    This is the estimated overall size of your project. If no size
-                    information exists in a granule&apos;s metadata, it will not be
-                    included in this number. The size is estimated based upon the
-                    first 20 granules added to your project from each collection.
-                  </Tooltip>
-                )}
+                overlay={
+                  (
+                    <Tooltip
+                      className="tooltip--large tooltip--ta-left tooltip--wide"
+                    >
+                      This is the estimated overall size of your project. If no size
+                      information exists in a granule&apos;s metadata, it will not be
+                      included in this number. The size is estimated based upon the
+                      first 20 granules added to your project from each collection.
+                    </Tooltip>
+                  )
+                }
               >
                 <EDSCIcon icon={FaInfoCircle} className="project-header__stats-icon" />
               </OverlayTrigger>
@@ -249,10 +256,12 @@ export const ProjectHeader = memo(({
         ) : (
           <Skeleton
             dataTestId="project-header__skeleton"
-            containerStyle={{
-              height: '21px',
-              width: '100%'
-            }}
+            containerStyle={
+              {
+                height: '21px',
+                width: '100%'
+              }
+            }
             shapes={projectHeader}
           />
         )
@@ -261,6 +270,8 @@ export const ProjectHeader = memo(({
     </header>
   )
 })
+
+ProjectHeader.displayName = 'ProjectHeader'
 
 ProjectHeader.propTypes = {
   onUpdateProjectName: PropTypes.func.isRequired,

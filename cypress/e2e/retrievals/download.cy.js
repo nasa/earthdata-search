@@ -20,6 +20,7 @@ describe('Download project spec', () => {
         headers: authHeaders
       }
     )
+
     cy.intercept(
       'POST',
       '**/granules/timeline',
@@ -28,6 +29,7 @@ describe('Download project spec', () => {
         headers: authHeaders
       }
     )
+
     cy.intercept(
       'POST',
       '**/dqs',
@@ -35,6 +37,7 @@ describe('Download project spec', () => {
         body: []
       }
     )
+
     cy.intercept(
       'POST',
       '**/granules',
@@ -46,6 +49,7 @@ describe('Download project spec', () => {
         }
       }
     )
+
     cy.intercept(
       'POST',
       '**/saved_access_configs',
@@ -71,6 +75,7 @@ describe('Download project spec', () => {
         headers: retrievals.headers
       }
     )
+
     cy.intercept(
       'GET',
       '**/retrievals/*',
@@ -107,6 +112,7 @@ describe('Download project spec', () => {
         headers: authHeaders
       }
     )
+
     cy.intercept(
       'GET',
       '**/granule_links*',
@@ -123,7 +129,7 @@ describe('Download project spec', () => {
       }
     )
 
-    // view download links
+    // View download links
     cy.contains('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1720.061.2020008170450.hdf').should('be.visible')
     cy.contains('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1900.061.2020008170003.hdf').should('be.visible')
     cy.contains('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/007/MYD04_3K.A2020007.1805.061.2020008182434.hdf').should('be.visible')

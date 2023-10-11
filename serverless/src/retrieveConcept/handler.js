@@ -52,26 +52,29 @@ const retrieveConcept = async (event) => {
       }
     })
 
-    const { data, headers } = response
+    const {
+      data,
+      headers: responseHeaders
+    } = response
 
     return {
       statusCode: response.status,
       headers: {
-        'cmr-hits': headers['cmr-hits'],
-        'cmr-took': headers['cmr-took'],
-        'cmr-request-id': headers['cmr-request-id'],
-        'access-control-allow-origin': headers['access-control-allow-origin'],
-        'access-control-expose-headers': prepareExposeHeaders(headers),
+        'cmr-hits': responseHeaders['cmr-hits'],
+        'cmr-took': responseHeaders['cmr-took'],
+        'cmr-request-id': responseHeaders['cmr-request-id'],
+        'access-control-allow-origin': responseHeaders['access-control-allow-origin'],
+        'access-control-expose-headers': prepareExposeHeaders(responseHeaders),
         'jwt-token': jwtToken
       },
       body: JSON.stringify(data)
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       statusCode: 500,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

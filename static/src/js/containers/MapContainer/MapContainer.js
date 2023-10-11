@@ -1,7 +1,16 @@
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React, {
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState
+} from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { difference, merge } from 'lodash'
+import {
+  difference,
+  isEqual,
+  merge
+} from 'lodash'
 import 'proj4leaflet'
 import LRUCache from 'lrucache'
 
@@ -88,6 +97,10 @@ export const MapContainer = (props) => {
   const { location } = router
   const { pathname } = location
   const isProjectPage = isPath(pathname, '/projects')
+  const isFocusedCollectionPage = isPath(pathname, [
+    '/search/granules',
+    '/search/granules/collection-details'
+  ])
   const [map, setMap] = useState(mapProps)
   const imageryCache = useRef(LRUCache(400))
 
@@ -96,11 +109,11 @@ export const MapContainer = (props) => {
     latitude,
     longitude,
     overlays,
-    projection: defaultProjection,
+    projection: propsProjection,
     zoom: zoomProps
   } = map
 
-  const [projection, setProjection] = useState(defaultProjection)
+  const [projection, setProjection] = useState(propsProjection)
   const [center, setCenter] = useState([latitude, longitude])
   const [zoom, setZoom] = useState(zoomProps)
 
@@ -138,13 +151,16 @@ export const MapContainer = (props) => {
     )
 
     const {
-      latitude,
-      longitude,
+      latitude: defaultLatitude,
+      longitude: defaultLongitude,
       projection: defaultProjection,
-      zoom
+      zoom: defaultZoom
     } = mapWithDefaults
-    setCenter([latitude, longitude])
-    setZoom(zoom)
+
+    if (isEqual(map, mapWithDefaults)) return
+
+    setCenter([defaultLatitude, defaultLongitude])
+    setZoom(defaultZoom)
     setProjection(defaultProjection)
 
     setMap(mapWithDefaults)
@@ -161,6 +177,7 @@ export const MapContainer = (props) => {
     if (isOpenSearch) {
       granuleIds = allGranuleIds.filter((id) => {
         const hashedId = murmurhash3(id).toString()
+
         return excludedGranuleIds.indexOf(hashedId) === -1
       })
     } else {
@@ -173,39 +190,44 @@ export const MapContainer = (props) => {
     })
   }
 
-  const handleProjectionSwitching = (projection) => {
-    const { onChangeMap, onMetricsMap } = props
+  const handleProjectionSwitching = useCallback((newProjection) => {
+    const {
+      onChangeMap: callbackOnChangeMap,
+      onMetricsMap: callbackOnMetricsMap
+    } = props
 
     const Projection = Object.keys(projections).find(((key) => (
-      projections[key] === projection
+      projections[key] === newProjection
     )))
 
-    let latitude = 0
-    const longitude = 0
-    let zoom = 2
+    let newLatitude = 0
+    const newLongitude = 0
+    let newZoom = 2
 
-    if (projection === projections.arctic) {
-      latitude = 90
-      zoom = 0
+    if (newProjection === projections.arctic) {
+      newLatitude = 90
+      newZoom = 0
     }
 
-    if (projection === projections.antarctic) {
-      latitude = -90
-      zoom = 0
+    if (newProjection === projections.antarctic) {
+      newLatitude = -90
+      newZoom = 0
     }
-    const map = {
-      latitude,
-      longitude,
-      projection,
-      zoom
-    }
-    setCenter([latitude, longitude])
-    setZoom(zoom)
-    setProjection(projection)
 
-    onMetricsMap(`Set Projection: ${Projection}`)
-    onChangeMap({ ...map })
-  }
+    const newMap = {
+      latitude: newLatitude,
+      longitude: newLongitude,
+      projection: newProjection,
+      zoom: newZoom
+    }
+
+    setCenter([newLatitude, newLongitude])
+    setZoom(newZoom)
+    setProjection(newProjection)
+
+    callbackOnMetricsMap(`Set Projection: ${Projection}`)
+    callbackOnChangeMap({ ...newMap })
+  }, [projection])
 
   // Projection switching in leaflet is not supported. Here we render MapWrapper with a key of the projection prop.
   // So when the projection is changed in ProjectionSwitcher this causes the map to unmount and remount a new instance,
@@ -223,6 +245,7 @@ export const MapContainer = (props) => {
       granules={nonExcludedGranules}
       granulesMetadata={granulesMetadata}
       imageryCache={imageryCache.current}
+      isFocusedCollectionPage={isFocusedCollectionPage}
       isProjectPage={isProjectPage}
       mapProps={mapProps}
       maxZoom={maxZoom}

@@ -7,6 +7,7 @@ const authTokenReducer = (state = initialState, action = {}) => {
     case UPDATE_AUTH: {
       return action.payload
     }
+
     default:
       return state
   }

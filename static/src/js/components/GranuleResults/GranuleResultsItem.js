@@ -125,6 +125,7 @@ const GranuleResultsItem = forwardRef(({
         )
       }
     }
+
     return element
   }
 
@@ -139,10 +140,10 @@ const GranuleResultsItem = forwardRef(({
     }
   }
 
-  const enhancedHandleOnClick = (e) => {
+  const enhancedHandleOnClick = (event) => {
     // Only fire the click event on the row if no text is currently selected
     if (textSelectionFlag) return
-    handleClick(e)
+    handleClick(event)
   }
 
   const itemTitle = {
@@ -195,10 +196,12 @@ const GranuleResultsItem = forwardRef(({
         >
           <LinkContainer
             onClick={() => handleClickGranuleDetails(id)}
-            to={{
-              pathname: '/search/granules/granule-details',
-              search: location.search
-            }}
+            to={
+              {
+                pathname: '/search/granules/granule-details',
+                search: location.search
+              }
+            }
           >
             <MoreActionsDropdownItem
               title="View details"
@@ -234,15 +237,17 @@ const GranuleResultsItem = forwardRef(({
                         label="Add granule"
                         title="Add granule"
                         disabled={isOpenSearch}
-                        onClick={(e) => {
-                          onAddGranuleToProjectCollection({
-                            collectionId,
-                            granuleId: id
-                          })
+                        onClick={
+                          (event) => {
+                            onAddGranuleToProjectCollection({
+                              collectionId,
+                              granuleId: id
+                            })
 
-                          // Prevent clicks from bubbling up to other granule item events.
-                          e.stopPropagation()
-                        }}
+                            // Prevent clicks from bubbling up to other granule item events.
+                            event.stopPropagation()
+                          }
+                        }
                       >
                         <EDSCIcon icon={FaPlus} />
                       </Button>
@@ -252,15 +257,17 @@ const GranuleResultsItem = forwardRef(({
                         className="button granule-results-item__button granule-results-item__button--remove"
                         label="Remove granule"
                         title="Remove granule"
-                        onClick={(e) => {
-                          onRemoveGranuleFromProjectCollection({
-                            collectionId,
-                            granuleId: id
-                          })
+                        onClick={
+                          (event) => {
+                            onRemoveGranuleFromProjectCollection({
+                              collectionId,
+                              granuleId: id
+                            })
 
-                          // Prevent clicks from bubbling up to other granule item events.
-                          e.stopPropagation()
-                        }}
+                            // Prevent clicks from bubbling up to other granule item events.
+                            event.stopPropagation()
+                          }
+                        }
                       >
                         <EDSCIcon icon={FaMinus} />
                       </Button>

@@ -132,6 +132,7 @@ export const removeSpatialFilter = () => (dispatch) => {
       exact: false
     }
   }))
+
   dispatch(actions.toggleDrawingNewLayer(false))
   dispatch(actions.clearShapefile())
 }

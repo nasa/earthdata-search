@@ -49,7 +49,10 @@ describe('formatDefaultSubscriptionName', () => {
 
   describe('when a collection is passed', () => {
     test('returns the correct value', () => {
-      const result = formatDefaultSubscriptionName({ boundingBox: '1,1,-1,-1', hasGranulesOrCwic: true }, 'collection')
+      const result = formatDefaultSubscriptionName({
+        boundingBox: '1,1,-1,-1',
+        hasGranulesOrCwic: true
+      }, 'collection')
       expect(result).toEqual('Dataset Search Subscription (Bounding Box)')
     })
 
@@ -63,7 +66,10 @@ describe('formatDefaultSubscriptionName', () => {
     describe('when a facet query parameter is used', () => {
       test('returns the correct value', () => {
         const result = formatDefaultSubscriptionName({
-          scienceKeywordsH: [{ term: 'Ocean Temperature', topic: 'Oceans' }],
+          scienceKeywordsH: [{
+            term: 'Ocean Temperature',
+            topic: 'Oceans'
+          }],
           hasGranulesOrCwic: true
         }, 'collection')
         expect(result).toEqual('Dataset Search Subscription (Science Keywords)')

@@ -28,7 +28,7 @@ describe('computeHierarchyMappings', () => {
       {
         conceptId: 'V1237332705-EEDTEST',
         longName: 'Photon Index Begin',
-        name: 'gt1r/geolocation/ph_index_beg' // leading slash missing on purpose
+        name: 'gt1r/geolocation/ph_index_beg' // Leading slash missing on purpose
       },
       {
         conceptId: 'V1237332539-EEDTEST',

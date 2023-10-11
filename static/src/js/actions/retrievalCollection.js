@@ -34,8 +34,8 @@ export const fetchRetrievalCollection = (id) => (dispatch, getState) => {
   const requestObject = new RetrievalCollectionRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.fetch(id)
-    .then((response) => {
-      const { data } = response
+    .then((responseObject) => {
+      const { data } = responseObject
 
       dispatch(updateRetrievalCollection(id, {
         ...data,

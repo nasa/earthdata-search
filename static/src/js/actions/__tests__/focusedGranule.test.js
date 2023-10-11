@@ -4,15 +4,9 @@ import thunk from 'redux-thunk'
 
 import actions from '../index'
 
-import {
-  getFocusedGranule,
-  updateFocusedGranule
-} from '../focusedGranule'
+import { getFocusedGranule, updateFocusedGranule } from '../focusedGranule'
 
-import {
-  UPDATE_GRANULE_METADATA,
-  UPDATE_FOCUSED_GRANULE
-} from '../../constants/actionTypes'
+import { UPDATE_GRANULE_METADATA, UPDATE_FOCUSED_GRANULE } from '../../constants/actionTypes'
 
 import * as getClientId from '../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
@@ -99,7 +93,7 @@ describe('getFocusedGranule', () => {
             }
           })
 
-        // mockStore with initialState
+        // MockStore with initialState
         const store = mockStore({
           authToken: '',
           focusedCollection: 'C10000000000-EDSC',
@@ -111,7 +105,7 @@ describe('getFocusedGranule', () => {
           searchResults: {}
         })
 
-        // call the dispatch
+        // Call the dispatch
         await store.dispatch(getFocusedGranule()).then(() => {
           const storeActions = store.getActions()
           expect(storeActions[0]).toEqual({
@@ -198,7 +192,7 @@ describe('getFocusedGranule', () => {
           }
         })
 
-        // call the dispatch
+        // Call the dispatch
         await store.dispatch(getFocusedGranule()).then(() => {
           const storeActions = store.getActions()
 
@@ -286,7 +280,7 @@ describe('changeFocusedGranule', () => {
         }
       })
 
-      // call the dispatch
+      // Call the dispatch
       store.dispatch(actions.changeFocusedGranule(''))
 
       const storeActions = store.getActions()

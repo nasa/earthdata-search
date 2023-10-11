@@ -10,16 +10,13 @@ import actions from '../../actions'
 import { locationPropType } from '../../util/propTypes/location'
 import { getProjectCollectionsRequiringChunking } from '../../selectors/project'
 
-import SidebarContainer
-  from '../../containers/SidebarContainer/SidebarContainer'
+import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 import ProjectCollectionsContainer
   from '../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
-import ProjectPanelsContainer
-  from '../../containers/ProjectPanelsContainer/ProjectPanelsContainer'
+import ProjectPanelsContainer from '../../containers/ProjectPanelsContainer/ProjectPanelsContainer'
 import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
-import EdscMapContainer
-  from '../../containers/MapContainer/MapContainer'
+import EdscMapContainer from '../../containers/MapContainer/MapContainer'
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 

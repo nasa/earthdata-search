@@ -147,6 +147,7 @@ describe('getFocusedCollection', () => {
             type: TOGGLE_SPATIAL_POLYGON_WARNING,
             payload: false
           })
+
           expect(storeActions[1]).toEqual({
             type: UPDATE_COLLECTION_METADATA,
             payload: [
@@ -220,6 +221,7 @@ describe('getFocusedCollection', () => {
               type: TOGGLE_SPATIAL_POLYGON_WARNING,
               payload: true
             })
+
             expect(storeActions[1]).toEqual({
               type: UPDATE_COLLECTION_METADATA,
               payload: [
@@ -290,6 +292,7 @@ describe('getFocusedCollection', () => {
             type: TOGGLE_SPATIAL_POLYGON_WARNING,
             payload: false
           })
+
           expect(storeActions[1]).toEqual({
             type: 'UPDATE_FOCUSED_COLLECTION',
             payload: ''
@@ -600,6 +603,7 @@ describe('changeFocusedCollection', () => {
         type: UPDATE_FOCUSED_COLLECTION,
         payload: collectionId
       })
+
       expect(storeActions[1]).toEqual({
         type: INITIALIZE_COLLECTION_GRANULES_QUERY,
         payload: {
@@ -607,6 +611,7 @@ describe('changeFocusedCollection', () => {
           granuleSortPreference: 'default'
         }
       })
+
       expect(storeActions[2]).toEqual({
         type: INITIALIZE_COLLECTION_GRANULES_RESULTS,
         payload: collectionId
@@ -640,10 +645,12 @@ describe('changeFocusedCollection', () => {
         type: UPDATE_FOCUSED_COLLECTION,
         payload: ''
       })
+
       expect(storeActions[1]).toEqual({
         type: UPDATE_FOCUSED_GRANULE,
         payload: ''
       })
+
       expect(storeActions[2]).toEqual({
         type: TOGGLE_SPATIAL_POLYGON_WARNING,
         payload: false

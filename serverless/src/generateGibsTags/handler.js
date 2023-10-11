@@ -93,8 +93,8 @@ const generateGibsTags = async (event, context) => {
         const { feed = {} } = data
         const { entry = [] } = feed
 
-        entry.forEach((entry) => {
-          const { id } = entry
+        entry.forEach((entryObject) => {
+          const { id } = entryObject
 
           const { [conceptId]: existingLayer = [] } = conceptIdLayers
 
@@ -106,8 +106,8 @@ const generateGibsTags = async (event, context) => {
             ]
           }
         })
-      } catch (e) {
-        parseError(e)
+      } catch (error) {
+        parseError(error)
       }
     }
   })

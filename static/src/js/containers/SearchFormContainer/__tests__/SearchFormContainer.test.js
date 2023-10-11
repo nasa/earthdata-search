@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, SearchFormContainer } from '../SearchFormContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  SearchFormContainer
+} from '../SearchFormContainer'
 import SearchForm from '../../../components/SearchForm/SearchForm'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -174,14 +178,19 @@ describe('SearchFormContainer component', () => {
     expect(searchForm.length).toBe(1)
     expect(searchFormProps.keywordSearch)
       .toEqual('Test value')
+
     expect(searchFormProps.onCancelAutocomplete)
       .toEqual(props.onCancelAutocomplete)
+
     expect(searchFormProps.onClearFilters)
       .toEqual(props.onClearFilters)
+
     expect(searchFormProps.onChangeQuery)
       .toEqual(props.onChangeQuery)
+
     expect(searchFormProps.onToggleAdvancedSearchModal)
       .toEqual(props.onToggleAdvancedSearchModal)
+
     expect(searchFormProps.showFilterStackToggle)
       .toEqual(false)
   })

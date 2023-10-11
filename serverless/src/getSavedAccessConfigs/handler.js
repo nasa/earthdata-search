@@ -67,11 +67,11 @@ const getSavedAccessConfigs = async (event, context) => {
       headers: defaultResponseHeaders,
       body: JSON.stringify(configs)
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

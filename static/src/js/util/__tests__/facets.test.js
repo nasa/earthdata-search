@@ -17,6 +17,7 @@ describe('changeCmrFacet', () => {
       {},
       false
     )
+
     expect(onChangeHandlerMock).toHaveBeenCalledTimes(1)
     expect(onChangeHandlerMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -40,6 +41,7 @@ describe('changeCmrFacet', () => {
         {},
         false
       )
+
       expect(onChangeHandlerMock).toHaveBeenCalledTimes(1)
       expect(onChangeHandlerMock).toHaveBeenCalledWith(
         expect.objectContaining({

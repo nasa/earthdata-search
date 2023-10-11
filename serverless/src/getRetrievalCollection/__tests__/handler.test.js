@@ -86,6 +86,7 @@ describe('getRetrievalCollection', () => {
       orders: [],
       urs_id: 'test_user'
     }))
+
     expect(statusCode).toEqual(200)
     expect(determineEarthdataEnvironmentMock).toBeCalledTimes(1)
     expect(determineEarthdataEnvironmentMock).toBeCalledWith({ 'Earthdata-Env': 'prod' })

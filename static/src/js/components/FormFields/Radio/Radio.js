@@ -20,6 +20,7 @@ export const Radio = ({
       'radio--is-selected': checked
     }
   ])
+
   return (
     <label
       className={labelClassName}

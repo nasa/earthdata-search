@@ -16,6 +16,7 @@ export const getTemporal = (start, end) => {
   if (normStart === normEnd) return [normStart, null]
   if (!normEnd) return [normStart, null]
   if (!normStart) return [null, normEnd]
+
   return [normStart, normEnd]
 }
 

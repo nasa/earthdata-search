@@ -61,6 +61,7 @@ export const BrowseLinksPanel = ({
           {
             browseUrls.map((link, i) => {
               const key = `link_${i}`
+
               return (
                 <li key={key}>
                   <a href={link}>{link}</a>

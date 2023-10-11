@@ -17,9 +17,11 @@ const FilterStackContents = (props) => {
 
   return (
     <div className={filterStackContentsClass}>
-      { title && (
-        <div className={filterStackLabelClass}>{`${title}:`}</div>
-      )}
+      {
+        title && (
+          <div className={filterStackLabelClass}>{`${title}:`}</div>
+        )
+      }
       { body && <div className="filter-stack-contents__body">{body}</div>}
     </div>
   )

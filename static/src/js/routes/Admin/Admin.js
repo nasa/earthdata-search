@@ -7,10 +7,11 @@ import {
   withRouter
 } from 'react-router-dom'
 
-import AdminProjectsContainer from '../../containers/AdminProjectsContainer/AdminProjectsContainer'
 import AdminProjectContainer from '../../containers/AdminProjectContainer/AdminProjectContainer'
-import AdminRetrievalsContainer from '../../containers/AdminRetrievalsContainer/AdminRetrievalsContainer'
+import AdminProjectsContainer from '../../containers/AdminProjectsContainer/AdminProjectsContainer'
 import AdminRetrievalContainer from '../../containers/AdminRetrievalContainer/AdminRetrievalContainer'
+import AdminRetrievalsContainer from '../../containers/AdminRetrievalsContainer/AdminRetrievalsContainer'
+import AdminRetrievalsMetricsContainer from '../../containers/AdminRetrievalsMetricsContainer/AdminRetrievalsMetricsContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import actions from '../../actions'
 
@@ -55,11 +56,19 @@ export class Admin extends Component {
                   >
                     View Projects
                   </PortalLinkContainer>
+                  |
+                  {' '}
+                  <PortalLinkContainer
+                    to="/admin/retrievalsMetrics"
+                  >
+                    View Retrieval Metrics
+                  </PortalLinkContainer>
                 </Route>
                 <Route exact path={`${path}/retrievals`} component={AdminRetrievalsContainer} />
                 <Route exact path={`${path}/retrievals/:id`} component={AdminRetrievalContainer} />
                 <Route exact path={`${path}/projects`} component={AdminProjectsContainer} />
                 <Route exact path={`${path}/projects/:id`} component={AdminProjectContainer} />
+                <Route exact path={`${path}/retrievalsMetrics`} component={AdminRetrievalsMetricsContainer} />
               </Switch>
             </div>
           </div>

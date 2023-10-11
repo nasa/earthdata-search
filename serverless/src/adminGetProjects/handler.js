@@ -74,11 +74,11 @@ const adminGetProjects = async (event, context) => {
         results
       })
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

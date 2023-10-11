@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, TooManyPointsModalContainer } from '../TooManyPointsModalContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  TooManyPointsModalContainer
+} from '../TooManyPointsModalContainer'
 import { TooManyPointsModal } from '../../../components/TooManyPointsModal/TooManyPointsModal'
 
 Enzyme.configure({ adapter: new Adapter() })

@@ -3,7 +3,10 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, SpatialSelectionDropdownContainer } from '../SpatialSelectionDropdownContainer'
+import {
+  mapDispatchToProps,
+  SpatialSelectionDropdownContainer
+} from '../SpatialSelectionDropdownContainer'
 import SpatialSelectionDropdown from '../../../components/SpatialDisplay/SpatialSelectionDropdown'
 
 Enzyme.configure({ adapter: new Adapter() })

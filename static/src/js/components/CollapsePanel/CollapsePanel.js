@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Collapse } from 'react-bootstrap'
-import $ from 'jquery'
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa'
 
-import scrollParent from '../../util/scrollParent'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './CollapsePanel.scss'
-
-window.$ = $
 
 export class CollapsePanel extends Component {
   constructor(props, context) {
@@ -20,20 +16,11 @@ export class CollapsePanel extends Component {
     }
 
     this.onToggleClick = this.onToggleClick.bind(this)
-    this.onEntering = this.onEntering.bind(this)
   }
 
   onToggleClick() {
     const { open } = this.state
     this.setState({ open: !open })
-  }
-
-  onEntering(el) {
-    const { scrollToBottom } = this.props
-    if (!scrollToBottom) return
-    const firstScrollableParent = $(scrollParent(el))
-    const parent = $(el).parents()[0]
-    $(firstScrollableParent).animate({ scrollTop: $(parent).offset().top }, 200)
   }
 
   render() {
@@ -59,7 +46,7 @@ export class CollapsePanel extends Component {
         <button
           className={buttonClassNames}
           type="button"
-          onClick={(e) => this.onToggleClick(e)}
+          onClick={(event) => this.onToggleClick(event)}
           aria-controls="collapse-text"
           aria-expanded={open}
         >
@@ -70,7 +57,7 @@ export class CollapsePanel extends Component {
             {icon}
           </span>
         </button>
-        <Collapse in={open} onEntering={this.onEntering}>
+        <Collapse in={open}>
           <div id="collapse-text" className={panelClassNames}>
             {children}
           </div>
@@ -83,8 +70,7 @@ export class CollapsePanel extends Component {
 CollapsePanel.defaultProps = {
   buttonClassName: '',
   className: '',
-  panelClassName: '',
-  scrollToBottom: false
+  panelClassName: ''
 }
 
 CollapsePanel.propTypes = {
@@ -95,8 +81,7 @@ CollapsePanel.propTypes = {
     PropTypes.string,
     PropTypes.node
   ]).isRequired,
-  panelClassName: PropTypes.string,
-  scrollToBottom: PropTypes.bool
+  panelClassName: PropTypes.string
 }
 
 export default CollapsePanel

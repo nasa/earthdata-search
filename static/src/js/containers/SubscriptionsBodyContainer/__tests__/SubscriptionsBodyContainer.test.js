@@ -4,7 +4,11 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import { withHooks } from 'jest-react-hooks-shallow'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, SubscriptionsBodyContainer } from '../SubscriptionsBodyContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  SubscriptionsBodyContainer
+} from '../SubscriptionsBodyContainer'
 import SubscriptionsBody from '../../../components/Subscriptions/SubscriptionsBody'
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -132,12 +136,16 @@ describe('SubscriptionsBodyContainer component', () => {
     expect(enzymeWrapper.find(SubscriptionsBody).length).toBe(1)
     expect(enzymeWrapper.find(SubscriptionsBody).props().queryString)
       .toEqual(props.granuleQueryString)
+
     expect(enzymeWrapper.find(SubscriptionsBody).props().subscriptions)
       .toEqual(props.granuleSubscriptions)
+
     expect(enzymeWrapper.find(SubscriptionsBody).props().onCreateSubscription)
       .toEqual(props.onCreateSubscription)
+
     expect(enzymeWrapper.find(SubscriptionsBody).props().onUpdateSubscription)
       .toEqual(props.onUpdateSubscription)
+
     expect(enzymeWrapper.find(SubscriptionsBody).props().onDeleteSubscription)
       .toEqual(props.onDeleteSubscription)
   })
@@ -151,12 +159,16 @@ describe('SubscriptionsBodyContainer component', () => {
       expect(enzymeWrapper.find(SubscriptionsBody).length).toBe(1)
       expect(enzymeWrapper.find(SubscriptionsBody).props().queryString)
         .toEqual(props.collectionQueryString)
+
       expect(enzymeWrapper.find(SubscriptionsBody).props().subscriptions)
         .toEqual(props.collectionSubscriptions)
+
       expect(enzymeWrapper.find(SubscriptionsBody).props().onCreateSubscription)
         .toEqual(props.onCreateSubscription)
+
       expect(enzymeWrapper.find(SubscriptionsBody).props().onUpdateSubscription)
         .toEqual(props.onUpdateSubscription)
+
       expect(enzymeWrapper.find(SubscriptionsBody).props().onDeleteSubscription)
         .toEqual(props.onDeleteSubscription)
 

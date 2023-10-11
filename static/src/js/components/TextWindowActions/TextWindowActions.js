@@ -33,6 +33,7 @@ import './TextWindowActions.scss'
  * @param {String} modalTitle - The title for the modal.
  * @param {Boolean} disableCopy - Disables the copy functionality.
  * @param {Boolean} disableSave - Disables the save functionality.
+ * @param {Boolean} disableEdd - Disables EDD button.
  */
 export const TextWindowActions = ({
   children,
@@ -63,14 +64,17 @@ export const TextWindowActions = ({
       downloadLink = macDownloadLink
       break
     }
+
     case 'Windows': {
       downloadLink = windowsDownloadLink
       break
     }
+
     case 'Linux': {
       downloadLink = linuxDownloadLink
       break
     }
+
     default:
     {
       operatingSystem = 'macOS'
@@ -154,10 +158,12 @@ export const TextWindowActions = ({
               bootstrapSize="sm"
               label="Save"
               icon={FaSave}
-              onClick={(e) => {
-                constructDownloadableFile(fileContents, fileName)
-                e.stopPropagation()
-              }}
+              onClick={
+                (event) => {
+                  constructDownloadableFile(fileContents, fileName)
+                  event.stopPropagation()
+                }
+              }
             >
               Save
             </Button>
@@ -186,12 +192,14 @@ export const TextWindowActions = ({
       {
         (!disableCopy && supportsClipboard) && (
           <form
-            style={{
-              position: 'absolute',
-              left: '-99999px',
-              height: 0,
-              width: 0
-            }}
+            style={
+              {
+                position: 'absolute',
+                left: '-99999px',
+                height: 0,
+                width: 0
+              }
+            }
             aria-hidden="true"
           >
             <textarea
@@ -209,48 +217,52 @@ export const TextWindowActions = ({
         isOpen={showLinksModal}
         size="lg"
         title={modalTitle}
-        body={(
-          <>
-            {
-              !(disableCopy && disableSave) && (
-                <header className="text-window-actions__actions">
-                  {
-                    (!disableCopy && supportsClipboard) && (
-                      <Button
-                        className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--copy"
-                        bootstrapSize="sm"
-                        icon={FaCopy}
-                        onClick={copyToClipboard}
-                        label="Copy"
-                      >
-                        Copy
-                      </Button>
-                    )
-                  }
-                  {
-                    (!disableSave && (fileContents && fileName)) && (
-                      <Button
-                        className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--save"
-                        bootstrapSize="sm"
-                        label="Save"
-                        icon={FaSave}
-                        onClick={(e) => {
-                          constructDownloadableFile(fileContents, fileName)
-                          e.stopPropagation()
-                        }}
-                      >
-                        Save
-                      </Button>
-                    )
-                  }
-                </header>
-              )
-            }
-            <div className={`text-window-actions__modal-body ${disableCopy && disableSave ? 'text-window-actions__modal-body--no-actions' : ''}`}>
-              {children}
-            </div>
-          </>
-        )}
+        body={
+          (
+            <>
+              {
+                !(disableCopy && disableSave) && (
+                  <header className="text-window-actions__actions">
+                    {
+                      (!disableCopy && supportsClipboard) && (
+                        <Button
+                          className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--copy"
+                          bootstrapSize="sm"
+                          icon={FaCopy}
+                          onClick={copyToClipboard}
+                          label="Copy"
+                        >
+                          Copy
+                        </Button>
+                      )
+                    }
+                    {
+                      (!disableSave && (fileContents && fileName)) && (
+                        <Button
+                          className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--save"
+                          bootstrapSize="sm"
+                          label="Save"
+                          icon={FaSave}
+                          onClick={
+                            (event) => {
+                              constructDownloadableFile(fileContents, fileName)
+                              event.stopPropagation()
+                            }
+                          }
+                        >
+                          Save
+                        </Button>
+                      )
+                    }
+                  </header>
+                )
+              }
+              <div className={`text-window-actions__modal-body ${disableCopy && disableSave ? 'text-window-actions__modal-body--no-actions' : ''}`}>
+                {children}
+              </div>
+            </>
+          )
+        }
       />
       <EDSCModalContainer
         id={`order-status-links-edd-modal__${id}`}
@@ -258,57 +270,59 @@ export const TextWindowActions = ({
         onClose={handleEddModalClose}
         isOpen={showEddModal}
         size="md"
-        body={(
-          <div className="d-flex flex-column align-items-center">
-            <h3 className="font-weight-bolder h5 mt-3 text-center w-75">Opening Earthdata Download to download your files...</h3>
-            <EDSCIcon
-              className="mt-4 text-window-actions__modal-icon"
-              icon={FaExternalLinkAlt}
-              size="4rem"
-            />
-            <Spinner
-              className="mt-4"
-              type="dots"
-            />
-            <div className="mt-4 text-muted text-center text--lg text-window-actions__modal-blurb">
-              Click
-              {' '}
-              <strong className="text-dark">Open Earthdata Download</strong>
-              {' '}
-              in the dialog presented by your browser.
-              If the dialog does not open automatically, click
-              {' '}
-              <strong className="text-dark">Open Earthdata Download</strong>
-              {' '}
-              below.
-            </div>
-            <Button
-              className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--open-edd mt-3"
-              bootstrapSize="sm"
-              label="Open Earthdata Download"
-              icon={FaExternalLinkAlt}
-              href={eddLink}
-              bootstrapVariant="primary"
-            >
-              Open Earthdata Download
-            </Button>
-            <Alert className="mt-3 mb-0 text-center" variant="secondary">
-              Don’t have the Earthdata Download installed?
-              <br />
-              <a
-                href={downloadLink}
+        body={
+          (
+            <div className="d-flex flex-column align-items-center">
+              <h3 className="font-weight-bolder h5 mt-3 text-center w-75">Opening Earthdata Download to download your files...</h3>
+              <EDSCIcon
+                className="mt-4 text-window-actions__modal-icon"
+                icon={FaExternalLinkAlt}
+                size="4rem"
+              />
+              <Spinner
+                className="mt-4"
+                type="dots"
+              />
+              <div className="mt-4 text-muted text-center text--lg text-window-actions__modal-blurb">
+                Click
+                {' '}
+                <strong className="text-dark">Open Earthdata Download</strong>
+                {' '}
+                in the dialog presented by your browser.
+                If the dialog does not open automatically, click
+                {' '}
+                <strong className="text-dark">Open Earthdata Download</strong>
+                {' '}
+                below.
+              </div>
+              <Button
+                className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--open-edd mt-3"
+                bootstrapSize="sm"
+                label="Open Earthdata Download"
+                icon={FaExternalLinkAlt}
+                href={eddLink}
+                bootstrapVariant="primary"
               >
-                Download for
+                Open Earthdata Download
+              </Button>
+              <Alert className="mt-3 mb-0 text-center" variant="secondary">
+                Don’t have the Earthdata Download installed?
+                <br />
+                <a
+                  href={downloadLink}
+                >
+                  Download for
+                  {' '}
+                  {operatingSystem}
+                  {' '}
+                </a>
+                or
                 {' '}
-                {operatingSystem}
-                {' '}
-              </a>
-              or
-              {' '}
-              <a className="link link--external" href="/earthdata-download">learn more.</a>
-            </Alert>
-          </div>
-        )}
+                <a className="link link--external" href="https://nasa.github.io/earthdata-download/" target="_blank" rel="nofollow noreferrer">learn more.</a>
+              </Alert>
+            </div>
+          )
+        }
       />
     </div>
   )

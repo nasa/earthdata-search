@@ -90,6 +90,7 @@ describe('getSystemToken', () => {
         username: 'edsc',
         password: 'mocked-password'
       }))
+
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
       const deleteSystemTokenMock = jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => {})
 
@@ -129,6 +130,7 @@ describe('getSystemToken', () => {
         username: 'edsc',
         password: 'mocked-password'
       }))
+
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
       const deleteSystemTokenMock = jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => {})
       const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
@@ -175,6 +177,7 @@ describe('getSystemToken', () => {
         username: 'edsc',
         password: 'mocked-password'
       }))
+
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
       const deleteSystemTokenMock = jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => {})
 
@@ -209,6 +212,7 @@ describe('getSystemToken', () => {
         username: 'edsc',
         password: 'mocked-password'
       }))
+
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ edlHost: 'http://example.com' }))
       const deleteSystemTokenMock = jest.spyOn(deleteSystemToken, 'deleteSystemToken').mockImplementation(() => {})
       const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())

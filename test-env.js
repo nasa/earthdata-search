@@ -2,12 +2,8 @@
  * Set up globals
  */
 // jQuery
-import $ from 'jquery'
 import nock from 'nock'
 import enableHooks from 'jest-react-hooks-shallow'
-
-global.$ = $
-global.jQuery = $
 
 // Google Tag Manager dataLayer
 global.dataLayer = {
@@ -24,7 +20,7 @@ const { error } = console
 
 const consoleError = function errorOverride(message) {
   // eslint-disable-next-line prefer-rest-params
-  error.apply(console, arguments) // keep default behaviour
+  error.apply(console, arguments) // Keep default behaviour
   throw (message instanceof Error ? message : new Error(message))
 }
 

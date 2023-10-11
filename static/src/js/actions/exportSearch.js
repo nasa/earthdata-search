@@ -68,8 +68,8 @@ export const exportSearch = (format) => (dispatch, getState) => {
       pageSize: undefined
     }
   }, format)
-    .then((response) => {
-      const { data } = response
+    .then((responseObject) => {
+      const { data } = responseObject
 
       // Create a blob with the text data from the export
       let blob
@@ -78,6 +78,7 @@ export const exportSearch = (format) => (dispatch, getState) => {
       } else {
         blob = new Blob([JSON.stringify(data)])
       }
+
       const url = window.URL.createObjectURL(blob)
 
       // Create a hyperlink to the blob and give it a filename
@@ -227,8 +228,8 @@ export const exportSearchAsStac = (format) => (dispatch, getState) => {
     pageNum: undefined,
     pageSize: undefined
   }, format)
-    .then((response) => {
-      const { data } = response
+    .then((responseObject) => {
+      const { data } = responseObject
 
       // Create a blob with the text data from the export
       let blob
@@ -237,6 +238,7 @@ export const exportSearchAsStac = (format) => (dispatch, getState) => {
       } else {
         blob = new Blob([JSON.stringify(data)])
       }
+
       const url = window.URL.createObjectURL(blob)
 
       // Create a hyperlink to the blob and give it a filename

@@ -1,0 +1,901 @@
+{
+  "data": {
+      "collection": {
+          "abstract": "A Group for High Resolution Sea Surface Temperature (GHRSST) Level 4 sea surface temperature analysis produced as a retrospective dataset (four day latency) and near-real-time dataset (one day latency) at the JPL Physical Oceanography DAAC using wavelets as basis functions in an optimal interpolation approach on a global 0.01 degree grid. The version 4 Multiscale Ultrahigh Resolution (MUR) L4 analysis is based upon nighttime GHRSST L2P skin and subskin SST observations from several instruments including the NASA Advanced Microwave Scanning Radiometer-EOS (AMSR-E), the JAXA Advanced Microwave Scanning Radiometer 2 on GCOM-W1, the Moderate Resolution Imaging Spectroradiometers (MODIS) on the NASA Aqua and Terra platforms, the US Navy microwave WindSat radiometer, the Advanced Very High Resolution Radiometer (AVHRR) on several NOAA satellites, and in situ SST observations from the NOAA iQuam project. The ice concentration data are from the archives at the EUMETSAT Ocean and Sea Ice Satellite Application Facility (OSI SAF) High Latitude Processing Center and are also used for an improved SST parameterization for the high-latitudes.  The dataset also contains additional variables for some granules including a SST anomaly derived from a MUR climatology and the temporal distance to the nearest IR measurement for each pixel.This dataset is funded by the NASA MEaSUREs program ( http://earthdata.nasa.gov/our-community/community-data-system-programs/measures-projects ), and created by a team led by Dr. Toshio M. Chin from JPL. It adheres to the GHRSST Data Processing Specification (GDS) version 2 format specifications. Use the file global metadata \"history:\" attribute to determine if a granule is near-realtime or retrospective.",
+          "archiveAndDistributionInformation": {
+              "fileArchiveInformation": [
+                  {
+                      "format": "netCDF-4",
+                      "formatType": "Native",
+                      "averageFileSize": 700,
+                      "averageFileSizeUnit": "MB",
+                      "totalCollectionFileSizeBeginDate": "2002-06-01T00:00:00.000Z"
+                  }
+              ],
+              "fileDistributionInformation": [
+                  {
+                      "format": "netCDF-4",
+                      "formatType": "Native",
+                      "averageFileSize": 700,
+                      "averageFileSizeUnit": "MB",
+                      "totalCollectionFileSizeBeginDate": "2002-06-01T00:00:00.000Z"
+                  }
+              ]
+          },
+          "associatedDois": null,
+          "boxes": [
+              "-90 -180 90 180"
+          ],
+          "cloudHosted": true,
+          "conceptId": "C1996881146-POCLOUD",
+          "coordinateSystem": "CARTESIAN",
+          "dataCenter": "POCLOUD",
+          "dataCenters": [
+              {
+                  "roles": [
+                      "ARCHIVER"
+                  ],
+                  "shortName": "NASA/JPL/PODAAC",
+                  "longName": "Physical Oceanography Distributed Active Archive Center, Jet Propulsion Laboratory, NASA",
+                  "contactInformation": {
+                      "contactMechanisms": [
+                          {
+                              "type": "Email",
+                              "value": "podaac@podaac.jpl.nasa.gov"
+                          }
+                      ],
+                      "relatedUrls": [
+                          {
+                              "urlContentType": "DataCenterURL",
+                              "type": "HOME PAGE",
+                              "url": "https://podaac.jpl.nasa.gov/"
+                          }
+                      ]
+                  },
+                  "contactGroups": [
+                      {
+                          "roles": [
+                              "Data Center Contact"
+                          ],
+                          "groupName": "Help Desk",
+                          "contactInformation": {
+                              "contactMechanisms": [
+                                  {
+                                      "type": "Email",
+                                      "value": "podaac@podaac.jpl.nasa.gov"
+                                  }
+                              ],
+                              "relatedUrls": [
+                                  {
+                                      "urlContentType": "DataContactURL",
+                                      "type": "HOME PAGE",
+                                      "url": "https://podaac.jpl.nasa.gov/"
+                                  }
+                              ]
+                          }
+                      }
+                  ]
+              },
+              {
+                  "roles": [
+                      "PROCESSOR"
+                  ],
+                  "shortName": "NASA/JPL",
+                  "longName": "Jet Propulsion Laboratory, NASA",
+                  "contactInformation": {
+                      "contactMechanisms": [
+                          {
+                              "type": "Email",
+                              "value": "podaac@podaac.jpl.nasa.gov"
+                          }
+                      ],
+                      "relatedUrls": [
+                          {
+                              "urlContentType": "DataCenterURL",
+                              "type": "HOME PAGE",
+                              "url": "https://podaac.jpl.nasa.gov/missions"
+                          }
+                      ]
+                  }
+              },
+              {
+                  "roles": [
+                      "DISTRIBUTOR"
+                  ],
+                  "shortName": "NASA/JPL/PODAAC",
+                  "longName": "Physical Oceanography Distributed Active Archive Center, Jet Propulsion Laboratory, NASA",
+                  "contactInformation": {
+                      "contactMechanisms": [
+                          {
+                              "type": "Email",
+                              "value": "podaac@podaac.jpl.nasa.gov"
+                          }
+                      ],
+                      "relatedUrls": [
+                          {
+                              "urlContentType": "DataCenterURL",
+                              "type": "HOME PAGE",
+                              "url": "https://podaac.jpl.nasa.gov/"
+                          }
+                      ]
+                  }
+              }
+          ],
+          "directDistributionInformation": {
+              "region": "us-west-2",
+              "s3BucketAndObjectPrefixNames": [
+                  "podaac-ops-cumulus-public/MUR-JPL-L4-GLOB-v4.1/",
+                  "podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/"
+              ],
+              "s3CredentialsApiEndpoint": "https://archive.podaac.earthdata.nasa.gov/s3credentials",
+              "s3CredentialsApiDocumentationUrl": "https://archive.podaac.earthdata.nasa.gov/s3credentialsREADME"
+          },
+          "doi": {
+              "doi": "10.5067/GHGMR-4FJ04",
+              "authority": "https://doi.org"
+          },
+          "duplicateCollections": {
+              "count": 1,
+              "items": [
+                  {
+                      "id": "C1664741463-PODAAC"
+                  }
+              ]
+          },
+          "hasGranules": true,
+          "lines": null,
+          "nativeDataFormats": [
+              "netCDF-4"
+          ],
+          "points": null,
+          "polygons": null,
+          "relatedUrls": [
+              {
+                  "description": "Group for High Resolution Sea Surface Temperature Information",
+                  "urlContentType": "PublicationURL",
+                  "type": "VIEW RELATED INFORMATION",
+                  "subtype": "GENERAL DOCUMENTATION",
+                  "url": "https://ghrsst.jpl.nasa.gov"
+              },
+              {
+                  "description": "Homepage for the NASA MEaSUREs projects",
+                  "urlContentType": "PublicationURL",
+                  "type": "VIEW RELATED INFORMATION",
+                  "subtype": "GENERAL DOCUMENTATION",
+                  "url": "https://earthdata.nasa.gov/esds/competitive-programs/measures/mur-sst"
+              },
+              {
+                  "description": "Chin T.M., Milliff R.F., Large W.G. (1998). Basin-scale, high-wavenumber sea surface wind fields from a multiresolution analysis of scatterometer data. Journal of Atmospheric and Oceanic Technology, 15: 741-763",
+                  "urlContentType": "PublicationURL",
+                  "type": "VIEW RELATED INFORMATION",
+                  "subtype": "PUBLICATIONS",
+                  "url": "http://journals.ametsoc.org/doi/abs/10.1175/1520-0426%281998%29015%3C0741:BSHWSS%3E2.0.CO;2"
+              },
+              {
+                  "description": "Documentation on the GDS version 2 format specification",
+                  "urlContentType": "PublicationURL",
+                  "type": "VIEW RELATED INFORMATION",
+                  "subtype": "USER'S GUIDE",
+                  "url": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-docs/ghrsst/open/docs/GDS20r5.pdf"
+              },
+              {
+                  "description": "Generic data readers",
+                  "urlContentType": "PublicationURL",
+                  "type": "VIEW RELATED INFORMATION",
+                  "subtype": "DATA RECIPE",
+                  "url": "https://github.com/podaac/data-readers"
+              },
+              {
+                  "description": "Chin, Toshio Michael, Jorge Vazquez-Cuervo, and Edward M. Armstrong. A multi-scale high-resolution analysis of global sea surface temperature. Remote sensing of environment 200 (2017): 154-169.",
+                  "urlContentType": "PublicationURL",
+                  "type": "VIEW RELATED INFORMATION",
+                  "subtype": "PUBLICATIONS",
+                  "url": "https://doi.org/10.1016/j.rse.2017.07.029"
+              },
+              {
+                  "description": "MUR formatted in ZARR for Amazon Web Services",
+                  "urlContentType": "DistributionURL",
+                  "type": "GOTO WEB TOOL",
+                  "url": "https://registry.opendata.aws/mur/#usageexa"
+              },
+              {
+                  "description": "GHRSST Project website",
+                  "urlContentType": "PublicationURL",
+                  "type": "VIEW RELATED INFORMATION",
+                  "subtype": "GENERAL DOCUMENTATION",
+                  "url": "http://www.ghrsst.org"
+              },
+              {
+                  "description": "Thumbnail",
+                  "urlContentType": "VisualizationURL",
+                  "type": "GET RELATED VISUALIZATION",
+                  "url": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/MUR-JPL-L4-GLOB-v4.1.jpg"
+              },
+              {
+                  "description": "Data Use and Citation Policy ",
+                  "urlContentType": "PublicationURL",
+                  "type": "VIEW RELATED INFORMATION",
+                  "subtype": "DATA CITATION POLICY",
+                  "url": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+              },
+              {
+                  "description": "HTTPS endpoint for data browse and download",
+                  "urlContentType": "DistributionURL",
+                  "type": "GET DATA",
+                  "subtype": "DIRECT DOWNLOAD",
+                  "url": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1996881146-POCLOUD ",
+                  "getData": {
+                      "format": "netCDF-4 classic",
+                      "mimeType": "application/x-netcdf",
+                      "size": 300,
+                      "unit": "MB"
+                  }
+              },
+              {
+                  "description": "Browse granule search results in Earthdata Search",
+                  "urlContentType": "DistributionURL",
+                  "type": "GET DATA",
+                  "subtype": "Earthdata Search",
+                  "url": " https://search.earthdata.nasa.gov/search/granules?p=C1996881146-POCLOUD ",
+                  "getData": {
+                      "format": "netCDF-4 classic",
+                      "mimeType": "application/x-netcdf",
+                      "size": 700,
+                      "unit": "MB"
+                  }
+              },
+              {
+                  "description": "MUR Project homepage",
+                  "urlContentType": "PublicationURL",
+                  "type": "VIEW RELATED INFORMATION",
+                  "subtype": "GENERAL DOCUMENTATION",
+                  "url": "https://podaac.jpl.nasa.gov/MEaSUREs-MUR"
+              },
+              {
+                  "description": "Jupyter python notebook to co-locate MUR and MODIS L2P satellite data with  Argo in-situ data for cross-validation",
+                  "urlContentType": "PublicationURL",
+                  "type": "VIEW RELATED INFORMATION",
+                  "subtype": "DATA RECIPE",
+                  "url": "https://github.com/podaac/tutorials/blob/master/notebooks/SWOT-EA-2021/Colocate_satellite_insitu_ocean.ipynb"
+              },
+              {
+                  "description": "SOTO (State of the Ocean) Visualization",
+                  "urlContentType": "VisualizationURL",
+                  "type": "GET RELATED VISUALIZATION",
+                  "subtype": "MAP",
+                  "url": "https://soto.podaac.earthdatacloud.nasa.gov/?l=GHRSST_L4_MUR_Sea_Surface_Temperature,BlueMarble_ShadedRelief_Bathymetry,Coastlines_15m"
+              }
+          ],
+          "relatedCollections": {
+              "count": 2502,
+              "items": [
+                  {
+                      "id": "C2036880657-POCLOUD",
+                      "title": "GHRSST Level 4 MUR 0.25deg Global Foundation Sea Surface Temperature Analysis (v4.2)"
+                  },
+                  {
+                      "id": "C1664741463-PODAAC",
+                      "title": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)"
+                  },
+                  {
+                      "id": "C2205102254-POCLOUD",
+                      "title": "GHRSST Level 4 MW_IR_OI Global Foundation Sea Surface Temperature analysis version 5.1 from REMSS"
+                  }
+              ]
+          },
+          "scienceKeywords": [
+              {
+                  "category": "EARTH SCIENCE",
+                  "topic": "OCEANS",
+                  "term": "OCEAN TEMPERATURE",
+                  "variableLevel1": "SEA SURFACE TEMPERATURE",
+                  "detailedVariable": "FOUNDATION SEA SURFACE TEMPERATURE"
+              }
+          ],
+          "shortName": "MUR-JPL-L4-GLOB-v4.1",
+          "spatialExtent": {
+              "spatialCoverageType": "HORIZONTAL",
+              "horizontalSpatialDomain": {
+                  "geometry": {
+                      "coordinateSystem": "CARTESIAN",
+                      "boundingRectangles": [
+                          {
+                              "northBoundingCoordinate": 90,
+                              "westBoundingCoordinate": -180,
+                              "eastBoundingCoordinate": 180,
+                              "southBoundingCoordinate": -90
+                          }
+                      ]
+                  },
+                  "resolutionAndCoordinateSystem": {
+                      "description": "Projection Type: Cylindrical Lat-Lon, Projection Detail: Geolocation information included for each pixel",
+                      "geodeticModel": {
+                          "horizontalDatumName": "World Geodetic System 1984",
+                          "ellipsoidName": "WGS 84",
+                          "semiMajorAxis": 6378137,
+                          "denominatorOfFlatteningRatio": 298.2572236
+                      },
+                      "horizontalDataResolution": {
+                          "genericResolutions": [
+                              {
+                                  "xDimension": 0.01,
+                                  "yDimension": 0.01,
+                                  "unit": "Decimal Degrees"
+                              }
+                          ]
+                      }
+                  }
+              },
+              "granuleSpatialRepresentation": "CARTESIAN"
+          },
+          "tags": {
+              "edsc.extra.serverless.collection_capabilities": {
+                  "data": {
+                      "cloud_cover": false,
+                      "day_night_flag": false,
+                      "granule_online_access_flag": true,
+                      "orbit_calculated_spatial_domains": false,
+                      "updated_at": "2023-09-01T18:40:38.679Z"
+                  }
+              },
+              "edsc.extra.serverless.gibs": {
+                  "data": [
+                      {
+                          "antarctic": false,
+                          "group": "overlays",
+                          "product": "GHRSST_L4_MUR_Sea_Ice_Concentration",
+                          "antarctic_resolution": null,
+                          "updated_at": "2023-09-01T12:45:23.556Z",
+                          "arctic": false,
+                          "title": "Sea Ice Concentration (L4, MUR)",
+                          "source": "Multi-mission / GHRSST",
+                          "match": {
+                              "time_start": ">=2002-06-01T00:00:00Z"
+                          },
+                          "geographic": true,
+                          "arctic_resolution": null,
+                          "format": "png",
+                          "geographic_resolution": "1km"
+                      },
+                      {
+                          "antarctic": false,
+                          "group": "overlays",
+                          "product": "GHRSST_L4_MUR_Sea_Surface_Temperature",
+                          "antarctic_resolution": null,
+                          "updated_at": "2023-09-01T12:45:23.556Z",
+                          "arctic": false,
+                          "title": "Sea Surface Temperature (L4, MUR)",
+                          "source": "Multi-mission / GHRSST",
+                          "match": {
+                              "time_start": ">=2002-06-01T00:00:00Z"
+                          },
+                          "geographic": true,
+                          "arctic_resolution": null,
+                          "format": "png",
+                          "geographic_resolution": "1km"
+                      },
+                      {
+                          "antarctic": false,
+                          "group": "overlays",
+                          "product": "GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies",
+                          "antarctic_resolution": null,
+                          "updated_at": "2023-09-01T12:45:23.556Z",
+                          "arctic": false,
+                          "title": "Sea Surface Temperature Anomalies (L4, MUR)",
+                          "source": "Multi-mission / GHRSST",
+                          "match": {
+                              "time_start": ">=2019-07-23T00:00:00Z"
+                          },
+                          "geographic": true,
+                          "arctic_resolution": null,
+                          "format": "png",
+                          "geographic_resolution": "1km"
+                      }
+                  ]
+              },
+              "edsc.extra.serverless.subset_service.opendap": {
+                  "data": {
+                      "updated_at": "2023-05-31T16:31:57.285Z",
+                      "id": "S2004184019-POCLOUD",
+                      "type": "OPeNDAP"
+                  }
+              }
+          },
+          "temporalExtents": [
+              {
+                  "rangeDateTimes": [
+                      {
+                          "beginningDateTime": "2002-05-31T21:00:00.000Z"
+                      }
+                  ]
+              }
+          ],
+          "tilingIdentificationSystems": null,
+          "title": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
+          "versionId": "4.1",
+          "services": {
+              "count": 4,
+              "items": [
+                  {
+                      "conceptId": "S2606110201-XYZ_PROV",
+                      "longName": "Harmony GDAL Adapter (HGA)",
+                      "name": "harmony-gdal-adapter",
+                      "type": "Harmony",
+                      "url": {
+                          "description": "This is the Harmony endpoint",
+                          "urlValue": "https://harmony.earthdata.nasa.gov"
+                      },
+                      "serviceOptions": {
+                          "subset": {
+                              "spatialSubset": {
+                                  "shapefile": [
+                                      {
+                                          "format": "GeoJSON"
+                                      }
+                                  ],
+                                  "boundingBox": {
+                                      "allowMultipleValues": false
+                                  }
+                              },
+                              "temporalSubset": {
+                                  "allowMultipleValues": false
+                              },
+                              "variableSubset": {
+                                  "allowMultipleValues": true
+                              }
+                          },
+                          "supportedReformattings": [
+                              {
+                                  "supportedInputFormat": "GEOTIFF",
+                                  "supportedOutputFormats": [
+                                      "COG"
+                                  ]
+                              },
+                              {
+                                  "supportedInputFormat": "GEOTIFF",
+                                  "supportedOutputFormats": [
+                                      "GIF"
+                                  ]
+                              },
+                              {
+                                  "supportedInputFormat": "GEOTIFF",
+                                  "supportedOutputFormats": [
+                                      "JPEG"
+                                  ]
+                              },
+                              {
+                                  "supportedInputFormat": "NETCDF-4",
+                                  "supportedOutputFormats": [
+                                      "NETCDF-4"
+                                  ]
+                              },
+                              {
+                                  "supportedInputFormat": "NETCDF-4",
+                                  "supportedOutputFormats": [
+                                      "GIF"
+                                  ]
+                              },
+                              {
+                                  "supportedInputFormat": "NETCDF-4",
+                                  "supportedOutputFormats": [
+                                      "JPEG"
+                                  ]
+                              }
+                          ],
+                          "supportedOutputProjections": [
+                              {
+                                  "projectionName": "Geographic"
+                              }
+                          ]
+                      },
+                      "supportedOutputProjections": [
+                          {
+                              "projectionName": "Geographic"
+                          }
+                      ],
+                      "supportedReformattings": [
+                          {
+                              "supportedInputFormat": "GEOTIFF",
+                              "supportedOutputFormats": [
+                                  "COG"
+                              ]
+                          },
+                          {
+                              "supportedInputFormat": "GEOTIFF",
+                              "supportedOutputFormats": [
+                                  "GIF"
+                              ]
+                          },
+                          {
+                              "supportedInputFormat": "GEOTIFF",
+                              "supportedOutputFormats": [
+                                  "JPEG"
+                              ]
+                          },
+                          {
+                              "supportedInputFormat": "NETCDF-4",
+                              "supportedOutputFormats": [
+                                  "NETCDF-4"
+                              ]
+                          },
+                          {
+                              "supportedInputFormat": "NETCDF-4",
+                              "supportedOutputFormats": [
+                                  "GIF"
+                              ]
+                          },
+                          {
+                              "supportedInputFormat": "NETCDF-4",
+                              "supportedOutputFormats": [
+                                  "JPEG"
+                              ]
+                          }
+                      ]
+                  },
+                  {
+                      "conceptId": "S2004184019-POCLOUD",
+                      "longName": "PO.DAAC OPeNDADP In the Cloud",
+                      "name": "PO.DAAC Cloud OPeNDAP",
+                      "type": "OPeNDAP",
+                      "url": {
+                          "description": "the main access point",
+                          "urlValue": "https://opendap.earthdata.nasa.gov/"
+                      },
+                      "serviceOptions": {
+                          "subset": {
+                              "spatialSubset": {
+                                  "boundingBox": {
+                                      "allowMultipleValues": false
+                                  }
+                              },
+                              "temporalSubset": {
+                                  "allowMultipleValues": false
+                              },
+                              "variableSubset": {
+                                  "allowMultipleValues": true
+                              }
+                          },
+                          "supportedReformattings": [
+                              {
+                                  "supportedInputFormat": "NETCDF-4",
+                                  "supportedOutputFormats": [
+                                      "ASCII",
+                                      "CSV",
+                                      "NETCDF-3",
+                                      "NETCDF-4"
+                                  ]
+                              },
+                              {
+                                  "supportedInputFormat": "HDF5",
+                                  "supportedOutputFormats": [
+                                      "ASCII",
+                                      "CSV",
+                                      "NETCDF-3",
+                                      "NETCDF-4"
+                                  ]
+                              }
+                          ]
+                      },
+                      "supportedOutputProjections": null,
+                      "supportedReformattings": [
+                          {
+                              "supportedInputFormat": "NETCDF-4",
+                              "supportedOutputFormats": [
+                                  "ASCII",
+                                  "CSV",
+                                  "NETCDF-3",
+                                  "NETCDF-4"
+                              ]
+                          },
+                          {
+                              "supportedInputFormat": "HDF5",
+                              "supportedOutputFormats": [
+                                  "ASCII",
+                                  "CSV",
+                                  "NETCDF-3",
+                                  "NETCDF-4"
+                              ]
+                          }
+                      ]
+                  },
+                  {
+                      "conceptId": "S2009180097-POCLOUD",
+                      "longName": "PO.DAAC harmony-netcdf-to-zarr Service Options",
+                      "name": "PO.DAAC harmony-netcdf-to-zarr",
+                      "type": "Harmony",
+                      "url": {
+                          "description": "This is the harmony root endpoint.",
+                          "urlValue": "https://harmony.earthdata.nasa.gov"
+                      },
+                      "serviceOptions": {
+                          "supportedReformattings": [
+                              {
+                                  "supportedInputFormat": "NETCDF-4",
+                                  "supportedOutputFormats": [
+                                      "ZARR"
+                                  ]
+                              }
+                          ]
+                      },
+                      "supportedOutputProjections": null,
+                      "supportedReformattings": [
+                          {
+                              "supportedInputFormat": "NETCDF-4",
+                              "supportedOutputFormats": [
+                                  "ZARR"
+                              ]
+                          }
+                      ]
+                  },
+                  {
+                      "conceptId": "S2164732315-XYZ_PROV",
+                      "longName": "SDS chained serviceHarmony OPeNDAP SubSetter (HOSS) and MaskFill for geographic collections",
+                      "name": "sds/HOSS Geographic",
+                      "type": "Harmony",
+                      "url": {
+                          "description": "This is the harmony root endpoint.",
+                          "urlValue": "https://harmony.earthdata.nasa.gov"
+                      },
+                      "serviceOptions": {
+                          "subset": {
+                              "spatialSubset": {
+                                  "boundingBox": {
+                                      "allowMultipleValues": false
+                                  },
+                                  "shapefile": [
+                                      {
+                                          "format": "GeoJSON"
+                                      }
+                                  ]
+                              },
+                              "variableSubset": {
+                                  "allowMultipleValues": true
+                              },
+                              "temporalSubset": {
+                                  "allowMultipleValues": false
+                              }
+                          },
+                          "supportedReformattings": [
+                              {
+                                  "supportedInputFormat": "HDF5",
+                                  "supportedOutputFormats": [
+                                      "NETCDF-4"
+                                  ]
+                              },
+                              {
+                                  "supportedInputFormat": "NETCDF-4",
+                                  "supportedOutputFormats": [
+                                      "NETCDF-4"
+                                  ]
+                              }
+                          ]
+                      },
+                      "supportedOutputProjections": null,
+                      "supportedReformattings": [
+                          {
+                              "supportedInputFormat": "HDF5",
+                              "supportedOutputFormats": [
+                                  "NETCDF-4"
+                              ]
+                          },
+                          {
+                              "supportedInputFormat": "NETCDF-4",
+                              "supportedOutputFormats": [
+                                  "NETCDF-4"
+                              ]
+                          }
+                      ]
+                  }
+              ]
+          },
+          "granules": {
+              "count": 7760,
+              "items": [
+                  {
+                      "conceptId": "G2030963432-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028106835-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028106890-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028106962-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028106862-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028105752-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028105744-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028106964-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028105698-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028105753-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028105775-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028106814-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028105657-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028106848-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028106994-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028107063-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028105658-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028106978-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028105710-POCLOUD",
+                      "onlineAccessFlag": true
+                  },
+                  {
+                      "conceptId": "G2028106857-POCLOUD",
+                      "onlineAccessFlag": true
+                  }
+              ]
+          },
+          "subscriptions": {
+              "count": 0,
+              "items": []
+          },
+          "tools": {
+              "count": 2,
+              "items": [
+                  {
+                      "longName": "PO.DAAC Data Subscriber",
+                      "name": "PO.DAAC Data Subscriber",
+                      "potentialAction": null
+                  },
+                  {
+                      "longName": "State of the Ocean by Worldview",
+                      "name": "SOTO by Worldview",
+                      "potentialAction": {
+                          "type": "SearchAction",
+                          "target": {
+                              "type": "EntryPoint",
+                              "responseContentType": [
+                                  "text/html"
+                              ],
+                              "urlTemplate": "https://soto.podaac.earthdatacloud.nasa.gov/?l={+layers}&t={+date}",
+                              "description": "SOTO is a suite of tools presented through an interactive, web-based visualization front end. It provides access to a broad range of satellite-derived products and key parameters of interest to the oceanographic community. SOTO facilitates visual exploration and comparative analysis of physical oceanographic data, enabling scientific oceanographic, climate, and related research.",
+                              "httpMethod": [
+                                  "GET"
+                              ]
+                          },
+                          "queryInput": [
+                              {
+                                  "valueType": "https://wiki.earthdata.nasa.gov/display/GIBS/GIBS+API+for+Developers#GIBSAPIforDevelopers-LayerNaming",
+                                  "description": "A comma-separated list of visualization layer ids, as defined by GIBS. These layers will be portrayed on the web application",
+                                  "valueName": "layers",
+                                  "valueRequired": true
+                              },
+                              {
+                                  "valueType": "https://schema.org/startDate",
+                                  "description": "A UTC ISO DateTime. The layers portrayed will correspond to this date.",
+                                  "valueName": "date",
+                                  "valueRequired": false
+                              }
+                          ]
+                      }
+                  }
+              ]
+          },
+          "variables": {
+              "count": 8,
+              "items": [
+                  {
+                      "conceptId": "V2028632042-POCLOUD",
+                      "definition": "\"Final\" version using Multi-Resolution Variational Analysis (MRVA) method for interpolation",
+                      "longName": "analysed sea surface temperature",
+                      "name": "analysed_sst",
+                      "nativeId": "MUR-JPL-L4-GLOB-v4.1-analysed_sst",
+                      "scienceKeywords": null
+                  },
+                  {
+                      "conceptId": "V2028632044-POCLOUD",
+                      "definition": "none",
+                      "longName": "estimated error standard deviation of analysed_sst",
+                      "name": "analysis_error",
+                      "nativeId": "MUR-JPL-L4-GLOB-v4.1-analysis_error",
+                      "scienceKeywords": null
+                  },
+                  {
+                      "conceptId": "V2112015422-POCLOUD",
+                      "definition": "none",
+                      "longName": "latitude",
+                      "name": "lat",
+                      "nativeId": "MUR-JPL-L4-GLOB-v4.1-lat",
+                      "scienceKeywords": null
+                  },
+                  {
+                      "conceptId": "V2112015425-POCLOUD",
+                      "definition": "none",
+                      "longName": "longitude",
+                      "name": "lon",
+                      "nativeId": "MUR-JPL-L4-GLOB-v4.1-lon",
+                      "scienceKeywords": null
+                  },
+                  {
+                      "conceptId": "V2028668049-POCLOUD",
+                      "definition": "mask can be used to further filter the data.",
+                      "longName": "sea/land field composite mask",
+                      "name": "mask",
+                      "nativeId": "MUR-JPL-L4-GLOB-v4.1-mask",
+                      "scienceKeywords": null
+                  },
+                  {
+                      "conceptId": "V2028632047-POCLOUD",
+                      "definition": "ice data interpolated by a nearest neighbor approach.",
+                      "longName": "sea ice area fraction",
+                      "name": "sea_ice_fraction",
+                      "nativeId": "MUR-JPL-L4-GLOB-v4.1-sea_ice_fraction",
+                      "scienceKeywords": null
+                  },
+                  {
+                      "conceptId": "V2262655973-POCLOUD",
+                      "definition": "Anomaly reference to the day-of-year average between 2003 and 2014. This variable was added to granules in the MUR collection in July 2019.",
+                      "longName": "SST anomaly from a seasonal SST climatology based on the MUR data over 2003-2014 period",
+                      "name": "sst_anomaly",
+                      "nativeId": "mmt_variable_22168",
+                      "scienceKeywords": [
+                          {
+                              "category": "EARTH SCIENCE",
+                              "topic": "OCEANS",
+                              "term": "OCEAN TEMPERATURE",
+                              "variableLevel1": "SEA SURFACE TEMPERATURE",
+                              "variableLevel2": "SEA SURFACE TEMPERATURE ANOMALY"
+                          }
+                      ]
+                  },
+                  {
+                      "conceptId": "V2112015420-POCLOUD",
+                      "definition": "Nominal time of analyzed fields",
+                      "longName": "reference time of sst field",
+                      "name": "time",
+                      "nativeId": "MUR-JPL-L4-GLOB-v4.1-time",
+                      "scienceKeywords": null
+                  }
+              ]
+          }
+      }
+  }
+}

@@ -1,0 +1,71 @@
+.collection-details-cloud-access-direct-distribution-information {
+  &__info {
+    > dt {
+      font-size: 0.925rem;
+      font-weight: 700;
+    }
+
+    > dd {
+      font-size: 0.925rem;
+      font-weight: 400;
+      word-wrap: break-word;
+    }
+  }
+
+  &__link {
+    display: block;
+    padding: 0;
+    white-space: nowrap;
+    font-weight: 700;
+    font-size: .925rem;
+    line-height: 1.5rem;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline !important;
+    }
+
+    .direct-distribution-information__links--horizontal & {
+      display: inline-block;
+      vertical-align: baseline;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:last-child {
+        padding-top: $spacer/8;
+      }
+
+      .button {
+        display: inline-block;
+
+        &__contents {
+          vertical-align: baseline;
+        }
+      }
+    }
+  }
+}
+
+.collection-details-cloud-access-variable-instance-information {
+  &__direct-distribution-information-list {
+    padding-left: 1.25rem;
+  }
+  
+  &__instance-field-title {
+    display: inline;
+    padding-right: 5px;
+  }
+
+  &__instance-field-value {
+    white-space: normal;
+  }
+
+  &__instance-field-list-title {
+    display: inline;
+    padding-right: 5px;
+    white-space: nowrap;
+    display: list-item;
+  }
+}

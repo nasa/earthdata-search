@@ -22,10 +22,12 @@ const LayerBuilder = (props) => {
   return (
     <TileLayer
       url={`https://gibs.earthdata.nasa.gov/wmts/${projection}/best/${product}/default/${date}/${resolution}/{z}/{y}/{x}.${format}`}
-      bounds={[
-        [-89.9999, -179.9999],
-        [89.9999, 179.9999]
-      ]}
+      bounds={
+        [
+          [-89.9999, -179.9999],
+          [89.9999, 179.9999]
+        ]
+      }
       tileSize={512}
       noWrap
       continuousWorld

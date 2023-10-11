@@ -1,7 +1,9 @@
 import { isEmpty } from 'lodash'
 
 import { buildDataCenters } from './collectionMetadata/dataCenters'
-import { buildDirectDistributionInformation } from './collectionMetadata/buildDirectDistributionInformation'
+import {
+  buildDirectDistributionInformation
+} from './collectionMetadata/buildDirectDistributionInformation'
 import { buildDoi } from './collectionMetadata/doi'
 import { buildDuplicateCollections } from './collectionMetadata/buildDuplicateCollections'
 import { buildGibsLayers } from './collectionMetadata/buildGibsLayers'

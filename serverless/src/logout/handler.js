@@ -30,7 +30,10 @@ const logout = async (event, context) => {
 
   try {
     const affectedRows = await dbConnection('user_tokens')
-      .where({ user_id: userId, environment: earthdataEnvironment })
+      .where({
+        user_id: userId,
+        environment: earthdataEnvironment
+      })
       .del()
 
     if (affectedRows > 0) {
@@ -55,14 +58,14 @@ const logout = async (event, context) => {
       },
       body: JSON.stringify({ errors: [`User token for user '${userId}' not found.`] })
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: {
         ...defaultResponseHeaders,
         'Access-Control-Allow-Methods': 'DELETE,OPTIONS'
       },
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

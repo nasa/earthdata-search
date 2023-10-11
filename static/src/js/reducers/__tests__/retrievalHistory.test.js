@@ -1,8 +1,5 @@
 import retrievalHistoryReducer from '../retrievalHistory'
-import {
-  SET_RETRIEVAL_HISTORY,
-  REMOVE_RETRIEVAL_HISTORY
-} from '../../constants/actionTypes'
+import { SET_RETRIEVAL_HISTORY, REMOVE_RETRIEVAL_HISTORY } from '../../constants/actionTypes'
 
 const initialState = {
   history: [],

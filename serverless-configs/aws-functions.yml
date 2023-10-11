@@ -625,6 +625,19 @@
             type: request
             resultTtlInSeconds: 0
 
+  adminGetRetrievalsMetrics:
+    handler: serverless/src/adminGetRetrievalsMetrics/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
+    events:
+      - http:
+          method: get
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: admin/retrievalsMetrics
+          authorizer:
+            name: edlAdminAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
   adminGetRetrieval:
     handler: serverless/src/adminGetRetrieval/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}

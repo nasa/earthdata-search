@@ -19,6 +19,7 @@ export const decodeGridCoords = (string) => {
     .replace(/:/g, ',')
     .replace(/(\d+)-(\d+)/g, (m, m0, m1) => {
       if (m0 === m1) return m0
+
       return m
     })
 

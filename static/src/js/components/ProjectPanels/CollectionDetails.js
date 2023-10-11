@@ -81,21 +81,29 @@ export const CollectionDetails = ({
                     className="collection-details__item-wrapper"
                     role="button"
                     tabIndex="0"
-                    onMouseEnter={() => {
-                      eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: granuleMetadata })
-                    }}
-                    onMouseLeave={() => {
-                      eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: null })
-                    }}
-                    onClick={() => {
-                      const newGranule = id === focusedGranuleId
-                        ? { granule: null }
-                        : { granule: granuleMetadata }
-                      eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, newGranule)
-                    }}
-                    onKeyPress={() => {
-                      eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granule: granuleMetadata })
-                    }}
+                    onMouseEnter={
+                      () => {
+                        eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: granuleMetadata })
+                      }
+                    }
+                    onMouseLeave={
+                      () => {
+                        eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: null })
+                      }
+                    }
+                    onClick={
+                      () => {
+                        const newGranule = id === focusedGranuleId
+                          ? { granule: null }
+                          : { granule: granuleMetadata }
+                        eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, newGranule)
+                      }
+                    }
+                    onKeyPress={
+                      () => {
+                        eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granule: granuleMetadata })
+                      }
+                    }
                   >
                     <span className="collection-details__item-title">
                       {title}
@@ -105,17 +113,21 @@ export const CollectionDetails = ({
                         className="collection-details__item-action"
                         type="button"
                         bootstrapSize="sm"
-                        onClick={(e) => {
-                          onFocusedGranuleChange(id)
-                          e.stopPropagation()
-                        }}
+                        onClick={
+                          (event) => {
+                            onFocusedGranuleChange(id)
+                            event.stopPropagation()
+                          }
+                        }
                         label="View granule details"
                         icon={FaInfoCircle}
                         iconSize="0.875rem"
-                        to={{
-                          pathname: '/search/granules/granule-details',
-                          search: location.search
-                        }}
+                        to={
+                          {
+                            pathname: '/search/granules/granule-details',
+                            search: location.search
+                          }
+                        }
                       />
                       <Button
                         className="collection-details__item-action collection-details__item-action--remove"
@@ -124,13 +136,16 @@ export const CollectionDetails = ({
                         label="Remove granule"
                         icon={FaMinus}
                         iconSize="0.875rem"
-                        onClick={(e) => {
-                          onRemoveGranuleFromProjectCollection({
-                            collectionId,
-                            granuleId: id
-                          })
-                          e.stopPropagation()
-                        }}
+                        onClick={
+                          (event) => {
+                            onRemoveGranuleFromProjectCollection({
+                              collectionId,
+                              granuleId: id
+                            })
+
+                            event.stopPropagation()
+                          }
+                        }
                       />
                     </span>
                   </div>

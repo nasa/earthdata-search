@@ -79,12 +79,17 @@ export const updatePreferences = (data) => (dispatch, getState) => {
   const requestObject = new PreferencesRequest(authToken, earthdataEnvironment)
 
   const response = requestObject.update({ preferences })
-    .then((response) => {
-      const { data, headers } = response
-      const { preferences } = data
+    .then((responseObject) => {
+      const {
+        data: dataObject,
+        headers
+      } = responseObject
+      const {
+        preferences: newPreferences
+      } = dataObject
 
       dispatch(updateAuthTokenFromHeaders(headers))
-      dispatch(setPreferences(preferences))
+      dispatch(setPreferences(newPreferences))
       dispatch(setIsSubmitting(false))
       addToast('Preferences saved!', {
         appearance: 'success',

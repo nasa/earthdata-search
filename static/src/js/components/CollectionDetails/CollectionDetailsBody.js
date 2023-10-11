@@ -2,13 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { uniq } from 'lodash'
 
-import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import {
+  Badge,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap'
 import { FaQuestionCircle, FaArrowRight } from 'react-icons/fa'
 import SimpleBar from 'simplebar-react'
 
 import ArrowTags from '../ArrowTags/ArrowTags'
 import Button from '../Button/Button'
 import CollapsePanel from '../CollapsePanel/CollapsePanel'
+import CollectionDetailsCloudAccessInstance from './CollectionDetailsCloudAccessInstance'
 import CollectionDetailsDataCenter from './CollectionDetailsDataCenter'
 import CollectionDetailsMinimap from './CollectionDetailsMinimap'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -54,6 +59,7 @@ const buildScienceKeywordList = (scienceKeywords) => {
       {
         scienceKeywords.map((keywordGroup, i) => {
           const key = `science_keyword_${i}`
+
           return (
             <li key={key}>
               <ArrowTags tags={keywordGroup} />
@@ -77,6 +83,13 @@ const buildNativeFormatList = (nativeFormats) => {
   )
 }
 
+const buildVarInstanceInformation = (instanceInformation) => (
+  <CollectionDetailsCloudAccessInstance
+    type="variable"
+    instanceInformation={instanceInformation}
+  />
+)
+
 const buildDoiLink = (doiLink, doiText) => {
   const DoiBadge = (
     <SplitBadge
@@ -92,12 +105,14 @@ const buildDoiLink = (doiLink, doiText) => {
       </a>
     )
   }
+
   return DoiBadge
 }
 
 const buildForDeveloperLink = (linkData, token) => {
   const link = linkData
   if (token) link.href = `link.href&${token}`
+
   return (
     <li>
       <a href={link.href}>{link.title}</a>
@@ -136,6 +151,7 @@ export const CollectionDetailsBody = ({
     spatial,
     temporal,
     urls,
+    variables,
     versionId
   } = collectionMetadata
 
@@ -145,10 +161,13 @@ export const CollectionDetailsBody = ({
         <div className="collection-details-body__content">
           <Skeleton
             shapes={collectionDetailsSkeleton}
-            containerStyle={{
-              height: '400px',
-              width: '100%'
-            }}
+            containerStyle={
+              {
+                height: '400px',
+                width: '100%',
+                dataTestId: 'collection-details-body__skeleton'
+              }
+            }
           />
         </div>
       </div>
@@ -191,17 +210,28 @@ export const CollectionDetailsBody = ({
     }
   }
 
+  const variableInstancesInformation = []
+  if (variables) {
+    const { items } = variables
+
+    if (items) {
+      items.forEach((variable) => {
+        const { instanceInformation } = variable
+
+        if (instanceInformation) {
+          const varInstanceInformation = buildVarInstanceInformation(instanceInformation)
+          variableInstancesInformation.push(varInstanceInformation)
+        }
+      })
+    }
+  }
+
   let formattedRelatedUrls = []
   if (relatedUrls && relatedUrls.length > 0) {
     formattedRelatedUrls = buildRelatedUrlsList(relatedUrls)
   }
 
-  const {
-    region,
-    s3BucketAndObjectPrefixNames = [],
-    s3CredentialsApiEndpoint,
-    s3CredentialsApiDocumentationUrl
-  } = directDistributionInformation
+  const { region } = directDistributionInformation
 
   const {
     doiLink,
@@ -216,9 +246,11 @@ export const CollectionDetailsBody = ({
     <div className="collection-details-body">
       <SimpleBar
         className="collection-details-body__simplebar"
-        scrollableNodeProps={{
-          className: 'collection-details-body__simplebar-content'
-        }}
+        scrollableNodeProps={
+          {
+            className: 'collection-details-body__simplebar-content'
+          }
+        }
       >
         <div className="collection-details-body__content">
           <div className="row collection-details-body__row">
@@ -226,9 +258,7 @@ export const CollectionDetailsBody = ({
               <div className="collection-details-body__tags">
                 <Badge className="collection-details-header__short-name mr-2" variant="light" data-testid="collection-details-header__short-name">{shortName}</Badge>
                 <Badge className="collection-details-header__version-id mr-2" variant="info" data-testid="collection-details-header__version-id">{`Version ${versionId}`}</Badge>
-                {
-                  doiText && buildDoiLink(doiLink, doiText)
-                }
+                {doiText && buildDoiLink(doiLink, doiText)}
               </div>
               {
                 associatedDois && associatedDois.length > 0 && (
@@ -242,18 +272,18 @@ export const CollectionDetailsBody = ({
                         associatedDois.map((associatedDoi) => {
                           const {
                             authority,
-                            doi,
+                            doi: doiValue,
                             title
                           } = associatedDoi
 
                           return (
                             <a
-                              key={doi}
+                              key={doiValue}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="link collection-details-body__link"
                               title={`View ${title}`}
-                              href={`${authority}${doi}`}
+                              href={`${authority}${doiValue}`}
                             >
                               {title}
                             </a>
@@ -308,6 +338,7 @@ export const CollectionDetailsBody = ({
                       {
                         temporal.map((entry, i) => {
                           const key = `temporal_entry_${i}`
+
                           return <span key={key}>{entry}</span>
                         })
                       }
@@ -323,9 +354,7 @@ export const CollectionDetailsBody = ({
                   >
                     <dt>{`Native ${pluralize('Format', nativeDataFormats.length)}`}</dt>
                     <dd>
-                      {
-                        nativeDataFormats.length > 0 && buildNativeFormatList(nativeDataFormats)
-                      }
+                      {nativeDataFormats.length > 0 && buildNativeFormatList(nativeDataFormats)}
                     </dd>
                   </dl>
                 )
@@ -341,16 +370,18 @@ export const CollectionDetailsBody = ({
                       <span className="collection-details-body__heading-tooltip">
                         <OverlayTrigger
                           placement="right"
-                          overlay={(
-                            <Tooltip
-                              id="tooltip_supported-reformatting"
-                              className="collection-details-body__tooltip tooltip--large tooltip--ta-left"
-                            >
-                              In addition to their native format, some data products can be
-                              reformatted to additional formats. If reformatting is desired,
-                              reformatting options can be set prior to downloading the data.
-                            </Tooltip>
-                          )}
+                          overlay={
+                            (
+                              <Tooltip
+                                id="tooltip_supported-reformatting"
+                                className="collection-details-body__tooltip tooltip--large tooltip--ta-left"
+                              >
+                                In addition to their native format, some data products can be
+                                reformatted to additional formats. If reformatting is desired,
+                                reformatting options can be set prior to downloading the data.
+                              </Tooltip>
+                            )
+                          }
                         >
                           <EDSCIcon icon={FaQuestionCircle} size="0.625rem" />
                         </OverlayTrigger>
@@ -366,6 +397,7 @@ export const CollectionDetailsBody = ({
                           } = reformattings
 
                           const key = `input-format__${supportedInputFormat}-${i}`
+
                           return (
                             <dl
                               key={key}
@@ -403,12 +435,8 @@ export const CollectionDetailsBody = ({
               >
                 <dt>Science Keywords</dt>
                 <dd>
-                  {
-                    scienceKeywords.length === 0 && <span>Not Available</span>
-                  }
-                  {
-                    scienceKeywords.length > 0 && buildScienceKeywordList(scienceKeywords)
-                  }
+                  {scienceKeywords.length === 0 && <span>Not Available</span>}
+                  {scienceKeywords.length > 0 && buildScienceKeywordList(scienceKeywords)}
                 </dd>
               </dl>
             </div>
@@ -444,6 +472,7 @@ export const CollectionDetailsBody = ({
                   {
                     dataCenters.map((dataCenter, i) => {
                       const key = `data_center_${i}`
+
                       return (
                         <CollectionDetailsDataCenter key={key} item={i} dataCenter={dataCenter} />
                       )
@@ -453,68 +482,46 @@ export const CollectionDetailsBody = ({
               )
             }
           </div>
-          {
-            region && (
-              <div className="row collection-details-body__row collection-details-body__feature">
-                <div className="col col-12">
+          <div>
+            {(region || (variableInstancesInformation.length > 0)) && <h4 className="collection-details-body__cloud-access-title"> Cloud Access</h4>}
+            {
+              region && (
+                <div>
                   <div className="collection-details-body__feature-heading">
-                    <h4 className="collection-details-body__feature-title">Cloud Access</h4>
+                    <h5 className="collection-details-body__feature-title">AWS Cloud</h5>
                     <p>Available for access in-region with AWS Cloud</p>
                   </div>
-                  <dl className="collection-details-body__info">
-                    <dt>Region</dt>
-                    <dd
-                      className="collection-details-body__cloud-access__region"
-                      data-testid="collection-details-body__cloud-access__region"
-                    >
-                      {region}
-                    </dd>
-
-                    <dt>Bucket/Object Prefix</dt>
-                    {
-                      s3BucketAndObjectPrefixNames.length && (
-                        s3BucketAndObjectPrefixNames.map((name, i) => {
-                          const key = `${name}-${i}`
-
-                          return (
-                            <dd
-                              key={key}
-                              className="collection-details-body__cloud-access__bucket-name"
-                              data-testid="collection-details-body__cloud-access__bucket-name"
-                            >
-                              {name}
-                            </dd>
-                          )
-                        })
-                      )
-                    }
-
-                    <dt>AWS S3 Credentials</dt>
-                    <dd className="collection-details-body__links collection-details-body__links--horizontal">
-                      <a
-                        className="link link--external collection-details-body__link collection-details-body__cloud-access__api-link"
-                        data-testid="collection-details-body__cloud-access__api-link"
-                        href={s3CredentialsApiEndpoint}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        Get AWS S3 Credentials
-                      </a>
-                      <a
-                        className="link link--separated link--external collection-details-body__link collection-details-body__cloud-access__documentation-link"
-                        data-testid="collection-details-body__cloud-access__documentation-link"
-                        href={s3CredentialsApiDocumentationUrl}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        Documentation
-                      </a>
-                    </dd>
-                  </dl>
+                  <div className="collection-details-body__cloud-access-content">
+                    <CollectionDetailsCloudAccessInstance
+                      instanceInformation={{ directDistributionInformation }}
+                    />
+                  </div>
                 </div>
-              </div>
-            )
-          }
+              )
+            }
+            {
+              (variableInstancesInformation.length > 0) && (
+                <>
+                  {
+                    variableInstancesInformation.map((variableInstance, i) => {
+                      const key = `variable_instance_information_${i}`
+
+                      return (
+                        <div key={key}>
+                          <h5 className="collection-details-body__feature-title">
+                            Variable Instance
+                          </h5>
+                          <div className="collection-details-body__cloud-access-content">
+                            {variableInstance}
+                          </div>
+                        </div>
+                      )
+                    })
+                  }
+                </>
+              )
+            }
+          </div>
           {
             !!(relatedCollectionsList.length && relatedCollectionsList.length > 0) && (
               <div className="row collection-details-body__row collection-details-body__feature">
@@ -548,13 +555,12 @@ export const CollectionDetailsBody = ({
                 </div>
               </div>
             )
-           }
+          }
         </div>
       </SimpleBar>
       <CollapsePanel
         className="collection-details-body__for-devs"
         header="For Developers"
-        scrollToBottom
       >
         <div className="row">
           <div className="col-auto">

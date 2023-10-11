@@ -3,7 +3,11 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
-import { mapDispatchToProps, mapStateToProps, SavedProjectsContainer } from '../SavedProjectsContainer'
+import {
+  mapDispatchToProps,
+  mapStateToProps,
+  SavedProjectsContainer
+} from '../SavedProjectsContainer'
 import { SavedProjects } from '../../../components/SavedProjects/SavedProjects'
 
 Enzyme.configure({ adapter: new Adapter() })

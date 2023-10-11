@@ -133,7 +133,7 @@ describe('getCollections', () => {
         'cmr-hits': 1
       })
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: '',
       searchResults: {
@@ -158,7 +158,7 @@ describe('getCollections', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(getCollections()).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
@@ -167,6 +167,7 @@ describe('getCollections', () => {
           results: []
         }
       })
+
       expect(storeActions[1]).toEqual({ type: LOADING_COLLECTIONS })
       expect(storeActions[2]).toEqual({ type: LOADING_FACETS })
       expect(storeActions[3]).toEqual({ type: STARTED_COLLECTIONS_TIMER })
@@ -175,12 +176,14 @@ describe('getCollections', () => {
         type: LOADED_COLLECTIONS,
         payload: { loaded: true }
       })
+
       expect(storeActions[6]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [{
           mockCollectionData: 'goes here'
         }]
       })
+
       expect(storeActions[7]).toEqual({
         type: UPDATE_COLLECTION_RESULTS,
         payload: {
@@ -192,6 +195,7 @@ describe('getCollections', () => {
           hits: 1
         }
       })
+
       expect(storeActions[8]).toEqual({
         type: LOADED_FACETS,
         payload: { loaded: true }
@@ -217,7 +221,7 @@ describe('getCollections', () => {
         'jwt-token': 'token'
       })
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({
       authToken: 'token',
       searchResults: {
@@ -241,7 +245,7 @@ describe('getCollections', () => {
       }
     })
 
-    // call the dispatch
+    // Call the dispatch
     await store.dispatch(getCollections()).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({ type: LOADING_COLLECTIONS })
@@ -252,12 +256,14 @@ describe('getCollections', () => {
         type: LOADED_COLLECTIONS,
         payload: { loaded: true }
       })
+
       expect(storeActions[5]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [{
           mockCollectionData: 'goes here'
         }]
       })
+
       expect(storeActions[6]).toEqual({
         type: ADD_MORE_COLLECTION_RESULTS,
         payload: {
@@ -269,6 +275,7 @@ describe('getCollections', () => {
           hits: 1
         }
       })
+
       expect(storeActions[7]).toEqual({
         type: LOADED_FACETS,
         payload: { loaded: true }
@@ -320,10 +327,12 @@ describe('getCollections', () => {
         type: LOADED_COLLECTIONS,
         payload: { loaded: false }
       })
+
       expect(storeActions[7]).toEqual({
         type: LOADED_FACETS,
         payload: { loaded: false }
       })
+
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })

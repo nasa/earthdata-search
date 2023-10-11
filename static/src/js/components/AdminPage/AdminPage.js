@@ -12,34 +12,34 @@ export const AdminPage = ({
   <div className="admin-page">
     <header className="admin-page__header">
       {
-          breadcrumbs.length > 0 && (
-            <ol className="breadcrumb admin-page__breadcrumbs">
-              {
-                breadcrumbs.map(({
-                  active,
-                  name,
-                  href
-                }) => (
-                  <li
-                    className={`breadcrumb-item ${active ? 'active' : ''}`}
-                    key={name}
-                  >
-                    {
-                        href
-                          ? (
-                            <Link to={href}>
-                              {name}
-                            </Link>
-                          )
-                          : name
-                      }
+        breadcrumbs.length > 0 && (
+          <ol className="breadcrumb admin-page__breadcrumbs">
+            {
+              breadcrumbs.map(({
+                active,
+                name,
+                href
+              }) => (
+                <li
+                  className={`breadcrumb-item ${active ? 'active' : ''}`}
+                  key={name}
+                >
+                  {
+                    href
+                      ? (
+                        <Link to={href}>
+                          {name}
+                        </Link>
+                      )
+                      : name
+                  }
 
-                  </li>
-                ))
-              }
-            </ol>
-          )
-        }
+                </li>
+              ))
+            }
+          </ol>
+        )
+      }
       <h2 className="admin-page__page-title">{pageTitle}</h2>
     </header>
     <div className="admin-page__body">

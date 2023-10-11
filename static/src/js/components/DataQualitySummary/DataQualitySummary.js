@@ -17,30 +17,33 @@ export const DataQualitySummary = ({
     <div className="data-quality-summary">
       <CollapsePanel
         className="data-quality-summary__panel"
-        header={(
-          <>
-            <EDSCIcon icon={FaExclamationCircle} className="data-quality-summary__icon" />
-            {` ${dataQualityHeader}`}
-          </>
-        )}
+        header={
+          (
+            <>
+              <EDSCIcon icon={FaExclamationCircle} className="data-quality-summary__icon" />
+              {` ${dataQualityHeader}`}
+            </>
+          )
+        }
       >
         {
-            dataQualitySummaries.map((dqs) => {
-              const { id, summary } = dqs
-              const key = `dqs-${id}`
+          dataQualitySummaries.map((dqs) => {
+            const { id, summary } = dqs
+            const key = `dqs-${id}`
 
-              if (React.isValidElement(summary)) {
-                return <React.Fragment key={key}>{summary}</React.Fragment>
-              }
-              return (
-                <SanitizedHTML
-                  key={key}
-                  html={summary}
-                  allowedTags={['br', 'span', 'a', 'p']}
-                />
-              )
-            })
-          }
+            if (React.isValidElement(summary)) {
+              return <React.Fragment key={key}>{summary}</React.Fragment>
+            }
+
+            return (
+              <SanitizedHTML
+                key={key}
+                html={summary}
+                allowedTags={['br', 'span', 'a', 'p']}
+              />
+            )
+          })
+        }
       </CollapsePanel>
     </div>
   )

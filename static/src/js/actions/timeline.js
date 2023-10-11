@@ -3,10 +3,7 @@ import { isCancel } from 'axios'
 import actions from './index'
 
 import TimelineRequest from '../util/request/timelineRequest'
-import {
-  UPDATE_TIMELINE_INTERVALS,
-  UPDATE_TIMELINE_QUERY
-} from '../constants/actionTypes'
+import { UPDATE_TIMELINE_INTERVALS, UPDATE_TIMELINE_QUERY } from '../constants/actionTypes'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
@@ -76,10 +73,10 @@ export const getTimeline = () => (dispatch, getState) => {
     polygon,
     startDate
   })
-    .then((response) => {
+    .then((responseObject) => {
       const payload = {}
 
-      payload.results = response.data
+      payload.results = responseObject.data
 
       dispatch(updateTimelineIntervals(payload))
     })

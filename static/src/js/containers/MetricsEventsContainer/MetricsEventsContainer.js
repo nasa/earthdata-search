@@ -1,7 +1,6 @@
 import { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import $ from 'jquery'
 
 import { metricsClick } from '../../middleware/metrics/actions'
 
@@ -17,17 +16,22 @@ export class MetricsEventsContainer extends Component {
   }
 
   componentDidMount() {
-    $(document).on('click', 'a, button', this.metricsClick)
+    document.body.addEventListener('click', this.metricsClick)
   }
 
   componentWillUnmount() {
-    $(document).off('click', 'a, button', this.metricsClick)
+    document.body.removeEventListener('click', this.metricsClick)
   }
 
-  metricsClick(e) {
+  metricsClick(event) {
     const { onMetricsClick } = this.props
-    const { currentTarget = {} } = e
-    const title = $(currentTarget)[0].title || $(currentTarget).text()
+    const { target } = event
+
+    const clickableParent = target.closest('a, button')
+
+    if (!clickableParent) return
+
+    const title = target.title || target.text
 
     onMetricsClick({
       elementLabel: title

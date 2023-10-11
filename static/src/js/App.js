@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import {
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom'
 import { ToastProvider } from 'react-toast-notifications'
 import { Helmet } from 'react-helmet'
 
@@ -11,7 +15,6 @@ import history from './util/history'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 
 import Admin from './routes/Admin/Admin'
-import EarthdataDownload from './routes/EarthdataDownload/EarthdataDownload'
 import ContactInfo from './routes/ContactInfo/ContactInfo'
 import Downloads from './routes/Downloads/Downloads'
 import EarthdataDownloadRedirect from './routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'
@@ -46,6 +49,7 @@ import HistoryContainer from './containers/HistoryContainer/HistoryContainer'
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
 
+// For using why-did-you-render
 // if (process.env.NODE_ENV !== 'production') {
 //   const whyDidYouRender = require('@welldone-software/why-did-you-render') // eslint-disable-line global-require
 
@@ -110,76 +114,86 @@ class App extends Component {
                   <Switch>
                     <Route
                       path="/admin"
-                      render={() => (
-                        <AuthRequiredContainer>
-                          <Admin />
-                        </AuthRequiredContainer>
-                      )}
+                      render={
+                        () => (
+                          <AuthRequiredContainer>
+                            <Admin />
+                          </AuthRequiredContainer>
+                        )
+                      }
                     />
                     <Route
                       path={this.portalPaths('/contact-info')}
-                      render={() => (
-                        <AuthRequiredContainer>
-                          <ContactInfo />
-                        </AuthRequiredContainer>
-                      )}
-                    />
-                    <Route
-                      path={this.portalPaths('/earthdata-download')}
-                      render={() => (
-                        <EarthdataDownload />
-                      )}
+                      render={
+                        () => (
+                          <AuthRequiredContainer>
+                            <ContactInfo />
+                          </AuthRequiredContainer>
+                        )
+                      }
                     />
                     <Route
                       path={this.portalPaths('/preferences')}
-                      render={() => (
-                        <AuthRequiredContainer>
-                          <Preferences />
-                        </AuthRequiredContainer>
-                      )}
+                      render={
+                        () => (
+                          <AuthRequiredContainer>
+                            <Preferences />
+                          </AuthRequiredContainer>
+                        )
+                      }
                     />
                     <Route
                       path={this.portalPaths('/earthdata-download-callback')}
-                      render={() => (
-                        <EarthdataDownloadRedirect />
-                      )}
+                      render={
+                        () => (
+                          <EarthdataDownloadRedirect />
+                        )
+                      }
                     />
                     <Route
                       path={this.portalPaths('/subscriptions')}
-                      render={() => (
-                        <AuthRequiredContainer>
-                          <Subscriptions />
-                        </AuthRequiredContainer>
-                      )}
+                      render={
+                        () => (
+                          <AuthRequiredContainer>
+                            <Subscriptions />
+                          </AuthRequiredContainer>
+                        )
+                      }
                     />
                     <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
                     <Redirect exact from="/data/status" to="/downloads" />
                     <Route
                       path={this.portalPaths('/downloads')}
-                      render={() => (
-                        <AuthRequiredContainer>
-                          <Downloads />
-                        </AuthRequiredContainer>
-                      )}
+                      render={
+                        () => (
+                          <AuthRequiredContainer>
+                            <Downloads />
+                          </AuthRequiredContainer>
+                        )
+                      }
                     />
                     <Route path={this.portalPaths('/projects')} component={Project} />
                     <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
                     <Redirect exact from="/" to="/search" />
                     <Route
                       path={this.portalPaths('/search')}
-                      render={() => (
-                        <>
-                          <Search />
-                          <EdscMapContainer />
-                        </>
-                      )}
+                      render={
+                        () => (
+                          <>
+                            <Search />
+                            <EdscMapContainer />
+                          </>
+                        )
+                      }
                     />
                     <Route
                       exact
                       path="/auth_callback"
-                      render={() => (
-                        <AuthCallbackContainer />
-                      )}
+                      render={
+                        () => (
+                          <AuthCallbackContainer />
+                        )
+                      }
                     />
                     <Route component={NotFound} />
                   </Switch>

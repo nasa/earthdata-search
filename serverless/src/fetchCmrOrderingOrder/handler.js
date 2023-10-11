@@ -119,8 +119,8 @@ const fetchCmrOrderingOrder = async (input) => {
       orderStatus: getStateFromOrderStatus(state),
       orderType
     }
-  } catch (e) {
-    const parsedErrorMessage = parseError(e, { asJSON: false })
+  } catch (error) {
+    const parsedErrorMessage = parseError(error, { asJSON: false })
 
     const [errorMessage] = parsedErrorMessage
 

@@ -22,6 +22,7 @@ export const nullableTemporal = (value, originalValue) => {
   if ((isDate && !Number.isNaN(value)) && originalValue === '') {
     return null
   }
+
   return value
 }
 
@@ -72,6 +73,7 @@ export function startBeforeEnd(value) {
   const momentEndVal = moment(endDate, dateFormat, true)
   const momentStartVal = moment(value, dateFormat, true)
   if (momentStartVal && !endDate) return true
+
   return momentStartVal.isBefore(momentEndVal)
 }
 

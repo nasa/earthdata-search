@@ -2,6 +2,7 @@ import React from 'react'
 import Enzyme, { mount, shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import { JSDOM } from 'jsdom'
+
 import TextWindowActions from '../TextWindowActions'
 import * as DownloadableFile from '../../../util/files/constructDownloadableFile'
 import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'
@@ -62,19 +63,23 @@ function setup(overrideProps, shouldMount) {
 }
 
 describe('TextWindowActions component', () => {
-  const { enzymeWrapper } = setup()
-
   test('should render an svg progress ring', () => {
+    const { enzymeWrapper } = setup()
+
     expect(enzymeWrapper.find('.text-window-actions').type()).toEqual('div')
   })
 
   test('renders the expand button', () => {
+    const { enzymeWrapper } = setup()
+
     const expandButton = enzymeWrapper.find('.text-window-actions__action--expand')
 
     expect(expandButton.length).toEqual(1)
   })
 
   test('renders the links modal closed by default', () => {
+    const { enzymeWrapper } = setup()
+
     const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
 
     expect(linksModal.props().isOpen).toEqual(false)
@@ -198,6 +203,7 @@ describe('TextWindowActions component', () => {
       })
     })
   })
+
   describe('when the eddModal is open', () => {
     describe('when clicking the Open Earthdata Download button ', () => {
       test('renders the save button', () => {
@@ -362,6 +368,28 @@ describe('TextWindowActions component', () => {
 
         test('hides the save button', () => {
           expect(enzymeWrapper.find('.text-window-actions__modal-action--save').length).toEqual(0)
+        })
+      })
+    })
+
+    describe('when disabling the edd button', () => {
+      const { enzymeWrapper } = setup({
+        disableEdd: true
+      })
+
+      test('hides the edd button', () => {
+        expect(enzymeWrapper.find('.text-window-actions__action--edd').length).toEqual(0)
+      })
+
+      describe('when the modal is open', () => {
+        const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
+        expandButton.simulate('click')
+
+        const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
+        expect(linksModal.props().isOpen).toEqual(true)
+
+        test('hides the edd button', () => {
+          expect(enzymeWrapper.find('.text-window-actions__modal-action--edd').length).toEqual(0)
         })
       })
     })

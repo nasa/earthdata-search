@@ -19,6 +19,7 @@ const contactInfoReducer = (state = initialState, action = {}) => {
         }
       }
     }
+
     default:
       return state
   }

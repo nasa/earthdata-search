@@ -1,7 +1,4 @@
-import {
-  prepareCollectionParams,
-  buildCollectionSearchParams
-} from '../util/collections'
+import { prepareCollectionParams, buildCollectionSearchParams } from '../util/collections'
 
 import { exactMatch } from '../util/relevancy'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'

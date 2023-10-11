@@ -55,7 +55,7 @@ export const encodeMap = (map, mapPreferences) => {
     zoom
   }
 
-  // home is used to determine if the map values need to be present in the URL
+  // Home is used to determine if the map values need to be present in the URL
   let defaultValues = {
     base: 'blueMarble',
     lat: 0,
@@ -71,12 +71,12 @@ export const encodeMap = (map, mapPreferences) => {
       baseLayer,
       latitude: latitudePreference,
       longitude: longitudePreference,
-      projection,
+      projection: mapProjection,
       overlayLayers,
       zoom: zoomPreference
     } = mapPreferences
 
-    const encodedProjectionPreference = projectionList[projection]
+    const encodedProjectionPreference = projectionList[mapProjection]
 
     let encodedBasePreference
     if (baseLayer === 'blueMarble') encodedBasePreference = 'blueMarble'

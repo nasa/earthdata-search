@@ -19,6 +19,7 @@ export const Banner = ({
       'banner--error': type === 'error'
     }
   ])
+
   return (
     <div className={bannerClassNames}>
       <div className="banner__content">

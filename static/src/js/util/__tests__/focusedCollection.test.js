@@ -1,6 +1,4 @@
-import {
-  getCollectionMetadata
-} from '../focusedCollection'
+import { getCollectionMetadata } from '../focusedCollection'
 
 describe('getCollectionMetadata', () => {
   describe('when no collections are provided', () => {

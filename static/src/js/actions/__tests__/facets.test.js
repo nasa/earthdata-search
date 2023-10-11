@@ -56,14 +56,14 @@ describe('changeCmrFacet', () => {
       data_center_h: ['facet1']
     }
 
-    // mock getCollections
+    // Mock getCollections
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
     getCollectionsMock.mockImplementation(() => jest.fn())
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({})
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(changeCmrFacet({ ...newFacets }))
 
     // Is updateCmrFacet called with the right payload
@@ -72,15 +72,17 @@ describe('changeCmrFacet', () => {
       type: UPDATE_COLLECTION_QUERY,
       payload: { pageNum: 1 }
     })
+
     expect(storeActions[1]).toEqual({
       type: UPDATE_SELECTED_CMR_FACET,
       payload: newFacets
     })
+
     expect(storeActions[2]).toEqual({
       type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
     })
 
-    // was getCollections called
+    // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
   })
 
@@ -122,6 +124,7 @@ describe('changeCmrFacet', () => {
       type: UPDATE_COLLECTION_QUERY,
       payload: { pageNum: 1 }
     })
+
     expect(storeActions[2]).toEqual({
       type: UPDATE_SELECTED_CMR_FACET,
       payload: { science_keywords_h: [] }
@@ -137,14 +140,14 @@ describe('changeFeatureFacet', () => {
       mapImagery: true
     }
 
-    // mock getCollections
+    // Mock getCollections
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
     getCollectionsMock.mockImplementation(() => jest.fn())
 
-    // mockStore with initialState
+    // MockStore with initialState
     const store = mockStore({})
 
-    // call the dispatch
+    // Call the dispatch
     store.dispatch(changeFeatureFacet({ ...newFacets }))
 
     // Is updateFeatureFacet called with the right payload
@@ -153,15 +156,17 @@ describe('changeFeatureFacet', () => {
       type: UPDATE_COLLECTION_QUERY,
       payload: { pageNum: 1 }
     })
+
     expect(storeActions[1]).toEqual({
       type: UPDATE_SELECTED_FEATURE_FACET,
       payload: newFacets
     })
+
     expect(storeActions[2]).toEqual({
       type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
     })
 
-    // was getCollections called
+    // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
   })
 })

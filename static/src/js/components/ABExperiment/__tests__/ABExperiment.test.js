@@ -16,15 +16,17 @@ function setup(overideProps) {
 
   const enzymeWrapper = shallow(
     <ABExperiment {...props}>
-      {({ variant }) => (
-        <div className="ab-experiment-child">
-          {
-            variant
-              ? `Variant: ${variant}`
-              : 'default content'
-          }
-        </div>
-      )}
+      {
+        ({ variant }) => (
+          <div className="ab-experiment-child">
+            {
+              variant
+                ? `Variant: ${variant}`
+                : 'default content'
+            }
+          </div>
+        )
+      }
     </ABExperiment>
   )
 

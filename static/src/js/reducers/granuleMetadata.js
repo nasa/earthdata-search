@@ -1,9 +1,6 @@
 import camelCaseKeys from 'camelcase-keys'
 
-import {
-  ADD_GRANULE_METADATA,
-  UPDATE_GRANULE_METADATA
-} from '../constants/actionTypes'
+import { ADD_GRANULE_METADATA, UPDATE_GRANULE_METADATA } from '../constants/actionTypes'
 
 const initialState = {}
 
@@ -45,12 +42,14 @@ const granuleMetadataReducer = (state = initialState, action = {}) => {
         ...newState
       }
     }
+
     case ADD_GRANULE_METADATA: {
       return {
         ...state,
         ...processResults(action.payload)
       }
     }
+
     default:
       return state
   }

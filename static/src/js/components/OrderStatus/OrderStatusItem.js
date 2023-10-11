@@ -10,7 +10,11 @@ import {
 } from 'react-icons/fa'
 
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import { getStateFromOrderStatus, aggregatedOrderStatus, formatOrderStatus } from '../../../../../sharedUtils/orderStatus'
+import {
+  getStateFromOrderStatus,
+  aggregatedOrderStatus,
+  formatOrderStatus
+} from '../../../../../sharedUtils/orderStatus'
 import { pluralize } from '../../util/pluralize'
 import { commafy } from '../../util/commafy'
 
@@ -444,8 +448,10 @@ export class OrderStatusItem extends PureComponent {
 
               if (stacLink) {
                 const { href = '' } = stacLink
+
                 return href
               }
+
               return false
             }).filter(Boolean)
           }
@@ -470,16 +476,12 @@ export class OrderStatusItem extends PureComponent {
                       progress={progressPercentage}
                     />
                     <span className="order-status-item__status">
-                      {
-                        !hasStatus ? 'Complete' : formatOrderStatus(orderStatus)
-                      }
+                      {!hasStatus ? 'Complete' : formatOrderStatus(orderStatus)}
                     </span>
                     {
                       (progressPercentage != null && progressPercentage >= 0) && (
                         <span className="order-status-item__percentage">
-                          {
-                            `(${progressPercentage}%)`
-                          }
+                          {`(${progressPercentage}%)`}
                         </span>
                       )
                     }
@@ -520,16 +522,12 @@ export class OrderStatusItem extends PureComponent {
                           <div className="order-status-item__progress-meta">
                             <div>
                               <span className="order-status-item__status">
-                                {
-                                  !hasStatus ? 'Complete' : formatOrderStatus(orderStatus)
-                                }
+                                {!hasStatus ? 'Complete' : formatOrderStatus(orderStatus)}
                               </span>
                               {
                                 (progressPercentage != null && progressPercentage >= 0) && (
                                   <span className="order-status-item__percentage">
-                                    {
-                                      `(${progressPercentage}%)`
-                                    }
+                                    {`(${progressPercentage}%)`}
                                   </span>
                                 )
                               }
@@ -596,6 +594,7 @@ export class OrderStatusItem extends PureComponent {
                             {
                               messages.map((message, i) => {
                                 const key = `message-${i}`
+
                                 return (
                                   <li key={key}>{message}</li>
                                 )
@@ -630,6 +629,7 @@ export class OrderStatusItem extends PureComponent {
                           retrievalId={retrievalId}
                           retrievalCollectionId={retrievalCollectionId}
                           showTextWindowActions={!isEsi}
+                          collectionIsCSDA={collectionIsCSDA}
                         />
                       </Tab>
                     )

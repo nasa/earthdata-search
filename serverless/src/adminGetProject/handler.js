@@ -59,11 +59,11 @@ const adminGetProject = async (event, context) => {
       headers: defaultResponseHeaders,
       body: JSON.stringify({ errors: [`Project '${providedProjectId}' not found.`] })
     }
-  } catch (e) {
+  } catch (error) {
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
-      ...parseError(e)
+      ...parseError(error)
     }
   }
 }

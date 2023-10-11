@@ -69,9 +69,11 @@ export class ShapefileUploadModal extends Component {
               className="shapefile-modal__action shapefile-modal__action--primary"
               bootstrapVariant="primary"
               label="Cancel"
-              onClick={() => {
-                eventEmitter.emit('shapefile.dropzoneOpen')
-              }}
+              onClick={
+                () => {
+                  eventEmitter.emit('shapefile.dropzoneOpen')
+                }
+              }
             >
               Browse Files
             </Button>

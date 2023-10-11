@@ -60,6 +60,7 @@ export const ProgressRing = ({
     </span>
   )
 }
+
 ProgressRing.defaultProps = {
   className: '',
   progress: 0,

@@ -27,7 +27,10 @@ describe('getCollectionCapabilities', () => {
             id: 'G100000-EDSC'
           }]))
 
-          const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+          const response = await getCollectionCapabilities({
+            cmrToken: 'token',
+            collection: { id: 'C100000-EDSC' }
+          })
 
           const { cloud_cover: cloudCover } = response
 
@@ -43,7 +46,10 @@ describe('getCollectionCapabilities', () => {
             id: 'G100000-EDSC'
           }]))
 
-          const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+          const response = await getCollectionCapabilities({
+            cmrToken: 'token',
+            collection: { id: 'C100000-EDSC' }
+          })
 
           const { day_night_flag: dayNightFlag } = response
 
@@ -59,7 +65,10 @@ describe('getCollectionCapabilities', () => {
             id: 'G100000-EDSC'
           }]))
 
-          const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+          const response = await getCollectionCapabilities({
+            cmrToken: 'token',
+            collection: { id: 'C100000-EDSC' }
+          })
 
           const { granule_online_access_flag: granuleOnlineAccessFlag } = response
 
@@ -75,7 +84,10 @@ describe('getCollectionCapabilities', () => {
             id: 'G100000-EDSC'
           }]))
 
-          const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+          const response = await getCollectionCapabilities({
+            cmrToken: 'token',
+            collection: { id: 'C100000-EDSC' }
+          })
 
           const { orbit_calculated_spatial_domains: orbitCalculatedSpatialDomains } = response
 
@@ -300,7 +312,10 @@ describe('getCollectionCapabilities', () => {
               cloud_cover: 20
             }]))
 
-            const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+            const response = await getCollectionCapabilities({
+              cmrToken: 'token',
+              collection: { id: 'C100000-EDSC' }
+            })
 
             const { cloud_cover: cloudCover } = response
 
@@ -317,7 +332,10 @@ describe('getCollectionCapabilities', () => {
               day_night_flag: 'UNSPECIFIED'
             }]))
 
-            const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+            const response = await getCollectionCapabilities({
+              cmrToken: 'token',
+              collection: { id: 'C100000-EDSC' }
+            })
 
             const { day_night_flag: dayNightFlag } = response
 
@@ -332,7 +350,10 @@ describe('getCollectionCapabilities', () => {
               day_night_flag: 'DAY'
             }]))
 
-            const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+            const response = await getCollectionCapabilities({
+              cmrToken: 'token',
+              collection: { id: 'C100000-EDSC' }
+            })
 
             const { day_night_flag: dayNightFlag } = response
 
@@ -349,7 +370,10 @@ describe('getCollectionCapabilities', () => {
               online_access_flag: true
             }]))
 
-            const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+            const response = await getCollectionCapabilities({
+              cmrToken: 'token',
+              collection: { id: 'C100000-EDSC' }
+            })
 
             const { granule_online_access_flag: granuleOnlineAccessFlag } = response
 
@@ -368,7 +392,10 @@ describe('getCollectionCapabilities', () => {
               }
             }]))
 
-            const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+            const response = await getCollectionCapabilities({
+              cmrToken: 'token',
+              collection: { id: 'C100000-EDSC' }
+            })
 
             const { orbit_calculated_spatial_domains: orbitCalculatedSpatialDomains } = response
 
@@ -389,7 +416,10 @@ describe('getCollectionCapabilities', () => {
               cloud_cover: 20
             }]))
 
-            const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+            const response = await getCollectionCapabilities({
+              cmrToken: 'token',
+              collection: { id: 'C100000-EDSC' }
+            })
 
             const { cloud_cover: cloudCover } = response
 
@@ -409,7 +439,10 @@ describe('getCollectionCapabilities', () => {
               day_night_flag: 'DAY'
             }]))
 
-            const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+            const response = await getCollectionCapabilities({
+              cmrToken: 'token',
+              collection: { id: 'C100000-EDSC' }
+            })
 
             const { day_night_flag: dayNightFlag } = response
 
@@ -426,7 +459,10 @@ describe('getCollectionCapabilities', () => {
               day_night_flag: 'DAY'
             }]))
 
-            const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+            const response = await getCollectionCapabilities({
+              cmrToken: 'token',
+              collection: { id: 'C100000-EDSC' }
+            })
 
             const { day_night_flag: dayNightFlag } = response
 
@@ -446,7 +482,10 @@ describe('getCollectionCapabilities', () => {
               online_access_flag: true
             }]))
 
-            const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+            const response = await getCollectionCapabilities({
+              cmrToken: 'token',
+              collection: { id: 'C100000-EDSC' }
+            })
 
             const { granule_online_access_flag: granuleOnlineAccessFlag } = response
 
@@ -467,7 +506,10 @@ describe('getCollectionCapabilities', () => {
               id: 'G100000-EDSC'
             }]))
 
-            const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+            const response = await getCollectionCapabilities({
+              cmrToken: 'token',
+              collection: { id: 'C100000-EDSC' }
+            })
 
             const { orbit_calculated_spatial_domains: orbitCalculatedSpatialDomains } = response
 
@@ -520,7 +562,10 @@ describe('getCollectionCapabilities', () => {
         ]
       })
 
-    const response = await getCollectionCapabilities({ cmrToken: 'token', collection: { id: 'C100000-EDSC' } })
+    const response = await getCollectionCapabilities({
+      cmrToken: 'token',
+      collection: { id: 'C100000-EDSC' }
+    })
 
     expect(response).toEqual({
       cloud_cover: false,

@@ -27,11 +27,13 @@ export const constructOrderPayload = async ({
   const granuleResponse = await axios({
     url: `${getEarthdataConfig(environment).cmrHost}/search/granules.json`,
     params: granuleParams,
-    paramsSerializer: (params) => stringify(params,
+    paramsSerializer: (params) => stringify(
+      params,
       {
         indices: false,
         arrayFormat: 'brackets'
-      }),
+      }
+    ),
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Client-Id': getClientId().background
@@ -44,6 +46,7 @@ export const constructOrderPayload = async ({
 
   const {
     enableTemporalSubsetting,
+    enableSpatialSubsetting,
     mbr,
     selectedOutputFormat,
     selectedOutputProjection,
@@ -68,7 +71,7 @@ export const constructOrderPayload = async ({
     temporal
   } = granuleParams
 
-  if (supportsShapefileSubsetting) {
+  if (supportsShapefileSubsetting && enableSpatialSubsetting) {
     if (shapefile) {
       try {
         // GeoJSON polygon points must be in CCW order, so we need to make sure that is true before sending the shapefile
@@ -78,8 +81,8 @@ export const constructOrderPayload = async ({
           filename: 'shapefile.geojson',
           contentType: 'application/geo+json'
         })
-      } catch (e) {
-        parseError(e, { reThrowError: true })
+      } catch (error) {
+        parseError(error, { reThrowError: true })
       }
     } else if (
       boundingBox.length > 0
@@ -105,8 +108,8 @@ export const constructOrderPayload = async ({
             filename: 'point.geojson',
             contentType: 'application/geo+json'
           })
-        } catch (e) {
-          parseError(e, { reThrowError: true })
+        } catch (error) {
+          parseError(error, { reThrowError: true })
         }
       }
 
@@ -127,8 +130,8 @@ export const constructOrderPayload = async ({
             filename: 'bbox.geojson',
             contentType: 'application/geo+json'
           })
-        } catch (e) {
-          parseError(e, { reThrowError: true })
+        } catch (error) {
+          parseError(error, { reThrowError: true })
         }
       }
 
@@ -146,8 +149,8 @@ export const constructOrderPayload = async ({
             filename: 'circle.geojson',
             contentType: 'application/geo+json'
           })
-        } catch (e) {
-          parseError(e, { reThrowError: true })
+        } catch (error) {
+          parseError(error, { reThrowError: true })
         }
       }
 
@@ -166,14 +169,14 @@ export const constructOrderPayload = async ({
             filename: 'polygon.geojson',
             contentType: 'application/geo+json'
           })
-        } catch (e) {
-          parseError(e, { reThrowError: true })
+        } catch (error) {
+          parseError(error, { reThrowError: true })
         }
       }
     }
   }
 
-  if (supportsBoundingBoxSubsetting) {
+  if (supportsBoundingBoxSubsetting && enableSpatialSubsetting) {
     if (boundingBox.length > 0) {
       const [swCoord, neCoord] = pointStringToLatLng(boundingBox[0])
 

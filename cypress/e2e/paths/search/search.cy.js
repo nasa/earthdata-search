@@ -87,21 +87,23 @@ describe('Path /search', () => {
     it('loads correctly', () => {
       const cmrHits = 8098
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/collections.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/collections.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-        req.reply({
-          body: commonBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: commonBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
       cy.visit('/search')
 
@@ -120,21 +122,23 @@ describe('Path /search', () => {
     it('loads with the keyword query populated', () => {
       const cmrHits = 1248
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/collections.json'
-      },
-      (req) => {
-        expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=modis*&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/collections.json'
+        },
+        (req) => {
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=modis*&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-        req.reply({
-          body: keywordBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: keywordBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
       cy.visit('/search?q=modis')
 
@@ -154,21 +158,23 @@ describe('Path /search', () => {
       it('loads with the temporal query applied', () => {
         const cmrHits = 2434
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2020-01-01T00:00:00.000Z,2021-01-01T23:59:59.999Z&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2020-01-01T00:00:00.000Z,2021-01-01T23:59:59.999Z&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: temporalBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: temporalBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?qt=2020-01-01T00%3A00%3A00.000Z%2C2021-01-01T23%3A59%3A59.999Z')
 
@@ -190,21 +196,23 @@ describe('Path /search', () => {
       it('loads with the temporal query applied', () => {
         const cmrHits = 5521
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2000-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z,1,31&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2000-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z,1,31&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: temporalRecurringBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: temporalRecurringBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?qt=2000-01-01T00%3A00%3A00.000Z%2C2021-01-31T23%3A59%3A59.999Z%2C1%2C31')
 
@@ -229,21 +237,23 @@ describe('Path /search', () => {
       it('loads with the spatial query applied', () => {
         const cmrHits = 5079
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=65.44171,4.33676&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=65.44171,4.33676&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: spatialPointBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: spatialPointBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?sp[0]=65.44171%2C4.33676')
 
@@ -259,7 +269,7 @@ describe('Path /search', () => {
         getByTestId('spatial-display_point').should('have.value', '4.33676,65.44171')
 
         // Test leaflet has drawn the shape correctly
-        cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1165px, 402px, 0px); z-index: 402;')
+        cy.get('.leaflet-marker-pane img').should('have.attr', 'style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1165px, 386px, 0px); z-index: 386;')
       })
     })
 
@@ -267,21 +277,23 @@ describe('Path /search', () => {
       it('loads with the spatial query applied', () => {
         const cmrHits = 5133
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=64.87748,1.3704,59.34354,-9.21839,78.35163,-11.89902,64.87748,1.3704&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=64.87748,1.3704,59.34354,-9.21839,78.35163,-11.89902,64.87748,1.3704&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: spatialPolygonBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: spatialPolygonBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?polygon[0]=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704')
 
@@ -297,7 +309,7 @@ describe('Path /search', () => {
         getByTestId('spatial-display_polygon').should('have.text', '3 Points')
 
         // Test leaflet has drawn the shape correctly
-        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1161 423L1122 499L1257 518L1161 423z')
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1161 407L1122 483L1257 502L1161 407z')
       })
     })
 
@@ -305,21 +317,23 @@ describe('Path /search', () => {
       it('loads with the spatial query applied', () => {
         const cmrHits = 5080
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=62.18209,2.22154,100000&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=62.18209,2.22154,100000&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: spatialCircleBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: spatialCircleBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?circle[0]=62.18209%2C2.22154%2C100000')
 
@@ -336,7 +350,7 @@ describe('Path /search', () => {
         getByTestId('spatial-display_circle-radius').should('have.value', '100000')
 
         // Test leaflet has drawn the shape correctly
-        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1136.1837511111112,417.20238222222224a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 ')
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1136.1837511111112,401.20238222222224a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 ')
       })
     })
 
@@ -344,21 +358,23 @@ describe('Path /search', () => {
       it('loads with the spatial query applied', () => {
         const cmrHits = 5209
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=5.02679,0.99949,32.8678,26.17555&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=5.02679,0.99949,32.8678,26.17555&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: spatialBoundingBoxBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: spatialBoundingBoxBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?sb[0]=5.02679%2C0.99949%2C32.8678%2C26.17555')
 
@@ -375,7 +391,7 @@ describe('Path /search', () => {
         getByTestId('spatial-display_northeast-point').should('have.value', '26.17555,32.8678')
 
         // Test leaflet has drawn the shape correctly
-        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M736 426L736 247L934 247L934 426L736 426z')
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M736 410L736 231L934 231L934 410L736 410z')
       })
     })
 
@@ -389,29 +405,48 @@ describe('Path /search', () => {
             file: {
               type: 'FeatureCollection',
               features: [{
-                type: 'Feature', id: 'simple-id', properties: { id: 'simple-id', prop0: 'value0', prop1: { this: 'that' } }, geometry: { type: 'Polygon', coordinates: [[[64.87748, 1.3704], [59.34354, -9.21839], [78.35163, -11.89902], [64.87748, 1.3704]]] }
+                type: 'Feature',
+                id: 'simple-id',
+                properties: {
+                  id: 'simple-id',
+                  prop0: 'value0',
+                  prop1: { this: 'that' }
+                },
+                geometry: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [64.87748, 1.3704],
+                      [59.34354, -9.21839],
+                      [78.35163, -11.89902],
+                      [64.87748, 1.3704]
+                    ]
+                  ]
+                }
               }]
             },
             shapefileName: 'test.geojson'
           }
         })
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
           // TODO: This intercept is called twice, the first time is cancelled because a new request is launched after the shapefile polygon is added. How do we only run this expect on the second run?
           // expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=59.34354,-9.21839,78.35163,-11.89902,64.87748,1.3704,59.34354,-9.21839&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: spatialPolygonBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: spatialPolygonBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?sf=123')
 
@@ -431,7 +466,7 @@ describe('Path /search', () => {
         getByTestId('filter-stack-item__hint').should('have.text', '1 shape selected')
 
         // Test leaflet has drawn the shape correctly
-        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1161 423L1122 499L1257 518L1161 423z')
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M1161 407L1122 483L1257 502L1161 407z')
       })
     })
   })
@@ -441,21 +476,23 @@ describe('Path /search', () => {
       it('loads with the feature facet applied', () => {
         const cmrHits = 720
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('cloud_hosted=true&has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('cloud_hosted=true&has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: awsCloudBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: awsCloudBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?ff=Available%20in%20Earthdata%20Cloud')
 
@@ -479,21 +516,23 @@ describe('Path /search', () => {
       it('loads with the feature facet applied', () => {
         const cmrHits = 233
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&service_type[]=esi&service_type[]=opendap&service_type[]=harmony&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&service_type[]=esi&service_type[]=opendap&service_type[]=harmony&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: customizableBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: customizableBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?ff=Customizable')
 
@@ -517,21 +556,23 @@ describe('Path /search', () => {
       it('loads with the feature facet applied', () => {
         const cmrHits = 394
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score&tag_key[]=edsc.extra.serverless.gibs')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score&tag_key[]=edsc.extra.serverless.gibs')
 
-          req.reply({
-            body: mapImageryBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: mapImageryBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?ff=Map%20Imagery')
 
@@ -557,21 +598,23 @@ describe('Path /search', () => {
       it('loads with the facet applied', () => {
         const cmrHits = 1
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&science_keywords_h[0][topic]=Aerosols&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&science_keywords_h[0][topic]=Aerosols&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: keywordsBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: keywordsBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?fst0=Aerosols')
 
@@ -604,21 +647,23 @@ describe('Path /search', () => {
       it('loads with the facet applied', () => {
         const cmrHits = 108
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&platforms_h[0][basis]=Aircraft&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&platforms_h[0][basis]=Aircraft&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: platformsBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: platformsBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?fpb0=Aircraft')
 
@@ -651,21 +696,23 @@ describe('Path /search', () => {
       it('loads with the facet applied', () => {
         const cmrHits = 104
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: instrumentsBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: instrumentsBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?ffi=AIRS')
 
@@ -698,21 +745,23 @@ describe('Path /search', () => {
       it('loads with the facet applied', () => {
         const cmrHits = 128
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&data_center_h[]=Alaska Satellite Facility&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&data_center_h[]=Alaska Satellite Facility&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: organizationsBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: organizationsBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?fdc=Alaska%20Satellite%20Facility')
 
@@ -745,21 +794,23 @@ describe('Path /search', () => {
       it('loads with the facet applied', () => {
         const cmrHits = 175
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&project_h[]=ABoVE&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&project_h[]=ABoVE&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: projectsBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: projectsBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?fpj=ABoVE')
 
@@ -792,21 +843,23 @@ describe('Path /search', () => {
       it('loads with the facet applied', () => {
         const cmrHits = 50
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&processing_level_id_h[]=0 - Raw Data&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&processing_level_id_h[]=0 - Raw Data&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: processingLevelsBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: processingLevelsBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?fl=0%20-%20Raw%20Data')
 
@@ -839,21 +892,23 @@ describe('Path /search', () => {
       it('loads with the facet applied', () => {
         const cmrHits = 5
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&granule_data_format_h[]=ArcGIS&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&granule_data_format_h[]=ArcGIS&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: dataFormatBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: dataFormatBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?gdf=ArcGIS')
 
@@ -886,21 +941,23 @@ describe('Path /search', () => {
       it('loads with the facet applied', () => {
         const cmrHits = 69
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score&two_d_coordinate_system_name[]=CALIPSO')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score&two_d_coordinate_system_name[]=CALIPSO')
 
-          req.reply({
-            body: tilingSystemBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: tilingSystemBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?s2n=CALIPSO')
 
@@ -933,21 +990,23 @@ describe('Path /search', () => {
       it('loads with the facet applied', () => {
         const cmrHits = 41
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&horizontal_data_resolution_range[]=0 to 1 meter&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&horizontal_data_resolution_range[]=0 to 1 meter&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: horizontalDataResolutionBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: horizontalDataResolutionBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?hdr=0%20to%201%20meter')
 
@@ -980,21 +1039,23 @@ describe('Path /search', () => {
       it('loads with the facet applied', () => {
         const cmrHits = 11
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&latency[]=1 to 3 hours&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&latency[]=1 to 3 hours&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: latencyBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: latencyBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?lf=1%20to%203%20hours')
 
@@ -1027,21 +1088,23 @@ describe('Path /search', () => {
       it('loads with the checkbox selected', () => {
         const cmrHits = 28270
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=-usage_score')
 
-          req.reply({
-            body: noGranulesBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: noGranulesBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?ac=true')
 
@@ -1070,21 +1133,23 @@ describe('Path /search', () => {
       it('loads with the checkbox selected', () => {
         const cmrHits = 7704
 
-        cy.intercept({
-          method: 'POST',
-          url: '**/search/collections.json'
-        },
-        (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&consortium[]=EOSDIS&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        cy.intercept(
+          {
+            method: 'POST',
+            url: '**/search/collections.json'
+          },
+          (req) => {
+            expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&consortium[]=EOSDIS&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
 
-          req.reply({
-            body: nonEosdisBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        })
+            req.reply({
+              body: nonEosdisBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': cmrHits.toString()
+              }
+            })
+          }
+        )
 
         cy.visit('/search?oe=t')
 
@@ -1112,21 +1177,23 @@ describe('Path /search', () => {
     it('loads in the correct environment', () => {
       const cmrHits = 6209
 
-      cy.intercept({
-        method: 'POST',
-        url: '**/search/collections.json'
-      },
-      (req) => {
-        expect(req.headers.host).to.eq('cmr.uat.earthdata.nasa.gov')
+      cy.intercept(
+        {
+          method: 'POST',
+          url: '**/search/collections.json'
+        },
+        (req) => {
+          expect(req.headers.host).to.eq('cmr.uat.earthdata.nasa.gov')
 
-        req.reply({
-          body: eeBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': cmrHits.toString()
-          }
-        })
-      })
+          req.reply({
+            body: eeBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        }
+      )
 
       cy.visit('/search?ee=uat')
 

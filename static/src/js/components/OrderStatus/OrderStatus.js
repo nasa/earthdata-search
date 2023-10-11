@@ -114,11 +114,25 @@ export const OrderStatus = ({
 
   const collectionsById = Object.values(byId)
 
-  downloads = collectionsById.filter(({ id }) => downloads.includes(id))
-  opendapOrders = collectionsById.filter(({ id }) => opendapOrders.includes(id))
-  echoOrders = collectionsById.filter(({ id }) => echoOrders.includes(id))
-  esiOrders = collectionsById.filter(({ id }) => esiOrders.includes(id))
-  harmonyOrders = collectionsById.filter(({ id }) => harmonyOrders.includes(id))
+  downloads = collectionsById.filter(
+    ({ id: collectionId }) => downloads.includes(collectionId)
+  )
+
+  opendapOrders = collectionsById.filter(
+    ({ id: collectionId }) => opendapOrders.includes(collectionId)
+  )
+
+  echoOrders = collectionsById.filter(
+    ({ id: collectionId }) => echoOrders.includes(collectionId)
+  )
+
+  esiOrders = collectionsById.filter(
+    ({ id: collectionId }) => esiOrders.includes(collectionId)
+  )
+
+  harmonyOrders = collectionsById.filter(
+    ({ id: collectionId }) => harmonyOrders.includes(collectionId)
+  )
 
   const { edscHost } = getEnvironmentConfig()
 
@@ -132,10 +146,12 @@ export const OrderStatus = ({
       </a>
       {' or the '}
       <PortalLinkContainer
-        to={{
-          pathname: '/downloads',
-          search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-        }}
+        to={
+          {
+            pathname: '/downloads',
+            search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+          }
+        }
       >
         Download Status and History
       </PortalLinkContainer>
@@ -168,7 +184,13 @@ export const OrderStatus = ({
               (isLoading && !isLoaded) && (
                 <Skeleton
                   className="order-status__item-skeleton"
-                  containerStyle={{ display: 'inline-block', height: '175px', width: '100%' }}
+                  containerStyle={
+                    {
+                      display: 'inline-block',
+                      height: '175px',
+                      width: '100%'
+                    }
+                  }
                   shapes={orderStatusSkeleton}
                 />
               )
@@ -185,9 +207,8 @@ export const OrderStatus = ({
                   onFetchRetrieval={onFetchRetrieval}
                   onFetchRetrievalCollection={onFetchRetrievalCollection}
                   onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
-                  onFetchRetrievalCollectionGranuleBrowseLinks={
-                    onFetchRetrievalCollectionGranuleBrowseLinks
-                  }
+                  // eslint-disable-next-line max-len
+                  onFetchRetrievalCollectionGranuleBrowseLinks={onFetchRetrievalCollectionGranuleBrowseLinks}
                   onToggleAboutCSDAModal={onToggleAboutCSDAModal}
                 />
               )
@@ -198,7 +219,13 @@ export const OrderStatus = ({
                 isLoading && (
                   <Skeleton
                     className="order-status__item-skeleton"
-                    containerStyle={{ display: 'inline-block', height: '175px', width: '100%' }}
+                    containerStyle={
+                      {
+                        display: 'inline-block',
+                        height: '175px',
+                        width: '100%'
+                      }
+                    }
                     shapes={orderStatusLinksSkeleton}
                   />
                 )
@@ -207,20 +234,25 @@ export const OrderStatus = ({
                 isLoaded && (
                   <ul className="order-status__links">
                     {
-                      (links && links.length > 0) && (
-                        links.map((link, i) => {
-                          const { dataset_id: datasetId, links } = link
+                      links && links.length > 0 && (
+                        links.map((link, index) => {
+                          const {
+                            dataset_id: datasetId,
+                            links: linkLinks
+                          } = link
+
                           return (
                             <li
                               // eslint-disable-next-line react/no-array-index-key
-                              key={`${datasetId}_${i}`}
+                              key={`${datasetId}_${index}`}
                               className="order-status__links-item"
                             >
                               <h3 className="order-status__links-title">{datasetId}</h3>
                               <ul className="order-status__collection-links">
                                 {
-                                  links.map((link) => {
-                                    const { href } = link
+                                  linkLinks.map((linkObject) => {
+                                    const { href } = linkObject
+
                                     return (
                                       <li
                                         key={href}
@@ -263,17 +295,17 @@ export const OrderStatus = ({
                     <ul className="order-status__links">
                       {
                         (
-                          filteredRelatedCollectionItems.map((relatedCollection, i) => {
-                            const { id } = relatedCollection
+                          filteredRelatedCollectionItems.map((relatedCollection, index) => {
+                            const { id: collectionId } = relatedCollection
 
                             return (
                               <li
                                 // eslint-disable-next-line react/no-array-index-key
-                                key={`${id}_${i}`}
+                                key={`${collectionId}_${index}`}
                                 className="order-status__links-item"
                               >
                                 <RelatedCollection
-                                  key={`related-collection-${id}`}
+                                  key={`related-collection-${collectionId}`}
                                   className="collection-body__related-collection-link"
                                   location={location}
                                   onFocusedCollectionChange={onFocusedCollectionChange}
@@ -289,7 +321,7 @@ export const OrderStatus = ({
                   </Well.Section>
                 </>
               )
-          }
+            }
           </Well.Main>
           <Well.Footer>
             <Well.Heading>Next Steps</Well.Heading>
@@ -298,10 +330,12 @@ export const OrderStatus = ({
                 <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
                 <PortalLinkContainer
                   className="order-status__footer-link"
-                  to={{
-                    pathname: '/search',
-                    search: source
-                  }}
+                  to={
+                    {
+                      pathname: '/search',
+                      search: source
+                    }
+                  }
                   onClick={() => { onChangePath(`/search${source}`) }}
                 >
                   Back to Earthdata Search Results
@@ -311,10 +345,12 @@ export const OrderStatus = ({
                 <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
                 <PortalLinkContainer
                   className="order-status__footer-link"
-                  to={{
-                    pathname: '/search',
-                    search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-                  }}
+                  to={
+                    {
+                      pathname: '/search',
+                      search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+                    }
+                  }
                   onClick={() => { onChangePath('/search') }}
                 >
                   Start a New Earthdata Search Session
@@ -324,10 +360,12 @@ export const OrderStatus = ({
                 <EDSCIcon library="fa" icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
                 <PortalLinkContainer
                   className="order-status__footer-link"
-                  to={{
-                    pathname: '/downloads',
-                    search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-                  }}
+                  to={
+                    {
+                      pathname: '/downloads',
+                      search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+                    }
+                  }
                 >
                   View Your Download Status & History
                 </PortalLinkContainer>

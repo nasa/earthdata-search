@@ -82,7 +82,10 @@ describe('Request#search', () => {
 
     const postMock = jest.spyOn(Request.prototype, 'post').mockImplementation()
 
-    const params = { param1: 12, ext: 'json' }
+    const params = {
+      param1: 12,
+      ext: 'json'
+    }
     request.search(params)
 
     expect(postMock).toBeCalledTimes(1)
@@ -106,7 +109,10 @@ describe('Request#handleUnauthorized', () => {
     const returnPath = 'http://example.com/test/path'
 
     delete window.location
-    window.location = { href: returnPath, pathname: '' }
+    window.location = {
+      href: returnPath,
+      pathname: ''
+    }
 
     request.handleUnauthorized(data)
     expect(window.location.href).toEqual(`http://localhost:3000/login?ee=prod&state=${encodeURIComponent(returnPath)}`)

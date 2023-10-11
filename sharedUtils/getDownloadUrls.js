@@ -11,6 +11,7 @@ export const getDownloadUrls = (granules) => {
     // Find the correct link from the list within the metadata
     return linkMetadata.filter((link) => {
       const { inherited, rel } = link
+
       return rel.includes('/data#') && !inherited
     })
   }).filter(Boolean)

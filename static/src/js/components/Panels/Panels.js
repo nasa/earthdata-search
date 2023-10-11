@@ -163,7 +163,7 @@ export class Panels extends PureComponent {
     }
   }
 
-  onWindowKeyUp(e) {
+  onWindowKeyUp(event) {
     const { show } = this.state
     const { keyboardShortcuts } = this
 
@@ -175,7 +175,7 @@ export class Panels extends PureComponent {
     }
 
     triggerKeyboardShortcut({
-      event: e,
+      event,
       shortcutKey: keyboardShortcuts.togglePanel,
       shortcutCallback: togglePanels
     })
@@ -210,12 +210,12 @@ export class Panels extends PureComponent {
     })
   }
 
-  onPanelHandleClickOrKeypress(e) {
+  onPanelHandleClickOrKeypress(event) {
     const { show } = this.state
     const {
       type,
       key
-    } = e
+    } = event
 
     // Any keypress other than the enter or spacebar keys is not considered a click.
     if (type === 'keydown') {
@@ -240,12 +240,12 @@ export class Panels extends PureComponent {
 
     this.enableHandleClickEvent()
 
-    e.preventDefault()
-    e.stopPropagation()
+    event.preventDefault()
+    event.stopPropagation()
   }
 
-  onMouseDown(e) {
-    if (e.button !== 0) return
+  onMouseDown(event) {
+    if (event.button !== 0) return
 
     this.handleClickCancelTimeout = setTimeout(this.disableHandleClickEvent, this.handleClickDelay)
 
@@ -254,7 +254,7 @@ export class Panels extends PureComponent {
     document.addEventListener('mousemove', this.onMouseMove)
     document.addEventListener('mouseup', this.onMouseUp)
 
-    this.onPanelDragStart(width, e.clientX)
+    this.onPanelDragStart(width, event.clientX)
   }
 
   onMouseUp() {
@@ -267,7 +267,7 @@ export class Panels extends PureComponent {
     this.onPanelDragEnd()
   }
 
-  onMouseMove(e) {
+  onMouseMove(event) {
     const {
       dragging,
       handleToolipVisible
@@ -279,7 +279,7 @@ export class Panels extends PureComponent {
       })
     }
 
-    this.clientX = e.clientX
+    this.clientX = event.clientX
 
     if (!dragging) return
 
@@ -340,12 +340,14 @@ export class Panels extends PureComponent {
       // Prevent the width from being set lower than minWidth.
       if (newWidth < minWidth) {
         this.updatePanelWidth(minWidth)
+
         return
       }
 
       // Prevent the width from being set greater than the maxWidth
       if (newWidth > maxWidth) {
         this.updatePanelWidth(maxWidth)
+
         return
       }
 
@@ -358,6 +360,7 @@ export class Panels extends PureComponent {
     this.setState({
       dragging: true
     })
+
     this.clickStartWidth = clickStartWidth
     this.clickStartX = clickStartX
   }
@@ -515,9 +518,9 @@ export class Panels extends PureComponent {
     panelSectionProps.isOpen = !!(panelSectionProps.panelSectionId === activePanelSectionId)
     panelSectionProps.isActive = !!(panelSectionProps.panelSectionId === activePanelSectionId)
 
-    const panelGroups = Children.map(children, (child, index) => {
-      const panelGroupProps = { ...child.props }
-      if (!panelGroupProps.panelGroupId) panelGroupProps.panelGroupId = `${index}`
+    const panelGroups = Children.map(children, (childValue, childIndex) => {
+      const panelGroupProps = { ...childValue.props }
+      if (!panelGroupProps.panelGroupId) panelGroupProps.panelGroupId = `${childIndex}`
 
       const isActivePanelGroup = !!(
         panelSectionProps.panelSectionId === activePanelSectionId
@@ -559,8 +562,10 @@ export class Panels extends PureComponent {
 
     const { width } = this
 
-    const panelGroups = Children.map(children,
-      (child, index) => this.renderPanelGroup(child, index))
+    const panelGroups = Children.map(
+      children,
+      (child, index) => this.renderPanelGroup(child, index)
+    )
 
     const className = classNames([
       'panels',
@@ -577,9 +582,11 @@ export class Panels extends PureComponent {
       <section
         className={className}
         style={{ width: `${width}px` }}
-        ref={(node) => {
-          this.container = node
-        }}
+        ref={
+          (node) => {
+            this.container = node
+          }
+        }
         data-testid="panels-section"
       >
         {
@@ -591,9 +598,11 @@ export class Panels extends PureComponent {
                 aria-label={`${handleTooltipState} panel (${keyboardShortcuts.togglePanel})`}
                 role="button"
                 tabIndex="0"
-                ref={(node) => {
-                  this.node = node
-                }}
+                ref={
+                  (node) => {
+                    this.node = node
+                  }
+                }
                 onMouseDown={this.onMouseDown}
                 onClick={this.onPanelHandleClickOrKeypress}
                 onKeyDown={this.onPanelHandleClickOrKeypress}
@@ -611,6 +620,7 @@ export class Panels extends PureComponent {
                   (props) => {
                     const tooltipProps = props
                     delete tooltipProps.show
+
                     return (
                       <Tooltip
                         {...tooltipProps}
@@ -631,9 +641,11 @@ export class Panels extends PureComponent {
         }
         <div
           className="panels__responsive-container"
-          ref={(node) => {
-            this.responsiveContainer = node
-          }}
+          ref={
+            (node) => {
+              this.responsiveContainer = node
+            }
+          }
         >
           {panelGroups}
         </div>

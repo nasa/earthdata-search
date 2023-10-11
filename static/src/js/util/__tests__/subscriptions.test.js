@@ -99,7 +99,11 @@ describe('removeDisabledFieldsFromQuery', () => {
 
     const result = removeDisabledFieldsFromQuery(query, disabledFields)
 
-    expect(result).toEqual({ keyword: 'modis', tagKey: ['mocktag'], consortium: ['mockConsortium'] })
+    expect(result).toEqual({
+      keyword: 'modis',
+      tagKey: ['mocktag'],
+      consortium: ['mockConsortium']
+    })
   })
 
   test('removes any remaining fields that are empty arrays', () => {
@@ -115,7 +119,7 @@ describe('removeDisabledFieldsFromQuery', () => {
   })
 
   test('sets hasGranulesOrCwic correctly if the field has been disabled', () => {
-    // hasGranulesOrCwic undefined in the query, but true in disabledFields
+    // `hasGranulesOrCwic` undefined in the query, but true in disabledFields
     const query = {}
 
     const disabledFields = {
