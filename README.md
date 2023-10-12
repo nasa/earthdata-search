@@ -12,7 +12,7 @@ It builds upon several public-facing services provided by EOSDIS, including the 
 
 ## License
 
-> Copyright © 2007-2019 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
+> Copyright © 2007-2023 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
 >
 > Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 > You may obtain a copy of the License at
