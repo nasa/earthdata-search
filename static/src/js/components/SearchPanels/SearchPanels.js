@@ -280,6 +280,8 @@ class SearchPanels extends PureComponent {
     ]
 
     const setCollectionSort = (value) => {
+      if (value === activeCollectionsSortKey) return
+
       const sortKey = value === 'relevance' ? undefined : [value]
 
       onChangeQuery({
