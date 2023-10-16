@@ -28,8 +28,16 @@ const MapEvents = (props) => {
 
   useEffect(() => {
     const { latitude = 0, longitude = 0, zoom = 4 } = mapProps
+    let newLatitude = latitude
 
-    if (mapProps) map.setView([latitude, longitude], zoom)
+    // Fix problems where 90 and -90 degrees cause page crashes when South Polar <-> North Polar projection switch
+    if (latitude === 90) {
+      newLatitude = 89.999
+    } else if (latitude === -90) {
+      newLatitude = -89.999
+    }
+
+    if (mapProps) map.setView([newLatitude, longitude], zoom)
   }, [mapProps])
 
   const handleOverlayChange = (event) => {
