@@ -1,9 +1,4 @@
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState
-} from 'react'
+import React, { useLayoutEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import Control from 'react-leaflet-custom-control'
 import {
@@ -12,9 +7,11 @@ import {
   ScaleControl
 } from 'react-leaflet'
 
+import { isEmpty } from 'lodash'
+
 import crsProjections from '../../util/map/crs'
+import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
-import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import ConnectedSpatialSelectionContainer from '../SpatialSelectionContainer/SpatialSelectionContainer'
 import GranuleGridLayer from '../../components/Map/GranuleGridLayer'
@@ -25,15 +22,13 @@ import ShapefileLayer from '../../components/Map/ShapefileLayer'
 import ZoomHome from '../../components/Map/ZoomHome'
 import MapEvents from './MapEvents'
 import Legend from '../../components/Legend/Legend'
-import projections from '../../util/map/projections'
-
-const { apiHost } = getEnvironmentConfig()
 
 const MapWrapper = ({
   authToken,
   base,
   center,
   collectionsMetadata,
+  colormapsMetadata,
   drawingNewLayer,
   focusedCollectionId,
   focusedGranuleId,
@@ -93,65 +88,18 @@ const MapWrapper = ({
     }
   }, [])
 
-  const [gibsLayer, setGibsLayer] = useState('')
-  const [colorMap, setColorMap] = useState({})
+  const { tags } = focusedCollectionMetadata
+  const [gibsTag] = getValueForTag('gibs', tags) || []
 
-  // TODO EDSC-3880 We can move the below state relating to colormaps into Redux which might help when eventually
-  // managaging multiple GIBS layers.
-  useEffect(() => {
-    const { tags } = focusedCollectionMetadata
-    const gibsTag = getValueForTag('gibs', tags)
-
-    if (gibsTag) setGibsLayer(gibsTag[0])
-  }, [focusedCollectionMetadata])
+  let colorMapState = {}
 
   // Check that we are in the correct projection
-  const hasGibsLayerForProjection = (gibsLayerValue, projectionValue) => {
-    if (projectionValue === projections.arctic && gibsLayerValue.arctic) return true
-    if (projectionValue === projections.geographic && gibsLayerValue.geographic) return true
-    if (projectionValue === projections.antarctic && gibsLayerValue.antarctic) return true
-
-    return false
+  if (gibsTag && hasGibsLayerForProjection(gibsTag, projection)) {
+    const { product } = gibsTag
+    colorMapState = colormapsMetadata[product] || {}
   }
 
-  useEffect(() => {
-    const getColorMap = async () => {
-      const hasNoColormapForProjection = (
-        !colorMap[focusedCollectionId]
-        || (colorMap[focusedCollectionId] && !colorMap[focusedCollectionId][projection])
-      )
-
-      if (
-        gibsLayer
-        && gibsLayer.product
-        && hasGibsLayerForProjection(gibsLayer, projection)
-        && hasNoColormapForProjection
-      ) {
-        try {
-          const response = await fetch(`${apiHost}/colormaps/${gibsLayer.product}`)
-          const colorMapResponse = await response.json()
-
-          setColorMap({
-            ...colorMap,
-            [focusedCollectionId]: {
-              ...colorMap[focusedCollectionId],
-              [projection]: colorMapResponse
-            }
-          })
-        } catch (error) {
-          setColorMap({
-            ...colorMap,
-            [focusedCollectionId]: {
-              ...colorMap[focusedCollectionId],
-              [projection]: null
-            }
-          })
-        }
-      }
-    }
-
-    getColorMap()
-  }, [gibsLayer, projection])
+  const { colorMapData: colorMap } = colorMapState
 
   return (
     <LeafletMapContainer
@@ -253,11 +201,9 @@ const MapWrapper = ({
       }
       <Control prepend position="topright">
         {
-          isFocusedCollectionPage
-          && colorMap[focusedCollectionId]
-          && colorMap[focusedCollectionId][projection] && (
+          (isFocusedCollectionPage && !isEmpty(colorMap)) && (
             <Legend
-              colorMap={colorMap[focusedCollectionId][projection]}
+              colorMap={colorMap}
             />
           )
         }
@@ -316,6 +262,7 @@ MapWrapper.propTypes = {
   }).isRequired,
   center: PropTypes.arrayOf(PropTypes.number).isRequired,
   collectionsMetadata: PropTypes.shape({}).isRequired,
+  colormapsMetadata: PropTypes.shape({}).isRequired,
   drawingNewLayer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
