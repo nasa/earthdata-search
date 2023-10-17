@@ -20,6 +20,7 @@
     },
     "moreInfoUrl": "https://seabass.gsfc.nasa.gov/",
     "pageTitle": "SeaBASS",
+    "parentConfig": "edsc",
     "portalBrowser": true,
     "query": {
       "dataCenter": "NASA/GSFC/SED/ESD/GCDC/SeaBASS"
@@ -30,8 +31,6 @@
     },
     "ui": {
       "showNonEosdisCheckbox": true,
-      "showOnlyGranulesCheckbox": true,
-      "showTophat": false
-    },
-    "parentConfig": "edsc"
+      "showOnlyGranulesCheckbox": true
+    }
   }
