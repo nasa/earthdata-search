@@ -12,7 +12,7 @@ describe('hasGibsLayerForProjection test', () => {
     expect(hasGibsLayerForProjection(gibsLayer, projections.arctic)).toBe(false)
   })
 
-  test('returns true with valid artic value', () => {
+  test('returns true with valid arctic value', () => {
     const gibsLayer = {
       arctic: true,
       geographic: null,
