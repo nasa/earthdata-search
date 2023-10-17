@@ -8,8 +8,7 @@ const eddLogger = async (event) => {
 
   const { body } = event
   const { params = {} } = JSON.parse(body)
-  const { data = {} } = params
-  const { eventType } = params
+  const { data = {}, eventType } = params
 
   const eventData = {
     event: eventType,
