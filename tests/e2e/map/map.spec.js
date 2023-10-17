@@ -367,7 +367,7 @@ test.describe('Map interactions', () => {
       })
     })
 
-    test.describe.skip('When editing a circle', () => { })
+    test.describe.skip('When editing a circle', () => {})
   })
 
   test.describe('When drawing bounding box spatial', () => {
@@ -504,7 +504,7 @@ test.describe('Map interactions', () => {
       })
     })
 
-    test.describe.skip('When editing a bounding box', () => { })
+    test.describe.skip('When editing a bounding box', () => {})
   })
 
   test.describe('When drawing polygon spatial', () => {
@@ -625,7 +625,7 @@ test.describe('Map interactions', () => {
       })
     })
 
-    test.describe.skip('When editing a polygon', () => { })
+    test.describe.skip('When editing a polygon', () => {})
   })
 
   test.describe('When uploading a shapefile', () => {
