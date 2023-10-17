@@ -64,10 +64,10 @@ export class AccessMethod extends Component {
     const {
       enableSpatialSubsetting = !(
         boundingBox === undefined
-         && circle === undefined
-         && line === undefined
-         && point === undefined
-         && polygon === undefined
+        && circle === undefined
+        && line === undefined
+        && point === undefined
+        && polygon === undefined
       )
     } = selectedMethod || {}
 
@@ -179,6 +179,33 @@ export class AccessMethod extends Component {
     })
   }
 
+  renderRadioItem(radioItem, onPropsChange, selected) {
+    const {
+      id,
+      methodKey,
+      title,
+      subtitle,
+      name,
+      description,
+      details
+    } = radioItem
+
+    return (
+      <AccessMethodRadio
+        key={id}
+        id={id}
+        value={methodKey}
+        title={title}
+        subtitle={subtitle}
+        serviceName={name}
+        description={description}
+        details={details}
+        onChange={onPropsChange}
+        checked={selected === methodKey}
+      />
+    )
+  }
+
   render() {
     const {
       enableTemporalSubsetting,
@@ -276,16 +303,15 @@ export class AccessMethod extends Component {
 
       if (type) {
         accessMethodsByType[type].push(
-          <AccessMethodRadio
-            key={id}
-            id={id}
-            value={methodKey}
-            title={title}
-            subtitle={subtitle}
-            serviceName={name}
-            description={description}
-            details={details}
-          />
+          {
+            id,
+            methodKey,
+            title,
+            subtitle,
+            name,
+            description,
+            details
+          }
         )
       }
     })
@@ -435,9 +461,9 @@ export class AccessMethod extends Component {
                   <RadioList
                     defaultValue={selectedAccessMethod}
                     onChange={(methodName) => this.handleAccessMethodSelection(methodName)}
-                  >
-                    {radioList}
-                  </RadioList>
+                    radioList={radioList}
+                    renderRadio={this.renderRadioItem}
+                  />
                 )
             }
           </div>
