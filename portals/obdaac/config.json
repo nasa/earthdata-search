@@ -1,0 +1,40 @@
+{
+  "features": {
+    "advancedSearch": true,
+    "authentication": false,
+    "featureFacets": {
+      "showAvailableInEarthdataCloud": false,
+      "showCustomizable": false,
+      "showMapImagery": false
+    }
+  },
+  "footer": {
+    "displayVersion": false,
+    "primaryLinks": [
+      {
+        "href": "https://oceancolor.gsfc.nasa.gov/",
+        "title": "Ocean Color" 
+      },
+      {
+        "href": "https://oceandata.sci.gsfc.nasa.gov/",
+        "title": "Ocean Data" 
+      }
+    ],
+    "secondaryLinks": []
+  },
+  "moreInfoUrl": "https://oceancolor.gsfc.nasa.gov/",
+  "pageTitle": "OBDAAC",
+  "parentConfig": "edsc",
+  "portalBrowser": true,
+  "query": {
+    "dataCenter": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC"
+  },
+  "title": {
+    "primary": "OBDAAC",
+    "secondary": "Ocean Biology Distributed Active Archive Center"
+  },
+  "ui": {
+    "showNonEosdisCheckbox": true,
+    "showOnlyGranulesCheckbox": true
+  }
+}
