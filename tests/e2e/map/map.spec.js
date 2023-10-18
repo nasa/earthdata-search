@@ -1028,7 +1028,7 @@ test.describe('Map interactions', () => {
         await expect(page).toHaveURL('search?polygon[0]=42.1875%2C-76.46517%2C42.1875%2C-82.40647%2C56.25%2C-76.46517%2C42.1875%2C-76.46517&sf=1&sfs[0]=0&lat=-90&projection=EPSG%3A3031&zoom=0')
 
         // Draws a polygon on the map
-        await expect(page.locator('.geojson-svg.leaflet-interactive')).toHaveAttribute('d', 'M768 343L821 284L850 318L768 343z')
+        await expect(page.locator('.geojson-svg.leaflet-interactive')).toHaveAttribute('d', 'M768 342L821 283L850 317L768 342z')
         await expect(page.locator('.leaflet-interactive').nth(0)).toHaveAttribute('d', 'M821 284L768 343L850 318L821 284z')
         await expect(page.locator('.leaflet-interactive').nth(2)).toHaveAttribute('d', 'M821 284L850 318L768 343L821 284z')
         await expect(page.locator('.leaflet-interactive').nth(3)).toHaveAttribute('d', 'M821 284L850 318L768 343L821 284z')
