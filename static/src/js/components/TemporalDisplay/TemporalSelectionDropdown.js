@@ -18,7 +18,6 @@ import './TemporalSelectionDropdown.scss'
 
 /**
  * Component representing the temporal selection dropdown
- * @extends PureComponent
  */
 const TemporalSelectionDropdown = ({
   allowRecurring,

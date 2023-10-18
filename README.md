@@ -68,7 +68,7 @@ Earthdata Search uses PostgreSQL in production on AWS RDS. If you don't already 
     brew install postgresql
 
 Start the PostgreSQL server:
-    
+
     # If you have never used brew services before:
     brew tap homebrew/services
     
