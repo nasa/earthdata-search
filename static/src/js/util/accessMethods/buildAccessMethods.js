@@ -40,7 +40,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         variables: serviceAssociatedVariables = {}
       } = serviceItem
 
-      if (serviceAssociatedVariables.count > 0) {
+      if (serviceAssociatedVariables.items) {
         associatedVariables = serviceAssociatedVariables
       }
 

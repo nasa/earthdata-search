@@ -180,7 +180,11 @@ describe('buildAccessMethods', () => {
               'TIFF',
               'NETCDF-4'
             ]
-          }]
+          }],
+          variables: {
+            count: 0,
+            items: null
+          }
         }]
       },
       variables: {
