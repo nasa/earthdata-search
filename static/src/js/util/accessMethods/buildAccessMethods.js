@@ -17,11 +17,13 @@ import { supportsVariableSubsetting } from './supportsVariableSubsetting'
 export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
   const {
     granules = {},
-    services = {}
+    services = {},
+    variables: collectionAssociatedVariables = {}
   } = collectionMetadata
+
   const accessMethods = {}
   let harmonyIndex = 0
-
+  let associatedVariables = collectionAssociatedVariables
   const { items: serviceItems = null } = services
 
   if (serviceItems !== null) {
@@ -35,8 +37,13 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         maxItemsPerOrder,
         name,
         supportedReformattings,
-        variables: associatedVariables
+        variables: serviceAssociatedVariables = {}
       } = serviceItem
+
+      if (serviceAssociatedVariables.items) {
+        associatedVariables = serviceAssociatedVariables
+      }
+
       // Only process service types that EDSC supports
       const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony']
       if (!supportedServiceTypes.includes(serviceType.toLowerCase())) return

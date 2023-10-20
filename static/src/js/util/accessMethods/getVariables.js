@@ -20,8 +20,7 @@ const computeVariables = (items) => {
 
 /**
  * Fetches the variable metadata for the provided variableIds
- * @param {Array} variableIds An array of variable Concept Ids
- * @param {String} jwtToken JWT returned from edlAuthorizer
+ * @param {Object} data variable object response from CMR
  */
 export const getVariables = (data) => {
   const { count } = data
