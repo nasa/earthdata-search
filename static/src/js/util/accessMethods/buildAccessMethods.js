@@ -18,12 +18,12 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
   const {
     granules = {},
     services = {},
-    variables: collAssociatedVars = {}
+    variables: collectionAssociatedVariables = {}
   } = collectionMetadata
 
   const accessMethods = {}
   let harmonyIndex = 0
-  let associatedVariables = collAssociatedVars
+  let associatedVariables = collectionAssociatedVariables
   const { items: serviceItems = null } = services
 
   if (serviceItems !== null) {
@@ -37,11 +37,11 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         maxItemsPerOrder,
         name,
         supportedReformattings,
-        variables: serviceAssocVars = {}
+        variables: serviceAssociatedVariables = {}
       } = serviceItem
 
-      if (serviceAssocVars.count > 0) {
-        associatedVariables = serviceAssocVars
+      if (serviceAssociatedVariables.count > 0) {
+        associatedVariables = serviceAssociatedVariables
       }
 
       // Only process service types that EDSC supports
