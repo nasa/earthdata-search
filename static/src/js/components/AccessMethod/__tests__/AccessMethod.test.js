@@ -1137,7 +1137,7 @@ describe('AccessMethod component', () => {
             }
           })
 
-          expect(screen.getByText('harmony-service-name')).toBeInTheDocument()
+          expect(screen.getByText(/using the harmony-service-name/)).toBeInTheDocument()
         })
       })
     })

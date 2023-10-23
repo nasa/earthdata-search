@@ -18,9 +18,12 @@ import './TemporalSelectionDropdown.scss'
 
 /**
  * Component representing the temporal selection dropdown
- * @extends PureComponent
  */
-const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
+const TemporalSelectionDropdown = ({
+  allowRecurring,
+  onChangeQuery,
+  temporalSearch
+}) => {
   const {
     startDate = '',
     endDate = '',
@@ -222,6 +225,7 @@ const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
       {
         open && (
           <TemporalSelectionDropdownMenu
+            allowRecurring={allowRecurring}
             disabled={disabled}
             onApplyClick={onApplyClick}
             onChangeQuery={onChangeQuery}
@@ -241,10 +245,12 @@ const TemporalSelectionDropdown = ({ temporalSearch, onChangeQuery }) => {
 }
 
 TemporalSelectionDropdown.defaultProps = {
+  allowRecurring: true,
   temporalSearch: {}
 }
 
 TemporalSelectionDropdown.propTypes = {
+  allowRecurring: PropTypes.bool,
   onChangeQuery: PropTypes.func.isRequired,
   temporalSearch: PropTypes.shape({
     endDate: PropTypes.string,

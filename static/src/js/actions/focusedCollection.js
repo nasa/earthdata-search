@@ -4,6 +4,7 @@ import { UPDATE_FOCUSED_COLLECTION, UPDATE_GRANULE_SUBSCRIPTIONS } from '../cons
 
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
 import { eventEmitter } from '../events/events'
+import { getValueForTag } from '../../../../sharedUtils/tags'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { getCollectionsQuery } from '../selectors/query'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
@@ -230,6 +231,15 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           variables,
           versionId
         } = collection
+
+        // Look and see if there are any gibs tags
+        // If there are, check to see if the colormaps associated with the productids in the tags exists.
+        // If they don't we call an action to pull the colorMaps and add them to the metadata.colormaps
+        const gibsTags = tags ? getValueForTag('gibs', tags) : null
+        if (gibsTags && gibsTags.length > 0) {
+          const { product } = gibsTags[0]
+          dispatch(actions.getColorMap({ product }))
+        }
 
         // Formats the metadata returned from graphql for use throughout the application
         const focusedMetadata = createFocusedCollectionMetadata(

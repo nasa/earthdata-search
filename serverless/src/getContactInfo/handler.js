@@ -8,7 +8,7 @@ import { parseError } from '../../../sharedUtils/parseError'
 import { getCmrPreferencesData } from './getCmrPreferencesData'
 
 /**
- * Handler for retreiving a users contact information
+ * Handler for retrieving a users contact information
  * @param {Object} event Details about the HTTP request that it received
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
@@ -27,7 +27,7 @@ const getContactInfo = async (event, context) => {
 
   const { id } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 
-  // Retrive a connection to the database
+  // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
 
   try {

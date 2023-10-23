@@ -1,0 +1,14 @@
+.admin-retrievals-metrics-list {
+  &__table-body {
+    overflow-y: auto;
+  }
+  
+  &__table-row {
+    cursor: default;
+    overflow-y: auto;
+
+    &:hover {
+      background-color: $color__black--200 !important;
+    }
+  }
+}

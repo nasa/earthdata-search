@@ -3,6 +3,7 @@ import { connectRouter } from 'connected-react-router'
 
 import adminIsAuthorizedReducer from './admin/isAuthorized'
 import adminProjectsReducer from './admin/projects'
+import adminMetricsRetrievalsReducer from './admin/retrievalsMetrics'
 import adminRetrievalsReducer from './admin/retrievals'
 import advancedSearchReducer from './advancedSearch'
 import authTokenReducer from './authToken'
@@ -10,6 +11,7 @@ import autocompleteReducer from './autocomplete'
 import browserReducer from './browser'
 import collectionMetadataReducer from './collectionMetadata'
 import collectionsResultsReducer from './collectionsResults'
+import colorMapsReducer from './colorMaps'
 import contactInfoReducer from './contactInfo'
 import dataQualitySummariesReducer from './dataQualitySummaries'
 import earthdataDownloadRedirectReducer from './earthdataDownloadRedirect'
@@ -47,7 +49,8 @@ export default (history) => combineReducers({
   admin: combineReducers({
     isAuthorized: adminIsAuthorizedReducer,
     projects: adminProjectsReducer,
-    retrievals: adminRetrievalsReducer
+    retrievals: adminRetrievalsReducer,
+    metricsRetrievals: adminMetricsRetrievalsReducer
   }),
   advancedSearch: advancedSearchReducer,
   authToken: authTokenReducer,
@@ -69,7 +72,8 @@ export default (history) => combineReducers({
   map: mapReducer,
   metadata: combineReducers({
     collections: collectionMetadataReducer,
-    granules: granuleMetadataReducer
+    granules: granuleMetadataReducer,
+    colormaps: colorMapsReducer
   }),
   portal: portalsReducer,
   project: projectReducer,

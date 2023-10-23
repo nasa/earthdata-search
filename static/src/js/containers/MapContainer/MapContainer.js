@@ -19,6 +19,7 @@ import { metricsMap } from '../../middleware/metrics/actions'
 
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
+import { getColormapsMetadata } from '../../selectors/colormapsMetadata'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getGranulesMetadata } from '../../selectors/granuleMetadata'
 import { getMapPreferences } from '../../selectors/preferences'
@@ -57,6 +58,7 @@ export const mapDispatchToProps = (dispatch) => ({
 export const mapStateToProps = (state) => ({
   authToken: state.authToken,
   collectionsMetadata: state.metadata.collections,
+  colormapsMetadata: getColormapsMetadata(state),
   drawingNewLayer: state.ui.map.drawingNewLayer,
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
@@ -74,6 +76,7 @@ export const MapContainer = (props) => {
     authToken,
     map: mapProps,
     collectionsMetadata,
+    colormapsMetadata,
     drawingNewLayer,
     focusedCollectionId,
     focusedGranuleId,
@@ -239,6 +242,7 @@ export const MapContainer = (props) => {
       base={base}
       center={center}
       collectionsMetadata={collectionsMetadata}
+      colormapsMetadata={colormapsMetadata}
       drawingNewLayer={drawingNewLayer}
       focusedCollectionId={focusedCollectionId}
       focusedGranuleId={focusedGranuleId}
@@ -275,6 +279,7 @@ MapContainer.defaultProps = {
 MapContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   collectionsMetadata: PropTypes.shape({}).isRequired,
+  colormapsMetadata: PropTypes.shape({}).isRequired,
   drawingNewLayer: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool

@@ -8,6 +8,13 @@ import {
   updateAdminRetrievalsSortKey,
   updateAdminRetrievalsPageNum
 } from './admin/retrievals'
+
+import {
+  fetchAdminMetricsRetrievals,
+  updateAdminMetricsRetrievalsStartDate,
+  updateAdminMetricsRetrievalsEndDate
+} from './admin/retrievalMetrics'
+
 import {
   adminViewProject,
   fetchAdminProjects,
@@ -30,6 +37,12 @@ import {
   viewCollectionGranules,
   viewCollectionDetails
 } from './focusedCollection'
+import {
+  getColorMap,
+  setColorMapsErrored,
+  setColorMapsLoaded,
+  setColorMapsLoading
+} from './colorMaps'
 import {
   applyGranuleFilters,
   clearGranuleFilters,
@@ -242,6 +255,7 @@ const actions = {
   fetchSavedProjects,
   fetchShapefile,
   getCollections,
+  getColorMap,
   getFocusedCollection,
   getFocusedGranule,
   getGranuleSubscriptions,
@@ -274,6 +288,9 @@ const actions = {
   setActivePanel,
   setActivePanelGroup,
   setActivePanelSection,
+  setColorMapsErrored,
+  setColorMapsLoaded,
+  setColorMapsLoading,
   setContactInfoFromJwt,
   setDataQualitySummaries,
   setIsSubmitting,
@@ -308,6 +325,9 @@ const actions = {
   updateAccessMethod,
   updateAdminRetrievalsPageNum,
   updateAdminRetrievalsSortKey,
+  fetchAdminMetricsRetrievals,
+  updateAdminMetricsRetrievalsStartDate,
+  updateAdminMetricsRetrievalsEndDate,
   updateAdvancedSearch,
   updateAuthToken,
   updateBrowserVersion,
