@@ -61,7 +61,7 @@ describe('RadioSettingDropdownItem component', () => {
   })
 
   test('will not call the onClick callback, if item is active', () => {
-    const { enzymeWrapper, props } = setup({isActive: true})
+    const { enzymeWrapper, props } = setup({ isActive: true })
 
     enzymeWrapper.update()
     enzymeWrapper.simulate('click')
