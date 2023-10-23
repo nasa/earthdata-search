@@ -13,11 +13,10 @@ module.exports = {
   ],
   sourceType: 'unambiguous',
   plugins: [
-    '@babel/plugin-proposal-object-rest-spread',
-    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-transform-object-rest-spread',
+    '@babel/plugin-transform-class-properties',
     '@babel/plugin-transform-runtime',
-    '@babel/plugin-syntax-dynamic-import',
-    'transform-class-properties'
+    '@babel/plugin-syntax-dynamic-import'
   ],
   env: {
     playwright: {
