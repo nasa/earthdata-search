@@ -90,6 +90,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
     const isLast = index === collectionIds.length - 1
 
     // Determine service feature flags
+    let hasCombine = false
     let hasFormats = false
     let hasSpatialSubsetting = false
     let hasTemporalSubsetting = false
@@ -100,6 +101,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
       const service = serviceFeatures[key]
 
       const {
+        has_combine: serviceHasCombine,
         has_formats: serviceHasFormats,
         has_spatial_subsetting: serviceHasSpatialSubsetting,
         has_temporal_subsetting: serviceHasTemporalSubsetting,
@@ -107,6 +109,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
         has_variables: serviceHasVariables
       } = service
 
+      if (serviceHasCombine) hasCombine = true
       if (serviceHasFormats) hasFormats = true
       if (serviceHasSpatialSubsetting) hasSpatialSubsetting = true
       if (serviceHasTemporalSubsetting) hasTemporalSubsetting = true
@@ -139,6 +142,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
       datasetId,
       displayOrganization,
       granuleCount,
+      hasCombine,
       hasFormats,
       hasMapImagery,
       hasSpatialSubsetting,
