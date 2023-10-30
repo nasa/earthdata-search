@@ -47,31 +47,42 @@ export default class GranuleRequest extends CmrRequest {
     const { entry = [] } = feed
 
     entry.map((granule) => {
+      const {
+        id,
+        time_start: timeStart,
+        time_end: timeEnd,
+        links
+      } = granule
+
       const updatedGranule = granule
 
       updatedGranule.isOpenSearch = false
 
-      const formattedTemporal = getTemporal(granule.time_start, granule.time_end)
+      const formattedTemporal = getTemporal(timeStart, timeEnd)
 
       if (formattedTemporal.filter(Boolean).length > 0) {
         updatedGranule.formatted_temporal = formattedTemporal
       }
 
-      const h = getApplicationConfig().thumbnailSize.height
-      const w = getApplicationConfig().thumbnailSize.width
+      const { thumbnailSize } = getApplicationConfig()
+      const { height, width } = thumbnailSize
 
-      if (granule.id) {
-        // eslint-disable-next-line
-        updatedGranule.thumbnail = `${getEarthdataConfig(this.earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${granule.id}?h=${h}&w=${w}`
+      if (id) {
+        updatedGranule.thumbnail = `${getEarthdataConfig(this.earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${id}?h=${height}&w=${width}`
       }
 
-      if (granule.links && granule.links.length > 0) {
+      if (links && links.length > 0) {
         let browseUrl
 
         // Pick the first 'browse' link to use as the browseUrl
-        granule.links.some((link) => {
-          if (link.rel.indexOf('browse') > -1) {
-            browseUrl = link.href
+        links.some((link) => {
+          const {
+            href,
+            rel
+          } = link
+
+          if (rel.indexOf('browse') > -1 && href.startsWith('https://')) {
+            browseUrl = href
 
             return true
           }
