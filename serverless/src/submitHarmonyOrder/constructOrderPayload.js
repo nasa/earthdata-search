@@ -47,11 +47,13 @@ export const constructOrderPayload = async ({
   const {
     enableTemporalSubsetting,
     enableSpatialSubsetting,
+    enableConcatenateDownload,
     mbr,
     selectedOutputFormat,
     selectedOutputProjection,
     supportsBoundingBoxSubsetting,
-    supportsShapefileSubsetting
+    supportsShapefileSubsetting,
+    supportsConcatenation
   } = accessMethod
 
   // OGC uses duplicate parameter names for subsetting and the
@@ -213,6 +215,11 @@ export const constructOrderPayload = async ({
 
   if (selectedOutputProjection) {
     orderPayload.append('outputCrs', selectedOutputProjection)
+  }
+
+  // adds supportsConcatenation to the payload and it's value
+  if (supportsConcatenation && enableConcatenateDownload) {
+    orderPayload.append('concatenate', enableConcatenateDownload)
   }
 
   // EDSC-3440: Add skipPreview=true to all Harmony orders
