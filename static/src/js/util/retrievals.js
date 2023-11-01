@@ -42,7 +42,8 @@ const permittedAccessMethodFields = [
   'supportsBoundingBoxSubsetting',
   'supportsShapefileSubsetting',
   'type',
-  'url'
+  'url',
+  'variables'
 ]
 
 /**
