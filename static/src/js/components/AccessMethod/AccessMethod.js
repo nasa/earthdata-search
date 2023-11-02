@@ -61,8 +61,6 @@ export class AccessMethod extends Component {
       enableTemporalSubsetting = !isRecurring
     } = selectedMethod || {}
 
-    console.log(selectedMethod)
-
     const {
       enableConcatenateDownload
     } = selectedMethod || false

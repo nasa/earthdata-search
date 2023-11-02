@@ -219,7 +219,7 @@ export const constructOrderPayload = async ({
 
   // adds supportsConcatenation to the payload and it's value
   if (supportsConcatenation && enableConcatenateDownload) {
-    orderPayload.append('concatenate', enableConcatenateDownload)
+    orderPayload.append('concatenate', true)
   }
 
   // EDSC-3440: Add skipPreview=true to all Harmony orders

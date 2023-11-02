@@ -59,8 +59,6 @@ export const prepareRetrievalParams = (state) => {
     shapefile
   } = state
 
-  console.log(state)
-
   // Retrieve data from Redux using selectors
   const collectionsMetadata = getProjectCollectionsMetadata(state)
   const earthdataEnvironment = getEarthdataEnvironment(state)
@@ -68,9 +66,6 @@ export const prepareRetrievalParams = (state) => {
   const projectCollectionsIds = getProjectCollectionsIds(state)
 
   const retrievalCollections = []
-
-  console.log(state)
-  console.log(projectCollectionsIds)
 
   projectCollectionsIds.forEach((collectionId) => {
     const { [collectionId]: projectCollection } = projectCollections
@@ -115,7 +110,7 @@ export const prepareRetrievalParams = (state) => {
     const params = buildGranuleSearchParams(preparedParams)
 
     returnValue.granule_params = params
-    console.log(accessMethods)
+
     returnValue.access_method = pick(
       accessMethods[selectedAccessMethod],
       permittedAccessMethodFields

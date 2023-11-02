@@ -5,7 +5,6 @@ import { isEmpty } from 'lodash'
  * @param {Object} service UMM S record to parse
  */
 export const supportsBoundingBoxSubsetting = (service) => {
-  console.log(service)
   const { serviceOptions = {} } = service
 
   // If there are no service options the record can not support variable subsetting
