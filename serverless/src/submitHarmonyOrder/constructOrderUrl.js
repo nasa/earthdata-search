@@ -4,21 +4,16 @@
  * @param {Object} accessMethod The selected access method from the project page
  */
 export const constructOrderUrl = (collectionId, accessMethod) => {
-  console.log('Got to parsing name in constructOrderUrl ')
   const {
     selectedVariables,
     url
   } = accessMethod
-  console.log('🚀 ~ file: constructOrderUrl.js:13 ~ constructOrderUrl ~ selectedVariables:', selectedVariables)
 
   const selectedVariableNames = []
 
   if (selectedVariables) {
     selectedVariables.forEach((variable) => {
-      console.log('🚀 ~ file: constructOrderUrl.js:18 ~ selectedVariables.forEach ~ variable:', variable)
-      // Const { [variable]: variableObject } = variable
       const { name } = variable
-      console.log('🚀 ~ file: constructOrderUrl.js:19 ~ selectedVariables.forEach ~ name:', name)
 
       selectedVariableNames.push(name)
     })
@@ -26,7 +21,6 @@ export const constructOrderUrl = (collectionId, accessMethod) => {
 
   let variableParameter = 'all'
   if (selectedVariableNames.length > 0) {
-    console.log('🚀 ~ file: constructOrderUrl.js:28 ~ constructOrderUrl ~ variableParameter:', variableParameter)
     variableParameter = encodeURIComponent(selectedVariableNames.join(','))
   }
 
@@ -38,7 +32,6 @@ export const constructOrderUrl = (collectionId, accessMethod) => {
     `collections/${variableParameter}`,
     'coverage/rangeset'
   ]
-  console.log('🚀 ~ file: constructOrderUrl.js:39 ~ constructOrderUrl ~ harmonyPathParts:', harmonyPathParts)
 
   return harmonyPathParts.join('/')
 }
