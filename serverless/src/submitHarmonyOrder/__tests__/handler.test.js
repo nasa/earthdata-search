@@ -96,16 +96,8 @@ describe('submitHarmonyOrder', () => {
             enableTemporalSubsetting: true,
             type: 'Harmony',
             selectedOutputFormat: 'NetCDF-4',
-            selectedVariables: [
-              {
-                name: 'test_var',
-                conceptId: 'V100000-EDSC'
-              },
-              {
-                name: 'test_var_2',
-                conceptId: 'V100002-EDSC'
-              }
-            ],
+            selectedVariables: ['V100000-EDSC', 'V100002-EDSC'],
+            selectedVariableNames: ['test_var', 'test_var_2'],
             url: 'https://harmony.earthdata.nasa.gov'
           },
           granule_params: {}
@@ -182,16 +174,8 @@ describe('submitHarmonyOrder', () => {
             enableTemporalSubsetting: true,
             type: 'Harmony',
             selectedOutputFormat: 'NetCDF-4',
-            selectedVariables: [
-              {
-                conceptId: 'V100000-EDSC',
-                name: 'test_var'
-              },
-              {
-                conceptId: 'V100002-EDSC',
-                name: 'test_var_2'
-              }
-            ],
+            selectedVariables: ['V100000-EDSC', 'V100002-EDSC'],
+            selectedVariableNames: ['test_var', 'test_var_2'],
             url: 'https://harmony.earthdata.nasa.gov'
           },
           granule_params: {}
@@ -269,16 +253,8 @@ describe('submitHarmonyOrder', () => {
             enableTemporalSubsetting: true,
             type: 'Harmony',
             selectedOutputFormat: 'NetCDF-4',
-            selectedVariables: [
-              {
-                conceptId: 'V100000-EDSC',
-                name: 'test_var'
-              },
-              {
-                conceptId: 'V100002-EDSC',
-                name: 'test_var_2'
-              }
-            ],
+            selectedVariables: ['V100000-EDSC', 'V100002-EDSC'],
+            selectedVariableNames: ['test_var', 'test_var_2'],
             url: 'https://harmony.earthdata.nasa.gov'
           },
           granule_params: {}

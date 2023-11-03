@@ -4,15 +4,8 @@ describe('constructOrderUrl', () => {
   describe('when variables are selected', () => {
     test('url uses selected variable names in the url for variables', () => {
       const response = constructOrderUrl('C100000-EDSC', {
-        selectedVariables: [
-          {
-            conceptId: 'V100000-EDSC',
-            name: 'test_var'
-          },
-          {
-            conceptId: 'V100002-EDSC',
-            name: 'test_var_2'
-          }
+        selectedVariableNames: [
+          'test_var', 'test_var_2'
         ],
         url: 'https://harmony.earthdata.nasa.gov'
       })

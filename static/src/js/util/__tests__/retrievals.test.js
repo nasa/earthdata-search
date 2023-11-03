@@ -42,7 +42,22 @@ describe('retrievals', () => {
                     'EPSG:4326'
                   ],
                   type: 'Harmony',
-                  url: 'https://harmony.sit.earthdata.nasa.gov'
+                  url: 'https://harmony.sit.earthdata.nasa.gov',
+                  variables: {
+                    'V100000-EDSC': {
+                      conceptId: 'V100000-EDSC',
+                      definition: 'Alpha channel value',
+                      longName: 'Alpha channel ',
+                      name: 'alpha_var',
+                      scienceKeywords: [
+                        {
+                          category: 'EARTH SCIENCE',
+                          topic: 'ATMOSPHERE',
+                          term: 'ATMOSPHERIC PRESSURE'
+                        }
+                      ]
+                    }
+                  }
                 }
               },
               granules: {

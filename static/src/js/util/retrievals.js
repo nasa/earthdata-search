@@ -108,7 +108,7 @@ export const prepareRetrievalParams = (state) => {
 
     const params = buildGranuleSearchParams(preparedParams)
 
-    const allVariables = accessMethods[selectedAccessMethod].variables
+    const { variables, selectedVariables } = accessMethods[selectedAccessMethod]
 
     returnValue.granule_params = params
     returnValue.access_method = pick(
@@ -116,20 +116,17 @@ export const prepareRetrievalParams = (state) => {
       permittedAccessMethodFields
     )
 
-    if (returnValue.access_method.selectedVariables) {
-      const variableObjects = []
-      returnValue.access_method.selectedVariables.forEach((variableKey) => {
-        // Only pull in the `name` field of the variables object
-        const newVarObj = {
-          conceptId: variableKey,
-          name: allVariables[variableKey].name
-        }
+    // Adding `selectedVariableNames` which is a derived field not included in `selectedAccessMethod`
+    if (selectedVariables) {
+      const variableNames = selectedVariables.map((variableKey) => {
+        const { [variableKey]: variableObject } = variables
+        const { name: variableName } = variableObject
 
-        variableObjects.push(newVarObj)
+        return variableName
       })
 
-      if (variableObjects) {
-        returnValue.access_method.selectedVariables = variableObjects
+      if (variableNames) {
+        returnValue.access_method.selectedVariableNames = variableNames
       }
     }
 
