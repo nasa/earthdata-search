@@ -42,22 +42,7 @@ describe('retrievals', () => {
                     'EPSG:4326'
                   ],
                   type: 'Harmony',
-                  url: 'https://harmony.sit.earthdata.nasa.gov',
-                  variables: {
-                    'V100000-EDSC': {
-                      conceptId: 'V100000-EDSC',
-                      definition: 'Alpha channel value',
-                      longName: 'Alpha channel ',
-                      name: 'alpha_var',
-                      scienceKeywords: [
-                        {
-                          category: 'EARTH SCIENCE',
-                          topic: 'ATMOSPHERE',
-                          term: 'ATMOSPHERIC PRESSURE'
-                        }
-                      ]
-                    }
-                  }
+                  url: 'https://harmony.sit.earthdata.nasa.gov'
                 }
               },
               granules: {
@@ -115,22 +100,7 @@ describe('retrievals', () => {
           },
           selectedOutputProjection: 'EPSG:4326',
           type: 'Harmony',
-          url: 'https://harmony.sit.earthdata.nasa.gov',
-          variables: {
-            'V100000-EDSC': {
-              conceptId: 'V100000-EDSC',
-              definition: 'Alpha channel value',
-              longName: 'Alpha channel ',
-              name: 'alpha_var',
-              scienceKeywords: [
-                {
-                  category: 'EARTH SCIENCE',
-                  topic: 'ATMOSPHERE',
-                  term: 'ATMOSPHERIC PRESSURE'
-                }
-              ]
-            }
-          }
+          url: 'https://harmony.sit.earthdata.nasa.gov'
         },
         collection_metadata: {
           conceptId: 'C100000-EDSC',
@@ -277,22 +247,7 @@ describe('retrievals', () => {
           },
           selectedOutputProjection: 'EPSG:4326',
           type: 'Harmony',
-          url: 'https://harmony.sit.earthdata.nasa.gov',
-          variables: {
-            'V100000-EDSC': {
-              conceptId: 'V100000-EDSC',
-              definition: 'Alpha channel value',
-              longName: 'Alpha channel ',
-              name: 'alpha_var',
-              scienceKeywords: [
-                {
-                  category: 'EARTH SCIENCE',
-                  topic: 'ATMOSPHERE',
-                  term: 'ATMOSPHERIC PRESSURE'
-                }
-              ]
-            }
-          }
+          url: 'https://harmony.sit.earthdata.nasa.gov'
         },
         collection_metadata: {
           conceptId: 'C100000-EDSC',

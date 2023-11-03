@@ -42,8 +42,7 @@ const permittedAccessMethodFields = [
   'supportsBoundingBoxSubsetting',
   'supportsShapefileSubsetting',
   'type',
-  'url',
-  'variables'
+  'url'
 ]
 
 /**
@@ -109,12 +108,42 @@ export const prepareRetrievalParams = (state) => {
 
     const params = buildGranuleSearchParams(preparedParams)
 
+    const allVariables = accessMethods[selectedAccessMethod].variables
+
+    console.log('🚀 ~ file: retrievals.js:113 ~ projectCollectionsIds.forEach ~ allVariables:', allVariables)
+
     returnValue.granule_params = params
     returnValue.access_method = pick(
       accessMethods[selectedAccessMethod],
       permittedAccessMethodFields
     )
 
+    // ReturnValue.access_method.merge({'variables':})
+    // TODO Add a parse to just get the variable name
+
+    console.log('🚀 ~ file: retrievals.js:118 ~ projectCollectionsIds.forEach ~ returnValue.access_method.selectedVariables:', returnValue.access_method)
+    if (returnValue.access_method.selectedVariables) {
+      console.log('🚀 ~ file: retrievals.js:112 ~ projectCollectionsIds.forEach ~ returnValue.access_method:', returnValue.access_method)
+      const variableObjects = []
+      returnValue.access_method.selectedVariables.forEach((variableKey) => {
+        console.log('🚀 ~ file: retrievals.js:119 ~ returnValue.access_method.selectedVariables.forEach ~ variableKey:', variableKey)
+        // Only pull in the `name` field of the variables object
+        const newVarObj = {
+          conceptId: variableKey,
+          name: allVariables[variableKey].name
+        }
+
+        console.log('🚀 ~ file: retrievals.js:128 ~ returnValue.access_method.selectedVariables.forEach ~ newVarObj:', newVarObj)
+        variableObjects.push(newVarObj)
+      })
+
+      if (variableObjects) {
+        console.log('🚀 ~ file: retrievals.js:124 ~ projectCollectionsIds.forEach ~ variableObjects:', variableObjects)
+        returnValue.access_method.selectedVariables = variableObjects
+      }
+    }
+
+    console.log('✅ ~ file: retrievals.js:141 ~ projectCollectionsIds.forEach ~ returnValue.access_method:', returnValue.access_method)
     const {
       boundingBox = [],
       circle = [],
@@ -151,6 +180,7 @@ export const prepareRetrievalParams = (state) => {
     }
 
     retrievalCollections.push(returnValue)
+    console.log('🚀 ~ file: retrievals.js:181 ~ projectCollectionsIds.forEach ~ retrievalCollections:', retrievalCollections)
   })
 
   const { search } = router.location
