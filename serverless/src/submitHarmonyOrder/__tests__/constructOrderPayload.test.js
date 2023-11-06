@@ -693,6 +693,7 @@ describe('constructOrderPayload', () => {
       })
     })
   })
+
   describe('when only sending concatenate is true', () => {
     test('constructs a payload containing supportsConcatenation = true and enableConcatenateDownload = true', async () => {
       nock(/cmr/)
@@ -726,9 +727,10 @@ describe('constructOrderPayload', () => {
       })
 
       expect(response.getAll('concatenate')).toEqual([
-        'true',
+        'true'
       ])
     })
+
     test('constructs a payload containing supportsConcatenation = true and enableConcatenateDownload = false', async () => {
       nock(/cmr/)
         .matchHeader('Authorization', 'Bearer access-token')
@@ -761,10 +763,11 @@ describe('constructOrderPayload', () => {
       })
 
       expect(response.getAll('concatenate')).not.toEqual([
-        'true',
+        'true'
       ])
     })
   })
+
   describe('when only sending concatenate is disabled', () => {
     test('constructs a payload containing supportsConcatenation = false', async () => {
       nock(/cmr/)
@@ -797,7 +800,7 @@ describe('constructOrderPayload', () => {
       })
 
       expect(response.getAll('concatenate')).not.toEqual([
-        'true',
+        'true'
       ])
     })
   })
