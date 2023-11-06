@@ -25,11 +25,11 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
 
   const accessMethods = {}
   let harmonyIndex = 0
-  let associatedVariables = collectionAssociatedVariables
   const { items: serviceItems = null } = services
 
   if (serviceItems !== null) {
     serviceItems.forEach((serviceItem) => {
+      let associatedVariables = collectionAssociatedVariables
       const {
         conceptId: serviceConceptId,
         orderOptions,
