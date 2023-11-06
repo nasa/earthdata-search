@@ -1151,6 +1151,32 @@ test.describe('Map interactions', () => {
         await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3031/)
       })
     })
+
+    test.describe('When switching from the North Polar Stereographic projection to the South Polar Stereographic projection', () => {
+      test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        await page.goto('/')
+
+        // Change the projection to North Polar
+        await page.getByTestId('projection-switcher__arctic').click()
+
+        await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413&zoom=0')
+
+        await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3413/)
+
+        // Change the projection to South Polar
+        await page.getByTestId('projection-switcher__antarctic').click()
+
+        await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031&zoom=0')
+
+        await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3031/)
+      })
+    })
   })
 
   test.describe('When changing the map layers', () => {

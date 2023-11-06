@@ -36,11 +36,16 @@ export const RadioSettingDropdownItem = ({
     }
   )
 
+  const handleClick = () => {
+    if (isActive) return
+    onClick()
+  }
+
   return (
     <Dropdown.Item
       as="button"
       className={radioSettingItemClasses}
-      onClick={onClick}
+      onClick={handleClick}
       disabled={inProgress}
     >
       {

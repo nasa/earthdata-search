@@ -96,27 +96,8 @@ describe('submitHarmonyOrder', () => {
             enableTemporalSubsetting: true,
             type: 'Harmony',
             selectedOutputFormat: 'NetCDF-4',
-            selectedVariables: [
-              'V100000-EDSC',
-              'V100002-EDSC'
-            ],
-            variables: {
-              'V100000-EDSC': {
-                name: 'test_var',
-                longName: 'Test Variable',
-                conceptId: 'V100000-EDSC'
-              },
-              'V100001-EDSC': {
-                name: 'test_var_1',
-                longName: 'Test Variable 1',
-                conceptId: 'V100001-EDSC'
-              },
-              'V100002-EDSC': {
-                name: 'test_var_2',
-                longName: 'Test Variable 2',
-                conceptId: 'V100002-EDSC'
-              }
-            },
+            selectedVariables: ['V100000-EDSC', 'V100002-EDSC'],
+            selectedVariableNames: ['test_var', 'test_var_2'],
             url: 'https://harmony.earthdata.nasa.gov'
           },
           granule_params: {}
@@ -193,27 +174,8 @@ describe('submitHarmonyOrder', () => {
             enableTemporalSubsetting: true,
             type: 'Harmony',
             selectedOutputFormat: 'NetCDF-4',
-            selectedVariables: [
-              'V100000-EDSC',
-              'V100002-EDSC'
-            ],
-            variables: {
-              'V100000-EDSC': {
-                name: 'test_var',
-                longName: 'Test Variable',
-                conceptId: 'V100000-EDSC'
-              },
-              'V100001-EDSC': {
-                name: 'test_var_1',
-                longName: 'Test Variable 1',
-                conceptId: 'V100001-EDSC'
-              },
-              'V100002-EDSC': {
-                name: 'test_var_2',
-                longName: 'Test Variable 2',
-                conceptId: 'V100002-EDSC'
-              }
-            },
+            selectedVariables: ['V100000-EDSC', 'V100002-EDSC'],
+            selectedVariableNames: ['test_var', 'test_var_2'],
             url: 'https://harmony.earthdata.nasa.gov'
           },
           granule_params: {}
@@ -291,27 +253,8 @@ describe('submitHarmonyOrder', () => {
             enableTemporalSubsetting: true,
             type: 'Harmony',
             selectedOutputFormat: 'NetCDF-4',
-            selectedVariables: [
-              'V100000-EDSC',
-              'V100002-EDSC'
-            ],
-            variables: {
-              'V100000-EDSC': {
-                name: 'test_var',
-                longName: 'Test Variable',
-                conceptId: 'V100000-EDSC'
-              },
-              'V100001-EDSC': {
-                name: 'test_var_1',
-                longName: 'Test Variable 1',
-                conceptId: 'V100001-EDSC'
-              },
-              'V100002-EDSC': {
-                name: 'test_var_2',
-                longName: 'Test Variable 2',
-                conceptId: 'V100002-EDSC'
-              }
-            },
+            selectedVariables: ['V100000-EDSC', 'V100002-EDSC'],
+            selectedVariableNames: ['test_var', 'test_var_2'],
             url: 'https://harmony.earthdata.nasa.gov'
           },
           granule_params: {}

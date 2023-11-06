@@ -12,7 +12,7 @@ It builds upon several public-facing services provided by EOSDIS, including the 
 
 ## License
 
-> Copyright © 2007-2019 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
+> Copyright © 2007-2023 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
 >
 > Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 > You may obtain a copy of the License at
@@ -67,9 +67,17 @@ Earthdata Search uses PostgreSQL in production on AWS RDS. If you don't already 
 
     brew install postgresql
 
+Start the PostgreSQL server:
+
+    # If you have never used brew services before:
+    brew tap homebrew/services
+    
+    # Start the server:
+    brew services start postgresql
+
 If you decide to install via Homebrew you'll need to create the default user.
 
-    /usr/local/opt/postgres/bin/createuser -s postgres
+    createuser -s postgres
 
 ### Initial Setup
 
@@ -81,21 +89,23 @@ Once npm is installed locally, you need to download the dependencies by executin
 
 ##### Configuration
 
-We can configure some of the layouts for the EDSC presentation by updating the defaultPortal value. For development purposes we should set this to `edsc`.
-
 ###### Secrets
 
 For local development Earthdata Search uses a json configuration file to store secure files, an example is provided and should be copied and completed before attempting to go any further.
 
     cp secret.config.json.example secret.config.json
 
-In order to operate against a local database this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `dbPort` in `static.config.json` if you have custom configuration locally)
+In order to operate against a local database this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `dbPort` in `static.config.json` if you have custom configuration locally). 
+
+If you created the `postgres` user after a new PostgreSQL install as described above, both `dbUsername` and `dbPassword` will be the username you use to log into your computer.
 
 ###### Public (Non-Secure)
 
 Non-secure values are stored in `static.config.json`. In order to prevent conflicts amongst developers you copy the static config into `overrideStatic.config.json` and change the config values there. Do not commit changes to `static.config.json`.
 
     cp static.config.json overrideStatic.config.json
+
+We can configure some of the layouts for the EDSC presentation by updating the `defaultPortal` value in `overrideStatic.config.json`. For development purposes we should set this to `edsc`.
 
 ##### Database Migration
 
