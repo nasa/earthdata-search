@@ -63,7 +63,6 @@ export const createSpatialDisplay = (spatial) => {
   if (selectedShape) {
     if (boundingBox) {
       const splitStr = transformBoundingBoxCoordinates(selectedShape[0])
-      console.log(splitStr)
 
       return `SW: (${splitStr[0]}) NE: (${splitStr[1]})`
     }
