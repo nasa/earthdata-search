@@ -2,15 +2,17 @@
  * Determine whether or not the provided UMM S record supports shapefile subsetting
  * @param {Object} service UMM S record to parse
  */
-export const supportsConcatenation = (service) => {
+export const defaultConcatenation = (service) => {
   const { serviceOptions = {} } = service
-
-  console.log(service)
 
   // If there are no service options the record can not support variable subsetting
   if (serviceOptions == null) return false
 
   const { aggregation = {} } = serviceOptions
+  const { concatenate = {} } = aggregation
 
-  return 'concatenate' in aggregation
+  const { concatenateDefault = false } = concatenate
+  console.log(concatenateDefault)
+
+  return concatenateDefault
 }

@@ -233,12 +233,6 @@ export class AccessMethod extends Component {
 
   render() {
     const {
-      enableTemporalSubsetting,
-      enableSpatialSubsetting,
-      enableConcatenateDownload
-    } = this.state
-
-    const {
       accessMethods,
       index,
       isActive,
@@ -364,8 +358,15 @@ export class AccessMethod extends Component {
       supportsShapefileSubsetting = false,
       supportsBoundingBoxSubsetting = false,
       supportsVariableSubsetting = false,
-      supportsConcatenation = false
+      supportsConcatenation = false,
+      defaultConcatenation = false
     } = selectedMethod || {}
+
+    const {
+      enableTemporalSubsetting,
+      enableSpatialSubsetting,
+      enableConcatenateDownload = defaultConcatenation
+    } = this.state
 
     const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
 

@@ -5,6 +5,7 @@ import { generateFormDigest } from './generateFormDigest'
 import { getVariables } from './getVariables'
 import { supportsBoundingBoxSubsetting } from './supportsBoundingBoxSubsetting'
 import { supportsConcatenation } from './supportsConcatenation'
+import { defaultConcatenation } from './defaultConcatenation'
 import { supportsShapefileSubsetting } from './supportsShapefileSubsetting'
 import { supportsTemporalSubsetting } from './supportsTemporalSubsetting'
 import { supportsVariableSubsetting } from './supportsVariableSubsetting'
@@ -172,6 +173,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           supportsTemporalSubsetting: supportsTemporalSubsetting(serviceItem),
           supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
           supportsConcatenation: supportsConcatenation(serviceItem),
+          defaultConcatenation: defaultConcatenation(serviceItem),
           type: serviceType,
           url: urlValue,
           variables

@@ -217,7 +217,7 @@ export const constructOrderPayload = async ({
     orderPayload.append('outputCrs', selectedOutputProjection)
   }
 
-  // adds supportsConcatenation to the payload and it's value
+  // Adds supportsConcatenation to the payload and it's value
   if (supportsConcatenation && enableConcatenateDownload) {
     orderPayload.append('concatenate', true)
   }

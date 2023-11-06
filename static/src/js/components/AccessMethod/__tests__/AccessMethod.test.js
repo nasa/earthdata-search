@@ -1065,7 +1065,7 @@ describe('AccessMethod component', () => {
 
             const checkbox = screen.getByRole('checkbox')
             await user.click(checkbox)
-            expect(screen.getByRole('checkbox').checked).toEqual(true)
+            expect(checkbox.checked).toEqual(true)
           })
 
           test('calls onUpdateAccessMethod', async () => {
@@ -1140,9 +1140,9 @@ describe('AccessMethod component', () => {
           expect(screen.getByText(/using the harmony-service-name/)).toBeInTheDocument()
         })
       })
+
       describe('when the service type is `Harmony` and concatenation is available', () => {
         test('the `Combine Data` option is avaialable when concatenation service is true', () => {
-          const user = userEvent.setup()
           const collectionId = 'collectionId'
           const serviceName = 'harmony-service-name'
           setup({
@@ -1151,7 +1151,8 @@ describe('AccessMethod component', () => {
                 isValid: true,
                 type: 'Harmony',
                 name: serviceName,
-                supportsConcatenation: true
+                supportsConcatenation: true,
+                defaultConcatenation: true
               }
             },
             metadata: {
@@ -1162,7 +1163,9 @@ describe('AccessMethod component', () => {
 
           expect(screen.getByText(/The requested data will be processed/)).toBeInTheDocument()
           expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
+          expect(screen.getByRole('checkbox').checked).toEqual(true)
         })
+
         test('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
           const user = userEvent.setup()
           const collectionId = 'collectionId'
@@ -1174,7 +1177,7 @@ describe('AccessMethod component', () => {
                 type: 'Harmony',
                 name: serviceName,
                 supportsConcatenation: true,
-                enableConcatenateDownload: false
+                defaultConcatenation: false
               }
             },
             metadata: {
@@ -1192,8 +1195,11 @@ describe('AccessMethod component', () => {
             collectionId: 'collectionId',
             method: { harmony0: { enableConcatenateDownload: true } }
           })
+
+          expect(screen.getByRole('checkbox').checked).toEqual(true)
         })
       })
+
       describe('when the service type is `Harmony` and concatenation is unavailable', () => {
         test('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
           const collectionId = 'collectionId'
@@ -1213,6 +1219,7 @@ describe('AccessMethod component', () => {
             },
             selectedAccessMethod: 'harmony0'
           })
+
           expect(screen.queryAllByText(/Combine Data/)).toHaveLength(0)
         })
       })
