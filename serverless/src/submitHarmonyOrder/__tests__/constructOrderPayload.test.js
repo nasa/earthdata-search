@@ -9,7 +9,7 @@ import { mockCcwShapefile } from './mocks'
 describe('constructOrderPayload', () => {
   beforeEach(() => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
-    cmrHost: 'https://cmr.earthdata.nasa.gov'
+      cmrHost: 'https://cmr.earthdata.nasa.gov'
     }))
   })
 
