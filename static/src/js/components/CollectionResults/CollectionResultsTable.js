@@ -7,11 +7,7 @@ import {
   Tooltip
 } from 'react-bootstrap'
 
-import {
-  FaCheck,
-  FaCubes,
-  FaInfoCircle
-} from 'react-icons/fa'
+import { FaCheck, FaInfoCircle } from 'react-icons/fa'
 
 import { commafy } from '../../util/commafy'
 
@@ -296,7 +292,7 @@ export const CollectionResultsTable = ({
       Header: 'Combine',
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
-          {value ? <EDSCIcon className="text-success" icon={FaCubes} /> : '-'}
+          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
         </div>
       ),
       accessor: 'hasCombine',
