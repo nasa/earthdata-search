@@ -26,6 +26,7 @@ const setup = (overrideProps) => {
   const onSelectAccessMethod = jest.fn()
   const onSetActivePanel = jest.fn()
   const onUpdateAccessMethod = jest.fn()
+  const onTogglePanels = jest.fn()
 
   const props = {
     accessMethods: {},
@@ -39,6 +40,7 @@ const setup = (overrideProps) => {
     overrideTemporal: {},
     onSelectAccessMethod,
     onSetActivePanel,
+    onTogglePanels,
     onUpdateAccessMethod,
     selectedAccessMethod: '',
     ...overrideProps
@@ -49,7 +51,8 @@ const setup = (overrideProps) => {
   return {
     onSelectAccessMethod,
     onSetActivePanel,
-    onUpdateAccessMethod
+    onUpdateAccessMethod,
+    onTogglePanels
   }
 }
 
@@ -1138,6 +1141,60 @@ describe('AccessMethod component', () => {
           })
 
           expect(screen.getByText(/using the harmony-service-name/)).toBeInTheDocument()
+        })
+
+        test('edit variables button calls `onSetActivePanel` and `onTogglePanels`', async () => {
+          const user = userEvent.setup()
+          const collectionId = 'collectionId'
+          const serviceName = 'harmony-service-name'
+
+          const { onSetActivePanel, onTogglePanels } = setup({
+            selectedAccessMethod: 'harmony0',
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                name: serviceName,
+                supportsVariableSubsetting: true,
+                variables: {
+                  conceptId: 'V1200465315-CMR_ONLY',
+                  definition: 'sea surface subskin temperature in units of kelvin',
+                  longName: 'sea surface subskin temperature',
+                  name: 'sea_surface_temperature',
+                  nativeId: 'eds-test-var-EDSC-3817',
+                  scienceKeywords: [
+                    {
+                      category: 'EARTH SCIENCE',
+                      topic: 'SPECTRAL/ENGINEERING',
+                      term: 'MICROWAVE',
+                      variableLevel1: 'SEA SURFACE TEMPERATURE',
+                      variableLevel2: 'MAXIMUM/MINIMUM TEMPERATURE',
+                      variableLevel3: '24 HOUR MAXIMUM TEMPERATURE',
+                      detailedVariable: 'details_4385'
+                    },
+                    {
+                      category: 'EARTH SCIENCE',
+                      topic: 'SPECTRAL/ENGINEERING',
+                      term: 'MICROWAVE',
+                      variableLevel1: 'MICROWAVE IMAGERY'
+                    }
+                  ]
+                }
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            }
+          })
+
+          const editVariablesBtn = screen.getByRole('button', { name: 'Edit Variables' })
+          await user.click(editVariablesBtn)
+
+          expect(onSetActivePanel).toHaveBeenCalledTimes(1)
+          expect(onSetActivePanel).toHaveBeenCalledWith('0.0.1')
+
+          expect(onTogglePanels).toHaveBeenCalledTimes(1)
+          expect(onTogglePanels).toHaveBeenCalledWith(true)
         })
       })
 

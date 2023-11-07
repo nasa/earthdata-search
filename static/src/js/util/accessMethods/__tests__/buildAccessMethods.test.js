@@ -988,6 +988,7 @@ describe('buildAccessMethods', () => {
             }
           }
         },
+        // Harmony2 contains the default variables in the coll -> var association
         harmony2: {
           enableTemporalSubsetting: true,
           enableSpatialSubsetting: true,
