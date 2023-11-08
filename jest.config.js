@@ -16,7 +16,7 @@ module.exports = {
     uuid: require.resolve('uuid'),
     '^nanoid(/(.*)|$)': 'nanoid$1',
     'react-leaflet': '<rootDir>/static/src/js/util/mocks/reactLeafletMock.js',
-    '^axios$': require.resolve('axios'),
+    '^axios$': require.resolve('axios')
   },
   coveragePathIgnorePatterns: [
     'package.json',
