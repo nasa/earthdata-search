@@ -5,21 +5,9 @@
  */
 export const constructOrderUrl = (collectionId, accessMethod) => {
   const {
-    selectedVariables,
-    url,
-    variables
+    selectedVariableNames = [],
+    url
   } = accessMethod
-
-  const selectedVariableNames = []
-
-  if (selectedVariables) {
-    selectedVariables.forEach((variable) => {
-      const { [variable]: variableObject } = variables
-      const { name } = variableObject
-
-      selectedVariableNames.push(name)
-    })
-  }
 
   let variableParameter = 'all'
   if (selectedVariableNames.length > 0) {
