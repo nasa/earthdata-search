@@ -342,6 +342,6 @@ describe('submitHarmonyOrder', () => {
     expect(consoleMock.mock.calls[3]).toEqual(['granuleId: G10000005-EDSC'])
     expect(consoleMock.mock.calls[4]).toEqual(['format: NetCDF-4'])
     expect(consoleMock.mock.calls[5]).toEqual(['skipPreview: true'])
-    expect(consoleMock.mock.calls[6]).toEqual(['Error (403): Error: You are not authorized to access the requested resource'])
+    expect(consoleMock.mock.calls[6]).toEqual(['AxiosError (403): Error: You are not authorized to access the requested resource'])
   })
 })

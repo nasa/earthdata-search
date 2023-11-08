@@ -15,7 +15,8 @@ module.exports = {
     // Force module uuid to resolve with the CJS entry point, because Jest does not support package.json.exports. See https://github.com/uuidjs/uuid/issues/451
     uuid: require.resolve('uuid'),
     '^nanoid(/(.*)|$)': 'nanoid$1',
-    'react-leaflet': '<rootDir>/static/src/js/util/mocks/reactLeafletMock.js'
+    'react-leaflet': '<rootDir>/static/src/js/util/mocks/reactLeafletMock.js',
+    '^axios$': require.resolve('axios'),
   },
   coveragePathIgnorePatterns: [
     'package.json',
