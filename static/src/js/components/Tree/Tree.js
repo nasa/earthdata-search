@@ -49,7 +49,7 @@ export const Tree = ({
       variables,
       onUpdateFinished: forceUpdate
     })
-  }, [variables]) // Update TreeModel when the list of variables changes
+  }, []) // Only execute this useEffect once on initial render
 
   /**
    * Update the treeModel with new values
