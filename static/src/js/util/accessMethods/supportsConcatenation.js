@@ -5,8 +5,6 @@
 export const supportsConcatenation = (service) => {
   const { serviceOptions = {} } = service
 
-  console.log(service)
-
   // If there are no service options the record can not support variable subsetting
   if (serviceOptions == null) return false
 

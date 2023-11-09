@@ -28,8 +28,6 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
   let associatedVariables = collectionAssociatedVariables
   const { items: serviceItems = null } = services
 
-  console.log(serviceItems)
-
   if (serviceItems !== null) {
     serviceItems.forEach((serviceItem) => {
       const {

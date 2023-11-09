@@ -12,7 +12,6 @@ export const defaultConcatenation = (service) => {
   const { concatenate = {} } = aggregation
 
   const { concatenateDefault = false } = concatenate
-  console.log(concatenateDefault)
 
   return concatenateDefault
 }
