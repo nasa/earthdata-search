@@ -543,7 +543,7 @@ export class AccessMethod extends Component {
                                 <span className="mb-1 d-block">
                                   Enable Concatenation
                                 </span>
-                                <span className="mb-1 d-block gray-text">
+                                <span className="mb-1 d-block text-muted">
                                   Data will be concatenated along a newly created dimension
                                 </span>
                               </div>
