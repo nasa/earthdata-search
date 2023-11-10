@@ -6,7 +6,8 @@ import {
   FaFileAlt,
   FaGlobe,
   FaSlidersH,
-  FaTags
+  FaTags,
+  FaCubes
 } from 'react-icons/fa'
 
 import { collectionListItemProps } from './mocks'
@@ -406,6 +407,23 @@ describe('CollectionResultsList component', () => {
 
           expect(featureItem.length).toEqual(1)
           expect(metaIcon.props().metadata.props.children[1].props.icon).toEqual(FaClock)
+        })
+      })
+
+      describe('combination icon', () => {
+        test('renders the metadata correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              hasCombine: true
+            }
+          })
+          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+          const featureItem = metaContainer.find('#feature-icon-list-view__customize')
+          const metaIcon = featureItem.find(MetaIcon)
+
+          expect(featureItem.length).toEqual(1)
+          expect(metaIcon.props().metadata.props.children[5].props.icon).toEqual(FaCubes)
         })
       })
     })
