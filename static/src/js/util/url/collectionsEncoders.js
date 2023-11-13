@@ -212,7 +212,7 @@ const decodedSelectedAccessMethod = (pgParam) => {
 const decodedConcatenateDownload = (pgParam) => {
   const { cd: enableConcatenateDownload } = pgParam
 
-  return enableConcatenateDownload !== 'f'
+  return enableConcatenateDownload === 't'
 }
 
 const decodedOutputFormat = (pgParam) => {
@@ -496,9 +496,6 @@ export const decodeCollections = (params) => {
       // Decode selected variables
       variableIds = decodedSelectedVariables(pCollection)
 
-      // Decode concatenate download
-      enableConcatenateDownload = decodedConcatenateDownload(pCollection)
-
       // Decode selected access method
       selectedAccessMethod = decodedSelectedAccessMethod(pCollection)
 
@@ -508,10 +505,14 @@ export const decodeCollections = (params) => {
       // Decode output projection
       selectedOutputProjection = decodedOutputProjection(pCollection)
 
-      // Decode temporal subsetting for harmony collections
+      // Decode harmony subsettings on collections
       if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')) {
+        // Decode Temporal Subsetting
         enableTemporalSubsetting = decodedTemporalSubsetting(pCollection)
+        // Decode Spatial Subsetting
         enableSpatialSubsetting = decodedSpatialSubsetting(pCollection)
+        // Decode concatenate download
+        enableConcatenateDownload = decodedConcatenateDownload(pCollection)
       }
 
       // Determine if the collection is a CWIC collection
