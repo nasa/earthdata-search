@@ -7,7 +7,7 @@ import { isEmpty } from 'lodash'
 export const supportsBoundingBoxSubsetting = (service) => {
   const { serviceOptions = {} } = service
 
-  // If there are no service options the record can not support variable subsetting
+  // If there are no service options the record can not support bounding box subsetting
   if (serviceOptions == null) return false
 
   const { subset = {} } = serviceOptions
