@@ -225,8 +225,6 @@ describe('buildAccessMethods', () => {
 
     const methods = buildAccessMethods(collectionMetadata, isOpenSearch)
 
-    console.log(methods)
-
     expect(methods).toEqual({
       harmony0: {
         enableTemporalSubsetting: true,
