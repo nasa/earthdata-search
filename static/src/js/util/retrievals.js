@@ -29,6 +29,7 @@ const permittedCollectionMetadataFields = [
   'versionId'
 ]
 const permittedAccessMethodFields = [
+  'enableConcatenateDownload',
   'enableTemporalSubsetting',
   'enableSpatialSubsetting',
   'maxItemsPerOrder',

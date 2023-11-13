@@ -156,6 +156,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         }
 
         accessMethods[`harmony${harmonyIndex}`] = {
+          enableConcatenateDownload: true,
           enableTemporalSubsetting: true,
           enableSpatialSubsetting: true,
           hierarchyMappings,
