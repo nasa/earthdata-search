@@ -227,7 +227,6 @@ describe('buildAccessMethods', () => {
 
     expect(methods).toEqual({
       harmony0: {
-        enableConcatenateDownload: true,
         enableTemporalSubsetting: true,
         enableSpatialSubsetting: true,
         hierarchyMappings: [
@@ -262,6 +261,7 @@ describe('buildAccessMethods', () => {
         supportsVariableSubsetting: true,
         supportsConcatenation: true,
         defaultConcatenation: true,
+        enableConcatenateDownload: true,
         type: 'Harmony',
         url: 'https://example.com',
         variables: {
@@ -672,7 +672,7 @@ describe('buildAccessMethods', () => {
       expect(methods).toEqual({
         harmony0: {
           defaultConcatenation: false,
-          enableConcatenateDownload: true,
+          enableConcatenateDownload: false,
           enableTemporalSubsetting: true,
           enableSpatialSubsetting: true,
           hierarchyMappings: [

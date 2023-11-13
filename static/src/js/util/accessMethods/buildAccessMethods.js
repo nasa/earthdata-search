@@ -156,7 +156,6 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         }
 
         accessMethods[`harmony${harmonyIndex}`] = {
-          enableConcatenateDownload: true,
           enableTemporalSubsetting: true,
           enableSpatialSubsetting: true,
           hierarchyMappings,
@@ -173,6 +172,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
           supportsConcatenation: supportsConcatenation(serviceItem),
           defaultConcatenation: defaultConcatenation(serviceItem),
+          enableConcatenateDownload: defaultConcatenation(serviceItem),
           type: serviceType,
           url: urlValue,
           variables
