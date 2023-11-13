@@ -70,6 +70,6 @@ describe('pageAllCmrResults', () => {
     })
 
     expect(consoleMock).toBeCalledTimes(1)
-    expect(consoleMock.mock.calls[0]).toEqual(['Error (400): HTTP Error'])
+    expect(consoleMock.mock.calls[0]).toEqual(['AxiosError (400): HTTP Error'])
   })
 })
