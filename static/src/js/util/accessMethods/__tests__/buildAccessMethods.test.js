@@ -225,8 +225,11 @@ describe('buildAccessMethods', () => {
 
     const methods = buildAccessMethods(collectionMetadata, isOpenSearch)
 
+    console.log(methods)
+
     expect(methods).toEqual({
       harmony0: {
+        enableConcatenateDownload: true,
         enableTemporalSubsetting: true,
         enableSpatialSubsetting: true,
         hierarchyMappings: [
