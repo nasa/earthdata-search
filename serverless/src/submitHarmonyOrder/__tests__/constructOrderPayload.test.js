@@ -768,7 +768,7 @@ describe('constructOrderPayload', () => {
     })
   })
 
-  describe('when only sending concatenate is disabled', () => {
+  describe('when concatenation is not supported', () => {
     test('constructs a payload containing supportsConcatenation = false', async () => {
       nock(/cmr/)
         .matchHeader('Authorization', 'Bearer access-token')
