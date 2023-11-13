@@ -33,6 +33,19 @@ describe('supportsConcatenation', () => {
     })
   })
 
+  describe('when concatenation is not in aggregation', () => {
+    test('returns false', () => {
+      const response = supportsConcatenation({
+        conceptId: 'S100000-EDSC',
+        serviceOptions: {
+          aggregation: {}
+        }
+      })
+
+      expect(response).toBeFalsy()
+    })
+  })
+
   describe('when concatenation is not supported', () => {
     test('returns false', () => {
       const response = supportsConcatenation({
