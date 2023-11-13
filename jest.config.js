@@ -16,6 +16,7 @@ module.exports = {
     uuid: require.resolve('uuid'),
     '^nanoid(/(.*)|$)': 'nanoid$1',
     'react-leaflet': '<rootDir>/static/src/js/util/mocks/reactLeafletMock.js',
+    // After the update to 1.x the CJS changed import method. Adding a module mapper to resolve issues. See https://stackoverflow.com/a/74079349
     '^axios$': require.resolve('axios')
   },
   coveragePathIgnorePatterns: [
