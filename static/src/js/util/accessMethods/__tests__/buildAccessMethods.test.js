@@ -187,37 +187,41 @@ describe('buildAccessMethods', () => {
             ]
           }],
           variables: {
-            count: 4,
-            items: [{
-              conceptId: 'V100000-EDSC',
-              definition: 'Alpha channel value',
-              longName: 'Alpha channel ',
-              name: 'alpha_var',
-              nativeId: 'mmt_variable_3972',
-              scienceKeywords: null
-            }, {
-              conceptId: 'V100001-EDSC',
-              definition: 'Blue channel value',
-              longName: 'Blue channel',
-              name: 'blue_var',
-              nativeId: 'mmt_variable_3971',
-              scienceKeywords: null
-            }, {
-              conceptId: 'V100002-EDSC',
-              definition: 'Green channel value',
-              longName: 'Green channel',
-              name: 'green_var',
-              nativeId: 'mmt_variable_3970',
-              scienceKeywords: null
-            }, {
-              conceptId: 'V100003-EDSC',
-              definition: 'Red channel value',
-              longName: 'Red Channel',
-              name: 'red_var',
-              nativeId: 'mmt_variable_3969',
-              scienceKeywords: null
-            }]
+            count: 0,
+            items: null
           }
+        }]
+      },
+      variables: {
+        count: 4,
+        items: [{
+          conceptId: 'V100000-EDSC',
+          definition: 'Alpha channel value',
+          longName: 'Alpha channel ',
+          name: 'alpha_var',
+          nativeId: 'mmt_variable_3972',
+          scienceKeywords: null
+        }, {
+          conceptId: 'V100001-EDSC',
+          definition: 'Blue channel value',
+          longName: 'Blue channel',
+          name: 'blue_var',
+          nativeId: 'mmt_variable_3971',
+          scienceKeywords: null
+        }, {
+          conceptId: 'V100002-EDSC',
+          definition: 'Green channel value',
+          longName: 'Green channel',
+          name: 'green_var',
+          nativeId: 'mmt_variable_3970',
+          scienceKeywords: null
+        }, {
+          conceptId: 'V100003-EDSC',
+          definition: 'Red channel value',
+          longName: 'Red Channel',
+          name: 'red_var',
+          nativeId: 'mmt_variable_3969',
+          scienceKeywords: null
         }]
       }
     }
