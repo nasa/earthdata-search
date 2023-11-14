@@ -31,7 +31,7 @@ describe('defaultConcatenation', () => {
     })
   })
 
-  describe('when concatenation is not supported', () => {
+  describe('when concatenationDefault is set to false', () => {
     test('returns false', () => {
       const response = defaultConcatenation({
         conceptId: 'S100000-EDSC',
