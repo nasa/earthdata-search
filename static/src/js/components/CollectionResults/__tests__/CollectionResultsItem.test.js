@@ -3,6 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import {
   FaClock,
+  FaCubes,
   FaFileAlt,
   FaGlobe,
   FaSlidersH,
@@ -406,6 +407,23 @@ describe('CollectionResultsList component', () => {
 
           expect(featureItem.length).toEqual(1)
           expect(metaIcon.props().metadata.props.children[1].props.icon).toEqual(FaClock)
+        })
+      })
+
+      describe('combination icon', () => {
+        test('renders the metadata correctly', () => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              hasCombine: true
+            }
+          })
+          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
+          const featureItem = metaContainer.find('#feature-icon-list-view__customize')
+          const metaIcon = featureItem.find(MetaIcon)
+
+          expect(featureItem.length).toEqual(1)
+          expect(metaIcon.props().metadata.props.children[5].props.icon).toEqual(FaCubes)
         })
       })
     })
