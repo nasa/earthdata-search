@@ -6,7 +6,9 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
+
 import { FaCheck, FaInfoCircle } from 'react-icons/fa'
+
 import { commafy } from '../../util/commafy'
 
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
@@ -281,6 +283,19 @@ export const CollectionResultsTable = ({
         </div>
       ),
       accessor: 'hasFormats',
+      width: '120',
+      customProps: {
+        centerContent: true
+      }
+    },
+    {
+      Header: 'Combine',
+      Cell: ({ value }) => (
+        <div className="edsc-table-cell">
+          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+        </div>
+      ),
+      accessor: 'hasCombine',
       width: '120',
       customProps: {
         centerContent: true

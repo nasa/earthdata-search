@@ -114,6 +114,11 @@ describe('CollectionResultsTable component', () => {
       accessor: 'hasFormats'
     }))
 
+    expect(columns[15]).toEqual(expect.objectContaining({
+      Header: 'Combine',
+      accessor: 'hasCombine'
+    }))
+
     expect(table.props().data).toEqual(collectionData)
     expect(table.props().itemCount).toEqual(props.itemCount)
     expect(table.props().loadMoreItems).toEqual(props.loadMoreItems)
