@@ -6,6 +6,7 @@ import {
   FaClock,
   FaCloud,
   FaCogs,
+  FaCubes,
   FaFileAlt,
   FaGlobe,
   FaInfoCircle,
@@ -54,6 +55,7 @@ export const CollectionResultsItem = forwardRef(({
     displayOrganization,
     granuleCount,
     hasFormats,
+    hasCombine,
     hasMapImagery,
     hasSpatialSubsetting,
     hasTemporalSubsetting,
@@ -205,6 +207,7 @@ export const CollectionResultsItem = forwardRef(({
                     || hasTransforms
                     || hasFormats
                     || hasTemporalSubsetting
+                    || hasCombine
                   ) && (
                     <MetaIcon
                       className="collection-results-item__meta-icon collection-results-item__meta-icon--customizable"
@@ -265,6 +268,16 @@ export const CollectionResultsItem = forwardRef(({
                                 />
                               )
                             }
+                            {
+                              hasCombine && (
+                                <EDSCIcon
+                                  className="collection-results-item__icon svg fa-file-svg"
+                                  title="A white cubes icon"
+                                  icon={FaCubes}
+                                  size="0.675rem"
+                                />
+                              )
+                            }
                           </>
                         )
                       }
@@ -284,7 +297,7 @@ export const CollectionResultsItem = forwardRef(({
                                       size="0.725rem"
                                       icon={FaGlobe}
                                     />
-                                    Spatial subsetting
+                                    Spatial subset
                                   </li>
                                 )
                               }
@@ -297,7 +310,7 @@ export const CollectionResultsItem = forwardRef(({
                                       size="0.725rem"
                                       icon={FaClock}
                                     />
-                                    Temporal subsetting
+                                    Temporal subset
                                   </li>
                                 )
                               }
@@ -310,7 +323,7 @@ export const CollectionResultsItem = forwardRef(({
                                       size="0.725rem"
                                       icon={FaTags}
                                     />
-                                    Variable subsetting
+                                    Variable subset
                                   </li>
                                 )
                               }
@@ -323,7 +336,7 @@ export const CollectionResultsItem = forwardRef(({
                                       size="0.725rem"
                                       icon={FaSlidersH}
                                     />
-                                    Transformation
+                                    Transform
                                   </li>
                                 )
                               }
@@ -336,7 +349,20 @@ export const CollectionResultsItem = forwardRef(({
                                       size="0.725rem"
                                       icon={FaFileAlt}
                                     />
-                                    Reformatting
+                                    Reformat
+                                  </li>
+                                )
+                              }
+                              {
+                                hasCombine && (
+                                  <li>
+                                    <EDSCIcon
+                                      className="collection-results-item__tooltip-feature-icon"
+                                      title="A white boxes icon"
+                                      size="0.725rem"
+                                      icon={FaCubes}
+                                    />
+                                    Combine
                                   </li>
                                 )
                               }
