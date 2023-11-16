@@ -172,6 +172,7 @@ describe('url#decodeUrlParams', () => {
                   harmony: {
                     enableTemporalSubsetting: false,
                     enableSpatialSubsetting: true,
+                    enableConcatenateDownload: false,
                     selectedOutputFormat: undefined,
                     selectedOutputProjection: undefined,
                     selectedVariables: undefined
@@ -202,7 +203,7 @@ describe('url#decodeUrlParams', () => {
         }
       }
 
-      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=f')).toEqual(expectedResult)
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f')).toEqual(expectedResult)
     })
 
     test('decodes enable temporal subsetting correctly when true', () => {
@@ -218,6 +219,7 @@ describe('url#decodeUrlParams', () => {
                 isVisible: true,
                 accessMethods: {
                   harmony: {
+                    enableConcatenateDownload: false,
                     enableSpatialSubsetting: true,
                     enableTemporalSubsetting: true,
                     selectedOutputFormat: undefined,
@@ -266,6 +268,7 @@ describe('url#decodeUrlParams', () => {
                 isVisible: true,
                 accessMethods: {
                   harmony: {
+                    enableConcatenateDownload: true,
                     enableSpatialSubsetting: true,
                     enableTemporalSubsetting: true,
                     selectedOutputFormat: undefined,
@@ -298,7 +301,7 @@ describe('url#decodeUrlParams', () => {
         }
       }
 
-      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony')).toEqual(expectedResult)
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][cd]=t')).toEqual(expectedResult)
     })
   })
 
@@ -316,6 +319,7 @@ describe('url#decodeUrlParams', () => {
                 isVisible: true,
                 accessMethods: {
                   harmony: {
+                    enableConcatenateDownload: false,
                     enableTemporalSubsetting: true,
                     enableSpatialSubsetting: false,
                     selectedOutputFormat: undefined,
@@ -366,6 +370,7 @@ describe('url#decodeUrlParams', () => {
                   harmony: {
                     enableTemporalSubsetting: false,
                     enableSpatialSubsetting: true,
+                    enableConcatenateDownload: false,
                     selectedOutputFormat: undefined,
                     selectedOutputProjection: undefined,
                     selectedVariables: undefined
@@ -396,7 +401,7 @@ describe('url#decodeUrlParams', () => {
         }
       }
 
-      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=f&pg[1][ess]=t')).toEqual(expectedResult)
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f&pg[1][ess]=t')).toEqual(expectedResult)
     })
   })
 
@@ -415,6 +420,7 @@ describe('url#decodeUrlParams', () => {
                 harmony: {
                   enableSpatialSubsetting: true,
                   enableTemporalSubsetting: true,
+                  enableConcatenateDownload: false,
                   selectedOutputFormat: undefined,
                   selectedOutputProjection: undefined,
                   selectedVariables: undefined
@@ -560,7 +566,7 @@ describe('url#encodeUrlQuery', () => {
       }
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=opendap&pg[1][uv]=V123456-EDSC!V987654-EDSC&pg[2][v]=f')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=opendap&pg[1][uv]=V123456-EDSC!V987654-EDSC&pg[1][cd]=f&pg[2][v]=f')
   })
 
   test('correctly encodes enable temporal subsetting', () => {
@@ -590,7 +596,7 @@ describe('url#encodeUrlQuery', () => {
       }
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][ets]=f&pg[1][ess]=f&pg[2][v]=f')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f&pg[1][ess]=f&pg[2][v]=f')
   })
 
   test('correctly encodes enable spatial subsetting', () => {
@@ -610,7 +616,8 @@ describe('url#encodeUrlQuery', () => {
               accessMethods: {
                 harmony: {
                   enableTemporalSubsetting: false,
-                  enableSpatialSubsetting: false
+                  enableSpatialSubsetting: false,
+                  enableConcatenateDownload: false
                 }
               },
               selectedAccessMethod: 'harmony'
@@ -621,6 +628,106 @@ describe('url#encodeUrlQuery', () => {
       }
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][ets]=f&pg[1][ess]=f&pg[2][v]=f')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f&pg[1][ess]=f&pg[2][v]=f')
+  })
+})
+
+describe('enable concatenate download flag', () => {
+  test('decodes enable concatenate download correctly when false', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      focusedCollection: '',
+      project: {
+        collections: {
+          allIds: ['collectionId1', 'collectionId2'],
+          byId: {
+            collectionId1: {
+              granules: {},
+              isVisible: true,
+              accessMethods: {
+                harmony: {
+                  enableSpatialSubsetting: true,
+                  enableConcatenateDownload: false,
+                  enableTemporalSubsetting: false,
+                  selectedOutputFormat: undefined,
+                  selectedOutputProjection: undefined,
+                  selectedVariables: undefined
+                }
+              },
+              selectedAccessMethod: 'harmony'
+            },
+            collectionId2: {
+              granules: {},
+              isVisible: true,
+              selectedAccessMethod: undefined
+            }
+          }
+        }
+      },
+      query: {
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          byId: {
+            collectionId1: {
+              granules: {}
+            },
+            collectionId2: {
+              granules: {}
+            }
+          }
+        }
+      }
+    }
+
+    expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f')).toEqual(expectedResult)
+  })
+
+  test('decodes enable concatenate download correctly when true', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      focusedCollection: '',
+      project: {
+        collections: {
+          allIds: ['collectionId1', 'collectionId2'],
+          byId: {
+            collectionId1: {
+              granules: {},
+              isVisible: true,
+              accessMethods: {
+                harmony: {
+                  enableSpatialSubsetting: true,
+                  enableConcatenateDownload: true,
+                  enableTemporalSubsetting: false,
+                  selectedOutputFormat: undefined,
+                  selectedOutputProjection: undefined,
+                  selectedVariables: undefined
+                }
+              },
+              selectedAccessMethod: 'harmony'
+            },
+            collectionId2: {
+              granules: {},
+              isVisible: true,
+              selectedAccessMethod: undefined
+            }
+          }
+        }
+      },
+      query: {
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          byId: {
+            collectionId1: {
+              granules: {}
+            },
+            collectionId2: {
+              granules: {}
+            }
+          }
+        }
+      }
+    }
+
+    expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=f&pg[1][cd]=t')).toEqual(expectedResult)
   })
 })

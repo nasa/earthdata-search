@@ -132,6 +132,11 @@ describe('buildAccessMethods', () => {
                 allowMultipleValues: true
               }
             },
+            aggregation: {
+              concatenate: {
+                concatenateDefault: true
+              }
+            },
             supportedOutputProjections: [{
               projectionName: 'Polar Stereographic'
             }, {
@@ -258,6 +263,9 @@ describe('buildAccessMethods', () => {
         supportsShapefileSubsetting: false,
         supportsTemporalSubsetting: false,
         supportsVariableSubsetting: true,
+        supportsConcatenation: true,
+        defaultConcatenation: true,
+        enableConcatenateDownload: true,
         type: 'Harmony',
         url: 'https://example.com',
         variables: {
@@ -667,6 +675,8 @@ describe('buildAccessMethods', () => {
 
       expect(methods).toEqual({
         harmony0: {
+          defaultConcatenation: false,
+          enableConcatenateDownload: false,
           enableTemporalSubsetting: true,
           enableSpatialSubsetting: true,
           hierarchyMappings: [
@@ -696,6 +706,7 @@ describe('buildAccessMethods', () => {
           ],
           supportedOutputProjections: [],
           supportsBoundingBoxSubsetting: true,
+          supportsConcatenation: false,
           supportsShapefileSubsetting: false,
           supportsTemporalSubsetting: false,
           supportsVariableSubsetting: true,

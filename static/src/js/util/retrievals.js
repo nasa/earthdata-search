@@ -29,6 +29,7 @@ const permittedCollectionMetadataFields = [
   'versionId'
 ]
 const permittedAccessMethodFields = [
+  'enableConcatenateDownload',
   'enableTemporalSubsetting',
   'enableSpatialSubsetting',
   'maxItemsPerOrder',
@@ -41,6 +42,8 @@ const permittedAccessMethodFields = [
   'selectedOutputProjection',
   'supportsBoundingBoxSubsetting',
   'supportsShapefileSubsetting',
+  'supportsConcatenation',
+  'defaultConcatenation',
   'type',
   'url'
 ]
@@ -111,6 +114,7 @@ export const prepareRetrievalParams = (state) => {
     const { variables, selectedVariables } = accessMethods[selectedAccessMethod]
 
     returnValue.granule_params = params
+
     returnValue.access_method = pick(
       accessMethods[selectedAccessMethod],
       permittedAccessMethodFields

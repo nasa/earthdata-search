@@ -7,7 +7,7 @@ import { isEmpty } from 'lodash'
 export const supportsTemporalSubsetting = (service) => {
   const { serviceOptions = {} } = service
 
-  // If there are no service options the record can not support variable subsetting
+  // If there are no service options the record can not support temporal subsetting
   if (serviceOptions == null) return false
 
   const { subset = {} } = serviceOptions

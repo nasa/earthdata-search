@@ -693,4 +693,115 @@ describe('constructOrderPayload', () => {
       })
     })
   })
+
+  describe('when supportsConcatenation = true and enableConcatenateDownload = true', () => {
+    test('constructs a payload containing concatenate = true', async () => {
+      nock(/cmr/)
+        .matchHeader('Authorization', 'Bearer access-token')
+        .get('/search/granules.json?point%5B%5D=-77%2C%2034')
+        .reply(200, {
+          feed: {
+            entry: [{
+              id: 'G10000001-EDSC'
+            }, {
+              id: 'G10000005-EDSC'
+            }]
+          }
+        })
+
+      const granuleParams = {
+        point: ['-77, 34']
+      }
+
+      const accessMethod = {
+        supportsConcatenation: true,
+        enableConcatenateDownload: true
+      }
+
+      const accessToken = 'access-token'
+
+      const response = await constructOrderPayload({
+        accessMethod,
+        granuleParams,
+        accessToken
+      })
+
+      expect(response.getAll('concatenate')).toEqual([
+        'true'
+      ])
+    })
+  })
+
+  describe('when supportsConcatenation = false or enableConcatenateDownload = false', () => {
+    test('constructed payload does not contain concatenate', async () => {
+      nock(/cmr/)
+        .matchHeader('Authorization', 'Bearer access-token')
+        .get('/search/granules.json?point%5B%5D=-77%2C%2034')
+        .reply(200, {
+          feed: {
+            entry: [{
+              id: 'G10000001-EDSC'
+            }, {
+              id: 'G10000005-EDSC'
+            }]
+          }
+        })
+
+      const granuleParams = {
+        point: ['-77, 34']
+      }
+
+      const accessMethod = {
+        supportsConcatenation: true,
+        enableConcatenateDownload: false
+      }
+
+      const accessToken = 'access-token'
+
+      const response = await constructOrderPayload({
+        accessMethod,
+        granuleParams,
+        accessToken
+      })
+
+      expect(response.getAll('concatenate')).not.toEqual([
+        'true'
+      ])
+    })
+
+    test('constructed payload does not contain concatenate', async () => {
+      nock(/cmr/)
+        .matchHeader('Authorization', 'Bearer access-token')
+        .get('/search/granules.json?point%5B%5D=-77%2C%2034')
+        .reply(200, {
+          feed: {
+            entry: [{
+              id: 'G10000001-EDSC'
+            }, {
+              id: 'G10000005-EDSC'
+            }]
+          }
+        })
+
+      const granuleParams = {
+        point: ['-77, 34']
+      }
+
+      const accessMethod = {
+        supportsConcatenation: false
+      }
+
+      const accessToken = 'access-token'
+
+      const response = await constructOrderPayload({
+        accessMethod,
+        granuleParams,
+        accessToken
+      })
+
+      expect(response.getAll('concatenate')).not.toEqual([
+        'true'
+      ])
+    })
+  })
 })
