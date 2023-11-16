@@ -733,7 +733,7 @@ describe('constructOrderPayload', () => {
   })
 
   describe('when supportsConcatenation = false or enableConcatenateDownload = false', () => {
-    test('constructed payload does not containe concatenate', async () => {
+    test('constructed payload does not contain concatenate', async () => {
       nock(/cmr/)
         .matchHeader('Authorization', 'Bearer access-token')
         .get('/search/granules.json?point%5B%5D=-77%2C%2034')
@@ -769,7 +769,7 @@ describe('constructOrderPayload', () => {
       ])
     })
 
-    test('constructed payload does not containe concatenate', async () => {
+    test('constructed payload does not contain concatenate', async () => {
       nock(/cmr/)
         .matchHeader('Authorization', 'Bearer access-token')
         .get('/search/granules.json?point%5B%5D=-77%2C%2034')
