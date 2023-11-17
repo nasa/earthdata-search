@@ -24,6 +24,7 @@ export const VariableTreePanel = (props) => {
 
   const selectedMethod = accessMethods[selectedAccessMethod]
   const {
+    id: selectedAccessMethodServiceConceptId = '',
     keywordMappings = [],
     hierarchyMappings = [],
     selectedVariables = [],
@@ -81,7 +82,7 @@ export const VariableTreePanel = (props) => {
     <ProjectPanelSection heading="Variable Selection">
       {keywordMappings.length > 0 && hierarchyMappings.length > 0 && browseBy}
       <Tree
-        key={treeView}
+        key={`${selectedAccessMethodServiceConceptId}_${treeView}`}
         collectionId={collectionId}
         index={index}
         items={items}
