@@ -536,7 +536,7 @@ describe('buildAccessMethods', () => {
     })
   })
 
-  describe('when the collection contains variables associated to its services and variables directly associated to the collection', () => {
+  describe('when the collection contains both variables associated to its services and variables directly associated to the collection', () => {
     test('variables on the service are returned instead of variables directly associated to the collection', () => {
       const collectionMetadata = {
         services: {
@@ -919,6 +919,8 @@ describe('buildAccessMethods', () => {
           }
         },
         harmony1: {
+          defaultConcatenation: false,
+          enableConcatenateDownload: false,
           enableTemporalSubsetting: true,
           enableSpatialSubsetting: true,
           hierarchyMappings: [
@@ -948,6 +950,7 @@ describe('buildAccessMethods', () => {
           ],
           supportedOutputProjections: [],
           supportsBoundingBoxSubsetting: true,
+          supportsConcatenation: false,
           supportsShapefileSubsetting: false,
           supportsTemporalSubsetting: false,
           supportsVariableSubsetting: true,
@@ -990,6 +993,8 @@ describe('buildAccessMethods', () => {
         },
         // Harmony2 contains the default variables in the coll -> var association
         harmony2: {
+          defaultConcatenation: false,
+          enableConcatenateDownload: false,
           enableTemporalSubsetting: true,
           enableSpatialSubsetting: true,
           hierarchyMappings: [
@@ -1016,6 +1021,7 @@ describe('buildAccessMethods', () => {
           ],
           supportedOutputProjections: [],
           supportsBoundingBoxSubsetting: true,
+          supportsConcatenation: false,
           supportsShapefileSubsetting: false,
           supportsTemporalSubsetting: false,
           supportsVariableSubsetting: true,
