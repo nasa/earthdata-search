@@ -1,67 +1,11 @@
 import axios from 'axios'
 
-import { Client } from '@googlemaps/google-maps-services-js'
-
 import { buildParams } from '../util/cmr/buildParams'
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { doSearchRequest } from '../util/cmr/doSearchRequest'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
-import { getGoogleMapsApiKey } from '../util/google/getGoogleMapsApiKey'
 import { getJwtToken } from '../util/getJwtToken'
 import { parseError } from '../../../sharedUtils/parseError'
-
-/**
- * Search the Google Maps API endpoint
- * @param {query} query The spatial query provided from the user
- */
-const googleGeocode = async (query, earthdataEnvironment) => {
-  const client = new Client({})
-
-  // Retrieve the Google Maps API key
-  const apiKey = await getGoogleMapsApiKey(earthdataEnvironment)
-
-  const geocodeResult = await client
-    .geocode({
-      params: {
-        address: query,
-        key: apiKey
-      }
-    })
-
-  const { data } = geocodeResult
-  const { results } = data
-
-  const formattedResult = results.map((place) => {
-    const { geometry, formatted_address: formattedAddress } = place
-    const { bounds, location } = geometry
-
-    const { lat, lng } = location
-    const spatialResponse = {
-      point: [
-        lat, lng
-      ]
-    }
-
-    // If the results include a bounding box include it in the result
-    if (bounds) {
-      const { northeast, southwest } = bounds
-
-      spatialResponse.bounding_box = [
-        southwest.lng,
-        southwest.lat,
-        northeast.lng,
-        northeast.lat
-      ]
-    }
-
-    return {
-      name: formattedAddress,
-      ...spatialResponse
-    }
-  })
-
-  return formattedResult
-}
 
 /**
  * Search the Nominatim OpenStreetMaps API endpoint
@@ -140,10 +84,6 @@ const geocode = (query, earthdataEnvironment) => {
 
   console.log(`Geocoding '${query}' with ${geocodingService}`)
 
-  if (geocodingService === 'google') {
-    return googleGeocode(query, earthdataEnvironment)
-  }
-
   if (geocodingService === 'nominatim') {
     return nominatimGeocode(query, earthdataEnvironment)
   }
@@ -162,8 +102,6 @@ const autocomplete = async (event) => {
 
   const { params, requestId } = JSON.parse(body)
 
-  const { type, q } = params
-
   const { defaultResponseHeaders } = getApplicationConfig()
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
@@ -178,17 +116,6 @@ const autocomplete = async (event) => {
   ]
 
   try {
-    if (type === 'spatial') {
-      const geocodeResult = await geocode(q, process.env.GEOCODE_SERVICE, earthdataEnvironment)
-
-      return {
-        isBase64Encoded: false,
-        statusCode: 200,
-        headers: defaultResponseHeaders,
-        body: JSON.stringify(geocodeResult)
-      }
-    }
-
     const results = await doSearchRequest({
       jwtToken: getJwtToken(event),
       method: 'get',
