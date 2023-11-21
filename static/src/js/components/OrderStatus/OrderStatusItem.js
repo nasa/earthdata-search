@@ -71,7 +71,8 @@ export class OrderStatusItem extends PureComponent {
     const { type: accessMethodType } = accessMethod
 
     // TODO: Add a second value and refresh at different intervals for the different types of orders
-    const { orderStatusRefreshTime } = getApplicationConfig()
+    const { orderStatusRefreshTime, env } = getApplicationConfig()
+    this.env = env
 
     if (collection && !['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
       const { id } = collection
@@ -183,7 +184,7 @@ export class OrderStatusItem extends PureComponent {
     const eulaCallback = 'earthdata-download://eulaCallback'
     const eulaRedirectUrl = `${edscHost}/auth_callback?eddRedirect=${encodeURIComponent(eulaCallback)}`
 
-    const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(getLinksUrl)}&downloadId=${downloadId}&token=Bearer ${authToken}&authUrl=${encodeURIComponent(authUrl)}&eulaRedirectUrl=${encodeURIComponent(eulaRedirectUrl)}`
+    const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(getLinksUrl)}&downloadId=${downloadId}&token=Bearer ${authToken}&authUrl=${encodeURIComponent(authUrl)}&eulaRedirectUrl=${encodeURIComponent(eulaRedirectUrl)}&clientId=${this.env}`
 
     return link
   }
