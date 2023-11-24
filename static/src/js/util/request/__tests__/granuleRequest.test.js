@@ -109,7 +109,7 @@ describe('GranuleRequest#transformResponse', () => {
             id: 'granuleId',
             time_end: '2000-01-31T00:00:00.000Z',
             time_start: '2000-01-01T00:00:00.000Z',
-            thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId?h=85&w=85',
+            thumbnail: 'http://localhost:3000/scale/granules/granuleId',
             formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
             isOpenSearch: false
           }
@@ -149,7 +149,7 @@ describe('GranuleRequest#transformResponse', () => {
               browse_url: undefined,
               time_end: '2000-01-31T00:00:00.000Z',
               time_start: '2000-01-01T00:00:00.000Z',
-              thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId?h=85&w=85',
+              thumbnail: 'http://localhost:3000/scale/granules/granuleId',
               formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false
             }
@@ -194,7 +194,7 @@ describe('GranuleRequest#transformResponse', () => {
               browse_url: 'https://test.com/browse/image/url.jpg',
               time_end: '2000-01-31T00:00:00.000Z',
               time_start: '2000-01-01T00:00:00.000Z',
-              thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId?h=85&w=85',
+              thumbnail: 'http://localhost:3000/scale/granules/granuleId',
               formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               links: [
@@ -253,7 +253,7 @@ describe('GranuleRequest#transformResponse', () => {
               browse_url: 'https://test.com/browse/image/first_url.jpg',
               time_end: '2000-01-31T00:00:00.000Z',
               time_start: '2000-01-01T00:00:00.000Z',
-              thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId?h=85&w=85',
+              thumbnail: 'http://localhost:3000/scale/granules/granuleId',
               formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               links: [
@@ -320,7 +320,7 @@ describe('GranuleRequest#transformResponse', () => {
               browse_url: 'https://test.com/browse/image/second_url.jpg',
               time_end: '2000-01-31T00:00:00.000Z',
               time_start: '2000-01-01T00:00:00.000Z',
-              thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/granules/granuleId?h=85&w=85',
+              thumbnail: 'http://localhost:3000/scale/granules/granuleId',
               formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               links: [

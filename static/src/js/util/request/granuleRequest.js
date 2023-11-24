@@ -1,9 +1,5 @@
 import CmrRequest from './cmrRequest'
-import {
-  getApplicationConfig,
-  getEarthdataConfig,
-  getEnvironmentConfig
-} from '../../../../../sharedUtils/config'
+import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { granuleRequestNonIndexedCmrKeys } from '../../../../../sharedConstants/nonIndexedCmrKeys'
 import { granuleRequestPermittedCmrKeys } from '../../../../../sharedConstants/permittedCmrKeys'
 
@@ -64,11 +60,9 @@ export default class GranuleRequest extends CmrRequest {
         updatedGranule.formatted_temporal = formattedTemporal
       }
 
-      const { thumbnailSize } = getApplicationConfig()
-      const { height, width } = thumbnailSize
-
       if (id) {
-        updatedGranule.thumbnail = `${getEarthdataConfig(this.earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${id}?h=${height}&w=${width}`
+        // Retrieve collection thumbnail if it exists
+        updatedGranule.thumbnail = `${getEnvironmentConfig().apiHost}/scale/granules/${id}`
       }
 
       if (links && links.length > 0) {
