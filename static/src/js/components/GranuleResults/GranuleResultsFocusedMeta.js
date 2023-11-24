@@ -15,7 +15,7 @@ import {
   Tooltip
 } from 'react-bootstrap'
 
-import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
@@ -30,8 +30,8 @@ import './GranuleResultsFocusedMeta.scss'
  * @param {String} props.focusedGranuleMetadata - The metadata for any currently focused granule.
  * @param {String} props.focusedGranuleId - The id for the focused granule.
  */
+// TODO we could get rid of that extra prop potentially
 const GranuleResultsFocusedMeta = ({
-  earthdataEnvironment,
   focusedGranuleMetadata,
   focusedGranuleId
 }) => {
@@ -300,9 +300,13 @@ const GranuleResultsFocusedMeta = ({
                       let preloadImg = new Image()
                       preloadImg.src = href
                       preloadImg.addEventListener('load', () => { preloadImg = undefined })
-
-                      const imgSrc1x = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${focusedGranuleId}?h=175&w=175&imageSrc=${href}`
-                      const imgSrc2x = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${focusedGranuleId}?h=350&w=350&imageSrc=${href}`
+                      // TODO technically we can have duplicate images on the granule metadata so we would get a react warning since hte keys
+                      // for two components would be the same
+                      // TODO there might be a way to have to have REACT not render something if the key was already created
+                      const imgSrc1x = `${getEnvironmentConfig().apiHost}/scale/granules/${focusedGranuleId}?h=175&w=175&imageSrc=${href}`
+                      const imgSrc2x = `${getEnvironmentConfig().apiHost}/scale/granules/${focusedGranuleId}?h=350&w=350&imageSrc=${href}`
+                      // Const imgSrc1x = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${focusedGranuleId}?h=175&w=175&imageSrc=${href}`
+                      // const imgSrc2x = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${focusedGranuleId}?h=350&w=350&imageSrc=${href}`
 
                       return (
                         href && (
@@ -422,7 +426,6 @@ const GranuleResultsFocusedMeta = ({
 }
 
 GranuleResultsFocusedMeta.propTypes = {
-  earthdataEnvironment: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   focusedGranuleMetadata: PropTypes.shape({
     browseFlag: PropTypes.bool,

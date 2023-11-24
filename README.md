@@ -147,6 +147,10 @@ The [serverless framework](https://serverless.com/framework/docs/providers/aws/)
 
 - Generating Colormaps
 
+- Scale images
+
+Scaling thumbnail images utilizes a redis cache in the deployed env locally there is not a way to run this however the functionality for scaling images still works the results just won't be cached. If you need the cache on then you'll need to install redis locally. The easiest way to do this would be by running it in a docker container such as by running `docker container run -p 1521:1521 redis:bullseye-7`. You can also use a visualizer such as `RedisInsight` to more easily inspect the cache.
+
 #### Running API Gateway and Lambda Locally
 
 Running the following command will spin up API Gateway and Lambda locally which will open up a vast majority of the functionality the backend offers.
