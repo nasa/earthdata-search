@@ -39,9 +39,6 @@ provider:
 
     collectionCapabilitiesLambda: ${self:custom.siteName}-generateCollectionCapabilityTags
 
-    geocodingService: ${self:custom.variables.geocodingService}
-    geocodingIncludePolygons: ${self:custom.variables.geocodingIncludePolygons}
-
     NODE_OPTIONS: '--enable-source-maps'
 
   vpc:
@@ -126,8 +123,6 @@ custom:
     obfuscationSpin: ${env:OBFUSCATION_SPIN, ''}
     obfuscationSpinShapefiles: ${env:OBFUSCATION_SPIN_SHAPEFILES, ''}
     orderDelaySeconds: ${env:ORDER_DELAY_SECONDS, '1'}
-    geocodingService: ${env:GEOCODING_SERVICE, 'nominatim'}
-    geocodingIncludePolygons: ${env:GEOCODING_INCLUDE_POLYGONS, 'false'}
 
     cloudfrontToCloudwatchBucketPrefixApi:
       Fn::Join:
