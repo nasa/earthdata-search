@@ -1,9 +1,5 @@
 import CmrRequest from './cmrRequest'
-import {
-  getApplicationConfig,
-  getEarthdataConfig,
-  getEnvironmentConfig
-} from '../../../../../sharedUtils/config'
+import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import { collectionRequestPermittedCmrKeys } from '../../../../../sharedConstants/permittedCmrKeys'
 import {
@@ -13,7 +9,6 @@ import {
 import { hasTag } from '../../../../../sharedUtils/tags'
 import { isCSDACollection } from '../isCSDACollection'
 import { getOpenSearchOsddLink } from '../../../../../sharedUtils/getOpenSearchOsddLink'
-
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 
 /**
@@ -77,6 +72,7 @@ export default class CollectionRequest extends CmrRequest {
       ({ entry = [] } = feed)
     }
 
+    // Iterate over the collections
     entry.map((collection) => {
       const transformedCollection = collection
 
@@ -98,12 +94,10 @@ export default class CollectionRequest extends CmrRequest {
         transformedCollection.isCSDA = isCSDACollection(collection.organizations)
       }
 
-      const h = getApplicationConfig().thumbnailSize.height
-      const w = getApplicationConfig().thumbnailSize.width
-
+      // Retrieve collection thumbnail if it exists
       if (collection.id) {
         transformedCollection.thumbnail = collection.browse_flag
-          ? `${getEarthdataConfig(this.earthdataEnvironment).cmrHost}/browse-scaler/browse_images/datasets/${collection.id}?h=${h}&w=${w}`
+          ? `${getEnvironmentConfig().apiHost}/scale/collections/${collection.id}`
           : unavailableImg
       }
 

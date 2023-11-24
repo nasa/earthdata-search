@@ -142,17 +142,15 @@ Resources:
                 Resource: '*'
 
   # Redis Cache for browse-scaler/image-resizing
-  # The CIDR notation 0.0. 0.0/0 defines an IP block containing all possible IP addresses
   RedisSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Ingress for Redis Cluster
+      VpcId: ${env:VPC_ID}
       SecurityGroupIngress:
-      - CidrIp: '0.0.0.0/0'
-        IpProtocol: tcp
+      - IpProtocol: tcp
         FromPort: 1521
         ToPort: 1521
-      VpcId: ${env:VPC_ID}
 
   RedisCacheSubnetGroup:
     Type: AWS::ElastiCache::SubnetGroup
@@ -229,18 +227,34 @@ Outputs:
     Export:
       Name: ${self:provider.stage}-EncryptedDatabasePort
 
-  ElastiCacheEndpoint:
+  DatabaseEndpoint:
     Value:
       Fn::GetAtt:
-        - RedisElasticCacheCluster
-        - RedisEndpoint.Address
+        - Database
+        - Endpoint.Address
     Export:
-      Name: ${self:provider.stage}-ElastiCacheEndpoint
+      Name: ${self:provider.stage}-DatabaseEndpoint
 
-  ElastiCachePort:
+  DatabasePort:
+    Value:
+      Fn::GetAtt:
+        - Database
+        - Endpoint.Port
+    Export:
+      Name: ${self:provider.stage}-DatabasePort
+
+  VisualizeElastiCacheEndpoint:
+      Value:
+        Fn::GetAtt:
+          - RedisElasticCacheCluster
+          - Endpoint.Address
+      Export:
+        Name: ${self:provider.stage}-VisualizeElastiCacheEndpoint
+
+  VisualizeElastiCachePort:
     Value:
       Fn::GetAtt:
         - RedisElasticCacheCluster
-        - RedisEndpoint.Port
+        - Endpoint.Port
     Export:
-      Name: ${self:provider.stage}-ElastiCachePort
+      Name: ${self:provider.stage}-VisualizeElastiCachePort

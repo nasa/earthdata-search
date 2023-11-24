@@ -48,9 +48,9 @@ provider:
 
     # Redis cache configuration
     cacheHost:
-      Fn::ImportValue: ${self:provider.stage}-ElastiCacheEndpoint
+      Fn::ImportValue: ${self:provider.stage}-VisualizeElastiCacheEndpoint
     cachePort:
-      Fn::ImportValue: ${self:provider.stage}-ElastiCachePort
+      Fn::ImportValue: ${self:provider.stage}-VisualizeElastiCachePort
     cacheKeyExpireSeconds: ${self:custom.variables.cacheKeyExpireSeconds}
 
   vpc:
@@ -117,8 +117,6 @@ custom:
       Exclude:
         - provider.environment.databaseEndpoint
         - provider.environment.databasePort
-        - provider.environment.cacheHost
-        - provider.environment.cachePort
         - provider.environment.colorMapQueueUrl
         - provider.environment.tagQueueUrl
         - provider.environment.cmrOrderingOrderQueueUrl
