@@ -72,7 +72,7 @@ export class OrderStatusItem extends PureComponent {
 
     // TODO: Add a second value and refresh at different intervals for the different types of orders
     const { orderStatusRefreshTime, env } = getApplicationConfig()
-    this.env = env
+    this.env = `edsc-${env}`
 
     if (collection && !['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
       const { id } = collection
