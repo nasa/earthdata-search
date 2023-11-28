@@ -184,7 +184,7 @@ export class OrderStatusItem extends PureComponent {
     const eulaCallback = 'earthdata-download://eulaCallback'
     const eulaRedirectUrl = `${edscHost}/auth_callback?eddRedirect=${encodeURIComponent(eulaCallback)}`
 
-    const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(getLinksUrl)}&downloadId=${downloadId}&token=Bearer ${authToken}&clientId=${getClientId().client}&authUrl=${encodeURIComponent(authUrl)}&eulaRedirectUrl=${encodeURIComponent(eulaRedirectUrl)}`
+    const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(getLinksUrl)}&downloadId=${downloadId}&clientId=${getClientId().client}&token=Bearer ${authToken}&authUrl=${encodeURIComponent(authUrl)}&eulaRedirectUrl=${encodeURIComponent(eulaRedirectUrl)}`
 
     return link
   }
