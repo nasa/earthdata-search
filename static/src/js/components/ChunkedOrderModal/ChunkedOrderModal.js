@@ -67,6 +67,7 @@ export class ChunkedOrderModal extends Component {
             })
           }
         }
+        updatePath
       >
         Refine your search
       </PortalLinkContainer>
