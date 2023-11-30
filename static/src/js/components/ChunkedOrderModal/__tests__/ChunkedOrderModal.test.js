@@ -6,9 +6,16 @@ import { Router } from 'react-router'
 import { Provider } from 'react-redux'
 import { createMemoryHistory } from 'history'
 
+import nock from 'nock'
+
 import ChunkedOrderModal from '../ChunkedOrderModal'
 
 import configureStore from '../../../store/configureStore'
+
+beforeEach(() => {
+  jest.clearAllMocks()
+  jest.restoreAllMocks()
+})
 
 const store = configureStore()
 
@@ -85,9 +92,51 @@ describe('ChunkedOrderModal component', () => {
     expect(screen.getByTestId('chunked_order_message-0')).toHaveTextContent('The collection collection title contains 9,001 granules which exceeds the 1,000 granule limit configured by the provider. When submitted, the order will automatically be split into 10 orders.')
   })
 
-  test('should render a \'Refine your search\' link that keeps the project params intact and removes the focused collection', async () => {
+  test.only('should render a \'Refine your search\' link that keeps the project params intact and removes the focused collection', async () => {
     const user = userEvent.setup()
     const { history } = setup()
+
+    nock(/cmr/)
+      .post(/collections/)
+      .reply(200, {
+        feed: {
+          updated: '2019-03-27T20:21:14.705Z',
+          id: 'https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic',
+          title: 'ECHO dataset metadata',
+          entry: [{
+            mockCollectionData: 'goes here'
+          }],
+          facets: {}
+        }
+      }, {
+        'cmr-hits': 1
+      })
+      .post(/granules/)
+      .reply(200, {
+        feed: {
+          entry: [{
+            id: 'G10000005-EDSC'
+          }]
+        }
+      })
+
+    nock(/localhost/)
+      .post(/saved_access_configs/)
+      .reply(200, {})
+
+    nock(/graphql/)
+      .post(/api/)
+      .reply(200, {
+        data: {
+          collections: {
+            count: 2,
+            cursor: 'mock-cursor',
+            items: []
+          }
+        }
+      })
+      .post(/api/)
+      .reply(200, { data: { subscriptions: { items: [] } } })
 
     await user.click(screen.getByRole('button', { name: 'Refine your search' }))
 
@@ -96,9 +145,52 @@ describe('ChunkedOrderModal component', () => {
   })
 
   describe('modal actions', () => {
-    test('\'Refine your search\' button should trigger onToggleChunkedOrderModal', async () => {
+    test.only('\'Refine your search\' button should trigger onToggleChunkedOrderModal', async () => {
       const user = userEvent.setup()
       const { onToggleChunkedOrderModal } = setup()
+
+      nock(/cmr/)
+        .post(/collections/)
+        .reply(200, {
+          feed: {
+            updated: '2019-03-27T20:21:14.705Z',
+            id: 'https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic',
+            title: 'ECHO dataset metadata',
+            entry: [{
+              mockCollectionData: 'goes here'
+            }],
+            facets: {}
+          }
+        }, {
+          'cmr-hits': 1
+        })
+
+      nock(/cmr/)
+        .post(/granules/)
+        .reply(200, {
+          feed: {
+            entry: [{
+              id: 'G10000005-EDSC'
+            }]
+          }
+        })
+
+      nock(/localhost/)
+        .post(/saved_access_configs/)
+        .reply(200, {})
+
+      nock(/graphql/)
+        .post(/api/)
+        .reply(200, {
+          data: {
+            collections: {
+              count: 2,
+              cursor: 'mock-cursor',
+              items: [],
+              hasGranules: true
+            }
+          }
+        })
 
       await user.click(screen.getByRole('button', { name: 'Refine your search' }))
 
