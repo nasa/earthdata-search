@@ -10,6 +10,7 @@ import { Router } from 'react-router'
 import { Provider } from 'react-redux'
 import { createMemoryHistory } from 'history'
 import ChunkedOrderModal from '../ChunkedOrderModal'
+import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import configureStore from '../../../store/configureStore'
 
@@ -19,33 +20,14 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children }) => {
-  console.log('🚀 ~ file: ChunkedOrderModal.test.js:34 ~ jest.mock ~ children:', children)
-
-  return (
-    <mock-comp
-      data-testid="PortalLinkContainer"
-      onClick={mockOnToggleChunkedOrderModal}
-    >
-      {children}
-    </mock-comp>
-  )
-}))
-
-import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
-
-// Jest.mock('node-fetch')
-
-// jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
-//   ...jest.requireActual('../../../containers/PortalLinkContainer/PortalLinkContainer'),
-//   Link: 'Link',
-//   Route: ({ children, path }) => children({ match: path === '/search' })
-// }))
-
-// jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
-//   updatePath,
-//   onClick
-// }) => `This is PortalLinkContainer bool:${updatePath} this is onClick: ${onClick}`)
+// In order to pass out of scope variables into `jest` they must be prefixed with `mock`
+jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children }) => (
+  <mock-PortalLinkContainer
+    onClick={mockOnToggleChunkedOrderModal}
+  >
+    {children}
+  </mock-PortalLinkContainer>
+)))
 
 const store = configureStore()
 
@@ -144,11 +126,8 @@ describe('ChunkedOrderModal component', () => {
     test('\'Refine your search\' button should trigger onToggleChunkedOrderModal', async () => {
       const user = userEvent.setup()
       const { onToggleChunkedOrderModal } = setup()
-      // Await user.click(screen.getByRole('button', { name: 'Refine your search' }))
-      await user.click(screen.getByTestId('PortalLinkContainer'))
+      await user.click(screen.getByText('Refine your search'))
       expect(onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
-      // expect(PortalLinkContainer).toHaveBeenCalledWith(onToggleChunkedOrderModal)
-      // Expect(onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
     })
 
     test('\'Change access methods\' button should trigger onToggleChunkedOrderModal', async () => {
