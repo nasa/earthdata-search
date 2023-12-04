@@ -29,7 +29,6 @@ export const AuthCallbackContainer = ({
   location,
   onAddEarthdataDownloadRedirect
 }) => {
-  console.log('🚀 ~ file: AuthCallbackContainer.js:31 ~ location:', location)
   const { edscHost } = getEnvironmentConfig()
 
   useEffect(() => {
@@ -43,48 +42,37 @@ export const AuthCallbackContainer = ({
       redirect = '/'
     } = params
 
+    let eddRedirectUrl = eddRedirect
+    if (redirect.includes('earthdata-download')) {
+      eddRedirectUrl = redirect
+    }
+
     // Handle EDD redirects
-    // EDD redirects must begin with `earthdata-download`
-    const validEddRedirect = eddRedirect && eddRedirect.startsWith('earthdata-download')
-    console.log('🚀 ~ file: AuthCallbackContainer.js:49 ~ useEffect ~ eddRedirect:', eddRedirect)
-    console.log('🚀 ~ file: AuthCallbackContainer.js:49 ~ useEffect ~ validEddRedirect:', validEddRedirect)
+    if (eddRedirectUrl) {
+      const validEddRedirect = eddRedirectUrl.startsWith('earthdata-download')
+      if (validEddRedirect) {
+        if (accessToken) eddRedirectUrl += `&token=${accessToken}`
 
-    console.log('🚀 ~ file: AuthCallbackContainer.js:54 ~ useEffect💀 ', redirect.includes('earthdata-download'))
+        // Add the redirect information to the store
+        onAddEarthdataDownloadRedirect({
+          redirect: eddRedirectUrl
+        })
 
-    if (eddRedirect && !validEddRedirect) {
-      console.log('🚀 ~ file: AuthCallbackContainer.js:54 ~ useEffect ~ redirect:', redirect)
+        // Redirect to the edd callback
+        history.push('/earthdata-download-callback')
 
-      // Redirect to an error page or a safe location if the URL is not a relative path
-      // https://developer.mozilla.org/en-US/docs/Web/API/Location/replace assign prevents back-button use in history
+        return
+      }
+
       window.location.replace('/')
 
       return
     }
 
-    // If the redirect includes earthdata-download, redirect to the edd callback
-    if (validEddRedirect || redirect.includes('earthdata-download')) {
-      console.log('🚀 ~ file: AuthCallbackContainer.js:48 ~ useEffect ~ eddRedirect:', eddRedirect)
-      let eddRedirectUrl = eddRedirect || redirect
-      if (accessToken) eddRedirectUrl += `&token=${accessToken}`
-
-      // Add the redirect information to the store
-      onAddEarthdataDownloadRedirect({
-        redirect: eddRedirectUrl
-      })
-
-      // Redirect to the edd callback
-      history.push('/earthdata-download-callback')
-
-      return
-    }
-
     // Handle redirects
-    // If we are not redirecting to earthdata-search relative path for redirects that have a value
     const invalidRedirectUrl = redirect !== '/' && !redirect.startsWith(edscHost)
 
     if (invalidRedirectUrl) {
-      console.log('🚀 ~ file: AuthCallbackContainer.js:54 ~ useEffect ~ redirect:', redirect)
-
       // Redirect to an error page or a safe location if the URL is not a relative path
       // https://developer.mozilla.org/en-US/docs/Web/API/Location/replace assign prevents back-button use in history
       window.location.replace('/')
