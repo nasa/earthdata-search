@@ -43,6 +43,7 @@ export const AuthCallbackContainer = ({
     } = params
 
     let eddRedirectUrl = eddRedirect
+
     if (redirect.includes('earthdata-download')) {
       eddRedirectUrl = redirect
     }
@@ -50,6 +51,7 @@ export const AuthCallbackContainer = ({
     // Handle EDD redirects
     if (eddRedirectUrl) {
       const validEddRedirect = eddRedirectUrl.startsWith('earthdata-download')
+
       if (validEddRedirect) {
         if (accessToken) eddRedirectUrl += `&token=${accessToken}`
 
@@ -64,7 +66,7 @@ export const AuthCallbackContainer = ({
         return
       }
 
-      window.location.replace('/')
+      window.location.replace('/not-found')
 
       return
     }
@@ -75,7 +77,7 @@ export const AuthCallbackContainer = ({
     if (invalidRedirectUrl) {
       // Redirect to an error page or a safe location if the URL is not a relative path
       // https://developer.mozilla.org/en-US/docs/Web/API/Location/replace assign prevents back-button use in history
-      window.location.replace('/')
+      window.location.replace('/not-found')
 
       return
     }
