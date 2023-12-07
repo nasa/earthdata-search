@@ -359,9 +359,17 @@ class SpatialDisplay extends Component {
    * @param {Array} boundingBox Array with [swPoint, nePoint] values
    */
   validateBoundingBoxCoordinates(boundingBox) {
+    let errorMessage = ''
     const [swPoint, nePoint] = boundingBox
 
-    return this.validateCoordinate(swPoint) + this.validateCoordinate(nePoint)
+    errorMessage = this.validateCoordinate(swPoint) + this.validateCoordinate(nePoint)
+
+    if (swPoint === nePoint) {
+      const message = 'Coordinates must not match. Point subsetting is available.'
+      errorMessage += errorMessage !== '' ? `\n${message}` : message
+    }
+
+    return errorMessage
   }
 
   /**
