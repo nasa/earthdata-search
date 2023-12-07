@@ -1,0 +1,10 @@
+{
+    "Records": [
+        {
+            "body": {
+                "accessToken": "eyJ0eXAiOiJKV1QiLCJvcmlnaW4iOiJFYXJ0aGRhdGEgTG9naW4iLCJzaWciOiJlZGxqd3RwdWJrZXlfdWF0IiwiYWxnIjoiUlMyNTYifQ.eyJ0eXBlIjoiT0F1dGgiLCJjbGllbnRfaWQiOiJLMzRyLTlsWWNMcm9nMnNvRnJsamx3IiwiZXhwIjoxNzAyNTg1MjQyLCJpYXQiOjE2OTk5OTMyNDIsImlzcyI6IkVhcnRoZGF0YSBMb2dpbiIsInVpZCI6ImJwb3JlaCJ9.qmbUD1cxN5q9auFs2IoqdOP8hDPkS_rbgshaNXQkfnM7dUxu_NXpO81LUoE-XJyGSvd8OV9MclGqq2nFekmswIYMkcgjb1TvYl-lB6rC5dBaay1wCPz0N5_jK0qdmiTnpaXlE6uNcGqZF-Kg_yenE_GcCVIdPFWzvGCs1_OP50v8jXJfgWyl4JZm2RMaSfWKLnH133yaU_Or7oViJwPQ1o1FHd2FGlkrQH036XTKfXxI_cgJxjAZQzepl9kFhE53gwcse-q3HO2HXFQ1G7Qbvnq6CNS0HEfJJSGtn6uiIJFHFnVazQ307jSaGh3XYrUMzKy3r7454ts3wvWJuhlt-g",
+                "id": 11
+            }
+        }
+    ]
+}
