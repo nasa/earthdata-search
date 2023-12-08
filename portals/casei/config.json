@@ -4,8 +4,332 @@
   "parentConfig": "edsc",
   "portalBrowser": true,
   "query": {
-    "project": "ABoVE&project=SnowEx&project=Delta-X&project=S-MODE&project=IMPACTS&project=SASSIE&project=CPEX-CV&project=ACCLIP&project=CALIPSO-NVF&project=DCOTSS&project=ACTIVATE&project=MOOSE&project=CPEX-AW&project=TRACER-AQ&project=OMG&project=EXPORTS&project=CAMP2&project=FIREX-AQ&project=LISTOS&project=ACT-America&project=SCOAPE&project=Aeolus&project=ORACLES&project=HyspIRI&project=OWLETS&project=ATom&project=NAAMES&project=ICE-POP&project=SPURS&project=ACEPOL&project=EPOCH&project=ASCENDS&project=CPEX&project=LMOS&project=CORAL&project=CARAFE&project=GOES-R&project=POSIDON&project=KORUS-AQ&project=KORUS-OC&project=OLYMPEX&project=AfriSAR&project=RADEX&project=CARVE&project=VIRGAS&project=AirMOSS&project=COMEX&project=Polar&project=ATTREX&project=CalWater&project=HS3&project=ARISE&project=DISCOVER-AQ&project=SABOR&project=IPHEx&project=SEAC4&project=MIZOPEX&project=IFloodS&project=HyMeX&project=PODEX&project=DC3&project=BROMEX&project=GCPEx&project=DEVOTE&project=COAST&project=ECO-3&project=ICESCAPE&project=MC3&project=MACPEX&project=LPVEx&project=GRIP&project=CASIE&project=AMISA&project=ARCTAS&project=TC4&project=CLASIC07&project=C3&project=NAMMA&project=CC-VEx&project=INTEX-NA&project=CR-AVE&project=TCSP&project=BigFoot&project=ACES&project=CRYSTAL-FACE&project=CAMEX&project=PAC2001&project=CLAMS&project=TRACE&project=SAFARI&project=ARESE&project=PEM&project=TEFLUN&project=FIRE&project=POLARIS&project=PROVE&project=BOREAS&project=TARFOX&project=ASHOE&project=SPADE&project=AASE&project=OTTER&project=ABLE&project=CITE&project=FIFE&project=AAOE&project=SNF"
-  },
+    "condition": {
+      "or": [
+        {
+          "project": "ABoVE"
+        },
+        {
+          "project": "SnowEx"
+        },
+        {
+          "project": "Delta-X"
+        },
+        {
+          "project": "S-MODE"
+        },
+        {
+          "project": "IMPACTS"
+        },
+        {
+          "project": "SASSIE"
+        },
+        {
+          "project": "CPEX-CV"
+        },
+        {
+          "project": "ACCLIP"
+        },
+        {
+          "project": "CALIPSO-NVF"
+        },
+        {
+          "project": "DCOTSS"
+        },
+        {
+          "project": "ACTIVATE"
+        },
+        {
+          "project": "MOOSE"
+        },
+        {
+          "project": "CPEX-AW"
+        },
+        {
+          "project": "TRACER-AQ"
+        },
+        {
+          "project": "OMG"
+        },
+        {
+          "project": "EXPORTS"
+        },
+        {
+          "project": "CAMP2"
+        },
+        {
+          "project": "FIREX-AQ"
+        },
+        {
+          "project": "LISTOS"
+        },
+        {
+          "project": "ACT-America"
+        },
+        {
+          "project": "SCOAPE"
+        },
+        {
+          "project": "Aeolus"
+        },
+        {
+          "project": "ORACLES"
+        },
+        {
+          "project": "HyspIRI"
+        },
+        {
+          "project": "OWLETS"
+        },
+        {
+          "project": "ATom"
+        },
+        {
+          "project": "NAAMES"
+        },
+        {
+          "project": "ICE-POP"
+        },
+        {
+          "project": "SPURS"
+        },
+        {
+          "project": "ACEPOL"
+        },
+        {
+          "project": "EPOCH"
+        },
+        {
+          "project": "ASCENDS"
+        },
+        {
+          "project": "CPEX"
+        },
+        {
+          "project": "LMOS"
+        },
+        {
+          "project": "CORAL"
+        },
+        {
+          "project": "CARAFE"
+        },
+        {
+          "project": "GOES-R"
+        },
+        {
+          "project": "POSIDON"
+        },
+        {
+          "project": "KORUS-AQ"
+        },
+        {
+          "project": "KORUS-OC"
+        },
+        {
+          "project": "OLYMPEX"
+        },
+        {
+          "project": "AfriSAR"
+        },
+        {
+          "project": "RADEX"
+        },
+        {
+          "project": "CARVE"
+        },
+        {
+          "project": "VIRGAS"
+        },
+        {
+          "project": "AirMOSS"
+        },
+        {
+          "project": "COMEX"
+        },
+        {
+          "project": "Polar"
+        },
+        {
+          "project": "ATTREX"
+        },
+        {
+          "project": "CalWater"
+        },
+        {
+          "project": "HS3"
+        },
+        {
+          "project": "ARISE"
+        },
+        {
+          "project": "DISCOVER-AQ"
+        },
+        {
+          "project": "SABOR"
+        },
+        {
+          "project": "IPHEx"
+        },
+        {
+          "project": "SEAC4"
+        },
+        {
+          "project": "MIZOPEX"
+        },
+        {
+          "project": "IFloodS"
+        },
+        {
+          "project": "HyMeX"
+        },
+        {
+          "project": "PODEX"
+        },
+        {
+          "project": "DC3"
+        },
+        {
+          "project": "BROMEX"
+        },
+        {
+          "project": "GCPEx"
+        },
+        {
+          "project": "DEVOTE"
+        },
+        {
+          "project": "COAST"
+        },
+        {
+          "project": "ECO-3"
+        },
+        {
+          "project": "ICESCAPE"
+        },
+        {
+          "project": "MC3"
+        },
+        {
+          "project": "MACPEX"
+        },
+        {
+          "project": "LPVEx"
+        },
+        {
+          "project": "GRIP"
+        },
+        {
+          "project": "CASIE"
+        },
+        {
+          "project": "AMISA"
+        },
+        {
+          "project": "ARCTAS"
+        },
+        {
+          "project": "TC4"
+        },
+        {
+          "project": "CLASIC07"
+        },
+        {
+          "project": "C3"
+        },
+        {
+          "project": "NAMMA"
+        },
+        {
+          "project": "CC-VEx"
+        },
+        {
+          "project": "INTEX-NA"
+        },
+        {
+          "project": "CR-AVE"
+        },
+        {
+          "project": "TCSP"
+        },
+        {
+          "project": "BigFoot"
+        },
+        {
+          "project": "ACES"
+        },
+        {
+          "project": "CRYSTAL-FACE"
+        },
+        {
+          "project": "CAMEX"
+        },
+        {
+          "project": "PAC2001"
+        },
+        {
+          "project": "CLAMS"
+        },
+        {
+          "project": "TRACE"
+        },
+        {
+          "project": "SAFARI"
+        },
+        {
+          "project": "ARESE"
+        },
+        {
+          "project": "PEM"
+        },
+        {
+          "project": "TEFLUN"
+        },
+        {
+          "project": "FIRE"
+        },
+        {
+          "project": "POLARIS"
+        },
+        {
+          "project": "PROVE"
+        },
+        {
+          "project": "BOREAS"
+        },
+        {
+          "project": "TARFOX"
+        },
+        {
+          "project": "ASHOE"
+        },
+        {
+          "project": "SPADE"
+        },
+        {
+          "project": "AASE"
+        },
+        {
+          "project": "OTTER"
+        },
+        {
+          "project": "ABLE"
+        },
+        {
+          "project": "CITE"
+        },
+        {
+          "project": "FIFE"
+        },
+        {
+          "project": "AAOE"
+        },
+        {
+          "project": "SNF"
+        }                   
+      ]
+    }
+},
   "title": {
     "primary": "CASEI",
     "secondary": "Catalog of Archived Suborbital Earth Science Investigations"

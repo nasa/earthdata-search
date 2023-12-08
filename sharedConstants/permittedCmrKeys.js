@@ -4,6 +4,7 @@ export const collectionRequestPermittedCmrKeys = [
   'cloud_hosted',
   'collection_data_type',
   'concept_id',
+  'condition',
   'consortium',
   'data_center_h',
   'data_center',
