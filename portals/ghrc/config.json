@@ -4,7 +4,7 @@
   "parentConfig": "edsc",
   "portalBrowser": true,
   "query": {
-    "dataCenter": "NASA/MSFC/GHRC",
+    "keyword": "NASA/MSFC/GHRC",
     "hasGranulesOrCwic": null
   },
   "title": {

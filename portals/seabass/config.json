@@ -23,7 +23,7 @@
     "parentConfig": "edsc",
     "portalBrowser": true,
     "query": {
-      "dataCenter": "NASA/GSFC/SED/ESD/GCDC/SeaBASS"
+      "keyword": "NASA/GSFC/SED/ESD/GCDC/SeaBASS"
     },
     "title": {
       "primary": "SeaBASS",
