@@ -104,6 +104,7 @@ describe('CollectionRequest#nonIndexedKeys', () => {
       'point',
       'polygon',
       'processing_level_id_h',
+      'project',
       'project_h',
       'provider',
       'service_type',
