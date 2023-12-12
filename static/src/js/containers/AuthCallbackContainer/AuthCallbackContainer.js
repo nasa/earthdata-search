@@ -76,7 +76,6 @@ export const AuthCallbackContainer = ({
 
     if (invalidRedirectUrl) {
       // Redirect to an error page or a safe location if the URL is not a relative path
-      // https://developer.mozilla.org/en-US/docs/Web/API/Location/replace assign prevents back-button use in history
       window.location.replace('/not-found')
 
       return
