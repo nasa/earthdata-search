@@ -365,7 +365,7 @@ class SpatialDisplay extends Component {
     errorMessage = this.validateCoordinate(swPoint) + this.validateCoordinate(nePoint)
 
     if (swPoint === nePoint) {
-      const message = 'Coordinates must not match. Point subsetting is available.'
+      const message = 'SW and NE points contain matching coordinates. Please use point selection instead.'
       errorMessage += errorMessage !== '' ? `\n${message}` : message
     }
 
