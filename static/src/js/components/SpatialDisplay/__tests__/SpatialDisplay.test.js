@@ -585,4 +585,16 @@ describe('SpatialDisplay component', () => {
       expect(result).toEqual('Longitude (190) must be between -180 and 180.')
     })
   })
+
+  describe('#validateBoundingBoxCoordinates', () => {
+    test('returns an error coordinates match each other.', () => {
+      const { enzymeWrapper } = setup()
+      const input = '-77.119,38.791'
+
+      const boundingBoxResult = enzymeWrapper.instance()
+        .validateBoundingBoxCoordinates([input, input])
+
+      expect(boundingBoxResult).toEqual('SW and NE points contain matching coordinates. Please use point selection instead.')
+    })
+  })
 })
