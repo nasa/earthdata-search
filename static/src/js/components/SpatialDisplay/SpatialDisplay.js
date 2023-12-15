@@ -367,7 +367,7 @@ class SpatialDisplay extends Component {
 
     if (swPoint === nePoint) {
       const message = 'SW and NE points contain matching coordinates. Please use point selection instead.'
-      errorMessage += errorMessage !== '' ? `\n${message}` : message
+      errorMessage += errorMessage !== '' ? ` ${message}` : message
     }
 
     return errorMessage
