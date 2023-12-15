@@ -4,6 +4,7 @@ const portals = [
   'airmoss',
   'amd',
   'carve',
+  'casei',
   'cwic',
   'default',
   'edsc',
