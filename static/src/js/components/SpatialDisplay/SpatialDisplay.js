@@ -359,9 +359,18 @@ class SpatialDisplay extends Component {
    * @param {Array} boundingBox Array with [swPoint, nePoint] values
    */
   validateBoundingBoxCoordinates(boundingBox) {
+    let errorMessage = ''
     const [swPoint, nePoint] = boundingBox
 
-    return this.validateCoordinate(swPoint) + this.validateCoordinate(nePoint)
+    errorMessage += this.validateCoordinate(swPoint)
+    if (errorMessage === '') { errorMessage += this.validateCoordinate(nePoint) }
+
+    if (swPoint === nePoint) {
+      const message = 'SW and NE points contain matching coordinates. Please use point selection instead.'
+      errorMessage += errorMessage !== '' ? ` ${message}` : message
+    }
+
+    return errorMessage
   }
 
   /**
