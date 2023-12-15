@@ -596,10 +596,8 @@ describe('SpatialDisplay component', () => {
 
       expect(boundingBoxResult).toEqual('SW and NE points contain matching coordinates. Please use point selection instead.')
     })
-  })
 
-  describe('#validateBoundingBoxCoordinates', () => {
-    test('returns an error coordinates match each other.', () => {
+    test('returns an error coordinates match each other and are invalid coordinates', () => {
       const { enzymeWrapper } = setup()
       const input = '-91.119,38.791'
 
