@@ -154,7 +154,41 @@ describe('AuthCallbackContainer component', () => {
     expect(setSpy).toBeCalledTimes(0)
 
     expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['/'])
+    expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
+  })
+
+  test('does not follow the redirect if the redirect param is not relative to earthdata-search', () => {
+    const setSpy = jest.spyOn(tinyCookie, 'set')
+    delete window.location
+    window.location = { replace: jest.fn() }
+
+    setup({
+      location: {
+        search: '?redirect=https://evil.com'
+      }
+    })
+
+    expect(setSpy).toBeCalledTimes(0)
+
+    expect(window.location.replace.mock.calls.length).toBe(1)
+    expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
+  })
+
+  test('does not follow the eddRedirect it is not a valid earthdata-download redirect', () => {
+    const setSpy = jest.spyOn(tinyCookie, 'set')
+    delete window.location
+    window.location = { replace: jest.fn() }
+
+    setup({
+      location: {
+        search: '?eddRedirect=https://evil.com'
+      }
+    })
+
+    expect(setSpy).toBeCalledTimes(0)
+
+    expect(window.location.replace.mock.calls.length).toBe(1)
+    expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
   })
 
   test('does not follow the redirect if the eddRedirect param is not valid', () => {
@@ -171,6 +205,6 @@ describe('AuthCallbackContainer component', () => {
     expect(setSpy).toBeCalledTimes(0)
 
     expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['/'])
+    expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
   })
 })
