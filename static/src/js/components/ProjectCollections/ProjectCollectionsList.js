@@ -50,8 +50,6 @@ export const ProjectCollectionsList = (props) => {
     activePanelGroup
   ] = activePanel.split('.')
 
-  console.log('collection list', projectIds.sort())
-
   const collectionsList = projectIds.sort().map((collectionId, index) => {
     const isPanelActive = activePanelGroup === index.toString()
     const color = getColorByIndex(index)

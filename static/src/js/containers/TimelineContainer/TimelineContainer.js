@@ -58,8 +58,6 @@ export const TimelineContainer = (props) => {
   const isProjectPage = isPath(pathname, ['/projects'])
   const isGranulesPage = isPath(pathname, ['/search/granules'])
 
-  console.log('timeline', timeline)
-
   const collectionMetadata = {}
   const collectionsToRender = []
 
