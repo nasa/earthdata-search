@@ -241,9 +241,10 @@ export const Timeline = ({
    * Converts redux timeline data (from CMR) into data usable by the timeline
    */
   const setupData = ({ intervals }) => {
-    const data = []
+    let data = []
 
-    Object.keys(intervals).sort().forEach((key, index) => {
+    // Sort the object keys so that they match the collectionMetadata order for indexing and color.
+    Object.keys(intervals).sort().forEach((key) => {
       // If collectionMetadata doesn't exist for this key return
       if (!collectionMetadata[key]) return
 
@@ -252,7 +253,6 @@ export const Timeline = ({
 
       const dataValue = {}
       dataValue.id = key
-      dataValue.color = getColorByIndex(index)
       const { title = '' } = metadata
       dataValue.title = title
 
@@ -264,6 +264,14 @@ export const Timeline = ({
       })
 
       data.push(dataValue)
+    })
+
+    // Apply the color to the dataValues based on index order.
+    data = data.map((dataValue, index) => {
+      const item = { ...dataValue }
+      item.color = getColorByIndex(index)
+
+      return item
     })
 
     return data
