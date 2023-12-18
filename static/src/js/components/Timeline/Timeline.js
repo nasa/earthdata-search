@@ -243,7 +243,7 @@ export const Timeline = ({
   const setupData = ({ intervals }) => {
     const data = []
 
-    Object.keys(intervals).forEach((key, index) => {
+    Object.keys(intervals).sort().forEach((key, index) => {
       // If collectionMetadata doesn't exist for this key return
       if (!collectionMetadata[key]) return
 
