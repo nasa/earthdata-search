@@ -90,6 +90,7 @@ export const TimelineContainer = (props) => {
       onMetricsTimeline={onMetricsTimeline}
       onToggleTimeline={onToggleTimeline}
       isOpen={isOpen}
+      projectCollectionsIds={projectCollectionsIds}
     />
   )
 }
