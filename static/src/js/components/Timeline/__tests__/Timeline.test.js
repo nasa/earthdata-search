@@ -24,6 +24,7 @@ function setup(overrideProps) {
     },
     showOverrideModal: false,
     pathname: '/search/granules',
+    projectCollectionsIds: ['collectionId'],
     onChangeQuery: jest.fn(),
     onChangeTimelineQuery: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
@@ -151,6 +152,75 @@ describe('Timeline component', () => {
       id: 'collectionId',
       intervals: [[1525132800000, 1618185600000]],
       title: 'Test Collection'
+    }])
+  })
+
+  test('setup data creates the correct intervals in the correct order for EDSCTimeline', () => {
+    const { enzymeWrapper } = setup({
+      pathname: '/search/granules',
+      collectionMetadata: {
+        collectionId: {
+          title: 'Test Collection'
+        },
+        secondCollection: {
+          title: '2nd Test Collection'
+        },
+        thirdCollection: {
+          title: '3rd Collection'
+        }
+      },
+      projectCollectionsIds: ['collectionId', 'secondCollection', 'thirdCollection'],
+      timeline: {
+        intervals: {
+          collectionId: [
+            [
+              1525132800,
+              1618185600,
+              582637
+            ]
+          ],
+          thirdCollection: [
+            [
+              1525132800,
+              1618185600,
+              582637
+            ]
+          ],
+          secondCollection: [
+            [
+              1525132800,
+              1618185600,
+              582637
+            ]
+          ]
+        },
+        query: {
+          center: 1552425382,
+          interval: 'day',
+          endDate: '2020-09-11T21:16:22.000Z',
+          startDate: '2017-09-09T21:16:22.000Z'
+        }
+      }
+    })
+
+    const timeline = enzymeWrapper.find(EDSCTimeline)
+    expect(timeline.props().data).toEqual([{
+      color: '#2ECC71',
+      id: 'collectionId',
+      intervals: [[1525132800000, 1618185600000]],
+      title: 'Test Collection'
+    },
+    {
+      color: '#3498DB',
+      id: 'secondCollection',
+      intervals: [[1525132800000, 1618185600000]],
+      title: '2nd Test Collection'
+    },
+    {
+      color: '#E67E22',
+      id: 'thirdCollection',
+      intervals: [[1525132800000, 1618185600000]],
+      title: '3rd Collection'
     }])
   })
 })
