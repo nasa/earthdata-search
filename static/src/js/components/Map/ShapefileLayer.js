@@ -215,8 +215,8 @@ class ShapefileLayerExtended extends L.Layer {
           featureLatLngs = featureLayer.getLatLngs().flat()
         }
 
-        allLatsArctic = featureLatLngs.every((latlng) => latlng.lat > 45)
-        allLatsAntarctic = featureLatLngs.every((latlng) => latlng.lat < -45)
+        allLatsArctic = featureLatLngs.every((latlng) => latlng.lat > 66.5)
+        allLatsAntarctic = featureLatLngs.every((latlng) => latlng.lat < -66.5)
 
         const addIconClasses = (layer) => {
           const { options = {} } = layer

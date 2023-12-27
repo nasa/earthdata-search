@@ -596,5 +596,15 @@ describe('SpatialDisplay component', () => {
 
       expect(boundingBoxResult).toEqual('SW and NE points contain matching coordinates. Please use point selection instead.')
     })
+
+    test('returns an error coordinates match each other and are invalid coordinates', () => {
+      const { enzymeWrapper } = setup()
+      const input = '-91.119,38.791'
+
+      const boundingBoxResult = enzymeWrapper.instance()
+        .validateBoundingBoxCoordinates([input, input])
+
+      expect(boundingBoxResult).toEqual('Latitude (-91.119) must be between -90 and 90. SW and NE points contain matching coordinates. Please use point selection instead.')
+    })
   })
 })

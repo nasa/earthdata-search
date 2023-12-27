@@ -362,13 +362,12 @@ class SpatialDisplay extends Component {
     let errorMessage = ''
     const [swPoint, nePoint] = boundingBox
 
-    // Sets an initial error message if on of the coordinates isn't valid
-    errorMessage = this.validateCoordinate(swPoint) + this.validateCoordinate(nePoint)
+    errorMessage += this.validateCoordinate(swPoint)
+    if (errorMessage === '') { errorMessage += this.validateCoordinate(nePoint) }
 
-    // Adds another error message or sets the original error message if the 2 points match each other
     if (swPoint === nePoint) {
       const message = 'SW and NE points contain matching coordinates. Please use point selection instead.'
-      errorMessage += errorMessage !== '' ? `\n${message}` : message
+      errorMessage += errorMessage !== '' ? ` ${message}` : message
     }
 
     return errorMessage

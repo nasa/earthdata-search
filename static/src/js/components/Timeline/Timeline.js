@@ -28,6 +28,7 @@ export const Timeline = ({
   onToggleOverrideTemporalModal,
   onToggleTimeline,
   pathname,
+  projectCollectionsIds,
   showOverrideModal,
   temporalSearch,
   timeline
@@ -243,15 +244,14 @@ export const Timeline = ({
   const setupData = ({ intervals }) => {
     const data = []
 
-    Object.keys(intervals).forEach((key, index) => {
-      // If collectionMetadata doesn't exist for this key return
-      if (!collectionMetadata[key]) return
+    projectCollectionsIds.forEach((conceptId, index) => {
+      if (!intervals[conceptId]) return
 
-      const values = intervals[key]
-      const metadata = collectionMetadata[key] || {}
+      const values = intervals[conceptId]
+      const metadata = collectionMetadata[conceptId] || {}
 
       const dataValue = {}
-      dataValue.id = key
+      dataValue.id = conceptId
       dataValue.color = getColorByIndex(index)
       const { title = '' } = metadata
       dataValue.title = title
@@ -385,6 +385,7 @@ Timeline.propTypes = {
   onToggleOverrideTemporalModal: PropTypes.func.isRequired,
   onToggleTimeline: PropTypes.func.isRequired,
   pathname: PropTypes.string.isRequired,
+  projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   showOverrideModal: PropTypes.bool.isRequired,
   temporalSearch: PropTypes.shape({
     endDate: PropTypes.string,
