@@ -113,7 +113,7 @@
     "array-foreach-async": "^1.0.1",
     "array-to-sentence": "^2.0.0",
     "autoprefixer": "^10.4.5",
-    "axios": "^1.6.1",
+    "axios": "^1.6.4",
     "axios-retry": "^3.2.4",
     "babel-loader": "^8.2.5",
     "bootstrap": "^4.6.1",
