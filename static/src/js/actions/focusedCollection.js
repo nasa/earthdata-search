@@ -82,15 +82,9 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   const graphQuery = `
     query GetCollection(
-      $id: String!
-      $includeHasGranules: Boolean
-      $includeTags: String
-      $subscriberId: String
+      $params: CollectionInput, $subcriptionParams: SubscriptionsInput
     ) {
-      collection (
-        conceptId: $id
-        includeHasGranules: $includeHasGranules
-        includeTags: $includeTags
+      collection (params: $params
       ) {
         abstract
         archiveAndDistributionInformation
@@ -153,7 +147,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           }
         }
         subscriptions (
-          subscriberId: $subscriberId
+          params: $subcriptionParams
         ) {
           count
           items {
@@ -189,10 +183,14 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     }`
 
   const response = graphQlRequestObject.search(graphQuery, {
-    id: focusedCollectionId,
-    includeHasGranules: true,
-    includeTags: defaultCmrSearchTags.join(','),
-    subscriberId: username
+    params: {
+      id: focusedCollectionId,
+      includeHasGranules: true,
+      includeTags: defaultCmrSearchTags.join(',')
+    },
+    subcriptionParams: {
+      subscriberId: username
+    }
   })
     .then((responseObject) => {
       const payload = []

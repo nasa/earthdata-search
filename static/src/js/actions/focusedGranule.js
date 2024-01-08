@@ -51,10 +51,10 @@ export const getFocusedGranule = () => (dispatch, getState) => {
 
   const graphQuery = `
     query GetGranule(
-      $id: String!
+      $params: GranuleInput
     ) {
       granule(
-        conceptId: $id
+        params: $params
       ) {
         granuleUr
         granuleSize
