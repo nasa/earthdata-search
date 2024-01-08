@@ -84,8 +84,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     query GetCollection(
       $params: CollectionInput, $subcriptionParams: SubscriptionsInput
     ) {
-      collection (params: $params
-      ) {
+      collection (params: $params) {
         abstract
         archiveAndDistributionInformation
         associatedDois
