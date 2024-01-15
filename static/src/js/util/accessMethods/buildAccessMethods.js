@@ -26,6 +26,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
   const accessMethods = {}
   let harmonyIndex = 0
   const { items: serviceItems = null } = services
+  const { disableOrdering } = process.env
 
   if (serviceItems !== null) {
     serviceItems.forEach((serviceItem) => {
@@ -55,7 +56,8 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
       const supportsOrderOptions = ['esi', 'echo orders']
 
       // Only process orderOptions if the service type uses orderOptions
-      if (supportsOrderOptions.includes(serviceType.toLowerCase())) {
+      // Do not include access if orders are disabled
+      if (supportsOrderOptions.includes(serviceType.toLowerCase()) && !disableOrdering) {
         const { items: orderOptionsItems } = orderOptions
         if (orderOptionsItems === null) return
 

@@ -1,5 +1,21 @@
 import { buildAccessMethods } from '../buildAccessMethods'
 
+const OLD_ENV = process.env
+
+beforeEach(() => {
+  jest.clearAllMocks()
+
+  // Manage resetting ENV variables
+  jest.resetModules()
+  process.env = { ...OLD_ENV }
+  delete process.env.NODE_ENV
+})
+
+afterEach(() => {
+  // Restore any ENV variables overwritten in tests
+  process.env = OLD_ENV
+})
+
 describe('buildAccessMethods', () => {
   test('returns a download access method', () => {
     const collectionMetadata = {
@@ -36,6 +52,8 @@ describe('buildAccessMethods', () => {
   })
 
   test('returns an esi access method', () => {
+    process.env.disableOrdering = false
+
     const collectionMetadata = {
       services: {
         items: [{
@@ -72,6 +90,8 @@ describe('buildAccessMethods', () => {
   })
 
   test('returns an echo orders access method', () => {
+    process.env.disableOrdering = false
+
     const collectionMetadata = {
       services: {
         items: [{
@@ -106,6 +126,35 @@ describe('buildAccessMethods', () => {
         maxItemsPerOrder: 2000,
         url: 'https://example.com'
       }
+    })
+  })
+
+  describe('when ordering is disabled', () => {
+    test('no echo-order access method is returned', () => {
+      process.env.disableOrdering = true
+      const collectionMetadata = {
+        services: {
+          items: [{
+            type: 'ECHO ORDERS',
+            url: {
+              urlValue: 'https://example.com'
+            },
+            maxItemsPerOrder: 2000,
+            orderOptions: {
+              items: [{
+                conceptId: 'OO10000-EDSC',
+                name: 'mock form',
+                form: 'mock form'
+              }]
+            }
+          }]
+        }
+      }
+      const isOpenSearch = false
+
+      const methods = buildAccessMethods(collectionMetadata, isOpenSearch)
+
+      expect(methods).toEqual({})
     })
   })
 
