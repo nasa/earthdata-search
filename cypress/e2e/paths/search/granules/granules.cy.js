@@ -1132,7 +1132,7 @@ describe('Path /search/granules', () => {
             })
           }
 
-          if (JSON.stringify(req.body) === '{"query":"\\n    query GetGranule(\\n      $id: String!\\n    ) {\\n      granule(\\n        conceptId: $id\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"id":"G2058417402-LPDAAC_ECS"}}') {
+          if (JSON.stringify(req.body) === '{"query":"\\n    query GetGranule(\\n      $params: GranulesInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"id":"G2058417402-LPDAAC_ECS"}}') {
             req.alias = 'graphQlGranuleQuery'
             req.reply({
               body: focusedGranuleGranuleGraphQlBody,

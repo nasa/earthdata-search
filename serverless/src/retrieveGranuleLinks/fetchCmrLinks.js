@@ -8,58 +8,8 @@ import { getS3Urls } from '../../../sharedUtils/getS3Urls'
 import { getBrowseUrls } from '../../../sharedUtils/getBrowseUrls'
 
 const granulesGraphQlQuery = `
-  query GetGranuleLinks(
-    $boundingBox: [String]
-    $browseOnly: Boolean
-    $circle: [String]
-    $cloudCover: JSON
-    $collectionConceptId: String
-    $conceptId: [String]
-    $cursor: String
-    $dayNightFlag: String
-    $equatorCrossingDate: JSON
-    $equatorCrossingLongitude: JSON
-    $exclude: JSON
-    $limit: Int
-    $line: [String]
-    $linkTypes: [String]
-    $offset: Int
-    $onlineOnly: Boolean
-    $options: JSON
-    $orbitNumber: JSON
-    $point: [String]
-    $polygon: [String]
-    $readableGranuleName: [String]
-    $sortKey: [String]
-    $temporal: String
-    $twoDCoordinateSystem: JSON
-  ) {
-    granules(
-      boundingBox: $boundingBox
-      browseOnly: $browseOnly
-      circle: $circle
-      cloudCover: $cloudCover
-      collectionConceptId: $collectionConceptId
-      conceptId: $conceptId
-      cursor: $cursor
-      dayNightFlag: $dayNightFlag
-      equatorCrossingDate: $equatorCrossingDate
-      equatorCrossingLongitude: $equatorCrossingLongitude
-      exclude: $exclude
-      limit: $limit
-      line: $line
-      linkTypes: $linkTypes
-      offset: $offset
-      onlineOnly: $onlineOnly
-      options: $options
-      orbitNumber: $orbitNumber
-      point: $point
-      polygon: $polygon
-      readableGranuleName: $readableGranuleName
-      sortKey: $sortKey
-      temporal: $temporal
-      twoDCoordinateSystem: $twoDCoordinateSystem
-    ) {
+  query GetGranuleLinks( $params: GranulesInput ) {
+    granules( params: $params) {
       cursor
       items {
         links
