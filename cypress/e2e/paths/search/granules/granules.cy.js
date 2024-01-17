@@ -1239,8 +1239,6 @@ describe('Path /search/granules', () => {
               body: projectGranuleCollectionsGraphQlBody,
               headers: projectGranuleGraphQlHeaders
             })
-          } else {
-            console.log("GET COLLECTIONS", JSON.stringify(req.body))
           }
         }
       )
