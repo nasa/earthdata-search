@@ -183,7 +183,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   const response = graphQlRequestObject.search(graphQuery, {
     params: {
-      id: focusedCollectionId,
+      conceptId: focusedCollectionId,
       includeHasGranules: true,
       includeTags: defaultCmrSearchTags.join(',')
     },

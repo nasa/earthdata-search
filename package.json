@@ -59,7 +59,7 @@
     "babel-jest": "^28.1.0",
     "babel-plugin-istanbul": "^6.1.1",
     "cookies": "^0.7.3",
-    "cypress": "^12.17.2",
+    "cypress": "^13.0.0",
     "cypress-file-upload": "^5.0.8",
     "enzyme": "^3.11.0",
     "istanbul-instrumenter-loader": "^3.0.1",

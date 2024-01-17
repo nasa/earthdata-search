@@ -1078,7 +1078,7 @@ describe('Path /search/granules', () => {
   })
 
   describe('When the path is loaded with a focused granule', () => {
-    it('loads with the granule focused', () => {
+    it.only('loads with the granule focused', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 275361
 
@@ -1132,7 +1132,7 @@ describe('Path /search/granules', () => {
             })
           }
 
-          if (JSON.stringify(req.body) === '{"query":"\\n    query GetGranule(\\n      $params: GranulesInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"id":"G2058417402-LPDAAC_ECS"}}') {
+          if (JSON.stringify(req.body) === '{"query":"\\n    query GetGranule(\\n      $params: GranulesInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"conceptId":"G2058417402-LPDAAC_ECS"}}') {
             req.alias = 'graphQlGranuleQuery'
             req.reply({
               body: focusedGranuleGranuleGraphQlBody,

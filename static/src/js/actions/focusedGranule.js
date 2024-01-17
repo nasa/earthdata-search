@@ -77,7 +77,9 @@ export const getFocusedGranule = () => (dispatch, getState) => {
     }`
 
   const response = graphQlRequestObject.search(graphQuery, {
-    id: focusedGranuleId
+    params: {
+      conceptId: focusedGranuleId
+    }
   })
     .then((responseObject) => {
       const payload = []
