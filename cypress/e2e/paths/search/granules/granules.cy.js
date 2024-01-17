@@ -1078,7 +1078,7 @@ describe('Path /search/granules', () => {
   })
 
   describe('When the path is loaded with a focused granule', () => {
-    it.only('loads with the granule focused', () => {
+    it('loads with the granule focused', () => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 275361
 
