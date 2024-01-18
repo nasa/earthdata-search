@@ -68,7 +68,6 @@ const GranuleResultsItem = forwardRef(({
   }
 
   const handleClickGranuleDetails = (granuleId) => {
-    console.log('CORBETT:: ', granuleId)
     onFocusedGranuleChange(granuleId)
   }
 

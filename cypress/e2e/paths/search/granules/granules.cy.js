@@ -1138,8 +1138,6 @@ describe('Path /search/granules', () => {
               body: focusedGranuleGranuleGraphQlBody,
               headers: focusedGranuleGraphQlHeaders
             })
-          } else {
-            console.log('Granule CORBETT:: ', JSON.stringify(req.body))
           }
         }
       )
