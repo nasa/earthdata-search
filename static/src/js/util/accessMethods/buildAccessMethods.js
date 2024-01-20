@@ -1,5 +1,7 @@
 import { camelCase, uniq } from 'lodash'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
 import { isDownloadable } from '../../../../../sharedUtils/isDownloadable'
 import { generateFormDigest } from './generateFormDigest'
 import { getVariables } from './getVariables'
@@ -26,7 +28,8 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
   const accessMethods = {}
   let harmonyIndex = 0
   const { items: serviceItems = null } = services
-  const { disableOrdering } = process.env
+
+  const { disableOrdering } = getApplicationConfig()
 
   if (serviceItems !== null) {
     serviceItems.forEach((serviceItem) => {

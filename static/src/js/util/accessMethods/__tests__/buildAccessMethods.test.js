@@ -1,14 +1,13 @@
 import { buildAccessMethods } from '../buildAccessMethods'
 
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+
 const OLD_ENV = process.env
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
-  // Manage resetting ENV variables
-  jest.resetModules()
-  process.env = { ...OLD_ENV }
-  delete process.env.NODE_ENV
+  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    disableOrdering: false
+  }))
 })
 
 afterEach(() => {
@@ -131,7 +130,10 @@ describe('buildAccessMethods', () => {
 
   describe('when ordering is disabled', () => {
     test('no echo-order access method is returned', () => {
-      process.env.disableOrdering = true
+      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        disableOrdering: true
+      }))
+
       const collectionMetadata = {
         services: {
           items: [{

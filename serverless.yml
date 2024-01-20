@@ -33,7 +33,6 @@ provider:
     obfuscationSpinShapefiles: ${self:custom.variables.obfuscationSpinShapefiles}
 
     orderDelaySeconds: ${self:custom.variables.orderDelaySeconds}
-    disableOrdering: ${self:custom.variables.disableOrdering}
 
     configSecretId:
       Fn::ImportValue: ${self:provider.stage}-DbPasswordSecret
@@ -124,7 +123,6 @@ custom:
     obfuscationSpin: ${env:OBFUSCATION_SPIN, ''}
     obfuscationSpinShapefiles: ${env:OBFUSCATION_SPIN_SHAPEFILES, ''}
     orderDelaySeconds: ${env:ORDER_DELAY_SECONDS, '1'}
-    disableOrdering: ${env:DISABLE_ORDERING, 'false'}
 
     cloudfrontToCloudwatchBucketPrefixApi:
       Fn::Join:
