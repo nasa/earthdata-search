@@ -149,9 +149,9 @@ export class SpatialSelectionDropdown extends PureComponent {
                     {spatialSelectionFileSpan}
                   </div>
                 </OverlayTrigger>
-              ) : (
-                { spatialSelectionFileSpan }
               )
+                : (spatialSelectionFileSpan)
+
             }
           </Dropdown.Item>
         </Dropdown.Menu>
