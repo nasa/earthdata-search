@@ -44,7 +44,7 @@ export default async function getColorMap(event, context) {
     const regex = /connect ECONNREFUSED/
     const dbConnectionError = regex.test(error.message)
     if (dbConnectionError && disableDatabase) {
-      const colorMapsDisabledMessage = 'Colormaps are currently disabled during maintenance period'
+      const colorMapsDisabledMessage = 'Colormaps are disabled during this maintenance period'
 
       return {
         isBase64Encoded: false,
