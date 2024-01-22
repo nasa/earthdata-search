@@ -74,7 +74,6 @@ describe('SecondaryToolbar component', () => {
     beforeEach(() => {
       jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         defaultPortal: 'edsc',
-        disableDatabase: false,
         env: 'prod'
       }))
     })

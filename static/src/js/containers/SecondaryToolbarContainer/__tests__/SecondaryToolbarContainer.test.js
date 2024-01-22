@@ -14,7 +14,7 @@ import SecondaryToolbar from '../../../components/SecondaryToolbar/SecondaryTool
 
 beforeEach(() => {
   jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-    disableOrdering: false
+    disableDatabaseComponents: false
   }))
 })
 

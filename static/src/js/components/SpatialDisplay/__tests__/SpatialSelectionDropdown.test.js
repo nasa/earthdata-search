@@ -117,7 +117,6 @@ describe('SpatialSelectionDropdown component', () => {
       expect(shapeFileSelectionButton.prop('disabled')).toEqual(true)
     })
 
-    // TODO ensure that this is only occuring when hovering
     test('hovering over the shapefile reveals tool-tip', () => {
       jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         disableDatabaseComponents: true
@@ -126,7 +125,6 @@ describe('SpatialSelectionDropdown component', () => {
       const { enzymeWrapper } = setup()
 
       const dropdowns = enzymeWrapper.find(Dropdown.Item)
-      console.log('🚀 ~ file: SpatialSelectionDropdown.test.js:128 ~ test.only ~ dropdowns:', dropdowns)
 
       const shapeFileSelectionButton = dropdowns.at(4)
       shapeFileSelectionButton.simulate('mouseenter')
@@ -134,7 +132,6 @@ describe('SpatialSelectionDropdown component', () => {
       expect(shapeFileSelectionButton.text()).toBe('<OverlayTrigger />')
 
       const overlayTrigger = enzymeWrapper.find(OverlayTrigger)
-      console.log('🚀 ~ file: SpatialSelectionDropdown.test.js:143 ~ test.only ~ overlayTrigger:', overlayTrigger)
 
       const toolTipMessage = overlayTrigger.props().overlay.props.children
       expect(toolTipMessage).toEqual('Shapefile subsetting is currently disabled')
