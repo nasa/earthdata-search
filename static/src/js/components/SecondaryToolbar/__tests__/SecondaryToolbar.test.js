@@ -28,6 +28,7 @@ function setup(state, overrideProps) {
     ursProfile: {
       first_name: 'First'
     },
+    secondaryToolbarEnabled: true,
     ...overrideProps
   }
 
@@ -62,10 +63,18 @@ describe('SecondaryToolbar component', () => {
     })
   })
 
+  describe('when the secondary toolbar is meant to be disabled', () => {
+    test('secondary toolbar components are not being rendered', () => {
+      const { enzymeWrapper } = setup('loggedIn', { secondaryToolbarEnabled: false })
+      expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toBe(0)
+    })
+  })
+
   describe('when logged in', () => {
     beforeEach(() => {
       jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         defaultPortal: 'edsc',
+        disableDatabase: false,
         env: 'prod'
       }))
     })

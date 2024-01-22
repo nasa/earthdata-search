@@ -9,6 +9,7 @@ import { parseError } from '../../../sharedUtils/parseError'
  */
 export default async function getColorMap(event, context) {
   const { defaultResponseHeaders } = getApplicationConfig()
+  const { disableDatabase } = process.env
 
   try {
     // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
@@ -40,6 +41,24 @@ export default async function getColorMap(event, context) {
       body: JSON.stringify({ errors: [`ColorMap '${providedProduct}' not found.`] })
     }
   } catch (error) {
+    const regex = /connect ECONNREFUSED/
+    const dbConnectionError = regex.test(error.message)
+    console.log('🚀 ~ file: handler.js:48 ~ getColorMap ~ disableDatabase:', disableDatabase)
+    // Todo how should we handle this error I guess disregard it
+    if (dbConnectionError && disableDatabase) {
+      console.log('Caught the error ✅')
+      console.log('🚀 ~ file: handler.js:57 ~ getColorMap ~ parseError(error):', parseError(error))
+      const colorMapsDisabledMessage = 'Colormaps are currently disabled during maintenance period'
+
+      return {
+        isBase64Encoded: false,
+        statusCode: 404,
+        headers: defaultResponseHeaders,
+        ...parseError(colorMapsDisabledMessage, {
+        })
+      }
+    }
+
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,

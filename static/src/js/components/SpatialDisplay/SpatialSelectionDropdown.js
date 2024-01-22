@@ -1,6 +1,10 @@
 import React, { PureComponent } from 'react'
 import { PropTypes } from 'prop-types'
-import { Dropdown } from 'react-bootstrap'
+import {
+  Dropdown,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap'
 import {
   FaCrop,
   FaMapMarker,
@@ -9,6 +13,8 @@ import {
 } from 'react-icons/fa'
 
 import { eventEmitter } from '../../events/events'
+
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -56,6 +62,8 @@ export class SpatialSelectionDropdown extends PureComponent {
   }
 
   render() {
+    const { disableDatabaseComponents } = getApplicationConfig()
+
     return (
       <Dropdown
         className="spatial-selection-dropdown"
@@ -116,11 +124,34 @@ export class SpatialSelectionDropdown extends PureComponent {
             icon={FaFile}
             onClick={() => this.onItemClick('file')}
             label="Select Shapefile"
+            disabled={disableDatabaseComponents}
           >
-            <span>
-              File
-              <span className="spatial-selection-dropdown__small">(KML, KMZ, ESRI, …)</span>
-            </span>
+            {
+              disableDatabaseComponents ? (
+                <OverlayTrigger
+                  placement="right"
+                  overlay={
+                    (
+                      <Tooltip>
+                        Shapefile subsetting is currently disabled
+                      </Tooltip>
+                    )
+                  }
+                >
+                  <div>
+                    <span>
+                      File
+                      <span className="spatial-selection-dropdown__small">(KML, KMZ, ESRI, …)</span>
+                    </span>
+                  </div>
+                </OverlayTrigger>
+              ) : (
+                <span>
+                  File
+                  <span className="spatial-selection-dropdown__small">(KML, KMZ, ESRI, …)</span>
+                </span>
+              )
+            }
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

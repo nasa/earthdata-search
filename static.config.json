@@ -46,6 +46,7 @@
     },
     "disableEddDownload": "false",
     "disableOrdering": false,
+    "disableDatabaseComponents": false,
     "macOSEddDownloadSize":130,
     "windowsEddDownloadSize":100,
     "linuxEddDownloadSize":90

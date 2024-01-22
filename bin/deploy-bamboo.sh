@@ -19,6 +19,7 @@ config="`jq '.application.granuleLinksPageSize = $newValue' --arg newValue $bamb
 config="`jq '.application.openSearchGranuleLinksPageSize = $newValue' --arg newValue $bamboo_OPEN_SEARCH_GRANULE_LINKS_PAGE_SIZE <<< $config`"
 config="`jq '.application.disableEddDownload = $newValue' --arg newValue $bamboo_DISABLE_EDD_DOWNLOAD <<< $config`"
 config="`jq '.application.disableOrdering = $newValue' --arg newValue $bamboo_DISABLE_ORDERING <<< $config`"
+config="`jq '.application.disableDatabaseComponents = $newValue' --arg newValue $bamboo_DISABLE_DATABASE_COMPONENTS <<< $config`"
 config="`jq '.application.macOSEddDownloadSize = $newValue' --arg newValue $bamboo_MACOS_EDD_DOWNLOAD_SIZE <<< $config`"
 config="`jq '.application.windowsEddDownloadSize = $newValue' --arg newValue $bamboo_WINDOWS_EDD_DOWNLOAD_SIZE <<< $config`"
 config="`jq '.application.linuxEddDownloadSize = $newValue' --arg newValue $bamboo_LINUX_EDD_DOWNLOAD_SIZE <<< $config`"
@@ -80,8 +81,6 @@ dockerRun() {
         -e "CLOUDFRONT_BUCKET_NAME=$bamboo_CLOUDFRONT_BUCKET_NAME" \
         -e "COLORMAP_JOB_ENABLED=$bamboo_COLORMAP_JOB_ENABLED" \
         -e "DB_INSTANCE_CLASS=$bamboo_DB_INSTANCE_CLASS" \
-        -e "GEOCODING_INCLUDE_POLYGONS=$bamboo_GEOCODING_INCLUDE_POLYGONS" \
-        -e "GEOCODING_SERVICE=$bamboo_GEOCODING_SERVICE" \
         -e "GIBS_JOB_ENABLED=$bamboo_GIBS_JOB_ENABLED" \
         -e "LAMBDA_TIMEOUT=$bamboo_LAMBDA_TIMEOUT" \
         -e "LOG_DESTINATION_ARN=$bamboo_LOG_DESTINATION_ARN" \
@@ -93,6 +92,7 @@ dockerRun() {
         -e "SUBNET_ID_A=$bamboo_SUBNET_ID_A" \
         -e "SUBNET_ID_B=$bamboo_SUBNET_ID_B" \
         -e "VPC_ID=$bamboo_VPC_ID" \
+        -e "DISABLE_DATABASE=$bamboo_DISABLE_DATABASE" \
         $dockerTag "$@"
 }
 

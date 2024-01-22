@@ -2,17 +2,10 @@ import { buildAccessMethods } from '../buildAccessMethods'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
-const OLD_ENV = process.env
-
 beforeEach(() => {
   jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     disableOrdering: false
   }))
-})
-
-afterEach(() => {
-  // Restore any ENV variables overwritten in tests
-  process.env = OLD_ENV
 })
 
 describe('buildAccessMethods', () => {
@@ -51,8 +44,6 @@ describe('buildAccessMethods', () => {
   })
 
   test('returns an esi access method', () => {
-    process.env.disableOrdering = false
-
     const collectionMetadata = {
       services: {
         items: [{
@@ -89,8 +80,6 @@ describe('buildAccessMethods', () => {
   })
 
   test('returns an echo orders access method', () => {
-    process.env.disableOrdering = false
-
     const collectionMetadata = {
       services: {
         items: [{
