@@ -62,8 +62,8 @@ export const SecondaryToolbarContainer = (props) => {
       projectCollectionIds={projectCollectionIds}
       savedProject={savedProject}
       retrieval={retrieval}
-      ursProfile={ursProfile}
       secondaryToolbarEnabled={secondaryToolbarEnabled}
+      ursProfile={ursProfile}
     />
   )
 }

@@ -116,8 +116,8 @@ class SecondaryToolbar extends Component {
       projectCollectionIds,
       location,
       retrieval = {},
-      ursProfile,
-      secondaryToolbarEnabled
+      secondaryToolbarEnabled,
+      ursProfile
     } = this.props
 
     const { first_name: firstName = '' } = ursProfile

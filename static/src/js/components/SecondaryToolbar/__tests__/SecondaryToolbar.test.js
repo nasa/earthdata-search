@@ -64,9 +64,18 @@ describe('SecondaryToolbar component', () => {
   })
 
   describe('when the secondary toolbar is meant to be disabled', () => {
-    test('secondary toolbar components are not being rendered', () => {
-      const { enzymeWrapper } = setup('loggedIn', { secondaryToolbarEnabled: false })
-      expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toBe(0)
+    describe('when the user is logged in', () => {
+      test('secondary toolbar components are not being rendered', () => {
+        const { enzymeWrapper } = setup('loggedIn', { secondaryToolbarEnabled: false })
+        expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toBe(0)
+      })
+    })
+
+    describe('when the user is logged out', () => {
+      test('secondary toolbar components are not being rendered', () => {
+        const { enzymeWrapper } = setup('loggedOut', { secondaryToolbarEnabled: false })
+        expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toBe(0)
+      })
     })
   })
 

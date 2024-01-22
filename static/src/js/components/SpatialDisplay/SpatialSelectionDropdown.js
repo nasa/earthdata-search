@@ -64,6 +64,13 @@ export class SpatialSelectionDropdown extends PureComponent {
   render() {
     const { disableDatabaseComponents } = getApplicationConfig()
 
+    const spatialSelectionFileSpan = (
+      <span>
+        File
+        <span className="spatial-selection-dropdown__small">(KML, KMZ, ESRI, …)</span>
+      </span>
+    )
+
     return (
       <Dropdown
         className="spatial-selection-dropdown"
@@ -139,17 +146,11 @@ export class SpatialSelectionDropdown extends PureComponent {
                   }
                 >
                   <div>
-                    <span>
-                      File
-                      <span className="spatial-selection-dropdown__small">(KML, KMZ, ESRI, …)</span>
-                    </span>
+                    {spatialSelectionFileSpan}
                   </div>
                 </OverlayTrigger>
               ) : (
-                <span>
-                  File
-                  <span className="spatial-selection-dropdown__small">(KML, KMZ, ESRI, …)</span>
-                </span>
+                { spatialSelectionFileSpan }
               )
             }
           </Dropdown.Item>
