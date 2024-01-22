@@ -1,7 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { Dropdown } from 'react-bootstrap'
+import { Dropdown, OverlayTrigger } from 'react-bootstrap'
+
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 import SpatialSelectionDropdown from '../SpatialSelectionDropdown'
 import * as EventEmitter from '../../../events/events'
@@ -97,5 +99,45 @@ describe('SpatialSelectionDropdown component', () => {
 
     expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
     expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(true)
+  })
+
+  describe('if the database is disabled', () => {
+    test('searching with the `shapefileUpload` buttons should also be disabled', () => {
+      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        disableDatabaseComponents: true
+      }))
+
+      const { enzymeWrapper } = setup()
+
+      const dropdowns = enzymeWrapper.find(Dropdown.Item)
+
+      const shapeFileSelectionButton = dropdowns.at(4)
+      shapeFileSelectionButton.simulate('click')
+
+      expect(shapeFileSelectionButton.prop('disabled')).toEqual(true)
+    })
+
+    // TODO ensure that this is only occuring when hovering
+    test('hovering over the shapefile reveals tool-tip', () => {
+      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        disableDatabaseComponents: true
+      }))
+
+      const { enzymeWrapper } = setup()
+
+      const dropdowns = enzymeWrapper.find(Dropdown.Item)
+      console.log('🚀 ~ file: SpatialSelectionDropdown.test.js:128 ~ test.only ~ dropdowns:', dropdowns)
+
+      const shapeFileSelectionButton = dropdowns.at(4)
+      shapeFileSelectionButton.simulate('mouseenter')
+
+      expect(shapeFileSelectionButton.text()).toBe('<OverlayTrigger />')
+
+      const overlayTrigger = enzymeWrapper.find(OverlayTrigger)
+      console.log('🚀 ~ file: SpatialSelectionDropdown.test.js:143 ~ test.only ~ overlayTrigger:', overlayTrigger)
+
+      const toolTipMessage = overlayTrigger.props().overlay.props.children
+      expect(toolTipMessage).toEqual('Shapefile subsetting is currently disabled')
+    })
   })
 })

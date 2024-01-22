@@ -6,6 +6,8 @@ import getColorMap from '../handler'
 let dbTracker
 
 beforeEach(() => {
+  process.env.disableDatabase = false
+
   jest.clearAllMocks()
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
@@ -89,5 +91,29 @@ describe('getColorMap', () => {
     expect(queries[0].method).toEqual('first')
 
     expect(response.statusCode).toEqual(500)
+  })
+
+  describe('When the database is disabled', () => {
+    test('ensure correct error message is returned', async () => {
+      dbTracker.on('query', (query) => {
+        query.reject('connect ECONNREFUSED port 12212 this error')
+      })
+
+      // Disable the database
+      process.env.disableDatabase = true
+
+      const response = await getColorMap({
+        pathParameters: {
+          product: 'MODIS_Aqua_L3_SST_MidIR_4km_Night_Daily'
+        }
+      }, {})
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].method).toEqual('first')
+
+      expect(response.statusCode).toEqual(500)
+      expect(JSON.parse(response.body).errors[0]).toEqual('Colormaps are currently disabled during maintenance period')
+    })
   })
 })

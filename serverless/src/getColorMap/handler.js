@@ -43,16 +43,12 @@ export default async function getColorMap(event, context) {
   } catch (error) {
     const regex = /connect ECONNREFUSED/
     const dbConnectionError = regex.test(error.message)
-    console.log('🚀 ~ file: handler.js:48 ~ getColorMap ~ disableDatabase:', disableDatabase)
-    // Todo how should we handle this error I guess disregard it
     if (dbConnectionError && disableDatabase) {
-      console.log('Caught the error ✅')
-      console.log('🚀 ~ file: handler.js:57 ~ getColorMap ~ parseError(error):', parseError(error))
       const colorMapsDisabledMessage = 'Colormaps are currently disabled during maintenance period'
 
       return {
         isBase64Encoded: false,
-        statusCode: 404,
+        statusCode: 500,
         headers: defaultResponseHeaders,
         ...parseError(colorMapsDisabledMessage, {
         })
