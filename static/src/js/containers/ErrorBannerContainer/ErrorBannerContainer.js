@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
 import actions from '../../actions/index'
 import { Banner } from '../../components/Banner/Banner'
 
@@ -23,6 +25,18 @@ export const ErrorBannerContainer = ({ errors, onRemoveError }) => {
     message,
     title
   } = error
+
+  const { disableDatabaseComponents } = getApplicationConfig()
+
+  // Suppress error if it is a result of the database being under maintenance
+  const regex = /connect ECONNREFUSED/
+  const dbConnectionError = regex.test(error.message)
+
+  if (disableDatabaseComponents && dbConnectionError) {
+    console.log('Error caught for database being down ', error.message)
+
+    return null
+  }
 
   const onClose = () => {
     onRemoveError(id)

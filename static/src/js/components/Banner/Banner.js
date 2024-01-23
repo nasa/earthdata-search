@@ -17,6 +17,9 @@ export const Banner = ({
     'banner',
     {
       'banner--error': type === 'error'
+    },
+    {
+      'banner--maintenance': type === 'maintenance'
     }
   ])
 
