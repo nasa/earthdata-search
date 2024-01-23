@@ -6,8 +6,6 @@ import getColorMap from '../handler'
 let dbTracker
 
 beforeEach(() => {
-  process.env.disableDatabase = false
-
   jest.clearAllMocks()
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
