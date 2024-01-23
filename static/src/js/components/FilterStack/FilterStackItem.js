@@ -65,6 +65,7 @@ const FilterStackItem = (props) => {
                         onRemove && (
                           <Button
                             variant="naked"
+                            dataTestId="filter-stack-item__action-button"
                             className="filter-stack-item__action-button"
                             label={`Remove ${title.toLowerCase()} filter`}
                             icon={FaTrash}
@@ -95,7 +96,7 @@ const FilterStackItem = (props) => {
         }
         {
           error && (
-            <div className="filter-stack-item__error">
+            <div className="filter-stack-item__error" data-testid="filter-stack-item__error">
               {error}
             </div>
           )

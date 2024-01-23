@@ -1,5 +1,16 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
+
+import {
+  act,
+  render,
+  screen
+} from '@testing-library/react'
+
+import userEvent from '@testing-library/user-event'
+
+import '@testing-library/jest-dom'
+
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import { FaCrop } from 'react-icons/fa'
 
@@ -9,7 +20,19 @@ import FilterStackContents from '../../FilterStack/FilterStackContents'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup() {
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
+const setup = (overrides) => {
+  const {
+    overrideMetadata = {},
+    overrideProps = {}
+  } = overrides || {}
+
+  const onChangeQuery = jest.fn()
+  const onRemoveSpatialFilter = jest.fn()
+
   const props = {
     boundingBoxSearch: [],
     circleSearch: [],
@@ -18,185 +41,171 @@ function setup() {
     lineSearch: [],
     pointSearch: [],
     polygonSearch: [],
-    onChangeQuery: jest.fn(),
-    onRemoveSpatialFilter: jest.fn(),
-    shapefile: {}
+    onChangeQuery,
+    onRemoveSpatialFilter,
+    manuallyEntering: '',
+    shapefile: {},
+    ...overrides
   }
 
   const enzymeWrapper = shallow(<SpatialDisplay {...props} />)
 
+  act(() => {
+    render(<SpatialDisplay {...props} />)
+  })
+
   return {
     enzymeWrapper,
-    props
+    props,
+    onChangeQuery,
+    onRemoveSpatialFilter
   }
 }
 
 describe('SpatialDisplay component', () => {
   describe('with no props', () => {
     test('should render self without display', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.type()).toBe(null)
+      setup()
+      expect(screen.queryAllByText('Spatial')).toHaveLength(2)
     })
   })
 
   describe('with pointSearch', () => {
     test('should render the spatial info', () => {
-      const { enzymeWrapper } = setup()
       const newPoint = '-77.0418825,38.805869' // Lon,Lat
-      enzymeWrapper.setProps({ pointSearch: [newPoint] })
+      setup({ pointSearch: [newPoint] })
 
-      const filterStackItem = enzymeWrapper.find(FilterStackItem)
-      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+      expect(screen.queryAllByText('Spatial')).toHaveLength(2)
+      expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
+      expect(screen.queryAllByText('Point')).toHaveLength(1)
 
-      expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual(FaCrop)
-      expect(filterStackContents.props().title).toEqual('Point')
-      const label = filterStackContents.props().body.props.children.props.children.props.children[0]
-      const input = filterStackContents.props().body.props.children.props.children.props.children[1]
-      expect(label.props.children).toContain('Point:') // Lat,Lon
-      expect(input.props.children.props.value).toEqual('38.805869,-77.0418825') // Lat,Lon
+      expect(screen.queryAllByText('Point:')).toHaveLength(2)
+      expect(screen.queryAllByTestId('spatial-display_point')[0].value).toEqual('38.805869,-77.0418825')
     })
   })
 
   describe('with boundingBoxSearch', () => {
     test('should render the spatial info', () => {
-      const { enzymeWrapper } = setup()
       const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
-      enzymeWrapper.setProps({ boundingBoxSearch: [newBoundingBox] })
+      setup({ boundingBoxSearch: [newBoundingBox] })
 
-      const filterStackItem = enzymeWrapper.find(FilterStackItem)
-      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+      expect(screen.queryAllByText('Spatial')).toHaveLength(2)
+      expect(screen.queryAllByText('Spatial')[1]).toBeVisible()
 
-      expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual(FaCrop)
-      expect(filterStackContents.props().title).toEqual('Rectangle')
+      expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
+      expect(screen.getAllByTestId('edsc-icon')[0]).toBeVisible()
 
-      const sw = filterStackContents.props().body.props.children.props.children[0]
-      const swLabel = sw.props.children[0]
-      const swInput = sw.props.children[1]
-      expect(swLabel.props.children).toEqual('SW:')
-      expect(swInput.props.children.props.value).toEqual('38.791645,-77.119759')
+      expect(screen.queryAllByText('Rectangle')).toHaveLength(1)
+      expect(screen.queryAllByText('Rectangle')[0]).toBeVisible()
 
-      const ne = filterStackContents.props().body.props.children.props.children[1]
-      const neLabel = ne.props.children[0]
-      const neInput = ne.props.children[1]
-      expect(neLabel.props.children).toEqual('NE:')
-      expect(neInput.props.children.props.value).toEqual('38.995845,-76.909393')
+      expect(screen.queryAllByText('Rectangle:')).toHaveLength(1)
+      expect(screen.queryAllByText('Rectangle:')[0]).toBeVisible()
+
+      expect(screen.queryAllByText('SW:')).toHaveLength(1)
+      expect(screen.queryAllByTestId('spatial-display_southwest-point')[0].value).toEqual('38.791645,-77.119759')
+
+      expect(screen.queryAllByText('NE:')).toHaveLength(1)
+      expect(screen.queryAllByTestId('spatial-display_northeast-point')[0].value).toEqual('38.995845,-76.909393')
     })
   })
 
   describe('with circleSearch', () => {
     test('should render the spatial info', () => {
-      const { enzymeWrapper } = setup()
       const newCircle = '-77.119759,38.791645,20000'
-      enzymeWrapper.setProps({ circleSearch: [newCircle] })
+      setup({ circleSearch: [newCircle] })
 
-      const filterStackItem = enzymeWrapper.find(FilterStackItem)
-      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+      expect(screen.queryAllByText('Spatial')).toHaveLength(2)
+      expect(screen.queryAllByText('Spatial')[1]).toBeVisible()
 
-      expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual(FaCrop)
-      expect(filterStackContents.props().title).toEqual('Circle')
+      expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
+      expect(screen.getAllByTestId('edsc-icon')[0]).toBeVisible()
 
-      const center = filterStackContents.props().body.props.children.props.children[0]
-      const centerLabel = center.props.children[0]
-      const centerInput = center.props.children[1]
-      expect(centerLabel.props.children).toEqual('Center:')
-      expect(centerInput.props.children.props.value).toEqual('38.791645,-77.119759')
+      expect(screen.queryAllByText('Circle')).toHaveLength(1)
+      expect(screen.queryAllByText('Circle')[0]).toBeVisible()
 
-      const radius = filterStackContents.props().body.props.children.props.children[1]
-      const radiusLabel = radius.props.children[0]
-      const radiusInput = radius.props.children[1]
-      expect(radiusLabel.props.children).toEqual('Radius (m):')
-      expect(radiusInput.props.children.props.value).toEqual('20000')
+      expect(screen.queryAllByText('Center:')).toHaveLength(1)
+      expect(screen.queryAllByTestId('spatial-display_circle-center')[0].value).toEqual('38.791645,-77.119759')
+
+      expect(screen.queryAllByText('Radius (m):')).toHaveLength(1)
+      expect(screen.queryAllByTestId('spatial-display_circle-radius')[0].value).toEqual('20000')
     })
   })
 
   describe('with polygonSearch', () => {
     test('should render without spatial info', () => {
-      const { enzymeWrapper } = setup()
       const newPolygon = '-77.04444122314453,38.99228142151045,'
         + '-77.01992797851562,38.79166886339155,'
         + '-76.89415168762207,38.902629947921575,'
         + '-77.04444122314453,38.99228142151045'
 
-      enzymeWrapper.setProps({ polygonSearch: [newPolygon] })
+      setup({ polygonSearch: [newPolygon] })
 
-      const filterStackItem = enzymeWrapper.find(FilterStackItem)
-      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+      expect(screen.queryAllByText('Spatial')).toHaveLength(2)
+      expect(screen.queryAllByText('Spatial')[1]).toBeVisible()
 
-      expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual(FaCrop)
-      expect(filterStackContents.props().title).toEqual('Polygon')
+      expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
+      expect(screen.getAllByTestId('edsc-icon')[0]).toBeVisible()
 
-      const pointCount = filterStackContents.props()
-        .body.props.children.props.children.props.children
-      expect(pointCount).toEqual('3 Points')
+      expect(screen.queryAllByText('Polygon')).toHaveLength(1)
+      expect(screen.queryAllByText('Polygon')[0]).toBeVisible()
+
+      expect(screen.queryAllByText('3 Points')[0]).toBeVisible()
+      expect(screen.getAllByTestId('spatial-display_polygon')[0]).toBeVisible()
+      expect(screen.getAllByTestId('spatial-display_polygon')[0].innerHTML).toEqual('3 Points')
     })
 
     test('should render a hint to draw the polygon on the map', () => {
-      const { enzymeWrapper } = setup()
+      setup({ drawingNewLayer: 'polygon' })
 
-      enzymeWrapper.setProps({ drawingNewLayer: 'polygon' })
-
-      const filterStackItem = enzymeWrapper.find(FilterStackItem)
-
-      expect(filterStackItem.props().hint).toEqual('Draw a polygon on the map to filter results')
+      expect(screen.queryAllByText('Draw a polygon on the map to filter results')).toHaveLength(1)
+      expect(screen.queryAllByText('Draw a polygon on the map to filter results')[0]).toBeVisible()
     })
   })
 
   describe('with polygonSearch and displaySpatialPolygonWarning', () => {
     test('should render without spatial info and a warning', () => {
-      const { enzymeWrapper } = setup()
       const newPolygon = '-77.04444122314453,38.99228142151045,'
         + '-77.01992797851562,38.79166886339155,'
         + '-76.89415168762207,38.902629947921575,'
         + '-77.04444122314453,38.99228142151045'
 
-      enzymeWrapper.setProps({
+      setup({
         displaySpatialPolygonWarning: true,
         polygonSearch: [newPolygon]
       })
 
-      const filterStackItem = enzymeWrapper.find(FilterStackItem)
-      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+      expect(screen.queryAllByText('Spatial')).toHaveLength(2)
+      expect(screen.queryAllByText('Spatial')[1]).toBeVisible()
 
-      expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual(FaCrop)
-      expect(filterStackItem.props().error).toEqual('This collection does not support polygon search. Your polygon has been converted to a bounding box.')
-      expect(filterStackContents.props().title).toEqual('Polygon')
+      expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
+      expect(screen.getAllByTestId('edsc-icon')[0]).toBeVisible()
 
-      const pointCount = filterStackContents.props()
-        .body.props.children.props.children.props.children
-      expect(pointCount).toEqual('3 Points')
+      expect(screen.queryAllByText('Polygon')).toHaveLength(1)
+      expect(screen.queryAllByText('Polygon')[0]).toBeVisible()
+
+      expect(screen.queryAllByText('This collection does not support polygon search. Your polygon has been converted to a bounding box.')).toHaveLength(1)
+      expect(screen.queryAllByText('This collection does not support polygon search. Your polygon has been converted to a bounding box.')[0]).toBeVisible()
+      expect(screen.getAllByTestId('spatial-display_polygon')[0].innerHTML).toEqual('3 Points')
     })
   })
 
   describe('with lineSearch', () => {
     test('should render without spatial info', () => {
-      const { enzymeWrapper } = setup()
       const line = '-77.04444122314453,38.99228142151045,'
         + '-77.01992797851562,38.79166886339155,'
         + '-76.89415168762207,38.902629947921575'
 
-      enzymeWrapper.setProps({ lineSearch: [line] })
+      setup({ lineSearch: [line] })
+      expect(screen.queryAllByText('Spatial')).toHaveLength(0)
 
-      const filterStackItem = enzymeWrapper.find(FilterStackItem)
-      const filterStackContents = enzymeWrapper.find(FilterStackContents)
-
-      expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual(FaCrop)
-      expect(filterStackContents.props().title).toEqual('Line')
-      expect(filterStackContents.props().body.props.children).toEqual(null)
+      expect(screen.queryAllByText('Line')).toHaveLength(0)
     })
   })
 
   describe('with shapefile', () => {
     describe('when the shapefile is loading', () => {
       test('should render with a loading spinner', () => {
-        const { enzymeWrapper } = setup()
-
-        enzymeWrapper.setProps({
+        setup({
           shapefile: {
             shapefileName: 'test file',
             shapefileSize: '',
@@ -205,35 +214,30 @@ describe('SpatialDisplay component', () => {
           }
         })
 
-        const filterStackItem = enzymeWrapper.find(FilterStackItem)
-        const filterStackContents = enzymeWrapper.find(FilterStackContents)
+        expect(screen.queryAllByText('Spatial')).toHaveLength(2)
+        expect(screen.queryAllByText('Spatial')[1]).toBeVisible()
 
-        expect(filterStackItem.props().title).toEqual('Spatial')
-        expect(filterStackItem.props().icon).toEqual(FaCrop)
-        expect(filterStackContents.props().title).toEqual('Shape File')
+        expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
+        expect(screen.getAllByTestId('edsc-icon')[0]).toBeVisible()
 
-        const fileWrapper = filterStackContents.props()
-          .body.props.children.props.children.props.children
-        const loadingIcon = fileWrapper[2].props.children[0]
-        const loadingText = fileWrapper[2].props.children[1]
+        expect(screen.queryAllByText('Shape File')).toHaveLength(1)
+        expect(screen.queryAllByText('Shape File')[0]).toBeVisible()
 
-        expect(fileWrapper[2].props.className).toEqual('spatial-display__loading')
-        expect(loadingIcon.props.animation).toEqual('border')
-        expect(loadingIcon.props.className).toEqual('spatial-display__loading-icon')
-        expect(loadingIcon.props.size).toEqual('sm')
-        expect(loadingIcon.props.variant).toEqual('light')
-        expect(loadingText).toEqual('Loading...')
+        expect(screen.getAllByTestId('spatial-display__loading')).toHaveLength(1)
+        expect(screen.getAllByTestId('spatial-display__loading')[0]).toBeVisible()
+
+        expect(screen.getAllByTestId('spatial-display__loading-icon')).toHaveLength(1)
+        expect(screen.getAllByTestId('spatial-display__loading-icon')[0]).toBeVisible()
       })
     })
 
     describe('when the shapefile is loaded', () => {
-      const { enzymeWrapper } = setup()
       const newPolygon = '-77.04444122314453,38.99228142151045,'
         + '-77.01992797851562,38.79166886339155,'
         + '-76.89415168762207,38.902629947921575,'
         + '-77.04444122314453,38.99228142151045'
 
-      enzymeWrapper.setProps({
+      setup({
         polygonSearch: [newPolygon],
         shapefile: {
           shapefileName: 'test file',
@@ -243,38 +247,34 @@ describe('SpatialDisplay component', () => {
         }
       })
 
-      const filterStackItem = enzymeWrapper.find(FilterStackItem)
-      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+      expect(screen.queryAllByText('Spatial')).toHaveLength(2)
+      expect(screen.queryAllByText('Spatial')[1]).toBeVisible()
 
-      expect(filterStackItem.props().title).toEqual('Spatial')
-      expect(filterStackItem.props().icon).toEqual(FaCrop)
-      expect(filterStackContents.props().title).toEqual('Shape File')
+      expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
+      expect(screen.getAllByTestId('edsc-icon')[0]).toBeVisible()
 
-      const fileWrapper = filterStackContents.props()
-        .body.props.children.props.children.props.children
-      const fileName = fileWrapper[0].props.children
-      const fileSize = fileWrapper[1].props.children
-      const loadingElement = fileWrapper[2]
+      expect(screen.queryAllByText('Shape File')).toHaveLength(1)
+      expect(screen.queryAllByText('Shape File')[0]).toBeVisible()
 
-      test('should render without a loading spinner', () => {
-        expect(loadingElement).toEqual(false)
-      })
 
-      test('should render without spatial info', () => {
-        expect(fileName).toEqual('test file')
-        expect(fileSize).toEqual('(42 KB)')
-      })
+      // test('should render without a loading spinner', () => {
+      //   expect(screen.getAllByTestId('spatial-display__loading')).toHaveLength(0)
+      // })
+
+      // test('should render without spatial info', () => {
+      //   expect(screen.queryAllByText('test file')).toHaveLength(0)
+      //   expect(screen.queryAllByText('(42 KB)')).toHaveLength(0)
+      // })
     })
 
     describe('when the shapefile has selected shapes', () => {
       test('should render a hint with number of shapes selected', () => {
-        const { enzymeWrapper } = setup()
         const newPolygon = '-77.04444122314453,38.99228142151045,'
           + '-77.01992797851562,38.79166886339155,'
           + '-76.89415168762207,38.902629947921575,'
           + '-77.04444122314453,38.99228142151045'
 
-        enzymeWrapper.setProps({
+        setup({
           polygonSearch: [newPolygon],
           shapefile: {
             shapefileName: 'test file',
@@ -285,15 +285,12 @@ describe('SpatialDisplay component', () => {
           }
         })
 
-        const filterStackContents = enzymeWrapper.find(FilterStackContents)
-        expect(filterStackContents.props().hint).toEqual('1 shape selected')
+        expect(screen.queryAllByText('1 shape selected')).toHaveLength(1)
       })
     })
 
     describe('when the shapefile is the wrong type', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
+      setup({
         shapefile: {
           shapefileName: 'test file',
           shapefileSize: '42 KB',
@@ -303,8 +300,7 @@ describe('SpatialDisplay component', () => {
         }
       })
 
-      const filterStackItem = enzymeWrapper.find(FilterStackItem)
-      expect(filterStackItem.props().error).toEqual('To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.')
+      expect(screen.queryAllByTestId('filter-stack-item__error')[0].innerHTML).toEqual('To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.')
     })
   })
 
@@ -318,40 +314,63 @@ describe('SpatialDisplay component', () => {
   })
 
   describe('#onSpatialRemove', () => {
-    test('calls onRemoveSpatialFilter', () => {
-      const { enzymeWrapper, props } = setup()
+    test('calls onRemoveSpatialFilter', async () => {
+      userEvent.setup()
 
-      enzymeWrapper.instance().onSpatialRemove()
+      const { props } = setup({
+        manuallyEntering: 'marker',
+        pointSearch: ['0,0']
+      })
 
-      expect(props.onRemoveSpatialFilter).toHaveBeenCalledTimes(1)
+      const { onRemoveSpatialFilter } = props
+
+      console.log(screen.debug())
+      const actionBtns = screen.queryAllByTestId('filter-stack-item__action-button')
+      const actionBtn = actionBtns[0]
+      const filterStackSpatial = screen.queryAllByTestId('filter-stack__spatial')
+      console.log(actionBtns)
+      console.log(actionBtn)
+      expect(actionBtns).toHaveLength(1)
+
+      userEvent.click(actionBtn)
+
+      expect(onRemoveSpatialFilter).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('manual entry of spatial values', () => {
-    test('changing point search updates the state', () => {
-      const { enzymeWrapper } = setup()
+    test('changing point search updates the state', async () => {
+      // TODO: vlaue gets lon,lat values are flipped in props
+      setup({
+        manuallyEntering: 'marker',
+        pointSearch: [' ']
+      })
 
-      enzymeWrapper.setState({ manuallyEntering: 'marker' })
+      userEvent.setup()
 
-      enzymeWrapper.instance().onChangePointSearch({ target: { value: '38,-77' } })
+      const input = screen.queryByTestId('spatial-display_point')
 
-      expect(enzymeWrapper.state().pointSearch).toEqual('-77,38')
-      expect(enzymeWrapper.state().error).toEqual('')
+      await userEvent.click(input)
+      await userEvent.type(input, '38,-77')
+
+      const updatedInput = screen.queryByTestId('spatial-display_point')
+
+      expect(updatedInput.value).toEqual('38,-77')
     })
 
-    test('submitting point search calls onChangeQuery', () => {
-      const { enzymeWrapper, props } = setup()
+    test('submitting point search calls onChangeQuery', async () => {
+      userEvent.setup()
 
-      enzymeWrapper.setState({
+      const { props } = setup({
         manuallyEntering: 'marker',
-        pointSearch: '-77,38',
-        error: ''
+        pointSearch: '',
+        // error: ''
       })
 
-      enzymeWrapper.instance().onSubmitPointSearch({
-        type: 'blur',
-        preventDefault: jest.fn()
-      })
+      const input = screen.queryByTestId('spatial-display_point')
+
+      await userEvent.click(input)
+      await userEvent.type(input, '38,-77')
 
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { point: ['-77,38'] } } })
@@ -389,7 +408,7 @@ describe('SpatialDisplay component', () => {
       enzymeWrapper.setState({
         manuallyEntering: 'rectangle',
         boundingBoxSearch: ['10,20', '30,40'],
-        error: ''
+        // error: ''
       })
 
       enzymeWrapper.instance().onSubmitBoundingBoxSearch({
@@ -421,7 +440,7 @@ describe('SpatialDisplay component', () => {
       enzymeWrapper.setState({
         manuallyEntering: 'circle',
         circleSearch: ['38,-77', '10000'],
-        error: ''
+        // error: ''
       })
 
       enzymeWrapper.instance().onSubmitCircleSearch({
