@@ -36,7 +36,6 @@ import EdscMapContainer from './containers/MapContainer/MapContainer'
 import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
 import ErrorBoundary from './components/Errors/ErrorBoundary'
 import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'
-import MaintenanceBannerContainer from './containers/MaintenanceBannerContainer/MaintenanceBannerContainer'
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
 import NotFound from './components/Errors/NotFound'
 import PortalContainer from './containers/PortalContainer/PortalContainer'
@@ -67,8 +66,7 @@ class App extends Component {
     this.state = {}
     this.store = configureStore()
     const { edscHost } = getEnvironmentConfig()
-    const { disableDatabaseComponents, env } = getApplicationConfig()
-    this.disableDatabaseComponents = disableDatabaseComponents
+    const { env } = getApplicationConfig()
     this.edscHost = edscHost
     this.env = env
   }
@@ -80,7 +78,7 @@ class App extends Component {
   }
 
   render() {
-    const { disableDatabaseComponents, edscHost, env } = this
+    const { edscHost, env } = this
     const title = 'Earthdata Search'
     const description = 'Search, discover, visualize, refine, and access NASA Earth Observation data in your browser with Earthdata Search'
     const url = `${edscHost}/search`
@@ -103,7 +101,6 @@ class App extends Component {
               <meta name="theme-color" content="#191a1b" />
               <link rel="canonical" href={url} />
             </Helmet>
-            {disableDatabaseComponents && <MaintenanceBannerContainer message="Some functionality may be disrupted we thank you for your patience"> </MaintenanceBannerContainer>}
             <ConnectedRouter history={history}>
               <HistoryContainer />
               <MetricsEventsContainer />

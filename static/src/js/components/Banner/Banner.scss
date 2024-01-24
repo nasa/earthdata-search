@@ -36,30 +36,6 @@
     }
   }
 
-  &--maintenance {
-    background-color: #ff8d00;
-    color: #fff;
-
-    .banner__title {
-      font-weight: 700;
-    }
-
-    .banner__message {
-      color: #fff;
-    }
-
-    .banner__close {
-      color: #fff;
-      color: rgba(255,255,255,0.7);
-      transition: color 0.15s ease-in-out;
-
-      &:hover {
-        color: #fff;
-        color: rgba(255,255,255,1);
-      }
-    }
-  }
-
   &__title {
     display: inline;
     margin: 0;
