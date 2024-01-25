@@ -266,26 +266,28 @@ export const Timeline = ({
       data.push(dataValue)
     })
 
-    Object.keys(intervals).forEach((conceptId, index) => {
-      if (!collectionMetadata[conceptId] || projectCollectionsIds.includes(conceptId)) return
+    if (!isProjectPage) {
+      Object.keys(intervals).forEach((conceptId, index) => {
+        if (!collectionMetadata[conceptId] || projectCollectionsIds.includes(conceptId)) return
 
-      const values = intervals[conceptId]
-      const metadata = collectionMetadata[conceptId] || {}
+        const values = intervals[conceptId]
+        const metadata = collectionMetadata[conceptId] || {}
 
-      const dataValue = {}
-      dataValue.id = conceptId
-      dataValue.color = getColorByIndex(index)
-      const { title = '' } = metadata
-      dataValue.title = title
+        const dataValue = {}
+        dataValue.id = conceptId
+        dataValue.color = getColorByIndex(index)
+        const { title = '' } = metadata
+        dataValue.title = title
 
-      dataValue.intervals = values.map((value) => {
-        const [start, end] = value
+        dataValue.intervals = values.map((value) => {
+          const [start, end] = value
 
-        return [start * 1000, end * 1000]
+          return [start * 1000, end * 1000]
+        })
+
+        data.push(dataValue)
       })
-
-      data.push(dataValue)
-    })
+    }
 
     return data
   }
