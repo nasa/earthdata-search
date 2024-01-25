@@ -28,6 +28,7 @@ export const Timeline = ({
   onToggleOverrideTemporalModal,
   onToggleTimeline,
   pathname,
+  projectCollectionsIds,
   showOverrideModal,
   temporalSearch,
   timeline
@@ -243,8 +244,8 @@ export const Timeline = ({
   const setupData = ({ intervals }) => {
     const data = []
 
-    Object.keys(intervals).forEach((conceptId, index) => {
-      if (!collectionMetadata[conceptId]) return
+    projectCollectionsIds.forEach((conceptId, index) => {
+      if (!intervals[conceptId]) return
 
       const values = intervals[conceptId]
       const metadata = collectionMetadata[conceptId] || {}
@@ -259,6 +260,27 @@ export const Timeline = ({
         const [start, end] = value
 
         // TODO: Change the format of the intervals to an object at some point
+        return [start * 1000, end * 1000]
+      })
+
+      data.push(dataValue)
+    })
+
+    Object.keys(intervals).forEach((conceptId, index) => {
+      if (!collectionMetadata[conceptId] || projectCollectionsIds.includes(conceptId)) return
+
+      const values = intervals[conceptId]
+      const metadata = collectionMetadata[conceptId] || {}
+
+      const dataValue = {}
+      dataValue.id = conceptId
+      dataValue.color = getColorByIndex(index)
+      const { title = '' } = metadata
+      dataValue.title = title
+
+      dataValue.intervals = values.map((value) => {
+        const [start, end] = value
+
         return [start * 1000, end * 1000]
       })
 
@@ -384,6 +406,7 @@ Timeline.propTypes = {
   onToggleOverrideTemporalModal: PropTypes.func.isRequired,
   onToggleTimeline: PropTypes.func.isRequired,
   pathname: PropTypes.string.isRequired,
+  projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   showOverrideModal: PropTypes.bool.isRequired,
   temporalSearch: PropTypes.shape({
     endDate: PropTypes.string,

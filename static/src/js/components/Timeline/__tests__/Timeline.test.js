@@ -159,20 +159,20 @@ describe('Timeline component', () => {
     const { enzymeWrapper } = setup({
       pathname: '/search/granules',
       collectionMetadata: {
-        collectionId: {
-          title: 'Test Collection'
+        firstCollection: {
+          title: '1st Collection'
         },
         secondCollection: {
-          title: '2nd Test Collection'
+          title: '2nd Collection'
         },
         thirdCollection: {
           title: '3rd Collection'
         }
       },
-      projectCollectionsIds: ['collectionId', 'secondCollection', 'thirdCollection'],
+      projectCollectionsIds: ['firstCollection', 'secondCollection', 'thirdCollection'],
       timeline: {
         intervals: {
-          collectionId: [
+          firstCollection: [
             [
               1525132800,
               1618185600,
@@ -206,15 +206,15 @@ describe('Timeline component', () => {
     const timeline = enzymeWrapper.find(EDSCTimeline)
     expect(timeline.props().data).toEqual([{
       color: '#2ECC71',
-      id: 'collectionId',
+      id: 'firstCollection',
       intervals: [[1525132800000, 1618185600000]],
-      title: 'Test Collection'
+      title: '1st Collection'
     },
     {
       color: '#3498DB',
       id: 'secondCollection',
       intervals: [[1525132800000, 1618185600000]],
-      title: '2nd Test Collection'
+      title: '2nd Collection'
     },
     {
       color: '#E67E22',
