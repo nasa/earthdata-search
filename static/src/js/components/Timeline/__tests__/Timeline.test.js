@@ -157,7 +157,7 @@ describe('Timeline component', () => {
 
   test('setup data creates the correct intervals in the correct order for EDSCTimeline', () => {
     const { enzymeWrapper } = setup({
-      pathname: '/search/granules',
+      pathname: '/projects',
       collectionMetadata: {
         firstCollection: {
           title: '1st Collection'
