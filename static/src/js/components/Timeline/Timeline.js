@@ -245,32 +245,34 @@ export const Timeline = ({
     const data = []
 
     // Render the Collection Timelines in the same order they were added
-    projectCollectionsIds.forEach((conceptId, index) => {
-      if (!intervals[conceptId]) return
+    if (isProjectPage) {
+      projectCollectionsIds.forEach((conceptId, index) => {
+        if (!intervals[conceptId]) return
 
-      const values = intervals[conceptId]
-      const metadata = collectionMetadata[conceptId] || {}
+        const values = intervals[conceptId]
+        const metadata = collectionMetadata[conceptId] || {}
 
-      const dataValue = {}
-      dataValue.id = conceptId
-      dataValue.color = getColorByIndex(index)
-      const { title = '' } = metadata
-      dataValue.title = title
+        const dataValue = {}
+        dataValue.id = conceptId
+        dataValue.color = getColorByIndex(index)
+        const { title = '' } = metadata
+        dataValue.title = title
 
-      dataValue.intervals = values.map((value) => {
-        const [start, end] = value
+        dataValue.intervals = values.map((value) => {
+          const [start, end] = value
 
-        // TODO: Change the format of the intervals to an object at some point
-        return [start * 1000, end * 1000]
+          // TODO: Change the format of the intervals to an object at some point
+          return [start * 1000, end * 1000]
+        })
+
+        data.push(dataValue)
       })
-
-      data.push(dataValue)
-    })
+    }
 
     // Ensure we render the Timeline on the focused collection view, even if it has not been added to the project
     if (!isProjectPage) {
       Object.keys(intervals).forEach((conceptId, index) => {
-        if (!collectionMetadata[conceptId] || projectCollectionsIds.includes(conceptId)) return
+        if (!collectionMetadata[conceptId]) return
 
         const values = intervals[conceptId]
         const metadata = collectionMetadata[conceptId] || {}
