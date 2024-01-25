@@ -244,6 +244,7 @@ export const Timeline = ({
   const setupData = ({ intervals }) => {
     const data = []
 
+    // Render the Collection Timelines in the same order they were added
     projectCollectionsIds.forEach((conceptId, index) => {
       if (!intervals[conceptId]) return
 
@@ -266,6 +267,7 @@ export const Timeline = ({
       data.push(dataValue)
     })
 
+    // Ensure we render the Timeline on the focused collection view, even if it has not been added to the project
     if (!isProjectPage) {
       Object.keys(intervals).forEach((conceptId, index) => {
         if (!collectionMetadata[conceptId] || projectCollectionsIds.includes(conceptId)) return
