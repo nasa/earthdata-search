@@ -28,7 +28,6 @@ export const Timeline = ({
   onToggleOverrideTemporalModal,
   onToggleTimeline,
   pathname,
-  projectCollectionsIds,
   showOverrideModal,
   temporalSearch,
   timeline
@@ -244,8 +243,8 @@ export const Timeline = ({
   const setupData = ({ intervals }) => {
     const data = []
 
-    projectCollectionsIds.forEach((conceptId, index) => {
-      if (!intervals[conceptId]) return
+    Object.keys(intervals).forEach((conceptId, index) => {
+      if (!collectionMetadata[conceptId]) return
 
       const values = intervals[conceptId]
       const metadata = collectionMetadata[conceptId] || {}
@@ -385,7 +384,6 @@ Timeline.propTypes = {
   onToggleOverrideTemporalModal: PropTypes.func.isRequired,
   onToggleTimeline: PropTypes.func.isRequired,
   pathname: PropTypes.string.isRequired,
-  projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   showOverrideModal: PropTypes.bool.isRequired,
   temporalSearch: PropTypes.shape({
     endDate: PropTypes.string,
