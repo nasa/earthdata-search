@@ -2,6 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+
 import actions from '../../../actions'
 import {
   ErrorBannerContainer,
@@ -32,6 +34,24 @@ function setup(overrideProps) {
     props
   }
 }
+
+describe('When the database is disabled', () => {
+  test('ensure that error messages for database connections refusals do not render', async () => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
+      disableDatabaseComponents: true
+    }))
+
+    const { enzymeWrapper } = setup({
+      errors: [{
+        id: 1,
+        title: 'example of database refusal error',
+        message: 'connect ECONNREFUSED port 12212 this error',
+        notificationType: displayNotificationType.banner
+      }]
+    })
+    expect(enzymeWrapper.find(Banner).length).toBe(0)
+  })
+})
 
 describe('mapDispatchToProps', () => {
   test('onRemoveError calls actions.removeError', () => {
