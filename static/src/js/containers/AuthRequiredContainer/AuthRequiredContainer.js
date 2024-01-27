@@ -22,7 +22,7 @@ export const AuthRequiredContainer = ({
     const { disableDatabaseComponents } = getApplicationConfig()
 
     const token = get('authToken')
-    if (disableDatabaseComponents) {
+    if (disableDatabaseComponents === 'true') {
       remove('authToken')
     }
 
@@ -32,7 +32,7 @@ export const AuthRequiredContainer = ({
       setIsLoggedIn(false)
       if (!noRedirect) {
         let location = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`
-        if (disableDatabaseComponents) {
+        if (disableDatabaseComponents === 'true') {
           location = '/search'
         }
 

@@ -110,7 +110,7 @@ describe('AuthRequiredContainer component', () => {
   describe('when database components are turned off', () => {
     test('should redirect to the home `search` page', () => {
       jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-        disableDatabaseComponents: true
+        disableDatabaseComponents: 'true'
       }))
 
       setup()
@@ -120,7 +120,7 @@ describe('AuthRequiredContainer component', () => {
 
     test('the token cookie should be cleared', () => {
       jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-        disableDatabaseComponents: true
+        disableDatabaseComponents: 'true'
       }))
 
       jest.spyOn(tinyCookie, 'remove').mockImplementation(() => null)

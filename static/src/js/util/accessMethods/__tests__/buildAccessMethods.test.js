@@ -4,7 +4,7 @@ import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 beforeEach(() => {
   jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-    disableOrdering: false
+    disableOrdering: 'false'
   }))
 })
 
@@ -120,7 +120,7 @@ describe('buildAccessMethods', () => {
   describe('when ordering is disabled', () => {
     test('no echo-order access method is returned', () => {
       jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-        disableOrdering: true
+        disableOrdering: 'true'
       }))
 
       const collectionMetadata = {

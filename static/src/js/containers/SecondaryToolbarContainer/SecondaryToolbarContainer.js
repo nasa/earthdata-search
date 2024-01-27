@@ -31,7 +31,9 @@ export const mapStateToProps = (state) => ({
 export const SecondaryToolbarContainer = (props) => {
   const { disableDatabaseComponents } = getApplicationConfig()
   let secondaryToolbarEnabled = true
-  if (disableDatabaseComponents) secondaryToolbarEnabled = false
+
+  if (disableDatabaseComponents === 'true') secondaryToolbarEnabled = false
+
   const {
     authToken,
     earthdataEnvironment,

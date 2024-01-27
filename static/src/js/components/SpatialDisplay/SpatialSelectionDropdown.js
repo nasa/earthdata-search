@@ -64,6 +64,9 @@ export class SpatialSelectionDropdown extends PureComponent {
   render() {
     const { disableDatabaseComponents } = getApplicationConfig()
 
+    // Parse string field `disableDatabaseComponents` disable shapefile search if true
+    const disableShapefileSearch = disableDatabaseComponents === 'true'
+
     const spatialSelectionFileSpan = (
       <span>
         File
@@ -131,10 +134,10 @@ export class SpatialSelectionDropdown extends PureComponent {
             icon={FaFile}
             onClick={() => this.onItemClick('file')}
             label="Select Shapefile"
-            disabled={disableDatabaseComponents}
+            disabled={disableShapefileSearch}
           >
             {
-              disableDatabaseComponents ? (
+              disableShapefileSearch ? (
                 <OverlayTrigger
                   placement="right"
                   overlay={

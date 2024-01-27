@@ -60,7 +60,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
 
       // Only process orderOptions if the service type uses orderOptions
       // Do not include access if orders are disabled
-      if (supportsOrderOptions.includes(serviceType.toLowerCase()) && !disableOrdering) {
+      if (supportsOrderOptions.includes(serviceType.toLowerCase()) && (disableOrdering !== 'true')) {
         const { items: orderOptionsItems } = orderOptions
         if (orderOptionsItems === null) return
 
