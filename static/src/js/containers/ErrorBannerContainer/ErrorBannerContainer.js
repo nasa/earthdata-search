@@ -32,7 +32,7 @@ export const ErrorBannerContainer = ({ errors, onRemoveError }) => {
   const regex = /connect ECONNREFUSED/
   const dbConnectionError = regex.test(error.message)
 
-  if (disableDatabaseComponents && dbConnectionError) {
+  if ((disableDatabaseComponents === 'true') && dbConnectionError) {
     console.log('Error caught for database being down ', error.message)
 
     return null
