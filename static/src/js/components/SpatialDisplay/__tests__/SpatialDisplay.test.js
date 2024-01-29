@@ -11,7 +11,6 @@ import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 
 import SpatialDisplay from '../SpatialDisplay'
-import FilterStackContents from '../../FilterStack/FilterStackContents'
 
 beforeEach(() => {
   jest.clearAllMocks()
