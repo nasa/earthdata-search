@@ -1,5 +1,4 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
 
 import {
   act,
@@ -11,14 +10,8 @@ import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { FaCrop } from 'react-icons/fa'
-
 import SpatialDisplay from '../SpatialDisplay'
-import FilterStackItem from '../../FilterStack/FilterStackItem'
 import FilterStackContents from '../../FilterStack/FilterStackContents'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -42,8 +35,6 @@ const setup = (overrides) => {
     shapefile: {},
     ...overrides
   }
-
-  // const enzymeWrapper = shallow(<SpatialDisplay {...props} />)
 
   act(() => {
     render(<SpatialDisplay {...props} />)
@@ -499,91 +490,91 @@ describe('SpatialDisplay component', () => {
   describe('#onFocusSpatialSearch', () => {
     // Not sure how to reproduce thist test in RTL.
     // perhaps checking that on focus and clearing
-    test.skip('focusing the point field sets the manuallyEntering state', () => {
-      const newPoint = '-77.0418825,38.805869' // Lon,Lat
-      setup({
-        pointSearch: [newPoint]
-      })
+    // test.skip('focusing the point field sets the manuallyEntering state', () => {
+    //   const newPoint = '-77.0418825,38.805869' // Lon,Lat
+    //   setup({
+    //     pointSearch: [newPoint]
+    //   })
 
-      enzymeWrapper.setProps({ pointSearch: [newPoint] })
+    //   enzymeWrapper.setProps({ pointSearch: [newPoint] })
 
-      const filterStackContents = enzymeWrapper.find(FilterStackContents)
+    //   const filterStackContents = enzymeWrapper.find(FilterStackContents)
 
-      const input = filterStackContents.props()
-        .body.props.children.props.children.props.children[1].props.children
+    //   const input = filterStackContents.props()
+    //     .body.props.children.props.children.props.children[1].props.children
 
-      input.props.onFocus()
+    //   input.props.onFocus()
 
-      expect(enzymeWrapper.state().manuallyEntering).toEqual('marker')
-    })
-
-    // Not sure how to reproduce thist test in RTL.
-    // perhaps checking that on focus and clearing
-    test.skip('focusing the bounding box SW field sets the manuallyEntering state', () => {
-      const { enzymeWrapper } = setup()
-
-      const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
-      enzymeWrapper.setProps({ boundingBoxSearch: [newBoundingBox] })
-
-      const filterStackContents = enzymeWrapper.find(FilterStackContents)
-      const sw = filterStackContents.props().body.props.children.props.children[0]
-      const swInput = sw.props.children[1].props.children
-
-      swInput.props.onFocus()
-
-      expect(enzymeWrapper.state().manuallyEntering).toEqual('rectangle')
-    })
+    //   expect(enzymeWrapper.state().manuallyEntering).toEqual('marker')
+    // })
 
     // Not sure how to reproduce thist test in RTL.
     // perhaps checking that on focus and clearing
-    test.skip('focusing the bounding box NE field sets the manuallyEntering state', () => {
-      const { enzymeWrapper } = setup()
+    // test.skip('focusing the bounding box SW field sets the manuallyEntering state', () => {
+    //   const { enzymeWrapper } = setup()
 
-      const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
-      enzymeWrapper.setProps({ boundingBoxSearch: [newBoundingBox] })
+    //   const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
+    //   enzymeWrapper.setProps({ boundingBoxSearch: [newBoundingBox] })
 
-      const filterStackContents = enzymeWrapper.find(FilterStackContents)
-      const ne = filterStackContents.props().body.props.children.props.children[1]
-      const neInput = ne.props.children[1].props.children
+    //   const filterStackContents = enzymeWrapper.find(FilterStackContents)
+    //   const sw = filterStackContents.props().body.props.children.props.children[0]
+    //   const swInput = sw.props.children[1].props.children
 
-      neInput.props.onFocus()
+    //   swInput.props.onFocus()
 
-      expect(enzymeWrapper.state().manuallyEntering).toEqual('rectangle')
-    })
-
-    // Not sure how to reproduce thist test in RTL.
-    // perhaps checking that on focus and clearing
-    test.skip('focusing the circle center field sets the manuallyEntering state', () => {
-      const { enzymeWrapper } = setup()
-
-      const newCircle = '-77.119759,38.791645,20000'
-      enzymeWrapper.setProps({ circleSearch: [newCircle] })
-
-      const filterStackContents = enzymeWrapper.find(FilterStackContents)
-      const center = filterStackContents.props().body.props.children.props.children[0]
-      const centerInput = center.props.children[1].props.children
-
-      centerInput.props.onFocus()
-
-      expect(enzymeWrapper.state().manuallyEntering).toEqual('circle')
-    })
+    //   expect(enzymeWrapper.state().manuallyEntering).toEqual('rectangle')
+    // })
 
     // Not sure how to reproduce thist test in RTL.
     // perhaps checking that on focus and clearing
-    test.skip('focusing the circle radius field sets the manuallyEntering state', () => {
-      const { enzymeWrapper } = setup()
+    // test.skip('focusing the bounding box NE field sets the manuallyEntering state', () => {
+    //   const { enzymeWrapper } = setup()
 
-      const newCircle = '-77.119759,38.791645,20000'
-      enzymeWrapper.setProps({ circleSearch: [newCircle] })
+    //   const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
+    //   enzymeWrapper.setProps({ boundingBoxSearch: [newBoundingBox] })
 
-      const filterStackContents = enzymeWrapper.find(FilterStackContents)
-      const radius = filterStackContents.props().body.props.children.props.children[1]
-      const radiusInput = radius.props.children[1].props.children
+    //   const filterStackContents = enzymeWrapper.find(FilterStackContents)
+    //   const ne = filterStackContents.props().body.props.children.props.children[1]
+    //   const neInput = ne.props.children[1].props.children
 
-      radiusInput.props.onFocus()
+    //   neInput.props.onFocus()
 
-      expect(enzymeWrapper.state().manuallyEntering).toEqual('circle')
-    })
+    //   expect(enzymeWrapper.state().manuallyEntering).toEqual('rectangle')
+    // })
+
+    // Not sure how to reproduce thist test in RTL.
+    // perhaps checking that on focus and clearing
+    // test.skip('focusing the circle center field sets the manuallyEntering state', () => {
+    //   const { enzymeWrapper } = setup()
+
+    //   const newCircle = '-77.119759,38.791645,20000'
+    //   enzymeWrapper.setProps({ circleSearch: [newCircle] })
+
+    //   const filterStackContents = enzymeWrapper.find(FilterStackContents)
+    //   const center = filterStackContents.props().body.props.children.props.children[0]
+    //   const centerInput = center.props.children[1].props.children
+
+    //   centerInput.props.onFocus()
+
+    //   expect(enzymeWrapper.state().manuallyEntering).toEqual('circle')
+    // })
+
+    // Not sure how to reproduce thist test in RTL.
+    // perhaps checking that on focus and clearing
+    // test.skip('focusing the circle radius field sets the manuallyEntering state', () => {
+    //   const { enzymeWrapper } = setup()
+
+    //   const newCircle = '-77.119759,38.791645,20000'
+    //   enzymeWrapper.setProps({ circleSearch: [newCircle] })
+
+    //   const filterStackContents = enzymeWrapper.find(FilterStackContents)
+    //   const radius = filterStackContents.props().body.props.children.props.children[1]
+    //   const radiusInput = radius.props.children[1].props.children
+
+    //   radiusInput.props.onFocus()
+
+    //   expect(enzymeWrapper.state().manuallyEntering).toEqual('circle')
+    // })
   })
 
   describe('#validateCoordinate', () => {
