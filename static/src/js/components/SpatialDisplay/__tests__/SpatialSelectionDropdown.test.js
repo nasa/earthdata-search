@@ -1,7 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { Dropdown } from 'react-bootstrap'
+import { Dropdown, OverlayTrigger } from 'react-bootstrap'
+
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 import SpatialSelectionDropdown from '../SpatialSelectionDropdown'
 import * as EventEmitter from '../../../events/events'
@@ -97,5 +99,42 @@ describe('SpatialSelectionDropdown component', () => {
 
     expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
     expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(true)
+  })
+
+  describe('if the database is disabled', () => {
+    test('searching with the `shapefileUpload` buttons should also be disabled', () => {
+      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        disableDatabaseComponents: true
+      }))
+
+      const { enzymeWrapper } = setup()
+
+      const dropdowns = enzymeWrapper.find(Dropdown.Item)
+
+      const shapeFileSelectionButton = dropdowns.at(4)
+      shapeFileSelectionButton.simulate('click')
+
+      expect(shapeFileSelectionButton.prop('disabled')).toEqual(true)
+    })
+
+    test('hovering over the shapefile reveals tool-tip', () => {
+      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        disableDatabaseComponents: true
+      }))
+
+      const { enzymeWrapper } = setup()
+
+      const dropdowns = enzymeWrapper.find(Dropdown.Item)
+
+      const shapeFileSelectionButton = dropdowns.at(4)
+      shapeFileSelectionButton.simulate('mouseenter')
+
+      expect(shapeFileSelectionButton.text()).toBe('<OverlayTrigger />')
+
+      const overlayTrigger = enzymeWrapper.find(OverlayTrigger)
+
+      const toolTipMessage = overlayTrigger.props().overlay.props.children
+      expect(toolTipMessage).toEqual('Shapefile subsetting is currently disabled')
+    })
   })
 })
