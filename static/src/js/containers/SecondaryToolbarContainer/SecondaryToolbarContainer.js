@@ -9,6 +9,8 @@ import { getUrsProfile } from '../../selectors/contactInfo'
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { locationPropType } from '../../util/propTypes/location'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
 import SecondaryToolbar from '../../components/SecondaryToolbar/SecondaryToolbar'
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -27,6 +29,11 @@ export const mapStateToProps = (state) => ({
 })
 
 export const SecondaryToolbarContainer = (props) => {
+  const { disableDatabaseComponents } = getApplicationConfig()
+  let secondaryToolbarEnabled = true
+
+  if (disableDatabaseComponents === 'true') secondaryToolbarEnabled = false
+
   const {
     authToken,
     earthdataEnvironment,
@@ -57,6 +64,7 @@ export const SecondaryToolbarContainer = (props) => {
       projectCollectionIds={projectCollectionIds}
       savedProject={savedProject}
       retrieval={retrieval}
+      secondaryToolbarEnabled={secondaryToolbarEnabled}
       ursProfile={ursProfile}
     />
   )

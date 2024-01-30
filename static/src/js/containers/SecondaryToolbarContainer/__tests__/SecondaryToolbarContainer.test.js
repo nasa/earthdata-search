@@ -2,6 +2,8 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+
 import actions from '../../../actions'
 import {
   mapDispatchToProps,
@@ -9,6 +11,12 @@ import {
   SecondaryToolbarContainer
 } from '../SecondaryToolbarContainer'
 import SecondaryToolbar from '../../../components/SecondaryToolbar/SecondaryToolbar'
+
+beforeEach(() => {
+  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    disableDatabaseComponents: 'false'
+  }))
+})
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -100,5 +108,16 @@ describe('SecondaryToolbarContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(SecondaryToolbar).props().authToken).toEqual('')
+  })
+})
+
+describe('if the secondaryToolbar should be disabled', () => {
+  test('passes the `secondaryToolbarEnabled` prop and to the Secondary toolbar as false', () => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      disableDatabaseComponents: 'true'
+    }))
+
+    const { enzymeWrapper } = setup()
+    expect(enzymeWrapper.find(SecondaryToolbar).props().secondaryToolbarEnabled).toEqual(false)
   })
 })

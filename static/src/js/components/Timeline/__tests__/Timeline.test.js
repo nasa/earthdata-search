@@ -155,24 +155,59 @@ describe('Timeline component', () => {
     }])
   })
 
+  test('timeline displays on focused collection even when projectCollectionsIds is empty', () => {
+    const { enzymeWrapper } = setup({
+      pathname: '/search/granules', // Indicating it's not a project page
+      collectionMetadata: {
+        someCollection: {
+          title: 'Some Collection'
+        }
+      },
+      projectCollectionsIds: [], // Empty project collections
+      timeline: {
+        intervals: {
+          someCollection: [
+            [1525132800, 1618185600]
+          ]
+        },
+        query: {
+          center: 1552425382,
+          interval: 'day',
+          endDate: '2020-09-11T21:16:22.000Z',
+          startDate: '2017-09-09T21:16:22.000Z'
+        }
+      }
+    })
+
+    const timeline = enzymeWrapper.find(EDSCTimeline)
+    expect(timeline.props().data).toEqual([
+      {
+        color: '#2ECC71',
+        id: 'someCollection',
+        intervals: [[1525132800000, 1618185600000]],
+        title: 'Some Collection'
+      }
+    ])
+  })
+
   test('setup data creates the correct intervals in the correct order for EDSCTimeline', () => {
     const { enzymeWrapper } = setup({
-      pathname: '/search/granules',
+      pathname: '/projects',
       collectionMetadata: {
-        collectionId: {
-          title: 'Test Collection'
+        firstCollection: {
+          title: '1st Collection'
         },
         secondCollection: {
-          title: '2nd Test Collection'
+          title: '2nd Collection'
         },
         thirdCollection: {
           title: '3rd Collection'
         }
       },
-      projectCollectionsIds: ['collectionId', 'secondCollection', 'thirdCollection'],
+      projectCollectionsIds: ['firstCollection', 'secondCollection', 'thirdCollection'],
       timeline: {
         intervals: {
-          collectionId: [
+          firstCollection: [
             [
               1525132800,
               1618185600,
@@ -206,15 +241,15 @@ describe('Timeline component', () => {
     const timeline = enzymeWrapper.find(EDSCTimeline)
     expect(timeline.props().data).toEqual([{
       color: '#2ECC71',
-      id: 'collectionId',
+      id: 'firstCollection',
       intervals: [[1525132800000, 1618185600000]],
-      title: 'Test Collection'
+      title: '1st Collection'
     },
     {
       color: '#3498DB',
       id: 'secondCollection',
       intervals: [[1525132800000, 1618185600000]],
-      title: '2nd Test Collection'
+      title: '2nd Collection'
     },
     {
       color: '#E67E22',

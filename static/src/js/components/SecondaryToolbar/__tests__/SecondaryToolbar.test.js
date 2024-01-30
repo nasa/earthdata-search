@@ -28,6 +28,7 @@ function setup(state, overrideProps) {
     ursProfile: {
       first_name: 'First'
     },
+    secondaryToolbarEnabled: true,
     ...overrideProps
   }
 
@@ -59,6 +60,22 @@ describe('SecondaryToolbar component', () => {
       const { enzymeWrapper } = setup()
 
       expect(enzymeWrapper.find('.secondary-toolbar__project-name-dropdown').length).toEqual(0)
+    })
+  })
+
+  describe('when the secondary toolbar is meant to be disabled', () => {
+    describe('when the user is logged in', () => {
+      test('secondary toolbar components are not being rendered', () => {
+        const { enzymeWrapper } = setup('loggedIn', { secondaryToolbarEnabled: false })
+        expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toBe(0)
+      })
+    })
+
+    describe('when the user is logged out', () => {
+      test('secondary toolbar components are not being rendered', () => {
+        const { enzymeWrapper } = setup('loggedOut', { secondaryToolbarEnabled: false })
+        expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toBe(0)
+      })
     })
   })
 
