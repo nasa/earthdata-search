@@ -104,7 +104,7 @@ describe('SpatialSelectionDropdown component', () => {
   describe('if the database is disabled', () => {
     test('searching with the `shapefileUpload` buttons should also be disabled', () => {
       jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-        disableDatabaseComponents: true
+        disableDatabaseComponents: 'true'
       }))
 
       const { enzymeWrapper } = setup()
@@ -119,7 +119,7 @@ describe('SpatialSelectionDropdown component', () => {
 
     test('hovering over the shapefile reveals tool-tip', () => {
       jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-        disableDatabaseComponents: true
+        disableDatabaseComponents: 'true'
       }))
 
       const { enzymeWrapper } = setup()

@@ -51,10 +51,10 @@ export const getFocusedGranule = () => (dispatch, getState) => {
 
   const graphQuery = `
     query GetGranule(
-      $id: String!
+      $params: GranuleInput
     ) {
       granule(
-        conceptId: $id
+        params: $params
       ) {
         granuleUr
         granuleSize
@@ -77,7 +77,9 @@ export const getFocusedGranule = () => (dispatch, getState) => {
     }`
 
   const response = graphQlRequestObject.search(graphQuery, {
-    id: focusedGranuleId
+    params: {
+      conceptId: focusedGranuleId
+    }
   })
     .then((responseObject) => {
       const payload = []

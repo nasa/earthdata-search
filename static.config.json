@@ -45,8 +45,8 @@
       "lambda": "eed-PORTAL-ENV-serverless-lambda"
     },
     "disableEddDownload": "false",
-    "disableOrdering": false,
-    "disableDatabaseComponents": false,
+    "disableOrdering": "false",
+    "disableDatabaseComponents": "false",
     "macOSEddDownloadSize":130,
     "windowsEddDownloadSize":100,
     "linuxEddDownloadSize":90
