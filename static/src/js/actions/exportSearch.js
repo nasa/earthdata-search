@@ -132,78 +132,8 @@ export const exportSearchAsStac = (format) => (dispatch, getState) => {
   const graphQlRequestObject = new ExportSearchRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
-    query SearchCollections(
-      $boundingBox: [String]
-      $circle: [String]
-      $cloudHosted: Boolean
-      $collectionDataType: [String]
-      $dataCenter: String
-      $dataCenterH: [String]
-      $facetsSize: Int
-      $granuleDataFormat: String
-      $granuleDataFormatH: [String]
-      $hasGranulesOrCwic: Boolean
-      $horizontalDataResolutionRange: [String]
-      $instrument: String
-      $instrumentH: [String]
-      $keyword: String
-      $line: [String]
-      $offset: Int
-      $options: JSON
-      $platform: String
-      $platformH: [String]
-      $point: [String]
-      $polygon: [String]
-      $processingLevelIdH: [String]
-      $project: String
-      $projectH: [String]
-      $provider: String
-      $scienceKeywordsH: JSON
-      $serviceType: [String]
-      $sortKey: [String]
-      $spatialKeyword: String
-      $tagKey: [String]
-      $temporal: String
-      $twoDCoordinateSystemName: [String]
-      $limit: Int
-      $cursor: String
-    ) {
-      collections (
-        boundingBox: $boundingBox
-        circle: $circle
-        cloudHosted: $cloudHosted
-        collectionDataType: $collectionDataType
-        dataCenter: $dataCenter
-        dataCenterH: $dataCenterH
-        facetsSize: $facetsSize
-        granuleDataFormat: $granuleDataFormat
-        granuleDataFormatH: $granuleDataFormatH
-        hasGranulesOrCwic: $hasGranulesOrCwic
-        horizontalDataResolutionRange: $horizontalDataResolutionRange
-        instrument: $instrument
-        instrumentH: $instrumentH
-        keyword: $keyword
-        line: $line
-        offset: $offset
-        options: $options
-        platform: $platform
-        platformH: $platformH
-        point: $point
-        polygon: $polygon
-        processingLevelIdH: $processingLevelIdH
-        project: $project
-        projectH: $projectH
-        provider: $provider
-        scienceKeywordsH: $scienceKeywordsH
-        serviceType: $serviceType
-        sortKey: $sortKey
-        spatialKeyword: $spatialKeyword
-        tagKey: $tagKey
-        temporal: $temporal
-        twoDCoordinateSystemName: $twoDCoordinateSystemName
-        limit: $limit,
-        cursor: $cursor
-      ) {
+    query SearchCollections($params: CollectionsInput) {
+      collections (params: $params) {
         cursor
         items {
           provider
