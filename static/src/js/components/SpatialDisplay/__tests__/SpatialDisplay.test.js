@@ -57,7 +57,6 @@ describe('SpatialDisplay component', () => {
       const newPoint = '-77.0418825,38.805869' // Lon,Lat
       setup({ pointSearch: [newPoint] })
 
-      screen.debug()
       expect(screen.queryAllByText('Spatial')).toHaveLength(2)
       expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
       expect(screen.queryAllByText('Point')).toHaveLength(1)
@@ -72,7 +71,6 @@ describe('SpatialDisplay component', () => {
       const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
       setup({ boundingBoxSearch: [newBoundingBox] })
 
-      screen.debug()
       expect(screen.queryAllByText('Spatial')).toHaveLength(2)
       expect(screen.queryAllByText('Spatial')[1]).toBeVisible()
 
@@ -98,7 +96,6 @@ describe('SpatialDisplay component', () => {
       const newCircle = '-77.119759,38.791645,20000'
       setup({ circleSearch: [newCircle] })
 
-      screen.debug()
       expect(screen.queryAllByText('Spatial')).toHaveLength(2)
       expect(screen.queryAllByText('Spatial')[1]).toBeVisible()
 
@@ -233,7 +230,6 @@ describe('SpatialDisplay component', () => {
           }
         })
 
-        screen.debug()
         expect(screen.queryAllByText('Spatial')).toHaveLength(2)
         expect(screen.queryAllByText('Spatial')[1]).toBeVisible()
 
@@ -486,10 +482,10 @@ describe('SpatialDisplay component', () => {
     })
   })
 
+  // Not sure how to reproduce thist test in RTL.
+  // perhaps checking that on focus and clearing
   describe('#onFocusSpatialSearch', () => {
-    // Not sure how to reproduce thist test in RTL.
-    // perhaps checking that on focus and clearing
-    // test.skip('focusing the point field sets the manuallyEntering state', () => {
+    // Test.skip('focusing the point field sets the manuallyEntering state', () => {
     //   const newPoint = '-77.0418825,38.805869' // Lon,Lat
     //   setup({
     //     pointSearch: [newPoint]
