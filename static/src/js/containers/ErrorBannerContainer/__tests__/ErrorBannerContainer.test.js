@@ -38,7 +38,7 @@ function setup(overrideProps) {
 describe('When the database is disabled', () => {
   test('ensure that error messages for database connections refusals do not render', async () => {
     jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
-      disableDatabaseComponents: true
+      disableDatabaseComponents: 'true'
     }))
 
     const { enzymeWrapper } = setup({

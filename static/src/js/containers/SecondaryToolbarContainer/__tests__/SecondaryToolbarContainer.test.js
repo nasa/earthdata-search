@@ -14,7 +14,7 @@ import SecondaryToolbar from '../../../components/SecondaryToolbar/SecondaryTool
 
 beforeEach(() => {
   jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-    disableDatabaseComponents: false
+    disableDatabaseComponents: 'false'
   }))
 })
 
@@ -114,7 +114,7 @@ describe('SecondaryToolbarContainer component', () => {
 describe('if the secondaryToolbar should be disabled', () => {
   test('passes the `secondaryToolbarEnabled` prop and to the Secondary toolbar as false', () => {
     jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-      disableDatabaseComponents: true
+      disableDatabaseComponents: 'true'
     }))
 
     const { enzymeWrapper } = setup()

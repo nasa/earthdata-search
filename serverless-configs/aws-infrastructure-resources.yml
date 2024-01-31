@@ -35,7 +35,7 @@ Resources:
     Type: AWS::RDS::DBInstance
     Properties:
       DBName: edsc_${self:provider.stage}
-      AllocatedStorage: '20'
+      AllocatedStorage: ${env:DB_ALLOCATED_STORAGE}
       DBInstanceClass: ${env:DB_INSTANCE_CLASS}
       Engine: postgres
       EngineVersion: '14.4'
