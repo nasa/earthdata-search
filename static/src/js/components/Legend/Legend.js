@@ -167,7 +167,7 @@ export const Legend = ({
                 {
                   minLabel && (
                     <span
-                      className="legend__label legend__label--min"
+                      className={`legend__label${qualitative ? '_hover' : ''} legend__label--min`}
                       data-testid="legend-label-min"
                     >
                       {replaceSupportedHtmlEntities(minLabel)}
