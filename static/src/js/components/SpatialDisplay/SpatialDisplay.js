@@ -679,6 +679,11 @@ const SpatialDisplay = ({
   )
 }
 
+SpatialDisplay.defaultProps = {
+  defaultError: '',
+  manuallyEntering: ''
+}
+
 SpatialDisplay.propTypes = {
   boundingBoxSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
   circleSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -695,11 +700,6 @@ SpatialDisplay.propTypes = {
   pointSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
   polygonSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
   shapefile: PropTypes.shape({}).isRequired
-}
-
-SpatialDisplay.defaultProps = {
-  defaultError: '',
-  manuallyEntering: ''
 }
 
 export default SpatialDisplay

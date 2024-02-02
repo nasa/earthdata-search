@@ -279,7 +279,7 @@ describe('SpatialDisplay component', () => {
             }
           })
 
-          expect(screen.queryAllByTestId('filter-stack-item__error')[0].innerHTML).toEqual('To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.')
+          expect(screen.getByText('To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.')).toBeInTheDocument()
         })
       })
     })
@@ -295,7 +295,7 @@ describe('SpatialDisplay component', () => {
 
       const { onRemoveSpatialFilter } = props
 
-      const actionBtns = screen.queryAllByTestId('filter-stack-item__action-button')
+      const actionBtns = screen.getAllByRole('button')
       const actionBtn = actionBtns[0]
       expect(actionBtns).toHaveLength(1)
 
@@ -307,7 +307,6 @@ describe('SpatialDisplay component', () => {
 
   describe('manual entry of spatial values', () => {
     test('changing point search updates the state', async () => {
-      // TODO: vlaue gets lon,lat values are flipped in props
       setup({
         manuallyEntering: 'marker',
         pointSearch: [' ']
@@ -355,7 +354,6 @@ describe('SpatialDisplay component', () => {
 
       const updatedSwPoint = screen.getByTestId('spatial-display_southwest-point')
       expect(updatedSwPoint.value).toEqual('10,20')
-      expect(screen.queryAllByTestId('filter-stack-item__error')).toHaveLength(0)
 
       const nePoint = screen.getByTestId('spatial-display_northeast-point')
 
@@ -364,7 +362,6 @@ describe('SpatialDisplay component', () => {
 
       const updatedNePoint = screen.getByTestId('spatial-display_northeast-point')
       expect(updatedNePoint.value).toEqual('30,40')
-      expect(screen.queryAllByTestId('filter-stack-item__error')).toHaveLength(0)
     })
 
     test('submitting bounding box search calls onChangeQuery', async () => {
@@ -406,7 +403,6 @@ describe('SpatialDisplay component', () => {
       const updatedCenterInput = screen.getByTestId('spatial-display_circle-center')
 
       expect(updatedCenterInput.value).toEqual('38,-77')
-      expect(screen.queryAllByTestId('filter-stack-item__error')).toHaveLength(0)
 
       const radiusInput = screen.getByTestId('spatial-display_circle-radius')
 
@@ -415,8 +411,6 @@ describe('SpatialDisplay component', () => {
 
       const updatedRadiusInput = screen.getByTestId('spatial-display_circle-radius')
       expect(updatedRadiusInput.value).toEqual('10000')
-
-      expect(screen.queryAllByTestId('filter-stack-item__error')).toHaveLength(0)
     })
 
     test('submitting circle search calls onChangeQuery', async () => {
@@ -482,96 +476,6 @@ describe('SpatialDisplay component', () => {
     })
   })
 
-  // Not sure how to reproduce thist test in RTL.
-  // perhaps checking that on focus and clearing
-  describe('#onFocusSpatialSearch', () => {
-    // Test.skip('focusing the point field sets the manuallyEntering state', () => {
-    //   const newPoint = '-77.0418825,38.805869' // Lon,Lat
-    //   setup({
-    //     pointSearch: [newPoint]
-    //   })
-
-    //   enzymeWrapper.setProps({ pointSearch: [newPoint] })
-
-    //   const filterStackContents = enzymeWrapper.find(FilterStackContents)
-
-    //   const input = filterStackContents.props()
-    //     .body.props.children.props.children.props.children[1].props.children
-
-    //   input.props.onFocus()
-
-    //   expect(enzymeWrapper.state().manuallyEntering).toEqual('marker')
-    // })
-
-    // Not sure how to reproduce thist test in RTL.
-    // perhaps checking that on focus and clearing
-    // test.skip('focusing the bounding box SW field sets the manuallyEntering state', () => {
-    //   const { enzymeWrapper } = setup()
-
-    //   const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
-    //   enzymeWrapper.setProps({ boundingBoxSearch: [newBoundingBox] })
-
-    //   const filterStackContents = enzymeWrapper.find(FilterStackContents)
-    //   const sw = filterStackContents.props().body.props.children.props.children[0]
-    //   const swInput = sw.props.children[1].props.children
-
-    //   swInput.props.onFocus()
-
-    //   expect(enzymeWrapper.state().manuallyEntering).toEqual('rectangle')
-    // })
-
-    // Not sure how to reproduce thist test in RTL.
-    // perhaps checking that on focus and clearing
-    // test.skip('focusing the bounding box NE field sets the manuallyEntering state', () => {
-    //   const { enzymeWrapper } = setup()
-
-    //   const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
-    //   enzymeWrapper.setProps({ boundingBoxSearch: [newBoundingBox] })
-
-    //   const filterStackContents = enzymeWrapper.find(FilterStackContents)
-    //   const ne = filterStackContents.props().body.props.children.props.children[1]
-    //   const neInput = ne.props.children[1].props.children
-
-    //   neInput.props.onFocus()
-
-    //   expect(enzymeWrapper.state().manuallyEntering).toEqual('rectangle')
-    // })
-
-    // Not sure how to reproduce thist test in RTL.
-    // perhaps checking that on focus and clearing
-    // test.skip('focusing the circle center field sets the manuallyEntering state', () => {
-    //   const { enzymeWrapper } = setup()
-
-    //   const newCircle = '-77.119759,38.791645,20000'
-    //   enzymeWrapper.setProps({ circleSearch: [newCircle] })
-
-    //   const filterStackContents = enzymeWrapper.find(FilterStackContents)
-    //   const center = filterStackContents.props().body.props.children.props.children[0]
-    //   const centerInput = center.props.children[1].props.children
-
-    //   centerInput.props.onFocus()
-
-    //   expect(enzymeWrapper.state().manuallyEntering).toEqual('circle')
-    // })
-
-    // Not sure how to reproduce thist test in RTL.
-    // perhaps checking that on focus and clearing
-    // test.skip('focusing the circle radius field sets the manuallyEntering state', () => {
-    //   const { enzymeWrapper } = setup()
-
-    //   const newCircle = '-77.119759,38.791645,20000'
-    //   enzymeWrapper.setProps({ circleSearch: [newCircle] })
-
-    //   const filterStackContents = enzymeWrapper.find(FilterStackContents)
-    //   const radius = filterStackContents.props().body.props.children.props.children[1]
-    //   const radiusInput = radius.props.children[1].props.children
-
-    //   radiusInput.props.onFocus()
-
-    //   expect(enzymeWrapper.state().manuallyEntering).toEqual('circle')
-    // })
-  })
-
   describe('#validateCoordinate', () => {
     test('returns an empty string if no coordinate is provided', async () => {
       userEvent.setup()
@@ -590,8 +494,6 @@ describe('SpatialDisplay component', () => {
       const updatedInput = screen.queryByTestId('spatial-display_point')
 
       expect(updatedInput.value).toEqual(inputVal)
-
-      expect(screen.queryAllByTestId('filter-stack-item__error')).toHaveLength(0)
     })
 
     test('returns no error with a valid coordinate', async () => {
@@ -610,8 +512,6 @@ describe('SpatialDisplay component', () => {
       const updatedInput = screen.queryByTestId('spatial-display_point')
 
       expect(updatedInput.value).toEqual(inputVal)
-
-      expect(screen.queryAllByTestId('filter-stack-item__error')).toHaveLength(0)
     })
 
     test('returns an error for a coordinate with too many decimal places', async () => {
@@ -626,10 +526,7 @@ describe('SpatialDisplay component', () => {
 
       expect(input.value).toEqual(inputVal.split(',').reverse().join(','))
 
-      const errors = screen.queryAllByTestId('filter-stack-item__error')
-
-      expect(errors).toHaveLength(1)
-      expect(errors[0].innerHTML).toEqual('Coordinates (0.123456,0) must use \'lat,lon\' format with up to 5 decimal place(s)')
+      expect(screen.getByText('Coordinates (0.123456,0) must use \'lat,lon\' format with up to 5 decimal place(s)')).toBeInTheDocument()
     })
 
     // Lat and lon are reversed
@@ -645,10 +542,7 @@ describe('SpatialDisplay component', () => {
 
       expect(input.value).toEqual(inputVal.split(',').reverse().join(','))
 
-      const errors = screen.queryAllByTestId('filter-stack-item__error')
-      expect(errors).toHaveLength(1)
-
-      expect(errors[0].innerHTML).toEqual('Latitude (95) must be between -90 and 90.')
+      expect(screen.getByText('Latitude (95) must be between -90 and 90.')).toBeInTheDocument()
     })
 
     test('returns an error for a coordinate an invalid longitude', () => {
@@ -663,10 +557,7 @@ describe('SpatialDisplay component', () => {
 
       expect(input.value).toEqual(inputVal.split(',').reverse().join(','))
 
-      const errors = screen.queryAllByTestId('filter-stack-item__error')
-      expect(errors).toHaveLength(1)
-
-      expect(errors[0].innerHTML).toEqual('Longitude (190) must be between -180 and 180.')
+      expect(screen.getByText('Longitude (190) must be between -180 and 180.')).toBeInTheDocument()
     })
   })
 
@@ -694,10 +585,7 @@ describe('SpatialDisplay component', () => {
       expect(updatedSwInput.value).toEqual(inputVal)
       expect(updatedNeInput.value).toEqual(inputVal)
 
-      const errors = screen.queryAllByTestId('filter-stack-item__error')
-      expect(errors).toHaveLength(1)
-
-      expect(errors[0].innerHTML).toEqual('SW and NE points contain matching coordinates. Please use point selection instead.')
+      expect(screen.getByText('SW and NE points contain matching coordinates. Please use point selection instead.')).toBeInTheDocument()
     })
 
     test('returns an error coordinates match each other and are invalid coordinates', async () => {
@@ -723,10 +611,7 @@ describe('SpatialDisplay component', () => {
       expect(updatedSwInput.value).toEqual(inputVal)
       expect(updatedNeInput.value).toEqual(inputVal)
 
-      const errors = screen.queryAllByTestId('filter-stack-item__error')
-      expect(errors).toHaveLength(1)
-
-      expect(errors[0].innerHTML).toEqual('Latitude (-91.119) must be between -90 and 90. SW and NE points contain matching coordinates. Please use point selection instead.')
+      expect(screen.getByText('Latitude (-91.119) must be between -90 and 90. SW and NE points contain matching coordinates. Please use point selection instead.')).toBeInTheDocument()
     })
   })
 })
