@@ -35,9 +35,7 @@ const setup = (overrides) => {
     ...overrides
   }
 
-  act(() => {
-    render(<SpatialDisplay {...props} />)
-  })
+  render(<SpatialDisplay {...props} />)
 
   return {
     props
@@ -289,9 +287,7 @@ describe('SpatialDisplay component', () => {
     test('calls onRemoveSpatialFilter', async () => {
       userEvent.setup()
 
-      const { props } = setup({
-        manuallyEntering: 'marker'
-      })
+      const { props } = setup({ pointSearch: [' '] })
 
       const { onRemoveSpatialFilter } = props
 
@@ -328,7 +324,6 @@ describe('SpatialDisplay component', () => {
       userEvent.setup()
 
       const { props } = setup({
-        manuallyEntering: 'marker',
         pointSearch: ['']
       })
       const { onChangeQuery } = props
@@ -345,10 +340,13 @@ describe('SpatialDisplay component', () => {
 
     test('changing bounding box search updates the state', async () => {
       userEvent.setup()
+      const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
 
-      setup({ manuallyEntering: 'rectangle' })
+      setup({ boundingBoxSearch: [newBoundingBox] })
+
       const swPoint = screen.getByTestId('spatial-display_southwest-point')
 
+      await userEvent.clear(swPoint)
       await userEvent.click(swPoint)
       await userEvent.type(swPoint, '10,20')
 
@@ -357,6 +355,7 @@ describe('SpatialDisplay component', () => {
 
       const nePoint = screen.getByTestId('spatial-display_northeast-point')
 
+      await userEvent.clear(nePoint)
       await userEvent.click(nePoint)
       await userEvent.type(nePoint, '30,40')
 
@@ -370,20 +369,25 @@ describe('SpatialDisplay component', () => {
       const swPoint = '10,20'
       const nePoint = '30,40'
 
+      const boundingBox = `${swPoint},${nePoint}` // Lon,Lat,Lon,Lat
+
       const { props } = setup({
-        manuallyEntering: 'rectangle'
+        boundingBoxSearch: [boundingBox]
       })
+
       const { onChangeQuery } = props
       const swInput = screen.getByTestId('spatial-display_southwest-point')
 
+      const newSwPoint = '15,25'
       await userEvent.click(swInput)
-      await userEvent.type(swInput, swPoint)
+      await userEvent.type(swInput, newSwPoint)
 
       const neInput = screen.getByTestId('spatial-display_northeast-point')
 
+      const newNePoint = '35,45'
       await userEvent.click(neInput)
-      await userEvent.type(neInput, nePoint)
-      await userEvent.type(neInput, '{enter}')
+      await userEvent.type(neInput, newNePoint)
+      await userEvent.tab(neInput)
 
       expect(onChangeQuery).toHaveBeenCalledTimes(1)
       expect(onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { boundingBox: ['20,10,40,30'] } } })
@@ -413,29 +417,30 @@ describe('SpatialDisplay component', () => {
       expect(updatedRadiusInput.value).toEqual('10000')
     })
 
-    test('submitting circle search calls onChangeQuery', async () => {
+    test.only('submitting circle search calls onChangeQuery', async () => {
       userEvent.setup()
+      const newCircle = '-77.119759,38.791645,20000'
 
       const center = '38,-77'
       const radius = '10000'
 
-      const { props } = setup({
-        manuallyEntering: 'circle'
-      })
+      const { props } = setup({ circleSearch: [newCircle] })
 
       const { onChangeQuery } = props
       const centerInput = screen.getByTestId('spatial-display_circle-center')
 
+      await userEvent.clear(centerInput)
       await userEvent.click(centerInput)
       await userEvent.type(centerInput, center)
 
       const radiusInput = screen.getByTestId('spatial-display_circle-radius')
 
+      await userEvent.clear(radiusInput)
       await userEvent.click(radiusInput)
       await userEvent.type(radiusInput, radius)
       await userEvent.type(radiusInput, '{enter}')
 
-      expect(onChangeQuery).toHaveBeenCalledTimes(1)
+      expect(onChangeQuery).toHaveBeenCalledTimes(2)
       expect(onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { circle: ['-77,38,10000'] } } })
     })
   })

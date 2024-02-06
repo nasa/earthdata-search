@@ -30,21 +30,19 @@ import './SpatialDisplay.scss'
 const { defaultSpatialDecimalSize } = getApplicationConfig()
 
 const SpatialDisplay = ({
-  defaultError,
   boundingBoxSearch,
   circleSearch,
   displaySpatialPolygonWarning,
   drawingNewLayer,
   lineSearch,
-  manuallyEntering,
   pointSearch,
   polygonSearch,
   shapefile,
   onRemoveSpatialFilter,
   onChangeQuery
 }) => {
-  const [error, setError] = useState(defaultError)
-  const [manuallyEnteringVal, setManuallyEnteringVal] = useState(manuallyEntering)
+  const [error, setError] = useState('')
+  const [manuallyEnteringVal, setManuallyEnteringVal] = useState('')
 
   const [currentPointSearch, setCurrentPointSearch] = useState(pointSearch)
   const [currentBoundingBoxSearch, setCurrentBoundingBoxSearch] = useState(
@@ -679,22 +677,15 @@ const SpatialDisplay = ({
   )
 }
 
-SpatialDisplay.defaultProps = {
-  defaultError: '',
-  manuallyEntering: ''
-}
-
 SpatialDisplay.propTypes = {
   boundingBoxSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
   circleSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
-  defaultError: PropTypes.string,
   displaySpatialPolygonWarning: PropTypes.bool.isRequired,
   drawingNewLayer: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool
   ]).isRequired,
   lineSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
-  manuallyEntering: PropTypes.string,
   onChangeQuery: PropTypes.func.isRequired,
   onRemoveSpatialFilter: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string).isRequired,

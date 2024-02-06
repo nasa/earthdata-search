@@ -110,9 +110,7 @@ describe('SpatialDisplayContainer component', () => {
       onRemoveSpatialFilter: props.onRemoveSpatialFilter,
       pointSearch: ['Test Point Search'],
       polygonSearch: ['Test Polygon Search'],
-      shapefile: {},
-      defaultError: '',
-      manuallyEntering: ''
+      shapefile: {}
     })
   })
 })
