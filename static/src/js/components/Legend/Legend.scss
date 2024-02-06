@@ -57,10 +57,10 @@
     color: $color__black--600;
     pointer-events: none;
     letter-spacing: 0.01rem;
+  }
 
-    &_hover {
-      font-style: italic;
-    }
+  &__hover-prompt {
+    font-style: italic;
   }
 
   &__meta {
