@@ -304,8 +304,7 @@ describe('SpatialDisplay component', () => {
   describe('manual entry of spatial values', () => {
     test('changing point search updates the state', async () => {
       setup({
-        manuallyEntering: 'marker',
-        pointSearch: [' ']
+        pointSearch: ['']
       })
 
       userEvent.setup()
@@ -379,28 +378,31 @@ describe('SpatialDisplay component', () => {
       const swInput = screen.getByTestId('spatial-display_southwest-point')
 
       const newSwPoint = '15,25'
+      await userEvent.clear(swInput)
       await userEvent.click(swInput)
       await userEvent.type(swInput, newSwPoint)
 
       const neInput = screen.getByTestId('spatial-display_northeast-point')
 
       const newNePoint = '35,45'
+      await userEvent.clear(neInput)
       await userEvent.click(neInput)
       await userEvent.type(neInput, newNePoint)
-      await userEvent.tab(neInput)
+      await userEvent.type(neInput, '{enter}')
 
-      expect(onChangeQuery).toHaveBeenCalledTimes(1)
-      expect(onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { boundingBox: ['20,10,40,30'] } } })
+      expect(onChangeQuery).toHaveBeenCalledTimes(2)
+      expect(onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { boundingBox: ['25,15,45,35'] } } })
     })
 
     test('changing circle search updates the state', async () => {
       userEvent.setup()
       setup({
-        manuallyEntering: 'circle'
+        circleSearch: ['0,0,0']
       })
 
       const centerInput = screen.getByTestId('spatial-display_circle-center')
 
+      await userEvent.clear(centerInput)
       await userEvent.click(centerInput)
       await userEvent.type(centerInput, '38,-77')
 
@@ -410,6 +412,7 @@ describe('SpatialDisplay component', () => {
 
       const radiusInput = screen.getByTestId('spatial-display_circle-radius')
 
+      await userEvent.clear(radiusInput)
       await userEvent.click(radiusInput)
       await userEvent.type(radiusInput, '10000')
 
@@ -417,7 +420,7 @@ describe('SpatialDisplay component', () => {
       expect(updatedRadiusInput.value).toEqual('10000')
     })
 
-    test.only('submitting circle search calls onChangeQuery', async () => {
+    test('submitting circle search calls onChangeQuery', async () => {
       userEvent.setup()
       const newCircle = '-77.119759,38.791645,20000'
 
@@ -449,7 +452,7 @@ describe('SpatialDisplay component', () => {
     test('returns the input trimmed', async () => {
       userEvent.setup()
 
-      setup({ manuallyEntering: 'marker' })
+      setup({ pointSearch: [''] })
 
       const input = screen.queryByTestId('spatial-display_point')
 
@@ -466,7 +469,7 @@ describe('SpatialDisplay component', () => {
     test('returns the input if no match was found', async () => {
       userEvent.setup()
 
-      setup({ manuallyEntering: 'marker' })
+      setup({ pointSearch: [''] })
 
       const input = screen.queryByTestId('spatial-display_point')
 
@@ -485,7 +488,7 @@ describe('SpatialDisplay component', () => {
     test('returns an empty string if no coordinate is provided', async () => {
       userEvent.setup()
 
-      setup({ manuallyEntering: 'marker' })
+      setup({ pointSearch: [''] })
 
       const input = screen.queryByTestId('spatial-display_point')
 
@@ -504,7 +507,7 @@ describe('SpatialDisplay component', () => {
     test('returns no error with a valid coordinate', async () => {
       userEvent.setup()
 
-      setup({ manuallyEntering: 'marker' })
+      setup({ pointSearch: [''] })
 
       const input = screen.queryByTestId('spatial-display_point')
 
@@ -523,7 +526,6 @@ describe('SpatialDisplay component', () => {
       const inputVal = '0,0.123456'
 
       setup({
-        manuallyEntering: 'marker',
         pointSearch: [inputVal]
       })
 
@@ -539,7 +541,6 @@ describe('SpatialDisplay component', () => {
       const inputVal = '0,95'
 
       setup({
-        manuallyEntering: 'marker',
         pointSearch: [inputVal]
       })
 
@@ -554,7 +555,6 @@ describe('SpatialDisplay component', () => {
       const inputVal = '190,0'
 
       setup({
-        manuallyEntering: 'marker',
         pointSearch: [inputVal]
       })
 
@@ -573,14 +573,16 @@ describe('SpatialDisplay component', () => {
       const inputVal = '38.791,-77.119'
 
       setup({
-        manuallyEntering: 'rectangle'
+        boundingBoxSearch: ['0,0,0,0']
       })
 
       const swInput = screen.queryByTestId('spatial-display_southwest-point')
+      await userEvent.clear(swInput)
       await userEvent.click(swInput)
       await userEvent.type(swInput, inputVal)
 
       const neInput = screen.queryByTestId('spatial-display_northeast-point')
+      await userEvent.clear(neInput)
       await userEvent.click(neInput)
       await userEvent.type(neInput, inputVal)
 
@@ -599,14 +601,16 @@ describe('SpatialDisplay component', () => {
       const inputVal = '-91.119,38.791'
 
       setup({
-        manuallyEntering: 'rectangle'
+        boundingBoxSearch: ['0,0,0,0']
       })
 
       const swInput = screen.queryByTestId('spatial-display_southwest-point')
+      await userEvent.clear(swInput)
       await userEvent.click(swInput)
       await userEvent.type(swInput, inputVal)
 
       const neInput = screen.queryByTestId('spatial-display_northeast-point')
+      await userEvent.clear(neInput)
       await userEvent.click(neInput)
       await userEvent.type(neInput, inputVal)
 
