@@ -26,7 +26,6 @@ const setup = (overrides) => {
     polygonSearch: [],
     onChangeQuery,
     onRemoveSpatialFilter,
-    manuallyEntering: '',
     shapefile: {},
     ...overrides
   }

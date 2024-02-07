@@ -3,7 +3,7 @@
    * @param {String} coordinateString A single coordinate representing a point on a map
    */
 export const transformSingleCoordinate = (coordinateString) => {
-  if (!coordinateString || !coordinateString.length) return ''
+  if (!coordinateString) return ''
 
   return coordinateString.split(',').reverse().join(',').replace(/\s/g, '')
 }
