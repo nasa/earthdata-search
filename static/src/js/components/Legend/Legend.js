@@ -92,7 +92,7 @@ export const Legend = ({
     minLabel = hoverPrompt
     maxLabel = null
   } else {
-    [minLabel] = labels
+    minLabel = labels[0]
     maxLabel = labels[labels.length - 1]
   }
 
