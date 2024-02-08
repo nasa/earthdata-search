@@ -140,22 +140,22 @@
           rate: cron(0 12 ? * MON-FRI *)
           input:
             projection: 'epsg4326'
-          enabled: ${env:COLORMAP_JOB_ENABLED, true}
+          enabled: ${env:COLORMAP_JOB_ENABLED, file(./serverless.yml):custom.enableGenerateColorMaps.${file(./serverless.yml):provider.stage}, true}
       - schedule:
           rate: cron(5 12 ? * MON-FRI *)
           input:
             projection: 'epsg3857'
-          enabled: ${env:COLORMAP_JOB_ENABLED, true}
+          enabled: ${env:COLORMAP_JOB_ENABLED, file(./serverless.yml):custom.enableGenerateColorMaps.${file(./serverless.yml):provider.stage}, true}
       - schedule:
           rate: cron(10 12 ? * MON-FRI *)
           input:
             projection: 'epsg3413'
-          enabled: ${env:COLORMAP_JOB_ENABLED, true}
+          enabled: ${env:COLORMAP_JOB_ENABLED, file(./serverless.yml):custom.enableGenerateColorMaps.${file(./serverless.yml):provider.stage}, true}
       - schedule:
           rate: cron(15 12 ? * MON-FRI *)
           input:
             projection: 'epsg3031'
-          enabled: ${env:COLORMAP_JOB_ENABLED, true}
+          enabled: ${env:COLORMAP_JOB_ENABLED, file(./serverless.yml):custom.enableGenerateColorMaps.${file(./serverless.yml):provider.stage}, true}
 
   generateGibsTags:
     handler: serverless/src/generateGibsTags/handler.default

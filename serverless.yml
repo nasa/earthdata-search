@@ -96,7 +96,8 @@ configValidationMode: error
 
 custom:
   siteName: earthdata-search-${self:provider.stage}
-
+  enableGenerateColorMaps:
+    dev: false
   infrastructureStackName: earthdata-search-infrastructure-${self:provider.stage}
 
   serverlessIfElse:
