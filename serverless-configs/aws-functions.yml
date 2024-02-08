@@ -164,7 +164,7 @@
     events:
       - schedule:
           rate: cron(45 12 ? * MON-FRI *)
-          enabled: ${env:GIBS_JOB_ENABLED, false}
+          enabled: ${env:GIBS_JOB_ENABLED, file(./serverless.yml):custom.enableGenerateColorMaps.${file(./serverless.yml):provider.stage}, true}
 
   #
   # API Gateway Endpoints
