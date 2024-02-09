@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
+
 import PropTypes from 'prop-types'
 import { isEqual } from 'lodash'
 import { FaCrop } from 'react-icons/fa'
@@ -28,307 +29,68 @@ import './SpatialDisplay.scss'
 
 const { defaultSpatialDecimalSize } = getApplicationConfig()
 
-class SpatialDisplay extends Component {
-  constructor(props) {
-    super(props)
+const SpatialDisplay = ({
+  boundingBoxSearch,
+  circleSearch,
+  displaySpatialPolygonWarning,
+  drawingNewLayer,
+  lineSearch,
+  pointSearch,
+  polygonSearch,
+  shapefile,
+  onRemoveSpatialFilter,
+  onChangeQuery
+}) => {
+  const [error, setError] = useState('')
+  const [manuallyEnteringVal, setManuallyEnteringVal] = useState('')
 
-    this.state = {
-      error: '',
-      boundingBoxSearch: '',
-      circleSearch: '',
-      lineSearch: '',
-      manuallyEntering: false,
-      pointSearch: '',
-      polygonSearch: '',
-      shapefile: {}
-    }
+  const [currentPointSearch, setCurrentPointSearch] = useState(pointSearch)
+  const [currentBoundingBoxSearch, setCurrentBoundingBoxSearch] = useState(
+    transformBoundingBoxCoordinates(boundingBoxSearch[0])
+  )
+  const [currentCircleSearch, setCurrentCircleSearch] = useState(
+    transformCircleCoordinates(circleSearch[0])
+  )
+  const [currentPolygonSearch, setCurrentPolygonSearch] = useState(polygonSearch)
+  const [currentLineSearch, setCurrentLineSearch] = useState(lineSearch)
+  const [currentShapefile, setCurrentShapefile] = useState(shapefile)
 
-    this.onSpatialRemove = this.onSpatialRemove.bind(this)
-    this.onChangePointSearch = this.onChangePointSearch.bind(this)
-    this.onSubmitPointSearch = this.onSubmitPointSearch.bind(this)
-    this.onChangeBoundingBoxSearch = this.onChangeBoundingBoxSearch.bind(this)
-    this.onSubmitBoundingBoxSearch = this.onSubmitBoundingBoxSearch.bind(this)
-    this.onChangeCircleCenter = this.onChangeCircleCenter.bind(this)
-    this.onChangeCircleRadius = this.onChangeCircleRadius.bind(this)
-    this.onSubmitCircleSearch = this.onSubmitCircleSearch.bind(this)
-    this.onFocusSpatialSearch = this.onFocusSpatialSearch.bind(this)
-  }
-
-  componentDidMount() {
-    const {
-      boundingBoxSearch,
-      circleSearch,
-      pointSearch,
-      polygonSearch,
-      shapefile
-    } = this.props
-
-    this.setState({
-      error: '',
-      boundingBoxSearch: transformBoundingBoxCoordinates(boundingBoxSearch[0]),
-      circleSearch: transformCircleCoordinates(circleSearch[0]),
-      pointSearch: pointSearch[0],
-      polygonSearch: polygonSearch[0],
-      shapefile
-    })
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const {
-      boundingBoxSearch,
-      circleSearch,
-      lineSearch,
-      pointSearch,
-      polygonSearch,
-      shapefile
-    } = this.props
-
-    let shouldUpdateState = false
-
-    const state = {
-      error: ''
-    }
-
-    if (pointSearch[0] !== nextProps.pointSearch[0]) {
-      shouldUpdateState = true;
-
-      ([state.pointSearch] = nextProps.pointSearch)
-      state.error = this.validateCoordinate(
-        transformSingleCoordinate(nextProps.pointSearch[0])
-      )
-    }
-
-    if (boundingBoxSearch[0] !== nextProps.boundingBoxSearch[0]) {
-      shouldUpdateState = true
-
-      const points = transformBoundingBoxCoordinates(nextProps.boundingBoxSearch[0])
-
-      state.boundingBoxSearch = points
-
-      if (points.filter(Boolean).length > 0) {
-        points.forEach((point) => {
-          state.error = this.validateCoordinate(point)
-        })
-      }
-    }
-
-    if (polygonSearch[0] !== nextProps.polygonSearch[0]) {
-      shouldUpdateState = true;
-
-      ([state.polygonSearch] = nextProps.polygonSearch)
-    }
-
-    if (lineSearch[0] !== nextProps.lineSearch[0]) {
-      shouldUpdateState = true;
-
-      ([state.lineSearch] = nextProps.lineSearch)
-    }
-
-    if (circleSearch[0] !== nextProps.circleSearch[0]) {
-      shouldUpdateState = true
-
-      const points = transformCircleCoordinates(nextProps.circleSearch[0])
-      state.circleSearch = points
-    }
-
-    if (!isEqual(shapefile, nextProps.shapefile)) {
-      shouldUpdateState = true
-
-      state.shapefile = nextProps.shapefile
-    }
-
-    // Only update the state if a prop we care about was provided and updated
-    if (shouldUpdateState) this.setState(state)
-  }
-
-  onSpatialRemove() {
-    const {
-      onRemoveSpatialFilter
-    } = this.props
-
-    this.setState({
-      manuallyEntering: false
-    })
-
-    onRemoveSpatialFilter()
-  }
-
-  onChangePointSearch(event) {
-    const { value = '' } = event.target
-
-    const trimmedValue = this.trimCoordinate(value)
-    const point = transformSingleCoordinate(trimmedValue)
-
-    this.setState({
-      pointSearch: point,
-      error: this.validateCoordinate(trimmedValue)
-    })
-  }
-
-  onSubmitPointSearch(event) {
-    if (event.type === 'blur' || event.key === 'Enter') {
-      eventEmitter.emit('map.drawCancel')
-
-      const { pointSearch, error } = this.state
-      const { onChangeQuery } = this.props
-
-      if (error === '') {
-        this.setState({
-          manuallyEntering: false
-        })
-
-        const point = pointSearch.length ? [pointSearch.replace(/\s/g, '')] : []
-        onChangeQuery({
-          collection: {
-            spatial: {
-              point
-            }
-          }
-        })
-      }
-    }
-
-    event.preventDefault()
-  }
-
-  onChangeBoundingBoxSearch(event) {
-    const { boundingBoxSearch } = this.state
-    const [swPoint, nePoint] = boundingBoxSearch
-
-    const {
-      name,
-      value = ''
-    } = event.target
-
-    const trimmedValue = this.trimCoordinate(value)
-    let newSearch
-
-    if (name === 'swPoint') {
-      newSearch = [trimmedValue, nePoint]
-    }
-
-    if (name === 'nePoint') {
-      newSearch = [swPoint, trimmedValue]
-    }
-
-    this.setState({
-      boundingBoxSearch: newSearch,
-      error: this.validateBoundingBoxCoordinates(newSearch)
-    })
-  }
-
-  onFocusSpatialSearch(spatialType) {
-    this.setState({
-      manuallyEntering: spatialType
-    })
-  }
-
-  onSubmitBoundingBoxSearch(event) {
-    if (event.type === 'blur' || event.key === 'Enter') {
-      const { boundingBoxSearch, error } = this.state
-      const { onChangeQuery } = this.props
-
-      if (boundingBoxSearch[0] && boundingBoxSearch[1]) {
-        eventEmitter.emit('map.drawCancel')
-
-        if (error === '') {
-          this.setState({
-            manuallyEntering: false
-          })
-
-          onChangeQuery({
-            collection: {
-              spatial: {
-                boundingBox: [transformBoundingBoxCoordinates(boundingBoxSearch.join(',')).join(',')]
-              }
-            }
-          })
-        }
-      }
-    }
-
-    event.preventDefault()
-  }
-
-  onChangeCircleCenter(event) {
-    const { circleSearch } = this.state
-    const [, radius] = circleSearch
-
-    const { value = '' } = event.target
-
-    const trimmedValue = this.trimCoordinate(value)
-    const newSearch = [trimmedValue, radius]
-
-    this.setState({
-      circleSearch: newSearch,
-      error: this.validateCircleCoordinates(newSearch)
-    })
-  }
-
-  onChangeCircleRadius(event) {
-    const { circleSearch } = this.state
-    const [center] = circleSearch
-
-    const { value = '' } = event.target
-
-    if (this.isValidRadius(value)) {
-      const newSearch = [center, value]
-
-      this.setState({
-        circleSearch: newSearch,
-        error: this.validateCircleCoordinates(newSearch)
-      })
-    }
-  }
-
-  onSubmitCircleSearch(event) {
-    if (event.type === 'blur' || event.key === 'Enter') {
-      const { circleSearch, error } = this.state
-      const [center, radius] = circleSearch
-      const { onChangeQuery } = this.props
-
-      if (center && radius) {
-        eventEmitter.emit('map.drawCancel')
-
-        if (error === '') {
-          this.setState({
-            manuallyEntering: false
-          })
-
-          onChangeQuery({
-            collection: {
-              spatial: {
-                circle: [[transformCircleCoordinates(circleSearch.join(','))].join(',')]
-              }
-            }
-          })
-        }
-      }
-    }
-
-    event.preventDefault()
+  const onFocusSpatialSearch = (spatialType) => {
+    setManuallyEnteringVal(spatialType)
   }
 
   /**
-   * Validates a radius is limited to an integer
-   * @param {String} value
+   * Trims the latitude and longitude to defaultSpatialDecimalSize
+   * @param {String} coordinateString A single coordinate representing a point on a map
    */
-  isValidRadius(value) {
-    const regex = /^\d*$/
+  const trimCoordinate = (coordinateString) => {
+    const coordinates = coordinateString.replace(/\s/g, '').split(',').map((coordinate) => {
+      // Checks if the coordinate is a positive or negative number,
+      // optionally followed by up to defaultSpatialDecimalSize decimal points
+      const regex = new RegExp(`^(-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}})`)
 
-    return !!(value.match(regex))
+      const matchedCoordinate = coordinate.match(regex)
+      if (matchedCoordinate[0]) {
+        return matchedCoordinate[0]
+      }
+
+      // If a matching coordinate wasn't found, return the input exactly
+      return coordinate
+    })
+
+    return coordinates.join(',')
   }
 
   /**
    * Validate the provided point setting any errors to the component state
    * @param {String} coordinates Value provided by an input field containing a single point of 'lat,lon'
    */
-  validateCoordinate(coordinates) {
+  const validateCoordinate = (coordinates) => {
     if (coordinates === '') return ''
 
     let errorMessage = ''
 
-    // Checks if the coordinates are two positive or negitive numbers separated by a comma,
+    // Checks if the coordinates are two positive or negative numbers separated by a comma,
     // each number optionally followed by up to defaultSpatialDecimalSize decimal points
     const regex = new RegExp(`^(-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}}),\\s?(-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}})$`)
     const validCoordinates = coordinates.trim().match(regex)
@@ -358,12 +120,12 @@ class SpatialDisplay extends Component {
    * Validate the provided bounding box points
    * @param {Array} boundingBox Array with [swPoint, nePoint] values
    */
-  validateBoundingBoxCoordinates(boundingBox) {
+  const validateBoundingBoxCoordinates = (boundingBox) => {
     let errorMessage = ''
     const [swPoint, nePoint] = boundingBox
 
-    errorMessage += this.validateCoordinate(swPoint)
-    if (errorMessage === '') { errorMessage += this.validateCoordinate(nePoint) }
+    errorMessage += validateCoordinate(swPoint)
+    if (errorMessage === '') { errorMessage += validateCoordinate(nePoint) }
 
     if (swPoint === nePoint) {
       const message = 'SW and NE points contain matching coordinates. Please use point selection instead.'
@@ -377,397 +139,542 @@ class SpatialDisplay extends Component {
    * Validate the provided center point of a circle
    * @param {Array} circle Array with [point, radius] values
    */
-  validateCircleCoordinates(circle) {
+  const validateCircleCoordinates = (circle) => {
     const [center] = circle
 
-    return this.validateCoordinate(center)
+    return validateCoordinate(center)
   }
 
   /**
-   * Trims the latitude and longitude to defaultSpatialDecimalSize
-   * @param {String} coordinateString A single coordinate representing a point on a map
+   * Validates a radius is limited to an integer
+   * @param {String} value
    */
-  trimCoordinate(coordinateString) {
-    const coordinates = coordinateString.replace(/\s/g, '').split(',').map((coordinate) => {
-      // Checks if the coordinate is a positive or negitive number,
-      // optionally followed by up to defaultSpatialDecimalSize decimal points
-      const regex = new RegExp(`^(-?\\d*\\.?\\d{0,${defaultSpatialDecimalSize}})`)
+  const isValidRadius = (value) => {
+    const regex = /^\d*$/
 
-      const matchedCoordinate = coordinate.match(regex)
-      if (matchedCoordinate[0]) {
-        return matchedCoordinate[0]
-      }
-
-      // If a matching coordinate wasn't found, return the input exactly
-      return coordinate
-    })
-
-    return coordinates.join(',')
+    return !!(value.match(regex))
   }
 
-  render() {
-    const {
-      displaySpatialPolygonWarning,
-      drawingNewLayer
-    } = this.props
+  const onSubmitBoundingBoxSearch = (event) => {
+    if (event.type === 'blur' || event.key === 'Enter') {
+      if (currentBoundingBoxSearch[0] && currentBoundingBoxSearch[1]) {
+        eventEmitter.emit('map.drawCancel')
 
-    const {
-      error,
-      boundingBoxSearch,
-      circleSearch,
-      lineSearch,
-      manuallyEntering,
-      pointSearch = '',
-      polygonSearch = '',
-      shapefile
-    } = this.state
+        if (error === '') {
+          setManuallyEnteringVal(false)
 
-    const contents = []
-    const items = []
-
-    let entry
-    let secondaryTitle = ''
-    let spatialError = error
-
-    const {
-      isErrored: shapefileError,
-      isLoading: shapefileLoading,
-      isLoaded: shapefileLoaded,
-      selectedFeatures = [],
-      shapefileName,
-      shapefileId,
-      shapefileSize
-    } = shapefile
-
-    let hint = ''
-
-    if (((shapefileError || shapefileLoading || shapefileLoaded || shapefileId)
-      && !drawingNewLayer)
-      || drawingNewLayer === 'shapefile') {
-      // If (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
-      // render the shapefile display
-      entry = (
-        <SpatialDisplayEntry>
-          <Row className="spatial-display__form-row">
-            {
-              shapefileName && (
-                <>
-                  <span
-                    className="spatial-display__text-primary"
-                    data-testid="spatial-display_shapefile-name"
-                  >
-                    {shapefileName}
-                  </span>
-                  {
-                    shapefileSize && (
-                      <span className="spatial-display__text-secondary">
-                        {`(${shapefileSize})`}
-                      </span>
-                    )
-                  }
-                  {
-                    shapefileLoading && (
-                      <span className="spatial-display__loading">
-                        <Spinner
-                          className="spatial-display__loading-icon"
-                          animation="border"
-                          variant="light"
-                          size="sm"
-                        />
-                        Loading...
-                      </span>
-                    )
-                  }
-                </>
-              )
+          onChangeQuery({
+            collection: {
+              spatial: {
+                boundingBox: [transformBoundingBoxCoordinates(currentBoundingBoxSearch.join(',')).join(',')]
+              }
             }
-          </Row>
-        </SpatialDisplayEntry>
-      )
-
-      if (shapefileLoaded && !selectedFeatures.length) {
-        hint = 'Select a shape to filter results'
-      }
-
-      if (selectedFeatures.length) {
-        hint = `${selectedFeatures.length} ${pluralize('shape', selectedFeatures.length)} selected`
-      }
-
-      if (shapefileError) {
-        const { type } = shapefileError
-
-        if (type === 'upload_shape') {
-          spatialError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+          })
         }
       }
+    }
 
-      secondaryTitle = 'Shape File'
+    event.preventDefault()
+  }
 
-      contents.push((
-        <FilterStackContents
-          key="filter__shapefile"
-          body={entry}
-          title="Shape File"
-          hint={hint}
-        />
+  const onChangeCircleCenter = (event) => {
+    const [, radius] = currentCircleSearch
+
+    const { value = '' } = event.target
+
+    const trimmedValue = trimCoordinate(value)
+    const newSearch = [trimmedValue, radius]
+
+    setCurrentCircleSearch(newSearch)
+    setError(validateCircleCoordinates(newSearch))
+  }
+
+  const onChangeCircleRadius = (event) => {
+    const [center] = currentCircleSearch
+
+    const { value = '' } = event.target
+
+    if (isValidRadius(value)) {
+      const newSearch = [center, value]
+
+      setCurrentCircleSearch(newSearch)
+      setError(validateCircleCoordinates(newSearch))
+    }
+  }
+
+  const onSubmitCircleSearch = (event) => {
+    if (event.type === 'blur' || event.key === 'Enter') {
+      const [center, radius] = currentCircleSearch
+
+      if (center && radius) {
+        eventEmitter.emit('map.drawCancel')
+
+        if (error === '') {
+          setManuallyEnteringVal(false)
+
+          const circle = [transformCircleCoordinates(currentCircleSearch.join(','))].join(',')
+
+          onChangeQuery({
+            collection: {
+              spatial: {
+                circle: [circle]
+              }
+            }
+          })
+        }
+      }
+    }
+
+    event.preventDefault()
+  }
+
+  useEffect(() => {
+    if (currentPointSearch[0] !== pointSearch[0] || validateCoordinate(
+      transformSingleCoordinate(currentPointSearch[0])
+    )) {
+      setCurrentPointSearch(pointSearch)
+
+      setError(validateCoordinate(
+        transformSingleCoordinate(currentPointSearch[0])
       ))
-    } else if ((pointSearch && !drawingNewLayer) || drawingNewLayer === 'marker' || manuallyEntering === 'marker') {
-      entry = (
-        <SpatialDisplayEntry>
-          <Form.Row className="spatial-display__form-row">
-            <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
-              <Form.Label
-                className="spatial-display__form-label"
-                column
-                sm="auto"
-              >
-                Point:
-              </Form.Label>
-              <Col
-                className="spatial-display__form-column"
-              >
-                <Form.Control
-                  className="spatial-display__text-input"
-                  data-testid="spatial-display_point"
-                  type="text"
-                  placeholder="lat, lon (e.g. 44.2, 130)"
-                  sm="auto"
-                  size="sm"
-                  value={transformSingleCoordinate(pointSearch)}
-                  onChange={this.onChangePointSearch}
-                  onBlur={this.onSubmitPointSearch}
-                  onKeyUp={this.onSubmitPointSearch}
-                  onFocus={() => this.onFocusSpatialSearch('marker')}
-                />
-              </Col>
-            </Form.Group>
-          </Form.Row>
-        </SpatialDisplayEntry>
-      )
+    }
 
-      secondaryTitle = 'Point'
+    if (currentBoundingBoxSearch[0] !== boundingBoxSearch[0]
+      || validateBoundingBoxCoordinates(transformBoundingBoxCoordinates(boundingBoxSearch[0]))) {
+      const tempPoints = transformBoundingBoxCoordinates(boundingBoxSearch[0])
 
-      contents.push((
-        <FilterStackContents
-          key="filter__point"
-          body={entry}
-          title="Point"
-        />
-      ))
-    } else if ((boundingBoxSearch && (boundingBoxSearch[0] || boundingBoxSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'rectangle' || manuallyEntering === 'rectangle') {
-      entry = (
-        <SpatialDisplayEntry>
-          <Form.Row className="spatial-display__form-row">
-            <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
-              <Form.Label
-                className="spatial-display__form-label"
-                column
-                sm="auto"
-              >
-                SW:
-              </Form.Label>
-              <Col className="spatial-display__form-column">
-                <Form.Control
-                  className="spatial-display__text-input"
-                  data-testid="spatial-display_southwest-point"
-                  sm="auto"
-                  type="text"
-                  placeholder="lat, lon (e.g. 44.2, 130)"
-                  size="sm"
-                  name="swPoint"
-                  value={boundingBoxSearch[0]}
-                  onChange={this.onChangeBoundingBoxSearch}
-                  onBlur={this.onSubmitBoundingBoxSearch}
-                  onKeyUp={this.onSubmitBoundingBoxSearch}
-                  onFocus={() => this.onFocusSpatialSearch('rectangle')}
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
-              <Form.Label
-                className="spatial-display__form-label"
-                column
-                sm="auto"
-              >
-                NE:
-              </Form.Label>
-              <Col className="spatial-display__form-column">
-                <Form.Control
-                  className="spatial-display__text-input"
-                  data-testid="spatial-display_northeast-point"
-                  sm="auto"
-                  type="text"
-                  placeholder="lat, lon (e.g. 50, 133.24)"
-                  size="sm"
-                  name="nePoint"
-                  value={boundingBoxSearch[1]}
-                  onChange={this.onChangeBoundingBoxSearch}
-                  onBlur={this.onSubmitBoundingBoxSearch}
-                  onKeyUp={this.onSubmitBoundingBoxSearch}
-                  onFocus={() => this.onFocusSpatialSearch('rectangle')}
-                />
-              </Col>
-            </Form.Group>
-          </Form.Row>
-        </SpatialDisplayEntry>
-      )
+      setCurrentBoundingBoxSearch(tempPoints)
 
-      secondaryTitle = 'Rectangle'
+      if (tempPoints.filter(Boolean).length > 0) {
+        tempPoints.forEach((point) => {
+          setError(validateCoordinate(point))
+        })
+      }
+    }
 
-      contents.push((
-        <FilterStackContents
-          key="filter__rectangle"
-          body={entry}
-          title="Rectangle"
-          variant="block"
-        />
-      ))
-    } else if ((circleSearch && (circleSearch[0] || circleSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'circle' || manuallyEntering === 'circle') {
-      entry = (
-        <SpatialDisplayEntry>
-          <Form.Row className="spatial-display__form-row">
-            <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
-              <Form.Label
-                className="spatial-display__form-label"
-                column
-                sm="auto"
-              >
-                Center:
-              </Form.Label>
-              <Col className="spatial-display__form-column">
-                <Form.Control
-                  className="spatial-display__text-input"
-                  data-testid="spatial-display_circle-center"
-                  sm="auto"
-                  type="text"
-                  placeholder="lat, lon (e.g. 44.2, 130)"
-                  size="sm"
-                  name="center"
-                  value={circleSearch[0]}
-                  onChange={this.onChangeCircleCenter}
-                  onBlur={this.onSubmitCircleSearch}
-                  onKeyUp={this.onSubmitCircleSearch}
-                  onFocus={() => this.onFocusSpatialSearch('circle')}
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
-              <Form.Label
-                className="spatial-display__form-label"
-                column
-                sm="auto"
-              >
-                Radius (m):
-              </Form.Label>
-              <Col className="spatial-display__form-column">
-                <Form.Control
-                  className="spatial-display__text-input"
-                  data-testid="spatial-display_circle-radius"
-                  sm="auto"
-                  type="text"
-                  placeholder="meters (e.g. 200)"
-                  size="sm"
-                  name="radius"
-                  value={circleSearch[1]}
-                  onChange={this.onChangeCircleRadius}
-                  onBlur={this.onSubmitCircleSearch}
-                  onKeyUp={this.onSubmitCircleSearch}
-                  onFocus={() => this.onFocusSpatialSearch('circle')}
-                />
-              </Col>
-            </Form.Group>
-          </Form.Row>
-        </SpatialDisplayEntry>
-      )
+    if (currentPolygonSearch[0] !== polygonSearch[0]) {
+      setCurrentPolygonSearch(polygonSearch)
+    }
 
-      secondaryTitle = 'Circle'
+    if (currentLineSearch[0] !== lineSearch[0]) {
+      setCurrentLineSearch(lineSearch)
+    }
 
-      contents.push((
-        <FilterStackContents
-          key="filter__circle"
-          body={entry}
-          title="Circle"
-          variant="block"
-        />
-      ))
-    } else if ((polygonSearch && !drawingNewLayer) || drawingNewLayer === 'polygon') {
-      const pointArray = polygonSearch.split(',')
-      const pointCount = (pointArray.length / 2) - 1
+    if (currentCircleSearch[0] !== circleSearch[0]) {
+      const tempPoints = transformCircleCoordinates(circleSearch[0])
+      setCurrentCircleSearch(tempPoints)
+    }
 
-      entry = (
-        <SpatialDisplayEntry>
+    if (!isEqual(currentShapefile, shapefile)) {
+      setCurrentShapefile(shapefile)
+    }
+  }, [pointSearch, boundingBoxSearch, polygonSearch, lineSearch, circleSearch, shapefile])
+
+  const onSpatialRemove = () => {
+    setManuallyEnteringVal(false)
+
+    onRemoveSpatialFilter()
+  }
+
+  const onChangePointSearch = (event) => {
+    const { value = '' } = event.target
+    const trimmedValue = trimCoordinate(value)
+    const point = transformSingleCoordinate(trimmedValue)
+
+    setCurrentPointSearch([point])
+    setError(validateCoordinate(trimmedValue))
+  }
+
+  const onSubmitPointSearch = (event) => {
+    if (event.type === 'blur' || event.key === 'Enter') {
+      eventEmitter.emit('map.drawCancel')
+
+      if (error === '') {
+        setManuallyEnteringVal(false)
+
+        const point = currentPointSearch[0].length ? [currentPointSearch[0].replace(/\s/g, '')] : []
+        onChangeQuery({
+          collection: {
+            spatial: {
+              point
+            }
+          }
+        })
+      }
+    }
+
+    event.preventDefault()
+  }
+
+  const onChangeBoundingBoxSearch = (event) => {
+    const [swPoint, nePoint] = currentBoundingBoxSearch
+
+    const {
+      name,
+      value = ''
+    } = event.target
+
+    const trimmedValue = trimCoordinate(value)
+    let newSearch
+
+    if (name === 'swPoint') {
+      newSearch = [trimmedValue, nePoint]
+    }
+
+    if (name === 'nePoint') {
+      newSearch = [swPoint, trimmedValue]
+    }
+
+    setCurrentBoundingBoxSearch(newSearch)
+    setError(validateBoundingBoxCoordinates(newSearch))
+  }
+
+  const contents = []
+  const items = []
+
+  let entry
+  let secondaryTitle = ''
+  let spatialError = error
+
+  const {
+    isErrored: shapefileError,
+    isLoading: shapefileLoading,
+    isLoaded: shapefileLoaded,
+    selectedFeatures = [],
+    shapefileName,
+    shapefileId,
+    shapefileSize
+  } = currentShapefile
+
+  let hint = ''
+
+  if (((shapefileError || shapefileLoading || shapefileLoaded || shapefileId)
+    && !drawingNewLayer)
+    || drawingNewLayer === 'shapefile') {
+    // If (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
+    // render the shapefile display
+    entry = (
+      <SpatialDisplayEntry>
+        <Row className="spatial-display__form-row">
           {
-            pointCount > 2 && (
-              <Row className="spatial-display__form-row">
+            shapefileName && (
+              <>
                 <span
                   className="spatial-display__text-primary"
-                  data-testid="spatial-display_polygon"
+                  data-testid="spatial-display_shapefile-name"
                 >
-                  {`${pointCount} ${pluralize('Point', pointCount)}`}
+                  {shapefileName}
                 </span>
-              </Row>
+                {
+                  shapefileSize && (
+                    <span className="spatial-display__text-secondary">
+                      {`(${shapefileSize})`}
+                    </span>
+                  )
+                }
+                {
+                  shapefileLoading && (
+                    <span className="spatial-display__loading" data-testid="spatial-display__loading">
+                      <Spinner
+                        className="spatial-display__loading-icon"
+                        data-testid="spatial-display__loading-icon"
+                        animation="border"
+                        variant="light"
+                        size="sm"
+                      />
+                      Loading...
+                    </span>
+                  )
+                }
+              </>
             )
           }
-        </SpatialDisplayEntry>
-      )
-
-      if (pointArray.length < 2) {
-        hint = 'Draw a polygon on the map to filter results'
-      }
-
-      secondaryTitle = 'Polygon'
-
-      if (displaySpatialPolygonWarning) {
-        spatialError = 'This collection does not support polygon search. Your polygon has been converted to a bounding box.'
-      }
-
-      contents.push((
-        <FilterStackContents
-          key="filter__polygon"
-          body={entry}
-          title="Polygon"
-        />
-      ))
-    } else if ((lineSearch && !drawingNewLayer) || drawingNewLayer === 'polyline') {
-      entry = <SpatialDisplayEntry />
-
-      contents.push((
-        <FilterStackContents
-          key="filter__polygon"
-          body={entry}
-          title="Line"
-        />
-      ))
-    }
-
-    if (contents.length) {
-      items.push((
-        <FilterStackItem
-          key="item__spatial"
-          dataTestId="filter-stack__spatial"
-          icon={FaCrop}
-          title="Spatial"
-          secondaryTitle={secondaryTitle}
-          error={drawingNewLayer && !manuallyEntering ? '' : spatialError}
-          onRemove={this.onSpatialRemove}
-          hint={hint}
-        >
-          {contents}
-        </FilterStackItem>
-      ))
-    }
-
-    if (!items.length) {
-      return null
-    }
-
-    return (
-      // eslint-disable-next-line react/jsx-no-useless-fragment
-      <>
-        {items}
-      </>
+        </Row>
+      </SpatialDisplayEntry>
     )
+
+    if (shapefileLoaded && !selectedFeatures.length) {
+      hint = 'Select a shape to filter results'
+    }
+
+    if (selectedFeatures.length) {
+      hint = `${selectedFeatures.length} ${pluralize('shape', selectedFeatures.length)} selected`
+    }
+
+    if (shapefileError) {
+      const { type } = shapefileError
+
+      if (type === 'upload_shape') {
+        spatialError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+      }
+    }
+
+    secondaryTitle = 'Shape File'
+
+    contents.push((
+      <FilterStackContents
+        key="filter__shapefile"
+        body={entry}
+        title="Shape File"
+        hint={hint}
+      />
+    ))
+  } else if (((currentPointSearch && currentPointSearch.length) && !drawingNewLayer) || drawingNewLayer === 'marker' || manuallyEnteringVal === 'marker') {
+    entry = (
+      <SpatialDisplayEntry>
+        <Form.Row className="spatial-display__form-row">
+          <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
+            <Form.Label
+              className="spatial-display__form-label"
+              column
+              sm="auto"
+            >
+              Point:
+            </Form.Label>
+            <Col
+              className="spatial-display__form-column"
+            >
+              <Form.Control
+                className="spatial-display__text-input"
+                data-testid="spatial-display_point"
+                type="text"
+                placeholder="lat, lon (e.g. 44.2, 130)"
+                sm="auto"
+                size="sm"
+                value={transformSingleCoordinate(currentPointSearch[0])}
+                onChange={onChangePointSearch}
+                onBlur={onSubmitPointSearch}
+                onKeyUp={onSubmitPointSearch}
+                onFocus={() => onFocusSpatialSearch('marker')}
+              />
+            </Col>
+          </Form.Group>
+        </Form.Row>
+      </SpatialDisplayEntry>
+    )
+
+    secondaryTitle = 'Point'
+
+    contents.push((
+      <FilterStackContents
+        key="filter__point"
+        body={entry}
+        title="Point"
+      />
+    ))
+  } else if (((currentBoundingBoxSearch && currentBoundingBoxSearch.length) && (currentBoundingBoxSearch[0] || currentBoundingBoxSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'rectangle' || manuallyEnteringVal === 'rectangle') {
+    entry = (
+      <SpatialDisplayEntry>
+        <Form.Row className="spatial-display__form-row">
+          <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
+            <Form.Label
+              className="spatial-display__form-label"
+              column
+              sm="auto"
+            >
+              SW:
+            </Form.Label>
+            <Col className="spatial-display__form-column">
+              <Form.Control
+                className="spatial-display__text-input"
+                data-testid="spatial-display_southwest-point"
+                sm="auto"
+                type="text"
+                placeholder="lat, lon (e.g. 44.2, 130)"
+                size="sm"
+                name="swPoint"
+                value={currentBoundingBoxSearch[0]}
+                onChange={onChangeBoundingBoxSearch}
+                onBlur={onSubmitBoundingBoxSearch}
+                onKeyUp={onSubmitBoundingBoxSearch}
+                onFocus={() => onFocusSpatialSearch('rectangle')}
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
+            <Form.Label
+              className="spatial-display__form-label"
+              column
+              sm="auto"
+            >
+              NE:
+            </Form.Label>
+            <Col className="spatial-display__form-column">
+              <Form.Control
+                className="spatial-display__text-input"
+                data-testid="spatial-display_northeast-point"
+                sm="auto"
+                type="text"
+                placeholder="lat, lon (e.g. 50, 133.24)"
+                size="sm"
+                name="nePoint"
+                value={currentBoundingBoxSearch[1]}
+                onChange={onChangeBoundingBoxSearch}
+                onBlur={onSubmitBoundingBoxSearch}
+                onKeyUp={onSubmitBoundingBoxSearch}
+                onFocus={() => onFocusSpatialSearch('rectangle')}
+              />
+            </Col>
+          </Form.Group>
+        </Form.Row>
+      </SpatialDisplayEntry>
+    )
+
+    secondaryTitle = 'Rectangle'
+
+    contents.push((
+      <FilterStackContents
+        key="filter__rectangle"
+        body={entry}
+        title="Rectangle"
+        variant="block"
+      />
+    ))
+  } else if (((currentCircleSearch && currentCircleSearch.length) && (currentCircleSearch[0] || currentCircleSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'circle' || manuallyEnteringVal === 'circle') {
+    entry = (
+      <SpatialDisplayEntry>
+        <Form.Row className="spatial-display__form-row">
+          <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
+            <Form.Label
+              className="spatial-display__form-label"
+              column
+              sm="auto"
+            >
+              Center:
+            </Form.Label>
+            <Col className="spatial-display__form-column">
+              <Form.Control
+                className="spatial-display__text-input"
+                data-testid="spatial-display_circle-center"
+                sm="auto"
+                type="text"
+                placeholder="lat, lon (e.g. 44.2, 130)"
+                size="sm"
+                name="center"
+                value={currentCircleSearch[0]}
+                onChange={onChangeCircleCenter}
+                onBlur={onSubmitCircleSearch}
+                onKeyUp={onSubmitCircleSearch}
+                onFocus={() => onFocusSpatialSearch('circle')}
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
+            <Form.Label
+              className="spatial-display__form-label"
+              column
+              sm="auto"
+            >
+              Radius (m):
+            </Form.Label>
+            <Col className="spatial-display__form-column">
+              <Form.Control
+                className="spatial-display__text-input"
+                data-testid="spatial-display_circle-radius"
+                sm="auto"
+                type="text"
+                placeholder="meters (e.g. 200)"
+                size="sm"
+                name="radius"
+                value={currentCircleSearch[1]}
+                onChange={onChangeCircleRadius}
+                onBlur={onSubmitCircleSearch}
+                onKeyUp={onSubmitCircleSearch}
+                onFocus={() => onFocusSpatialSearch('circle')}
+              />
+            </Col>
+          </Form.Group>
+        </Form.Row>
+      </SpatialDisplayEntry>
+    )
+
+    secondaryTitle = 'Circle'
+
+    contents.push((
+      <FilterStackContents
+        key="filter__circle"
+        body={entry}
+        title="Circle"
+        variant="block"
+      />
+    ))
+  } else if (((currentPolygonSearch && currentPolygonSearch.length) && !drawingNewLayer) || drawingNewLayer === 'polygon') {
+    const pointArray = currentPolygonSearch.length ? currentPolygonSearch[0].split(',') : []
+    const pointCount = (pointArray.length / 2) - 1
+
+    entry = (
+      <SpatialDisplayEntry>
+        {
+          pointCount > 2 && (
+            <Row className="spatial-display__form-row">
+              <span
+                className="spatial-display__text-primary"
+                data-testid="spatial-display_polygon"
+              >
+                {`${pointCount} ${pluralize('Point', pointCount)}`}
+              </span>
+            </Row>
+          )
+        }
+      </SpatialDisplayEntry>
+    )
+
+    if (pointArray.length < 2) {
+      hint = 'Draw a polygon on the map to filter results'
+    }
+
+    secondaryTitle = 'Polygon'
+
+    if (displaySpatialPolygonWarning) {
+      spatialError = 'This collection does not support polygon search. Your polygon has been converted to a bounding box.'
+    }
+
+    contents.push((
+      <FilterStackContents
+        key="filter__polygon"
+        body={entry}
+        title="Polygon"
+      />
+    ))
+  } else if (((currentLineSearch && currentLineSearch.length) && !drawingNewLayer) || drawingNewLayer === 'polyline') {
+    entry = <SpatialDisplayEntry />
+
+    contents.push((
+      <FilterStackContents
+        key="filter__polygon"
+        body={entry}
+        title="Line"
+      />
+    ))
   }
+
+  if (contents.length) {
+    items.push((
+      <FilterStackItem
+        key="item__spatial"
+        dataTestId="filter-stack__spatial"
+        icon={FaCrop}
+        title="Spatial"
+        secondaryTitle={secondaryTitle}
+        error={drawingNewLayer && !manuallyEnteringVal ? '' : spatialError}
+        onRemove={onSpatialRemove}
+        hint={hint}
+      >
+        {contents}
+      </FilterStackItem>
+    ))
+  }
+
+  if (!items.length) {
+    return null
+  }
+
+  return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
+      {items}
+    </>
+  )
 }
 
 SpatialDisplay.propTypes = {
