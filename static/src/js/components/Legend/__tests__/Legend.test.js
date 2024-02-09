@@ -5,7 +5,7 @@ import 'jest-canvas-mock'
 
 import Legend from '../Legend'
 
-const validColorMap = {
+const quantitativeColorMap = {
   scale: {
     colors: [
       '#080008',
@@ -24,6 +24,25 @@ const validColorMap = {
   }
 }
 
+const qualitativeColorMap = {
+  classes: {
+    colors: [
+      '#080008',
+      '#100010',
+      '#180018',
+      '#200020',
+      '#280028'
+    ],
+    labels: [
+      'Not Water',
+      'Open Water',
+      'Partial Surface Water',
+      'Snow/Ice',
+      'Cloud'
+    ]
+  }
+}
+
 describe('Legend', () => {
   describe('when no colormap is provided', () => {
     test('does not render the component', () => {
@@ -34,7 +53,7 @@ describe('Legend', () => {
   })
 
   describe('when a colormap is provided', () => {
-    describe('if the scale property does not exist', () => {
+    describe('if neither the scale or class property exist', () => {
       test('does not render the component', () => {
         const { container } = render(<Legend colorMap={{ test: {} }} />)
 
@@ -44,13 +63,13 @@ describe('Legend', () => {
 
     describe('if the scale property exists', () => {
       test('renders the component', () => {
-        const { container } = render(<Legend colorMap={validColorMap} />)
+        const { container } = render(<Legend colorMap={quantitativeColorMap} />)
 
         expect(container).not.toBeEmptyDOMElement()
       })
 
       test('renders the min label', () => {
-        render(<Legend colorMap={validColorMap} />)
+        render(<Legend colorMap={quantitativeColorMap} />)
 
         const minLabel = screen.queryByText('0.004 – 0.008 mm')
 
@@ -58,11 +77,35 @@ describe('Legend', () => {
       })
 
       test('renders and encodes the max label', () => {
-        render(<Legend colorMap={validColorMap} />)
+        render(<Legend colorMap={quantitativeColorMap} />)
 
-        const minLabel = screen.queryByText('≥ 0.025 mm')
+        const maxLabel = screen.queryByText('≥ 0.025 mm')
 
-        expect(minLabel).toBeInTheDocument()
+        expect(maxLabel).toBeInTheDocument()
+      })
+    })
+
+    describe('if the class property exists', () => {
+      test('renders the component', () => {
+        const { container } = render(<Legend colorMap={qualitativeColorMap} />)
+
+        expect(container).not.toBeEmptyDOMElement()
+      })
+
+      test('renders the hover prompt', () => {
+        render(<Legend colorMap={qualitativeColorMap} />)
+
+        const hoverPrompt = screen.queryByText('Hover for class names')
+
+        expect(hoverPrompt).toBeInTheDocument()
+      })
+
+      test('does not render the max label', () => {
+        render(<Legend colorMap={qualitativeColorMap} />)
+
+        const maxLabel = screen.queryByText('Cloud')
+
+        expect(maxLabel).not.toBeInTheDocument()
       })
     })
   })

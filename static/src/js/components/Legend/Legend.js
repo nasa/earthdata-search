@@ -54,9 +54,12 @@ export const Legend = ({
   const [colormapIsRendered, setColormapIsRendered] = useState(false)
 
   useEffect(() => {
-    if (barRef.current && colorMap.scale) {
-      const { scale = {} } = colorMap
-      const { colors = [], labels = [] } = scale
+    if (barRef.current && (colorMap.scale || colorMap.classes)) {
+      const { scale = {}, classes = {} } = colorMap
+      let { colors = [], labels = [] } = scale
+      if (Object.keys(classes).length > 0) {
+        ({ colors = [], labels = [] } = classes)
+      }
 
       // Create a canvas element to display the colormap.
       const canvas = barRef.current.getContext('2d')
@@ -75,12 +78,23 @@ export const Legend = ({
   }, [barRef.current, colorMap])
 
   // If no colormap is available, hide the legend.
-  if (!colorMap || !colorMap.scale) return null
+  if (!colorMap || (!colorMap.scale && !colorMap.classes)) return null
 
-  const { scale = {} } = colorMap
-  const { labels = [], colors = [] } = scale
-  const minLabel = labels[0]
-  const maxLabel = labels[labels.length - 1]
+  const { scale = {}, classes = {} } = colorMap
+  let { colors = [], labels = [] } = scale
+  let minLabel
+  let maxLabel
+
+  const qualitative = Object.keys(classes).length > 0
+  const hoverPrompt = 'Hover for class names'
+  if (qualitative) {
+    ({ colors = [], labels = [] } = classes)
+    minLabel = hoverPrompt
+    maxLabel = null
+  } else {
+    [minLabel] = labels
+    maxLabel = labels[labels.length - 1]
+  }
 
   /**
    * Resets the focus state when a users mouse leaves the colormap.
@@ -153,7 +167,7 @@ export const Legend = ({
                 {
                   minLabel && (
                     <span
-                      className="legend__label legend__label--min"
+                      className={`legend__label legend__label--min ${qualitative ? 'legend__hover-prompt' : ''}`}
                       data-testid="legend-label-min"
                     >
                       {replaceSupportedHtmlEntities(minLabel)}
