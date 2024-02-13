@@ -210,6 +210,56 @@ describe('AccessMethod component', () => {
     })
   })
 
+  describe('when the selected access method has variables', () => {
+    test('displays correct elements in variables window', () => {
+      const accessMethodsWithVariables = {
+        opendap: {
+          isValid: true,
+          type: 'OPeNDAP',
+          variables: {
+            VAR123: {
+              conceptId: 'VAR123',
+              longName: 'Variable 123',
+              name: 'Var123'
+            }
+          },
+          supportsVariableSubsetting: true
+        }
+      }
+
+      setup({
+        accessMethods: accessMethodsWithVariables,
+        selectedAccessMethod: 'opendap'
+      })
+
+      expect(screen.queryByText('This service has no associated variables.')).not.toBeInTheDocument()
+      expect(screen.getByText(/variables selected/)).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Edit Variables' })).toBeInTheDocument()
+    })
+  })
+
+  describe('when the selected access method has no variables', () => {
+    test('displays correct elements in variables window', () => {
+      const accessMethodsWithoutVariables = {
+        opendap: {
+          isValid: true,
+          type: 'OPeNDAP',
+          variables: {},
+          supportsVariableSubsetting: true
+        }
+      }
+
+      setup({
+        accessMethods: accessMethodsWithoutVariables,
+        selectedAccessMethod: 'opendap'
+      })
+
+      expect(screen.getByText('This service has no associated variables.')).toBeInTheDocument()
+      expect(screen.queryByText(/variables selected/)).not.toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: 'Edit Variables' })).not.toBeInTheDocument()
+    })
+  })
+
   describe('when the selected access method has an echoform', () => {
     test('lazy loads the echo-forms component and provides the correct fallback', async () => {
       const collectionId = 'collectionId'
