@@ -20,7 +20,11 @@ export const VariableTreePanel = (props) => {
     onViewDetails
   } = props
 
-  if (!accessMethods || !selectedAccessMethod) return null
+  if (!accessMethods || !selectedAccessMethod) {
+    return (
+      <div className="variable-tree-panel__no-variables">No variables available for selected access method</div>
+    )
+  }
 
   const selectedMethod = accessMethods[selectedAccessMethod]
   const {
@@ -30,6 +34,7 @@ export const VariableTreePanel = (props) => {
     selectedVariables = [],
     variables
   } = selectedMethod
+
   if (!variables) return null
 
   const hierarchyButtonClasses = classNames([
@@ -73,6 +78,7 @@ export const VariableTreePanel = (props) => {
   )
 
   let items = treeView === 'hierarchy' ? hierarchyMappings : keywordMappings
+  const isItemsEmpty = items.length === 0
 
   // If keywordMappings or hierarchyMappings don't exist, default items to the one that does exist
   if (keywordMappings.length && !hierarchyMappings.length) items = keywordMappings
@@ -81,16 +87,22 @@ export const VariableTreePanel = (props) => {
   return (
     <ProjectPanelSection heading="Variable Selection">
       {keywordMappings.length > 0 && hierarchyMappings.length > 0 && browseBy}
-      <Tree
-        key={`${selectedAccessMethodServiceConceptId}_${treeView}`}
-        collectionId={collectionId}
-        index={index}
-        items={items}
-        selectedVariables={selectedVariables}
-        variables={variables}
-        onUpdateSelectedVariables={onUpdateSelectedVariables}
-        onViewDetails={onViewDetails}
-      />
+      {
+        isItemsEmpty ? (
+          <div className="variable-tree-panel__no-variables">No variables available for selected access method</div>
+        ) : (
+          <Tree
+            key={`${selectedAccessMethodServiceConceptId}_${treeView}`}
+            collectionId={collectionId}
+            index={index}
+            items={items}
+            selectedVariables={selectedVariables}
+            variables={variables}
+            onUpdateSelectedVariables={onUpdateSelectedVariables}
+            onViewDetails={onViewDetails}
+          />
+        )
+      }
     </ProjectPanelSection>
   )
 }
