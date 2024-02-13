@@ -35,7 +35,11 @@ export const VariableTreePanel = (props) => {
     variables
   } = selectedMethod
 
-  if (!variables) return null
+  if (!variables) {
+    return (
+      <div className="variable-tree-panel__no-variables">No variables available for selected access method</div>
+    )
+  }
 
   const hierarchyButtonClasses = classNames([
     'variable-tree-panel__tree-switcher-button',
@@ -78,11 +82,12 @@ export const VariableTreePanel = (props) => {
   )
 
   let items = treeView === 'hierarchy' ? hierarchyMappings : keywordMappings
-  const isItemsEmpty = items.length === 0
 
   // If keywordMappings or hierarchyMappings don't exist, default items to the one that does exist
   if (keywordMappings.length && !hierarchyMappings.length) items = keywordMappings
   if (!keywordMappings.length && hierarchyMappings.length) items = hierarchyMappings
+
+  const isItemsEmpty = items.length === 0
 
   return (
     <ProjectPanelSection heading="Variable Selection">
