@@ -75,10 +75,13 @@ export class AccessMethod extends Component {
       )
     } = selectedMethod || {}
 
+    const harmonyTypeSelected = false
+
     this.state = {
       enableTemporalSubsetting,
       enableSpatialSubsetting,
-      enableConcatenateDownload
+      enableConcatenateDownload,
+      harmonyTypeSelected
     }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
@@ -102,10 +105,25 @@ export class AccessMethod extends Component {
     }
   }
 
+  handleHarmonyTypeAccessMethodSelection() {
+    this.setState({ harmonyTypeSelected: true })
+
+    const { metadata, onSelectAccessMethod } = this.props
+    const { conceptId: collectionId } = metadata
+
+    onSelectAccessMethod({
+      collectionId,
+      selectedAccessMethod: null
+    })
+  }
+
   handleAccessMethodSelection(method) {
     const { metadata, onSelectAccessMethod } = this.props
-
     const { conceptId: collectionId } = metadata
+
+    if (!method.includes('harmony')) {
+      this.setState({ harmonyTypeSelected: false })
+    }
 
     onSelectAccessMethod({
       collectionId,
@@ -231,6 +249,44 @@ export class AccessMethod extends Component {
     )
   }
 
+  renderStep1(hasHarmony, radioList, collectionId, selectedAccessMethod) {
+    if (hasHarmony) {
+      const id = `${collectionId}_access-method__harmony_type`
+      const { harmonyTypeSelected: checked } = this.state
+
+      return (
+        <>
+          <AccessMethodRadio
+            key={id}
+            id={id}
+            value="XXX"
+            title="Customize with Harmony"
+            description="Select a service to customize options"
+            details="Select a Harmony service in the section below"
+            onChange={() => this.handleHarmonyTypeAccessMethodSelection()}
+            checked={checked}
+          />
+
+          <RadioList
+            defaultValue={selectedAccessMethod}
+            onChange={(methodName) => this.handleAccessMethodSelection(methodName)}
+            radioList={radioList}
+            renderRadio={this.renderRadioItem}
+          />
+        </>
+      )
+    }
+
+    return (
+      <RadioList
+        defaultValue={selectedAccessMethod}
+        onChange={(methodName) => this.handleAccessMethodSelection(methodName)}
+        radioList={radioList}
+        renderRadio={this.renderRadioItem}
+      />
+    )
+  }
+
   render() {
     const {
       accessMethods,
@@ -256,6 +312,8 @@ export class AccessMethod extends Component {
       OPeNDAP: [],
       Harmony: []
     }
+
+    let hasHarmony = false
 
     Object.keys(accessMethods).forEach((methodKey) => {
       const { [methodKey]: accessMethod = {} } = accessMethods
@@ -314,6 +372,7 @@ export class AccessMethod extends Component {
           subtitle = 'Harmony'
           description = 'Select options like variables, transformations, and output formats for in-region cloud access.'
           details = `The requested data will be processed using the ${name} service and stored in the cloud for analysis.`
+          hasHarmony = true
           break
         }
 
@@ -337,7 +396,6 @@ export class AccessMethod extends Component {
     })
 
     const radioList = [
-      ...accessMethodsByType.Harmony,
       ...accessMethodsByType.OPeNDAP,
       ...accessMethodsByType.ESI,
       ...accessMethodsByType['ECHO ORDERS'],
@@ -483,7 +541,7 @@ export class AccessMethod extends Component {
         >
           <div className="access-method__radio-list">
             {
-              radioList.length === 0
+              radioList.length === 0 && hasHarmony === false
                 ? (
                   <Alert
                     variant="warning"
@@ -491,14 +549,7 @@ export class AccessMethod extends Component {
                     No access methods exist for this collection.
                   </Alert>
                 )
-                : (
-                  <RadioList
-                    defaultValue={selectedAccessMethod}
-                    onChange={(methodName) => this.handleAccessMethodSelection(methodName)}
-                    radioList={radioList}
-                    renderRadio={this.renderRadioItem}
-                  />
-                )
+                : this.renderStep1(hasHarmony, radioList, collectionId, selectedAccessMethod)
             }
           </div>
         </ProjectPanelSection>
