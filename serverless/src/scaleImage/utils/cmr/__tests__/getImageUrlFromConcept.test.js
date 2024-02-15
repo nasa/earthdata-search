@@ -86,7 +86,14 @@ describe('getImageUrlFromConcept', () => {
     })
 
     describe('if the imageSrc has been provided in the request', () => {
-      test('Pass that `imageSrc` instead', async () => {
+      test('return the `imageSrc` instead', async () => {
+        nock(/example/)
+          .get(/search\/concepts/)
+          .reply(200, {
+            id: 'G100000-EDSC',
+            links: validLinkArray
+          })
+
         const imageSrc = 'https://example-image-src.com'
         const imageUrl = await getImageUrlFromConcept('G100000-EDSC', 'granules', false, imageSrc)
         expect(imageUrl).toEqual(imageSrc)

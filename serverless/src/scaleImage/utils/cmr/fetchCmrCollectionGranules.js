@@ -1,49 +1,33 @@
-import fetch from 'node-fetch'
+import axios from 'axios'
+import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
+import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Given a concept id, fetch the metadata for granules
  * @param {String} conceptId A collection concept id to return granules for
- * @param {String} cmrEndpoint The collection or granule search URL
  * @returns {JSON} the collection associated with the supplied id
  */
 export const fetchCmrCollectionGranules = async (conceptId) => {
-  const headers = {}
+  const earthdataEnvironment = deployedEnvironment()
 
-  const response = await fetch(`${process.env.cmrRootUrl}/search/granules.json?collection_concept_id=${conceptId}`, {
-    method: 'GET',
-    headers
-  })
-    .then((res) => res.json())
-    .then((json) => {
-      const {
-        errors,
-        feed
-      } = json
-      console.log('🚀 ~ file: fetchCmrCollectionGranules.js:22 ~ .then ~ errors:', errors)
+  const { cmrHost } = getEarthdataConfig(earthdataEnvironment)
 
-      if (errors) {
-        console.log('🚀 ~ file: fetchCmrCollectionGranules.js:24 ~ .then ~ errors:', errors)
-        // On failure throw an exception
-        const [firstError] = errors
-
-        throw new Error(firstError)
-      }
-
-      // Return the first page of granules as an array
-      const { entry } = feed
-
-      return entry
+  const granuleLocation = `${cmrHost}/search/granules.json?collection_concept_id=${conceptId}`
+  try {
+    const response = await axios({
+      url: granuleLocation,
+      method: 'get'
     })
-    .catch((error) => {
-      console.log('🚀 ~ file: fetchCmrCollectionGranules.js:36 ~ fetchCmrCollectionGranules ~ error:', error)
-      console.log(error.toString())
+    const { data } = response
+    const { feed } = data
+    const { entry } = feed
 
-      return {
-        errors: [
-          error.toString()
-        ]
-      }
-    })
+    return entry
+  } catch (error) {
+    const { response } = error
+    const { data: errorMessage } = response
+    console.log(`Error fetching granules from cmr to set a thumbnail ${errorMessage}`)
 
-  return response
+    return errorMessage
+  }
 }

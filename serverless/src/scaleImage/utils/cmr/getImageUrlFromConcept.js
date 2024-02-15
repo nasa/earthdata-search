@@ -34,15 +34,18 @@ export const getImageUrlFromConcept = async (
     // If no browse image was found in the collection metadata and the user wants to fallback to granule metadata
     if (collectionBrowseImage == null && cascadeConcepts === 'true') {
       const collectionGranuleMetadata = await fetchCmrCollectionGranules(conceptId)
-      // TODO this is where we may need to select to fulfill all the browse-scaler functionality
-      // TODO: Break from this loop as soon as an image url is found
-      collectionGranuleMetadata.forEach((granuleMetadata) => {
-        const granuleBrowseImageUrl = getBrowseImageUrlFromConcept(granuleMetadata)
 
-        // If a browse image url was found on the granule, set it to the collection browse image
+      collectionGranuleMetadata.some((granuleMetadata) => {
+        // If we find a browsable image break out of loop and set it equal to the collection image
+        const granuleBrowseImageUrl = getBrowseImageUrlFromConcept(granuleMetadata)
+        collectionBrowseImage = granuleBrowseImageUrl
+
+        // TODO remove me useful for testing
         if (granuleBrowseImageUrl) {
-          collectionBrowseImage = granuleBrowseImageUrl
+          console.log('🚀We have defaulted to using the granule image for the thumbnail')
         }
+
+        return granuleBrowseImageUrl
       })
     }
 

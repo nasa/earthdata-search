@@ -15,26 +15,22 @@ export const fetchCmrConcept = async (conceptId) => {
   const collectionUrl = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/concepts/${conceptId}.json`
 
   try {
-    const response = await axios.get(collectionUrl, {
+    const response = await axios({
+      url: collectionUrl,
+      method: 'get',
       headers
     })
 
     const {
-      data: responseData,
-      errors
+      data: responseData
     } = response
-
-    if (errors) {
-      // On failure throw an exception
-      const [firstError] = errors
-
-      throw new Error(firstError)
-    }
 
     return responseData
   } catch (error) {
-    console.log(`Error fetching concept ${conceptId} - ${error.toString()}`)
+    const { response } = error
+    const { data: errorMessage } = response
+    console.log(`Error fetching concept ${conceptId} - ${errorMessage}`)
 
-    return error.toString()
+    return errorMessage
   }
 }
