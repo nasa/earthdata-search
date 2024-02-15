@@ -51,7 +51,7 @@ describe('fetchCmrConcept', () => {
 
       // Axios errors become wrapped
       expect(response).toEqual(
-        'AxiosError: Request failed with status code 404'
+        { errors: ['C100000-EDSC not found.'] }
       )
     })
 
@@ -67,7 +67,7 @@ describe('fetchCmrConcept', () => {
       const response = await fetchCmrConcept('C100000-EDSC')
 
       expect(response).toEqual(
-        'AxiosError: Request failed with status code 500'
+        { errors: ['Unknown error.'] }
       )
     })
   })
