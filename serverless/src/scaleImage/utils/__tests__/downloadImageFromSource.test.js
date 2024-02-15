@@ -14,7 +14,7 @@ describe('downloadImageFromSource', () => {
     expect(response).toEqual(responseImage)
   })
 
-  test('returns image buffer when source responds successfully', async () => {
+  test('returns undefined when source responds unsuccessfully', async () => {
     const responseImage = Buffer.from('SGVsbG8gV29ybGQ=', 'base64')
     nock(/example/)
       .get(/jpg/)

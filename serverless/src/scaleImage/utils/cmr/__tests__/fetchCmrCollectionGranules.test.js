@@ -1,16 +1,17 @@
 import nock from 'nock'
 
+import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
+import * as config from '../../../../../../sharedUtils/config'
 import { fetchCmrCollectionGranules } from '../fetchCmrCollectionGranules'
 
 describe('fetchCmrCollectionGranules', () => {
   const OLD_ENV = process.env
 
   beforeEach(() => {
-    process.env = { ...OLD_ENV }
+    jest.clearAllMocks()
+    jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 
-    delete process.env.NODE_ENV
-
-    process.env.cmrRootUrl = 'http://example.com'
+    jest.spyOn(config, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://example.com' }))
   })
 
   afterEach(() => {
@@ -49,7 +50,7 @@ describe('fetchCmrCollectionGranules', () => {
 
       expect(response).toEqual({
         errors: [
-          'Error: C100000-EDSC not found.'
+          'C100000-EDSC not found.'
         ]
       })
     })
@@ -67,7 +68,7 @@ describe('fetchCmrCollectionGranules', () => {
 
       expect(response).toEqual({
         errors: [
-          'Error: Unknown error.'
+          'Unknown error.'
         ]
       })
     })

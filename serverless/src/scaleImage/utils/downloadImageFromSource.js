@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+import axios from 'axios'
 
 /**
  * Fetches images from a given url and returns them as a buffer
@@ -6,27 +6,20 @@ import fetch from 'node-fetch'
  * @returns {Buffer<Image>} The image contained in a buffer
  */
 export const downloadImageFromSource = async (imageUrl) => {
-  console.log(`🚀 Attempting to download ${imageUrl}`)
-
-  // Node 18 `fetch` is enabled by default
-  return fetch(imageUrl)
-    .then(async (response) => {
-      if (response.ok) {
-        console.log('request was 200✅')
-        const content = await response.arrayBuffer()
-        const saveBuffer = Buffer.from(content)
-
-        return saveBuffer
-      }
-
-      const { status, statusText } = response
-
-      throw new Error(`Failed to download ${imageUrl} [${status}]: ${statusText}`)
+  try {
+    const response = await axios({
+      url: imageUrl,
+      method: 'get',
+      responseType: 'arraybuffer'
     })
-    .then(
-      (response) => response,
-      (error) => {
-        console.log(error.toString())
-      }
-    )
+    const { data } = response
+
+    return data
+  } catch (error) {
+    const { response } = error
+    const { data: errorMessage } = response
+    console.log(`Error fetching granules from cmr to set a thumbnail ${errorMessage}`)
+
+    return undefined
+  }
 }
