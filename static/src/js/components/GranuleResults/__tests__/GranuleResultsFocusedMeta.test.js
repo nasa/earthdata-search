@@ -15,7 +15,6 @@ describe('GranuleResultsFocusedMeta component', () => {
     test('should not render', () => {
       render(
         <GranuleResultsFocusedMeta
-          earthdataEnvironment="prod"
           focusedGranuleMetadata={
             {
               browseFlag: false,
@@ -36,7 +35,6 @@ describe('GranuleResultsFocusedMeta component', () => {
     test('should not render', () => {
       render(
         <GranuleResultsFocusedMeta
-          earthdataEnvironment="prod"
           focusedGranuleMetadata={
             {
               browseFlag: false,
@@ -61,7 +59,6 @@ describe('GranuleResultsFocusedMeta component', () => {
     test('should render', () => {
       render(
         <GranuleResultsFocusedMeta
-          earthdataEnvironment="prod"
           focusedGranuleMetadata={
             {
               browseFlag: true,
@@ -87,7 +84,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
         render(
           <GranuleResultsFocusedMeta
-            earthdataEnvironment="prod"
             focusedGranuleMetadata={
               {
                 browseFlag: true,
@@ -116,7 +112,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
         render(
           <GranuleResultsFocusedMeta
-            earthdataEnvironment="prod"
             focusedGranuleMetadata={
               {
                 browseFlag: true,
@@ -150,7 +145,6 @@ describe('GranuleResultsFocusedMeta component', () => {
       test('should render the navigation', () => {
         render(
           <GranuleResultsFocusedMeta
-            earthdataEnvironment="prod"
             focusedGranuleMetadata={
               {
                 browseFlag: true,
@@ -190,7 +184,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -231,7 +224,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -276,7 +268,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -318,7 +309,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -362,7 +352,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -412,7 +401,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -451,7 +439,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -489,7 +476,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -532,7 +518,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             render(
               <GranuleResultsFocusedMeta
-                earthdataEnvironment="prod"
                 focusedGranuleMetadata={
                   {
                     browseFlag: true,
@@ -574,7 +559,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             render(
               <GranuleResultsFocusedMeta
-                earthdataEnvironment="prod"
                 focusedGranuleMetadata={
                   {
                     browseFlag: true,
@@ -621,7 +605,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             render(
               <GranuleResultsFocusedMeta
-                earthdataEnvironment="prod"
                 focusedGranuleMetadata={
                   {
                     browseFlag: true,
@@ -670,7 +653,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             render(
               <GranuleResultsFocusedMeta
-                earthdataEnvironment="prod"
                 focusedGranuleMetadata={
                   {
                     browseFlag: true,
@@ -725,7 +707,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             render(
               <GranuleResultsFocusedMeta
-                earthdataEnvironment="prod"
                 focusedGranuleMetadata={
                   {
                     browseFlag: true,
@@ -769,7 +750,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             render(
               <GranuleResultsFocusedMeta
-                earthdataEnvironment="prod"
                 focusedGranuleMetadata={
                   {
                     browseFlag: true,

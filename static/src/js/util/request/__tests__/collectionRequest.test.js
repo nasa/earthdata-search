@@ -265,7 +265,7 @@ describe('CollectionRequest#transformResponse', () => {
             tags: {
               'edsc.extra.serverless.gibs': 'stuff here'
             },
-            thumbnail: 'https://cmr.earthdata.nasa.gov/browse-scaler/browse_images/datasets/collectionId?h=85&w=85'
+            thumbnail: 'http://localhost:3000/scale/collections/collectionId'
           }]
         }
       }

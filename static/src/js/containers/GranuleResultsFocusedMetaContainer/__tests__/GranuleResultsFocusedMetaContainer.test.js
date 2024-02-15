@@ -28,7 +28,6 @@ describe('GranuleResultsFocusedMetaContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(GranuleResultsFocusedMeta).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleResultsFocusedMeta).props().earthdataEnvironment).toEqual('prod')
     expect(enzymeWrapper.find(GranuleResultsFocusedMeta).props().focusedGranuleId).toEqual('1234-TEST')
     expect(enzymeWrapper.find(GranuleResultsFocusedMeta).props().focusedGranuleMetadata).toEqual({ test: 'test' })
   })
