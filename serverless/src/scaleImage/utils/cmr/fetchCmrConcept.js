@@ -12,11 +12,11 @@ export const fetchCmrConcept = async (conceptId) => {
 
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
-  const collectionUrl = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/concepts/${conceptId}.json`
+  const conceptUrl = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/concepts/${conceptId}.json`
 
   try {
     const response = await axios({
-      url: collectionUrl,
+      url: conceptUrl,
       method: 'get',
       headers
     })

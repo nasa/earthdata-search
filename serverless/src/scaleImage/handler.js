@@ -9,9 +9,7 @@ import { getImageFromCache } from './utils/cache/getImageFromCache'
 
 import { getImageUrlFromConcept } from './utils/cmr/getImageUrlFromConcept'
 
-import {
-  buildAndResizeUnavailableImageBuffer
-} from './utils/sharp/buildAndResizeUnavailableImageBuffer'
+import { buildUnavailableImageBuffer } from './utils/sharp/buildUnavailableImageBuffer'
 
 import { resizeImage } from './utils/sharp/resizeImage'
 
@@ -90,7 +88,7 @@ const scaleImage = async (event) => {
 
         if (returnDefault === 'true') {
           // If there is no image url found and returnDefault is true, return a 200 with the unavailable image
-          thumbnail = await buildAndResizeUnavailableImageBuffer(height, width)
+          thumbnail = await buildUnavailableImageBuffer(height, width)
           statusCode = 200
         }
 
@@ -119,7 +117,7 @@ const scaleImage = async (event) => {
     console.log(error.toString())
 
     if (returnDefault === 'true') {
-      thumbnail = await buildAndResizeUnavailableImageBuffer(height, width)
+      thumbnail = await buildUnavailableImageBuffer(height, width)
     }
 
     return buildResponse(thumbnail, 500)

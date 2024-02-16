@@ -9,7 +9,6 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    earthdataEnvironment: 'prod',
     focusedGranuleMetadata: { test: 'test' },
     focusedGranuleId: '1234-TEST',
     ...overrideProps
