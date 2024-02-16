@@ -10,7 +10,7 @@ import * as getImageFromCache from '../utils/cache/getImageFromCache'
 import * as getApplicationConfig from '../../../../sharedUtils/config'
 import * as getImageUrlFromConcept from '../utils/cmr/getImageUrlFromConcept'
 
-import * as buildAndResizeUnavailableImageBuffer from '../utils/sharp/buildAndResizeUnavailableImageBuffer'
+import * as buildUnavailableImageBuffer from '../utils/sharp/buildUnavailableImageBuffer'
 import * as resizeImage from '../utils/sharp/resizeImage'
 
 beforeEach(() => {
@@ -144,7 +144,7 @@ describe('scaleImage', () => {
 
               const responseBuffer = Buffer.from('test-image-contents')
 
-              const buildAndResizeUnavailableImageBufferMock = jest.spyOn(buildAndResizeUnavailableImageBuffer, 'buildAndResizeUnavailableImageBuffer')
+              const buildUnavailableImageBufferMock = jest.spyOn(buildUnavailableImageBuffer, 'buildUnavailableImageBuffer')
                 .mockImplementationOnce(() => responseBuffer)
 
               const buildResponseMock = jest.spyOn(buildResponse, 'buildResponse')
@@ -168,13 +168,13 @@ describe('scaleImage', () => {
 
               expect(getImageFromCacheMock).toBeCalledWith('C100000-EDSC-h-w')
               expect(getImageUrlFromConceptMock).toBeCalledWith('C100000-EDSC', 'datasets', 'false', undefined)
-              expect(buildAndResizeUnavailableImageBufferMock).toBeCalledWith(undefined, undefined)
+              expect(buildUnavailableImageBufferMock).toBeCalledWith(undefined, undefined)
               expect(buildResponseMock).toBeCalledWith(responseBuffer, 200)
             })
           })
 
           describe('when return_default is false', () => {
-            test('does not call buildAndResizeUnavailableImageBuffer and returns an empty Buffer', async () => {
+            test('does not call buildUnavailableImageBuffer and returns an empty Buffer', async () => {
               const generateCacheKeyMock = jest.spyOn(generateCacheKey, 'generateCacheKey')
                 .mockImplementationOnce(() => 'C100000-EDSC-h-w')
                 .mockImplementationOnce(() => 'C100000-EDSC-h-w')
@@ -186,7 +186,7 @@ describe('scaleImage', () => {
               const getImageUrlFromConceptMock = jest.spyOn(getImageUrlFromConcept, 'getImageUrlFromConcept')
                 .mockImplementationOnce(() => null)
 
-              const buildAndResizeUnavailableImageBufferMock = jest.spyOn(buildAndResizeUnavailableImageBuffer, 'buildAndResizeUnavailableImageBuffer')
+              const buildUnavailableImageBufferMock = jest.spyOn(buildUnavailableImageBuffer, 'buildUnavailableImageBuffer')
 
               const buildResponseMock = jest.spyOn(buildResponse, 'buildResponse')
 
@@ -211,7 +211,7 @@ describe('scaleImage', () => {
               expect(getImageFromCacheMock).toBeCalledWith('C100000-EDSC-h-w')
               expect(getImageUrlFromConceptMock).toBeCalledWith('C100000-EDSC', 'datasets', 'false', undefined)
 
-              expect(buildAndResizeUnavailableImageBufferMock).toBeCalledTimes(0)
+              expect(buildUnavailableImageBufferMock).toBeCalledTimes(0)
 
               expect(buildResponseMock).toBeCalledWith(Buffer.from(''), 404)
             })
@@ -346,7 +346,7 @@ describe('scaleImage', () => {
 
             const responseBuffer = Buffer.from('test-image-contents')
 
-            const buildAndResizeUnavailableImageBufferMock = jest.spyOn(buildAndResizeUnavailableImageBuffer, 'buildAndResizeUnavailableImageBuffer')
+            const buildUnavailableImageBufferMock = jest.spyOn(buildUnavailableImageBuffer, 'buildUnavailableImageBuffer')
               .mockImplementationOnce(() => responseBuffer)
 
             const buildResponseMock = jest.spyOn(buildResponse, 'buildResponse')
@@ -368,13 +368,13 @@ describe('scaleImage', () => {
 
             expect(getImageFromCacheMock).toBeCalledWith('G100000-EDSC-h-w')
             expect(getImageUrlFromConceptMock).toBeCalledWith('G100000-EDSC', 'granules', 'true', undefined)
-            expect(buildAndResizeUnavailableImageBufferMock).toBeCalledWith(undefined, undefined)
+            expect(buildUnavailableImageBufferMock).toBeCalledWith(undefined, undefined)
             expect(buildResponseMock).toBeCalledWith(responseBuffer, 200)
           })
         })
 
         describe('when return_default is false', () => {
-          test('does not call buildAndResizeUnavailableImageBuffer and returns an empty Buffer', async () => {
+          test('does not call buildUnavailableImageBuffer and returns an empty Buffer', async () => {
             const generateCacheKeyMock = jest.spyOn(generateCacheKey, 'generateCacheKey')
               .mockImplementationOnce(() => 'G100000-EDSC-h-w')
               .mockImplementationOnce(() => 'G100000-EDSC-h-w')
@@ -386,7 +386,7 @@ describe('scaleImage', () => {
             const getImageUrlFromConceptMock = jest.spyOn(getImageUrlFromConcept, 'getImageUrlFromConcept')
               .mockImplementationOnce(() => null)
 
-            const buildAndResizeUnavailableImageBufferMock = jest.spyOn(buildAndResizeUnavailableImageBuffer, 'buildAndResizeUnavailableImageBuffer')
+            const buildUnavailableImageBufferMock = jest.spyOn(buildUnavailableImageBuffer, 'buildUnavailableImageBuffer')
 
             const buildResponseMock = jest.spyOn(buildResponse, 'buildResponse')
 
@@ -410,7 +410,7 @@ describe('scaleImage', () => {
             expect(getImageFromCacheMock).toBeCalledWith('G100000-EDSC-h-w')
             expect(getImageUrlFromConceptMock).toBeCalledWith('G100000-EDSC', 'granules', 'true', undefined)
 
-            expect(buildAndResizeUnavailableImageBufferMock).toBeCalledTimes(0)
+            expect(buildUnavailableImageBufferMock).toBeCalledTimes(0)
 
             expect(buildResponseMock).toBeCalledWith(Buffer.from(''), 404)
           })
@@ -426,7 +426,7 @@ describe('scaleImage', () => {
 
       const responseBuffer = Buffer.from('test-image-contents')
 
-      const buildAndResizeUnavailableImageBufferMock = jest.spyOn(buildAndResizeUnavailableImageBuffer, 'buildAndResizeUnavailableImageBuffer')
+      const buildUnavailableImageBufferMock = jest.spyOn(buildUnavailableImageBuffer, 'buildUnavailableImageBuffer')
         .mockImplementationOnce(() => responseBuffer)
 
       const buildResponseMock = jest.spyOn(buildResponse, 'buildResponse')
@@ -445,7 +445,7 @@ describe('scaleImage', () => {
         width: undefined
       })
 
-      expect(buildAndResizeUnavailableImageBufferMock).toBeCalledWith(undefined, undefined)
+      expect(buildUnavailableImageBufferMock).toBeCalledWith(undefined, undefined)
       expect(buildResponseMock).toBeCalledWith(responseBuffer, 500)
     })
 
