@@ -260,6 +260,36 @@ describe('AccessMethod component', () => {
     })
   })
 
+  describe('when selectedAccessMethod has selectedVariables', () => {
+    test('displays the number of selected variables', async () => {
+      const selectedVariables = ['VAR123', 'VAR456']
+      setup({
+        accessMethods: {
+          opendap: {
+            isValid: true,
+            type: 'OPeNDAP',
+            variables: {
+              VAR123: {
+                meta: {},
+                umm: {}
+              },
+              VAR456: {
+                meta: {},
+                umm: {}
+              }
+            },
+            selectedVariables,
+            supportsVariableSubsetting: true
+          }
+        },
+        selectedAccessMethod: 'opendap'
+      })
+
+      // Check if the text indicating the number of selected variables is present
+      expect(screen.getByText(`${selectedVariables.length} variables selected`)).toBeInTheDocument()
+    })
+  })
+
   describe('when the selected access method has an echoform', () => {
     test('lazy loads the echo-forms component and provides the correct fallback', async () => {
       const collectionId = 'collectionId'
