@@ -25,15 +25,15 @@ describe('fetchCmrCollectionGranules', () => {
         .reply(200, {
           feed: {
             entry: [{
-              id: 'C100000-EDSC'
+              id: 'G100000-EDSC'
             }]
           }
         })
 
-      const response = await fetchCmrCollectionGranules('C100000-EDSC')
+      const response = await fetchCmrCollectionGranules('G100000-EDSC')
 
       expect(response).toEqual([{
-        id: 'C100000-EDSC'
+        id: 'G100000-EDSC'
       }])
     })
 
@@ -42,15 +42,15 @@ describe('fetchCmrCollectionGranules', () => {
         .get(/search\/granules/)
         .reply(404, {
           errors: [
-            'C100000-EDSC not found.'
+            'G100000-EDSC not found.'
           ]
         })
 
-      const response = await fetchCmrCollectionGranules('C100000-EDSC')
+      const response = await fetchCmrCollectionGranules('G100000-EDSC')
 
       expect(response).toEqual({
         errors: [
-          'C100000-EDSC not found.'
+          'G100000-EDSC not found.'
         ]
       })
     })
@@ -64,7 +64,7 @@ describe('fetchCmrCollectionGranules', () => {
           ]
         })
 
-      const response = await fetchCmrCollectionGranules('C100000-EDSC')
+      const response = await fetchCmrCollectionGranules('G100000-EDSC')
 
       expect(response).toEqual({
         errors: [

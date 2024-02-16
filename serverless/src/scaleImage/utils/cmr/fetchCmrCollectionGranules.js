@@ -4,15 +4,15 @@ import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Given a concept id, fetch the metadata for granules
- * @param {String} conceptId A collection concept id to return granules for
+ * @param {String} collectionConceptId A collection concept id to return granules for
  * @returns {JSON} the collection associated with the supplied id
  */
-export const fetchCmrCollectionGranules = async (conceptId) => {
+export const fetchCmrCollectionGranules = async (collectionConceptId) => {
   const earthdataEnvironment = deployedEnvironment()
 
   const { cmrHost } = getEarthdataConfig(earthdataEnvironment)
 
-  const granuleLocation = `${cmrHost}/search/granules.json?collection_concept_id=${conceptId}`
+  const granuleLocation = `${cmrHost}/search/granules.json?collection_concept_id=${collectionConceptId}`
   try {
     const response = await axios({
       url: granuleLocation,

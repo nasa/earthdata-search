@@ -10,4 +10,19 @@ describe('buildUnavailableImageBuffer', () => {
     expect(sharp).toHaveBeenCalledWith(imageUnavailablePath)
     expect(sharp().toFormat).toHaveBeenCalledWith('png')
   })
+
+  test('retrieves, resizes and formats the unavailable image', async () => {
+    buildUnavailableImageBuffer(200, 200)
+
+    expect(sharp).toHaveBeenCalledWith(imageUnavailablePath)
+    expect(sharp().resize).toHaveBeenCalledWith(200, 200, { fit: 'inside' })
+    expect(sharp().toFormat).toHaveBeenCalledWith('png')
+  })
+
+  test('retrieves, resizes and formats the unavailable image', async () => {
+    buildUnavailableImageBuffer()
+
+    expect(sharp).toHaveBeenCalledWith(imageUnavailablePath)
+    expect(sharp().toFormat).toHaveBeenCalledWith('png')
+  })
 })
