@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { determineEarthdataEnvironment } from '../../../util/determineEarthdataEnvironment'
+import { getSystemToken } from '../../../util/urs/getSystemToken'
 
 /**
  * Retrieve the CMR metadata for the provided concept id
@@ -9,11 +10,14 @@ import { determineEarthdataEnvironment } from '../../../util/determineEarthdataE
  */
 export const fetchCmrConcept = async (conceptId) => {
   const headers = {}
+  const earthdataEnvironment = determineEarthdataEnvironment()
 
-  const earthdataEnvironment = determineEarthdataEnvironment(headers)
+  if (!process.env.IS_OFFLINE) {
+    const cmrToken = await getSystemToken()
+    headers.Authorization = `${cmrToken}`
+  }
 
   const conceptUrl = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/concepts/${conceptId}.json`
-
   try {
     const response = await axios({
       url: conceptUrl,
@@ -29,7 +33,7 @@ export const fetchCmrConcept = async (conceptId) => {
   } catch (error) {
     const { response } = error
     const { data: errorMessage } = response
-    console.log(`Error fetching concept ${conceptId} - ${errorMessage}`)
+    console.log(`Error fetching concept ${conceptId} - ${JSON.stringify(errorMessage)}`)
 
     return errorMessage
   }

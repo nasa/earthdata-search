@@ -299,8 +299,7 @@ const GranuleResultsFocusedMeta = ({
                       let preloadImg = new Image()
                       preloadImg.src = href
                       preloadImg.addEventListener('load', () => { preloadImg = undefined })
-                      // TODO technically we can have duplicate images on the granule metadata so we would get a react warning since hte keys
-                      // for two components would be the same
+
                       const imgSrc1x = `${getEnvironmentConfig().apiHost}/scale/granules/${focusedGranuleId}?h=175&w=175&imageSrc=${href}`
                       const imgSrc2x = `${getEnvironmentConfig().apiHost}/scale/granules/${focusedGranuleId}?h=350&w=350&imageSrc=${href}`
 
