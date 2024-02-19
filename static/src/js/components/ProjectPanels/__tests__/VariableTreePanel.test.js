@@ -110,7 +110,6 @@ describe('VariableTreePanel', () => {
       }
     })
 
-    expect(enzymeWrapper.exists()).toBeTruthy()
     expect(enzymeWrapper.find('.variable-tree-panel__no-variables').exists()).toBeTruthy()
     expect(enzymeWrapper.find('.variable-tree-panel__no-variables').text()).toBe('No variables available for selected access method')
   })

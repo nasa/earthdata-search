@@ -236,31 +236,7 @@ describe('AccessMethod component', () => {
       expect(screen.getByText(/variables selected/)).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'Edit Variables' })).toBeInTheDocument()
     })
-  })
 
-  describe('when the selected access method has no variables', () => {
-    test('displays correct elements in variables window', () => {
-      const accessMethodsWithoutVariables = {
-        opendap: {
-          isValid: true,
-          type: 'OPeNDAP',
-          variables: {},
-          supportsVariableSubsetting: true
-        }
-      }
-
-      setup({
-        accessMethods: accessMethodsWithoutVariables,
-        selectedAccessMethod: 'opendap'
-      })
-
-      expect(screen.getByText('This service has no associated variables.')).toBeInTheDocument()
-      expect(screen.queryByText(/variables selected/)).not.toBeInTheDocument()
-      expect(screen.queryByRole('button', { name: 'Edit Variables' })).not.toBeInTheDocument()
-    })
-  })
-
-  describe('when selectedAccessMethod has selectedVariables', () => {
     test('displays the number of selected variables', async () => {
       const selectedVariables = ['VAR123', 'VAR456']
       setup({
@@ -287,6 +263,28 @@ describe('AccessMethod component', () => {
 
       // Check if the text indicating the number of selected variables is present
       expect(screen.getByText(`${selectedVariables.length} variables selected`)).toBeInTheDocument()
+    })
+  })
+
+  describe('when the selected access method has no variables', () => {
+    test('displays correct elements in variables window', () => {
+      const accessMethodsWithoutVariables = {
+        opendap: {
+          isValid: true,
+          type: 'OPeNDAP',
+          variables: {},
+          supportsVariableSubsetting: true
+        }
+      }
+
+      setup({
+        accessMethods: accessMethodsWithoutVariables,
+        selectedAccessMethod: 'opendap'
+      })
+
+      expect(screen.getByText('This service has no associated variables.')).toBeInTheDocument()
+      expect(screen.queryByText(/variables selected/)).not.toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: 'Edit Variables' })).not.toBeInTheDocument()
     })
   })
 

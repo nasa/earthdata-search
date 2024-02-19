@@ -87,13 +87,13 @@ export const VariableTreePanel = (props) => {
   if (keywordMappings.length && !hierarchyMappings.length) items = keywordMappings
   if (!keywordMappings.length && hierarchyMappings.length) items = hierarchyMappings
 
-  const isItemsEmpty = items.length === 0
+  const hasVariableItems = items.length
 
   return (
     <ProjectPanelSection heading="Variable Selection">
       {keywordMappings.length > 0 && hierarchyMappings.length > 0 && browseBy}
       {
-        isItemsEmpty ? (
+        !hasVariableItems ? (
           <div className="variable-tree-panel__no-variables">No variables available for selected access method</div>
         ) : (
           <Tree
