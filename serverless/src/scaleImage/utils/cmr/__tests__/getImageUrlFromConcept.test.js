@@ -1,6 +1,7 @@
 import nock from 'nock'
 
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
+import * as getSystemToken from '../../../../util/urs/getSystemToken'
 import { getImageUrlFromConcept } from '../getImageUrlFromConcept'
 
 const invalidLinkArray = [{
@@ -48,15 +49,17 @@ describe('getImageUrlFromConcept', () => {
     delete process.env.NODE_ENV
 
     process.env.cmrRootUrl = 'http://example.com'
+
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      cmrHost: 'http://example.com'
+    }))
+
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
   })
 
   afterEach(() => {
     process.env = OLD_ENV
   })
-
-  jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
-    cmrHost: 'http://example.com'
-  }))
 
   describe('granules', () => {
     test('when a valid link is found', async () => {

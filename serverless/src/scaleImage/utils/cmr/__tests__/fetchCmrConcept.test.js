@@ -2,6 +2,7 @@ import nock from 'nock'
 
 import { fetchCmrConcept } from '../fetchCmrConcept'
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
+import * as getSystemToken from '../../../../util/urs/getSystemToken'
 
 describe('fetchCmrConcept', () => {
   const OLD_ENV = process.env
@@ -13,15 +14,17 @@ describe('fetchCmrConcept', () => {
 
     process.env.cmrRootUrl = 'http://example.com'
     process.env.cmrHost = 'http://example.com'
+
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+      cmrHost: 'http://example.com'
+    }))
+
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
   })
 
   afterEach(() => {
     process.env = OLD_ENV
   })
-
-  jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
-    cmrHost: 'http://example.com'
-  }))
 
   describe('fetchCmrConcept', () => {
     test('returns collection', async () => {
