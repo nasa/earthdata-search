@@ -149,7 +149,7 @@ The [serverless framework](https://serverless.com/framework/docs/providers/aws/)
 
 - Scale images
 
-Scaling thumbnail images utilizes a redis cache in the deployed env locally there is not a way to run this however the functionality for scaling images still works the results just won't be cached. If you need the cache on then you'll need to install redis locally. The easiest way to do this would be by running it in a docker container such as by running `docker container run -p 1521:1521 redis:bullseye-7`. You can also use a visualizer such as `RedisInsight` to more easily inspect the cache.
+Scaling thumbnail images utilizes a redis cache in the deployed environment. If to utilize this cache locally you'll need to install redis on the dev machine. The easiest way to do this would be by running it in a docker container such as by running `docker container run -p 1521:1521 redis:bullseye-7`. You can also use a visualizer such as `RedisInsight` to more easily inspect the cache. You will also need to set the environment variable `USE_CACHE` locally to `true` after you've started up the cache service.
 
 #### Running API Gateway and Lambda Locally
 

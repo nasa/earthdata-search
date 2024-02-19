@@ -27,7 +27,6 @@ export const getImageUrlFromConcept = async (
     return getBrowseImageUrlFromConcept(conceptMetadata)
   }
 
-  // TODO are we still going to support things called datasets?
   // Support previously used names for collections
   if (['collections', 'datasets'].includes(conceptType)) {
     let collectionBrowseImage = await getBrowseImageUrlFromConcept(conceptMetadata)
@@ -39,11 +38,6 @@ export const getImageUrlFromConcept = async (
         // If we find a browsable image break out of loop and set it equal to the collection image
         const granuleBrowseImageUrl = getBrowseImageUrlFromConcept(granuleMetadata)
         collectionBrowseImage = granuleBrowseImageUrl
-
-        // TODO remove me useful for testing
-        if (granuleBrowseImageUrl) {
-          console.log('🚀We have defaulted to using the granule image for the thumbnail')
-        }
 
         return granuleBrowseImageUrl
       })

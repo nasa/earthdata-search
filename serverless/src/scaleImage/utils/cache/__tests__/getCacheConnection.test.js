@@ -12,7 +12,6 @@ describe('getCacheConnection', () => {
 
     process.env.cacheHost = 'example.com'
     process.env.cachePort = '1234'
-    // Todo this env var needs someWork
     process.env.IS_OFFLINE = false
   })
 

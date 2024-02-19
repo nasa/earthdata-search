@@ -2,6 +2,7 @@ import nock from 'nock'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 import * as config from '../../../../../../sharedUtils/config'
+import * as getSystemToken from '../../../../util/urs/getSystemToken'
 import { fetchCmrCollectionGranules } from '../fetchCmrCollectionGranules'
 
 describe('fetchCmrCollectionGranules', () => {
@@ -10,8 +11,8 @@ describe('fetchCmrCollectionGranules', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
-
     jest.spyOn(config, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://example.com' }))
+    jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
   })
 
   afterEach(() => {
