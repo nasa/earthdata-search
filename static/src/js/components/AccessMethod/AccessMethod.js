@@ -670,7 +670,7 @@ export class AccessMethod extends Component {
                       {
                         !hasVariables ? (
                           <p className="access-method__section-status">
-                            This service has no associated variables.
+                            No variables available for selected item.
                           </p>
                         ) : (
                           <>
