@@ -10,12 +10,12 @@ export const getBrowseImageUrlFromConcept = (concept) => {
   const { id, links = [] } = concept
 
   // Select the first browse image in the event there are more than one
-  // Todo since granules could return any of these we could refine this to do the parsing here
   const [imgUrl] = links.filter((link) => imgRegex.test(link.rel))
 
   // If no image url was found return null
-  // todo make this catch better
   if (imgUrl == null) {
+    console.log(`Did not find imgUrl for a browseable image on concept: ${id}`)
+
     return null
   }
 

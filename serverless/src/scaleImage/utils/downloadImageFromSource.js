@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { requestTimeout } from '../../util/requestTimeout'
 
 /**
  * Fetches images from a given url and returns them as a buffer
@@ -7,10 +8,12 @@ import axios from 'axios'
  */
 export const downloadImageFromSource = async (imageUrl) => {
   try {
+    // Retrieve image data from external url and ensure timeout is less than lambda timeout
     const response = await axios({
       url: imageUrl,
       method: 'get',
-      responseType: 'arraybuffer'
+      responseType: 'arraybuffer',
+      timeout: requestTimeout()
     })
     const { data } = response
 
