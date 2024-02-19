@@ -71,7 +71,7 @@ const scaleImage = async (event) => {
     let imageBuffer
 
     if (originalImageFromCache) {
-      // If the original image is cached, don't download it from the imageUrl
+      // If the original image is cached, don't download it from the imageUrl, instead we just resize it
       imageBuffer = originalImageFromCache
     } else {
       // Attempt to retrieve the url of a browse image for the provided concept and type
@@ -95,7 +95,6 @@ const scaleImage = async (event) => {
         return buildResponse(thumbnail, statusCode)
       }
 
-      // TODO where do we set this externalTimeoutDelta we should set it to something
       imageBuffer = await downloadImageFromSource(imageUrl)
 
       console.log(`Successfully downloaded ${imageUrl}`)
