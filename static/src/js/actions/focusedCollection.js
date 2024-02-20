@@ -80,9 +80,11 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
+  const varLimit = 2000
+
   const graphQuery = `
     query GetCollection(
-      $params: CollectionInput, $subcriptionParams: SubscriptionsInput
+      $params: CollectionInput, $subcriptionParams: SubscriptionsInput, $variableParams: VariablesInput
     ) {
       collection (params: $params) {
         abstract
@@ -166,8 +168,11 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             potentialAction
           }
         }
-        variables {
+        variables (
+          params: $variableParams
+        ) {
           count
+          cursor
           items {
             conceptId
             definition
@@ -189,6 +194,9 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     },
     subcriptionParams: {
       subscriberId: username
+    },
+    variableParams: {
+      limit: varLimit
     }
   })
     .then((responseObject) => {
@@ -228,6 +236,70 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           variables,
           versionId
         } = collection
+
+        const { cursor, count } = variables
+        console.log(`cursor: ${cursor}\ncount: ${count}`)
+        // L
+        // let counter = 0
+        // while (nextCursor) {
+        let nextCursor = cursor
+        // console.log(counter)
+        // counter += 1
+        const varsGraphQuery = `
+          query GetCollection(
+            $params: CollectionInput, $variableParams: VariablesInput
+          ) {
+            collection (params: $params) {
+              conceptId
+              variables (
+                params: $variableParams
+              ) {
+                count
+                cursor
+                items {
+                  conceptId
+                  definition
+                  instanceInformation
+                  longName
+                  name
+                  nativeId
+                  scienceKeywords
+                }
+              }
+            }
+          }`
+        const results = graphQlRequestObject.search(varsGraphQuery, {
+          params: {
+            conceptId: focusedCollectionId,
+            includeHasGranules: true,
+            includeTags: defaultCmrSearchTags.join(',')
+          },
+          variableParams: {
+            limit: varLimit,
+            cursor: nextCursor
+          }
+        }).then((nextResponse) => {
+          console.log(nextResponse)
+          const {
+            data: variablesData
+          } = nextResponse
+
+          const { data: pagedData } = variablesData
+          const { collection: pagedCollection } = pagedData
+          const { variables: pagedVariables } = pagedCollection
+          const { cursor: newCursor } = pagedVariables
+
+          return {
+            newCursor,
+            pagedVariables
+          }
+        })
+
+        const { newCursor, pagedVariables } = Promise.resolve(results)
+        nextCursor = newCursor
+        variables.concat(pagedVariables)
+        console.log(variables.length)
+        // }
 
         // Look and see if there are any gibs tags
         // If there are, check to see if the colormaps associated with the productids in the tags exists.

@@ -211,7 +211,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
-    query GetProjectCollections ($params: CollectionsInput, $subcriptionParams: SubscriptionsInput) {
+    query GetProjectCollections ($params: CollectionsInput, $subcriptionParams: SubscriptionsInput, $variableParams: VariablesInput) {
       collections (
         params: $params
       ) {
@@ -323,8 +323,11 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               potentialAction
             }
           }
-          variables {
+          variables (
+            params: $variableParams
+          ){
             count
+            cursor
             items {
               conceptId
               definition
@@ -348,6 +351,9 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     },
     subcriptionParams: {
       subscriberId: username
+    },
+    variableParams: {
+      limit: 2000
     }
   })
     .then((responseObject) => {
