@@ -282,7 +282,7 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'opendap'
       })
 
-      expect(screen.getByText('This service has no associated variables.')).toBeInTheDocument()
+      expect(screen.getByText('No variables available for selected item.')).toBeInTheDocument()
       expect(screen.queryByText(/variables selected/)).not.toBeInTheDocument()
       expect(screen.queryByRole('button', { name: 'Edit Variables' })).not.toBeInTheDocument()
     })
