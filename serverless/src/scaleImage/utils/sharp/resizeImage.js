@@ -3,8 +3,8 @@ import sharp from 'sharp'
 /**
  * Resize a given image to a given height and width
  * @param {Buffer<Image>} image An image binary contained in a buffer
- * @param {Integer} height image height
- * @param {Integer} width image width
+ * @param {Integer|String} height image height
+ * @param {Integer|String} width image width
  * @return {Buffer<Image>} Resized image or null
  */
 export const resizeImage = async (image, height, width) => {
