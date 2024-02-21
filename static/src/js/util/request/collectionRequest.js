@@ -13,6 +13,7 @@ import {
 import { hasTag } from '../../../../../sharedUtils/tags'
 import { isCSDACollection } from '../isCSDACollection'
 import { getOpenSearchOsddLink } from '../../../../../sharedUtils/getOpenSearchOsddLink'
+
 import unavailableImg from '../../../assets/images/image-unavailable.svg'
 
 /**
