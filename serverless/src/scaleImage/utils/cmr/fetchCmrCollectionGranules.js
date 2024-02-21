@@ -2,6 +2,7 @@ import axios from 'axios'
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { getSystemToken } from '../../../util/urs/getSystemToken'
+import { requestTimeout } from '../../../util/requestTimeout'
 
 /**
  * Given a concept id, fetch the metadata for granules
@@ -24,7 +25,8 @@ export const fetchCmrCollectionGranules = async (collectionConceptId) => {
     const response = await axios({
       url: granuleLocation,
       method: 'get',
-      headers
+      headers,
+      timeout: requestTimeout()
     })
     const { data } = response
     const { feed } = data
