@@ -30,6 +30,8 @@
     "test:watch": "NODE_OPTIONS=--max-old-space-size=6144 jest --watchAll",
     "test:watch-lite": "jest --watchAll --collectCoverageFrom='' --coverage=true",
     "start:ci": "webpack-dev-server --config static.webpack.config.dev.js",
+    "start:cache": "docker-compose up -d",
+    "stop:cache": "docker-compose down",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run -c video=false",
     "cypress:ci": "start-server-and-test start:ci http-get://localhost:8080 cypress:run",
