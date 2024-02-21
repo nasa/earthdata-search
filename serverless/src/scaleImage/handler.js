@@ -35,12 +35,14 @@ const scaleImage = async (event) => {
   const { height: defaultHeight, width: defaultWidth } = getApplicationConfig().thumbnailSize
   const {
     cascade_concepts: cascadeConcepts = 'true',
-    h: height = defaultHeight,
-    w: width = defaultWidth,
+    h = defaultHeight,
+    w = defaultWidth,
     return_default: returnDefault = 'true',
     imageSrc
   } = queryStringParameters || {}
 
+  const width = parseInt(w, 10)
+  const height = parseInt(h, 10)
   // Initialize the thumbnail to an empty array buffer to support `return_default` being set to false
   let thumbnail = Buffer.from('')
 

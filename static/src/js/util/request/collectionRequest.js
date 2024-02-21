@@ -1,5 +1,9 @@
 import CmrRequest from './cmrRequest'
-import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import {
+  getApplicationConfig,
+  getEarthdataConfig,
+  getEnvironmentConfig
+} from '../../../../../sharedUtils/config'
 
 import { collectionRequestPermittedCmrKeys } from '../../../../../sharedConstants/permittedCmrKeys'
 import {
@@ -94,10 +98,13 @@ export default class CollectionRequest extends CmrRequest {
         transformedCollection.isCSDA = isCSDACollection(collection.organizations)
       }
 
+      const h = getApplicationConfig().thumbnailSize.height
+      const w = getApplicationConfig().thumbnailSize.width
+
       // Retrieve collection thumbnail if it exists
       if (collection.id) {
         transformedCollection.thumbnail = collection.browse_flag
-          ? `${getEnvironmentConfig().apiHost}/scale/collections/${collection.id}`
+          ? `${getEnvironmentConfig().apiHost}/scale/collections/${collection.id}?h=${h}&w=${w}`
           : unavailableImg
       }
 
