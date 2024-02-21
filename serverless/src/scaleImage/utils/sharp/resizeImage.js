@@ -3,21 +3,18 @@ import sharp from 'sharp'
 /**
  * Resize a given image to a given height and width
  * @param {Buffer<Image>} image An image binary contained in a buffer
- * @param {Integer|String} height image height
- * @param {Integer|String} width image width
+ * @param {Integer} height image height
+ * @param {Integer} width image width
  * @return {Buffer<Image>} Resized image or null
  */
 export const resizeImage = async (image, height, width) => {
   try {
-    const w = parseInt(width, 10)
-    const h = parseInt(height, 10)
-
     // Only attempt to resize the image if a height or a width were provided
     if (height || width) {
       return await sharp(image)
         .resize(
-          (w || null),
-          (h || null),
+          (width || null),
+          (height || null),
           { fit: 'inside' }
         )
         .toFormat('png')
