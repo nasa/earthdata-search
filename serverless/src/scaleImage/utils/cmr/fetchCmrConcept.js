@@ -2,6 +2,7 @@ import axios from 'axios'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { determineEarthdataEnvironment } from '../../../util/determineEarthdataEnvironment'
 import { getSystemToken } from '../../../util/urs/getSystemToken'
+import { requestTimeout } from '../../../util/requestTimeout'
 
 /**
  * Retrieve the CMR metadata for the provided concept id
@@ -22,7 +23,8 @@ export const fetchCmrConcept = async (conceptId) => {
     const response = await axios({
       url: conceptUrl,
       method: 'get',
-      headers
+      headers,
+      timeout: requestTimeout()
     })
 
     const {
