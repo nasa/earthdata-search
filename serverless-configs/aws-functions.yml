@@ -190,7 +190,6 @@
           method: get
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: scale/{concept_type}/{concept_id}
-          # Not sure if we'll need the entire path come gametime
 
   regionSearch:
     handler: serverless/src/regionSearch/handler.default

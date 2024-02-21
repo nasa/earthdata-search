@@ -46,9 +46,9 @@ provider:
 
     # Redis cache configuration
     cacheHost:
-      Fn::ImportValue: ${self:provider.stage}-VisualizeElastiCacheEndpoint
+      Fn::ImportValue: ${self:provider.stage}-ElastiCacheEndpoint
     cachePort:
-      Fn::ImportValue: ${self:provider.stage}-VisualizeElastiCachePort
+      Fn::ImportValue: ${self:provider.stage}-ElastiCachePort
     cacheKeyExpireSeconds: ${self:custom.variables.cacheKeyExpireSeconds}
 
   vpc:
