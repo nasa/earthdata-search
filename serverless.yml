@@ -111,6 +111,8 @@ custom:
     # When invoking an offline lambda with `npm run invoke-local` this condition will disable serverless components that need to import or reference cloudformation values
     - If: '"${self:provider.stage}" == "invokeLocal"'
       Exclude:
+        - provider.environment.cacheHost
+        - provider.environment.cachePort
         - provider.environment.dbEndpoint
         - provider.environment.dbPort
         - provider.environment.colorMapQueueUrl
