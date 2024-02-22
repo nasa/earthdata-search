@@ -247,7 +247,7 @@ Outputs:
     Value:
       Fn::GetAtt:
         - RedisElasticCacheCluster
-        - Endpoint.Address
+        - ConfigurationEndpoint.Address
     Export:
       Name: ${self:provider.stage}-ElastiCacheEndpoint
 
@@ -255,6 +255,6 @@ Outputs:
     Value:
       Fn::GetAtt:
         - RedisElasticCacheCluster
-        - Endpoint.Port
+        - ConfigurationEndpoint.Port
     Export:
       Name: ${self:provider.stage}-ElastiCachePort
