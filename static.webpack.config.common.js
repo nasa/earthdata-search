@@ -13,6 +13,7 @@ const { availablePortals } = require('./portals/index')
 const {
   analytics,
   defaultPortal,
+  env,
   feedbackApp
 } = config.getApplicationConfig()
 
@@ -141,6 +142,7 @@ const StaticCommonConfig = {
       {
         path: path.join(__dirname, './static/src/partials/body.html'),
         options: {
+          env,
           feedbackApp,
           gtmPropertyId: analytics.gtmPropertyId,
           showTophat: ui.showTophat
