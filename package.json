@@ -221,6 +221,7 @@
     "serverless-plugin-split-stacks": "^1.12.0",
     "serverless-step-functions": "^3.11.0",
     "serverless-webpack": "^5.10.0",
+    "sharp": "^0.33.2",
     "simple-oauth2": "^4.3.0",
     "simplebar": "^6.2.0",
     "simplebar-react": "^3.2.0",
