@@ -30,8 +30,6 @@
     "test:watch": "NODE_OPTIONS=--max-old-space-size=6144 jest --watchAll",
     "test:watch-lite": "jest --watchAll --collectCoverageFrom='' --coverage=true",
     "start:ci": "webpack-dev-server --config static.webpack.config.dev.js",
-    "start:cache": "docker-compose up -d",
-    "stop:cache": "docker-compose down",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run -c video=false",
     "cypress:ci": "start-server-and-test start:ci http-get://localhost:8080 cypress:run",
@@ -76,7 +74,6 @@
     "parse-multipart": "^1.0.4",
     "playwright-test-coverage": "^1.2.12",
     "process": "^0.11.10",
-    "redis-mock": "^0.56.3",
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.4",
     "snyk": "^1.913.0",
@@ -115,7 +112,6 @@
     "ajv": "^6.12.6",
     "array-foreach-async": "^1.0.1",
     "array-to-sentence": "^2.0.0",
-    "async-redis": "^2.0.0",
     "autoprefixer": "^10.4.5",
     "axios": "^1.6.4",
     "axios-retry": "^3.2.4",
@@ -204,7 +200,6 @@
     "react-virtualized-auto-sizer": "^1.0.6",
     "react-window": "^1.8.7",
     "react-window-infinite-loader": "^1.0.7",
-    "redis": "^4.6.11",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
     "regenerator-runtime": "^0.13.9",
@@ -221,7 +216,6 @@
     "serverless-plugin-split-stacks": "^1.12.0",
     "serverless-step-functions": "^3.11.0",
     "serverless-webpack": "^5.10.0",
-    "sharp": "^0.33.2",
     "simple-oauth2": "^4.3.0",
     "simplebar": "^6.2.0",
     "simplebar-react": "^3.2.0",
@@ -290,9 +284,5 @@
     "mock-knex": {
       "knex": "$knex"
     }
-  },
-  "optionalDependencies": {
-    "@img/sharp-linux-x64": "^0.33.2",
-    "@img/sharp-linuxmusl-x64": "^0.33.2"
   }
 }
