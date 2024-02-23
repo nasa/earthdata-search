@@ -138,7 +138,7 @@ Resources:
                   - states:*
                 Resource: '*'
 
-  # Redis Cache for browse-scaler
+  # Redis Cache for browse-scaler/image-resizing
   RedisSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -176,7 +176,7 @@ Resources:
       ClusterName: browse-scaler-${self:provider.stage}
       CacheNodeType: cache.t2.medium
       NumCacheNodes: 1
-      # In transit encryption is not currenlty supported with the REDIS engine.
+      # In transit encryption is not currently supported with the REDIS engine.
       # TransitEncryptionEnabled: true
       CacheParameterGroupName:
         Ref: RedisParameterGroup
@@ -223,3 +223,19 @@ Outputs:
         - Endpoint.Port
     Export:
       Name: ${self:provider.stage}-DatabasePort
+
+  ElastiCacheEndpoint:
+    Value:
+      Fn::GetAtt:
+        - RedisElasticCacheCluster
+        - RedisEndpoint.Address
+    Export:
+      Name: ${self:provider.stage}-ElastiCacheEndpoint
+
+  ElastiCachePort:
+    Value:
+      Fn::GetAtt:
+        - RedisElasticCacheCluster
+        - RedisEndpoint.Port
+    Export:
+      Name: ${self:provider.stage}-ElastiCachePort
