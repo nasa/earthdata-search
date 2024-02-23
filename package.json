@@ -290,5 +290,9 @@
     "mock-knex": {
       "knex": "$knex"
     }
+  },
+  "optionalDependencies": {
+    "@img/sharp-linux-x64": "^0.33.2",
+    "@img/sharp-linuxmusl-x64": "^0.33.2"
   }
 }
