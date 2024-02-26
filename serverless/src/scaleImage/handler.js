@@ -31,6 +31,8 @@ const scaleImage = async (event) => {
     concept_type: conceptType
   } = pathParameters
 
+  console.log('🚀 Attempting to scale the collection: ', conceptId)
+
   // Default the queryStringParameters because when none are provided the key is missing
   const { height: defaultHeight, width: defaultWidth } = getApplicationConfig().thumbnailSize
   const {
