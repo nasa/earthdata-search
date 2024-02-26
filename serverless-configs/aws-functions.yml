@@ -196,6 +196,7 @@
 
   scaleImage:
     handler: serverless/src/scaleImage/handler.default
+    memorySize: 256
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
