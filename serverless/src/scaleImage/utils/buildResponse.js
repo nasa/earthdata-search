@@ -5,6 +5,7 @@
  * @returns {JSON} Constructed response object with image as a base64 string
  */
 export const buildResponse = (imageBuffer, statusCode = 200) => {
+  console.log('🚀 Building the response object back')
   const base64Image = imageBuffer.toString('base64')
 
   return {

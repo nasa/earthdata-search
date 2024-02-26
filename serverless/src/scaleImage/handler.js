@@ -55,6 +55,7 @@ const scaleImage = async (event) => {
     const cacheKey = generateCacheKey(conceptId, conceptType, imageSrc, dimensions)
     // Should we use the cache
     const useCache = (process.env.useCache === 'true')
+    console.log('🚀 ~ file: handler.js:58 ~ scaleImage ~ useCache:', useCache)
 
     let originalImageFromCache = null
     const originalCacheKey = generateCacheKey(conceptId, conceptType)
@@ -103,6 +104,7 @@ const scaleImage = async (event) => {
 
       // Cache the original image, if the requested image was resized
       if (originalCacheKey !== cacheKey && useCache) {
+        console.log('🚀 ~ file: handler.js:107 ~ scaleImage ~ originalCacheKey:', originalCacheKey)
         cacheImage(originalCacheKey, imageBuffer)
       }
     }
@@ -115,7 +117,7 @@ const scaleImage = async (event) => {
       cacheImage(cacheKey, thumbnail)
     }
   } catch (error) {
-    console.log(error.toString())
+    console.log(`Error occurred running the scale image handler ${error.toString()}`)
 
     if (returnDefault === 'true') {
       thumbnail = await buildUnavailableImageBuffer(height, width)
