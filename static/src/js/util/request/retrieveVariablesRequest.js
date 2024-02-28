@@ -11,7 +11,6 @@ export const retrieveVariablesRequest = async (
   const { cursor, items } = variablesObj
 
   let collectedItems = items
-
   let nextCursor = cursor
   while (nextCursor !== null) {
     const varsGraphQuery = `
@@ -38,9 +37,10 @@ export const retrieveVariablesRequest = async (
           }
         }`
     // Disabling await in loop because we need to retrieve the next cursor in order to retrieve the next set of variables
+
     // eslint-disable-next-line no-await-in-loop
     const results = await graphQlRequestObject.search(varsGraphQuery, {
-      params: requestParams
+      requestParams
     })
     const {
       data: variablesData
@@ -51,8 +51,9 @@ export const retrieveVariablesRequest = async (
     const { variables: pagedVariables } = pagedCollection
     const { cursor: newCursor, items: vars } = pagedVariables
 
-    nextCursor = newCursor
     collectedItems = collectedItems.concat(vars)
+    if (newCursor === nextCursor) break
+    nextCursor = newCursor
   }
 
   return collectedItems

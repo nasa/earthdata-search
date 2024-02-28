@@ -211,8 +211,10 @@ export const getProjectCollections = () => async (dispatch, getState) => {
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
+  const varLimit = 2000
+
   const graphQuery = `
-    query GetProjectCollections ($params: CollectionsInput, $subcriptionParams: SubscriptionsInput) {
+    query GetProjectCollections ($params: CollectionsInput, $subcriptionParams: SubscriptionsInput, $variableParams: VariablesInput) {
       collections (
         params: $params
       ) {
@@ -324,8 +326,11 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               potentialAction
             }
           }
-          variables {
+          variables (
+            params: $variableParams
+          ) {
             count
+            cursor
             items {
               conceptId
               definition
@@ -340,149 +345,155 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       }
     }`
 
-  const response = await graphQlRequestObject.search(graphQuery, {
-    params: {
-      conceptId: filteredIds,
-      includeTags: defaultCmrSearchTags.join(','),
-      includeHasGranules,
-      pageSize: filteredIds.length
-    },
-    subcriptionParams: {
-      subscriberId: username
-    }
-  })
-
-  const payload = []
-
-  const {
-    data: responseData
-  } = response
-  const { data } = responseData
-  const { collections } = data
-  const { items } = collections
-  items.forEach(async (metadata) => {
-    const {
-      abstract,
-      archiveAndDistributionInformation,
-      associatedDois,
-      boxes,
-      cloudHosted,
-      conceptId,
-      coordinateSystem,
-      dataCenter,
-      dataCenters,
-      dataQualitySummaries,
-      duplicateCollections,
-      granules,
-      hasGranules,
-      relatedCollections,
-      services,
-      shortName,
-      subscriptions,
-      tags,
-      tilingIdentificationSystems,
-      title,
-      tools,
-      variables,
-      versionId
-    } = metadata
-
-    if (variables.count > 2000) {
-      variables.items = await retrieveVariablesRequest(
-        variables,
-        {
-          params: {
-            conceptId,
-            includeHasGranules: true,
-            includeTags: defaultCmrSearchTags.join(',')
-          },
-          variableParams: {
-            limit: 2000,
-            cursor: variables.cursor
-          }
-        },
-        graphQlRequestObject
-      )
-    }
-
-    const focusedMetadata = createFocusedCollectionMetadata(
-      metadata,
-      authToken,
-      earthdataEnvironment
-    )
-
-    const isOpenSearch = !!getOpenSearchOsddLink(metadata)
-
-    payload.push({
-      abstract,
-      archiveAndDistributionInformation,
-      associatedDois,
-      boxes,
-      cloudHosted,
-      coordinateSystem,
-      dataQualitySummaries,
-      dataCenter,
-      duplicateCollections,
-      granules,
-      hasAllMetadata: true,
-      hasGranules,
-      id: conceptId,
-      isCSDA: isCSDACollection(dataCenters),
-      isOpenSearch,
-      relatedCollections,
-      services,
-      shortName,
-      subscriptions,
-      tags,
-      tilingIdentificationSystems,
-      title,
-      tools,
-      variables,
-      versionId,
-      ...focusedMetadata
+  try {
+    const response = await graphQlRequestObject.search(graphQuery, {
+      params: {
+        conceptId: filteredIds,
+        includeTags: defaultCmrSearchTags.join(','),
+        includeHasGranules,
+        pageSize: filteredIds.length
+      },
+      subcriptionParams: {
+        subscriberId: username
+      },
+      variableParams: {
+        limit: varLimit
+      }
     })
 
-    const { [conceptId]: savedAccessConfig } = savedAccessConfigs
+    const payload = []
 
-    const accessMethodsObject = insertSavedAccessConfig(
-      buildAccessMethods(metadata, isOpenSearch),
-      savedAccessConfig
-    )
+    const {
+      data: responseData
+    } = response
+    const { data } = responseData
+    const { collections } = data
+    const { items } = collections
+    items.forEach(async (metadata) => {
+      const {
+        abstract,
+        archiveAndDistributionInformation,
+        associatedDois,
+        boxes,
+        cloudHosted,
+        conceptId,
+        coordinateSystem,
+        dataCenter,
+        dataCenters,
+        dataQualitySummaries,
+        duplicateCollections,
+        granules,
+        hasGranules,
+        relatedCollections,
+        services,
+        shortName,
+        subscriptions,
+        tags,
+        tilingIdentificationSystems,
+        title,
+        tools,
+        variables,
+        versionId
+      } = metadata
 
-    const { methods = {} } = accessMethodsObject
-    let { selectedAccessMethod } = accessMethodsObject
+      if (variables.count > 2000) {
+        variables.items = await retrieveVariablesRequest(
+          variables,
+          {
+            params: {
+              conceptId,
+              includeHasGranules: true,
+              includeTags: defaultCmrSearchTags.join(',')
+            },
+            variableParams: {
+              limit: 2000,
+              cursor: variables.cursor
+            }
+          },
+          graphQlRequestObject
+        )
+      }
 
-    if (Object.keys(methods).length === 1 && !selectedAccessMethod) {
-      const [firstAccessMethod] = Object.keys(methods)
-      selectedAccessMethod = firstAccessMethod
-    }
+      const focusedMetadata = createFocusedCollectionMetadata(
+        metadata,
+        authToken,
+        earthdataEnvironment
+      )
 
-    dispatch(actions.addAccessMethods({
-      collectionId: conceptId,
-      methods,
-      selectedAccessMethod
+      const isOpenSearch = !!getOpenSearchOsddLink(metadata)
+
+      payload.push({
+        abstract,
+        archiveAndDistributionInformation,
+        associatedDois,
+        boxes,
+        cloudHosted,
+        coordinateSystem,
+        dataQualitySummaries,
+        dataCenter,
+        duplicateCollections,
+        granules,
+        hasAllMetadata: true,
+        hasGranules,
+        id: conceptId,
+        isCSDA: isCSDACollection(dataCenters),
+        isOpenSearch,
+        relatedCollections,
+        services,
+        shortName,
+        subscriptions,
+        tags,
+        tilingIdentificationSystems,
+        title,
+        tools,
+        variables,
+        versionId,
+        ...focusedMetadata
+      })
+
+      const { [conceptId]: savedAccessConfig } = savedAccessConfigs
+
+      const accessMethodsObject = insertSavedAccessConfig(
+        buildAccessMethods(metadata, isOpenSearch),
+        savedAccessConfig
+      )
+
+      const { methods = {} } = accessMethodsObject
+      let { selectedAccessMethod } = accessMethodsObject
+
+      if (Object.keys(methods).length === 1 && !selectedAccessMethod) {
+        const [firstAccessMethod] = Object.keys(methods)
+        selectedAccessMethod = firstAccessMethod
+      }
+
+      dispatch(actions.addAccessMethods({
+        collectionId: conceptId,
+        methods,
+        selectedAccessMethod
+      }))
+
+      const { items: dqsItems = [] } = dataQualitySummaries
+      if (dqsItems) {
+        dispatch(actions.setDataQualitySummaries({
+          catalogItemId: conceptId,
+          dataQualitySummaries: dqsItems
+        }))
+      }
+
+      // Update metadata in the store
+      dispatch(actions.updateCollectionMetadata(payload))
+    })
+
+    return response
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'getProjectCollections',
+      resource: 'project collections'
     }))
 
-    const { items: dqsItems = [] } = dataQualitySummaries
-    if (dqsItems) {
-      dispatch(actions.setDataQualitySummaries({
-        catalogItemId: conceptId,
-        dataQualitySummaries: dqsItems
-      }))
-    }
-
-    // Update metadata in the store
-    dispatch(actions.updateCollectionMetadata(payload))
-  })
-    .catch((error) => {
-      dispatch(actions.handleError({
-        error,
-        action: 'getProjectCollections',
-        resource: 'project collections'
-      }))
-    })
-
-  return response
+    return null
+  }
 }
 
 /**
