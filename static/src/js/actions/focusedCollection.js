@@ -85,7 +85,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   const graphQuery = `
     query GetCollection(
-      $params: CollectionInput, $subcriptionParams: SubscriptionsInput
+      $params: CollectionInput, $subcriptionParams: SubscriptionsInput, $variableParams: VariablesInput
     ) {
       collection (params: $params) {
         abstract
@@ -169,8 +169,11 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             potentialAction
           }
         }
-        variables {
+        variables (
+          params: $variableParams
+        ) {
           count
+          cursor
           items {
             conceptId
             definition
@@ -235,23 +238,21 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       } = collection
 
       // Retrieves all variables if there are more than 2000
-      if (variables.count > 2000) {
-        variables.items = await retrieveVariablesRequest(
-          variables,
-          {
-            params: {
-              conceptId: focusedCollectionId,
-              includeHasGranules: true,
-              includeTags: defaultCmrSearchTags.join(',')
-            },
-            variableParams: {
-              limit: varLimit,
-              cursor: variables.cursor
-            }
+      variables.items = await retrieveVariablesRequest(
+        variables,
+        {
+          params: {
+            conceptId: focusedCollectionId,
+            includeHasGranules: true,
+            includeTags: defaultCmrSearchTags.join(',')
           },
-          graphQlRequestObject
-        )
-      }
+          variableParams: {
+            limit: varLimit,
+            cursor: variables.cursor
+          }
+        },
+        graphQlRequestObject
+      )
 
       // Look and see if there are any gibs tags
       // If there are, check to see if the colormaps associated with the productids in the tags exists.
