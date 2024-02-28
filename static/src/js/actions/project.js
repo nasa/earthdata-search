@@ -387,6 +387,24 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       versionId
     } = metadata
 
+    if (variables.count > 2000) {
+      variables.items = await retrieveVariablesRequest(
+        variables,
+        {
+          params: {
+            conceptId,
+            includeHasGranules: true,
+            includeTags: defaultCmrSearchTags.join(',')
+          },
+          variableParams: {
+            limit: 2000,
+            cursor: variables.cursor
+          }
+        },
+        graphQlRequestObject
+      )
+    }
+
     const focusedMetadata = createFocusedCollectionMetadata(
       metadata,
       authToken,
@@ -423,24 +441,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       versionId,
       ...focusedMetadata
     })
-
-    if (variables.count > 2000) {
-      variables.items = await retrieveVariablesRequest(
-        variables,
-        {
-          params: {
-            conceptId,
-            includeHasGranules: true,
-            includeTags: defaultCmrSearchTags.join(',')
-          },
-          variableParams: {
-            limit: 2000,
-            cursor: variables.cursor
-          }
-        },
-        graphQlRequestObject
-      )
-    }
 
     const { [conceptId]: savedAccessConfig } = savedAccessConfigs
 
