@@ -15,6 +15,7 @@ import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsdd
 import { getUsername } from '../selectors/user'
 import { isCSDACollection } from '../util/isCSDACollection'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
+import { retrieveVariablesRequest } from '../util/request/retrieveVariablesRequest'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
@@ -79,6 +80,8 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   const { defaultCmrSearchTags } = getApplicationConfig()
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+
+  const varLimit = 2000
 
   const graphQuery = `
     query GetCollection(
@@ -180,130 +183,152 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         }
       }
     }`
-
-  const response = graphQlRequestObject.search(graphQuery, {
-    params: {
-      conceptId: focusedCollectionId,
-      includeHasGranules: true,
-      includeTags: defaultCmrSearchTags.join(',')
-    },
-    subcriptionParams: {
-      subscriberId: username
-    }
-  })
-    .then((responseObject) => {
-      const payload = []
-
-      const {
-        data: responseData
-      } = responseObject
-
-      const { data } = responseData
-      const { collection } = data
-
-      // If no results were returned, graphql will return `null`
-      if (collection) {
-        const {
-          abstract,
-          archiveAndDistributionInformation,
-          associatedDois,
-          boxes,
-          cloudHosted,
-          conceptId,
-          coordinateSystem,
-          dataCenter,
-          dataCenters,
-          duplicateCollections,
-          granules,
-          hasGranules,
-          nativeDataFormats,
-          relatedCollections,
-          services,
-          shortName,
-          subscriptions,
-          tags,
-          tilingIdentificationSystems,
-          title,
-          tools,
-          variables,
-          versionId
-        } = collection
-
-        // Look and see if there are any gibs tags
-        // If there are, check to see if the colormaps associated with the productids in the tags exists.
-        // If they don't we call an action to pull the colorMaps and add them to the metadata.colormaps
-        const gibsTags = tags ? getValueForTag('gibs', tags) : null
-        if (gibsTags && gibsTags.length > 0) {
-          const { product } = gibsTags[0]
-          dispatch(actions.getColorMap({ product }))
-        }
-
-        // Formats the metadata returned from graphql for use throughout the application
-        const focusedMetadata = createFocusedCollectionMetadata(
-          collection,
-          authToken,
-          earthdataEnvironment
-        )
-
-        payload.push({
-          abstract,
-          archiveAndDistributionInformation,
-          associatedDois,
-          boxes,
-          cloudHosted,
-          coordinateSystem,
-          dataCenter,
-          duplicateCollections,
-          granules,
-          hasAllMetadata: true,
-          hasGranules,
-          id: conceptId,
-          isCSDA: isCSDACollection(dataCenters),
-          isOpenSearch: !!getOpenSearchOsddLink(collection),
-          nativeDataFormats,
-          relatedCollections,
-          services,
-          shortName,
-          subscriptions,
-          tags,
-          tilingIdentificationSystems,
-          title,
-          tools,
-          variables,
-          versionId,
-          ...focusedMetadata
-        })
-
-        // A users authToken will come back with an authenticated request if a valid token was used
-
-        // Update metadata in the store
-        dispatch(actions.updateCollectionMetadata(payload))
-
-        // Query CMR for granules belonging to the focused collection
-        dispatch(actions.getSearchGranules())
-      } else {
-        // If no data was returned, clear the focused collection and redirect the user back to the search page
-        dispatch(actions.updateFocusedCollection(''))
-
-        const { location } = router
-        const { search } = location
-
-        dispatch(actions.changeUrl({
-          pathname: '/search',
-          search
-        }))
+  try {
+    const response = await graphQlRequestObject.search(graphQuery, {
+      params: {
+        conceptId: focusedCollectionId,
+        includeHasGranules: true,
+        includeTags: defaultCmrSearchTags.join(',')
+      },
+      subcriptionParams: {
+        subscriberId: username
+      },
+      variableParams: {
+        limit: varLimit
       }
     })
-    .catch((error) => {
-      dispatch(actions.handleError({
-        error,
-        action: 'getFocusedCollection',
-        resource: 'collection',
-        requestObject: graphQlRequestObject
-      }))
-    })
+    const payload = []
 
-  return response
+    const {
+      data: responseData
+    } = response
+
+    const { data } = responseData
+    const { collection } = data
+
+    // If no results were returned, graphql will return `null`
+    if (collection) {
+      const {
+        abstract,
+        archiveAndDistributionInformation,
+        associatedDois,
+        boxes,
+        cloudHosted,
+        conceptId,
+        coordinateSystem,
+        dataCenter,
+        dataCenters,
+        duplicateCollections,
+        granules,
+        hasGranules,
+        nativeDataFormats,
+        relatedCollections,
+        services,
+        shortName,
+        subscriptions,
+        tags,
+        tilingIdentificationSystems,
+        title,
+        tools,
+        variables,
+        versionId
+      } = collection
+
+      // Retrieves all variables if there are more than 2000
+      if (variables.count > 2000) {
+        variables.items = await retrieveVariablesRequest(
+          variables,
+          {
+            params: {
+              conceptId: focusedCollectionId,
+              includeHasGranules: true,
+              includeTags: defaultCmrSearchTags.join(',')
+            },
+            variableParams: {
+              limit: varLimit,
+              cursor: variables.cursor
+            }
+          },
+          graphQlRequestObject
+        )
+      }
+
+      // Look and see if there are any gibs tags
+      // If there are, check to see if the colormaps associated with the productids in the tags exists.
+      // If they don't we call an action to pull the colorMaps and add them to the metadata.colormaps
+      const gibsTags = tags ? getValueForTag('gibs', tags) : null
+      if (gibsTags && gibsTags.length > 0) {
+        const { product } = gibsTags[0]
+        dispatch(actions.getColorMap({ product }))
+      }
+
+      // Formats the metadata returned from graphql for use throughout the application
+      const focusedMetadata = createFocusedCollectionMetadata(
+        collection,
+        authToken,
+        earthdataEnvironment
+      )
+
+      payload.push({
+        abstract,
+        archiveAndDistributionInformation,
+        associatedDois,
+        boxes,
+        cloudHosted,
+        coordinateSystem,
+        dataCenter,
+        duplicateCollections,
+        granules,
+        hasAllMetadata: true,
+        hasGranules,
+        id: conceptId,
+        isCSDA: isCSDACollection(dataCenters),
+        isOpenSearch: !!getOpenSearchOsddLink(collection),
+        nativeDataFormats,
+        relatedCollections,
+        services,
+        shortName,
+        subscriptions,
+        tags,
+        tilingIdentificationSystems,
+        title,
+        tools,
+        variables,
+        versionId,
+        ...focusedMetadata
+      })
+
+      // A users authToken will come back with an authenticated request if a valid token was used
+
+      // Update metadata in the store
+      dispatch(actions.updateCollectionMetadata(payload))
+
+      // Query CMR for granules belonging to the focused collection
+      dispatch(actions.getSearchGranules())
+    } else {
+      // If no data was returned, clear the focused collection and redirect the user back to the search page
+      dispatch(actions.updateFocusedCollection(''))
+
+      const { location } = router
+      const { search } = location
+
+      dispatch(actions.changeUrl({
+        pathname: '/search',
+        search
+      }))
+    }
+
+    return response
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'getFocusedCollection',
+      resource: 'collection',
+      requestObject: graphQlRequestObject
+    }))
+
+    return null
+  }
 }
 
 /**
@@ -343,40 +368,42 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
       }
     }`
 
-  const response = graphQlRequestObject.search(graphQuery, {
-    params: {
-      collectionConceptId,
-      subscriberId: username,
-      type: 'granule'
-    }
-  })
-    .then((responseObject) => {
-      parseGraphQLError(responseObject)
-
-      const {
-        data: responseData
-      } = responseObject.data
-
-      const { subscriptions } = responseData
-
-      dispatch({
-        type: UPDATE_GRANULE_SUBSCRIPTIONS,
-        payload: {
-          collectionId: collectionConceptId,
-          subscriptions
-        }
-      })
-    })
-    .catch((error) => {
-      dispatch(actions.handleError({
-        error,
-        action: 'getGranuleSubscriptions',
-        resource: 'subscription',
-        requestObject: graphQlRequestObject
-      }))
+  try {
+    const response = await graphQlRequestObject.search(graphQuery, {
+      params: {
+        collectionConceptId,
+        subscriberId: username,
+        type: 'granule'
+      }
     })
 
-  return response
+    parseGraphQLError(response)
+
+    const {
+      data: responseData
+    } = response.data
+
+    const { subscriptions } = responseData
+
+    dispatch({
+      type: UPDATE_GRANULE_SUBSCRIPTIONS,
+      payload: {
+        collectionId: collectionConceptId,
+        subscriptions
+      }
+    })
+
+    return response
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'getGranuleSubscriptions',
+      resource: 'subscription',
+      requestObject: graphQlRequestObject
+    }))
+
+    return null
+  }
 }
 
 /**

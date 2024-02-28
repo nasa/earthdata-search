@@ -33,6 +33,7 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getUsername } from '../selectors/user'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { isCSDACollection } from '../util/isCSDACollection'
+import { retrieveVariablesRequest } from '../util/request/retrieveVariablesRequest'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
 import { buildAccessMethods } from '../util/accessMethods/buildAccessMethods'
 
@@ -339,7 +340,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       }
     }`
 
-  const response = graphQlRequestObject.search(graphQuery, {
+  const response = await graphQlRequestObject.search(graphQuery, {
     params: {
       conceptId: filteredIds,
       includeTags: defaultCmrSearchTags.join(','),
@@ -350,112 +351,129 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       subscriberId: username
     }
   })
-    .then((responseObject) => {
-      const payload = []
 
-      const {
-        data: responseData
-      } = responseObject
-      const { data } = responseData
-      const { collections } = data
-      const { items } = collections
-      items.forEach((metadata) => {
-        const {
-          abstract,
-          archiveAndDistributionInformation,
-          associatedDois,
-          boxes,
-          cloudHosted,
-          conceptId,
-          coordinateSystem,
-          dataCenter,
-          dataCenters,
-          dataQualitySummaries,
-          duplicateCollections,
-          granules,
-          hasGranules,
-          relatedCollections,
-          services,
-          shortName,
-          subscriptions,
-          tags,
-          tilingIdentificationSystems,
-          title,
-          tools,
-          variables,
-          versionId
-        } = metadata
+  const payload = []
 
-        const focusedMetadata = createFocusedCollectionMetadata(
-          metadata,
-          authToken,
-          earthdataEnvironment
-        )
+  const {
+    data: responseData
+  } = response
+  const { data } = responseData
+  const { collections } = data
+  const { items } = collections
+  items.forEach(async (metadata) => {
+    const {
+      abstract,
+      archiveAndDistributionInformation,
+      associatedDois,
+      boxes,
+      cloudHosted,
+      conceptId,
+      coordinateSystem,
+      dataCenter,
+      dataCenters,
+      dataQualitySummaries,
+      duplicateCollections,
+      granules,
+      hasGranules,
+      relatedCollections,
+      services,
+      shortName,
+      subscriptions,
+      tags,
+      tilingIdentificationSystems,
+      title,
+      tools,
+      variables,
+      versionId
+    } = metadata
 
-        const isOpenSearch = !!getOpenSearchOsddLink(metadata)
+    const focusedMetadata = createFocusedCollectionMetadata(
+      metadata,
+      authToken,
+      earthdataEnvironment
+    )
 
-        payload.push({
-          abstract,
-          archiveAndDistributionInformation,
-          associatedDois,
-          boxes,
-          cloudHosted,
-          coordinateSystem,
-          dataQualitySummaries,
-          dataCenter,
-          duplicateCollections,
-          granules,
-          hasAllMetadata: true,
-          hasGranules,
-          id: conceptId,
-          isCSDA: isCSDACollection(dataCenters),
-          isOpenSearch,
-          relatedCollections,
-          services,
-          shortName,
-          subscriptions,
-          tags,
-          tilingIdentificationSystems,
-          title,
-          tools,
-          variables,
-          versionId,
-          ...focusedMetadata
-        })
+    const isOpenSearch = !!getOpenSearchOsddLink(metadata)
 
-        const { [conceptId]: savedAccessConfig } = savedAccessConfigs
-
-        const accessMethodsObject = insertSavedAccessConfig(
-          buildAccessMethods(metadata, isOpenSearch),
-          savedAccessConfig
-        )
-
-        const { methods = {} } = accessMethodsObject
-        let { selectedAccessMethod } = accessMethodsObject
-
-        if (Object.keys(methods).length === 1 && !selectedAccessMethod) {
-          const [firstAccessMethod] = Object.keys(methods)
-          selectedAccessMethod = firstAccessMethod
-        }
-
-        dispatch(actions.addAccessMethods({
-          collectionId: conceptId,
-          methods,
-          selectedAccessMethod
-        }))
-
-        const { items: dqsItems = [] } = dataQualitySummaries
-        if (dqsItems) {
-          dispatch(actions.setDataQualitySummaries({
-            catalogItemId: conceptId,
-            dataQualitySummaries: dqsItems
-          }))
-        }
-      })
-
-      // Update metadata in the store
-      dispatch(actions.updateCollectionMetadata(payload))
+    payload.push({
+      abstract,
+      archiveAndDistributionInformation,
+      associatedDois,
+      boxes,
+      cloudHosted,
+      coordinateSystem,
+      dataQualitySummaries,
+      dataCenter,
+      duplicateCollections,
+      granules,
+      hasAllMetadata: true,
+      hasGranules,
+      id: conceptId,
+      isCSDA: isCSDACollection(dataCenters),
+      isOpenSearch,
+      relatedCollections,
+      services,
+      shortName,
+      subscriptions,
+      tags,
+      tilingIdentificationSystems,
+      title,
+      tools,
+      variables,
+      versionId,
+      ...focusedMetadata
     })
+
+    if (variables.count > 2000) {
+      variables.items = await retrieveVariablesRequest(
+        variables,
+        {
+          params: {
+            conceptId,
+            includeHasGranules: true,
+            includeTags: defaultCmrSearchTags.join(',')
+          },
+          variableParams: {
+            limit: 2000,
+            cursor: variables.cursor
+          }
+        },
+        graphQlRequestObject
+      )
+    }
+
+    const { [conceptId]: savedAccessConfig } = savedAccessConfigs
+
+    const accessMethodsObject = insertSavedAccessConfig(
+      buildAccessMethods(metadata, isOpenSearch),
+      savedAccessConfig
+    )
+
+    const { methods = {} } = accessMethodsObject
+    let { selectedAccessMethod } = accessMethodsObject
+
+    if (Object.keys(methods).length === 1 && !selectedAccessMethod) {
+      const [firstAccessMethod] = Object.keys(methods)
+      selectedAccessMethod = firstAccessMethod
+    }
+
+    dispatch(actions.addAccessMethods({
+      collectionId: conceptId,
+      methods,
+      selectedAccessMethod
+    }))
+
+    const { items: dqsItems = [] } = dataQualitySummaries
+    if (dqsItems) {
+      dispatch(actions.setDataQualitySummaries({
+        catalogItemId: conceptId,
+        dataQualitySummaries: dqsItems
+      }))
+    }
+
+    // Update metadata in the store
+    dispatch(actions.updateCollectionMetadata(payload))
+  })
     .catch((error) => {
       dispatch(actions.handleError({
         error,
