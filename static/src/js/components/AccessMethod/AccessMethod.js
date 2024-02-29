@@ -305,6 +305,36 @@ export class AccessMethod extends Component {
     )
   }
 
+  renderAccessMethodRadioTest() {
+    const id = 'testkey'
+    const methodKey = 'testMethodKey'
+    const title = 'testTitle'
+    const subtitle = 'testSubtitle'
+    const serviceName = 'testServiceName'
+    const desc = 'testDescription'
+    const details = 'testDetails'
+    const onPropsChange = () => {}
+
+    const checked = false
+
+    return (
+      <Select.Item className="SelectItem" key="testSelectItem" value="testValue">
+        <AccessMethodRadio
+          key={id}
+          id={id}
+          value={methodKey}
+          title={title}
+          subtitle={subtitle}
+          serviceName={serviceName}
+          description={desc}
+          details={details}
+          onChange={onPropsChange}
+          checked={checked}
+        />
+      </Select.Item>
+    )
+  }
+
   renderHarmonySelector(harmonyMethods) {
     return (
       <Select.Root name="HarmonyMethodSelector">
@@ -317,6 +347,7 @@ export class AccessMethod extends Component {
           <Select.Content className="SelectContent">
             <Select.ScrollUpButton className="SelectScrollButton" />
             <Select.Viewport key="HarmonySelectorViewport" className="SelectViewport">
+              {this.renderAccessMethodRadioTest()}
               {this.renderJustItems(harmonyMethods)}
             </Select.Viewport>
             <Select.ScrollDownButton className="SelectScrollButton" />
