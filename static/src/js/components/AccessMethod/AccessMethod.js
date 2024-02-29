@@ -344,7 +344,7 @@ export class AccessMethod extends Component {
         </Select.Trigger>
 
         <Select.Portal>
-          <Select.Content className="SelectContent">
+          <Select.Content className="SelectContent" position="popper">
             <Select.ScrollUpButton className="SelectScrollButton" />
             <Select.Viewport key="HarmonySelectorViewport" className="SelectViewport">
               {this.renderAccessMethodRadioTest()}

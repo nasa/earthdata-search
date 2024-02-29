@@ -54,7 +54,7 @@ button {
   border-radius: 3px;
   display: flex;
   align-items: center;
-  height: 25px;
+  height: auto;
   padding: 0 35px 0 25px;
   position: relative;
   user-select: none;
