@@ -33,6 +33,7 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getUsername } from '../selectors/user'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { isCSDACollection } from '../util/isCSDACollection'
+import { retrieveVariablesRequest } from '../util/retrieveVariablesRequest'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
 import { buildAccessMethods } from '../util/accessMethods/buildAccessMethods'
 
@@ -210,6 +211,8 @@ export const getProjectCollections = () => async (dispatch, getState) => {
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
+  const varLimit = 2000
+
   const graphQuery = `
     query GetProjectCollections ($params: CollectionsInput, $subcriptionParams: SubscriptionsInput, $variableParams: VariablesInput) {
       collections (
@@ -325,7 +328,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           }
           variables (
             params: $variableParams
-          ){
+          ) {
             count
             cursor
             items {
@@ -342,135 +345,156 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       }
     }`
 
-  const response = graphQlRequestObject.search(graphQuery, {
-    params: {
-      conceptId: filteredIds,
-      includeTags: defaultCmrSearchTags.join(','),
-      includeHasGranules,
-      pageSize: filteredIds.length
-    },
-    subcriptionParams: {
-      subscriberId: username
-    },
-    variableParams: {
-      limit: 2000
-    }
-  })
-    .then((responseObject) => {
-      const payload = []
+  try {
+    const response = await graphQlRequestObject.search(graphQuery, {
+      params: {
+        conceptId: filteredIds,
+        includeTags: defaultCmrSearchTags.join(','),
+        includeHasGranules,
+        pageSize: filteredIds.length
+      },
+      subcriptionParams: {
+        subscriberId: username
+      },
+      variableParams: {
+        limit: varLimit
+      }
+    })
 
+    const payload = []
+
+    const {
+      data: responseData
+    } = response
+    const { data } = responseData
+    const { collections } = data
+    const { items } = collections
+    items.forEach(async (metadata) => {
       const {
-        data: responseData
-      } = responseObject
-      const { data } = responseData
-      const { collections } = data
-      const { items } = collections
-      items.forEach((metadata) => {
-        const {
-          abstract,
-          archiveAndDistributionInformation,
-          associatedDois,
-          boxes,
-          cloudHosted,
-          conceptId,
-          coordinateSystem,
-          dataCenter,
-          dataCenters,
-          dataQualitySummaries,
-          duplicateCollections,
-          granules,
-          hasGranules,
-          relatedCollections,
-          services,
-          shortName,
-          subscriptions,
-          tags,
-          tilingIdentificationSystems,
-          title,
-          tools,
+        abstract,
+        archiveAndDistributionInformation,
+        associatedDois,
+        boxes,
+        cloudHosted,
+        conceptId,
+        coordinateSystem,
+        dataCenter,
+        dataCenters,
+        dataQualitySummaries,
+        duplicateCollections,
+        granules,
+        hasGranules,
+        relatedCollections,
+        services,
+        shortName,
+        subscriptions,
+        tags,
+        tilingIdentificationSystems,
+        title,
+        tools,
+        variables,
+        versionId
+      } = metadata
+
+      if (variables.count > 2000) {
+        variables.items = await retrieveVariablesRequest(
           variables,
-          versionId
-        } = metadata
-
-        const focusedMetadata = createFocusedCollectionMetadata(
-          metadata,
-          authToken,
-          earthdataEnvironment
+          {
+            params: {
+              conceptId,
+              includeHasGranules: true,
+              includeTags: defaultCmrSearchTags.join(',')
+            },
+            variableParams: {
+              limit: 2000,
+              cursor: variables.cursor
+            }
+          },
+          graphQlRequestObject,
+          'GetProjectCollections'
         )
+      }
 
-        const isOpenSearch = !!getOpenSearchOsddLink(metadata)
+      const focusedMetadata = createFocusedCollectionMetadata(
+        metadata,
+        authToken,
+        earthdataEnvironment
+      )
 
-        payload.push({
-          abstract,
-          archiveAndDistributionInformation,
-          associatedDois,
-          boxes,
-          cloudHosted,
-          coordinateSystem,
-          dataQualitySummaries,
-          dataCenter,
-          duplicateCollections,
-          granules,
-          hasAllMetadata: true,
-          hasGranules,
-          id: conceptId,
-          isCSDA: isCSDACollection(dataCenters),
-          isOpenSearch,
-          relatedCollections,
-          services,
-          shortName,
-          subscriptions,
-          tags,
-          tilingIdentificationSystems,
-          title,
-          tools,
-          variables,
-          versionId,
-          ...focusedMetadata
-        })
+      const isOpenSearch = !!getOpenSearchOsddLink(metadata)
 
-        const { [conceptId]: savedAccessConfig } = savedAccessConfigs
-
-        const accessMethodsObject = insertSavedAccessConfig(
-          buildAccessMethods(metadata, isOpenSearch),
-          savedAccessConfig
-        )
-
-        const { methods = {} } = accessMethodsObject
-        let { selectedAccessMethod } = accessMethodsObject
-
-        if (Object.keys(methods).length === 1 && !selectedAccessMethod) {
-          const [firstAccessMethod] = Object.keys(methods)
-          selectedAccessMethod = firstAccessMethod
-        }
-
-        dispatch(actions.addAccessMethods({
-          collectionId: conceptId,
-          methods,
-          selectedAccessMethod
-        }))
-
-        const { items: dqsItems = [] } = dataQualitySummaries
-        if (dqsItems) {
-          dispatch(actions.setDataQualitySummaries({
-            catalogItemId: conceptId,
-            dataQualitySummaries: dqsItems
-          }))
-        }
+      payload.push({
+        abstract,
+        archiveAndDistributionInformation,
+        associatedDois,
+        boxes,
+        cloudHosted,
+        coordinateSystem,
+        dataQualitySummaries,
+        dataCenter,
+        duplicateCollections,
+        granules,
+        hasAllMetadata: true,
+        hasGranules,
+        id: conceptId,
+        isCSDA: isCSDACollection(dataCenters),
+        isOpenSearch,
+        relatedCollections,
+        services,
+        shortName,
+        subscriptions,
+        tags,
+        tilingIdentificationSystems,
+        title,
+        tools,
+        variables,
+        versionId,
+        ...focusedMetadata
       })
+
+      const { [conceptId]: savedAccessConfig } = savedAccessConfigs
+
+      const accessMethodsObject = insertSavedAccessConfig(
+        buildAccessMethods(metadata, isOpenSearch),
+        savedAccessConfig
+      )
+
+      const { methods = {} } = accessMethodsObject
+      let { selectedAccessMethod } = accessMethodsObject
+
+      if (Object.keys(methods).length === 1 && !selectedAccessMethod) {
+        const [firstAccessMethod] = Object.keys(methods)
+        selectedAccessMethod = firstAccessMethod
+      }
+
+      dispatch(actions.addAccessMethods({
+        collectionId: conceptId,
+        methods,
+        selectedAccessMethod
+      }))
+
+      const { items: dqsItems = [] } = dataQualitySummaries
+      if (dqsItems) {
+        dispatch(actions.setDataQualitySummaries({
+          catalogItemId: conceptId,
+          dataQualitySummaries: dqsItems
+        }))
+      }
 
       // Update metadata in the store
       dispatch(actions.updateCollectionMetadata(payload))
     })
-    .catch((error) => {
-      dispatch(actions.handleError({
-        error,
-        action: 'getProjectCollections',
-        resource: 'project collections'
-      }))
-    })
 
-  return response
+    return response
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'getProjectCollections',
+      resource: 'project collections'
+    }))
+
+    return null
+  }
 }
 
 /**

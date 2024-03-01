@@ -132,7 +132,7 @@ export const TreeItem = ({
       className={treeItemClasses}
     >
       <div
-        className="tree-item__header"
+        className="tree-item__header-variable"
       >
         {
           isParent && (
