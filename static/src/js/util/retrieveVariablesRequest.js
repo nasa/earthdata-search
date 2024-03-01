@@ -5,7 +5,8 @@
 export const retrieveVariablesRequest = async (
   variablesObj,
   requestParams,
-  graphQlRequestObject
+  graphQlRequestObject,
+  queryType
 ) => {
   // Pull out cursor and already retrieved items from the variablesObj
   const { cursor, items } = variablesObj
@@ -14,7 +15,7 @@ export const retrieveVariablesRequest = async (
   let nextCursor = cursor
   while (nextCursor !== null) {
     const varsGraphQuery = `
-        query GetCollection(
+        query ${queryType}(
           $params: CollectionInput, $variableParams: VariablesInput
         ) {
           collection (params: $params) {
@@ -36,12 +37,13 @@ export const retrieveVariablesRequest = async (
             }
           }
         }`
-    // Disabling await in loop because we need to retrieve the next cursor in order to retrieve the next set of variables
 
+    const varsParams = requestParams
+    varsParams.variableParams.cursor = nextCursor
+
+    // Disabling await in loop because we need to retrieve the next cursor in order to retrieve the next set of variables
     // eslint-disable-next-line no-await-in-loop
-    const results = await graphQlRequestObject.search(varsGraphQuery, {
-      requestParams
-    })
+    const results = await graphQlRequestObject.search(varsGraphQuery, varsParams)
     const {
       data: variablesData
     } = results

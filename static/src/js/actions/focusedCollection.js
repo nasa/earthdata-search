@@ -15,7 +15,7 @@ import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsdd
 import { getUsername } from '../selectors/user'
 import { isCSDACollection } from '../util/isCSDACollection'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
-import { retrieveVariablesRequest } from '../util/request/retrieveVariablesRequest'
+import { retrieveVariablesRequest } from '../util/retrieveVariablesRequest'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
 
@@ -251,8 +251,11 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             cursor: variables.cursor
           }
         },
-        graphQlRequestObject
+        graphQlRequestObject,
+        'GetCollection'
       )
+
+      console.log(variables)
 
       // Look and see if there are any gibs tags
       // If there are, check to see if the colormaps associated with the productids in the tags exists.

@@ -33,7 +33,7 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getUsername } from '../selectors/user'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { isCSDACollection } from '../util/isCSDACollection'
-import { retrieveVariablesRequest } from '../util/request/retrieveVariablesRequest'
+import { retrieveVariablesRequest } from '../util/retrieveVariablesRequest'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
 import { buildAccessMethods } from '../util/accessMethods/buildAccessMethods'
 
@@ -410,7 +410,8 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               cursor: variables.cursor
             }
           },
-          graphQlRequestObject
+          graphQlRequestObject,
+          'GetProjectCollections'
         )
       }
 
