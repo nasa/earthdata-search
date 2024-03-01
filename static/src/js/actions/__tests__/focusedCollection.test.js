@@ -28,6 +28,40 @@ import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
 const mockStore = configureMockStore([thunk])
 
+const randomId = () => (Math.random() + 1).toString(36).substring(2)
+
+// Returns a set of variable results in 3 chucks with 2000 variables in the first 2 and 25 in the last
+const createVariableResults = () => {
+  const items = []
+  for (let i = 0; i < 4025; i += 1) {
+    items.push({
+      conceptId: `C${10000000000 + i}-EDSC`
+    })
+  }
+
+  return [{
+    variables: {
+      items: items.slice(0, 2000),
+      count: 4025,
+      cursor: randomId()
+    }
+  },
+  {
+    variables: {
+      items: items.slice(2000, 4000),
+      count: 4025,
+      cursor: randomId()
+    }
+  },
+  {
+    variables: {
+      items: items.slice(4000),
+      count: 4025,
+      cursor: null
+    }
+  }]
+}
+
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
@@ -512,6 +546,106 @@ describe('getFocusedCollection', () => {
 
       const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
       getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
+
+      const store = mockStore({
+        authToken: '',
+        focusedCollection: 'C10000000000-EDSC',
+        metadata: {
+          collections: {}
+        },
+        query: {
+          collection: {
+            spatial: {}
+          }
+        },
+        searchResults: {}
+      })
+
+      await store.dispatch(getFocusedCollection()).then(() => {
+        const storeActions = store.getActions()
+        expect(storeActions[0]).toEqual({
+          type: TOGGLE_SPATIAL_POLYGON_WARNING,
+          payload: false
+        })
+
+        expect(storeActions[1]).toEqual({
+          type: UPDATE_COLLECTION_METADATA,
+          payload: [
+            expect.objectContaining({
+              isCSDA: true
+            })
+          ]
+        })
+      })
+
+      expect(relevancyMock).toHaveBeenCalledTimes(1)
+      expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('when requesting a collection with more than 2000 variables', () => {
+    test('retrieves all 2000 variables and sets the metadata correctly', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+        cmrHost: 'https://cmr.example.com',
+        graphQlHost: 'https://graphql.example.com',
+        opensearchRoot: 'https://cmr.example.com'
+      }))
+
+      const varResults = createVariableResults()
+
+      nock(/graph/)
+        .post(/api/)
+        .reply(200, {
+          data: {
+            collection: {
+              conceptId: 'C10000000000-EDSC',
+              shortName: 'id_1',
+              versionId: 'VersionID',
+              tools: {
+                items: [{
+                  name: 'SOTO'
+                }]
+              },
+              variables: varResults[0]
+            }
+          }
+        })
+
+      nock(/graph/)
+        .post(/api/)
+        .reply(200, {
+          data: {
+            collection: {
+              conceptId: 'C10000000000-EDSC',
+              shortName: 'id_1',
+              versionId: 'VersionID',
+              tools: {
+                items: [{
+                  name: 'SOTO'
+                }]
+              },
+              variables: varResults[1]
+            }
+          }
+        })
+
+      nock(/graph/)
+        .post(/api/)
+        .reply(200, {
+          data: {
+            collection: {
+              conceptId: 'C10000000000-EDSC',
+              shortName: 'id_1',
+              versionId: 'VersionID',
+              tools: {
+                items: [{
+                  name: 'SOTO'
+                }]
+              },
+              variables: varResults[2]
+            }
+          }
+        })
 
       const store = mockStore({
         authToken: '',
