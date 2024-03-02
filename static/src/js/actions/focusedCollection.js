@@ -77,11 +77,9 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   }
 
   // Retrieve the default CMR tags to provide to the collection request
-  const { defaultCmrSearchTags } = getApplicationConfig()
+  const { defaultCmrSearchTags, maxCmrPageSize } = getApplicationConfig()
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
-
-  const varLimit = 2000
 
   const graphQuery = `
     query GetCollection(
@@ -197,7 +195,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         subscriberId: username
       },
       variableParams: {
-        limit: varLimit
+        limit: maxCmrPageSize
       }
     })
     const payload = []
@@ -238,24 +236,26 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       } = collection
 
       // Retrieves all variables if there are more than 2000
-      variables.items = await retrieveVariablesRequest(
-        variables,
-        {
-          params: {
-            conceptId: focusedCollectionId,
-            includeHasGranules: true,
-            includeTags: defaultCmrSearchTags.join(',')
+      if (variables) {
+        variables.items = await retrieveVariablesRequest(
+          variables,
+          {
+            params: {
+              conceptId: focusedCollectionId,
+              includeHasGranules: true,
+              includeTags: defaultCmrSearchTags.join(',')
+            },
+            variableParams: {
+              limit: maxCmrPageSize,
+              cursor: variables.cursor
+            }
           },
-          variableParams: {
-            limit: varLimit,
-            cursor: variables.cursor
-          }
-        },
-        graphQlRequestObject,
-        'GetCollection'
-      )
+          graphQlRequestObject,
+          'GetCollection'
+        )
 
-      console.log(variables)
+        if (Object.hasOwn(variables, 'cursor')) delete variables.cursor
+      }
 
       // Look and see if there are any gibs tags
       // If there are, check to see if the colormaps associated with the productids in the tags exists.

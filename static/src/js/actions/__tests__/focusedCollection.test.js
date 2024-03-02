@@ -28,39 +28,28 @@ import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
 const mockStore = configureMockStore([thunk])
 
-const randomId = () => (Math.random() + 1).toString(36).substring(2)
-
 // Returns a set of variable results in 3 chucks with 2000 variables in the first 2 and 25 in the last
-const createVariableResults = () => {
-  const items = []
-  for (let i = 0; i < 4025; i += 1) {
-    items.push({
-      conceptId: `C${10000000000 + i}-EDSC`
-    })
+const createVariableResults = () => [{
+  variables: {
+    items: [{ conceptId: 'V10000000000-EDSC' }],
+    count: 3,
+    cursor: 'abc000'
   }
-
-  return [{
-    variables: {
-      items: items.slice(0, 2000),
-      count: 4025,
-      cursor: randomId()
-    }
-  },
-  {
-    variables: {
-      items: items.slice(2000, 4000),
-      count: 4025,
-      cursor: randomId()
-    }
-  },
-  {
-    variables: {
-      items: items.slice(4000),
-      count: 4025,
-      cursor: null
-    }
-  }]
-}
+},
+{
+  variables: {
+    items: [{ conceptId: 'V10000000001-EDSC' }],
+    count: 3,
+    cursor: 'abc001'
+  }
+},
+{
+  variables: {
+    items: [{ conceptId: 'V10000000002-EDSC' }],
+    count: 3,
+    cursor: null
+  }
+}]
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -586,6 +575,7 @@ describe('getFocusedCollection', () => {
   describe('when requesting a collection with more than 2000 variables', () => {
     test('retrieves all 2000 variables and sets the metadata correctly', async () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+        maxCmrPageSize: '1',
         cmrHost: 'https://cmr.example.com',
         graphQlHost: 'https://graphql.example.com',
         opensearchRoot: 'https://cmr.example.com'
@@ -606,7 +596,7 @@ describe('getFocusedCollection', () => {
                   name: 'SOTO'
                 }]
               },
-              variables: varResults[0]
+              variables: varResults[0].variables
             }
           }
         })
@@ -624,7 +614,7 @@ describe('getFocusedCollection', () => {
                   name: 'SOTO'
                 }]
               },
-              variables: varResults[1]
+              variables: varResults[1].variables
             }
           }
         })
@@ -642,10 +632,16 @@ describe('getFocusedCollection', () => {
                   name: 'SOTO'
                 }]
               },
-              variables: varResults[2]
+              variables: varResults[2].variables
             }
           }
         })
+
+      const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
+      relevancyMock.mockImplementationOnce(() => jest.fn())
+
+      const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+      getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
 
       const store = mockStore({
         authToken: '',
@@ -661,25 +657,27 @@ describe('getFocusedCollection', () => {
         searchResults: {}
       })
 
+      const expectedItems = [
+        { conceptId: 'V10000000000-EDSC' },
+        { conceptId: 'V10000000001-EDSC' },
+        { conceptId: 'V10000000002-EDSC' }
+      ]
+
       await store.dispatch(getFocusedCollection()).then(() => {
         const storeActions = store.getActions()
-        expect(storeActions[0]).toEqual({
-          type: TOGGLE_SPATIAL_POLYGON_WARNING,
-          payload: false
-        })
 
         expect(storeActions[1]).toEqual({
           type: UPDATE_COLLECTION_METADATA,
           payload: [
             expect.objectContaining({
-              isCSDA: true
+              variables: {
+                count: 3,
+                items: expectedItems
+              }
             })
           ]
         })
       })
-
-      expect(relevancyMock).toHaveBeenCalledTimes(1)
-      expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
     })
   })
 

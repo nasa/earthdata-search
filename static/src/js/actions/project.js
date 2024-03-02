@@ -148,7 +148,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
   const earthdataEnvironment = getEarthdataEnvironment(state)
   const username = getUsername(state)
 
-  const { defaultCmrSearchTags } = getApplicationConfig()
+  const { defaultCmrSearchTags, maxCmrPageSize } = getApplicationConfig()
 
   const emptyProjectCollections = []
 
@@ -210,8 +210,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
   } = searchParams
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
-
-  const varLimit = 2000
 
   const graphQuery = `
     query GetProjectCollections ($params: CollectionsInput, $subcriptionParams: SubscriptionsInput, $variableParams: VariablesInput) {
@@ -357,7 +355,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         subscriberId: username
       },
       variableParams: {
-        limit: varLimit
+        limit: maxCmrPageSize
       }
     })
 
@@ -396,7 +394,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         versionId
       } = metadata
 
-      if (variables.count > 2000) {
+      if (variables && variables.count && variables.count > maxCmrPageSize) {
         variables.items = await retrieveVariablesRequest(
           variables,
           {
@@ -406,7 +404,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               includeTags: defaultCmrSearchTags.join(',')
             },
             variableParams: {
-              limit: 2000,
+              limit: maxCmrPageSize,
               cursor: variables.cursor
             }
           },
