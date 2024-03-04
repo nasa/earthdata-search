@@ -4,6 +4,7 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
  * @param {Object} event Details about the HTTP request that it received
  */
 const eddLogger = async (event) => {
+  console.log('🚀 ~ file: handler.js:7 ~ eddLogger ~ event:', event)
   const { defaultResponseHeaders } = getApplicationConfig()
 
   const { body } = event

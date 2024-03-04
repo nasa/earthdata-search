@@ -19,6 +19,7 @@ const relevancyLogger = async (event) => {
   console.log(`[metrics] ${JSON.stringify(eventData)}`)
 
   return {
+    isBase64Encoded: false,
     statusCode: 200,
     headers: defaultResponseHeaders
   }
