@@ -67,7 +67,6 @@ export const CollectionResultsItem = forwardRef(({
     thumbnail,
     versionId
   } = collectionMetadata
-  console.log('🚀 ~ file: CollectionResultsItem.js:75 ~ thumbnail:', thumbnail)
 
   const [loadingThumbnail, setLoadingThumbnail] = useState(true)
   const { thumbnailSize } = getApplicationConfig()
