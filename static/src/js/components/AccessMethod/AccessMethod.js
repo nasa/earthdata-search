@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable capitalized-comments */
 import React, {
   Component,
@@ -84,7 +85,8 @@ export class AccessMethod extends Component {
       enableTemporalSubsetting,
       enableSpatialSubsetting,
       enableConcatenateDownload,
-      harmonyTypeSelected
+      harmonyTypeSelected,
+      selectValue: ''
     }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
@@ -93,6 +95,7 @@ export class AccessMethod extends Component {
     this.handleToggleTemporalSubsetting = this.handleToggleTemporalSubsetting.bind(this)
     this.handleToggleSpatialSubsetting = this.handleToggleSpatialSubsetting.bind(this)
     this.handleConcatenationSelection = this.handleConcatenationSelection.bind(this)
+    this.updateStep2 = this.updateStep2.bind(this)
   }
 
   UNSAFE_componentWillReceiveProps() {
@@ -124,13 +127,19 @@ export class AccessMethod extends Component {
     const { metadata, onSelectAccessMethod } = this.props
     const { conceptId: collectionId } = metadata
 
-    if (!method.includes('harmony')) {
+    let methodId = method
+
+    if (typeof (method) === 'object') {
+      methodId = method.target.value
+    }
+
+    if (!methodId.includes('harmony')) {
       this.setState({ harmonyTypeSelected: false })
     }
 
     onSelectAccessMethod({
       collectionId,
-      selectedAccessMethod: method
+      selectedAccessMethod: methodId
     })
   }
 
@@ -225,6 +234,104 @@ export class AccessMethod extends Component {
     })
   }
 
+  harmonyMethodsMapper(methods, selected, testFunc) {
+    return (
+      <div id="harmony_methods">
+        {methods.map((radio) => this.renderRadioItemSelectItem(radio, testFunc, selected))}
+      </div>
+    )
+  }
+
+  updateStep2(event) {
+    console.log(`The selectValue before setting is ${this.state.selectValue}`)
+    console.log(`The event value is ${event}`)
+    if (event !== '') {
+      this.setState({
+        selectValue: event
+      })
+
+      this.handleAccessMethodSelection(event)
+    }
+
+    console.log(`The selectValue after setting is ${this.state.selectValue}`)
+  }
+
+  // eslint-disable-next-line react/no-unused-class-component-methods
+  renderJustItems(harmonyMethods) { // XXX
+    return (
+      <div key="HarmonyMethodsList">
+        {
+          harmonyMethods.map((value) => (
+            <Select.Item className="SelectItem" key={value.methodKey} value={`${value.methodKey}_val`}>
+              <Select.ItemText key={`${value.methodKey}_text`}>{value.name}</Select.ItemText>
+              <Select.ItemIndicator key={`${value.methodKey}_itemIndicator`} className="SelectItemIndicator" />
+            </Select.Item>
+          ))
+        }
+      </div>
+    )
+  }
+
+  // eslint-disable-next-line react/no-unused-class-component-methods
+  renderAccessMethodRadioTest() { // XXX
+    const id = 'testkey'
+    const methodKey = 'testMethodKey'
+    const title = 'testTitle'
+    const subtitle = 'testSubtitle'
+    const serviceName = 'testServiceName'
+    const desc = 'testDescription'
+    const details = 'testDetails'
+    const onPropsChange = () => {}
+
+    const checked = false
+
+    return (
+      <Select.Item className="SelectItem" key="testSelectItem" value="testValue">
+        <AccessMethodRadio
+          key={id}
+          id={id}
+          value={methodKey}
+          title={title}
+          subtitle={subtitle}
+          serviceName={serviceName}
+          description={desc}
+          details={details}
+          onChange={onPropsChange}
+          checked={checked}
+        />
+      </Select.Item>
+    )
+  }
+
+  renderRadioItemSelectItem(radioItem, onPropsChange, selected) {
+    const {
+      id,
+      methodKey,
+      title,
+      subtitle,
+      name,
+      description,
+      details
+    } = radioItem
+
+    return (
+      <Select.Item className="SelectItem" key={methodKey} value={methodKey}>
+        <AccessMethodRadio
+          key={id}
+          id={id}
+          value={methodKey}
+          title={title}
+          subtitle={subtitle}
+          serviceName={name}
+          description={description}
+          details={details}
+          onChange={onPropsChange}
+          checked={selected === methodKey}
+        />
+      </Select.Item>
+    )
+  }
+
   renderRadioItem(radioItem, onPropsChange, selected) {
     const {
       id,
@@ -249,6 +356,32 @@ export class AccessMethod extends Component {
         onChange={onPropsChange}
         checked={selected === methodKey}
       />
+    )
+  }
+
+  renderHarmonySelector(harmonyMethods, selectedAccessMethod) {
+    const onPropsChange = (methodName) => this.handleAccessMethodSelection(methodName)
+
+    return (
+      <Select.Root name="HarmonyMethodSelector" value={this.state.selectValue} onValueChange={this.updateStep2}>
+        <Select.Trigger key="HarmonyTrigger" className="SelectTrigger">
+          <Select.Value placeholder="Choose a service">
+            {this.state.selectValue}
+          </Select.Value>
+          <Select.Icon className="SelectIcon" />
+        </Select.Trigger>
+
+        <Select.Portal>
+          <Select.Content className="SelectContent" position="popper">
+            <Select.ScrollUpButton className="SelectScrollButton" />
+            <Select.Viewport key="HarmonySelectorViewport" className="SelectViewport">
+              {this.harmonyMethodsMapper(harmonyMethods, selectedAccessMethod, onPropsChange)}
+            </Select.Viewport>
+            <Select.ScrollDownButton className="SelectScrollButton" />
+            <Select.Arrow />
+          </Select.Content>
+        </Select.Portal>
+      </Select.Root>
     )
   }
 
@@ -287,74 +420,6 @@ export class AccessMethod extends Component {
         radioList={radioList}
         renderRadio={this.renderRadioItem}
       />
-    )
-  }
-
-  renderJustItems(harmonyMethods) {
-    return (
-      <div key="HarmonyMethodsList">
-        {
-          harmonyMethods.map((value) => (
-            <Select.Item className="SelectItem" key={value.methodKey} value={`${value.methodKey}_val`}>
-              <Select.ItemText key={`${value.methodKey}_text`}>{value.name}</Select.ItemText>
-              <Select.ItemIndicator key={`${value.methodKey}_itemIndicator`} className="SelectItemIndicator" />
-            </Select.Item>
-          ))
-        }
-      </div>
-    )
-  }
-
-  renderAccessMethodRadioTest() {
-    const id = 'testkey'
-    const methodKey = 'testMethodKey'
-    const title = 'testTitle'
-    const subtitle = 'testSubtitle'
-    const serviceName = 'testServiceName'
-    const desc = 'testDescription'
-    const details = 'testDetails'
-    const onPropsChange = () => {}
-
-    const checked = false
-
-    return (
-      <Select.Item className="SelectItem" key="testSelectItem" value="testValue">
-        <AccessMethodRadio
-          key={id}
-          id={id}
-          value={methodKey}
-          title={title}
-          subtitle={subtitle}
-          serviceName={serviceName}
-          description={desc}
-          details={details}
-          onChange={onPropsChange}
-          checked={checked}
-        />
-      </Select.Item>
-    )
-  }
-
-  renderHarmonySelector(harmonyMethods) {
-    return (
-      <Select.Root name="HarmonyMethodSelector">
-        <Select.Trigger key="HarmonyTrigger" className="SelectTrigger">
-          <Select.Value placeholder="Choose a service" />
-          <Select.Icon className="SelectIcon" />
-        </Select.Trigger>
-
-        <Select.Portal>
-          <Select.Content className="SelectContent" position="popper">
-            <Select.ScrollUpButton className="SelectScrollButton" />
-            <Select.Viewport key="HarmonySelectorViewport" className="SelectViewport">
-              {this.renderAccessMethodRadioTest()}
-              {this.renderJustItems(harmonyMethods)}
-            </Select.Viewport>
-            <Select.ScrollDownButton className="SelectScrollButton" />
-            <Select.Arrow />
-          </Select.Content>
-        </Select.Portal>
-      </Select.Root>
     )
   }
 
@@ -632,13 +697,11 @@ export class AccessMethod extends Component {
           heading="Configure data customization options"
           intro="Edit the options below to configure the customization and output options for the selected data product."
           step={2}
-          // eslint-disable-next-line react/destructuring-assignment
           faded={!selectedAccessMethod && !this.state.harmonyTypeSelected} // XXX
         >
           {
-            // eslint-disable-next-line react/destructuring-assignment
             this.state.harmonyTypeSelected && ( // XXX
-              this.renderHarmonySelector(harmonyMethods)
+              this.renderHarmonySelector(harmonyMethods, selectedAccessMethod)
             )
           }
           {
