@@ -242,12 +242,12 @@ export class AccessMethod extends Component {
     )
   }
 
-  updateStep2(event) {
+  updateStep2(event, harmonyMethods) {
     console.log(`The selectValue before setting is ${this.state.selectValue}`)
     console.log(`The event value is ${event}`)
     if (event !== '') {
       this.setState({
-        selectValue: event
+        selectValue: harmonyMethods.find(({ methodKey }) => methodKey === event).name
       })
 
       this.handleAccessMethodSelection(event)
@@ -363,7 +363,11 @@ export class AccessMethod extends Component {
     const onPropsChange = () => {}
 
     return (
-      <Select.Root name="HarmonyMethodSelector" value={this.state.selectValue} onValueChange={this.updateStep2}>
+      <Select.Root
+        name="HarmonyMethodSelector"
+        value={this.state.selectValue}
+        onValueChange={(e) => this.updateStep2(e, harmonyMethods)}
+      >
         <Select.Trigger key="HarmonyTrigger" className="SelectTrigger">
           <Select.Value placeholder="Choose a service">
             {this.state.selectValue}
