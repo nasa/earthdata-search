@@ -38,11 +38,12 @@ Resources:
       AllocatedStorage: ${env:DB_ALLOCATED_STORAGE}
       DBInstanceClass: ${env:DB_INSTANCE_CLASS}
       Engine: postgres
-      EngineVersion: '14.4'
+      EngineVersion: '14.10'
       AllowMajorVersionUpgrade: true
       MasterUsername: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:username}}"] ] }
       MasterUserPassword: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:password}}"] ] }
       MultiAZ: true
+      StorageEncrypted: true
       StorageType: gp2
       DBSubnetGroupName:
         Ref: DBSubnetGroup
