@@ -234,10 +234,10 @@ export class AccessMethod extends Component {
     })
   }
 
-  harmonyMethodsMapper(methods, selected, testFunc) {
+  harmonyMethodsMapper(methods, selected, onPropsChange) {
     return (
       <div id="harmony_methods">
-        {methods.map((radio) => this.renderRadioItemSelectItem(radio, testFunc, selected))}
+        {methods.map((radio) => this.renderRadioItemSelectItem(radio, onPropsChange, selected))}
       </div>
     )
   }
@@ -360,7 +360,7 @@ export class AccessMethod extends Component {
   }
 
   renderHarmonySelector(harmonyMethods, selectedAccessMethod) {
-    const onPropsChange = (methodName) => this.handleAccessMethodSelection(methodName)
+    const onPropsChange = () => {}
 
     return (
       <Select.Root name="HarmonyMethodSelector" value={this.state.selectValue} onValueChange={this.updateStep2}>
