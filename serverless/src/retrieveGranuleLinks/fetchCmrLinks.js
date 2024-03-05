@@ -1,5 +1,7 @@
 import axios from 'axios'
+import camelcaseKeys from 'camelcase-keys'
 
+import { prepareGranuleAccessParams } from '../../../sharedUtils/prepareGranuleAccessParams'
 import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
 import { getDownloadUrls } from '../../../sharedUtils/getDownloadUrls'
 import { getS3Urls } from '../../../sharedUtils/getS3Urls'
@@ -29,14 +31,18 @@ export const fetchCmrLinks = async ({
 
   const graphQlUrl = `${graphQlHost}/api`
 
-  const { concept_id: conceptIdsFromParams = [] } = granuleParams
+  const preparedGranuleParams = camelcaseKeys(prepareGranuleAccessParams(granuleParams))
+
+  delete preparedGranuleParams.pageNum
+  delete preparedGranuleParams.pageSize
+  delete preparedGranuleParams.echoCollectionId
 
   const variables = {
     params: {
+      ...preparedGranuleParams,
       limit: parseInt(granuleLinksPageSize, 10),
       linkTypes: linkTypes.split(','),
       collectionConceptId: collectionId,
-      conceptId: conceptIdsFromParams,
       cursor
     }
   }
