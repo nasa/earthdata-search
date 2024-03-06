@@ -3,8 +3,23 @@ import { fetchCmrLinks } from '../fetchCmrLinks'
 
 describe('fetchCmrLinks', () => {
   test('returns a list of links from CMR', async () => {
+    const granulesGraphQlQuery = '\n  query GetGranuleLinks( $params: GranulesInput ) {\n    granules( params: $params) {\n      cursor\n      items {\n        links\n      }\n    }\n  }'
     nock(/graphql/)
-      .post(/api/)
+      .post(/api/, (body) => JSON.stringify(body) === JSON.stringify({
+        query: granulesGraphQlQuery,
+        variables: {
+          params: {
+            exclude: {},
+            options: {},
+            temporal: '2023-03-26T15:05:48.871Z,2023-03-27T10:48:39.230Z',
+            conceptId: [],
+            twoDCoordinateSystem: {},
+            limit: 500,
+            linkTypes: ['data', 's3'],
+            collectionConceptId: 'C1214470488-ASF'
+          }
+        }
+      }))
       .reply(200, {
         data: {
           granules: {
