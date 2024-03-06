@@ -79,7 +79,7 @@ export class AccessMethod extends Component {
       )
     } = selectedMethod || {}
 
-    const harmonyTypeSelected = false
+    const harmonyTypeSelected = selectedAccessMethod ? selectedAccessMethod.startsWith('harmony') : false
 
     this.state = {
       enableTemporalSubsetting,
@@ -120,6 +120,11 @@ export class AccessMethod extends Component {
     onSelectAccessMethod({
       collectionId,
       selectedAccessMethod: null
+    })
+
+    // Clear the text for the <Select> in step 2
+    this.setState({
+      selectValue: ''
     })
   }
 
@@ -361,6 +366,12 @@ export class AccessMethod extends Component {
 
   renderHarmonySelector(harmonyMethods, selectedAccessMethod) {
     const onPropsChange = () => {}
+
+    if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony') && this.state.selectValue === '') {
+      this.setState({
+        selectValue: harmonyMethods.find(({ methodKey }) => methodKey === selectedAccessMethod).name
+      })
+    }
 
     return (
       <Select.Root
@@ -704,7 +715,7 @@ export class AccessMethod extends Component {
           faded={!selectedAccessMethod && !this.state.harmonyTypeSelected} // XXX
         >
           {
-            this.state.harmonyTypeSelected && ( // XXX
+            this.state.harmonyTypeSelected && harmonyMethods.length > 0 && ( // XXX
               this.renderHarmonySelector(harmonyMethods, selectedAccessMethod)
             )
           }
