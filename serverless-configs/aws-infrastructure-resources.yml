@@ -63,6 +63,8 @@ Resources:
       MultiAZ: true
       StorageEncrypted: true
       StorageType: gp2
+      EnablePerformanceInsights: true
+      PerformanceInsightsRetentionPeriod: 7
       DBSubnetGroupName:
         Ref: DBSubnetGroup
       VPCSecurityGroups:
