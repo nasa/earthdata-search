@@ -102,8 +102,8 @@ class ProjectPanels extends PureComponent {
 
     allIds.forEach((collectionId) => {
       const { accessMethods = {}, selectedAccessMethod } = byId[collectionId]
-
       if (selectedAccessMethod) {
+        console.log(`${collectionId} selectedAccessMethod: ${selectedAccessMethod}`)
         const { [selectedAccessMethod]: accessMethod = {} } = accessMethods
 
         const {

@@ -79,6 +79,7 @@ export class AccessMethod extends Component {
       )
     } = selectedMethod || {}
 
+    console.log(`selectedAccessMethod is ${selectedAccessMethod}`)
     const harmonyTypeSelected = selectedAccessMethod ? selectedAccessMethod.startsWith('harmony') : false
 
     this.state = {
@@ -134,7 +135,7 @@ export class AccessMethod extends Component {
 
     let methodId = method
 
-    if (typeof (method) === 'object') {
+    if (typeof (method) === 'object') { // Not sure if still necessary
       methodId = method.target.value
     }
 
@@ -684,8 +685,7 @@ export class AccessMethod extends Component {
       : false
 
     const harmonyMethods = accessMethodsByType.Harmony
-    // eslint-disable-next-line max-len
-    // const harmonyOptions = <select>{harmonyMethods.map((value) => <option key={value.id}>{value.id}</option>)}</select>
+    // Clear Harmony method-related state if harmonyMethods is empty? XXX
 
     return (
       <div className="access-method">
