@@ -316,7 +316,6 @@ export class AccessMethod extends Component {
       methodKey,
       title,
       subtitle,
-      name,
       description,
       details
     } = radioItem
@@ -329,7 +328,6 @@ export class AccessMethod extends Component {
           value={methodKey}
           title={title}
           subtitle={subtitle}
-          serviceName={name}
           description={description}
           details={details}
           onChange={onPropsChange}
@@ -381,6 +379,7 @@ export class AccessMethod extends Component {
         value={this.state.selectValue}
         onValueChange={(e) => this.updateStep2(e, harmonyMethods)}
       >
+        <span>Service</span>
         <Select.Trigger key="HarmonyTrigger" className="SelectTrigger">
           <Select.Value placeholder="Choose a service">
             {this.state.selectValue}
@@ -479,7 +478,7 @@ export class AccessMethod extends Component {
     Object.keys(accessMethods).forEach((methodKey) => {
       const { [methodKey]: accessMethod = {} } = accessMethods
 
-      const { type, name } = accessMethod
+      const { type, name, description: descriptionFromMetadata } = accessMethod
 
       let id = null
       let title = null
@@ -529,10 +528,8 @@ export class AccessMethod extends Component {
 
         case 'Harmony': {
           id = `${collectionId}_access-method__harmony_${methodKey}`
-          title = 'Customize'
-          subtitle = 'Harmony'
-          description = 'Select options like variables, transformations, and output formats for in-region cloud access.'
-          details = `The requested data will be processed using the ${name} service and stored in the cloud for analysis.`
+          title = name
+          description = descriptionFromMetadata
           hasHarmony = true
           break
         }

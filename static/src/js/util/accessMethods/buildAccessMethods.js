@@ -36,6 +36,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
       let associatedVariables = collectionAssociatedVariables
       const {
         conceptId: serviceConceptId,
+        description,
         orderOptions,
         type: serviceType,
         url,
@@ -161,6 +162,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         }
 
         accessMethods[`harmony${harmonyIndex}`] = {
+          description,
           enableTemporalSubsetting: true,
           enableSpatialSubsetting: true,
           hierarchyMappings,
