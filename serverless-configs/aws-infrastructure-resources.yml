@@ -30,6 +30,26 @@ Resources:
         Ref: Database
       TargetType: AWS::RDS::DBInstance
 
+  # Encrypted Database password secret storage
+  EncryptedDbPasswordSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Description: "EDSC Encrypted RDS database master password"
+      GenerateSecretString:
+        SecretStringTemplate: "{\"username\":\"edsc\"}"
+        GenerateStringKey: "password"
+        PasswordLength: 30
+        ExcludeCharacters: "\"@/\\"
+
+  SecretEncryptedRDSInstanceAttachment:
+    Type: "AWS::SecretsManager::SecretTargetAttachment"
+    Properties:
+      SecretId:
+        Ref: EncryptedDbPasswordSecret
+      TargetId:
+        Ref: EncryptedDatabase
+      TargetType: AWS::RDS::DBInstance
+
   # RDS database
   Database:
     Type: AWS::RDS::DBInstance
@@ -229,10 +249,26 @@ Outputs:
     Export:
       Name: ${self:provider.stage}-EDSCServerlessAppRole
 
-  DatabaseEndpoint:
+  EncryptedDatabaseEndpoint:
     Value:
       Fn::GetAtt:
         - EncryptedDatabase
+        - Endpoint.Address
+    Export:
+      Name: ${self:provider.stage}-EncryptedDatabaseEndpoint
+
+  EncryptedDatabasePort:
+    Value:
+      Fn::GetAtt:
+        - EncryptedDatabase
+        - Endpoint.Port
+    Export:
+      Name: ${self:provider.stage}-EncryptedDatabasePort
+
+  DatabaseEndpoint:
+    Value:
+      Fn::GetAtt:
+        - Database
         - Endpoint.Address
     Export:
       Name: ${self:provider.stage}-DatabaseEndpoint
@@ -240,7 +276,7 @@ Outputs:
   DatabasePort:
     Value:
       Fn::GetAtt:
-        - EncryptedDatabase
+        - Database
         - Endpoint.Port
     Export:
       Name: ${self:provider.stage}-DatabasePort
