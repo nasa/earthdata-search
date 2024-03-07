@@ -20,7 +20,7 @@ const initParams = {
     items: [{
       conceptId: 'V10000000000-EDSC'
     }],
-    cursor: 'abd12'
+    cursor: 'mock-cursor-0'
   },
   requestParams: {
     params: {
@@ -31,7 +31,7 @@ const initParams = {
     variableParams: {
       limit: 1,
       count: 2,
-      cursor: 'abc12'
+      cursor: 'mock-cursor-0'
     }
   },
   queryType: 'GetCollection'
@@ -131,7 +131,7 @@ describe('retrieveVariablesRequest', () => {
                 conceptId: 'V10000000001-EDSC'
               }],
               count: 4,
-              cursor: 'abc0001'
+              cursor: 'mock-cursor-1'
             }
           }
         }
@@ -155,7 +155,7 @@ describe('retrieveVariablesRequest', () => {
                 conceptId: 'V10000000002-EDSC'
               }],
               count: 4,
-              cursor: 'abc0002'
+              cursor: 'mock-cursor-2'
             }
           }
         }

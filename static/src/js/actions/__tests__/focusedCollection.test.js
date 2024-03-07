@@ -28,19 +28,19 @@ import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
 const mockStore = configureMockStore([thunk])
 
-// Returns a set of variable results in 3 chucks with 2000 variables in the first 2 and 25 in the last
+// Returns a set of variable results in 3 chucks with more variables than maxCmrPageSize in the first 2 and 25 in the last
 const createVariableResults = () => [{
   variables: {
     items: [{ conceptId: 'V10000000000-EDSC' }],
     count: 3,
-    cursor: 'abc000'
+    cursor: 'mock-cursor-0'
   }
 },
 {
   variables: {
     items: [{ conceptId: 'V10000000001-EDSC' }],
     count: 3,
-    cursor: 'abc001'
+    cursor: 'mock-cursor-1'
   }
 },
 {
@@ -572,13 +572,26 @@ describe('getFocusedCollection', () => {
     })
   })
 
-  describe('when requesting a collection with more than 2000 variables', () => {
-    test('retrieves all 2000 variables and sets the metadata correctly', async () => {
+  describe('when requesting a collection with more variables than the maxCmrPageSize', () => {
+    test('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
-        maxCmrPageSize: '1',
         cmrHost: 'https://cmr.example.com',
         graphQlHost: 'https://graphql.example.com',
         opensearchRoot: 'https://cmr.example.com'
+      }))
+
+      jest.spyOn(getEarthdataConfig, 'getApplicationConfig').mockImplementation(() => ({
+        maxCmrPageSize: 1,
+        env: 'prod',
+        defaultCmrSearchTags: [
+          'edsc.*',
+          'opensearch.granule.osdd'
+        ],
+        clientId: {
+          background: 'eed-PORTAL-ENV-serverless-background',
+          client: 'eed-PORTAL-ENV-serverless-client',
+          lambda: 'eed-PORTAL-ENV-serverless-lambda'
+        }
       }))
 
       const varResults = createVariableResults()

@@ -44,6 +44,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   // Retrieve data from Redux using selectors
   const collectionsQuery = getCollectionsQuery(state)
+  console.log(state)
   const earthdataEnvironment = getEarthdataEnvironment(state)
   const focusedCollectionId = getFocusedCollectionId(state)
   const focusedCollectionMetadata = getFocusedCollectionMetadata(state)
@@ -79,7 +80,13 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   // Retrieve the default CMR tags to provide to the collection request
   const { defaultCmrSearchTags, maxCmrPageSize } = getApplicationConfig()
 
+  console.log(defaultCmrSearchTags)
+  console.log(maxCmrPageSize)
+  console.log(authToken)
+  console.log(earthdataEnvironment)
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+
+  console.log(graphQlRequestObject)
 
   const graphQuery = `
     query GetCollection(
@@ -198,6 +205,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         limit: maxCmrPageSize
       }
     })
+
     const payload = []
 
     const {
@@ -236,7 +244,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       } = collection
 
       // Retrieves all variables if there are more than 2000
-      if (variables) {
+      if (variables && variables.count && variables.count > maxCmrPageSize) {
         variables.items = await retrieveVariablesRequest(
           variables,
           {
@@ -251,7 +259,28 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
             }
           },
           graphQlRequestObject,
-          'GetCollection'
+          `query GetCollection(
+            $params: CollectionInput, $variableParams: VariablesInput
+          ) {
+            collection (params: $params) {
+              conceptId
+              variables (
+                params: $variableParams
+              ) {
+                count
+                cursor
+                items {
+                  conceptId
+                  definition
+                  instanceInformation
+                  longName
+                  name
+                  nativeId
+                  scienceKeywords
+                }
+              }
+            }
+          }`
         )
 
         if (Object.hasOwn(variables, 'cursor')) delete variables.cursor

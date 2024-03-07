@@ -394,13 +394,15 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         versionId
       } = metadata
 
+      console.log(hasGranules)
+
       if (variables && variables.count && variables.count > maxCmrPageSize) {
-        variables.items = await retrieveVariablesRequest(
+        const myItems = await retrieveVariablesRequest(
           variables,
           {
             params: {
-              conceptId,
-              includeHasGranules: true,
+              conceptId: filteredIds,
+              includeHasGranules: false,
               includeTags: defaultCmrSearchTags.join(',')
             },
             variableParams: {
@@ -409,10 +411,40 @@ export const getProjectCollections = () => async (dispatch, getState) => {
             }
           },
           graphQlRequestObject,
-          'GetProjectCollections'
+          `query GetProjectCollections ($params: CollectionsInput, $variableParams: VariablesInput) {
+            collections (
+              params: $params
+            ) {
+              items {
+                conceptId
+                hasGranules
+                variables (
+                  params: $variableParams
+                ) {
+                  count
+                  cursor
+                  items {
+                    conceptId
+                    definition
+                    instanceInformation
+                    longName
+                    name
+                    nativeId
+                    scienceKeywords
+                  }
+                }
+              }
+            }
+          }`
         )
+        console.log(myItems)
+        variables.items = myItems
+
+        if (Object.hasOwn(variables, 'cursor')) delete variables.cursor
       }
 
+      console.log(metadata.variables)
+      console.log(`before push ${hasGranules}`)
       const focusedMetadata = createFocusedCollectionMetadata(
         metadata,
         authToken,
@@ -420,7 +452,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       )
 
       const isOpenSearch = !!getOpenSearchOsddLink(metadata)
-
       payload.push({
         abstract,
         archiveAndDistributionInformation,
@@ -478,10 +509,10 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           dataQualitySummaries: dqsItems
         }))
       }
-
-      // Update metadata in the store
-      dispatch(actions.updateCollectionMetadata(payload))
     })
+
+    // Update metadata in the store
+    dispatch(actions.updateCollectionMetadata(payload))
 
     return response
   } catch (error) {
