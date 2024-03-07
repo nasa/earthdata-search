@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 import { Alert, Form } from 'react-bootstrap'
 import moment from 'moment'
 import * as Select from '@radix-ui/react-select'
+import * as ScrollArea from '@radix-ui/react-scroll-area'
 
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
@@ -389,12 +390,20 @@ export class AccessMethod extends Component {
 
         <Select.Portal>
           <Select.Content className="SelectContent" position="popper">
-            <Select.ScrollUpButton className="SelectScrollButton" />
-            <Select.Viewport key="HarmonySelectorViewport" className="SelectViewport">
-              {this.harmonyMethodsMapper(harmonyMethods, selectedAccessMethod, onPropsChange)}
-            </Select.Viewport>
-            <Select.ScrollDownButton className="SelectScrollButton" />
-            <Select.Arrow />
+            <ScrollArea.Root className="ScrollAreaRoot" type="auto">
+              <Select.Viewport key="HarmonySelectorViewport" className="SelectViewport" asChild>
+                <ScrollArea.Viewport className="ScrollAreaViewport">
+                  {this.harmonyMethodsMapper(harmonyMethods, selectedAccessMethod, onPropsChange)}
+                </ScrollArea.Viewport>
+              </Select.Viewport>
+              <ScrollArea.Scrollbar
+                className="ScrollAreaScrollbar"
+                orientation="vertical"
+              >
+                <ScrollArea.Thumb className="ScrollAreaThumb" />
+              </ScrollArea.Scrollbar>
+              <Select.Arrow />
+            </ScrollArea.Root>
           </Select.Content>
         </Select.Portal>
       </Select.Root>

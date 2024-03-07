@@ -19,6 +19,7 @@ button {
   gap: 5px;
   background-color: white;
   margin-bottom: 0.5rem;
+  margin-left: 1rem;
 }
 .SelectTrigger:hover {
   background-color: #f3f3f3; /* $color__black--100 */
@@ -34,6 +35,8 @@ button {
   border-radius: 6px;
   box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
   z-index: 100;
+  width: 434px;
+  height: 280px;
 }
 
 .SelectViewport {
@@ -64,7 +67,7 @@ button {
   align-items: center;
   justify-content: center;
 }
-
+/*
 .SelectScrollButton {
   display: flex;
   align-items: center;
@@ -72,4 +75,28 @@ button {
   height: 25px;
   background-color: white;
   cursor: default;
+}*/
+
+
+/* scroll area */
+
+.ScrollAreaRoot {
+  width: 100%;
+  height: 100%;
+}
+
+.ScrollAreaViewport {
+  width: 100%;
+  height: 100%;
+}
+
+.ScrollAreaScrollbar {
+  width: 4px;
+  padding: 5px 2px;
+  background: #dcdee0; /* color__black--200 */
+}
+
+.ScrollAreaThumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
 }
