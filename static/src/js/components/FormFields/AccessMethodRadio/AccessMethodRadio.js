@@ -93,35 +93,44 @@ export const AccessMethodRadio = ({
               {description}
             </span>
           </div>
-          <div className="access-method-radio__header-tertiary">
-            <button
-              className="access-method-radio__more-info-button"
-              type="button"
-              onClick={onMoreDetailsClick}
-            >
-              {`${!moreInfoActive ? 'More ' : 'Less '}`}
-              Info
-            </button>
-          </div>
+          {
+            details && (
+              <div className="access-method-radio__header-tertiary">
+                <button
+                  className="access-method-radio__more-info-button"
+                  type="button"
+                  onClick={onMoreDetailsClick}
+                >
+                  {`${!moreInfoActive ? 'More ' : 'Less '}`}
+                  Info
+                </button>
+              </div>
+            )
+          }
         </header>
       </div>
-      <CSSTransition
-        in={moreInfoActive}
-        timeout={0}
-        classNames="access-method-radio__more-info-view"
-      >
-        <div className="access-method-radio__more-info">
-          <span className="access-method-radio__details">
-            {details}
-          </span>
-        </div>
-      </CSSTransition>
+      {
+        details && (
+          <CSSTransition
+            in={moreInfoActive}
+            timeout={0}
+            classNames="access-method-radio__more-info-view"
+          >
+            <div className="access-method-radio__more-info">
+              <span className="access-method-radio__details">
+                {details}
+              </span>
+            </div>
+          </CSSTransition>
+        )
+      }
     </label>
   )
 }
 
 AccessMethodRadio.defaultProps = {
   checked: null,
+  details: null,
   onChange: null,
   onClick: null,
   subtitle: null,
@@ -137,7 +146,7 @@ AccessMethodRadio.propTypes = {
   details: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.string
-  ]).isRequired,
+  ]),
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func,
