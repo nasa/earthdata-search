@@ -243,7 +243,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         versionId
       } = collection
 
-      // Retrieves all variables if there are more than 2000
+      // Retrieves all variables if there are more than `maxCmrPageSize`
       if (variables && variables.count && variables.count > maxCmrPageSize) {
         variables.items = await retrieveVariablesRequest(
           variables,
