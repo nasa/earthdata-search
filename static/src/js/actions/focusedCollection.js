@@ -44,7 +44,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   // Retrieve data from Redux using selectors
   const collectionsQuery = getCollectionsQuery(state)
-  console.log(state)
   const earthdataEnvironment = getEarthdataEnvironment(state)
   const focusedCollectionId = getFocusedCollectionId(state)
   const focusedCollectionMetadata = getFocusedCollectionMetadata(state)
@@ -80,13 +79,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   // Retrieve the default CMR tags to provide to the collection request
   const { defaultCmrSearchTags, maxCmrPageSize } = getApplicationConfig()
 
-  console.log(defaultCmrSearchTags)
-  console.log(maxCmrPageSize)
-  console.log(authToken)
-  console.log(earthdataEnvironment)
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
-
-  console.log(graphQlRequestObject)
 
   const graphQuery = `
     query GetCollection(

@@ -1,4 +1,5 @@
 import { isEmpty, intersection } from 'lodash'
+import 'array-foreach-async'
 
 import actions from './index'
 
@@ -369,9 +370,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     const { collections } = data
     const { items } = collections
 
-    for (let i = 0; i < items.length; i += 1) {
-      const metadata = items[i]
-
+    await items.forEachAsync(async (metadata) => {
       const {
         abstract,
         archiveAndDistributionInformation,
@@ -400,7 +399,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
 
       if (variables && variables.count && variables.count > maxCmrPageSize) {
         // eslint-disable-next-line no-await-in-loop
-        const myItems = await retrieveVariablesRequest(
+        const retrievedItems = await retrieveVariablesRequest(
           variables,
           {
             params: {
@@ -416,13 +415,11 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           graphQlRequestObject
         )
 
-        variables.items = myItems
+        variables.items = retrievedItems
 
         if (variables.cursor) delete variables.cursor
       }
 
-      console.log(metadata.variables)
-      console.log(`before push ${hasGranules}`)
       const focusedMetadata = createFocusedCollectionMetadata(
         metadata,
         authToken,
@@ -489,10 +486,10 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           }))
         }
       }
-    }
 
-    // Update metadata in the store
-    dispatch(actions.updateCollectionMetadata(payload))
+      // Update metadata in the store
+      dispatch(actions.updateCollectionMetadata(payload))
+    })
   } catch (error) {
     dispatch(actions.handleError({
       error,

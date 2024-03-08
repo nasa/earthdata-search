@@ -350,7 +350,7 @@ describe('getProjectCollections', () => {
 
     const storeActions = store.getActions()
 
-    expect(storeActions.length).toEqual(3)
+    expect(storeActions.length).toEqual(4)
     expect(storeActions[0]).toEqual({
       type: ADD_ACCESS_METHODS,
       payload: {
@@ -360,6 +360,18 @@ describe('getProjectCollections', () => {
     })
 
     expect(storeActions[1]).toEqual({
+      type: UPDATE_COLLECTION_METADATA,
+      payload: [
+        expect.objectContaining({
+          id: 'collectionId1'
+        }),
+        expect.objectContaining({
+          id: 'collectionId2'
+        })
+      ]
+    })
+
+    expect(storeActions[2]).toEqual({
       type: ADD_ACCESS_METHODS,
       payload: {
         collectionId: 'collectionId2',
@@ -367,7 +379,7 @@ describe('getProjectCollections', () => {
       }
     })
 
-    expect(storeActions[2]).toEqual({
+    expect(storeActions[3]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
         expect.objectContaining({
@@ -409,7 +421,7 @@ describe('getProjectCollections', () => {
         .reply(200, {})
 
       nock(/localhost/)
-        .post(/graph/)
+        .post(/graphql/)
         .reply(200, {
           data: {
             collections: {
@@ -429,54 +441,37 @@ describe('getProjectCollections', () => {
         })
 
       nock(/localhost/)
-        .post(/granules/)
-        .reply(200, {
-          feed: {
-            updated: '2019-03-27T20:21:14.705Z',
-            id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C10000000000-EDSC',
-            title: 'ECHO granule metadata',
-            entry: [{
-              id: 'G1000001-EDSC'
-            }, {
-              id: 'G1000002-EDSC'
-            }]
-          }
-        }, {
-          'cmr-hits': 1
-        })
-
-      nock(/localhost/)
-        .post(/graph/)
+        .post(/graphql/)
         .reply(200, {
           data: {
-            collections: {
-              items: [{
-                conceptId: 'C10000000000-EDSC',
-                tools: {
-                  items: [{
-                    name: 'SOTO'
-                  }]
-                },
-                variables: varResults[1].variables
-              }]
+            collection: {
+              conceptId: 'C10000000000-EDSC',
+              shortName: 'id_1',
+              versionId: 'VersionID',
+              tools: {
+                items: [{
+                  name: 'SOTO'
+                }]
+              },
+              variables: varResults[1].variables
             }
           }
         })
 
       nock(/localhost/)
-        .post(/graph/)
+        .post(/graphql/)
         .reply(200, {
           data: {
-            collections: {
-              items: [{
-                conceptId: 'C10000000000-EDSC',
-                tools: {
-                  items: [{
-                    name: 'SOTO'
-                  }]
-                },
-                variables: varResults[2].variables
-              }]
+            collection: {
+              conceptId: 'C10000000000-EDSC',
+              shortName: 'id_1',
+              versionId: 'VersionID',
+              tools: {
+                items: [{
+                  name: 'SOTO'
+                }]
+              },
+              variables: varResults[2].variables
             }
           }
         })
@@ -501,20 +496,31 @@ describe('getProjectCollections', () => {
         { conceptId: 'V10000000002-EDSC' }
       ]
 
-      await store.dispatch(actions.getProjectCollections()).then(() => {
-        const storeActions = store.getActions()
+      await store.dispatch(actions.getProjectCollections())
 
-        expect(storeActions[1]).toEqual({
-          type: UPDATE_COLLECTION_METADATA,
-          payload: [
-            expect.objectContaining({
-              variables: {
-                count: 3,
-                items: expectedItems
-              }
-            })
-          ]
-        })
+      const storeActions = store.getActions()
+
+      expect(storeActions.length).toEqual(2)
+
+      expect(storeActions[0]).toEqual({
+        type: ADD_ACCESS_METHODS,
+        payload: {
+          collectionId: 'C10000000000-EDSC',
+          methods: {},
+          selectedAccessMethod: undefined
+        }
+      })
+
+      expect(storeActions[1]).toEqual({
+        type: UPDATE_COLLECTION_METADATA,
+        payload: [
+          expect.objectContaining({
+            variables: {
+              count: 3,
+              items: expectedItems
+            }
+          })
+        ]
       })
     })
   })
@@ -688,7 +694,7 @@ describe('getProjectCollections', () => {
 
     const storeActions = store.getActions()
 
-    expect(storeActions.length).toEqual(4)
+    expect(storeActions.length).toEqual(5)
     expect(storeActions[0]).toEqual({
       type: ADD_ERROR,
       payload: expect.objectContaining({
@@ -707,6 +713,18 @@ describe('getProjectCollections', () => {
     })
 
     expect(storeActions[2]).toEqual({
+      type: UPDATE_COLLECTION_METADATA,
+      payload: [
+        expect.objectContaining({
+          id: 'collectionId1'
+        }),
+        expect.objectContaining({
+          id: 'collectionId2'
+        })
+      ]
+    })
+
+    expect(storeActions[3]).toEqual({
       type: ADD_ACCESS_METHODS,
       payload: {
         collectionId: 'collectionId2',
@@ -714,7 +732,7 @@ describe('getProjectCollections', () => {
       }
     })
 
-    expect(storeActions[3]).toEqual({
+    expect(storeActions[4]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
         expect.objectContaining({
@@ -817,7 +835,8 @@ describe('getProjectCollections', () => {
 
       const storeActions = store.getActions()
 
-      expect(storeActions.length).toEqual(3)
+      expect(storeActions.length).toEqual(4)
+
       expect(storeActions[0]).toEqual({
         type: ADD_ACCESS_METHODS,
         payload: {
@@ -827,6 +846,18 @@ describe('getProjectCollections', () => {
       })
 
       expect(storeActions[1]).toEqual({
+        type: UPDATE_COLLECTION_METADATA,
+        payload: [
+          expect.objectContaining({
+            isCSDA: true
+          }),
+          expect.objectContaining({
+            isCSDA: false
+          })
+        ]
+      })
+
+      expect(storeActions[2]).toEqual({
         type: ADD_ACCESS_METHODS,
         payload: {
           collectionId: 'collectionId2',
@@ -834,7 +865,7 @@ describe('getProjectCollections', () => {
         }
       })
 
-      expect(storeActions[2]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [
           expect.objectContaining({
