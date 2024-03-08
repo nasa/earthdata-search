@@ -1,9 +1,9 @@
 .access-method-radio {
   position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
-  flex-flow: row wrap;
+  flex-flow: row;
   width: 100%;
   border: 1px solid $color__black--200;
   border-radius: 0.125rem;
@@ -25,10 +25,8 @@
   }
 
   &__radio {
-    position: absolute;
-    top: $spacer;
-    left: $spacer;
     display: flex;
+    margin-left: $spacer;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
@@ -61,7 +59,7 @@
     margin-top: 0.8125*$spacer;
     margin-bottom: 0.875*$spacer;
     margin-right: $spacer;
-    margin-left: 2.5*$spacer;
+    margin-left: $spacer;
     overflow: hidden;
   }
 
