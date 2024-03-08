@@ -381,7 +381,7 @@ describe('getProjectCollections', () => {
   })
 
   describe('when requesting a collection with more variables than the maxCmrPageSize', () => {
-    test.only('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
+    test('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
       jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
         cmrHost: 'https://cmr.example.com',
         graphQlHost: 'https://graphql.example.com',

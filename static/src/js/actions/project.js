@@ -342,9 +342,10 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         }
       }
     }`
+  let response = null
 
   try {
-    const response = await graphQlRequestObject.search(graphQuery, {
+    response = await graphQlRequestObject.search(graphQuery, {
       params: {
         conceptId: filteredIds,
         includeTags: defaultCmrSearchTags.join(','),
@@ -367,7 +368,10 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     const { data } = responseData
     const { collections } = data
     const { items } = collections
-    items.forEach(async (metadata) => {
+
+    for (let i = 0; i < items.length; i += 1) {
+      const metadata = items[i]
+
       const {
         abstract,
         archiveAndDistributionInformation,
@@ -394,14 +398,13 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         versionId
       } = metadata
 
-      console.log(hasGranules)
-
       if (variables && variables.count && variables.count > maxCmrPageSize) {
+        // eslint-disable-next-line no-await-in-loop
         const myItems = await retrieveVariablesRequest(
           variables,
           {
             params: {
-              conceptId: filteredIds,
+              conceptId,
               includeHasGranules: false,
               includeTags: defaultCmrSearchTags.join(',')
             },
@@ -410,37 +413,12 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               cursor: variables.cursor
             }
           },
-          graphQlRequestObject,
-          `query GetProjectCollections ($params: CollectionsInput, $variableParams: VariablesInput) {
-            collections (
-              params: $params
-            ) {
-              items {
-                conceptId
-                hasGranules
-                variables (
-                  params: $variableParams
-                ) {
-                  count
-                  cursor
-                  items {
-                    conceptId
-                    definition
-                    instanceInformation
-                    longName
-                    name
-                    nativeId
-                    scienceKeywords
-                  }
-                }
-              }
-            }
-          }`
+          graphQlRequestObject
         )
-        console.log(myItems)
+
         variables.items = myItems
 
-        if (Object.hasOwn(variables, 'cursor')) delete variables.cursor
+        if (variables.cursor) delete variables.cursor
       }
 
       console.log(metadata.variables)
@@ -502,28 +480,28 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         selectedAccessMethod
       }))
 
-      const { items: dqsItems = [] } = dataQualitySummaries
-      if (dqsItems) {
-        dispatch(actions.setDataQualitySummaries({
-          catalogItemId: conceptId,
-          dataQualitySummaries: dqsItems
-        }))
+      if (dataQualitySummaries) {
+        const { items: dqsItems = [] } = dataQualitySummaries
+        if (dqsItems) {
+          dispatch(actions.setDataQualitySummaries({
+            catalogItemId: conceptId,
+            dataQualitySummaries: dqsItems
+          }))
+        }
       }
-    })
+    }
 
     // Update metadata in the store
     dispatch(actions.updateCollectionMetadata(payload))
-
-    return response
   } catch (error) {
     dispatch(actions.handleError({
       error,
       action: 'getProjectCollections',
       resource: 'project collections'
     }))
-
-    return null
   }
+
+  return response
 }
 
 /**

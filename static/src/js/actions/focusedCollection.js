@@ -258,32 +258,10 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
               cursor: variables.cursor
             }
           },
-          graphQlRequestObject,
-          `query GetCollection(
-            $params: CollectionInput, $variableParams: VariablesInput
-          ) {
-            collection (params: $params) {
-              conceptId
-              variables (
-                params: $variableParams
-              ) {
-                count
-                cursor
-                items {
-                  conceptId
-                  definition
-                  instanceInformation
-                  longName
-                  name
-                  nativeId
-                  scienceKeywords
-                }
-              }
-            }
-          }`
+          graphQlRequestObject
         )
 
-        if (Object.hasOwn(variables, 'cursor')) delete variables.cursor
+        if (variables.cursor) delete variables.cursor
       }
 
       // Look and see if there are any gibs tags
