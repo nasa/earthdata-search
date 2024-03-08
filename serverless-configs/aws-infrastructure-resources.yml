@@ -242,19 +242,18 @@ Outputs:
         - Endpoint.Port
     Export:
       Name: ${self:provider.stage}-DatabasePort
+  # ElastiCacheEndpoint:
+  #   Value:
+  #     Fn::GetAtt:
+  #       - RedisElasticCacheCluster
+  #       - RedisEndpoint.Address
+  #   Export:
+  #     Name: ${self:provider.stage}-ElastiCacheEndpoint
 
-  ElastiCacheEndpoint:
-    Value:
-      Fn::GetAtt:
-        - RedisElasticCacheCluster
-        - RedisEndpoint.Address
-    Export:
-      Name: ${self:provider.stage}-ElastiCacheEndpoint
-
-  ElastiCachePort:
-    Value:
-      Fn::GetAtt:
-        - RedisElasticCacheCluster
-        - RedisEndpoint.Port
-    Export:
-      Name: ${self:provider.stage}-ElastiCachePort
+  # ElastiCachePort:
+  #   Value:
+  #     Fn::GetAtt:
+  #       - RedisElasticCacheCluster
+  #       - RedisEndpoint.Port
+  #   Export:
+  #     Name: ${self:provider.stage}-ElastiCachePort

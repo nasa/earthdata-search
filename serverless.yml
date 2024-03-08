@@ -46,12 +46,12 @@ provider:
 
     NODE_OPTIONS: '--enable-source-maps'
 
-    # Redis cache configuration
-    cacheHost:
-      Fn::ImportValue: ${self:provider.stage}-ElastiCacheEndpoint
-    cachePort:
-      Fn::ImportValue: ${self:provider.stage}-ElastiCachePort
-    cacheKeyExpireSeconds: ${self:custom.variables.cacheKeyExpireSeconds}
+    # Redis cache configuration TODO commenting out for testing feature branch
+    # cacheHost:
+    #   Fn::ImportValue: ${self:provider.stage}-ElastiCacheEndpoint
+    # cachePort:
+    #   Fn::ImportValue: ${self:provider.stage}-ElastiCachePort
+    # cacheKeyExpireSeconds: ${self:custom.variables.cacheKeyExpireSeconds}
 
   vpc:
     securityGroupIds:
@@ -118,8 +118,8 @@ custom:
       Exclude:
         - provider.environment.databaseEndpoint
         - provider.environment.databasePort
-        - provider.environment.cacheHost
-        - provider.environment.cachePort
+        # - provider.environment.cacheHost
+        # - provider.environment.cachePort
         - provider.environment.dbEndpoint
         - provider.environment.dbPort
         - provider.environment.colorMapQueueUrl
