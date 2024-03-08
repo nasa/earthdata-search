@@ -518,10 +518,9 @@ export class AccessMethod extends Component {
 
         case 'OPeNDAP': {
           id = `${collectionId}_access-method__opendap_${methodKey}`
-          title = 'Customize'
-          subtitle = 'OPeNDAP'
+          title = 'Customize with OPeNDAP'
           description = 'Select options like variables, transformations, and output formats for direct access via link or script.'
-          details = 'The requested data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.'
+          details = 'The data will be made available for access immediately.'
 
           break
         }
