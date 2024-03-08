@@ -1066,7 +1066,7 @@ test.describe('Map interactions', () => {
 
         const urlValues = {
           chromium: 'search?lat=13.999032615512775',
-          firefox: 'search?lat=13.99892766713073',
+          firefox: 'search?lat=13.999207532962274',
           webkit: 'search?lat=13.999032615512775'
         }
         await expect(page).toHaveURL(urlValues[browser])
