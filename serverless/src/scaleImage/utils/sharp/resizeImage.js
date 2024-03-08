@@ -11,8 +11,6 @@ export const resizeImage = async (image, height, width) => {
   try {
     // Only attempt to resize the image if a height or a width were provided
     if (height || width) {
-      console.log('🚀 Resizing the image with h and w')
-
       return await sharp(image)
         .resize(
           (width || null),
@@ -22,8 +20,6 @@ export const resizeImage = async (image, height, width) => {
         .toFormat('png')
         .toBuffer()
     }
-
-    console.log('🚀 Resizing the image with default h and w')
 
     // Default to return the full image
     return await sharp(image)
