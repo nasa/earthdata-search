@@ -421,8 +421,8 @@ export class AccessMethod extends Component {
             id={id}
             value="XXX"
             title="Customize with Harmony"
-            description="Select a service to customize options"
-            details="Select a Harmony service in the section below"
+            description="Select a Harmony service to customize options"
+            details="Select options like variables, transformations, and output formats by applying a Harmony service. Data will be staged in the cloud for download and analysis."
             onChange={() => this.handleHarmonyTypeAccessMethodSelection()}
             checked={checked}
           />
@@ -491,7 +491,7 @@ export class AccessMethod extends Component {
           id = `${collectionId}_access-method__direct-download`
           title = 'Direct Download'
           description = 'Direct download of all data associated with the selected granules.'
-          details = 'The requested data files will be available for download immediately. Files will be accessed from a list of links displayed in the browser or by using a download script.'
+          details = 'The data will be available for download immediately.'
 
           break
         }
