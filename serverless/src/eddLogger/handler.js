@@ -4,7 +4,6 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
  * @param {Object} event Details about the HTTP request that it received
  */
 const eddLogger = async (event) => {
-  console.log('🚀 ~ file: handler.js:7 ~ eddLogger ~ event:', event)
   const { defaultResponseHeaders } = getApplicationConfig()
 
   const { body } = event
@@ -20,7 +19,6 @@ const eddLogger = async (event) => {
   console.log(`[metrics] ${JSON.stringify(eventData)}`)
 
   return {
-    isBase64Encoded: false,
     statusCode: 200,
     headers: defaultResponseHeaders
   }

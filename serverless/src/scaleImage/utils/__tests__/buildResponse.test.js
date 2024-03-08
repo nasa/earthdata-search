@@ -13,7 +13,7 @@ describe('buildResponse', () => {
         'Content-Type': 'image/png',
         'Access-Control-Allow-Origin': '*'
       },
-      body: 'dGVzdC1pbWFnZS1jb250ZW50cw=='
+      body: imageBuffer
     })
   })
 
@@ -29,7 +29,7 @@ describe('buildResponse', () => {
         'Content-Type': 'image/png',
         'Access-Control-Allow-Origin': '*'
       },
-      body: ''
+      body: imageBuffer
     })
   })
 })
