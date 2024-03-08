@@ -74,8 +74,6 @@ provider:
   # Setup apiGateway to be able to return image/png responses for `scale` lambda thumbnails
   apiGateway:
     shouldStartNameWithService: true
-    binaryMediaTypes:
-    - '*/*'
 
 plugins:
   - serverless-finch

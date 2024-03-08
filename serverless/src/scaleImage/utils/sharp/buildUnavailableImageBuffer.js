@@ -6,8 +6,9 @@ import { resizeImage } from './resizeImage'
  * @return {Buffer<Image>} This is what you show the user when an image cannot be found or resized
  */
 export const buildUnavailableImageBuffer = async (height = null, width = null) => {
-  const noFoundAsset = '../../../../../static/src/assets/images/image-unavailable.svg'
+  // Const noFoundAsset = '../../../../../static/src/assets/images/image-unavailable.svg'
 
+  const noFoundAsset = 'static/src/assets/images/image-unavailable.svg'
   if (height || width) {
     return resizeImage(noFoundAsset, height, width)
   }

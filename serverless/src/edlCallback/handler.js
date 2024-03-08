@@ -148,7 +148,6 @@ const edlCallback = async (event, context) => {
 
   return {
     statusCode: 307,
-    isBase64Encoded: false,
     headers: {
       Location: location
     }
