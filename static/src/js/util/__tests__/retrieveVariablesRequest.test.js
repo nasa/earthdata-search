@@ -239,4 +239,134 @@ describe('retrieveVariablesRequest', () => {
       }
     ])
   })
+
+  test('retrieves variables when the passed in format is that of GetProjectCollections', async () => {
+    nock(/graph/)
+      .post(/api/)
+      .reply(200, {
+        data: {
+          collections: {
+            items: [{
+              conceptId: 'C10000000000-EDSC',
+              shortName: 'id_1',
+              versionId: 'VersionID',
+              tools: {
+                items: [{
+                  name: 'SOTO'
+                }]
+              },
+              variables: {
+                items: [{
+                  conceptId: 'V10000000001-EDSC'
+                }],
+                count: 4,
+                cursor: 'mock-cursor-1'
+              }
+            }]
+          }
+        }
+      })
+
+    nock(/graph/)
+      .post(/api/)
+      .reply(200, {
+        data: {
+          collection: {
+            conceptId: 'C10000000000-EDSC',
+            shortName: 'id_1',
+            versionId: 'VersionID',
+            tools: {
+              items: [{
+                name: 'SOTO'
+              }]
+            },
+            variables: {
+              items: [{
+                conceptId: 'V10000000002-EDSC'
+              }],
+              count: 4,
+              cursor: 'mock-cursor-2'
+            }
+          }
+        }
+      })
+
+    nock(/graph/)
+      .post(/api/)
+      .reply(200, {
+        data: {
+          collection: {
+            conceptId: 'C10000000000-EDSC',
+            shortName: 'id_1',
+            versionId: 'VersionID',
+            tools: {
+              items: [{
+                name: 'SOTO'
+              }]
+            },
+            variables: {
+              items: [{
+                conceptId: 'V10000000003-EDSC'
+              }],
+              count: 4,
+              cursor: null
+            }
+          }
+        }
+      })
+
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      cmrHost: 'https://cmr.example.com',
+      graphQlHost: 'https://graphql.example.com',
+      opensearchRoot: 'https://cmr.example.com'
+    }))
+
+    const store = mockStore({
+      authToken: '',
+      focusedCollection: 'C10000000000-EDSC',
+      metadata: {
+        collections: {
+          'C10000000000-EDSC': {
+            hasAllMetadata: true
+          }
+        }
+      },
+      query: {
+        collection: {
+          spatial: {}
+        }
+      },
+      searchResults: {}
+    })
+
+    const earthdataEnvironment = {
+      cmrHost: 'https://cmr.example.com',
+      graphQlHost: 'https://graphql.example.com',
+      opensearchRoot: 'https://cmr.example.com'
+    }
+
+    const graphQlRequest = new GraphQlRequest(store.auth, earthdataEnvironment)
+
+    const resultVars = await retrieveVariablesRequest(
+      initParams.variables,
+      initParams.requestParams,
+      graphQlRequest,
+      initParams.queryType
+    )
+
+    expect(resultVars).toEqual([
+      {
+        conceptId: 'V10000000000-EDSC'
+      },
+      {
+        conceptId: 'V10000000001-EDSC'
+      },
+      {
+        conceptId: 'V10000000002-EDSC'
+      },
+      {
+        conceptId: 'V10000000003-EDSC'
+      }
+    ])
+  })
 })
