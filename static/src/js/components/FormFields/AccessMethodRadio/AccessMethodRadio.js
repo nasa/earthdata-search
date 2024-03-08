@@ -19,7 +19,6 @@ export const AccessMethodRadio = ({
   onChange,
   onClick,
   title,
-  serviceName,
   subtitle
 }) => {
   const [moreInfoActive, setMoreInfoActive] = useState(false)
@@ -66,27 +65,6 @@ export const AccessMethodRadio = ({
                 {subtitle}
               </span>
             </span>
-            {
-              serviceName && (
-                <OverlayTrigger
-                  placement="top"
-                  overlay={
-                    (
-                      <Tooltip>
-                        <span className="tooltip__secondary-text">Service</span>
-                        {serviceName}
-                      </Tooltip>
-                    )
-                  }
-                >
-                  <div className="access-method-radio__header-secondary">
-                    <span className="access-method-radio__primary-service-name">
-                      {serviceName}
-                    </span>
-                  </div>
-                </OverlayTrigger>
-              )
-            }
           </div>
           <div className="access-method-radio__header-content">
             <span className="access-method-radio__description">
@@ -133,8 +111,7 @@ AccessMethodRadio.defaultProps = {
   details: null,
   onChange: null,
   onClick: null,
-  subtitle: null,
-  serviceName: null
+  subtitle: null
 }
 
 AccessMethodRadio.propTypes = {
@@ -152,8 +129,7 @@ AccessMethodRadio.propTypes = {
   onChange: PropTypes.func,
   onClick: PropTypes.func,
   title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string,
-  serviceName: PropTypes.string
+  subtitle: PropTypes.string
 }
 
 export default AccessMethodRadio
