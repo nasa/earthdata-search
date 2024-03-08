@@ -54,6 +54,7 @@
   }
 
   &__content {
+    display: inherit;
     flex-wrap: nowrap;
     flex-grow: 1;
     flex-shrink: 1;
@@ -92,6 +93,7 @@
 
   &__header-content {
     margin-bottom: 0.325rem;
+    max-width: 440px;
   }
 
   &__header-tertiary {
@@ -127,117 +129,10 @@
     flex-grow: 1;
   }
 
-
-  &__primary-service-name {
-    display: block;
-    padding: 0 0.125rem;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    color: $color__black--500;
-  }
-
-
   &__description {
     margin: 0;
     padding: 0;
     font-size: 0.825rem;
-  }
-
-
-  &__more-info-button {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    font-size: 0.75rem;
-    color: $color__black--500;
-    background-color: transparent;
-
-    &:hover {
-      border: 0;
-      color: $color__black--700;
-    }
-
-    &:focus {
-      border: 0;
-    }
-  }
-
-  &__more-info {
-    flex: 1 100%;
-    height: 0;
-    border-top: 1px solid transparent;
-
-    .access-method-radio__details,
-    .access-method-radio__service-name {
-      position: absolute;
-      opacity: 0;
-      transition: opacity 0.3s ease-in-out;
-      transition-delay: 0.1s;
-    }
-  }
-
-  &__more-info-view-enter {
-    display: block;
-    margin: 0.75*$spacer;
-    margin-top: 0.5*$spacer;
-    visibility: hidden;
-    height: 0;
-    border-top: 1px solid $color__black--200;
-
-    .access-method-radio__details,
-    .access-method-radio__service-name {
-      opacity: 1;
-      position: relative;
-    }
-  }
-
-  &__more-info-view-enter-active {
-    padding: 1rem;
-    height: auto;
-    visibility: hidden;
-    border-top: 1px solid $color__black--200;
-
-    .access-method-radio__details,
-    .access-method-radio__service-name {
-      position: relative;
-    }
-  }
-
-  &__more-info-view-enter-done {
-    padding: 1rem;
-    height: auto;
-    visibility: visible;
-    border-top: 1px solid $color__black--200;
-    background: rgba($color__black, 0.05);
-
-    .access-method-radio__details,
-    .access-method-radio__service-name {
-      opacity: 1;
-      position: relative;
-    }
-  }
-
-  &__more-info-view-exit {
-    height: auto;
-    visibility: hidden;
-  }
-
-  &__more-info-view-exit-active {
-    transition: opacity 200ms;
-    height: 0;
-  }
-
-  &__more-info-view-exit-done {
-    height: 0;
-    visibility: hidden;
-  }
-
-  &__details {
-    display: block;
-    font-size: 0.825rem;
-    word-break: break-word;
   }
 
   &__service-name {

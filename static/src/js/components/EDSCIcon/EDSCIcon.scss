@@ -3,4 +3,12 @@
     color: $color__black--400;
     margin-left: 0.25rem;
   }
+  &--details {
+    color: $color__black--300;
+    height: 100%;
+  }
+}
+
+.rightside {
+  margin-left: auto;
 }
