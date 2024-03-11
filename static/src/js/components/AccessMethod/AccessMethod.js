@@ -478,13 +478,28 @@ export class AccessMethod extends Component {
     Object.keys(accessMethods).forEach((methodKey) => {
       const { [methodKey]: accessMethod = {} } = accessMethods
 
-      const { type, name, description: descriptionFromMetadata } = accessMethod
+      const {
+        type,
+        name,
+        description: descriptionFromMetadata,
+        supportsBoundingBoxSubsetting: hasBBoxSubsetting,
+        supportsShapefileSubsetting: hasShapefileSubsetting,
+        supportsTemporalSubsetting: hasTemporalSubsetting,
+        supportsVariableSubsetting: hasVariables,
+        supportsConcatenation: hasCombine,
+        supportedOutputFormats,
+        supportedOutputProjections
+      } = accessMethod
 
       let id = null
       let title = null
       let subtitle = null
       let description = null
       let details = null
+      let hasFormats = null
+      let hasProjections = null
+      let hasTransform = null
+      let hasSpatialSubsetting = null
 
       switch (type) {
         case 'download': {
@@ -530,6 +545,14 @@ export class AccessMethod extends Component {
           title = name
           description = descriptionFromMetadata
           hasHarmony = true
+          hasSpatialSubsetting = hasShapefileSubsetting || hasBBoxSubsetting
+          hasFormats = supportedOutputFormats.length > 1
+          hasProjections = supportedOutputProjections.length > 1
+          /**
+           * CMR defines has-transforms as including interpolation or multiple projections, but
+           * interpolation is not exposed by GraphQL and is not currently supported by Harmony.
+          */
+          hasTransform = hasProjections
           break
         }
 
@@ -538,17 +561,29 @@ export class AccessMethod extends Component {
       }
 
       if (type) {
-        accessMethodsByType[type].push(
-          {
-            id,
-            methodKey,
-            title,
-            subtitle,
-            name,
-            description,
-            details
+        let processedAccessMethod = {
+          id,
+          methodKey,
+          title,
+          subtitle,
+          name,
+          description,
+          details
+        }
+        // Used for adding service capability icons to the Harmony access method select items
+        if (type === 'Harmony') {
+          processedAccessMethod = {
+            ...processedAccessMethod,
+            hasSpatialSubsetting,
+            hasTemporalSubsetting,
+            hasVariables,
+            hasCombine,
+            hasFormats,
+            hasTransform
           }
-        )
+        }
+
+        accessMethodsByType[type].push(processedAccessMethod)
       }
     })
 
