@@ -343,10 +343,8 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         }
       }
     }`
-  let response = null
-
   try {
-    response = await graphQlRequestObject.search(graphQuery, {
+    const response = await graphQlRequestObject.search(graphQuery, {
       params: {
         conceptId: filteredIds,
         includeTags: defaultCmrSearchTags.join(','),
@@ -488,6 +486,8 @@ export const getProjectCollections = () => async (dispatch, getState) => {
 
       // Update metadata in the store
       dispatch(actions.updateCollectionMetadata(payload))
+
+      return response
     })
   } catch (error) {
     dispatch(actions.handleError({
@@ -495,9 +495,9 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       action: 'getProjectCollections',
       resource: 'project collections'
     }))
-  }
 
-  return response
+    return null
+  }
 }
 
 /**

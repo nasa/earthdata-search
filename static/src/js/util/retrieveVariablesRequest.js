@@ -24,8 +24,8 @@ const formatCollectionObject = (data) => {
 /**
  * Retrieves the variables of a collection if there are more than `maxCmrPageSize`
   * @param {Object} variablesObj: contains cusor and item from the original graphQlReuqest
-  * * @param {Object} requestParams: the variable request params
-  * * @param {Object} graphQlRequestObject: used to make additional graphql requests
+  * @param {Object} requestParams: the variable request params
+  * @param {Object} graphQlRequestObject: used to make additional graphql requests
   * @returns {Object} retrieves the rest of the variables for a given collection
  */
 export const retrieveVariablesRequest = async (
