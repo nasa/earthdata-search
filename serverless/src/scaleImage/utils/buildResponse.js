@@ -45,7 +45,7 @@ export const buildResponse = (imageBuffer, statusCode = 200) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      base64Image
+      base64Image: responseImg
     }),
     isBase64Encoded: false
   }
