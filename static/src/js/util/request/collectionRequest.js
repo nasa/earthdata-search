@@ -104,10 +104,16 @@ export default class CollectionRequest extends CmrRequest {
 
       // Retrieve collection thumbnail if it exists
       if (collection.id) {
-        transformedCollection.thumbnail = collection.browse_flag
-          ? `${getEnvironmentConfig().apiHost}/scale/collections/${collection.id}?h=${h}&w=${w}`
-          : unavailableImg
+        if (collection.browse_flag) {
+          transformedCollection.thumbnail = `${getEnvironmentConfig().apiHost}/scale/collections/${collection.id}?h=${h}&w=${w}`
+        } else {
+          console.log('🪓 using the default image')
+          transformedCollection.thumbnail = unavailableImg
+          transformedCollection.isDefaultImage = true
+        }
       }
+
+      console.log('🚀 ~ file: collectionRequest.js:113 ~ CollectionRequest ~ entry.map ~ transformedCollection.isDefaultImage:', transformedCollection.isDefaultImage)
 
       return transformedCollection
     })

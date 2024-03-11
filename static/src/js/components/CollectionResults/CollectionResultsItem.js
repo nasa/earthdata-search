@@ -70,8 +70,10 @@ export const CollectionResultsItem = forwardRef(({
     summary,
     temporalRange,
     thumbnail,
+    isDefaultImage,
     versionId
   } = collectionMetadata
+  console.log('🚀 ~ file: CollectionResultsItem.js:81 ~ isDefaultImage:', isDefaultImage)
 
   const [loadingThumbnail, setLoadingThumbnail] = useState(true)
   const { thumbnailSize } = getApplicationConfig()
@@ -97,18 +99,26 @@ export const CollectionResultsItem = forwardRef(({
     setLoadingThumbnail(false)
   }
 
+  // Fetch the base64 string from the Lambda function
   // Explicity call the GET request for the lambda
   useEffect(() => {
-    // Fetch the base64 string from the Lambda function
-    axios.get(thumbnail)
-      .then((response) => {
+    if (!isDefaultImage) {
+      console.log('🚀 ~ file: CollectionResultsItem.js:109 ~ useEffect ~ isDefaultImage:', isDefaultImage)
+      axios.get(thumbnail)
+        .then((response) => {
         // Set the base64 string received from Lambda
-        setBase64Image(response.data.base64Image)
-        onThumbnailLoaded()
-      })
-      .catch((error) => {
-        console.error('Error:', error)
-      })
+          setBase64Image(response.data.base64Image)
+          onThumbnailLoaded()
+        })
+        .catch((error) => {
+          console.error('Error:', error)
+        })
+    } else {
+      // Passed in thumbnail was the default set `base64` image to that
+      console.log('🚀 ~ file: CollectionResultsItem.js:117 ~ useEffect ~ thumbnail:', thumbnail)
+      setBase64Image(thumbnail)
+      onThumbnailLoaded()
+    }
   }, [])
 
   const getConsortiumTooltipText = (consortium) => {
@@ -271,10 +281,9 @@ export const CollectionResultsItem = forwardRef(({
                       />
                     )
                   }
-                  {console.log('Thumbnail value', thumbnail)}
                   <img
                     className={`collection-results-item__thumb-image ${loadingThumbnail ? 'collection-results-item__thumb-image--is-loading' : 'collection-results-item__thumb-image--is-loaded'}`}
-                    src={`data:image/png;base64, ${base64Image}`}
+                    src={base64Image}
                     alt={`Thumbnail for ${datasetId}`}
                     height={thumbnailHeight}
                     width={thumbnailWidth}

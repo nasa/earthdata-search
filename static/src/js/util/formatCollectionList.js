@@ -11,7 +11,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
 
   return collectionIds.map((collectionId, index) => {
     const { [collectionId]: collectionMetadata = {} } = metadata
-
+    // TODO double check that there isn't an edge case here
     const {
       cloudHosted = false,
       collectionDataType,
@@ -22,6 +22,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
       isCSDA = false,
       isNrt = false,
       isOpenSearch = false,
+      isDefaultImage = false,
       organizations = [],
       serviceFeatures = {},
       shortName,
@@ -154,6 +155,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
       isLast,
       isNrt,
       isOpenSearch,
+      isDefaultImage,
       nrt,
       organizations,
       shortName,
