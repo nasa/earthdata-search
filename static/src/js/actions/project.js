@@ -404,8 +404,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           {
             params: {
               conceptId,
-              includeHasGranules: false,
-              includeTags: defaultCmrSearchTags.join(',')
+              includeHasGranules: false
             },
             variableParams: {
               limit: maxCmrPageSize,
