@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import axios from 'axios'
 
 import Spinner from '../Spinner/Spinner'
 
@@ -24,10 +25,12 @@ export const EDSCImage = ({
   height,
   src,
   srcSet,
-  width
+  width,
+  isBase64Image
 }) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isErrored, setIsErrored] = useState(false)
+  const [base64Image, setBase64Image] = useState('')
 
   const onImageLoad = () => {
     setIsLoaded(true)
@@ -46,6 +49,20 @@ export const EDSCImage = ({
     }
   ])
 
+  useEffect(() => {
+    if (isBase64Image) {
+      axios.get(src)
+        .then((response) => {
+        // Set the base64 string received from Lambda
+          setBase64Image(response.data.base64Image)
+          onImageLoad()
+        })
+        .catch((error) => {
+          console.error('Error:', error)
+        })
+    }
+  }, [])
+
   return (
     <div
       className={`${imageClasses} ${className}`}
@@ -62,7 +79,7 @@ export const EDSCImage = ({
         )
       }
       {
-        !isErrored && (
+        !isErrored && !isBase64Image && (
           <img
             className="edsc-image__image"
             alt={alt}
@@ -75,6 +92,19 @@ export const EDSCImage = ({
           />
         )
       }
+      { // TODO need srcSet
+        isBase64Image && (
+          <img
+            className="edsc-image__image"
+            alt={alt}
+            height={height}
+            width={width}
+            src={base64Image}
+            onLoad={onImageLoad}
+            onError={onImageError}
+          />
+        )
+      }
     </div>
   )
 }
@@ -82,17 +112,19 @@ export const EDSCImage = ({
 EDSCImage.defaultProps = {
   className: undefined,
   dataTestId: undefined,
-  srcSet: undefined
+  srcSet: undefined,
+  isBase64Image: false
 }
 
 EDSCImage.propTypes = {
   alt: PropTypes.string.isRequired,
   className: PropTypes.string,
   dataTestId: PropTypes.string,
-  height: PropTypes.string.isRequired,
+  height: PropTypes.number.isRequired,
   src: PropTypes.string.isRequired,
   srcSet: PropTypes.string,
-  width: PropTypes.string.isRequired
+  isBase64Image: PropTypes.bool,
+  width: PropTypes.number.isRequired
 }
 
 export default EDSCImage

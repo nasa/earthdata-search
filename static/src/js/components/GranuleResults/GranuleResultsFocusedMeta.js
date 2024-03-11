@@ -314,6 +314,7 @@ const GranuleResultsFocusedMeta = ({
                             alt={description || `Browse image for ${title}`}
                             width="175px"
                             height="175px"
+                            isBase64Image
                           />
                         )
                       )
