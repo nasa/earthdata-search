@@ -263,53 +263,6 @@ export class AccessMethod extends Component {
     console.log(`The selectValue after setting is ${this.state.selectValue}`)
   }
 
-  // eslint-disable-next-line react/no-unused-class-component-methods
-  renderJustItems(harmonyMethods) { // XXX
-    return (
-      <div key="HarmonyMethodsList">
-        {
-          harmonyMethods.map((value) => (
-            <Select.Item className="SelectItem" key={value.methodKey} value={`${value.methodKey}_val`}>
-              <Select.ItemText key={`${value.methodKey}_text`}>{value.name}</Select.ItemText>
-              <Select.ItemIndicator key={`${value.methodKey}_itemIndicator`} className="SelectItemIndicator" />
-            </Select.Item>
-          ))
-        }
-      </div>
-    )
-  }
-
-  // eslint-disable-next-line react/no-unused-class-component-methods
-  renderAccessMethodRadioTest() { // XXX
-    const id = 'testkey'
-    const methodKey = 'testMethodKey'
-    const title = 'testTitle'
-    const subtitle = 'testSubtitle'
-    const serviceName = 'testServiceName'
-    const desc = 'testDescription'
-    const details = 'testDetails'
-    const onPropsChange = () => {}
-
-    const checked = false
-
-    return (
-      <Select.Item className="SelectItem" key="testSelectItem" value="testValue">
-        <AccessMethodRadio
-          key={id}
-          id={id}
-          value={methodKey}
-          title={title}
-          subtitle={subtitle}
-          serviceName={serviceName}
-          description={desc}
-          details={details}
-          onChange={onPropsChange}
-          checked={checked}
-        />
-      </Select.Item>
-    )
-  }
-
   renderRadioItemSelectItem(radioItem, onPropsChange, selected) {
     const {
       id,
