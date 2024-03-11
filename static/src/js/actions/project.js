@@ -397,7 +397,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         versionId
       } = metadata
 
-      if (variables && variables.count && variables.count > maxCmrPageSize) {
+      if (variables && variables.count > maxCmrPageSize) {
         // eslint-disable-next-line no-await-in-loop
         const retrievedItems = await retrieveVariablesRequest(
           variables,

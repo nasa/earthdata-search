@@ -1,9 +1,10 @@
 /**
  *
- * @param {*} data
- * @returns data in the correct format to extract the variables from it.
+  * @param {Object} data collection metadata
+  * @returns {Object} data with the additional variables to be extracted
  */
-const formatCollection = (data) => {
+const formatCollectionObject = (data) => {
+  // If the input object contains multiple collections
   if (data.collections) {
     const formattedData = {}
 
@@ -21,7 +22,11 @@ const formatCollection = (data) => {
 }
 
 /**
- * Retrieves the variables of a collection if there are more than 2000
+ * Retrieves the variables of a collection if there are more than `maxCmrPageSize`
+  * @param {Object} variablesObj: contains cusor and item from the original graphQlReuqest
+  * * @param {Object} requestParams: the variable request params
+  * * @param {Object} graphQlRequestObject: used to make additional graphql requests
+  * @returns {Object} retrieves the rest of the variables for a given collection
  */
 export const retrieveVariablesRequest = async (
   variablesObj,
@@ -69,7 +74,7 @@ export const retrieveVariablesRequest = async (
     } = results
 
     const { data: pagedData } = variablesData
-    const formattedData = formatCollection(pagedData)
+    const formattedData = formatCollectionObject(pagedData)
 
     const { collection: pagedCollection } = formattedData
     const { variables: pagedVariables } = pagedCollection

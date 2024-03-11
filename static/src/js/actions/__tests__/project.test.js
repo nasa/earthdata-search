@@ -36,7 +36,7 @@ import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
 const mockStore = configureMockStore([thunk])
 
-// Returns a set of variable results in 3 chucks with more variables than maxCmrPageSize in the first 2 and 25 in the last
+// Returns a set of variable results in 3 chucks with more variables than `maxCmrPageSize`
 const createVariableResults = () => [{
   variables: {
     items: [{ conceptId: 'V10000000000-EDSC' }],
