@@ -9,9 +9,9 @@ import {
   FaPlus,
   FaTimesCircle
 } from 'react-icons/fa'
+import EDSCImage from '../EDSCImage/EDSCImage'
 
 import murmurhash3 from '../../util/murmurhash3'
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
@@ -22,9 +22,6 @@ import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownI
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './GranuleResultsItem.scss'
-
-const thumbnailHeight = getApplicationConfig().thumbnailSize.height
-const thumbnailWidth = getApplicationConfig().thumbnailSize.width
 
 /**
  * Renders GranuleResultsItem.
@@ -92,16 +89,16 @@ const GranuleResultsItem = forwardRef(({
 
   const buildThumbnail = () => {
     let element = null
-
     if (granuleThumbnail) {
       element = (
         // eslint-disable-next-line jsx-a11y/img-redundant-alt
-        <img
+        <EDSCImage
           className="granule-results-item__thumb-image"
           src={granuleThumbnail}
-          height={thumbnailHeight}
-          width={thumbnailWidth}
+          height={85}
+          width={85}
           alt={`Browse Image for ${title}`}
+          isBase64Image
         />
       )
 

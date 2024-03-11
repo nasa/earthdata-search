@@ -16,11 +16,13 @@ export const GranuleResultsBrowseImageCell = ({ row }) => {
     granuleThumbnail,
     title
   } = rowProps
+  console.log('🚀 ~ file: GranuleResultsBrowseImageCell.js:19 ~ GranuleResultsBrowseImageCell ~ granuleThumbnail:', granuleThumbnail)
 
   const buildThumbnail = () => {
     let element = null
-
+    // TODO I think this is the issue
     if (granuleThumbnail) {
+      console.log('🚀 ~ file: GranuleResultsBrowseImageCell.js:25 ~ buildThumbnail ~ granuleThumbnail:', granuleThumbnail)
       element = (
         // eslint-disable-next-line jsx-a11y/img-redundant-alt
         <img
