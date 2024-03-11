@@ -1,5 +1,10 @@
-import React, { forwardRef, useState } from 'react'
+import React, {
+  forwardRef,
+  useState,
+  useEffect
+} from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import {
@@ -70,6 +75,9 @@ export const CollectionResultsItem = forwardRef(({
 
   const [loadingThumbnail, setLoadingThumbnail] = useState(true)
   const { thumbnailSize } = getApplicationConfig()
+  // eslint-disable-next-line no-unused-vars
+  const [base64Image, setBase64Image] = useState('')
+
   const {
     height: thumbnailHeight,
     width: thumbnailWidth
@@ -85,8 +93,23 @@ export const CollectionResultsItem = forwardRef(({
   const { description: nrtDescription, label: nrtLabel } = nrt
 
   const onThumbnailLoaded = () => {
+    console.log('✅thumbnail has loaded')
     setLoadingThumbnail(false)
   }
+
+  // Explicity call the GET request for the lambda
+  useEffect(() => {
+    // Fetch the base64 string from the Lambda function
+    axios.get(thumbnail)
+      .then((response) => {
+        // Set the base64 string received from Lambda
+        setBase64Image(response.data.base64Image)
+        onThumbnailLoaded()
+      })
+      .catch((error) => {
+        console.error('Error:', error)
+      })
+  }, [])
 
   const getConsortiumTooltipText = (consortium) => {
     let tooltip = ''
@@ -248,13 +271,13 @@ export const CollectionResultsItem = forwardRef(({
                       />
                     )
                   }
+                  {console.log('Thumbnail value', thumbnail)}
                   <img
                     className={`collection-results-item__thumb-image ${loadingThumbnail ? 'collection-results-item__thumb-image--is-loading' : 'collection-results-item__thumb-image--is-loaded'}`}
-                    src={thumbnail}
+                    src={`data:image/png;base64, ${base64Image}`}
                     alt={`Thumbnail for ${datasetId}`}
                     height={thumbnailHeight}
                     width={thumbnailWidth}
-                    onLoad={onThumbnailLoaded}
                   />
                 </div>
               )

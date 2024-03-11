@@ -126,6 +126,8 @@ const scaleImage = async (event) => {
     return buildResponse(thumbnail, 500)
   }
 
+  console.log('At the end for this one✅')
+
   // Return the resized image
   return buildResponse(thumbnail)
 }
