@@ -188,7 +188,8 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
     const response = await graphQlRequestObject.search(graphQuery, {
       params: {
         conceptId: focusedCollectionId,
-        includeHasGranules: true
+        includeHasGranules: true,
+        includeTags: defaultCmrSearchTags.join(',')
       },
       subcriptionParams: {
         subscriberId: username
@@ -242,8 +243,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           {
             params: {
               conceptId: focusedCollectionId,
-              includeHasGranules: true,
-              includeTags: defaultCmrSearchTags.join(',')
+              includeHasGranules: true
             },
             variableParams: {
               limit: maxCmrPageSize,
