@@ -31,24 +31,6 @@ Resources:
       TargetType: AWS::RDS::DBInstance
 
   # RDS database
-  Database:
-    Type: AWS::RDS::DBInstance
-    Properties:
-      DBName: edsc_${self:provider.stage}
-      AllocatedStorage: ${env:DB_ALLOCATED_STORAGE}
-      DBInstanceClass: ${env:DB_INSTANCE_CLASS}
-      Engine: postgres
-      EngineVersion: '14.4'
-      AllowMajorVersionUpgrade: true
-      MasterUsername: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:username}}"] ] }
-      MasterUserPassword: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:password}}"] ] }
-      MultiAZ: true
-      StorageType: gp2
-      DBSubnetGroupName:
-        Ref: DBSubnetGroup
-      VPCSecurityGroups:
-        - Ref: DatabaseVpcSecurityGroup
-
   EncryptedDatabase:
     Type: AWS::RDS::DBInstance
     Properties:
@@ -244,19 +226,3 @@ Outputs:
         - Endpoint.Port
     Export:
       Name: ${self:provider.stage}-EncryptedDatabasePort
-
-  DatabaseEndpoint:
-    Value:
-      Fn::GetAtt:
-        - Database
-        - Endpoint.Address
-    Export:
-      Name: ${self:provider.stage}-DatabaseEndpoint
-
-  DatabasePort:
-    Value:
-      Fn::GetAtt:
-        - Database
-        - Endpoint.Port
-    Export:
-      Name: ${self:provider.stage}-DatabasePort
