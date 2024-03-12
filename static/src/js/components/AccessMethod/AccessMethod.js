@@ -270,7 +270,8 @@ export class AccessMethod extends Component {
       title,
       subtitle,
       description,
-      details
+      details,
+      customizationOptions
     } = radioItem
 
     return (
@@ -285,6 +286,7 @@ export class AccessMethod extends Component {
           details={details}
           onChange={onPropsChange}
           checked={selected === methodKey}
+          customizationOptions={customizationOptions}
         />
       </Select.Item>
     )
@@ -453,6 +455,7 @@ export class AccessMethod extends Component {
       let hasProjections = null
       let hasTransform = null
       let hasSpatialSubsetting = null
+      let customizationOptions = null
 
       switch (type) {
         case 'download': {
@@ -506,6 +509,16 @@ export class AccessMethod extends Component {
            * interpolation is not exposed by GraphQL and is not currently supported by Harmony.
           */
           hasTransform = hasProjections
+
+          customizationOptions = {
+            hasTemporalSubsetting,
+            hasVariables,
+            hasCombine,
+            hasSpatialSubsetting,
+            hasFormats,
+            hasTransform
+          }
+
           break
         }
 
@@ -514,29 +527,18 @@ export class AccessMethod extends Component {
       }
 
       if (type) {
-        let processedAccessMethod = {
-          id,
-          methodKey,
-          title,
-          subtitle,
-          name,
-          description,
-          details
-        }
-        // Used for adding service capability icons to the Harmony access method select items
-        if (type === 'Harmony') {
-          processedAccessMethod = {
-            ...processedAccessMethod,
-            hasSpatialSubsetting,
-            hasTemporalSubsetting,
-            hasVariables,
-            hasCombine,
-            hasFormats,
-            hasTransform
+        accessMethodsByType[type].push(
+          {
+            id,
+            methodKey,
+            title,
+            subtitle,
+            name,
+            description,
+            details,
+            customizationOptions
           }
-        }
-
-        accessMethodsByType[type].push(processedAccessMethod)
+        )
       }
     })
 
