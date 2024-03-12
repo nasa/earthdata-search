@@ -27,26 +27,6 @@ Resources:
       SecretId:
         Ref: DbPasswordSecret
       TargetId:
-        Ref: Database
-      TargetType: AWS::RDS::DBInstance
-
-  # Encrypted Database password secret storage
-  EncryptedDbPasswordSecret:
-    Type: AWS::SecretsManager::Secret
-    Properties:
-      Description: "EDSC Encrypted RDS database master password"
-      GenerateSecretString:
-        SecretStringTemplate: "{\"username\":\"edsc\"}"
-        GenerateStringKey: "password"
-        PasswordLength: 30
-        ExcludeCharacters: "\"@/\\"
-
-  SecretEncryptedRDSInstanceAttachment:
-    Type: "AWS::SecretsManager::SecretTargetAttachment"
-    Properties:
-      SecretId:
-        Ref: EncryptedDbPasswordSecret
-      TargetId:
         Ref: EncryptedDatabase
       TargetType: AWS::RDS::DBInstance
 
