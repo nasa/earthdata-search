@@ -705,7 +705,6 @@ export class AccessMethod extends Component {
         </ProjectPanelSection>
         <ProjectPanelSection
           heading="Configure data customization options"
-          intro="Edit the options below to configure the customization and output options for the selected data product."
           step={2}
           faded={!selectedAccessMethod && !this.state.harmonyTypeSelected} // XXX
         >
@@ -734,6 +733,26 @@ export class AccessMethod extends Component {
                         />
                       </Suspense>
                     </ProjectPanelSection>
+                  )
+                }
+                {
+                  // Show Harmony method description
+                  this.state.harmonyTypeSelected && (
+                    <>
+                      <p />
+                      <h3 className="project-panel-section__heading">{this.state.selectValue}</h3>
+                      <p>{accessMethods[selectedAccessMethod].description}</p>
+                      <p>
+                        <a
+                          className="link link--external"
+                          href="https://harmony.earthdata.nasa.gov/docs#service-capabilities"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Documentation
+                        </a>
+                      </p>
+                    </>
                   )
                 }
                 {
