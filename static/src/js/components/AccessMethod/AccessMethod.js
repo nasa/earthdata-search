@@ -460,8 +460,8 @@ export class AccessMethod extends Component {
       switch (type) {
         case 'download': {
           id = `${collectionId}_access-method__direct-download`
-          title = 'Direct Download'
-          description = 'Direct download of all data associated with the selected granules.'
+          title = 'Download all data'
+          description = 'Direct download of all selected data'
           details = 'The data will be available for download immediately.'
 
           break
@@ -490,7 +490,7 @@ export class AccessMethod extends Component {
         case 'OPeNDAP': {
           id = `${collectionId}_access-method__opendap_${methodKey}`
           title = 'Customize with OPeNDAP'
-          description = 'Select options like variables, transformations, and output formats for direct access via link or script.'
+          description = 'Select options like variables, transformations, and output formats for direct access via link or script'
           details = 'The data will be made available for access immediately.'
 
           break
@@ -685,8 +685,7 @@ export class AccessMethod extends Component {
     return (
       <div className="access-method">
         <ProjectPanelSection
-          heading="Select a data access method"
-          intro="The selected access method will determine which customization and output options are available."
+          heading="Choose how you want to download your data"
           step={1}
         >
           <div className="access-method__radio-list">
@@ -704,7 +703,7 @@ export class AccessMethod extends Component {
           </div>
         </ProjectPanelSection>
         <ProjectPanelSection
-          heading="Configure data customization options"
+          heading="Select a service and customize options"
           step={2}
           faded={!selectedAccessMethod && !this.state.harmonyTypeSelected} // XXX
         >
