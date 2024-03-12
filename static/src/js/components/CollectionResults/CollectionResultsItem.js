@@ -195,7 +195,17 @@ export const CollectionResultsItem = forwardRef(({
                     />
                   )
                 }
-                {getCustomizeIcons(hasSpatialSubsetting, hasVariables, hasTransforms, hasFormats, hasTemporalSubsetting, hasCombine, false)}
+                {
+                  getCustomizeIcons(
+                    hasSpatialSubsetting,
+                    hasVariables,
+                    hasTransforms,
+                    hasFormats,
+                    hasTemporalSubsetting,
+                    hasCombine,
+                    false
+                  )
+                }
                 {
                   cloudHosted && (
                     <MetaIcon

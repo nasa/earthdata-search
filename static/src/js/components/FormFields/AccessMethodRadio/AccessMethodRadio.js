@@ -57,7 +57,15 @@ export const AccessMethodRadio = ({
       />
       {
         customizationOptions && (
-          getCustomizeIcons(hasSpatialSubsetting, hasVariables, hasTransforms, hasFormats, hasTemporalSubsetting, hasCombine, true)
+          getCustomizeIcons(
+            hasSpatialSubsetting,
+            hasVariables,
+            hasTransforms,
+            hasFormats,
+            hasTemporalSubsetting,
+            hasCombine,
+            false
+          )
         )
       }
       <div className="access-method-radio__radio">
