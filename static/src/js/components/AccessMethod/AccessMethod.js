@@ -131,19 +131,13 @@ export class AccessMethod extends Component {
     const { metadata, onSelectAccessMethod } = this.props
     const { conceptId: collectionId } = metadata
 
-    let methodId = method
-
-    if (typeof (method) === 'object') { // Not sure if still necessary
-      methodId = method.target.value
-    }
-
-    if (!methodId.includes('harmony')) {
+    if (!method.includes('harmony')) {
       this.setState({ harmonyTypeSelected: false })
     }
 
     onSelectAccessMethod({
       collectionId,
-      selectedAccessMethod: methodId
+      selectedAccessMethod: method
     })
   }
 
@@ -248,15 +242,15 @@ export class AccessMethod extends Component {
     }
   }
 
-  harmonyMethodsMapper(methods, selected, onPropsChange) {
+  harmonyMethodsMapper(methods, selected) {
     return (
       <div id="harmony_methods">
-        {methods.map((radio) => this.renderHarmonySelectItem(radio, onPropsChange, selected))}
+        {methods.map((radio) => this.renderHarmonySelectItem(radio, selected))}
       </div>
     )
   }
 
-  renderHarmonySelectItem(radioItem, onPropsChange, selected) {
+  renderHarmonySelectItem(radioItem, selected) {
     const {
       id,
       methodKey,
@@ -277,7 +271,6 @@ export class AccessMethod extends Component {
           subtitle={subtitle}
           description={description}
           details={details}
-          onChange={onPropsChange}
           checked={selected === methodKey}
           customizationOptions={customizationOptions}
         />
@@ -313,8 +306,6 @@ export class AccessMethod extends Component {
   }
 
   renderHarmonySelector(harmonyMethods, selectedAccessMethod) {
-    const onPropsChange = () => {}
-
     const { selectValue } = this.state
     if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony') && selectValue === '') {
       this.setState({
@@ -341,7 +332,7 @@ export class AccessMethod extends Component {
             <ScrollArea.Root className="ScrollAreaRoot" type="auto">
               <Select.Viewport key="HarmonySelectorViewport" className="SelectViewport" asChild>
                 <ScrollArea.Viewport className="ScrollAreaViewport">
-                  {this.harmonyMethodsMapper(harmonyMethods, selectedAccessMethod, onPropsChange)}
+                  {this.harmonyMethodsMapper(harmonyMethods, selectedAccessMethod)}
                 </ScrollArea.Viewport>
               </Select.Viewport>
               <ScrollArea.Scrollbar
