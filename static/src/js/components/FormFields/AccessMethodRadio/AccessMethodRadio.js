@@ -64,7 +64,7 @@ export const AccessMethodRadio = ({
             hasFormats,
             hasTemporalSubsetting,
             hasCombine,
-            false
+            true
           )
         )
       }
