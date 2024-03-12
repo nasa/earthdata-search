@@ -1,5 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable capitalized-comments */
 import React, {
   Component,
   lazy,
@@ -80,7 +78,6 @@ export class AccessMethod extends Component {
       )
     } = selectedMethod || {}
 
-    console.log(`selectedAccessMethod is ${selectedAccessMethod}`)
     const harmonyTypeSelected = selectedAccessMethod ? selectedAccessMethod.startsWith('harmony') : false
 
     this.state = {
@@ -242,8 +239,6 @@ export class AccessMethod extends Component {
   }
 
   handleHarmonySelection(event, harmonyMethods) {
-    console.log(`The selectValue before setting is ${this.state.selectValue}`)
-    console.log(`The event value is ${event}`)
     if (event !== '') {
       this.setState({
         selectValue: harmonyMethods.find(({ methodKey }) => methodKey === event).name
@@ -251,8 +246,6 @@ export class AccessMethod extends Component {
 
       this.handleAccessMethodSelection(event)
     }
-
-    console.log(`The selectValue after setting is ${this.state.selectValue}`)
   }
 
   harmonyMethodsMapper(methods, selected, onPropsChange) {
@@ -322,7 +315,8 @@ export class AccessMethod extends Component {
   renderHarmonySelector(harmonyMethods, selectedAccessMethod) {
     const onPropsChange = () => {}
 
-    if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony') && this.state.selectValue === '') {
+    const { selectValue } = this.state
+    if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony') && selectValue === '') {
       this.setState({
         selectValue: harmonyMethods.find(({ methodKey }) => methodKey === selectedAccessMethod).name
       })
@@ -331,13 +325,13 @@ export class AccessMethod extends Component {
     return (
       <Select.Root
         name="HarmonyMethodSelector"
-        value={this.state.selectValue}
+        value={selectValue}
         onValueChange={(e) => this.handleHarmonySelection(e, harmonyMethods)}
       >
         <span>Service</span>
         <Select.Trigger key="HarmonyTrigger" className="SelectTrigger">
           <Select.Value placeholder="Choose a service">
-            {this.state.selectValue}
+            {selectValue}
           </Select.Value>
           <Select.Icon className="SelectIcon" />
         </Select.Trigger>
@@ -374,7 +368,7 @@ export class AccessMethod extends Component {
           <AccessMethodRadio
             key={id}
             id={id}
-            value="XXX"
+            value="HarmonyMethodType"
             title="Customize with Harmony"
             description="Select a Harmony service to customize options"
             details="Select options like variables, transformations, and output formats by applying a Harmony service. Data will be staged in the cloud for download and analysis."
@@ -680,7 +674,8 @@ export class AccessMethod extends Component {
       : false
 
     const harmonyMethods = accessMethodsByType.Harmony
-    // Clear Harmony method-related state if harmonyMethods is empty? XXX
+
+    const { harmonyTypeSelected, selectValue } = this.state
 
     return (
       <div className="access-method">
@@ -705,10 +700,10 @@ export class AccessMethod extends Component {
         <ProjectPanelSection
           heading="Select a service and customize options"
           step={2}
-          faded={!selectedAccessMethod && !this.state.harmonyTypeSelected} // XXX
+          faded={!selectedAccessMethod && !harmonyTypeSelected}
         >
           {
-            this.state.harmonyTypeSelected && harmonyMethods.length > 0 && ( // XXX
+            harmonyTypeSelected && harmonyMethods.length > 0 && (
               this.renderHarmonySelector(harmonyMethods, selectedAccessMethod)
             )
           }
@@ -736,10 +731,10 @@ export class AccessMethod extends Component {
                 }
                 {
                   // Show Harmony method description
-                  this.state.harmonyTypeSelected && (
+                  harmonyTypeSelected && (
                     <>
                       <p />
-                      <h3 className="project-panel-section__heading">{this.state.selectValue}</h3>
+                      <h3 className="project-panel-section__heading">{selectValue}</h3>
                       <p>{accessMethods[selectedAccessMethod].description}</p>
                       <p>
                         <a
