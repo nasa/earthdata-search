@@ -495,9 +495,9 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       action: 'getProjectCollections',
       resource: 'project collections'
     }))
-
-    return null
   }
+
+  return null
 }
 
 /**
