@@ -97,7 +97,7 @@ export class AccessMethod extends Component {
     this.handleToggleTemporalSubsetting = this.handleToggleTemporalSubsetting.bind(this)
     this.handleToggleSpatialSubsetting = this.handleToggleSpatialSubsetting.bind(this)
     this.handleConcatenationSelection = this.handleConcatenationSelection.bind(this)
-    this.updateStep2 = this.updateStep2.bind(this)
+    this.handleHarmonySelection = this.handleHarmonySelection.bind(this)
   }
 
   UNSAFE_componentWillReceiveProps() {
@@ -241,15 +241,7 @@ export class AccessMethod extends Component {
     })
   }
 
-  harmonyMethodsMapper(methods, selected, onPropsChange) {
-    return (
-      <div id="harmony_methods">
-        {methods.map((radio) => this.renderRadioItemSelectItem(radio, onPropsChange, selected))}
-      </div>
-    )
-  }
-
-  updateStep2(event, harmonyMethods) {
+  handleHarmonySelection(event, harmonyMethods) {
     console.log(`The selectValue before setting is ${this.state.selectValue}`)
     console.log(`The event value is ${event}`)
     if (event !== '') {
@@ -263,7 +255,15 @@ export class AccessMethod extends Component {
     console.log(`The selectValue after setting is ${this.state.selectValue}`)
   }
 
-  renderRadioItemSelectItem(radioItem, onPropsChange, selected) {
+  harmonyMethodsMapper(methods, selected, onPropsChange) {
+    return (
+      <div id="harmony_methods">
+        {methods.map((radio) => this.renderHarmonySelectItem(radio, onPropsChange, selected))}
+      </div>
+    )
+  }
+
+  renderHarmonySelectItem(radioItem, onPropsChange, selected) {
     const {
       id,
       methodKey,
@@ -332,7 +332,7 @@ export class AccessMethod extends Component {
       <Select.Root
         name="HarmonyMethodSelector"
         value={this.state.selectValue}
-        onValueChange={(e) => this.updateStep2(e, harmonyMethods)}
+        onValueChange={(e) => this.handleHarmonySelection(e, harmonyMethods)}
       >
         <span>Service</span>
         <Select.Trigger key="HarmonyTrigger" className="SelectTrigger">
