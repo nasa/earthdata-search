@@ -21,14 +21,20 @@ export const AccessMethodRadio = ({
   onClick,
   title,
   subtitle,
-  customizationOptions
+  customizationOptions,
+  isHarmony
 }) => {
-  const labelClassName = classNames([
+  const labelClasses = [
     'access-method-radio',
     {
       'access-method-radio--is-selected': checked
     }
-  ])
+  ]
+  if (isHarmony) {
+    labelClasses.push('access-method-radio--isHarmony')
+  }
+
+  const labelClassName = classNames(labelClasses)
 
   const {
     hasSpatialSubsetting = false,
@@ -117,7 +123,8 @@ AccessMethodRadio.defaultProps = {
   onChange: null,
   onClick: null,
   subtitle: null,
-  customizationOptions: null
+  customizationOptions: null,
+  isHarmony: false
 }
 
 AccessMethodRadio.propTypes = {
@@ -144,7 +151,8 @@ AccessMethodRadio.propTypes = {
     hasSpatialSubsetting: propTypes.bool,
     hasFormats: propTypes.bool,
     hasTransform: propTypes.bool
-  })
+  }),
+  isHarmony: propTypes.bool
 }
 
 export default AccessMethodRadio

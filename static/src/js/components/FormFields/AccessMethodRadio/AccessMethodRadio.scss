@@ -18,6 +18,11 @@
     color: $color__black--800;
   }
 
+  &--isHarmony {
+    margin-bottom: 0;
+    border-radius: 0;
+  }
+
   &__input {
     visibility: hidden;
     height: 0;
