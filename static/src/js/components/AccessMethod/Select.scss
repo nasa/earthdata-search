@@ -1,17 +1,9 @@
-@import '@radix-ui/colors/black-alpha.css';
-
-/* reset */
-button {
-  all: unset;
-}
+$trigger-width: 400px;
 
 .SelectTrigger {
-  display: box;
-  align-items: center;
-  justify-content: left;
-  width: 400px;
+  width: $trigger-width;
   border-radius: 4px;
-  border: 1px solid #dcdee0; /* color__black--200 */
+  border: 1px solid $color__black--200;
   padding: 0 15px;
   font-size: 13px;
   line-height: 1;
@@ -20,13 +12,21 @@ button {
   background-color: white;
   margin-bottom: 0.5rem;
   margin-left: 1rem;
-}
-.SelectTrigger:hover {
-  background-color: #f3f3f3; /* $color__black--100 */
+  &:hover {
+    background-color: $color__black--100;
+  }
 }
 
 .SelectIcon {
   float: right;
+}
+
+.SelectTrigger > span:first-child {
+  float: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: calc(#{$trigger-width} - 50px);
 }
 
 .SelectContent {
@@ -36,11 +36,11 @@ button {
   box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
   z-index: 100;
   width: 434px;
-  height: 200px;
 }
 
 .SelectViewport {
-  padding: 5px;
+  padding: 3px;
+  max-height: 275px; // Enough for three services if they have short descriptions
 }
 
 .SelectItem {
@@ -52,21 +52,10 @@ button {
   height: auto;
   position: relative;
   user-select: none;
-  padding-right: 6px;
 }
-
 .SelectItem[data-highlighted] {
   outline: none;
-  background-color: #f3f3f3; /* $color__black--100 */
-}
-
-.SelectItemIndicator {
-  position: absolute;
-  left: 0;
-  width: 25px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  background-color: $color__black--200;
 }
 
 /* scroll area */
@@ -87,14 +76,13 @@ button {
   display: flex;
   user-select: none;
   padding: 2px;
-  /*background: #dcdee0;  color__black--200 */
-}
-.ScrollAreaScrollbar[data-orientation='vertical'] {
-  width: var(--scrollbar-size);
+  &[data-orientation='vertical'] {
+    width: var(--scrollbar-size);
+  }
 }
 
 .ScrollAreaThumb {
-  background: #b6b8bb; /* $color__black--300 */
+  background: $color__black--300;
   border-radius: 3px;
   position: relative;
   flex: 1;

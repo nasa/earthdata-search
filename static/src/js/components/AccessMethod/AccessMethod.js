@@ -19,7 +19,7 @@ import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio
 import RadioList from '../FormFields/RadioList/RadioList'
 import Spinner from '../Spinner/Spinner'
 
-import './Select.css'
+import './Select.scss'
 import './AccessMethod.scss'
 import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
 
