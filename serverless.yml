@@ -9,10 +9,6 @@ provider:
   endpointType: PRIVATE
   memorySize: 128
   environment:
-    dbEndpoint:
-      Fn::ImportValue: ${self:provider.stage}-DatabaseEndpoint
-    dbPort:
-      Fn::ImportValue: ${self:provider.stage}-DatabasePort
     # Variables for new Encrypted database
     databaseEndpoint:
       Fn::ImportValue: ${self:provider.stage}-EncryptedDatabaseEndpoint
