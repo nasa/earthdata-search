@@ -227,21 +227,6 @@ Outputs:
     Export:
       Name: ${self:provider.stage}-EncryptedDatabasePort
 
-  DatabaseEndpoint:
-    Value:
-      Fn::GetAtt:
-        - Database
-        - Endpoint.Address
-    Export:
-      Name: ${self:provider.stage}-DatabaseEndpoint
-
-  DatabasePort:
-    Value:
-      Fn::GetAtt:
-        - Database
-        - Endpoint.Port
-    Export:
-      Name: ${self:provider.stage}-DatabasePort
   ElastiCacheEndpoint:
     Value:
       Fn::GetAtt:
