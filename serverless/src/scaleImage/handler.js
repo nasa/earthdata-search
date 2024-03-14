@@ -123,10 +123,10 @@ const scaleImage = async (event) => {
       thumbnail = await buildUnavailableImageBuffer(height, width)
     }
 
-    return buildResponse(thumbnail, 500)
+    // TODO if the axios call is set to 500 here even though its an error the front end
+    // will not work
+    return buildResponse(thumbnail, 200)
   }
-
-  console.log('At the end for this one✅')
 
   // Return the resized image
   return buildResponse(thumbnail)

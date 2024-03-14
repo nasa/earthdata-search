@@ -7,8 +7,7 @@ import { resizeImage } from './resizeImage'
  */
 export const buildUnavailableImageBuffer = async (height = null, width = null) => {
   // Const noFoundAsset = '../../../../../static/src/assets/images/image-unavailable.svg'
-  // const noFoundAsset = 'static/src/assets/images/image-unavailable.svg'
-  const noFoundAsset = 'image-unavailable.svg'
+  const noFoundAsset = 'static/src/assets/images/image-unavailable.svg'
   if (height || width) {
     return resizeImage(noFoundAsset, height, width)
   }

@@ -7,13 +7,13 @@ describe('buildResponse', () => {
     const response = buildResponse(imageBuffer)
 
     expect(response).toEqual({
-      isBase64Encoded: true,
+      isBase64Encoded: false,
       statusCode: 200,
       headers: {
-        'Content-Type': 'image/png',
+        'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
-      body: imageBuffer
+      body: '{"base64Image":"data:image/png;base64, dGVzdC1pbWFnZS1jb250ZW50cw==","Content-Type":"image/png"}'
     })
   })
 
@@ -23,13 +23,13 @@ describe('buildResponse', () => {
     const response = buildResponse(imageBuffer, 404)
 
     expect(response).toEqual({
-      isBase64Encoded: true,
+      isBase64Encoded: false,
       statusCode: 404,
       headers: {
-        'Content-Type': 'image/png',
+        'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
-      body: imageBuffer
+      body: '{"base64Image":"data:image/png;base64, ","Content-Type":"image/png"}'
     })
   })
 })
