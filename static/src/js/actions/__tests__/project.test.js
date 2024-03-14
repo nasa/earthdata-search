@@ -444,17 +444,7 @@ describe('getProjectCollections', () => {
         .post(/graphql/)
         .reply(200, {
           data: {
-            collection: {
-              conceptId: 'C10000000000-EDSC',
-              shortName: 'id_1',
-              versionId: 'VersionID',
-              tools: {
-                items: [{
-                  name: 'SOTO'
-                }]
-              },
-              variables: varResults[1].variables
-            }
+            variables: varResults[1].variables
           }
         })
 
@@ -462,17 +452,7 @@ describe('getProjectCollections', () => {
         .post(/graphql/)
         .reply(200, {
           data: {
-            collection: {
-              conceptId: 'C10000000000-EDSC',
-              shortName: 'id_1',
-              versionId: 'VersionID',
-              tools: {
-                items: [{
-                  name: 'SOTO'
-                }]
-              },
-              variables: varResults[2].variables
-            }
+            variables: varResults[2].variables
           }
         })
 
