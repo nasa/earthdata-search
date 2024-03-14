@@ -33,8 +33,7 @@ const initParams = {
       count: 2,
       cursor: 'mock-cursor-0'
     }
-  },
-  queryType: 'GetCollection'
+  }
 }
 
 describe('retrieveVariablesRequest', () => {
@@ -43,22 +42,12 @@ describe('retrieveVariablesRequest', () => {
       .post(/api/)
       .reply(200, {
         data: {
-          collection: {
-            conceptId: 'C10000000000-EDSC',
-            shortName: 'id_1',
-            versionId: 'VersionID',
-            tools: {
-              items: [{
-                name: 'SOTO'
-              }]
-            },
-            variables: {
-              items: [{
-                conceptId: 'V10000000001-EDSC'
-              }],
-              count: 2,
-              cursor: null
-            }
+          variables: {
+            items: [{
+              conceptId: 'V10000000001-EDSC'
+            }],
+            count: 2,
+            cursor: null
           }
         }
       })
@@ -98,8 +87,7 @@ describe('retrieveVariablesRequest', () => {
     const resultVars = await retrieveVariablesRequest(
       initParams.variables,
       initParams.requestParams,
-      graphQlRequest,
-      initParams.queryType
+      graphQlRequest
     )
 
     expect(resultVars).toEqual([
@@ -117,22 +105,12 @@ describe('retrieveVariablesRequest', () => {
       .post(/api/)
       .reply(200, {
         data: {
-          collection: {
-            conceptId: 'C10000000000-EDSC',
-            shortName: 'id_1',
-            versionId: 'VersionID',
-            tools: {
-              items: [{
-                name: 'SOTO'
-              }]
-            },
-            variables: {
-              items: [{
-                conceptId: 'V10000000001-EDSC'
-              }],
-              count: 4,
-              cursor: 'mock-cursor-1'
-            }
+          variables: {
+            items: [{
+              conceptId: 'V10000000001-EDSC'
+            }],
+            count: 4,
+            cursor: 'mock-cursor-1'
           }
         }
       })
@@ -141,22 +119,12 @@ describe('retrieveVariablesRequest', () => {
       .post(/api/)
       .reply(200, {
         data: {
-          collection: {
-            conceptId: 'C10000000000-EDSC',
-            shortName: 'id_1',
-            versionId: 'VersionID',
-            tools: {
-              items: [{
-                name: 'SOTO'
-              }]
-            },
-            variables: {
-              items: [{
-                conceptId: 'V10000000002-EDSC'
-              }],
-              count: 4,
-              cursor: 'mock-cursor-2'
-            }
+          variables: {
+            items: [{
+              conceptId: 'V10000000002-EDSC'
+            }],
+            count: 4,
+            cursor: 'mock-cursor-2'
           }
         }
       })
@@ -165,22 +133,12 @@ describe('retrieveVariablesRequest', () => {
       .post(/api/)
       .reply(200, {
         data: {
-          collection: {
-            conceptId: 'C10000000000-EDSC',
-            shortName: 'id_1',
-            versionId: 'VersionID',
-            tools: {
-              items: [{
-                name: 'SOTO'
-              }]
-            },
-            variables: {
-              items: [{
-                conceptId: 'V10000000003-EDSC'
-              }],
-              count: 4,
-              cursor: null
-            }
+          variables: {
+            items: [{
+              conceptId: 'V10000000003-EDSC'
+            }],
+            count: 4,
+            cursor: null
           }
         }
       })
@@ -220,8 +178,7 @@ describe('retrieveVariablesRequest', () => {
     const resultVars = await retrieveVariablesRequest(
       initParams.variables,
       initParams.requestParams,
-      graphQlRequest,
-      initParams.queryType
+      graphQlRequest
     )
 
     expect(resultVars).toEqual([
@@ -245,24 +202,12 @@ describe('retrieveVariablesRequest', () => {
       .post(/api/)
       .reply(200, {
         data: {
-          collections: {
+          variables: {
             items: [{
-              conceptId: 'C10000000000-EDSC',
-              shortName: 'id_1',
-              versionId: 'VersionID',
-              tools: {
-                items: [{
-                  name: 'SOTO'
-                }]
-              },
-              variables: {
-                items: [{
-                  conceptId: 'V10000000001-EDSC'
-                }],
-                count: 4,
-                cursor: 'mock-cursor-1'
-              }
-            }]
+              conceptId: 'V10000000001-EDSC'
+            }],
+            count: 4,
+            cursor: 'mock-cursor-1'
           }
         }
       })
@@ -271,22 +216,12 @@ describe('retrieveVariablesRequest', () => {
       .post(/api/)
       .reply(200, {
         data: {
-          collection: {
-            conceptId: 'C10000000000-EDSC',
-            shortName: 'id_1',
-            versionId: 'VersionID',
-            tools: {
-              items: [{
-                name: 'SOTO'
-              }]
-            },
-            variables: {
-              items: [{
-                conceptId: 'V10000000002-EDSC'
-              }],
-              count: 4,
-              cursor: 'mock-cursor-2'
-            }
+          variables: {
+            items: [{
+              conceptId: 'V10000000002-EDSC'
+            }],
+            count: 4,
+            cursor: 'mock-cursor-2'
           }
         }
       })
@@ -295,22 +230,12 @@ describe('retrieveVariablesRequest', () => {
       .post(/api/)
       .reply(200, {
         data: {
-          collection: {
-            conceptId: 'C10000000000-EDSC',
-            shortName: 'id_1',
-            versionId: 'VersionID',
-            tools: {
-              items: [{
-                name: 'SOTO'
-              }]
-            },
-            variables: {
-              items: [{
-                conceptId: 'V10000000003-EDSC'
-              }],
-              count: 4,
-              cursor: null
-            }
+          variables: {
+            items: [{
+              conceptId: 'V10000000003-EDSC'
+            }],
+            count: 4,
+            cursor: null
           }
         }
       })
@@ -350,8 +275,7 @@ describe('retrieveVariablesRequest', () => {
     const resultVars = await retrieveVariablesRequest(
       initParams.variables,
       initParams.requestParams,
-      graphQlRequest,
-      initParams.queryType
+      graphQlRequest
     )
 
     expect(resultVars).toEqual([
