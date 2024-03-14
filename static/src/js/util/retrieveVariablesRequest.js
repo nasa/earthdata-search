@@ -51,9 +51,7 @@ export const retrieveVariablesRequest = async (
 
     const { data: pagedData } = variablesData
 
-    console.log(pagedData)
     const { variables: pagedVariables } = pagedData
-    console.log(pagedVariables)
     const { cursor: newCursor, items: vars } = pagedVariables
 
     collectedItems = collectedItems.concat(vars)
