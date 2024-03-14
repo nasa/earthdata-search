@@ -129,7 +129,6 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
           count
           items {
             conceptId
-            description
             longName
             name
             type
