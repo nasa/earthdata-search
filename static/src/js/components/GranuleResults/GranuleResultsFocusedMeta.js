@@ -293,7 +293,7 @@ const GranuleResultsFocusedMeta = ({
                           'granule-results-focused-meta__thumb--is-active': activeBrowseImageIndex === i
                         }
                       ])
-
+                      // TODO because we have to load these as base64 I don't think these help anymore
                       // Preload each image as they are first rendered so they are more likely to be
                       // done loading prior to the user navigating to the next image
                       let preloadImg = new Image()
@@ -301,7 +301,7 @@ const GranuleResultsFocusedMeta = ({
                       preloadImg.addEventListener('load', () => { preloadImg = undefined })
 
                       const imgSrc1x = `${getEnvironmentConfig().apiHost}/scale/granules/${focusedGranuleId}?h=175&w=175&imageSrc=${href}`
-                      const imgSrc2x = `${getEnvironmentConfig().apiHost}/scale/granules/${focusedGranuleId}?h=350&w=350&imageSrc=${href}`
+                      // Const imgSrc2x = `${getEnvironmentConfig().apiHost}/scale/granules/${focusedGranuleId}?h=350&w=350&imageSrc=${href}`
 
                       return (
                         href && (
@@ -309,11 +309,10 @@ const GranuleResultsFocusedMeta = ({
                             key={href}
                             className={thumbnailClassName}
                             dataTestId="granule-results-focused-meta-image"
-                            srcSet={`${imgSrc1x} 1x, ${imgSrc2x} 2x`}
                             src={imgSrc1x}
                             alt={description || `Browse image for ${title}`}
-                            width="175px"
-                            height="175px"
+                            width={175}
+                            height={175}
                             isBase64Image
                           />
                         )
@@ -355,6 +354,7 @@ const GranuleResultsFocusedMeta = ({
                     let preloadImg = new Image()
                     preloadImg.src = href
                     preloadImg.addEventListener('load', () => { preloadImg = undefined })
+                    const modalImage = `${getEnvironmentConfig().apiHost}/scale/granules/${focusedGranuleId}?h=175&w=175&imageSrc=${href}`
 
                     return (
                       href && (
@@ -362,10 +362,11 @@ const GranuleResultsFocusedMeta = ({
                           key={href}
                           dataTestId="granule-results-focused-meta-modal-image"
                           className={thumbnailClassName}
-                          src={href}
+                          src={modalImage}
                           alt={description || `Browse image for ${title}`}
-                          width="528px"
-                          height="528px"
+                          width={528}
+                          height={528}
+                          isBase64Image
                         />
                       )
                     )

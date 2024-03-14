@@ -16,12 +16,14 @@ export const downloadImageFromSource = async (imageUrl) => {
       timeout: requestTimeout()
     })
     const { data } = response
+    console.log('🚀 ~ file: downloadImageFromSource.js:19 ~ downloadImageFromSource ~ data:', data)
 
     return data
   } catch (error) {
     const { response } = error
     const { data: errorMessage } = response
-    console.log(`Error fetching granules from cmr to set a thumbnail ${errorMessage}`)
+    // TODO double check this error message
+    console.log(`🎃Error fetching granules from cmr to set a thumbnail ${errorMessage}`)
 
     return undefined
   }

@@ -95,15 +95,16 @@ export const CollectionResultsItem = forwardRef(({
   const { description: nrtDescription, label: nrtLabel } = nrt
 
   const onThumbnailLoaded = () => {
-    console.log('✅thumbnail has loaded')
     setLoadingThumbnail(false)
   }
 
   // Fetch the base64 string from the Lambda function
   // Explicity call the GET request for the lambda
+  // TODO there are some collections which it seems have inaccessible collections
   useEffect(() => {
     if (!isDefaultImage) {
       console.log('🚀 ~ file: CollectionResultsItem.js:109 ~ useEffect ~ isDefaultImage:', isDefaultImage)
+      console.log('🚀 ~ file: CollectionResultsItem.js:114 ~ useEffect ~ thumbnail:', thumbnail)
       axios.get(thumbnail)
         .then((response) => {
         // Set the base64 string received from Lambda

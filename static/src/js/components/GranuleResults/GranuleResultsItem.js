@@ -91,7 +91,6 @@ const GranuleResultsItem = forwardRef(({
     let element = null
     if (granuleThumbnail) {
       element = (
-        // eslint-disable-next-line jsx-a11y/img-redundant-alt
         <EDSCImage
           className="granule-results-item__thumb-image"
           src={granuleThumbnail}
