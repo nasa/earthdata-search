@@ -5,7 +5,6 @@ import classNames from 'classnames'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FaCheck, FaQuestionCircle } from 'react-icons/fa'
 
-import { propTypes } from 'react-bootstrap/esm/Image'
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import { getCustomizeIcons } from '../../../util/metaIcon'
 
@@ -144,15 +143,15 @@ AccessMethodRadio.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
   customizationOptions: PropTypes.shape({
-    hasTemporalSubsetting: propTypes.bool,
-    hasVariables: propTypes.bool,
-    hasTransforms: propTypes.bool,
-    hasCombine: propTypes.bool,
-    hasSpatialSubsetting: propTypes.bool,
-    hasFormats: propTypes.bool,
-    hasTransform: propTypes.bool
+    hasTemporalSubsetting: PropTypes.bool,
+    hasVariables: PropTypes.bool,
+    hasTransforms: PropTypes.bool,
+    hasCombine: PropTypes.bool,
+    hasSpatialSubsetting: PropTypes.bool,
+    hasFormats: PropTypes.bool,
+    hasTransform: PropTypes.bool
   }),
-  isHarmony: propTypes.bool
+  isHarmony: PropTypes.bool
 }
 
 export default AccessMethodRadio
