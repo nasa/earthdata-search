@@ -11,6 +11,7 @@ import autocompleteReducer from './autocomplete'
 import browserReducer from './browser'
 import collectionMetadataReducer from './collectionMetadata'
 import collectionsResultsReducer from './collectionsResults'
+import colorMapsReducer from './colorMaps'
 import contactInfoReducer from './contactInfo'
 import dataQualitySummariesReducer from './dataQualitySummaries'
 import earthdataDownloadRedirectReducer from './earthdataDownloadRedirect'
@@ -71,7 +72,8 @@ export default (history) => combineReducers({
   map: mapReducer,
   metadata: combineReducers({
     collections: collectionMetadataReducer,
-    granules: granuleMetadataReducer
+    granules: granuleMetadataReducer,
+    colormaps: colorMapsReducer
   }),
   portal: portalsReducer,
   project: projectReducer,

@@ -38,6 +38,12 @@ import {
   viewCollectionDetails
 } from './focusedCollection'
 import {
+  getColorMap,
+  setColorMapsErrored,
+  setColorMapsLoaded,
+  setColorMapsLoading
+} from './colorMaps'
+import {
   applyGranuleFilters,
   clearGranuleFilters,
   excludeGranule,
@@ -249,6 +255,7 @@ const actions = {
   fetchSavedProjects,
   fetchShapefile,
   getCollections,
+  getColorMap,
   getFocusedCollection,
   getFocusedGranule,
   getGranuleSubscriptions,
@@ -281,6 +288,9 @@ const actions = {
   setActivePanel,
   setActivePanelGroup,
   setActivePanelSection,
+  setColorMapsErrored,
+  setColorMapsLoaded,
+  setColorMapsLoading,
   setContactInfoFromJwt,
   setDataQualitySummaries,
   setIsSubmitting,
