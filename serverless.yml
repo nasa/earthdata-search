@@ -45,11 +45,11 @@ provider:
     NODE_OPTIONS: '--enable-source-maps'
 
     # Redis cache configuration TODO commenting out for testing feature branch
-    # cacheHost:
-    #   Fn::ImportValue: ${self:provider.stage}-ElastiCacheEndpoint
-    # cachePort:
-    #   Fn::ImportValue: ${self:provider.stage}-ElastiCachePort
-    # cacheKeyExpireSeconds: ${self:custom.variables.cacheKeyExpireSeconds}
+    cacheHost:
+      Fn::ImportValue: ${self:provider.stage}-ElastiCacheEndpoint
+    cachePort:
+      Fn::ImportValue: ${self:provider.stage}-ElastiCachePort
+    cacheKeyExpireSeconds: ${self:custom.variables.cacheKeyExpireSeconds}
 
   vpc:
     securityGroupIds:
