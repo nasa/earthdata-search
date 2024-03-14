@@ -13,11 +13,11 @@
     "primaryLinks": [
       {
         "href": "https://oceancolor.gsfc.nasa.gov/",
-        "title": "Ocean Color" 
+        "title": "Ocean Color"
       },
       {
         "href": "https://oceandata.sci.gsfc.nasa.gov/",
-        "title": "Ocean Data" 
+        "title": "Ocean Data"
       }
     ],
     "secondaryLinks": []
@@ -27,7 +27,7 @@
   "parentConfig": "edsc",
   "portalBrowser": true,
   "query": {
-    "dataCenter": "NASA/GSFC/SED/ESD/GCDC/OB.DAAC"
+    "provider": ["OB_DAAC"]
   },
   "title": {
     "primary": "OBDAAC",
