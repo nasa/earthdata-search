@@ -1151,6 +1151,32 @@ test.describe('Map interactions', () => {
         await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3031/)
       })
     })
+
+    test.describe('When switching from the North Polar Stereographic projection to the South Polar Stereographic projection', () => {
+      test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        await page.goto('/')
+
+        // Change the projection to North Polar
+        await page.getByTestId('projection-switcher__arctic').click()
+
+        await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413&zoom=0')
+
+        await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3413/)
+
+        // Change the projection to South Polar
+        await page.getByTestId('projection-switcher__antarctic').click()
+
+        await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031&zoom=0')
+
+        await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3031/)
+      })
+    })
   })
 
   test.describe('When changing the map layers', () => {
@@ -1417,7 +1443,7 @@ test.describe('Map interactions', () => {
           await page.route(/api$/, async (route) => {
             const query = route.request().postData()
 
-            expect(query).toEqual('{"query":"\\n    query GetGranule(\\n      $id: String!\\n    ) {\\n      granule(\\n        conceptId: $id\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"id":"G2061166811-ASF"}}')
+            expect(query).toEqual('{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"G2061166811-ASF"}}}')
 
             await route.fulfill({
               json: granuleGraphQlBody,

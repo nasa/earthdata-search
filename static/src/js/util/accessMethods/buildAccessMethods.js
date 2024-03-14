@@ -1,9 +1,13 @@
 import { camelCase, uniq } from 'lodash'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
 import { isDownloadable } from '../../../../../sharedUtils/isDownloadable'
 import { generateFormDigest } from './generateFormDigest'
 import { getVariables } from './getVariables'
 import { supportsBoundingBoxSubsetting } from './supportsBoundingBoxSubsetting'
+import { supportsConcatenation } from './supportsConcatenation'
+import { defaultConcatenation } from './defaultConcatenation'
 import { supportsShapefileSubsetting } from './supportsShapefileSubsetting'
 import { supportsTemporalSubsetting } from './supportsTemporalSubsetting'
 import { supportsVariableSubsetting } from './supportsVariableSubsetting'
@@ -17,15 +21,19 @@ import { supportsVariableSubsetting } from './supportsVariableSubsetting'
 export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
   const {
     granules = {},
-    services = {}
+    services = {},
+    variables: collectionAssociatedVariables = {}
   } = collectionMetadata
+
   const accessMethods = {}
   let harmonyIndex = 0
-
   const { items: serviceItems = null } = services
+
+  const { disableOrdering } = getApplicationConfig()
 
   if (serviceItems !== null) {
     serviceItems.forEach((serviceItem) => {
+      let associatedVariables = collectionAssociatedVariables
       const {
         conceptId: serviceConceptId,
         orderOptions,
@@ -35,8 +43,13 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         maxItemsPerOrder,
         name,
         supportedReformattings,
-        variables: associatedVariables
+        variables: serviceAssociatedVariables = {}
       } = serviceItem
+
+      if (serviceAssociatedVariables.items) {
+        associatedVariables = serviceAssociatedVariables
+      }
+
       // Only process service types that EDSC supports
       const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony']
       if (!supportedServiceTypes.includes(serviceType.toLowerCase())) return
@@ -46,7 +59,8 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
       const supportsOrderOptions = ['esi', 'echo orders']
 
       // Only process orderOptions if the service type uses orderOptions
-      if (supportsOrderOptions.includes(serviceType.toLowerCase())) {
+      // Do not include access if orders are disabled
+      if (supportsOrderOptions.includes(serviceType.toLowerCase()) && (disableOrdering !== 'true')) {
         const { items: orderOptionsItems } = orderOptions
         if (orderOptionsItems === null) return
 
@@ -161,6 +175,9 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           supportsShapefileSubsetting: supportsShapefileSubsetting(serviceItem),
           supportsTemporalSubsetting: supportsTemporalSubsetting(serviceItem),
           supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
+          supportsConcatenation: supportsConcatenation(serviceItem),
+          defaultConcatenation: defaultConcatenation(serviceItem),
+          enableConcatenateDownload: defaultConcatenation(serviceItem),
           type: serviceType,
           url: urlValue,
           variables

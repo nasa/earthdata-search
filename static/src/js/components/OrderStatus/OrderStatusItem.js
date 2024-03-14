@@ -9,6 +9,7 @@ import {
   FaQuestionCircle
 } from 'react-icons/fa'
 
+import { getClientId } from '../../../../../sharedUtils/getClientId'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import {
   getStateFromOrderStatus,
@@ -183,7 +184,7 @@ export class OrderStatusItem extends PureComponent {
     const eulaCallback = 'earthdata-download://eulaCallback'
     const eulaRedirectUrl = `${edscHost}/auth_callback?eddRedirect=${encodeURIComponent(eulaCallback)}`
 
-    const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(getLinksUrl)}&downloadId=${downloadId}&token=Bearer ${authToken}&authUrl=${encodeURIComponent(authUrl)}&eulaRedirectUrl=${encodeURIComponent(eulaRedirectUrl)}`
+    const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(getLinksUrl)}&downloadId=${downloadId}&clientId=${getClientId().client}&token=Bearer ${authToken}&authUrl=${encodeURIComponent(authUrl)}&eulaRedirectUrl=${encodeURIComponent(eulaRedirectUrl)}`
 
     return link
   }

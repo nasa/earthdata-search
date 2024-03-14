@@ -1,14 +1,33 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import {
+  render,
+  screen,
+  waitFor
+} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 import { Router } from 'react-router'
 import { Provider } from 'react-redux'
 import { createMemoryHistory } from 'history'
-
 import ChunkedOrderModal from '../ChunkedOrderModal'
+import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import configureStore from '../../../store/configureStore'
+
+const mockOnToggleChunkedOrderModal = jest.fn()
+
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
+// In order to pass out of scope variables into `jest` they must be prefixed with `mock`
+jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children }) => (
+  <mock-PortalLinkContainer
+    onClick={mockOnToggleChunkedOrderModal}
+  >
+    {children}
+  </mock-PortalLinkContainer>
+)))
 
 const store = configureStore()
 
@@ -31,7 +50,7 @@ function setup(overrideProps = {}) {
       }
     },
     onSubmitRetrieval: jest.fn(),
-    onToggleChunkedOrderModal: jest.fn(),
+    onToggleChunkedOrderModal: mockOnToggleChunkedOrderModal,
     ...overrideProps
   }
 
@@ -87,23 +106,28 @@ describe('ChunkedOrderModal component', () => {
 
   test('should render a \'Refine your search\' link that keeps the project params intact and removes the focused collection', async () => {
     const user = userEvent.setup()
-    const { history } = setup()
+    setup()
+    await user.click(screen.getByText('Refine your search'))
 
-    await user.click(screen.getByRole('button', { name: 'Refine your search' }))
-
-    expect(history.location.pathname).toEqual('/search')
-    expect(decodeURIComponent(history.location.search)).toContain('?p=!C100005-EDSC&pg[1][v]=t')
+    await waitFor(() => {
+      expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
+      expect(PortalLinkContainer).toHaveBeenCalledWith(expect.objectContaining({
+        children: 'Refine your search',
+        to: {
+          pathname: '/search',
+          search: '?p=!C100005-EDSC&pg[1][v]=t'
+        },
+        updatePath: true
+      }), {})
+    })
   })
 
   describe('modal actions', () => {
     test('\'Refine your search\' button should trigger onToggleChunkedOrderModal', async () => {
       const user = userEvent.setup()
       const { onToggleChunkedOrderModal } = setup()
-
-      await user.click(screen.getByRole('button', { name: 'Refine your search' }))
-
+      await user.click(screen.getByText('Refine your search'))
       expect(onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
-      expect(onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
     })
 
     test('\'Change access methods\' button should trigger onToggleChunkedOrderModal', async () => {

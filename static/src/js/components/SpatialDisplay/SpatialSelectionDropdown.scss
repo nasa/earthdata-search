@@ -40,5 +40,9 @@
     .dropdown-item:hover & {
       color: $color__black--500;
     }
+
+    .dropdown-item:disabled & {
+      pointer-events: auto;
+    }
   }
 }

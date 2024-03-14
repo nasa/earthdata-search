@@ -205,25 +205,15 @@ export const getProjectCollections = () => async (dispatch, getState) => {
   const searchParams = buildCollectionSearchParams(collectionParams)
 
   const {
-    includeGranuleCounts,
     includeHasGranules
   } = searchParams
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
-    query GetProjectCollections (
-      $ids: [String]
-      $includeHasGranules: Boolean
-      $includeTags: String
-      $pageSize: Int
-      $subscriberId: String
-    ) {
+    query GetProjectCollections ($params: CollectionsInput, $subcriptionParams: SubscriptionsInput) {
       collections (
-        conceptId: $ids
-        includeHasGranules: $includeHasGranules
-        includeTags: $includeTags
-        limit: $pageSize
+        params: $params
       ) {
         items {
           abstract
@@ -315,7 +305,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
             }
           }
           subscriptions (
-            subscriberId: $subscriberId
+            params: $subcriptionParams
           ) {
             count
             items {
@@ -350,12 +340,15 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     }`
 
   const response = graphQlRequestObject.search(graphQuery, {
-    ids: filteredIds,
-    includeTags: defaultCmrSearchTags.join(','),
-    includeGranuleCounts,
-    includeHasGranules,
-    pageSize: filteredIds.length,
-    subscriberId: username
+    params: {
+      conceptId: filteredIds,
+      includeTags: defaultCmrSearchTags.join(','),
+      includeHasGranules,
+      pageSize: filteredIds.length
+    },
+    subcriptionParams: {
+      subscriberId: username
+    }
   })
     .then((responseObject) => {
       const payload = []

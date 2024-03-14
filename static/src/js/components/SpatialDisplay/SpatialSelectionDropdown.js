@@ -1,6 +1,10 @@
 import React, { PureComponent } from 'react'
 import { PropTypes } from 'prop-types'
-import { Dropdown } from 'react-bootstrap'
+import {
+  Dropdown,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap'
 import {
   FaCrop,
   FaMapMarker,
@@ -9,6 +13,8 @@ import {
 } from 'react-icons/fa'
 
 import { eventEmitter } from '../../events/events'
+
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -56,6 +62,18 @@ export class SpatialSelectionDropdown extends PureComponent {
   }
 
   render() {
+    const { disableDatabaseComponents } = getApplicationConfig()
+
+    // Parse string field `disableDatabaseComponents` disable shapefile search if true
+    const disableShapefileSearch = disableDatabaseComponents === 'true'
+
+    const spatialSelectionFileSpan = (
+      <span>
+        File
+        <span className="spatial-selection-dropdown__small">(KML, KMZ, ESRI, …)</span>
+      </span>
+    )
+
     return (
       <Dropdown
         className="spatial-selection-dropdown"
@@ -116,11 +134,28 @@ export class SpatialSelectionDropdown extends PureComponent {
             icon={FaFile}
             onClick={() => this.onItemClick('file')}
             label="Select Shapefile"
+            disabled={disableShapefileSearch}
           >
-            <span>
-              File
-              <span className="spatial-selection-dropdown__small">(KML, KMZ, ESRI, …)</span>
-            </span>
+            {
+              disableShapefileSearch ? (
+                <OverlayTrigger
+                  placement="right"
+                  overlay={
+                    (
+                      <Tooltip>
+                        Shapefile subsetting is currently disabled
+                      </Tooltip>
+                    )
+                  }
+                >
+                  <div>
+                    {spatialSelectionFileSpan}
+                  </div>
+                </OverlayTrigger>
+              )
+                : (spatialSelectionFileSpan)
+
+            }
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

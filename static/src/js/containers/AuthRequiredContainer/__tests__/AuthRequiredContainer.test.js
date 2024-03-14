@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import '@testing-library/jest-dom'
 import * as tinyCookie from 'tiny-cookie'
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 import { AuthRequiredContainer, mapStateToProps } from '../AuthRequiredContainer'
 
@@ -23,6 +24,9 @@ const setup = (overrideProps) => {
 beforeEach(() => {
   jest.restoreAllMocks()
   jest.clearAllMocks()
+  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    disableDatabaseComponents: false
+  }))
 })
 
 describe('mapStateToProps', () => {
@@ -100,6 +104,29 @@ describe('AuthRequiredContainer component', () => {
 
       setup({ noRedirect: true })
       expect(screen.queryByText('children')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('when database components are turned off', () => {
+    test('should redirect to the home `search` page', () => {
+      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        disableDatabaseComponents: 'true'
+      }))
+
+      setup()
+      expect(screen.getByTestId('auth-required')).toBeInTheDocument()
+      expect(window.location.href).toEqual('/search')
+    })
+
+    test('the token cookie should be cleared', () => {
+      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        disableDatabaseComponents: 'true'
+      }))
+
+      jest.spyOn(tinyCookie, 'remove').mockImplementation(() => null)
+
+      setup()
+      expect(tinyCookie.remove).toHaveBeenCalledTimes(1)
     })
   })
 })

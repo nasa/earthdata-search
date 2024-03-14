@@ -29,6 +29,7 @@ const permittedCollectionMetadataFields = [
   'versionId'
 ]
 const permittedAccessMethodFields = [
+  'enableConcatenateDownload',
   'enableTemporalSubsetting',
   'enableSpatialSubsetting',
   'maxItemsPerOrder',
@@ -41,6 +42,8 @@ const permittedAccessMethodFields = [
   'selectedOutputProjection',
   'supportsBoundingBoxSubsetting',
   'supportsShapefileSubsetting',
+  'supportsConcatenation',
+  'defaultConcatenation',
   'type',
   'url'
 ]
@@ -108,11 +111,28 @@ export const prepareRetrievalParams = (state) => {
 
     const params = buildGranuleSearchParams(preparedParams)
 
+    const { variables, selectedVariables } = accessMethods[selectedAccessMethod]
+
     returnValue.granule_params = params
+
     returnValue.access_method = pick(
       accessMethods[selectedAccessMethod],
       permittedAccessMethodFields
     )
+
+    // Adding `selectedVariableNames` which is a derived field not included in `selectedAccessMethod`
+    if (selectedVariables) {
+      const variableNames = selectedVariables.map((variableKey) => {
+        const { [variableKey]: variableObject } = variables
+        const { name: variableName } = variableObject
+
+        return variableName
+      })
+
+      if (variableNames) {
+        returnValue.access_method.selectedVariableNames = variableNames
+      }
+    }
 
     const {
       boundingBox = [],

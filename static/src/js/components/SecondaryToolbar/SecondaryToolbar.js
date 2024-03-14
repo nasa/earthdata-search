@@ -116,6 +116,7 @@ class SecondaryToolbar extends Component {
       projectCollectionIds,
       location,
       retrieval = {},
+      secondaryToolbarEnabled,
       ursProfile
     } = this.props
 
@@ -362,20 +363,25 @@ class SecondaryToolbar extends Component {
     const showViewProjectLink = (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
 
     return (
-      <nav className="secondary-toolbar">
-        {isPath(location.pathname, ['/projects']) && backToSearchLink}
-        {isDownloadPathWithId(location.pathname) && backToProjectLink}
-        <PortalFeatureContainer authentication>
-          <>
-            {showViewProjectLink && projectLink}
-            {showSaveProjectDropdown && saveProjectDropdown}
-            {!loggedIn ? loginLink : loggedInDropdown}
-          </>
-        </PortalFeatureContainer>
-      </nav>
+      secondaryToolbarEnabled
+      && (
+        <nav className="secondary-toolbar">
+          {isPath(location.pathname, ['/projects']) && backToSearchLink}
+          {isDownloadPathWithId(location.pathname) && backToProjectLink}
+          <PortalFeatureContainer authentication>
+            <>
+              {showViewProjectLink && projectLink}
+              {showSaveProjectDropdown && saveProjectDropdown}
+              {!loggedIn ? loginLink : loggedInDropdown}
+            </>
+          </PortalFeatureContainer>
+        </nav>
+      )
     )
   }
 }
+
+SecondaryToolbar.defaultProps = { secondaryToolbarEnabled: true }
 
 SecondaryToolbar.propTypes = {
   authToken: PropTypes.string.isRequired,
@@ -390,7 +396,8 @@ SecondaryToolbar.propTypes = {
   }).isRequired,
   ursProfile: PropTypes.shape({
     first_name: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  secondaryToolbarEnabled: PropTypes.bool
 }
 
 export default SecondaryToolbar

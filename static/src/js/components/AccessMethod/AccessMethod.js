@@ -62,6 +62,10 @@ export class AccessMethod extends Component {
     } = selectedMethod || {}
 
     const {
+      enableConcatenateDownload
+    } = selectedMethod || false
+
+    const {
       enableSpatialSubsetting = !(
         boundingBox === undefined
         && circle === undefined
@@ -73,7 +77,8 @@ export class AccessMethod extends Component {
 
     this.state = {
       enableTemporalSubsetting,
-      enableSpatialSubsetting
+      enableSpatialSubsetting,
+      enableConcatenateDownload
     }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
@@ -81,6 +86,7 @@ export class AccessMethod extends Component {
     this.handleOutputProjectionSelection = this.handleOutputProjectionSelection.bind(this)
     this.handleToggleTemporalSubsetting = this.handleToggleTemporalSubsetting.bind(this)
     this.handleToggleSpatialSubsetting = this.handleToggleSpatialSubsetting.bind(this)
+    this.handleConcatenationSelection = this.handleConcatenationSelection.bind(this)
   }
 
   UNSAFE_componentWillReceiveProps() {
@@ -136,6 +142,25 @@ export class AccessMethod extends Component {
       method: {
         [selectedAccessMethod]: {
           selectedOutputProjection: value
+        }
+      }
+    })
+  }
+
+  handleConcatenationSelection(event) {
+    const { metadata, onUpdateAccessMethod, selectedAccessMethod } = this.props
+    const { conceptId: collectionId } = metadata
+
+    const { target } = event
+    const { checked } = target
+
+    this.setState({ enableConcatenateDownload: checked })
+
+    onUpdateAccessMethod({
+      collectionId,
+      method: {
+        [selectedAccessMethod]: {
+          enableConcatenateDownload: checked
         }
       }
     })
@@ -207,11 +232,6 @@ export class AccessMethod extends Component {
   }
 
   render() {
-    const {
-      enableTemporalSubsetting,
-      enableSpatialSubsetting
-    } = this.state
-
     const {
       accessMethods,
       index,
@@ -337,8 +357,16 @@ export class AccessMethod extends Component {
       supportsTemporalSubsetting = false,
       supportsShapefileSubsetting = false,
       supportsBoundingBoxSubsetting = false,
-      supportsVariableSubsetting = false
+      supportsVariableSubsetting = false,
+      supportsConcatenation = false,
+      defaultConcatenation = false
     } = selectedMethod || {}
+
+    const {
+      enableTemporalSubsetting,
+      enableSpatialSubsetting,
+      enableConcatenateDownload = defaultConcatenation
+    } = this.state
 
     const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
 
@@ -392,6 +420,7 @@ export class AccessMethod extends Component {
       || supportsBoundingBoxSubsetting
       || supportedOutputFormatOptions.length > 0
       || supportedOutputProjectionOptions.length > 0
+      || supportsConcatenation
       || (form && isActive)
 
     const {
@@ -439,6 +468,11 @@ export class AccessMethod extends Component {
     }
 
     const selectedSpatialDisplay = createSpatialDisplay(spatial)
+
+    // Checking to see if the selectedMethod variables exists and has at least one variable
+    const hasVariables = selectedMethod.variables
+      ? Object.keys(selectedMethod.variables).length > 0
+      : false
 
     return (
       <div className="access-method">
@@ -493,6 +527,38 @@ export class AccessMethod extends Component {
                           onUpdateAccessMethod={onUpdateAccessMethod}
                         />
                       </Suspense>
+                    </ProjectPanelSection>
+                  )
+                }
+                {
+                  supportsConcatenation && (
+                    <ProjectPanelSection
+                      customHeadingTag="h4"
+                      heading="Combine Data"
+                      intro="Select from available operations to combine the data."
+                      nested
+                    >
+                      <Form.Group controlId="input__concatinate-subsetting" className="mb-0">
+                        <Form.Check
+                          id="input__concatinate-subsetting"
+                          type="checkbox"
+                          label={
+                            (
+                              <div>
+                                <span className="mb-1 d-block">
+                                  Enable Concatenation
+                                </span>
+                                <span className="mb-1 d-block text-muted">
+                                  Data will be concatenated along a newly created dimension
+                                </span>
+                              </div>
+                            )
+                          }
+                          checked={enableConcatenateDownload}
+                          disabled={isRecurring}
+                          onChange={this.handleConcatenationSelection}
+                        />
+                      </Form.Group>
                     </ProjectPanelSection>
                   )
                 }
@@ -602,34 +668,36 @@ export class AccessMethod extends Component {
                       nested
                     >
                       {
-                        selectedVariables.length > 0 && (
+                        !hasVariables ? (
                           <p className="access-method__section-status">
-                            {`${selectedVariables.length} ${pluralize('variable', selectedVariables.length)} selected`}
+                            No variables available for selected item.
                           </p>
+                        ) : (
+                          <>
+                            <p className="access-method__section-status">
+                              {
+                                selectedVariables.length > 0
+                                  ? `${selectedVariables.length} ${pluralize('variable', selectedVariables.length)} selected`
+                                  : 'No variables selected. All variables will be included in download.'
+                              }
+                            </p>
+                            <Button
+                              type="button"
+                              bootstrapVariant="primary"
+                              label="Edit Variables"
+                              bootstrapSize="sm"
+                              onClick={
+                                () => {
+                                  onSetActivePanel(`0.${index}.1`)
+                                  onTogglePanels(true)
+                                }
+                              }
+                            >
+                              Edit Variables
+                            </Button>
+                          </>
                         )
                       }
-
-                      {
-                        selectedVariables.length === 0 && (
-                          <p className="access-method__section-status">
-                            No variables selected. All variables will be included in download.
-                          </p>
-                        )
-                      }
-                      <Button
-                        type="button"
-                        bootstrapVariant="primary"
-                        label="Edit Variables"
-                        bootstrapSize="sm"
-                        onClick={
-                          () => {
-                            onSetActivePanel(`0.${index}.1`)
-                            onTogglePanels(true)
-                          }
-                        }
-                      >
-                        Edit Variables
-                      </Button>
                     </ProjectPanelSection>
                   )
                 }

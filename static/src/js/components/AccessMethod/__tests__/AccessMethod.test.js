@@ -26,6 +26,7 @@ const setup = (overrideProps) => {
   const onSelectAccessMethod = jest.fn()
   const onSetActivePanel = jest.fn()
   const onUpdateAccessMethod = jest.fn()
+  const onTogglePanels = jest.fn()
 
   const props = {
     accessMethods: {},
@@ -39,6 +40,7 @@ const setup = (overrideProps) => {
     overrideTemporal: {},
     onSelectAccessMethod,
     onSetActivePanel,
+    onTogglePanels,
     onUpdateAccessMethod,
     selectedAccessMethod: '',
     ...overrideProps
@@ -49,7 +51,8 @@ const setup = (overrideProps) => {
   return {
     onSelectAccessMethod,
     onSetActivePanel,
-    onUpdateAccessMethod
+    onUpdateAccessMethod,
+    onTogglePanels
   }
 }
 
@@ -204,6 +207,84 @@ describe('AccessMethod component', () => {
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
       // Multiple `Harmony` services are possible for a collection
       expect(directDownloadAccessMethodRadioButton.value).toEqual('harmony0')
+    })
+  })
+
+  describe('when the selected access method has variables', () => {
+    test('displays correct elements in variables window', () => {
+      const accessMethodsWithVariables = {
+        opendap: {
+          isValid: true,
+          type: 'OPeNDAP',
+          variables: {
+            VAR123: {
+              conceptId: 'VAR123',
+              longName: 'Variable 123',
+              name: 'Var123'
+            }
+          },
+          supportsVariableSubsetting: true
+        }
+      }
+
+      setup({
+        accessMethods: accessMethodsWithVariables,
+        selectedAccessMethod: 'opendap'
+      })
+
+      expect(screen.queryByText('This service has no associated variables.')).not.toBeInTheDocument()
+      expect(screen.getByText(/variables selected/)).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Edit Variables' })).toBeInTheDocument()
+    })
+
+    test('displays the number of selected variables', async () => {
+      const selectedVariables = ['VAR123', 'VAR456']
+      setup({
+        accessMethods: {
+          opendap: {
+            isValid: true,
+            type: 'OPeNDAP',
+            variables: {
+              VAR123: {
+                meta: {},
+                umm: {}
+              },
+              VAR456: {
+                meta: {},
+                umm: {}
+              }
+            },
+            selectedVariables,
+            supportsVariableSubsetting: true
+          }
+        },
+        selectedAccessMethod: 'opendap'
+      })
+
+      // Check if the text indicating the number of selected variables is present
+      expect(screen.getByText(`${selectedVariables.length} variables selected`)).toBeInTheDocument()
+    })
+  })
+
+  describe('when the selected access method has no variables', () => {
+    test('displays correct elements in variables window', () => {
+      const accessMethodsWithoutVariables = {
+        opendap: {
+          isValid: true,
+          type: 'OPeNDAP',
+          variables: {},
+          supportsVariableSubsetting: true
+        }
+      }
+
+      setup({
+        accessMethods: accessMethodsWithoutVariables,
+        selectedAccessMethod: 'opendap'
+      })
+
+      expect(screen.getByText('No variables available for selected item.')).toBeInTheDocument()
+      expect(screen.queryByText(/variables selected/)).not.toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: 'Edit Variables' })).not.toBeInTheDocument()
     })
   })
 
@@ -1065,7 +1146,7 @@ describe('AccessMethod component', () => {
 
             const checkbox = screen.getByRole('checkbox')
             await user.click(checkbox)
-            expect(screen.getByRole('checkbox').checked).toEqual(true)
+            expect(checkbox.checked).toEqual(true)
           })
 
           test('calls onUpdateAccessMethod', async () => {
@@ -1138,6 +1219,143 @@ describe('AccessMethod component', () => {
           })
 
           expect(screen.getByText(/using the harmony-service-name/)).toBeInTheDocument()
+        })
+
+        test('edit variables button calls `onSetActivePanel` and `onTogglePanels`', async () => {
+          const user = userEvent.setup()
+          const collectionId = 'collectionId'
+          const serviceName = 'harmony-service-name'
+
+          const { onSetActivePanel, onTogglePanels } = setup({
+            selectedAccessMethod: 'harmony0',
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                name: serviceName,
+                supportsVariableSubsetting: true,
+                variables: {
+                  conceptId: 'V1200465315-CMR_ONLY',
+                  definition: 'sea surface subskin temperature in units of kelvin',
+                  longName: 'sea surface subskin temperature',
+                  name: 'sea_surface_temperature',
+                  nativeId: 'eds-test-var-EDSC-3817',
+                  scienceKeywords: [
+                    {
+                      category: 'EARTH SCIENCE',
+                      topic: 'SPECTRAL/ENGINEERING',
+                      term: 'MICROWAVE',
+                      variableLevel1: 'SEA SURFACE TEMPERATURE',
+                      variableLevel2: 'MAXIMUM/MINIMUM TEMPERATURE',
+                      variableLevel3: '24 HOUR MAXIMUM TEMPERATURE',
+                      detailedVariable: 'details_4385'
+                    },
+                    {
+                      category: 'EARTH SCIENCE',
+                      topic: 'SPECTRAL/ENGINEERING',
+                      term: 'MICROWAVE',
+                      variableLevel1: 'MICROWAVE IMAGERY'
+                    }
+                  ]
+                }
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            }
+          })
+
+          const editVariablesBtn = screen.getByRole('button', { name: 'Edit Variables' })
+          await user.click(editVariablesBtn)
+
+          expect(onSetActivePanel).toHaveBeenCalledTimes(1)
+          expect(onSetActivePanel).toHaveBeenCalledWith('0.0.1')
+
+          expect(onTogglePanels).toHaveBeenCalledTimes(1)
+          expect(onTogglePanels).toHaveBeenCalledWith(true)
+        })
+      })
+
+      describe('when the service type is `Harmony` and concatenation is available', () => {
+        test('the `Combine Data` option is avaialable when concatenation service is true', () => {
+          const collectionId = 'collectionId'
+          const serviceName = 'harmony-service-name'
+          setup({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                name: serviceName,
+                supportsConcatenation: true,
+                defaultConcatenation: true
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            },
+            selectedAccessMethod: 'harmony0'
+          })
+
+          expect(screen.getByText(/The requested data will be processed/)).toBeInTheDocument()
+          expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
+          expect(screen.getByRole('checkbox').checked).toEqual(true)
+        })
+
+        test('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
+          const user = userEvent.setup()
+          const collectionId = 'collectionId'
+          const serviceName = 'harmony-service-name'
+          const { onUpdateAccessMethod } = setup({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                name: serviceName,
+                supportsConcatenation: true,
+                defaultConcatenation: false
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            },
+            selectedAccessMethod: 'harmony0'
+          })
+
+          expect(screen.getByText(/The requested data will be processed/)).toBeInTheDocument()
+          expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
+          await user.click(screen.getByRole('checkbox'))
+
+          expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+          expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+            collectionId: 'collectionId',
+            method: { harmony0: { enableConcatenateDownload: true } }
+          })
+
+          expect(screen.getByRole('checkbox').checked).toEqual(true)
+        })
+      })
+
+      describe('when the service type is `Harmony` and concatenation is unavailable', () => {
+        test('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
+          const collectionId = 'collectionId'
+          const serviceName = 'harmony-service-name'
+          setup({
+            accessMethods: {
+              harmony0: {
+                isValid: true,
+                type: 'Harmony',
+                name: serviceName,
+                supportsConcatenation: false,
+                enableConcatenateDownload: false
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            },
+            selectedAccessMethod: 'harmony0'
+          })
+
+          expect(screen.queryAllByText(/Combine Data/)).toHaveLength(0)
         })
       })
     })

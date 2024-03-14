@@ -62,6 +62,24 @@ const decodedGranules = (key, granules) => {
   return result
 }
 
+const encodeConcatenateDownload = (projectCollection) => {
+  if (!projectCollection) return null
+
+  const {
+    accessMethods,
+    selectedAccessMethod
+  } = projectCollection
+
+  if (!accessMethods || !selectedAccessMethod) return null
+
+  const selectedMethod = accessMethods[selectedAccessMethod]
+  const {
+    enableConcatenateDownload
+  } = selectedMethod
+
+  return enableConcatenateDownload ? 't' : 'f'
+}
+
 const encodeSelectedVariables = (projectCollection) => {
   if (!projectCollection) return null
 
@@ -189,6 +207,12 @@ const decodedSelectedAccessMethod = (pgParam) => {
   if (!accessMethod) return undefined
 
   return accessMethod
+}
+
+const decodedConcatenateDownload = (pgParam) => {
+  const { cd: enableConcatenateDownload } = pgParam
+
+  return enableConcatenateDownload === 't'
 }
 
 const decodedOutputFormat = (pgParam) => {
@@ -336,6 +360,9 @@ export const encodeCollections = (props) => {
     // Encode selected variables
     pg.uv = encodeSelectedVariables(projectCollection)
 
+    // Encode concatenation selection
+    pg.cd = encodeConcatenateDownload(projectCollection)
+
     // Encode selected output format
     pg.of = encodeOutputFormat(projectCollection)
 
@@ -402,6 +429,7 @@ export const decodeCollections = (params) => {
     // Project
     let addedGranuleIds = []
     let addedIsOpenSearch
+    let enableConcatenateDownload
     let enableTemporalSubsetting
     let enableSpatialSubsetting
     let isVisible = true
@@ -477,10 +505,14 @@ export const decodeCollections = (params) => {
       // Decode output projection
       selectedOutputProjection = decodedOutputProjection(pCollection)
 
-      // Decode temporal subsetting for harmony collections
+      // Decode harmony subsettings on collections
       if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')) {
+        // Decode Temporal Subsetting
         enableTemporalSubsetting = decodedTemporalSubsetting(pCollection)
+        // Decode Spatial Subsetting
         enableSpatialSubsetting = decodedSpatialSubsetting(pCollection)
+        // Decode concatenate download
+        enableConcatenateDownload = decodedConcatenateDownload(pCollection)
       }
 
       // Determine if the collection is a CWIC collection
@@ -512,9 +544,11 @@ export const decodeCollections = (params) => {
           || selectedOutputProjection
           || enableTemporalSubsetting !== undefined
           || enableSpatialSubsetting !== undefined
+          || enableConcatenateDownload !== undefined
         ) {
           projectById[collectionId].accessMethods = {
             [selectedAccessMethod]: {
+              enableConcatenateDownload,
               enableTemporalSubsetting,
               enableSpatialSubsetting,
               selectedOutputFormat,

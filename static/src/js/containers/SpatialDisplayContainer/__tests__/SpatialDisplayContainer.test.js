@@ -107,7 +107,6 @@ describe('SpatialDisplayContainer component', () => {
       drawingNewLayer: false,
       lineSearch: ['Test Line'],
       onChangeQuery: props.onChangeQuery,
-      onRemoveGridFilter: props.onRemoveGridFilter,
       onRemoveSpatialFilter: props.onRemoveSpatialFilter,
       pointSearch: ['Test Point Search'],
       polygonSearch: ['Test Polygon Search'],

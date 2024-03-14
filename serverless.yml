@@ -9,10 +9,12 @@ provider:
   endpointType: PRIVATE
   memorySize: 128
   environment:
-    dbEndpoint:
-      Fn::ImportValue: ${self:provider.stage}-DatabaseEndpoint
-    dbPort:
-      Fn::ImportValue: ${self:provider.stage}-DatabasePort
+    # Variables for new Encrypted database
+    databaseEndpoint:
+      Fn::ImportValue: ${self:provider.stage}-EncryptedDatabaseEndpoint
+    databasePort:
+      Fn::ImportValue: ${self:provider.stage}-EncryptedDatabasePort
+
     dbUsername: edsc
     dbName: edsc_${self:provider.stage}
 
@@ -38,9 +40,6 @@ provider:
       Fn::ImportValue: ${self:provider.stage}-DbPasswordSecret
 
     collectionCapabilitiesLambda: ${self:custom.siteName}-generateCollectionCapabilityTags
-
-    geocodingService: ${self:custom.variables.geocodingService}
-    geocodingIncludePolygons: ${self:custom.variables.geocodingIncludePolygons}
 
     NODE_OPTIONS: '--enable-source-maps'
 
@@ -106,8 +105,8 @@ custom:
     # When invoking an offline lambda with `npm run invoke-local` this condition will disable serverless components that need to import or reference cloudformation values
     - If: '"${self:provider.stage}" == "invokeLocal"'
       Exclude:
-        - provider.environment.dbEndpoint
-        - provider.environment.dbPort
+        - provider.environment.databaseEndpoint
+        - provider.environment.databasePort
         - provider.environment.colorMapQueueUrl
         - provider.environment.tagQueueUrl
         - provider.environment.cmrOrderingOrderQueueUrl
@@ -126,8 +125,6 @@ custom:
     obfuscationSpin: ${env:OBFUSCATION_SPIN, ''}
     obfuscationSpinShapefiles: ${env:OBFUSCATION_SPIN_SHAPEFILES, ''}
     orderDelaySeconds: ${env:ORDER_DELAY_SECONDS, '1'}
-    geocodingService: ${env:GEOCODING_SERVICE, 'nominatim'}
-    geocodingIncludePolygons: ${env:GEOCODING_INCLUDE_POLYGONS, 'false'}
 
     cloudfrontToCloudwatchBucketPrefixApi:
       Fn::Join:

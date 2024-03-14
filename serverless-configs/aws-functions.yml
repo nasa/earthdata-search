@@ -328,6 +328,15 @@
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
           path: relevancy_logger
 
+  eddLogger:
+    handler: serverless/src/eddLogger/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
+    events:
+      - http:
+          method: post
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: edd_logger
+
   edlOptionalAuthorizer:
     handler: serverless/src/edlOptionalAuthorizer/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}

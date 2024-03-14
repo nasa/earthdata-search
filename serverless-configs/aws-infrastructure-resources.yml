@@ -27,23 +27,26 @@ Resources:
       SecretId:
         Ref: DbPasswordSecret
       TargetId:
-        Ref: Database
+        Ref: EncryptedDatabase
       TargetType: AWS::RDS::DBInstance
 
   # RDS database
-  Database:
+  EncryptedDatabase:
     Type: AWS::RDS::DBInstance
     Properties:
       DBName: edsc_${self:provider.stage}
-      AllocatedStorage: '20'
+      AllocatedStorage: ${env:DB_ALLOCATED_STORAGE}
       DBInstanceClass: ${env:DB_INSTANCE_CLASS}
       Engine: postgres
-      EngineVersion: '14.4'
+      EngineVersion: '14.10'
       AllowMajorVersionUpgrade: true
       MasterUsername: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:username}}"] ] }
       MasterUserPassword: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:password}}"] ] }
       MultiAZ: true
+      StorageEncrypted: true
       StorageType: gp2
+      EnablePerformanceInsights: true
+      PerformanceInsightsRetentionPeriod: 7
       DBSubnetGroupName:
         Ref: DBSubnetGroup
       VPCSecurityGroups:
@@ -138,6 +141,53 @@ Resources:
                   - states:*
                 Resource: '*'
 
+  # Redis Cache for browse-scaler
+  RedisSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Ingress for Redis Cluster
+      VpcId: ${env:VPC_ID}
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 1521
+        ToPort: 1521
+
+  RedisCacheSubnetGroup:
+    Type: AWS::ElastiCache::SubnetGroup
+    Properties:
+      CacheSubnetGroupName: browse-scaler-${self:provider.stage}
+      Description: 'Redis Cache Subnet Group'
+      SubnetIds:
+        - ${env:SUBNET_ID_A}
+        - ${env:SUBNET_ID_B}
+
+  RedisParameterGroup:
+    Type: AWS::ElastiCache::ParameterGroup
+    Properties:
+      CacheParameterGroupFamily: redis7
+      Description: 'Redis ElasticCache Parameter Group'
+      Properties:
+        maxmemory-policy: allkeys-lru
+
+  RedisElasticCacheCluster:
+    DependsOn: RedisSecurityGroup
+    Type: AWS::ElastiCache::CacheCluster
+    Properties:
+      Engine: redis
+      EngineVersion: '7.0'
+      Port: 1521
+      ClusterName: browse-scaler-${self:provider.stage}
+      CacheNodeType: cache.t2.medium
+      NumCacheNodes: 1
+      # In transit encryption is not currenlty supported with the REDIS engine.
+      # TransitEncryptionEnabled: true
+      CacheParameterGroupName:
+        Ref: RedisParameterGroup
+      VpcSecurityGroupIds:
+      - "Fn::GetAtt": RedisSecurityGroup.GroupId
+      CacheSubnetGroupName:
+        Ref: RedisCacheSubnetGroup
+
 # Output the following resources so that other stacks can access the values
 Outputs:
   DbPasswordSecret:
@@ -161,18 +211,18 @@ Outputs:
     Export:
       Name: ${self:provider.stage}-EDSCServerlessAppRole
 
-  DatabaseEndpoint:
+  EncryptedDatabaseEndpoint:
     Value:
       Fn::GetAtt:
-        - Database
+        - EncryptedDatabase
         - Endpoint.Address
     Export:
-      Name: ${self:provider.stage}-DatabaseEndpoint
+      Name: ${self:provider.stage}-EncryptedDatabaseEndpoint
 
-  DatabasePort:
+  EncryptedDatabasePort:
     Value:
       Fn::GetAtt:
-        - Database
+        - EncryptedDatabase
         - Endpoint.Port
     Export:
-      Name: ${self:provider.stage}-DatabasePort
+      Name: ${self:provider.stage}-EncryptedDatabasePort

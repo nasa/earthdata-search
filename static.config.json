@@ -45,6 +45,8 @@
       "lambda": "eed-PORTAL-ENV-serverless-lambda"
     },
     "disableEddDownload": "false",
+    "disableOrdering": "false",
+    "disableDatabaseComponents": "false",
     "macOSEddDownloadSize":130,
     "windowsEddDownloadSize":100,
     "linuxEddDownloadSize":90
@@ -58,7 +60,7 @@
     "development": {
       "dbHost": "127.0.0.1",
       "dbName": "edsc_dev",
-      "dbPort": 5432,
+      "databasePort": 5432,
       "apiHost": "http://localhost:3001/dev",
       "edscHost": "http://localhost:8080"
     },

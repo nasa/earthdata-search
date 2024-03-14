@@ -141,7 +141,7 @@ export class TreeNode {
   }
 
   /**
-   * Seralizes the selected items into an array of the fullValues
+   * Serializes the selected items into an array of the fullValues
    */
   seralize() {
     const checked = []

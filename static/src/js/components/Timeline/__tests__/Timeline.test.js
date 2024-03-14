@@ -24,6 +24,7 @@ function setup(overrideProps) {
     },
     showOverrideModal: false,
     pathname: '/search/granules',
+    projectCollectionsIds: ['collectionId'],
     onChangeQuery: jest.fn(),
     onChangeTimelineQuery: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
@@ -151,6 +152,110 @@ describe('Timeline component', () => {
       id: 'collectionId',
       intervals: [[1525132800000, 1618185600000]],
       title: 'Test Collection'
+    }])
+  })
+
+  test('timeline displays on focused collection even when projectCollectionsIds is empty', () => {
+    const { enzymeWrapper } = setup({
+      pathname: '/search/granules', // Indicating it's not a project page
+      collectionMetadata: {
+        someCollection: {
+          title: 'Some Collection'
+        }
+      },
+      projectCollectionsIds: [], // Empty project collections
+      timeline: {
+        intervals: {
+          someCollection: [
+            [1525132800, 1618185600]
+          ]
+        },
+        query: {
+          center: 1552425382,
+          interval: 'day',
+          endDate: '2020-09-11T21:16:22.000Z',
+          startDate: '2017-09-09T21:16:22.000Z'
+        }
+      }
+    })
+
+    const timeline = enzymeWrapper.find(EDSCTimeline)
+    expect(timeline.props().data).toEqual([
+      {
+        color: '#2ECC71',
+        id: 'someCollection',
+        intervals: [[1525132800000, 1618185600000]],
+        title: 'Some Collection'
+      }
+    ])
+  })
+
+  test('setup data creates the correct intervals in the correct order for EDSCTimeline', () => {
+    const { enzymeWrapper } = setup({
+      pathname: '/projects',
+      collectionMetadata: {
+        firstCollection: {
+          title: '1st Collection'
+        },
+        secondCollection: {
+          title: '2nd Collection'
+        },
+        thirdCollection: {
+          title: '3rd Collection'
+        }
+      },
+      projectCollectionsIds: ['firstCollection', 'secondCollection', 'thirdCollection'],
+      timeline: {
+        intervals: {
+          firstCollection: [
+            [
+              1525132800,
+              1618185600,
+              582637
+            ]
+          ],
+          thirdCollection: [
+            [
+              1525132800,
+              1618185600,
+              582637
+            ]
+          ],
+          secondCollection: [
+            [
+              1525132800,
+              1618185600,
+              582637
+            ]
+          ]
+        },
+        query: {
+          center: 1552425382,
+          interval: 'day',
+          endDate: '2020-09-11T21:16:22.000Z',
+          startDate: '2017-09-09T21:16:22.000Z'
+        }
+      }
+    })
+
+    const timeline = enzymeWrapper.find(EDSCTimeline)
+    expect(timeline.props().data).toEqual([{
+      color: '#2ECC71',
+      id: 'firstCollection',
+      intervals: [[1525132800000, 1618185600000]],
+      title: '1st Collection'
+    },
+    {
+      color: '#3498DB',
+      id: 'secondCollection',
+      intervals: [[1525132800000, 1618185600000]],
+      title: '2nd Collection'
+    },
+    {
+      color: '#E67E22',
+      id: 'thirdCollection',
+      intervals: [[1525132800000, 1618185600000]],
+      title: '3rd Collection'
     }])
   })
 })
