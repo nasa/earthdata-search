@@ -206,7 +206,7 @@ describe('AccessMethod component', () => {
 
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
       // Multiple `Harmony` services are possible for a collection
-      expect(directDownloadAccessMethodRadioButton.value).toEqual('harmony0')
+      expect(directDownloadAccessMethodRadioButton.value).toEqual('HarmonyMethodType')
     })
   })
 
