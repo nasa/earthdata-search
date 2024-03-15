@@ -28,6 +28,7 @@ const defaultProps = {
       isLast: false,
       isNrt: false,
       shortName: 'cId1',
+      isDefaultImage: true,
       thumbnail: 'http://some.test.com/thumbnail/url.jpg',
       temporalRange: '2010-10-10 to 2011-10-10',
       versionId: '2'

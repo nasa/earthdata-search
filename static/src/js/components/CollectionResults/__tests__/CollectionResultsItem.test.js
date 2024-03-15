@@ -1,5 +1,8 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
+import axios from 'axios'
+import { withHooks } from 'jest-react-hooks-shallow'
+
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import { collectionListItemProps } from './mocks'
@@ -9,6 +12,9 @@ import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/P
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import MetaIcon from '../../MetaIcon/MetaIcon'
 import Spinner from '../../Spinner/Spinner'
+
+jest.mock('axios')
+jest.mock('../../../../assets/images/image-unavailable.svg', () => 'test-file-stub')
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -75,20 +81,76 @@ describe('CollectionResultsList component', () => {
     })
 
     describe('when the image has loaded', () => {
-      test('renders with the loaded state', () => {
-        const { enzymeWrapper } = setup()
-        const thumbnail = enzymeWrapper.find('.collection-results-item__thumb-image')
-        thumbnail.simulate('load')
-        enzymeWrapper.update()
-        expect(enzymeWrapper.find('.collection-results-item__thumb').props().className).toContain('collection-results-item__thumb--is-loaded')
+      test('renders with the loaded state', async () => {
+        axios.get.mockResolvedValueOnce({
+          data: {
+            base64Image: 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==',
+            'content-type': 'image/png'
+          }
+        })
+
+        withHooks(async () => {
+          const { enzymeWrapper } = setup()
+          const thumbnail = enzymeWrapper.find('.collection-results-item__thumb-image')
+          expect(thumbnail.length).toEqual(1)
+          await enzymeWrapper.update()
+          expect(enzymeWrapper.find('.collection-results-item__thumb').props().className).toContain('collection-results-item__thumb--is-loaded')
+        })
       })
 
       test('renders without a spinner', () => {
-        const { enzymeWrapper } = setup()
-        const thumbnail = enzymeWrapper.find('.collection-results-item__thumb-image')
-        thumbnail.simulate('load')
-        enzymeWrapper.update()
-        expect(enzymeWrapper.find('.collection-results-item__thumb').find(Spinner).length).toEqual(0)
+        axios.get.mockResolvedValueOnce({
+          data: {
+            base64Image: 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==',
+            'content-type': 'image/png'
+          }
+        })
+
+        withHooks(async () => {
+          const { enzymeWrapper } = setup()
+          const thumbnail = enzymeWrapper.find('.collection-results-item__thumb-image')
+          expect(thumbnail.length).toEqual(1)
+          await enzymeWrapper.update()
+          expect(enzymeWrapper.find('.collection-results-item__thumb').find(Spinner).length).toEqual(0)
+        })
+      })
+    })
+
+    // TODO what is the best describe to put this test in
+    describe('when the thumbnail request returns with errors', () => {
+      test('default to the `image-unavailable` thumbnail', () => {
+        const error = new Error('Error requesting thumbnail from scale lambda')
+        axios.get.mockRejectedValueOnce(error)
+
+        withHooks(async () => {
+          const { enzymeWrapper } = await setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata
+            }
+          })
+          await enzymeWrapper.update()
+          // This value is mocked by the `static/src/js/util/mocks/fileMock.js`
+          expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().src)
+            .toEqual('test-file-stub')
+        })
+      })
+    })
+
+    describe('when the image is the default image', () => {
+      test('use the incoming thumbnail', () => {
+        withHooks(() => {
+          const { enzymeWrapper } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              thumbnail: 'default-image',
+              isDefaultImage: true
+            }
+          })
+          enzymeWrapper.update()
+          console.log(enzymeWrapper.find('.collection-results-item__thumb-image'))
+          expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().src)
+            .toEqual('default-image')
+        })
       })
     })
   })
@@ -121,18 +183,33 @@ describe('CollectionResultsList component', () => {
   })
 
   test('renders thumbnail correctly', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().src)
-      .toEqual('http://some.test.com/thumbnail/url.jpg')
+    axios.get.mockResolvedValueOnce({
+      data: {
+        base64Image: 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==',
+        'content-type': 'image/png'
+      }
+    })
 
-    expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().alt)
-      .toEqual('Thumbnail for Test Collection')
+    withHooks(async () => {
+      const { enzymeWrapper } = setup()
+      // Before the `fetch` completes and updates the state image `src` is initialized to empty string
+      expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().src)
+        .toEqual('')
 
-    expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().height)
-      .toEqual(85)
+      // Await for the `fetch` to complete and `src` value is updated
+      await enzymeWrapper.update()
+      expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().src)
+        .toEqual('data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==')
 
-    expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().width)
-      .toEqual(85)
+      expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().alt)
+        .toEqual('Thumbnail for Test Collection')
+
+      expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().height)
+        .toEqual(85)
+
+      expect(enzymeWrapper.find('.collection-results-item__thumb-image').props().width)
+        .toEqual(85)
+    })
   })
 
   test('renders title correctly', () => {
