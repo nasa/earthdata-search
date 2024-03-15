@@ -31,6 +31,8 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 
 import './CollectionResultsItem.scss'
 
+import unavailableImg from '../../../assets/images/image-unavailable.svg'
+
 /**
  * Renders CollectionResultsItem.
  * @param {Object} props - The props passed into the component.
@@ -73,7 +75,6 @@ export const CollectionResultsItem = forwardRef(({
     isDefaultImage,
     versionId
   } = collectionMetadata
-  console.log('🚀 ~ file: CollectionResultsItem.js:81 ~ isDefaultImage:', isDefaultImage)
 
   const [loadingThumbnail, setLoadingThumbnail] = useState(true)
   const { thumbnailSize } = getApplicationConfig()
@@ -102,21 +103,23 @@ export const CollectionResultsItem = forwardRef(({
   // Explicity call the GET request for the lambda
   // TODO there are some collections which it seems have inaccessible collections
   useEffect(() => {
+    console.log('getting into useEffect ✅')
     if (!isDefaultImage) {
-      console.log('🚀 ~ file: CollectionResultsItem.js:109 ~ useEffect ~ isDefaultImage:', isDefaultImage)
-      console.log('🚀 ~ file: CollectionResultsItem.js:114 ~ useEffect ~ thumbnail:', thumbnail)
       axios.get(thumbnail)
         .then((response) => {
         // Set the base64 string received from Lambda
+          console.log('in the response obj')
           setBase64Image(response.data.base64Image)
           onThumbnailLoaded()
         })
-        .catch((error) => {
-          console.error('Error:', error)
+        .catch(() => {
+          // TODO should we print an error message here?
+          setBase64Image(unavailableImg)
+          onThumbnailLoaded()
         })
     } else {
       // Passed in thumbnail was the default set `base64` image to that
-      console.log('🚀 ~ file: CollectionResultsItem.js:117 ~ useEffect ~ thumbnail:', thumbnail)
+      // If the thumbnail was null set it to the unavailable image
       setBase64Image(thumbnail)
       onThumbnailLoaded()
     }

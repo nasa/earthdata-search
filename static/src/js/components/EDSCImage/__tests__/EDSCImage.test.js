@@ -107,15 +107,14 @@ describe('EDSCImage component', () => {
           />
         )
 
-        const image = screen.queryByAltText('Test alt text')
         const spinner = screen.queryByTestId('edsc-image-spinner')
 
-        expect(image).toBeInTheDocument()
         expect(container.firstChild.classList.contains('edsc-image--is-loaded')).toEqual(false)
         expect(spinner).toBeInTheDocument()
 
-        // Ensure that once the recourse does finnish loading spinner is gone
+        // Ensure that once the resource does finnish loading spinner is gone
         await waitFor(() => {
+          const image = screen.queryByAltText('Test alt text')
           expect(image).toBeInTheDocument()
           expect(container.firstChild.classList.contains('edsc-image--is-loaded')).toEqual(true)
           expect(spinner).not.toBeInTheDocument()

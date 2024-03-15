@@ -143,6 +143,7 @@ describe('CollectionRequest#transformResponse', () => {
         ...data.feed,
         entry: [{
           id: 'collectionId',
+          isDefaultImage: true,
           tags: {},
           has_map_imagery: false,
           isOpenSearch: false,
@@ -181,6 +182,7 @@ describe('CollectionRequest#transformResponse', () => {
         ...data.feed,
         entry: [{
           id: 'collectionId',
+          isDefaultImage: true,
           has_map_imagery: false,
           links: [{
             length: '0.0KB',
@@ -219,6 +221,7 @@ describe('CollectionRequest#transformResponse', () => {
         ...data.feed,
         entry: [{
           id: 'collectionId',
+          isDefaultImage: true,
           isCSDA: true,
           organizations: ['NASA/CSDA'],
           thumbnail: 'test-file-stub'
@@ -298,6 +301,7 @@ describe('CollectionRequest#transformResponse', () => {
           entry: [{
             browse_flag: false,
             has_granules: false,
+            isDefaultImage: true,
             has_map_imagery: false,
             id: 'collectionId',
             isOpenSearch: false,
