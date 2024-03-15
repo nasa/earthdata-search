@@ -13,7 +13,7 @@ export const retrieveVariablesRequest = async (
   // Pull out cursor and already retrieved items from the variablesObj
   const { cursor, items } = variablesObj
 
-  let collectedItems = items
+  let allVariables = items
   let nextCursor = cursor
   while (nextCursor !== null) {
     const varsGraphQuery = `
@@ -54,10 +54,10 @@ export const retrieveVariablesRequest = async (
     const { variables: pagedVariables } = pagedData
     const { cursor: newCursor, items: vars } = pagedVariables
 
-    collectedItems = collectedItems.concat(vars)
+    allVariables = allVariables.concat(vars)
 
     nextCursor = newCursor
   }
 
-  return collectedItems
+  return allVariables
 }
