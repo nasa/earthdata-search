@@ -488,8 +488,8 @@ export class AccessMethod extends Component {
           description = descriptionFromMetadata
           hasHarmony = true
           hasSpatialSubsetting = hasShapefileSubsetting || hasBBoxSubsetting
-          hasFormats = supportedOutputFormats.length > 1
-          hasProjections = supportedOutputProjections.length > 1
+          hasFormats = supportedOutputFormats ? supportedOutputFormats.length > 1 : false
+          hasProjections = supportedOutputProjections ? supportedOutputProjections.length > 1 : false
           /**
            * CMR defines has-transforms as including interpolation or multiple projections, but
            * interpolation is not exposed by GraphQL and is not currently supported by Harmony.
