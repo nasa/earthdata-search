@@ -71,8 +71,6 @@ export const CollectionResultsListItem = memo(({
     )
   }
 
-  console.log('🚀 ~ file: CollectionResultsListItem.js:87 ~ CollectionResultsItem:', CollectionResultsItem)
-
   return (
     <li className="collection-results-list-item" style={style}>
       <CollectionResultsItem
