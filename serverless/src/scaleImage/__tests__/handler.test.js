@@ -446,7 +446,7 @@ describe('scaleImage', () => {
       })
 
       expect(buildUnavailableImageBufferMock).toBeCalledWith(85, 85)
-      expect(buildResponseMock).toBeCalledWith(responseBuffer, 500)
+      expect(buildResponseMock).toBeCalledWith(responseBuffer, 200)
     })
 
     test('when return_default is false', async () => {
@@ -472,7 +472,7 @@ describe('scaleImage', () => {
         width: 85
       })
 
-      expect(buildResponseMock).toBeCalledWith(Buffer.from(''), 500)
+      expect(buildResponseMock).toBeCalledWith(Buffer.from(''), 200)
     })
   })
 })

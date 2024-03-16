@@ -125,7 +125,7 @@ const scaleImage = async (event) => {
 
     // TODO if the axios call is set to 500 here even though its an error the front end
     // will not work
-    return buildResponse(thumbnail, 500)
+    return buildResponse(thumbnail, 200)
   }
 
   // Return the resized image

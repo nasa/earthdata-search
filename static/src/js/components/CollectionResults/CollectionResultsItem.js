@@ -1,7 +1,7 @@
 import React, {
   forwardRef,
-  useState,
-  useEffect
+  useEffect,
+  useState
 } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
@@ -78,7 +78,6 @@ export const CollectionResultsItem = forwardRef(({
 
   const [loadingThumbnail, setLoadingThumbnail] = useState(true)
   const { thumbnailSize } = getApplicationConfig()
-  // eslint-disable-next-line no-unused-vars
   const [base64Image, setBase64Image] = useState('')
 
   const {
@@ -99,24 +98,26 @@ export const CollectionResultsItem = forwardRef(({
     setLoadingThumbnail(false)
   }
 
+  const fetchThumbnail = async (thumbnailSrc) => {
+    axios.get(thumbnailSrc)
+      .then((response) => {
+        // Set the base64 string received from Lambda
+        setBase64Image(response.data.base64Image)
+        onThumbnailLoaded()
+      })
+      .catch((error) => {
+        console.error('Error:', error)
+        setBase64Image(unavailableImg)
+        onThumbnailLoaded()
+      })
+  }
+
   // Fetch the base64 string from the Lambda function
   // Explicity call the GET request for the lambda
   // TODO there are some collections which it seems have inaccessible collections
   useEffect(() => {
     if (!isDefaultImage) {
-      axios.get(thumbnail)
-        .then((response) => {
-        // Set the base64 string received from Lambda
-          console.log('in the response obj')
-          setBase64Image(response.data.base64Image)
-          onThumbnailLoaded()
-        })
-        .catch((err) => {
-          console.log('🚀 ~ file: CollectionResultsItem.js:120 ~ useEffect ~ err:', err)
-          // TODO should we print an error message here?
-          setBase64Image(unavailableImg)
-          onThumbnailLoaded()
-        })
+      fetchThumbnail(thumbnail)
     } else {
       // Passed in thumbnail was the default set `base64` image to that
       // If the thumbnail was null set it to the unavailable image

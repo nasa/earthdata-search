@@ -50,10 +50,8 @@ export const EDSCImage = ({
   ])
 
   const fetchImageData = async (imageSrc) => {
-    console.log('🚀 ~ file: EDSCImage.js:54 ~ fetchImageData ~ imageSrc:', imageSrc)
     axios.get(imageSrc)
       .then((response) => {
-        console.log('🚀 ~ file: EDSCImage.js:57 ~ .then ~ response:', response)
         // Set the base64 string received from Lambda
         setBase64Image(response.data.base64Image)
         onImageLoad()
@@ -63,35 +61,9 @@ export const EDSCImage = ({
       })
   }
 
-  // Const fetchImageDataForAllGranuleSizes = async () => {
-  //   const granuleImagesBase64 = []
-  //   srcSet.forEach((imageSrc) => {
-  //     axios.get(imageSrc)
-  //       .then((response) => {
-  //         console.log('🚀 ~ file: EDSCImage.js:71 ~ .then ~ response:', response)
-  //         // Add the `base64` image returned from the lambda
-  //         granuleImagesBase64.append(response.data.base64Image)
-  //         console.log('Adding data into the arr ✅')
-  //       })
-  //       .catch((error) => {
-  //         console.log('🚀 ~ file: EDSCImage.js:62 ~ useEffect ~ error:', error)
-  //         console.error('Error:', error)
-  //       })
-  //   })
-  // }
-
   useEffect(() => {
     if (isBase64Image) {
       fetchImageData(src)
-      // If (srcSet) {
-      //   console.log('Getting into image srcSet')
-      //   fetchImageDataForAllGranuleSizes()
-      // }
-      //   // SrcSet.forEach((imageSrc) => {
-      //   //   fetchImageDataForAllGranuleSizes(imageSrc)
-      //   // })
-
-    //   // onImageLoad()
     }
   }, [])
 
@@ -126,7 +98,7 @@ export const EDSCImage = ({
       }
       { // TODO need srcSet
       // TODO why is the isError check causing issues
-        isLoaded && isBase64Image && (
+        !isErrored && isLoaded && isBase64Image && (
           <img
             className="edsc-image__image"
             alt={alt}
