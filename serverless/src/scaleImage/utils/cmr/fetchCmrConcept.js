@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { determineEarthdataEnvironment } from '../../../util/determineEarthdataEnvironment'
-// Import { getSystemToken } from '../../../util/urs/getSystemToken'
+import { getSystemToken } from '../../../util/urs/getSystemToken'
 import { requestTimeout } from '../../../util/requestTimeout'
 
 /**
@@ -13,10 +13,10 @@ export const fetchCmrConcept = async (conceptId) => {
   const headers = {}
   const earthdataEnvironment = determineEarthdataEnvironment()
 
-  // If (!process.env.IS_OFFLINE) {
-  //   const cmrToken = await getSystemToken()
-  //   headers.Authorization = `${cmrToken}`
-  // }
+  if (!process.env.IS_OFFLINE) {
+    const cmrToken = await getSystemToken()
+    headers.Authorization = `${cmrToken}`
+  }
 
   const conceptUrl = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/concepts/${conceptId}.json`
   try {

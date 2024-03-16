@@ -16,39 +16,6 @@ import configureStore from '../../../store/configureStore'
 
 Enzyme.configure({ adapter: new Adapter() })
 jest.mock('../../../../assets/images/image-unavailable.svg', () => 'test-file-stub')
-
-// Jest.mock('../CollectionResultsItem', () => jest.fn((children) => (
-//   <mock-CollectionResultsItem data-testid="mock-CollectionResultsItem">
-//     {children}
-//   </mock-CollectionResultsItem>
-// )))
-
-// jest.mock('../CollectionResultsItem', () => jest.fn(() => {
-//   const { forwardRef } = jest.requireActual('react')
-//   // Const mockCollectionResultsItem = (
-//   //   <mock-CollectionResultsItem data-testid="mock-CollectionResultsItem">
-//   //     data
-//   //   </mock-CollectionResultsItem>
-//   // )
-
-//   return forwardRef((props, ref) => (
-//     <p ref={ref} />
-//   ))
-// }))
-
-// Jest.mock('../CollectionResultsItem', () => ({
-//   CollectionResultsItem: jest.fn(({ children }) => (
-//     <mock-CollectionResultsItem data-testid="CollectionResultsItem">
-//       {children}
-//     </mock-CollectionResultsItem>
-//   ))
-// }))
-
-// Jest.mock('../CollectionResultsListItem', (children) => {
-//   <mock-CollectionResultsItem data-testid="mock-CollectionResultsItem">
-//     {children}
-//   </mock-CollectionResultsItem>
-// })
 jest.mock('axios')
 
 const originalOffsetHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetHeight')
@@ -155,6 +122,7 @@ describe('CollectionResultsList component', () => {
         return true
       })
       let enzymeWrapperRef
+
       await act(async () => {
         const { enzymeWrapper } = setup({
           itemCount: 3,
@@ -177,6 +145,7 @@ describe('CollectionResultsList component', () => {
         .mockReturnValue(true)
 
       let enzymeWrapperRef
+
       await act(async () => {
         const { enzymeWrapper } = setup({
           itemCount: 2,
