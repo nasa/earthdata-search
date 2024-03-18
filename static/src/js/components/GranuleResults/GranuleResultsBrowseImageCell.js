@@ -29,8 +29,8 @@ export const GranuleResultsBrowseImageCell = ({ row }) => {
         <EDSCImage
           className="granule-results-browse-image-cell__thumb-image"
           src={granuleThumbnail}
-          height="60"
-          width="60"
+          height={60}
+          width={60}
           alt={`Browse Image for ${title}`}
           isBase64Image
         />
