@@ -49,21 +49,26 @@ export const EDSCImage = ({
     }
   ])
 
-  const fetchImageData = async (imageSrc) => {
-    axios.get(imageSrc)
-      .then((response) => {
-        // Set the base64 string received from Lambda
-        setBase64Image(response.data.base64Image)
-        onImageLoad()
-      })
-      .catch((error) => {
-        console.error('Error:', error)
-      })
-  }
-
   useEffect(() => {
+    let isMounted = true
     if (isBase64Image) {
-      fetchImageData(src)
+      axios.get(src)
+        .then((response) => {
+        // Set the base64 string received from Lambda
+          if (isMounted) {
+            setBase64Image(response.data.base64Image)
+            onImageLoad()
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error)
+        })
+    }
+
+    // Cleanup function to cancel fetching when component unmounts
+    // TODO I want to try a better way of doing this; just the cleanup function without isMounted was not working
+    return () => {
+      isMounted = false // Set the flag to false when component unmounts
     }
   }, [])
 
@@ -83,6 +88,7 @@ export const EDSCImage = ({
         )
       }
       {
+        // If src is a standard image endpoint
         !isErrored && !isBase64Image && (
           <img
             className="edsc-image__image"

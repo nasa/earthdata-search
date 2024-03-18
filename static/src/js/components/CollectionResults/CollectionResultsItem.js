@@ -102,13 +102,16 @@ export const CollectionResultsItem = forwardRef(({
   // Explicity call the GET request for the lambda
   // TODO there are some collections which it seems have inaccessible collections
   useEffect(() => {
+    let isMounted = true
     if (!isDefaultImage) {
       axios.get(thumbnail)
         .then((response) => {
           // Set the base64 string received from Lambda
           console.log('in the response obj')
-          setBase64Image(response.data.base64Image)
-          onThumbnailLoaded()
+          if (isMounted) {
+            setBase64Image(response.data.base64Image)
+            onThumbnailLoaded()
+          }
         })
         .catch(() => {
           setBase64Image(unavailableImg)
@@ -119,6 +122,12 @@ export const CollectionResultsItem = forwardRef(({
       // If the thumbnail was null set it to the unavailable image
       setBase64Image(thumbnail)
       onThumbnailLoaded()
+    }
+
+    // Cleanup function to cancel fetching when component unmounts
+    // TODO I want to try a better way of doing this; just the cleanup function without isMounted was not working
+    return () => {
+      isMounted = false // Set the flag to false when component unmounts
     }
   }, [])
 
