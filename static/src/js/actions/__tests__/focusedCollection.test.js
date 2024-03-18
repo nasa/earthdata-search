@@ -28,6 +28,29 @@ import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
 const mockStore = configureMockStore([thunk])
 
+// Returns a set of variable results in 3 chucks with more variables than `maxCmrPageSize`
+const createVariableResults = () => [{
+  variables: {
+    items: [{ conceptId: 'V10000000000-EDSC' }],
+    count: 3,
+    cursor: 'mock-cursor-0'
+  }
+},
+{
+  variables: {
+    items: [{ conceptId: 'V10000000001-EDSC' }],
+    count: 3,
+    cursor: 'mock-cursor-1'
+  }
+},
+{
+  variables: {
+    items: [{ conceptId: 'V10000000002-EDSC' }],
+    count: 3,
+    cursor: null
+  }
+}]
+
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
@@ -546,6 +569,108 @@ describe('getFocusedCollection', () => {
 
       expect(relevancyMock).toHaveBeenCalledTimes(1)
       expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('when requesting a collection with more variables than the maxCmrPageSize', () => {
+    test('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+        cmrHost: 'https://cmr.example.com',
+        graphQlHost: 'https://graphql.example.com',
+        opensearchRoot: 'https://cmr.example.com'
+      }))
+
+      jest.spyOn(getEarthdataConfig, 'getApplicationConfig').mockImplementation(() => ({
+        maxCmrPageSize: 1,
+        env: 'prod',
+        defaultCmrSearchTags: [
+          'edsc.*',
+          'opensearch.granule.osdd'
+        ],
+        clientId: {
+          background: 'eed-PORTAL-ENV-serverless-background',
+          client: 'eed-PORTAL-ENV-serverless-client',
+          lambda: 'eed-PORTAL-ENV-serverless-lambda'
+        }
+      }))
+
+      const varResults = createVariableResults()
+
+      nock(/graph/)
+        .post(/api/)
+        .reply(200, {
+          data: {
+            collection: {
+              conceptId: 'C10000000000-EDSC',
+              shortName: 'id_1',
+              versionId: 'VersionID',
+              tools: {
+                items: [{
+                  name: 'SOTO'
+                }]
+              },
+              variables: varResults[0].variables
+            }
+          }
+        })
+
+      nock(/graph/)
+        .post(/api/)
+        .reply(200, {
+          data: {
+            variables: varResults[1].variables
+          }
+        })
+
+      nock(/graph/)
+        .post(/api/)
+        .reply(200, {
+          data: {
+            variables: varResults[2].variables
+          }
+        })
+
+      const relevancyMock = jest.spyOn(actions, 'collectionRelevancyMetrics')
+      relevancyMock.mockImplementationOnce(() => jest.fn())
+
+      const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+      getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
+
+      const store = mockStore({
+        authToken: '',
+        focusedCollection: 'C10000000000-EDSC',
+        metadata: {
+          collections: {}
+        },
+        query: {
+          collection: {
+            spatial: {}
+          }
+        },
+        searchResults: {}
+      })
+
+      const expectedItems = [
+        { conceptId: 'V10000000000-EDSC' },
+        { conceptId: 'V10000000001-EDSC' },
+        { conceptId: 'V10000000002-EDSC' }
+      ]
+
+      await store.dispatch(getFocusedCollection()).then(() => {
+        const storeActions = store.getActions()
+
+        expect(storeActions[1]).toEqual({
+          type: UPDATE_COLLECTION_METADATA,
+          payload: [
+            expect.objectContaining({
+              variables: {
+                count: 3,
+                items: expectedItems
+              }
+            })
+          ]
+        })
+      })
     })
   })
 
