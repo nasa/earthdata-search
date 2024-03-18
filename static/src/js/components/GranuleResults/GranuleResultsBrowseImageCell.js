@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import './GranuleResultsBrowseImageCell.scss'
+import EDSCImage from '../EDSCImage/EDSCImage'
 
 /**
  * Renders GranuleResultsBrowseImageCell.
@@ -25,12 +26,13 @@ export const GranuleResultsBrowseImageCell = ({ row }) => {
       console.log('🚀 ~ file: GranuleResultsBrowseImageCell.js:25 ~ buildThumbnail ~ granuleThumbnail:', granuleThumbnail)
       element = (
         // eslint-disable-next-line jsx-a11y/img-redundant-alt
-        <img
+        <EDSCImage
           className="granule-results-browse-image-cell__thumb-image"
           src={granuleThumbnail}
           height="60"
           width="60"
           alt={`Browse Image for ${title}`}
+          isBase64Image
         />
       )
 
