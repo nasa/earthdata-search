@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import './GranuleResultsBrowseImageCell.scss'
+import EDSCImage from '../EDSCImage/EDSCImage'
 
 /**
  * Renders GranuleResultsBrowseImageCell.
@@ -16,19 +17,22 @@ export const GranuleResultsBrowseImageCell = ({ row }) => {
     granuleThumbnail,
     title
   } = rowProps
+  console.log('🚀 ~ file: GranuleResultsBrowseImageCell.js:19 ~ GranuleResultsBrowseImageCell ~ granuleThumbnail:', granuleThumbnail)
 
   const buildThumbnail = () => {
     let element = null
-
+    // TODO I think this is the issue
     if (granuleThumbnail) {
+      console.log('🚀 ~ file: GranuleResultsBrowseImageCell.js:25 ~ buildThumbnail ~ granuleThumbnail:', granuleThumbnail)
       element = (
         // eslint-disable-next-line jsx-a11y/img-redundant-alt
-        <img
+        <EDSCImage
           className="granule-results-browse-image-cell__thumb-image"
           src={granuleThumbnail}
-          height="60"
-          width="60"
+          height={60}
+          width={60}
           alt={`Browse Image for ${title}`}
+          isBase64Image
         />
       )
 

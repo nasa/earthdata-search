@@ -68,7 +68,8 @@ export default class GranuleRequest extends CmrRequest {
       const { height, width } = thumbnailSize
 
       if (id) {
-        updatedGranule.thumbnail = `${getEarthdataConfig(this.earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${id}?h=${height}&w=${width}`
+        // Retrieve collection thumbnail if it exists
+        updatedGranule.thumbnail = `${getEnvironmentConfig().apiHost}/scale/granules/${id}?h=${height}&w=${width}`
       }
 
       if (links && links.length > 0) {

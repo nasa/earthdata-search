@@ -1,5 +1,10 @@
-import React, { forwardRef, useState } from 'react'
+import React, {
+  forwardRef,
+  useEffect,
+  useState
+} from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import {
@@ -30,6 +35,8 @@ import Spinner from '../Spinner/Spinner'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './CollectionResultsItem.scss'
+
+import unavailableImg from '../../../assets/images/image-unavailable.svg'
 
 /**
  * Renders CollectionResultsItem.
@@ -70,11 +77,14 @@ export const CollectionResultsItem = forwardRef(({
     summary,
     temporalRange,
     thumbnail,
+    isDefaultImage,
     versionId
   } = collectionMetadata
 
   const [loadingThumbnail, setLoadingThumbnail] = useState(true)
   const { thumbnailSize } = getApplicationConfig()
+  const [base64Image, setBase64Image] = useState('')
+
   const {
     height: thumbnailHeight,
     width: thumbnailWidth
@@ -92,6 +102,39 @@ export const CollectionResultsItem = forwardRef(({
   const onThumbnailLoaded = () => {
     setLoadingThumbnail(false)
   }
+
+  // Fetch the base64 string from the Lambda function
+  // Explicity call the GET request for the lambda
+  // TODO there are some collections which it seems have inaccessible collections
+  useEffect(() => {
+    let isMounted = true
+    if (!isDefaultImage) {
+      axios.get(thumbnail)
+        .then((response) => {
+          // Set the base64 string received from Lambda
+          console.log('in the response obj')
+          if (isMounted) {
+            setBase64Image(response.data.base64Image)
+            onThumbnailLoaded()
+          }
+        })
+        .catch(() => {
+          setBase64Image(unavailableImg)
+          onThumbnailLoaded()
+        })
+    } else {
+      // Passed in thumbnail was the default set `base64` image to that
+      // If the thumbnail was null set it to the unavailable image
+      setBase64Image(thumbnail)
+      onThumbnailLoaded()
+    }
+
+    // Cleanup function to cancel fetching when component unmounts
+    // TODO I want to try a better way of doing this; just the cleanup function without isMounted was not working
+    return () => {
+      isMounted = false // Set the flag to false when component unmounts
+    }
+  }, [])
 
   const getConsortiumTooltipText = (consortium) => {
     let tooltip = ''
@@ -419,11 +462,10 @@ export const CollectionResultsItem = forwardRef(({
                   }
                   <img
                     className={`collection-results-item__thumb-image ${loadingThumbnail ? 'collection-results-item__thumb-image--is-loading' : 'collection-results-item__thumb-image--is-loaded'}`}
-                    src={thumbnail}
+                    src={base64Image}
                     alt={`Thumbnail for ${datasetId}`}
                     height={thumbnailHeight}
                     width={thumbnailWidth}
-                    onLoad={onThumbnailLoaded}
                   />
                 </div>
               )

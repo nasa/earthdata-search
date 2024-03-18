@@ -77,6 +77,7 @@ export default class CollectionRequest extends CmrRequest {
       ({ entry = [] } = feed)
     }
 
+    // Iterate over the collections
     entry.map((collection) => {
       const transformedCollection = collection
 
@@ -101,10 +102,14 @@ export default class CollectionRequest extends CmrRequest {
       const h = getApplicationConfig().thumbnailSize.height
       const w = getApplicationConfig().thumbnailSize.width
 
+      // Retrieve collection thumbnail if it exists
       if (collection.id) {
-        transformedCollection.thumbnail = collection.browse_flag
-          ? `${getEarthdataConfig(this.earthdataEnvironment).cmrHost}/browse-scaler/browse_images/datasets/${collection.id}?h=${h}&w=${w}`
-          : unavailableImg
+        if (collection.browse_flag) {
+          transformedCollection.thumbnail = `${getEnvironmentConfig().apiHost}/scale/collections/${collection.id}?h=${h}&w=${w}`
+        } else {
+          transformedCollection.thumbnail = unavailableImg
+          transformedCollection.isDefaultImage = true
+        }
       }
 
       return transformedCollection

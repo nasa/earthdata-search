@@ -48,6 +48,7 @@ export const collectionResultsBodyData = {
   hasTransforms: false,
   hasVariables: false,
   isCollectionInProject: false,
+  isDefaultImage: false,
   isCSDA: false,
   isLast: true,
   isNrt: false,
