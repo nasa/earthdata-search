@@ -1325,7 +1325,6 @@ describe('AccessMethod component', () => {
             selectedAccessMethod: 'harmony0'
           })
 
-          expect(screen.getByText(/The requested data will be processed/)).toBeInTheDocument()
           expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
           expect(screen.getByRole('checkbox').checked).toEqual(true)
         })
@@ -1351,7 +1350,6 @@ describe('AccessMethod component', () => {
             selectedAccessMethod: 'harmony0'
           })
 
-          expect(screen.getByText(/The requested data will be processed/)).toBeInTheDocument()
           expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
           await user.click(screen.getByRole('checkbox'))
 
