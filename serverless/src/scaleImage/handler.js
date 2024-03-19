@@ -2,6 +2,7 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
 
 import { buildResponse } from './utils/buildResponse'
 import { downloadImageFromSource } from './utils/downloadImageFromSource'
+import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 
 import { cacheImage } from './utils/cache/cacheImage'
 import { generateCacheKey } from './utils/cache/generateCacheKey'
@@ -17,7 +18,6 @@ import { resizeImage } from './utils/sharp/resizeImage'
 /**
  * Resizes an image and returns it as a string buffer
  * @param {Object} event AWS Lambda Event
- * @param {Object} context AWS Lambda Context
  */
 const scaleImage = async (event) => {
   // Pull the path and query parameters from the http event
@@ -38,8 +38,10 @@ const scaleImage = async (event) => {
     h = defaultHeight,
     w = defaultWidth,
     return_default: returnDefault = 'true',
-    imageSrc
+    imageSrc,
+    ee: earthdataEnvironment = determineEarthdataEnvironment()
   } = queryStringParameters || {}
+  console.log('🚀 ~ file: handler.js:43 ~ scaleImage ~ earthdataEnvironment:', earthdataEnvironment)
 
   const width = parseInt(w, 10)
   const height = parseInt(h, 10)
@@ -82,7 +84,8 @@ const scaleImage = async (event) => {
         conceptId,
         conceptType,
         cascadeConcepts,
-        imageSrc
+        imageSrc,
+        earthdataEnvironment
       )
 
       if (!imageUrl) {

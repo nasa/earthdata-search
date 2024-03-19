@@ -150,6 +150,7 @@ export const GranuleResultsTable = ({
 
   const onRowMouseEnter = useCallback((e, row) => {
     const { original: rowOriginal } = row
+    console.log('🚀 ~ file: GranuleResultsTable.js:153 ~ onRowMouseEnter ~ row:', row)
     const { handleMouseEnter } = rowOriginal
     if (handleMouseEnter) handleMouseEnter(e, row)
   }, [])
