@@ -332,7 +332,7 @@ export class AccessMethod extends Component {
           <Select.Content className="SelectContent" position="popper">
             <ScrollArea.Root className="ScrollAreaRoot" type="auto">
               <Select.Viewport key="HarmonySelectorViewport" className="SelectViewport" asChild>
-                <ScrollArea.Viewport className="ScrollAreaViewport">
+                <ScrollArea.Viewport className="ScrollAreaViewport" style={{ overflowY: undefined }}>
                   {this.harmonyMethodsMapper(harmonyMethods, selectedAccessMethod)}
                 </ScrollArea.Viewport>
               </Select.Viewport>
