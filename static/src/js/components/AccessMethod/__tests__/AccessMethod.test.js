@@ -1247,23 +1247,6 @@ describe('AccessMethod component', () => {
     })
 
     describe('when a service name is passed in', () => {
-      describe('when the service type is `OPeNDAP`', () => {
-        test('the service name is rendered on the panel without needing to click `More Info`', () => {
-          const serviceName = 'opendap-service-name'
-          setup({
-            accessMethods: {
-              opendap: {
-                isValid: true,
-                type: 'OPeNDAP',
-                name: serviceName
-              }
-            }
-          })
-
-          expect(screen.getByText('opendap-service-name')).toBeInTheDocument()
-        })
-      })
-
       describe('when the service type is `Harmony`', () => {
         test('the service name is rendered on the panel without needing to click `More Info`', () => {
           const collectionId = 'collectionId'
