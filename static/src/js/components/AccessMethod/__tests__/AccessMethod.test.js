@@ -418,6 +418,8 @@ describe('AccessMethod component', () => {
         setup({
           accessMethods: {
             harmony0: {
+              name: 'test name',
+              description: 'test description',
               isValid: true,
               type: 'Harmony'
             }
@@ -439,6 +441,8 @@ describe('AccessMethod component', () => {
         setup({
           accessMethods: {
             harmony0: {
+              name: 'test name',
+              description: 'test description',
               isValid: true,
               type: 'Harmony',
               supportedOutputFormats: ['NETCDF-3', 'NETCDF-4']
@@ -460,6 +464,8 @@ describe('AccessMethod component', () => {
         const { onUpdateAccessMethod } = setup({
           accessMethods: {
             harmony0: {
+              name: 'test name',
+              description: 'test description',
               isValid: true,
               type: 'Harmony',
               supportedOutputFormats: ['NETCDF-3', 'NETCDF-4']
@@ -494,6 +500,8 @@ describe('AccessMethod component', () => {
         setup({
           accessMethods: {
             harmony0: {
+              name: 'test name',
+              description: 'test description',
               isValid: true,
               type: 'Harmony'
             }
@@ -515,6 +523,8 @@ describe('AccessMethod component', () => {
         setup({
           accessMethods: {
             harmony0: {
+              name: 'test name',
+              description: 'test description',
               isValid: true,
               type: 'Harmony',
               supportedOutputProjections: ['EPSG:4326']
@@ -536,6 +546,8 @@ describe('AccessMethod component', () => {
         const { onUpdateAccessMethod } = setup({
           accessMethods: {
             harmony0: {
+              name: 'test name',
+              description: 'test description',
               isValid: true,
               type: 'Harmony',
               supportedOutputProjections: ['EPSG:4326']
@@ -572,6 +584,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: false
@@ -594,6 +608,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: false
@@ -622,6 +638,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -643,6 +661,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -668,6 +688,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -693,6 +715,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsTemporalSubsetting: true
@@ -717,6 +741,8 @@ describe('AccessMethod component', () => {
               setup({
                 accessMethods: {
                   harmony0: {
+                    name: 'test name',
+                    description: 'test description',
                     isValid: true,
                     type: 'Harmony',
                     supportsTemporalSubsetting: true
@@ -744,6 +770,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -770,6 +798,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -795,6 +825,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -823,6 +855,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -849,6 +883,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true,
@@ -877,6 +913,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsTemporalSubsetting: true,
@@ -909,6 +947,8 @@ describe('AccessMethod component', () => {
             const { onUpdateAccessMethod } = setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsTemporalSubsetting: true,
@@ -943,6 +983,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true,
@@ -968,6 +1010,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsBoundingBoxSubsetting: true,
@@ -990,6 +1034,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsBoundingBoxSubsetting: true,
@@ -1010,6 +1056,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsBoundingBoxSubsetting: true,
@@ -1032,6 +1080,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsBoundingBoxSubsetting: true,
@@ -1054,6 +1104,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsBoundingBoxSubsetting: true,
@@ -1076,6 +1128,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsShapefileSubsetting: true,
@@ -1103,6 +1157,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsTemporalSubsetting: true,
@@ -1132,6 +1188,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsBoundingBoxSubsetting: true,
@@ -1158,6 +1216,8 @@ describe('AccessMethod component', () => {
             const { onUpdateAccessMethod } = setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsTemporalSubsetting: true,
@@ -1211,6 +1271,7 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 name: serviceName
@@ -1233,6 +1294,7 @@ describe('AccessMethod component', () => {
             selectedAccessMethod: 'harmony0',
             accessMethods: {
               harmony0: {
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 name: serviceName,
@@ -1286,6 +1348,7 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 name: serviceName,
@@ -1311,6 +1374,7 @@ describe('AccessMethod component', () => {
           const { onUpdateAccessMethod } = setup({
             accessMethods: {
               harmony0: {
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 name: serviceName,
@@ -1345,6 +1409,7 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 name: serviceName,
