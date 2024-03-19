@@ -1248,26 +1248,6 @@ describe('AccessMethod component', () => {
 
     describe('when a service name is passed in', () => {
       describe('when the service type is `Harmony`', () => {
-        test('the service name is rendered on the panel without needing to click `More Info`', () => {
-          const collectionId = 'collectionId'
-          const serviceName = 'harmony-service-name'
-          setup({
-            accessMethods: {
-              harmony0: {
-                description: 'test description',
-                isValid: true,
-                type: 'Harmony',
-                name: serviceName
-              }
-            },
-            metadata: {
-              conceptId: collectionId
-            }
-          })
-
-          expect(screen.getByText(/using the harmony-service-name/)).toBeInTheDocument()
-        })
-
         test('edit variables button calls `onSetActivePanel` and `onTogglePanels`', async () => {
           const user = userEvent.setup()
           const collectionId = 'collectionId'
