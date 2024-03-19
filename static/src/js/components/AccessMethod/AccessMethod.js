@@ -309,11 +309,12 @@ export class AccessMethod extends Component {
 
   renderHarmonySelector(harmonyMethods, selectedAccessMethod) {
     const { selectValue } = this.state
-    if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony') && selectValue === '') {
-      this.setState({
-        selectValue: harmonyMethods.find(({ methodKey }) => methodKey === selectedAccessMethod).name
-      })
-    }
+    // eslint-disable-next-line capitalized-comments
+    // if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony') && selectValue === '') {
+    //   this.setState({
+    //     selectValue: harmonyMethods.find(({ methodKey }) => methodKey === selectedAccessMethod).name
+    //   })
+    // }
 
     return (
       <Select.Root
