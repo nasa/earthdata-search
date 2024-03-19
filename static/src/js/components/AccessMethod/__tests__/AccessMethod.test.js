@@ -8,8 +8,11 @@ import {
 import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
+import ResizeObserver from 'resize-observer-polyfill'
 
 import { AccessMethod } from '../AccessMethod'
+
+global.ResizeObserver = ResizeObserver
 
 beforeEach(() => {
   jest.clearAllMocks()
