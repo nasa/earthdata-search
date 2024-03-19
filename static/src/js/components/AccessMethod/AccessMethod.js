@@ -273,6 +273,7 @@ export class AccessMethod extends Component {
           details={details}
           checked={selected === methodKey}
           customizationOptions={customizationOptions}
+          onChange={() => true}
           isHarmony
         />
       </Select.Item>
