@@ -27,48 +27,10 @@ Resources:
       SecretId:
         Ref: DbPasswordSecret
       TargetId:
-        Ref: Database
-      TargetType: AWS::RDS::DBInstance
-
-  # Encrypted Database password secret storage
-  EncryptedDbPasswordSecret:
-    Type: AWS::SecretsManager::Secret
-    Properties:
-      Description: "EDSC Encrypted RDS database master password"
-      GenerateSecretString:
-        SecretStringTemplate: "{\"username\":\"edsc\"}"
-        GenerateStringKey: "password"
-        PasswordLength: 30
-        ExcludeCharacters: "\"@/\\"
-
-  SecretEncryptedRDSInstanceAttachment:
-    Type: "AWS::SecretsManager::SecretTargetAttachment"
-    Properties:
-      SecretId:
-        Ref: EncryptedDbPasswordSecret
-      TargetId:
         Ref: EncryptedDatabase
       TargetType: AWS::RDS::DBInstance
 
   # RDS database
-  Database:
-    Type: AWS::RDS::DBInstance
-    Properties:
-      DBName: edsc_${self:provider.stage}
-      AllocatedStorage: ${env:DB_ALLOCATED_STORAGE}
-      DBInstanceClass: ${env:DB_INSTANCE_CLASS}
-      Engine: postgres
-      EngineVersion: '14.4'
-      AllowMajorVersionUpgrade: true
-      MasterUsername: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:username}}"] ] }
-      MasterUserPassword: {"Fn::Join": ["", ["{{resolve:secretsmanager:",{"Ref": "DbPasswordSecret"},":SecretString:password}}"] ] }
-      MultiAZ: true
-      StorageType: gp2
-      DBSubnetGroupName:
-        Ref: DBSubnetGroup
-      VPCSecurityGroups:
-        - Ref: DatabaseVpcSecurityGroup
-
   EncryptedDatabase:
     Type: AWS::RDS::DBInstance
     Properties:
@@ -264,19 +226,3 @@ Outputs:
         - Endpoint.Port
     Export:
       Name: ${self:provider.stage}-EncryptedDatabasePort
-
-  DatabaseEndpoint:
-    Value:
-      Fn::GetAtt:
-        - Database
-        - Endpoint.Address
-    Export:
-      Name: ${self:provider.stage}-DatabaseEndpoint
-
-  DatabasePort:
-    Value:
-      Fn::GetAtt:
-        - Database
-        - Endpoint.Port
-    Export:
-      Name: ${self:provider.stage}-DatabasePort

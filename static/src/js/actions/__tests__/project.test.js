@@ -36,6 +36,29 @@ import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
 const mockStore = configureMockStore([thunk])
 
+// Returns a set of variable results in 3 chucks with more variables than `maxCmrPageSize`
+const createVariableResults = () => [{
+  variables: {
+    items: [{ conceptId: 'V10000000000-EDSC' }],
+    count: 3,
+    cursor: 'mock-cursor-0'
+  }
+},
+{
+  variables: {
+    items: [{ conceptId: 'V10000000001-EDSC' }],
+    count: 3,
+    cursor: 'mock-cursor-1'
+  }
+},
+{
+  variables: {
+    items: [{ conceptId: 'V10000000002-EDSC' }],
+    count: 3,
+    cursor: null
+  }
+}]
+
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
@@ -327,7 +350,7 @@ describe('getProjectCollections', () => {
 
     const storeActions = store.getActions()
 
-    expect(storeActions.length).toEqual(3)
+    expect(storeActions.length).toEqual(4)
     expect(storeActions[0]).toEqual({
       type: ADD_ACCESS_METHODS,
       payload: {
@@ -337,14 +360,6 @@ describe('getProjectCollections', () => {
     })
 
     expect(storeActions[1]).toEqual({
-      type: ADD_ACCESS_METHODS,
-      payload: {
-        collectionId: 'collectionId2',
-        methods: {}
-      }
-    })
-
-    expect(storeActions[2]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
         expect.objectContaining({
@@ -354,6 +369,139 @@ describe('getProjectCollections', () => {
           id: 'collectionId2'
         })
       ]
+    })
+
+    expect(storeActions[2]).toEqual({
+      type: ADD_ACCESS_METHODS,
+      payload: {
+        collectionId: 'collectionId2',
+        methods: {}
+      }
+    })
+
+    expect(storeActions[3]).toEqual({
+      type: UPDATE_COLLECTION_METADATA,
+      payload: [
+        expect.objectContaining({
+          id: 'collectionId1'
+        }),
+        expect.objectContaining({
+          id: 'collectionId2'
+        })
+      ]
+    })
+  })
+
+  describe('when requesting a collection with more variables than the maxCmrPageSize', () => {
+    test('retrieves all variables associated to the collection and sets the metadata correctly', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+        cmrHost: 'https://cmr.example.com',
+        graphQlHost: 'https://graphql.example.com',
+        opensearchRoot: 'https://cmr.example.com'
+      }))
+
+      jest.spyOn(getEarthdataConfig, 'getApplicationConfig').mockImplementation(() => ({
+        maxCmrPageSize: 1,
+        env: 'prod',
+        defaultCmrSearchTags: [
+          'edsc.*',
+          'opensearch.granule.osdd'
+        ],
+        clientId: {
+          background: 'eed-PORTAL-ENV-serverless-background',
+          client: 'eed-PORTAL-ENV-serverless-client',
+          lambda: 'eed-PORTAL-ENV-serverless-lambda'
+        }
+      }))
+
+      const varResults = createVariableResults()
+
+      nock(/localhost/)
+        .post(/saved_access_configs/)
+        .reply(200, {})
+
+      nock(/localhost/)
+        .post(/graphql/)
+        .reply(200, {
+          data: {
+            collections: {
+              items: [{
+                conceptId: 'C10000000000-EDSC',
+                tools: {
+                  items: [{
+                    name: 'SOTO'
+                  }]
+                },
+                variables: varResults[0].variables
+              }]
+            }
+          }
+        }, {
+          'jwt-token': 'token'
+        })
+
+      nock(/localhost/)
+        .post(/graphql/)
+        .reply(200, {
+          data: {
+            variables: varResults[1].variables
+          }
+        })
+
+      nock(/localhost/)
+        .post(/graphql/)
+        .reply(200, {
+          data: {
+            variables: varResults[2].variables
+          }
+        })
+
+      const store = mockStore({
+        authToken: 'token',
+        metadata: {
+          collections: {},
+          granules: {}
+        },
+        project: {
+          collections: {
+            allIds: ['C10000000000-EDSC'],
+            byId: {}
+          }
+        }
+      })
+
+      const expectedItems = [
+        { conceptId: 'V10000000000-EDSC' },
+        { conceptId: 'V10000000001-EDSC' },
+        { conceptId: 'V10000000002-EDSC' }
+      ]
+
+      await store.dispatch(actions.getProjectCollections())
+
+      const storeActions = store.getActions()
+
+      expect(storeActions.length).toEqual(2)
+
+      expect(storeActions[0]).toEqual({
+        type: ADD_ACCESS_METHODS,
+        payload: {
+          collectionId: 'C10000000000-EDSC',
+          methods: {},
+          selectedAccessMethod: undefined
+        }
+      })
+
+      expect(storeActions[1]).toEqual({
+        type: UPDATE_COLLECTION_METADATA,
+        payload: [
+          expect.objectContaining({
+            variables: {
+              count: 3,
+              items: expectedItems
+            }
+          })
+        ]
+      })
     })
   })
 
@@ -526,7 +674,7 @@ describe('getProjectCollections', () => {
 
     const storeActions = store.getActions()
 
-    expect(storeActions.length).toEqual(4)
+    expect(storeActions.length).toEqual(5)
     expect(storeActions[0]).toEqual({
       type: ADD_ERROR,
       payload: expect.objectContaining({
@@ -545,6 +693,18 @@ describe('getProjectCollections', () => {
     })
 
     expect(storeActions[2]).toEqual({
+      type: UPDATE_COLLECTION_METADATA,
+      payload: [
+        expect.objectContaining({
+          id: 'collectionId1'
+        }),
+        expect.objectContaining({
+          id: 'collectionId2'
+        })
+      ]
+    })
+
+    expect(storeActions[3]).toEqual({
       type: ADD_ACCESS_METHODS,
       payload: {
         collectionId: 'collectionId2',
@@ -552,7 +712,7 @@ describe('getProjectCollections', () => {
       }
     })
 
-    expect(storeActions[3]).toEqual({
+    expect(storeActions[4]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
         expect.objectContaining({
@@ -655,7 +815,8 @@ describe('getProjectCollections', () => {
 
       const storeActions = store.getActions()
 
-      expect(storeActions.length).toEqual(3)
+      expect(storeActions.length).toEqual(4)
+
       expect(storeActions[0]).toEqual({
         type: ADD_ACCESS_METHODS,
         payload: {
@@ -665,6 +826,18 @@ describe('getProjectCollections', () => {
       })
 
       expect(storeActions[1]).toEqual({
+        type: UPDATE_COLLECTION_METADATA,
+        payload: [
+          expect.objectContaining({
+            isCSDA: true
+          }),
+          expect.objectContaining({
+            isCSDA: false
+          })
+        ]
+      })
+
+      expect(storeActions[2]).toEqual({
         type: ADD_ACCESS_METHODS,
         payload: {
           collectionId: 'collectionId2',
@@ -672,7 +845,7 @@ describe('getProjectCollections', () => {
         }
       })
 
-      expect(storeActions[2]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [
           expect.objectContaining({
