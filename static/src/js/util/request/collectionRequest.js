@@ -60,6 +60,8 @@ export default class CollectionRequest extends CmrRequest {
   transformResponse(data) {
     super.transformResponse(data)
 
+    const { earthdataEnvironment } = this
+
     // If the response status code is not 200, return unaltered data
     // If the status code is 200, it doesn't exist in the response
     const { errors = [] } = data
@@ -105,7 +107,7 @@ export default class CollectionRequest extends CmrRequest {
       // Retrieve collection thumbnail if it exists
       if (collection.id) {
         if (collection.browse_flag) {
-          transformedCollection.thumbnail = `${getEnvironmentConfig().apiHost}/scale/collections/${collection.id}?h=${h}&w=${w}`
+          transformedCollection.thumbnail = `${getEnvironmentConfig().apiHost}/scale/collections/${collection.id}?h=${h}&w=${w}&ee=${earthdataEnvironment}`
         } else {
           transformedCollection.thumbnail = unavailableImg
           transformedCollection.isDefaultImage = true

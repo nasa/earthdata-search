@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { getSystemToken } from '../../../util/urs/getSystemToken'
 import { requestTimeout } from '../../../util/requestTimeout'
@@ -9,9 +8,8 @@ import { requestTimeout } from '../../../util/requestTimeout'
  * @param {String} collectionConceptId A collection concept id to return granules for
  * @returns {JSON} the collection associated with the supplied id
  */
-export const fetchCmrCollectionGranules = async (collectionConceptId) => {
+export const fetchCmrCollectionGranules = async (collectionConceptId, earthdataEnvironment) => {
   const headers = {}
-  const earthdataEnvironment = deployedEnvironment()
 
   if (!process.env.IS_OFFLINE) {
     const cmrToken = await getSystemToken()

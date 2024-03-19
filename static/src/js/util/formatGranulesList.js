@@ -68,6 +68,8 @@ export const formatGranulesList = ({
     }
 
     const handleMouseEnter = () => {
+      console.log('🚀 ~ file: formatGranulesList.js:69 ~ handleMouseEnter ~ eventEmitter:', eventEmitter)
+      console.log('🚀 ~ file: formatGranulesList.js:74 ~ handleMouseEnter ~ collectionConceptId:', collectionConceptId)
       eventEmitter.emit(`map.layer.${collectionConceptId}.focusgranule`, { granule: original })
     }
 
