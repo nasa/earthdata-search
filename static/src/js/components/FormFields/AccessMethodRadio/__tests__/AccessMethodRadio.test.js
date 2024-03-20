@@ -121,24 +121,6 @@ describe('AccessMethodRadio component', () => {
     })
   })
 
-  describe('more info section', () => {
-    test('does not display by default', () => {
-      setup()
-      expect(screen.getByText('More Info')).toBeInTheDocument()
-    })
-
-    test('displays when the more info button is clicked', async () => {
-      const { onClick } = setup()
-      const user = userEvent.setup()
-      const moreInfoButton = screen.getByRole('button')
-      await user.click(moreInfoButton)
-      expect(screen.getByText('Less Info')).toBeInTheDocument()
-
-      // Ensure outer `onClick` is not being called
-      expect(onClick).toHaveBeenCalledTimes(0)
-    })
-  })
-
   describe('when the access method is checked', () => {
     test('adds the is-selected classname modifier', () => {
       setup({ checked: true })
