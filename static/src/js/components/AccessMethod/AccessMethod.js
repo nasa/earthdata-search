@@ -301,7 +301,6 @@ export class AccessMethod extends Component {
       methodKey,
       title,
       subtitle,
-      name,
       description,
       details
     } = radioItem
@@ -313,7 +312,6 @@ export class AccessMethod extends Component {
         value={methodKey}
         title={title}
         subtitle={subtitle}
-        serviceName={name}
         description={description}
         details={details}
         onChange={onPropsChange}
