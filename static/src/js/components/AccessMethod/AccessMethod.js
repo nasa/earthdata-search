@@ -9,6 +9,7 @@ import moment from 'moment'
 import * as Select from '@radix-ui/react-select'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
 
+import { isUndefined } from 'lodash'
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
@@ -106,6 +107,20 @@ export class AccessMethod extends Component {
     if (isRecurring) {
       this.setState({
         enableTemporalSubsetting: false
+      })
+    }
+  }
+
+  componentDidUpdate() {
+    const { accessMethods, selectedAccessMethod } = this.props
+    const { selectValue } = this.state
+
+    if (selectedAccessMethod
+        && selectedAccessMethod.startsWith('harmony')
+        && !isUndefined(accessMethods[selectedAccessMethod].name)
+        && selectValue === '') {
+      this.setState({
+        selectValue: accessMethods[selectedAccessMethod].name
       })
     }
   }
@@ -309,12 +324,6 @@ export class AccessMethod extends Component {
 
   renderHarmonySelector(harmonyMethods, selectedAccessMethod) {
     const { selectValue } = this.state
-    // eslint-disable-next-line capitalized-comments
-    // if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony') && selectValue === '') {
-    //   this.setState({
-    //     selectValue: harmonyMethods.find(({ methodKey }) => methodKey === selectedAccessMethod).name
-    //   })
-    // }
 
     return (
       <Select.Root
