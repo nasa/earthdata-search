@@ -2,6 +2,7 @@ import scaleImage from '../handler'
 
 import * as buildResponse from '../utils/buildResponse'
 import * as downloadImageFromSource from '../utils/downloadImageFromSource'
+import * as determineEarthdataEnvironment from '../../util/determineEarthdataEnvironment'
 
 import * as cacheImage from '../utils/cache/cacheImage'
 import * as generateCacheKey from '../utils/cache/generateCacheKey'
@@ -21,6 +22,9 @@ beforeEach(() => {
       width: 85
     }
   }))
+
+  jest.spyOn(determineEarthdataEnvironment, 'determineEarthdataEnvironment')
+    .mockImplementationOnce(() => 'dev')
 })
 
 describe('scaleImage', () => {
@@ -131,6 +135,9 @@ describe('scaleImage', () => {
         describe('when the metadata does not contain a browse image url', () => {
           describe('when return_default is true', () => {
             test('returns the unavailable (default) image', async () => {
+              jest.spyOn(determineEarthdataEnvironment, 'determineEarthdataEnvironment')
+                .mockImplementationOnce(() => 'dev')
+
               const generateCacheKeyMock = jest.spyOn(generateCacheKey, 'generateCacheKey')
                 .mockImplementationOnce(() => 'C100000-EDSC-h-w')
                 .mockImplementationOnce(() => 'C100000-EDSC-h-w')
@@ -167,7 +174,7 @@ describe('scaleImage', () => {
               })
 
               expect(getImageFromCacheMock).toBeCalledWith('C100000-EDSC-h-w')
-              expect(getImageUrlFromConceptMock).toBeCalledWith('C100000-EDSC', 'datasets', 'false', undefined)
+              expect(getImageUrlFromConceptMock).toBeCalledWith('C100000-EDSC', 'datasets', 'false', undefined, 'dev')
               expect(buildUnavailableImageBufferMock).toBeCalledWith(85, 85)
               expect(buildResponseMock).toBeCalledWith(responseBuffer, 200)
             })
@@ -209,7 +216,7 @@ describe('scaleImage', () => {
               })
 
               expect(getImageFromCacheMock).toBeCalledWith('C100000-EDSC-h-w')
-              expect(getImageUrlFromConceptMock).toBeCalledWith('C100000-EDSC', 'datasets', 'false', undefined)
+              expect(getImageUrlFromConceptMock).toBeCalledWith('C100000-EDSC', 'datasets', 'false', undefined, 'dev')
 
               expect(buildUnavailableImageBufferMock).toBeCalledTimes(0)
 
@@ -262,7 +269,7 @@ describe('scaleImage', () => {
             })
 
             expect(getImageFromCacheMock).toBeCalledWith('C100000-EDSC-h-w')
-            expect(getImageUrlFromConceptMock).toBeCalledWith('C100000-EDSC', 'datasets', 'false', undefined)
+            expect(getImageUrlFromConceptMock).toBeCalledWith('C100000-EDSC', 'datasets', 'false', undefined, 'dev')
             expect(downloadImageFromSourceMock).toBeCalledWith('https://daac.ornl.gov/graphics/browse/project/square/fife_logo_square.png')
             expect(resizeImageMock).toBeCalledWith(responseBuffer, 85, 85)
             expect(cacheImageMock).toBeCalledWith('C100000-EDSC-h-w', responseBuffer)
@@ -318,7 +325,7 @@ describe('scaleImage', () => {
 
             expect(generateCacheKeyMock.mock.calls[1]).toEqual(['C100000-EDSC', 'datasets'])
             expect(getImageFromCacheMock).toBeCalledWith('C100000-EDSC-h-w')
-            expect(getImageUrlFromConceptMock).toBeCalledWith('C100000-EDSC', 'datasets', 'false', undefined)
+            expect(getImageUrlFromConceptMock).toBeCalledWith('C100000-EDSC', 'datasets', 'false', undefined, 'dev')
             expect(downloadImageFromSourceMock).toBeCalledWith('https://daac.ornl.gov/graphics/browse/project/square/fife_logo_square.png')
             expect(resizeImageMock).toBeCalledWith(responseBuffer, 100, 100)
             expect(cacheImageMock.mock.calls[0]).toEqual(['C100000-EDSC-h-w', responseBuffer])
@@ -360,14 +367,14 @@ describe('scaleImage', () => {
 
             await scaleImage(event, {})
 
-            expect(getImageUrlFromConceptMock).toBeCalledWith('G100000-EDSC', 'granules', 'true', undefined)
+            expect(getImageUrlFromConceptMock).toBeCalledWith('G100000-EDSC', 'granules', 'true', undefined, 'dev')
             expect(generateCacheKeyMock).toBeCalledWith('G100000-EDSC', 'granules', undefined, {
               height: 85,
               width: 85
             })
 
             expect(getImageFromCacheMock).toBeCalledWith('G100000-EDSC-h-w')
-            expect(getImageUrlFromConceptMock).toBeCalledWith('G100000-EDSC', 'granules', 'true', undefined)
+            expect(getImageUrlFromConceptMock).toBeCalledWith('G100000-EDSC', 'granules', 'true', undefined, 'dev')
             expect(buildUnavailableImageBufferMock).toBeCalledWith(85, 85)
             expect(buildResponseMock).toBeCalledWith(responseBuffer, 200)
           })
@@ -408,7 +415,7 @@ describe('scaleImage', () => {
             })
 
             expect(getImageFromCacheMock).toBeCalledWith('G100000-EDSC-h-w')
-            expect(getImageUrlFromConceptMock).toBeCalledWith('G100000-EDSC', 'granules', 'true', undefined)
+            expect(getImageUrlFromConceptMock).toBeCalledWith('G100000-EDSC', 'granules', 'true', undefined, 'dev')
 
             expect(buildUnavailableImageBufferMock).toBeCalledTimes(0)
 
