@@ -3,7 +3,8 @@ import React from 'react'
 import {
   act,
   render,
-  screen
+  screen,
+  waitFor
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -74,8 +75,16 @@ describe('AccessMethodRadio component', () => {
     expect(screen.getByText('test description')).toBeInTheDocument()
   })
 
-  test('displays the details', () => {
+  test('displays the details as a tooltip', async () => {
     setup()
+    const user = userEvent.setup()
+    const icon = screen.getByTestId('edsc-icon-details')
+    await waitFor(async () => {
+      await user.hover(icon)
+    })
+
+    const tooltip = screen.getByRole('tooltip')
+    expect(tooltip).toBeInTheDocument()
     expect(screen.getByText('test details')).toBeInTheDocument()
   })
 

@@ -69,7 +69,7 @@ export const EDSCIcon = ({
           className={iconClassNames}
           title={title}
           size={size}
-          data-testid="edsc-icon"
+          data-testid="edsc-icon-details"
           {...props}
         />
         {children}
