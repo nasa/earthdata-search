@@ -15,7 +15,7 @@ import {
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { commafy } from '../../util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import { getCustomizeIcons } from '../../util/metaIcon'
+import { getCustomizeIcons } from '../../util/getCustomizeIcons'
 import { pluralize } from '../../util/pluralize'
 
 import Button from '../Button/Button'

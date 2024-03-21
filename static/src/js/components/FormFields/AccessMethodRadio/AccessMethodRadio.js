@@ -6,7 +6,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FaCheck, FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
-import { getCustomizeIcons } from '../../../util/metaIcon'
+import { getCustomizeIcons } from '../../../util/getCustomizeIcons'
 
 import './AccessMethodRadio.scss'
 
