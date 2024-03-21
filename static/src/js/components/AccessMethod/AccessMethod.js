@@ -255,7 +255,7 @@ export class AccessMethod extends Component {
   }
 
   handleHarmonySelection(event, harmonyMethods) {
-    if (event !== '') {
+    if (event) {
       this.setState({
         selectValue: harmonyMethods.find(({ methodKey }) => methodKey === event).name
       })
@@ -740,8 +740,7 @@ export class AccessMethod extends Component {
                 {
                   // Show Harmony method description
                   harmonyTypeSelected && (
-                    <>
-                      <p />
+                    <div className="access-method__harmony-method-info">
                       <h3 className="project-panel-section__heading">{selectValue}</h3>
                       <p>{accessMethods[selectedAccessMethod].description}</p>
                       <p>
@@ -754,7 +753,7 @@ export class AccessMethod extends Component {
                           Documentation
                         </a>
                       </p>
-                    </>
+                    </div>
                   )
                 }
                 {
