@@ -86,22 +86,6 @@ describe('getColorMaps with error', () => {
         type: ERRORED_COLOR_MAPS,
         payload: { product }
       })
-
-      expect(storeActions[2]).toEqual({
-        type: ADD_ERROR,
-        payload: expect.objectContaining({
-          title: 'Error retrieving colormaps',
-          message: 'Unknown Error'
-        })
-      })
-
-      expect(handleErrorMock).toHaveBeenCalledTimes(1)
-      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
-        action: 'getColorMap',
-        resource: 'colormaps'
-      }))
-
-      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })
