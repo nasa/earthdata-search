@@ -81,12 +81,19 @@ export class AccessMethod extends Component {
 
     const harmonyTypeSelected = selectedAccessMethod ? selectedAccessMethod.startsWith('harmony') : false
 
+    let selectValue = ''
+    if (selectedAccessMethod
+        && selectedAccessMethod.startsWith('harmony')
+        && !isUndefined(accessMethods[selectedAccessMethod].name)) {
+      selectValue = accessMethods[selectedAccessMethod].name
+    }
+
     this.state = {
       enableTemporalSubsetting,
       enableSpatialSubsetting,
       enableConcatenateDownload,
       harmonyTypeSelected,
-      selectValue: ''
+      selectValue
     }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)

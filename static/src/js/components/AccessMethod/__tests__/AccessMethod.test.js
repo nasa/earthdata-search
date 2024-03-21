@@ -1,6 +1,7 @@
 import React from 'react'
 
 import {
+  getByRole,
   render,
   screen,
   waitFor
@@ -411,7 +412,123 @@ describe('AccessMethod component', () => {
     })
   })
 
-  describe('when the selected access method is harmony', () => {
+  describe('when the selected access method type is harmony', () => {
+    test('sets the checkbox checked in Step 1 for "Customize with Harmony"', () => {
+      const collectionId = 'collectionId'
+      setup({
+        accessMethods: {
+          harmony0: {
+            name: 'test name',
+            description: 'test description',
+            isValid: true,
+            type: 'Harmony'
+          }
+        },
+        selectedAccessMethod: 'harmony0',
+        metadata: {
+          conceptId: collectionId
+        }
+      })
+
+      const harmonyTypeInput = screen.getByTestId('collectionId_access-method__harmony_type')
+      expect(getByRole(harmonyTypeInput, 'radio').checked).toEqual(true)
+    })
+
+    describe('and multiple harmony methods are available', () => {
+      test('each method is listed in the Select menu and has appropriate icons for customization options', async () => {
+        const user = userEvent.setup()
+        const collectionId = 'collectionId'
+        setup({
+          accessMethods: {
+            harmony0: {
+              name: 'first harmony service',
+              description: 'test description',
+              isValid: true,
+              type: 'Harmony',
+              supportsConcatenation: true
+            },
+            harmony1: {
+              name: 'second harmony service',
+              description: 'test description',
+              isValid: true,
+              type: 'Harmony',
+              supportsShapefileSubsetting: true
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          }
+        })
+
+        const harmonyTypeInput = screen.getByTestId('collectionId_access-method__harmony_type')
+        await waitFor(async () => {
+          await user.click(harmonyTypeInput)
+        })
+
+        window.HTMLElement.prototype.hasPointerCapture = jest.fn()
+        window.HTMLElement.prototype.scrollIntoView = jest.fn()
+
+        const harmonySelector = screen.getByRole('combobox')
+        await waitFor(async () => {
+          await user.click(harmonySelector)
+        })
+
+        expect(screen.getByText('first harmony service').toBeInTheDocument)
+        expect(screen.getByText('second harmony service').toBeInTheDocument)
+        expect(screen.getByTitle('A white cubes icon').toBeInTheDocument)
+        expect(screen.getByTitle('A white globe icon').toBeInTheDocument)
+      })
+
+      test('the selected method is displayed in the Select box', () => {
+        const collectionId = 'collectionId'
+        setup({
+          accessMethods: {
+            harmony0: {
+              name: 'first harmony service',
+              description: 'test description',
+              isValid: true,
+              type: 'Harmony'
+            },
+            harmony1: {
+              name: 'second harmony service',
+              description: 'test description',
+              isValid: true,
+              type: 'Harmony'
+            }
+          },
+          selectedAccessMethod: 'harmony1',
+          metadata: {
+            conceptId: collectionId
+          }
+        })
+
+        expect(screen.getByText('second harmony service').toBeInTheDocument)
+      })
+    })
+
+    describe('and a specific harmony method has been chosen', () => {
+      test('the method description is displayed below in the Select box', () => {
+        const collectionId = 'collectionId'
+        setup({
+          accessMethods: {
+            harmony0: {
+              name: 'test name',
+              description: 'test description',
+              isValid: true,
+              type: 'Harmony',
+              supportsConcatenation: true
+            }
+          },
+          selectedAccessMethod: 'harmony0',
+          metadata: {
+            conceptId: collectionId
+          }
+        })
+
+        expect(screen.getByText('test description').toBeInTheDocument)
+      })
+    })
+
     describe('when supportedOutputFormats does not exist', () => {
       test('does not display outputFormat field', () => {
         const collectionId = 'collectionId'
