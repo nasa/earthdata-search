@@ -10,7 +10,6 @@ import * as Select from '@radix-ui/react-select'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
 import { FaFileAlt, FaExternalLinkAlt } from 'react-icons/fa'
 
-import { isUndefined } from 'lodash'
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
@@ -81,12 +80,14 @@ export class AccessMethod extends Component {
       )
     } = selectedMethod || {}
 
-    const harmonyTypeSelected = selectedAccessMethod ? selectedAccessMethod.startsWith('harmony') : false
+    const harmonyTypeSelected = selectedAccessMethod
+      ? selectedAccessMethod.startsWith('harmony')
+      : false
 
     let selectValue = ''
     if (selectedAccessMethod
         && selectedAccessMethod.startsWith('harmony')
-        && !isUndefined(accessMethods[selectedAccessMethod].name)) {
+        && accessMethods[selectedAccessMethod].name) {
       selectValue = accessMethods[selectedAccessMethod].name
     }
 
@@ -126,7 +127,7 @@ export class AccessMethod extends Component {
 
     if (selectedAccessMethod
         && selectedAccessMethod.startsWith('harmony')
-        && !isUndefined(accessMethods[selectedAccessMethod].name)
+        && accessMethods[selectedAccessMethod].name
         && selectValue === '') {
       this.setState({
         selectValue: accessMethods[selectedAccessMethod].name
@@ -500,8 +501,14 @@ export class AccessMethod extends Component {
           description = descriptionFromMetadata
           hasHarmony = true
           hasSpatialSubsetting = hasShapefileSubsetting || hasBBoxSubsetting
-          hasFormats = supportedOutputFormats ? supportedOutputFormats.length > 1 : false
-          hasProjections = supportedOutputProjections ? supportedOutputProjections.length > 1 : false
+          hasFormats = supportedOutputFormats
+            ? supportedOutputFormats.length > 1
+            : false
+
+          hasProjections = supportedOutputProjections
+            ? supportedOutputProjections.length > 1
+            : false
+
           /**
            * CMR defines has-transforms as including interpolation or multiple projections, but
            * interpolation is not exposed by GraphQL and is not currently supported by Harmony.
@@ -697,7 +704,12 @@ export class AccessMethod extends Component {
                     No access methods exist for this collection.
                   </Alert>
                 )
-                : this.getAccessMethodTypes(hasHarmony, radioList, collectionId, selectedAccessMethod)
+                : this.getAccessMethodTypes(
+                  hasHarmony,
+                  radioList,
+                  collectionId,
+                  selectedAccessMethod
+                )
             }
           </div>
         </ProjectPanelSection>
