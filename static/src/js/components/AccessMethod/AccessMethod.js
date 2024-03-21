@@ -754,7 +754,7 @@ export class AccessMethod extends Component {
                         >
                           <EDSCIcon icon={FaFileAlt} className="access-method__documentation-icon" />
                           Documentation
-                          <EDSCIcon icon={FaExternalLinkAlt} size={12} className="access-method__external-link-icon" />
+                          <EDSCIcon icon={FaExternalLinkAlt} size="12" className="access-method__external-link-icon" />
                         </a>
                       </p>
                     </div>
