@@ -64,7 +64,7 @@ export const EDSCIcon = ({
 
   if (variant === 'details') {
     return (
-      <div className="rightside">
+      <div className="access-method-radio__icons-rightside">
         <Icon
           className={iconClassNames}
           title={title}
