@@ -80,7 +80,7 @@ export class AccessMethod extends Component {
       )
     } = selectedMethod || {}
 
-    const harmonyTypeSelected = selectedAccessMethod
+    const isHarmony = selectedAccessMethod
       ? selectedAccessMethod.startsWith('harmony')
       : false
 
@@ -95,7 +95,7 @@ export class AccessMethod extends Component {
       enableTemporalSubsetting,
       enableSpatialSubsetting,
       enableConcatenateDownload,
-      harmonyTypeSelected,
+      isHarmony,
       selectValue
     }
 
@@ -136,7 +136,7 @@ export class AccessMethod extends Component {
   }
 
   handleHarmonyTypeAccessMethodSelection() {
-    this.setState({ harmonyTypeSelected: true })
+    this.setState({ isHarmony: true })
 
     const { metadata, onSelectAccessMethod } = this.props
     const { conceptId: collectionId } = metadata
@@ -157,7 +157,7 @@ export class AccessMethod extends Component {
     const { conceptId: collectionId } = metadata
 
     if (!method.includes('harmony')) {
-      this.setState({ harmonyTypeSelected: false })
+      this.setState({ isHarmony: false })
     }
 
     onSelectAccessMethod({
@@ -270,7 +270,7 @@ export class AccessMethod extends Component {
   getAccessMethodTypes(hasHarmony, radioList, collectionId, selectedAccessMethod) {
     if (hasHarmony) {
       const id = `${collectionId}_access-method__harmony_type`
-      const { harmonyTypeSelected } = this.state
+      const { isHarmony } = this.state
 
       return (
         <>
@@ -282,7 +282,7 @@ export class AccessMethod extends Component {
             description="Select a Harmony service to customize options"
             details="Select options like variables, transformations, and output formats by applying a Harmony service. Data will be staged in the cloud for download and analysis."
             onChange={() => this.handleHarmonyTypeAccessMethodSelection()}
-            checked={harmonyTypeSelected}
+            checked={isHarmony}
           />
 
           <RadioList
@@ -581,7 +581,7 @@ export class AccessMethod extends Component {
     const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
 
     // Harmony access methods are postfixed with an index given that there can be more than one
-    const isHarmony = (selectedAccessMethod && selectedAccessMethod.includes('harmony'))
+    const { isHarmony, selectValue } = this.state
 
     // Default supportedOutputFormatOptions
     let supportedOutputFormatOptions = []
@@ -686,8 +686,6 @@ export class AccessMethod extends Component {
 
     const harmonyMethods = accessMethodsByType.Harmony
 
-    const { harmonyTypeSelected, selectValue } = this.state
-
     return (
       <div className="access-method">
         <ProjectPanelSection
@@ -716,10 +714,10 @@ export class AccessMethod extends Component {
         <ProjectPanelSection
           heading="Select a service and customize options"
           step={2}
-          faded={!selectedAccessMethod && !harmonyTypeSelected}
+          faded={!selectedAccessMethod && !isHarmony}
         >
           {
-            harmonyTypeSelected && harmonyMethods.length > 0 && (
+            isHarmony && harmonyMethods.length > 0 && (
               this.createHarmonySelector(harmonyMethods, selectedAccessMethod)
             )
           }
@@ -747,7 +745,7 @@ export class AccessMethod extends Component {
                 }
                 {
                   // Show Harmony method description
-                  harmonyTypeSelected && (
+                  isHarmony && (
                     <div className="access-method__harmony-method-info">
                       <h3 className="project-panel-section__heading">{selectValue}</h3>
                       <p>{accessMethods[selectedAccessMethod].description}</p>
