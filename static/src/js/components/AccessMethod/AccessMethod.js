@@ -8,6 +8,7 @@ import { Alert, Form } from 'react-bootstrap'
 import moment from 'moment'
 import * as Select from '@radix-ui/react-select'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
+import { FaFileAlt, FaExternalLinkAlt } from 'react-icons/fa'
 
 import { isUndefined } from 'lodash'
 import { pluralize } from '../../util/pluralize'
@@ -15,6 +16,7 @@ import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
 
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio'
 import RadioList from '../FormFields/RadioList/RadioList'
@@ -745,12 +747,14 @@ export class AccessMethod extends Component {
                       <p>{accessMethods[selectedAccessMethod].description}</p>
                       <p>
                         <a
-                          className="link link--external"
+                          className="link"
                           href="https://harmony.earthdata.nasa.gov/docs#service-capabilities"
                           target="_blank"
                           rel="noreferrer"
                         >
+                          <EDSCIcon icon={FaFileAlt} className="access-method__documentation-icon" />
                           Documentation
+                          <EDSCIcon icon={FaExternalLinkAlt} size={12} className="access-method__external-link-icon" />
                         </a>
                       </p>
                     </div>
