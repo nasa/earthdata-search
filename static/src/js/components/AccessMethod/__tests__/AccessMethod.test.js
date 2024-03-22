@@ -473,10 +473,10 @@ describe('AccessMethod component', () => {
           await user.click(harmonySelector)
         })
 
-        expect(screen.getByText('first harmony service').toBeInTheDocument)
-        expect(screen.getByText('second harmony service').toBeInTheDocument)
-        expect(screen.getByTitle('A white cubes icon').toBeInTheDocument)
-        expect(screen.getByTitle('A white globe icon').toBeInTheDocument)
+        expect(screen.getByText('first harmony service')).toBeInTheDocument()
+        expect(screen.getByText('second harmony service')).toBeInTheDocument()
+        expect(screen.getByTitle('A white cubes icon')).toBeInTheDocument()
+        expect(screen.getByTitle('A white globe icon')).toBeInTheDocument()
       })
 
       test('the selected method is displayed in the Select box', () => {
@@ -502,7 +502,7 @@ describe('AccessMethod component', () => {
           }
         })
 
-        expect(screen.getByText('second harmony service').toBeInTheDocument)
+        expect(screen.getByText('second harmony service')).toBeInTheDocument()
       })
     })
 
@@ -525,7 +525,7 @@ describe('AccessMethod component', () => {
           }
         })
 
-        expect(screen.getByText('test description').toBeInTheDocument)
+        expect(screen.getByText('test description')).toBeInTheDocument()
       })
     })
 
