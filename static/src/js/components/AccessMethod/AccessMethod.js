@@ -469,6 +469,11 @@ export class AccessMethod extends Component {
 
     const selectedSpatialDisplay = createSpatialDisplay(spatial)
 
+    // Checking to see if the selectedMethod variables exists and has at least one variable
+    const hasVariables = selectedMethod.variables
+      ? Object.keys(selectedMethod.variables).length > 0
+      : false
+
     return (
       <div className="access-method">
         <ProjectPanelSection
@@ -663,34 +668,36 @@ export class AccessMethod extends Component {
                       nested
                     >
                       {
-                        selectedVariables.length > 0 && (
+                        !hasVariables ? (
                           <p className="access-method__section-status">
-                            {`${selectedVariables.length} ${pluralize('variable', selectedVariables.length)} selected`}
+                            No variables available for selected item.
                           </p>
+                        ) : (
+                          <>
+                            <p className="access-method__section-status">
+                              {
+                                selectedVariables.length > 0
+                                  ? `${selectedVariables.length} ${pluralize('variable', selectedVariables.length)} selected`
+                                  : 'No variables selected. All variables will be included in download.'
+                              }
+                            </p>
+                            <Button
+                              type="button"
+                              bootstrapVariant="primary"
+                              label="Edit Variables"
+                              bootstrapSize="sm"
+                              onClick={
+                                () => {
+                                  onSetActivePanel(`0.${index}.1`)
+                                  onTogglePanels(true)
+                                }
+                              }
+                            >
+                              Edit Variables
+                            </Button>
+                          </>
                         )
                       }
-
-                      {
-                        selectedVariables.length === 0 && (
-                          <p className="access-method__section-status">
-                            No variables selected. All variables will be included in download.
-                          </p>
-                        )
-                      }
-                      <Button
-                        type="button"
-                        bootstrapVariant="primary"
-                        label="Edit Variables"
-                        bootstrapSize="sm"
-                        onClick={
-                          () => {
-                            onSetActivePanel(`0.${index}.1`)
-                            onTogglePanels(true)
-                          }
-                        }
-                      >
-                        Edit Variables
-                      </Button>
                     </ProjectPanelSection>
                   )
                 }

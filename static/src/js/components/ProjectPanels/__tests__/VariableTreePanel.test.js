@@ -89,6 +89,31 @@ describe('VariableTreePanel', () => {
     ])
   })
 
+  test('displays a message when there are no items to display', () => {
+    const { enzymeWrapper } = setup({
+      accessMethods: {
+        opendap: {
+          hierarchyMappings: [],
+          keywordMappings: [],
+          selectedVariables: [],
+          variables: {
+            'V123456-EDSC': {
+              meta: {},
+              umm: {}
+            },
+            'V987654-EDSC': {
+              meta: {},
+              umm: {}
+            }
+          }
+        }
+      }
+    })
+
+    expect(enzymeWrapper.find('.variable-tree-panel__no-variables').exists()).toBeTruthy()
+    expect(enzymeWrapper.find('.variable-tree-panel__no-variables').text()).toBe('No variables available for selected access method')
+  })
+
   test('displays a Tree hierarchical mappings', () => {
     const { enzymeWrapper } = setup({
       accessMethods: {

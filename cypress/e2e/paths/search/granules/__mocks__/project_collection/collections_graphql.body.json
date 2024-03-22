@@ -502,6 +502,7 @@
           },
           "variables": {
             "count": 0,
+            "cursor": null,
             "items": null
           }
         }
