@@ -16,21 +16,21 @@ export const getDbConnectionConfig = async () => {
     }
 
     if (process.env.NODE_ENV === 'development') {
-      const { dbHost, dbName, dbPort } = getEnvironmentConfig()
+      const { dbHost, dbName, databasePort } = getEnvironmentConfig()
 
       return {
         ...configObject,
         host: dbHost,
         database: dbName,
-        port: dbPort
+        port: databasePort
       }
     }
 
     connectionConfig = {
       ...configObject,
-      host: process.env.dbEndpoint,
+      host: process.env.databaseEndpoint,
       database: process.env.dbName,
-      port: process.env.dbPort
+      port: process.env.databasePort
     }
   }
 

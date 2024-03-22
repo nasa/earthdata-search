@@ -95,7 +95,7 @@ For local development Earthdata Search uses a json configuration file to store s
 
     cp secret.config.json.example secret.config.json
 
-In order to operate against a local database this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `dbPort` in `static.config.json` if you have custom configuration locally). 
+In order to operate against a local database this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `databasePort` in `static.config.json` if you have custom configuration locally). 
 
 If you created the `postgres` user after a new PostgreSQL install as described above, both `dbUsername` and `dbPassword` will be the username you use to log into your computer.
 

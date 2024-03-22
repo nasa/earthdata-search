@@ -18,9 +18,9 @@ describe('getDbConnectionConfig', () => {
   })
 
   test('fetches urs credentials from secrets manager', async () => {
-    process.env.dbEndpoint = 'db://endpoint.com'
+    process.env.databaseEndpoint = 'db://endpoint.com'
     process.env.dbName = 'test-db'
-    process.env.dbPort = 1234
+    process.env.databasePort = 1234
 
     jest.spyOn(getDbCredentials, 'getDbCredentials').mockImplementationOnce(() => ({
       username: 'username',
