@@ -31,7 +31,7 @@ const saveProject = async (event, context) => {
 
   const earthdataEnvironment = deployedEnvironment()
 
-  // Retrive a connection to the database
+  // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
 
   let newProjectId
@@ -40,11 +40,7 @@ const saveProject = async (event, context) => {
     let userId
     // If user information was included, use it in the queries
     if (authToken) {
-      const { username } = getVerifiedJwtToken(authToken, earthdataEnvironment)
-
-      const userRecord = await dbConnection('users').first('id').where({ urs_id: username })
-
-      const { id } = userRecord
+      const { id } = getVerifiedJwtToken(authToken, earthdataEnvironment)
       userId = id
     }
 
