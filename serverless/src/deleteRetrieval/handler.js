@@ -37,7 +37,7 @@ export default async function deleteRetrieval(event, context) {
 
     // Nullify the foreign key constraint on the table before deleting
     await dbConnection('retrieval_collections')
-      .where('retrieval_id', '=', decodedRetrievalId)
+      .where('retrieval_id', decodedRetrievalId)
       .update('retrieval_id', null)
 
     // Retrieve the authenticated users' id to ensure the retrieval being deleted belongs to them
