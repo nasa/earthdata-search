@@ -274,6 +274,7 @@ const SpatialDisplay = ({
     setManuallyEnteringVal(false)
 
     onRemoveSpatialFilter()
+    eventEmitter.emit('map.drawCancel')
   }
 
   const onChangePointSearch = (event) => {
