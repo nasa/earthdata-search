@@ -5,6 +5,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
+import * as EventEmitter from '../../../events/events'
 
 import SpatialDisplay from '../SpatialDisplay'
 
@@ -280,6 +281,7 @@ describe('SpatialDisplay component', () => {
 
   describe('#onSpatialRemove', () => {
     test('calls onRemoveSpatialFilter', async () => {
+      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
       userEvent.setup()
 
       const { props } = setup({ pointSearch: [' '] })
@@ -293,6 +295,8 @@ describe('SpatialDisplay component', () => {
       await userEvent.click(actionBtn)
 
       expect(onRemoveSpatialFilter).toHaveBeenCalledTimes(1)
+      expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
+      expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.drawCancel')
     })
   })
 
