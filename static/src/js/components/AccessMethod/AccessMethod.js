@@ -84,11 +84,11 @@ export class AccessMethod extends Component {
       ? selectedAccessMethod.startsWith('harmony')
       : false
 
-    let selectValue = ''
+    let selectedHarmonyMethodName = ''
     if (selectedAccessMethod
         && selectedAccessMethod.startsWith('harmony')
         && accessMethods[selectedAccessMethod].name) {
-      selectValue = accessMethods[selectedAccessMethod].name
+      selectedHarmonyMethodName = accessMethods[selectedAccessMethod].name
     }
 
     this.state = {
@@ -96,7 +96,7 @@ export class AccessMethod extends Component {
       enableSpatialSubsetting,
       enableConcatenateDownload,
       isHarmony,
-      selectValue
+      selectedHarmonyMethodName
     }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
@@ -123,14 +123,14 @@ export class AccessMethod extends Component {
 
   componentDidUpdate() {
     const { accessMethods, selectedAccessMethod } = this.props
-    const { selectValue } = this.state
+    const { selectedHarmonyMethodName } = this.state
 
     if (selectedAccessMethod
         && selectedAccessMethod.startsWith('harmony')
         && accessMethods[selectedAccessMethod].name
-        && selectValue === '') {
+        && selectedHarmonyMethodName === '') {
       this.setState({
-        selectValue: accessMethods[selectedAccessMethod].name
+        selectedHarmonyMethodName: accessMethods[selectedAccessMethod].name
       })
     }
   }
@@ -148,7 +148,7 @@ export class AccessMethod extends Component {
 
     // Clear the text for the <Select> in step 2
     this.setState({
-      selectValue: ''
+      selectedHarmonyMethodName: ''
     })
   }
 
@@ -260,7 +260,7 @@ export class AccessMethod extends Component {
   handleHarmonySelection(event, harmonyMethods) {
     if (event) {
       this.setState({
-        selectValue: harmonyMethods.find(({ methodKey }) => methodKey === event).name
+        selectedHarmonyMethodName: harmonyMethods.find(({ methodKey }) => methodKey === event).name
       })
 
       this.handleAccessMethodSelection(event)
@@ -336,18 +336,18 @@ export class AccessMethod extends Component {
   }
 
   createHarmonySelector(harmonyMethods, selectedAccessMethod) {
-    const { selectValue } = this.state
+    const { selectedHarmonyMethodName } = this.state
 
     return (
       <Select.Root
         name="HarmonyMethodSelector"
-        value={selectValue}
+        value={selectedHarmonyMethodName}
         onValueChange={(e) => this.handleHarmonySelection(e, harmonyMethods)}
       >
         <span>Service</span>
         <Select.Trigger key="HarmonyTrigger" className="SelectTrigger">
           <Select.Value placeholder="Choose a service">
-            {selectValue}
+            {selectedHarmonyMethodName}
           </Select.Value>
           <Select.Icon className="SelectIcon" />
         </Select.Trigger>
@@ -581,7 +581,7 @@ export class AccessMethod extends Component {
     const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
 
     // Harmony access methods are postfixed with an index given that there can be more than one
-    const { isHarmony, selectValue } = this.state
+    const { isHarmony, selectedHarmonyMethodName } = this.state
 
     // Default supportedOutputFormatOptions
     let supportedOutputFormatOptions = []
@@ -747,7 +747,7 @@ export class AccessMethod extends Component {
                   // Show Harmony method description
                   isHarmony && (
                     <div className="access-method__harmony-method-info">
-                      <h3 className="project-panel-section__heading">{selectValue}</h3>
+                      <h3 className="project-panel-section__heading">{selectedHarmonyMethodName}</h3>
                       <p>{accessMethods[selectedAccessMethod].description}</p>
                       <p>
                         <a
