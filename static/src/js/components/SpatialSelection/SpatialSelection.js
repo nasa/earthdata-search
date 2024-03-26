@@ -404,6 +404,7 @@ const SpatialSelection = (props) => {
       drawControl.current._toolbars.draw._modes.marker.handler.disable()
       drawControl.current._toolbars.draw._modes.rectangle.handler.disable()
       drawControl.current._toolbars.draw._modes.circle.handler.disable()
+      drawControl.current._toolbars.draw._modes.polygon.handler.disable()
     }
   }
 
