@@ -509,10 +509,7 @@ export class AccessMethod extends Component {
             ? supportedOutputProjections.length > 1
             : false
 
-          /**
-           * CMR defines has-transforms as including interpolation or multiple projections, but
-           * interpolation is not exposed by GraphQL and is not currently supported by Harmony.
-          */
+          // TODO: include interpolation in hasTransform boolean once Harmony supports interpolation
           hasTransform = hasProjections
 
           customizationOptions = {
