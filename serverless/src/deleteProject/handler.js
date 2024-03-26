@@ -31,7 +31,7 @@ const deleteProject = async (event, context) => {
 
   const decodedProjectId = deobfuscateId(providedProjectId)
 
-  // Retrive a connection to the database
+  // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
 
   try {
