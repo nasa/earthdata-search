@@ -43,6 +43,6 @@ export const getColorMap = (payload) => async (dispatch, getState) => {
     })
     .catch((error) => {
       dispatch(setColorMapsErrored({ product }))
-      console.log(error)
+      console.log(`ColorMap loading has errored with: ${error}`)
     })
 }
