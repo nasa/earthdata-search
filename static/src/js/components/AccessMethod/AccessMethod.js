@@ -502,7 +502,7 @@ export class AccessMethod extends Component {
           hasHarmony = true
           hasSpatialSubsetting = hasShapefileSubsetting || hasBBoxSubsetting
           hasFormats = supportedOutputFormats
-            ? supportedOutputFormats.length > 1
+            ? supportedOutputFormats.length > 0
             : false
 
           hasProjections = supportedOutputProjections
