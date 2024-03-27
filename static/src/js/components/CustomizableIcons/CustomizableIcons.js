@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import {
   FaClock,
@@ -10,8 +11,8 @@ import {
   FaTags
 } from 'react-icons/fa'
 
-import MetaIcon from '../components/MetaIcon/MetaIcon'
-import EDSCIcon from '../components/EDSCIcon/EDSCIcon'
+import MetaIcon from '../MetaIcon/MetaIcon'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 /**
  * Renders icons indicating customization options for access methods.
@@ -24,7 +25,7 @@ import EDSCIcon from '../components/EDSCIcon/EDSCIcon'
  * @param {boolean} hasCombine
  * @param {boolean} forAccessMethodRadio - indicates usage for AccessMethodRadio
  */
-export function getCustomizeIcons(
+export const CustomizableIcons = ({
   hasSpatialSubsetting,
   hasVariables,
   hasTransforms,
@@ -32,7 +33,7 @@ export function getCustomizeIcons(
   hasTemporalSubsetting,
   hasCombine,
   forAccessMethodRadio
-) {
+}) => {
   let metaIconClasses = 'collection-results-item__meta-icon collection-results-item__meta-icon--customizable'
   if (forAccessMethodRadio) {
     metaIconClasses += ' meta-icon__accessMethod'
@@ -212,3 +213,19 @@ export function getCustomizeIcons(
     )
   )
 }
+
+CustomizableIcons.defaultProps = {
+  forAccessMethodRadio: false
+}
+
+CustomizableIcons.propTypes = {
+  hasSpatialSubsetting: PropTypes.bool.isRequired,
+  hasVariables: PropTypes.bool.isRequired,
+  hasTransforms: PropTypes.bool.isRequired,
+  hasFormats: PropTypes.bool.isRequired,
+  hasTemporalSubsetting: PropTypes.bool.isRequired,
+  hasCombine: PropTypes.bool.isRequired,
+  forAccessMethodRadio: PropTypes.bool
+}
+
+export default CustomizableIcons

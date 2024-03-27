@@ -15,7 +15,7 @@ import {
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { commafy } from '../../util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import { getCustomizeIcons } from '../../util/getCustomizeIcons'
+import CustomizableIcons from '../CustomizableIcons/CustomizableIcons'
 import { pluralize } from '../../util/pluralize'
 
 import Button from '../Button/Button'
@@ -195,17 +195,15 @@ export const CollectionResultsItem = forwardRef(({
                     />
                   )
                 }
-                {
-                  getCustomizeIcons(
-                    hasSpatialSubsetting,
-                    hasVariables,
-                    hasTransforms,
-                    hasFormats,
-                    hasTemporalSubsetting,
-                    hasCombine,
-                    false
-                  )
-                }
+                <CustomizableIcons
+                  hasSpatialSubsetting={hasSpatialSubsetting}
+                  hasVariables={hasVariables}
+                  hasTransforms={hasTransforms}
+                  hasFormats={hasFormats}
+                  hasTemporalSubsetting={hasTemporalSubsetting}
+                  hasCombine={hasCombine}
+                  forAccessMethodRadio={false}
+                />
                 {
                   cloudHosted && (
                     <MetaIcon

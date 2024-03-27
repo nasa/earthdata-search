@@ -6,7 +6,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FaCheck, FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
-import { getCustomizeIcons } from '../../../util/getCustomizeIcons'
+import CustomizableIcons from '../../CustomizableIcons/CustomizableIcons'
 
 import './AccessMethodRadio.scss'
 
@@ -62,15 +62,15 @@ export const AccessMethodRadio = ({
       />
       {
         customizationOptions && (
-          getCustomizeIcons(
-            hasSpatialSubsetting,
-            hasVariables,
-            hasTransforms,
-            hasFormats,
-            hasTemporalSubsetting,
-            hasCombine,
-            true
-          )
+          <CustomizableIcons
+            hasSpatialSubsetting={hasSpatialSubsetting}
+            hasVariables={hasVariables}
+            hasTransforms={hasTransforms}
+            hasFormats={hasFormats}
+            hasTemporalSubsetting={hasTemporalSubsetting}
+            hasCombine={hasCombine}
+            forAccessMethodRadio
+          />
         )
       }
       <div className="access-method-radio__radio">
