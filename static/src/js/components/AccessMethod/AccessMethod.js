@@ -358,7 +358,11 @@ export class AccessMethod extends Component {
               <Select.Viewport key="HarmonySelectorViewport" className="SelectViewport" asChild>
                 <ScrollArea.Viewport className="ScrollAreaViewport" style={{ overflowY: undefined }}>
                   <div id="harmony_methods">
-                    {harmonyMethods.map((radio) => this.createHarmonySelectItem(radio, selectedAccessMethod))}
+                    {
+                      harmonyMethods.map(
+                        (radio) => this.createHarmonySelectItem(radio, selectedAccessMethod)
+                      )
+                    }
                   </div>
                 </ScrollArea.Viewport>
               </Select.Viewport>
