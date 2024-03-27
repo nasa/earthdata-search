@@ -215,16 +215,22 @@ export const CustomizableIcons = ({
 }
 
 CustomizableIcons.defaultProps = {
-  forAccessMethodRadio: false
+  forAccessMethodRadio: false,
+  hasSpatialSubsetting: false,
+  hasVariables: false,
+  hasTransforms: false,
+  hasFormats: false,
+  hasTemporalSubsetting: false,
+  hasCombine: false
 }
 
 CustomizableIcons.propTypes = {
-  hasSpatialSubsetting: PropTypes.bool.isRequired,
-  hasVariables: PropTypes.bool.isRequired,
-  hasTransforms: PropTypes.bool.isRequired,
-  hasFormats: PropTypes.bool.isRequired,
-  hasTemporalSubsetting: PropTypes.bool.isRequired,
-  hasCombine: PropTypes.bool.isRequired,
+  hasSpatialSubsetting: PropTypes.bool,
+  hasVariables: PropTypes.bool,
+  hasTransforms: PropTypes.bool,
+  hasFormats: PropTypes.bool,
+  hasTemporalSubsetting: PropTypes.bool,
+  hasCombine: PropTypes.bool,
   forAccessMethodRadio: PropTypes.bool
 }
 
