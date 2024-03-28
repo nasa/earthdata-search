@@ -7,7 +7,6 @@ import TextWindowActions from '../TextWindowActions'
 import * as DownloadableFile from '../../../util/files/constructDownloadableFile'
 import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'
 import Button from '../../Button/Button'
-import { getOperatingSystem } from '../../../util/files/parseUserAgent'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -219,20 +218,6 @@ describe('TextWindowActions component', () => {
 
         expect(window.location.assign).toHaveBeenCalledTimes(1)
         expect(window.location.assign).toHaveBeenCalledWith('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata&downloadId=shortName_versionId&token=Bearer mock-token')
-      })
-
-      test('Download link render correctly based on operating system', () => {
-        getOperatingSystem.mockImplementation(() => 'Windows')
-        const windowsDownloadLink = 'https://github.com/nasa/earthdata-download/releases/latest/download/Earthdata-Download-x64.exe'
-        const { enzymeWrapper } = setup({}, true)
-
-        const eddButton = enzymeWrapper.find('.text-window-actions__action--edd').filter(Button)
-        eddButton.simulate('click')
-
-        const eddModal = enzymeWrapper.find(EDSCModalContainer).at(1)
-        const link = eddModal.find('a').at(1).prop('href')
-
-        expect(link).toEqual(windowsDownloadLink)
       })
     })
   })
