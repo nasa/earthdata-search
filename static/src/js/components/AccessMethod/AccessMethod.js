@@ -86,7 +86,7 @@ export class AccessMethod extends Component {
 
     let selectedHarmonyMethodName = ''
     if (selectedAccessMethod
-        && selectedAccessMethod.startsWith('harmony')
+        && isHarmony
         && accessMethods[selectedAccessMethod].name) {
       selectedHarmonyMethodName = accessMethods[selectedAccessMethod].name
     }

@@ -15,10 +15,10 @@ import {
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { commafy } from '../../util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import CustomizableIcons from '../CustomizableIcons/CustomizableIcons'
 import { pluralize } from '../../util/pluralize'
 
 import Button from '../Button/Button'
+import CustomizableIcons from '../CustomizableIcons/CustomizableIcons'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import MetaIcon from '../MetaIcon/MetaIcon'
 import Spinner from '../Spinner/Spinner'
