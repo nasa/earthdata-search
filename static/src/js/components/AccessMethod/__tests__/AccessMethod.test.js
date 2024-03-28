@@ -1,6 +1,7 @@
 import React from 'react'
 
 import {
+  getByRole,
   render,
   screen,
   waitFor
@@ -8,8 +9,11 @@ import {
 import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
+import ResizeObserver from 'resize-observer-polyfill'
 
 import { AccessMethod } from '../AccessMethod'
+
+global.ResizeObserver = ResizeObserver
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -206,7 +210,7 @@ describe('AccessMethod component', () => {
 
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
       // Multiple `Harmony` services are possible for a collection
-      expect(directDownloadAccessMethodRadioButton.value).toEqual('harmony0')
+      expect(directDownloadAccessMethodRadioButton.value).toEqual('HarmonyMethodType')
     })
   })
 
@@ -408,13 +412,131 @@ describe('AccessMethod component', () => {
     })
   })
 
-  describe('when the selected access method is harmony', () => {
+  describe('when the selected access method type is harmony', () => {
+    test('sets the checkbox checked in Step 1 for "Customize with Harmony"', () => {
+      const collectionId = 'collectionId'
+      setup({
+        accessMethods: {
+          harmony0: {
+            name: 'test name',
+            description: 'test description',
+            isValid: true,
+            type: 'Harmony'
+          }
+        },
+        selectedAccessMethod: 'harmony0',
+        metadata: {
+          conceptId: collectionId
+        }
+      })
+
+      const harmonyTypeInput = screen.getByTestId('collectionId_access-method__harmony_type')
+      expect(getByRole(harmonyTypeInput, 'radio').checked).toEqual(true)
+    })
+
+    describe('and multiple harmony methods are available', () => {
+      test('each method is listed in the Select menu and has appropriate icons for customization options', async () => {
+        const user = userEvent.setup()
+        const collectionId = 'collectionId'
+        setup({
+          accessMethods: {
+            harmony0: {
+              name: 'first harmony service',
+              description: 'test description',
+              isValid: true,
+              type: 'Harmony',
+              supportsConcatenation: true
+            },
+            harmony1: {
+              name: 'second harmony service',
+              description: 'test description',
+              isValid: true,
+              type: 'Harmony',
+              supportsShapefileSubsetting: true
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          }
+        })
+
+        const harmonyTypeInput = screen.getByTestId('collectionId_access-method__harmony_type')
+        await waitFor(async () => {
+          await user.click(harmonyTypeInput)
+        })
+
+        window.HTMLElement.prototype.hasPointerCapture = jest.fn()
+        window.HTMLElement.prototype.scrollIntoView = jest.fn()
+
+        const harmonySelector = screen.getByRole('combobox')
+        await waitFor(async () => {
+          await user.click(harmonySelector)
+        })
+
+        expect(screen.getByText('first harmony service')).toBeInTheDocument()
+        expect(screen.getByText('second harmony service')).toBeInTheDocument()
+        expect(screen.getByTitle('A white cubes icon')).toBeInTheDocument()
+        expect(screen.getByTitle('A white globe icon')).toBeInTheDocument()
+      })
+
+      test('the selected method is displayed in the Select box', () => {
+        const collectionId = 'collectionId'
+        setup({
+          accessMethods: {
+            harmony0: {
+              name: 'first harmony service',
+              description: 'test description',
+              isValid: true,
+              type: 'Harmony'
+            },
+            harmony1: {
+              name: 'second harmony service',
+              description: 'test description',
+              isValid: true,
+              type: 'Harmony'
+            }
+          },
+          selectedAccessMethod: 'harmony1',
+          metadata: {
+            conceptId: collectionId
+          }
+        })
+
+        expect(screen.getByText('second harmony service')).toBeInTheDocument()
+      })
+    })
+
+    describe('and a specific harmony method has been chosen', () => {
+      test('the method description is displayed below in the Select box', () => {
+        const collectionId = 'collectionId'
+        setup({
+          accessMethods: {
+            harmony0: {
+              name: 'test name',
+              description: 'test description',
+              isValid: true,
+              type: 'Harmony',
+              supportsConcatenation: true
+            }
+          },
+          selectedAccessMethod: 'harmony0',
+          metadata: {
+            conceptId: collectionId
+          }
+        })
+
+        expect(screen.getByText('test description')).toBeInTheDocument()
+      })
+    })
+
     describe('when supportedOutputFormats does not exist', () => {
       test('does not display outputFormat field', () => {
         const collectionId = 'collectionId'
         setup({
           accessMethods: {
             harmony0: {
+              name: 'test name',
+              description: 'test description',
               isValid: true,
               type: 'Harmony'
             }
@@ -436,6 +558,8 @@ describe('AccessMethod component', () => {
         setup({
           accessMethods: {
             harmony0: {
+              name: 'test name',
+              description: 'test description',
               isValid: true,
               type: 'Harmony',
               supportedOutputFormats: ['NETCDF-3', 'NETCDF-4']
@@ -457,6 +581,8 @@ describe('AccessMethod component', () => {
         const { onUpdateAccessMethod } = setup({
           accessMethods: {
             harmony0: {
+              name: 'test name',
+              description: 'test description',
               isValid: true,
               type: 'Harmony',
               supportedOutputFormats: ['NETCDF-3', 'NETCDF-4']
@@ -491,6 +617,8 @@ describe('AccessMethod component', () => {
         setup({
           accessMethods: {
             harmony0: {
+              name: 'test name',
+              description: 'test description',
               isValid: true,
               type: 'Harmony'
             }
@@ -512,6 +640,8 @@ describe('AccessMethod component', () => {
         setup({
           accessMethods: {
             harmony0: {
+              name: 'test name',
+              description: 'test description',
               isValid: true,
               type: 'Harmony',
               supportedOutputProjections: ['EPSG:4326']
@@ -533,6 +663,8 @@ describe('AccessMethod component', () => {
         const { onUpdateAccessMethod } = setup({
           accessMethods: {
             harmony0: {
+              name: 'test name',
+              description: 'test description',
               isValid: true,
               type: 'Harmony',
               supportedOutputProjections: ['EPSG:4326']
@@ -569,6 +701,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: false
@@ -591,6 +725,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: false
@@ -619,6 +755,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -640,6 +778,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -665,6 +805,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -690,6 +832,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsTemporalSubsetting: true
@@ -714,6 +858,8 @@ describe('AccessMethod component', () => {
               setup({
                 accessMethods: {
                   harmony0: {
+                    name: 'test name',
+                    description: 'test description',
                     isValid: true,
                     type: 'Harmony',
                     supportsTemporalSubsetting: true
@@ -741,6 +887,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -767,6 +915,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -792,6 +942,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -820,6 +972,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true
@@ -846,6 +1000,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true,
@@ -874,6 +1030,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsTemporalSubsetting: true,
@@ -906,6 +1064,8 @@ describe('AccessMethod component', () => {
             const { onUpdateAccessMethod } = setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsTemporalSubsetting: true,
@@ -940,6 +1100,8 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                name: 'test name',
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 supportsTemporalSubsetting: true,
@@ -965,6 +1127,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsBoundingBoxSubsetting: true,
@@ -987,6 +1151,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsBoundingBoxSubsetting: true,
@@ -1007,6 +1173,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsBoundingBoxSubsetting: true,
@@ -1029,6 +1197,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsBoundingBoxSubsetting: true,
@@ -1051,6 +1221,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsBoundingBoxSubsetting: true,
@@ -1073,6 +1245,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsShapefileSubsetting: true,
@@ -1100,6 +1274,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsTemporalSubsetting: true,
@@ -1129,6 +1305,8 @@ describe('AccessMethod component', () => {
             setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsBoundingBoxSubsetting: true,
@@ -1155,6 +1333,8 @@ describe('AccessMethod component', () => {
             const { onUpdateAccessMethod } = setup({
               accessMethods: {
                 harmony0: {
+                  name: 'test name',
+                  description: 'test description',
                   isValid: true,
                   type: 'Harmony',
                   supportsTemporalSubsetting: true,
@@ -1184,43 +1364,7 @@ describe('AccessMethod component', () => {
     })
 
     describe('when a service name is passed in', () => {
-      describe('when the service type is `OPeNDAP`', () => {
-        test('the service name is rendered on the panel without needing to click `More Info`', () => {
-          const serviceName = 'opendap-service-name'
-          setup({
-            accessMethods: {
-              opendap: {
-                isValid: true,
-                type: 'OPeNDAP',
-                name: serviceName
-              }
-            }
-          })
-
-          expect(screen.getByText('opendap-service-name')).toBeInTheDocument()
-        })
-      })
-
       describe('when the service type is `Harmony`', () => {
-        test('the service name is rendered on the panel without needing to click `More Info`', () => {
-          const collectionId = 'collectionId'
-          const serviceName = 'harmony-service-name'
-          setup({
-            accessMethods: {
-              harmony0: {
-                isValid: true,
-                type: 'Harmony',
-                name: serviceName
-              }
-            },
-            metadata: {
-              conceptId: collectionId
-            }
-          })
-
-          expect(screen.getByText(/using the harmony-service-name/)).toBeInTheDocument()
-        })
-
         test('edit variables button calls `onSetActivePanel` and `onTogglePanels`', async () => {
           const user = userEvent.setup()
           const collectionId = 'collectionId'
@@ -1230,6 +1374,7 @@ describe('AccessMethod component', () => {
             selectedAccessMethod: 'harmony0',
             accessMethods: {
               harmony0: {
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 name: serviceName,
@@ -1283,6 +1428,7 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 name: serviceName,
@@ -1296,7 +1442,6 @@ describe('AccessMethod component', () => {
             selectedAccessMethod: 'harmony0'
           })
 
-          expect(screen.getByText(/The requested data will be processed/)).toBeInTheDocument()
           expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
           expect(screen.getByRole('checkbox').checked).toEqual(true)
         })
@@ -1308,6 +1453,7 @@ describe('AccessMethod component', () => {
           const { onUpdateAccessMethod } = setup({
             accessMethods: {
               harmony0: {
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 name: serviceName,
@@ -1321,7 +1467,6 @@ describe('AccessMethod component', () => {
             selectedAccessMethod: 'harmony0'
           })
 
-          expect(screen.getByText(/The requested data will be processed/)).toBeInTheDocument()
           expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
           await user.click(screen.getByRole('checkbox'))
 
@@ -1342,6 +1487,7 @@ describe('AccessMethod component', () => {
           setup({
             accessMethods: {
               harmony0: {
+                description: 'test description',
                 isValid: true,
                 type: 'Harmony',
                 name: serviceName,

@@ -268,6 +268,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
             count
             items {
               conceptId
+              description
               longName
               name
               type

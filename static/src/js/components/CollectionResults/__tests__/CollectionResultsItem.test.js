@@ -1,14 +1,6 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import {
-  FaClock,
-  FaCubes,
-  FaFileAlt,
-  FaGlobe,
-  FaSlidersH,
-  FaTags
-} from 'react-icons/fa'
 
 import { collectionListItemProps } from './mocks'
 
@@ -324,107 +316,6 @@ describe('CollectionResultsList component', () => {
         const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
         const featureItem = metaContainer.find('#feature-icon-list-view__customize')
         expect(featureItem.length).toEqual(0)
-      })
-
-      describe('spatial subsetting icon', () => {
-        test('renders the metadata correctly', () => {
-          const { enzymeWrapper } = setup({
-            collectionMetadata: {
-              ...collectionListItemProps.collectionMetadata,
-              hasSpatialSubsetting: true
-            }
-          })
-          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
-          const featureItem = metaContainer.find('#feature-icon-list-view__customize')
-          const metaIcon = featureItem.find(MetaIcon)
-          expect(featureItem.length).toEqual(1)
-          expect(metaIcon.props().metadata.props.children[0].props.icon).toEqual(FaGlobe)
-        })
-      })
-
-      describe('variables icon', () => {
-        test('renders the metadata correctly', () => {
-          const { enzymeWrapper } = setup({
-            collectionMetadata: {
-              ...collectionListItemProps.collectionMetadata,
-              hasVariables: true
-            }
-          })
-          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
-          const featureItem = metaContainer.find('#feature-icon-list-view__customize')
-          const metaIcon = featureItem.find(MetaIcon)
-
-          expect(featureItem.length).toEqual(1)
-          expect(metaIcon.props().metadata.props.children[2].props.icon).toEqual(FaTags)
-        })
-      })
-
-      describe('transforms icon', () => {
-        test('renders the metadata correctly', () => {
-          const { enzymeWrapper } = setup({
-            collectionMetadata: {
-              ...collectionListItemProps.collectionMetadata,
-              hasTransforms: true
-            }
-          })
-          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
-          const featureItem = metaContainer.find('#feature-icon-list-view__customize')
-          const metaIcon = featureItem.find(MetaIcon)
-
-          expect(featureItem.length).toEqual(1)
-          expect(metaIcon.props().metadata.props.children[3].props.icon).toEqual(FaSlidersH)
-        })
-      })
-
-      describe('formats icon', () => {
-        test('renders the metadata correctly', () => {
-          const { enzymeWrapper } = setup({
-            collectionMetadata: {
-              ...collectionListItemProps.collectionMetadata,
-              hasFormats: true
-            }
-          })
-          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
-          const featureItem = metaContainer.find('#feature-icon-list-view__customize')
-          const metaIcon = featureItem.find(MetaIcon)
-
-          expect(featureItem.length).toEqual(1)
-          expect(metaIcon.props().metadata.props.children[4].props.icon).toEqual(FaFileAlt)
-        })
-      })
-
-      describe('temporal subsetting icon', () => {
-        test('renders the metadata correctly', () => {
-          const { enzymeWrapper } = setup({
-            collectionMetadata: {
-              ...collectionListItemProps.collectionMetadata,
-              hasTemporalSubsetting: true
-            }
-          })
-          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
-          const featureItem = metaContainer.find('#feature-icon-list-view__customize')
-          const metaIcon = featureItem.find(MetaIcon)
-
-          expect(featureItem.length).toEqual(1)
-          expect(metaIcon.props().metadata.props.children[1].props.icon).toEqual(FaClock)
-        })
-      })
-
-      describe('combination icon', () => {
-        test('renders the metadata correctly', () => {
-          const { enzymeWrapper } = setup({
-            collectionMetadata: {
-              ...collectionListItemProps.collectionMetadata,
-              hasCombine: true
-            }
-          })
-          const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
-          const featureItem = metaContainer.find('#feature-icon-list-view__customize')
-          const metaIcon = featureItem.find(MetaIcon)
-
-          expect(featureItem.length).toEqual(1)
-          expect(metaIcon.props().metadata.props.children[5].props.icon).toEqual(FaCubes)
-        })
       })
     })
   })
