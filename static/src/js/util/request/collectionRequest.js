@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 import CmrRequest from './cmrRequest'
 import {
   getApplicationConfig,
@@ -77,7 +79,7 @@ export default class CollectionRequest extends CmrRequest {
       ({ entry = [] } = feed)
     }
 
-    entry.map((collection) => {
+    entry.map(async (collection) => {
       const transformedCollection = collection
 
       if (collection && (collection.tags || collection.links)) {
@@ -105,6 +107,16 @@ export default class CollectionRequest extends CmrRequest {
         transformedCollection.thumbnail = collection.browse_flag
           ? `${getEarthdataConfig(this.earthdataEnvironment).cmrHost}/browse-scaler/browse_images/datasets/${collection.id}?h=${h}&w=${w}`
           : unavailableImg
+      }
+
+      if (transformedCollection.thumbnail !== unavailableImg) {
+        const resp = await axios.get(transformedCollection.thumbnail)
+
+        console.log(resp)
+
+        const { data: binary } = resp
+
+        transformedCollection.thumbnail = binary
       }
 
       return transformedCollection
