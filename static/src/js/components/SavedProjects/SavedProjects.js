@@ -160,6 +160,7 @@ export class SavedProjects extends Component {
                                     </Popover>
                                   )
                                 }
+                                rootClose
                               >
                                 <Button
                                   className="saved-projects__button saved-projects__button--share"
