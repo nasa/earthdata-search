@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 import CmrRequest from './cmrRequest'
 import {
   getApplicationConfig,
@@ -46,13 +48,15 @@ export default class GranuleRequest extends CmrRequest {
     const { feed = {} } = data
     const { entry = [] } = feed
 
-    entry.map((granule) => {
+    entry.map(async (granule) => {
       const {
         id,
         time_start: timeStart,
         time_end: timeEnd,
         links
       } = granule
+
+      let granThumbnail = ''
 
       const updatedGranule = granule
 
@@ -69,6 +73,17 @@ export default class GranuleRequest extends CmrRequest {
 
       if (id) {
         updatedGranule.thumbnail = `${getEarthdataConfig(this.earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${id}?h=${height}&w=${width}`
+
+        const resp = await axios.get(updatedGranule.thumbnail)
+
+        console.log(resp)
+
+        const { data: binary } = resp
+        granThumbnail = binary
+
+        console.log(granThumbnail)
+
+        updatedGranule.thumbnail = granThumbnail
       }
 
       if (links && links.length > 0) {
