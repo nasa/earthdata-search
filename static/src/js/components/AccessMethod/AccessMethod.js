@@ -345,18 +345,18 @@ export class AccessMethod extends Component {
         onValueChange={(e) => this.handleHarmonySelection(e, harmonyMethods)}
       >
         <span>Service</span>
-        <Select.Trigger key="HarmonyTrigger" className="SelectTrigger">
+        <Select.Trigger key="harmony-trigger" className="select-trigger">
           <Select.Value placeholder="Choose a service">
             {selectedHarmonyMethodName}
           </Select.Value>
-          <Select.Icon className="SelectIcon" />
+          <Select.Icon className="select-icon" />
         </Select.Trigger>
 
         <Select.Portal>
-          <Select.Content className="SelectContent" position="popper">
-            <ScrollArea.Root className="ScrollAreaRoot" type="auto">
-              <Select.Viewport key="HarmonySelectorViewport" className="SelectViewport" asChild>
-                <ScrollArea.Viewport className="ScrollAreaViewport" style={{ overflowY: undefined }}>
+          <Select.Content className="select-content" position="popper">
+            <ScrollArea.Root className="scroll-area-root" type="auto">
+              <Select.Viewport key="harmony-selector-viewport" className="select-viewport" asChild>
+                <ScrollArea.Viewport className="scroll-area-viewport" style={{ overflowY: undefined }}>
                   <div id="harmony_methods">
                     {
                       harmonyMethods.map(
@@ -367,10 +367,10 @@ export class AccessMethod extends Component {
                 </ScrollArea.Viewport>
               </Select.Viewport>
               <ScrollArea.Scrollbar
-                className="ScrollAreaScrollbar"
+                className="scroll-area-scrollbar"
                 orientation="vertical"
               >
-                <ScrollArea.Thumb className="ScrollAreaThumb" />
+                <ScrollArea.Thumb className="scroll-area-thumb" />
               </ScrollArea.Scrollbar>
               <Select.Arrow />
             </ScrollArea.Root>

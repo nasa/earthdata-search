@@ -1,6 +1,6 @@
 $trigger-width: 400px;
 
-.SelectTrigger {
+.select-trigger {
   width: $trigger-width;
   border-radius: 4px;
   border: 1px solid $color__black--200;
@@ -17,11 +17,11 @@ $trigger-width: 400px;
   }
 }
 
-.SelectIcon {
+.select-icon {
   float: right;
 }
 
-.SelectTrigger > span:first-child {
+.select-trigger > span:first-child {
   float: left;
   overflow: hidden;
   white-space: nowrap;
@@ -29,7 +29,7 @@ $trigger-width: 400px;
   max-width: calc(#{$trigger-width} - 50px);
 }
 
-.SelectContent {
+.select-content {
   overflow: hidden;
   background-color: $color__white;
   border-radius: 6px;
@@ -38,7 +38,7 @@ $trigger-width: 400px;
   width: 434px;
 }
 
-.SelectViewport {
+.select-viewport {
   padding: 0px;
   max-height: 275px; // Enough for three services if they have short descriptions
 }
@@ -60,19 +60,19 @@ $trigger-width: 400px;
 
 /* scroll area */
 
-.ScrollAreaRoot {
+.scroll-area-root {
   width: 100%;
   height: 100%;
   --scrollbar-size: 10px;
   overflow: hidden;
 }
 
-.ScrollAreaViewport {
+.scroll-area-viewport {
   width: 100%;
   height: 100%;
 }
 
-.ScrollAreaScrollbar {
+.scroll-area-scrollbar {
   display: flex;
   user-select: none;
   padding: 2px;
@@ -81,7 +81,7 @@ $trigger-width: 400px;
   }
 }
 
-.ScrollAreaThumb {
+.scroll-area-thumb {
   background: $color__black--300;
   border-radius: 3px;
   position: relative;

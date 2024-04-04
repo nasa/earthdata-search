@@ -30,7 +30,7 @@ export const AccessMethodRadio = ({
     }
   ]
   if (isHarmony) {
-    labelClasses.push('access-method-radio--isHarmony')
+    labelClasses.push('access-method-radio--is-harmony')
   }
 
   const labelClassName = classNames(labelClasses)
