@@ -13,6 +13,7 @@ import { FaFileAlt, FaExternalLinkAlt } from 'react-icons/fa'
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
+import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -23,7 +24,6 @@ import Spinner from '../Spinner/Spinner'
 
 import './Select.scss'
 import './AccessMethod.scss'
-import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
 
 const EchoForm = lazy(() => import('./EchoForm'))
 
@@ -317,7 +317,7 @@ export class AccessMethod extends Component {
     } = radioItem
 
     return (
-      <Select.Item className="SelectItem" key={methodKey} value={methodKey}>
+      <Select.Item className="select-item" key={methodKey} value={methodKey}>
         <AccessMethodRadio
           key={id}
           id={id}
@@ -340,7 +340,7 @@ export class AccessMethod extends Component {
 
     return (
       <Select.Root
-        name="HarmonyMethodSelector"
+        name="harmony-method-selector"
         value={selectedHarmonyMethodName}
         onValueChange={(e) => this.handleHarmonySelection(e, harmonyMethods)}
       >
