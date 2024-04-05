@@ -1,10 +1,10 @@
-$trigger-width: 24.5rem;
-
 .select-trigger {
-  width: $trigger-width;
+  position: relative;
+  width: 24.5rem;
   border-radius: $border-radius;
   border: 1px solid $color__black--200;
-  padding: 0 $spacer;
+  padding-left: $spacer;
+  padding-right: $spacer*2;
   font-size: 0.81rem;
   line-height: 1;
   height: 2.1rem;
@@ -18,15 +18,20 @@ $trigger-width: 24.5rem;
 }
 
 .select-icon {
-  float: right;
+  position: absolute;
+  top: 0.6rem;
+  right: 0.75rem;
 }
 
 .select-trigger > span:first-child {
-  float: left;
+  position: relative;
+  display: inline-block;
+  width: 21.375rem;
+  top: 0.05rem;
+  text-align: left;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: calc(#{$trigger-width} - 3.125rem);
 }
 
 .select-content {
