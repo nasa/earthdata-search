@@ -5,14 +5,14 @@ import { FaDownload } from 'react-icons/fa'
 import { parse } from 'qs'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
 import { commafy } from '../../util/commafy'
 import { stringify } from '../../util/url/url'
 import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 export const GranuleDownloadButton = (props) => {
   const {
@@ -28,6 +28,7 @@ export const GranuleDownloadButton = (props) => {
     onChangePath,
     tooManyGranules
   } = props
+
   const { disableDatabaseComponents } = getApplicationConfig()
 
   if (tooManyGranules) {
