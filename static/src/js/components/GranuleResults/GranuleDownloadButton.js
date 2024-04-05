@@ -5,6 +5,8 @@ import { FaDownload } from 'react-icons/fa'
 import { parse } from 'qs'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
 import { commafy } from '../../util/commafy'
 import { stringify } from '../../util/url/url'
 import { locationPropType } from '../../util/propTypes/location'
@@ -26,6 +28,8 @@ export const GranuleDownloadButton = (props) => {
     onChangePath,
     tooManyGranules
   } = props
+
+  const { disableDatabaseComponents } = getApplicationConfig()
 
   if (tooManyGranules) {
     return (
@@ -129,7 +133,7 @@ export const GranuleDownloadButton = (props) => {
         bootstrapVariant="success"
         className="granule-results-actions__download-all-button"
         dataTestId="granule-results-actions__download-all-button"
-        disabled={granuleCount === 0 || initialLoading}
+        disabled={granuleCount === 0 || initialLoading || (disableDatabaseComponents === 'true')}
         icon={FaDownload}
         label={buttonText}
         variant="full"
