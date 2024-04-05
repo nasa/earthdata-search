@@ -22,7 +22,6 @@ import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio
 import RadioList from '../FormFields/RadioList/RadioList'
 import Spinner from '../Spinner/Spinner'
 
-import './Select.scss'
 import './AccessMethod.scss'
 
 const EchoForm = lazy(() => import('./EchoForm'))
