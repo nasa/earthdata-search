@@ -12,6 +12,8 @@ import { locationPropType } from '../../util/propTypes/location'
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
 export const GranuleDownloadButton = (props) => {
   const {
     badge,
@@ -26,6 +28,7 @@ export const GranuleDownloadButton = (props) => {
     onChangePath,
     tooManyGranules
   } = props
+  const { disableDatabaseComponents } = getApplicationConfig()
 
   if (tooManyGranules) {
     return (
@@ -129,7 +132,7 @@ export const GranuleDownloadButton = (props) => {
         bootstrapVariant="success"
         className="granule-results-actions__download-all-button"
         dataTestId="granule-results-actions__download-all-button"
-        disabled={granuleCount === 0 || initialLoading}
+        disabled={granuleCount === 0 || initialLoading || (disableDatabaseComponents === 'true')}
         icon={FaDownload}
         label={buttonText}
         variant="full"
