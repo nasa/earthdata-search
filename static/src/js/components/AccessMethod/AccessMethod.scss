@@ -40,7 +40,7 @@
   }
 }
 
-.select-trigger {
+.harmony-select-trigger {
   position: relative;
   width: 24.5rem;
   border-radius: $border-radius;
@@ -59,13 +59,13 @@
   }
 }
 
-.select-icon {
+.harmony-select-icon {
   position: absolute;
   top: 0.6rem;
   right: 0.75rem;
 }
 
-.select-trigger > span:first-child {
+.harmony-select-trigger > span:first-child {
   position: relative;
   display: inline-block;
   width: 21.375rem;
@@ -76,7 +76,7 @@
   text-overflow: ellipsis;
 }
 
-.select-content {
+.harmony-select-content {
   overflow: hidden;
   background-color: $color__white;
   border-radius: $border-radius;
@@ -85,12 +85,12 @@
   width: 27.125rem;
 }
 
-.select-viewport {
+.harmony-select-viewport {
   padding: 0;
   max-height: 17.5rem; // Enough for three services if they have short descriptions
 }
 
-.select-item {
+.harmony-select-item {
   line-height: 1;
   display: flex;
   align-items: center;
@@ -99,29 +99,29 @@
   user-select: none;
 }
 
-.select-item[data-highlighted] {
+.harmony-select-item[data-highlighted] {
   outline: none;
   background-color: $color__black--100;
 }
 
-.scroll-area-root {
+.harmony-scroll-area-root {
   --scrollbar-size: 0.625rem;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-.scroll-area-viewport {
+.harmony-scroll-area-viewport {
   width: 100%;
   height: 100%;
 }
 
-.scroll-area-scrollbar {
+.harmony-scroll-area-scrollbar {
   padding: 0.125rem;
   width: var(--scrollbar-size);
 }
 
-.scroll-area-thumb {
+.harmony-scroll-area-thumb {
   background: $color__black--300;
   border-radius: $border-radius;
   position: relative;

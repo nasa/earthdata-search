@@ -316,7 +316,7 @@ export class AccessMethod extends Component {
     } = radioItem
 
     return (
-      <Select.Item className="select-item" key={methodKey} value={methodKey}>
+      <Select.Item className="harmony-select-item" key={methodKey} value={methodKey}>
         <AccessMethodRadio
           key={id}
           id={id}
@@ -344,18 +344,18 @@ export class AccessMethod extends Component {
         onValueChange={(e) => this.handleHarmonySelection(e, harmonyMethods)}
       >
         <span>Service</span>
-        <Select.Trigger key="harmony-trigger" className="select-trigger">
+        <Select.Trigger key="harmony-trigger" className="harmony-select-trigger">
           <Select.Value placeholder="Choose a service">
             {selectedHarmonyMethodName}
           </Select.Value>
-          <Select.Icon className="select-icon" />
+          <Select.Icon className="harmony-select-icon" />
         </Select.Trigger>
 
         <Select.Portal>
-          <Select.Content className="select-content" position="popper">
-            <ScrollArea.Root className="scroll-area-root" type="auto">
-              <Select.Viewport key="harmony-selector-viewport" className="select-viewport" asChild>
-                <ScrollArea.Viewport className="scroll-area-viewport" style={{ overflowY: undefined }}>
+          <Select.Content className="harmony-select-content" position="popper">
+            <ScrollArea.Root className="harmony-scroll-area-root" type="auto">
+              <Select.Viewport key="harmony-selector-viewport" className="harmony-select-viewport" asChild>
+                <ScrollArea.Viewport className="harmony-scroll-area-viewport" style={{ overflowY: undefined }}>
                   <div id="harmony_methods">
                     {
                       harmonyMethods.map(
@@ -366,10 +366,10 @@ export class AccessMethod extends Component {
                 </ScrollArea.Viewport>
               </Select.Viewport>
               <ScrollArea.Scrollbar
-                className="scroll-area-scrollbar"
+                className="harmony-scroll-area-scrollbar"
                 orientation="vertical"
               >
-                <ScrollArea.Thumb className="scroll-area-thumb" />
+                <ScrollArea.Thumb className="harmony-scroll-area-thumb" />
               </ScrollArea.Scrollbar>
               <Select.Arrow />
             </ScrollArea.Root>
