@@ -118,10 +118,7 @@
 
 .scroll-area-scrollbar {
   padding: 0.125rem;
-
-  &[data-orientation='vertical'] {
-    width: var(--scrollbar-size);
-  }
+  width: var(--scrollbar-size);
 }
 
 .scroll-area-thumb {
