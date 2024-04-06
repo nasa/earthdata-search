@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { CSSTransition } from 'react-transition-group'
-import { FaCheck } from 'react-icons/fa'
+import { FaCheck, FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
+import CustomizableIcons from '../../CustomizableIcons/CustomizableIcons'
 
 import './AccessMethodRadio.scss'
 
@@ -19,22 +19,30 @@ export const AccessMethodRadio = ({
   onChange,
   onClick,
   title,
-  serviceName,
-  subtitle
+  subtitle,
+  customizationOptions,
+  isHarmony
 }) => {
-  const [moreInfoActive, setMoreInfoActive] = useState(false)
-
-  const onMoreDetailsClick = (event) => {
-    event.stopPropagation()
-    setMoreInfoActive(!moreInfoActive)
-  }
-
-  const labelClassName = classNames([
+  const labelClasses = [
     'access-method-radio',
     {
       'access-method-radio--is-selected': checked
     }
-  ])
+  ]
+  if (isHarmony) {
+    labelClasses.push('access-method-radio--is-harmony')
+  }
+
+  const labelClassName = classNames(labelClasses)
+
+  const {
+    hasSpatialSubsetting = false,
+    hasVariables = false,
+    hasTransforms = false,
+    hasFormats = false,
+    hasTemporalSubsetting = false,
+    hasCombine = false
+  } = customizationOptions || {}
 
   return (
     <label
@@ -52,6 +60,19 @@ export const AccessMethodRadio = ({
         onChange={onChange}
         onClick={onClick}
       />
+      {
+        customizationOptions && (
+          <CustomizableIcons
+            hasSpatialSubsetting={hasSpatialSubsetting}
+            hasVariables={hasVariables}
+            hasTransforms={hasTransforms}
+            hasFormats={hasFormats}
+            hasTemporalSubsetting={hasTemporalSubsetting}
+            hasCombine={hasCombine}
+            forAccessMethodRadio
+          />
+        )
+      }
       <div className="access-method-radio__radio">
         { checked && <EDSCIcon icon={FaCheck} className="access-method-radio__radio-icon" /> }
       </div>
@@ -66,66 +87,43 @@ export const AccessMethodRadio = ({
                 {subtitle}
               </span>
             </span>
-            {
-              serviceName && (
-                <OverlayTrigger
-                  placement="top"
-                  overlay={
-                    (
-                      <Tooltip>
-                        <span className="tooltip__secondary-text">Service</span>
-                        {serviceName}
-                      </Tooltip>
-                    )
-                  }
-                >
-                  <div className="access-method-radio__header-secondary">
-                    <span className="access-method-radio__primary-service-name">
-                      {serviceName}
-                    </span>
-                  </div>
-                </OverlayTrigger>
-              )
-            }
           </div>
           <div className="access-method-radio__header-content">
             <span className="access-method-radio__description">
               {description}
             </span>
           </div>
-          <div className="access-method-radio__header-tertiary">
-            <button
-              className="access-method-radio__more-info-button"
-              type="button"
-              onClick={onMoreDetailsClick}
-            >
-              {`${!moreInfoActive ? 'More ' : 'Less '}`}
-              Info
-            </button>
-          </div>
         </header>
+        {
+          details && (
+
+            <OverlayTrigger
+              placement="top"
+              overlay={
+                (
+                  <Tooltip style={{ width: '20rem' }}>
+                    {details}
+                  </Tooltip>
+                )
+              }
+            >
+              <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details" />
+            </OverlayTrigger>
+          )
+        }
       </div>
-      <CSSTransition
-        in={moreInfoActive}
-        timeout={0}
-        classNames="access-method-radio__more-info-view"
-      >
-        <div className="access-method-radio__more-info">
-          <span className="access-method-radio__details">
-            {details}
-          </span>
-        </div>
-      </CSSTransition>
     </label>
   )
 }
 
 AccessMethodRadio.defaultProps = {
   checked: null,
+  details: null,
   onChange: null,
   onClick: null,
   subtitle: null,
-  serviceName: null
+  customizationOptions: null,
+  isHarmony: false
 }
 
 AccessMethodRadio.propTypes = {
@@ -137,14 +135,23 @@ AccessMethodRadio.propTypes = {
   details: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.string
-  ]).isRequired,
+  ]),
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   onClick: PropTypes.func,
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
-  serviceName: PropTypes.string
+  customizationOptions: PropTypes.shape({
+    hasTemporalSubsetting: PropTypes.bool,
+    hasVariables: PropTypes.bool,
+    hasTransforms: PropTypes.bool,
+    hasCombine: PropTypes.bool,
+    hasSpatialSubsetting: PropTypes.bool,
+    hasFormats: PropTypes.bool,
+    hasTransform: PropTypes.bool
+  }),
+  isHarmony: PropTypes.bool
 }
 
 export default AccessMethodRadio

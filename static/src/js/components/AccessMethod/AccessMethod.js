@@ -6,19 +6,23 @@ import React, {
 import PropTypes from 'prop-types'
 import { Alert, Form } from 'react-bootstrap'
 import moment from 'moment'
+import * as Select from '@radix-ui/react-select'
+import * as ScrollArea from '@radix-ui/react-scroll-area'
+import { FaFileAlt, FaExternalLinkAlt } from 'react-icons/fa'
 
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
+import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
 
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio'
 import RadioList from '../FormFields/RadioList/RadioList'
 import Spinner from '../Spinner/Spinner'
 
 import './AccessMethod.scss'
-import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
 
 const EchoForm = lazy(() => import('./EchoForm'))
 
@@ -75,10 +79,23 @@ export class AccessMethod extends Component {
       )
     } = selectedMethod || {}
 
+    const isHarmony = selectedAccessMethod
+      ? selectedAccessMethod.startsWith('harmony')
+      : false
+
+    let selectedHarmonyMethodName = ''
+    if (selectedAccessMethod
+        && isHarmony
+        && accessMethods[selectedAccessMethod].name) {
+      selectedHarmonyMethodName = accessMethods[selectedAccessMethod].name
+    }
+
     this.state = {
       enableTemporalSubsetting,
       enableSpatialSubsetting,
-      enableConcatenateDownload
+      enableConcatenateDownload,
+      isHarmony,
+      selectedHarmonyMethodName
     }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
@@ -87,6 +104,7 @@ export class AccessMethod extends Component {
     this.handleToggleTemporalSubsetting = this.handleToggleTemporalSubsetting.bind(this)
     this.handleToggleSpatialSubsetting = this.handleToggleSpatialSubsetting.bind(this)
     this.handleConcatenationSelection = this.handleConcatenationSelection.bind(this)
+    this.handleHarmonySelection = this.handleHarmonySelection.bind(this)
   }
 
   UNSAFE_componentWillReceiveProps() {
@@ -102,10 +120,44 @@ export class AccessMethod extends Component {
     }
   }
 
+  componentDidUpdate() {
+    const { accessMethods, selectedAccessMethod } = this.props
+    const { selectedHarmonyMethodName } = this.state
+
+    if (selectedAccessMethod
+        && selectedAccessMethod.startsWith('harmony')
+        && accessMethods[selectedAccessMethod].name
+        && selectedHarmonyMethodName === '') {
+      this.setState({
+        selectedHarmonyMethodName: accessMethods[selectedAccessMethod].name
+      })
+    }
+  }
+
+  handleHarmonyTypeAccessMethodSelection() {
+    this.setState({ isHarmony: true })
+
+    const { metadata, onSelectAccessMethod } = this.props
+    const { conceptId: collectionId } = metadata
+
+    onSelectAccessMethod({
+      collectionId,
+      selectedAccessMethod: null
+    })
+
+    // Clear the text for the <Select> in step 2
+    this.setState({
+      selectedHarmonyMethodName: ''
+    })
+  }
+
   handleAccessMethodSelection(method) {
     const { metadata, onSelectAccessMethod } = this.props
-
     const { conceptId: collectionId } = metadata
+
+    if (!method.includes('harmony')) {
+      this.setState({ isHarmony: false })
+    }
 
     onSelectAccessMethod({
       collectionId,
@@ -204,13 +256,135 @@ export class AccessMethod extends Component {
     })
   }
 
+  handleHarmonySelection(event, harmonyMethods) {
+    if (event) {
+      this.setState({
+        selectedHarmonyMethodName: harmonyMethods.find(({ methodKey }) => methodKey === event).name
+      })
+
+      this.handleAccessMethodSelection(event)
+    }
+  }
+
+  getAccessMethodTypes(hasHarmony, radioList, collectionId, selectedAccessMethod) {
+    if (hasHarmony) {
+      const id = `${collectionId}_access-method__harmony_type`
+      const { isHarmony } = this.state
+
+      return (
+        <>
+          <AccessMethodRadio
+            key={id}
+            id={id}
+            value="HarmonyMethodType"
+            title="Customize with Harmony"
+            description="Select a Harmony service to customize options"
+            details="Select options like variables, transformations, and output formats by applying a Harmony service. Data will be staged in the cloud for download and analysis."
+            onChange={() => this.handleHarmonyTypeAccessMethodSelection()}
+            checked={isHarmony}
+          />
+
+          <RadioList
+            defaultValue={selectedAccessMethod}
+            onChange={(methodName) => this.handleAccessMethodSelection(methodName)}
+            radioList={radioList}
+            renderRadio={this.renderRadioItem}
+          />
+        </>
+      )
+    }
+
+    return (
+      <RadioList
+        defaultValue={selectedAccessMethod}
+        onChange={(methodName) => this.handleAccessMethodSelection(methodName)}
+        radioList={radioList}
+        renderRadio={this.renderRadioItem}
+      />
+    )
+  }
+
+  createHarmonySelectItem(radioItem, selected) {
+    const {
+      id,
+      methodKey,
+      title,
+      subtitle,
+      description,
+      details,
+      customizationOptions
+    } = radioItem
+
+    return (
+      <Select.Item className="harmony-select-item" key={methodKey} value={methodKey}>
+        <AccessMethodRadio
+          key={id}
+          id={id}
+          value={methodKey}
+          title={title}
+          subtitle={subtitle}
+          description={description}
+          details={details}
+          checked={selected === methodKey}
+          customizationOptions={customizationOptions}
+          onChange={() => true}
+          isHarmony
+        />
+      </Select.Item>
+    )
+  }
+
+  createHarmonySelector(harmonyMethods, selectedAccessMethod) {
+    const { selectedHarmonyMethodName } = this.state
+
+    return (
+      <Select.Root
+        name="harmony-method-selector"
+        value={selectedHarmonyMethodName}
+        onValueChange={(e) => this.handleHarmonySelection(e, harmonyMethods)}
+      >
+        <span>Service</span>
+        <Select.Trigger key="harmony-trigger" className="harmony-select-trigger">
+          <Select.Value placeholder="Choose a service">
+            {selectedHarmonyMethodName}
+          </Select.Value>
+          <Select.Icon className="harmony-select-icon" />
+        </Select.Trigger>
+
+        <Select.Portal>
+          <Select.Content className="harmony-select-content" position="popper">
+            <ScrollArea.Root className="harmony-scroll-area-root" type="auto">
+              <Select.Viewport key="harmony-selector-viewport" className="harmony-select-viewport" asChild>
+                <ScrollArea.Viewport className="harmony-scroll-area-viewport" style={{ overflowY: undefined }}>
+                  <div id="harmony_methods">
+                    {
+                      harmonyMethods.map(
+                        (radio) => this.createHarmonySelectItem(radio, selectedAccessMethod)
+                      )
+                    }
+                  </div>
+                </ScrollArea.Viewport>
+              </Select.Viewport>
+              <ScrollArea.Scrollbar
+                className="harmony-scroll-area-scrollbar"
+                orientation="vertical"
+              >
+                <ScrollArea.Thumb className="harmony-scroll-area-thumb" />
+              </ScrollArea.Scrollbar>
+              <Select.Arrow />
+            </ScrollArea.Root>
+          </Select.Content>
+        </Select.Portal>
+      </Select.Root>
+    )
+  }
+
   renderRadioItem(radioItem, onPropsChange, selected) {
     const {
       id,
       methodKey,
       title,
       subtitle,
-      name,
       description,
       details
     } = radioItem
@@ -222,7 +396,6 @@ export class AccessMethod extends Component {
         value={methodKey}
         title={title}
         subtitle={subtitle}
-        serviceName={name}
         description={description}
         details={details}
         onChange={onPropsChange}
@@ -257,23 +430,41 @@ export class AccessMethod extends Component {
       Harmony: []
     }
 
+    let hasHarmony = false
+
     Object.keys(accessMethods).forEach((methodKey) => {
       const { [methodKey]: accessMethod = {} } = accessMethods
 
-      const { type, name } = accessMethod
+      const {
+        type,
+        name,
+        description: descriptionFromMetadata,
+        supportsBoundingBoxSubsetting: hasBBoxSubsetting,
+        supportsShapefileSubsetting: hasShapefileSubsetting,
+        supportsTemporalSubsetting: hasTemporalSubsetting,
+        supportsVariableSubsetting: hasVariables,
+        supportsConcatenation: hasCombine,
+        supportedOutputFormats,
+        supportedOutputProjections
+      } = accessMethod
 
       let id = null
       let title = null
       let subtitle = null
       let description = null
       let details = null
+      let hasFormats = null
+      let hasProjections = null
+      let hasTransform = null
+      let hasSpatialSubsetting = null
+      let customizationOptions = null
 
       switch (type) {
         case 'download': {
           id = `${collectionId}_access-method__direct-download`
-          title = 'Direct Download'
-          description = 'Direct download of all data associated with the selected granules.'
-          details = 'The requested data files will be available for download immediately. Files will be accessed from a list of links displayed in the browser or by using a download script.'
+          title = 'Download all data'
+          description = 'Direct download of all selected data'
+          details = 'The data will be available for download immediately.'
 
           break
         }
@@ -300,20 +491,39 @@ export class AccessMethod extends Component {
 
         case 'OPeNDAP': {
           id = `${collectionId}_access-method__opendap_${methodKey}`
-          title = 'Customize'
-          subtitle = 'OPeNDAP'
-          description = 'Select options like variables, transformations, and output formats for direct access via link or script.'
-          details = 'The requested data files will be made available for access immediately. Files will be accessed from a list of links in the browser or by using a download script.'
+          title = 'Customize with OPeNDAP'
+          description = 'Select options like variables, transformations, and output formats for direct access via link or script'
+          details = 'The data will be made available for access immediately.'
 
           break
         }
 
         case 'Harmony': {
           id = `${collectionId}_access-method__harmony_${methodKey}`
-          title = 'Customize'
-          subtitle = 'Harmony'
-          description = 'Select options like variables, transformations, and output formats for in-region cloud access.'
-          details = `The requested data will be processed using the ${name} service and stored in the cloud for analysis.`
+          title = name
+          description = descriptionFromMetadata
+          hasHarmony = true
+          hasSpatialSubsetting = hasShapefileSubsetting || hasBBoxSubsetting
+          hasFormats = supportedOutputFormats
+            ? supportedOutputFormats.length > 0
+            : false
+
+          hasProjections = supportedOutputProjections
+            ? supportedOutputProjections.length > 1
+            : false
+
+          // TODO: include interpolation in hasTransform boolean once Harmony supports interpolation
+          hasTransform = hasProjections
+
+          customizationOptions = {
+            hasTemporalSubsetting,
+            hasVariables,
+            hasCombine,
+            hasSpatialSubsetting,
+            hasFormats,
+            hasTransform
+          }
+
           break
         }
 
@@ -330,14 +540,14 @@ export class AccessMethod extends Component {
             subtitle,
             name,
             description,
-            details
+            details,
+            customizationOptions
           }
         )
       }
     })
 
     const radioList = [
-      ...accessMethodsByType.Harmony,
       ...accessMethodsByType.OPeNDAP,
       ...accessMethodsByType.ESI,
       ...accessMethodsByType['ECHO ORDERS'],
@@ -371,7 +581,7 @@ export class AccessMethod extends Component {
     const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
 
     // Harmony access methods are postfixed with an index given that there can be more than one
-    const isHarmony = (selectedAccessMethod && selectedAccessMethod.includes('harmony'))
+    const { isHarmony, selectedHarmonyMethodName } = this.state
 
     // Default supportedOutputFormatOptions
     let supportedOutputFormatOptions = []
@@ -474,16 +684,17 @@ export class AccessMethod extends Component {
       ? Object.keys(selectedMethod.variables).length > 0
       : false
 
+    const harmonyMethods = accessMethodsByType.Harmony
+
     return (
       <div className="access-method">
         <ProjectPanelSection
-          heading="Select a data access method"
-          intro="The selected access method will determine which customization and output options are available."
+          heading="Choose how you want to download your data"
           step={1}
         >
           <div className="access-method__radio-list">
             {
-              radioList.length === 0
+              radioList.length === 0 && hasHarmony === false
                 ? (
                   <Alert
                     variant="warning"
@@ -491,23 +702,25 @@ export class AccessMethod extends Component {
                     No access methods exist for this collection.
                   </Alert>
                 )
-                : (
-                  <RadioList
-                    defaultValue={selectedAccessMethod}
-                    onChange={(methodName) => this.handleAccessMethodSelection(methodName)}
-                    radioList={radioList}
-                    renderRadio={this.renderRadioItem}
-                  />
+                : this.getAccessMethodTypes(
+                  hasHarmony,
+                  radioList,
+                  collectionId,
+                  selectedAccessMethod
                 )
             }
           </div>
         </ProjectPanelSection>
         <ProjectPanelSection
-          heading="Configure data customization options"
-          intro="Edit the options below to configure the customization and output options for the selected data product."
+          heading="Select a service and customize options"
           step={2}
-          faded={!selectedAccessMethod}
+          faded={!selectedAccessMethod && !isHarmony}
         >
+          {
+            isHarmony && harmonyMethods.length > 0 && (
+              this.createHarmonySelector(harmonyMethods, selectedAccessMethod)
+            )
+          }
           {
             isCustomizationAvailable && (
               <>
@@ -528,6 +741,27 @@ export class AccessMethod extends Component {
                         />
                       </Suspense>
                     </ProjectPanelSection>
+                  )
+                }
+                {
+                  // Show Harmony method description
+                  isHarmony && (
+                    <div className="access-method__harmony-method-info">
+                      <h3 className="project-panel-section__heading">{selectedHarmonyMethodName}</h3>
+                      <p>{accessMethods[selectedAccessMethod].description}</p>
+                      <p>
+                        <a
+                          className="link"
+                          href="https://harmony.earthdata.nasa.gov/docs#service-capabilities"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <EDSCIcon icon={FaFileAlt} className="access-method__documentation-icon" />
+                          Documentation
+                          <EDSCIcon icon={FaExternalLinkAlt} size="12" className="access-method__external-link-icon" />
+                        </a>
+                      </p>
+                    </div>
                   )
                 }
                 {

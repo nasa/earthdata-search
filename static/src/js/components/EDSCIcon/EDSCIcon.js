@@ -62,6 +62,21 @@ export const EDSCIcon = ({
     )
   }
 
+  if (variant === 'details') {
+    return (
+      <div className="access-method-radio__icons-rightside">
+        <Icon
+          className={iconClassNames}
+          title={title}
+          size={size}
+          data-testid="edsc-icon-details"
+          {...props}
+        />
+        {children}
+      </div>
+    )
+  }
+
   return (
     <>
       <Icon
