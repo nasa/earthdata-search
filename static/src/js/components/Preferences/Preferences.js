@@ -8,7 +8,7 @@ import './Preferences.scss'
 const PreferencesForm = lazy(() => import('./PreferencesForm'))
 
 /**
- * Renders the Contact Info form
+ * Renders the Preferences form
  */
 const Preferences = ({ preferences, onUpdatePreferences }) => (
   <div className="preferences">

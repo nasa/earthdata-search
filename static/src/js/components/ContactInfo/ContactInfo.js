@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FaArrowCircleRight } from 'react-icons/fa'
+import { FaExternalLinkAlt } from 'react-icons/fa'
 import { isEmpty } from 'lodash'
 
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Spinner from '../Spinner/Spinner'
 
 import './ContactInfo.scss'
@@ -79,7 +78,7 @@ class ContactInfo extends Component {
     return (
       <fieldset className="contact-info-form">
         <legend>
-          <h3>View Contact Information</h3>
+          <h2 className="route-wrapper__page-heading">Contact Information</h2>
         </legend>
         <ul className="contact-info-form__list">
           <li className="contact-info-form__item">
@@ -121,10 +120,10 @@ class ContactInfo extends Component {
             href={`${edlHost}/profile/edit`}
             label="Edit Profile in Earthdata Login"
             target="_blank"
+            icon={FaExternalLinkAlt}
+            iconPosition="right"
           >
             Edit Profile in Earthdata Login
-            {' '}
-            <EDSCIcon icon={FaArrowCircleRight} />
           </Button>
         </p>
 

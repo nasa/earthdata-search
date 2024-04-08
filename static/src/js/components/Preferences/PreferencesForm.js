@@ -14,7 +14,7 @@ import PreferencesMultiSelectField from './PreferencesMultiSelectField'
 import './PreferencesForm.scss'
 
 /**
- * Renders the Contact Info form
+ * Renders the Preferences form
  */
 const PreferencesForm = (props) => {
   const { preferences, onUpdatePreferences } = props

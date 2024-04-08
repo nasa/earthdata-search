@@ -38,7 +38,7 @@ describe('SavedProjects component', () => {
     })
   })
 
-  describe('wehn the projects have loaded', () => {
+  describe('when the projects have loaded', () => {
     test('renders a message when no saved projects exist', () => {
       const { enzymeWrapper } = setup({
         savedProjectsIsLoaded: true
