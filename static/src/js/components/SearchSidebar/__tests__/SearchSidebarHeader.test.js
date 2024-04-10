@@ -26,7 +26,8 @@ import SearchSidebarHeader from '../SearchSidebarHeader'
 import SearchFormContainer from '../../../containers/SearchFormContainer/SearchFormContainer'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
-import { availablePortals } from '../../../../../../portals'
+// eslint-disable-next-line import/no-unresolved
+import availablePortals from '../../../../../../portals/availablePortals.json'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 

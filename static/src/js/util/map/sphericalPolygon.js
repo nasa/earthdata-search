@@ -108,12 +108,12 @@ L.sphericalPolygon = (latlngs, options) => new L.SphericalPolygon(latlngs, optio
 
 // Monkey-patch _removeLayer.  The original doesn't handle event propagation
 // from FeatureGroups, and SphericalPolygons are FeatureGroups
-const originalRemove = L.EditToolbar.Delete.prototype._removeLayer
-L.EditToolbar.Delete.prototype._removeLayer = function removeLayer(event) {
-  if (event.target != null ? event.target._boundaries : undefined) {
-    // eslint-disable-next-line no-param-reassign
-    event.layer = event.target
-  }
+if (L.EditToolbar && L.EditToolbar.Delete) {
+  L.EditToolbar.Delete.prototype._removeLayer = (e) => {
+    const layer = e.layer || e.target || e
 
-  return originalRemove.call(this, event)
+    this._deletableLayers.removeLayer(layer)
+    this._deletedLayers.addLayer(layer)
+    layer.fire('deleted')
+  }
 }

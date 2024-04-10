@@ -1,4 +1,4 @@
-import { startCase } from 'lodash'
+import { startCase } from 'lodash-es'
 
 /**
  * Returns an array of parents, removing the leaf node, which is the value

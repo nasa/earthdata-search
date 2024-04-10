@@ -1,4 +1,4 @@
-import pick from 'lodash/pick'
+import pick from 'lodash-es/pick'
 import snakeCaseKeys from 'snakecase-keys'
 
 import Request from './request'

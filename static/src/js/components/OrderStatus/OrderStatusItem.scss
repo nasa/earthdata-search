@@ -1,3 +1,5 @@
+@import "static/src/css/vendor/bootstrap/vars";
+@import "static/src/css/utils/variables/colors";
 $item-height: 3rem;
 
 .order-status-item {
@@ -108,7 +110,7 @@ $item-height: 3rem;
   }
 
   &__progress-ring {
-    margin-right: $spacer/4;
+    margin-right: calc($spacer / 4);
     height: 23px;
 
     .progress-ring__circle-back {
@@ -167,7 +169,7 @@ $item-height: 3rem;
 
   &__percentage {
     display: inline-block;
-    margin-left: $spacer/4;
+    margin-left: calc($spacer / 4);
     font-weight: 300;
     font-size: 0.725rem;
     line-height: 1rem;
@@ -194,7 +196,7 @@ $item-height: 3rem;
 
   &__note {
     display: block;
-    margin-bottom: $spacer/2;
+    margin-bottom: calc($spacer / 2);
     color: $color__black--500;
     font-size: 0.875rem;
   }

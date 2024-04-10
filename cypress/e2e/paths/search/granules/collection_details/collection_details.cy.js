@@ -473,7 +473,7 @@ describe('Path /search/granules/collection-details', () => {
       cy.visit('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
 
       cy.get('.collection-details-minimap').within(() => {
-        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M0 180L360 180L360 0L0 0L0 180z')
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M0 180L360 180L360 0L0 0z')
       })
     })
   })

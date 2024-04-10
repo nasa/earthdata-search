@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 /**
  * Determine whether or not the provided UMM S record supports variable subsetting

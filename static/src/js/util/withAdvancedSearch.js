@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 /**
  * Takes CMR params and applies any changes needed to

@@ -1,3 +1,6 @@
+@import "static/src/css/vendor/bootstrap/vars";
+@import "static/src/css/utils/variables/colors";
+@import "static/src/css/utils/variables/shadows";
 .spatial-selection-dropdown {
   display: flex;
 
@@ -33,7 +36,7 @@
   }
 
   &__small {
-    margin-left: $spacer/4;
+    margin-left: calc($spacer / 4);
     font-size: 0.75rem;
     color: $color__black--500;
 

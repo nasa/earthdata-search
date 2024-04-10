@@ -27,6 +27,7 @@ const edlLogin = async (event) => {
     redirectUriPath
   } = getEarthdataConfig(earthdataEnvironment)
 
+  console.log('NODE_ENV', process.env.NODE_ENV)
   const { apiHost } = getEnvironmentConfig()
   const redirectUri = `${apiHost}${redirectUriPath}`
 

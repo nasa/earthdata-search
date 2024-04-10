@@ -1,13 +1,14 @@
+@import "static/src/css/vendor/bootstrap/vars";
 .access-method {
   &__radio-tooltip.fa {
-    margin-left: $spacer/4;
+    margin-left: calc($spacer / 4);
     font-size: 0.875rem;
     color: $color__black--400;
   }
 
   &__section-intro,
   p.access-method__section-intro {
-    margin-bottom: $spacer/2
+    margin-bottom: calc($spacer / 2)
   }
 
   &__section-status {
@@ -30,13 +31,13 @@
   }
 
   &__documentation-icon {
-    margin-right: $spacer/3;
-    margin-bottom: $spacer/4;
+    margin-right:   calc($spacer / 3);
+    margin-bottom: calc($spacer / 4);
   }
 
   &__external-link-icon {
-    margin-left: $spacer/3;
-    margin-bottom: $spacer/3;
+    margin-left:   calc($spacer / 3);
+    margin-bottom:   calc($spacer / 3);
   }
 }
 
@@ -51,7 +52,7 @@
   line-height: 1;
   height: 2.1rem;
   background-color: $color__white;
-  margin-bottom: $spacer/2;
+  margin-bottom: calc($spacer / 2);
   margin-left: $spacer;
 
   &:hover {
