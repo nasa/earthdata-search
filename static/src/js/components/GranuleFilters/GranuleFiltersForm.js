@@ -260,6 +260,11 @@ export const GranuleFiltersForm = (props) => {
                           <strong>Delimiters:</strong>
                           {' '}
                           Separate multiple granule IDs by commas.
+                          <br />
+                          <br />
+                          <strong>Example:</strong>
+                          {' '}
+                          SWOT_*_01?_26?_10*_*
                         </Tooltip>
                       )
                     }
