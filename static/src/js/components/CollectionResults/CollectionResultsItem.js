@@ -4,8 +4,6 @@ import React, {
   useState
 } from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
-
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import {
   FaClock,
@@ -21,6 +19,7 @@ import { collectionMetadataPropType } from '../../util/propTypes/collectionMetad
 import { commafy } from '../../util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { pluralize } from '../../util/pluralize'
+import { retrieveThumbnail } from '../../util/retrieveThumbnail'
 
 import Button from '../Button/Button'
 import CustomizableIcons from '../CustomizableIcons/CustomizableIcons'
@@ -30,8 +29,6 @@ import Spinner from '../Spinner/Spinner'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './CollectionResultsItem.scss'
-
-import unavailableImg from '../../../assets/images/image-unavailable.svg'
 
 /**
  * Renders CollectionResultsItem.
@@ -75,6 +72,7 @@ export const CollectionResultsItem = forwardRef(({
     isDefaultImage,
     versionId
   } = collectionMetadata
+  console.log('🚀 ~ file: CollectionResultsItem.js:75 ~ thumbnail:', thumbnail)
 
   const [loadingThumbnail, setLoadingThumbnail] = useState(true)
   const { thumbnailSize } = getApplicationConfig()
@@ -95,40 +93,31 @@ export const CollectionResultsItem = forwardRef(({
   const { description: nrtDescription, label: nrtLabel } = nrt
 
   const onThumbnailLoaded = () => {
+    console.log('Thumnail has loaded✅')
     setLoadingThumbnail(false)
+  }
+
+  const parseScaleImageResponse = async () => {
+    if (!isDefaultImage) {
+      const thumbnailValue = await retrieveThumbnail(thumbnail)
+      console.log('🚀 ~ file: CollectionResultsItem.js:110 ~ parseScaleImageResponse ~ thumbnailValue:', thumbnailValue)
+      setBase64Image(thumbnailValue)
+      onThumbnailLoaded()
+    } else {
+      console.log('Am going into else block')
+      // Passed in thumbnail was the default set `base64` image to that
+      // If the thumbnail was null set it to the unavailable image
+      console.log('🚀 ~ file: CollectionResultsItem.js:113 ~ parseScaleImageResponse ~ thumbnail:', thumbnail)
+      setBase64Image(thumbnail)
+      onThumbnailLoaded()
+    }
   }
 
   // Fetch the base64 string from the Lambda function
   // Explicity call the GET request for the lambda
   // TODO there are some collections which it seems have inaccessible collections
   useEffect(() => {
-    let isMounted = true
-    if (!isDefaultImage) {
-      axios.get(thumbnail)
-        .then((response) => {
-          // Set the base64 string received from Lambda
-          console.log('in the response obj')
-          if (isMounted) {
-            setBase64Image(response.data.base64Image)
-            onThumbnailLoaded()
-          }
-        })
-        .catch(() => {
-          setBase64Image(unavailableImg)
-          onThumbnailLoaded()
-        })
-    } else {
-      // Passed in thumbnail was the default set `base64` image to that
-      // If the thumbnail was null set it to the unavailable image
-      setBase64Image(thumbnail)
-      onThumbnailLoaded()
-    }
-
-    // Cleanup function to cancel fetching when component unmounts
-    // TODO I want to try a better way of doing this; just the cleanup function without isMounted was not working
-    return () => {
-      isMounted = false // Set the flag to false when component unmounts
-    }
+    parseScaleImageResponse()
   }, [])
 
   const getConsortiumTooltipText = (consortium) => {
@@ -285,6 +274,7 @@ export const CollectionResultsItem = forwardRef(({
                     loadingThumbnail && (
                       <Spinner
                         type="dots"
+                        dataTestId="collection-results-item-spinner"
                         className="collection-results-item__thumb-spinner"
                         color="white"
                         size="tiny"

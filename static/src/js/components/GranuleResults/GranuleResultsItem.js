@@ -77,7 +77,6 @@ const GranuleResultsItem = forwardRef(({
     handleMouseEnter,
     handleMouseLeave,
     id,
-    isHoveredGranule,
     isFocusedGranule,
     isOpenSearch,
     onlineAccessFlag,
@@ -97,6 +96,7 @@ const GranuleResultsItem = forwardRef(({
           height={85}
           width={85}
           alt={`Browse Image for ${title}`}
+          useSpinner={false}
           isBase64Image
         />
       )
@@ -153,7 +153,7 @@ const GranuleResultsItem = forwardRef(({
   const granuleResultsItemClasses = classNames([
     'granule-results-item',
     {
-      'granule-results-item--active': isFocusedGranule || isHoveredGranule,
+      'granule-results-item--active': isFocusedGranule,
       'granule-results-item--emphisized': isCollectionInProject && isInProject,
       'granule-results-item--deemphisized': isCollectionInProject && !isInProject,
       'granule-results-item--has-thumbnail': browseFlag
