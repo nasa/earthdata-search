@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .filter-stack-item {
   display: flex;
   flex-direction: row;
@@ -34,7 +35,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: $spacer/2;
+    margin-left: calc($spacer / 2);
     color: $color__black--300;
   }
 
@@ -98,14 +99,14 @@
   }
 
   &__hint {
-    margin-top: $spacer/4;
-    margin-left: $spacer/4;
+    margin-top: calc($spacer / 4);
+    margin-left: calc($spacer / 4);
     font-size: 0.8rem;
     color: $color__black--400;
   }
 
   &__error {
-    margin-top: $spacer/2;
+    margin-top: calc($spacer / 2);
     font-size: 0.8rem;
     color: $color__red;
     font-weight: bold;

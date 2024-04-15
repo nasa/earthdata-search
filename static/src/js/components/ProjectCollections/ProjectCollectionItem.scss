@@ -1,6 +1,7 @@
+@import "static/src/css/main";
 .project-collections-item {
   position: relative;
-  padding: $spacer/2;
+  padding: calc($spacer / 2);
   border-bottom: 1px solid $border-color;
   border-right: 1px solid $border-color;
   border-left: 5px solid transparent;
@@ -52,7 +53,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     flex-grow: 1;
-    margin-bottom: $spacer/4;
+    margin-bottom: calc($spacer / 4);
     font-size: 0.85rem;
     line-height: 1.35em;
     font-weight: 700;
@@ -61,13 +62,13 @@
   &__stats-list {
     display: flex;
     margin: 0;
-    margin-bottom: $spacer/4;
+    margin-bottom: calc($spacer / 4);
     padding: 0;
     list-style: none;
   }
 
   &__stats-item {
-    margin-right: $spacer/2;
+    margin-right: calc($spacer / 2);
     color: $color__black--500;
     font-size: 0.85rem;
 
@@ -77,7 +78,7 @@
   }
 
   &__more-actions {
-    top: -$spacer/4;
+    top: -calc($spacer / 4);
     flex-grow: 0;
     flex-shrink: 0;
   }
@@ -94,7 +95,7 @@
   }
 
   &__status {
-    margin-right: $spacer/4;
+    margin-right: calc($spacer / 4);
     height: 0.85rem;
     width: 0.85rem;
     display: inline;

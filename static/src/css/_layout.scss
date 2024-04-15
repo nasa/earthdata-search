@@ -54,7 +54,7 @@
   }
 
   &__content-nav {
-    padding: $spacer/2 $spacer;
+    padding: calc($spacer / 2) $spacer;
     color: $color__white;
   }
 

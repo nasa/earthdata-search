@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .button {
   display: flex;
   align-items: center;
@@ -53,7 +54,7 @@
     }
 
     .button--icon-right & {
-      margin-left: $spacer/2;
+      margin-left: calc($spacer / 2);
       margin-right: 0;
     }
 
@@ -65,7 +66,7 @@
       display: inline;
       vertical-align: bottom;
       line-height: 1em;
-      margin-right: $spacer/4;
+      margin-right: calc($spacer / 4);
     }
 
     .button--svg & {

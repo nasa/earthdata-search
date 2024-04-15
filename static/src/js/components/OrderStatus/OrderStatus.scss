@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .order-status {
   &__links {
     margin-top: $spacer;
@@ -43,7 +44,7 @@
   }
 
   &__footer-link-item {
-    margin-bottom: $spacer/4;
+    margin-bottom: calc($spacer / 4);
 
     &:last-child {
       margin-bottom: 0;
@@ -51,7 +52,7 @@
   }
 
   &__footer-link-icon {
-    margin-right: $spacer/4;
+    margin-right: calc($spacer / 4);
   }
 
   &__footer-link {

@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .region-search-results {
   position: relative;
   flex-grow: 1;
@@ -40,12 +41,12 @@
   }
 
   &__selected-region-id {
-    margin-right: $spacer/2;
+    margin-right: calc($spacer / 2);
     font-weight: 700;
   }
 
   &__selected-region-name {
-    margin-right: $spacer/2;
+    margin-right: calc($spacer / 2);
     font-style: italic;
     color: $color__black--400;
     font-size: 0.875rem;
@@ -79,7 +80,7 @@
   &__item {
     display: block;
     width: 100%;
-    padding: $spacer/4 $spacer;
+    padding: calc($spacer / 4) $spacer;
     text-align: left;
 
     &:nth-of-type(odd) {

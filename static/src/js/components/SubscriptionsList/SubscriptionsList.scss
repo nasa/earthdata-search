@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .subscriptions-list {
   &__subscription-group {
     margin-bottom: 3rem;
@@ -8,7 +9,7 @@
   }
 
   &__button {
-    margin: 0 $spacer/2;
+    margin: 0 calc($spacer / 2);
     color: $color__black--300;
 
     &--share {

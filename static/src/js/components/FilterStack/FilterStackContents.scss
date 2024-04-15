@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .filter-stack-contents {
   display: flex;
   flex-wrap: wrap;
@@ -10,7 +11,7 @@
   }
 
   &__label {
-    margin-right: $spacer/4;
+    margin-right: calc($spacer / 4);
     font-weight: 700;
     visibility: hidden;
     height: 0;

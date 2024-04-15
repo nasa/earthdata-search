@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .collection-details-body {
   display: flex;
   flex-direction: column;
@@ -135,7 +136,7 @@
   }
 
   &__keywords {
-    margin: $spacer/4 0 $spacer/4;
+    margin: calc($spacer / 4) 0 calc($spacer / 4);
     padding: 0;
     list-style: none;
     overflow: hidden;

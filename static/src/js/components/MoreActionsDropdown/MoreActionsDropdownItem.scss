@@ -1,12 +1,13 @@
+@import "static/src/css/main";
 .more-actions-dropdown-item {
-  padding: $spacer/4 $spacer/2;
+  padding: calc($spacer / 4) calc($spacer / 2);
   font-size: 0.75rem;
 
   &__icon {
     display: inline-block;
     vertical-align: middle;
     width: 1rem;
-    margin-right: $spacer/4;
+    margin-right: calc($spacer / 4);
     text-align: center;
     color: $color__black--300;
 

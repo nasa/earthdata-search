@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .project-header {
   flex-grow: 0;
   flex-shrink: 0;
@@ -9,7 +10,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    margin-bottom: $spacer/4;
+    margin-bottom: calc($spacer / 4);
     font-size: 1.125rem;
     font-weight: 300;
   }
@@ -76,7 +77,7 @@
     flex-grow: 0;
     height: 1.75rem;
     width: 1.75rem;
-    margin-left: $spacer/4;
+    margin-left: calc($spacer / 4);
     padding: 0;
     font-size: 0.925rem;
     border: 0;
@@ -98,7 +99,7 @@
   }
 
   &__title {
-    min-width: $spacer/2;
+    min-width: calc($spacer / 2);
     margin: 0;
     padding: 0;
     font-weight: 300;
@@ -126,7 +127,7 @@
   }
 
   &__stats-item {
-    margin-right: $spacer/2;
+    margin-right: calc($spacer / 2);
     display: inline-block;
     font-size: 0.775rem;
     line-height: 1.25rem;
@@ -144,7 +145,7 @@
     display: inline;
     height: 0.75rem;
     width: 0.75rem;
-    margin-left: $spacer/4;
+    margin-left: calc($spacer / 4);
     color: $color__black--400;
   }
 }

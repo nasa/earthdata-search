@@ -1,8 +1,9 @@
+@import "static/src/css/main";
 .radio {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: $spacer/2 $spacer;
+  padding: calc($spacer / 2) $spacer;
   width: 100%;
   border: 1px solid $color__black--200;
   border-radius: 0.125rem;
@@ -19,7 +20,7 @@
 
   &__content {
     display: inline-block;
-    margin-left: $spacer/2;
+    margin-left: calc($spacer / 2);
     font-weight: 700;
     color: $color__black--500;
     vertical-align: middle;
