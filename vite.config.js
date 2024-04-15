@@ -9,6 +9,10 @@ export default {
     }
   },
   build: {
+    outDir: resolve(__dirname, 'static/dist/app'),
+    emptyOutDir: true,
+    minify: 'esbuild',
+    cssMinify: 'lightningcss',
     rollupOptions: {
       input: 'static/src/index.jsx'
     }

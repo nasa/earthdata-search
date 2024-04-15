@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .panel-group-header {
   display: flex;
   flex-direction: column;
@@ -90,7 +91,7 @@
     display: flex;
     align-items: center;
     height: auto;
-    padding: 0.325rem $spacer/2 0.325rem $spacer;
+    padding: 0.325rem calc($spacer / 2) 0.325rem $spacer;
     color: $color__black--600;
   }
 
@@ -140,7 +141,7 @@
 
   &__heading-secondary {
     display: block;
-    margin-bottom: $spacer/4;
+    margin-bottom: calc($spacer / 4);
     font-size: 0.825rem;
     color: $color__black--900;
   }

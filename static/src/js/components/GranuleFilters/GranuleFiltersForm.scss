@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .granule-filters-form {
   &__item {
     display: flex;
@@ -5,7 +6,7 @@
   }
 
   &__item-button {
-    margin-left: $spacer/2;
+    margin-left: calc($spacer / 2);
     padding: 0.075rem 0.425rem;
     background-color: $color__blue--dark;
     border-color: $color__blue--dark;

@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .edsc-modal {
   .modal-body {
     padding: 0;
@@ -111,7 +112,7 @@
   }
 
   &__action {
-    margin-right: $spacer/2;
+    margin-right: calc($spacer / 2);
 
     &:last-child {
       margin-right: 0;

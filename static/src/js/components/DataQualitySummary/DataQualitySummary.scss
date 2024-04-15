@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .data-quality-summary {
   &__panel {
     background-color: $color__pale-yellow;
@@ -5,7 +6,7 @@
 
     .collapse-panel__button {
       width: 100%;
-      padding: $spacer/2 $spacer;
+      padding: calc($spacer / 2) $spacer;
       background-color: transparent;
       font-size: 0.825rem;
       font-weight: 300;
@@ -37,7 +38,7 @@
       overflow-x: scroll;
       background-color: $color__pale-yellow;
       border-bottom: 1px solid $color__pale-yellow--dark;
-      padding: $spacer/2 $spacer;
+      padding: calc($spacer / 2) $spacer;
       font-size: 0.825rem;
       font-weight: 300;
 

@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .too-many-points-modal {
   &__actions {
     display: flex;
@@ -6,6 +7,6 @@
   }
 
   &__action {
-    margin-right: $spacer/2;
+    margin-right: calc($spacer / 2);
   }
 }

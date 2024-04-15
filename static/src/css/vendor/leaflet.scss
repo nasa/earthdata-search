@@ -126,7 +126,7 @@
       position: relative;
       display: inline-block;
       margin-top: 0;
-      margin-right: $spacer/4;
+      margin-right: calc($spacer / 4);
       top: 0px;
     }
 

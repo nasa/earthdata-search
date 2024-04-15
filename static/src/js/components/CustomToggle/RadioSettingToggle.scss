@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .radio-setting-toggle {
   display: flex;
   align-items: center;
@@ -14,7 +15,7 @@
     overflow: hidden;
     font-size: 0.875rem;
     color: $color__black--800;
-    margin-left: $spacer/4;
+    margin-left: calc($spacer / 4);
     text-indent: -10000px;
 
     .panels--sm & {

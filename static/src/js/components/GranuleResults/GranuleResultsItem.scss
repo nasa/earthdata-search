@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .granule-results-item {
   position: relative;
   width: 100%;
@@ -88,7 +89,7 @@
   }
 
   &__title {
-    padding: $spacer/2;
+    padding: calc($spacer / 2);
     margin: 0;
     font-size: 0.825rem;
     font-weight: 400;
@@ -111,7 +112,7 @@
   }
 
   &__more-actions-dropdown {
-    padding: $spacer/2;
+    padding: calc($spacer / 2);
     padding-left: 0;
     align-items: flex-start;
 
@@ -157,7 +158,7 @@
     flex-grow: 0;
     flex-direction: column;
     justify-content: space-between;
-    padding: $spacer/4 $spacer/2 $spacer/4 $spacer/2;
+    padding: calc($spacer / 4) calc($spacer / 2) calc($spacer / 4) calc($spacer / 2);
 
     .panels--sm & {
       flex-direction: row;

@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .collection-results-item {
   border-bottom: 1px solid $border-color;
 
@@ -214,7 +215,7 @@
     justify-content: center;
     flex-shrink: 0;
     padding: 0.5rem 0.5rem;
-    margin-right: $spacer/4;
+    margin-right: calc($spacer / 4);
     color: $color__black--500;
     font-size: 0.925rem;
 
@@ -269,7 +270,7 @@
     word-break: break-all;
     line-break: normal;
     white-space: normal;
-    margin-right: $spacer/4;
+    margin-right: calc($spacer / 4);
     margin-bottom: $spacer/8;
     color: $color__white;
     text-transform: uppercase;

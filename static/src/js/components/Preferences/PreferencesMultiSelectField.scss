@@ -1,10 +1,11 @@
+@import "static/src/css/main";
 .preferences-multi-select-field {
   &__name {
     font-weight: bold;
   }
 
   &__description {
-    margin-bottom: $spacer/2;
+    margin-bottom: calc($spacer / 2);
     color: $color__black--400;
     font-size: 0.875rem;
   }

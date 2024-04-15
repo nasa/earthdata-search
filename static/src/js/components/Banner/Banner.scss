@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .banner {
   position: relative;
   display: flex;
@@ -39,7 +40,7 @@
   &__title {
     display: inline;
     margin: 0;
-    margin-right: $spacer/2;
+    margin-right: calc($spacer / 2);
     padding: 0;
     font-size: 1rem;
     line-height: 1rem;

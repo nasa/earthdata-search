@@ -1,3 +1,4 @@
+@import "static/src/css/main";
 .shapefile-modal {
   &__upload-link {
     font-weight: 700;
@@ -9,7 +10,7 @@
   }
 
   &__hint-label {
-    margin-right: $spacer/4;
+    margin-right: calc($spacer / 4);
     font-weight: 700;
   }
 
@@ -20,7 +21,7 @@
   }
 
   &__action {
-    margin-right: $spacer/2;
+    margin-right: calc($spacer / 2);
   }
 
   .modal-content {
@@ -34,7 +35,7 @@
       left: 0;
       bottom: 0;
       right: 0;
-      margin: $spacer/4;
+      margin: calc($spacer / 4);
       border: 2px dashed $color__black--300;
       border-radius: $border-radius-sm;
       z-index: 0;

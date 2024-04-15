@@ -1,10 +1,11 @@
+@import "static/src/css/main";
 .download-history {
   &__spinner {
     margin: 0 auto;
   }
 
   &__button {
-    margin: 0 $spacer/2;
+    margin: 0 calc($spacer / 2);
     color: $color__black--300;
 
     &--share {
