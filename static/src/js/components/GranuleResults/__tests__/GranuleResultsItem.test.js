@@ -382,16 +382,6 @@ describe('GranuleResultsItem component', () => {
     })
   })
 
-  describe('when passed a hovered granule', () => {
-    test('adds the correct classname', () => {
-      const {
-        enzymeWrapper
-      } = setup('hovered-granule')
-
-      expect(enzymeWrapper.props().className).toContain('granule-results-item--active')
-    })
-  })
-
   describe('when passed a CMR granule', () => {
     test('renders the title', () => {
       const { enzymeWrapper } = setup('cmr')

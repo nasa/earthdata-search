@@ -4,7 +4,6 @@ import { CSSTransition } from 'react-transition-group'
 
 import { getGranuleIds } from '../../util/getGranuleIds'
 import { formatGranulesList } from '../../util/formatGranulesList'
-import { eventEmitter } from '../../events/events'
 import { locationPropType } from '../../util/propTypes/location'
 
 import Spinner from '../Spinner/Spinner'
@@ -46,22 +45,6 @@ const GranuleResultsBody = ({
   panelView,
   project
 }) => {
-  const [hoveredGranuleId, setHoveredGranuleId] = useState(null)
-
-  eventEmitter.on(`map.layer.${collectionId}.focusgranule`, (data) => {
-    const { granule: focusedGranule } = data
-
-    if (focusedGranule) {
-      const { id: focusedId } = focusedGranule
-
-      setHoveredGranuleId(focusedId)
-
-      return
-    }
-
-    setHoveredGranuleId(null)
-  })
-
   const {
     hits: granuleHits,
     loadTime = 0,
@@ -133,11 +116,10 @@ const GranuleResultsBody = ({
   const result = useMemo(() => formatGranulesList({
     granuleIds,
     granulesMetadata,
-    hoveredGranuleId,
     focusedGranuleId,
     isGranuleInProject,
     isCollectionInProject
-  }), [granuleIds, granulesMetadata, focusedGranuleId, hoveredGranuleId])
+  }), [granuleIds, granulesMetadata, focusedGranuleId])
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)
 
