@@ -1,4 +1,4 @@
-@import "static/src/css/main";
+@import "static/src/css/vendor/bootstrap/vars";
 .button {
   display: flex;
   align-items: center;
@@ -75,7 +75,7 @@
   }
 
   &__badge {
-    margin-left: $spacer/3;
+    margin-left:   calc($spacer / 3);
     background-color: rgba($color__black, 0.5);
     border-radius: 1em;
     vertical-align: middle;

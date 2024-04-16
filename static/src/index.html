@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie11 lt-ie10 lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie11 lt-ie10 lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie11 lt-ie10 lt-ie9"> <![endif]-->
+<!--[if lte IE 9]>     <html class="no-js lt-ie11 lt-ie10"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js gt-ie9" lang="en-US">
+<!--<![endif]-->
+<html class="no-js" lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Search, discover, visualize, refine, and access NASA Earth Observation data in your browser with Earthdata Search" data-react-helmet="true" />
+    <link rel="shortcut icon" href="/favicon.ico?v=1.1" />
+    <title>Earthdata Search</title>
+    <style type="text/css">
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+      }
+    
+      body {
+        display: block;
+        display: flex;
+        flex-direction: column;
+        background-color: #000;
+        overflow: hidden;
+      }
+    
+      .th-wrapper {
+        width: 100%;
+        z-index: 1000;
+        height: 34px;
+      }
+    
+      .root {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+    
+      .root__app {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+    
+      .root__loading {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1000;
+        background-color: black;
+        transition: opacity 0.15s ease-out;
+      }
+    
+      .root--loading .root__loading {
+        display: block;
+      }
+    
+      .root--loading-fade .root__loading{
+        opacity: 0;
+      }
+    
+      .root__spinner {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%)
+      }
+    
+      .fallback-page,
+      .fallback-page__wrapper--no-js,
+      .fallback-page__wrapper--unsupported-browser {
+        display: none;
+      }
+    
+      .fallback-page {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        padding: 0px;
+        background-color: #191a1b;
+      }
+    
+      .fallback-page__wrapper {
+        height: 100%;
+      }
+    
+      .fallback-page__content {
+        position: relative;
+        top: 150px;
+        margin: 0 auto;
+        max-width: 700px;
+        padding: 1rem;
+        text-align: center;
+        color: white;
+        background-color: #121315;
+        border-radius: 4px;
+        border-radius: 0.25rem;
+      }
+    
+      .fallback-page__wrapper--unsupported-browser .fallback-page__content {
+        max-width: 850px;
+      }
+    
+      .lt-ie8 .fallback-page__heading {
+        margin-top: 16px;
+      }
+    
+      .fallback-page__note--last {
+        margin-bottom: 0;
+      }
+    
+      .footer.fallback-page__footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+    
+      .lt-ie8 .footer__info--right {
+        float: right;
+        margin: 10px;
+      }
+    
+      .lt-ie8 .footer__info--left {
+        float: left;
+        margin: 10px;
+      }
+    
+      .no-js .fallback-page,
+      .no-js .fallback-page__wrapper--no-js {
+        display: block;
+      }
+    
+      .unsupported-browser .fallback-page,
+      .unsupported-browser .fallback-page__wrapper--unsupported-browser {
+        display: block;
+      }
+    
+      .no-js .root,
+      .unsupported-browser .root {
+        display: none;
+      }
+    
+      .no-js .th-wrapper,
+      .unsupported-browser .th-wrapper {
+        display: none;
+      }
+    
+      .lt-ie11 .unsupported-browser {
+        display: block;
+      }
+    
+      .browser-icons {
+        margin-top: 2em;
+        margin-top: 2rem;
+        padding: 0;
+        list-style-type: none;
+      }
+    
+      .browser-icons__item {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        cursor: pointer;
+        width: 120px;
+        height: 122px;
+        margin: 0px 10px 10px 10px;
+      }
+    
+      .browser-icons__icon {
+        display: block;
+        width: 100px;
+        height: 100px;
+        margin: 1px auto;
+        background-attachment: scroll;
+        background-color: transparent;
+        background-position: 0% 0%;
+        background-repeat: no-repeat no-repeat;
+      }
+    
+      .browser-icons__icon--chrome {
+        background-image: url('images/browsers/browser_chrome.gif');
+      }
+    
+      .browser-icons__icon--firefox {
+        background-image: url('images/browsers/browser_firefox.gif');
+      }
+    
+      .browser-icons__icon--safari {
+        background-image: url('images/browsers/browser_safari.gif');
+      }
+    
+      .browser-icons__icon--opera {
+        background-image: url('images/browsers/browser_opera.gif');
+      }
+    
+      .browser-icons__icon--ie {
+        background-image: url('images/browsers/browser_ie.gif');
+      }
+    
+      .browser-icons__name {
+        display: block;
+        margin: 8px auto 0;
+        margin: 0.5rem auto 0;
+        width: 118px;
+        color: rgb(128, 128, 128);
+        font-size: 0.8em;
+        height: 18px;
+        line-height: 17px;
+        text-align: center;
+      }
+    </style>
+    <noscript>
+      <style>
+        [data-simplebar] {
+          overflow: auto;
+        }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <script type="module" src="index.jsx"></script>
+    <noscript>
+      <% if (gtmPropertyId.length > 0) { %>
+          <iframe src="https://www.googletagmanager.com/ns.html?id=<%= gtmPropertyId %>" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+      <% } %>
+    </noscript>
+    <script type="text/javascript">
+        var htmlElement = document.getElementsByTagName('html')[0];
+        if (htmlElement) {
+            // Remove the 'no-js' class from the html element
+            htmlElement.className = htmlElement.className.replace(/\bno-js\b/, '');
+    
+            // Add the 'unsupported-browser' class to the html element
+            // https://stackoverflow.com/questions/49986720/how-to-detect-internet-explorer-11-and-below-versions
+            function isOldIE() {
+                var ua = window.navigator.userAgent;
+                var msie = ua.indexOf('MSIE ');
+    
+                return (msie > 0);
+            }
+    
+            if (isOldIE()) {
+                htmlElement.className += ' unsupported-browser'
+            }
+        }
+    </script>
+    <% if (showTophat) { %>
+    <div id="earthdata-tophat2" class="th-wrapper" style="height: 34px; background: #000;"></div>
+    <% } %>
+    <div id="root" class="root root--loading">
+        <div class="root__loading">
+            <div class="root__spinner spinner spinner--dots spinner--white spinner--small">
+                <div class="spinner__inner"></div>
+                <div class="spinner__inner"></div>
+                <div class="spinner__inner"></div>
+            </div>
+        </div>
+        <div id="app" class="root__app"></div>
+    </div>
+    <div id="app"></div>
+    <div class="fallback-page">
+        <div class="fallback-page__wrapper fallback-page__wrapper--no-js">
+            <div class="fallback-page__content">
+                <h3 class="fallback-page__heading">Earthdata Search uses JavaScript</h3>
+                <p class="fallback-page__note fallback-page__note--last">Please use a JavaScript-aware browser and make sure
+                    JavaScript is enabled.</p>
+            </div>
+        </div>
+        <div class="fallback-page__wrapper fallback-page__wrapper--unsupported-browser">
+            <div class="fallback-page__content">
+                <h3 class="fallback-page__heading">Your browser is out of date</h3>
+                <p class="fallback-page__note">In order to use Earthdata Search, you must upgrade your web browser.<br>
+                    Alternatively, you can <a href="https://access.earthdata.nasa.gov">Earthdata Access</a>.</p>
+                <p class="fallback-page__note fallback-page__note--last">To upgrade your browser, click on the icons below
+                    to go to the download page.</p>
+                <ul class="browser-icons">
+                    <li class="browser-icons__item">
+                        <a class="browser-icons__link" href="https://www.google.com/chrome/" target="_blank">
+                            <span class="browser-icons__icon browser-icons__icon--chrome"></span>
+                            <span class="browser-icons__name">Chrome</span>
+                        </a>
+                    </li>
+                    <li class="browser-icons__item">
+                        <a class="browser-icons__link" href="http://www.mozilla.org/firefox/" target="_blank">
+                            <span class="browser-icons__icon browser-icons__icon--firefox"></span>
+                            <span class="browser-icons__name">Firefox</span>
+                        </a>
+                    </li>
+                    <li class="browser-icons__item">
+                        <a class="browser-icons__link" href="http://www.apple.com/safari/" target="_blank">
+                            <span class="browser-icons__icon browser-icons__icon--safari"></span>
+                            <span class="browser-icons__name">Safari</span>
+                        </a>
+                    </li>
+                    <li class="browser-icons__item">
+                        <a class="browser-icons__link" href="http://www.opera.com/" target="_blank">
+                            <span class="browser-icons__icon browser-icons__icon--opera"></span>
+                            <span class="browser-icons__name">Opera</span>
+                        </a>
+                    </li>
+                    <li class="browser-icons__item">
+                        <a class="browser-icons__link" href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank">
+                            <span class="browser-icons__icon browser-icons__icon--ie"></span>
+                            <span class="browser-icons__name">Internet Explorer</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer fallback-page__footer">
+            <span class="footer__info footer__info--left">
+                <span class="footer__info-bit footer__info-bit--emph">NASA Official: Stephen Berrick</span>
+                <span class="footer__info-bit"><a class="footer__info-link" aria-label="NASA Freedom of Information Act" href="http://www.nasa.gov/FOIA/index.html">FOIA</a></span>
+                <span class="footer__info-bit"><a class="footer__info-link" aria-label="NASA Privacy Policy" href="http://www.nasa.gov/about/highlights/HP_Privacy.html">NASA Privacy Policy</a></span>
+                <span class="footer__info-bit"><a class="footer__info-link" aria-label="USA Government Information and Services" href="http://www.usa.gov">USA.gov</a></span>
+            </span>
+            <span class="footer__info footer__info--right">
+                <span class="footer__info-bit footer__info-bit--clean footer__info-bit--emph">
+                    <a class="footer__info-link footer__info-link--underline" aria-label="Earthdata Access 508 Accessible Alternative" href="https://access.earthdata.nasa.gov/">
+                        Earthdata Access: A Section 508 accessible alternative
+                    </a>
+                </span>
+            </span>
+        </div>
+  </div>
+  <% if (showTophat) { %>
+    <script
+      id="earthdata-tophat-script"
+      src="https://cdn.earthdata.nasa.gov/tophat2/tophat2.js"
+      async="async"
+      defer="defer"
+      data-show-fbm="false"
+      data-show-status="true"
+      data-status-api-url="https://status.earthdata.nasa.gov/api/v1/notifications"
+      data-show-outage-banner="true">
+    </script>
+  <% } %>
+  <% if (feedbackApp.length > 0) { %>
+    <script
+      src="https://fbm.earthdata.nasa.gov/for/<%= feedbackApp %>/feedback.js"
+      type="text/javascript">
+    </script>
+  <script type="text/javascript">feedback.init({ showIcon: false });</script>
+  <% } %>
+  <% if (env !== 'dev') { %>
+    <script 
+      async 
+      type="text/javascript"
+      src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NASA&subagency=GSFC"
+      id="_fed_an_ua_tag">
+    </script>
+  <% } %>
+  <% if (gtmPropertyId.length > 0) { %>
+    <script>
+      var dataLayer = window.dataLayer = window.dataLayer || [];
+      <% if (environment === 'development' && includeDevGoogleAnalytics === true) { %>
+        dataLayer.push({
+          'event': 'localIdentifier',
+          'localGAProperty': '<%= gaPropertyId %>'
+        });
+      <% } %>
+    
+      (function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', '<%= gtmPropertyId %>');
+    </script>
+    <% } %>
+  </body>
+</html>

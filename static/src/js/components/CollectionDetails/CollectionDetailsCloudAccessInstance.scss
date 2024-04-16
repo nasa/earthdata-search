@@ -1,4 +1,4 @@
-@import "static/src/css/main";
+@import "static/src/css/vendor/bootstrap/vars";
 .collection-details-cloud-access-direct-distribution-information {
   &__info {
     > dt {
@@ -35,7 +35,7 @@
       }
 
       &:last-child {
-        padding-top: $spacer/8;
+        padding-top:   calc($spacer / 8);
       }
 
       .button {

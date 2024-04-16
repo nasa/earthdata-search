@@ -1,4 +1,4 @@
-@import "static/src/css/main";
+@import "static/src/css/vendor/bootstrap/vars";
 .project-collections-item {
   position: relative;
   padding: calc($spacer / 2);
@@ -78,7 +78,7 @@
   }
 
   &__more-actions {
-    top: -calc($spacer / 4);
+    top: calc(-1 * $spacer / 4);
     flex-grow: 0;
     flex-shrink: 0;
   }
