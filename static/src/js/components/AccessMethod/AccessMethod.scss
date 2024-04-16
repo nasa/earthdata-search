@@ -1,4 +1,4 @@
-@import "static/src/css/main";
+@import "static/src/css/vendor/bootstrap/vars";
 .access-method {
   &__radio-tooltip.fa {
     margin-left: calc($spacer / 4);
@@ -31,13 +31,13 @@
   }
 
   &__documentation-icon {
-    margin-right: $spacer/3;
+    margin-right:   calc($spacer / 3);
     margin-bottom: calc($spacer / 4);
   }
 
   &__external-link-icon {
-    margin-left: $spacer/3;
-    margin-bottom: $spacer/3;
+    margin-left:   calc($spacer / 3);
+    margin-bottom:   calc($spacer / 3);
   }
 }
 

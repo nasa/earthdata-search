@@ -1,4 +1,5 @@
-@import "static/src/css/main";
+@import "static/src/css/vendor/bootstrap/vars";
+@import "static/src/css/utils/variables/colors";
 .region-search {
   &__selected-region-id {
     margin-right: calc($spacer / 2);

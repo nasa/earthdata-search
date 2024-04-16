@@ -1,4 +1,6 @@
-@import "static/src/css/main";
+
+@import "static/src/css/vendor/bootstrap/vars";
+@import "static/src/css/utils/variables/colors";
 .granule-details-body {
   display: flex;
   flex-direction: column;

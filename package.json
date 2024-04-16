@@ -19,8 +19,9 @@
     }
   ],
   "scripts": {
-    "build-vite": "vite build",
-    "start-vite": "vite",
+    "build-vite": "vite build --debug",
+    "start-vite": "vite serve --debug",
+    "preview-vite": "vite preview --port 8080",
     "build": "NODE_ENV=production NODE_OPTIONS=--max-old-space-size=6144 webpack --config static.webpack.config.prod.js",
     "build-sit": "NODE_ENV=production webpack --mode production",
     "copy-secrets": "cp secret.config.json.example secret.config.json",
@@ -79,11 +80,13 @@
     "process": "^0.11.10",
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.4",
-    "sass": "^1.74.1",
+    "sass": "~1.64.2",
     "snyk": "^1.913.0",
     "start-server-and-test": "^2.0.0",
     "three": "^0.127.0",
     "vite": "^5.2.8",
+    "vite-plugin-babel": "^1.2.0",
+    "vite-plugin-node-polyfills": "^0.21.0",
     "vite-plugin-simple-html": "^0.1.2"
   },
   "dependencies": {
@@ -107,6 +110,7 @@
     "@edsc/geo-utils": "^1.0.4",
     "@edsc/smart-handoffs": "^1.0.5",
     "@edsc/timeline": "^1.1.7",
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@popperjs/core": "^2.11.8",
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-select": "2.0.0",
@@ -157,6 +161,7 @@
     "leaflet": "^1.9.3",
     "leaflet-draw": "^1.0.4",
     "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "lowercase-keys": "^2.0.0",
     "lrucache": "^1.0.3",
     "mini-css-extract-plugin": "^1.6.2",
@@ -223,6 +228,7 @@
     "url": "^0.11.0",
     "url-template": "^2.0.8",
     "uuid": "^8.3.2",
+    "vite-plugin-ejs": "^1.7.0",
     "ws": "^7.5.7",
     "xpath": "0.0.27",
     "yup": "^0.32.11"

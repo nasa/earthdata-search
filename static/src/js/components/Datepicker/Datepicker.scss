@@ -1,4 +1,6 @@
-@import "static/src/css/main";
+@import "static/src/css/vendor/bootstrap/vars";
+@import "static/src/css/utils/variables/colors";
+@import "static/src/css/utils/mixins/mixins";
 .datetime {
   &__buttons {
     order: 1;
