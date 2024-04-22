@@ -14,7 +14,6 @@ import { buildUnavailableImageBuffer } from './utils/sharp/buildUnavailableImage
 
 import { resizeImage } from './utils/sharp/resizeImage'
 
-// Initialize the token used to retrieve CMR data
 /**
  * Resizes an image and returns it as a string buffer
  * @param {Object} event AWS Lambda Event
@@ -41,7 +40,7 @@ const scaleImage = async (event) => {
     imageSrc,
     ee: earthdataEnvironment = determineEarthdataEnvironment()
   } = queryStringParameters || {}
-  console.log('🚀 ~ file: handler.js:43 ~ scaleImage ~ earthdataEnvironment:', earthdataEnvironment)
+  console.log('🚀 ~ file: handler.js:43  scaleImage ~ earthdataEnvironment:', earthdataEnvironment)
 
   const width = parseInt(w, 10)
   const height = parseInt(h, 10)
