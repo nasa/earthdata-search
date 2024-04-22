@@ -11,7 +11,6 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
 
   return collectionIds.map((collectionId, index) => {
     const { [collectionId]: collectionMetadata = {} } = metadata
-    // TODO double check that there isn't an edge case here
     const {
       cloudHosted = false,
       collectionDataType,

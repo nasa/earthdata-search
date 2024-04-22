@@ -5,9 +5,9 @@ import unavailableImg from '../../assets/images/image-unavailable.svg'
  * @param {thumbnail} string the endpoint to retrieve the thumbnail from
  * @returns {Promise<string>} The thumbnail image as as a `base64` encoded string
  */
-export const retrieveThumbnail = async (thumbnail) => {
+export const retrieveThumbnail = async (thumbnailSrc) => {
   try {
-    const response = await fetch(thumbnail, {
+    const response = await fetch(thumbnailSrc, {
       Accept: 'image/png'
     })
     const buffer = await response.arrayBuffer()

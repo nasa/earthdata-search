@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios'
 
 import {
   render,
@@ -11,8 +10,6 @@ import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 
 import GranuleResultsFocusedMeta from '../GranuleResultsFocusedMeta'
-
-jest.mock('axios')
 
 describe('GranuleResultsFocusedMeta component', () => {
   describe('when no links are provided', () => {
@@ -61,15 +58,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
   describe('when links are provided', () => {
     test('should render', async () => {
-      axios.get.mockResolvedValue({
-        data: {
-          body: {
-            base64Image: 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==',
-            'content-type': 'image/png'
-          }
-        }
-      })
-
       render(
         <GranuleResultsFocusedMeta
           focusedGranuleMetadata={
@@ -94,15 +82,6 @@ describe('GranuleResultsFocusedMeta component', () => {
       test('should render a modal', async () => {
         const user = userEvent.setup()
 
-        axios.get.mockResolvedValue({
-          data: {
-            body: {
-              base64Image: 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==',
-              'content-type': 'image/png'
-            }
-          }
-        })
-
         render(
           <GranuleResultsFocusedMeta
             focusedGranuleMetadata={
@@ -119,28 +98,17 @@ describe('GranuleResultsFocusedMeta component', () => {
           />
         )
 
-        await waitFor(async () => {
-          const expandButton = await screen.findByLabelText('Expand browse image')
+        const expandButton = screen.getByRole('button', { name: 'Expand browse image' })
+        user.click(expandButton)
 
-          await user.click(expandButton)
+        await waitFor(() => {
+          const modal = screen.getByTestId('granule-results-focused-meta-modal')
+          expect(modal).toBeInTheDocument()
         })
-
-        const modal = await screen.findByTestId('granule-results-focused-meta-modal')
-
-        expect(modal).toBeInTheDocument()
       })
 
       test('should not render modal navigation', async () => {
         const user = userEvent.setup()
-        axios.get.mockResolvedValue({
-          data: {
-            body: {
-              base64Image: 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==',
-              'content-type': 'image/png'
-            }
-          }
-        })
-
         render(
           <GranuleResultsFocusedMeta
             focusedGranuleMetadata={
@@ -157,34 +125,25 @@ describe('GranuleResultsFocusedMeta component', () => {
           />
         )
 
-        await waitFor(async () => {
-          const expandButton = screen.getByLabelText('Expand browse image')
+        const expandButton = screen.getByRole('button', { name: 'Expand browse image' })
 
-          await user.click(expandButton)
+        user.click(expandButton)
+
+        await waitFor(() => {
+          const modal = screen.getByTestId('granule-results-focused-meta-modal')
+          const modalPrev = within(modal).queryByLabelText('Previous browse image')
+          const modalNext = within(modal).queryByLabelText('Next browse image')
+
+          const modalPopoverButton = within(modal).queryByLabelText('View available browse imagery')
+          expect(modalPrev).not.toBeInTheDocument()
+          expect(modalNext).not.toBeInTheDocument()
+          expect(modalPopoverButton).not.toBeInTheDocument()
         })
-
-        const modal = screen.getByTestId('granule-results-focused-meta-modal')
-        const modalPrev = within(modal).queryByLabelText('Previous browse image')
-        const modalNext = within(modal).queryByLabelText('Next browse image')
-        const modalPopoverButton = within(modal).queryByLabelText('View available browse imagery')
-
-        expect(modalPrev).not.toBeInTheDocument()
-        expect(modalNext).not.toBeInTheDocument()
-        expect(modalPopoverButton).not.toBeInTheDocument()
       })
     })
 
     describe('when multiple links are provided', () => {
       test('should render the navigation', async () => {
-        axios.get.mockResolvedValue({
-          data: {
-            body: {
-              base64Image: 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==',
-              'content-type': 'image/png'
-            }
-          }
-        })
-
         render(
           <GranuleResultsFocusedMeta
             focusedGranuleMetadata={
@@ -209,15 +168,17 @@ describe('GranuleResultsFocusedMeta component', () => {
           />
         )
 
-        const prevButton = await screen.findByLabelText('Previous browse image thumbnail')
-        const nextButton = await screen.findByLabelText('Next browse image thumbnail')
-        const pagination = await screen.findByText('1/3')
-        const popoverListButton = await screen.findByLabelText('View available browse imagery')
+        await waitFor(() => {
+          const prevButton = screen.getByLabelText('Previous browse image thumbnail')
+          const nextButton = screen.getByLabelText('Next browse image thumbnail')
+          const pagination = screen.getByText('1/3')
+          const popoverListButton = screen.getByLabelText('View available browse imagery')
 
-        expect(prevButton).toBeInTheDocument()
-        expect(nextButton).toBeInTheDocument()
-        expect(pagination).toBeInTheDocument()
-        expect(popoverListButton).toBeInTheDocument()
+          expect(prevButton).toBeInTheDocument()
+          expect(pagination).toBeInTheDocument()
+          expect(popoverListButton).toBeInTheDocument()
+          expect(nextButton).toBeInTheDocument()
+        })
       })
 
       describe('when the selection button is clicked', () => {
@@ -250,9 +211,8 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           const popoverListButton = screen.getByLabelText('View available browse imagery')
 
-          await waitFor(async () => {
-            await user.click(popoverListButton)
-
+          user.click(popoverListButton)
+          await waitFor(() => {
             const popoverList = screen.getAllByTestId('granule-results-focused-meta-list')
             const popoverListItems = screen.getAllByText('.jpg', { exact: false })
 
@@ -291,13 +251,16 @@ describe('GranuleResultsFocusedMeta component', () => {
           const overlayWrapper = await screen.findByTestId('granule-results-focused-meta-overlay-wrapper')
           const popoverListButton = await screen.findByLabelText('View available browse imagery')
 
+          // Tool-tip however
           await user.hover(overlayWrapper)
-
-          await waitFor(async () => {
+          await waitFor(() => {
             const tooltip = screen.queryByTestId('granule-results-focused-meta-tooltip')
             expect(tooltip).toBeInTheDocument()
-            await user.click(popoverListButton)
+          })
 
+          // Click to disappear tool-tip
+          user.click(popoverListButton)
+          await waitFor(() => {
             const tooltipAfter = screen.queryByTestId('granule-results-focused-meta-tooltip')
             expect(tooltipAfter).not.toBeInTheDocument()
           })
@@ -332,16 +295,16 @@ describe('GranuleResultsFocusedMeta component', () => {
             />
           )
 
-          const nextButton = await screen.findByLabelText('Next browse image thumbnail')
+          const nextButton = screen.getByRole('button', { name: 'Next browse image thumbnail' })
+          user.click(nextButton)
 
-          await user.click(nextButton)
-
-          const images = screen.queryAllByTestId('granule-results-focused-meta-image')
-          const pagination = screen.queryByText('2/3')
-
-          expect(images.length).toEqual(3)
-          expect(images[1]).toHaveClass('granule-results-focused-meta__thumb--is-active')
-          expect(pagination).toBeInTheDocument()
+          await waitFor(() => {
+            const images = screen.queryAllByTestId('granule-results-focused-meta-image')
+            const pagination = screen.queryByText('2/3')
+            expect(images.length).toEqual(3)
+            expect(images[1]).toHaveClass('granule-results-focused-meta__thumb--is-active')
+            expect(pagination).toBeInTheDocument()
+          })
         })
       })
 
@@ -781,7 +744,6 @@ describe('GranuleResultsFocusedMeta component', () => {
               await user.click(expandButton)
             })
 
-            // TODO do the others need to be wrapped?
             const modal = screen.getByTestId('granule-results-focused-meta-modal')
             const modalNext = within(modal).queryByLabelText('Next browse image')
 
@@ -821,24 +783,24 @@ describe('GranuleResultsFocusedMeta component', () => {
               />
             )
 
-            const expandButton = screen.getByLabelText('Expand browse image')
-            await waitFor(async () => {
-              await user.click(expandButton)
+            const expandButton = screen.getByRole('button', { name: 'Expand browse image' })
+            user.click(expandButton)
+            await waitFor(() => {
+              expect(screen.getByTestId('granule-results-focused-meta-modal')).toBeInTheDocument()
             })
 
-            // Await user.click(expandButton)
-
             const modal = screen.getByTestId('granule-results-focused-meta-modal')
-            const modalPrev = within(modal).queryByLabelText('Previous browse image')
+            const modalPrev = within(modal).getByRole('button', { name: 'Previous browse image' })
 
-            await user.click(modalPrev)
+            user.click(modalPrev)
+            await waitFor(() => {
+              const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
+              const pagination = within(modal).queryByText('2/2')
 
-            const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
-            const pagination = within(modal).queryByText('2/2')
-
-            expect(images.length).toEqual(2)
-            expect(images[1]).toHaveClass('granule-results-focused-meta__full--is-active')
-            expect(pagination).toBeInTheDocument()
+              expect(images.length).toEqual(2)
+              expect(images[1]).toHaveClass('granule-results-focused-meta__full--is-active')
+              expect(pagination).toBeInTheDocument()
+            })
           })
         })
       })

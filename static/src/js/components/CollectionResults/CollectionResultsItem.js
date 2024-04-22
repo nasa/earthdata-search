@@ -72,7 +72,6 @@ export const CollectionResultsItem = forwardRef(({
     isDefaultImage,
     versionId
   } = collectionMetadata
-  console.log('🚀 ~ file: CollectionResultsItem.js:75 ~ thumbnail:', thumbnail)
 
   const [loadingThumbnail, setLoadingThumbnail] = useState(true)
   const { thumbnailSize } = getApplicationConfig()
@@ -93,21 +92,18 @@ export const CollectionResultsItem = forwardRef(({
   const { description: nrtDescription, label: nrtLabel } = nrt
 
   const onThumbnailLoaded = () => {
-    console.log('Thumnail has loaded✅')
     setLoadingThumbnail(false)
   }
 
   const parseScaleImageResponse = async () => {
     if (!isDefaultImage) {
       const thumbnailValue = await retrieveThumbnail(thumbnail)
-      console.log('🚀 ~ file: CollectionResultsItem.js:110 ~ parseScaleImageResponse ~ thumbnailValue:', thumbnailValue)
       setBase64Image(thumbnailValue)
       onThumbnailLoaded()
     } else {
       console.log('Am going into else block')
       // Passed in thumbnail was the default set `base64` image to that
       // If the thumbnail was null set it to the unavailable image
-      console.log('🚀 ~ file: CollectionResultsItem.js:113 ~ parseScaleImageResponse ~ thumbnail:', thumbnail)
       setBase64Image(thumbnail)
       onThumbnailLoaded()
     }
@@ -115,7 +111,6 @@ export const CollectionResultsItem = forwardRef(({
 
   // Fetch the base64 string from the Lambda function
   // Explicity call the GET request for the lambda
-  // TODO there are some collections which it seems have inaccessible collections
   useEffect(() => {
     parseScaleImageResponse()
   }, [])
