@@ -119,6 +119,7 @@ custom:
         - functions.submitCatalogRestOrder.environment.updateOrderStatusStateMachineArn
         - functions.submitCmrOrderingOrder.environment.updateOrderStatusStateMachineArn
         - functions.submitHarmonyOrder.environment.updateOrderStatusStateMachineArn
+        - functions.submitSwodlrOrder.environment.updateOrderStatusStateMachineArn
 
   variables:
     # Default values for environment variables used to set environment variables
