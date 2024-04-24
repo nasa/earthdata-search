@@ -95,6 +95,7 @@ const submitHarmonyOrder = async (event, context) => {
         environment
       })
 
+      console.log('Harmony order payload')
       // eslint-disable-next-line no-restricted-syntax
       for (const pair of orderPayload.entries()) {
         console.log(`${pair[0]}: ${pair[1]}`)

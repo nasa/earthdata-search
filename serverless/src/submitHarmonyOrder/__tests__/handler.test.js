@@ -70,7 +70,7 @@ describe('submitHarmonyOrder', () => {
       })
 
     nock('https://harmony.earthdata.nasa.gov')
-      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var%2Ctest_var_2/coverage/rangeset')
+      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/parameter_vars/coverage/rangeset?variable=test_var%2Ctest_var_2')
       .reply(201, {
         username: 'rabbott',
         status: 'running',
@@ -146,7 +146,7 @@ describe('submitHarmonyOrder', () => {
       })
 
     nock('https://harmony.earthdata.nasa.gov')
-      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var%2Ctest_var_2/coverage/rangeset')
+      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/parameter_vars/coverage/rangeset?variable=test_var%2Ctest_var_2')
       .reply(201, {
         username: 'rabbott',
         status: 'running',
@@ -234,7 +234,7 @@ describe('submitHarmonyOrder', () => {
       })
 
     nock('https://harmony.earthdata.nasa.gov')
-      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var%2Ctest_var_2/coverage/rangeset')
+      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/parameter_vars/coverage/rangeset?variable=test_var%2Ctest_var_2')
       .reply(403, {
         code: 'harmony.ForbiddenError',
         description: 'Error: You are not authorized to access the requested resource'
