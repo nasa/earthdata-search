@@ -117,7 +117,7 @@ describe('SearchSidebarHeader component', () => {
       })
 
       await waitFor(() => {
-        expect(screen.getByTestId('portal-logo-link').href).toEqual('https://idn.ceos.org/')
+        expect(screen.getByTestId('portal-logo-link').href).toEqual('https://ceos.org/ourwork/workinggroups/wgiss/access/international-directory-network/')
       })
     })
   })
