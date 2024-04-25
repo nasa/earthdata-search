@@ -30,8 +30,8 @@ mutation GenerateNewL2RasterProduct ($cycle: Int!, $pass: Int!, $scene: Int!, $o
 }`
 
 /**
- * Submits an order to CMR Ordering (cmr-ordering)
- * npm run invoke-local -- --function submitSwodlrOrder -p tmp/test_echo_order.json
+ * Submits an order to SWODLR
+ * npm run invoke-local -- --function submitSwodlrOrder -p tmp/test_swodlr_order.json
  * @param {Object} event Queue messages from SQS
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */

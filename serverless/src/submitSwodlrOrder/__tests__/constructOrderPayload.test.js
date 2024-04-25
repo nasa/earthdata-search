@@ -30,15 +30,6 @@ describe('constructOrderPayload', () => {
 
     const collectionConceptId = 'C2799438271-POCLOUD'
 
-    // Const accessMethod = {
-    //   optionDefinition: {
-    //     conceptId: 'C2799438271-POCLOUD',
-    //     name: 'SWOT Level 2 Water Mask Raster Image Data Product, Version 2.0'
-    //   },
-    //   url: 'https://swodlr.podaac.earthdatacloud.nasa.gov',
-    //   type: 'SWODLR'
-    // }
-
     const granuleParams = {
       collection_concept_id: 'C2799438271-POCLOUD'
     }
