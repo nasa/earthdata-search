@@ -8,7 +8,7 @@ import unavailableImg from '../../assets/images/image-unavailable.svg'
 export const retrieveThumbnail = async (thumbnailSrc) => {
   try {
     const response = await fetch(thumbnailSrc, {
-      Accept: 'image/png'
+      headers: { Accept: 'image/png' }
     })
     const buffer = await response.arrayBuffer()
     const base64ImageString = Buffer.from(buffer, 'binary').toString('base64')
