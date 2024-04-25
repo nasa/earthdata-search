@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-import { getSystemToken } from '../../../util/urs/getSystemToken'
+// Import { getSystemToken } from '../../../util/urs/getSystemToken'
 import { requestTimeout } from '../../../util/requestTimeout'
 
 /**
@@ -11,10 +11,10 @@ import { requestTimeout } from '../../../util/requestTimeout'
 export const fetchCmrCollectionGranules = async (collectionConceptId, earthdataEnvironment) => {
   const headers = {}
 
-  if (!process.env.IS_OFFLINE) {
-    const cmrToken = await getSystemToken()
-    headers.Authorization = `${cmrToken}`
-  }
+  // If (!process.env.IS_OFFLINE) {
+  //   const cmrToken = await getSystemToken()
+  //   headers.Authorization = `${cmrToken}`
+  // }
 
   const { cmrHost } = getEarthdataConfig(earthdataEnvironment)
 
