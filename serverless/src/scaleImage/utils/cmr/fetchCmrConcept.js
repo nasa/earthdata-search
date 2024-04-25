@@ -24,6 +24,7 @@ export const fetchCmrConcept = async (conceptId, earthdataEnvironment) => {
 
   const conceptUrl = `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/concepts/${conceptId}.json`
   try {
+    // Retrieve concept
     const response = await axios({
       url: conceptUrl,
       method: 'get',
