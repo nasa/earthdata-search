@@ -14,6 +14,7 @@ export const constructOrderPayload = async ({
 }) => {
   const newGranuleParams = { ...granuleParams }
 
+  // Remove data to use for CMR query
   delete newGranuleParams.json_data
 
   const granuleResponse = await axios({
