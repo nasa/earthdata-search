@@ -93,6 +93,10 @@ const submitSwodlrOrder = async (event, context) => {
 
       const { orderItems } = granuleInfo
 
+      if (orderItems.length > 10) {
+        throw new Error('Too many granules')
+      }
+
       await orderItems.forEachAsync(async (granule) => {
         const { granuleUr, granuleConceptId } = granule
 
