@@ -102,8 +102,8 @@ dockerRun() {
 stageOpts="--stage $bamboo_STAGE_NAME"
 
 # Deploy AWS Infrastructure Resources
-echo 'Deploying AWS Infrastructure Resources...'
-dockerRun npx serverless deploy $stageOpts --config serverless-infrastructure.yml
+echo 'Skipping Deploying AWS Infrastructure Resources...'
+# dockerRun npx serverless deploy $stageOpts --config serverless-infrastructure.yml
 
 # Deploy AWS Application Resources
 echo 'Deploying AWS Application Resources...'
