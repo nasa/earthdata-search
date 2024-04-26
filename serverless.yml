@@ -28,6 +28,8 @@ provider:
       Ref: CatalogRestOrderQueue
     harmonyQueueUrl:
       Ref: HarmonyOrderQueue
+    swodlrQueueUrl:
+      Ref: SwodlrOrderQueue
     userDataQueueUrl:
       Ref: UserDataQueue
 
