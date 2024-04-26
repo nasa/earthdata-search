@@ -10,7 +10,7 @@ describe('constructOrderUrl', () => {
         url: 'https://harmony.earthdata.nasa.gov'
       })
 
-      expect(response).toEqual('https://harmony.earthdata.nasa.gov/C100000-EDSC/ogc-api-coverages/1.0.0/collections/parameter_vars/coverage/rangeset?variable=test_var%2Ctest_var_2')
+      expect(response).toEqual('https://harmony.earthdata.nasa.gov/C100000-EDSC/ogc-api-coverages/1.0.0/collections/parameter_vars/coverage/rangeset')
     })
   })
 

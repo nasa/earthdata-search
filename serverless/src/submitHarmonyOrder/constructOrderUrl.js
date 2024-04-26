@@ -9,10 +9,9 @@ export const constructOrderUrl = (collectionId, accessMethod) => {
     url
   } = accessMethod
 
-  const hasSelectedVariables = selectedVariableNames.length > 0
   let variablesPath = 'all'
 
-  if (hasSelectedVariables) {
+  if (selectedVariableNames.length > 0) {
     // Overwrite the pseudo-variable for harmony request
     variablesPath = 'parameter_vars'
   }
@@ -26,12 +25,5 @@ export const constructOrderUrl = (collectionId, accessMethod) => {
     'coverage/rangeset'
   ]
 
-  let harmonyOrderUrl = harmonyPathParts.join('/')
-
-  if (hasSelectedVariables) {
-    const variableParameter = encodeURIComponent(selectedVariableNames.join(','))
-    harmonyOrderUrl = `${harmonyOrderUrl}?variable=${variableParameter}`
-  }
-
-  return harmonyOrderUrl
+  return harmonyPathParts.join('/')
 }
