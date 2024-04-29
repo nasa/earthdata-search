@@ -6,7 +6,7 @@ import { getEarthdataConfig } from '../../../sharedUtils/config'
 import { getClientId } from '../../../sharedUtils/getClientId'
 import { readCmrResults } from '../util/cmr/readCmrResults'
 
-export const constructOrderPayload = async ({
+export const retrieveCMRGranules = async ({
   collectionConceptId,
   earthdataEnvironment,
   accessToken,

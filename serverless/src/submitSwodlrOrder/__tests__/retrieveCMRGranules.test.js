@@ -2,16 +2,16 @@ import nock from 'nock'
 
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 
-import { constructOrderPayload } from '../constructOrderPayload'
+import { retrieveCMRGranules } from '../retrieveCMRGranules'
 
-describe('constructOrderPayload', () => {
+describe('retrieveCMRGranules', () => {
   beforeEach(() => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov'
     }))
   })
 
-  test('constructs an order payload', async () => {
+  test('retrieve cmr granules', async () => {
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
       .get(/search\/granules.json/)
@@ -37,7 +37,7 @@ describe('constructOrderPayload', () => {
     const accessToken = 'access-token'
     const earthdataEnvironment = 'prod'
 
-    const response = await constructOrderPayload({
+    const response = await retrieveCMRGranules({
       collectionConceptId,
       earthdataEnvironment,
       accessToken,
@@ -58,7 +58,7 @@ describe('constructOrderPayload', () => {
     })
   })
 
-  test('constructs an order payload with added granule params', async () => {
+  test('retrieves the granules with the added granule params', async () => {
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
       .get(/search\/granules.json/)
@@ -111,7 +111,7 @@ describe('constructOrderPayload', () => {
     const accessToken = 'access-token'
     const earthdataEnvironment = 'prod'
 
-    const response = await constructOrderPayload({
+    const response = await retrieveCMRGranules({
       accessToken,
       collectionConceptId,
       earthdataEnvironment,

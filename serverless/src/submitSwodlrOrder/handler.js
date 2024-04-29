@@ -2,7 +2,7 @@ import 'array-foreach-async'
 import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 
-import { constructOrderPayload } from './constructOrderPayload'
+import { retrieveCMRGranules } from './retrieveCMRGranules'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { parseError } from '../../../sharedUtils/parseError'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
@@ -84,7 +84,7 @@ const submitSwodlrOrder = async (event, context) => {
       const { type, url: swodlrUrl } = accessMethod
 
       // No need for Accessmethod at this stage of dev.
-      const granuleInfo = await constructOrderPayload({
+      const granuleInfo = await retrieveCMRGranules({
         collectionConceptId,
         granuleParams,
         accessToken,
