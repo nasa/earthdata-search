@@ -55,14 +55,14 @@ const scaleImage = async (event) => {
     }
     const cacheKey = generateCacheKey(conceptId, conceptType, imageSrc, dimensions)
     // Should we use the cache
-    const useCache = (process.env.useCache === 'true')
+    const useCache = process.env.useCache === 'true'
     console.log('🚀 ~ file: handler.js:58 ~ scaleImage ~ useCache:', useCache)
 
     let originalImageFromCache = null
     const originalCacheKey = generateCacheKey(conceptId, conceptType)
     if (useCache) {
+      console.log('Trying to use cache')
       const imageFromCache = await getImageFromCache(cacheKey)
-
       if (imageFromCache) {
       // If the image is in the cache, return it
         return buildResponse(imageFromCache)
