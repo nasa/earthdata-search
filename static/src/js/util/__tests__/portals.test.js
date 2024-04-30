@@ -57,7 +57,7 @@ describe('buildConfig', () => {
           href: 'https://access.earthdata.nasa.gov/'
         }]
       },
-      moreInfoUrl: 'https://idn.ceos.org/',
+      moreInfoUrl: 'https://ceos.org/ourwork/workinggroups/wgiss/access/international-directory-network/',
       pageTitle: 'IDN',
       portalBrowser: true,
       portalId: 'idn',

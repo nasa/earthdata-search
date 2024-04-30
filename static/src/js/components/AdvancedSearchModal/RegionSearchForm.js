@@ -214,6 +214,26 @@ export class RegionSearchForm extends Component {
                       </EDSCAlert>
                     )
                   }
+                  {
+                    endpoint === 'rivers/reach' && (
+                      <EDSCAlert
+                        variant="small"
+                        bootstrapVariant="light"
+                        icon={FaQuestionCircle}
+                      >
+                        Find River Reach IDs in the SWOT River Database (SWORD):
+                        {' '}
+                        <a
+                          className="link--external"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          href="https://www.swordexplorer.com/"
+                        >
+                          https://www.swordexplorer.com/
+                        </a>
+                      </EDSCAlert>
+                    )
+                  }
                 </Col>
               </Row>
             )

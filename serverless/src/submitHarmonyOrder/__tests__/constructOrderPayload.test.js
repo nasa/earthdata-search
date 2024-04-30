@@ -804,4 +804,37 @@ describe('constructOrderPayload', () => {
       ])
     })
   })
+
+  describe('with a selected variable names', () => {
+    test('constructs a payload containing the selected variable names included in this access method request', async () => {
+      nock(/cmr/)
+        .matchHeader('Authorization', 'Bearer access-token')
+        .get('/search/granules.json')
+        .reply(200, {
+          feed: {
+            entry: [{
+              id: 'G10000001-EDSC'
+            }, {
+              id: 'G10000005-EDSC'
+            }]
+          }
+        })
+
+      const accessMethod = {
+        selectedVariableNames: [
+          'test_var', 'test_var_2'
+        ]
+      }
+      const granuleParams = {}
+      const accessToken = 'access-token'
+
+      const response = await constructOrderPayload({
+        accessMethod,
+        granuleParams,
+        accessToken
+      })
+
+      expect(response.getAll('variable')).toEqual(['test_var,test_var_2'])
+    })
+  })
 })
