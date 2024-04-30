@@ -12,6 +12,7 @@
   * @returns {String} Key to be used to store an item in cache.
   */
 export const generateCacheKey = (conceptId, conceptType, imageSrc, dimensions = {}) => {
+  console.log('🚀 ~ file: generateCacheKey.js:15 ~ generateCacheKey ~ conceptId:', conceptId)
   const {
     height = 'h',
     width = 'w'
