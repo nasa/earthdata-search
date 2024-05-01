@@ -142,15 +142,17 @@ Resources:
                 Resource: '*'
 
   # Redis Cache for browse-scaler/image-resizing
+  # The CIDR notation 0.0. 0.0/0 defines an IP block containing all possible IP addresses
   RedisSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Ingress for Redis Cluster
-      VpcId: ${env:VPC_ID}
       SecurityGroupIngress:
-      - IpProtocol: tcp
+      - CidrIp: '0.0.0.0/0'
+        IpProtocol: tcp
         FromPort: 1521
         ToPort: 1521
+      VpcId: ${env:VPC_ID}
 
   RedisCacheSubnetGroup:
     Type: AWS::ElastiCache::SubnetGroup
