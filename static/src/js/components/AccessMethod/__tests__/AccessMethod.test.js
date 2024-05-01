@@ -377,7 +377,7 @@ describe('AccessMethod component', () => {
   })
 
   describe('when the selected access method is opendap', () => {
-    test('selecting a output format calls onUpdateAccessMethod', async () => {
+    test.only('selecting a output format calls onUpdateAccessMethod', async () => {
       const user = userEvent.setup()
       const collectionId = 'collectionId'
       const { onUpdateAccessMethod } = setup({
@@ -394,11 +394,15 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'opendap'
       })
 
+      expect(screen.getByRole('option', { name: 'No data conversion' }).selected).toBe(true)
+      expect(screen.getByTestId('access-methods__output-format-options').value).toBe('')
+
       await user.selectOptions(
         screen.getByTestId('access-methods__output-format-options'),
         screen.getByRole('option', { name: 'NETCDF-4' })
       )
 
+      expect(screen.getByTestId('access-methods__output-format-options').value).toBe('nc4')
       expect(screen.getByRole('option', { name: 'NETCDF-4' }).selected).toBe(true)
       expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
       expect(onUpdateAccessMethod).toHaveBeenCalledWith({
