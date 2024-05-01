@@ -97,9 +97,12 @@ const submitSwodlrOrder = async (event, context) => {
         throw new Error('Too many granules')
       }
 
+      const orderInfo = { jobs: {} }
+
       await orderItems.forEachAsync(async (granule) => {
         const { granuleUr, granuleConceptId } = granule
 
+        // TODO: Call Swoldr API when it supports passing concept-id and deriving these values
         const splitTitle = granuleUr.split('_')
         const cycle = parseInt(splitTitle[10], 10)
         const pass = parseInt(splitTitle[11], 10)
@@ -164,12 +167,17 @@ const submitSwodlrOrder = async (event, context) => {
         const { id: productId, status: jobStatus } = generateL2RasterProduct
         const { id: jobId, state } = jobStatus[0]
 
-        await dbConnection('retrieval_orders').update({
-          order_number: productId,
-          order_information: { jobId },
-          state
-        }).where({ id })
+        orderInfo.jobs[jobId] = {
+          product_id: productId,
+          status: state
+        }
       })
+
+      await dbConnection('retrieval_orders').update({
+        order_number: Object.keys(orderInfo.jobs)[0],
+        order_information: orderInfo,
+        state: orderInfo.jobs[Object.keys(orderInfo.jobs)[0]].status
+      }).where({ id })
 
       // Not sure if we can parse errors from swodlr
 
