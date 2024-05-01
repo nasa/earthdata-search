@@ -64,16 +64,20 @@ const scaleImage = async (event) => {
       console.log('Trying to use cache')
       const imageFromCache = await getImageFromCache(cacheKey)
       if (imageFromCache) {
-      // If the image is in the cache, return it
+        console.log('The image was already in the cache')
+
+        // If the image is in the cache, return it
         return buildResponse(imageFromCache)
       }
 
-      // Check for the original size image in the cache
-      originalImageFromCache = await getImageFromCache(originalCacheKey)
+      // Check for the original size image in the cache if a specific granule image is not being requested
+      if (!imageSrc) {
+        originalImageFromCache = await getImageFromCache(originalCacheKey)
+      }
     }
 
     let imageBuffer
-
+    // TODO if we have the original image buffer why go out again?
     if (originalImageFromCache) {
       // If the original image is cached, don't download it from the imageUrl, instead we just resize it
       imageBuffer = originalImageFromCache
