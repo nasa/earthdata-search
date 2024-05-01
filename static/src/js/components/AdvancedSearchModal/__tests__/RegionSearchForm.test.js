@@ -111,6 +111,31 @@ describe('RegionSearchForm component', () => {
       expect(alertChildren.at(2).prop('href')).toEqual('https://water.usgs.gov/GIS/huc.html')
       expect(alertChildren.at(2).text()).toEqual('https://water.usgs.gov/GIS/huc.html')
     })
+
+    test('when the rivers/reach endpoint is selected', () => {
+      const { enzymeWrapper } = setup({
+        regionSearchForm: {
+          errors: {},
+          handleBlur: jest.fn(),
+          handleChange: jest.fn(),
+          handleSubmit: jest.fn(),
+          touched: {},
+          values: {
+            endpoint: 'rivers/reach'
+          },
+          validateForm: jest.fn(),
+          isValid: false
+        },
+        selectedRegion: {},
+        onRemoveSelected: jest.fn()
+      })
+
+      const alertChildren = enzymeWrapper.find(EDSCAlert).children()
+
+      expect(alertChildren.at(0).text()).toEqual('Find River Reach IDs in the SWOT River Database (SWORD):')
+      expect(alertChildren.at(2).prop('href')).toEqual('https://www.swordexplorer.com/')
+      expect(alertChildren.at(2).text()).toEqual('https://www.swordexplorer.com/')
+    })
   })
 
   describe('when keyword input is invalid', () => {

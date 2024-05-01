@@ -51,6 +51,7 @@ export const constructOrderPayload = async ({
     mbr,
     selectedOutputFormat,
     selectedOutputProjection,
+    selectedVariableNames = [],
     supportsBoundingBoxSubsetting,
     supportsShapefileSubsetting,
     supportsConcatenation
@@ -220,6 +221,12 @@ export const constructOrderPayload = async ({
   // Adds supportsConcatenation to the payload and it's value
   if (supportsConcatenation && enableConcatenateDownload) {
     orderPayload.append('concatenate', true)
+  }
+
+  // Adds the selectedVariableNames if they were included in the access method
+  if (selectedVariableNames.length > 0) {
+    const selectedVariableNameFormElement = selectedVariableNames.join(',')
+    orderPayload.append('variable', selectedVariableNameFormElement)
   }
 
   // EDSC-3440: Add skipPreview=true to all Harmony orders
