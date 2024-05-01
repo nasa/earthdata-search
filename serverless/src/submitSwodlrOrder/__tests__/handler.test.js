@@ -308,6 +308,161 @@ describe('submitSwodlrOrder', () => {
     expect(queries[1].bindings).toEqual(['create_failed', 'Unknown Error', 12])
   })
 
+  test('Doesnt submit download when there are too many granules', async () => {
+    nock(/cmr/)
+      .matchHeader('Authorization', 'Bearer access-token')
+      .get(/granules/)
+      .reply(200, {
+        feed: {
+          entry: [
+            {
+              id: 'G2938391118-POCLOUD1',
+              title: 'SWOT_L2_HR_Raster_250m_UTM34L_N_x_x_x_013_514_087F_20240414T225546_20240414T225558_PIC0_01'
+            }, {
+              id: 'G2938390924-POCLOUD2',
+              title: 'SWOT_L2_HR_Raster_250m_UTM34L_N_x_x_x_013_514_086F_20240414T225526_20240414T225547_PIC0_01'
+            },
+            {
+              id: 'G2938391118-POCLOUD3',
+              title: 'SWOT_L2_HR_Raster_250m_UTM34L_N_x_x_x_013_514_087F_20240414T225546_20240414T225558_PIC0_01'
+            }, {
+              id: 'G2938390924-POCLOUD4',
+              title: 'SWOT_L2_HR_Raster_250m_UTM34L_N_x_x_x_013_514_086F_20240414T225526_20240414T225547_PIC0_01'
+            },
+            {
+              id: 'G2938391118-POCLOUD5',
+              title: 'SWOT_L2_HR_Raster_250m_UTM34L_N_x_x_x_013_514_087F_20240414T225546_20240414T225558_PIC0_01'
+            }, {
+              id: 'G2938390924-POCLOUD6',
+              title: 'SWOT_L2_HR_Raster_250m_UTM34L_N_x_x_x_013_514_086F_20240414T225526_20240414T225547_PIC0_01'
+            },
+            {
+              id: 'G2938391118-POCLOUD7',
+              title: 'SWOT_L2_HR_Raster_250m_UTM34L_N_x_x_x_013_514_087F_20240414T225546_20240414T225558_PIC0_01'
+            }, {
+              id: 'G2938390924-POCLOUD8',
+              title: 'SWOT_L2_HR_Raster_250m_UTM34L_N_x_x_x_013_514_086F_20240414T225526_20240414T225547_PIC0_01'
+            },
+            {
+              id: 'G2938391118-POCLOUD9',
+              title: 'SWOT_L2_HR_Raster_250m_UTM34L_N_x_x_x_013_514_087F_20240414T225546_20240414T225558_PIC0_01'
+            }, {
+              id: 'G2938390924-POCLOUD10',
+              title: 'SWOT_L2_HR_Raster_250m_UTM34L_N_x_x_x_013_514_086F_20240414T225526_20240414T225547_PIC0_01'
+            },
+            {
+              id: 'G2938391118-POCLOUD11',
+              title: 'SWOT_L2_HR_Raster_250m_UTM34L_N_x_x_x_013_514_087F_20240414T225546_20240414T225558_PIC0_01'
+            }
+          ]
+        }
+      })
+
+    dbTracker.on('query', (query, step) => {
+      if (step === 1) {
+        query.response({
+          id: 1,
+          environment: 'prod',
+          access_method: {
+            optionDefinition: {
+              conceptId: 'C2799438271-POCLOUD',
+              name: 'SWOT Level 2 Water Mask Raster Image Data Product, Version 2.0'
+            },
+            url: 'https://swodlr.podaac.earthdatacloud.nasa.gov',
+            type: 'SWODLR'
+          },
+          collection_id: 'C2799438271-POCLOUD',
+          granule_params: {
+            exclude: {},
+            options: {},
+            page_num: 1,
+            sort_key: '-start_date',
+            json_data: {
+              params: {
+                rasterResolution: 6,
+                outputSamplingGridType: 'GEO',
+                outputGranuleExtentFlag: false
+              },
+              custom_params: {
+                'G2938391118-POCLOUD1': {
+                  utmZoneAdjust: null,
+                  mgrsBandAdjust: null
+                },
+                'G2938390924-POCLOUD2': {
+                  utmZoneAdjust: null,
+                  mgrsBandAdjust: null
+                },
+                'G2938391118-POCLOUD3': {
+                  utmZoneAdjust: null,
+                  mgrsBandAdjust: null
+                },
+                'G2938390924-POCLOUD4': {
+                  utmZoneAdjust: null,
+                  mgrsBandAdjust: null
+                },
+                'G2938391118-POCLOUD5': {
+                  utmZoneAdjust: null,
+                  mgrsBandAdjust: null
+                },
+                'G2938390924-POCLOUD6': {
+                  utmZoneAdjust: null,
+                  mgrsBandAdjust: null
+                },
+                'G2938391118-POCLOUD7': {
+                  utmZoneAdjust: null,
+                  mgrsBandAdjust: null
+                },
+                'G2938390924-POCLOUD8': {
+                  utmZoneAdjust: null,
+                  mgrsBandAdjust: null
+                },
+                'G2938391118-POCLOUD9': {
+                  utmZoneAdjust: null,
+                  mgrsBandAdjust: null
+                },
+                'G2938390924-POCLOUD10': {
+                  utmZoneAdjust: null,
+                  mgrsBandAdjust: null
+                },
+                'G2938391118-POCLOUD11': {
+                  utmZoneAdjust: null,
+                  mgrsBandAdjust: null
+                }
+              }
+            },
+            page_size: 2000,
+            concept_id: [
+              'G2938390910-POCLOUD1',
+              'G2938390924-POCLOUD2',
+              'G2938390910-POCLOUD3',
+              'G2938390924-POCLOUD4',
+              'G2938390910-POCLOUD5',
+              'G2938390924-POCLOUD6',
+              'G2938390910-POCLOUD7',
+              'G2938390924-POCLOUD8',
+              'G2938390910-POCLOUD9',
+              'G2938390924-POCLOUD10',
+              'G2938390910-POCLOUD11'
+            ],
+            echo_collection_id: 'C2799438271-POCLOUD',
+            two_d_coordinate_system: {}
+          }
+        })
+      } else if (step === 2) {
+        query.response([])
+      }
+    })
+
+    const context = {}
+    await expect(submitSwodlrOrder(mockSwodlrOrder, context)).rejects.toEqual(new Error('Error: Too many granules'))
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('first')
+    expect(queries[1].method).toEqual('update')
+    expect(queries[1].bindings).toEqual(['create_failed', 'Error: Too many granules', 12])
+  })
+
   test('saves an error message if the create fails in swodlr order', async () => {
     nock(/cmr/)
       .matchHeader('Authorization', 'Bearer access-token')
