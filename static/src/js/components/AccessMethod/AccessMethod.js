@@ -952,7 +952,7 @@ export class AccessMethod extends Component {
                       >
                         {
                           [
-                            <option key="output-format-none" value="">No data conversion</option>,
+                            <option key="output-format-none" value="">No Data Conversion</option>,
                             ...supportedOutputFormatOptions
                           ]
                         }

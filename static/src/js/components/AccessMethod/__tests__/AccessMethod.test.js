@@ -394,7 +394,7 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'opendap'
       })
 
-      expect(screen.getByRole('option', { name: 'No data conversion' }).selected).toBe(true)
+      expect(screen.getByRole('option', { name: 'No Data Conversion' }).selected).toBe(true)
       expect(screen.getByTestId('access-methods__output-format-options').value).toBe('')
 
       await user.selectOptions(
