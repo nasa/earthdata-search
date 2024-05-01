@@ -377,7 +377,7 @@ describe('AccessMethod component', () => {
   })
 
   describe('when the selected access method is opendap', () => {
-    test.only('selecting a output format calls onUpdateAccessMethod', async () => {
+    test('selecting a output format calls onUpdateAccessMethod', async () => {
       const user = userEvent.setup()
       const collectionId = 'collectionId'
       const { onUpdateAccessMethod } = setup({
