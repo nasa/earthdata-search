@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-// Import { getSystemToken } from '../../../util/urs/getSystemToken'
+import { getSystemToken } from '../../../util/urs/getSystemToken'
 import { requestTimeout } from '../../../util/requestTimeout'
+import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 
 /**
  * Given a concept id, fetch the metadata for granules
@@ -11,10 +12,13 @@ import { requestTimeout } from '../../../util/requestTimeout'
 export const fetchCmrCollectionGranules = async (collectionConceptId, earthdataEnvironment) => {
   const headers = {}
 
-  // If (!process.env.IS_OFFLINE) {
-  //   const cmrToken = await getSystemToken()
-  //   headers.Authorization = `${cmrToken}`
-  // }
+  const retrieveSystemToken = earthdataEnvironment === deployedEnvironment()
+
+  if (!process.env.IS_OFFLINE && (retrieveSystemToken)) {
+    console.log('Retrieving System token for granule image')
+    const cmrToken = await getSystemToken()
+    headers.Authorization = `${cmrToken}`
+  }
 
   const { cmrHost } = getEarthdataConfig(earthdataEnvironment)
 
