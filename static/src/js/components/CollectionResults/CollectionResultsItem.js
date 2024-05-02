@@ -101,7 +101,6 @@ export const CollectionResultsItem = forwardRef(({
       setBase64Image(thumbnailValue)
       onThumbnailLoaded()
     } else {
-      console.log('Am going into else block')
       // Passed in thumbnail was the default set `base64` image to that
       // If the thumbnail was null set it to the unavailable image
       setBase64Image(thumbnail)

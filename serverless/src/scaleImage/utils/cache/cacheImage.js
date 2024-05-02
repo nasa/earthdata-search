@@ -7,7 +7,6 @@ import { getCacheConnection } from './getCacheConnection'
  */
 export const cacheImage = async (key, image) => {
   const { cacheKeyExpireSeconds } = process.env
-  console.log('🚀 ~ file: cacheImage.js:10 ~ cacheImage ~ cacheKeyExpireSeconds:', cacheKeyExpireSeconds)
 
   // Ignore empty cache attempts
   if (image) {
@@ -25,7 +24,6 @@ export const cacheImage = async (key, image) => {
 
       console.log(`Successfully cached ${key}`)
     } catch (error) {
-      console.log('🚀 ~ file: cacheImage.js:28 ~ cacheImage ~ error:', error)
       console.log(`Failed to cache ${key}: ${error.toString()}`)
 
       throw error

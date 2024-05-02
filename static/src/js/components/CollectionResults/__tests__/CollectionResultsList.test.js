@@ -1,4 +1,4 @@
-import React, {} from 'react'
+import React from 'react'
 import { Provider } from 'react-redux'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
