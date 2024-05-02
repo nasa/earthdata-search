@@ -48,14 +48,16 @@ const scaleImage = async (event) => {
   let thumbnail = Buffer.from('')
 
   try {
-    // Optional imageSrc that gets passed when a granule image from one of many is specified
     const dimensions = {
       height,
       width
     }
-    const cacheKey = generateCacheKey(conceptId, conceptType, imageSrc, dimensions)
-    // Should we use the cache
     const useCache = process.env.useCache === 'true'
+
+    // Optional imageSrc that gets passed when a granule image from one of many is specified
+    const cacheKey = generateCacheKey(conceptId, conceptType, imageSrc, dimensions)
+    console.log('🚀 ~ file: handler.js:59 ~ scaleImage ~ cacheKey:', cacheKey)
+
     console.log('🚀 ~ file: handler.js:58 ~ scaleImage ~ useCache:', useCache)
 
     let originalImageFromCache = null

@@ -23,8 +23,8 @@ export const generateCacheKey = (conceptId, conceptType, imageSrc, dimensions = 
     conceptId,
     conceptType,
     height,
-    imageSrc,
-    width
+    width,
+    imageSrc
   ].filter(Boolean)
 
   return providedKeys.join('-')
