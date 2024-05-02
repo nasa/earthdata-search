@@ -18,12 +18,17 @@ describe('retrieveThumbnail', () => {
     data: mockBuffer
   }))
 
-  describe('retrieving hte image from the endpoint', () => {
+  describe('retrieving the image from the endpoint', () => {
     test('returns the buffer data as a response', async () => {
       const thumbnail = await retrieveThumbnail(mockThumbnailEndpoint)
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(mockThumbnailEndpoint, { Accept: 'image/png' })
+      expect(fetch).toHaveBeenCalledWith(mockThumbnailEndpoint, {
+        headers: {
+          Accept: 'image/png'
+        }
+      })
+
       expect(thumbnail).toEqual('data:image/png;base64, Y2Rl')
     })
   })
@@ -38,7 +43,12 @@ describe('retrieveThumbnail', () => {
       const thumbnail = await retrieveThumbnail(mockThumbnailEndpoint)
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(mockThumbnailEndpoint, { Accept: 'image/png' })
+      expect(fetch).toHaveBeenCalledWith(mockThumbnailEndpoint, {
+        headers: {
+          Accept: 'image/png'
+        }
+      })
+
       expect(thumbnail).toEqual('test-file-stub')
     })
   })
