@@ -18,8 +18,10 @@ import './EDSCImage.scss'
  * @param {String} props.dataTestId - An optional test id.
  * @param {String} props.className - An optional css class attribute.
  * @param {Integer} props.height - The height of the image.
+ * @param {Boolean} props.isBase64Image - If this image needs to be retrieved asynchronously because a header must be passed
  * @param {String} props.src - The src to be used as the src attribute on the image..
- * @param {String} props.srcSet - The srcSet to be used as the srcSet attribute on the image.
+ * @param {Boolean} props.srcSet - The srcSet to be used as the srcSet attribute on the image.
+ * @param {Boolean} props.useSpinner - If the spinner should be used for this Image while it is loading
  * @param {Integer} props.width - The width of the image.
  */
 export const EDSCImage = (props) => {
@@ -28,11 +30,11 @@ export const EDSCImage = (props) => {
     className,
     dataTestId,
     height,
+    isBase64Image,
     src,
     srcSet,
     useSpinner,
-    width,
-    isBase64Image
+    width
   } = props
   const [isLoaded, setIsLoaded] = useState(false)
   const [isErrored, setIsErrored] = useState(false)
@@ -103,7 +105,7 @@ export const EDSCImage = (props) => {
           />
         )
       }
-      { // TODO need srcSet
+      {
       // TODO why is the isError check causing issues
         !isErrored && isLoaded && isBase64Image && (
           <img

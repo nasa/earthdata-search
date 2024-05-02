@@ -40,7 +40,6 @@ const scaleImage = async (event) => {
     imageSrc,
     ee: earthdataEnvironment = determineEarthdataEnvironment()
   } = queryStringParameters || {}
-  console.log('🚀 ~ file: handler.js:43  scaleImage ~ earthdataEnvironment:', earthdataEnvironment)
 
   const width = parseInt(w, 10)
   const height = parseInt(h, 10)
@@ -56,18 +55,12 @@ const scaleImage = async (event) => {
 
     // Optional imageSrc that gets passed when a granule image from one of many is specified
     const cacheKey = generateCacheKey(conceptId, conceptType, imageSrc, dimensions)
-    console.log('🚀 ~ file: handler.js:59 ~ scaleImage ~ cacheKey:', cacheKey)
-
-    console.log('🚀 ~ file: handler.js:58 ~ scaleImage ~ useCache:', useCache)
 
     let originalImageFromCache = null
     const originalCacheKey = generateCacheKey(conceptId, conceptType)
     if (useCache) {
-      console.log('Trying to use cache')
       const imageFromCache = await getImageFromCache(cacheKey)
       if (imageFromCache) {
-        console.log('The image was already in the cache')
-
         // If the image is in the cache, return it
         return buildResponse(imageFromCache)
       }
@@ -112,7 +105,6 @@ const scaleImage = async (event) => {
 
       // Cache the original image, if the requested image was resized
       if (originalCacheKey !== cacheKey && useCache) {
-        console.log('🚀 ~ file: handler.js:107 ~ scaleImage ~ originalCacheKey:', originalCacheKey)
         cacheImage(originalCacheKey, imageBuffer)
       }
     }

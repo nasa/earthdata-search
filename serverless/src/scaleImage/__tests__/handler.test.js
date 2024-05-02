@@ -110,7 +110,6 @@ describe('scaleImage', () => {
       }
 
       await scaleImage(event, {})
-      // Should the cache key be a number is that okay?
       expect(generateCacheKeyMock).toBeCalledTimes(2)
       expect(generateCacheKeyMock.mock.calls[0]).toEqual(['C100000-EDSC', 'datasets', undefined, {
         height: 100,

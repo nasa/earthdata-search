@@ -19,10 +19,6 @@ export const getCacheConnection = () => {
     port = '6379'
   }
 
-  console.log('🚀 ~ file: getCacheConnection.js:20 ~ getCacheConnection ~ port:', port)
-  console.log('🚀 ~ file: getCacheConnection.js:19 ~ getCacheConnection ~ host:', host)
-  console.log('🚀 trying to create a client connection to the redis cache')
-
   cacheClient = asyncRedis.createClient({
     return_buffers: true,
     host,
