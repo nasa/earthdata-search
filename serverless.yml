@@ -121,8 +121,6 @@ custom:
         - provider.environment.databasePort
         - provider.environment.cacheHost
         - provider.environment.cachePort
-        - provider.environment.dbEndpoint
-        - provider.environment.dbPort
         - provider.environment.colorMapQueueUrl
         - provider.environment.tagQueueUrl
         - provider.environment.cmrOrderingOrderQueueUrl
