@@ -11,11 +11,10 @@ import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironm
  */
 export const fetchCmrCollectionGranules = async (collectionConceptId, earthdataEnvironment) => {
   const headers = {}
-
   const retrieveSystemToken = earthdataEnvironment === deployedEnvironment()
 
-  if (!process.env.IS_OFFLINE && (retrieveSystemToken)) {
-    console.log('Retrieving System token for granule image')
+  // Do not retrieve system token if offline or using the `ee` params to query other CMR envs
+  if (!process.env.IS_OFFLINE && retrieveSystemToken) {
     const cmrToken = await getSystemToken()
     headers.Authorization = `${cmrToken}`
   }

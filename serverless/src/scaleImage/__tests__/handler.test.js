@@ -422,6 +422,58 @@ describe('scaleImage', () => {
             expect(buildResponseMock).toBeCalledWith(Buffer.from(''), 404)
           })
         })
+
+        describe('when imageSrc is pass to select a specific granule image', () => {
+          test('calls the cache retrieval with the imageSrc', async () => {
+            const generateCacheKeyMock = jest.spyOn(generateCacheKey, 'generateCacheKey')
+              .mockImplementationOnce(() => 'G100000-EDSC-granules-85-85-https://example.com')
+              .mockImplementationOnce(() => 'G100000-EDSC-granules-x-y')
+
+            const getImageFromCacheMock = jest.spyOn(getImageFromCache, 'getImageFromCache')
+              .mockImplementationOnce(() => null)
+
+            const getImageUrlFromConceptMock = jest.spyOn(getImageUrlFromConcept, 'getImageUrlFromConcept')
+              .mockImplementationOnce(() => null)
+
+            const buildUnavailableImageBufferMock = jest.spyOn(buildUnavailableImageBuffer, 'buildUnavailableImageBuffer')
+
+            const buildResponseMock = jest.spyOn(buildResponse, 'buildResponse')
+
+            const event = {
+              pathParameters: {
+                concept_id: 'G100000-EDSC',
+                concept_type: 'granules'
+              },
+              queryStringParameters: {
+                imageSrc: 'https://example.com',
+                return_default: 'false'
+              }
+            }
+
+            await scaleImage(event, {})
+
+            // Call for the granule where the granule contains multiple images and `imageSrc` is passed
+            expect(generateCacheKeyMock).toBeCalledWith('G100000-EDSC', 'granules', 'https://example.com', {
+              height: 85,
+              width: 85
+            })
+
+            // Call for the original cache key for the granule itself
+            expect(generateCacheKeyMock).toBeCalledWith('G100000-EDSC', 'granules')
+
+            expect(generateCacheKeyMock).toHaveBeenCalledTimes(2)
+
+            expect(getImageFromCacheMock).toBeCalledWith('G100000-EDSC-granules-85-85-https://example.com')
+
+            // Don't call the cache to get the image from the granule with the originalCacheKey if the `imageSrc` is specified
+            expect(getImageFromCacheMock).toHaveBeenCalledTimes(1)
+            expect(getImageUrlFromConceptMock).toBeCalledWith('G100000-EDSC', 'granules', 'true', 'https://example.com', 'dev')
+
+            expect(buildUnavailableImageBufferMock).toBeCalledTimes(0)
+
+            expect(buildResponseMock).toBeCalledWith(Buffer.from(''), 404)
+          })
+        })
       })
     })
   })

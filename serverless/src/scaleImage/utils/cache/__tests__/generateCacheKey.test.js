@@ -31,4 +31,13 @@ describe('generateCacheKey', () => {
 
     expect(cacheKey).toEqual('C100000-EDSC-datasets-h-w')
   })
+
+  test('when `imageSrc` is being passed', () => {
+    const cacheKey = generateCacheKey('C100000-EDSC', 'datasets', 'https://example.com', {
+      height: 20,
+      width: 20
+    })
+
+    expect(cacheKey).toEqual('C100000-EDSC-datasets-20-20-https://example.com')
+  })
 })
