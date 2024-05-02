@@ -114,6 +114,7 @@ custom:
         - provider.environment.cmrOrderingOrderQueueUrl
         - provider.environment.catalogRestQueueUrl
         - provider.environment.harmonyQueueUrl
+        - provider.environment.swodlrQueueUrl
         - provider.environment.userDataQueueUrl
         - provider.environment.configSecretId
         - provider.vpc
