@@ -44,7 +44,7 @@ provider:
 
     NODE_OPTIONS: '--enable-source-maps'
 
-    # Redis cache configuration TODO commenting out for testing feature branch
+    # Redis cache configuration
     cacheHost:
       Fn::ImportValue: ${self:provider.stage}-ElastiCacheEndpoint
     cachePort:
