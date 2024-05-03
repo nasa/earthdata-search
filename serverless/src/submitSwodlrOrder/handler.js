@@ -83,7 +83,7 @@ const submitSwodlrOrder = async (event, context) => {
 
       const { type, url: swodlrUrl } = accessMethod
 
-      // No need for Accessmethod at this stage of dev.
+      // TODO: Add accessMethod after design implementation
       const granuleInfo = await retrieveCMRGranules({
         collectionConceptId,
         granuleParams,
@@ -135,10 +135,7 @@ const submitSwodlrOrder = async (event, context) => {
 
         const requestId = uuidv4()
 
-        console.log(`Submitting retrieval_order ${id} to swodlr with requestId ${requestId}`)
-
         // Submit the order
-
         const response = await axios({
           url: `${swodlrUrl}/api/graphql`,
           method: 'post',
@@ -154,9 +151,10 @@ const submitSwodlrOrder = async (event, context) => {
 
         const { data: responseData, errors } = response
 
-        console.log(errors)
-
-        if (errors) throw new Error(JSON.stringify(errors))
+        if (errors) {
+          console.log(errors)
+          throw new Error(JSON.stringify(errors))
+        }
 
         const { data } = responseData
         const { generateL2RasterProduct } = data
@@ -178,8 +176,6 @@ const submitSwodlrOrder = async (event, context) => {
         order_information: orderInfo,
         state: orderInfo.jobs[Object.keys(orderInfo.jobs)[0]].status
       }).where({ id })
-
-      // Not sure if we can parse errors from swodlr
 
       // Start the order status check workflow
       await startOrderStatusUpdateWorkflow(id, accessToken, type)

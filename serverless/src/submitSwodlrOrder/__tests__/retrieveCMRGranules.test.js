@@ -31,7 +31,7 @@ describe('retrieveCMRGranules', () => {
     const collectionConceptId = 'C2799438271-POCLOUD'
 
     const granuleParams = {
-      collection_concept_id: 'C2799438271-POCLOUD'
+      collection_concept_id: collectionConceptId
     }
 
     const accessToken = 'access-token'
