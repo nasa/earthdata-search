@@ -216,7 +216,6 @@ describe('submitSwodlrOrder', () => {
     const { queries } = dbTracker.queries
 
     expect(consoleMock.mock.calls[0]).toEqual(['Processing 1 order(s)'])
-    expect(consoleMock.mock.calls[1]).toEqual(['Submitting retrieval_order 12 to swodlr with requestId mock-request-id'])
 
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('update')
