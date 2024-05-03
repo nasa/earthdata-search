@@ -72,7 +72,6 @@ const scaleImage = async (event) => {
     }
 
     let imageBuffer
-    // TODO if we have the original image buffer why go out again?
     if (originalImageFromCache) {
       // If the original image is cached, don't download it from the imageUrl, instead we just resize it
       imageBuffer = originalImageFromCache
@@ -123,8 +122,7 @@ const scaleImage = async (event) => {
       thumbnail = await buildUnavailableImageBuffer(height, width)
     }
 
-    // TODO if the axios call is set to 500 here even though its an error the front end
-    // will not work
+    // TODO if the axios call is set to 500 here even though its an error the front end will fail
     return buildResponse(thumbnail, 200)
   }
 
