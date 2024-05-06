@@ -77,7 +77,7 @@ export const GranuleResultsTable = ({
       Cell: GranuleResultsBrowseImageCell,
       accessor: 'granuleThumbnail',
       width: '60',
-      customProps: {}
+      customProps: { imageHasLoaded: false }
     },
     {
       Header: 'Start',
