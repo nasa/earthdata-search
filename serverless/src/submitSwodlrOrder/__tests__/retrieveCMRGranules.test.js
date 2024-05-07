@@ -5,7 +5,7 @@ import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import { retrieveCMRGranules } from '../retrieveCMRGranules'
 
 describe('retrieveCMRGranules', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov'
     }))

@@ -152,7 +152,7 @@ const submitSwodlrOrder = async (event, context) => {
         const { data: responseData, errors } = response
 
         if (errors) {
-          console.log(errors)
+          console.error(errors)
           throw new Error(JSON.stringify(errors))
         }
 
