@@ -19,8 +19,9 @@ Enzyme.configure({ adapter: new Adapter() })
 
 beforeEach(() => {
   jest.clearAllMocks()
-  jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 })
+
+jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 
 function setup() {
   const enzymeWrapper = shallow(<SavedProjects.WrappedComponent />)
