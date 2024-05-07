@@ -284,7 +284,7 @@ class SecondaryToolbar extends Component {
             </Dropdown.Item>
           </LinkContainer>
           <LinkContainer
-            to="/projects"
+            to="/savedProjects"
           >
             <Dropdown.Item
               className="secondary-toolbar__saved-projects"

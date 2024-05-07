@@ -21,6 +21,8 @@ import EarthdataDownloadRedirect from './routes/EarthdataDownloadRedirect/Earthd
 import FooterContainer from './containers/FooterContainer/FooterContainer'
 import Preferences from './routes/Preferences/Preferences'
 import Project from './routes/Project/Project'
+import SavedProjects from './routes/SavedProjects/SavedProjects'
+
 import Search from './routes/Search/Search'
 import Subscriptions from './routes/Subscriptions/Subscriptions'
 
@@ -173,6 +175,7 @@ class App extends Component {
                       }
                     />
                     <Route path={this.portalPaths('/projects')} component={Project} />
+                    <Route path={this.portalPaths('/savedProjects')} component={SavedProjects} />
                     <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
                     <Redirect exact from="/" to="/search" />
                     <Route
