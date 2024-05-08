@@ -180,6 +180,7 @@
     "proj4leaflet": "^1.0.2",
     "prop-types": "^15.8.1",
     "qs": "^6.10.3",
+    "raw-loader": "^4.0.2",
     "rc-pagination": "^1.21.1",
     "react": "^17.0.2",
     "react-autosuggest": "^10.1.0",

@@ -19,6 +19,8 @@ export const getImageUrlFromConcept = async (
 ) => {
   // Retrieve the metadata for the provided concept id and type
   const conceptMetadata = await fetchCmrConcept(conceptId, earthdataEnvironment)
+  console.log('🚀 ~ file: getImageUrlFromConcept.js:22 ~ conceptMetadata:', conceptMetadata)
+  // If we fail to get back conceptMetadata just return with default image
 
   if (conceptType === 'granules') {
     // If the `imgSrc` was included in the request then we should search for that one

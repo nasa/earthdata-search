@@ -48,7 +48,7 @@ const ServerlessWebpackConfig = {
     rules: [
       {
         test: /\.svg$/,
-        use: { loader: 'file-loader' }
+        use: { loader: 'raw-loader' }
       },
       {
         test: /\.js$/,
