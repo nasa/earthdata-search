@@ -45,6 +45,7 @@ describe('SavedProjects component', () => {
         <SavedProjects />
       </Router>
     )
+
     expect(screen.getByText('Mock Saved Projects Container')).toBeInTheDocument()
   })
 
