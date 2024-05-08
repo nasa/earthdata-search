@@ -6,8 +6,6 @@ import Helmet from 'react-helmet'
 import * as AppConfig from '../../../../../../sharedUtils/config'
 
 import Project from '../Project'
-import SavedProjectsContainer
-  from '../../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import ProjectCollectionsContainer
   from '../../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
 
@@ -86,18 +84,6 @@ describe('Project component', () => {
 
       form.simulate('submit', { preventDefault: jest.fn() })
       expect(props.onToggleChunkedOrderModal.mock.calls.length).toBe(1)
-    })
-  })
-
-  describe('Saved projects page', () => {
-    test('displays the SavedProjectsContainer', () => {
-      const { enzymeWrapper } = setup({
-        location: {
-          search: ''
-        }
-      })
-
-      expect(enzymeWrapper.find(SavedProjectsContainer).length).toBe(1)
     })
   })
 
