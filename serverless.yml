@@ -28,6 +28,8 @@ provider:
       Ref: CatalogRestOrderQueue
     harmonyQueueUrl:
       Ref: HarmonyOrderQueue
+    swodlrQueueUrl:
+      Ref: SwodlrOrderQueue
     userDataQueueUrl:
       Ref: UserDataQueue
 
@@ -35,6 +37,7 @@ provider:
     obfuscationSpinShapefiles: ${self:custom.variables.obfuscationSpinShapefiles}
 
     orderDelaySeconds: ${self:custom.variables.orderDelaySeconds}
+    useCache: ${self:custom.variables.useCache}
 
     configSecretId:
       Fn::ImportValue: ${self:provider.stage}-DbPasswordSecret
@@ -42,6 +45,13 @@ provider:
     collectionCapabilitiesLambda: ${self:custom.siteName}-generateCollectionCapabilityTags
 
     NODE_OPTIONS: '--enable-source-maps'
+
+    # Redis cache configuration
+    cacheHost:
+      Fn::ImportValue: ${self:provider.stage}-ElastiCacheEndpoint
+    cachePort:
+      Fn::ImportValue: ${self:provider.stage}-ElastiCachePort
+    cacheKeyExpireSeconds: ${self:custom.variables.cacheKeyExpireSeconds}
 
   vpc:
     securityGroupIds:
@@ -107,11 +117,14 @@ custom:
       Exclude:
         - provider.environment.databaseEndpoint
         - provider.environment.databasePort
+        - provider.environment.cacheHost
+        - provider.environment.cachePort
         - provider.environment.colorMapQueueUrl
         - provider.environment.tagQueueUrl
         - provider.environment.cmrOrderingOrderQueueUrl
         - provider.environment.catalogRestQueueUrl
         - provider.environment.harmonyQueueUrl
+        - provider.environment.swodlrQueueUrl
         - provider.environment.userDataQueueUrl
         - provider.environment.configSecretId
         - provider.vpc
@@ -119,12 +132,15 @@ custom:
         - functions.submitCatalogRestOrder.environment.updateOrderStatusStateMachineArn
         - functions.submitCmrOrderingOrder.environment.updateOrderStatusStateMachineArn
         - functions.submitHarmonyOrder.environment.updateOrderStatusStateMachineArn
+        - functions.submitSwodlrOrder.environment.updateOrderStatusStateMachineArn
 
   variables:
     # Default values for environment variables used to set environment variables
+    cacheKeyExpireSeconds: ${env:CACHE_KEY_EXPIRE_SECONDS, '84000'}
     obfuscationSpin: ${env:OBFUSCATION_SPIN, ''}
     obfuscationSpinShapefiles: ${env:OBFUSCATION_SPIN_SHAPEFILES, ''}
     orderDelaySeconds: ${env:ORDER_DELAY_SECONDS, '1'}
+    useCache: ${env:USE_CACHE, 'false'}
 
     cloudfrontToCloudwatchBucketPrefixApi:
       Fn::Join:

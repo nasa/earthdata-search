@@ -126,7 +126,7 @@ const submitRetrieval = async (event, context) => {
       // need to be submitted to
       const { type } = accessMethod
 
-      if (['ESI', 'ECHO ORDERS', 'Harmony'].includes(type)) {
+      if (['ESI', 'ECHO ORDERS', 'Harmony', 'SWODLR'].includes(type)) {
         // The insert above returns an array but we've only added a single row
         // so we will always take the first result
         const [retrievalCollection] = newRetrievalCollection

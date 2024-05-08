@@ -70,7 +70,7 @@ describe('submitHarmonyOrder', () => {
       })
 
     nock('https://harmony.earthdata.nasa.gov')
-      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var%2Ctest_var_2/coverage/rangeset')
+      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/parameter_vars/coverage/rangeset')
       .reply(201, {
         username: 'rabbott',
         status: 'running',
@@ -146,7 +146,7 @@ describe('submitHarmonyOrder', () => {
       })
 
     nock('https://harmony.earthdata.nasa.gov')
-      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var%2Ctest_var_2/coverage/rangeset')
+      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/parameter_vars/coverage/rangeset')
       .reply(201, {
         username: 'rabbott',
         status: 'running',
@@ -234,7 +234,7 @@ describe('submitHarmonyOrder', () => {
       })
 
     nock('https://harmony.earthdata.nasa.gov')
-      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/test_var%2Ctest_var_2/coverage/rangeset')
+      .post('/C100000-EDSC/ogc-api-coverages/1.0.0/collections/parameter_vars/coverage/rangeset?')
       .reply(403, {
         code: 'harmony.ForbiddenError',
         description: 'Error: You are not authorized to access the requested resource'
@@ -278,13 +278,14 @@ describe('submitHarmonyOrder', () => {
     expect(queries[2].method).toEqual('update')
     expect(queries[2].bindings).toEqual(['create_failed', 'Error: You are not authorized to access the requested resource', 12])
 
-    expect(consoleMock).toBeCalledTimes(7)
+    expect(consoleMock).toBeCalledTimes(8)
     expect(consoleMock.mock.calls[0]).toEqual(['Processing 1 order(s)'])
     expect(consoleMock.mock.calls[1]).toEqual(['Harmony order payload'])
     expect(consoleMock.mock.calls[2]).toEqual(['forceAsync: true'])
     expect(consoleMock.mock.calls[3]).toEqual(['granuleId: G10000005-EDSC'])
     expect(consoleMock.mock.calls[4]).toEqual(['format: NetCDF-4'])
-    expect(consoleMock.mock.calls[5]).toEqual(['skipPreview: true'])
-    expect(consoleMock.mock.calls[6]).toEqual(['AxiosError (403): Error: You are not authorized to access the requested resource'])
+    expect(consoleMock.mock.calls[5]).toEqual(['variable: test_var,test_var_2'])
+    expect(consoleMock.mock.calls[6]).toEqual(['skipPreview: true'])
+    expect(consoleMock.mock.calls[7]).toEqual(['AxiosError (403): Error: You are not authorized to access the requested resource'])
   })
 })
