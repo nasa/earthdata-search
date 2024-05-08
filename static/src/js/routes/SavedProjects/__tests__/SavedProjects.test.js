@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import * as AppConfig from '../../../../../../sharedUtils/config'
 import SavedProjects from '../SavedProjects'
@@ -21,29 +21,30 @@ jest.mock('../../../containers/AuthRequiredContainer/AuthRequiredContainer', () 
 )))
 
 jest.mock('react-helmet', () => {
-  const React = require('react');
-  const plugin = jest.requireActual('react-helmet');
-  const mockHelmet = ({ children, ...props }) =>
-    React.createElement('div', {
-      ...props,
-      className: 'mock-helmet',
-    }, children);
+  const plugin = jest.requireActual('react-helmet')
+  const mockHelmet = ({ children, ...props }) => React.createElement('div', {
+    ...props,
+    className: 'mock-helmet'
+  }, children)
+
   return {
     ...plugin,
-    Helmet: jest.fn().mockImplementation(mockHelmet),
-  };
-});
+    Helmet: jest.fn().mockImplementation(mockHelmet)
+  }
+})
 
 jest.mock('../../../containers/SavedProjectsContainer/SavedProjectsContainer', () => jest.fn(
   () => <>Mock Saved Projects Container</>
 ))
+
 jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 
 beforeEach(() => {
   render(
     <Router>
       <SavedProjects />
-    </Router>)
+    </Router>
+  )
 })
 
 describe('SavedProjects component', () => {
@@ -54,26 +55,32 @@ describe('SavedProjects component', () => {
 
   describe('helmet metadata rendered', () => {
     test('title metadata is rendered', () => {
-      const { container } = render(<Router>
-        <SavedProjects />
-      </Router>);
-      const metaEl = container.querySelector(`meta[name="title"]`);
+      const { container } = render(
+        <Router>
+          <SavedProjects />
+        </Router>
+      )
+      const metaEl = container.querySelector('meta[name="title"]')
       expect(metaEl).toBeInTheDocument()
     })
 
     test('metadata robots is rendered', () => {
-      const { container } = render(<Router>
-        <SavedProjects />
-      </Router>);
-      const metaEl = container.querySelector(`meta[name="robots"]`);
+      const { container } = render(
+        <Router>
+          <SavedProjects />
+        </Router>
+      )
+      const metaEl = container.querySelector('meta[name="robots"]')
       expect(metaEl).toBeInTheDocument()
     })
 
     test('metadata robots is rendered', () => {
-      const { container } = render(<Router>
-        <SavedProjects />
-      </Router>);
-      const metaEl = container.querySelector(`link[href="https://search.earthdata.nasa.gov/projects"]`);
+      const { container } = render(
+        <Router>
+          <SavedProjects />
+        </Router>
+      )
+      const metaEl = container.querySelector('link[href="https://search.earthdata.nasa.gov/projects"]')
       expect(metaEl).toBeInTheDocument()
     })
   })
