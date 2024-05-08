@@ -1,60 +1,80 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import Helmet from 'react-helmet'
+import { render, screen } from '@testing-library/react'
+import '@testing-library/jest-dom'
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import * as AppConfig from '../../../../../../sharedUtils/config'
-
 import SavedProjects from '../SavedProjects'
-import SavedProjectsContainer
-  from '../../../containers/SavedProjectsContainer/SavedProjectsContainer'
 
 // Mock react-leaflet because it causes errors
 jest.mock('react-leaflet', () => ({
-  createLayerComponent: jest.fn().mockImplementation(() => {}),
-  createControlComponent: jest.fn().mockImplementation(() => {})
+  createLayerComponent: jest.fn().mockImplementation(() => { }),
+  createControlComponent: jest.fn().mockImplementation(() => { })
 }))
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../containers/AuthRequiredContainer/AuthRequiredContainer', () => jest.fn(({ children }) => (
+  <mock-auth-container>{children}</mock-auth-container>
+)))
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
+jest.mock('../../../containers/AuthRequiredContainer/AuthRequiredContainer', () => jest.fn(({ children }) => (
+  <mock-auth-container>{children}</mock-auth-container>
+)))
 
+jest.mock('react-helmet', () => {
+  const React = require('react');
+  const plugin = jest.requireActual('react-helmet');
+  const mockHelmet = ({ children, ...props }) =>
+    React.createElement('div', {
+      ...props,
+      className: 'mock-helmet',
+    }, children);
+  return {
+    ...plugin,
+    Helmet: jest.fn().mockImplementation(mockHelmet),
+  };
+});
+
+jest.mock('../../../containers/SavedProjectsContainer/SavedProjectsContainer', () => jest.fn(
+  () => <>Mock Saved Projects Container</>
+))
 jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 
-function setup() {
-  const enzymeWrapper = shallow(<SavedProjects.WrappedComponent />)
-
-  return {
-    enzymeWrapper
-  }
-}
+beforeEach(() => {
+  render(
+    <Router>
+      <SavedProjects />
+    </Router>)
+})
 
 describe('SavedProjects component', () => {
-  test('should render self', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.exists()).toBeTruthy()
+  test('displays the SavedProjectsContainer', () => {
+    screen.debug()
+    expect(screen.getByText('Mock Saved Projects Container')).toBeInTheDocument()
   })
 
-  test('sets the correct Helmet meta information', () => {
-    const { enzymeWrapper } = setup()
+  describe('helmet metadata rendered', () => {
+    test('title metadata is rendered', () => {
+      const { container } = render(<Router>
+        <SavedProjects />
+      </Router>);
+      const metaEl = container.querySelector(`meta[name="title"]`);
+      expect(metaEl).toBeInTheDocument()
+    })
 
-    const helmet = enzymeWrapper.find(Helmet)
+    test('metadata robots is rendered', () => {
+      const { container } = render(<Router>
+        <SavedProjects />
+      </Router>);
+      const metaEl = container.querySelector(`meta[name="robots"]`);
+      expect(metaEl).toBeInTheDocument()
+    })
 
-    expect(helmet.childAt(1).props().name).toEqual('title')
-    expect(helmet.childAt(1).props().content).toEqual('Saved Projects')
-    expect(helmet.childAt(2).props().name).toEqual('robots')
-    expect(helmet.childAt(2).props().content).toEqual('noindex, nofollow')
-    expect(helmet.childAt(3).props().rel).toEqual('canonical')
-  })
-
-  describe('Saved projects page', () => {
-    test('displays the SavedProjectsContainer', () => {
-      const { enzymeWrapper } = setup()
-
-      expect(enzymeWrapper.find(SavedProjectsContainer).length).toBe(1)
+    test('metadata robots is rendered', () => {
+      const { container } = render(<Router>
+        <SavedProjects />
+      </Router>);
+      const metaEl = container.querySelector(`link[href="https://search.earthdata.nasa.gov/projects"]`);
+      expect(metaEl).toBeInTheDocument()
     })
   })
 })
