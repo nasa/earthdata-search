@@ -16,11 +16,10 @@ jest.mock('../../../containers/AuthRequiredContainer/AuthRequiredContainer', () 
   <mock-auth-container>{children}</mock-auth-container>
 )))
 
-jest.mock('../../../containers/AuthRequiredContainer/AuthRequiredContainer', () => jest.fn(({ children }) => (
-  <mock-auth-container>{children}</mock-auth-container>
-)))
-
 jest.mock('react-helmet', () => {
+  // Disabling the no-shadow rule for this one line as the mock needs to create a react element and it cannot use an outer scope varible to do that.
+  // eslint-disable-next-line no-shadow
+  const React = jest.requireActual('react')
   const plugin = jest.requireActual('react-helmet')
   const mockHelmet = ({ children, ...props }) => React.createElement('div', {
     ...props,
@@ -49,7 +48,6 @@ beforeEach(() => {
 
 describe('SavedProjects component', () => {
   test('displays the SavedProjectsContainer', () => {
-    screen.debug()
     expect(screen.getByText('Mock Saved Projects Container')).toBeInTheDocument()
   })
 
