@@ -38,16 +38,13 @@ jest.mock('../../../containers/SavedProjectsContainer/SavedProjectsContainer', (
 
 jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 
-beforeEach(() => {
-  render(
-    <Router>
-      <SavedProjects />
-    </Router>
-  )
-})
-
 describe('SavedProjects component', () => {
   test('displays the SavedProjectsContainer', () => {
+    render(
+      <Router>
+        <SavedProjects />
+      </Router>
+    )
     expect(screen.getByText('Mock Saved Projects Container')).toBeInTheDocument()
   })
 
@@ -72,7 +69,7 @@ describe('SavedProjects component', () => {
       expect(metaEl).toBeInTheDocument()
     })
 
-    test('metadata robots is rendered', () => {
+    test('link is properly rendered', () => {
       const { container } = render(
         <Router>
           <SavedProjects />
