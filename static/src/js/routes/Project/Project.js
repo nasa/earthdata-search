@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
@@ -17,7 +17,6 @@ import ProjectPanelsContainer from '../../containers/ProjectPanelsContainer/Proj
 import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
 import EdscMapContainer from '../../containers/MapContainer/MapContainer'
-import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 
 const mapDispatchToProps = (dispatch) => ({
@@ -66,24 +65,10 @@ export class Project extends Component {
     const { search } = location
     const { edscHost } = this
 
-    // If there are no params in the URL, show the saved projects page
+    // If there are no project params in the URL, re-route to the saved Projects page
     if (search === '') {
       return (
-        <AuthRequiredContainer>
-          <Helmet>
-            <title>Saved Projects</title>
-            <meta name="title" content="Saved Projects" />
-            <meta name="robots" content="noindex, nofollow" />
-            <link rel="canonical" href={`${edscHost}/projects`} />
-          </Helmet>
-          <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
-            <div className="route-wrapper__content">
-              <div className="route-wrapper__content-inner">
-                <SavedProjectsContainer />
-              </div>
-            </div>
-          </div>
-        </AuthRequiredContainer>
+        <Redirect to="/saved-projects" />
       )
     }
 

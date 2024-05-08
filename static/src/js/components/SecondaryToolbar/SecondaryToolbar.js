@@ -284,7 +284,7 @@ class SecondaryToolbar extends Component {
             </Dropdown.Item>
           </LinkContainer>
           <LinkContainer
-            to="/savedProjects"
+            to="/saved-projects"
           >
             <Dropdown.Item
               className="secondary-toolbar__saved-projects"
@@ -360,13 +360,13 @@ class SecondaryToolbar extends Component {
     )
 
     const showSaveProjectDropdown = pathStartsWith(location.pathname, ['/search']) && loggedIn
-    const showViewProjectLink = (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
+    const showViewProjectLink = (!pathStartsWith(location.pathname, ['/projects', 'saved-projects', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
 
     return (
       secondaryToolbarEnabled
       && (
         <nav className="secondary-toolbar">
-          {isPath(location.pathname, ['/projects']) && backToSearchLink}
+          {(isPath(location.pathname, ['/projects']) || isPath(location.pathname, ['/saved-projects'])) && backToSearchLink}
           {isDownloadPathWithId(location.pathname) && backToProjectLink}
           <PortalFeatureContainer authentication>
             <>

@@ -175,7 +175,7 @@ class App extends Component {
                       }
                     />
                     <Route path={this.portalPaths('/projects')} component={Project} />
-                    <Route path={this.portalPaths('/savedProjects')} component={SavedProjects} />
+                    <Route path={this.portalPaths('/saved-projects')} component={SavedProjects} />
                     <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
                     <Redirect exact from="/" to="/search" />
                     <Route
