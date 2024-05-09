@@ -135,8 +135,7 @@ const GranuleResultsBody = ({
     hoveredGranuleId,
     focusedGranuleId,
     isGranuleInProject,
-    isCollectionInProject,
-    isTableView
+    isCollectionInProject
   }), [granuleIds, granulesMetadata, focusedGranuleId, hoveredGranuleId])
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)
