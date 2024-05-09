@@ -47,6 +47,7 @@ const GranuleResultsBody = ({
   project
 }) => {
   const [hoveredGranuleId, setHoveredGranuleId] = useState(null)
+
   // When the map hovers over a granule
   eventEmitter.on(`map.layer.${collectionId}.focusgranule`, (data) => {
     const { granule: focusedGranule } = data

@@ -111,6 +111,17 @@ describe('granule map events', () => {
     expect(eventEmitterEmitMock).toBeCalledWith('map.layer.C1219248410-LANCEMODIS.focusgranule', { granule: null })
   })
 
+  test('sets isHoveredGranule for the correct granule', () => {
+    const { granulesList } = setup({
+      hoveredGranuleId: 'G1924512983-LANCEMODIS'
+    })
+
+    const [granule] = granulesList
+    const { isHoveredGranule } = granule
+
+    expect(isHoveredGranule).toEqual(true)
+  })
+
   test('clicking on a granule sets that granule as sticky on the map', () => {
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
     eventEmitterEmitMock.mockImplementation(() => jest.fn())

@@ -1423,6 +1423,7 @@ test.describe('Map interactions', () => {
       })
 
       // TODO find a way to verify the granules are drawn on the map
+
       test.describe('When hovering over a granule', () => {
         test('highlights the granule in the granule results list', async ({ page }) => {
           await page.locator('.map').hover({
