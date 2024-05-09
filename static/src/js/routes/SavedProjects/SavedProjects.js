@@ -15,7 +15,7 @@ export const SavedProjects = () => {
         <title>Saved Projects</title>
         <meta name="title" content="Saved Projects" />
         <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href={`${edscHost}/projects`} />
+        <link rel="canonical" href={`${edscHost}/saved-projects`} />
       </Helmet>
       <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
         <div className="route-wrapper__content">
