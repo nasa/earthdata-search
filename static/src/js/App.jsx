@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
+import L from 'leaflet'
+import './util/map/sphericalPolygon'
 import { ConnectedRouter } from 'connected-react-router'
 import {
   Switch,

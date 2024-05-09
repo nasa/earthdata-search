@@ -1,4 +1,5 @@
 import L from 'leaflet'
+import '../../util/map/sphericalPolygon'
 import { difference, isEqual } from 'lodash'
 import { createLayerComponent } from '@react-leaflet/core'
 

@@ -1,3 +1,5 @@
+import L from 'leaflet'
+import './map/sphericalPolygon'
 import { createS3Links } from '../../../../sharedUtils/getS3Urls'
 import { eventEmitter } from '../events/events'
 import { createDataLinks } from './granules'
