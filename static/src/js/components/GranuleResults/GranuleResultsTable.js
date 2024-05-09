@@ -162,7 +162,7 @@ export const GranuleResultsTable = ({
   const hiddenColumns = []
 
   // If (!hasBrowseImagery) hiding column from table
-  // TODO table rerenders which is rerendering all columns/cells causing image to be refetched
+  // TODO: table rerenders which is rerendering all columns/cells causing image to be refetched
   // After table update EDSC-4094 retry to `unhide` image
   hiddenColumns.push('granuleThumbnail')
 

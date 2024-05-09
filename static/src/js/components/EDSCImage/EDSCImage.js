@@ -1,8 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  memo
-} from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import retrieveThumbnail from '../../util/retrieveThumbnail'
@@ -143,4 +139,4 @@ EDSCImage.propTypes = {
   width: PropTypes.number.isRequired
 }
 
-export default memo(EDSCImage)
+export default EDSCImage
