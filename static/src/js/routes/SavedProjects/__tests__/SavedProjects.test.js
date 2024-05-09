@@ -76,7 +76,7 @@ describe('SavedProjects component', () => {
           <SavedProjects />
         </Router>
       )
-      const metaEl = container.querySelector('link[href="https://search.earthdata.nasa.gov/projects"]')
+      const metaEl = container.querySelector('link[href="https://search.earthdata.nasa.gov/saved-projects"]')
       expect(metaEl).toBeInTheDocument()
     })
   })
