@@ -1,4 +1,8 @@
-import React, { Component } from 'react'
+import React, {
+  Component,
+  lazy,
+  Suspense
+} from 'react'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import {
@@ -32,7 +36,6 @@ import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequir
 import AuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
 import ChunkedOrderModalContainer from './containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer'
 import DeprecatedParameterModalContainer from './containers/DeprecatedParameterModalContainer/DeprecatedParameterModalContainer'
-import EdscMapContainer from './containers/MapContainer/MapContainer'
 import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
 import ErrorBoundary from './components/Errors/ErrorBoundary'
 import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'
@@ -59,6 +62,7 @@ window.reactToastProvider = React.createRef()
 //   whyDidYouUpdate(React, { include: [/Search/] })
 // }
 
+const EdscMapContainer = lazy(() => import('./containers/MapContainer/MapContainer'))
 // Create the root App component
 class App extends Component {
   constructor(props) {
@@ -179,10 +183,10 @@ class App extends Component {
                       path={this.portalPaths('/search')}
                       render={
                         () => (
-                          <>
+                          <Suspense fallback={<div />}>
                             <Search />
                             <EdscMapContainer />
-                          </>
+                          </Suspense>
                         )
                       }
                     />
