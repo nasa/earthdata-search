@@ -20,7 +20,6 @@ jest.mock('axios')
 
 const originalOffsetHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetHeight')
 const originalOffsetWidth = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetWidth')
-jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
 
 beforeEach(() => {
   jest.clearAllMocks()

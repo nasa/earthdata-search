@@ -40,7 +40,7 @@ describe('retrieveThumbnail', () => {
         data: 'error'
       }))
 
-      const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+      const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
       const thumbnail = await retrieveThumbnail(mockThumbnailEndpoint)
 
