@@ -24,7 +24,7 @@ export const cacheImage = async (key, image) => {
 
       console.log(`Successfully cached ${key}`)
     } catch (error) {
-      console.log(`Failed to cache ${key}: ${error.toString()}`)
+      console.error(`Failed to cache ${key}: ${error.toString()}`)
 
       throw error
     }
