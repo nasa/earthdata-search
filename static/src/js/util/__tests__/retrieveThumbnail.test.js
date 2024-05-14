@@ -40,6 +40,8 @@ describe('retrieveThumbnail', () => {
         data: 'error'
       }))
 
+      const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+
       const thumbnail = await retrieveThumbnail(mockThumbnailEndpoint)
 
       expect(fetch).toHaveBeenCalledTimes(1)
@@ -50,6 +52,8 @@ describe('retrieveThumbnail', () => {
       })
 
       expect(thumbnail).toEqual('test-file-stub')
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('There was an error retrieving the thumbnail from', 'https://test.com')
     })
   })
 })

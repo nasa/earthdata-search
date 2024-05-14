@@ -9,13 +9,15 @@ import {
   FaPlus,
   FaTimesCircle
 } from 'react-icons/fa'
-import EDSCImage from '../EDSCImage/EDSCImage'
+
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import murmurhash3 from '../../util/murmurhash3'
 import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import EDSCImage from '../EDSCImage/EDSCImage'
 import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
@@ -51,6 +53,12 @@ const GranuleResultsItem = forwardRef(({
   onMetricsDataAccess,
   onRemoveGranuleFromProjectCollection
 }, ref) => {
+  const { thumbnailSize } = getApplicationConfig()
+  const {
+    height: thumbnailHeight,
+    width: thumbnailWidth
+  } = thumbnailSize
+
   const handleFilterClick = () => {
     let { id } = granule
 
@@ -94,8 +102,8 @@ const GranuleResultsItem = forwardRef(({
         <EDSCImage
           className="granule-results-item__thumb-image"
           src={granuleThumbnail}
-          height={85}
-          width={85}
+          height={thumbnailHeight}
+          width={thumbnailWidth}
           alt={`Browse Image for ${title}`}
           useSpinner={false}
           isBase64Image

@@ -16,7 +16,7 @@ export const retrieveThumbnail = async (thumbnailSrc) => {
 
     return responseImg
   } catch (error) {
-    console.log('There was an error retrieving the thumbnail from', thumbnailSrc)
+    console.error('There was an error retrieving the thumbnail from', thumbnailSrc)
 
     return unavailableImg
   }

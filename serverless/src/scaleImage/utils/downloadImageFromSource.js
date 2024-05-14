@@ -21,7 +21,7 @@ export const downloadImageFromSource = async (imageUrl) => {
   } catch (error) {
     const { response } = error
     const { data: errorMessage } = response
-    console.log(`Error fetching image from url ${imageUrl}, ${errorMessage}`)
+    console.error(`Error fetching image from url ${imageUrl}, ${errorMessage}`)
 
     return undefined
   }
