@@ -11,6 +11,7 @@ import userEvent from '@testing-library/user-event'
 
 import GranuleResultsFocusedMeta from '../GranuleResultsFocusedMeta'
 
+jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
 describe('GranuleResultsFocusedMeta component', () => {
   describe('when no links are provided', () => {
     test('should not render', () => {
