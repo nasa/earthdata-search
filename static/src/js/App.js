@@ -18,6 +18,7 @@ import configureStore from './store/configureStore'
 import history from './util/history'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 
+// Routes
 import Admin from './routes/Admin/Admin'
 import ContactInfo from './routes/ContactInfo/ContactInfo'
 import Downloads from './routes/Downloads/Downloads'
@@ -28,6 +29,7 @@ import Project from './routes/Project/Project'
 import Search from './routes/Search/Search'
 import Subscriptions from './routes/Subscriptions/Subscriptions'
 
+// Components and Containers
 import AboutCSDAModalContainer from './containers/AboutCSDAModalContainer/AboutCSDAModalContainer'
 import AboutCwicModalContainer from './containers/AboutCwicModalContainer/AboutCwicModalContainer'
 import AppHeader from './components/AppHeader/AppHeader'
@@ -36,19 +38,19 @@ import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequir
 import AuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
 import ChunkedOrderModalContainer from './containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer'
 import DeprecatedParameterModalContainer from './containers/DeprecatedParameterModalContainer/DeprecatedParameterModalContainer'
+import EditSubscriptionModalContainer from './containers/EditSubscriptionModalContainer/EditSubscriptionModalContainer'
 import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
 import ErrorBoundary from './components/Errors/ErrorBoundary'
+import HistoryContainer from './containers/HistoryContainer/HistoryContainer'
 import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
 import NotFound from './components/Errors/NotFound'
 import PortalContainer from './containers/PortalContainer/PortalContainer'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
+import Spinner from './components/Spinner/Spinner'
 import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
 import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
-import EditSubscriptionModalContainer from './containers/EditSubscriptionModalContainer/EditSubscriptionModalContainer'
-import HistoryContainer from './containers/HistoryContainer/HistoryContainer'
-
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
 
@@ -63,6 +65,7 @@ window.reactToastProvider = React.createRef()
 // }
 
 const EdscMapContainer = lazy(() => import('./containers/MapContainer/MapContainer'))
+
 // Create the root App component
 class App extends Component {
   constructor(props) {
@@ -180,13 +183,17 @@ class App extends Component {
                     <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
                     <Redirect exact from="/" to="/search" />
                     <Route
+                      // TODO not relevant to PR but, I want to understand why the Search component has to be loaded first
+                      // EVEN without the lazy loading
                       path={this.portalPaths('/search')}
                       render={
                         () => (
-                          <Suspense fallback={<div />}>
+                          <>
                             <Search />
-                            <EdscMapContainer />
-                          </Suspense>
+                            <Suspense fallback={<Spinner type="dots" />}>
+                              <EdscMapContainer />
+                            </Suspense>
+                          </>
                         )
                       }
                     />
