@@ -1,7 +1,6 @@
-/* eslint-disable global-require */
-const { defineConfig } = require('cypress')
+import vitePreprocessor from 'cypress-vite'
 
-module.exports = defineConfig({
+export default ({
   viewportWidth: 1400,
   viewportHeight: 900,
   fixturesFolder: 'cypress/fixtures',
@@ -13,10 +12,8 @@ module.exports = defineConfig({
     test_cyress: true
   },
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index')(on, config)
+    setupNodeEvents(on) {
+      on('file:preprocessor', vitePreprocessor({}))
     },
     baseUrl: 'http://localhost:8080',
     specPattern: 'cypress/e2e/**/*.cy.js'

@@ -1,7 +1,7 @@
 import postcss from '@vituum/vite-plugin-postcss'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import react from '@vitejs/plugin-react'
-import {ViteEjsPlugin} from "vite-plugin-ejs"
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
+import { ViteEjsPlugin } from 'vite-plugin-ejs'
 import { resolve } from 'path'
 import availablePortals from './portals/index'
 
@@ -68,6 +68,8 @@ export default {
         'core-js/stable',
         'regenerator-runtime/runtime'],
       output: {
+        format: 'es',
+        inlineDynamicImports: false,
         entryFileNames: '[name].bundle.js',
         assetFileNames: 'assets/[name].[hash].[ext]',
         dir: resolve(__dirname, 'static/dist'),
