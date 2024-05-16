@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './GranuleResultsBrowseImageCell.scss'
 import EDSCImage from '../EDSCImage/EDSCImage'
+
+import './GranuleResultsBrowseImageCell.scss'
 
 /**
  * Renders GranuleResultsBrowseImageCell.

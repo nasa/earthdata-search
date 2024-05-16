@@ -2,7 +2,6 @@ import sharp from 'sharp'
 import { resizeImage } from './resizeImage'
 import notFoundAsset from './image-unavailable.svg'
 
-// ../../assets/images/image-unavailable.svg
 /**
  * No image available? This will pull the svg file and return it as a Buffer
  const notFoundAsset = require('./image-unavailable.svg')

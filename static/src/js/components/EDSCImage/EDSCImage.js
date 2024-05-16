@@ -102,7 +102,6 @@ export const EDSCImage = (props) => {
         )
       }
       {
-      // TODO why is the isError check causing issues
         !isErrored && isLoaded && isBase64Image && (
           <img
             className="edsc-image__image"
