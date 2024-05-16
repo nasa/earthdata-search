@@ -18,8 +18,8 @@
     }
   ],
   "scripts": {
-    "build-vite": "vite build --debug",
-    "start-vite": "vite serve --debug",
+    "build-vite": "vite build",
+    "start-vite": "vite serve",
     "preview-vite": "vite preview --port 8080",
     "build": "NODE_ENV=production NODE_OPTIONS=--max-old-space-size=6144 webpack --config static.webpack.config.prod.js",
     "build-sit": "NODE_ENV=production webpack --mode production",
@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.11.0",
+    "@cypress/vite-dev-server": "^5.0.7",
     "@cypress/webpack-preprocessor": "^5.16.1",
     "@playwright/test": "^1.37.1",
     "@testing-library/jest-dom": "^5.17.0",
@@ -64,7 +65,7 @@
     "babel-jest": "^28.1.0",
     "babel-plugin-istanbul": "^6.1.1",
     "cookies": "^0.7.3",
-    "cypress": "^13.0.0",
+    "cypress": "^13.9.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-rollup-preprocessor": "^1.2.0",
     "cypress-vite": "^1.5.0",

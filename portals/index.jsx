@@ -17,7 +17,7 @@ import podaacCloudConfig from './podaac-cloud/config.json'
 import seabassConfig from './seabass/config.json'
 import snwgConfig from './snwg/config.json'
 import soosConfig from './soos/config.json'
-import standardproductsConfig from './standardproducts/config.json'
+import standardProductsConfig from './standardproducts/config.json'
 import suborbitalConfig from './suborbital/config.json'
 
 const output = {}
@@ -27,7 +27,7 @@ Object.assign(output, {
     ...aboveConfig,
     portalId: 'above'
   },
-  aiMl: {
+  'ai-ml': {
     ...aiMlConfig,
     portalId: 'ai-ml'
   },
@@ -100,7 +100,7 @@ Object.assign(output, {
     portalId: 'soos'
   },
   standardproducts: {
-    ...standardproductsConfig,
+    ...standardProductsConfig,
     portalId: 'standardproducts'
   },
   suborbital: {
