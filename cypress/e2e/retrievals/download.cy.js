@@ -7,7 +7,7 @@ import retrieval from './download_mocks/retrieval.json'
 import { getAuthHeaders } from '../utils/getAuthHeaders'
 
 describe('Download project spec', () => {
-  it('downloading a collection sends gives the user download links', () => {
+  it('downloading a collection gives the user download links', () => {
     cy.login()
 
     const authHeaders = getAuthHeaders()
