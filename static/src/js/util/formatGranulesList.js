@@ -92,8 +92,8 @@ export const formatGranulesList = ({
       timeStart,
       // Use producerGranuleId as title, unless it doesn't exist (CWIC) then fallback to title
       title: producerGranuleId || title,
-      isHoveredGranule,
       isFocusedGranule,
+      isHoveredGranule,
       isInProject,
       isCollectionInProject,
       isOpenSearch,

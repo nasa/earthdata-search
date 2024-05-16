@@ -19,7 +19,6 @@ function setup(overrideProps) {
     isProjectGranulesLoading: false,
     itemCount: 1,
     focusedGranule: 'one',
-    hasBrowseImagery: false,
     loadMoreItems: jest.fn(),
     location: {},
     onExcludeGranule: jest.fn(),

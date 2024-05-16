@@ -48,12 +48,12 @@ const GranuleResultsBody = ({
 }) => {
   const [hoveredGranuleId, setHoveredGranuleId] = useState(null)
 
+  // When the map hovers over a granule
   eventEmitter.on(`map.layer.${collectionId}.focusgranule`, (data) => {
     const { granule: focusedGranule } = data
 
     if (focusedGranule) {
       const { id: focusedId } = focusedGranule
-
       setHoveredGranuleId(focusedId)
 
       return
@@ -141,7 +141,7 @@ const GranuleResultsBody = ({
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)
 
-  const { granulesList, hasBrowseImagery } = result
+  const { granulesList } = result
 
   // Determine if another page is available by checking if there are more granules to load,
   // or if we have no granules and granules are loading. This controls whether or not the
@@ -214,7 +214,6 @@ const GranuleResultsBody = ({
           excludedGranuleIds={excludedGranuleIds}
           focusedGranuleId={focusedGranuleId}
           granules={granulesList}
-          hasBrowseImagery={hasBrowseImagery}
           isOpenSearch={isOpenSearch}
           itemCount={itemCount}
           isItemLoaded={isItemLoaded}

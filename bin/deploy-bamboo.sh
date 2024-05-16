@@ -64,7 +64,7 @@ tmp
 EOF
 
 cat <<EOF > Dockerfile
-FROM node:18.16-bullseye
+FROM node:18.19-bullseye
 COPY . /build
 WORKDIR /build
 RUN npm ci --omit=dev && npm run build
@@ -92,6 +92,7 @@ dockerRun() {
         -e "ORDER_DELAY_SECONDS=$bamboo_ORDER_DELAY_SECONDS" \
         -e "SUBNET_ID_A=$bamboo_SUBNET_ID_A" \
         -e "SUBNET_ID_B=$bamboo_SUBNET_ID_B" \
+        -e "USE_CACHE=$bamboo_USE_CACHE" \
         -e "VPC_ID=$bamboo_VPC_ID" \
         $dockerTag "$@"
 }

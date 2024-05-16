@@ -194,6 +194,16 @@
             type: request
             resultTtlInSeconds: 0
 
+  scaleImage:
+    handler: serverless/src/scaleImage/handler.default
+    memorySize: 256
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
+    events:
+      - http:
+          method: get
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: scale/{concept_type}/{concept_id}
+
   regionSearch:
     handler: serverless/src/regionSearch/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}

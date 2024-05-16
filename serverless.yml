@@ -71,8 +71,10 @@ provider:
   # Deprecation warning: Starting with next major version, API Gateway naming will be changed from "{stage}-{service}" to "{service}-{stage}".
   # Set "provider.apiGateway.shouldStartNameWithService" to "true" to adapt to the new behavior now.
   # More Info: https://www.serverless.com/framework/docs/deprecations/#AWS_API_GATEWAY_NAME_STARTING_WITH_SERVICE
+  # Setup apiGateway to be able to return image/png responses for `scale` lambda thumbnails
   apiGateway:
     shouldStartNameWithService: true
+    binaryMediaTypes: 'image/png'
 
 plugins:
   - serverless-finch

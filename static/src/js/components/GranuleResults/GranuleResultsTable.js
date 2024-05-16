@@ -18,7 +18,7 @@ import './GranuleResultsTable.scss'
  * @param {String} props.focusedGranuleId - The focused granule ID.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Boolean} props.hasBrowseImagery - Designates if the collection has browse imagery.
- * @param {Function} props.isGranuleInProject - Function to detirmine if the granule is in the project.
+ * @param {Function} props.isGranuleInProject - Function to determine if the granule is in the project.
  * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
@@ -37,7 +37,6 @@ export const GranuleResultsTable = ({
   directDistributionInformation,
   focusedGranuleId,
   granules,
-  hasBrowseImagery,
   isGranuleInProject,
   isItemLoaded,
   itemCount,
@@ -162,7 +161,10 @@ export const GranuleResultsTable = ({
 
   const hiddenColumns = []
 
-  if (!hasBrowseImagery) hiddenColumns.push('granuleThumbnail')
+  // If (!hasBrowseImagery) hiding column from table
+  // TODO: table rerenders which is rerendering all columns/cells causing image to be refetched
+  // After table update EDSC-4094 retry to `unhide` image
+  hiddenColumns.push('granuleThumbnail')
 
   const initialTableState = {
     hiddenColumns
@@ -206,7 +208,6 @@ GranuleResultsTable.propTypes = {
   directDistributionInformation: PropTypes.shape({}).isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  hasBrowseImagery: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,

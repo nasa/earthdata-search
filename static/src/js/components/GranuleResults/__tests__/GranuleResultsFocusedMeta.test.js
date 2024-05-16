@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   render,
   screen,
@@ -15,7 +16,6 @@ describe('GranuleResultsFocusedMeta component', () => {
     test('should not render', () => {
       render(
         <GranuleResultsFocusedMeta
-          earthdataEnvironment="prod"
           focusedGranuleMetadata={
             {
               browseFlag: false,
@@ -36,7 +36,6 @@ describe('GranuleResultsFocusedMeta component', () => {
     test('should not render', () => {
       render(
         <GranuleResultsFocusedMeta
-          earthdataEnvironment="prod"
           focusedGranuleMetadata={
             {
               browseFlag: false,
@@ -58,10 +57,9 @@ describe('GranuleResultsFocusedMeta component', () => {
   })
 
   describe('when links are provided', () => {
-    test('should render', () => {
+    test('should render', async () => {
       render(
         <GranuleResultsFocusedMeta
-          earthdataEnvironment="prod"
           focusedGranuleMetadata={
             {
               browseFlag: true,
@@ -76,8 +74,7 @@ describe('GranuleResultsFocusedMeta component', () => {
         />
       )
 
-      const focusedMeta = screen.queryByTestId('granule-results-focused-meta')
-
+      const focusedMeta = await screen.findByTestId('granule-results-focused-meta')
       expect(focusedMeta).toBeInTheDocument()
     })
 
@@ -87,7 +84,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
         render(
           <GranuleResultsFocusedMeta
-            earthdataEnvironment="prod"
             focusedGranuleMetadata={
               {
                 browseFlag: true,
@@ -102,21 +98,19 @@ describe('GranuleResultsFocusedMeta component', () => {
           />
         )
 
-        const expandButton = screen.getByLabelText('Expand browse image')
+        const expandButton = screen.getByRole('button', { name: 'Expand browse image' })
+        user.click(expandButton)
 
-        await user.click(expandButton)
-
-        const modal = screen.getByTestId('granule-results-focused-meta-modal')
-
-        expect(modal).toBeInTheDocument()
+        await waitFor(() => {
+          const modal = screen.getByTestId('granule-results-focused-meta-modal')
+          expect(modal).toBeInTheDocument()
+        })
       })
 
       test('should not render modal navigation', async () => {
         const user = userEvent.setup()
-
         render(
           <GranuleResultsFocusedMeta
-            earthdataEnvironment="prod"
             focusedGranuleMetadata={
               {
                 browseFlag: true,
@@ -131,26 +125,27 @@ describe('GranuleResultsFocusedMeta component', () => {
           />
         )
 
-        const expandButton = screen.getByLabelText('Expand browse image')
+        const expandButton = screen.getByRole('button', { name: 'Expand browse image' })
 
-        await user.click(expandButton)
+        user.click(expandButton)
 
-        const modal = screen.getByTestId('granule-results-focused-meta-modal')
-        const modalPrev = within(modal).queryByLabelText('Previous browse image')
-        const modalNext = within(modal).queryByLabelText('Next browse image')
-        const modalPopoverButton = within(modal).queryByLabelText('View available browse imagery')
+        await waitFor(() => {
+          const modal = screen.getByTestId('granule-results-focused-meta-modal')
+          const modalPrev = within(modal).queryByLabelText('Previous browse image')
+          const modalNext = within(modal).queryByLabelText('Next browse image')
 
-        expect(modalPrev).not.toBeInTheDocument()
-        expect(modalNext).not.toBeInTheDocument()
-        expect(modalPopoverButton).not.toBeInTheDocument()
+          const modalPopoverButton = within(modal).queryByLabelText('View available browse imagery')
+          expect(modalPrev).not.toBeInTheDocument()
+          expect(modalNext).not.toBeInTheDocument()
+          expect(modalPopoverButton).not.toBeInTheDocument()
+        })
       })
     })
 
     describe('when multiple links are provided', () => {
-      test('should render the navigation', () => {
+      test('should render the navigation', async () => {
         render(
           <GranuleResultsFocusedMeta
-            earthdataEnvironment="prod"
             focusedGranuleMetadata={
               {
                 browseFlag: true,
@@ -173,15 +168,17 @@ describe('GranuleResultsFocusedMeta component', () => {
           />
         )
 
-        const prevButton = screen.queryByLabelText('Previous browse image thumbnail')
-        const nextButton = screen.queryByLabelText('Next browse image thumbnail')
-        const pagination = screen.queryByText('1/3')
-        const popoverListButton = screen.queryByLabelText('View available browse imagery')
+        await waitFor(() => {
+          const prevButton = screen.getByLabelText('Previous browse image thumbnail')
+          const nextButton = screen.getByLabelText('Next browse image thumbnail')
+          const pagination = screen.getByText('1/3')
+          const popoverListButton = screen.getByLabelText('View available browse imagery')
 
-        expect(prevButton).toBeInTheDocument()
-        expect(nextButton).toBeInTheDocument()
-        expect(pagination).toBeInTheDocument()
-        expect(popoverListButton).toBeInTheDocument()
+          expect(prevButton).toBeInTheDocument()
+          expect(pagination).toBeInTheDocument()
+          expect(popoverListButton).toBeInTheDocument()
+          expect(nextButton).toBeInTheDocument()
+        })
       })
 
       describe('when the selection button is clicked', () => {
@@ -190,7 +187,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -215,9 +211,8 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           const popoverListButton = screen.getByLabelText('View available browse imagery')
 
-          await waitFor(async () => {
-            await user.click(popoverListButton)
-
+          user.click(popoverListButton)
+          await waitFor(() => {
             const popoverList = screen.getAllByTestId('granule-results-focused-meta-list')
             const popoverListItems = screen.getAllByText('.jpg', { exact: false })
 
@@ -231,7 +226,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -254,16 +248,19 @@ describe('GranuleResultsFocusedMeta component', () => {
             />
           )
 
-          const overlayWrapper = screen.getByTestId('granule-results-focused-meta-overlay-wrapper')
-          const popoverListButton = screen.getByLabelText('View available browse imagery')
+          const overlayWrapper = await screen.findByTestId('granule-results-focused-meta-overlay-wrapper')
+          const popoverListButton = await screen.findByLabelText('View available browse imagery')
 
+          // Tool-tip however
           await user.hover(overlayWrapper)
-
-          await waitFor(async () => {
+          await waitFor(() => {
             const tooltip = screen.queryByTestId('granule-results-focused-meta-tooltip')
             expect(tooltip).toBeInTheDocument()
-            await user.click(popoverListButton)
+          })
 
+          // Click to disappear tool-tip
+          user.click(popoverListButton)
+          await waitFor(() => {
             const tooltipAfter = screen.queryByTestId('granule-results-focused-meta-tooltip')
             expect(tooltipAfter).not.toBeInTheDocument()
           })
@@ -276,7 +273,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -299,16 +295,16 @@ describe('GranuleResultsFocusedMeta component', () => {
             />
           )
 
-          const nextButton = screen.queryByLabelText('Next browse image thumbnail')
+          const nextButton = screen.getByRole('button', { name: 'Next browse image thumbnail' })
+          user.click(nextButton)
 
-          await user.click(nextButton)
-
-          const images = screen.queryAllByTestId('granule-results-focused-meta-image')
-          const pagination = screen.queryByText('2/3')
-
-          expect(images.length).toEqual(3)
-          expect(images[1]).toHaveClass('granule-results-focused-meta__thumb--is-active')
-          expect(pagination).toBeInTheDocument()
+          await waitFor(() => {
+            const images = screen.queryAllByTestId('granule-results-focused-meta-image')
+            const pagination = screen.queryByText('2/3')
+            expect(images.length).toEqual(3)
+            expect(images[1]).toHaveClass('granule-results-focused-meta__thumb--is-active')
+            expect(pagination).toBeInTheDocument()
+          })
         })
       })
 
@@ -318,7 +314,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -341,8 +336,8 @@ describe('GranuleResultsFocusedMeta component', () => {
             />
           )
 
-          const nextButton = screen.queryByLabelText('Next browse image thumbnail')
-          const prevButton = screen.queryByLabelText('Previous browse image thumbnail')
+          const nextButton = await screen.findByLabelText('Next browse image thumbnail')
+          const prevButton = await screen.findByLabelText('Previous browse image thumbnail')
 
           await user.click(nextButton)
           await user.click(prevButton)
@@ -362,7 +357,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -385,7 +379,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             />
           )
 
-          const popoverListButton = screen.queryByLabelText('View available browse imagery')
+          const popoverListButton = await screen.findByLabelText('View available browse imagery')
 
           await waitFor(async () => {
             await user.click(popoverListButton)
@@ -412,7 +406,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -431,7 +424,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             />
           )
 
-          const nextButton = screen.queryByLabelText('Next browse image thumbnail')
+          const nextButton = await screen.findByLabelText('Next browse image thumbnail')
 
           await user.click(nextButton)
           await user.click(nextButton)
@@ -451,7 +444,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -470,7 +462,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             />
           )
 
-          const prevButton = screen.queryByLabelText('Previous browse image thumbnail')
+          const prevButton = await screen.findByLabelText('Previous browse image thumbnail')
 
           await user.click(prevButton)
 
@@ -489,7 +481,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           render(
             <GranuleResultsFocusedMeta
-              earthdataEnvironment="prod"
               focusedGranuleMetadata={
                 {
                   browseFlag: true,
@@ -512,18 +503,19 @@ describe('GranuleResultsFocusedMeta component', () => {
             />
           )
 
-          const expandButton = screen.getByLabelText('Expand browse image')
+          const expandButton = await screen.findByLabelText('Expand browse image')
 
-          await user.click(expandButton)
+          await waitFor(async () => {
+            await user.click(expandButton)
+            const modal = screen.getByTestId('granule-results-focused-meta-modal')
+            const modalPrev = within(modal).queryByLabelText('Previous browse image')
+            const modalNext = within(modal).queryByLabelText('Next browse image')
+            const modalPopoverButton = within(modal).queryByLabelText('View available browse imagery')
 
-          const modal = screen.getByTestId('granule-results-focused-meta-modal')
-          const modalPrev = within(modal).queryByLabelText('Previous browse image')
-          const modalNext = within(modal).queryByLabelText('Next browse image')
-          const modalPopoverButton = within(modal).queryByLabelText('View available browse imagery')
-
-          expect(modalPrev).toBeInTheDocument()
-          expect(modalNext).toBeInTheDocument()
-          expect(modalPopoverButton).toBeInTheDocument()
+            expect(modalPrev).toBeInTheDocument()
+            expect(modalNext).toBeInTheDocument()
+            expect(modalPopoverButton).toBeInTheDocument()
+          })
         })
 
         describe('when clicking the close button', () => {
@@ -532,7 +524,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             render(
               <GranuleResultsFocusedMeta
-                earthdataEnvironment="prod"
                 focusedGranuleMetadata={
                   {
                     browseFlag: true,
@@ -555,16 +546,18 @@ describe('GranuleResultsFocusedMeta component', () => {
               />
             )
 
-            const expandButton = screen.getByLabelText('Expand browse image')
+            const expandButton = await screen.findByLabelText('Expand browse image')
 
-            await user.click(expandButton)
+            await waitFor(async () => {
+              await user.click(expandButton)
 
-            const modal = screen.getByTestId('granule-results-focused-meta-modal')
-            const modalCloseButton = within(modal).queryByText('Close')
+              const modal = screen.getByTestId('granule-results-focused-meta-modal')
+              const modalCloseButton = within(modal).queryByText('Close')
 
-            await user.click(modalCloseButton)
+              await user.click(modalCloseButton)
 
-            expect(modal).not.toBeInTheDocument()
+              expect(modal).not.toBeInTheDocument()
+            })
           })
         })
 
@@ -574,7 +567,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             render(
               <GranuleResultsFocusedMeta
-                earthdataEnvironment="prod"
                 focusedGranuleMetadata={
                   {
                     browseFlag: true,
@@ -597,21 +589,22 @@ describe('GranuleResultsFocusedMeta component', () => {
               />
             )
 
-            const expandButton = screen.getByLabelText('Expand browse image')
+            const expandButton = await screen.findByLabelText('Expand browse image')
+            await waitFor(async () => {
+              await user.click(expandButton)
 
-            await user.click(expandButton)
+              const modal = screen.getByTestId('granule-results-focused-meta-modal')
+              const modalNext = within(modal).queryByLabelText('Next browse image')
 
-            const modal = screen.getByTestId('granule-results-focused-meta-modal')
-            const modalNext = within(modal).queryByLabelText('Next browse image')
+              await user.click(modalNext)
 
-            await user.click(modalNext)
+              const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
+              const pagination = within(modal).queryByText('2/3')
 
-            const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
-            const pagination = within(modal).queryByText('2/3')
-
-            expect(images.length).toEqual(3)
-            expect(images[1]).toHaveClass('granule-results-focused-meta__full--is-active')
-            expect(pagination).toBeInTheDocument()
+              expect(images.length).toEqual(3)
+              expect(images[1]).toHaveClass('granule-results-focused-meta__full--is-active')
+              expect(pagination).toBeInTheDocument()
+            })
           })
         })
 
@@ -621,7 +614,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             render(
               <GranuleResultsFocusedMeta
-                earthdataEnvironment="prod"
                 focusedGranuleMetadata={
                   {
                     browseFlag: true,
@@ -644,23 +636,24 @@ describe('GranuleResultsFocusedMeta component', () => {
               />
             )
 
-            const expandButton = screen.getByLabelText('Expand browse image')
+            const expandButton = await screen.findByLabelText('Expand browse image')
+            await waitFor(async () => {
+              await user.click(expandButton)
 
-            await user.click(expandButton)
+              const modal = screen.getByTestId('granule-results-focused-meta-modal')
+              const modalNext = within(modal).queryByLabelText('Next browse image')
+              const modalPrev = within(modal).queryByLabelText('Previous browse image')
 
-            const modal = screen.getByTestId('granule-results-focused-meta-modal')
-            const modalNext = within(modal).queryByLabelText('Next browse image')
-            const modalPrev = within(modal).queryByLabelText('Previous browse image')
+              await user.click(modalNext)
+              await user.click(modalPrev)
 
-            await user.click(modalNext)
-            await user.click(modalPrev)
+              const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
+              const pagination = within(modal).queryByText('1/3')
 
-            const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
-            const pagination = within(modal).queryByText('1/3')
-
-            expect(images.length).toEqual(3)
-            expect(images[0]).toHaveClass('granule-results-focused-meta__full--is-active')
-            expect(pagination).toBeInTheDocument()
+              expect(images.length).toEqual(3)
+              expect(images[0]).toHaveClass('granule-results-focused-meta__full--is-active')
+              expect(pagination).toBeInTheDocument()
+            })
           })
         })
 
@@ -670,7 +663,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             render(
               <GranuleResultsFocusedMeta
-                earthdataEnvironment="prod"
                 focusedGranuleMetadata={
                   {
                     browseFlag: true,
@@ -693,9 +685,11 @@ describe('GranuleResultsFocusedMeta component', () => {
               />
             )
 
-            const expandButton = screen.getByLabelText('Expand browse image')
+            const expandButton = await screen.findByLabelText('Expand browse image')
 
-            await user.click(expandButton)
+            await waitFor(async () => {
+              await user.click(expandButton)
+            })
 
             const modal = screen.getByTestId('granule-results-focused-meta-modal')
 
@@ -708,7 +702,9 @@ describe('GranuleResultsFocusedMeta component', () => {
             const popoverList = screen.queryByTestId('granule-results-focused-meta-modal-popover-list')
             const popoverListItem = within(popoverList).queryByText('test-3.jpg')
 
-            await user.click(popoverListItem)
+            await waitFor(async () => {
+              await user.click(popoverListItem)
+            })
 
             const pagination = within(modal).queryByText('3/3')
             const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
@@ -725,7 +721,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             render(
               <GranuleResultsFocusedMeta
-                earthdataEnvironment="prod"
                 focusedGranuleMetadata={
                   {
                     browseFlag: true,
@@ -745,8 +740,9 @@ describe('GranuleResultsFocusedMeta component', () => {
             )
 
             const expandButton = screen.getByLabelText('Expand browse image')
-
-            await user.click(expandButton)
+            await waitFor(async () => {
+              await user.click(expandButton)
+            })
 
             const modal = screen.getByTestId('granule-results-focused-meta-modal')
             const modalNext = within(modal).queryByLabelText('Next browse image')
@@ -769,7 +765,6 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             render(
               <GranuleResultsFocusedMeta
-                earthdataEnvironment="prod"
                 focusedGranuleMetadata={
                   {
                     browseFlag: true,
@@ -788,21 +783,24 @@ describe('GranuleResultsFocusedMeta component', () => {
               />
             )
 
-            const expandButton = screen.getByLabelText('Expand browse image')
-
-            await user.click(expandButton)
+            const expandButton = screen.getByRole('button', { name: 'Expand browse image' })
+            user.click(expandButton)
+            await waitFor(() => {
+              expect(screen.getByTestId('granule-results-focused-meta-modal')).toBeInTheDocument()
+            })
 
             const modal = screen.getByTestId('granule-results-focused-meta-modal')
-            const modalPrev = within(modal).queryByLabelText('Previous browse image')
+            const modalPrev = within(modal).getByRole('button', { name: 'Previous browse image' })
 
-            await user.click(modalPrev)
+            user.click(modalPrev)
+            await waitFor(() => {
+              const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
+              const pagination = within(modal).queryByText('2/2')
 
-            const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
-            const pagination = within(modal).queryByText('2/2')
-
-            expect(images.length).toEqual(2)
-            expect(images[1]).toHaveClass('granule-results-focused-meta__full--is-active')
-            expect(pagination).toBeInTheDocument()
+              expect(images.length).toEqual(2)
+              expect(images[1]).toHaveClass('granule-results-focused-meta__full--is-active')
+              expect(pagination).toBeInTheDocument()
+            })
           })
         })
       })

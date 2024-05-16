@@ -1,6 +1,9 @@
-import React, { forwardRef, useState } from 'react'
+import React, {
+  forwardRef,
+  useEffect,
+  useState
+} from 'react'
 import PropTypes from 'prop-types'
-
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import {
   FaClock,
@@ -16,6 +19,7 @@ import { collectionMetadataPropType } from '../../util/propTypes/collectionMetad
 import { commafy } from '../../util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { pluralize } from '../../util/pluralize'
+import { retrieveThumbnail } from '../../util/retrieveThumbnail'
 
 import Button from '../Button/Button'
 import CustomizableIcons from '../CustomizableIcons/CustomizableIcons'
@@ -65,11 +69,14 @@ export const CollectionResultsItem = forwardRef(({
     summary,
     temporalRange,
     thumbnail,
+    isDefaultImage,
     versionId
   } = collectionMetadata
 
   const [loadingThumbnail, setLoadingThumbnail] = useState(true)
   const { thumbnailSize } = getApplicationConfig()
+  const [base64Image, setBase64Image] = useState('')
+
   const {
     height: thumbnailHeight,
     width: thumbnailWidth
@@ -87,6 +94,25 @@ export const CollectionResultsItem = forwardRef(({
   const onThumbnailLoaded = () => {
     setLoadingThumbnail(false)
   }
+
+  const parseScaleImageResponse = async () => {
+    if (!isDefaultImage) {
+      const thumbnailValue = await retrieveThumbnail(thumbnail)
+      setBase64Image(thumbnailValue)
+      onThumbnailLoaded()
+    } else {
+      // Passed in thumbnail was the default set `base64` image to that
+      // If the thumbnail was null set it to the unavailable image
+      setBase64Image(thumbnail)
+      onThumbnailLoaded()
+    }
+  }
+
+  // Fetch the base64 string from the Lambda function
+  // Explicity call the GET request for the lambda
+  useEffect(() => {
+    parseScaleImageResponse()
+  }, [])
 
   const getConsortiumTooltipText = (consortium) => {
     let tooltip = ''
@@ -242,6 +268,7 @@ export const CollectionResultsItem = forwardRef(({
                     loadingThumbnail && (
                       <Spinner
                         type="dots"
+                        dataTestId="collection-results-item-spinner"
                         className="collection-results-item__thumb-spinner"
                         color="white"
                         size="tiny"
@@ -250,11 +277,10 @@ export const CollectionResultsItem = forwardRef(({
                   }
                   <img
                     className={`collection-results-item__thumb-image ${loadingThumbnail ? 'collection-results-item__thumb-image--is-loading' : 'collection-results-item__thumb-image--is-loaded'}`}
-                    src={thumbnail}
+                    src={base64Image}
                     alt={`Thumbnail for ${datasetId}`}
                     height={thumbnailHeight}
                     width={thumbnailWidth}
-                    onLoad={onThumbnailLoaded}
                   />
                 </div>
               )
