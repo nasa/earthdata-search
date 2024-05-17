@@ -1491,7 +1491,7 @@ test.describe('Map interactions', () => {
             await page.mouse.move(1000, 600)
             await page.mouse.up()
 
-            await expect(page.locator('.leaflet-interactive').nth(1)).toHaveAttribute('d', 'M994 441L996 454L1012 451L1009 438L994 441z')
+            await expect(page.locator('.leaflet-interactive').nth(1)).toHaveAttribute('d', 'M987 548L993 573L1024 566L1019 541L987 548z')
             await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
           })
         })
@@ -1501,7 +1501,7 @@ test.describe('Map interactions', () => {
             // Zoom the map
             await page.locator('.leaflet-control-zoom-in').click()
 
-            await expect(page.locator('.leaflet-interactive').nth(1)).toHaveAttribute('d', 'M1287 465L1293 490L1324 483L1319 458L1287 465z')
+            await expect(page.locator('.leaflet-interactive').nth(1)).toHaveAttribute('d', 'M1287 466L1293 491L1324 484L1319 459L1287 466z')
             await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
           })
         })
