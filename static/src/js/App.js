@@ -64,7 +64,7 @@ window.reactToastProvider = React.createRef()
 //   whyDidYouUpdate(React, { include: [/Search/] })
 // }
 
-const MapContainer = lazy(() => import('./containers/MapContainer/MapContainer'))
+const EdscMapContainer = lazy(() => import('./containers/MapContainer/MapContainer'))
 
 // Create the root App component
 class App extends Component {
@@ -191,7 +191,7 @@ class App extends Component {
                           <>
                             <Search />
                             <Suspense fallback={<Spinner type="dots" />}>
-                              <MapContainer />
+                              <EdscMapContainer />
                             </Suspense>
                           </>
                         )

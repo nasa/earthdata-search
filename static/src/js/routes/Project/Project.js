@@ -1,4 +1,8 @@
-import React, { Component } from 'react'
+import React, {
+  Component,
+  lazy,
+  Suspense
+} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -16,9 +20,12 @@ import ProjectCollectionsContainer
 import ProjectPanelsContainer from '../../containers/ProjectPanelsContainer/ProjectPanelsContainer'
 import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
-import EdscMapContainer from '../../containers/MapContainer/MapContainer'
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
+
+import Spinner from '../../components/Spinner/Spinner'
+
+const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmitRetrieval:
@@ -109,7 +116,9 @@ export class Project extends Component {
           </SidebarContainer>
           <OverrideTemporalModalContainer />
         </form>
-        <EdscMapContainer />
+        <Suspense fallback={<Spinner type="dots" />}>
+          <EdscMapContainer />
+        </Suspense>
       </AuthRequiredContainer>
     )
   }
