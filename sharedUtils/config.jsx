@@ -1,4 +1,4 @@
-import { merge } from 'lodash'
+import { merge } from 'lodash-es'
 
 import staticConfig from '../static.config.json'
 // eslint-disable-next-line import/no-unresolved
