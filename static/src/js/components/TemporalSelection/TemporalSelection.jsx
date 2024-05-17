@@ -90,8 +90,6 @@ export class TemporalSelection extends Component {
 
     if (temporal && temporal.startDate) {
       value.invalidStartDate = !start.isValid()
-      console.log("🚀 ~ TemporalSelection ~ checkTemporal ~ start.isValid():", start.isValid())
-      console.log("🚀 ~ TemporalSelection ~ checkTemporal ~ start:", start)
     }
 
     if (temporal && temporal.endDate) {
@@ -114,22 +112,17 @@ export class TemporalSelection extends Component {
       temporal,
       validate
     } = this.props
-    console.log("🚀 ~ TemporalSelection ~ render ~ controlId:", controlId)
 
     let { isRecurring } = temporal
-    console.log("🚀 ~ TemporalSelection ~ render ~ temporal:", temporal)
 
     const {
       validation
     } = this.state
-    console.log("🚀 ~ TemporalSelection ~ render ~ validation:", validation)
 
-    console.log("🚀 ~ TemporalSelection ~ render ~ isRecurring1:", isRecurring)
     const enableRecurring = Object.values(validation).some((isInvalid) => isInvalid === true)
     if (enableRecurring) {
       isRecurring = false
     }
-    console.log("🚀 ~ TemporalSelection ~ render ~ isRecurring2:", isRecurring)
 
     const { minimumTemporalDateString, temporalDateFormatFull } = getApplicationConfig()
     const minimumTemporalDate = moment(minimumTemporalDateString, temporalDateFormatFull)
