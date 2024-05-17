@@ -179,7 +179,16 @@ class App extends Component {
                         )
                       }
                     />
-                    <Route path={this.portalPaths('/projects')} component={Project} />
+                    <Route
+                      path={this.portalPaths('/projects')}
+                      render={
+                        () => (
+                          <AuthRequiredContainer>
+                            <Project />
+                          </AuthRequiredContainer>
+                        )
+                      }
+                    />
                     <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
                     <Redirect exact from="/" to="/search" />
                     <Route

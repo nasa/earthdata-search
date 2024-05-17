@@ -1,8 +1,4 @@
-import React, {
-  Component,
-  lazy,
-  Suspense
-} from 'react'
+import React, { lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -21,8 +17,6 @@ import ProjectPanelsContainer from '../../containers/ProjectPanelsContainer/Proj
 import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
-import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
-
 import Spinner from '../../components/Spinner/Spinner'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
@@ -39,24 +33,15 @@ const mapStateToProps = (state) => ({
   name: state.savedProject.name
 })
 
-export class Project extends Component {
-  constructor(props) {
-    super(props)
+export const Project = (props) => {
+  const {
+    onSubmitRetrieval,
+    onToggleChunkedOrderModal,
+    projectCollectionsRequiringChunking
+  } = props
 
-    this.handleSubmit = this.handleSubmit.bind(this)
-
-    const { edscHost } = getEnvironmentConfig()
-    this.edscHost = edscHost
-  }
-
-  handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault()
-
-    const {
-      onSubmitRetrieval,
-      onToggleChunkedOrderModal,
-      projectCollectionsRequiringChunking
-    } = this.props
 
     if (Object.keys(projectCollectionsRequiringChunking).length > 0) {
       onToggleChunkedOrderModal(true)
@@ -65,63 +50,61 @@ export class Project extends Component {
     }
   }
 
-  render() {
-    const {
-      location,
-      name
-    } = this.props
-    const { search } = location
-    const { edscHost } = this
+  const {
+    location,
+    name
+  } = props
+  const { search } = location
+  const { edscHost } = getEnvironmentConfig()
 
-    // If there are no params in the URL, show the saved projects page
-    if (search === '') {
-      return (
-        <AuthRequiredContainer>
-          <Helmet>
-            <title>Saved Projects</title>
-            <meta name="title" content="Saved Projects" />
-            <meta name="robots" content="noindex, nofollow" />
-            <link rel="canonical" href={`${edscHost}/projects`} />
-          </Helmet>
-          <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
-            <div className="route-wrapper__content">
-              <div className="route-wrapper__content-inner">
-                <SavedProjectsContainer />
-              </div>
+  // If there are no params in the URL, show the saved projects page
+  if (search === '') {
+    return (
+      <>
+        <Helmet>
+          <title>Saved Projects</title>
+          <meta name="title" content="Saved Projects" />
+          <meta name="robots" content="noindex, nofollow" />
+          <link rel="canonical" href={`${edscHost}/projects`} />
+        </Helmet>
+        <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
+          <div className="route-wrapper__content">
+            <div className="route-wrapper__content-inner">
+              <SavedProjectsContainer />
             </div>
           </div>
-        </AuthRequiredContainer>
-      )
-    }
-
-    // Show the project page
-    return (
-      <AuthRequiredContainer>
-        <Helmet>
-          <title>{name || 'Untitled Project'}</title>
-          <meta name="title" content={name || 'Untitled Project'} />
-          <meta name="robots" content="noindex, nofollow" />
-          <link rel="canonical" href={`${edscHost}`} />
-        </Helmet>
-        <form
-          id="form__project"
-          onSubmit={this.handleSubmit}
-          method="post"
-          className="route-wrapper__content--map route-wrapper--project"
-        >
-          <SidebarContainer
-            panels={<ProjectPanelsContainer />}
-          >
-            <ProjectCollectionsContainer />
-          </SidebarContainer>
-          <OverrideTemporalModalContainer />
-        </form>
-        <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
-          <EdscMapContainer />
-        </Suspense>
-      </AuthRequiredContainer>
+        </div>
+      </>
     )
   }
+
+  // Show the project page
+  return (
+    <>
+      <Helmet>
+        <title>{name || 'Untitled Project'}</title>
+        <meta name="title" content={name || 'Untitled Project'} />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={`${edscHost}`} />
+      </Helmet>
+      <form
+        id="form__project"
+        onSubmit={handleSubmit}
+        method="post"
+        className="route-wrapper__content--map route-wrapper--project"
+      >
+        <SidebarContainer
+          panels={<ProjectPanelsContainer />}
+        >
+          <ProjectCollectionsContainer />
+        </SidebarContainer>
+        <OverrideTemporalModalContainer />
+      </form>
+      <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
+        <EdscMapContainer />
+      </Suspense>
+    </>
+  )
 }
 
 Project.propTypes = {
