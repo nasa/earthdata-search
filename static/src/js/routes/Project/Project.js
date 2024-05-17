@@ -107,7 +107,7 @@ export class Project extends Component {
           id="form__project"
           onSubmit={this.handleSubmit}
           method="post"
-          className="route-wrapper route-wrapper--project"
+          className="route-wrapper__content--map route-wrapper--project"
         >
           <SidebarContainer
             panels={<ProjectPanelsContainer />}
@@ -116,7 +116,7 @@ export class Project extends Component {
           </SidebarContainer>
           <OverrideTemporalModalContainer />
         </form>
-        <Suspense fallback={<Spinner type="dots" />}>
+        <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
           <EdscMapContainer />
         </Suspense>
       </AuthRequiredContainer>

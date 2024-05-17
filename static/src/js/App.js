@@ -190,7 +190,7 @@ class App extends Component {
                         () => (
                           <>
                             <Search />
-                            <Suspense fallback={<Spinner type="dots" />}>
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
                               <EdscMapContainer />
                             </Suspense>
                           </>

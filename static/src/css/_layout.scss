@@ -51,6 +51,16 @@
     .route-wrapper--content-page-centered & {
       justify-content: center;
     }
+
+  }
+  // TODO this should just be an extension of __content
+  &__content--map {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+    background-color: $color__black;
   }
 
   &__content-nav {
