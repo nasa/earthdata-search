@@ -288,6 +288,7 @@ describe('Project component', () => {
       // TODO: `UserEvent` does not have submit func and `click` not recognized as submit
       fireEvent.submit(formSubmit)
       expect(onToggleChunkedOrderModal).toBeCalledTimes(1)
+      expect(onToggleChunkedOrderModal).toHaveBeenCalledWith(true)
       expect(onSubmitRetrieval).toBeCalledTimes(0)
     })
   })
