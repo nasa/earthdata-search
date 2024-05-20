@@ -23,7 +23,6 @@ jest.mock('react-leaflet', () => ({
   createControlComponent: jest.fn().mockImplementation(() => {})
 }))
 
-// Mock App components routes and containers
 jest.mock('../../../containers/SidebarContainer/SidebarContainer', () => {
   const MockedSidebarContainer = () => <div data-testid="mocked-sidebarContainer" />
 
@@ -104,64 +103,6 @@ const setup = (overrideProps) => {
 }
 
 describe('Project component', () => {
-  test('should render self', async () => {
-    nock(/localhost/)
-      .post(/retrievals/)
-      .reply(200, {
-        id: 7
-      })
-
-    const store = mockStore({
-      project: {
-        collections: {
-          allIds: [],
-          byId: {},
-          isSubmitted: false,
-          isSubmitting: false
-        }
-      },
-      portal: { portalId: 'edsc' },
-      router: {
-        location: {
-          search: ''
-        }
-      },
-      shapefile: {
-        shapefileId: '',
-        selectedFeatures: null
-      }
-    })
-
-    await store.dispatch(actions.submitRetrieval())
-
-    setup({
-      location: {
-        search: ''
-      }
-    })
-
-    await waitFor(() => {
-      // Document title
-      expect(document.title).toEqual('Saved Projects')
-
-      // Document meta elements
-      const metaTitleElement = document.querySelector('[name="title"]')
-
-      expect(metaTitleElement).toHaveAttribute('content', 'Saved Projects')
-
-      const metaBotsElement = document.querySelector('[name="robots"]')
-
-      expect(metaBotsElement).toHaveAttribute('content', 'noindex, nofollow')
-
-      const metaLinkElement = document.querySelector('link[rel="canonical"]')
-
-      // TODO why was this updated to `/projects`
-      expect(metaLinkElement).toHaveAttribute('href', 'https://search.earthdata.nasa.gov/projects')
-
-      expect(metaLinkElement).toBeInTheDocument()
-    })
-  })
-
   describe('Saved projects page', () => {
     test('displays the SavedProjectsContainer', async () => {
       nock(/localhost/)
@@ -283,7 +224,7 @@ describe('Project component', () => {
         }
       })
 
-      store.dispatch(actions.submitRetrieval())
+      await store.dispatch(actions.submitRetrieval())
 
       const { onSubmitRetrieval } = setup({
         location: {
@@ -329,7 +270,7 @@ describe('Project component', () => {
         }
       })
 
-      store.dispatch(actions.submitRetrieval())
+      await store.dispatch(actions.submitRetrieval())
 
       const { onSubmitRetrieval, onToggleChunkedOrderModal } = setup({
         location: {
@@ -348,6 +289,60 @@ describe('Project component', () => {
       fireEvent.submit(formSubmit)
       expect(onToggleChunkedOrderModal).toBeCalledTimes(1)
       expect(onSubmitRetrieval).toBeCalledTimes(0)
+    })
+  })
+
+  // RTL Lazy loading issue with mocks between https://github.com/testing-library/react-testing-library/issues/716
+  describe('render self', () => {
+    test('should render self', async () => {
+      nock(/localhost/)
+        .post(/retrievals/)
+        .reply(200, {
+          id: 1
+        })
+
+      const store = mockStore({
+        project: {
+          collections: {
+            allIds: [],
+            byId: {},
+            isSubmitted: false,
+            isSubmitting: false
+          }
+        },
+        portal: { portalId: 'edsc' },
+        router: {
+          location: {
+            search: ''
+          }
+        },
+        shapefile: {
+          shapefileId: '',
+          selectedFeatures: null
+        }
+      })
+
+      await store.dispatch(actions.submitRetrieval())
+
+      setup()
+
+      await waitFor(() => {
+        // Document title
+        expect(document.title).toEqual('Test Project')
+
+        // Document meta elements
+        const metaTitleElement = document.querySelector('[name="title"]')
+
+        expect(metaTitleElement).toHaveAttribute('content', 'Test Project')
+
+        const metaBotsElement = document.querySelector('[name="robots"]')
+
+        expect(metaBotsElement).toHaveAttribute('content', 'noindex, nofollow')
+
+        const metaLinkElement = document.querySelector('link[rel="canonical"]')
+
+        expect(metaLinkElement).toHaveAttribute('href', 'https://search.earthdata.nasa.gov')
+      })
     })
   })
 })

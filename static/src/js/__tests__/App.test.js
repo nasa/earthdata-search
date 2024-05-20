@@ -180,7 +180,7 @@ jest.mock('../containers/HistoryContainer/HistoryContainer', () => {
   return MockedHistoryContainer
 })
 
-// Don't mock `UrlQueryContainer` its children which contain all the routes
+// Only mock `UrlQueryContainer` not its children which are the routes
 jest.mock('../containers/UrlQueryContainer/UrlQueryContainer', () => (
   jest.fn(({ children }) => (
     <mock-UrlQueryContainer data-testid="UrlQueryContainer">
