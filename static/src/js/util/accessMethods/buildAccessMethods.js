@@ -47,7 +47,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         variables: serviceAssociatedVariables = {}
       } = serviceItem
 
-      if (serviceAssociatedVariables.items) {
+      if (serviceAssociatedVariables.items && serviceAssociatedVariables.items.length > 0) {
         associatedVariables = serviceAssociatedVariables
       }
 
