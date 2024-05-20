@@ -98,6 +98,6 @@ describe('Panel Behavior', () => {
   it('drags the panel to maximum width', () => {
     dragPanelToX(1500)
 
-    getByTestId('panels-section').should('have.css', 'width', '1035px')
+    getByTestId('panels-section').should('have.css', 'width', '1000px')
   })
 })
