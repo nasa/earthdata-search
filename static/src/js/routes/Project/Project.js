@@ -91,11 +91,10 @@ export const Project = (props) => {
         id="form__project"
         onSubmit={handleSubmit}
         method="post"
+        name="project form"
         className="route-wrapper__content--map route-wrapper--project"
       >
-        <SidebarContainer
-          panels={<ProjectPanelsContainer />}
-        >
+        <SidebarContainer panels={<ProjectPanelsContainer />}>
           <ProjectCollectionsContainer />
         </SidebarContainer>
         <OverrideTemporalModalContainer />

@@ -189,6 +189,12 @@ jest.mock('../containers/UrlQueryContainer/UrlQueryContainer', () => (
   ))
 ))
 
+beforeEach(() => {
+  jest.clearAllMocks()
+  jest.spyOn(AppConfig, 'getApplicationConfig').mockImplementation(() => ({ env: 'dev' }))
+  jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
+})
+
 const setup = () => {
   nock(/cmr/)
     .post(/collections/)
@@ -216,12 +222,6 @@ const setup = () => {
     props
   }
 }
-
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.spyOn(AppConfig, 'getApplicationConfig').mockImplementation(() => ({ env: 'dev' }))
-  jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
-})
 
 describe('App component', () => {
   test('sets the correct default title', async () => {
