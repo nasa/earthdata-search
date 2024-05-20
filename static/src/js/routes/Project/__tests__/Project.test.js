@@ -17,11 +17,6 @@ import actions from '../../../actions'
 import '@testing-library/jest-dom'
 import { Project } from '../Project'
 
-// Import SavedProjectsContainer
-//   from '../../../containers/SavedProjectsContainer/SavedProjectsContainer'
-// import ProjectCollectionsContainer
-//   from '../../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
-
 // Mock react-leaflet because it causes errors
 jest.mock('react-leaflet', () => ({
   createLayerComponent: jest.fn().mockImplementation(() => {}),
@@ -71,30 +66,17 @@ jest.mock('../../../components/Spinner/Spinner', () => {
   return MockedSpinner
 })
 
-// Jest.mock('react-router-dom', () => ({
-//   ...jest.requireActual('react-router-dom')
-// }))
-
-// Define a MockRouter component
-// eslint-disable-next-line react/prop-types
-// const MockRouter = ({ children }) => (
-//   <MemoryRouter initialEntries={['/']}>
-//     {children}
-//   </MemoryRouter>
-// )
-
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom')
 }))
 
 const mockStore = configureMockStore([thunk])
-// Const store = configureStore()
 
 beforeEach(() => {
   jest.clearAllMocks()
   jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({
     edscHost: 'https://search.earthdata.nasa.gov',
-    apiHost: 'https://cmr.earthdata.nasa.gov'
+    apiHost: 'http://localhost:3000'
   }))
 })
 
@@ -122,29 +104,80 @@ const setup = (overrideProps) => {
 }
 
 describe('Project component', () => {
+  test('should render self', async () => {
+    nock(/localhost/)
+      .post(/retrievals/)
+      .reply(200, {
+        id: 7
+      })
+
+    const store = mockStore({
+      project: {
+        collections: {
+          allIds: [],
+          byId: {},
+          isSubmitted: false,
+          isSubmitting: false
+        }
+      },
+      portal: { portalId: 'edsc' },
+      router: {
+        location: {
+          search: ''
+        }
+      },
+      shapefile: {
+        shapefileId: '',
+        selectedFeatures: null
+      }
+    })
+
+    await store.dispatch(actions.submitRetrieval())
+
+    setup({
+      location: {
+        search: ''
+      }
+    })
+
+    await waitFor(() => {
+      // Document title
+      expect(document.title).toEqual('Saved Projects')
+
+      // Document meta elements
+      const metaTitleElement = document.querySelector('[name="title"]')
+
+      expect(metaTitleElement).toHaveAttribute('content', 'Saved Projects')
+
+      const metaBotsElement = document.querySelector('[name="robots"]')
+
+      expect(metaBotsElement).toHaveAttribute('content', 'noindex, nofollow')
+
+      const metaLinkElement = document.querySelector('link[rel="canonical"]')
+
+      // TODO why was this updated to `/projects`
+      expect(metaLinkElement).toHaveAttribute('href', 'https://search.earthdata.nasa.gov/projects')
+
+      expect(metaLinkElement).toBeInTheDocument()
+    })
+  })
+
   describe('Saved projects page', () => {
     test('displays the SavedProjectsContainer', async () => {
-      nock(/cmr/)
+      nock(/localhost/)
         .post(/retrievals/)
         .reply(200, {
           id: 7
         })
 
       const store = mockStore({
-        retrieval: {
-          id: null,
-          collections: {},
-          isLoading: false,
-          isLoaded: false
-        },
         project: {
-          collections:
-        {
-          allIds: [],
-          byId: {},
-          isSubmitted: false,
-          isSubmitting: false
-        }
+          collections: {
+            allIds: [],
+            byId: {},
+            isSubmitted: false,
+            isSubmitting: false
+          }
         },
         portal: { portalId: 'edsc' },
         router: {
@@ -167,43 +200,18 @@ describe('Project component', () => {
       })
 
       expect(screen.getByTestId('mocked-savedProjectsContainer')).toBeInTheDocument()
-      await waitFor(() => {
-        // Title
-        expect(document.title).toEqual('Saved Projects')
-
-        // Meta elements
-        const metaTitleElement = document.querySelector('[name="title"]')
-
-        expect(metaTitleElement).toHaveAttribute('content', 'Saved Projects')
-
-        const metaBotsElement = document.querySelector('[name="robots"]')
-
-        expect(metaBotsElement).toHaveAttribute('content', 'noindex, nofollow')
-
-        const metaLinkElement = document.querySelector('link[rel="canonical"]')
-        // TODO why was this updated to `/projects`
-        expect(metaLinkElement).toHaveAttribute('href', 'https://search.earthdata.nasa.gov/projects')
-
-        expect(metaLinkElement).toBeInTheDocument()
-      })
     })
   })
 
   describe('Projects page', () => {
     test('displays the ProjectCollectionsContainer', async () => {
-      nock(/cmr/)
+      nock(/localhost/)
         .post(/retrievals/)
         .reply(200, {
           id: 7
         })
 
       const store = mockStore({
-        retrieval: {
-          id: null,
-          collections: {},
-          isLoading: false,
-          isLoaded: false
-        },
         project: {
           collections:
         {
@@ -247,19 +255,13 @@ describe('Project component', () => {
 
   describe('handleSubmit', () => {
     test('calls onSubmitRetrieval', async () => {
-      nock(/cmr/)
+      nock(/localhost/)
         .post(/retrievals/)
         .reply(200, {
           id: 7
         })
 
       const store = mockStore({
-        retrieval: {
-          id: null,
-          collections: {},
-          isLoading: false,
-          isLoaded: false
-        },
         project: {
           collections:
       {
@@ -299,19 +301,13 @@ describe('Project component', () => {
     })
 
     test('calls onToggleChunkedOrderModal when any collections require chunking', async () => {
-      nock(/cmr/)
+      nock(/localhost/)
         .post(/retrievals/)
         .reply(200, {
           id: 7
         })
 
       const store = mockStore({
-        retrieval: {
-          id: null,
-          collections: {},
-          isLoading: false,
-          isLoaded: false
-        },
         project: {
           collections:
       {
@@ -354,41 +350,4 @@ describe('Project component', () => {
       expect(onSubmitRetrieval).toBeCalledTimes(0)
     })
   })
-
-  // Test.skip('sets the correct Helmet meta information', () => {
-  //   const { enzymeWrapper } = setup()
-
-  //   const helmet = enzymeWrapper.find(Helmet)
-
-  //   expect(helmet.childAt(0).type()).toEqual('title')
-  //   expect(helmet.childAt(0).text()).toEqual('Test Project')
-  //   expect(helmet.childAt(1).props().name).toEqual('title')
-  //   expect(helmet.childAt(1).props().content).toEqual('Test Project')
-  //   expect(helmet.childAt(2).props().name).toEqual('robots')
-  //   expect(helmet.childAt(2).props().content).toEqual('noindex, nofollow')
-  //   expect(helmet.childAt(3).props().rel).toEqual('canonical')
-  //   expect(helmet.childAt(3).props().href).toEqual('https://search.earthdata.nasa.gov')
-  // })
 })
-
-// Describe('Project component', () => {
-//   test('should render self', () => {
-//     const { enzymeWrapper } = setup()
-
-//     expect(enzymeWrapper.exists()).toBeTruthy()
-//   })
-
-//   test('sets the correct Helmet meta information', () => {
-//     const { enzymeWrapper } = setup()
-
-//     const helmet = enzymeWrapper.find(Helmet)
-
-//     expect(helmet.childAt(0).type()).toEqual('title')
-//     expect(helmet.childAt(0).text()).toEqual('Test Project')
-//     expect(helmet.childAt(1).props().name).toEqual('title')
-//     expect(helmet.childAt(1).props().content).toEqual('Test Project')
-//     expect(helmet.childAt(2).props().name).toEqual('robots')
-//     expect(helmet.childAt(2).props().content).toEqual('noindex, nofollow')
-//     expect(helmet.childAt(3).props().rel).toEqual('canonical')
-//     expect(helmet.childAt(3).props().href).toEqual('https://search.earthdata.nasa.gov')
-//   })
