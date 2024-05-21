@@ -24,8 +24,8 @@
   migrateDatabase:
     handler: serverless/src/migrateDatabase/handler.default
     timeout: 300
-    webpack:
-      includeMigrations: true
+    # webpack:
+    #   includeMigrations: true
 
   storeUserData:
     timeout: 300

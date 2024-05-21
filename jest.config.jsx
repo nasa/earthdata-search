@@ -1,5 +1,5 @@
 // https://github.com/ai/nanoid/issues/363#issuecomment-1140906651
-const esModulesToIgnore = ['nanoid'].join('|')
+const esModulesToIgnore = ['nanoid', 'lodash-es'].join('|')
 
 module.exports = {
   collectCoverage: true,

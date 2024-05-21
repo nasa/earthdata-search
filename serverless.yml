@@ -65,14 +65,15 @@ provider:
     shouldStartNameWithService: true
 
 plugins:
+  - serverless-esbuild
   - serverless-finch
-  - serverless-webpack
+  #- serverless-webpack
   - serverless-step-functions
   - serverless-plugin-split-stacks
   - serverless-plugin-log-subscription
   - serverless-plugin-ifelse
   - serverless-offline
-  - ./serverless-plugins/serverless-webpack-include-migrations.js
+  #- ./serverless-plugins/serverless-webpack-include-migrations.js
 
 #
 # Lambda Functions
@@ -169,6 +170,13 @@ custom:
     # Uncomment useInProcess to enable in-process run mode
     # https://github.com/dherault/serverless-offline#run-modes
     # useInProcess: true
+
+  # Serverless esbuild configurations
+  esbuild:
+    external:
+      - knex
+    bundle: true
+    minify: false
 
   # Serverless Webpack configurations
   webpack:
