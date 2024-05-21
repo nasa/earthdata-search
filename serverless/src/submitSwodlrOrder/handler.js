@@ -77,8 +77,7 @@ const submitSwodlrOrder = async (event, context) => {
       const {
         access_method: accessMethod,
         collection_id: collectionConceptId,
-        environment: earthdataEnvironment,
-        granule_params: granuleParams
+        environment: earthdataEnvironment
       } = retrievalRecord
 
       const { type, url: swodlrUrl } = accessMethod
@@ -86,7 +85,7 @@ const submitSwodlrOrder = async (event, context) => {
       // TODO: Add accessMethod after design implementation
       const granuleInfo = await retrieveCMRGranules({
         collectionConceptId,
-        granuleParams,
+        accessMethod,
         accessToken,
         earthdataEnvironment
       })
@@ -108,7 +107,7 @@ const submitSwodlrOrder = async (event, context) => {
         const pass = parseInt(splitTitle[11], 10)
         const scene = parseInt(splitTitle[12].substring(0, splitTitle[12].length - 1), 10)
 
-        const { json_data: jsonData } = granuleParams
+        const { swodlrData: jsonData } = accessMethod
         const { params, custom_params: customParams } = jsonData
 
         const {

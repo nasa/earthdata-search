@@ -125,15 +125,8 @@ describe('submitSwodlrOrder', () => {
               name: 'SWOT Level 2 Water Mask Raster Image Data Product, Version 2.0'
             },
             url: 'https://swodlr.podaac.earthdatacloud.nasa.gov',
-            type: 'SWODLR'
-          },
-          collection_id: 'C2799438271-POCLOUD',
-          granule_params: {
-            exclude: {},
-            options: {},
-            page_num: 1,
-            sort_key: '-start_date',
-            json_data: {
+            type: 'SWODLR',
+            swodlrData: {
               params: {
                 rasterResolution: 6,
                 outputSamplingGridType: 'GEO',
@@ -149,7 +142,14 @@ describe('submitSwodlrOrder', () => {
                   mgrsBandAdjust: null
                 }
               }
-            },
+            }
+          },
+          collection_id: 'C2799438271-POCLOUD',
+          granule_params: {
+            exclude: {},
+            options: {},
+            page_num: 1,
+            sort_key: '-start_date',
             page_size: 2000,
             concept_id: [
               'G2938390910-POCLOUD',
@@ -170,15 +170,8 @@ describe('submitSwodlrOrder', () => {
               name: 'SWOT Level 2 Water Mask Raster Image Data Product, Version 2.0'
             },
             url: 'https://swodlr.podaac.earthdatacloud.nasa.gov',
-            type: 'SWODLR'
-          },
-          collection_id: 'C2799438271-POCLOUD',
-          granule_params: {
-            exclude: {},
-            options: {},
-            page_num: 1,
-            sort_key: '-start_date',
-            json_data: {
+            type: 'SWODLR',
+            swodlrData: {
               params: {
                 rasterResolution: 6,
                 outputSamplingGridType: 'GEO',
@@ -194,7 +187,14 @@ describe('submitSwodlrOrder', () => {
                   mgrsBandAdjust: null
                 }
               }
-            },
+            }
+          },
+          collection_id: 'C2799438271-POCLOUD',
+          granule_params: {
+            exclude: {},
+            options: {},
+            page_num: 1,
+            sort_key: '-start_date',
             page_size: 2000,
             concept_id: [
               'G2938390910-POCLOUD',
@@ -258,15 +258,8 @@ describe('submitSwodlrOrder', () => {
               name: 'SWOT Level 2 Water Mask Raster Image Data Product, Version 2.0'
             },
             url: 'https://swodlr.podaac.earthdatacloud.nasa.gov',
-            type: 'SWODLR'
-          },
-          collection_id: 'C2799438271-POCLOUD',
-          granule_params: {
-            exclude: {},
-            options: {},
-            page_num: 1,
-            sort_key: '-start_date',
-            json_data: {
+            type: 'SWODLR',
+            swodlrData: {
               params: {
                 rasterResolution: 6,
                 outputSamplingGridType: 'GEO',
@@ -282,7 +275,14 @@ describe('submitSwodlrOrder', () => {
                   mgrsBandAdjust: null
                 }
               }
-            },
+            }
+          },
+          collection_id: 'C2799438271-POCLOUD',
+          granule_params: {
+            exclude: {},
+            options: {},
+            page_num: 1,
+            sort_key: '-start_date',
             page_size: 2000,
             concept_id: [
               'G2938390910-POCLOUD',
@@ -368,15 +368,8 @@ describe('submitSwodlrOrder', () => {
               name: 'SWOT Level 2 Water Mask Raster Image Data Product, Version 2.0'
             },
             url: 'https://swodlr.podaac.earthdatacloud.nasa.gov',
-            type: 'SWODLR'
-          },
-          collection_id: 'C2799438271-POCLOUD',
-          granule_params: {
-            exclude: {},
-            options: {},
-            page_num: 1,
-            sort_key: '-start_date',
-            json_data: {
+            type: 'SWODLR',
+            swodlrData: {
               params: {
                 rasterResolution: 6,
                 outputSamplingGridType: 'GEO',
@@ -428,7 +421,14 @@ describe('submitSwodlrOrder', () => {
                   mgrsBandAdjust: null
                 }
               }
-            },
+            }
+          },
+          collection_id: 'C2799438271-POCLOUD',
+          granule_params: {
+            exclude: {},
+            options: {},
+            page_num: 1,
+            sort_key: '-start_date',
             page_size: 2000,
             concept_id: [
               'G2938390910-POCLOUD1',
@@ -499,15 +499,8 @@ describe('submitSwodlrOrder', () => {
               name: 'SWOT Level 2 Water Mask Raster Image Data Product, Version 2.0'
             },
             url: 'https://swodlr.podaac.earthdatacloud.nasa.gov',
-            type: 'SWODLR'
-          },
-          collection_id: 'C2799438271-POCLOUD',
-          granule_params: {
-            exclude: {},
-            options: {},
-            page_num: 1,
-            sort_key: '-start_date',
-            json_data: {
+            type: 'SWODLR',
+            swodlrData: {
               params: {
                 rasterResolution: 6,
                 outputSamplingGridType: 'GEO',
@@ -523,7 +516,14 @@ describe('submitSwodlrOrder', () => {
                   mgrsBandAdjust: null
                 }
               }
-            },
+            }
+          },
+          collection_id: 'C2799438271-POCLOUD',
+          granule_params: {
+            exclude: {},
+            options: {},
+            page_num: 1,
+            sort_key: '-start_date',
             page_size: 2000,
             concept_id: [
               'G2938390910-POCLOUD',
