@@ -29,6 +29,7 @@ import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
 import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
+import { swodlrToolTips } from '../../constants/swodlrToolTips'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -1071,7 +1072,7 @@ export class AccessMethod extends Component {
                         overlay={
                           (
                             <Tooltip style={{ width: '20rem' }}>
-                              There are two sizing options for raster granules: nonoverlapping square (256 km x 128 km). The rectangular granule extent is 64 km longer in along-track on both sides of the granule and can be useful for observing areas of interest near the along-track edges of the nonoverlapping granules without the need to stictch sequential granules together.
+                              {swodlrToolTips.GranuleExtent}
                             </Tooltip>
                           )
                         }
@@ -1097,7 +1098,7 @@ export class AccessMethod extends Component {
                         overlay={
                           (
                             <Tooltip style={{ width: '20rem' }}>
-                              Specifies the type of the raster sampling grid. It can be either a Universal Transverse Mercator (UTM) grid or a geodetic latitude-longitude grid.
+                              {swodlrToolTips.SamplingGridResolution}
                             </Tooltip>
                           )
                         }
@@ -1122,7 +1123,7 @@ export class AccessMethod extends Component {
                         overlay={
                           (
                             <Tooltip style={{ width: '20rem' }}>
-                              Resolution of the raster sampling grid in units of integer meters UTM grids and integer arc-seconds for latitude-longitude grids.
+                              {swodlrToolTips.RasterResolution}
                             </Tooltip>
                           )
                         }
@@ -1170,7 +1171,7 @@ export class AccessMethod extends Component {
                                         overlay={
                                           (
                                             <Tooltip style={{ width: '20rem' }}>
-                                              The universal Transverse Mercator (UTM) projection is divided into 60 local zones 6 wide in Longitude. By default, UTM raster processing uses the UTM zone at the scene center. If a common grid is desired for scenes near each other , the zone per scene can be adjusted (+/- 1 zone)to allow nearby L2_HR_Raster outpouts to be sampled on a common grid. This parameter has no effect if the outpout grid is not UTM.
+                                              {swodlrToolTips.UTM}
                                             </Tooltip>
                                           )
                                         }
@@ -1185,7 +1186,7 @@ export class AccessMethod extends Component {
                                         overlay={
                                           (
                                             <Tooltip style={{ width: '20rem' }}>
-                                              The Military Grid Reference System (MGRS) defines alphabetic Latitude bands. By default, UTM raster processing uses the MGRS band at the scene center. If a common grid is desired for scenes near each other , the band per scene can be adjusted (+/- 1 band) to allow nearby L@_HR_Raster outputs to be sampled on a common grid. This parameter has no effect if the output grid is not UTM.
+                                              {swodlrToolTips.MGRS}
                                             </Tooltip>
                                           )
                                         }
@@ -1197,7 +1198,8 @@ export class AccessMethod extends Component {
                                 </thead>
                                 <tbody>
                                   {
-                                    metadata && metadata.granules && metadata.granules.items && metadata.granules.items.map((granule) => (
+                                    metadata && metadata.granules && metadata.granules.items
+                                    && metadata.granules.items.map((granule) => (
                                       <tr key={granule.conceptId}>
                                         <td>{granule.conceptId}</td>
                                         <td>
