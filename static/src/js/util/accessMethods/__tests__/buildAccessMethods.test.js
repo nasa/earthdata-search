@@ -576,6 +576,65 @@ describe('buildAccessMethods', () => {
     })
   })
 
+  test('returns a swodlr access method', () => {
+    const collectionMetadata = {
+      services: {
+        items: [
+          {
+            conceptId: 'S100000-EDSC',
+            longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
+            name: 'Mock PODAAC_SWODLR',
+            type: 'SWODLR',
+            url: {
+              description: 'Service top-level URL',
+              urlValue: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
+            },
+            serviceOptions: {
+              supportedOutputProjections: [
+                {
+                  projectionName: 'Universal Transverse Mercator'
+                },
+                {
+                  projectionName: 'WGS84 - World Geodetic System 1984'
+                }
+              ]
+            },
+            supportedOutputProjections: [
+              {
+                projectionName: 'Universal Transverse Mercator'
+              },
+              {
+                projectionName: 'WGS84 - World Geodetic System 1984'
+              }
+            ],
+            supportedReformattings: null,
+            supportedInputProjections: null,
+            orderOptions: {
+              items: []
+            },
+            variables: {
+              items: []
+            }
+          }
+        ]
+      }
+    }
+    const isOpenSearch = false
+
+    const methods = buildAccessMethods(collectionMetadata, isOpenSearch)
+
+    expect(methods).toEqual({
+      swodlr: {
+        id: 'S100000-EDSC',
+        isValid: true,
+        longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
+        name: 'Mock PODAAC_SWODLR',
+        supportsSwodlr: true,
+        type: 'SWODLR'
+      }
+    })
+  })
+
   describe('when the collection contains both variables associated to its services and variables directly associated to the collection', () => {
     test('variables on the service are returned instead of variables directly associated to the collection', () => {
       const collectionMetadata = {
