@@ -4,11 +4,26 @@ import React, {
   Suspense
 } from 'react'
 import PropTypes from 'prop-types'
-import { Alert, Form } from 'react-bootstrap'
+import {
+  Accordion,
+  Alert,
+  Card,
+  Form,
+  Container,
+  Row,
+  Table,
+  OverlayTrigger,
+  Tooltip,
+  Col
+} from 'react-bootstrap'
 import moment from 'moment'
 import * as Select from '@radix-ui/react-select'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
-import { FaFileAlt, FaExternalLinkAlt } from 'react-icons/fa'
+import {
+  FaFileAlt,
+  FaExternalLinkAlt,
+  FaQuestionCircle
+} from 'react-icons/fa'
 
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
@@ -85,8 +100,8 @@ export class AccessMethod extends Component {
 
     let selectedHarmonyMethodName = ''
     if (selectedAccessMethod
-        && isHarmony
-        && accessMethods[selectedAccessMethod].name) {
+      && isHarmony
+      && accessMethods[selectedAccessMethod].name) {
       selectedHarmonyMethodName = accessMethods[selectedAccessMethod].name
     }
 
@@ -105,6 +120,7 @@ export class AccessMethod extends Component {
     this.handleToggleSpatialSubsetting = this.handleToggleSpatialSubsetting.bind(this)
     this.handleConcatenationSelection = this.handleConcatenationSelection.bind(this)
     this.handleHarmonySelection = this.handleHarmonySelection.bind(this)
+    this.handleSwoldrOptions = this.handleSwoldrOptions.bind(this)
   }
 
   UNSAFE_componentWillReceiveProps() {
@@ -125,9 +141,9 @@ export class AccessMethod extends Component {
     const { selectedHarmonyMethodName } = this.state
 
     if (selectedAccessMethod
-        && selectedAccessMethod.startsWith('harmony')
-        && accessMethods[selectedAccessMethod].name
-        && selectedHarmonyMethodName === '') {
+      && selectedAccessMethod.startsWith('harmony')
+      && accessMethods[selectedAccessMethod].name
+      && selectedHarmonyMethodName === '') {
       this.setState({
         selectedHarmonyMethodName: accessMethods[selectedAccessMethod].name
       })
@@ -264,6 +280,37 @@ export class AccessMethod extends Component {
 
       this.handleAccessMethodSelection(event)
     }
+  }
+
+  handleSwoldrOptions() {
+    console.log('Handling Swodlr')
+    const { metadata, selectedAccessMethod } = this.props
+    const { conceptId: collectionId } = metadata
+
+    this.onUpdateAccessMethod({
+      collectionId,
+      method: {
+        [selectedAccessMethod]: {
+          json_data: {
+            params: {
+              rasterResolution: 6,
+              outputSamplingGridType: 'GEO',
+              outputGranuleExtentFlag: false
+            },
+            custom_params: {
+              'G2938391118-POCLOUD': {
+                utmZoneAdjust: null,
+                mgrsBandAdjust: null
+              },
+              'G2938390924-POCLOUD': {
+                utmZoneAdjust: null,
+                mgrsBandAdjust: null
+              }
+            }
+          }
+        }
+      }
+    })
   }
 
   getAccessMethodTypes(hasHarmony, radioList, collectionId, selectedAccessMethod) {
@@ -427,7 +474,8 @@ export class AccessMethod extends Component {
       'ECHO ORDERS': [],
       ESI: [],
       OPeNDAP: [],
-      Harmony: []
+      Harmony: [],
+      SWODLR: []
     }
 
     let hasHarmony = false
@@ -527,6 +575,15 @@ export class AccessMethod extends Component {
           break
         }
 
+        case 'Swodlr': {
+          id = `${collectionId}_access-method__swodlr_${methodKey}`
+          title = 'Generate with SWODLR'
+          description = 'Set options and generate new standard products'
+          details = 'Select options and generate customized products using the SWODLR service. Data will be avaliable for access once any necessary processing is complete.'
+
+          break
+        }
+
         default:
           break
       }
@@ -551,7 +608,8 @@ export class AccessMethod extends Component {
       ...accessMethodsByType.OPeNDAP,
       ...accessMethodsByType.ESI,
       ...accessMethodsByType['ECHO ORDERS'],
-      ...accessMethodsByType.download
+      ...accessMethodsByType.download,
+      ...accessMethodsByType.SWODLR
     ]
 
     const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
@@ -569,6 +627,7 @@ export class AccessMethod extends Component {
       supportsBoundingBoxSubsetting = false,
       supportsVariableSubsetting = false,
       supportsConcatenation = false,
+      supportsSwodlr = true,
       defaultConcatenation = false
     } = selectedMethod || {}
 
@@ -630,6 +689,7 @@ export class AccessMethod extends Component {
       || supportsBoundingBoxSubsetting
       || supportedOutputFormatOptions.length > 0
       || supportedOutputProjectionOptions.length > 0
+      || supportsSwodlr
       || supportsConcatenation
       || (form && isActive)
 
@@ -994,6 +1054,175 @@ export class AccessMethod extends Component {
               </ProjectPanelSection>
             )
           }
+          {
+            supportsSwodlr && (
+              <ProjectPanelSection
+                customHeadingTag="h4"
+                nested
+              >
+                <Container fluid>
+                  <Row>
+                    <Col>
+                      Granule Extent
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          (
+                            <Tooltip style={{ width: '20rem' }}>
+                              There are two sizing options for raster granules: nonoverlapping square (256 km x 128 km). The rectangular granule extent is 64 km longer in along-track on both sides of the granule and can be useful for observing areas of interest near the along-track edges of the nonoverlapping granules without the need to stictch sequential granules together.
+                            </Tooltip>
+                          )
+                        }
+                      >
+                        <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+                      </OverlayTrigger>
+
+                    </Col>
+                    <Col>
+                      <Form>
+                        <div className="mb-3">
+                          <Form.Check inline label="128 x 128 km" name="128-by-128" type="radio" id="granule-extent-128-by-128" checked />
+                          <Form.Check inline label="256 x 128 km" name="256-by-128" type="radio" id="granule-extent-256-by-128" />
+                        </div>
+                      </Form>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      Sampling Grid Type
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          (
+                            <Tooltip style={{ width: '20rem' }}>
+                              Specifies the type of the raster sampling grid. It can be either a Universal Transverse Mercator (UTM) grid or a geodetic latitude-longitude grid.
+                            </Tooltip>
+                          )
+                        }
+                      >
+                        <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+                      </OverlayTrigger>
+                    </Col>
+                    <Col>
+                      <Form>
+                        <div className="mb-3">
+                          <Form.Check inline label="UTM" name="UTM" type="radio" id="sample-grid-utm" checked />
+                          <Form.Check inline label="LAT/LON" name="latLon" type="radio" id="sample-grid-lat-lon" />
+                        </div>
+                      </Form>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      Raster Resolution
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          (
+                            <Tooltip style={{ width: '20rem' }}>
+                              Resolution of the raster sampling grid in units of integer meters UTM grids and integer arc-seconds for latitude-longitude grids.
+                            </Tooltip>
+                          )
+                        }
+                      >
+                        <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+                      </OverlayTrigger>
+                    </Col>
+                    <Col>
+                      <Form>
+                        <Form.Control as="select" onChange={this.handleSwoldrOptions}>
+                          <option value={90}>90 Meters</option>
+                          <option value={100}>100 Meters</option>
+                          <option value={120}>120 Meters</option>
+                          <option value={125}>125 Meters</option>
+                          <option value={200}>200 Meters</option>
+                          <option value={250}>250 Meters</option>
+                          <option value={500}>500 Meters</option>
+                          <option value={1000}>1000 Meters</option>
+                          <option value={2500}>2500 Meters</option>
+                          <option value={5000}>5000 Meters</option>
+                          <option value={10000}>10000 Meters</option>
+                        </Form.Control>
+                      </Form>
+
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col>
+                      <Accordion>
+                        <Card>
+                          <Accordion.Toggle as={Card.Header} eventKey="0">
+                            Advanced options
+                          </Accordion.Toggle>
+                          <Accordion.Collapse eventKey="0">
+                            <Card.Body>
+                              <Table striped bordered size="sm" responsive>
+                                <thead>
+                                  <tr>
+                                    <th>Granule</th>
+                                    <th>
+                                      UTM Zone Adjust
+                                      <OverlayTrigger
+                                        placement="top"
+                                        overlay={
+                                          (
+                                            <Tooltip style={{ width: '20rem' }}>
+                                              The universal Transverse Mercator (UTM) projection is divided into 60 local zones 6 wide in Longitude. By default, UTM raster processing uses the UTM zone at the scene center. If a common grid is desired for scenes near each other , the zone per scene can be adjusted (+/- 1 zone)to allow nearby L2_HR_Raster outpouts to be sampled on a common grid. This parameter has no effect if the outpout grid is not UTM.
+                                            </Tooltip>
+                                          )
+                                        }
+                                      >
+                                        <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+                                      </OverlayTrigger>
+                                    </th>
+                                    <th>
+                                      MGRS Band Adjust
+                                      <OverlayTrigger
+                                        placement="top"
+                                        overlay={
+                                          (
+                                            <Tooltip style={{ width: '20rem' }}>
+                                              The Military Grid Reference System (MGRS) defines alphabetic Latitude bands. By default, UTM raster processing uses the MGRS band at the scene center. If a common grid is desired for scenes near each other , the band per scene can be adjusted (+/- 1 band) to allow nearby L@_HR_Raster outputs to be sampled on a common grid. This parameter has no effect if the output grid is not UTM.
+                                            </Tooltip>
+                                          )
+                                        }
+                                      >
+                                        <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+                                      </OverlayTrigger>
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {
+                                    metadata && metadata.granules && metadata.granules.items && metadata.granules.items.map((granule) => (
+                                      <tr key={granule.conceptId}>
+                                        <td>{granule.conceptId}</td>
+                                        <td>
+                                          <Form.Check inline label="+1" name={`${granule.conceptId}-plus-1-UTM-zone`} type="radio" id={`${granule.conceptId}-plus-1-UTM-zone`} />
+                                          <Form.Check inline label="0" name={`${granule.conceptId}-0-UTM-zone`} type="radio" id={`${granule.conceptId}-0-UTM-zone`} checked />
+                                          <Form.Check inline label="-1" name={`${granule.conceptId}-minus-1-UTM-zone`} type="radio" id={`${granule.conceptId}-minus-1-UTM-zone`} />
+                                        </td>
+                                        <td>
+                                          <Form.Check inline label="+1" name={`${granule.conceptId}-plus-1-MGRS-band`} type="radio" id={`${granule.conceptId}-plus-1-MGRS-band`} />
+                                          <Form.Check inline label="0" name={`${granule.conceptId}-0-MGRS-band`} type="radio" id={`${granule.conceptId}-0-MGRS-band`} checked />
+                                          <Form.Check inline label="-1" name={`${granule.conceptId}-minus-1-MGRS-band`} type="radio" id={`${granule.conceptId}-minus-1-MGRS-band`} />
+                                        </td>
+                                      </tr>
+                                    ))
+                                  }
+                                </tbody>
+                              </Table>
+                            </Card.Body>
+                          </Accordion.Collapse>
+                        </Card>
+                      </Accordion>
+                    </Col>
+                  </Row>
+                </Container>
+              </ProjectPanelSection>
+            )
+          }
         </ProjectPanelSection>
       </div>
     )
@@ -1019,7 +1248,8 @@ AccessMethod.propTypes = {
   metadata: PropTypes.shape({
     conceptId: PropTypes.string,
     endDate: PropTypes.string,
-    startDate: PropTypes.string
+    startDate: PropTypes.string,
+    granules: []
   }),
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func,

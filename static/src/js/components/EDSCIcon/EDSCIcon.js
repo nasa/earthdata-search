@@ -77,6 +77,21 @@ export const EDSCIcon = ({
     )
   }
 
+  if (variant === 'details-span') {
+    return (
+      <span className="pl-2">
+        <Icon
+          className={iconClassNames}
+          title={title}
+          size={size}
+          data-testid="edsc-icon-details"
+          {...props}
+        />
+        {children}
+      </span>
+    )
+  }
+
   return (
     <>
       <Icon
