@@ -284,10 +284,10 @@ export class AccessMethod extends Component {
 
   handleSwoldrOptions() {
     console.log('Handling Swodlr')
-    const { metadata, selectedAccessMethod } = this.props
+    const { metadata, onUpdateAccessMethod, selectedAccessMethod } = this.props
     const { conceptId: collectionId } = metadata
 
-    this.onUpdateAccessMethod({
+    onUpdateAccessMethod({
       collectionId,
       method: {
         [selectedAccessMethod]: {
@@ -480,6 +480,7 @@ export class AccessMethod extends Component {
 
     let hasHarmony = false
 
+    console.log('🚀 ~ file: AccessMethod.js:485 ~ AccessMethod ~ Object.keys ~ accessMethods:', accessMethods)
     Object.keys(accessMethods).forEach((methodKey) => {
       const { [methodKey]: accessMethod = {} } = accessMethods
 
@@ -507,6 +508,7 @@ export class AccessMethod extends Component {
       let hasSpatialSubsetting = null
       let customizationOptions = null
 
+      console.log('🚀 ~ file: AccessMethod.js:512 ~ AccessMethod ~ Object.keys ~ type:', type)
       switch (type) {
         case 'download': {
           id = `${collectionId}_access-method__direct-download`
