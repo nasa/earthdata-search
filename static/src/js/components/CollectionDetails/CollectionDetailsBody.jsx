@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { uniq } from 'lodash'
+import { uniq } from 'lodash-es'
 
 import {
   Badge,

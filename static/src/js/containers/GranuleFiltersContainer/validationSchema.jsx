@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 import * as Yup from 'yup'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 import {
   dateOutsideRange,

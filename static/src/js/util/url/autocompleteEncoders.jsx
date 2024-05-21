@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 /**
  * Encodes the Autocomplete Selected params into an object

@@ -1,4 +1,4 @@
-import { isEmpty, intersection } from 'lodash'
+import { isEmpty, intersection } from 'lodash-es'
 import 'array-foreach-async'
 
 import actions from './index'

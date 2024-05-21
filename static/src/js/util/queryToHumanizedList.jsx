@@ -1,4 +1,4 @@
-import { castArray } from 'lodash'
+import { castArray } from 'lodash-es'
 
 import { humanizedQueryValueFormattingMap } from './humanizedQueryValueFormattingMap'
 

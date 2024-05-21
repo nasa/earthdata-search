@@ -2,7 +2,7 @@ import {
   find,
   isEqual,
   remove
-} from 'lodash'
+} from 'lodash-es'
 
 import {
   UPDATE_SELECTED_FEATURE_FACET,

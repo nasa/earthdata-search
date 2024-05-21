@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import { FaChevronLeft } from 'react-icons/fa'
 
 import SimpleBar from 'simplebar-react'

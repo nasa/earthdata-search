@@ -8,7 +8,7 @@ import React, {
 import { PropTypes } from 'prop-types'
 import { VariableSizeGrid as Grid } from 'react-window'
 import InfiniteLoader from 'react-window-infinite-loader'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 import { getActivePanelSize } from '../../util/getActivePanelSize'
 import { itemToRowColumnIndicies } from '../../util/itemToRowColumnIndicies'

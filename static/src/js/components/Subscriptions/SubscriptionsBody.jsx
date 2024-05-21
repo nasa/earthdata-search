@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
-import { isEmpty, isEqual } from 'lodash'
+import { isEmpty, isEqual } from 'lodash-es'
 import { FaBell, FaPlus } from 'react-icons/fa'
 import { Form } from 'react-bootstrap'
 import snakecaseKeys from 'snakecase-keys'

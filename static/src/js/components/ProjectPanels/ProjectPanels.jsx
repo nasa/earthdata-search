@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
-import { isEmpty, uniq } from 'lodash'
+import { isEmpty, uniq } from 'lodash-es'
 import {
   FaCheckCircle,
   FaCog,

@@ -1,4 +1,4 @@
-import { castArray } from 'lodash'
+import { castArray } from 'lodash-es'
 
 const degrees = (value) => {
   if (value % 1 !== 0) {

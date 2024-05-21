@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 import Spinner from '../Spinner/Spinner'
 

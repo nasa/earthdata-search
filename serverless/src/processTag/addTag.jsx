@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { castArray, isEmpty } from 'lodash'
+import { castArray, isEmpty } from 'lodash-es'
 import { stringify } from 'qs'
 
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'

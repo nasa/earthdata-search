@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { difference } from 'lodash'
+import { difference } from 'lodash-es'
 import classNames from 'classnames'
 import { FaInfoCircle, FaMinus } from 'react-icons/fa'
 

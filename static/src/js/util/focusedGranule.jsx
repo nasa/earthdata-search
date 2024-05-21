@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 /**
  * Returns the collection object from the metadata store for the provided granuleId

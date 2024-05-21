@@ -1,4 +1,4 @@
-import { keyBy } from 'lodash'
+import { keyBy } from 'lodash-es'
 
 import { deobfuscateId } from '../util/obfuscation/deobfuscateId'
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'

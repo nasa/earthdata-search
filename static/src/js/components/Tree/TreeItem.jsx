@@ -4,7 +4,7 @@ import React, {
   useEffect
 } from 'react'
 import PropTypes from 'prop-types'
-import { difference } from 'lodash'
+import { difference } from 'lodash-es'
 import {
   FaInfoCircle,
   FaFolder,

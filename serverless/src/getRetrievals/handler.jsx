@@ -1,4 +1,4 @@
-import { groupBy, sortBy } from 'lodash'
+import { groupBy, sortBy } from 'lodash-es'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'

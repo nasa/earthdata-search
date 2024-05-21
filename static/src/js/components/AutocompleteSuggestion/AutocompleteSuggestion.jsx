@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { isEmpty, startCase } from 'lodash'
+import { isEmpty, startCase } from 'lodash-es'
 import { FaChevronRight } from 'react-icons/fa'
 
 import { buildHierarchy, buildHierarchicalAutocompleteTitle } from '../../util/autocompleteResults'

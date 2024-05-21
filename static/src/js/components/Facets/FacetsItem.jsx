@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { kebabCase, uniqueId } from 'lodash'
+import { kebabCase, uniqueId } from 'lodash-es'
 import classNames from 'classnames'
 
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'

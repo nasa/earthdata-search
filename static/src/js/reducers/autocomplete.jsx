@@ -1,4 +1,4 @@
-import { differenceWith, findIndex } from 'lodash'
+import { differenceWith, findIndex } from 'lodash-es'
 
 import {
   LOADED_AUTOCOMPLETE,

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
-import { sortBy } from 'lodash'
+import { sortBy } from 'lodash-es'
 import { Row, Col } from 'react-bootstrap'
 
 import { locationPropType } from '../../util/propTypes/location'

@@ -3,7 +3,7 @@ import {
   isEqual,
   startCase,
   uniqWith
-} from 'lodash'
+} from 'lodash-es'
 
 const fixCase = (keyword) => startCase(capitalize(keyword))
 

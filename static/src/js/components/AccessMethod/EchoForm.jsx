@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import EDSCEchoform from '@edsc/echoforms'
 import moment from 'moment'
-import { isEqual } from 'lodash'
+import { isEqual } from 'lodash-es'
 import { mbr } from '@edsc/geo-utils'
 
 import './EchoForm.scss'

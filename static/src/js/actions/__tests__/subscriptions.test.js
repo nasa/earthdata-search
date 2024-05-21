@@ -2,7 +2,7 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { stringify } from 'qs'
-import { isEqual } from 'lodash'
+import { isEqual } from 'lodash-es'
 
 import actions from '../index'
 

@@ -8,7 +8,7 @@ import {
   camelCase,
   capitalize,
   isEqual
-} from 'lodash'
+} from 'lodash-es'
 import { FaTimes } from 'react-icons/fa'
 import { dividePolygon } from '@edsc/geo-utils'
 

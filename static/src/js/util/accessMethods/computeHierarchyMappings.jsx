@@ -1,4 +1,4 @@
-import { isArray, isEmpty } from 'lodash'
+import { isArray, isEmpty } from 'lodash-es'
 
 /**
  * Returns variable ids grouped by their hierarchical names

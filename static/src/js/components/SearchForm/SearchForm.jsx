@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { isEmpty, isEqual } from 'lodash'
+import { isEmpty, isEqual } from 'lodash-es'
 import Autosuggest from 'react-autosuggest'
 import {
   FaEraser,

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import { parse, stringify } from 'qs'
-import { isObject } from 'lodash'
+import { isObject } from 'lodash-es'
 
 import { locationPropType } from '../../util/propTypes/location'
 

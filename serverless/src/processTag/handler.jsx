@@ -2,7 +2,7 @@ import 'array-foreach-async'
 
 import axios from 'axios'
 
-import { isEqual } from 'lodash'
+import { isEqual } from 'lodash-es'
 
 import { addTag } from './addTag'
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'

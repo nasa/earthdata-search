@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 
-import { kebabCase } from 'lodash'
+import { kebabCase } from 'lodash-es'
 
 import FacetsList from './FacetsList'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'

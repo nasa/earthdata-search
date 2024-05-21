@@ -1,4 +1,4 @@
-import { camelCase, uniq } from 'lodash'
+import { camelCase, uniq } from 'lodash-es'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
