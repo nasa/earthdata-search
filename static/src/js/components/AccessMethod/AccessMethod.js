@@ -627,7 +627,7 @@ export class AccessMethod extends Component {
       supportsBoundingBoxSubsetting = false,
       supportsVariableSubsetting = false,
       supportsConcatenation = false,
-      supportsSwodlr = true,
+      supportsSwodlr = false,
       defaultConcatenation = false
     } = selectedMethod || {}
 
