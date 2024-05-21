@@ -1,4 +1,4 @@
-import { cloneDeep, merge } from 'lodash'
+import { cloneDeep, merge } from 'lodash-es'
 
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { availablePortals } from '../../../../portals'

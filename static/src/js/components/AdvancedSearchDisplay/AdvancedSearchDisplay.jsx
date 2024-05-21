@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { isEmpty, isObject } from 'lodash'
+import { isEmpty, isObject } from 'lodash-es'
 import { FaSlidersH } from 'react-icons/fa'
 
 import AdvancedSearchDisplayEntry from './AdvancedSearchDisplayEntry'

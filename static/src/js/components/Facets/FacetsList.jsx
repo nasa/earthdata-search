@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { uniqueId } from 'lodash'
+import { uniqueId } from 'lodash-es'
 import classNames from 'classnames'
 
 import { buildOrganizedFacets } from '../../util/facets'

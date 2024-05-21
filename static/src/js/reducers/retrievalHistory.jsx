@@ -1,4 +1,4 @@
-import { findIndex } from 'lodash'
+import { findIndex } from 'lodash-es'
 import {
   SET_RETRIEVAL_HISTORY,
   SET_RETRIEVAL_HISTORY_LOADING,

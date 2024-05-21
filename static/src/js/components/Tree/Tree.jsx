@@ -5,7 +5,7 @@ import React, {
   useCallback
 } from 'react'
 import PropTypes from 'prop-types'
-import { isEqual } from 'lodash'
+import { isEqual } from 'lodash-es'
 
 import { TreeItem } from './TreeItem'
 import { TreeNode } from '../../util/tree/TreeNode'

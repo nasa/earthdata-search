@@ -2,7 +2,7 @@
 import L from 'leaflet'
 import './sphericalPolygon'
 
-import { castArray } from 'lodash'
+import { castArray } from 'lodash-es'
 
 // Is the granule coordinate system cartesian?
 export function isCartesian(metadata = {}) {

@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom'
 import { PropTypes } from 'prop-types'
 import { Dropdown } from 'react-bootstrap'
 import classNames from 'classnames'
-import { snakeCase } from 'lodash'
+import { snakeCase } from 'lodash-es'
 
 import RadioSettingDropdownItem from './RadioSettingDropdownItem'
 import RadioSettingToggle from '../CustomToggle/RadioSettingToggle'

@@ -2,7 +2,7 @@ import {
   castArray,
   flattenDeep,
   isPlainObject
-} from 'lodash'
+} from 'lodash-es'
 
 // Returns the date in YYYY-MM-DD format by splitting an ISO string
 export const getDaysFromIsoDate = (date = '') => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { kebabCase } from 'lodash'
+import { kebabCase } from 'lodash-es'
 
 import { Badge, ProgressBar } from 'react-bootstrap'
 

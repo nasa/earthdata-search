@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { startCase } from 'lodash'
+import { startCase } from 'lodash-es'
 import { parse, stringify } from 'qs'
 
 import actions from '../../actions/index'

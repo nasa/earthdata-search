@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { partition } from 'lodash'
+import { partition } from 'lodash-es'
 
 import Spinner from '../Spinner/Spinner'
 import SubscriptionsListTable from './SubscriptionsListTable'

@@ -5,7 +5,7 @@ import {
   mapValues,
   isString,
   isNumber
-} from 'lodash'
+} from 'lodash-es'
 import classNames from 'classnames'
 
 import './Skeleton.scss'

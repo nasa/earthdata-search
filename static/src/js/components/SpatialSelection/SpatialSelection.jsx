@@ -12,7 +12,7 @@ import {
   isEqual,
   startCase,
   uniq
-} from 'lodash'
+} from 'lodash-es'
 import { FeatureGroup, useMap } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
 import L from 'leaflet'

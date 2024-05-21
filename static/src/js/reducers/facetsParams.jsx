@@ -1,4 +1,4 @@
-import { findIndex, isEqual } from 'lodash'
+import { findIndex, isEqual } from 'lodash-es'
 
 import {
   TOGGLE_VIEW_ALL_FACETS_MODAL,

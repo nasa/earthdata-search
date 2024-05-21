@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { isFunction } from 'lodash'
+import { isFunction } from 'lodash-es'
 
 import { FaRegCopy } from 'react-icons/fa'
 

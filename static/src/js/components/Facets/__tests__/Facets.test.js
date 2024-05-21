@@ -12,7 +12,7 @@ import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
 
-import { kebabCase } from 'lodash'
+import { kebabCase } from 'lodash-es'
 
 import Facets from '../Facets'
 import * as facetUtils from '../../../util/facets'

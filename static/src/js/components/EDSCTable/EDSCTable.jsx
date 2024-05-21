@@ -12,7 +12,7 @@ import {
   useBlockLayout,
   useRowState
 } from 'react-table'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import classNames from 'classnames'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import InfiniteLoader from 'react-window-infinite-loader'

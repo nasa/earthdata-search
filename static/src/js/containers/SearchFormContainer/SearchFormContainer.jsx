@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { isPlainObject, isEmpty } from 'lodash'
+import { isPlainObject, isEmpty } from 'lodash-es'
 
 import actions from '../../actions/index'
 

@@ -5,7 +5,7 @@ import {
   Form,
   Row
 } from 'react-bootstrap'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import { FaQuestionCircle } from 'react-icons/fa'
 
 import Button from '../Button/Button'

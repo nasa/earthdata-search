@@ -1,5 +1,5 @@
 import { XMLParser } from 'fast-xml-parser'
-import { isEmpty, isString } from 'lodash'
+import { isEmpty, isString } from 'lodash-es'
 
 import Request from './request'
 

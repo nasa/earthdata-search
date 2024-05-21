@@ -1,4 +1,4 @@
-import { castArray } from 'lodash'
+import { castArray } from 'lodash-es'
 
 /**
  * Returns true if the pathname starts with one of the paths

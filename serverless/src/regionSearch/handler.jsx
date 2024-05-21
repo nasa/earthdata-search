@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { uniq } from 'lodash'
+import { uniq } from 'lodash-es'
 
 import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
 import { getEarthdataConfig, getApplicationConfig } from '../../../sharedUtils/config'

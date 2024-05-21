@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { min } from 'lodash'
+import { min } from 'lodash-es'
 
 import { getCollectionsQuery } from '../../selectors/query'
 import {

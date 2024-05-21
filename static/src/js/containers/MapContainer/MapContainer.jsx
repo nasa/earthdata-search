@@ -10,7 +10,7 @@ import {
   difference,
   isEqual,
   merge
-} from 'lodash'
+} from 'lodash-es'
 import 'proj4leaflet'
 import LRUCache from 'lrucache'
 

@@ -7,7 +7,7 @@ import {
   ScaleControl
 } from 'react-leaflet'
 
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 import crsProjections from '../../util/map/crs'
 import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'

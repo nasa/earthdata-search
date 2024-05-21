@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Col, Tab } from 'react-bootstrap'
-import { upperFirst } from 'lodash'
+import { upperFirst } from 'lodash-es'
 import {
   FaChevronUp,
   FaChevronDown,

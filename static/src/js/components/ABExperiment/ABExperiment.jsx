@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import PropTypes from 'prop-types'
 
 import useExperiment from '../../hooks/useExperiment'
