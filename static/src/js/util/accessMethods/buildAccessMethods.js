@@ -53,8 +53,12 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
       }
 
       // Only process service types that EDSC supports
-      const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony']
-      if (!supportedServiceTypes.includes(serviceType.toLowerCase())) return
+      const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony', 'swodlr']
+      if (!supportedServiceTypes.includes(serviceType.toLowerCase())) {
+        console.log('Unsupported service type called with: ', serviceType)
+
+        return
+      }
 
       const { urlValue } = url
 
@@ -114,6 +118,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           })
         }
 
+        console.log('🚀 ~ file: buildAccessMethods.js:133 ~ serviceItems.forEach ~ outputFormats:', outputFormats)
         accessMethods.opendap = {
           hierarchyMappings,
           id: serviceConceptId,
@@ -188,6 +193,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
 
         harmonyIndex += 1
       }
+      // TODO add case for swodlr
     })
   }
 
