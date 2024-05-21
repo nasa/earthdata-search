@@ -1,4 +1,5 @@
 # Project build files
+.esbuild
 .dockerignore
 .DS_Store
 .serverless

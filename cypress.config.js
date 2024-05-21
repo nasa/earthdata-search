@@ -13,11 +13,9 @@ export default ({
   },
   e2e: {
     setupNodeEvents(on, config) {
-      on('dev-server:start', (options) => {
-        return devServer({
-          ...options
-        })
-      })
+      on('dev-server:start', (options) => devServer({
+        ...options
+      }))
 
       return config
     },
