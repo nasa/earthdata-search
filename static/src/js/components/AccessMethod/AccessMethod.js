@@ -577,7 +577,7 @@ export class AccessMethod extends Component {
           break
         }
 
-        case 'Swodlr': {
+        case 'SWODLR': {
           id = `${collectionId}_access-method__swodlr_${methodKey}`
           title = 'Generate with SWODLR'
           description = 'Set options and generate new standard products'

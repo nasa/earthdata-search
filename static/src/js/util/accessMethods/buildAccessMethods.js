@@ -90,6 +90,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           }
 
           let methodKey = camelCase(serviceType)
+          console.log('🚀 ~ file: buildAccessMethods.js:93 ~ orderOptionsItems.forEach ~ methodKey:', methodKey)
 
           // `echoOrders` needs to be singular to match existing savedAccessConfigurations
           if (methodKey === 'echoOrders') {
@@ -118,7 +119,6 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           })
         }
 
-        console.log('🚀 ~ file: buildAccessMethods.js:133 ~ serviceItems.forEach ~ outputFormats:', outputFormats)
         accessMethods.opendap = {
           hierarchyMappings,
           id: serviceConceptId,
@@ -193,7 +193,18 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
 
         harmonyIndex += 1
       }
-      // TODO add case for swodlr
+
+      if (serviceType.toLowerCase() === 'swodlr') {
+        console.log('parsing swodlr accessMEthod')
+        accessMethods.swodlr = {
+          id: serviceConceptId,
+          isValid: true,
+          longName,
+          name,
+          type: serviceType,
+          supportsSwodlr: true
+        }
+      }
     })
   }
 
