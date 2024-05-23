@@ -23,7 +23,6 @@ import Admin from './routes/Admin/Admin'
 import ContactInfo from './routes/ContactInfo/ContactInfo'
 import Downloads from './routes/Downloads/Downloads'
 import EarthdataDownloadRedirect from './routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'
-import FooterContainer from './containers/FooterContainer/FooterContainer'
 import Preferences from './routes/Preferences/Preferences'
 import Project from './routes/Project/Project'
 import Search from './routes/Search/Search'
@@ -41,6 +40,7 @@ import DeprecatedParameterModalContainer from './containers/DeprecatedParameterM
 import EditSubscriptionModalContainer from './containers/EditSubscriptionModalContainer/EditSubscriptionModalContainer'
 import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
 import ErrorBoundary from './components/Errors/ErrorBoundary'
+import FooterContainer from './containers/FooterContainer/FooterContainer'
 import HistoryContainer from './containers/HistoryContainer/HistoryContainer'
 import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
@@ -192,8 +192,6 @@ class App extends Component {
                     <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
                     <Redirect exact from="/" to="/search" />
                     <Route
-                      // TODO not relevant to PR but, I want to understand why the Search component has to be loaded first
-                      // EVEN without the lazy loading
                       path={this.portalPaths('/search')}
                       render={
                         () => (

@@ -129,7 +129,7 @@ The production build of the application will be output in the `/static/dist/` di
 
     npm run build
 
-This production build can be run locally with any number of http-server solution. A simple one is to use the http-server package
+This production build can be run locally with any number of http-server solutions. A simple one is to use the http-server package
 
     npx http-server static/dist
 
