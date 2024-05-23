@@ -10,13 +10,6 @@
   align-items: flex-end;
   background-color: #f3f3f3;
   background-image: linear-gradient(#f3f3f3, #f5f5f5);
-  // &__evil {
-  //   background: $color__black;
-  // }
-
-  &--evil {
-    background: $color__black;
-  }
 
   &__header {
     background-color: $color__black--800;
@@ -24,18 +17,10 @@
     border-bottom: 1px solid $color__black--700;
 
 
-    // .route-wrapper--evil & {
-    //   background: $color__black;
-    // }
-
     .route-wrapper--light & {
       border-bottom: 1px solid $color__black--200;
     }
   }
-
-  // &__map--black {
-  //   background-color: $color__black;
-  // }
 
   &__header-primary {
     display: flex;
@@ -73,15 +58,6 @@
     }
 
   }
-  // TODO this should probably just be an extension of __content color is the only diff
-  &__content--map {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    justify-content: space-between;
-    flex-direction: column;
-    background-color: $color__black;
-  }
 
   &__content-nav {
     padding: $spacer/2 $spacer;
@@ -107,6 +83,10 @@
 
   &--light {
     background: white;
+  }
+
+  &--dark {
+    background: $color__black;
   }
 
   &__page-heading {

@@ -86,7 +86,6 @@ export class DownloadHistory extends Component {
             <Spinner
               className="download-history__spinner"
               type="dots"
-              color="white"
               size="small"
             />
           )

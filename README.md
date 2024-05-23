@@ -51,7 +51,9 @@ npm is a separate project from Node.js, and tends to update more frequently. As 
 
 ##### NVM
 
-To ensure that you're using the correct version of Node it is recommended that you use Node Version Manager. Installation instructions can be found on [the repository](https://github.com/nvm-sh/nvm#install--update-script). The version used is defined in .nvmrc and will be used automatically if NVM is configured correctly.
+To ensure that you're using the correct version of Node it is recommended that you use Node Version Manager. Installation instructions can be found on [the repository](https://github.com/nvm-sh/nvm#install--update-script). The version used is defined in .nvmrc and will be used automatically if NVM is configured correctly. Using nvm we can switch node versions to the one utilized on Earthdata Search. From the top-level directory:
+
+    nvm use
 
 ##### Serverless Framework
 

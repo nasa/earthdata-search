@@ -67,7 +67,7 @@ export const Project = (props) => {
           <meta name="robots" content="noindex, nofollow" />
           <link rel="canonical" href={`${edscHost}/projects`} />
         </Helmet>
-        <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
+        <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
           <div className="route-wrapper__content">
             <div className="route-wrapper__content-inner">
               <SavedProjectsContainer />
@@ -92,7 +92,7 @@ export const Project = (props) => {
         onSubmit={handleSubmit}
         method="post"
         name="project form"
-        className="route-wrapper route-wrapper--evil"
+        className="route-wrapper route-wrapper--dark"
       >
         <SidebarContainer panels={<ProjectPanelsContainer />}>
           <ProjectCollectionsContainer />
