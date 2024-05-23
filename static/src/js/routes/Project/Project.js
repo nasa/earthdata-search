@@ -92,7 +92,7 @@ export const Project = (props) => {
         onSubmit={handleSubmit}
         method="post"
         name="project form"
-        className="route-wrapper__content--map route-wrapper--project"
+        className="route-wrapper route-wrapper--evil"
       >
         <SidebarContainer panels={<ProjectPanelsContainer />}>
           <ProjectCollectionsContainer />
