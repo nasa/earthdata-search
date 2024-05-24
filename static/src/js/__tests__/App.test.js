@@ -229,17 +229,6 @@ describe('App component', () => {
     await waitFor(() => expect(document.title).toEqual('Earthdata Search'))
   })
 
-  // TODO this is just a prop being passed in Helmet its not rendered on DOM so I think that we should remove it for RTL test
-  test.skip('sets the correct title template', async () => {
-    setup()
-    await waitFor(() => {
-      const metaElement = document.querySelector('x[name="description"]')
-
-      expect(metaElement).toBeInTheDocument()
-      expect(metaElement).toHaveAttribute('content', 'Search, discover, visualize, refine, and access NASA Earth Observation data in your browser with Earthdata Search')
-    })
-  })
-
   test('sets the correct meta description', async () => {
     setup()
     await waitFor(() => {
