@@ -110,7 +110,7 @@ export class AccessMethod extends Component {
     const sampleGrid = 'GEO'
     const rasterResolution = 90
     // We only want to allow for the processing of the first 10 granules of a collection for Swodlr
-    const collectionGranuleList = props.metadata.granules.items > 0 ? props.metadata.granules.items.slice(0, 10) : []
+    const collectionGranuleList = []
 
     this.state = {
       enableTemporalSubsetting,
@@ -1299,8 +1299,8 @@ export class AccessMethod extends Component {
                                 </thead>
                                 <tbody>
                                   {
-                                    collectionGranuleList
-                                    && collectionGranuleList.map((granule, position) => (
+                                    metadata && metadata.granules
+                                    && metadata.granules.items.map((granule, position) => (
                                       <tr key={granule.conceptId}>
                                         <td>{granule.conceptId}</td>
                                         <td>
