@@ -106,12 +106,22 @@ export class AccessMethod extends Component {
       selectedHarmonyMethodName = accessMethods[selectedAccessMethod].name
     }
 
+    const granuleExtent = true
+    const sampleGrid = 'GEO'
+    const rasterResolution = 90
+    // We only want to allow for the processing of the first 10 granules of a collection for Swodlr
+    const collectionGranuleList = props.metadata.granules.items.slice(0, 10)
+
     this.state = {
       enableTemporalSubsetting,
       enableSpatialSubsetting,
       enableConcatenateDownload,
       isHarmony,
-      selectedHarmonyMethodName
+      selectedHarmonyMethodName,
+      granuleExtent,
+      sampleGrid,
+      rasterResolution,
+      collectionGranuleList
     }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
@@ -122,6 +132,7 @@ export class AccessMethod extends Component {
     this.handleConcatenationSelection = this.handleConcatenationSelection.bind(this)
     this.handleHarmonySelection = this.handleHarmonySelection.bind(this)
     this.handleSwoldrOptions = this.handleSwoldrOptions.bind(this)
+    this.handleCollectionGranuleListUpdate = this.handleCollectionGranuleListUpdate.bind(this)
   }
 
   UNSAFE_componentWillReceiveProps() {
@@ -283,10 +294,39 @@ export class AccessMethod extends Component {
     }
   }
 
+  handleCollectionGranuleListUpdate(granuleList, index, property, e) {
+    const updatedCollectionGranuleList = granuleList
+    if (property === 'utm') {
+      updatedCollectionGranuleList[index].utmZoneAdjust = e.target.value
+    }
+
+    if (property === 'mgrs') {
+      updatedCollectionGranuleList[index].mgrsBandAdjust = e.target.value
+    }
+
+    this.setState({
+      collectionGranuleList: updatedCollectionGranuleList
+    })
+  }
+
   handleSwoldrOptions() {
-    console.log('Handling Swodlr')
     const { metadata, onUpdateAccessMethod, selectedAccessMethod } = this.props
     const { conceptId: collectionId } = metadata
+    const {
+      rasterResolution,
+      sampleGrid,
+      granuleExtent,
+      collectionGranuleList
+    } = this.state
+
+    const customParams = {}
+
+    collectionGranuleList.forEach((granule) => {
+      customParams[granule.conceptId] = {
+        utmZoneAdjust: granule.utmZoneAdjust || null,
+        mgrsBandAdjust: granule.mgrsBandAdjust || null
+      }
+    })
 
     onUpdateAccessMethod({
       collectionId,
@@ -294,20 +334,11 @@ export class AccessMethod extends Component {
         [selectedAccessMethod]: {
           json_data: {
             params: {
-              rasterResolution: 6,
-              outputSamplingGridType: 'GEO',
-              outputGranuleExtentFlag: false
+              rasterResolution,
+              outputSamplingGridType: sampleGrid,
+              outputGranuleExtentFlag: granuleExtent
             },
-            custom_params: {
-              'G2938391118-POCLOUD': {
-                utmZoneAdjust: null,
-                mgrsBandAdjust: null
-              },
-              'G2938390924-POCLOUD': {
-                utmZoneAdjust: null,
-                mgrsBandAdjust: null
-              }
-            }
+            custom_params: customParams
           }
         }
       }
@@ -481,7 +512,6 @@ export class AccessMethod extends Component {
 
     let hasHarmony = false
 
-    console.log('🚀 ~ file: AccessMethod.js:485 ~ AccessMethod ~ Object.keys ~ accessMethods:', accessMethods)
     Object.keys(accessMethods).forEach((methodKey) => {
       const { [methodKey]: accessMethod = {} } = accessMethods
 
@@ -509,7 +539,6 @@ export class AccessMethod extends Component {
       let hasSpatialSubsetting = null
       let customizationOptions = null
 
-      console.log('🚀 ~ file: AccessMethod.js:512 ~ AccessMethod ~ Object.keys ~ type:', type)
       switch (type) {
         case 'download': {
           id = `${collectionId}_access-method__direct-download`
@@ -637,7 +666,11 @@ export class AccessMethod extends Component {
     const {
       enableTemporalSubsetting,
       enableSpatialSubsetting,
-      enableConcatenateDownload = defaultConcatenation
+      enableConcatenateDownload = defaultConcatenation,
+      granuleExtent,
+      sampleGrid,
+      rasterResolution,
+      collectionGranuleList
     } = this.state
 
     const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
@@ -1084,8 +1117,38 @@ export class AccessMethod extends Component {
                     <Col>
                       <Form>
                         <div className="mb-3">
-                          <Form.Check inline label="128 x 128 km" name="128-by-128" type="radio" id="granule-extent-128-by-128" checked />
-                          <Form.Check inline label="256 x 128 km" name="256-by-128" type="radio" id="granule-extent-256-by-128" />
+                          <Form.Check
+                            inline
+                            label="128 x 128 km"
+                            name="granuleExtent"
+                            type="radio"
+                            id="granule-extent-128-by-128"
+                            checked={!granuleExtent}
+                            onClick={
+                              () => {
+                                this.setState({
+                                  granuleExtent: false
+                                })
+                              }
+
+                            }
+                          />
+                          <Form.Check
+                            inline
+                            label="256 x 128 km"
+                            name="granuleExtent"
+                            type="radio"
+                            id="granule-extent-256-by-128"
+                            checked={granuleExtent}
+                            onClick={
+                              () => {
+                                this.setState({
+                                  granuleExtent: true
+                                })
+                              }
+
+                            }
+                          />
                         </div>
                       </Form>
                     </Col>
@@ -1109,8 +1172,36 @@ export class AccessMethod extends Component {
                     <Col>
                       <Form>
                         <div className="mb-3">
-                          <Form.Check inline label="UTM" name="UTM" type="radio" id="sample-grid-utm" checked />
-                          <Form.Check inline label="LAT/LON" name="latLon" type="radio" id="sample-grid-lat-lon" />
+                          <Form.Check
+                            inline
+                            label="UTM"
+                            name="sample-grid"
+                            type="radio"
+                            id="sample-grid-utm"
+                            checked={sampleGrid === 'UTM'}
+                            onClick={
+                              () => {
+                                this.setState({
+                                  sampleGrid: 'UTM'
+                                })
+                              }
+                            }
+                          />
+                          <Form.Check
+                            inline
+                            label="LAT/LON"
+                            name="sample-grid"
+                            type="radio"
+                            id="sample-grid-lat-lon"
+                            checked={sampleGrid === 'GEO'}
+                            onClick={
+                              () => {
+                                this.setState({
+                                  sampleGrid: 'GEO'
+                                })
+                              }
+                            }
+                          />
                         </div>
                       </Form>
                     </Col>
@@ -1133,7 +1224,17 @@ export class AccessMethod extends Component {
                     </Col>
                     <Col>
                       <Form>
-                        <Form.Control as="select" onChange={this.handleSwoldrOptions}>
+                        <Form.Control
+                          as="select"
+                          onChange={
+                            (e) => {
+                              this.setState({
+                                rasterResolution: e.target.value
+                              })
+                            }
+                          }
+                          value={rasterResolution}
+                        >
                           <option value={90}>90 Meters</option>
                           <option value={100}>100 Meters</option>
                           <option value={120}>120 Meters</option>
@@ -1151,7 +1252,7 @@ export class AccessMethod extends Component {
                     </Col>
                   </Row>
                   <br />
-                  <Row>
+                  <Row hidden={sampleGrid !== 'GEO'}>
                     <Col>
                       <Accordion>
                         <Card>
@@ -1198,19 +1299,87 @@ export class AccessMethod extends Component {
                                 </thead>
                                 <tbody>
                                   {
-                                    metadata && metadata.granules && metadata.granules.items
-                                    && metadata.granules.items.map((granule) => (
+                                    collectionGranuleList
+                                    && collectionGranuleList.map((granule, position) => (
                                       <tr key={granule.conceptId}>
                                         <td>{granule.conceptId}</td>
                                         <td>
-                                          <Form.Check inline label="+1" name={`${granule.conceptId}-plus-1-UTM-zone`} type="radio" id={`${granule.conceptId}-plus-1-UTM-zone`} />
-                                          <Form.Check inline label="0" name={`${granule.conceptId}-0-UTM-zone`} type="radio" id={`${granule.conceptId}-0-UTM-zone`} checked />
-                                          <Form.Check inline label="-1" name={`${granule.conceptId}-minus-1-UTM-zone`} type="radio" id={`${granule.conceptId}-minus-1-UTM-zone`} />
+                                          <Form.Check
+                                            inline
+                                            label="+1"
+                                            name={`${granule.conceptId}-UTM-zone`}
+                                            type="radio"
+                                            id={`${granule.conceptId}-plus-1-UTM-zone`}
+                                            onChange={
+                                              (e) => {
+                                                this.handleCollectionGranuleListUpdate(collectionGranuleList, 'utm', position, e)
+                                              }
+                                            }
+                                          />
+                                          <Form.Check
+                                            inline
+                                            label="0"
+                                            name={`${granule.conceptId}-UTM-zone`}
+                                            type="radio"
+                                            id={`${granule.conceptId}-0-UTM-zone`}
+                                            checked
+                                            onChange={
+                                              (e) => {
+                                                this.handleCollectionGranuleListUpdate(collectionGranuleList, 'utm', position, e)
+                                              }
+                                            }
+                                          />
+                                          <Form.Check
+                                            inline
+                                            label="-1"
+                                            name={`${granule.conceptId}-UTM-zone`}
+                                            type="radio"
+                                            id={`${granule.conceptId}-minus-1-UTM-zone`}
+                                            onChange={
+                                              (e) => {
+                                                this.handleCollectionGranuleListUpdate(collectionGranuleList, 'utm', position, e)
+                                              }
+                                            }
+                                          />
                                         </td>
                                         <td>
-                                          <Form.Check inline label="+1" name={`${granule.conceptId}-plus-1-MGRS-band`} type="radio" id={`${granule.conceptId}-plus-1-MGRS-band`} />
-                                          <Form.Check inline label="0" name={`${granule.conceptId}-0-MGRS-band`} type="radio" id={`${granule.conceptId}-0-MGRS-band`} checked />
-                                          <Form.Check inline label="-1" name={`${granule.conceptId}-minus-1-MGRS-band`} type="radio" id={`${granule.conceptId}-minus-1-MGRS-band`} />
+                                          <Form.Check
+                                            inline
+                                            label="+1"
+                                            name={`${granule.conceptId}-MGRS-band`}
+                                            type="radio"
+                                            id={`${granule.conceptId}-plus-1-MGRS-band`}
+                                            onChange={
+                                              (e) => {
+                                                this.handleCollectionGranuleListUpdate(collectionGranuleList, 'mgrs', position, e)
+                                              }
+                                            }
+                                          />
+                                          <Form.Check
+                                            inline
+                                            label="0"
+                                            name={`${granule.conceptId}-MGRS-band`}
+                                            type="radio"
+                                            id={`${granule.conceptId}-0-MGRS-band`}
+                                            checked
+                                            onChange={
+                                              (e) => {
+                                                this.handleCollectionGranuleListUpdate(collectionGranuleList, 'mgrs', position, e)
+                                              }
+                                            }
+                                          />
+                                          <Form.Check
+                                            inline
+                                            label="-1"
+                                            name={`${granule.conceptId}-MGRS-band`}
+                                            type="radio"
+                                            id={`${granule.conceptId}-minus-1-MGRS-band`}
+                                            onChange={
+                                              (e) => {
+                                                this.handleCollectionGranuleListUpdate(collectionGranuleList, 'mgrs', position, e)
+                                              }
+                                            }
+                                          />
                                         </td>
                                       </tr>
                                     ))
