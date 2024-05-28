@@ -1129,6 +1129,8 @@ export class AccessMethod extends Component {
                                 this.setState({
                                   granuleExtent: false
                                 })
+
+                                this.handleSwoldrOptions()
                               }
 
                             }
@@ -1145,6 +1147,8 @@ export class AccessMethod extends Component {
                                 this.setState({
                                   granuleExtent: true
                                 })
+
+                                this.handleSwoldrOptions()
                               }
 
                             }
@@ -1184,6 +1188,8 @@ export class AccessMethod extends Component {
                                 this.setState({
                                   sampleGrid: 'UTM'
                                 })
+
+                                this.handleSwoldrOptions()
                               }
                             }
                           />
@@ -1199,6 +1205,8 @@ export class AccessMethod extends Component {
                                 this.setState({
                                   sampleGrid: 'GEO'
                                 })
+
+                                this.handleSwoldrOptions()
                               }
                             }
                           />
@@ -1231,6 +1239,8 @@ export class AccessMethod extends Component {
                               this.setState({
                                 rasterResolution: e.target.value
                               })
+
+                              this.handleSwoldrOptions()
                             }
                           }
                           value={rasterResolution}
@@ -1313,6 +1323,7 @@ export class AccessMethod extends Component {
                                             onChange={
                                               (e) => {
                                                 this.handleCollectionGranuleListUpdate(collectionGranuleList, 'utm', position, e)
+                                                this.handleSwoldrOptions()
                                               }
                                             }
                                           />
@@ -1326,6 +1337,7 @@ export class AccessMethod extends Component {
                                             onChange={
                                               (e) => {
                                                 this.handleCollectionGranuleListUpdate(collectionGranuleList, 'utm', position, e)
+                                                this.handleSwoldrOptions()
                                               }
                                             }
                                           />
@@ -1338,6 +1350,7 @@ export class AccessMethod extends Component {
                                             onChange={
                                               (e) => {
                                                 this.handleCollectionGranuleListUpdate(collectionGranuleList, 'utm', position, e)
+                                                this.handleSwoldrOptions()
                                               }
                                             }
                                           />
@@ -1352,6 +1365,7 @@ export class AccessMethod extends Component {
                                             onChange={
                                               (e) => {
                                                 this.handleCollectionGranuleListUpdate(collectionGranuleList, 'mgrs', position, e)
+                                                this.handleSwoldrOptions()
                                               }
                                             }
                                           />
@@ -1365,6 +1379,7 @@ export class AccessMethod extends Component {
                                             onChange={
                                               (e) => {
                                                 this.handleCollectionGranuleListUpdate(collectionGranuleList, 'mgrs', position, e)
+                                                this.handleSwoldrOptions()
                                               }
                                             }
                                           />
@@ -1377,6 +1392,7 @@ export class AccessMethod extends Component {
                                             onChange={
                                               (e) => {
                                                 this.handleCollectionGranuleListUpdate(collectionGranuleList, 'mgrs', position, e)
+                                                this.handleSwoldrOptions()
                                               }
                                             }
                                           />
