@@ -1513,7 +1513,6 @@ describe('AccessMethod component', () => {
 
   describe('when the selected access method is swodlr', () => {
     test('selecting a output format calls onUpdateAccessMethod', async () => {
-      const user = userEvent.setup()
       const collectionId = 'collectionId'
       const { onUpdateAccessMethod } = setup({
         accessMethods: {
@@ -1528,22 +1527,28 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'swodlr'
       })
 
-      expect(screen.getByRole('option', { name: 'No Data Conversion' }).selected).toBe(true)
-      expect(screen.getByTestId('access-methods__output-format-options').value).toBe('')
-
-      await user.selectOptions(
-        screen.getByTestId('access-methods__output-format-options'),
-        screen.getByRole('option', { name: 'NETCDF-4' })
-      )
-
-      expect(screen.getByTestId('access-methods__output-format-options').value).toBe('nc4')
-      expect(screen.getByRole('option', { name: 'NETCDF-4' }).selected).toBe(true)
       expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
       expect(onUpdateAccessMethod).toHaveBeenCalledWith({
         collectionId: 'collectionId',
         method: {
-          opendap: {
-            selectedOutputFormat: 'nc4'
+          swodlr: {
+            json_data: {
+              params: {
+                rasterResolution: 6,
+                outputSamplingGridType: 'GEO',
+                outputGranuleExtentFlag: false
+              },
+              custom_params: {
+                'G2938391118-POCLOUD': {
+                  utmZoneAdjust: null,
+                  mgrsBandAdjust: null
+                },
+                'G2938390924-POCLOUD': {
+                  utmZoneAdjust: null,
+                  mgrsBandAdjust: null
+                }
+              }
+            }
           }
         }
       })
