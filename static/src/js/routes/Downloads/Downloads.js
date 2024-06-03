@@ -17,7 +17,7 @@ export const Downloads = ({
   return (
     <Switch>
       <Route path={`${path}`}>
-        <div className="route-wrapper route-wrapper--dark route-wrapper--content-page">
+        <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
           <div className="route-wrapper__content">
             <div className="route-wrapper__content-inner">
               <Switch>

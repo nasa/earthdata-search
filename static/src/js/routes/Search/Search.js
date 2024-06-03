@@ -227,7 +227,7 @@ export const Search = ({
           </Route>
         </Switch>
       </SidebarContainer>
-      <div className="route-wrapper__content">
+      <div className="route-wrapper__content route-wrapper__content--dark">
         <PortalBrowserModalContainer />
         <RelatedUrlsModalContainer />
         <FacetsModalContainer />
