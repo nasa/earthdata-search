@@ -10,7 +10,6 @@ import {
   waitFor
 } from '@testing-library/react'
 
-// TODO Memory router is supposed to be more lightweight?
 import { BrowserRouter as Router } from 'react-router-dom'
 import * as AppConfig from '../../../../../../sharedUtils/config'
 import actions from '../../../actions'
