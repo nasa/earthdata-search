@@ -103,7 +103,6 @@ class ShapefileLayerExtended extends L.Layer {
       const { geometry } = feature
       const { type } = geometry
 
-      // KML type file
       if (type === 'GeometryCollection') {
         // Remove the entire GeometryCollection
         featureIndexesToRemove.push(featureIndex)
