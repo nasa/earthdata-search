@@ -100,7 +100,7 @@ class ShapefileLayerExtended extends L.Layer {
     const newFeaturesToAdd = []
 
     features.forEach((feature, featureIndex) => {
-      const { geometry } = feature
+      const { geometry, properties = {} } = feature
       const { type } = geometry
 
       if (type === 'GeometryCollection') {
@@ -114,6 +114,7 @@ class ShapefileLayerExtended extends L.Layer {
             nestedGeometry.coordinates.forEach((polygon) => {
               const newPolygon = {
                 type: 'Feature',
+                properties,
                 geometry: {
                   type: 'Polygon',
                   coordinates: polygon
@@ -127,6 +128,7 @@ class ShapefileLayerExtended extends L.Layer {
             // Add all over shapes to the top level features array
             newFeaturesToAdd.push({
               type: 'Feature',
+              properties,
               geometry: nestedGeometry
             })
           }
@@ -139,6 +141,7 @@ class ShapefileLayerExtended extends L.Layer {
         geometry.coordinates.forEach((coordinate) => {
           const newFeature = {
             type: 'Feature',
+            properties,
             geometry: {
               type: 'Polygon',
               coordinates: coordinate
