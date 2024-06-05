@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import singleCollection from './__mocks__/single_collection.json'
+import singleCollection from './__mocks__/single_collection.json' with { type: 'json' }
 
 test.describe('Collection List Behavior', () => {
   test.beforeEach(async ({ page }) => {

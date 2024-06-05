@@ -34,7 +34,16 @@ export default {
       includeDevGoogleAnalytics: analytics.localIdentifier.enabled,
       showTophat
     }),
-    react(),
+    react({
+      babel: {
+        plugins: [
+          '@babel/plugin-syntax-import-assertions'
+        ],
+        generatorOpts: {
+          importAttributesKeyword: 'with'
+        }
+      }
+    }),
     postcss(),
     // Handle crypto and stream polyfills.
     nodePolyfills({
@@ -70,6 +79,7 @@ export default {
       output: {
         format: 'es',
         inlineDynamicImports: false,
+        externalImportAttributes: true,
         entryFileNames: '[name].bundle.js',
         assetFileNames: 'assets/[name].[hash].[ext]',
         dir: resolve(__dirname, 'static/dist'),

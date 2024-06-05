@@ -3,6 +3,11 @@ import thunk from 'redux-thunk'
 import nock from 'nock'
 import * as tinyCookie from 'tiny-cookie'
 
+jest.mock('tiny-cookie', () => ({
+  set: jest.fn(),
+  remove: jest.fn()
+}))
+
 import { UPDATE_AUTH } from '../../constants/actionTypes'
 import {
   logout,

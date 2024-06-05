@@ -211,7 +211,7 @@ export const buildLayer = (options, metadata) => {
         shape = new L.polygon(rect, options)
         shape._interpolationFn = 'cartesian'
       } else {
-        shape = new SphericalPolygon(rect, options)
+        shape = new L.SphericalPolygon(rect, options)
       }
 
       layer.addLayer(shape)

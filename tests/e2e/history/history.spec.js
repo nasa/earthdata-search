@@ -1,13 +1,13 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import collectionsSearchBody from './__mocks__/collectionsSearch.body.json'
-import commonHeaders from './__mocks__/common.headers.json'
-import getCollectionsGraphQlBody from './__mocks__/getCollectionsGraphql.body.json'
-import getSubscriptionsGraphQlBody from './__mocks__/getSubscriptions.graphql.body.json'
-import granulesBody from './__mocks__/granules.body.json'
-import granulesGraphQlBody from './__mocks__/granulesGraphql.body.json'
-import graphQlHeaders from './__mocks__/graphql.headers.json'
-import timeline from './__mocks__/timeline.json'
+import collectionsSearchBody from './__mocks__/collectionsSearch.body.json' with { type: 'json' }
+import commonHeaders from './__mocks__/common.headers.json' with { type: 'json' }
+import getCollectionsGraphQlBody from './__mocks__/getCollectionsGraphql.body.json' with { type: 'json' }
+import getSubscriptionsGraphQlBody from './__mocks__/getSubscriptions.graphql.body.json' with { type: 'json' }
+import granulesBody from './__mocks__/granules.body.json' with { type: 'json' }
+import granulesGraphQlBody from './__mocks__/granulesGraphql.body.json' with { type: 'json' }
+import graphQlHeaders from './__mocks__/graphql.headers.json' with { type: 'json' }
+import timeline from './__mocks__/timeline.json' with { type: 'json' }
 
 import { graphQlGetSubscriptionsQuery } from '../../support/graphQlGetSubscriptionsQuery'
 import { graphQlGetCollection } from '../../support/graphQlGetCollection'

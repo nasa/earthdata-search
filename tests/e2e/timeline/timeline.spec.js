@@ -1,11 +1,11 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import collectionsGraphJson from './__mocks__/collections_graph.json'
-import timeline from './__mocks__/timeline.json'
-import granules from './__mocks__/granules.json'
-import providers from './__mocks__/providers.json'
-import accessMethods from './__mocks__/access_methods.json'
-import collectionFixture from './__mocks__/authenticated_collections.json'
+import collectionsGraphJson from './__mocks__/collections_graph.json' with { type: 'json' }
+import timeline from './__mocks__/timeline.json' with { type: 'json' }
+import granules from './__mocks__/granules.json' with { type: 'json' }
+import providers from './__mocks__/providers.json' with { type: 'json' }
+import accessMethods from './__mocks__/access_methods.json' with { type: 'json' }
+import collectionFixture from './__mocks__/authenticated_collections.json' with { type: 'json' }
 
 import { login } from '../../support/login'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
