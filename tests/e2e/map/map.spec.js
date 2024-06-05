@@ -5,40 +5,40 @@ import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
 
-import boundingBoxBody from './__mocks__/bounding_box_collections.body.json'
-import circleBody from './__mocks__/circle_collections.body.json'
-import cmrGranulesBody from './__mocks__/cmr_granules/granules.body.json'
-import cmrGranulesCollectionBody from './__mocks__/cmr_granules/collections.body.json'
-import cmrGranulesCollectionGraphQlBody from './__mocks__/cmr_granules/collection_graphql.body.json'
-import colormapOneBody from './__mocks__/colormaps/colormap_1.body.json'
-import colormapTwoBody from './__mocks__/colormaps/colormap_2.body.json'
-import colormapCollectionsBody from './__mocks__/colormaps/collections.body.json'
-import colormapGranulesOneBody from './__mocks__/colormaps/granules_1.body.json'
-import colormapGranulesTwoBody from './__mocks__/colormaps/granules_2.body.json'
-import colormapGranulesHeaders from './__mocks__/colormaps/granules.headers.json'
-import colormapCollectionOneGraphQlBody from './__mocks__/colormaps/collection_graphql_1.body.json'
-import colormapCollectionTwoGraphQlBody from './__mocks__/colormaps/collection_graphql_2.body.json'
-import colormapCollectionGraphQlHeaders from './__mocks__/colormaps/graphql.headers.json'
-import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
-import cmrGranulesCollectionGraphQlHeaders from './__mocks__/cmr_granules/graphql.headers.json'
-import cmrGranulesHeaders from './__mocks__/cmr_granules/granules.headers.json'
-import commonBody from './__mocks__/common_collections.body.json'
-import commonHeaders from './__mocks__/common_collections.headers.json'
-import multipleShapesShapefileBody from './__mocks__/multiple_shapes_shapefile_collections.body.json'
+import boundingBoxBody from './__mocks__/bounding_box_collections.body.json' with { type: 'json' }
+import circleBody from './__mocks__/circle_collections.body.json' with { type: 'json' }
+import cmrGranulesBody from './__mocks__/cmr_granules/granules.body.json' with { type: 'json' }
+import cmrGranulesCollectionBody from './__mocks__/cmr_granules/collections.body.json' with { type: 'json' }
+import cmrGranulesCollectionGraphQlBody from './__mocks__/cmr_granules/collection_graphql.body.json' with { type: 'json' }
+import colormapOneBody from './__mocks__/colormaps/colormap_1.body.json' with { type: 'json' }
+import colormapTwoBody from './__mocks__/colormaps/colormap_2.body.json' with { type: 'json' }
+import colormapCollectionsBody from './__mocks__/colormaps/collections.body.json' with { type: 'json' }
+import colormapGranulesOneBody from './__mocks__/colormaps/granules_1.body.json' with { type: 'json' }
+import colormapGranulesTwoBody from './__mocks__/colormaps/granules_2.body.json' with { type: 'json' }
+import colormapGranulesHeaders from './__mocks__/colormaps/granules.headers.json' with { type: 'json' }
+import colormapCollectionOneGraphQlBody from './__mocks__/colormaps/collection_graphql_1.body.json' with { type: 'json' }
+import colormapCollectionTwoGraphQlBody from './__mocks__/colormaps/collection_graphql_2.body.json' with { type: 'json' }
+import colormapCollectionGraphQlHeaders from './__mocks__/colormaps/graphql.headers.json' with { type: 'json' }
+import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json' with { type: 'json' }
+import cmrGranulesCollectionGraphQlHeaders from './__mocks__/cmr_granules/graphql.headers.json' with { type: 'json' }
+import cmrGranulesHeaders from './__mocks__/cmr_granules/granules.headers.json' with { type: 'json' }
+import commonBody from './__mocks__/common_collections.body.json' with { type: 'json' }
+import commonHeaders from './__mocks__/common_collections.headers.json' with { type: 'json' }
+import multipleShapesShapefileBody from './__mocks__/multiple_shapes_shapefile_collections.body.json' with { type: 'json' }
 import opensearchGranulesBody from './__mocks__/opensearch_granules/granules_body'
-import opensearchGranulesCollectionBody from './__mocks__/opensearch_granules/collections.body.json'
-import opensearchGranulesCollectionGraphQlBody from './__mocks__/opensearch_granules/graphql.body.json'
-import opensearchGranulesCollectionGraphQlHeaders from './__mocks__/opensearch_granules/graphql.headers.json'
-import opensearchGranulesHeaders from './__mocks__/opensearch_granules/granules.headers.json'
-import opensearchGranulesTimelineBody from './__mocks__/opensearch_granules/timeline.body.json'
-import opensearchGranulesTimelineHeaders from './__mocks__/opensearch_granules/timeline.headers.json'
-import pointBody from './__mocks__/point_collections.body.json'
-import pointBodyEdited from './__mocks__/point_collections_edited.body.json'
-import polygonBody from './__mocks__/polygon_collections.body.json'
-import simpleShapefileBody from './__mocks__/simple_shapefile_collections.body.json'
-import tooManyPointsShapefileBody from './__mocks__/too_many_points_shapefile_collections.body.json'
-import arcticShapefileBody from './__mocks__/arctic_shapefile_collections.body.json'
-import antarcticShapefileBody from './__mocks__/antarctic_shapefile_collections.body.json'
+import opensearchGranulesCollectionBody from './__mocks__/opensearch_granules/collections.body.json' with { type: 'json' }
+import opensearchGranulesCollectionGraphQlBody from './__mocks__/opensearch_granules/graphql.body.json' with { type: 'json' }
+import opensearchGranulesCollectionGraphQlHeaders from './__mocks__/opensearch_granules/graphql.headers.json' with { type: 'json' }
+import opensearchGranulesHeaders from './__mocks__/opensearch_granules/granules.headers.json' with { type: 'json' }
+import opensearchGranulesTimelineBody from './__mocks__/opensearch_granules/timeline.body.json' with { type: 'json' }
+import opensearchGranulesTimelineHeaders from './__mocks__/opensearch_granules/timeline.headers.json' with { type: 'json' }
+import pointBody from './__mocks__/point_collections.body.json' with { type: 'json' }
+import pointBodyEdited from './__mocks__/point_collections_edited.body.json' with { type: 'json' }
+import polygonBody from './__mocks__/polygon_collections.body.json' with { type: 'json' }
+import simpleShapefileBody from './__mocks__/simple_shapefile_collections.body.json' with { type: 'json' }
+import tooManyPointsShapefileBody from './__mocks__/too_many_points_shapefile_collections.body.json' with { type: 'json' }
+import arcticShapefileBody from './__mocks__/arctic_shapefile_collections.body.json' with { type: 'json' }
+import antarcticShapefileBody from './__mocks__/antarctic_shapefile_collections.body.json' with { type: 'json' }
 import uploadShapefile from '../../support/uploadShapefile'
 
 // When testing map values we don't need to test the exact values coming from leaflet. The inconsistencies

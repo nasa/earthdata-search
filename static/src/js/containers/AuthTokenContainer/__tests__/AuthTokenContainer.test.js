@@ -3,6 +3,10 @@ import { render } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import * as tinyCookie from 'tiny-cookie'
 
+jest.mock('tiny-cookie', () => ({
+  get: jest.fn()
+}))
+
 import actions from '../../../actions'
 import { AuthTokenContainer, mapDispatchToProps } from '../AuthTokenContainer'
 

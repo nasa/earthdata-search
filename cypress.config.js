@@ -1,4 +1,4 @@
-import { devServer } from '@cypress/vite-dev-server'
+import vitePreprocessor from 'cypress-vite'
 
 export default ({
   viewportWidth: 1400,
@@ -12,12 +12,8 @@ export default ({
     test_cyress: true
   },
   e2e: {
-    setupNodeEvents(on, config) {
-      on('dev-server:start', (options) => devServer({
-        ...options
-      }))
-
-      return config
+    setupNodeEvents(on) {
+      on('file:preprocessor', vitePreprocessor({ configFile: false }))
     },
     baseUrl: 'http://localhost:8080',
     specPattern: 'cypress/e2e/**/*.cy.js'

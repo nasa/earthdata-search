@@ -99,6 +99,7 @@ class FacetsItem extends Component {
             data-testid={`facet_item-${kebabCase(facet.title)}`}
             type="checkbox"
             name={facet.title}
+            aria-label={facet.title}
             checked={applied}
             onChange={this.onFacetChange.bind(this, changeHandlerArgs)}
           />

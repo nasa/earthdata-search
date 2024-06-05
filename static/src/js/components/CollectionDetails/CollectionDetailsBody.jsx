@@ -283,6 +283,7 @@ export const CollectionDetailsBody = ({
                               rel="noopener noreferrer"
                               className="link collection-details-body__link"
                               title={`View ${title}`}
+                              aria-label={`View ${title}`}
                               href={`${authority}${doiValue}`}
                             >
                               {title}
