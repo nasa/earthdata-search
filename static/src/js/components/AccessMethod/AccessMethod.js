@@ -111,6 +111,91 @@ export class AccessMethod extends Component {
     const rasterResolution = 90
     // We only want to allow for the processing of the first 10 granules of a collection for Swodlr
     const collectionGranuleList = []
+    const geoRasterOptions = [
+      {
+        title: '90 Meters',
+        value: 90
+      },
+      {
+        title: '120 Meters',
+        value: 120
+      },
+      {
+        title: '125 Meters',
+        value: 125
+      },
+      {
+        title: '200 Meters',
+        value: 200
+      },
+      {
+        title: '250 Meters',
+        value: 250
+      },
+      {
+        title: '500 Meters',
+        value: 500
+      },
+      {
+        title: '1000 Meters',
+        value: 1000
+      },
+      {
+        title: '2500 Meters',
+        value: 2500
+      },
+      {
+        title: '5000 Meters',
+        value: 5000
+      },
+      {
+        title: '10000 Meters',
+        value: 10000
+      }
+    ]
+
+    const utmRasterOptions = [
+      {
+        title: '3 arc-seconds',
+        value: 3
+      },
+      {
+        title: '4 arc-seconds',
+        value: 4
+      },
+      {
+        title: '5 arc-seconds',
+        value: 5
+      },
+      {
+        title: '6 arc-seconds',
+        value: 6
+      },
+      {
+        title: '8 arc-seconds',
+        value: 8
+      },
+      {
+        title: '15 arc-seconds',
+        value: 15
+      },
+      {
+        title: '30 arc-seconds',
+        value: 30
+      },
+      {
+        title: '60 arc-seconds',
+        value: 60
+      },
+      {
+        title: '180 arc-seconds',
+        value: 180
+      },
+      {
+        title: '300 arc-seconds',
+        value: 300
+      }
+    ]
 
     this.state = {
       enableTemporalSubsetting,
@@ -121,7 +206,9 @@ export class AccessMethod extends Component {
       granuleExtent,
       sampleGrid,
       rasterResolution,
-      collectionGranuleList
+      collectionGranuleList,
+      geoRasterOptions,
+      utmRasterOptions
     }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
@@ -670,7 +757,9 @@ export class AccessMethod extends Component {
       granuleExtent,
       sampleGrid,
       rasterResolution,
-      collectionGranuleList
+      collectionGranuleList,
+      geoRasterOptions,
+      utmRasterOptions
     } = this.state
 
     const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
@@ -1245,17 +1334,15 @@ export class AccessMethod extends Component {
                           }
                           value={rasterResolution}
                         >
-                          <option value={90}>90 Meters</option>
-                          <option value={100}>100 Meters</option>
-                          <option value={120}>120 Meters</option>
-                          <option value={125}>125 Meters</option>
-                          <option value={200}>200 Meters</option>
-                          <option value={250}>250 Meters</option>
-                          <option value={500}>500 Meters</option>
-                          <option value={1000}>1000 Meters</option>
-                          <option value={2500}>2500 Meters</option>
-                          <option value={5000}>5000 Meters</option>
-                          <option value={10000}>10000 Meters</option>
+                          {
+                            sampleGrid === 'GEO'
+                              ? geoRasterOptions.map((option) => (
+                                <option value={option.value} key={option.value}>{option.title}</option>
+                              ))
+                              : utmRasterOptions.map((option) => (
+                                <option value={option.value} key={option.value}>{option.title}</option>
+                              ))
+                          }
                         </Form.Control>
                       </Form>
 
