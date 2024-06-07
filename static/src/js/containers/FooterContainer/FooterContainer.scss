@@ -1,20 +1,49 @@
+// .footer-containment {
+//   position: relative;
+// }
+
+
+
 .footer {
-  position: relative;
   display: flex;
+  // position: fixed;
+  position: absolute;
+  bottom: 0px;
+  right:0px;
+  left:0;
   flex-direction: column;
   align-items: center;
   flex-basis: auto;
   padding: 0 1rem;
   background: $color__blue;
-  z-index: 1;
+  // TODO: using same value as static/src/js/components/AppHeader/AppHeader.scss
+  // TODO: needs to be at least 3
+  z-index: 3;
   color: $color__white;
   font-size: 0.7rem;
-  line-height: 1.25rem;
+  line-height: 1rem;
 
   @media (min-width: 940px) {
     justify-content: space-between;
     flex-direction: row;
   }
+
+  // &__app {
+  //   position: fixed;
+  //   bottom: 0px;
+  //   right:0px;
+  //   left:0;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   flex-basis: auto;
+  //   padding: 0 1rem;
+  //   background: $color__blue;
+  //   // TODO: using same value as static/src/js/components/AppHeader/AppHeader.scss
+  //   // TODO: needs to be at least 3
+  //   color: $color__white;
+  //   font-size: 0.7rem;
+  //   line-height: 1.25rem;
+  // }
 
   &__info {
     padding: 0.5rem;

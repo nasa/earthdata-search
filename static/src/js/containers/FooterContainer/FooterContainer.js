@@ -109,11 +109,20 @@ export class FooterContainer extends Component {
         />
       )
     })
+    // TODO:
+    // If we are in the top level transition app move the footer to the bottom
+    const footerClassname = 'footer'
+    // Const targetElement = document.getElementById('app')
+    // console.log('🚀 ~ file: FooterContainer.js:115 ~ FooterContainer ~ render ~ targetElement:', targetElement)
+    // if (targetElement) {
+    //   footerClassname = 'footer__app'
+    //   console.log('🚀 ~ file: FooterContainer.js:119 ~ FooterContainer ~ render ~ footerClassname:', footerClassname)
+    // }
 
     return (
       <>
         <TimelineContainer />
-        <footer className="footer">
+        <footer className={footerClassname}>
           <span className="footer__info footer__info--left">
             <span className="footer__ver-pill">
               {

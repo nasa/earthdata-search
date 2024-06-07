@@ -726,6 +726,8 @@ class SearchPanels extends PureComponent {
 
     const { edscHost } = this
 
+    // TODO: does this need toe lbe lazy loaded
+    // TODO: That would be messy and probably cause problems
     return (
       <Switch key="panel-children">
         <Route
