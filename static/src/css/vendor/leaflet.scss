@@ -1,7 +1,6 @@
 #root {
   .map {
     .projection-switcher {
-      // margin-bottom: 3rem;
       &__button {
         background-image: url('~Images/projection-sprite.png');
         background-size: 90px 30px;
@@ -51,9 +50,7 @@
 
     .leaflet-control-container {
       position: relative;
-      // top: 60;
       left: 0;
-      // margin-bottom: 1rem;
       margin-bottom: 8rem;
       /* Set baseline styles for icons */
       .edsc-icon {
@@ -86,7 +83,6 @@
     .leaflet-control-layers-toggle,
     .leaflet-touch .leaflet-control-layers-toggle,
     .leaflet-retina .leaflet-control-layers-toggle {
-      // padding-bottom: 3rem;
       position: relative;
       z-index: 100;
       width: 30px;
@@ -274,25 +270,21 @@
 
     .leaflet-draw-toolbar .leaflet-draw-draw-polygon,
     .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-polygon {
-      // margin-bottom: 3rem;
       background-position: -29px 0px;
     }
 
     .leaflet-draw-toolbar .leaflet-draw-draw-circle,
     .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-circle {
-      // margin-bottom: 3rem;
       background-position: -90px 0px;
     }
 
     .leaflet-draw-toolbar .leaflet-draw-draw-rectangle,
     .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-rectangle {
-      // margin-bottom: 3rem;
       background-position: -60px 0px;
     }
 
     .leaflet-draw-toolbar .leaflet-draw-draw-marker,
     .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-marker {
-      // margin-bottom: 3rem;
 
       background-position: -120px 0px;
     }
