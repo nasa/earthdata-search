@@ -111,7 +111,7 @@ export class AccessMethod extends Component {
     const rasterResolution = 90
     // We only want to allow for the processing of the first 10 granules of a collection for Swodlr
     const collectionGranuleList = []
-    const geoRasterOptions = [
+    const utmRasterOptions = [
       {
         title: '90 Meters',
         value: 90
@@ -154,7 +154,7 @@ export class AccessMethod extends Component {
       }
     ]
 
-    const utmRasterOptions = [
+    const geoRasterOptions = [
       {
         title: '3 arc-seconds',
         value: 3
