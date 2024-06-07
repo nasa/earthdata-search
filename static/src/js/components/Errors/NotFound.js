@@ -5,8 +5,6 @@ import { eventEmitter } from '../../events/events'
 import LoggerRequest from '../../util/request/loggerRequest'
 import { locationPropType } from '../../util/propTypes/location'
 
-import './NotFound.scss'
-
 export const NotFound = ({
   location
 }) => {
