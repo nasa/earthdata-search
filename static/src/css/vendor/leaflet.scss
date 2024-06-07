@@ -1,6 +1,7 @@
 #root {
   .map {
     .projection-switcher {
+      // margin-bottom: 3rem;
       &__button {
         background-image: url('~Images/projection-sprite.png');
         background-size: 90px 30px;
@@ -31,6 +32,7 @@
     }
 
     .leaflet-control-container {
+      margin-bottom: 1rem;
       height: 100%;
       width: 100%;
     }
@@ -39,7 +41,7 @@
       margin-bottom: 55px;
 
       .leaflet-disabled {
-        color: $color__black--300;
+        color: $color__black--800;
 
         &:hover {
           cursor: not-allowed;
@@ -48,13 +50,12 @@
     }
 
     .leaflet-control-container {
-      position: absolute;
-      top: 0;
+      position: relative;
+      // top: 60;
       left: 0;
-    }
-
-    /* Set baseline styles for icons */
-    .leaflet-control-container {
+      // margin-bottom: 1rem;
+      margin-bottom: 8rem;
+      /* Set baseline styles for icons */
       .edsc-icon {
         font-size: 12px;
         line-height: 1.65;
@@ -85,6 +86,9 @@
     .leaflet-control-layers-toggle,
     .leaflet-touch .leaflet-control-layers-toggle,
     .leaflet-retina .leaflet-control-layers-toggle {
+      // padding-bottom: 3rem;
+      position: relative;
+      z-index: 100;
       width: 30px;
       height: 30px;
       line-height: 30px;
@@ -93,6 +97,7 @@
 
     .leaflet-control-layers,
     .leaflet-touch .leaflet-control-layers {
+      margin-bottom: 1rem;
       border-radius: 2px;
 
       label {
@@ -269,21 +274,26 @@
 
     .leaflet-draw-toolbar .leaflet-draw-draw-polygon,
     .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-polygon {
+      // margin-bottom: 3rem;
       background-position: -29px 0px;
     }
 
     .leaflet-draw-toolbar .leaflet-draw-draw-circle,
     .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-circle {
+      // margin-bottom: 3rem;
       background-position: -90px 0px;
     }
 
     .leaflet-draw-toolbar .leaflet-draw-draw-rectangle,
     .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-rectangle {
+      // margin-bottom: 3rem;
       background-position: -60px 0px;
     }
 
     .leaflet-draw-toolbar .leaflet-draw-draw-marker,
     .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-marker {
+      // margin-bottom: 3rem;
+
       background-position: -120px 0px;
     }
   }

@@ -14,6 +14,7 @@ export const Downloads = ({
 }) => {
   const { path } = match
 
+  // TODO: Lazy load the two components
   return (
     <Switch>
       <Route path={`${path}`}>

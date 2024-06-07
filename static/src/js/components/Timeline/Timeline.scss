@@ -1,9 +1,11 @@
 .timeline {
   position: relative;
   z-index: 3;
+  margin-bottom: 2rem;
 
   &__container {
     display: flex;
+    // margin-bottom: 2rem;
 
     .timeline--is-hidden & {
       display: none;

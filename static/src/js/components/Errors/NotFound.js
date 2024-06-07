@@ -5,6 +5,8 @@ import { eventEmitter } from '../../events/events'
 import LoggerRequest from '../../util/request/loggerRequest'
 import { locationPropType } from '../../util/propTypes/location'
 
+import './NotFound.scss'
+
 export const NotFound = ({
   location
 }) => {
@@ -17,6 +19,18 @@ export const NotFound = ({
   }, [])
 
   const guid = uuidv4()
+
+  // Modify the background color of root element for the not found page so we can load stars jpg
+  const selectElementById = () => {
+    const element = document.getElementById('app')
+    if (element) {
+      element.style.backgroundColor = 'initial'
+      // Do something with the selected element
+      console.log(element.textContent)
+    }
+  }
+
+  selectElementById()
 
   const requestObject = new LoggerRequest()
   requestObject.log({

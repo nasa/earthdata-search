@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -31,6 +32,7 @@ export const mapStateToProps = (state) => ({
   collectionsMetadata: getCollectionsMetadata(state),
   focusedCollectionId: getFocusedCollectionId(state),
   pathname: state.router.location.pathname,
+  search: state.router.location.search,
   projectCollectionsIds: getProjectCollectionsIds(state),
   temporalSearch: state.query.collection.temporal,
   timeline: state.timeline,
@@ -43,6 +45,7 @@ export const TimelineContainer = (props) => {
     collectionsMetadata,
     focusedCollectionId,
     pathname,
+    search: searchLocation,
     projectCollectionsIds,
     temporalSearch,
     timeline,
@@ -53,10 +56,15 @@ export const TimelineContainer = (props) => {
     onToggleTimeline,
     isOpen
   } = props
+  console.log('🚀 ~ file: TimelineContainer.js:58 ~ TimelineContainer ~ location:', searchLocation)
 
   // Determine the collectionMetadata the timeline should be displaying
-  const isProjectPage = isPath(pathname, ['/projects'])
+  // TODO the timeline shouldn't be showing on the saved projects page but, it can't tell after this is mounted that its there
+  console.log('🚀 ~ file: TimelineContainer.js:60 ~ TimelineContainer ~ pathname:', pathname)
+  // Ensure that timeline does not appear on the `Saved Projects page
+  const isProjectPage = isPath(pathname, ['/projects']) && (searchLocation.length > 0)
   const isGranulesPage = isPath(pathname, ['/search/granules'])
+  console.log('🚀 ~ file: TimelineContainer.js:68 ~ TimelineContainer ~ projectCollectionsIds:', projectCollectionsIds)
 
   const collectionMetadata = {}
   const collectionsToRender = []

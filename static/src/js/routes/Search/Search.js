@@ -1,4 +1,8 @@
-import React, { useState } from 'react'
+import React, {
+  useState,
+  lazy,
+  Suspense
+} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -21,14 +25,14 @@ import {
 
 import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
-import CollectionDetailsHighlightsContainer
-  from '../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'
+// Import CollectionDetailsHighlightsContainer
+//   from '../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'
 import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
 import FacetsModalContainer from '../../containers/FacetsModalContainer/FacetsModalContainer'
-import GranuleResultsHighlightsContainer
-  from '../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'
-import GranuleFiltersContainer
-  from '../../containers/GranuleFiltersContainer/GranuleFiltersContainer'
+// Import GranuleResultsHighlightsContainer
+//   from '../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'
+// import GranuleFiltersContainer
+//   from '../../containers/GranuleFiltersContainer/GranuleFiltersContainer'
 import PortalBrowserModalContainer
   from '../../containers/PortalBrowserModalContainer/PortalBrowserModalContainer'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
@@ -47,6 +51,10 @@ import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
 import Button from '../../components/Button/Button'
+
+const CollectionDetailsHighlightsContainer = lazy(() => import('../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'))
+const GranuleResultsHighlightsContainer = lazy(() => import('../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'))
+const GranuleFiltersContainer = lazy(() => import('../../containers/GranuleFiltersContainer/GranuleFiltersContainer'))
 
 export const mapDispatchToProps = (dispatch) => ({
   onUpdateAdvancedSearch:
@@ -121,10 +129,12 @@ export const Search = ({
         }
       }
     >
-      <GranuleFiltersContainer
-        granuleFiltersNeedsReset={granuleFiltersNeedsReset}
-        setGranuleFiltersNeedReset={setGranuleFiltersNeedReset}
-      />
+      <Suspense fallback={<div />}>
+        <GranuleFiltersContainer
+          granuleFiltersNeedsReset={granuleFiltersNeedsReset}
+          setGranuleFiltersNeedReset={setGranuleFiltersNeedReset}
+        />
+      </Suspense>
     </SidebarSection>
   )
 
@@ -142,7 +152,9 @@ export const Search = ({
               sectionTitle="Granules"
               titleIcon={FaMap}
             >
-              <GranuleResultsHighlightsContainer />
+              <Suspense fallback={<div />}>
+                <GranuleResultsHighlightsContainer />
+              </Suspense>
             </SidebarSection>
           </Route>
           <Route exact path={`${path}/granules`}>
@@ -153,7 +165,9 @@ export const Search = ({
               sectionTitle="Collection Details"
               titleIcon={FaInfoCircle}
             >
-              <CollectionDetailsHighlightsContainer />
+              <Suspense fallback={FaQuestionCircle}>
+                <CollectionDetailsHighlightsContainer />
+              </Suspense>
             </SidebarSection>
           </Route>
           <Route exact path={`${path}/granules/subscriptions`}>

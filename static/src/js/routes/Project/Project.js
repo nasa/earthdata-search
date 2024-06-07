@@ -54,54 +54,62 @@ export const Project = (props) => {
     location,
     name
   } = props
+  console.log('🚀 ~ file: Project.js:57 ~ Project ~ location:', location)
   const { search } = location
   const { edscHost } = getEnvironmentConfig()
 
   // If there are no params in the URL, show the saved projects page
-  if (search === '') {
+  const isProject = /^(\?p).*/
+
+  // Show the project page
+  if (isProject.test(search)) {
+    console.log(' I AM IN HERE💀')
+
     return (
       <>
         <Helmet>
-          <title>Saved Projects</title>
-          <meta name="title" content="Saved Projects" />
+          <title>{name || 'Untitled Project'}</title>
+          <meta name="title" content={name || 'Untitled Project'} />
           <meta name="robots" content="noindex, nofollow" />
-          <link rel="canonical" href={`${edscHost}/projects`} />
+          <link rel="canonical" href={`${edscHost}`} />
         </Helmet>
-        <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
-          <div className="route-wrapper__content">
-            <div className="route-wrapper__content-inner">
-              <SavedProjectsContainer />
-            </div>
-          </div>
-        </div>
+        <form
+          id="form__project"
+          onSubmit={handleSubmit}
+          method="post"
+          name="project form"
+          className="route-wrapper route-wrapper--dark"
+        >
+          <SidebarContainer panels={<ProjectPanelsContainer />}>
+            <ProjectCollectionsContainer />
+          </SidebarContainer>
+          <OverrideTemporalModalContainer />
+        </form>
+        <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
+          <EdscMapContainer />
+        </Suspense>
       </>
     )
   }
 
-  // Show the project page
+  // Show the Saved projects page
+  console.log('Im gonna be rendering the saved projects page ✅')
+
   return (
     <>
       <Helmet>
-        <title>{name || 'Untitled Project'}</title>
-        <meta name="title" content={name || 'Untitled Project'} />
+        <title>Saved Projects</title>
+        <meta name="title" content="Saved Projects" />
         <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href={`${edscHost}`} />
+        <link rel="canonical" href={`${edscHost}/projects`} />
       </Helmet>
-      <form
-        id="form__project"
-        onSubmit={handleSubmit}
-        method="post"
-        name="project form"
-        className="route-wrapper route-wrapper--dark"
-      >
-        <SidebarContainer panels={<ProjectPanelsContainer />}>
-          <ProjectCollectionsContainer />
-        </SidebarContainer>
-        <OverrideTemporalModalContainer />
-      </form>
-      <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
-        <EdscMapContainer />
-      </Suspense>
+      <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
+        <div className="route-wrapper__content">
+          <div className="route-wrapper__content-inner">
+            <SavedProjectsContainer />
+          </div>
+        </div>
+      </div>
     </>
   )
 }

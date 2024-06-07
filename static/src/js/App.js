@@ -19,14 +19,14 @@ import history from './util/history'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 
 // Routes
-import Admin from './routes/Admin/Admin'
-import ContactInfo from './routes/ContactInfo/ContactInfo'
-import Downloads from './routes/Downloads/Downloads'
-import EarthdataDownloadRedirect from './routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'
-import Preferences from './routes/Preferences/Preferences'
+// import Admin from './routes/Admin/Admin'
+// import ContactInfo from './routes/ContactInfo/ContactInfo'
+// import Downloads from './routes/Downloads/Downloads'
+// import EarthdataDownloadRedirect from './routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'
+// import Preferences from './routes/Preferences/Preferences'
 import Project from './routes/Project/Project'
+// Import Subscriptions from './routes/Subscriptions/Subscriptions'
 import Search from './routes/Search/Search'
-import Subscriptions from './routes/Subscriptions/Subscriptions'
 
 // Components and Containers
 import AboutCSDAModalContainer from './containers/AboutCSDAModalContainer/AboutCSDAModalContainer'
@@ -51,6 +51,7 @@ import ShapefileUploadModalContainer from './containers/ShapefileUploadModalCont
 import Spinner from './components/Spinner/Spinner'
 import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
 import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
+
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
 
@@ -63,6 +64,16 @@ window.reactToastProvider = React.createRef()
 //   const { whyDidYouUpdate } = require('why-did-you-update') // eslint-disable-line global-require
 //   whyDidYouUpdate(React, { include: [/Search/] })
 // }
+
+// Routes
+const Admin = lazy(() => import('./routes/Admin/Admin'))
+const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
+const Downloads = lazy(() => import('./routes/Downloads/Downloads'))
+const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
+const Preferences = lazy(() => import('./routes/Preferences/Preferences'))
+// Const Project = lazy(() => import('./routes/Project/Project'))
+// Const Search = lazy(() => import('./routes/Search/Search'))
+const Subscriptions = lazy(() => import('./routes/Subscriptions/Subscriptions'))
 
 const EdscMapContainer = lazy(() => import('./containers/MapContainer/MapContainer'))
 
@@ -124,7 +135,9 @@ class App extends Component {
                       render={
                         () => (
                           <AuthRequiredContainer>
-                            <Admin />
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                              <Admin />
+                            </Suspense>
                           </AuthRequiredContainer>
                         )
                       }
@@ -134,7 +147,9 @@ class App extends Component {
                       render={
                         () => (
                           <AuthRequiredContainer>
-                            <ContactInfo />
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                              <ContactInfo />
+                            </Suspense>
                           </AuthRequiredContainer>
                         )
                       }
@@ -144,7 +159,9 @@ class App extends Component {
                       render={
                         () => (
                           <AuthRequiredContainer>
-                            <Preferences />
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                              <Preferences />
+                            </Suspense>
                           </AuthRequiredContainer>
                         )
                       }
@@ -153,7 +170,9 @@ class App extends Component {
                       path={this.portalPaths('/earthdata-download-callback')}
                       render={
                         () => (
-                          <EarthdataDownloadRedirect />
+                          <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                            <EarthdataDownloadRedirect />
+                          </Suspense>
                         )
                       }
                     />
@@ -162,7 +181,9 @@ class App extends Component {
                       render={
                         () => (
                           <AuthRequiredContainer>
-                            <Subscriptions />
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                              <Subscriptions />
+                            </Suspense>
                           </AuthRequiredContainer>
                         )
                       }
@@ -174,7 +195,9 @@ class App extends Component {
                       render={
                         () => (
                           <AuthRequiredContainer>
-                            <Downloads />
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                              <Downloads />
+                            </Suspense>
                           </AuthRequiredContainer>
                         )
                       }
@@ -213,6 +236,7 @@ class App extends Component {
                         )
                       }
                     />
+                    {/* // TODO: do we lazy load this page? in my opinion no we want that loaded into app.js top level bundle */}
                     <Route component={NotFound} />
                   </Switch>
                   <FooterContainer />

@@ -51,6 +51,14 @@ class ErrorBoundary extends Component {
     const { children } = this.props
 
     if (hasError) {
+      // Modify the background color of root element for the not found page so we can load stars jpg
+      const element = document.getElementById('app')
+      if (element) {
+        console.log('🧵 this wont work because the errorBoundry is always coming on')
+        element.style.backgroundColor = 'initial'
+        console.log(element.textContent)
+      }
+
       return (
         <div className="wrap">
           <h2 className="h1">
