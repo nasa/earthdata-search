@@ -133,6 +133,7 @@ const ProjectCollectionItem = ({
                   {title}
                 </h3>
               </Button>
+              {/* // TODO: More actions to remove a collection from the project */}
               <MoreActionsDropdown handoffLinks={handoffLinks} alignRight>
                 <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-remove"

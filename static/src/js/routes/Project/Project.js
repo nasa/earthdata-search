@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -30,7 +31,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   projectCollectionsRequiringChunking: getProjectCollectionsRequiringChunking(state),
-  name: state.savedProject.name
+  name: state.savedProject.name,
+  project: state.project
+
 })
 
 export const Project = (props) => {
@@ -52,17 +55,19 @@ export const Project = (props) => {
 
   const {
     location,
-    name
+    name,
+    project
   } = props
+
+  console.log('🚀 ~ file: Project.js:60 ~ Project ~ project:', project)
   console.log('🚀 ~ file: Project.js:57 ~ Project ~ location:', location)
   const { search } = location
   const { edscHost } = getEnvironmentConfig()
-
+  // TODO this does have an issue though because you can have empty projects
   // If there are no params in the URL, show the saved projects page
-  const isProject = /^(\?p).*/
-
+  // const isProject = /^(\?p).*/
   // Show the project page
-  if (isProject.test(search)) {
+  if (search !== '') {
     console.log(' I AM IN HERE💀')
 
     return (

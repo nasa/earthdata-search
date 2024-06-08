@@ -63,6 +63,7 @@ export const ProjectCollectionsContainer = (props) => {
     projectCollectionsMetadata,
     savedProject
   } = props
+  console.log('🚀 ~ file: ProjectCollectionsContainer.js:66 ~ ProjectCollectionsContainer ~ project:', project)
 
   return (
     <ProjectCollections

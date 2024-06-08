@@ -93,7 +93,7 @@
 
     .leaflet-control-layers,
     .leaflet-touch .leaflet-control-layers {
-      margin-bottom: 1rem;
+      // margin-bottom: 1rem;
       border-radius: 2px;
 
       label {
@@ -285,7 +285,6 @@
 
     .leaflet-draw-toolbar .leaflet-draw-draw-marker,
     .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-marker {
-
       background-position: -120px 0px;
     }
   }

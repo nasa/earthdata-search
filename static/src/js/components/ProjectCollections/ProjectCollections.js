@@ -109,6 +109,14 @@ export class ProjectCollections extends Component {
       return granulesIsLoading
     })
 
+    const { collections: projectCollections } = project
+    const {
+      allIds: projectIds
+    } = projectCollections
+
+    const projectIsEmpty = !projectIds.length
+    console.log('🚀 ~ file: ProjectCollections.js:118 ~ ProjectCollections ~ render ~ projectIsEmpty:', projectIsEmpty)
+
     return (
       <section className="project-collections">
         <ProjectHeader
@@ -133,7 +141,7 @@ export class ProjectCollections extends Component {
           panels={panels}
           project={project}
         />
-        <div className="project-collections__footer">
+        <div className={projectIsEmpty ? 'project-collections__footer project-collections__footer--empty' : 'project-collections__footer'}>
           {
             !isLoading && (
               <p className="project-collections__footer-message">

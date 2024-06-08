@@ -92,6 +92,7 @@ export const ProjectCollectionsList = (props) => {
         }
       }
     >
+      {/* // TODO: Empty project ehre  */}
       {
         projectIsEmpty && (
           <p className="project-collections-list__notice">
