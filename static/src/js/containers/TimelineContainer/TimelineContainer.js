@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -45,7 +44,6 @@ export const TimelineContainer = (props) => {
     collectionsMetadata,
     focusedCollectionId,
     pathname,
-    search: searchLocation,
     projectCollectionsIds,
     temporalSearch,
     timeline,
@@ -54,7 +52,8 @@ export const TimelineContainer = (props) => {
     onToggleOverrideTemporalModal,
     onMetricsTimeline,
     onToggleTimeline,
-    isOpen
+    isOpen,
+    search: searchLocation
   } = props
   console.log('🚀 ~ file: TimelineContainer.js:58 ~ TimelineContainer ~ location:', searchLocation)
 
@@ -63,6 +62,7 @@ export const TimelineContainer = (props) => {
   console.log('🚀 ~ file: TimelineContainer.js:60 ~ TimelineContainer ~ pathname:', pathname)
   // Ensure that timeline does not appear on the `Saved Projects page
   const isProjectPage = isPath(pathname, ['/projects']) && (searchLocation.length > 0)
+  console.log('🚀 ~ file: TimelineContainer.js:65 ~ TimelineContainer ~ isProjectPage:', isProjectPage)
   const isGranulesPage = isPath(pathname, ['/search/granules'])
   console.log('🚀 ~ file: TimelineContainer.js:68 ~ TimelineContainer ~ projectCollectionsIds:', projectCollectionsIds)
 
@@ -120,7 +120,8 @@ TimelineContainer.propTypes = {
   projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   temporalSearch: PropTypes.shape({}),
   timeline: PropTypes.shape({}).isRequired,
-  isOpen: PropTypes.bool.isRequired
+  isOpen: PropTypes.bool.isRequired,
+  search: PropTypes.string.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimelineContainer)
