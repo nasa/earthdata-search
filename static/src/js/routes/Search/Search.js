@@ -159,7 +159,7 @@ export const Search = ({
               sectionTitle="Collection Details"
               titleIcon={FaInfoCircle}
             >
-              <Suspense fallback={FaQuestionCircle}>
+              <Suspense fallback={<div />}>
                 <CollectionDetailsHighlightsContainer />
               </Suspense>
             </SidebarSection>
