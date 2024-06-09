@@ -37,7 +37,6 @@ const AppLogo = () => (
         <span className="app-logo__site-name-ent app-logo__site-name-ent--s">Search</span>
       </PortalLinkContainer>
     </span>
-    {/* {TODO: this is always getting rendered by the app.ks} */}
     <Switch>
       <Route path="/admin">
         <PortalLinkContainer

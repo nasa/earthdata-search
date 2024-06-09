@@ -14,7 +14,8 @@ export const Downloads = ({
 }) => {
   const { path } = match
 
-  // TODO: Lazy load the two components
+  // TODO: Lazy load the two components? Since user is expected to go to one of the orders if they are on the download page does not make sense
+  // Similarly lazy loading the ordering page slightly slows things down further for a route that should be often used
   return (
     <Switch>
       <Route path={`${path}`}>

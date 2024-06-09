@@ -19,13 +19,7 @@ import history from './util/history'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 
 // Routes
-// import Admin from './routes/Admin/Admin'
-// import ContactInfo from './routes/ContactInfo/ContactInfo'
-// import Downloads from './routes/Downloads/Downloads'
-// import EarthdataDownloadRedirect from './routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'
-// import Preferences from './routes/Preferences/Preferences'
 import Project from './routes/Project/Project'
-// Import Subscriptions from './routes/Subscriptions/Subscriptions'
 import Search from './routes/Search/Search'
 
 // Components and Containers
@@ -65,17 +59,14 @@ window.reactToastProvider = React.createRef()
 //   whyDidYouUpdate(React, { include: [/Search/] })
 // }
 
-// Routes
+// Lazy loaded routes
 const Admin = lazy(() => import('./routes/Admin/Admin'))
 const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
 const Downloads = lazy(() => import('./routes/Downloads/Downloads'))
 const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
-const Preferences = lazy(() => import('./routes/Preferences/Preferences'))
-// Const Project = lazy(() => import('./routes/Project/Project'))
-// Const Search = lazy(() => import('./routes/Search/Search'))
-const Subscriptions = lazy(() => import('./routes/Subscriptions/Subscriptions'))
-
 const EdscMapContainer = lazy(() => import('./containers/MapContainer/MapContainer'))
+const Preferences = lazy(() => import('./routes/Preferences/Preferences'))
+const Subscriptions = lazy(() => import('./routes/Subscriptions/Subscriptions'))
 
 // Create the root App component
 class App extends Component {
@@ -236,7 +227,6 @@ class App extends Component {
                         )
                       }
                     />
-                    {/* // TODO: do we lazy load this page? in my opinion no we want that loaded into app.js top level bundle */}
                     <Route component={NotFound} />
                   </Switch>
                   <FooterContainer />

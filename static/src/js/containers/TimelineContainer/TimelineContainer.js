@@ -55,16 +55,11 @@ export const TimelineContainer = (props) => {
     isOpen,
     search: searchLocation
   } = props
-  console.log('🚀 ~ file: TimelineContainer.js:58 ~ TimelineContainer ~ location:', searchLocation)
 
   // Determine the collectionMetadata the timeline should be displaying
-  // TODO the timeline shouldn't be showing on the saved projects page but, it can't tell after this is mounted that its there
-  console.log('🚀 ~ file: TimelineContainer.js:60 ~ TimelineContainer ~ pathname:', pathname)
-  // Ensure that timeline does not appear on the `Saved Projects page
+  // Ensure that timeline does not appear on the `Saved Projects` page
   const isProjectPage = isPath(pathname, ['/projects']) && (searchLocation.length > 0)
-  console.log('🚀 ~ file: TimelineContainer.js:65 ~ TimelineContainer ~ isProjectPage:', isProjectPage)
   const isGranulesPage = isPath(pathname, ['/search/granules'])
-  console.log('🚀 ~ file: TimelineContainer.js:68 ~ TimelineContainer ~ projectCollectionsIds:', projectCollectionsIds)
 
   const collectionMetadata = {}
   const collectionsToRender = []
