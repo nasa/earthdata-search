@@ -23,7 +23,6 @@ export const NotFound = ({
     const element = document.getElementById('app')
     if (element) {
       element.style.backgroundColor = 'initial'
-      // Do something with the selected element
       console.log(element.textContent)
     }
   }

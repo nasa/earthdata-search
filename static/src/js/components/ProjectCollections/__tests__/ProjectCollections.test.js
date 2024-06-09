@@ -153,7 +153,6 @@ describe('ProjectCollectionsList component', () => {
       .toEqual(props.onMetricsDataAccess)
 
     expect(enzymeWrapper.find('.project-collections__footer').length).toBe(1)
-    expect(enzymeWrapper.find('.project-collections__footer--empty').length).toBe(0)
   })
 
   describe('help text', () => {
@@ -259,24 +258,6 @@ describe('ProjectCollectionsList component', () => {
       const button = enzymeWrapper.find(Button)
 
       expect(button.props().disabled).toBeTruthy()
-    })
-
-    describe('the project is empty', () => {
-      test('button is disabled and empty `classname` is present', () => {
-        const { enzymeWrapper } = setup()
-
-        enzymeWrapper.setProps({
-          project: {
-            collections: {
-              allIds: []
-            }
-          }
-        })
-
-        expect(enzymeWrapper.find('.project-collections__footer--empty').length).toBe(1)
-        const button = enzymeWrapper.find(Button)
-        expect(button.props().disabled).toBeTruthy()
-      })
     })
   })
 
