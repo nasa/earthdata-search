@@ -25,14 +25,8 @@ import {
 
 import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
-// Import CollectionDetailsHighlightsContainer
-//   from '../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'
 import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
 import FacetsModalContainer from '../../containers/FacetsModalContainer/FacetsModalContainer'
-// Import GranuleResultsHighlightsContainer
-//   from '../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'
-// import GranuleFiltersContainer
-//   from '../../containers/GranuleFiltersContainer/GranuleFiltersContainer'
 import PortalBrowserModalContainer
   from '../../containers/PortalBrowserModalContainer/PortalBrowserModalContainer'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
