@@ -115,7 +115,6 @@ export class ProjectCollections extends Component {
     } = projectCollections
 
     const projectIsEmpty = !projectIds.length
-    console.log('🚀 ~ file: ProjectCollections.js:118 ~ ProjectCollections ~ render ~ projectIsEmpty:', projectIsEmpty)
 
     return (
       <section className="project-collections">

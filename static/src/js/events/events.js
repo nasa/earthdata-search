@@ -7,7 +7,6 @@ emitter.setMaxListeners(0)
 
 emitter.on('error.global', (error = true) => {
   const { body } = document
-  console.log('🚀 ~ file: events.js:10 ~ emitter.on ~ body:', body)
   if (error) {
     body.classList.add('body--has-error')
   } else {

@@ -1,6 +1,5 @@
 import { castArray } from 'lodash'
 
-// TODO can this be used to fix the project?
 /**
  * Returns true if the pathname matches one of the paths
  * @param {string} pathname - The pathname to check.
