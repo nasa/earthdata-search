@@ -55,7 +55,6 @@ class ErrorBoundary extends Component {
       const element = document.getElementById('app')
       if (element) {
         element.style.backgroundColor = 'initial'
-        console.log(element.textContent)
       }
 
       return (
