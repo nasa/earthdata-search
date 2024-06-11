@@ -10,16 +10,13 @@ export const retrieveCMRGranules = async ({
   collectionConceptId,
   earthdataEnvironment,
   accessToken,
-  accessMethod
+  granuleParams
 }) => {
-  const newAccessMethodData = { ...accessMethod }
-
-  // Remove data to use for CMR query
-  delete newAccessMethodData.swodlrData
+  const { concept_id: granuleIds } = granuleParams
 
   const granuleResponse = await axios({
     url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/granules.json`,
-    params: newAccessMethodData,
+    params: { concept_id: granuleIds },
     paramsSerializer: (params) => stringify(
       params,
       {

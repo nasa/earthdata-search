@@ -4,9 +4,11 @@ export const orderStates = {
   canceled: [
     'canceled',
     'cancelled',
-    'cancelling'
+    'cancelling',
+    'unavailable'
   ],
   complete: [
+    'ready',
     'closed',
     'complete_with_errors',
     'complete',
@@ -15,6 +17,7 @@ export const orderStates = {
   failed: [
     'closed_with_exceptions',
     'create_failed', // Custom EDSC status for orders that failed to create
+    'error',
     'failed',
     'not_found', // Custom EDSC status for orders that aren't found in the DB
     'not_validated',
@@ -25,6 +28,8 @@ export const orderStates = {
   ],
   in_progress: [
     'accepted',
+    'available',
+    'generating',
     'in progress',
     'initialized', // Custom EDSC status for orders that have been submitted but we dont have a status for yet
     'pending',
@@ -39,7 +44,8 @@ export const orderStates = {
     'validated'
   ],
   creating: [
-    'creating' // Custom EDSC status pertaining to orders before they are submitted
+    'creating', // Custom EDSC status pertaining to orders before they are submitted
+    'new'
   ]
 }
 

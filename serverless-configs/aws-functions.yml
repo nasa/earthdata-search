@@ -139,6 +139,10 @@
   fetchHarmonyOrder:
     handler: serverless/src/fetchHarmonyOrder/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
+  
+  fetchSwodlrOrder:
+    handler: serverless/src/fetchSwodlrOrder/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
 
   #
   # Scheduled Lambdas

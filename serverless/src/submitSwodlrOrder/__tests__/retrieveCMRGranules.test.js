@@ -82,7 +82,7 @@ describe('retrieveCMRGranules', () => {
       options: {},
       page_num: 1,
       sort_key: '-start_date',
-      json_data: {
+      swodlrData: {
         params: {
           rasterResolution: 6,
           outputSamplingGridType: 'GEO',

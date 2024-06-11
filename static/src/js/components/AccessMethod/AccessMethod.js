@@ -419,7 +419,7 @@ export class AccessMethod extends Component {
       collectionId,
       method: {
         [selectedAccessMethod]: {
-          json_data: {
+          swodlrData: {
             params: {
               rasterResolution,
               outputSamplingGridType: sampleGrid,
