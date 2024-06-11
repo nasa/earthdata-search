@@ -249,6 +249,7 @@ export class OrderStatusItem extends PureComponent {
       const isHarmony = typeToLower === 'harmony'
       const isEchoOrders = typeToLower === 'echo orders'
       const isEsi = typeToLower === 'esi'
+      const isSwodlr = typeToLower === 'swodlr'
 
       const messages = []
       let messageIsError = false
@@ -304,6 +305,66 @@ export class OrderStatusItem extends PureComponent {
           orderInfo = 'The data provider is reporting the order has failed processing.'
         }
       }
+
+      if (isSwodlr) {
+        if (stateFromOrderStatus === 'creating') {
+          progressPercentage = 0
+
+          orderInfo = 'Your orders are pending generation. This may take some time.'
+        }
+
+        if (stateFromOrderStatus === 'in_progress') {
+          orderInfo = 'Your orders are currently being generated. Once generated is finished, links will be displayed below and sent to the email you\'ve provided.'
+        }
+
+        if (stateFromOrderStatus === 'complete') {
+          orderInfo = 'Your orders have been generated and are available for download.'
+        }
+
+        if (stateFromOrderStatus === 'failed') {
+          progressPercentage = 0
+          orderInfo = 'The order has failed.'
+        }
+
+        let totalNumber = 0
+        let totalProcessed = 0
+
+        if (orders.length) {
+          const { order_information: orderInformation } = orders[0]
+          const { contactInformation = {} } = orderInformation;
+          ({ contactName, contactEmail } = contactInformation)
+        }
+
+        orders.forEach((order) => {
+          console.log(order)
+
+          const {
+            error,
+            state,
+            order_information: orderInformation = {}
+          } = order
+
+          const { reason } = orderInformation
+
+          totalNumber += 1
+
+          if (state === 'completed') {
+            const { granules } = orderInformation
+            const { uri } = granules
+
+            downloadUrls.push(uri)
+            totalProcessed += 1
+          } else if (state === 'failed') {
+            totalProcessed += 1
+            progressPercentage = 100
+            messages.push(error !== null ? error : reason)
+          }
+        })
+
+        progressPercentage = Math.floor((totalProcessed / totalNumber) * 100)
+      }
+
+      console.log(progressPercentage)
 
       if (isEsi || isHarmony) {
         if (stateFromOrderStatus === 'creating') {

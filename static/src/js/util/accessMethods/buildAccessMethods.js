@@ -195,14 +195,14 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
       }
 
       if (serviceType.toLowerCase() === 'swodlr') {
-        console.log('parsing swodlr accessMEthod')
         accessMethods.swodlr = {
           id: serviceConceptId,
           isValid: true,
           longName,
           name,
           type: serviceType,
-          supportsSwodlr: true
+          supportsSwodlr: true,
+          url: urlValue
         }
       }
     })

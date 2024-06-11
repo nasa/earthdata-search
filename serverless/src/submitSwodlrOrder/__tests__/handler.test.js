@@ -219,18 +219,14 @@ describe('submitSwodlrOrder', () => {
 
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('update')
-    expect(queries[1].bindings).toEqual(['dcb5e83f-6669-4fef-9d45-5296dcbef1c6', {
-      jobs: {
-        'dcb5e83f-6669-4fef-9d45-5296dcbef1c6': {
-          product_id: 'e40d4b75-b632-4608-bfae-6f6e2c6f8f56',
-          status: 'NEW'
-        },
-        'ccb5e83f-6669-4fef-9d45-5296dcbef1c6': {
-          product_id: 'f40d4b75-b632-4608-bfae-6f6e2c6f8f56',
-          status: 'NEW'
-        }
-      }
-    }, 'NEW', 12])
+    expect(queries[1].bindings).toEqual(['e40d4b75-b632-4608-bfae-6f6e2c6f8f56', {
+      jobId: 'dcb5e83f-6669-4fef-9d45-5296dcbef1c6',
+      createdAt: '2024-04-22T20:30:05.061178',
+      numGranules: 2,
+      productId: 'e40d4b75-b632-4608-bfae-6f6e2c6f8f56',
+      status: 'NEW',
+      updatedAt: '2024-04-22T20:30:05.061178'
+    }, 'creating', 12])
 
     expect(startOrderStatusUpdateWorkflowMock).toBeCalledWith(12, 'access-token', 'SWODLR')
   })

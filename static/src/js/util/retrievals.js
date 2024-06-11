@@ -44,6 +44,8 @@ const permittedAccessMethodFields = [
   'supportsShapefileSubsetting',
   'supportsConcatenation',
   'defaultConcatenation',
+  'swodlrData',
+  'json_data',
   'type',
   'url'
 ]

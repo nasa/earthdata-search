@@ -21,7 +21,12 @@ const isLimitedCollection = (collectionMetadata) => {
 const maxGranulesPerOrder = (collectionMetadata, accessMethod) => {
   const { defaultGranulesPerOrder } = getApplicationConfig()
 
-  const { maxItemsPerOrder } = accessMethod
+  const { maxItemsPerOrder, type } = accessMethod
+
+  if (type === 'SWODLR') {
+    return 1
+  }
+
   if (maxItemsPerOrder || isLimitedCollection(collectionMetadata)) {
     // Return the mininum between the default order size and the collection granuleLimit
     return Math.min(maxItemsPerOrder, defaultGranulesPerOrder, getGranuleLimit(collectionMetadata))
