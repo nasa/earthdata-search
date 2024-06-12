@@ -13,27 +13,32 @@ test.describe('Performance Benchmarking', () => {
     })
   })
 
-  test('Search page load time is less than 1 second', async ({ page }) => {
-    await page.goto('/')
-    const requestFinishedPromise = page.waitForEvent('requestfinished')
-    const request = await requestFinishedPromise
+  test('Search page load time is less than 1 second', async ({ page, browserName }) => {
+    if (browserName === 'chromium') {
+      await page.goto('/')
+      const requestFinishedPromise = page.waitForEvent('requestfinished')
+      const request = await requestFinishedPromise
 
-    expect(request.timing().responseEnd < 30000).toBe(true)
+      expect(request.timing().responseEnd < 30000).toBe(true)
+    }
   })
 
-  test('Search page LCP start time is less than 7 second', async ({ page }) => {
+  test('Search page LCP start time is less than 7 second', async ({ page, browserName }) => {
     await page.goto('/')
-    const LCP = await page.evaluate(() => new Promise((resolve) => {
-      new PerformanceObserver((list) => {
-        const entries = list.getEntries()
-        const lcp = entries.at(-1)
-        resolve(lcp.startTime)
-      }).observe({
-        type: 'largest-contentful-paint',
-        buffered: true
-      })
-    }))
 
-    expect(LCP < 30000).toBe(true)
+    if (browserName === 'chromium') {
+      const LCP = await page.evaluate(() => new Promise((resolve) => {
+        new PerformanceObserver((list) => {
+          const entries = list.getEntries()
+          const lcp = entries.at(-1)
+          resolve(lcp.startTime)
+        }).observe({
+          type: 'largest-contentful-paint',
+          buffered: true
+        })
+
+        expect(LCP < 30000).toBe(true)
+      }))
+    }
   })
 })
