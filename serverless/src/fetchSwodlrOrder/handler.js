@@ -132,7 +132,7 @@ const fetchSwodlrOrder = async (input) => {
       currentState = 'failed'
     } else if (prodStatus === 'canceled' || currentState === 'canceled') {
       currentState = 'canceled'
-    } else if (prodStatus === 'complete' && !['failed', 'in_progress', 'creating', 'canceled'].includes(currentState)) {
+    } else if (prodStatus === 'complete' && !['failed', 'canceled'].includes(currentState)) {
       currentState = 'complete'
     }
     // When swodlr orders are submitted we store the response immediately giving us access to
