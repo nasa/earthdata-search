@@ -342,20 +342,21 @@ export class OrderStatusItem extends PureComponent {
             order_information: orderInformation = {}
           } = order
 
-          const { reason } = orderInformation
+          const { reason, granules = [] } = orderInformation
 
           totalNumber += 1
 
-          if (state === 'completed') {
-            const { granules } = orderInformation
-            const { uri } = granules
+          if (state === 'complete') {
+            granules.forEach((granule) => {
+              const { uri } = granule
+              downloadUrls.push(uri)
+            })
 
-            downloadUrls.push(uri)
             totalProcessed += 1
           } else if (state === 'failed') {
-            totalProcessed += 1
             progressPercentage = 100
             messages.push(error !== null ? error : reason)
+            messageIsError = messageIsError || true
           }
         })
 
