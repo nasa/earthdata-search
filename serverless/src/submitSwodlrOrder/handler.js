@@ -155,9 +155,6 @@ const submitSwodlrOrder = async (event, context) => {
           throw new Error(JSON.stringify(errors))
         }
 
-        console.log(responseData)
-        console.log(errors)
-
         const { data } = responseData
         const { generateL2RasterProduct } = data
 
