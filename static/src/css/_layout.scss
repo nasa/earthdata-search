@@ -51,6 +51,11 @@
     .route-wrapper--content-page-centered & {
       justify-content: center;
     }
+
+    &--dark {
+      background: $color__black;
+    }
+
   }
 
   &__content-nav {
@@ -77,6 +82,10 @@
 
   &--light {
     background: white;
+  }
+
+  &--dark {
+    background: $color__black;
   }
 
   &__page-heading {
