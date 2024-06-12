@@ -84,11 +84,8 @@ const fetchSwodlrOrder = async (input) => {
 
     const {
       order_information: orderInformation,
-      access_method: accessMethod,
-      state
+      access_method: accessMethod
     } = retrievalOrderRecord
-
-    let currentState = state
 
     const { productId } = orderInformation
     const { url } = accessMethod
@@ -124,17 +121,6 @@ const fetchSwodlrOrder = async (input) => {
 
     const prodStatus = getStateFromOrderStatus(status)
 
-    if (prodStatus === 'creating' && currentState === !['failed', 'in_progress', 'canceled'].includes(currentState)) {
-      currentState = 'creating'
-    } else if (prodStatus === 'in_progress' && !['failed', 'canceled'].includes(currentState)) {
-      currentState = 'in_progress'
-    } else if (prodStatus === 'failed' || currentState === 'failed') {
-      currentState = 'failed'
-    } else if (prodStatus === 'canceled' || currentState === 'canceled') {
-      currentState = 'canceled'
-    } else if (prodStatus === 'complete' && !['failed', 'canceled'].includes(currentState)) {
-      currentState = 'complete'
-    }
     // When swodlr orders are submitted we store the response immediately giving us access to
     // the payload in this job. Part of the response is a list of links, a link with rel equal
     // to 'self' is the order status endpoint -- we'll use that to request the status
@@ -151,7 +137,7 @@ const fetchSwodlrOrder = async (input) => {
           reason,
           granules
         },
-        state: currentState,
+        state: prodStatus,
         updated_at: updatedAt
       })
       .where({
@@ -161,7 +147,7 @@ const fetchSwodlrOrder = async (input) => {
     return {
       accessToken,
       id,
-      orderStatus: currentState,
+      orderStatus: prodStatus,
       orderType
     }
   } catch (error) {

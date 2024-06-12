@@ -22,6 +22,9 @@ stateMachines:
             - Variable: '$.orderType'
               StringEquals: 'Harmony'
               Next: FetchHarmonyOrderStatus
+            - Variables: '$.orderType'
+              StringEquals: 'SWODLR'
+              Next: FetchSwodlrOrderStatus
         FetchCatalogRestOrderStatus:
           Type: Task
           Resource:
@@ -41,6 +44,13 @@ stateMachines:
           Resource:
             Fn::GetAtt:
               - FetchHarmonyOrderLambdaFunction
+              - Arn
+          Next: CheckOrderStatus
+        FetchSwodlrOrderStatus:
+          Type: Task
+          Resource:
+            Fn::GetAtt:
+              - FetchSwodlrOrderLambdaFunction
               - Arn
           Next: CheckOrderStatus
         CheckOrderStatus:

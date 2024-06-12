@@ -336,8 +336,6 @@ export class OrderStatusItem extends PureComponent {
         }
 
         orders.forEach((order) => {
-          console.log(order)
-
           const {
             error,
             state,
@@ -363,8 +361,6 @@ export class OrderStatusItem extends PureComponent {
 
         progressPercentage = Math.floor((totalProcessed / totalNumber) * 100)
       }
-
-      console.log(progressPercentage)
 
       if (isEsi || isHarmony) {
         if (stateFromOrderStatus === 'creating') {
@@ -675,6 +671,7 @@ export class OrderStatusItem extends PureComponent {
                       || isOpendap
                       || isEsi
                       || isHarmony
+                      || isSwodlr
                     ) && (
                       <Tab
                         className={downloadUrls.length > 0 ? '' : 'order-status-item__tab-status'}
@@ -775,7 +772,7 @@ export class OrderStatusItem extends PureComponent {
                     )
                   }
                   {
-                    ((isEsi || isHarmony) && orders.length > 0) && (
+                    ((isEsi || isHarmony || isSwodlr) && orders.length > 0) && (
                       <Tab
                         title="Order Status"
                         eventKey="order-status"
