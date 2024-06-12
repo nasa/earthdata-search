@@ -19,21 +19,17 @@ test.describe('Performance Benchmarking', () => {
       const requestFinishedPromise = page.waitForEvent('requestfinished')
       const request = await requestFinishedPromise
 
-      expect(request.timing().responseEnd < 30000).toBe(true)
+      expect(request.timing().responseEnd < 1000).toBe(true)
     }
   })
 
-  test('Search page LCP start time is less than 7 second', async ({ page, browserName }) => {
+  test('Search page FCP start time is less than 1 second', async ({ page, browserName }) => {
     if (browserName === 'chromium') {
-      await page.goto('/')
-      page.on('metrics', (metrics) => {
-        const lcp = metrics.LargestContenfulPaint / 1000
-        if (lcp > 7) {
-          console.error(`LCP is too high for the code: ${lcp} seconds`)
-        } else {
-          console.info(`LCP is acceptable: ${lcp} seconds`)
-        }
-      })
+      await page.goto('/search')
+      const paintTimingJson = await page.evaluate(() => JSON.stringify(window.performance.getEntriesByName('first-contentful-paint')))
+      const paintTiming = JSON.parse(paintTimingJson)
+
+      expect(paintTiming[0].startTime).toBeLessThan(1000)
     }
   })
 })
