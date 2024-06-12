@@ -17,7 +17,7 @@ export const EarthdataDownloadRedirect = () => {
         <meta name="robots" content="noindex, nofollow" />
         <link rel="canonical" href={`${edscHost}/earthdata-download-redirect`} />
       </Helmet>
-      <div className="route-wrapper route-wrapper--dark route-wrapper--content-page route-wrapper--content-page-centered">
+      <div className="route-wrapper route-wrapper--light route-wrapper--content-page route-wrapper--content-page-centered">
         <div className="route-wrapper__content">
           <div className="route-wrapper__content-inner">
             <EarthdataDownloadRedirectContainer />

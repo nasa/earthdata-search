@@ -51,7 +51,9 @@ npm is a separate project from Node.js, and tends to update more frequently. As 
 
 ##### NVM
 
-To ensure that you're using the correct version of Node it is recommended that you use Node Version Manager. Installation instructions can be found on [the repository](https://github.com/nvm-sh/nvm#install--update-script). The version used is defined in .nvmrc and will be used automatically if NVM is configured correctly.
+To ensure that you're using the correct version of Node it is recommended that you use Node Version Manager. Installation instructions can be found on [the repository](https://github.com/nvm-sh/nvm#install--update-script). The version used is defined in .nvmrc and will be used automatically if NVM is configured correctly. Using nvm we can switch node versions to the one utilized on Earthdata Search. From the top-level directory:
+
+    nvm use
 
 ##### Serverless Framework
 
@@ -126,6 +128,10 @@ Optionally, we can run the migration locally and not within a deployed Lambda. W
 The production build of the application will be output in the `/static/dist/` directory:
 
     npm run build
+
+This production build can be run locally with any number of http-server solutions. A simple one is to use the http-server package
+
+    npx http-server static/dist
 
 ### Run the Application Locally
 
