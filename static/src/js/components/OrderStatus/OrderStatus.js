@@ -173,8 +173,6 @@ export const OrderStatus = ({
     ...swodlrOrders
   ]
 
-  console.log(allCollections)
-
   return (
     <>
       <Helmet>
