@@ -23,6 +23,8 @@ import App from '../App'
 
 jest.mock('../util/history', () => {
   console.log('my mock is being called')
+  // TODO this needs to be per component not just hard conded on the push
+  // TODO jest requires that this is prefixed with `mock` or it will error
   const history = mockCreateBrowserHistory()
   history.push('/contact-info')
 
@@ -384,18 +386,20 @@ describe('App component', () => {
   test.only('lazy loads contact-info', async () => {
     // Const path = '/not-found'
     // window.history.pushState({}, 'unusedArg', path)
-    jest.mock('../util/history', () => {
-      console.log('my mock is being called')
-      const history = mockCreateBrowserHistory()
-      history.push('/contact-info')
+    // TODO can't do this in the test level
+    // jest.mock('../util/history', () => {
+    //   console.log('my mock is being called')
+    //   const history = mockCreateBrowserHistory()
+    //   history.push('/contact-info')
 
-      return history
-    })
+    //   return history
+    // })
 
     setup()
     // Window.history.pushState({}, 'unusedArg', path)
 
     // Expect(screen.queryByTestId('mocked-not-found')).toBeInTheDocument()
+    // TODO waits for the component to load before this it will be a spinner on DOM
     await waitFor(() => {
       expect(screen.queryByTestId('mocked-contact-info')).toBeInTheDocument()
       screen.debug()
