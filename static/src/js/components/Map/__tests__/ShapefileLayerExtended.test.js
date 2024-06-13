@@ -2,13 +2,8 @@ import { ShapefileLayerExtended } from '../ShapefileLayerExtended'
 
 describe('ShapefileLayerExtended', () => {
   describe('separateMultiPolygons', () => {
-    let layer
-
-    beforeEach(() => {
-      layer = new ShapefileLayerExtended({})
-    })
-
-    it('should separate MultiPolygon features into individual Polygon features', () => {
+    test('should separate MultiPolygon features into individual Polygon features', () => {
+      const layer = new ShapefileLayerExtended({})
       const geojson = {
         type: 'FeatureCollection',
         features: [
@@ -37,7 +32,8 @@ describe('ShapefileLayerExtended', () => {
       expect(geojson.features[1].properties).toEqual({ name: 'Region Name' })
     })
 
-    it('should handle GeometryCollection with MultiPolygon features', () => {
+    test('should handle GeometryCollection with MultiPolygon features', () => {
+      const layer = new ShapefileLayerExtended({})
       const geojson = {
         type: 'FeatureCollection',
         features: [
@@ -71,7 +67,8 @@ describe('ShapefileLayerExtended', () => {
       expect(geojson.features[1].properties).toEqual({ name: 'Region Name' })
     })
 
-    it('should leave Polygon features unchanged', () => {
+    test('should leave Polygon features unchanged', () => {
+      const layer = new ShapefileLayerExtended({})
       const geojson = {
         type: 'FeatureCollection',
         features: [
@@ -94,7 +91,8 @@ describe('ShapefileLayerExtended', () => {
       expect(geojson.features[0].properties).toEqual({ name: 'Region Name' })
     })
 
-    it('should add empty properties to geojson when input has no properties', () => {
+    test('should add empty properties to geojson when input has no properties', () => {
+      const layer = new ShapefileLayerExtended({})
       const geojson = {
         type: 'FeatureCollection',
         features: [
