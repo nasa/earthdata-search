@@ -132,6 +132,12 @@ const submitSwodlrOrder = async (event, context) => {
           mgrsBandAdjust
         }
 
+        // Makes it easier on the frontend to null out the values if outputSamplingGridType is GEO (LAT/LON)
+        if (outputSamplingGridType === 'GEO') {
+          variables.utmZoneAdjust = null
+          variables.mgrsBandAdjust = null
+        }
+
         const requestId = uuidv4()
 
         // Submit the order
