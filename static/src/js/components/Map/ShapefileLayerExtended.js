@@ -85,12 +85,12 @@ export class ShapefileLayerExtended extends L.Layer {
   }
 
   // Leaflet 1.0+ changed the way that MultiPolygons are handled.
-  // Instead of creating a new layer for each polgon in a MultiPolygon
+  // Instead of creating a new layer for each polygon in a MultiPolygon
   // feature (v0.7) it creates a single layer with multiple polygons.
   // This means when you hover over one island in Hawaii it highlights
   // all the islands, and passes all the polygons to _setConstraint.
   // This method takes all the MultiPolygon geometries and separates them
-  // into individual polygons, to mimick the 0.7 functionality.
+  // into individual polygons, to mimic the 0.7 functionality.
   separateMultiPolygons(geojson) {
     const featureIndexesToRemove = []
     const { features } = geojson
