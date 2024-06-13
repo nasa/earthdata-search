@@ -62,7 +62,8 @@ export class AccessMethod extends Component {
       accessMethods,
       selectedAccessMethod,
       temporal,
-      spatial
+      spatial,
+      granuleMetadata
     } = props
 
     const { isRecurring } = temporal
@@ -110,7 +111,7 @@ export class AccessMethod extends Component {
     const sampleGrid = 'UTM'
     const rasterResolution = 90
     // We only want to allow for the processing of the first 10 granules of a collection for Swodlr
-    const granuleList = props.granuleMetadata || []
+    const granuleList = granuleMetadata || []
     const utmRasterOptions = [
       {
         title: '90 Meters',
@@ -220,10 +221,13 @@ export class AccessMethod extends Component {
     this.handleHarmonySelection = this.handleHarmonySelection.bind(this)
     this.handleSwoldrOptions = this.handleSwoldrOptions.bind(this)
     this.handleCollectionGranuleListUpdate = this.handleCollectionGranuleListUpdate.bind(this)
+    this.handleRasterResolutionUpdate = this.handleRasterResolutionUpdate.bind(this)
+    this.handleSampleGrid = this.handleSampleGrid.bind(this)
+    this.handleGranuleExtent = this.handleGranuleExtent.bind(this)
   }
 
   UNSAFE_componentWillReceiveProps() {
-    const { temporal } = this.props
+    const { temporal, granuleMetadata } = this.props
 
     const { isRecurring } = temporal
 
@@ -233,6 +237,10 @@ export class AccessMethod extends Component {
         enableTemporalSubsetting: false
       })
     }
+
+    this.setState({
+      granuleList: granuleMetadata
+    })
   }
 
   componentDidUpdate() {
@@ -382,9 +390,7 @@ export class AccessMethod extends Component {
   }
 
   handleCollectionGranuleListUpdate(granule, property, e) {
-    const { granuleMetadata } = this.props
-    const granuleList = granuleMetadata
-    console.log('updating granule list', granuleMetadata, e.target.value)
+    const { granuleList } = this.state
 
     if (property === 'utm') {
       granuleList[granule].utmZoneAdjust = e.target.value
@@ -394,9 +400,40 @@ export class AccessMethod extends Component {
       granuleList[granule].mgrsBandAdjust = e.target.value
     }
 
-    this.setState({
-      granuleList
-    })
+    this.setState(
+      {
+        granuleList
+      },
+      this.handleSwoldrOptions()
+    )
+  }
+
+  handleRasterResolutionUpdate(event) {
+    console.log(event.target.value)
+    this.setState(
+      {
+        rasterResolution: Number(event.target.value)
+      },
+      this.handleSwoldrOptions()
+    )
+  }
+
+  handleSampleGrid(type) {
+    this.setState(
+      {
+        sampleGrid: type
+      },
+      this.handleSwoldrOptions()
+    )
+  }
+
+  handleGranuleExtent(value) {
+    this.setState(
+      {
+        granuleExtent: value
+      },
+      this.handleSwoldrOptions()
+    )
   }
 
   handleSwoldrOptions() {
@@ -410,6 +447,18 @@ export class AccessMethod extends Component {
     } = this.state
 
     const customParams = granuleList
+
+    if (sampleGrid === 'UTM') {
+      Object.keys(customParams).forEach((granule) => {
+        if (!customParams[granule].utmZoneAdjust) {
+          customParams[granule].utmZoneAdjust = 0
+        }
+
+        if (!customParams[granule].mgrsBandAdjust) {
+          customParams[granule].mgrsBandAdjust = 0
+        }
+      })
+    }
 
     onUpdateAccessMethod({
       collectionId,
@@ -754,11 +803,9 @@ export class AccessMethod extends Component {
       sampleGrid,
       rasterResolution,
       geoRasterOptions,
-      utmRasterOptions
+      utmRasterOptions,
+      granuleList
     } = this.state
-
-    const { granuleMetadata } = this.props
-    const granuleList = granuleMetadata
 
     const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
 
@@ -1213,11 +1260,7 @@ export class AccessMethod extends Component {
                             checked={!granuleExtent}
                             onClick={
                               () => {
-                                this.setState({
-                                  granuleExtent: false
-                                })
-
-                                this.handleSwoldrOptions()
+                                this.handleGranuleExtent(false)
                               }
 
                             }
@@ -1231,13 +1274,8 @@ export class AccessMethod extends Component {
                             checked={granuleExtent}
                             onClick={
                               () => {
-                                this.setState({
-                                  granuleExtent: true
-                                })
-
-                                this.handleSwoldrOptions()
+                                this.handleGranuleExtent(true)
                               }
-
                             }
                           />
                         </div>
@@ -1272,11 +1310,7 @@ export class AccessMethod extends Component {
                             checked={sampleGrid === 'UTM'}
                             onClick={
                               () => {
-                                this.setState({
-                                  sampleGrid: 'UTM'
-                                })
-
-                                this.handleSwoldrOptions()
+                                this.handleSampleGrid('UTM')
                               }
                             }
                           />
@@ -1289,11 +1323,7 @@ export class AccessMethod extends Component {
                             checked={sampleGrid === 'GEO'}
                             onClick={
                               () => {
-                                this.setState({
-                                  sampleGrid: 'GEO'
-                                })
-
-                                this.handleSwoldrOptions()
+                                this.handleSampleGrid('GEO')
                               }
                             }
                           />
@@ -1323,11 +1353,7 @@ export class AccessMethod extends Component {
                           as="select"
                           onChange={
                             (e) => {
-                              this.setState({
-                                rasterResolution: e.target.value
-                              })
-
-                              this.handleSwoldrOptions()
+                              this.handleRasterResolutionUpdate(e)
                             }
                           }
                           value={rasterResolution}
@@ -1405,11 +1431,9 @@ export class AccessMethod extends Component {
                                             type="radio"
                                             id={`${granule}-plus-1-UTM-zone`}
                                             value={1}
-                                            checked={granule.utmZoneAdjust === '1'}
                                             onChange={
                                               (e) => {
                                                 this.handleCollectionGranuleListUpdate(granule, 'utm', e)
-                                                this.handleSwoldrOptions()
                                               }
                                             }
                                           />
@@ -1420,11 +1444,10 @@ export class AccessMethod extends Component {
                                             type="radio"
                                             id={`${granule}-0-UTM-zone`}
                                             value={0}
-                                            checked={granule.utmZoneAdjust === '0' || !granule.utmZoneAdjust}
+                                            defaultChecked
                                             onChange={
                                               (e) => {
                                                 this.handleCollectionGranuleListUpdate(granule, 'utm', e)
-                                                this.handleSwoldrOptions()
                                               }
                                             }
                                           />
@@ -1435,11 +1458,9 @@ export class AccessMethod extends Component {
                                             type="radio"
                                             id={`${granule}-minus-1-UTM-zone`}
                                             value={-1}
-                                            checked={granule.utmZoneAdjust === '-1'}
                                             onChange={
                                               (e) => {
                                                 this.handleCollectionGranuleListUpdate(granule, 'utm', e)
-                                                this.handleSwoldrOptions()
                                               }
                                             }
                                           />
@@ -1452,11 +1473,9 @@ export class AccessMethod extends Component {
                                             type="radio"
                                             id={`${granule}-plus-1-MGRS-band`}
                                             value={1}
-                                            checked={granule.mgrs === '1'}
                                             onChange={
                                               (e) => {
                                                 this.handleCollectionGranuleListUpdate(granule, 'mgrs', e)
-                                                this.handleSwoldrOptions()
                                               }
                                             }
                                           />
@@ -1467,11 +1486,10 @@ export class AccessMethod extends Component {
                                             type="radio"
                                             id={`${granule}-0-MGRS-band`}
                                             value={0}
-                                            checked={granule.mgrs === '0' || !granule.mgrs}
+                                            defaultChecked
                                             onChange={
                                               (e) => {
                                                 this.handleCollectionGranuleListUpdate(granule, 'mgrs', e)
-                                                this.handleSwoldrOptions()
                                               }
                                             }
                                           />
@@ -1482,11 +1500,9 @@ export class AccessMethod extends Component {
                                             type="radio"
                                             id={`${granule}-minus-1-MGRS-band`}
                                             value={-1}
-                                            checked={granule.mgrs === '-1'}
                                             onChange={
                                               (e) => {
                                                 this.handleCollectionGranuleListUpdate(granule, 'mgrs', e)
-                                                this.handleSwoldrOptions()
                                               }
                                             }
                                           />
