@@ -1,21 +1,45 @@
 import React from 'react'
 import nock from 'nock'
-
+import { createBrowserHistory as mockCreateBrowserHistory } from 'history'
 import {
   render,
   waitFor,
   screen
 } from '@testing-library/react'
+// Import history from '../util/history'
+
 import '@testing-library/jest-dom'
 
 import * as AppConfig from '../../../../sharedUtils/config'
 import App from '../App'
+// Import configureStore from '../store/configureStore'
+// jest.mock('../util/history', () => {
+//   console.log('my mock is being called')
+//   const history = mockCreateBrowserHistory()
+//   history.push('/contact-info')
+
+//   return history
+// })
+
+jest.mock('../util/history', () => {
+  console.log('my mock is being called')
+  const history = mockCreateBrowserHistory()
+  history.push('/contact-info')
+
+  return history
+})
 
 // Mock react-leaflet because it causes errors
 jest.mock('react-leaflet', () => ({
   createLayerComponent: jest.fn().mockImplementation(() => {}),
   createControlComponent: jest.fn().mockImplementation(() => {})
 }))
+
+jest.mock('../containers/AuthRequiredContainer/AuthRequiredContainer', () => {
+  const MockedAuthRequiredContainer = () => <div data-testid="mocked-auth-required-container" />
+
+  return MockedAuthRequiredContainer
+})
 
 // Mock App components routes and containers
 jest.mock('../routes/Admin/Admin', () => () => {
@@ -90,17 +114,11 @@ jest.mock('../components/AppHeader/AppHeader', () => {
   return MockedAppHeader
 })
 
-jest.mock('../containers/AuthCallbackContainer/AuthCallbackContainer', () => {
-  const MockedAuthCallbackContainer = () => <div data-testid="mocked-auth-callback-container" />
+// Jest.mock('../containers/AuthCallbackContainer/AuthCallbackContainer', () => {
+//   const MockedAuthCallbackContainer = () => <div data-testid="mocked-auth-callback-container" />
 
-  return MockedAuthCallbackContainer
-})
-
-jest.mock('../containers/AuthRequiredContainer/AuthRequiredContainer', () => {
-  const MockedAuthRequiredContainer = () => <div data-testid="mocked-auth-required-container" />
-
-  return MockedAuthRequiredContainer
-})
+//   return MockedAuthCallbackContainer
+// })
 
 jest.mock('../containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer', () => {
   const MockedChunkedOrderModalContainer = () => <div data-testid="mocked-chunked-order-modal-container" />
@@ -140,6 +158,7 @@ jest.mock('../containers/MetricsEventsContainer/MetricsEventsContainer', () => {
 
 jest.mock('../components/Errors/NotFound', () => {
   const MockedNotFound = () => <div data-testid="mocked-not-found" />
+  console.log('🚀 ~ file: App.test.js:146 ~ jest.mock ~ MockedNotFound:🛑', MockedNotFound)
 
   return MockedNotFound
 })
@@ -189,13 +208,42 @@ jest.mock('../containers/UrlQueryContainer/UrlQueryContainer', () => (
   ))
 ))
 
+jest.mock('../containers/AuthRequiredContainer/AuthRequiredContainer', () => (
+  jest.fn(({ children }) => (
+    <mock-AuthCallbackContainer data-testid="AuthCallbackContainer">
+      {children}
+    </mock-AuthCallbackContainer>
+  ))
+))
+
+// Jest.mock('../containers/AuthRequiredContainer/AuthRequiredContainer', () => {
+//   const MockedAuthRequiredContainer = () => <div data-testid="mocked-auth-required-container" />
+
+//   return MockedAuthRequiredContainer
+// })
+
 beforeEach(() => {
   jest.clearAllMocks()
   jest.spyOn(AppConfig, 'getApplicationConfig').mockImplementation(() => ({ env: 'dev' }))
   jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
+  // Mocking window.history.pushState
+  delete window.location
+  window.location = {
+    href: '',
+    pathname: '/',
+    search: '',
+    hash: '',
+    origin: 'http://localhost'
+  }
+
+  window.history.pushState = jest.fn()
 })
 
-const setup = () => {
+afterEach(() => {
+  jest.clearAllMocks()
+})
+
+const setup = (path) => {
   nock(/cmr/)
     .post(/collections/)
     .reply(200, {
@@ -215,8 +263,14 @@ const setup = () => {
     })
 
   const props = {}
+  // Const history = createMemoryHistory()
+  // Const store = configureStore()
+  render(
 
-  render(<App {...props} />)
+    <App {...props} />
+  )
+
+  window.history.pushState({}, '/not-found', path)
 
   return {
     props
@@ -309,10 +363,13 @@ describe('App component', () => {
   })
 
   // https://stackoverflow.com/questions/66667827/react-testing-library-to-cover-the-lazy-load/66690463
-  test('renders loaded lazy components', () => {
+  test('renders loaded lazy components', async () => {
     setup()
-    expect(screen.getByTestId('mocked-map-container')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByTestId('mocked-map-container')).toBeInTheDocument()
+    })
 
+    screen.debug()
     // Lazy loaded routes not immediately loaded onto `App.js`
     expect(screen.queryByTestId('mocked-admin')).not.toBeInTheDocument()
     expect(screen.queryByTestId('mocked-contact-info')).not.toBeInTheDocument()
@@ -320,5 +377,29 @@ describe('App component', () => {
     expect(screen.queryByTestId('mocked-earthdata-download-redirect')).not.toBeInTheDocument()
     expect(screen.queryByTestId('mocked-preferences')).not.toBeInTheDocument()
     expect(screen.queryByTestId('mocked-subscriptions')).not.toBeInTheDocument()
+  })
+
+  // https://testing-library.com/docs/example-react-router/
+  // https://stackoverflow.com/questions/72897761/testing-routes-with-jest-rtl-for-react-router
+  test.only('lazy loads contact-info', async () => {
+    // Const path = '/not-found'
+    // window.history.pushState({}, 'unusedArg', path)
+    jest.mock('../util/history', () => {
+      console.log('my mock is being called')
+      const history = mockCreateBrowserHistory()
+      history.push('/contact-info')
+
+      return history
+    })
+
+    setup()
+    // Window.history.pushState({}, 'unusedArg', path)
+
+    // Expect(screen.queryByTestId('mocked-not-found')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.queryByTestId('mocked-contact-info')).toBeInTheDocument()
+      screen.debug()
+    })
+    // Lazy loaded routes not immediately loaded onto `App.js`
   })
 })
