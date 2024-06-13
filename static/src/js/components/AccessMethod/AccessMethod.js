@@ -106,11 +106,11 @@ export class AccessMethod extends Component {
       selectedHarmonyMethodName = accessMethods[selectedAccessMethod].name
     }
 
-    const granuleExtent = true
-    const sampleGrid = 'GEO'
+    const granuleExtent = false
+    const sampleGrid = 'UTM'
     const rasterResolution = 90
     // We only want to allow for the processing of the first 10 granules of a collection for Swodlr
-    const collectionGranuleList = []
+    const granuleList = props.granuleMetadata || []
     const utmRasterOptions = [
       {
         title: '90 Meters',
@@ -206,9 +206,9 @@ export class AccessMethod extends Component {
       granuleExtent,
       sampleGrid,
       rasterResolution,
-      collectionGranuleList,
       geoRasterOptions,
-      utmRasterOptions
+      utmRasterOptions,
+      granuleList
     }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
@@ -381,18 +381,21 @@ export class AccessMethod extends Component {
     }
   }
 
-  handleCollectionGranuleListUpdate(granuleList, index, property, e) {
-    const updatedCollectionGranuleList = granuleList
+  handleCollectionGranuleListUpdate(granule, property, e) {
+    const { granuleMetadata } = this.props
+    const granuleList = granuleMetadata
+    console.log('updating granule list', granuleMetadata, e.target.value)
+
     if (property === 'utm') {
-      updatedCollectionGranuleList[index].utmZoneAdjust = e.target.value
+      granuleList[granule].utmZoneAdjust = e.target.value
     }
 
     if (property === 'mgrs') {
-      updatedCollectionGranuleList[index].mgrsBandAdjust = e.target.value
+      granuleList[granule].mgrsBandAdjust = e.target.value
     }
 
     this.setState({
-      collectionGranuleList: updatedCollectionGranuleList
+      granuleList
     })
   }
 
@@ -403,17 +406,10 @@ export class AccessMethod extends Component {
       rasterResolution,
       sampleGrid,
       granuleExtent,
-      collectionGranuleList
+      granuleList
     } = this.state
 
-    const customParams = {}
-
-    collectionGranuleList.forEach((granule) => {
-      customParams[granule.conceptId] = {
-        utmZoneAdjust: granule.utmZoneAdjust || null,
-        mgrsBandAdjust: granule.mgrsBandAdjust || null
-      }
-    })
+    const customParams = granuleList
 
     onUpdateAccessMethod({
       collectionId,
@@ -757,10 +753,12 @@ export class AccessMethod extends Component {
       granuleExtent,
       sampleGrid,
       rasterResolution,
-      collectionGranuleList,
       geoRasterOptions,
       utmRasterOptions
     } = this.state
+
+    const { granuleMetadata } = this.props
+    const granuleList = granuleMetadata
 
     const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
 
@@ -1349,7 +1347,7 @@ export class AccessMethod extends Component {
                     </Col>
                   </Row>
                   <br />
-                  <Row hidden={sampleGrid !== 'GEO'}>
+                  <Row hidden={sampleGrid !== 'UTM'}>
                     <Col>
                       <Accordion>
                         <Card>
@@ -1396,20 +1394,21 @@ export class AccessMethod extends Component {
                                 </thead>
                                 <tbody>
                                   {
-                                    metadata && metadata.granules
-                                    && metadata.granules.items.map((granule, position) => (
+                                    granuleList && Object.keys(granuleList).map((granule) => (
                                       <tr key={granule.conceptId}>
-                                        <td>{granule.conceptId}</td>
-                                        <td>
+                                        <td>{granule}</td>
+                                        <td className="nowrap">
                                           <Form.Check
                                             inline
                                             label="+1"
-                                            name={`${granule.conceptId}-UTM-zone`}
+                                            name={`${granule}-UTM-zone`}
                                             type="radio"
-                                            id={`${granule.conceptId}-plus-1-UTM-zone`}
+                                            id={`${granule}-plus-1-UTM-zone`}
+                                            value={1}
+                                            checked={granule.utmZoneAdjust === '1'}
                                             onChange={
                                               (e) => {
-                                                this.handleCollectionGranuleListUpdate(collectionGranuleList, 'utm', position, e)
+                                                this.handleCollectionGranuleListUpdate(granule, 'utm', e)
                                                 this.handleSwoldrOptions()
                                               }
                                             }
@@ -1417,13 +1416,14 @@ export class AccessMethod extends Component {
                                           <Form.Check
                                             inline
                                             label="0"
-                                            name={`${granule.conceptId}-UTM-zone`}
+                                            name={`${granule}-UTM-zone`}
                                             type="radio"
-                                            id={`${granule.conceptId}-0-UTM-zone`}
-                                            checked
+                                            id={`${granule}-0-UTM-zone`}
+                                            value={0}
+                                            checked={granule.utmZoneAdjust === '0' || !granule.utmZoneAdjust}
                                             onChange={
                                               (e) => {
-                                                this.handleCollectionGranuleListUpdate(collectionGranuleList, 'utm', position, e)
+                                                this.handleCollectionGranuleListUpdate(granule, 'utm', e)
                                                 this.handleSwoldrOptions()
                                               }
                                             }
@@ -1431,27 +1431,31 @@ export class AccessMethod extends Component {
                                           <Form.Check
                                             inline
                                             label="-1"
-                                            name={`${granule.conceptId}-UTM-zone`}
+                                            name={`${granule}-UTM-zone`}
                                             type="radio"
-                                            id={`${granule.conceptId}-minus-1-UTM-zone`}
+                                            id={`${granule}-minus-1-UTM-zone`}
+                                            value={-1}
+                                            checked={granule.utmZoneAdjust === '-1'}
                                             onChange={
                                               (e) => {
-                                                this.handleCollectionGranuleListUpdate(collectionGranuleList, 'utm', position, e)
+                                                this.handleCollectionGranuleListUpdate(granule, 'utm', e)
                                                 this.handleSwoldrOptions()
                                               }
                                             }
                                           />
                                         </td>
-                                        <td>
+                                        <td className="nowrap">
                                           <Form.Check
                                             inline
                                             label="+1"
-                                            name={`${granule.conceptId}-MGRS-band`}
+                                            name={`${granule}-MGRS-band`}
                                             type="radio"
-                                            id={`${granule.conceptId}-plus-1-MGRS-band`}
+                                            id={`${granule}-plus-1-MGRS-band`}
+                                            value={1}
+                                            checked={granule.mgrs === '1'}
                                             onChange={
                                               (e) => {
-                                                this.handleCollectionGranuleListUpdate(collectionGranuleList, 'mgrs', position, e)
+                                                this.handleCollectionGranuleListUpdate(granule, 'mgrs', e)
                                                 this.handleSwoldrOptions()
                                               }
                                             }
@@ -1459,13 +1463,14 @@ export class AccessMethod extends Component {
                                           <Form.Check
                                             inline
                                             label="0"
-                                            name={`${granule.conceptId}-MGRS-band`}
+                                            name={`${granule}-MGRS-band`}
                                             type="radio"
-                                            id={`${granule.conceptId}-0-MGRS-band`}
-                                            checked
+                                            id={`${granule}-0-MGRS-band`}
+                                            value={0}
+                                            checked={granule.mgrs === '0' || !granule.mgrs}
                                             onChange={
                                               (e) => {
-                                                this.handleCollectionGranuleListUpdate(collectionGranuleList, 'mgrs', position, e)
+                                                this.handleCollectionGranuleListUpdate(granule, 'mgrs', e)
                                                 this.handleSwoldrOptions()
                                               }
                                             }
@@ -1473,12 +1478,14 @@ export class AccessMethod extends Component {
                                           <Form.Check
                                             inline
                                             label="-1"
-                                            name={`${granule.conceptId}-MGRS-band`}
+                                            name={`${granule}-MGRS-band`}
                                             type="radio"
-                                            id={`${granule.conceptId}-minus-1-MGRS-band`}
+                                            id={`${granule}-minus-1-MGRS-band`}
+                                            value={-1}
+                                            checked={granule.mgrs === '-1'}
                                             onChange={
                                               (e) => {
-                                                this.handleCollectionGranuleListUpdate(collectionGranuleList, 'mgrs', position, e)
+                                                this.handleCollectionGranuleListUpdate(granule, 'mgrs', e)
                                                 this.handleSwoldrOptions()
                                               }
                                             }
@@ -1514,7 +1521,8 @@ AccessMethod.defaultProps = {
   onTogglePanels: null,
   selectedAccessMethod: null,
   shapefileId: null,
-  spatial: {}
+  spatial: {},
+  granuleMetadata: {}
 }
 
 AccessMethod.propTypes = {
@@ -1547,7 +1555,8 @@ AccessMethod.propTypes = {
   }).isRequired,
   ursProfile: PropTypes.shape({
     email_address: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  granuleMetadata: PropTypes.shape({})
 }
 
 export default AccessMethod
