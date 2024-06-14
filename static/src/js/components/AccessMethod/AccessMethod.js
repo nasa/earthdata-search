@@ -404,17 +404,16 @@ export class AccessMethod extends Component {
       {
         granuleList
       },
-      this.handleSwoldrOptions()
+      () => this.handleSwoldrOptions()
     )
   }
 
   handleRasterResolutionUpdate(event) {
-    console.log(event.target.value)
     this.setState(
       {
         rasterResolution: Number(event.target.value)
       },
-      this.handleSwoldrOptions()
+      () => this.handleSwoldrOptions()
     )
   }
 
@@ -423,7 +422,23 @@ export class AccessMethod extends Component {
       {
         sampleGrid: type
       },
-      this.handleSwoldrOptions()
+      () => {
+        // Set the rasterResolution to the default value.
+        let defaultRasterValue
+        if (type === 'GEO') {
+          defaultRasterValue = 3
+        } else {
+          defaultRasterValue = 90
+        }
+
+        this.setState(
+          {
+            rasterResolution: defaultRasterValue
+          },
+          () => this.handleSwoldrOptions()
+        )
+      }
+
     )
   }
 
@@ -432,7 +447,7 @@ export class AccessMethod extends Component {
       {
         granuleExtent: value
       },
-      this.handleSwoldrOptions()
+      () => this.handleSwoldrOptions()
     )
   }
 
