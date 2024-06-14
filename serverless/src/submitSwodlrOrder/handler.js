@@ -136,6 +136,9 @@ const submitSwodlrOrder = async (event, context) => {
         if (outputSamplingGridType === 'GEO') {
           variables.utmZoneAdjust = null
           variables.mgrsBandAdjust = null
+        } else {
+          variables.utmZoneAdjust = parseInt(variables.utmZoneAdjust, 10)
+          variables.mgrsBandAdjust = parseInt(variables.mgrsBandAdjust, 10)
         }
 
         const requestId = uuidv4()

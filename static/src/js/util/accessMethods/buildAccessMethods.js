@@ -90,7 +90,6 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           }
 
           let methodKey = camelCase(serviceType)
-          console.log('🚀 ~ file: buildAccessMethods.js:93 ~ orderOptionsItems.forEach ~ methodKey:', methodKey)
 
           // `echoOrders` needs to be singular to match existing savedAccessConfigurations
           if (methodKey === 'echoOrders') {

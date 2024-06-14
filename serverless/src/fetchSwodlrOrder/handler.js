@@ -64,7 +64,7 @@ const fetchSwodlrOrder = async (input) => {
       }
     }
 
-    const statusGraphqlQuery = `query ($product: ID!, $limit: Int) {
+    const statusGraphqlQuery = `query GetStatusByProduct($product: ID!, $limit: Int) {
         status: statusByProduct(product: $product, limit: $limit) {
           id
           timestamp
@@ -87,7 +87,7 @@ const fetchSwodlrOrder = async (input) => {
       access_method: accessMethod
     } = retrievalOrderRecord
 
-    const { productId } = orderInformation
+    const { productId, createdAt } = orderInformation
     const { url } = accessMethod
 
     const swodlrUrl = `${url}/api/graphql`
@@ -113,6 +113,7 @@ const fetchSwodlrOrder = async (input) => {
     const parsedResponse = parseSwodlrResponse(orderResponse.data.data)
 
     const {
+      jobId,
       status,
       updatedAt,
       granules,
@@ -121,21 +122,17 @@ const fetchSwodlrOrder = async (input) => {
 
     const prodStatus = getStateFromOrderStatus(status)
 
-    // When swodlr orders are submitted we store the response immediately giving us access to
-    // the payload in this job. Part of the response is a list of links, a link with rel equal
-    // to 'self' is the order status endpoint -- we'll use that to request the status
-    // const { links } = orderInformation
-    // const selfLink = links.find((link) => link.rel === 'self')
-    // const { href: orderStatusUrl } = selfLink
-
     // Updates the database with current order data
     await dbConnection('retrieval_orders')
       .update({
         order_information: {
+          jobId,
           status: prodStatus,
           productId,
           reason,
-          granules
+          granules,
+          createdAt,
+          updatedAt
         },
         state: prodStatus,
         updated_at: updatedAt

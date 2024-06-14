@@ -321,7 +321,7 @@ describe('fetchSwodlrOrder', () => {
     })
   })
 
-  test.only('correctly returns when the order cannot be found', async () => {
+  test('correctly returns when the order cannot be found', async () => {
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response(null)
