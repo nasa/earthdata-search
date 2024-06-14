@@ -1595,7 +1595,7 @@ describe('AccessMethod component', () => {
         collectionId: 'collectionId',
         method: {
           swodlr: {
-            json_data: {
+            swodlrData: {
               params: {
                 rasterResolution: 3,
                 outputSamplingGridType: 'GEO',

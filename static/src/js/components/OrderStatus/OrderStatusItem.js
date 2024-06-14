@@ -314,7 +314,7 @@ export class OrderStatusItem extends PureComponent {
         }
 
         if (stateFromOrderStatus === 'in_progress') {
-          orderInfo = 'Your orders are currently being generated. Once generated is finished, links will be displayed below and sent to the email you\'ve provided.'
+          orderInfo = 'Your orders are currently being generated. Once generation is finished, links will be displayed below and sent to the email you\'ve provided.'
         }
 
         if (stateFromOrderStatus === 'complete') {
