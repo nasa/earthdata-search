@@ -50,13 +50,14 @@ const setup = (overrideProps) => {
     ...overrideProps
   }
 
-  render(<AccessMethod {...props} />)
+  const component = render(<AccessMethod {...props} />)
 
   return {
     onSelectAccessMethod,
     onSetActivePanel,
     onUpdateAccessMethod,
-    onTogglePanels
+    onTogglePanels,
+    component
   }
 }
 
@@ -1512,9 +1513,9 @@ describe('AccessMethod component', () => {
   })
 
   describe('when the selected access method is swodlr', () => {
-    test('selecting a output format calls onUpdateAccessMethod', async () => {
+    test('SWODLR Option displayed', async () => {
       const collectionId = 'collectionId'
-      const { onUpdateAccessMethod } = setup({
+      setup({
         accessMethods: {
           swodlr: {
             type: 'SWODLR',
@@ -1527,6 +1528,30 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'swodlr'
       })
 
+      const swodlrText = screen.getByText('Generate with SWODLR')
+      expect(swodlrText).toBeInTheDocument()
+    })
+
+    test('selecting a granuleExtent calls onUpdateAccessMethod', async () => {
+      const user = userEvent.setup()
+
+      const collectionId = 'collectionId'
+      const { component, onUpdateAccessMethod } = setup({
+        accessMethods: {
+          swodlr: {
+            type: 'SWODLR',
+            supportsSwodlr: true
+          }
+        },
+        metadata: {
+          conceptId: collectionId
+        },
+        selectedAccessMethod: 'swodlr'
+      })
+
+      const granuleExtent256Checkbox = component.container.querySelector('#granule-extent-256-by-128')
+      await user.click(granuleExtent256Checkbox)
+
       expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
       expect(onUpdateAccessMethod).toHaveBeenCalledWith({
         collectionId: 'collectionId',
@@ -1534,20 +1559,49 @@ describe('AccessMethod component', () => {
           swodlr: {
             swodlrData: {
               params: {
-                rasterResolution: 6,
+                rasterResolution: 90,
+                outputSamplingGridType: 'UTM',
+                outputGranuleExtentFlag: true
+              },
+              custom_params: {}
+            }
+          }
+        }
+      })
+    })
+
+    test('selecting a LAT/LON sample grid calls onUpdateAccessMethod with automatic rasterResolution value adjustment', async () => {
+      const user = userEvent.setup()
+
+      const collectionId = 'collectionId'
+      const { component, onUpdateAccessMethod } = setup({
+        accessMethods: {
+          swodlr: {
+            type: 'SWODLR',
+            supportsSwodlr: true
+          }
+        },
+        metadata: {
+          conceptId: collectionId
+        },
+        selectedAccessMethod: 'swodlr'
+      })
+
+      const latLonCheckbox = component.container.querySelector('#sample-grid-lat-lon')
+      await user.click(latLonCheckbox)
+
+      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+      expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+        collectionId: 'collectionId',
+        method: {
+          swodlr: {
+            json_data: {
+              params: {
+                rasterResolution: 3,
                 outputSamplingGridType: 'GEO',
                 outputGranuleExtentFlag: false
               },
-              custom_params: {
-                'G2938391118-POCLOUD': {
-                  utmZoneAdjust: null,
-                  mgrsBandAdjust: null
-                },
-                'G2938390924-POCLOUD': {
-                  utmZoneAdjust: null,
-                  mgrsBandAdjust: null
-                }
-              }
+              custom_params: {}
             }
           }
         }
