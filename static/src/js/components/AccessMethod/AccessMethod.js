@@ -1273,7 +1273,7 @@ export class AccessMethod extends Component {
                             type="radio"
                             id="granule-extent-128-by-128"
                             checked={!granuleExtent}
-                            onClick={
+                            onChange={
                               () => {
                                 this.handleGranuleExtent(false)
                               }
@@ -1287,7 +1287,7 @@ export class AccessMethod extends Component {
                             type="radio"
                             id="granule-extent-256-by-128"
                             checked={granuleExtent}
-                            onClick={
+                            onChange={
                               () => {
                                 this.handleGranuleExtent(true)
                               }
@@ -1323,7 +1323,7 @@ export class AccessMethod extends Component {
                             type="radio"
                             id="sample-grid-utm"
                             checked={sampleGrid === 'UTM'}
-                            onClick={
+                            onChange={
                               () => {
                                 this.handleSampleGrid('UTM')
                               }
@@ -1336,7 +1336,7 @@ export class AccessMethod extends Component {
                             type="radio"
                             id="sample-grid-lat-lon"
                             checked={sampleGrid === 'GEO'}
-                            onClick={
+                            onChange={
                               () => {
                                 this.handleSampleGrid('GEO')
                               }
@@ -1563,8 +1563,7 @@ AccessMethod.propTypes = {
   metadata: PropTypes.shape({
     conceptId: PropTypes.string,
     endDate: PropTypes.string,
-    startDate: PropTypes.string,
-    granules: []
+    startDate: PropTypes.string
   }),
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func,
