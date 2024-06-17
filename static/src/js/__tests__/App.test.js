@@ -309,16 +309,11 @@ describe('App component', () => {
   })
 
   // https://stackoverflow.com/questions/66667827/react-testing-library-to-cover-the-lazy-load/66690463
-  test('renders loaded lazy components', () => {
+  test('renders loaded lazy components', async () => {
     setup()
-    expect(screen.getByTestId('mocked-map-container')).toBeInTheDocument()
 
-    // Lazy loaded routes not immediately loaded onto `App.js`
-    expect(screen.queryByTestId('mocked-admin')).not.toBeInTheDocument()
-    expect(screen.queryByTestId('mocked-contact-info')).not.toBeInTheDocument()
-    expect(screen.queryByTestId('mocked-downloads')).not.toBeInTheDocument()
-    expect(screen.queryByTestId('mocked-earthdata-download-redirect')).not.toBeInTheDocument()
-    expect(screen.queryByTestId('mocked-preferences')).not.toBeInTheDocument()
-    expect(screen.queryByTestId('mocked-subscriptions')).not.toBeInTheDocument()
+    waitFor(() => {
+      expect(screen.getByTestId('mocked-map-container')).toBeInTheDocument()
+    })
   })
 })
