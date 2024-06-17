@@ -54,11 +54,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
 
       // Only process service types that EDSC supports
       const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony', 'swodlr']
-      if (!supportedServiceTypes.includes(serviceType.toLowerCase())) {
-        console.log('Unsupported service type called with: ', serviceType)
-
-        return
-      }
+      if (!supportedServiceTypes.includes(serviceType.toLowerCase())) return
 
       const { urlValue } = url
 
