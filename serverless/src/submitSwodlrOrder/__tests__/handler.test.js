@@ -73,7 +73,7 @@ describe('submitSwodlrOrder', () => {
             outputGranuleExtentFlag: false,
             outputSamplingGridType: 'UTM',
             rasterResolution: 200,
-            utmZoneAdjust: 0,
+            utmZoneAdjust: -1,
             mgrsBandAdjust: 1,
             status: [
               {
@@ -100,7 +100,7 @@ describe('submitSwodlrOrder', () => {
             outputGranuleExtentFlag: false,
             outputSamplingGridType: 'UTM',
             rasterResolution: 200,
-            utmZoneAdjust: 0,
+            utmZoneAdjust: -1,
             mgrsBandAdjust: 1,
             status: [
               {
@@ -134,11 +134,11 @@ describe('submitSwodlrOrder', () => {
               },
               custom_params: {
                 'G2938391118-POCLOUD': {
-                  utmZoneAdjust: 0,
+                  utmZoneAdjust: '-1',
                   mgrsBandAdjust: '1'
                 },
                 'G2938390924-POCLOUD': {
-                  utmZoneAdjust: 0,
+                  utmZoneAdjust: '-1',
                   mgrsBandAdjust: '1'
                 }
               }
@@ -179,11 +179,11 @@ describe('submitSwodlrOrder', () => {
               },
               custom_params: {
                 'G2938391118-POCLOUD': {
-                  utmZoneAdjust: 0,
+                  utmZoneAdjust: '-1',
                   mgrsBandAdjust: '1'
                 },
                 'G2938390924-POCLOUD': {
-                  utmZoneAdjust: 0,
+                  utmZoneAdjust: '-1',
                   mgrsBandAdjust: '1'
                 }
               }
