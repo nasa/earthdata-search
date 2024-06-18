@@ -59,8 +59,8 @@ export const constructOrderPayload = async ({
 
   // OGC uses duplicate parameter names for subsetting and the
   // standard javascript object will not support that so we need to use
-  // duplicate keys
   // the FormData object to avoid any language specific restrictions on
+  // duplicate keys
   const orderPayload = new FormData()
 
   orderPayload.append('forceAsync', 'true')
