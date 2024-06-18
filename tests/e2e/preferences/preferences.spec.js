@@ -73,12 +73,19 @@ test.describe('preferences', () => {
 
     await login(context)
 
-    await page.goto('/preferences')
+    await page.goto('/')
+    await page.getByLabel('User Menu').click()
+    await page.getByText('Preferences').click()
   })
 
   test.describe('preferences page', () => {
     test('loads the correct context', async ({ page }) => {
-      await expect(page.getByText('Preferences')).toBeVisible()
+      // TODO: preferences form resolves to field-set HTML elements which aren't being matched by roles
+      await expect(page.getByText('Collection Sort')).toBeVisible()
+      await expect(page.getByText('Granule Sort')).toBeVisible()
+      await expect(page.getByText('Panel State')).toBeVisible()
+      await expect(page.getByText('Collection List View')).toBeVisible()
+      await expect(page.getByText('Granule List View')).toBeVisible()
     })
   })
 })
