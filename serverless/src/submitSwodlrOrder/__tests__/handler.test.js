@@ -71,10 +71,10 @@ describe('submitSwodlrOrder', () => {
             pass: 514,
             scene: 87,
             outputGranuleExtentFlag: false,
-            outputSamplingGridType: 'GEO',
-            rasterResolution: 6,
-            utmZoneAdjust: null,
-            mgrsBandAdjust: null,
+            outputSamplingGridType: 'UTM',
+            rasterResolution: 200,
+            utmZoneAdjust: 0,
+            mgrsBandAdjust: 1,
             status: [
               {
                 id: 'dcb5e83f-6669-4fef-9d45-5296dcbef1c6',
@@ -98,10 +98,10 @@ describe('submitSwodlrOrder', () => {
             pass: 514,
             scene: 86,
             outputGranuleExtentFlag: false,
-            outputSamplingGridType: 'GEO',
-            rasterResolution: 6,
-            utmZoneAdjust: null,
-            mgrsBandAdjust: null,
+            outputSamplingGridType: 'UTM',
+            rasterResolution: 200,
+            utmZoneAdjust: 0,
+            mgrsBandAdjust: 1,
             status: [
               {
                 id: 'ccb5e83f-6669-4fef-9d45-5296dcbef1c6',
@@ -128,18 +128,18 @@ describe('submitSwodlrOrder', () => {
             type: 'SWODLR',
             swodlrData: {
               params: {
-                rasterResolution: 6,
-                outputSamplingGridType: 'GEO',
+                rasterResolution: 200,
+                outputSamplingGridType: 'UTM',
                 outputGranuleExtentFlag: false
               },
               custom_params: {
                 'G2938391118-POCLOUD': {
-                  utmZoneAdjust: null,
-                  mgrsBandAdjust: null
+                  utmZoneAdjust: 0,
+                  mgrsBandAdjust: '1'
                 },
                 'G2938390924-POCLOUD': {
-                  utmZoneAdjust: null,
-                  mgrsBandAdjust: null
+                  utmZoneAdjust: 0,
+                  mgrsBandAdjust: '1'
                 }
               }
             }
@@ -173,18 +173,18 @@ describe('submitSwodlrOrder', () => {
             type: 'SWODLR',
             swodlrData: {
               params: {
-                rasterResolution: 6,
-                outputSamplingGridType: 'GEO',
+                rasterResolution: 200,
+                outputSamplingGridType: 'UTM',
                 outputGranuleExtentFlag: false
               },
               custom_params: {
                 'G2938391118-POCLOUD': {
-                  utmZoneAdjust: null,
-                  mgrsBandAdjust: null
+                  utmZoneAdjust: 0,
+                  mgrsBandAdjust: '1'
                 },
                 'G2938390924-POCLOUD': {
-                  utmZoneAdjust: null,
-                  mgrsBandAdjust: null
+                  utmZoneAdjust: 0,
+                  mgrsBandAdjust: '1'
                 }
               }
             }
