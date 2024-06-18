@@ -50,14 +50,13 @@ const setup = (overrideProps) => {
     ...overrideProps
   }
 
-  const component = render(<AccessMethod {...props} />)
+  render(<AccessMethod {...props} />)
 
   return {
     onSelectAccessMethod,
     onSetActivePanel,
     onUpdateAccessMethod,
-    onTogglePanels,
-    component
+    onTogglePanels
   }
 }
 
@@ -1536,7 +1535,7 @@ describe('AccessMethod component', () => {
       const user = userEvent.setup()
 
       const collectionId = 'collectionId'
-      const { component, onUpdateAccessMethod } = setup({
+      const { onUpdateAccessMethod } = setup({
         accessMethods: {
           swodlr: {
             type: 'SWODLR',
@@ -1549,7 +1548,7 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'swodlr'
       })
 
-      const granuleExtent256Checkbox = component.container.querySelector('#granule-extent-256-by-128')
+      const granuleExtent256Checkbox = screen.getByRole('radio', { name: '256 x 128 km' })
       await user.click(granuleExtent256Checkbox)
 
       expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
@@ -1574,7 +1573,7 @@ describe('AccessMethod component', () => {
       const user = userEvent.setup()
 
       const collectionId = 'collectionId'
-      const { component, onUpdateAccessMethod } = setup({
+      const { onUpdateAccessMethod } = setup({
         accessMethods: {
           swodlr: {
             type: 'SWODLR',
@@ -1587,7 +1586,8 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'swodlr'
       })
 
-      const latLonCheckbox = component.container.querySelector('#sample-grid-lat-lon')
+      const latLonCheckbox = screen.getByRole('radio', { name: 'LAT/LON' })
+
       await user.click(latLonCheckbox)
 
       expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
