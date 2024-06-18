@@ -329,12 +329,6 @@ export class OrderStatusItem extends PureComponent {
         let totalNumber = 0
         let totalProcessed = 0
 
-        if (orders.length) {
-          const { order_information: orderInformation } = orders[0]
-          const { contactInformation = {} } = orderInformation;
-          ({ contactName, contactEmail } = contactInformation)
-        }
-
         orders.forEach((order) => {
           const {
             error,
