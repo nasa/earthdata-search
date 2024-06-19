@@ -135,6 +135,13 @@
 .mb-3 {
   white-space: nowrap;
 }
+.swodlr-advanced-options-container {
+  display: flex;
+}
+
+.swodlr-advanced-options-item {
+  flex: 1;
+}
 
 .table td, .table th {
   padding: .625rem;
