@@ -22,7 +22,8 @@ import * as ScrollArea from '@radix-ui/react-scroll-area'
 import {
   FaFileAlt,
   FaExternalLinkAlt,
-  FaQuestionCircle
+  FaQuestionCircle,
+  FaChevronDown
 } from 'react-icons/fa'
 
 import { pluralize } from '../../util/pluralize'
@@ -1414,7 +1415,10 @@ export class AccessMethod extends Component {
                       <Accordion>
                         <Card>
                           <Accordion.Toggle as={Card.Header} eventKey="0">
-                            Advanced options
+                            <div style={{ display: 'flex' }}>
+                              <div style={{ flex: '1' }}>Advanced options</div>
+                              <div><EDSCIcon icon={FaChevronDown} /></div>
+                            </div>
                           </Accordion.Toggle>
                           <Accordion.Collapse eventKey="0">
                             <Card.Body>
