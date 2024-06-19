@@ -131,3 +131,11 @@
 .nowrap {
   text-wrap: nowrap;
 }
+
+.mb-3 {
+  white-space: nowrap;
+}
+
+.table td, .table th {
+  padding: .625rem;
+}
