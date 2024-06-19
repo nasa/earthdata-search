@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import LoggerRequest from '../../../util/request/loggerRequest'
 import '@testing-library/jest-dom'
 
-import NotFound from '../NotFound'
+import ErrorBoundary from '../ErrorBoundary'
 
 jest.mock('uuid')
 uuidv4.mockImplementation(() => 'mock-request-id')
@@ -15,16 +15,22 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
+const ErroredComponent = () => {
+  throw new Error('Test error')
+}
+
 const setup = (props) => {
   act(() => {
     render(
-      <NotFound {...props} />
+      <ErrorBoundary {...props}>
+        <ErroredComponent />
+      </ErrorBoundary>
     )
   })
 }
 
-describe('NotFound component', () => {
-  test('should render the NotFound component', () => {
+describe('ErrorBoundary component', () => {
+  test('should render the ErrorBoundary component', () => {
     const appNode = document.createElement('div')
     appNode.id = 'app'
     document.body.appendChild(appNode)
@@ -34,53 +40,23 @@ describe('NotFound component', () => {
       .reply(200)
 
     const loggerMock = jest.spyOn(LoggerRequest.prototype, 'log')
+    setup()
+    expect(screen.getByRole('heading', { name: /We're sorry, but something went wrong./i })).toBeInTheDocument()
 
-    setup({
-      location: {
-        search: ''
-      }
-    })
-
-    expect(screen.getByRole('heading', { name: /Sorry! The page you were looking for does not exist./i })).toBeInTheDocument()
     expect(loggerMock).toBeCalledTimes(1)
-    expect(loggerMock).toHaveBeenCalledWith({
-      error: {
-        guid: 'mock-request-id',
-        message: '404 Not Found',
-        location: {
-          search: ''
-        }
-      }
-    })
-
     document.body.removeChild(appNode)
   })
 
   describe('render standalone', () => {
-    test('renders the notFound component', () => {
+    test('should render the ErrorBoundary component', () => {
       nock(/localhost/)
         .post(/error_logger/)
         .reply(200)
 
       const loggerMock = jest.spyOn(LoggerRequest.prototype, 'log')
-
-      setup({
-        location: {
-          search: ''
-        }
-      })
-
-      expect(screen.getByRole('heading', { name: /Sorry! The page you were looking for does not exist./i })).toBeInTheDocument()
+      setup()
+      expect(screen.getByRole('heading', { name: /We're sorry, but something went wrong./i })).toBeInTheDocument()
       expect(loggerMock).toBeCalledTimes(1)
-      expect(loggerMock).toHaveBeenCalledWith({
-        error: {
-          guid: 'mock-request-id',
-          message: '404 Not Found',
-          location: {
-            search: ''
-          }
-        }
-      })
     })
   })
 })

@@ -31,6 +31,7 @@ export const mapStateToProps = (state) => ({
   collectionsMetadata: getCollectionsMetadata(state),
   focusedCollectionId: getFocusedCollectionId(state),
   pathname: state.router.location.pathname,
+  search: state.router.location.search,
   projectCollectionsIds: getProjectCollectionsIds(state),
   temporalSearch: state.query.collection.temporal,
   timeline: state.timeline,
@@ -51,11 +52,13 @@ export const TimelineContainer = (props) => {
     onToggleOverrideTemporalModal,
     onMetricsTimeline,
     onToggleTimeline,
-    isOpen
+    isOpen,
+    search: searchLocation
   } = props
 
   // Determine the collectionMetadata the timeline should be displaying
-  const isProjectPage = isPath(pathname, ['/projects'])
+  // Ensure that timeline does not appear on the `Saved Projects` page
+  const isProjectPage = isPath(pathname, ['/projects']) && (searchLocation.length > 0)
   const isGranulesPage = isPath(pathname, ['/search/granules'])
 
   const collectionMetadata = {}
@@ -112,7 +115,8 @@ TimelineContainer.propTypes = {
   projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   temporalSearch: PropTypes.shape({}),
   timeline: PropTypes.shape({}).isRequired,
-  isOpen: PropTypes.bool.isRequired
+  isOpen: PropTypes.bool.isRequired,
+  search: PropTypes.string.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimelineContainer)
