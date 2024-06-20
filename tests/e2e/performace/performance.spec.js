@@ -40,9 +40,6 @@ test.describe('Performance Benchmarking', () => {
         })
       }))
 
-      await page.close({ runBeforeUnload: true })
-      await page.waitForTimeout(100)
-
       const paintTiming = JSON.parse(paintTimingJson)
       console.log('LCP:', Math.round(paintTiming), 'ms')
 
