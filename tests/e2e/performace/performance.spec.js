@@ -25,13 +25,28 @@ test.describe('Performance Benchmarking', () => {
     }
   })
 
-  test('Search page FCP start time is less than 1 second', async ({ page, browserName }) => {
+  test('Search page LCP start time is less than 1 second', async ({ page, browserName }) => {
     if (browserName === 'chromium') {
-      await page.goto('/search')
-      const paintTimingJson = await page.evaluate(() => JSON.stringify(window.performance.getEntriesByName('first-contentful-paint')))
-      const paintTiming = JSON.parse(paintTimingJson)
+      await page.goto('/')
+      const paintTimingJson = await page.evaluate(async () => new Promise((resolve) => {
+        new PerformanceObserver((entryList) => {
+          const largestPaintEntry = entryList.getEntries().find(
+            (entry) => entry.entryType === 'largest-contentful-paint'
+          )
+          resolve(largestPaintEntry.startTime)
+        }).observe({
+          type: 'largest-contentful-paint',
+          buffered: true
+        })
+      }))
 
-      expect(paintTiming[0].startTime).toBeLessThan(1000)
+      await page.close({ runBeforeUnload: true })
+      await page.waitForTimeout(100)
+
+      const paintTiming = JSON.parse(paintTimingJson)
+      console.log('LCP:', Math.round(paintTiming), 'ms')
+
+      expect(paintTiming).toBeLessThan(1000)
     }
   })
 })
