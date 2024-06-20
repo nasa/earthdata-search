@@ -117,8 +117,8 @@ const submitSwodlrOrder = async (event, context) => {
         } = params
 
         const {
-          utmZoneAdjust = null,
-          mgrsBandAdjust = null
+          utmZoneAdjust,
+          mgrsBandAdjust
         } = customParams[granuleConceptId]
 
         const variables = {
