@@ -35,7 +35,7 @@ import './OrderStatusItem.scss'
 /**
  * Renders OrderStatusItem.
  * @param {Object} arg0 - The props passed into the component.
- * @param {Boolean} arg0.defaultOpen - Sets the item open on intital render.
+ * @param {Boolean} arg0.defaultOpen - Sets the item open on initial render.
  * @param {String} arg0.earthdataEnvironment - The earthdata environment.
  * @param {Object} arg0.granuleDownload - granuleDownload state.
  * @param {Object} arg0.collection - The collection state.
@@ -87,7 +87,7 @@ export class OrderStatusItem extends PureComponent {
         }, orderStatusRefreshTime)
       }
 
-      // Fetch the granule browse links recardless of accessMethodType
+      // Fetch the granule browse links regardless of accessMethodType
       // download & opendap browse links return with the granule links, every other access method needs
       // to fetch them here
       onFetchRetrievalCollectionGranuleBrowseLinks(collection)
@@ -160,7 +160,7 @@ export class OrderStatusItem extends PureComponent {
       type = ''
     } = firstOrder
 
-    // If the order is Harmony iand isn't successful, don't show the EDD link
+    // If the order is Harmony and isn't successful, don't show the EDD link
     if (type.toLowerCase() === 'harmony' && state !== 'successful') return null
 
     const {

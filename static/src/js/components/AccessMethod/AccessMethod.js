@@ -1398,10 +1398,14 @@ export class AccessMethod extends Component {
                           {
                             sampleGrid === 'GEO'
                               ? geoRasterOptions.map((option) => (
-                                <option value={option.value} key={option.value}>{option.title}</option>
+                                <option value={option.value} key={option.value}>
+                                  {option.title}
+                                </option>
                               ))
                               : utmRasterOptions.map((option) => (
-                                <option value={option.value} key={option.value}>{option.title}</option>
+                                <option value={option.value} key={option.value}>
+                                  {option.title}
+                                </option>
                               ))
                           }
                         </Form.Control>
@@ -1415,9 +1419,11 @@ export class AccessMethod extends Component {
                       <Accordion>
                         <Card>
                           <Accordion.Toggle as={Card.Header} eventKey="0">
-                            <div style={{ display: 'flex' }}>
-                              <div style={{ flex: '1' }}>Advanced options</div>
-                              <div><EDSCIcon icon={FaChevronDown} /></div>
+                            <div className="swodlr-advanced-options-container">
+                              <div className="swodlr-advanced-options-item">
+                                Advanced options
+                              </div>
+                              <EDSCIcon icon={FaChevronDown} className="swodlr-advanced-options-icon" />
                             </div>
                           </Accordion.Toggle>
                           <Accordion.Collapse eventKey="0">
