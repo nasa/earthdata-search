@@ -339,11 +339,13 @@ export class OrderStatusItem extends PureComponent {
           const { reason, granules = [] } = orderInformation
 
           totalNumber += 1
+          totalOrders += 1
 
           if (state === 'complete') {
             granules.forEach((granule) => {
               const { uri } = granule
               downloadUrls.push(uri)
+              totalCompleteOrders += 1
             })
 
             totalProcessed += 1

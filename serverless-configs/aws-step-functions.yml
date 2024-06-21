@@ -57,6 +57,9 @@ stateMachines:
           Type: Choice
           Choices:
             - Variable: '$.orderStatus'
+              StringEquals: creating
+              Next: WaitForRetry
+            - Variable: '$.orderStatus'
               StringEquals: complete
               Next: OrderComplete
             - Variable: '$.orderStatus'

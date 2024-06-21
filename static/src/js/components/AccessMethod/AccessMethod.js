@@ -488,14 +488,17 @@ export class AccessMethod extends Component {
 
     const customParams = {}
 
-    if (sampleGrid === 'UTM') {
-      granuleList.forEach((granule) => {
-        const { id } = granule
-        customParams[id] = {}
-        customParams[id].utmZoneAdjust = !granule.utmZoneAdjust ? 0 : granule.utmZoneAdjust
-        customParams[id].mgrsBandAdjust = !granule.mgrsBandAdjust ? 0 : granule.mgrsBandAdjust
-      })
-    }
+    granuleList.forEach((granule) => {
+      const { id } = granule
+      customParams[id] = {}
+      if (sampleGrid === 'UTM') {
+        customParams[id].utmZoneAdjust = granule.utmZoneAdjust ? granule.utmZoneAdjust : 0
+        customParams[id].mgrsBandAdjust = granule.mgrsBandAdjust ? granule.mgrsBandAdjust : 0
+      } else {
+        customParams[id].utmZoneAdjust = null
+        customParams[id].mgrsBandAdjust = null
+      }
+    })
 
     onUpdateAccessMethod({
       collectionId,
