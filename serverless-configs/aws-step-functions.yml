@@ -22,7 +22,7 @@ stateMachines:
             - Variable: '$.orderType'
               StringEquals: 'Harmony'
               Next: FetchHarmonyOrderStatus
-            - Variables: '$.orderType'
+            - Variable: '$.orderType'
               StringEquals: 'SWODLR'
               Next: FetchSwodlrOrderStatus
         FetchCatalogRestOrderStatus:
