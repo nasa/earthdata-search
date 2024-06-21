@@ -67,6 +67,8 @@ jobs:
       run: npm ci
     - name: Copy secrets example file
       run: npm run copy-secrets
+    - name: Prepare for jest tests
+      run: npm run jest:prepare-ci
     - name: Run Jest tests
       run: npm run silent-test -- --shard=${{ matrix.shard }}
     - name: Upload coverage to codecov
