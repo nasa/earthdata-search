@@ -23,7 +23,7 @@ test.describe('Timeline spec', () => {
 
     const authHeaders = getAuthHeaders()
 
-    await page.route(/collections/, async (route) => {
+    await page.route(/collections$/, async (route) => {
       await route.fulfill({
         json: collectionFixture.body,
         headers: collectionFixture.headers
@@ -37,7 +37,7 @@ test.describe('Timeline spec', () => {
       })
     })
 
-    await page.route(/timeline/, async (route) => {
+    await page.route(/timeline$/, async (route) => {
       await route.fulfill({
         json: timeline.body,
         headers: authHeaders
@@ -72,7 +72,7 @@ test.describe('Timeline spec', () => {
       })
     })
 
-    await page.goto('/projects?p=!C1443528505-LAADS&sb=-77.15071678161621%2C38.78817179999825%2C-76.89801406860352%2C38.99784152603538&lat=37.64643450971326&long=-77.407470703125&zoom=7qt=2020-01-06T04%3A15%3A27.310Z%2C2020-01-13T07%3A32%3A50.962Z&ff=Map%20Imagery&tl=1563377338!4!!')
+    await page.goto('/projects?p=!C1443528505-LAADS&sb=-77.15071%2C38.78817%2C-76.89801%2C38.99784&lat=37.64643&long=-77.40747&zoom=7qt=2020-01-06T04%3A15%3A27.310Z%2C2020-01-13T07%3A32%3A50.962Z&ff=Map%20Imagery&tl=1563377338!4!!')
 
     // Click the back to search button
     await page.getByTestId('back-to-search-button').click()

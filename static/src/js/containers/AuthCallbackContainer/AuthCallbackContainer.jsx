@@ -83,7 +83,6 @@ export const AuthCallbackContainer = ({
 
     // Set the authToken cookie
     set('authToken', jwt)
-    console.log("🚀 ~ useEffect ~ jwt:", jwt)
 
     // Redirect the user to the correct location
     window.location.replace(redirect)
