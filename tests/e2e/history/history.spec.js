@@ -20,7 +20,7 @@ test.describe('History', () => {
   test.beforeEach(async ({ page, context }) => {
     const granuleHits = 1
 
-    await page.route(/collections/, async (route) => {
+    await page.route(/collections$/, async (route) => {
       await route.fulfill({
         json: collectionsSearchBody,
         headers: {
@@ -40,7 +40,7 @@ test.describe('History', () => {
       })
     })
 
-    await page.route(/timeline/, async (route) => {
+    await page.route(/timeline$/, async (route) => {
       await route.fulfill({
         json: timeline.body
       })

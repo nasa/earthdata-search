@@ -9,6 +9,7 @@ provider:
   endpointType: PRIVATE
   memorySize: 128
   environment:
+    NODE_ENV: development
     # Variables for new Encrypted database
     databaseEndpoint:
       Fn::ImportValue: ${self:provider.stage}-EncryptedDatabaseEndpoint

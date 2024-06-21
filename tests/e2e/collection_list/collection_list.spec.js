@@ -5,7 +5,7 @@ import singleCollection from './__mocks__/single_collection.json' with { type: '
 test.describe('Collection List Behavior', () => {
   test.beforeEach(async ({ page }) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route(/collections/, async (route) => {
+    await page.route(/collections.json/, async (route) => {
       await route.fulfill({
         json: singleCollection.body,
         headers: singleCollection.headers

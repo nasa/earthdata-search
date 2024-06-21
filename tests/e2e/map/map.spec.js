@@ -820,9 +820,9 @@ test.describe('Map interactions', () => {
 
         // Point
         const pointValues = {
-          chromium: 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 182px, 0px); z-index: 182; outline: none;',
-          firefox: 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 182px, 0px); z-index: 182; outline: none;',
-          webkit: 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 182px, 0px); z-index: 182; outline: currentcolor;'
+          chromium: 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 182px, 0px); z-index: 182; outline-style: none;',
+          firefox: 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 182px, 0px); z-index: 182; outline-style: none;',
+          webkit: 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 182px, 0px); z-index: 182; outline-style: none;'
         }
         await expect(page.locator('.leaflet-marker-icon.leaflet-interactive').nth(0)).toHaveAttribute('style', pointValues[browser])
 
@@ -1413,7 +1413,7 @@ test.describe('Map interactions', () => {
           })
         })
 
-        await page.route(/autocomplete/, async (route) => {
+        await page.route(/autocomplete$/, async (route) => {
           await route.fulfill({
             json: { feed: { entry: [] } }
           })
@@ -1599,7 +1599,7 @@ test.describe('Map interactions', () => {
           })
         })
 
-        await page.route(/autocomplete/, async (route) => {
+        await page.route(/autocomplete$/, async (route) => {
           await route.fulfill({
             json: { feed: { entry: [] } }
           })
@@ -1668,7 +1668,7 @@ test.describe('Map interactions', () => {
         }
       })
 
-      await page.route(/autocomplete/, async (route) => {
+      await page.route(/autocomplete$/, async (route) => {
         await route.fulfill({
           json: { feed: { entry: [] } }
         })
