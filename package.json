@@ -33,6 +33,7 @@
     "silent-test": "NODE_OPTIONS=--max-old-space-size=8192 jest --silent",
     "test:watch": "NODE_OPTIONS=--max-old-space-size=6144 jest --watchAll",
     "test:watch-lite": "jest --watchAll --collectCoverageFrom='' --coverage=true",
+    "jest:prepare-ci": "bin/cypress-prepare-ci",
     "start:ci": "vite preview --port 8080",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run -c video=false",
