@@ -1,6 +1,7 @@
+import { defineConfig } from 'cypress'
 import vitePreprocessor from 'cypress-vite'
 
-export default ({
+export default defineConfig({
   viewportWidth: 1400,
   viewportHeight: 900,
   fixturesFolder: 'cypress/fixtures',
@@ -13,9 +14,7 @@ export default ({
   },
   e2e: {
     setupNodeEvents(on) {
-      on('file:preprocessor', vitePreprocessor({ configFile: false }))
-    },
-    baseUrl: 'http://localhost:8080',
-    specPattern: 'cypress/e2e/**/*.cy.js'
+      on('file:preprocessor', vitePreprocessor())
+    }
   }
 })
