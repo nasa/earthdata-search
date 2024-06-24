@@ -14,7 +14,15 @@ export default defineConfig({
   },
   e2e: {
     setupNodeEvents(on) {
-      on('file:preprocessor', vitePreprocessor())
+      on('file:preprocessor', vitePreprocessor({
+        build: {
+          rollupOptions: {
+            output: {
+              format: 'es'
+            }
+          }
+        }
+      }))
     }
   }
 })
