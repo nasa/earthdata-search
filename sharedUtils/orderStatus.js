@@ -4,8 +4,7 @@ export const orderStates = {
   canceled: [
     'canceled',
     'cancelled',
-    'cancelling',
-    'unavailable'
+    'cancelling'
   ],
   complete: [
     'ready',
@@ -24,7 +23,8 @@ export const orderStates = {
     'quote_failed',
     'quote_rejected',
     'submit_failed',
-    'submit_rejected'
+    'submit_rejected',
+    'unavailable'
   ],
   in_progress: [
     'accepted',

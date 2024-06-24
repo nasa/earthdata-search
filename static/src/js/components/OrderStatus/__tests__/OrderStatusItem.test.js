@@ -2131,7 +2131,7 @@ describe('OrderStatusItem', () => {
 
   describe('Swodlr', () => {
     describe('when the order created', () => {
-      test.only('renders creating state', () => {
+      test('renders creating state', () => {
         const { enzymeWrapper, props } = setup({
           type: 'SWODLR',
           collection: {
@@ -2179,7 +2179,6 @@ describe('OrderStatusItem', () => {
         expect(body.find(ProgressRing).props().progress).toEqual(0)
         expect(body.find('.order-status-item__status').text()).toEqual('Creating')
         expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        console.log(enzymeWrapper.debug())
 
         expect(body.find('.order-status-item__orders-processed').text()).toEqual('0/1 orders complete')
         expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('SWODLR')
@@ -2197,14 +2196,13 @@ describe('OrderStatusItem', () => {
         expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
 
         const orderStatusTab = tabs.childAt(1)
-        console.log(enzymeWrapper.debug())
         expect(orderStatusTab.props().title).toEqual('Order Status')
         expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
     })
 
     describe('when the order is submitted', () => {
-      test.only('renders in progress state', () => {
+      test('renders in progress state', () => {
         const { enzymeWrapper, props } = setup({
           type: 'SWODLR',
           collection: {
@@ -2276,10 +2274,10 @@ describe('OrderStatusItem', () => {
     })
 
     describe('when the order is in progress', () => {
-      test.skip('renders an updated progress state', () => {
+      test('renders an updated progress state', () => {
         // TODO make sure type field is right
         const { enzymeWrapper, props } = setup({
-          type: 'Swodlr',
+          type: 'SWODLR',
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -2297,43 +2295,18 @@ describe('OrderStatusItem', () => {
               state: 'available',
               order_information: {
                 jobID: 'e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
-                links: [
-                  {
-                    rel: 'self',
-                    href: 'https://harmony.uat.earthdata.nasa.gov/jobs/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
-                    type: 'application/json',
-                    title: 'Job Status'
-                  },
-                  {
-                    title: 'STAC catalog',
-                    href: 'https://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/',
-                    rel: 'stac-catalog-json',
-                    type: 'application/json'
-                  },
-                  {
-                    href: 'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png',
-                    title: 'G1233800390-EEDTEST',
-                    type: 'image/png',
-                    rel: 'data',
-                    bbox: [
-                      -180,
-                      64.2,
-                      -169.6,
-                      71.6
-                    ],
-                    temporal: {
-                      start: '2020-01-06T08:00:00.000Z',
-                      end: '2020-01-06T09:59:59.000Z'
-                    }
-                  }
-                ],
                 status: 'running',
                 message: 'CMR query identified 51 granules.',
-                request: 'https://harmony.uat.earthdata.nasa.gov/C1233800302-EEDTEST/ogc-api-coverages/1.0.0/collections/all/coverage/rangeset?forceAsync=true&granuleIds=G1233800432-EEDTEST%2CG1233800431-EEDTEST%2CG1233800430-EEDTEST%2CG1233800429-EEDTEST%2CG1233800428-EEDTEST%2CG1233800427-EEDTEST%2CG1233800426-EEDTEST%2CG1233800513-EEDTEST%2CG1233800512-EEDTEST%2CG1233800425-EEDTEST%2CG1233800424-EEDTEST%2CG1233800423-EEDTEST%2CG1233800422-EEDTEST%2CG1233800421-EEDTEST%2CG1233800420-EEDTEST%2CG1233800419-EEDTEST%2CG1233800418-EEDTEST%2CG1233800417-EEDTEST%2CG1233800511-EEDTEST%2CG1233800510-EEDTEST%2CG1233800416-EEDTEST%2CG1233800415-EEDTEST%2CG1233800414-EEDTEST%2CG1233800413-EEDTEST%2CG1233800412-EEDTEST%2CG1233800411-EEDTEST%2CG1233800410-EEDTEST%2CG1233800409-EEDTEST%2CG1233800408-EEDTEST%2CG1233800509-EEDTEST%2CG1233800508-EEDTEST%2CG1233800407-EEDTEST%2CG1233800406-EEDTEST%2CG1233800405-EEDTEST%2CG1233800404-EEDTEST%2CG1233800403-EEDTEST%2CG1233800402-EEDTEST%2CG1233800401-EEDTEST%2CG1233800400-EEDTEST%2CG1233800399-EEDTEST%2CG1233800507-EEDTEST%2CG1233800506-EEDTEST%2CG1233800398-EEDTEST%2CG1233800397-EEDTEST%2CG1233800396-EEDTEST%2CG1233800395-EEDTEST%2CG1233800394-EEDTEST%2CG1233800393-EEDTEST%2CG1233800392-EEDTEST%2CG1233800391-EEDTEST%2CG1233800390-EEDTEST&subset=time(%222020-01-06T08%3A18%3A35.096Z%22%3A%222020-01-10T20%3A38%3A58.262Z%22)&format=image%2Fpng&outputCrs=EPSG%3A4326',
-                progress: 90,
+                productId: '714cbd4d-2733-4ba0-85ac-b42a4aa4a1dc',
+                granules: [{
+                  id: '22be8568-d7a7-460b-9b4a-d560b5688da2',
+                  uri: 'https://archive.swot.podaac.earthdata.nasa.gov/podaac-swot-ops-swodlr-protected/L2_HR_Raster/714cbd4d-2733-4ba0-85ac-b42a4aa4a1dc/1718399955/SWOT_L2_HR_Raster_1000m_UTM11Q_N_x_x_x_007_121_100F_20231127T173107_20231127T173121_DIC0_01.nc',
+                  timestamp: '2024-06-14T21:19:21.025'
+                }],
                 username: 'edlusername',
                 createdAt: '2020-09-10T13:50:22.372Z',
-                updatedAt: '2020-09-10T13:50:22.372Z'
+                updatedAt: '2020-09-10T13:50:22.372Z',
+                error: 'Variable subsetting failed with error: HTTP Error 400: Bad Request.'
               }
             }],
             isLoaded: true
@@ -2345,9 +2318,9 @@ describe('OrderStatusItem', () => {
         expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
 
         const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(90)
+        expect(header.find(ProgressRing).props().progress).toEqual(0)
         expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(90%)')
+        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
         expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
 
         let body = enzymeWrapper.find('.order-status-item__body')
@@ -2356,35 +2329,36 @@ describe('OrderStatusItem', () => {
         // Expand the body
         enzymeWrapper.find('.order-status-item__button').simulate('click')
 
-        expect(header.find(ProgressRing).props().progress).toEqual(90)
+        expect(header.find(ProgressRing).props().progress).toEqual(0)
         expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(90%)')
+        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
         expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
 
         body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(90)
+        expect(body.find(ProgressRing).props().progress).toEqual(0)
         expect(body.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(90%)')
+        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
 
         expect(body.find('.order-status-item__orders-processed').text()).toEqual('0/1 orders complete')
         expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('SWODLR')
         expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('10 Granules')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are currently processing. Once processing is finished, links will be displayed below and sent to the email you\'ve provided.')
+        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are currently being generated. Once generation is finished, links will be displayed below and sent to the email you\'ve provided.')
         expect(body.find('.order-status-item__additional-info').text()).toEqual('')
 
         const tabs = body.find('EDSCTabs')
         expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
+
         expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([
-          'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
-        ])
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(10)
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
 
         // TODO: edd link?
-        expect(linksTab.childAt(0).props().eddLink).toEqual(null)
+        expect(linksTab.childAt(0).props().eddLink).toEqual(
+          'earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3Dundefined%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=undefined&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback'
+        )
 
         const orderStatusTab = tabs.childAt(1)
         expect(orderStatusTab.props().title).toEqual('Order Status')
@@ -2394,62 +2368,34 @@ describe('OrderStatusItem', () => {
 
     describe('when the order is in complete', () => {
       test('renders an updated progress state', () => {
+        // TODO make sure type field is right
         const { enzymeWrapper, props } = setup({
-          type: 'harmony',
+          type: 'SWODLR',
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
-            retrieval_collection_id: '42',
             retrieval_id: '54',
             collection_metadata: {
               id: 'TEST_COLLECTION_111',
-              title: 'Test Dataset ID',
-              shortName: 'testDataset',
-              versionId: '1'
+              title: 'Test Dataset ID'
             },
             access_method: {
-              type: 'Harmony'
+              type: 'SWODLR'
             },
-            granule_count: 100,
+            granule_count: 1,
             orders: [{
-              type: 'Harmony',
-              state: 'successful',
+              type: 'SWODLR',
+              state: 'complete',
               order_information: {
                 jobID: 'e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
-                links: [
-                  {
-                    rel: 'self',
-                    href: 'https://harmony.uat.earthdata.nasa.gov/jobs/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
-                    type: 'application/json',
-                    title: 'Job Status'
-                  },
-                  {
-                    title: 'STAC catalog',
-                    href: 'https://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/',
-                    rel: 'stac-catalog-json',
-                    type: 'application/json'
-                  },
-                  {
-                    href: 'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png',
-                    title: 'G1233800390-EEDTEST',
-                    type: 'image/png',
-                    rel: 'data',
-                    bbox: [
-                      -180,
-                      64.2,
-                      -169.6,
-                      71.6
-                    ],
-                    temporal: {
-                      start: '2020-01-06T08:00:00.000Z',
-                      end: '2020-01-06T09:59:59.000Z'
-                    }
-                  }
-                ],
-                status: 'successful',
+                status: 'complete',
                 message: 'CMR query identified 51 granules.',
-                request: 'https://harmony.uat.earthdata.nasa.gov/C1233800302-EEDTEST/ogc-api-coverages/1.0.0/collections/all/coverage/rangeset?forceAsync=true&granuleIds=G1233800432-EEDTEST%2CG1233800431-EEDTEST%2CG1233800430-EEDTEST%2CG1233800429-EEDTEST%2CG1233800428-EEDTEST%2CG1233800427-EEDTEST%2CG1233800426-EEDTEST%2CG1233800513-EEDTEST%2CG1233800512-EEDTEST%2CG1233800425-EEDTEST%2CG1233800424-EEDTEST%2CG1233800423-EEDTEST%2CG1233800422-EEDTEST%2CG1233800421-EEDTEST%2CG1233800420-EEDTEST%2CG1233800419-EEDTEST%2CG1233800418-EEDTEST%2CG1233800417-EEDTEST%2CG1233800511-EEDTEST%2CG1233800510-EEDTEST%2CG1233800416-EEDTEST%2CG1233800415-EEDTEST%2CG1233800414-EEDTEST%2CG1233800413-EEDTEST%2CG1233800412-EEDTEST%2CG1233800411-EEDTEST%2CG1233800410-EEDTEST%2CG1233800409-EEDTEST%2CG1233800408-EEDTEST%2CG1233800509-EEDTEST%2CG1233800508-EEDTEST%2CG1233800407-EEDTEST%2CG1233800406-EEDTEST%2CG1233800405-EEDTEST%2CG1233800404-EEDTEST%2CG1233800403-EEDTEST%2CG1233800402-EEDTEST%2CG1233800401-EEDTEST%2CG1233800400-EEDTEST%2CG1233800399-EEDTEST%2CG1233800507-EEDTEST%2CG1233800506-EEDTEST%2CG1233800398-EEDTEST%2CG1233800397-EEDTEST%2CG1233800396-EEDTEST%2CG1233800395-EEDTEST%2CG1233800394-EEDTEST%2CG1233800393-EEDTEST%2CG1233800392-EEDTEST%2CG1233800391-EEDTEST%2CG1233800390-EEDTEST&subset=time(%222020-01-06T08%3A18%3A35.096Z%22%3A%222020-01-10T20%3A38%3A58.262Z%22)&format=image%2Fpng&outputCrs=EPSG%3A4326',
-                progress: 100,
+                productId: '714cbd4d-2733-4ba0-85ac-b42a4aa4a1dc',
+                granules: [{
+                  id: '22be8568-d7a7-460b-9b4a-d560b5688da2',
+                  uri: 'https://archive.swot.podaac.earthdata.nasa.gov/podaac-swot-ops-swodlr-protected/L2_HR_Raster/714cbd4d-2733-4ba0-85ac-b42a4aa4a1dc/1718399955/SWOT_L2_HR_Raster_1000m_UTM11Q_N_x_x_x_007_121_100F_20231127T173107_20231127T173121_DIC0_01.nc',
+                  timestamp: '2024-06-14T21:19:21.025'
+                }],
                 username: 'edlusername',
                 createdAt: '2020-09-10T13:50:22.372Z',
                 updatedAt: '2020-09-10T13:50:22.372Z'
@@ -2467,7 +2413,7 @@ describe('OrderStatusItem', () => {
         expect(header.find(ProgressRing).props().progress).toEqual(100)
         expect(header.find('.order-status-item__status').text()).toEqual('Complete')
         expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
 
         let body = enzymeWrapper.find('.order-status-item__body')
         expect(body.length).toBe(0)
@@ -2478,7 +2424,7 @@ describe('OrderStatusItem', () => {
         expect(header.find(ProgressRing).props().progress).toEqual(100)
         expect(header.find('.order-status-item__status').text()).toEqual('Complete')
         expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
 
         body = enzymeWrapper.find('.order-status-item__body')
         expect(body.find(ProgressRing).props().progress).toEqual(100)
@@ -2486,32 +2432,27 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
 
         expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Harmony')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('SWODLR')
+        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('1 Granule')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are done processing and are available for download.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:CMR query identified 51 granules.')
+        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders have been generated and are available for download.')
+        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
 
         const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(3)
+        expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
 
         expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(1)
         expect(linksTab.childAt(0).props().downloadLinks).toEqual([
-          'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
+          'https://archive.swot.podaac.earthdata.nasa.gov/podaac-swot-ops-swodlr-protected/L2_HR_Raster/714cbd4d-2733-4ba0-85ac-b42a4aa4a1dc/1718399955/SWOT_L2_HR_Raster_1000m_UTM11Q_N_x_x_x_007_121_100F_20231127T173107_20231127T173121_DIC0_01.nc'
         ])
 
-        expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=testDataset_1&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
+        // TODO: edd link?
+        expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3Dundefined%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=undefined&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
 
-        const stacLinksTab = tabs.childAt(1)
-        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([
-          'https://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/'
-        ])
-
-        const orderStatusTab = tabs.childAt(2)
+        const orderStatusTab = tabs.childAt(1)
         expect(orderStatusTab.props().title).toEqual('Order Status')
         expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
@@ -2520,7 +2461,7 @@ describe('OrderStatusItem', () => {
     describe('when the order failed', () => {
       test('renders an updated progress state', () => {
         const { enzymeWrapper, props } = setup({
-          type: 'harmony',
+          type: 'SWODLR',
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -2530,25 +2471,17 @@ describe('OrderStatusItem', () => {
               title: 'Test Dataset ID'
             },
             access_method: {
-              type: 'Harmony'
+              type: 'SWODLR'
             },
-            granule_count: 100,
+            granule_count: 10,
             orders: [{
               state: 'failed',
               order_information: {
                 jobID: 'e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
-                links: [
-                  {
-                    rel: 'self',
-                    href: 'https://harmony.uat.earthdata.nasa.gov/jobs/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
-                    type: 'application/json',
-                    title: 'Job Status'
-                  }
-                ],
+                reason: 'SDS job failed - please contact support',
+                granules: [],
+                productId: '6980916a-fdfd-49d1-a2ee-98d838be6314',
                 status: 'failed',
-                message: 'Variable subsetting failed with error: HTTP Error 400: Bad Request.',
-                request: 'https://harmony.uat.earthdata.nasa.gov/C1233800302-EEDTEST/ogc-api-coverages/1.0.0/collections/all/coverage/rangeset?forceAsync=true&granuleIds=G1233800432-EEDTEST%2CG1233800431-EEDTEST%2CG1233800430-EEDTEST%2CG1233800429-EEDTEST%2CG1233800428-EEDTEST%2CG1233800427-EEDTEST%2CG1233800426-EEDTEST%2CG1233800513-EEDTEST%2CG1233800512-EEDTEST%2CG1233800425-EEDTEST%2CG1233800424-EEDTEST%2CG1233800423-EEDTEST%2CG1233800422-EEDTEST%2CG1233800421-EEDTEST%2CG1233800420-EEDTEST%2CG1233800419-EEDTEST%2CG1233800418-EEDTEST%2CG1233800417-EEDTEST%2CG1233800511-EEDTEST%2CG1233800510-EEDTEST%2CG1233800416-EEDTEST%2CG1233800415-EEDTEST%2CG1233800414-EEDTEST%2CG1233800413-EEDTEST%2CG1233800412-EEDTEST%2CG1233800411-EEDTEST%2CG1233800410-EEDTEST%2CG1233800409-EEDTEST%2CG1233800408-EEDTEST%2CG1233800509-EEDTEST%2CG1233800508-EEDTEST%2CG1233800407-EEDTEST%2CG1233800406-EEDTEST%2CG1233800405-EEDTEST%2CG1233800404-EEDTEST%2CG1233800403-EEDTEST%2CG1233800402-EEDTEST%2CG1233800401-EEDTEST%2CG1233800400-EEDTEST%2CG1233800399-EEDTEST%2CG1233800507-EEDTEST%2CG1233800506-EEDTEST%2CG1233800398-EEDTEST%2CG1233800397-EEDTEST%2CG1233800396-EEDTEST%2CG1233800395-EEDTEST%2CG1233800394-EEDTEST%2CG1233800393-EEDTEST%2CG1233800392-EEDTEST%2CG1233800391-EEDTEST%2CG1233800390-EEDTEST&subset=time(%222020-01-06T08%3A18%3A35.096Z%22%3A%222020-01-10T20%3A38%3A58.262Z%22)&format=image%2Fpng&outputCrs=EPSG%3A4326',
-                progress: 0,
                 username: 'edlusername',
                 createdAt: '2020-09-10T13:50:22.372Z',
                 updatedAt: '2020-09-10T13:50:22.372Z'
@@ -2563,102 +2496,10 @@ describe('OrderStatusItem', () => {
         expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(true)
 
         const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
-
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
-
-        // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
-
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
-
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(100)
-        expect(body.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
-
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Harmony')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
-
-        expect(body.find('.order-status-item__order-info').text()).toEqual('The order has failed processing.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:Variable subsetting failed with error: HTTP Error 400: Bad Request.')
-
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(3)
-
-        const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
-
-        const stacLinksTab = tabs.childAt(1)
-        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([])
-
-        const orderStatusTab = tabs.childAt(2)
-        expect(orderStatusTab.props().title).toEqual('Order Status')
-        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
-      })
-    })
-
-    describe('when the order is canceled', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper, props } = setup({
-          type: 'harmony',
-          collection: {
-            id: 1,
-            collection_id: 'TEST_COLLECTION_111',
-            retrieval_id: '54',
-            collection_metadata: {
-              id: 'TEST_COLLECTION_111',
-              title: 'Test Dataset ID'
-            },
-            access_method: {
-              type: 'Harmony'
-            },
-            granule_count: 100,
-            orders: [{
-              state: 'canceled',
-              order_information: {
-                jobID: 'e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
-                links: [
-                  {
-                    rel: 'self',
-                    href: 'https://harmony.uat.earthdata.nasa.gov/jobs/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
-                    type: 'application/json',
-                    title: 'Job Status'
-                  }
-                ],
-                status: 'canceled',
-                message: 'Canceled by user.',
-                request: 'https://harmony.uat.earthdata.nasa.gov/C1233800302-EEDTEST/ogc-api-coverages/1.0.0/collections/all/coverage/rangeset?forceAsync=true&granuleIds=G1233800432-EEDTEST%2CG1233800431-EEDTEST%2CG1233800430-EEDTEST%2CG1233800429-EEDTEST%2CG1233800428-EEDTEST%2CG1233800427-EEDTEST%2CG1233800426-EEDTEST%2CG1233800513-EEDTEST%2CG1233800512-EEDTEST%2CG1233800425-EEDTEST%2CG1233800424-EEDTEST%2CG1233800423-EEDTEST%2CG1233800422-EEDTEST%2CG1233800421-EEDTEST%2CG1233800420-EEDTEST%2CG1233800419-EEDTEST%2CG1233800418-EEDTEST%2CG1233800417-EEDTEST%2CG1233800511-EEDTEST%2CG1233800510-EEDTEST%2CG1233800416-EEDTEST%2CG1233800415-EEDTEST%2CG1233800414-EEDTEST%2CG1233800413-EEDTEST%2CG1233800412-EEDTEST%2CG1233800411-EEDTEST%2CG1233800410-EEDTEST%2CG1233800409-EEDTEST%2CG1233800408-EEDTEST%2CG1233800509-EEDTEST%2CG1233800508-EEDTEST%2CG1233800407-EEDTEST%2CG1233800406-EEDTEST%2CG1233800405-EEDTEST%2CG1233800404-EEDTEST%2CG1233800403-EEDTEST%2CG1233800402-EEDTEST%2CG1233800401-EEDTEST%2CG1233800400-EEDTEST%2CG1233800399-EEDTEST%2CG1233800507-EEDTEST%2CG1233800506-EEDTEST%2CG1233800398-EEDTEST%2CG1233800397-EEDTEST%2CG1233800396-EEDTEST%2CG1233800395-EEDTEST%2CG1233800394-EEDTEST%2CG1233800393-EEDTEST%2CG1233800392-EEDTEST%2CG1233800391-EEDTEST%2CG1233800390-EEDTEST&subset=time(%222020-01-06T08%3A18%3A35.096Z%22%3A%222020-01-10T20%3A38%3A58.262Z%22)&format=image%2Fpng&outputCrs=EPSG%3A4326',
-                progress: 0,
-                username: 'edlusername',
-                createdAt: '2020-09-10T13:50:22.372Z',
-                updatedAt: '2020-09-10T13:50:22.372Z'
-              }
-            }],
-            isLoaded: true
-          }
-        })
-
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--canceled')).toEqual(true)
-
-        const header = enzymeWrapper.find('.order-status-item__header')
         expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Canceled')
+        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
         expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
 
         let body = enzymeWrapper.find('.order-status-item__body')
         expect(body.length).toBe(0)
@@ -2667,35 +2508,31 @@ describe('OrderStatusItem', () => {
         enzymeWrapper.find('.order-status-item__button').simulate('click')
 
         expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Canceled')
+        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
         expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
 
         body = enzymeWrapper.find('.order-status-item__body')
         expect(body.find(ProgressRing).props().progress).toEqual(0)
-        expect(body.find('.order-status-item__status').text()).toEqual('Canceled')
+        expect(body.find('.order-status-item__status').text()).toEqual('Failed')
         expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Harmony')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        expect(body.find('.order-status-item__orders-processed').text()).toEqual('0/1 orders complete')
+        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('SWODLR')
+        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('10 Granules')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('The order has been canceled.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:Canceled by user.')
+        expect(body.find('.order-status-item__order-info').text()).toEqual('The order has failed.')
+        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:SDS job failed - please contact support')
 
         const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(3)
+        expect(tabs.children().length).toEqual(2)
 
         const linksTab = tabs.childAt(0)
         expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(10)
         expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
 
-        const stacLinksTab = tabs.childAt(1)
-        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([])
-
-        const orderStatusTab = tabs.childAt(2)
+        const orderStatusTab = tabs.childAt(1)
         expect(orderStatusTab.props().title).toEqual('Order Status')
         expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
