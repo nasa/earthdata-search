@@ -64,7 +64,9 @@ export class AccessMethod extends Component {
       accessMethods,
       selectedAccessMethod,
       temporal,
-      spatial
+      spatial,
+      projectCollection,
+      granuleMetadata
     } = props
 
     const { isRecurring } = temporal
@@ -198,7 +200,28 @@ export class AccessMethod extends Component {
       }
     ]
 
+    const {
+      granules: projectCollectionGranules = {}
+    } = projectCollection
+
+    const {
+      addedGranuleIds = [],
+      allIds: granulesAllIds = []
+    } = projectCollectionGranules
+
+    let granulesToDisplay = []
+
+    if (addedGranuleIds.length > 0) {
+      granulesToDisplay = addedGranuleIds
+    } else {
+      granulesToDisplay = granulesAllIds.slice(0, 10)
+    }
+
     const granuleList = []
+
+    granulesToDisplay.forEach((id) => {
+      granuleList.push(granuleMetadata[id])
+    })
 
     this.state = {
       enableTemporalSubsetting,
@@ -1422,7 +1445,7 @@ export class AccessMethod extends Component {
                       <Accordion>
                         <Card>
                           <Accordion.Toggle as={Card.Header} eventKey="0">
-                            <div className="swodlr-advanced-options-container">
+                            <div data-testid="advancedOptionsToggle" className="swodlr-advanced-options-container">
                               <div className="swodlr-advanced-options-item">
                                 Advanced options
                               </div>
@@ -1478,7 +1501,7 @@ export class AccessMethod extends Component {
                                             label="+1"
                                             name={`${granule.id}-UTM-zone`}
                                             type="radio"
-                                            id={`${granule.id}-plus-1-UTM-zone`}
+                                            data-testid={`${granule.id}-plus-1-UTM-zone`}
                                             value={1}
                                             onChange={
                                               (e) => {
@@ -1491,7 +1514,7 @@ export class AccessMethod extends Component {
                                             label="0"
                                             name={`${granule.id}-UTM-zone`}
                                             type="radio"
-                                            id={`${granule.id}-0-UTM-zone`}
+                                            data-testid={`${granule.id}-0-UTM-zone`}
                                             value={0}
                                             defaultChecked
                                             onChange={
@@ -1505,7 +1528,7 @@ export class AccessMethod extends Component {
                                             label="-1"
                                             name={`${granule.id}-UTM-zone`}
                                             type="radio"
-                                            id={`${granule.id}-minus-1-UTM-zone`}
+                                            data-testid={`${granule.id}-minus-1-UTM-zone`}
                                             value={-1}
                                             onChange={
                                               (e) => {
@@ -1520,7 +1543,7 @@ export class AccessMethod extends Component {
                                             label="+1"
                                             name={`${granule.id}-MGRS-band`}
                                             type="radio"
-                                            id={`${granule.id}-plus-1-MGRS-band`}
+                                            data-testid={`${granule.id}-plus-1-MGRS-band`}
                                             value={1}
                                             onChange={
                                               (e) => {
@@ -1533,7 +1556,7 @@ export class AccessMethod extends Component {
                                             label="0"
                                             name={`${granule.id}-MGRS-band`}
                                             type="radio"
-                                            id={`${granule.id}-0-MGRS-band`}
+                                            data-testid={`${granule.id}-0-MGRS-band`}
                                             value={0}
                                             defaultChecked
                                             onChange={
@@ -1547,7 +1570,7 @@ export class AccessMethod extends Component {
                                             label="-1"
                                             name={`${granule.id}-MGRS-band`}
                                             type="radio"
-                                            id={`${granule.id}-minus-1-MGRS-band`}
+                                            data-testid={`${granule.id}-minus-1-MGRS-band`}
                                             value={-1}
                                             onChange={
                                               (e) => {

@@ -1607,5 +1607,75 @@ describe('AccessMethod component', () => {
         }
       })
     })
+
+    test.only('can update individual granules MGRS band and UTM Zone Adjust', async () => {
+      const user = userEvent.setup()
+
+      const collectionId = 'collectionId'
+      const { onUpdateAccessMethod } = setup({
+        accessMethods: {
+          swodlr: {
+            type: 'SWODLR',
+            supportsSwodlr: true
+          }
+        },
+        metadata: {
+          conceptId: collectionId
+        },
+        selectedAccessMethod: 'swodlr',
+        granuleMetadata: {
+          'G1261369123-POCLOUD': {
+            value: 'test',
+            id: 'G1261369123-POCLOUD'
+          },
+          'G1261369376-POCLOUD': {
+            value: 'test',
+            id: 'G1261369376-POCLOUD'
+          },
+        },
+        projectCollection: {
+          granules: {
+            addedGranuleIds: [
+              'G1261369123-POCLOUD',
+              'G1261369376-POCLOUD'
+            ]
+          }
+        }
+      })
+
+      const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
+      await user.click(advancedOptionsToggleButton)
+
+      const firstGranuleUTMZonePlusOne = screen.getByTestId('G1261369123-POCLOUD-plus-1-UTM-zone')
+      user.click(firstGranuleUTMZonePlusOne)
+
+      waitFor(() => expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1))
+
+      waitFor(() => expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+        collectionId: 'collectionId',
+        method: {
+          swodlr: {
+            json_data: {
+              params: {
+                rasterResolution: 90,
+                outputSamplingGridType: 'UTM',
+                outputGranuleExtentFlag: true
+              },
+              custom_params: {
+                'G1261369123-POCLOUD': {
+                  utmZoneAdjust: 1,
+                  mgrsBandAdjust: 0
+                },
+                'G1261369376-POCLOUD': {
+                  utmZoneAdjust: 0,
+                  mgrsBandAdjust: 0
+                }
+              }
+            }
+          }
+        }
+      })
+      )
+    })
   })
 })
