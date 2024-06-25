@@ -1631,7 +1631,7 @@ describe('AccessMethod component', () => {
           'G1261369376-POCLOUD': {
             value: 'test',
             id: 'G1261369376-POCLOUD'
-          },
+          }
         },
         projectCollection: {
           granules: {
@@ -1674,8 +1674,7 @@ describe('AccessMethod component', () => {
             }
           }
         }
-      })
-      )
+      }))
     })
   })
 })
