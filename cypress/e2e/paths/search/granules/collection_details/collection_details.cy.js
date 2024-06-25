@@ -5,14 +5,14 @@ import { graphQlGetSubscriptionsQuery } from '../../../../../support/graphQlGetS
 import { commafy } from '../../../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../../../static/src/js/util/pluralize'
 
-import assocatedDoisGraphQlBody from './__mocks__/associated_dois/graphql.body.json'
-import collectionsBody from './__mocks__/common/collections.body.json'
-import commonHeaders from './__mocks__/common/common.headers.json'
-import associatedDoisGranulesBody from './__mocks__/associated_dois/granules.body.json'
-import graphQlHeaders from './__mocks__/common/graphql.headers.json'
-import reformattingGraphQlBody from './__mocks__/reformattings/graphql.body.json'
-import reformattingsGranulesBody from './__mocks__/reformattings/granules.body.json'
-import getSubscriptionsGraphQlBody from './__mocks__/common/getSubscriptions.graphql.body.json'
+import assocatedDoisGraphQlBody from './__mocks__/associated_dois/graphql.body.json' with { type: 'json' }
+import collectionsBody from './__mocks__/common/collections.body.json' with { type: 'json' }
+import commonHeaders from './__mocks__/common/common.headers.json' with { type: 'json' }
+import associatedDoisGranulesBody from './__mocks__/associated_dois/granules.body.json' with { type: 'json' }
+import graphQlHeaders from './__mocks__/common/graphql.headers.json' with { type: 'json' }
+import reformattingGraphQlBody from './__mocks__/reformattings/graphql.body.json' with { type: 'json' }
+import reformattingsGranulesBody from './__mocks__/reformattings/granules.body.json' with { type: 'json' }
+import getSubscriptionsGraphQlBody from './__mocks__/common/getSubscriptions.graphql.body.json' with { type: 'json' }
 
 /**
  * Tests the search panel header and meta text for results size

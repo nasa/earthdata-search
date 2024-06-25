@@ -12,9 +12,11 @@
     ],
     "@babel/preset-react"
   ],
+  "generatorOpts": {
+    "importAttributesKeyword": "with"
+  },
   "sourceType": "unambiguous",
   "plugins": [
-    "@babel/plugin-transform-object-rest-spread",
     "@babel/plugin-transform-class-properties",
     "@babel/plugin-transform-runtime",
     "@babel/plugin-syntax-dynamic-import",

@@ -71,8 +71,9 @@
     "aws-sdk-client-mock": "^4.0.0",
     "babel-jest": "^28.1.0",
     "babel-plugin-istanbul": "^6.1.1",
+    "chokidar": "^3.6.0",
     "cookies": "^0.7.3",
-    "cypress": "^13.9.0",
+    "cypress": "^13.12.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-rollup-preprocessor": "^1.2.0",
     "cypress-vite": "^1.5.0",
@@ -100,7 +101,6 @@
     "vite": "^5.2.11",
     "vite-plugin-babel": "^1.2.0",
     "vite-plugin-node-polyfills": "^0.21.0",
-    "vite-plugin-simple-html": "^0.1.2",
     "webpack-dev-server": "^4.8.1"
   },
   "dependencies": {

@@ -1,5 +1,6 @@
 import postcss from '@vituum/vite-plugin-postcss'
 import react from '@vitejs/plugin-react'
+import babel from 'vite-plugin-babel'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { ViteEjsPlugin } from 'vite-plugin-ejs'
 import { resolve } from 'path'
@@ -44,8 +45,22 @@ export default {
         }
       }
     }),
+    babel({
+      babelConfig: {
+        babelrc: false,
+        configFile: false,
+        presets: [
+          '@babel/preset-react'
+        ],
+        plugins: [
+          '@babel/plugin-transform-class-properties',
+          '@babel/plugin-transform-runtime',
+          '@babel/plugin-syntax-dynamic-import',
+          '@babel/plugin-syntax-import-attributes'
+        ]
+      }
+    }),
     postcss(),
-    // Handle crypto and stream polyfills.
     nodePolyfills({
       protocolImports: true
     })
