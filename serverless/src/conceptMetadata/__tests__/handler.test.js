@@ -19,7 +19,7 @@ describe('conceptMetadata', () => {
 
     const result = await conceptMetadata(event)
 
-    expect(result.headers).toEqual({ Location: 'http://example.com/concepts?token=access_token' })
+    expect(result.headers).toEqual({ Location: 'http://example.com/concepts?token=Bearer access_token' })
     expect(result.statusCode).toBe(307)
   })
 
@@ -35,7 +35,7 @@ describe('conceptMetadata', () => {
 
     const result = await conceptMetadata(event)
 
-    expect(result.headers).toEqual({ Location: 'http://example.com/concepts?id=42&token=access_token' })
+    expect(result.headers).toEqual({ Location: 'http://example.com/concepts?id=42&token=Bearer access_token' })
     expect(result.statusCode).toBe(307)
   })
 })

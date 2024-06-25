@@ -351,7 +351,12 @@ export class OrderStatusItem extends PureComponent {
             totalProcessed += 1
           } else if (state === 'failed') {
             progressPercentage = 100
-            messages.push(error !== null ? error : reason)
+            if (error) {
+              messages.push(error)
+            } else if (reason) {
+              messages.push(reason)
+            }
+
             messageIsError = messageIsError || true
           }
         })
