@@ -42,7 +42,7 @@ jobs:
     - name: Prepare for Playwright tests
       run: npm run playwright:prepare-ci
     - name: Run Playwright tests
-      run: npm run playwright:ci:${{ matrix.shard }}
+      run: npm run playwright:ci:${{ matrix.shard }}:performance
     - name: Upload coverage to codecov
       uses: codecov/codecov-action@v4
       env:
