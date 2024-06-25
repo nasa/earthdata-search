@@ -219,8 +219,8 @@ export const constructOrderPayload = async ({
   }
 
   // Adds supportsConcatenation to the payload and it's value
-  if (supportsConcatenation && enableConcatenateDownload) {
-    orderPayload.append('concatenate', true)
+  if (supportsConcatenation) {
+    orderPayload.append('concatenate', enableConcatenateDownload)
   }
 
   // Adds the selectedVariableNames if they were included in the access method
