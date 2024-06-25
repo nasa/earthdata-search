@@ -732,7 +732,7 @@ describe('constructOrderPayload', () => {
     })
   })
 
-  describe('when the accessMethod supports concatenation but, it is not selected', () => {
+  describe('when the accessMethod supports concatenation, but it is not selected', () => {
     test('constructed payload sets concatenation to false', async () => {
       nock(/cmr/)
         .matchHeader('Authorization', 'Bearer access-token')
