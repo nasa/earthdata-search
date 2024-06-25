@@ -694,7 +694,7 @@ describe('constructOrderPayload', () => {
     })
   })
 
-  describe('when the collection supports concatenation and it has been selected', () => {
+  describe('when the accessMethod supports concatenation and it has been selected', () => {
     test('constructed payload sets concatenation to true', async () => {
       nock(/cmr/)
         .matchHeader('Authorization', 'Bearer access-token')
@@ -732,7 +732,7 @@ describe('constructOrderPayload', () => {
     })
   })
 
-  describe('when the collection supports concatenation but, it is not selected', () => {
+  describe('when the accessMethod supports concatenation but, it is not selected', () => {
     test('constructed payload sets concatenation to false', async () => {
       nock(/cmr/)
         .matchHeader('Authorization', 'Bearer access-token')
@@ -770,7 +770,7 @@ describe('constructOrderPayload', () => {
     })
   })
 
-  describe('when the collection does not support concatenation', () => {
+  describe('when the accessMethod does not support concatenation', () => {
     test('the constructed payload does not contain concatenate', async () => {
       nock(/cmr/)
         .matchHeader('Authorization', 'Bearer access-token')
