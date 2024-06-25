@@ -1608,7 +1608,7 @@ describe('AccessMethod component', () => {
       })
     })
 
-    test.only('can update individual granules MGRS band and UTM Zone Adjust', async () => {
+    test('can update individual granules MGRS band and UTM Zone Adjust', async () => {
       const user = userEvent.setup()
 
       const collectionId = 'collectionId'
