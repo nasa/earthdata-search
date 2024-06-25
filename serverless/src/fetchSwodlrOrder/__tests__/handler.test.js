@@ -66,8 +66,6 @@ describe('fetchSwodlrOrder', () => {
       }
     })
 
-    console.log('api stuff')
-
     nock(/swodlr/)
       .matchHeader('Authorization', 'Bearer access-token')
       .post(/api\/graphql/)

@@ -55,7 +55,8 @@ const EchoForm = lazy(() => import('./EchoForm'))
  * @param {Function} props.onSetActivePanel - Switches the currently active panel.
  * @param {Function} props.onUpdateAccessMethod - Updates an access method.
  * @param {Object} projectCollection - The project collection.
- */
+ * @param {Object} granuleMetadata - The metadata for the granules on the collection.
+*/
 export class AccessMethod extends Component {
   constructor(props) {
     super(props)
@@ -214,6 +215,7 @@ export class AccessMethod extends Component {
     if (addedGranuleIds.length > 0) {
       granulesToDisplay = addedGranuleIds
     } else {
+      // Default to the first 10 granules for Swodlr service if none were subset
       granulesToDisplay = granulesAllIds.slice(0, 10)
     }
 
@@ -441,11 +443,11 @@ export class AccessMethod extends Component {
     const { granuleList } = this.state
 
     if (property === 'utm') {
-      granuleList[index].utmZoneAdjust = e.target.value
+      granuleList[index].utmZoneAdjust = Number(e.target.value)
     }
 
     if (property === 'mgrs') {
-      granuleList[index].mgrsBandAdjust = e.target.value
+      granuleList[index].mgrsBandAdjust = Number(e.target.value)
     }
 
     this.setState(

@@ -2275,7 +2275,6 @@ describe('OrderStatusItem', () => {
 
     describe('when the order is in progress', () => {
       test('renders an updated progress state', () => {
-        // TODO make sure type field is right
         const { enzymeWrapper, props } = setup({
           type: 'SWODLR',
           collection: {
@@ -2355,7 +2354,6 @@ describe('OrderStatusItem', () => {
         expect(linksTab.childAt(0).props().granuleCount).toEqual(10)
         expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
 
-        // TODO: edd link?
         expect(linksTab.childAt(0).props().eddLink).toEqual(
           'earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3Dundefined%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=undefined&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback'
         )
@@ -2368,7 +2366,6 @@ describe('OrderStatusItem', () => {
 
     describe('when the order is in complete', () => {
       test('renders an updated progress state', () => {
-        // TODO make sure type field is right
         const { enzymeWrapper, props } = setup({
           type: 'SWODLR',
           collection: {
@@ -2449,7 +2446,6 @@ describe('OrderStatusItem', () => {
           'https://archive.swot.podaac.earthdata.nasa.gov/podaac-swot-ops-swodlr-protected/L2_HR_Raster/714cbd4d-2733-4ba0-85ac-b42a4aa4a1dc/1718399955/SWOT_L2_HR_Raster_1000m_UTM11Q_N_x_x_x_007_121_100F_20231127T173107_20231127T173121_DIC0_01.nc'
         ])
 
-        // TODO: edd link?
         expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3Dundefined%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=undefined&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
 
         const orderStatusTab = tabs.childAt(1)

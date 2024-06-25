@@ -1569,7 +1569,7 @@ describe('AccessMethod component', () => {
       })
     })
 
-    test('selecting a LAT/LON sample grid calls onUpdateAccessMethod with automatic rasterResolution value adjustment', async () => {
+    test('selecting a LAT/LON sampling grid type calls onUpdateAccessMethod with automatic rasterResolution value adjustment', async () => {
       const user = userEvent.setup()
 
       const collectionId = 'collectionId'
@@ -1647,19 +1647,18 @@ describe('AccessMethod component', () => {
       await user.click(advancedOptionsToggleButton)
 
       const firstGranuleUTMZonePlusOne = screen.getByTestId('G1261369123-POCLOUD-plus-1-UTM-zone')
-      user.click(firstGranuleUTMZonePlusOne)
+      await user.click(firstGranuleUTMZonePlusOne)
 
-      waitFor(() => expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1))
-
-      waitFor(() => expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+      expect(onUpdateAccessMethod).toHaveBeenCalledWith({
         collectionId: 'collectionId',
         method: {
           swodlr: {
-            json_data: {
+            swodlrData: {
               params: {
                 rasterResolution: 90,
                 outputSamplingGridType: 'UTM',
-                outputGranuleExtentFlag: true
+                outputGranuleExtentFlag: false
               },
               custom_params: {
                 'G1261369123-POCLOUD': {
@@ -1674,7 +1673,7 @@ describe('AccessMethod component', () => {
             }
           }
         }
-      }))
+      })
     })
   })
 })
