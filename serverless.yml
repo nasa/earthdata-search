@@ -192,6 +192,8 @@ custom:
 
   # Serverless esbuild configurations
   esbuild:
+    loader:
+      .svg: text
     external:
       - knex
     bundle: true
