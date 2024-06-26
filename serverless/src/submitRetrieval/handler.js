@@ -150,6 +150,8 @@ const submitRetrieval = async (event, context) => {
         } else if (type === 'Harmony') {
           // Submits to Harmony
           queueUrl = process.env.harmonyQueueUrl
+        } else if (type === 'SWODLR') {
+          queueUrl = process.env.swodlrQueueUrl
         }
 
         // Initialize the array we'll send to sqs

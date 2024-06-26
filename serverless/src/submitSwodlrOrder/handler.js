@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { retrieveCMRGranules } from './retrieveCMRGranules'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { parseError } from '../../../sharedUtils/parseError'
+import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
 
 const graphQlQuery = `
@@ -76,9 +77,9 @@ const submitSwodlrOrder = async (event, context) => {
 
       const {
         access_method: accessMethod,
+        granule_params: granuleParams,
         collection_id: collectionConceptId,
-        environment: earthdataEnvironment,
-        granule_params: granuleParams
+        environment: earthdataEnvironment
       } = retrievalRecord
 
       const { type, url: swodlrUrl } = accessMethod
@@ -97,8 +98,6 @@ const submitSwodlrOrder = async (event, context) => {
         throw new Error('Too many granules')
       }
 
-      const orderInfo = { jobs: {} }
-
       await orderItems.forEachAsync(async (granule) => {
         const { granuleUr, granuleConceptId } = granule
 
@@ -108,8 +107,8 @@ const submitSwodlrOrder = async (event, context) => {
         const pass = parseInt(splitTitle[11], 10)
         const scene = parseInt(splitTitle[12].substring(0, splitTitle[12].length - 1), 10)
 
-        const { json_data: jsonData } = granuleParams
-        const { params, custom_params: customParams } = jsonData
+        const { swodlrData } = accessMethod
+        const { params, custom_params: customParams } = swodlrData
 
         const {
           outputGranuleExtentFlag,
@@ -118,8 +117,8 @@ const submitSwodlrOrder = async (event, context) => {
         } = params
 
         const {
-          utmZoneAdjust,
-          mgrsBandAdjust
+          utmZoneAdjust = null,
+          mgrsBandAdjust = null
         } = customParams[granuleConceptId]
 
         const variables = {
@@ -131,6 +130,15 @@ const submitSwodlrOrder = async (event, context) => {
           rasterResolution,
           utmZoneAdjust,
           mgrsBandAdjust
+        }
+
+        // Makes it easier on the frontend to null out the values if outputSamplingGridType is GEO (LAT/LON)
+        if (outputSamplingGridType === 'GEO') {
+          variables.utmZoneAdjust = null
+          variables.mgrsBandAdjust = null
+        } else {
+          variables.utmZoneAdjust = parseInt(variables.utmZoneAdjust, 10)
+          variables.mgrsBandAdjust = parseInt(variables.mgrsBandAdjust, 10)
         }
 
         const requestId = uuidv4()
@@ -163,22 +171,26 @@ const submitSwodlrOrder = async (event, context) => {
         // product Id is the Id of the product that's being generated
         // jobId is the Id of the job that is being run to generate the product
         const { id: productId, status: jobStatus } = generateL2RasterProduct
-        const { id: jobId, state } = jobStatus[0]
+        const { id: jobId, state, timestamp: createdAt } = jobStatus[0]
 
-        orderInfo.jobs[jobId] = {
-          product_id: productId,
-          status: state
+        const orderInfo = {
+          jobId,
+          productId,
+          status: state,
+          createdAt,
+          updatedAt: createdAt,
+          numGranules: orderItems.length
         }
+
+        await dbConnection('retrieval_orders').update({
+          order_number: productId,
+          order_information: orderInfo,
+          state: getStateFromOrderStatus(state)
+        }).where({ id })
+
+        // Start the order status check workflow
+        await startOrderStatusUpdateWorkflow(id, accessToken, type)
       })
-
-      await dbConnection('retrieval_orders').update({
-        order_number: Object.keys(orderInfo.jobs)[0],
-        order_information: orderInfo,
-        state: orderInfo.jobs[Object.keys(orderInfo.jobs)[0]].status
-      }).where({ id })
-
-      // Start the order status check workflow
-      await startOrderStatusUpdateWorkflow(id, accessToken, type)
     } catch (error) {
       const parsedErrorMessage = parseError(error, { asJSON: false })
 

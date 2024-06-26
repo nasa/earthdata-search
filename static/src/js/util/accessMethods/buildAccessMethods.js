@@ -53,7 +53,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
       }
 
       // Only process service types that EDSC supports
-      const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony']
+      const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony', 'swodlr']
       if (!supportedServiceTypes.includes(serviceType.toLowerCase())) return
 
       const { urlValue } = url
@@ -187,6 +187,18 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         }
 
         harmonyIndex += 1
+      }
+
+      if (serviceType.toLowerCase() === 'swodlr') {
+        accessMethods.swodlr = {
+          id: serviceConceptId,
+          isValid: true,
+          longName,
+          name,
+          type: serviceType,
+          supportsSwodlr: true,
+          url: urlValue
+        }
       }
     })
   }
