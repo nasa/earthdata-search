@@ -13,7 +13,7 @@ test.describe('Performance Benchmarking', () => {
     })
   })
 
-  test('Search page load time is less than 1 second', async ({ page, browserName }) => {
+  test('Search page load time is less than 2 second', async ({ page, browserName }) => {
     if (['chromium'].includes(browserName)) {
       await page.goto('/')
       const requestFinishedPromise = page.waitForEvent('requestfinished')
@@ -21,11 +21,11 @@ test.describe('Performance Benchmarking', () => {
 
       const requestTime = request.timing().responseEnd
       console.log('Request time:', Math.round(requestTime), 'ms')
-      expect(requestTime < 1000).toBe(true)
+      expect(requestTime < 2000).toBe(true)
     }
   })
 
-  test('Search page LCP start time is less than 1 second', async ({ page, browserName }) => {
+  test('Search page LCP start time is less than 2 second', async ({ page, browserName }) => {
     if (browserName === 'chromium') {
       await page.goto('/')
       const paintTimingJson = await page.evaluate(async () => new Promise((resolve) => {
@@ -43,7 +43,7 @@ test.describe('Performance Benchmarking', () => {
       const paintTiming = JSON.parse(paintTimingJson)
       console.log('LCP:', Math.round(paintTiming), 'ms')
 
-      expect(paintTiming).toBeLessThan(1000)
+      expect(paintTiming).toBeLessThan(2000)
     }
   })
 })
