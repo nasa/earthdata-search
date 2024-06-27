@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { FaArrowCircleLeft } from 'react-icons/fa'
@@ -21,9 +21,6 @@ const ChunkedOrderModal = ({
   projectCollectionsMetadata,
   projectCollectionsRequiringChunking
 }) => {
-  console.log('🚀 ~ file: ChunkedOrderModal.js:24 ~ projectCollectionsMetadata:', projectCollectionsMetadata)
-  const [sendsEmails, setSendsEmails] = useState(true)
-
   const onModalClose = () => {
     onToggleChunkedOrderModal(false)
   }
@@ -63,9 +60,9 @@ const ChunkedOrderModal = ({
       Refine your search
     </PortalLinkContainer>
   )
-
+  // TODO Take out the outer div
   const body = (
-    <>
+    <div>
       {
         Object.keys(projectCollectionsRequiringChunking).length > 0 && (
           Object.keys(projectCollectionsRequiringChunking).map((collectionId, i) => {
@@ -87,56 +84,61 @@ const ChunkedOrderModal = ({
               accessMethods,
               selectedAccessMethod
             )
-            // Const isEchoOrdering = /echoOrder\d+$/
 
-            // TODO ESI does support emails
-            // const isEsi = /esi\d+$/
+            // Display notice for services which send confirmation emails
+            let sendsEmails = false
+            const isEchoOrdering = /echoOrderx\d+$/
+            const isEsi = /esi\d+$/
 
-            // If (selectedAccessMethod
-            //   && (isEchoOrdering.test(selectedAccessMethod) || isEsi.test(selectedAccessMethod))) {
-            //   setSendsEmails(true)
-            // }
+            if (selectedAccessMethod
+              && (isEchoOrdering.test(selectedAccessMethod) || isEsi.test(selectedAccessMethod))) {
+              sendsEmails = true
+            }
 
             const { [collectionId]: projectCollectionMetadata = {} } = projectCollectionsMetadata
             const { title } = projectCollectionMetadata
 
+            // TODO making the fragement an outer div and adding the key was getting rid of the warning
             return (
-              <p
-                key={key}
-                data-testid={key}
-              >
-                The collection
-                {' '}
-                <span className="chunked-order-modal__body-emphasis">{title}</span>
-                {' '}
-                contains
-                {' '}
-                <span className="chunked-order-modal__body-emphasis">{commafy(granuleCount)}</span>
-                {' '}
-                granules which exceeds the
-                {' '}
-                <span className="chunked-order-modal__body-emphasis">{commafy(granulesPerOrder)}</span>
-                {' '}
-                granule limit configured by the provider.
-                When submitted, the order will automatically be split into
-                {' '}
-                <span className="chunked-order-modal__body-strong">{`${orderCount} orders`}</span>
-                .
-              </p>
+              <div key={key}>
+                <p
+                  key={key}
+                  data-testid={key}
+                >
+                  The collection
+                  {' '}
+                  <span className="chunked-order-modal__body-emphasis">{title}</span>
+                  {' '}
+                  contains
+                  {' '}
+                  <span className="chunked-order-modal__body-emphasis">{commafy(granuleCount)}</span>
+                  {' '}
+                  granules which exceeds the
+                  {' '}
+                  <span className="chunked-order-modal__body-emphasis">{commafy(granulesPerOrder)}</span>
+                  {' '}
+                  granule limit configured by the provider.
+                  When submitted, the order will automatically be split into
+                  {' '}
+                  <span className="chunked-order-modal__body-strong">{`${orderCount} orders`}</span>
+                  .
+                </p>
+                {
+                  sendsEmails
+              && (
+                <p>
+                  Note: You will receive a separate set of confirmation emails
+                  for each order of these placed orders.
+                  {console.log('🚀 ~ file: ChunkedOrderModal.js:137 ~ ChunkedOrderModal ~ sendsEmails:', sendsEmails)}
+                </p>
+              )
+                }
+              </div>
             )
           })
         )
       }
-      {
-        sendsEmails
-      && (
-        <p>
-          Note: You will receive a separate set of confirmation emails for each order placed.
-          {console.log('🚀 ~ file: ChunkedOrderModal.js:137 ~ ChunkedOrderModal ~ sendsEmails:', sendsEmails)}
-        </p>
-      )
-      }
-    </>
+    </div>
   )
 
   return (
