@@ -45,7 +45,7 @@ const ChunkedOrderModal = ({
       type="button"
       icon={FaArrowCircleLeft}
       label="Refine your search"
-      onClick={() => onToggleChunkedOrderModal(false)}
+      onClick={onModalClose}
       to={
         {
           pathname: '/search',
@@ -60,7 +60,6 @@ const ChunkedOrderModal = ({
       Refine your search
     </PortalLinkContainer>
   )
-  // TODO Take out the outer div
   const body = (
     <div>
       {
@@ -76,7 +75,6 @@ const ChunkedOrderModal = ({
               granules = {},
               selectedAccessMethod
             } = projectCollection
-            console.log('🚀 ~ file: ChunkedOrderModal.js:91 ~ ChunkedOrderModal ~ Object.keys ~ selectedAccessMethod:', selectedAccessMethod)
 
             const { hits: granuleCount } = granules
 
@@ -87,7 +85,7 @@ const ChunkedOrderModal = ({
 
             // Display notice for services which send confirmation emails
             let sendsEmails = false
-            const isEchoOrdering = /echoOrderx\d+$/
+            const isEchoOrdering = /echoOrder\d+$/
             const isEsi = /esi\d+$/
 
             if (selectedAccessMethod
@@ -98,13 +96,12 @@ const ChunkedOrderModal = ({
             const { [collectionId]: projectCollectionMetadata = {} } = projectCollectionsMetadata
             const { title } = projectCollectionMetadata
 
-            // TODO making the fragement an outer div and adding the key was getting rid of the warning
             return (
-              <div key={key}>
-                <p
-                  key={key}
-                  data-testid={key}
-                >
+              <div
+                key={key}
+                data-testid={key}
+              >
+                <p>
                   The collection
                   {' '}
                   <span className="chunked-order-modal__body-emphasis">{title}</span>
@@ -124,14 +121,15 @@ const ChunkedOrderModal = ({
                   .
                 </p>
                 {
-                  sendsEmails
-              && (
-                <p>
-                  Note: You will receive a separate set of confirmation emails
-                  for each order of these placed orders.
-                  {console.log('🚀 ~ file: ChunkedOrderModal.js:137 ~ ChunkedOrderModal ~ sendsEmails:', sendsEmails)}
-                </p>
-              )
+                  sendsEmails && (
+                    <p>
+                      Note: You will receive a separate set of confirmation emails
+                      for each order in
+                      {' '}
+                      {title}
+                      .
+                    </p>
+                  )
                 }
               </div>
             )
