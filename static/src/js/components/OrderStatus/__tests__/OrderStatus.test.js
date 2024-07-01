@@ -71,8 +71,7 @@ describe('OrderStatus component', () => {
     expect(onFetchRetrieval).toHaveBeenCalledWith('7', 'testToken')
   })
 
-  // TODO idk what this describe block means
-  describe('introduction', () => {
+  describe('Order Status page', () => {
     beforeEach(() => {
       jest.spyOn(config, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'http://localhost' }))
       jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
@@ -83,7 +82,6 @@ describe('OrderStatus component', () => {
 
     test('displays the correct text', () => {
       setup()
-      // http://localhost/downloads/7 or the Download Status and History page.
       expect(screen.getByText(/This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting/))
         .toBeInTheDocument()
 
@@ -131,8 +129,7 @@ describe('OrderStatus component', () => {
   describe('data links', () => {
     test('renders data links in a list', () => {
       setup()
-      // TODO there is only one link with the url but, there are other link attributes in the document
-      screen.getByRole('link', { name: 'http://linkurl.com/test' })
+      expect(screen.getByRole('link', { name: 'http://linkurl.com/test' })).toBeInTheDocument()
     })
   })
 
@@ -142,43 +139,16 @@ describe('OrderStatus component', () => {
       const relatedCollectionsHeading = screen.getByRole('heading', { name: 'You might also be interested in...' })
       expect(relatedCollectionsHeading).toBeInTheDocument()
       const listElements = screen.getAllByRole('list')
-      console.log('size of list', listElements.length)
+      // Several other list elements on DOM get the related collections list
       const relatedColList = listElements[3]
 
-      // Expect(within(relatedCollections).getByRole('link', { name: 'Test Title 1' })).toBeInTheDocument()
+      // Get list-items for each individual related collections
       const relatedCollections = within(relatedColList).getAllByRole('listitem')
 
       expect(relatedCollections.length).toEqual(3)
-      console.log('🚀 ~ file: OrderStatusRTL.test.js:203 ~ test ~ relatedCollections:', relatedCollections[0])
-
       expect(within(relatedCollections[0]).getByRole('link', { key: 'related-collection-TEST_COLLECTION_3_111' })).toBeInTheDocument()
       expect(within(relatedCollections[1]).getByRole('link', { key: 'related-collection-TEST_COLLECTION_2_111' })).toBeInTheDocument()
       expect(within(relatedCollections[2]).getByRole('link', { key: 'related-collection-TEST_COLLECTION_1_111' })).toBeInTheDocument()
-      // Expect(within(relatedCollections[2]).getByText('Test Title 2'))
-      // expect(within(relatedCollections[1]).getByText('Test Title 3'))
-      // TODO for some reason this next one is failing but, I can see on the `screen its there for relatedCollections[3]
-      // expect(within(relatedCollections[2]).getByText('Test Title 3'))latedCollections[1])
-
-      // Console.log('🚀 ~ file: OrderStausRTL.test.js:194 ~ test ~ relatedCollections:', relatedCollections)
-      // expect(within(relatedCollections[1]).getByText('Test Title 1'))
-
-      // Expect(within(relatedCollections[0]).getByRole('link', { name: 'Test Title 1' })).toBeInTheDocument()
-      // expect(within(relatedCollections[1]).getByRole('link', { name: 'Test Title 2' })).toBeInTheDocument()
-      // expect(within(relatedCollections[2]).getByRole('link', { name: 'Test Title 3' })).toBeInTheDocument()
-
-      // Expect(within(relatedCollections).getByRole('link', { name: 'Test Title 2' })).toBeInTheDocument()
-      // expect(within(relatedCollections).getByRole('link', { name: 'Test Title 3' })).toBeInTheDocument()
-
-      // Console.log('🚀 ~ file: OrderStatusRTL.test.js:168 ~ test ~ relatedCollections:', relatedCollections)
-      // screen.getByRole(relatedCollections, 'listItem', { name: 'Test Title 1' })
-      // screen.getByRole(relatedCollections, 'link', { name: 'Test Title 1' })
-
-      // console.log('🚀 ~ file: OrderStatusRTL.test.js:167 ~ test ~ relatedCollections:', relatedCollections)
-
-      // Screen.getByRole('link', { name: 'Test Title 1' })
-      // screen.getByRole('link', { name: 'Test Title 2' })
-      // screen.getByRole('link', { name: 'Test Title 3' })
-      screen.debug()
     })
   })
 
