@@ -10,13 +10,6 @@ import { login } from '../../support/login'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
 
 test.describe('Download spec', () => {
-  // Test.beforeEach(async ({ page }, testInfo) => {
-  //   await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-
-  //   // eslint-disable-next-line no-param-reassign
-  //   // testInfo.snapshotPath = (name) => `${testInfo.file}-snapshots/${name}`
-  // })
-
   test('get to the download page', async ({ page, context }) => {
     login(context)
 
@@ -58,48 +51,63 @@ test.describe('Download spec', () => {
       })
     })
 
-    // Await page.route(/providers/, async (route) => {
-    //   await route.fulfill({
-    //     json: providers.body
-    //   })
-    // })
-
-    // await page.route(/access_methods/, async (route) => {
-    //   await route.fulfill({
-    //     json: accessMethods.body
-    //   })
-    // })
-
     await page.goto('/projects?p=!C1443528505-LAADS&sb=-77.15071678161621%2C38.78817179999825%2C-76.89801406860352%2C38.99784152603538&lat=37.64643450971326&long=-77.407470703125&zoom=7&qt=2020-01-06T04%3A15%3A27.310Z%2C2020-01-13T07%3A32%3A50.962Z&ff=Map%20Imagery&tl=1563377338!4!!')
 
-    // Await page.getByTestId('C1443528505-LAADS_access-method__direct-download').click()
+    await page.getByTestId('C1443528505-LAADS_access-method__direct-download').click()
 
-    // // Click the back to search button
-    // await page.getByTestId('back-to-search-button').click()
+    // Click the done panel
+    await page.getByTestId('project-panels-done').click()
+    await expect(page.getByTestId('panels-section')).toBeVisible()
 
-    await page.waitForSelector('[data-testid="collection-result-item_C1443528505-LAADS"]')
+    // Click the Download Data button
+    await page.getByTestId('project-download-data').click()
 
-    // // Confirm the leaflet tools are in the correct location
-    // await expect(page).toHaveScreenshot('search-screenshot.png', {
-    //   clip: {
-    //     x: 1200,
-    //     y: 700,
-    //     width: 200,
-    //     height: 200
-    //   }
-    // })
+    // Load the download data and mock the results
+    await page.route(/retrievals/, async (route) => {
+      await route.fulfill({
+        json: retrievals.body,
+        headers: retrievals.headers
+      })
+    })
 
-    // // Click a collection that exists in the project
-    // await page.getByTestId('collection-result-item_C1443528505-LAADS').click()
+    await page.route(/retrievals/, async (route) => {
+      await route.fulfill({
+        json: retrieval.body,
+        headers: retrieval.headers
+      })
+    })
 
-    // // Confirm the leaflet tools are in the correct location
-    // await expect(page).toHaveScreenshot('granules-screenshot.png', {
-    //   clip: {
-    //     x: 1200,
-    //     y: 700,
-    //     width: 200,
-    //     height: 200
-    //   }
-    // })
+    await page.route(/granule_links/, async (route) => {
+      await route.fulfill({
+        json: {
+          cursor: 'mock-cursor',
+          links: {
+            browse: [],
+            download: [
+              'https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1720.061.2020008170450.hdf',
+              'https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1900.061.2020008170003.hdf',
+              'https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/007/MYD04_3K.A2020007.1805.061.2020008182434.hdf',
+              'https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/008/MYD04_3K.A2020008.1850.061.2020010183913.hdf',
+              'https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/009/MYD04_3K.A2020009.1755.061.2020010200250.hdf',
+              'https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/010/MYD04_3K.A2020010.1835.061.2020011153413.hdf',
+              'https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/011/MYD04_3K.A2020011.1740.061.2020012150910.hdf',
+              'https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/012/MYD04_3K.A2020012.1825.061.2020013152621.hdf'
+            ],
+            s3: []
+          }
+        },
+        headers: authHeaders
+      })
+    })
+
+    // Make sure all links that are in the download list are visible on the page
+    await expect(page.getByText('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1720.061.2020008170450.hdf').first()).toBeVisible()
+    await expect(page.getByText('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1900.061.2020008170003.hdf').first()).toBeVisible()
+    await expect(page.getByText('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/007/MYD04_3K.A2020007.1805.061.2020008182434.hdf').first()).toBeVisible()
+    await expect(page.getByText('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/008/MYD04_3K.A2020008.1850.061.2020010183913.hdf').first()).toBeVisible()
+    await expect(page.getByText('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/009/MYD04_3K.A2020009.1755.061.2020010200250.hdf').first()).toBeVisible()
+    await expect(page.getByText('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/010/MYD04_3K.A2020010.1835.061.2020011153413.hdf').first()).toBeVisible()
+    await expect(page.getByText('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/011/MYD04_3K.A2020011.1740.061.2020012150910.hdf').first()).toBeVisible()
+    await expect(page.getByText('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/012/MYD04_3K.A2020012.1825.061.2020013152621.hdf').first()).toBeVisible()
   })
 })
