@@ -107,7 +107,6 @@ describe('OrderStatus component', () => {
       expect(link).toBeInTheDocument()
     })
 
-    // TODO I'm not positive this is the same thing
     test('status link has correct href', () => {
       setup()
       const link = screen.getByRole('link', { name: 'Download Status and History' })
