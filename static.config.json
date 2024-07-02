@@ -44,9 +44,10 @@
       "client": "eed-PORTAL-ENV-serverless-client",
       "lambda": "eed-PORTAL-ENV-serverless-lambda"
     },
+    "disableDatabaseComponents": "false",
     "disableEddDownload": "false",
     "disableOrdering": "false",
-    "disableDatabaseComponents": "false",
+    "disableSwodlr": "false",
     "macOSEddDownloadSize":130,
     "windowsEddDownloadSize":100,
     "linuxEddDownloadSize":90
