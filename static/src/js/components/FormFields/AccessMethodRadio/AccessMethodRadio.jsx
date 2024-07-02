@@ -39,6 +39,8 @@ export const AccessMethodRadio = ({
     labelClasses.push('access-method-radio--disable-button')
   }
 
+  console.log(disabled)
+
   const labelClassName = classNames(labelClasses)
 
   const {
@@ -101,9 +103,9 @@ export const AccessMethodRadio = ({
             </span>
             {
               errorMessage && (
-                <div className="access-method-radio__error">
+                <span className="access-method-radio__description">
                   {errorMessage}
-                </div>
+                </span>
               )
             }
           </div>
