@@ -55,13 +55,13 @@ test.describe('Panel Behavior', () => {
   test('drags the panel to a specific width', async ({ page }) => {
     await dragPanelToX(page, 100)
 
-    await expect(page.locator('[data-testid="panels-section"]')).toHaveCSS('width', '700px')
+    await expect(page.getByTestId('panels-section')).toHaveCSS('width', '700px')
   })
 
   test('drags the panel to closed', async ({ page }) => {
     await dragPanelToX(page, -1500)
 
-    await expect(page.locator('.panels--is-open.panels--will-minimize')).toHaveCount(1)
+    await expect(page.locator('.panels--is-open.panels--will-minimize').length).toEqual(1)
   })
 
   test('drags the panel to open from being closed', async ({ page }) => {
@@ -72,13 +72,13 @@ test.describe('Panel Behavior', () => {
 
     await dragPanelToX(page, 570)
 
-    await expect(page.locator('[data-testid="panels-section"]')).toHaveCSS('width', '570px')
+    await expect(page.getByTestId('panels-section')).toHaveCSS('width', '570px')
     await expect(page.locator('.panels--is-open')).toHaveCount(1)
   })
 
   test('drags the panel to maximum width', async ({ page }) => {
     await dragPanelToX(page, 1500)
 
-    await expect(page.locator('[data-testid="panels-section"]')).toHaveCSS('width', '1035px')
+    await expect(page.getByTestId('panels-section')).toHaveCSS('width', '1035px')
   })
 })
