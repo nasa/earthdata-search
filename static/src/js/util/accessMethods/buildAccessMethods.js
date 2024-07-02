@@ -197,7 +197,8 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
           name,
           type: serviceType,
           supportsSwodlr: true,
-          url: urlValue
+          url: urlValue,
+          disabled: true
         }
       }
     })

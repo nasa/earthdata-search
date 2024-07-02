@@ -215,8 +215,7 @@ export class AccessMethod extends Component {
     if (addedGranuleIds.length > 0) {
       granulesToDisplay = addedGranuleIds
     } else {
-      // Default to the first 10 granules for Swodlr service if none were subset
-      granulesToDisplay = granulesAllIds.slice(0, 10)
+      granulesToDisplay = granulesAllIds
     }
 
     const granuleList = []
@@ -279,7 +278,7 @@ export class AccessMethod extends Component {
     if (addedGranuleIds.length > 0) {
       granulesToDisplay = addedGranuleIds
     } else {
-      granulesToDisplay = granulesAllIds.slice(0, 10)
+      granulesToDisplay = granulesAllIds
     }
 
     const granuleList = []
@@ -662,7 +661,9 @@ export class AccessMethod extends Component {
       title,
       subtitle,
       description,
-      details
+      details,
+      disabled,
+      errorMessage
     } = radioItem
 
     return (
@@ -676,6 +677,8 @@ export class AccessMethod extends Component {
         details={details}
         onChange={onPropsChange}
         checked={selected === methodKey}
+        disabled={disabled}
+        errorMessage={errorMessage}
       />
     )
   }
@@ -695,6 +698,8 @@ export class AccessMethod extends Component {
       temporal,
       ursProfile
     } = this.props
+
+    const { granuleList } = this.state
 
     const { conceptId: collectionId } = metadata
 
@@ -730,6 +735,8 @@ export class AccessMethod extends Component {
       let subtitle = null
       let description = null
       let details = null
+      let disabled = false
+      let errorMessage = ''
       let hasFormats = null
       let hasProjections = null
       let hasTransform = null
@@ -809,7 +816,10 @@ export class AccessMethod extends Component {
           title = 'Generate with SWODLR'
           description = 'Set options and generate new standard products'
           details = 'Select options and generate customized products using the SWODLR service. Data will be avaliable for access once any necessary processing is complete.'
-
+          // Disabled if more than 10 granules are selected.
+          disabled = granuleList && granuleList.length > 10
+          // Update the error message if more than 10 granules are selected
+          errorMessage = granuleList && granuleList.length > 10 ? 'SWODLR customization is only avaliable with a max of 10 granules. Reduce your granule selection to enable this option.' : ''
           break
         }
 
@@ -827,7 +837,9 @@ export class AccessMethod extends Component {
             name,
             description,
             details,
-            customizationOptions
+            customizationOptions,
+            disabled,
+            errorMessage
           }
         )
       }
@@ -868,8 +880,7 @@ export class AccessMethod extends Component {
       sampleGrid,
       rasterResolution,
       geoRasterOptions,
-      utmRasterOptions,
-      granuleList
+      utmRasterOptions
     } = this.state
 
     const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
@@ -1615,7 +1626,9 @@ AccessMethod.defaultProps = {
   spatial: {},
   granuleMetadata: {},
   projectCollection: {
-    granules: {}
+    granules: {
+      addedGranuleIds: []
+    }
   }
 }
 
@@ -1651,7 +1664,9 @@ AccessMethod.propTypes = {
   }).isRequired,
   granuleMetadata: PropTypes.shape({}),
   projectCollection: PropTypes.shape({
-    granules: PropTypes.shape({})
+    granules: PropTypes.shape({
+      addedGranuleIds: PropTypes.arrayOf(PropTypes.shape({}))
+    })
   })
 }
 

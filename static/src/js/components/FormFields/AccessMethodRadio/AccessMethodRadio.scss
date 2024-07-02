@@ -148,5 +148,10 @@
   &__icons-rightside {
     margin-left: auto;
   }
+
+  &--disable-button {
+    pointer-events: none;
+    opacity: 0.4;
+}
 }
 
