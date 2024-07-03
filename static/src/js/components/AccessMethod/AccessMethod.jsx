@@ -109,6 +109,7 @@ const AccessMethod = ({
   let granulesToDisplay = []
 
   if (addedGranuleIds.length > 0) {
+    console.log('🚀 ~ file: AccessMethod.js:226 ~ addedGranuleIds:', addedGranuleIds)
     granulesToDisplay = addedGranuleIds
   } else {
     granulesToDisplay = granulesAllIds
@@ -121,6 +122,7 @@ const AccessMethod = ({
   })
 
   useEffect(() => {
+    console.log('re-rendering here')
     setGranuleList(granuleListObj)
   }, [projectCollection])
 
@@ -168,6 +170,7 @@ const AccessMethod = ({
 
     const { target } = event
     const { value } = target
+    console.log('💀 ~ file: AccessMethod.js:307 ~ handleOutputFormatSelection ~ value:', value)
 
     onUpdateAccessMethod({
       collectionId,
@@ -270,6 +273,7 @@ const AccessMethod = ({
       errorMessage
     } = radioItem
 
+    // TODO does this need to be () => onPropsChange ?
     return (
       <AccessMethodRadio
         key={id}
@@ -487,8 +491,11 @@ const AccessMethod = ({
 
         // TODO should this not be length > 0 its > 1 on main
         hasProjections = supportedOutputProjections
-          ? supportedOutputProjections.length > 1
+          ? supportedOutputProjections.length > 0
           : false
+
+        console.log('🚀 ~ file: AccessMethod.js:701 ~ Object.keys ~ supportedOutputProjections:', supportedOutputProjections)
+        console.log('🚀 ~ file: AccessMethod.js:701 ~ Object.keys ~ hasProjections:', hasProjections)
 
         // TODO: include interpolation in hasTransform boolean once Harmony supports interpolation
         hasTransform = hasProjections
@@ -511,6 +518,8 @@ const AccessMethod = ({
         description = 'Set options and generate new standard products'
         details = 'Select options and generate customized products using the SWODLR service. Data will be avaliable for access once any necessary processing is complete.'
         disabled = granuleList && granuleList.length > 10
+        console.log('🚀 ~ file: AccessMethod.js:719 ~ Object.keys ~ disabled:', disabled)
+        console.log('🚀 ~ file: AccessMethod.js:719 ~ Object.keys ~ granuleList.length:', granuleList.length)
         // Update the error message if more than 10 granules are selected
         errorMessage = granuleList && granuleList.length > 10 ? 'SWODLR customization is only available with a maximum of 10 granules. Reduce your granule selection to enable this option.' : ''
         break
@@ -617,6 +626,7 @@ const AccessMethod = ({
     : false
 
   const harmonyMethods = accessMethodsByType.Harmony
+  console.log('🚀 ~ file: AccessMethod.js:1489 ~ granuleList.length:', granuleList.length)
 
   return (
     <div className="access-method">
