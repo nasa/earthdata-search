@@ -185,24 +185,23 @@ const AccessMethod = ({
   const { isRecurring } = temporal
 
   // Initialize State Variables
-  const [enableTemporalSubsetting, setEnableTemporalSubsetting] = useState(false)
+  // TODO enableTemporalSubsetting initialize state
+  // Disable temporal subsetting if the user has a recurring date selected
+  const [enableTemporalSubsetting, setEnableTemporalSubsetting] = useState(!isRecurring)
   const [selectedHarmonyMethodName, setSelectedHarmonyMethodName] = useState('')
   const [isHarmony, setIsHarmony] = useState(false)
   const [enableSpatialSubsetting, setEnableSpatialSubsetting] = useState(false)
   const [enableConcatenateDownload, setEnableConcatenateDownload] = useState(defaultConcatenation)
-  const [granuleExtent, setGranuleExtent] = useState(null)
-  const [sampleGrid, setSampleGrid] = useState(null)
-  const [rasterResolution, setRasterResolution] = useState(null)
+  // TODO Granule extent is a bool?
+  const [granuleExtent, setGranuleExtent] = useState(false)
+  const [sampleGrid, setSampleGrid] = useState('UTM')
+  const [rasterResolution, setRasterResolution] = useState(90)
   const [granuleList, setGranuleList] = useState([])
-  // Only set state on re-render
 
-
-  // Const [swodlrDisabled, setSwodlrDisabled] = useState(false)
-
-  // Disable temporal subsetting if the user has a recurring date selected
-  if (isRecurring) {
-    setEnableTemporalSubsetting(false)
-  }
+  // // Disable temporal subsetting if the user has a recurring date selected
+  // if (isRecurring) {
+  //   setEnableTemporalSubsetting(false)
+  // }
 
   const {
     granules: projectCollectionGranules = {}
@@ -224,10 +223,12 @@ const AccessMethod = ({
   let granulesToDisplay = []
 
   if (addedGranuleIds.length > 0) {
+    console.log('🚀 ~ file: AccessMethod.js:226 ~ addedGranuleIds:', addedGranuleIds)
     granulesToDisplay = addedGranuleIds
   } else {
     // Default to the first 10 granules for Swodlr service if none were subset
-    granulesToDisplay = granulesAllIds.slice(0, 10)
+    // TODO what is the default supposed to be set to here?
+    granulesToDisplay = granulesAllIds
   }
 
   const granuleListObj = []
@@ -237,6 +238,7 @@ const AccessMethod = ({
   })
 
   useEffect(() => {
+    console.log('re-rendering here')
     setGranuleList(granuleListObj)
   }, [projectCollection])
 
@@ -302,6 +304,7 @@ const AccessMethod = ({
 
     const { target } = event
     const { value } = target
+    console.log('💀 ~ file: AccessMethod.js:307 ~ handleOutputFormatSelection ~ value:', value)
 
     onUpdateAccessMethod({
       collectionId,
@@ -435,6 +438,8 @@ const AccessMethod = ({
       granuleList[indexVal].mgrsBandAdjust = Number(e.target.value)
     }
 
+    // TODO this does not make sense to me totally
+    console.log('🚀 ~ file: AccessMethod.js:439 ~ handleCollectionGranuleListUpdate ~ granuleList:', granuleList)
     setGranuleList(granuleList)
     handleSwoldrOptions()
   }
@@ -476,6 +481,7 @@ const AccessMethod = ({
     console.log('🚀 ~ file: AccessMethod.js:439 ~ renderRadioItem ~ errorMessage:', errorMessage)
     console.log('🚀 ~ file: AccessMethod.js:439 ~ renderRadioItem ~ disabled:', disabled)
 
+    // TODO does this need to be () => onPropsChange ?
     return (
       <AccessMethodRadio
         key={id}
@@ -691,9 +697,13 @@ const AccessMethod = ({
           ? supportedOutputFormats.length > 0
           : false
 
+        // TODO should this not be length > 0 its > 1 on main
         hasProjections = supportedOutputProjections
-          ? supportedOutputProjections.length > 1
+          ? supportedOutputProjections.length > 0
           : false
+
+        console.log('🚀 ~ file: AccessMethod.js:701 ~ Object.keys ~ supportedOutputProjections:', supportedOutputProjections)
+        console.log('🚀 ~ file: AccessMethod.js:701 ~ Object.keys ~ hasProjections:', hasProjections)
 
         // TODO: include interpolation in hasTransform boolean once Harmony supports interpolation
         hasTransform = hasProjections
@@ -716,8 +726,10 @@ const AccessMethod = ({
         description = 'Set options and generate new standard products'
         details = 'Select options and generate customized products using the SWODLR service. Data will be avaliable for access once any necessary processing is complete.'
         disabled = granuleList && granuleList.length > 10
+        console.log('🚀 ~ file: AccessMethod.js:719 ~ Object.keys ~ disabled:', disabled)
+        console.log('🚀 ~ file: AccessMethod.js:719 ~ Object.keys ~ granuleList.length:', granuleList.length)
         // Update the error message if more than 10 granules are selected
-        errorMessage = granuleList && granuleList.length > 10 ? 'SWODLR customization is only avaliable with a max of 10 granules. Reduce your granule selection to enable this option.' : ''
+        errorMessage = granuleList && granuleList.length > 10 ? ' SWODLR customization is only available with a maximum of 10 granules. Reduce your granule selection to enable this option.' : ''
         break
       }
 
@@ -726,7 +738,6 @@ const AccessMethod = ({
     }
 
     if (type) {
-      console.log('🚀 ~ file: AccessMethod.js:676 ~ Object.keys ~ type:', type)
       accessMethodsByType[type].push(
         {
           id,
@@ -859,6 +870,7 @@ const AccessMethod = ({
     : false
 
   const harmonyMethods = accessMethodsByType.Harmony
+  console.log('🚀 ~ file: AccessMethod.js:1489 ~ granuleList.length:', granuleList.length)
 
   return (
     <div className="access-method">
@@ -1011,8 +1023,8 @@ const AccessMethod = ({
                     {
                       !(startDate || endDate) && (
                         <p className="access-method__section-status mb-0">
-                          { /* eslint-disable-next-line max-len */}
-                          No temporal range selected. Make a temporal selection to enable temporal subsetting.
+                          No temporal range selected.
+                          Make a temporal selection to enable temporal subsetting.
                         </p>
                       )
                     }
@@ -1059,8 +1071,8 @@ const AccessMethod = ({
                     {
                       !selectedSpatialDisplay && (
                         <p className="access-method__section-status mb-0">
-                          { /* eslint-disable-next-line max-len */}
-                          No spatial area selected. Make a spatial selection to enable spatial subsetting.
+                          No spatial area selected.
+                          Make a spatial selection to enable spatial subsetting.
                         </p>
                       )
                     }
@@ -1169,7 +1181,8 @@ const AccessMethod = ({
           )
         }
         {
-          supportsSwodlr && (
+          // TODO use No customization options are available for the selected access method.
+          supportsSwodlr && granuleList.length <= 10 && (
             <ProjectPanelSection
               customHeadingTag="h4"
               nested
@@ -1202,12 +1215,7 @@ const AccessMethod = ({
                           type="radio"
                           id="granule-extent-128-by-128"
                           checked={!granuleExtent}
-                          onChange={
-                            () => {
-                              handleGranuleExtent(false)
-                            }
-
-                          }
+                          onChange={handleGranuleExtent(false)}
                         />
                         <Form.Check
                           inline
@@ -1216,11 +1224,7 @@ const AccessMethod = ({
                           type="radio"
                           id="granule-extent-256-by-128"
                           checked={granuleExtent}
-                          onChange={
-                            () => {
-                              handleGranuleExtent(true)
-                            }
-                          }
+                          onChange={handleGranuleExtent(true)}
                         />
                       </div>
                     </Form>
@@ -1252,11 +1256,7 @@ const AccessMethod = ({
                           type="radio"
                           id="sample-grid-utm"
                           checked={sampleGrid === 'UTM'}
-                          onChange={
-                            () => {
-                              handleSampleGrid('UTM')
-                            }
-                          }
+                          onChange={handleSampleGrid('UTM')}
                         />
                         <Form.Check
                           inline
@@ -1265,11 +1265,7 @@ const AccessMethod = ({
                           type="radio"
                           id="sample-grid-lat-lon"
                           checked={sampleGrid === 'GEO'}
-                          onChange={
-                            () => {
-                              handleSampleGrid('GEO')
-                            }
-                          }
+                          onChange={handleSampleGrid('GEO')}
                         />
                       </div>
                     </Form>
