@@ -39,6 +39,7 @@ export const orderStates = {
     'quoted',
     'quoting',
     'running',
+    'running_with_errors',
     'submitted_with_exceptions',
     'submitting',
     'validated'
