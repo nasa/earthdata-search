@@ -61,7 +61,7 @@ test.describe('Panel Behavior', () => {
   test('drags the panel to closed', async ({ page }) => {
     await dragPanelToX(page, -1500)
 
-    await expect(page.locator('.panels--is-open.panels--will-minimize').length).toEqual(1)
+    await expect(page.locator('.panels--is-open.panels--will-minimize')).toHaveCount(1)
   })
 
   test('drags the panel to open from being closed', async ({ page }) => {
