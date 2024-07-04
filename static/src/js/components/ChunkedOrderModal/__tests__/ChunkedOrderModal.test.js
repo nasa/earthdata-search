@@ -122,6 +122,54 @@ describe('ChunkedOrderModal component', () => {
     })
   })
 
+  describe('access methods email notice', () => {
+    const emailNotice = 'Note: You will receive a separate set of confirmation emails for each order in collection title.'
+    test('ordering shows the notice ', () => {
+      setup({
+        projectCollectionsRequiringChunking: {
+          'C100005-EDSC': {
+            granules: {
+              hits: 9001
+            },
+            selectedAccessMethod: 'echoOrder0'
+          }
+        }
+      })
+
+      expect(screen.getByText(emailNotice)).toBeInTheDocument()
+    })
+
+    test('esi shows the notice', () => {
+      setup({
+        projectCollectionsRequiringChunking: {
+          'C100005-EDSC': {
+            granules: {
+              hits: 9001
+            },
+            selectedAccessMethod: 'esi0'
+          }
+        }
+      })
+
+      expect(screen.getByText(emailNotice)).toBeInTheDocument()
+    })
+
+    test('harmony does no show the notice', () => {
+      setup({
+        projectCollectionsRequiringChunking: {
+          'C100005-EDSC': {
+            granules: {
+              hits: 9001
+            },
+            selectedAccessMethod: 'harmony0'
+          }
+        }
+      })
+
+      expect(screen.queryByText(emailNotice)).not.toBeInTheDocument()
+    })
+  })
+
   describe('modal actions', () => {
     test('\'Refine your search\' button should trigger onToggleChunkedOrderModal', async () => {
       const user = userEvent.setup()
