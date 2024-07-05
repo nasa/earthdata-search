@@ -29,8 +29,8 @@ test.describe('Download spec', () => {
       })
     })
 
+    // Load the download data and mock the results
     await page.route(/retrievals/, async (route) => {
-      console.log(route.request().url())
       if (route.request().method() === 'GET') {
         await route.fulfill({
           json: retrieval.body,
@@ -112,8 +112,6 @@ test.describe('Download spec', () => {
 
     // Click the Download Data button
     await page.getByTestId('project-download-data').click()
-
-    // Load the download data and mock the results
 
     // Make sure all links that are in the download list are visible on the page
     await expect(page.getByText('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1720.061.2020008170450.hdf').first()).toBeVisible()
