@@ -100,6 +100,19 @@ test.describe('Download spec', () => {
       })
     })
 
+    await page.route(/granule_links/, async (route) => {
+      await route.fulfill({
+        json: {
+          cursor: null,
+          links: {
+            browse: [],
+            download: [],
+            s3: []
+          }
+        }
+      })
+    })
+
     // Make sure all links that are in the download list are visible on the page
     await expect(page.getByText('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1720.061.2020008170450.hdf').first()).toBeVisible()
     await expect(page.getByText('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1900.061.2020008170003.hdf').first()).toBeVisible()
