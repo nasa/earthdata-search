@@ -385,6 +385,20 @@ export const GranuleFiltersForm = (props) => {
                     setFieldValue('temporal.isRecurring', isChecked)
                     setFieldTouched('temporal.isRecurring', isChecked)
 
+                    // If recurring is checked and values exist, set the recurringDay values
+                    if (isChecked) {
+                      const newStartDate = moment(temporal.startDate || undefined).utc()
+                      if (temporal.startDate) {
+                        setFieldValue('temporal.recurringDayStart', newStartDate.dayOfYear())
+                      }
+
+                      const newEndDate = moment(temporal.endDate || undefined).utc()
+                      if (temporal.endDate) {
+                        // Use the start year to calculate the end day of year. This avoids leap years potentially causing day mismatches
+                        setFieldValue('temporal.recurringDayEnd', newEndDate.year(newStartDate.year()).dayOfYear())
+                      }
+                    }
+
                     setTimeout(() => {
                       handleSubmit()
                     }, 0)

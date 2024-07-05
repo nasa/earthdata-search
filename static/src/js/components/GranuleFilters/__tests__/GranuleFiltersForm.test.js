@@ -231,6 +231,26 @@ describe('GranuleFiltersForm component', () => {
           expect(props.setFieldValue).toHaveBeenCalledTimes(1)
           expect(props.setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2019-08-14T23:59:59:999Z')
         })
+
+        test('calls the correct callbacks on onRecurringToggle', () => {
+          const { enzymeWrapper, props } = setup({
+            values: {
+              temporal: {
+                startDate: '2019-08-13T00:00:00.000Z',
+                endDate: '2019-08-14T23:59:59.999Z'
+              }
+            }
+          })
+          const temporalSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
+          temporalSection.find(TemporalSelection).prop('onRecurringToggle')({ target: { checked: true } })
+
+          expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
+          expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.isRecurring', true)
+          expect(props.setFieldValue).toHaveBeenCalledTimes(3)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 225)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 226)
+        })
       })
     })
 
