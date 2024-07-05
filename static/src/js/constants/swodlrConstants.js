@@ -5,3 +5,89 @@ export const swodlrToolTips = {
   RasterResolution: 'Resolution of the raster sampling grid in units of integer meters UTM grids and integer arc-seconds for latitude-longitude grids.',
   SamplingGridResolution: 'Specifies the type of the raster sampling grid. It can be either a Universal Transverse Mercator (UTM) grid or a geodetic latitude-longitude grid.'
 }
+
+export const utmRasterOptions = [
+  {
+    title: '90 Meters',
+    value: 90
+  },
+  {
+    title: '120 Meters',
+    value: 120
+  },
+  {
+    title: '125 Meters',
+    value: 125
+  },
+  {
+    title: '200 Meters',
+    value: 200
+  },
+  {
+    title: '250 Meters',
+    value: 250
+  },
+  {
+    title: '500 Meters',
+    value: 500
+  },
+  {
+    title: '1000 Meters',
+    value: 1000
+  },
+  {
+    title: '2500 Meters',
+    value: 2500
+  },
+  {
+    title: '5000 Meters',
+    value: 5000
+  },
+  {
+    title: '10000 Meters',
+    value: 10000
+  }
+]
+
+export const geoRasterOptions = [
+  {
+    title: '3 arc-seconds',
+    value: 3
+  },
+  {
+    title: '4 arc-seconds',
+    value: 4
+  },
+  {
+    title: '5 arc-seconds',
+    value: 5
+  },
+  {
+    title: '6 arc-seconds',
+    value: 6
+  },
+  {
+    title: '8 arc-seconds',
+    value: 8
+  },
+  {
+    title: '15 arc-seconds',
+    value: 15
+  },
+  {
+    title: '30 arc-seconds',
+    value: 30
+  },
+  {
+    title: '60 arc-seconds',
+    value: 60
+  },
+  {
+    title: '180 arc-seconds',
+    value: 180
+  },
+  {
+    title: '300 arc-seconds',
+    value: 300
+  }
+]

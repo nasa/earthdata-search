@@ -80,6 +80,7 @@ const AccessMethod = ({
   } = selectedMethod || {}
 
   const { isRecurring } = temporal
+  console.log('🚀 ~ file: AccessMethod.js:186 ~ temporal:', temporal)
 
   // EnabledTemporalSubsetting by default
   let setTemporal = true
@@ -121,6 +122,8 @@ const AccessMethod = ({
     granuleListObj.push(granuleMetadata[id])
   })
 
+  // TODO does this useEffect actually work if I have a destructured value
+  // TODO can I specify this to be `granulesAllIds` in the dep array?
   useEffect(() => {
     setGranuleList(granuleListObj)
   }, [projectCollection])
@@ -435,7 +438,6 @@ const AccessMethod = ({
     let customizationOptions = null
     let disabled = false
     let errorMessage = ''
-
     // TODO pull out in the util
     switch (type) {
       case 'download': {
