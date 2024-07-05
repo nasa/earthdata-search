@@ -29,7 +29,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
   let harmonyIndex = 0
   const { items: serviceItems = null } = services
 
-  const { disableOrdering } = getApplicationConfig()
+  const { disableOrdering, disableSwodlr } = getApplicationConfig()
 
   if (serviceItems !== null) {
     serviceItems.forEach((serviceItem) => {
@@ -189,7 +189,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         harmonyIndex += 1
       }
 
-      if (serviceType.toLowerCase() === 'swodlr') {
+      if (serviceType.toLowerCase() === 'swodlr' && (disableSwodlr !== 'true')) {
         accessMethods.swodlr = {
           id: serviceConceptId,
           isValid: true,
