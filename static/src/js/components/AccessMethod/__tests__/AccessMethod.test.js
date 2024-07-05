@@ -1512,7 +1512,7 @@ describe('AccessMethod component', () => {
   })
 
   describe('when the selected access method is swodlr', () => {
-    test.skip('SWODLR Option displayed', async () => {
+    test('SWODLR Option displayed', async () => {
       const collectionId = 'collectionId'
       setup({
         accessMethods: {
@@ -1531,7 +1531,7 @@ describe('AccessMethod component', () => {
       expect(swodlrText).toBeInTheDocument()
     })
 
-    test.skip('selecting a granuleExtent calls onUpdateAccessMethod', async () => {
+    test('selecting a granuleExtent calls onUpdateAccessMethod', async () => {
       const user = userEvent.setup()
 
       const collectionId = 'collectionId'
@@ -1569,7 +1569,7 @@ describe('AccessMethod component', () => {
       })
     })
 
-    test.skip('selecting a LAT/LON sampling grid type calls onUpdateAccessMethod with automatic rasterResolution value adjustment', async () => {
+    test('selecting a LAT/LON sampling grid type calls onUpdateAccessMethod with automatic rasterResolution value adjustment', async () => {
       const user = userEvent.setup()
 
       const collectionId = 'collectionId'
@@ -1608,7 +1608,7 @@ describe('AccessMethod component', () => {
       })
     })
 
-    test.skip('can update individual granules MGRS band and UTM Zone Adjust', async () => {
+    test('can update individual granules MGRS band and UTM Zone Adjust', async () => {
       const user = userEvent.setup()
 
       const collectionId = 'collectionId'
