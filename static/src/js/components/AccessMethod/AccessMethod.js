@@ -17,7 +17,6 @@ import {
   Tooltip,
   Col
 } from 'react-bootstrap'
-import moment from 'moment'
 import * as Select from '@radix-ui/react-select'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
 import {
@@ -29,7 +28,7 @@ import {
 
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
-import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
+import { createTemporalDisplay } from '../../util/createTemporalDisplay'
 import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
 import {
   swodlrToolTips,
@@ -737,45 +736,8 @@ const AccessMethod = ({
     endDate = ''
   } = temporal
 
-  const temporalDateFormat = getTemporalDateFormat(isRecurring)
-  const format = 'YYYY-MM-DDTHH:m:s.SSSZ'
-
-  let startDateObject
-  let endDateObject = moment.utc(endDate, format, true)
-  let startDateDisplay
-  let endDateDisplay
-
-  if (startDate) {
-    startDateObject = moment.utc(startDate, format, true)
-  }
-
-  if (endDate) {
-    endDateObject = moment.utc(endDate, format, true)
-  }
-
-  if (startDateObject) {
-    startDateDisplay = startDateObject.format(temporalDateFormat)
-  }
-
-  if (endDateObject) {
-    endDateDisplay = endDateObject.format(temporalDateFormat)
-  }
-
-  // TODO write util for write selectedTemporalDisplay
-  let selectedTemporalDisplay
-
-  if (startDate && endDate) {
-    selectedTemporalDisplay = `${startDateDisplay} to ${endDateDisplay}`
-  }
-
-  if (startDate && !endDate) {
-    selectedTemporalDisplay = `${startDateDisplay} ongoing`
-  }
-
-  if (endDate && !startDate) {
-    selectedTemporalDisplay = `Up to ${endDateDisplay}`
-  }
-
+  // Get spatial and temporal display values
+  const selectedTemporalDisplay = createTemporalDisplay(temporal)
   const selectedSpatialDisplay = createSpatialDisplay(spatial)
 
   // Checking to see if the selectedMethod variables exists and has at least one variable
