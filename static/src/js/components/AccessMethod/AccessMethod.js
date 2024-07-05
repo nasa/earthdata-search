@@ -31,7 +31,11 @@ import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
 import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
-import { swodlrToolTips } from '../../constants/swodlrToolTips'
+import {
+  swodlrToolTips,
+  utmRasterOptions,
+  geoRasterOptions
+} from '../../constants/swodlrConstants'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -96,96 +100,12 @@ const AccessMethod = ({
     defaultConcatenation = false
   } = selectedMethod || {}
 
-  const utmRasterOptions = [
-    {
-      title: '90 Meters',
-      value: 90
-    },
-    {
-      title: '120 Meters',
-      value: 120
-    },
-    {
-      title: '125 Meters',
-      value: 125
-    },
-    {
-      title: '200 Meters',
-      value: 200
-    },
-    {
-      title: '250 Meters',
-      value: 250
-    },
-    {
-      title: '500 Meters',
-      value: 500
-    },
-    {
-      title: '1000 Meters',
-      value: 1000
-    },
-    {
-      title: '2500 Meters',
-      value: 2500
-    },
-    {
-      title: '5000 Meters',
-      value: 5000
-    },
-    {
-      title: '10000 Meters',
-      value: 10000
-    }
-  ]
-
-  const geoRasterOptions = [
-    {
-      title: '3 arc-seconds',
-      value: 3
-    },
-    {
-      title: '4 arc-seconds',
-      value: 4
-    },
-    {
-      title: '5 arc-seconds',
-      value: 5
-    },
-    {
-      title: '6 arc-seconds',
-      value: 6
-    },
-    {
-      title: '8 arc-seconds',
-      value: 8
-    },
-    {
-      title: '15 arc-seconds',
-      value: 15
-    },
-    {
-      title: '30 arc-seconds',
-      value: 30
-    },
-    {
-      title: '60 arc-seconds',
-      value: 60
-    },
-    {
-      title: '180 arc-seconds',
-      value: 180
-    },
-    {
-      title: '300 arc-seconds',
-      value: 300
-    }
-  ]
-
   const { isRecurring } = temporal
+  console.log('🚀 ~ file: AccessMethod.js:186 ~ temporal:', temporal)
 
   // Initialize State Variables
   // TODO enableTemporalSubsetting initialize state
+  // TODO useEffect on the isRecurring changed
   // Disable temporal subsetting if the user has a recurring date selected
   const [enableTemporalSubsetting, setEnableTemporalSubsetting] = useState(!isRecurring)
   const [selectedHarmonyMethodName, setSelectedHarmonyMethodName] = useState('')
@@ -239,6 +159,8 @@ const AccessMethod = ({
     granuleListObj.push(granuleMetadata[id])
   })
 
+  // TODO does this useEffect actually work if I have a destructured value
+  // TODO can I specify this to be `granulesAllIds` in the dep array?
   useEffect(() => {
     setGranuleList(granuleListObj)
   }, [projectCollection])
@@ -261,8 +183,6 @@ const AccessMethod = ({
   //   granuleList.push(granuleMetadata[id])
   // })
 
-  // Console.log('🚀 ~ file: AccessMethod.js:1435 ~ granuleList:', granuleList)
-  console.log('🚀 ~ file: AccessMethod.js:1438 ~ granuleList:', granuleList)
   // TODO below will cause bugs
   // SetGranuleList(granuleList)
 
@@ -644,7 +564,7 @@ const AccessMethod = ({
     let disabled = false
     let errorMessage = ''
     console.log('🚀 ~ file: AccessMethod.js:593 ~ Object.keys ~ customizationOptions:', customizationOptions)
-
+    // TODO pull out in the util
     switch (type) {
       case 'download': {
         id = `${collectionId}_access-method__direct-download`
@@ -841,6 +761,7 @@ const AccessMethod = ({
     endDateDisplay = endDateObject.format(temporalDateFormat)
   }
 
+  // TODO write util for write selectedTemporalDisplay
   let selectedTemporalDisplay
 
   if (startDate && endDate) {
