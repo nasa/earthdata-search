@@ -164,6 +164,7 @@ export class TemporalSelection extends Component {
                 </Form.Label>
                 <DatepickerContainer
                   id={`${controlId}__temporal-form__start-date`}
+                  label="Start Date"
                   onSubmit={(value) => onSubmitStart(value)}
                   type="start"
                   size={size}
@@ -183,6 +184,7 @@ export class TemporalSelection extends Component {
                 </Form.Label>
                 <DatepickerContainer
                   id={`${controlId}__temporal-form__end-date`}
+                  label="End Date"
                   onSubmit={(value) => onSubmitEnd(value)}
                   type="end"
                   size={size}
