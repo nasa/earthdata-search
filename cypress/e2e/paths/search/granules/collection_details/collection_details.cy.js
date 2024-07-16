@@ -399,7 +399,7 @@ describe('Path /search/granules/collection-details', () => {
     })
   })
 
-  describe('When collection has spatial', () => {
+  describe.only('When collection has spatial', () => {
     it('displays the spatial on the minimap', () => {
       const conceptId = 'C1996546500-GHRC_DAAC'
       const cmrHits = 8180

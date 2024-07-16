@@ -2,7 +2,7 @@ import { test, expect } from 'playwright-test-coverage'
 
 import singleCollection from './__mocks__/single_collection.json'
 
-test.describe.only('Collection List Behavior', () => {
+test.describe('Collection List Behavior', () => {
   test.beforeEach(async ({ page }) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
     await page.route(/collections.json/, async (route) => {
