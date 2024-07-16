@@ -37,7 +37,7 @@ const { defaultCmrPageSize } = getApplicationConfig()
  * @param {String} facetGroup Name of the facet that should be expanded
  */
 const testFacetGroupExistence = async (page, facetGroup) => {
-  await expect(page.getByTestId( `facet-${facetGroup}`)).toBeVisible()
+  await expect(page.getByTestId(`facet-${facetGroup}`)).toBeVisible()
 
   const facetGroups = [
     'features',
@@ -55,7 +55,7 @@ const testFacetGroupExistence = async (page, facetGroup) => {
   await Promise.all(
     facetGroups
       .filter((group) => group !== facetGroup)
-      .map((group) => expect(page.getByTestId( `facet-${group}`)).not.toBeVisible())
+      .map((group) => expect(page.getByTestId(`facet-${group}`)).not.toBeVisible())
   )
 }
 
@@ -65,7 +65,7 @@ const testFacetGroupExistence = async (page, facetGroup) => {
  * @param {Number} selectedCount How many elements are selected within the facet group
  */
 const testFacetGroupSelectedCount = async (page, facetGroup, selectedCount) => {
-  await expect(page.getByTestId( `facet_group-${facetGroup}`).locator('.facets-group__selected-count')).toHaveText(`${selectedCount} Selected`)
+  await expect(page.getByTestId(`facet_group-${facetGroup}`).locator('.facets-group__selected-count')).toHaveText(`${selectedCount} Selected`)
 }
 
 /**
@@ -106,7 +106,7 @@ test.describe('Path /search', () => {
       await testResultsSize(page, cmrHits)
 
       // Keyword input is empty
-      await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+      await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
       // Ensure facet group bodies are shown correctly
       await testFacetGroupExistence(page, 'features')
@@ -139,7 +139,7 @@ test.describe('Path /search', () => {
       await testResultsSize(page, cmrHits)
 
       // Keyword input is populated
-      await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('modis')
+      await expect(page.getByTestId('keyword-search-input')).toHaveValue('modis')
 
       // Ensure facet group bodies are shown correctly
       await testFacetGroupExistence(page, 'features')
@@ -173,7 +173,7 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -210,7 +210,7 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -250,12 +250,12 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
 
-        await expect(page.getByTestId( 'spatial-display_point')).toHaveValue('4.33676,65.44171')
+        await expect(page.getByTestId('spatial-display_point')).toHaveValue('4.33676,65.44171')
 
         // Test leaflet has drawn the shape correctly
         await expect(page.locator('.leaflet-marker-pane img')).toHaveAttribute('style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1165px, 386px, 0px); z-index: 386;')
@@ -288,12 +288,12 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
 
-        await expect(page.getByTestId( 'spatial-display_polygon')).toHaveText('3 Points')
+        await expect(page.getByTestId('spatial-display_polygon')).toHaveText('3 Points')
 
         // Test leaflet has drawn the shape correctly
         await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', 'M1161 407L1122 483L1257 502L1161 407z')
@@ -326,13 +326,13 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
 
-        await expect(page.getByTestId( 'spatial-display_circle-center')).toHaveValue('2.22154,62.18209')
-        await expect(page.getByTestId( 'spatial-display_circle-radius')).toHaveValue('100000')
+        await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue('2.22154,62.18209')
+        await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue('100000')
 
         // Test leaflet has drawn the shape correctly
         await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', 'M1136.1837511111112,401.20238222222224a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 ')
@@ -365,13 +365,13 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
 
-        await expect(page.getByTestId( 'spatial-display_southwest-point')).toHaveValue('0.99949,5.02679')
-        await expect(page.getByTestId( 'spatial-display_northeast-point')).toHaveValue('26.17555,32.8678')
+        await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue('0.99949,5.02679')
+        await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue('26.17555,32.8678')
 
         // Test leaflet has drawn the shape correctly
         await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', 'M736 410L736 231L934 231L934 410L736 410z')
@@ -440,13 +440,13 @@ test.describe('Path /search', () => {
         await expect(page).toHaveURL('search?polygon[0]=59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704%2C59.34354%2C-9.21839&sf=123&sfs[0]=0')
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
 
-        await expect(page.getByTestId( 'spatial-display_shapefile-name')).toHaveText('test.geojson')
-        await expect(page.getByTestId( 'filter-stack-item__hint')).toHaveText('1 shape selected')
+        await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
+        await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
 
         // Test leaflet has drawn the shape correctly
         await expect(page.locator('.leaflet-interactive').first()).toHaveAttribute('d', 'M1161 407L1122 483L1257 502L1161 407z')
@@ -481,12 +481,12 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Ensure that the correct feature facets are selected
-        await expect(page.getByTestId( 'facet_item-available-in-earthdata-cloud')).toBeChecked()
-        await expect(page.getByTestId( 'facet_item-customizable')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-map-imagery')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-available-in-earthdata-cloud')).toBeChecked()
+        await expect(page.getByTestId('facet_item-customizable')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -519,12 +519,12 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Ensure that the correct feature facets are selected
-        await expect(page.getByTestId( 'facet_item-available-in-earthdata-cloud')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-customizable')).toBeChecked()
-        await expect(page.getByTestId( 'facet_item-map-imagery')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-available-in-earthdata-cloud')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-customizable')).toBeChecked()
+        await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -557,12 +557,12 @@ test.describe('Path /search', () => {
         await testResultsSize(page, cmrHits)
 
         // Ensure that the correct feature facets are selected
-        await expect(page.getByTestId( 'facet_item-available-in-earthdata-cloud')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-customizable')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-map-imagery')).toBeChecked()
+        await expect(page.getByTestId('facet_item-available-in-earthdata-cloud')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-customizable')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-map-imagery')).toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
@@ -600,18 +600,18 @@ test.describe('Path /search', () => {
         await testFacetGroupSelectedCount(page, 'keywords', 1)
 
         // Ensure that the correct feature facets are selected
-        await expect(page.getByTestId( 'facet_item-available-in-earthdata-cloud')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-customizable')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-map-imagery')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-available-in-earthdata-cloud')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-customizable')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
 
         // Ensure the facet is selected
-        await page.getByTestId( 'facet_group-keywords').click()
+        await page.getByTestId('facet_group-keywords').click()
         await expect(page.locator('label[title="Aerosols"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -647,18 +647,18 @@ test.describe('Path /search', () => {
         await testFacetGroupSelectedCount(page, 'platforms', 1)
 
         // Ensure that the correct feature facets are selected
-        await expect(page.getByTestId( 'facet_item-available-in-earthdata-cloud')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-customizable')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-map-imagery')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-available-in-earthdata-cloud')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-customizable')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
 
         // Ensure the facet is selected
-        await page.getByTestId( 'facet_group-platforms').click()
+        await page.getByTestId('facet_group-platforms').click()
         await expect(page.locator('label[title="AIRCRAFT"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -694,18 +694,18 @@ test.describe('Path /search', () => {
         await testFacetGroupSelectedCount(page, 'instruments', 1)
 
         // Ensure that the correct feature facets are selected
-        await expect(page.getByTestId( 'facet_item-available-in-earthdata-cloud')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-customizable')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-map-imagery')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-available-in-earthdata-cloud')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-customizable')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
 
         // Ensure the facet is selected
-        await page.getByTestId( 'facet_group-instruments').click()
+        await page.getByTestId('facet_group-instruments').click()
         await expect(page.locator('label[title="AIRS"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -741,18 +741,18 @@ test.describe('Path /search', () => {
         await testFacetGroupSelectedCount(page, 'organizations', 1)
 
         // Ensure that the correct feature facets are selected
-        await expect(page.getByTestId( 'facet_item-available-in-earthdata-cloud')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-customizable')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-map-imagery')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-available-in-earthdata-cloud')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-customizable')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
 
         // Ensure the facet is selected
-        await page.getByTestId( 'facet_group-organizations').click()
+        await page.getByTestId('facet_group-organizations').click()
         await expect(page.locator('label[title="Alaska Satellite Facility"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -788,18 +788,18 @@ test.describe('Path /search', () => {
         await testFacetGroupSelectedCount(page, 'projects', 1)
 
         // Ensure that the correct feature facets are selected
-        await expect(page.getByTestId( 'facet_item-available-in-earthdata-cloud')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-customizable')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-map-imagery')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-available-in-earthdata-cloud')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-customizable')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
 
         // Ensure the facet is selected
-        await page.getByTestId( 'facet_group-projects').click()
+        await page.getByTestId('facet_group-projects').click()
         await expect(page.locator('label[title="ABoVE"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -835,18 +835,18 @@ test.describe('Path /search', () => {
         await testFacetGroupSelectedCount(page, 'processing-levels', 1)
 
         // Ensure that the correct feature facets are selected
-        await expect(page.getByTestId( 'facet_item-available-in-earthdata-cloud')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-customizable')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-map-imagery')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-available-in-earthdata-cloud')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-customizable')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
 
         // Ensure the facet is selected
-        await page.getByTestId( 'facet_group-processing-levels').click()
+        await page.getByTestId('facet_group-processing-levels').click()
         await expect(page.locator('label[title="0 - Raw Data"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -882,18 +882,18 @@ test.describe('Path /search', () => {
         await testFacetGroupSelectedCount(page, 'data-format', 1)
 
         // Ensure that the correct feature facets are selected
-        await expect(page.getByTestId( 'facet_item-available-in-earthdata-cloud')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-customizable')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-map-imagery')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-available-in-earthdata-cloud')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-customizable')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
 
         // Ensure the facet is selected
-        await page.getByTestId( 'facet_group-data-format').click()
+        await page.getByTestId('facet_group-data-format').click()
         await expect(page.locator('label[title="ArcGIS"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -929,18 +929,18 @@ test.describe('Path /search', () => {
         await testFacetGroupSelectedCount(page, 'tiling-system', 1)
 
         // Ensure that the correct feature facets are selected
-        await expect(page.getByTestId( 'facet_item-available-in-earthdata-cloud')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-customizable')).not.toBeChecked()
-        await expect(page.getByTestId( 'facet_item-map-imagery')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-available-in-earthdata-cloud')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-customizable')).not.toBeChecked()
+        await expect(page.getByTestId('facet_item-map-imagery')).not.toBeChecked()
 
         // Keyword input is empty
-        await expect(page.getByTestId( 'keyword-search-input')).toHaveValue('')
+        await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
 
         // Ensure facet group bodies are shown correctly
         await testFacetGroupExistence(page, 'features')
 
         // Ensure the facet is selected
-        await page.getByTestId( 'facet_group-tiling-system').click()
+        await page.getByTestId('facet_group-tiling-system').click()
         await expect(page.locator('label[title="CALIPSO"] input[type="checkbox"]')).toBeChecked()
       })
     })
@@ -1125,9 +1125,9 @@ test.describe('Path /search', () => {
       const cmrHits = 6209
 
       await page.route('**/search/collections.json', async (route, request) => {
-        const url = request.url();
+        const url = request.url()
         expect(url).toBe('https://cmr.uat.earthdata.nasa.gov/search/collections.json')
-  
+
         route.fulfill({
           body: JSON.stringify(eeBody),
           headers: {
