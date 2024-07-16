@@ -1,9 +1,8 @@
-@import "static/src/css/utils/variables/colors";
 .admin-retrievals-metrics-list {
   &__table-body {
     overflow-y: auto;
   }
-  
+
   &__table-row {
     cursor: default;
     overflow-y: auto;

@@ -39,7 +39,12 @@ export default defineConfig({
     nodePolyfills()
   ],
   css: {
-    devSourcemap: true
+    devSourcemap: true,
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@import "static/src/css/vendor/bootstrap/vars"; @import "static/src/css/utils/utils";'
+      }
+    }
   },
   resolve: {
     alias: {
