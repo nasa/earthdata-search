@@ -5,36 +5,15 @@ import React, {
   Suspense
 } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Accordion,
-  Alert,
-  Card,
-  Form,
-  Container,
-  Row,
-  Table,
-  OverlayTrigger,
-  Tooltip,
-  Col
-} from 'react-bootstrap'
+import { Alert, Form } from 'react-bootstrap'
 import * as Select from '@radix-ui/react-select'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
-import {
-  FaFileAlt,
-  FaExternalLinkAlt,
-  FaQuestionCircle,
-  FaChevronDown
-} from 'react-icons/fa'
+import { FaFileAlt, FaExternalLinkAlt } from 'react-icons/fa'
 
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { createTemporalDisplay } from '../../util/createTemporalDisplay'
 import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
-import {
-  swodlrToolTips,
-  utmRasterOptions,
-  geoRasterOptions
-} from '../../constants/swodlrConstants'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -44,6 +23,7 @@ import RadioList from '../FormFields/RadioList/RadioList'
 import Spinner from '../Spinner/Spinner'
 
 import './AccessMethod.scss'
+import SwodlrForm from './SwodlrForm'
 
 const EchoForm = lazy(() => import('./EchoForm'))
 
@@ -80,7 +60,6 @@ const AccessMethod = ({
   projectCollection
 }) => {
   const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
-  console.log('🚀 ~ file: AccessMethod.js:79 ~ selectedMethod:', selectedMethod)
 
   const {
     form,
@@ -100,7 +79,6 @@ const AccessMethod = ({
   } = selectedMethod || {}
 
   const { isRecurring } = temporal
-  console.log('🚀 ~ file: AccessMethod.js:186 ~ temporal:', temporal)
 
   // Initialize State Variables
   // TODO enableTemporalSubsetting initialize state
@@ -111,14 +89,8 @@ const AccessMethod = ({
   const [isHarmony, setIsHarmony] = useState(false)
   const [enableSpatialSubsetting, setEnableSpatialSubsetting] = useState(false)
   const [enableConcatenateDownload, setEnableConcatenateDownload] = useState(defaultConcatenation)
-  // TODO Granule extent is a bool?
-  const [granuleExtent, setGranuleExtent] = useState(false)
-  const [sampleGrid, setSampleGrid] = useState('UTM')
-  const [rasterResolution, setRasterResolution] = useState(90)
   const [granuleList, setGranuleList] = useState([])
   // Only set state on re-render
-
-  // Const [swodlrDisabled, setSwodlrDisabled] = useState(false)
 
   // Disable temporal subsetting if the user has a recurring date selected
   if (isRecurring) {
@@ -133,22 +105,12 @@ const AccessMethod = ({
     addedGranuleIds = [],
     allIds: granulesAllIds = []
   } = projectCollectionGranules
-  // TODO Old code on main
-  //    let granulesToDisplay = []
 
-  // if (addedGranuleIds.length > 0) {
-  //   granulesToDisplay = addedGranuleIds
-  // } else {
-  //   // Default to the first 10 granules for Swodlr service if none were subset
-  //   granulesToDisplay = granulesAllIds.slice(0, 10)
-  // }
   let granulesToDisplay = []
 
   if (addedGranuleIds.length > 0) {
     granulesToDisplay = addedGranuleIds
   } else {
-    // Default to the first 10 granules for Swodlr service if none were subset
-    // granulesToDisplay = granulesAllIds.slice(0, 10)
     granulesToDisplay = granulesAllIds
   }
 
@@ -163,27 +125,6 @@ const AccessMethod = ({
   useEffect(() => {
     setGranuleList(granuleListObj)
   }, [projectCollection])
-
-  // SetGranuleList(granuleListObj)
-
-  // Const granulesToDisplay = granulesAllIds.slice(0, 10)
-  // console.log('🚀 ~ file: AccessMethod.js:212 ~ granulesToDisplay:', granulesToDisplay)
-  // // TODO other useState
-  // const [granuleList, setGranuleList] = useState(granulesToDisplay)
-  // console.log('🚀 ~ file: AccessMethod.js:215 ~ granuleList:', granuleList)
-
-  // // TODO Don't do anything with swodlr if the conditions are not correct just disable it
-  // if (addedGranuleIds.length > 0 && addedGranuleIds.length < 10) {
-  //   // Update state for the granule list that swodlr uses
-  //   setGranuleList(granulesToDisplay)
-  // }
-
-  // GranulesToDisplay.forEach((id) => {
-  //   granuleList.push(granuleMetadata[id])
-  // })
-
-  // TODO below will cause bugs
-  // SetGranuleList(granuleList)
 
   if (selectedAccessMethod
       && selectedAccessMethod.startsWith('harmony')
@@ -314,76 +255,6 @@ const AccessMethod = ({
     }
   }
 
-  const handleSwoldrOptions = () => {
-    const { conceptId: collectionId } = metadata
-
-    const customParams = {}
-
-    granuleList.forEach((granule) => {
-      const { id } = granule
-      customParams[id] = {}
-      if (sampleGrid === 'UTM') {
-        customParams[id].utmZoneAdjust = granule.utmZoneAdjust ? granule.utmZoneAdjust : 0
-        customParams[id].mgrsBandAdjust = granule.mgrsBandAdjust ? granule.mgrsBandAdjust : 0
-      } else {
-        customParams[id].utmZoneAdjust = null
-        customParams[id].mgrsBandAdjust = null
-      }
-    })
-
-    onUpdateAccessMethod({
-      collectionId,
-      method: {
-        [selectedAccessMethod]: {
-          swodlrData: {
-            params: {
-              rasterResolution,
-              outputSamplingGridType: sampleGrid,
-              outputGranuleExtentFlag: granuleExtent
-            },
-            custom_params: customParams
-          }
-        }
-      }
-    })
-  }
-
-  const handleCollectionGranuleListUpdate = (indexVal, property, e) => {
-    if (property === 'utm') {
-      granuleList[indexVal].utmZoneAdjust = Number(e.target.value)
-    }
-
-    if (property === 'mgrs') {
-      granuleList[indexVal].mgrsBandAdjust = Number(e.target.value)
-    }
-
-    setGranuleList(granuleList)
-    handleSwoldrOptions()
-  }
-
-  const handleRasterResolutionUpdate = (event) => {
-    setRasterResolution(Number(event.target.value))
-    handleSwoldrOptions()
-  }
-
-  const handleSampleGrid = (type) => {
-    setSampleGrid(type)
-    let defaultRasterValue
-    if (type === 'GEO') {
-      defaultRasterValue = 3
-    } else {
-      defaultRasterValue = 90
-    }
-
-    setRasterResolution(defaultRasterValue)
-    handleSwoldrOptions()
-  }
-
-  const handleGranuleExtent = (value) => {
-    setGranuleExtent(value)
-    handleSwoldrOptions()
-  }
-
   const renderRadioItem = (radioItem, onPropsChange, selected) => {
     const {
       id,
@@ -395,8 +266,6 @@ const AccessMethod = ({
       disabled,
       errorMessage
     } = radioItem
-    console.log('🚀 ~ file: AccessMethod.js:439 ~ renderRadioItem ~ errorMessage:', errorMessage)
-    console.log('🚀 ~ file: AccessMethod.js:439 ~ renderRadioItem ~ disabled:', disabled)
 
     return (
       <AccessMethodRadio
@@ -562,7 +431,7 @@ const AccessMethod = ({
     let customizationOptions = null
     let disabled = false
     let errorMessage = ''
-    console.log('🚀 ~ file: AccessMethod.js:593 ~ Object.keys ~ customizationOptions:', customizationOptions)
+
     // TODO pull out in the util
     switch (type) {
       case 'download': {
@@ -640,7 +509,7 @@ const AccessMethod = ({
         details = 'Select options and generate customized products using the SWODLR service. Data will be avaliable for access once any necessary processing is complete.'
         disabled = granuleList && granuleList.length > 10
         // Update the error message if more than 10 granules are selected
-        errorMessage = granuleList && granuleList.length > 10 ? ' SWODLR customization is only available with a maximum of 10 granules. Reduce your granule selection to enable this option.' : ''
+        errorMessage = granuleList && granuleList.length > 10 ? 'SWODLR customization is only available with a maximum of 10 granules. Reduce your granule selection to enable this option.' : ''
         break
       }
 
@@ -649,7 +518,6 @@ const AccessMethod = ({
     }
 
     if (type) {
-      console.log('🚀 ~ file: AccessMethod.js:676 ~ Object.keys ~ type:', type)
       accessMethodsByType[type].push(
         {
           id,
@@ -1056,313 +924,14 @@ const AccessMethod = ({
           )
         }
         {
-          // TODO use No customization options are available for the selected access method.
-          supportsSwodlr && granuleList.length <= 10 && (
-            // TODO This is a difference between `() => {` and just hte function directly which can cause bugs on swodlr here
-            <ProjectPanelSection
-              customHeadingTag="h4"
-              nested
-            >
-              <Container fluid>
-                <Row>
-                  <Col>
-                    Granule Extent
-                    <OverlayTrigger
-                      placement="top"
-                      overlay={
-                        (
-                          <Tooltip style={{ width: '20rem' }}>
-                            {swodlrToolTips.GranuleExtent}
-                          </Tooltip>
-                        )
-                      }
-                    >
-                      <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
-                    </OverlayTrigger>
-
-                  </Col>
-                  <Col>
-                    <Form>
-                      <div className="mb-3">
-                        <Form.Check
-                          inline
-                          label="128 x 128 km"
-                          name="granuleExtent"
-                          type="radio"
-                          id="granule-extent-128-by-128"
-                          checked={!granuleExtent}
-                          onChange={
-                            () => {
-                              handleGranuleExtent(false)
-                            }
-
-                          }
-                        />
-                        <Form.Check
-                          inline
-                          label="256 x 128 km"
-                          name="granuleExtent"
-                          type="radio"
-                          id="granule-extent-256-by-128"
-                          checked={granuleExtent}
-                          onChange={
-                            () => {
-                              handleGranuleExtent(true)
-                            }
-                          }
-                        />
-                      </div>
-                    </Form>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    Sampling Grid Type
-                    <OverlayTrigger
-                      placement="top"
-                      overlay={
-                        (
-                          <Tooltip style={{ width: '20rem' }}>
-                            {swodlrToolTips.SamplingGridResolution}
-                          </Tooltip>
-                        )
-                      }
-                    >
-                      <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
-                    </OverlayTrigger>
-                  </Col>
-                  <Col>
-                    <Form>
-                      <div className="mb-3">
-                        <Form.Check
-                          inline
-                          label="UTM"
-                          name="sample-grid"
-                          type="radio"
-                          id="sample-grid-utm"
-                          checked={sampleGrid === 'UTM'}
-                          onChange={
-                            () => {
-                              handleSampleGrid('UTM')
-                            }
-                          }
-                        />
-                        <Form.Check
-                          inline
-                          label="LAT/LON"
-                          name="sample-grid"
-                          type="radio"
-                          id="sample-grid-lat-lon"
-                          checked={sampleGrid === 'GEO'}
-                          onChange={
-                            () => {
-                              handleSampleGrid('GEO')
-                            }
-                          }
-                        />
-                      </div>
-                    </Form>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    Raster Resolution
-                    <OverlayTrigger
-                      placement="top"
-                      overlay={
-                        (
-                          <Tooltip style={{ width: '20rem' }}>
-                            {swodlrToolTips.RasterResolution}
-                          </Tooltip>
-                        )
-                      }
-                    >
-                      <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
-                    </OverlayTrigger>
-                  </Col>
-                  <Col>
-                    <Form>
-                      <Form.Control
-                        as="select"
-                        onChange={
-                          (e) => {
-                            handleRasterResolutionUpdate(e)
-                          }
-                        }
-                        value={rasterResolution}
-                      >
-                        {
-                          sampleGrid === 'GEO'
-                            ? geoRasterOptions.map((option) => (
-                              <option value={option.value} key={option.value}>
-                                {option.title}
-                              </option>
-                            ))
-                            : utmRasterOptions.map((option) => (
-                              <option value={option.value} key={option.value}>
-                                {option.title}
-                              </option>
-                            ))
-                        }
-                      </Form.Control>
-                    </Form>
-
-                  </Col>
-                </Row>
-                <br />
-                <Row hidden={sampleGrid !== 'UTM'}>
-                  <Col>
-                    <Accordion>
-                      <Card>
-                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                          <div data-testid="advancedOptionsToggle" className="swodlr-advanced-options-container">
-                            <div className="swodlr-advanced-options-item">
-                              Advanced options
-                            </div>
-                            <EDSCIcon icon={FaChevronDown} className="swodlr-advanced-options-icon" />
-                          </div>
-                        </Accordion.Toggle>
-                        <Accordion.Collapse eventKey="0">
-                          <Card.Body>
-                            <Table striped bordered size="sm" responsive>
-                              <thead>
-                                <tr>
-                                  <th>Granule</th>
-                                  <th>
-                                    UTM Zone Adjust
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={
-                                        (
-                                          <Tooltip style={{ width: '20rem' }}>
-                                            {swodlrToolTips.UTM}
-                                          </Tooltip>
-                                        )
-                                      }
-                                    >
-                                      <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
-                                    </OverlayTrigger>
-                                  </th>
-                                  <th>
-                                    MGRS Band Adjust
-                                    <OverlayTrigger
-                                      placement="top"
-                                      overlay={
-                                        (
-                                          <Tooltip style={{ width: '20rem' }}>
-                                            {swodlrToolTips.MGRS}
-                                          </Tooltip>
-                                        )
-                                      }
-                                    >
-                                      <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
-                                    </OverlayTrigger>
-                                  </th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {
-                                  granuleList && granuleList.map((granule, i) => (
-                                    <tr key={granule.id}>
-                                      <td>{granule.id}</td>
-                                      <td className="nowrap">
-                                        <Form.Check
-                                          inline
-                                          label="+1"
-                                          name={`${granule.id}-UTM-zone`}
-                                          type="radio"
-                                          data-testid={`${granule.id}-plus-1-UTM-zone`}
-                                          value={1}
-                                          onChange={
-                                            (e) => {
-                                              handleCollectionGranuleListUpdate(i, 'utm', e)
-                                            }
-                                          }
-                                        />
-                                        <Form.Check
-                                          inline
-                                          label="0"
-                                          name={`${granule.id}-UTM-zone`}
-                                          type="radio"
-                                          data-testid={`${granule.id}-0-UTM-zone`}
-                                          value={0}
-                                          defaultChecked
-                                          onChange={
-                                            (e) => {
-                                              handleCollectionGranuleListUpdate(i, 'utm', e)
-                                            }
-                                          }
-                                        />
-                                        <Form.Check
-                                          inline
-                                          label="-1"
-                                          name={`${granule.id}-UTM-zone`}
-                                          type="radio"
-                                          data-testid={`${granule.id}-minus-1-UTM-zone`}
-                                          value={-1}
-                                          onChange={
-                                            (e) => {
-                                              handleCollectionGranuleListUpdate(i, 'utm', e)
-                                            }
-                                          }
-                                        />
-                                      </td>
-                                      <td className="nowrap">
-                                        <Form.Check
-                                          inline
-                                          label="+1"
-                                          name={`${granule.id}-MGRS-band`}
-                                          type="radio"
-                                          data-testid={`${granule.id}-plus-1-MGRS-band`}
-                                          value={1}
-                                          onChange={
-                                            (e) => {
-                                              handleCollectionGranuleListUpdate(i, 'mgrs', e)
-                                            }
-                                          }
-                                        />
-                                        <Form.Check
-                                          inline
-                                          label="0"
-                                          name={`${granule.id}-MGRS-band`}
-                                          type="radio"
-                                          data-testid={`${granule.id}-0-MGRS-band`}
-                                          value={0}
-                                          defaultChecked
-                                          onChange={
-                                            (e) => {
-                                              handleCollectionGranuleListUpdate(i, 'mgrs', e)
-                                            }
-                                          }
-                                        />
-                                        <Form.Check
-                                          inline
-                                          label="-1"
-                                          name={`${granule.id}-MGRS-band`}
-                                          type="radio"
-                                          data-testid={`${granule.id}-minus-1-MGRS-band`}
-                                          value={-1}
-                                          onChange={
-                                            (e) => {
-                                              handleCollectionGranuleListUpdate(i, 'mgrs', e)
-                                            }
-                                          }
-                                        />
-                                      </td>
-                                    </tr>
-                                  ))
-
-                                }
-                              </tbody>
-                            </Table>
-                          </Card.Body>
-                        </Accordion.Collapse>
-                      </Card>
-                    </Accordion>
-                  </Col>
-                </Row>
-              </Container>
-            </ProjectPanelSection>
+          (supportsSwodlr) && (
+            <SwodlrForm
+              granuleList={granuleList}
+              collectionId={collectionId}
+              onUpdateAccessMethod={onUpdateAccessMethod}
+              selectedAccessMethod={selectedAccessMethod}
+              setGranuleList={setGranuleList}
+            />
           )
         }
       </ProjectPanelSection>
