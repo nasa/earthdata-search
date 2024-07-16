@@ -2,7 +2,6 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import L from 'leaflet'
-import '../../util/map/sphericalPolygon'
 
 import {
   camelCase,

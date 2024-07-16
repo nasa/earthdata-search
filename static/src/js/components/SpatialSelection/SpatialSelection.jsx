@@ -92,6 +92,9 @@ L.Draw.Tooltip.prototype.updatePosition = function updatePosition(latlng) {
   return originalUpdatePosition.call(this, latlng)
 }
 
+// https://stackoverflow.com/questions/76893010/error-while-trying-to-draw-a-rectangle-using-react-leaflet-draw-with-vite-uncau#comment136939532_76893010
+window.type = true
+
 const SpatialSelection = (props) => {
   const map = useMap()
   const layers = useRef([])
