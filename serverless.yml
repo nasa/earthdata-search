@@ -206,15 +206,6 @@ custom:
     bundle: true
     minify: ${self:custom.minifyBuild.${self:provider.stage}}
 
-  # Serverless Webpack configurations
-  webpack:
-    webpackConfig: 'serverless.webpack.config.js'
-    includeModules:
-      forceExclude:
-        - aws-sdk
-    packager: 'npm'
-    excludeFiles: src/**/*.test.js
-
   # Manage resource count (Maximum of 200) by splitting up the cloudformation templates
   splitStacks:
     perFunction: true
