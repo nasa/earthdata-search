@@ -359,7 +359,7 @@ describe('layers util', () => {
       })
 
       test('returns a sphericalPolygon layer when polygon spatial is not cartesian', () => {
-        const sphericalPolygonMock = jest.spyOn(L, 'sphericalPolygon').mockImplementation((point) => ({ ...point }))
+        const sphericalPolygonMock = jest.spyOn(L, 'SphericalPolygon').mockImplementation((point) => ({ ...point }))
 
         const metadata = {
           polygons: [['-10 -162.4683 -10.013 -151.7155 -0.0009 -149.4309 0.015 -160.0162 -10 -162.4683']]
@@ -456,7 +456,7 @@ describe('layers util', () => {
     })
 
     test('returns a sphericalPolygon layer when geodetic boxes spatial is provided', () => {
-      const sphericalPolygonMock = jest.spyOn(L, 'sphericalPolygon').mockImplementation((point) => ({ ...point }))
+      const sphericalPolygonMock = jest.spyOn(L, 'SphericalPolygon').mockImplementation((point) => ({ ...point }))
 
       const metadata = {
         coordinateSystem: 'GEODETIC',
