@@ -43,16 +43,13 @@ export default class CollectionRequest extends CmrRequest {
     return collectionRequestNonIndexedCmrKeys
   }
 
-  async search(params) {
+  search(params) {
     if (params.twoDCoordinateSystem && params.twoDCoordinateSystem.coordinates) {
       // eslint-disable-next-line no-param-reassign
       delete params.twoDCoordinateSystem.coordinates
     }
 
-    const response = await this.post(this.searchPath, params)
-    console.log('🚀 ~ CollectionRequest ~ search ~ response:', response)
-
-    return response
+    return this.post(this.searchPath, params)
   }
 
   /**
