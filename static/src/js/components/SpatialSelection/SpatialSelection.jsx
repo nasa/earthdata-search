@@ -3,8 +3,7 @@
 import React, {
   useEffect,
   useMemo,
-  useRef,
-  useState
+  useRef
 } from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -100,8 +99,9 @@ const SpatialSelection = (props) => {
   const layers = useRef([])
   const drawnLayers = useRef([])
   const drawControl = useRef(null)
-  const [preEditBounds, setPreEditBounds] = useState(null)
   const featureGroupRef = useRef(null)
+  // https://stackoverflow.com/questions/57847594/accessing-up-to-date-state-from-within-a-callback/62453660#62453660
+  const preEditBounds = useRef()
 
   const {
     advancedSearch: propsAdvancedSearch = {},
@@ -471,7 +471,7 @@ const SpatialSelection = (props) => {
 
   // Callback from EditControl, called when clicking the edit button
   const onEditStart = () => {
-    setPreEditBounds(layers.current.map((layer) => boundsToPoints(layer)))
+    preEditBounds.current = layers.current.map((layer) => boundsToPoints(layer))
   }
 
   // Callback from EditControl, called when clicking the save button
@@ -479,13 +479,14 @@ const SpatialSelection = (props) => {
     const { onMetricsSpatialEdit } = props
     const postEditBounds = layers.current.map((layer) => boundsToPoints(layer))
 
-    preEditBounds.forEach((bounds, index) => {
+    // Iterate over the `stateRefPreEditBounds` and get the difference between that and the `postEditBounds`
+    preEditBounds.current.forEach((bounds, index) => {
       const { type: layerType } = layers.current[index]
       let distanceSum = 0
 
-      bounds.forEach((p0, i) => {
-        const p1 = postEditBounds[index][i]
-        distanceSum += p0.distanceTo(p1)
+      bounds.forEach((initialPoint, i) => {
+        const updatedPoint = postEditBounds[index][i]
+        distanceSum += initialPoint.distanceTo(updatedPoint)
       })
 
       onMetricsSpatialEdit({

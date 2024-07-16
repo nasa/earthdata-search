@@ -5,9 +5,11 @@ import PropTypes from 'prop-types'
 import SpatialSelectionDropdown from '../../components/SpatialDisplay/SpatialSelectionDropdown'
 
 import actions from '../../actions'
+import { metricsSpatialSelection } from '../../middleware/metrics/actions'
 
 export const mapDispatchToProps = (dispatch) => ({
-  onToggleShapefileUploadModal: (state) => dispatch(actions.toggleShapefileUploadModal(state))
+  onToggleShapefileUploadModal: (state) => dispatch(actions.toggleShapefileUploadModal(state)),
+  onMetricsSpatialSelection: (data) => dispatch(metricsSpatialSelection(data))
 })
 
 /**
@@ -16,17 +18,20 @@ export const mapDispatchToProps = (dispatch) => ({
  */
 export const SpatialSelectionDropdownContainer = (props) => {
   const {
+    onMetricsSpatialSelection,
     onToggleShapefileUploadModal
   } = props
 
   return (
     <SpatialSelectionDropdown
       onToggleShapefileUploadModal={onToggleShapefileUploadModal}
+      onMetricsSpatialSelection={onMetricsSpatialSelection}
     />
   )
 }
 
 SpatialSelectionDropdownContainer.propTypes = {
+  onMetricsSpatialSelection: PropTypes.func.isRequired,
   onToggleShapefileUploadModal: PropTypes.func.isRequired
 }
 

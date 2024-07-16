@@ -7,6 +7,7 @@ import {
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
+  METRICS_SPATIAL_SELECTION,
   METRICS_TIMELINE,
   METRICS_TIMING
 } from '../constants'
@@ -100,7 +101,7 @@ describe('metrics middleware', () => {
     expect(events.timeline).toHaveBeenCalledWith(action)
   })
 
-  test('calls timeline event', () => {
+  test('calls map event', () => {
     // eslint-disable-next-line no-import-assign
     events.map = jest.fn()
     const { invoke } = createStore()
@@ -130,6 +131,22 @@ describe('metrics middleware', () => {
     invoke(action)
     expect(events.spatialEdit).toHaveBeenCalledTimes(1)
     expect(events.spatialEdit).toHaveBeenCalledWith(action)
+  })
+
+  test('calls spatialSelection event', () => {
+    // eslint-disable-next-line no-import-assign
+    events.spatialSelection = jest.fn()
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_SPATIAL_SELECTION,
+      payload: {
+        item: 'Test'
+      }
+    }
+    invoke(action)
+    expect(events.spatialSelection).toHaveBeenCalledTimes(1)
+    expect(events.spatialSelection).toHaveBeenCalledWith(action)
   })
 
   test('calls timing event', () => {
