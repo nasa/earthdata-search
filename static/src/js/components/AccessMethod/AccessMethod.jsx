@@ -80,7 +80,6 @@ const AccessMethod = ({
   } = selectedMethod || {}
 
   const { isRecurring } = temporal
-  console.log('🚀 ~ file: AccessMethod.js:186 ~ temporal:', temporal)
 
   // EnabledTemporalSubsetting by default
   let setTemporal = true
@@ -524,7 +523,6 @@ const AccessMethod = ({
     }
 
     if (type) {
-      console.log('🚀 ~ file: AccessMethod.js:676 ~ Object.keys ~ type:', type)
       accessMethodsByType[type].push(
         {
           id,
