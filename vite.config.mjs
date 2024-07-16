@@ -56,6 +56,7 @@ export default defineConfig({
       ]
     }
   },
+  // TODO: vitest is currently blocked by enzyme removal ticket EDSC-4201
   test: {
     globals: true,
     environment: 'jsdom',

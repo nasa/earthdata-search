@@ -4,10 +4,6 @@
 // jQuery
 import nock from 'nock'
 import enableHooks from 'jest-react-hooks-shallow'
-import { TextEncoder, TextDecoder } from 'util'
-
-global.TextEncoder = TextEncoder
-global.TextDecoder = TextDecoder
 
 // Google Tag Manager dataLayer
 global.dataLayer = {
