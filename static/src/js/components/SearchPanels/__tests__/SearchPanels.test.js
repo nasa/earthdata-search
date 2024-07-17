@@ -61,7 +61,7 @@ function setup(overrideProps, location = '/search') {
     },
     collectionQuery: {
       pageNum: 1,
-      sortKey: ['']
+      sortKey: ['-score']
     },
     collectionsSearch: {
       allIds: ['COLL_ID_1'],

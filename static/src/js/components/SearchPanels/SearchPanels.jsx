@@ -177,10 +177,10 @@ class SearchPanels extends PureComponent {
 
     const {
       pageNum: collectionsPageNum = 1,
-      sortKey: collectionsSortKey = ''
+      sortKey: collectionsSortKey = '-score'
     } = collectionQuery
 
-    const [activeCollectionsSortKey = ''] = collectionsSortKey
+    const [activeCollectionsSortKey = '-score'] = collectionsSortKey
 
     const {
       allIds: collectionAllIds,
@@ -280,8 +280,7 @@ class SearchPanels extends PureComponent {
     ]
 
     const setCollectionSort = (value) => {
-      const sortKey = value === 'relevance' ? undefined : [value]
-
+      const sortKey = [value]
       onChangeQuery({
         collection: {
           sortKey
@@ -294,8 +293,8 @@ class SearchPanels extends PureComponent {
     const collectionsSortsArray = [
       {
         label: 'Relevance',
-        isActive: activeCollectionsSortKey === '',
-        onClick: () => setCollectionSort('relevance')
+        isActive: activeCollectionsSortKey === '-score',
+        onClick: () => setCollectionSort('-score')
       },
       {
         label: 'Usage',

@@ -60,7 +60,7 @@ describe('PreferencesForm component', () => {
         formData: {
           panelState: 'collapsed',
           collectionListView: 'list',
-          collectionSort: 'relevance',
+          collectionSort: '-score',
           granuleListView: 'table',
           granuleSort: 'end_date',
           mapView: {
@@ -83,7 +83,7 @@ describe('PreferencesForm component', () => {
     expect(enzymeWrapper.find(Form).props().formData).toEqual({
       panelState: 'collapsed',
       collectionListView: 'list',
-      collectionSort: 'relevance',
+      collectionSort: '-score',
       granuleListView: 'table',
       granuleSort: 'end_date',
       mapView: {

@@ -17,7 +17,7 @@ const initialState = {
     keyword: '',
     hasGranulesOrCwic: true,
     pageNum: 1,
-    sortKey: ['-usage_score'],
+    sortKey: ['-score'],
     spatial: {},
     temporal: {}
   },
@@ -54,7 +54,7 @@ describe('UPDATE_COLLECTION_QUERY', () => {
         ...payload,
         byId: {},
         hasGranulesOrCwic: true,
-        sortKey: ['-usage_score']
+        sortKey: ['-score']
       },
       region: {
         exact: false
@@ -154,11 +154,11 @@ describe('RESTORE_FROM_URL', () => {
     })
   })
 
-  describe('with the relevance collection sort preference', () => {
+  describe('with the usage collection sort preference', () => {
     test('returns the correct state', () => {
       const query = {
         collection: { pageNum: 1 },
-        collectionSortPreference: 'relevance',
+        collectionSortPreference: '-usage_score',
         granule: { pageNum: 1 },
         region: {
           exact: true
@@ -178,7 +178,7 @@ describe('RESTORE_FROM_URL', () => {
         collection: {
           ...initialState.collection,
           ...query.collection,
-          sortKey: undefined
+          sortKey: ['-usage_score']
         }
       }
 
