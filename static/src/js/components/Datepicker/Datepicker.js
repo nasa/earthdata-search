@@ -60,6 +60,7 @@ class Datepicker extends PureComponent {
   render() {
     const {
       isValidDate,
+      label,
       onBlur,
       onChange,
       picker,
@@ -79,7 +80,8 @@ class Datepicker extends PureComponent {
             id,
             placeholder: format,
             autoComplete: 'off',
-            className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`
+            className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`,
+            'aria-label': label
           }
         }
         isValidDate={isValidDate}
@@ -97,14 +99,16 @@ class Datepicker extends PureComponent {
 
 Datepicker.defaultProps = {
   format: 'YYYY-MM-DD HH:mm:ss',
+  label: '',
   size: '',
   value: '',
   viewMode: 'years'
 }
 
 Datepicker.propTypes = {
-  id: PropTypes.string.isRequired,
   format: PropTypes.string,
+  label: PropTypes.string,
+  id: PropTypes.string.isRequired,
   isValidDate: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,

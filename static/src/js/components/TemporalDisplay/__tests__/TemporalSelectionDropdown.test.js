@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
+  act,
   fireEvent,
   render,
   screen,
@@ -201,6 +202,59 @@ describe('TemporalSelectionDropdown component', () => {
           isRecurring: false,
           startDate: validStartDate,
           endDate: validEndDate
+        }
+      }
+    })
+
+    expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
+  })
+
+  test('applies the values for leap years onApplyClick', async () => {
+    const onChangeQueryMock = jest.fn()
+    const user = userEvent.setup()
+
+    setup({
+      onChangeQuery: onChangeQueryMock
+    })
+
+    const validStartDate = '2021-06-15 00:00:00'
+    const validEndDate = '2024-06-15 23:59:59'
+
+    await act(async () => {
+      await user.click(screen.getByRole('button'))
+    })
+
+    const startField = await screen.findByRole('textbox', { name: 'Start Date' })
+    const endField = await screen.findByRole('textbox', { name: 'End Date' })
+
+    // Select the start date
+    await user.click(startField)
+    await user.click((await screen.findAllByText('2021')).at(0))
+    await user.click(await screen.findByText('Jun'))
+    await user.click(await screen.findByText('15'))
+    expect(startField).toHaveValue(validStartDate)
+
+    // Select the end date
+    await user.click(endField)
+    await user.click((await screen.findAllByText('2024')).at(1))
+    await user.click(await screen.findByText('Jun'))
+    await user.click(await screen.findByText('15'))
+    expect(endField).toHaveValue(validEndDate)
+
+    // Select Recurring
+    await user.click(screen.getByLabelText('Recurring?'))
+
+    const applyBtn = screen.getByRole('button', { name: 'Apply' })
+    await user.click(applyBtn)
+
+    expect(onChangeQueryMock).toHaveBeenCalledWith({
+      collection: {
+        temporal: {
+          isRecurring: true,
+          startDate: '2021-06-15T00:00:00.000Z',
+          endDate: '2024-06-15T23:59:59.999Z',
+          recurringDayEnd: '166',
+          recurringDayStart: '166'
         }
       }
     })

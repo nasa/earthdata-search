@@ -77,6 +77,57 @@ describe('generateRetrievalPayloads', () => {
     })
   })
 
+  describe('when the access method is a swodlr order', () => {
+    test('the max granules per order is 1', async () => {
+      const orderPayloads = await generateRetrievalPayloads(
+        {
+          id: 19,
+          access_method: {
+            type: 'SWODLR',
+            id: 'S10000001-EDSC',
+            url: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
+          },
+          collection_metadata: {},
+          granule_count: 4,
+          granule_params: {
+            concept_id: ['G10000000-EDSC', 'G10000001-EDSC', 'G10000002-EDSC', 'G10000003-EDSC'],
+            echo_collection_id: 'C10000005-EDSC'
+          }
+        },
+        {
+          type: 'SWODLR'
+        }
+      )
+
+      expect(orderPayloads).toEqual([
+        {
+          concept_id: ['G10000000-EDSC'],
+          echo_collection_id: 'C10000005-EDSC',
+          page_num: 1,
+          page_size: 1
+        },
+        {
+          concept_id: ['G10000001-EDSC'],
+          echo_collection_id: 'C10000005-EDSC',
+          page_num: 2,
+          page_size: 1
+        },
+        {
+          concept_id: ['G10000002-EDSC'],
+          echo_collection_id: 'C10000005-EDSC',
+          page_num: 3,
+          page_size: 1
+        },
+        {
+          concept_id: ['G10000003-EDSC'],
+          echo_collection_id: 'C10000005-EDSC',
+          page_num: 4,
+          page_size: 1
+        }
+      ])
+    })
+  })
+
   test('returns the correct payload for a single page', async () => {
     const orderPayloads = await generateRetrievalPayloads(
       {

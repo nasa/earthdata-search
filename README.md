@@ -12,7 +12,7 @@ It builds upon several public-facing services provided by EOSDIS, including the 
 
 ## License
 
-> Copyright © 2007-2023 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
+> Copyright © 2007-2024 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
 >
 > Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 > You may obtain a copy of the License at
@@ -51,7 +51,7 @@ npm is a separate project from Node.js, and tends to update more frequently. As 
 
 ##### NVM
 
-To ensure that you're using the correct version of Node it is recommended that you use Node Version Manager. Installation instructions can be found on [the repository](https://github.com/nvm-sh/nvm#install--update-script). The version used is defined in .nvmrc and will be used automatically if NVM is configured correctly. Using nvm we can switch node versions to the one utilized on Earthdata Search. From the top-level directory:
+To ensure that you're using the correct version of Node it is recommended that you use Node Version Manager. Installation instructions can be found on [the repository](https://github.com/nvm-sh/nvm#install--update-script). The version used is defined in .nvmrc and will be used automatically if NVM is configured correctly. Using nvm we can switch node versions to the one utilized by Earthdata Search. From the top-level directory:
 
     nvm use
 
@@ -97,7 +97,7 @@ For local development Earthdata Search uses a json configuration file to store s
 
     cp secret.config.json.example secret.config.json
 
-In order to operate against a local database this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `databasePort` in `static.config.json` if you have custom configuration locally). 
+In order to operate against a local database this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `databasePort` in `static.config.json` if you have custom configuration locally).
 
 If you created the `postgres` user after a new PostgreSQL install as described above, both `dbUsername` and `dbPassword` will be the username you use to log into your computer.
 
@@ -155,7 +155,7 @@ The [serverless framework](https://serverless.com/framework/docs/providers/aws/)
 
 - Scale images
 
-Scaling thumbnail images utilizes a redis cache in the deployed environment. To utilize this cache locally you'll need to install Redis on the dev machine. The easiest way to do this would be by running it in a docker container use the command `npm run start:cache`. You can also use a visualizer such as `RedisInsight` to more easily inspect the cache. You will also need to set the environment variable `USE_CACHE` locally to `true` with `export USE_CACHE=true` or add the environment variable to your shell script. After you've started up the cache service. To stop the docker container use the `npm run stop:cache` command.
+Scaling thumbnail images utilizes a redis cache in the deployed environment. To utilize this cache locally you'll need to install Redis on the dev machine. The easiest way to do this would be by running it in a docker container using the command `npm run start:cache`. You can also use a visualizer such as `RedisInsight` to more easily inspect the cache. You will also need to set the environment variable `USE_CACHE` locally to `true` with `export USE_CACHE=true` or add the environment variable to your shell script. To stop the docker container use the `npm run stop:cache` command.
 
 #### Running API Gateway and Lambda Locally
 

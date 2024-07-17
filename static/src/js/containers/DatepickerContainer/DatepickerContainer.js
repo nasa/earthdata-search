@@ -129,6 +129,7 @@ class DatepickerContainer extends Component {
     const {
       id,
       format,
+      label,
       size,
       viewMode
     } = this.props
@@ -149,6 +150,7 @@ class DatepickerContainer extends Component {
         id={id}
         format={format}
         isValidDate={this.isValidDate}
+        label={label}
         onBlur={this.onBlur}
         onChange={this.onChange}
         onClearClick={this.onClearClick}
@@ -164,6 +166,7 @@ class DatepickerContainer extends Component {
 
 DatepickerContainer.defaultProps = {
   format: 'YYYY-MM-DD HH:mm:ss',
+  label: '',
   maxDate: '',
   minDate: '',
   shouldValidate: true,
@@ -176,6 +179,7 @@ DatepickerContainer.defaultProps = {
 DatepickerContainer.propTypes = {
   format: PropTypes.string,
   id: PropTypes.string.isRequired,
+  label: PropTypes.string,
   maxDate: PropTypes.string,
   minDate: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,

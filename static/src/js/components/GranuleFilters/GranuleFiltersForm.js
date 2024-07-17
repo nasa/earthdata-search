@@ -385,6 +385,20 @@ export const GranuleFiltersForm = (props) => {
                     setFieldValue('temporal.isRecurring', isChecked)
                     setFieldTouched('temporal.isRecurring', isChecked)
 
+                    // If recurring is checked and values exist, set the recurringDay values
+                    if (isChecked) {
+                      const newStartDate = moment(temporal.startDate || undefined).utc()
+                      if (temporal.startDate) {
+                        setFieldValue('temporal.recurringDayStart', newStartDate.dayOfYear())
+                      }
+
+                      const newEndDate = moment(temporal.endDate || undefined).utc()
+                      if (temporal.endDate) {
+                        // Use the start year to calculate the end day of year. This avoids leap years potentially causing day mismatches
+                        setFieldValue('temporal.recurringDayEnd', newEndDate.year(newStartDate.year()).dayOfYear())
+                      }
+                    }
+
                     setTimeout(() => {
                       handleSubmit()
                     }, 0)
@@ -394,21 +408,13 @@ export const GranuleFiltersForm = (props) => {
                   (value) => {
                     const { temporal: newTemporal } = values
 
-                    const newStartDate = moment(newTemporal.startDate || undefined).utc()
-                    newStartDate.set({
-                      year: value.min,
-                      hour: '00',
-                      minute: '00',
-                      second: '00'
-                    })
+                    const newStartDate = moment(newTemporal.startDate || undefined)
+                      .utc()
+                      .year(value.min)
 
-                    const newEndDate = moment(newTemporal.endDate || undefined).utc()
-                    newEndDate.set({
-                      year: value.max,
-                      hour: '23',
-                      minute: '59',
-                      second: '59'
-                    })
+                    const newEndDate = moment(newTemporal.endDate || undefined)
+                      .utc()
+                      .year(value.max)
 
                     setFieldValue('temporal.startDate', newStartDate.toISOString())
                     setFieldTouched('temporal.startDate')
@@ -417,7 +423,7 @@ export const GranuleFiltersForm = (props) => {
                     setFieldTouched('temporal.endDate')
 
                     setFieldValue('temporal.recurringDayStart', newStartDate.dayOfYear())
-                    setFieldValue('temporal.recurringDayEnd', newEndDate.dayOfYear())
+                    setFieldValue('temporal.recurringDayEnd', newEndDate.year(value.min).dayOfYear())
 
                     handleSubmit()
                   }
@@ -831,12 +837,12 @@ GranuleFiltersForm.propTypes = {
   setFieldValue: PropTypes.func.isRequired,
   touched: PropTypes.shape({
     cloudCover: PropTypes.shape({}),
-    gridCoords: PropTypes.string,
+    gridCoords: PropTypes.bool,
     orbitNumber: PropTypes.shape({}),
     equatorCrossingLongitude: PropTypes.shape({}),
     equatorCrossingDate: PropTypes.shape({}),
     temporal: PropTypes.shape({}),
-    readableGranuleName: PropTypes.string
+    readableGranuleName: PropTypes.bool
   }).isRequired,
   values: PropTypes.shape({
     browseOnly: PropTypes.bool,

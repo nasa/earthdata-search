@@ -109,7 +109,8 @@ export const OrderStatus = ({
     opendap: opendapOrders = [],
     echo_orders: echoOrders = [],
     esi: esiOrders = [],
-    harmony: harmonyOrders = []
+    harmony: harmonyOrders = [],
+    swodlr: swodlrOrders = []
   } = collections
 
   const collectionsById = Object.values(byId)
@@ -132,6 +133,10 @@ export const OrderStatus = ({
 
   harmonyOrders = collectionsById.filter(
     ({ id: collectionId }) => harmonyOrders.includes(collectionId)
+  )
+
+  swodlrOrders = collectionsById.filter(
+    ({ id: collectionId }) => swodlrOrders.includes(collectionId)
   )
 
   const { edscHost } = getEnvironmentConfig()
@@ -164,7 +169,8 @@ export const OrderStatus = ({
     ...opendapOrders,
     ...echoOrders,
     ...esiOrders,
-    ...harmonyOrders
+    ...harmonyOrders,
+    ...swodlrOrders
   ]
 
   return (

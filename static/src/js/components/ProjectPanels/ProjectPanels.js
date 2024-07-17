@@ -599,6 +599,7 @@ class ProjectPanels extends PureComponent {
               spatial={spatial}
               temporal={preferredTemporal}
               ursProfile={ursProfile}
+              projectCollection={projectCollection}
             />
           </PanelItem>
           <PanelItem

@@ -11,6 +11,9 @@ export const calculateGranulesPerOrder = (accessMethods, selectedAccessMethod) =
 
   const { defaultGranulesPerOrder } = getApplicationConfig()
 
+  // SWODLR requires us to process each granule as a separate order
+  if (accessMethod === 'SWODLR') return 1
+
   if (!maxItemsPerOrder) return defaultGranulesPerOrder
 
   return Math.min(maxItemsPerOrder, parseInt(defaultGranulesPerOrder, 10))
@@ -32,6 +35,10 @@ export const calculateOrderCount = (projectCollection) => {
   if (['download', 'opendap'].indexOf(selectedAccessMethod) > -1) return 0
 
   const { hits: granuleCount } = projectCollectionGranules
+
+  if (selectedAccessMethod === 'SWODLR') {
+    return granuleCount
+  }
 
   return Math.ceil(granuleCount / calculateGranulesPerOrder(accessMethods, selectedAccessMethod))
 }

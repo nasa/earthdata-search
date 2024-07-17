@@ -4,16 +4,33 @@ import React, {
   Suspense
 } from 'react'
 import PropTypes from 'prop-types'
-import { Alert, Form } from 'react-bootstrap'
+import {
+  Accordion,
+  Alert,
+  Card,
+  Form,
+  Container,
+  Row,
+  Table,
+  OverlayTrigger,
+  Tooltip,
+  Col
+} from 'react-bootstrap'
 import moment from 'moment'
 import * as Select from '@radix-ui/react-select'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
-import { FaFileAlt, FaExternalLinkAlt } from 'react-icons/fa'
+import {
+  FaFileAlt,
+  FaExternalLinkAlt,
+  FaQuestionCircle,
+  FaChevronDown
+} from 'react-icons/fa'
 
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
 import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
+import { swodlrToolTips } from '../../constants/swodlrToolTips'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -37,7 +54,9 @@ const EchoForm = lazy(() => import('./EchoForm'))
  * @param {Function} props.onSelectAccessMethod - Selects an access method.
  * @param {Function} props.onSetActivePanel - Switches the currently active panel.
  * @param {Function} props.onUpdateAccessMethod - Updates an access method.
- */
+ * @param {Object} projectCollection - The project collection.
+ * @param {Object} granuleMetadata - The metadata for the granules on the collection.
+*/
 export class AccessMethod extends Component {
   constructor(props) {
     super(props)
@@ -46,7 +65,9 @@ export class AccessMethod extends Component {
       accessMethods,
       selectedAccessMethod,
       temporal,
-      spatial
+      spatial,
+      projectCollection,
+      granuleMetadata
     } = props
 
     const { isRecurring } = temporal
@@ -85,17 +106,137 @@ export class AccessMethod extends Component {
 
     let selectedHarmonyMethodName = ''
     if (selectedAccessMethod
-        && isHarmony
-        && accessMethods[selectedAccessMethod].name) {
+      && isHarmony
+      && accessMethods[selectedAccessMethod].name) {
       selectedHarmonyMethodName = accessMethods[selectedAccessMethod].name
     }
+
+    const granuleExtent = false
+    const sampleGrid = 'UTM'
+    const rasterResolution = 90
+    // We only want to allow for the processing of the first 10 granules of a collection for Swodlr
+    const utmRasterOptions = [
+      {
+        title: '90 Meters',
+        value: 90
+      },
+      {
+        title: '120 Meters',
+        value: 120
+      },
+      {
+        title: '125 Meters',
+        value: 125
+      },
+      {
+        title: '200 Meters',
+        value: 200
+      },
+      {
+        title: '250 Meters',
+        value: 250
+      },
+      {
+        title: '500 Meters',
+        value: 500
+      },
+      {
+        title: '1000 Meters',
+        value: 1000
+      },
+      {
+        title: '2500 Meters',
+        value: 2500
+      },
+      {
+        title: '5000 Meters',
+        value: 5000
+      },
+      {
+        title: '10000 Meters',
+        value: 10000
+      }
+    ]
+
+    const geoRasterOptions = [
+      {
+        title: '3 arc-seconds',
+        value: 3
+      },
+      {
+        title: '4 arc-seconds',
+        value: 4
+      },
+      {
+        title: '5 arc-seconds',
+        value: 5
+      },
+      {
+        title: '6 arc-seconds',
+        value: 6
+      },
+      {
+        title: '8 arc-seconds',
+        value: 8
+      },
+      {
+        title: '15 arc-seconds',
+        value: 15
+      },
+      {
+        title: '30 arc-seconds',
+        value: 30
+      },
+      {
+        title: '60 arc-seconds',
+        value: 60
+      },
+      {
+        title: '180 arc-seconds',
+        value: 180
+      },
+      {
+        title: '300 arc-seconds',
+        value: 300
+      }
+    ]
+
+    const {
+      granules: projectCollectionGranules = {}
+    } = projectCollection
+
+    const {
+      addedGranuleIds = [],
+      allIds: granulesAllIds = []
+    } = projectCollectionGranules
+
+    let granulesToDisplay = []
+
+    if (addedGranuleIds.length > 0) {
+      granulesToDisplay = addedGranuleIds
+    } else {
+      // Default to the first 10 granules for Swodlr service if none were subset
+      granulesToDisplay = granulesAllIds.slice(0, 10)
+    }
+
+    const granuleList = []
+
+    granulesToDisplay.forEach((id) => {
+      granuleList.push(granuleMetadata[id])
+    })
 
     this.state = {
       enableTemporalSubsetting,
       enableSpatialSubsetting,
       enableConcatenateDownload,
       isHarmony,
-      selectedHarmonyMethodName
+      selectedHarmonyMethodName,
+      granuleExtent,
+      sampleGrid,
+      rasterResolution,
+      geoRasterOptions,
+      utmRasterOptions,
+      granuleList
     }
 
     this.handleAccessMethodSelection = this.handleAccessMethodSelection.bind(this)
@@ -105,10 +246,15 @@ export class AccessMethod extends Component {
     this.handleToggleSpatialSubsetting = this.handleToggleSpatialSubsetting.bind(this)
     this.handleConcatenationSelection = this.handleConcatenationSelection.bind(this)
     this.handleHarmonySelection = this.handleHarmonySelection.bind(this)
+    this.handleSwoldrOptions = this.handleSwoldrOptions.bind(this)
+    this.handleCollectionGranuleListUpdate = this.handleCollectionGranuleListUpdate.bind(this)
+    this.handleRasterResolutionUpdate = this.handleRasterResolutionUpdate.bind(this)
+    this.handleSampleGrid = this.handleSampleGrid.bind(this)
+    this.handleGranuleExtent = this.handleGranuleExtent.bind(this)
   }
 
   UNSAFE_componentWillReceiveProps() {
-    const { temporal } = this.props
+    const { temporal, granuleMetadata, projectCollection } = this.props
 
     const { isRecurring } = temporal
 
@@ -118,6 +264,33 @@ export class AccessMethod extends Component {
         enableTemporalSubsetting: false
       })
     }
+
+    const {
+      granules: projectCollectionGranules = {}
+    } = projectCollection
+
+    const {
+      addedGranuleIds = [],
+      allIds: granulesAllIds = []
+    } = projectCollectionGranules
+
+    let granulesToDisplay = []
+
+    if (addedGranuleIds.length > 0) {
+      granulesToDisplay = addedGranuleIds
+    } else {
+      granulesToDisplay = granulesAllIds.slice(0, 10)
+    }
+
+    const granuleList = []
+
+    granulesToDisplay.forEach((id) => {
+      granuleList.push(granuleMetadata[id])
+    })
+
+    this.setState({
+      granuleList
+    })
   }
 
   componentDidUpdate() {
@@ -125,9 +298,9 @@ export class AccessMethod extends Component {
     const { selectedHarmonyMethodName } = this.state
 
     if (selectedAccessMethod
-        && selectedAccessMethod.startsWith('harmony')
-        && accessMethods[selectedAccessMethod].name
-        && selectedHarmonyMethodName === '') {
+      && selectedAccessMethod.startsWith('harmony')
+      && accessMethods[selectedAccessMethod].name
+      && selectedHarmonyMethodName === '') {
       this.setState({
         selectedHarmonyMethodName: accessMethods[selectedAccessMethod].name
       })
@@ -264,6 +437,109 @@ export class AccessMethod extends Component {
 
       this.handleAccessMethodSelection(event)
     }
+  }
+
+  handleCollectionGranuleListUpdate(index, property, e) {
+    const { granuleList } = this.state
+
+    if (property === 'utm') {
+      granuleList[index].utmZoneAdjust = Number(e.target.value)
+    }
+
+    if (property === 'mgrs') {
+      granuleList[index].mgrsBandAdjust = Number(e.target.value)
+    }
+
+    this.setState(
+      {
+        granuleList
+      },
+      () => this.handleSwoldrOptions()
+    )
+  }
+
+  handleRasterResolutionUpdate(event) {
+    this.setState(
+      {
+        rasterResolution: Number(event.target.value)
+      },
+      () => this.handleSwoldrOptions()
+    )
+  }
+
+  handleSampleGrid(type) {
+    this.setState(
+      {
+        sampleGrid: type
+      },
+      () => {
+        // Set the rasterResolution to the default value.
+        let defaultRasterValue
+        if (type === 'GEO') {
+          defaultRasterValue = 3
+        } else {
+          defaultRasterValue = 90
+        }
+
+        this.setState(
+          {
+            rasterResolution: defaultRasterValue
+          },
+          () => this.handleSwoldrOptions()
+        )
+      }
+
+    )
+  }
+
+  handleGranuleExtent(value) {
+    this.setState(
+      {
+        granuleExtent: value
+      },
+      () => this.handleSwoldrOptions()
+    )
+  }
+
+  handleSwoldrOptions() {
+    const { metadata, onUpdateAccessMethod, selectedAccessMethod } = this.props
+    const { conceptId: collectionId } = metadata
+    const {
+      rasterResolution,
+      sampleGrid,
+      granuleExtent,
+      granuleList
+    } = this.state
+
+    const customParams = {}
+
+    granuleList.forEach((granule) => {
+      const { id } = granule
+      customParams[id] = {}
+      if (sampleGrid === 'UTM') {
+        customParams[id].utmZoneAdjust = granule.utmZoneAdjust ? granule.utmZoneAdjust : 0
+        customParams[id].mgrsBandAdjust = granule.mgrsBandAdjust ? granule.mgrsBandAdjust : 0
+      } else {
+        customParams[id].utmZoneAdjust = null
+        customParams[id].mgrsBandAdjust = null
+      }
+    })
+
+    onUpdateAccessMethod({
+      collectionId,
+      method: {
+        [selectedAccessMethod]: {
+          swodlrData: {
+            params: {
+              rasterResolution,
+              outputSamplingGridType: sampleGrid,
+              outputGranuleExtentFlag: granuleExtent
+            },
+            custom_params: customParams
+          }
+        }
+      }
+    })
   }
 
   getAccessMethodTypes(hasHarmony, radioList, collectionId, selectedAccessMethod) {
@@ -427,7 +703,8 @@ export class AccessMethod extends Component {
       'ECHO ORDERS': [],
       ESI: [],
       OPeNDAP: [],
-      Harmony: []
+      Harmony: [],
+      SWODLR: []
     }
 
     let hasHarmony = false
@@ -527,6 +804,15 @@ export class AccessMethod extends Component {
           break
         }
 
+        case 'SWODLR': {
+          id = `${collectionId}_access-method__swodlr_${methodKey}`
+          title = 'Generate with SWODLR'
+          description = 'Set options and generate new standard products'
+          details = 'Select options and generate customized products using the SWODLR service. Data will be avaliable for access once any necessary processing is complete.'
+
+          break
+        }
+
         default:
           break
       }
@@ -551,7 +837,8 @@ export class AccessMethod extends Component {
       ...accessMethodsByType.OPeNDAP,
       ...accessMethodsByType.ESI,
       ...accessMethodsByType['ECHO ORDERS'],
-      ...accessMethodsByType.download
+      ...accessMethodsByType.download,
+      ...accessMethodsByType.SWODLR
     ]
 
     const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
@@ -569,13 +856,20 @@ export class AccessMethod extends Component {
       supportsBoundingBoxSubsetting = false,
       supportsVariableSubsetting = false,
       supportsConcatenation = false,
+      supportsSwodlr = false,
       defaultConcatenation = false
     } = selectedMethod || {}
 
     const {
       enableTemporalSubsetting,
       enableSpatialSubsetting,
-      enableConcatenateDownload = defaultConcatenation
+      enableConcatenateDownload = defaultConcatenation,
+      granuleExtent,
+      sampleGrid,
+      rasterResolution,
+      geoRasterOptions,
+      utmRasterOptions,
+      granuleList
     } = this.state
 
     const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
@@ -630,6 +924,7 @@ export class AccessMethod extends Component {
       || supportsBoundingBoxSubsetting
       || supportedOutputFormatOptions.length > 0
       || supportedOutputProjectionOptions.length > 0
+      || supportsSwodlr
       || supportsConcatenation
       || (form && isActive)
 
@@ -994,6 +1289,314 @@ export class AccessMethod extends Component {
               </ProjectPanelSection>
             )
           }
+          {
+            supportsSwodlr && (
+              <ProjectPanelSection
+                customHeadingTag="h4"
+                nested
+              >
+                <Container fluid>
+                  <Row>
+                    <Col>
+                      Granule Extent
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          (
+                            <Tooltip style={{ width: '20rem' }}>
+                              {swodlrToolTips.GranuleExtent}
+                            </Tooltip>
+                          )
+                        }
+                      >
+                        <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+                      </OverlayTrigger>
+
+                    </Col>
+                    <Col>
+                      <Form>
+                        <div className="mb-3">
+                          <Form.Check
+                            inline
+                            label="128 x 128 km"
+                            name="granuleExtent"
+                            type="radio"
+                            id="granule-extent-128-by-128"
+                            checked={!granuleExtent}
+                            onChange={
+                              () => {
+                                this.handleGranuleExtent(false)
+                              }
+
+                            }
+                          />
+                          <Form.Check
+                            inline
+                            label="256 x 128 km"
+                            name="granuleExtent"
+                            type="radio"
+                            id="granule-extent-256-by-128"
+                            checked={granuleExtent}
+                            onChange={
+                              () => {
+                                this.handleGranuleExtent(true)
+                              }
+                            }
+                          />
+                        </div>
+                      </Form>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      Sampling Grid Type
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          (
+                            <Tooltip style={{ width: '20rem' }}>
+                              {swodlrToolTips.SamplingGridResolution}
+                            </Tooltip>
+                          )
+                        }
+                      >
+                        <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+                      </OverlayTrigger>
+                    </Col>
+                    <Col>
+                      <Form>
+                        <div className="mb-3">
+                          <Form.Check
+                            inline
+                            label="UTM"
+                            name="sample-grid"
+                            type="radio"
+                            id="sample-grid-utm"
+                            checked={sampleGrid === 'UTM'}
+                            onChange={
+                              () => {
+                                this.handleSampleGrid('UTM')
+                              }
+                            }
+                          />
+                          <Form.Check
+                            inline
+                            label="LAT/LON"
+                            name="sample-grid"
+                            type="radio"
+                            id="sample-grid-lat-lon"
+                            checked={sampleGrid === 'GEO'}
+                            onChange={
+                              () => {
+                                this.handleSampleGrid('GEO')
+                              }
+                            }
+                          />
+                        </div>
+                      </Form>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      Raster Resolution
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          (
+                            <Tooltip style={{ width: '20rem' }}>
+                              {swodlrToolTips.RasterResolution}
+                            </Tooltip>
+                          )
+                        }
+                      >
+                        <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+                      </OverlayTrigger>
+                    </Col>
+                    <Col>
+                      <Form>
+                        <Form.Control
+                          as="select"
+                          onChange={
+                            (e) => {
+                              this.handleRasterResolutionUpdate(e)
+                            }
+                          }
+                          value={rasterResolution}
+                        >
+                          {
+                            sampleGrid === 'GEO'
+                              ? geoRasterOptions.map((option) => (
+                                <option value={option.value} key={option.value}>
+                                  {option.title}
+                                </option>
+                              ))
+                              : utmRasterOptions.map((option) => (
+                                <option value={option.value} key={option.value}>
+                                  {option.title}
+                                </option>
+                              ))
+                          }
+                        </Form.Control>
+                      </Form>
+
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row hidden={sampleGrid !== 'UTM'}>
+                    <Col>
+                      <Accordion>
+                        <Card>
+                          <Accordion.Toggle as={Card.Header} eventKey="0">
+                            <div data-testid="advancedOptionsToggle" className="swodlr-advanced-options-container">
+                              <div className="swodlr-advanced-options-item">
+                                Advanced options
+                              </div>
+                              <EDSCIcon icon={FaChevronDown} className="swodlr-advanced-options-icon" />
+                            </div>
+                          </Accordion.Toggle>
+                          <Accordion.Collapse eventKey="0">
+                            <Card.Body>
+                              <Table striped bordered size="sm" responsive>
+                                <thead>
+                                  <tr>
+                                    <th>Granule</th>
+                                    <th>
+                                      UTM Zone Adjust
+                                      <OverlayTrigger
+                                        placement="top"
+                                        overlay={
+                                          (
+                                            <Tooltip style={{ width: '20rem' }}>
+                                              {swodlrToolTips.UTM}
+                                            </Tooltip>
+                                          )
+                                        }
+                                      >
+                                        <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+                                      </OverlayTrigger>
+                                    </th>
+                                    <th>
+                                      MGRS Band Adjust
+                                      <OverlayTrigger
+                                        placement="top"
+                                        overlay={
+                                          (
+                                            <Tooltip style={{ width: '20rem' }}>
+                                              {swodlrToolTips.MGRS}
+                                            </Tooltip>
+                                          )
+                                        }
+                                      >
+                                        <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+                                      </OverlayTrigger>
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {
+                                    granuleList && granuleList.map((granule, i) => (
+                                      <tr key={granule.id}>
+                                        <td>{granule.id}</td>
+                                        <td className="nowrap">
+                                          <Form.Check
+                                            inline
+                                            label="+1"
+                                            name={`${granule.id}-UTM-zone`}
+                                            type="radio"
+                                            data-testid={`${granule.id}-plus-1-UTM-zone`}
+                                            value={1}
+                                            onChange={
+                                              (e) => {
+                                                this.handleCollectionGranuleListUpdate(i, 'utm', e)
+                                              }
+                                            }
+                                          />
+                                          <Form.Check
+                                            inline
+                                            label="0"
+                                            name={`${granule.id}-UTM-zone`}
+                                            type="radio"
+                                            data-testid={`${granule.id}-0-UTM-zone`}
+                                            value={0}
+                                            defaultChecked
+                                            onChange={
+                                              (e) => {
+                                                this.handleCollectionGranuleListUpdate(i, 'utm', e)
+                                              }
+                                            }
+                                          />
+                                          <Form.Check
+                                            inline
+                                            label="-1"
+                                            name={`${granule.id}-UTM-zone`}
+                                            type="radio"
+                                            data-testid={`${granule.id}-minus-1-UTM-zone`}
+                                            value={-1}
+                                            onChange={
+                                              (e) => {
+                                                this.handleCollectionGranuleListUpdate(i, 'utm', e)
+                                              }
+                                            }
+                                          />
+                                        </td>
+                                        <td className="nowrap">
+                                          <Form.Check
+                                            inline
+                                            label="+1"
+                                            name={`${granule.id}-MGRS-band`}
+                                            type="radio"
+                                            data-testid={`${granule.id}-plus-1-MGRS-band`}
+                                            value={1}
+                                            onChange={
+                                              (e) => {
+                                                this.handleCollectionGranuleListUpdate(i, 'mgrs', e)
+                                              }
+                                            }
+                                          />
+                                          <Form.Check
+                                            inline
+                                            label="0"
+                                            name={`${granule.id}-MGRS-band`}
+                                            type="radio"
+                                            data-testid={`${granule.id}-0-MGRS-band`}
+                                            value={0}
+                                            defaultChecked
+                                            onChange={
+                                              (e) => {
+                                                this.handleCollectionGranuleListUpdate(i, 'mgrs', e)
+                                              }
+                                            }
+                                          />
+                                          <Form.Check
+                                            inline
+                                            label="-1"
+                                            name={`${granule.id}-MGRS-band`}
+                                            type="radio"
+                                            data-testid={`${granule.id}-minus-1-MGRS-band`}
+                                            value={-1}
+                                            onChange={
+                                              (e) => {
+                                                this.handleCollectionGranuleListUpdate(i, 'mgrs', e)
+                                              }
+                                            }
+                                          />
+                                        </td>
+                                      </tr>
+                                    ))
+
+                                  }
+                                </tbody>
+                              </Table>
+                            </Card.Body>
+                          </Accordion.Collapse>
+                        </Card>
+                      </Accordion>
+                    </Col>
+                  </Row>
+                </Container>
+              </ProjectPanelSection>
+            )
+          }
         </ProjectPanelSection>
       </div>
     )
@@ -1009,7 +1612,11 @@ AccessMethod.defaultProps = {
   onTogglePanels: null,
   selectedAccessMethod: null,
   shapefileId: null,
-  spatial: {}
+  spatial: {},
+  granuleMetadata: {},
+  projectCollection: {
+    granules: {}
+  }
 }
 
 AccessMethod.propTypes = {
@@ -1041,7 +1648,11 @@ AccessMethod.propTypes = {
   }).isRequired,
   ursProfile: PropTypes.shape({
     email_address: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  granuleMetadata: PropTypes.shape({}),
+  projectCollection: PropTypes.shape({
+    granules: PropTypes.shape({})
+  })
 }
 
 export default AccessMethod

@@ -35,7 +35,7 @@ import './OrderStatusItem.scss'
 /**
  * Renders OrderStatusItem.
  * @param {Object} arg0 - The props passed into the component.
- * @param {Boolean} arg0.defaultOpen - Sets the item open on intital render.
+ * @param {Boolean} arg0.defaultOpen - Sets the item open on initial render.
  * @param {String} arg0.earthdataEnvironment - The earthdata environment.
  * @param {Object} arg0.granuleDownload - granuleDownload state.
  * @param {Object} arg0.collection - The collection state.
@@ -87,7 +87,7 @@ export class OrderStatusItem extends PureComponent {
         }, orderStatusRefreshTime)
       }
 
-      // Fetch the granule browse links recardless of accessMethodType
+      // Fetch the granule browse links regardless of accessMethodType
       // download & opendap browse links return with the granule links, every other access method needs
       // to fetch them here
       onFetchRetrievalCollectionGranuleBrowseLinks(collection)
@@ -160,7 +160,7 @@ export class OrderStatusItem extends PureComponent {
       type = ''
     } = firstOrder
 
-    // If the order is Harmony iand isn't successful, don't show the EDD link
+    // If the order is Harmony and isn't successful, don't show the EDD link
     if (type.toLowerCase() === 'harmony' && state !== 'successful') return null
 
     const {
@@ -249,6 +249,7 @@ export class OrderStatusItem extends PureComponent {
       const isHarmony = typeToLower === 'harmony'
       const isEchoOrders = typeToLower === 'echo orders'
       const isEsi = typeToLower === 'esi'
+      const isSwodlr = typeToLower === 'swodlr'
 
       const messages = []
       let messageIsError = false
@@ -303,6 +304,64 @@ export class OrderStatusItem extends PureComponent {
           progressPercentage = 100
           orderInfo = 'The data provider is reporting the order has failed processing.'
         }
+      }
+
+      if (isSwodlr) {
+        if (stateFromOrderStatus === 'creating') {
+          progressPercentage = 0
+
+          orderInfo = 'Your orders are pending generation. This may take some time.'
+        }
+
+        if (stateFromOrderStatus === 'in_progress') {
+          orderInfo = 'Your orders are currently being generated. Once generation is finished, links will be displayed below and sent to the email you\'ve provided.'
+        }
+
+        if (stateFromOrderStatus === 'complete') {
+          orderInfo = 'Your orders have been generated and are available for download.'
+        }
+
+        if (stateFromOrderStatus === 'failed') {
+          progressPercentage = 0
+          orderInfo = 'The order has failed.'
+        }
+
+        let totalNumber = 0
+        let totalProcessed = 0
+
+        orders.forEach((order) => {
+          const {
+            error,
+            state,
+            order_information: orderInformation = {}
+          } = order
+
+          const { reason, granules = [] } = orderInformation
+
+          totalNumber += 1
+          totalOrders += 1
+
+          if (state === 'complete') {
+            granules.forEach((granule) => {
+              const { uri } = granule
+              downloadUrls.push(uri)
+              totalCompleteOrders += 1
+            })
+
+            totalProcessed += 1
+          } else if (state === 'failed') {
+            progressPercentage = 100
+            if (error) {
+              messages.push(error)
+            } else if (reason) {
+              messages.push(reason)
+            }
+
+            messageIsError = messageIsError || true
+          }
+        })
+
+        progressPercentage = Math.floor((totalProcessed / totalNumber) * 100)
       }
 
       if (isEsi || isHarmony) {
@@ -614,6 +673,7 @@ export class OrderStatusItem extends PureComponent {
                       || isOpendap
                       || isEsi
                       || isHarmony
+                      || isSwodlr
                     ) && (
                       <Tab
                         className={downloadUrls.length > 0 ? '' : 'order-status-item__tab-status'}
@@ -714,7 +774,7 @@ export class OrderStatusItem extends PureComponent {
                     )
                   }
                   {
-                    ((isEsi || isHarmony) && orders.length > 0) && (
+                    ((isEsi || isHarmony || isSwodlr) && orders.length > 0) && (
                       <Tab
                         title="Order Status"
                         eventKey="order-status"

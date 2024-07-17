@@ -59,8 +59,8 @@ export const constructOrderPayload = async ({
 
   // OGC uses duplicate parameter names for subsetting and the
   // standard javascript object will not support that so we need to use
-  // duplicate keys
   // the FormData object to avoid any language specific restrictions on
+  // duplicate keys
   const orderPayload = new FormData()
 
   orderPayload.append('forceAsync', 'true')
@@ -219,8 +219,8 @@ export const constructOrderPayload = async ({
   }
 
   // Adds supportsConcatenation to the payload and it's value
-  if (supportsConcatenation && enableConcatenateDownload) {
-    orderPayload.append('concatenate', true)
+  if (supportsConcatenation) {
+    orderPayload.append('concatenate', enableConcatenateDownload)
   }
 
   // Adds the selectedVariableNames if they were included in the access method

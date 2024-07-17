@@ -18,6 +18,16 @@ export const NotFound = ({
 
   const guid = uuidv4()
 
+  // Modify the background color of root element for the not found page so we can load stars jpg
+  const selectElementById = () => {
+    const element = document.getElementById('app')
+    if (element) {
+      element.style.backgroundColor = 'initial'
+    }
+  }
+
+  selectElementById()
+
   const requestObject = new LoggerRequest()
   requestObject.log({
     error: {

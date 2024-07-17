@@ -309,8 +309,11 @@ describe('App component', () => {
   })
 
   // https://stackoverflow.com/questions/66667827/react-testing-library-to-cover-the-lazy-load/66690463
-  test('renders lazy component', () => {
+  test('renders loaded lazy components', async () => {
     setup()
-    expect(screen.getByTestId('mocked-map-container')).toBeInTheDocument()
+
+    waitFor(() => {
+      expect(screen.getByTestId('mocked-map-container')).toBeInTheDocument()
+    })
   })
 })

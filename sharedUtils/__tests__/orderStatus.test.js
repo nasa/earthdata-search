@@ -55,5 +55,11 @@ describe('aggregatedOrderStatus', () => {
         state: 'failed'
       }])).toEqual('failed')
     })
+
+    test('returns the correct state when complete for running errors', () => {
+      expect(aggregatedOrderStatus([{
+        state: 'running_with_errors'
+      }])).toEqual('in progress')
+    })
   })
 })

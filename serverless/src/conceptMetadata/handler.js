@@ -24,7 +24,7 @@ const conceptMetadata = async (event) => {
   // Access tokens used in the URL still require the client id
   const conceptUrl = `${desiredPath}?${stringify({
     ...parsedQueryParams,
-    token: `${accessToken}`
+    token: `Bearer ${accessToken}`
   }, { encode: false })}`
 
   return {
