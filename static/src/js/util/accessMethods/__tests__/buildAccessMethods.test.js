@@ -575,27 +575,27 @@ describe('buildAccessMethods', () => {
         serviceOptions: {
           supportedOutputProjections: [
             {
-              projectionName: 'Universal Transverse Mercator',
+              projectionName: 'Universal Transverse Mercator'
             },
             {
-              projectionName: 'WGS84 - World Geodetic System 1984',
+              projectionName: 'WGS84 - World Geodetic System 1984'
             }
           ]
         },
         supportedInputProjections: null,
         supportedOutputProjections: [
           {
-            projectionName: 'Universal Transverse Mercator',
+            projectionName: 'Universal Transverse Mercator'
           },
           {
-            projectionName: 'WGS84 - World Geodetic System 1984',
+            projectionName: 'WGS84 - World Geodetic System 1984'
           }
         ],
         supportedReformattings: null,
         type: 'SWODLR',
         url: {
           description: 'Service top-level URL',
-          urlValue: 'https://swodlr.podaac.earthdatacloud.nasa.gov',
+          urlValue: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
         },
         variables: {
           items: []
