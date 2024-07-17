@@ -1,7 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import { commafy } from '../../../../static/src/js/util/commafy'
-import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { pluralize } from '../../../../static/src/js/util/pluralize'
 
 import awsCloudBody from './__mocks__/aws_cloud.body.json'
@@ -30,7 +29,7 @@ import temporalBody from './__mocks__/temporal.body.json'
 import temporalRecurringBody from './__mocks__/temporal_recurring.body.json'
 import tilingSystemBody from './__mocks__/tiling_system.body.json'
 
-const { defaultCmrPageSize } = getApplicationConfig()
+const defaultCmrPageSize = 20
 
 /**
  * Test that the provided facet group is expanded and the others not
