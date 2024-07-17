@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from 'playwright-test-coverage'
 
 import { commafy } from '../../../../static/src/js/util/commafy'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
