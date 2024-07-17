@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from 'playwright-test-coverage'
 import { graphQlGetCollection } from '../../../../../support/graphQlGetCollection'
 
 import collectionsBody from './__mocks__/collections.body.json'
