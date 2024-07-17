@@ -49,9 +49,7 @@ export const buildEsiEcho = (serviceItem, disableOrdering) => {
 
       accessMethods[`${methodKey}${orderOptionIndex}`] = method
     })
-
-    return accessMethods
   }
 
-  return {}
+  return accessMethods
 }

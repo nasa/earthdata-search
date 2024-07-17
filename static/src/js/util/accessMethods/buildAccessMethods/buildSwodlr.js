@@ -21,9 +21,7 @@ export const buildSwodlr = (serviceItem, disableSwodlr) => {
       supportsSwodlr: true,
       url: urlValue
     }
-
-    return accessMethods
   }
 
-  return {}
+  return accessMethods
 }
