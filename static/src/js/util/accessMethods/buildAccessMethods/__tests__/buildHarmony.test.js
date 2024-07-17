@@ -255,9 +255,11 @@ describe('buildHarmony', () => {
             }]
           },
           supportedOutputProjections: [{
-            projectionName: 'Polar Stereographic'
+            projectionName: 'Polar Stereographic',
+            projectionAuthority: 'Polar Stereographic'
           }, {
-            projectionName: 'Geographic'
+            projectionName: 'Geographic',
+            projectionAuthority: 'Geographic'
           }],
           supportedReformattings: [{
             supportedInputFormat: 'NETCDF-4',
@@ -563,7 +565,7 @@ describe('buildHarmony', () => {
           'TIFF',
           'NETCDF-4'
         ],
-        supportedOutputProjections: [],
+        supportedOutputProjections: ['Polar Stereographic', 'Geographic'],
         supportsBoundingBoxSubsetting: true,
         supportsConcatenation: false,
         supportsShapefileSubsetting: false,
