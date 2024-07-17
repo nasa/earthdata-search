@@ -399,7 +399,7 @@ describe('Path /search/granules/collection-details', () => {
     })
   })
 
-  describe.only('When collection has spatial', () => {
+  describe('When collection has spatial', () => {
     it('displays the spatial on the minimap', () => {
       const conceptId = 'C1996546500-GHRC_DAAC'
       const cmrHits = 8180
@@ -473,7 +473,7 @@ describe('Path /search/granules/collection-details', () => {
       cy.visit('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
 
       cy.get('.collection-details-minimap').within(() => {
-        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M0 180L360 180L360 0L0 0z')
+        cy.get('.leaflet-interactive').should('have.attr', 'd', 'M0 180L360 180L360 0L0 0L0 180z')
       })
     })
   })
