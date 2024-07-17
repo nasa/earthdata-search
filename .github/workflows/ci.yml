@@ -163,7 +163,6 @@ jobs:
       with:
         name: playwright-report-${{ strategy.job-index }}
         path: |
-          playwright-coverage/
           playwright-report/
           test-results/
         retention-days: 30

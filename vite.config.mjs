@@ -4,6 +4,7 @@ import { ViteEjsPlugin } from 'vite-plugin-ejs'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import rollupNodePolyFill from 'rollup-plugin-polyfill-node'
 import { resolve } from 'path'
+import istanbul from 'vite-plugin-istanbul'
 
 import availablePortals from './portals/availablePortals.json'
 
@@ -36,7 +37,14 @@ export default defineConfig({
       showTophat
     }),
     react(),
-    nodePolyfills()
+    nodePolyfills(),
+    istanbul({
+      include: 'static/src/*',
+      exclude: ['node_modules', 'test/'],
+      extension: ['.js', '.jsx'],
+      requireEnv: true,
+      forceBuildInstrument: true
+    })
   ],
   css: {
     devSourcemap: true,

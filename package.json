@@ -34,7 +34,7 @@
     "start:cache": "docker-compose up -d",
     "stop:cache": "docker-compose down",
     "jest:prepare-ci": "bin/cypress-prepare-ci",
-    "prestart-ci": "npm run build",
+    "prestart-ci": "NODE_OPTIONS=--max-old-space-size=8192 VITE_COVERAGE=true npm run build",
     "start-ci": "npm run preview",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run -c video=false",
@@ -242,6 +242,7 @@
     "uuid": "^8.3.2",
     "vite": "^5.3.3",
     "vite-plugin-ejs": "^1.7.0",
+    "vite-plugin-istanbul": "^6.0.2",
     "vite-plugin-node-polyfills": "^0.22.0",
     "ws": "^8.18.0",
     "xpath": "0.0.27",
@@ -253,7 +254,8 @@
   "nyc": {
     "report-dir": "cypress-coverage",
     "include": [
-      "static/src/js/**/*.js"
+      "static/src/js/**/*.js",
+      "static/src/js/**/*.jsx"
     ],
     "excludeAfterRemap": true
   },
