@@ -243,6 +243,7 @@
     "webpack-merge": "^5.8.0",
     "webpack-node-externals": "^3.0.0",
     "webpackbar": "^5.0.2",
+    "ws": "^8.18.0",
     "xpath": "0.0.27",
     "yup": "^0.32.11"
   },
