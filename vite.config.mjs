@@ -43,7 +43,7 @@ export default defineConfig({
       exclude: ['node_modules', 'test/'],
       extension: ['.js', '.jsx'],
       requireEnv: true,
-      forceBuildInstrument: true
+      forceBuildInstrument: process.env.VITE_COVERAGE === 'true'
     })
   ],
   css: {
