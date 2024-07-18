@@ -18,7 +18,7 @@ const initialState = {
     keyword: '',
     hasGranulesOrCwic: true,
     pageNum: 1,
-    sortKey: [collectionSortKeys.scoreDecending],
+    sortKey: [collectionSortKeys.scoreDescending],
     spatial: {},
     temporal: {}
   },
@@ -55,7 +55,7 @@ describe('UPDATE_COLLECTION_QUERY', () => {
         ...payload,
         byId: {},
         hasGranulesOrCwic: true,
-        sortKey: [collectionSortKeys.scoreDecending]
+        sortKey: [collectionSortKeys.scoreDescending]
       },
       region: {
         exact: false
