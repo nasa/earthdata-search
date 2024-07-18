@@ -202,7 +202,7 @@ custom:
   esbuild:
     loader:
       .svg: text
-    external: ['knex', 'pg']
+    external: ['knex', 'pg', 'sharp']
     bundle: true
     minify: ${self:custom.minifyBuild.${self:provider.stage}}
 
