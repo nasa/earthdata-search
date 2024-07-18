@@ -15,6 +15,7 @@ import Helmet from 'react-helmet'
 import configureStore from '../../../store/configureStore'
 import * as PortalUtils from '../../../util/portals'
 import * as AppConfig from '../../../../../../sharedUtils/config'
+import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 
 import SearchPanels from '../SearchPanels'
 import Panels from '../../Panels/Panels'
@@ -61,7 +62,7 @@ function setup(overrideProps, location = '/search') {
     },
     collectionQuery: {
       pageNum: 1,
-      sortKey: ['-score']
+      sortKey: [collectionSortKeys.scoreDecending]
     },
     collectionsSearch: {
       allIds: ['COLL_ID_1'],

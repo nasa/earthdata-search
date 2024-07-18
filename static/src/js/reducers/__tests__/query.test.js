@@ -10,6 +10,7 @@ import {
   UPDATE_GRANULE_SEARCH_QUERY,
   UPDATE_REGION_QUERY
 } from '../../constants/actionTypes'
+import { collectionSortKeys } from '../../constants/collectionSortKeys'
 
 const initialState = {
   collection: {
@@ -17,7 +18,7 @@ const initialState = {
     keyword: '',
     hasGranulesOrCwic: true,
     pageNum: 1,
-    sortKey: ['-score'],
+    sortKey: [collectionSortKeys.scoreDecending],
     spatial: {},
     temporal: {}
   },
@@ -54,7 +55,7 @@ describe('UPDATE_COLLECTION_QUERY', () => {
         ...payload,
         byId: {},
         hasGranulesOrCwic: true,
-        sortKey: ['-score']
+        sortKey: [collectionSortKeys.scoreDecending]
       },
       region: {
         exact: false
@@ -158,7 +159,7 @@ describe('RESTORE_FROM_URL', () => {
     test('returns the correct state', () => {
       const query = {
         collection: { pageNum: 1 },
-        collectionSortPreference: '-usage_score',
+        collectionSortPreference: collectionSortKeys.usageDescending,
         granule: { pageNum: 1 },
         region: {
           exact: true
@@ -178,7 +179,7 @@ describe('RESTORE_FROM_URL', () => {
         collection: {
           ...initialState.collection,
           ...query.collection,
-          sortKey: ['-usage_score']
+          sortKey: [collectionSortKeys.usageDescending]
         }
       }
 
@@ -190,7 +191,7 @@ describe('RESTORE_FROM_URL', () => {
     test('returns the correct state', () => {
       const query = {
         collection: { pageNum: 1 },
-        collectionSortPreference: '-ongoing',
+        collectionSortPreference: collectionSortKeys.endDateDescending,
         granule: { pageNum: 1 },
         region: {
           exact: true
@@ -210,7 +211,7 @@ describe('RESTORE_FROM_URL', () => {
         collection: {
           ...initialState.collection,
           ...query.collection,
-          sortKey: ['-ongoing']
+          sortKey: [collectionSortKeys.endDateDescending]
         }
       }
 

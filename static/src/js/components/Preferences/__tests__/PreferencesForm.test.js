@@ -4,6 +4,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import Form from '@rjsf/core'
 import { act } from 'react-dom/test-utils'
 
+import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import PreferencesForm from '../PreferencesForm'
 import schema from '../../../../../../schemas/sitePreferencesSchema.json'
 import uiSchema from '../../../../../../schemas/sitePreferencesUISchema.json'
@@ -60,7 +61,7 @@ describe('PreferencesForm component', () => {
         formData: {
           panelState: 'collapsed',
           collectionListView: 'list',
-          collectionSort: '-score',
+          collectionSort: collectionSortKeys.scoreDecending,
           granuleListView: 'table',
           granuleSort: 'end_date',
           mapView: {
@@ -83,7 +84,7 @@ describe('PreferencesForm component', () => {
     expect(enzymeWrapper.find(Form).props().formData).toEqual({
       panelState: 'collapsed',
       collectionListView: 'list',
-      collectionSort: '-score',
+      collectionSort: collectionSortKeys.scoreDecending,
       granuleListView: 'table',
       granuleSort: 'end_date',
       mapView: {

@@ -21,7 +21,7 @@ const initialState = {
     pageNum: 1,
     spatial: {},
     temporal: {},
-    sortKey: [collectionSearchResultsSortKey || '-score']
+    sortKey: [collectionSearchResultsSortKey]
   },
   region: {
     exact: false
