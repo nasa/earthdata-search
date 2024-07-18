@@ -24,6 +24,8 @@ const setup = (overrideProps) => {
     onClick,
     title: 'test title',
     subtitle: 'test subtitle',
+    error: '',
+    disabled: false,
     ...overrideProps
   }
 
@@ -74,6 +76,11 @@ describe('AccessMethodRadio component', () => {
     expect(screen.getByText('test description')).toBeInTheDocument()
   })
 
+  test('displays the error message', () => {
+    setup({ errorMessage: 'Something went wrong' })
+    expect(screen.getByText('Something went wrong')).toBeInTheDocument()
+  })
+
   test('displays the details as a tooltip', async () => {
     setup()
     const user = userEvent.setup()
@@ -119,6 +126,13 @@ describe('AccessMethodRadio component', () => {
       const radioButton = screen.getByRole('radio', { value: 'test value' })
       await user.click(radioButton)
       expect(onClick).toHaveBeenCalledTimes(1)
+    })
+
+    test('can be disabled', () => {
+      setup({ disabled: true })
+      const radioButton = screen.getByRole('radio', { value: 'test value' })
+
+      expect(radioButton).toBeDisabled()
     })
   })
 

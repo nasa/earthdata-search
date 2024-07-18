@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Accordion,
@@ -90,12 +90,10 @@ const SwodlrForm = ({
     }
 
     setGranuleList(granuleList)
-    handleSwoldrOptions()
   }
 
   const handleRasterResolutionUpdate = (event) => {
     setRasterResolution(Number(event.target.value))
-    handleSwoldrOptions()
   }
 
   const handleSampleGrid = (type) => {
@@ -108,13 +106,15 @@ const SwodlrForm = ({
     }
 
     setRasterResolution(defaultRasterValue)
-    handleSwoldrOptions()
   }
 
   const handleGranuleExtent = (value) => {
     setGranuleExtent(value)
-    handleSwoldrOptions()
   }
+
+  useEffect(() => {
+    handleSwoldrOptions()
+  }, [granuleExtent, granuleList, rasterResolution, sampleGrid])
 
   return (
     <ProjectPanelSection
@@ -247,17 +247,18 @@ const SwodlrForm = ({
                     handleRasterResolutionUpdate(e)
                   }
                 }
+                data-testid="rasterResolutionSelection"
                 value={rasterResolution}
               >
                 {
                   sampleGrid === 'GEO'
                     ? geoRasterOptions.map((option) => (
-                      <option value={option.value} key={option.value}>
+                      <option value={option.value} key={option.value} data-testid={`geo-raster-selection-${option.value}`}>
                         {option.title}
                       </option>
                     ))
                     : utmRasterOptions.map((option) => (
-                      <option value={option.value} key={option.value}>
+                      <option value={option.value} key={option.value} data-testid={`utm-raster-selection-${option.value}`}>
                         {option.title}
                       </option>
                     ))
