@@ -135,7 +135,6 @@ const AccessMethod = ({
       && accessMethods[selectedAccessMethod].name
       && selectedHarmonyMethodName === '') {
     setSelectedHarmonyMethodName(accessMethods[selectedAccessMethod].name)
-    setIsHarmony(true)
   }
 
   const handleHarmonyTypeAccessMethodSelection = () => {
