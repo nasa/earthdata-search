@@ -14,7 +14,7 @@ export const createTemporalDisplay = (temporal) => {
   } = temporal
 
   const temporalDateFormat = getTemporalDateFormat(isRecurring)
-  const format = 'YYYY-MM-DDTHH:m:s.SSSZ'
+  const format = 'YYYY-MM-DDTHH:mm:ss.SSSZ'
 
   let startDateObject
   let endDateObject = moment.utc(endDate, format, true)
