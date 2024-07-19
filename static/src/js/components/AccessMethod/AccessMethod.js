@@ -92,7 +92,7 @@ const AccessMethod = ({
   // Initialize State Variables
   const [enableTemporalSubsetting, setEnableTemporalSubsetting] = useState(setTemporal)
   const [selectedHarmonyMethodName, setSelectedHarmonyMethodName] = useState('')
-  const [isHarmony, setIsHarmony] = useState(false)
+  const [isHarmony, setIsHarmony] = useState(selectedAccessMethod.startsWith('harmony'))
   const [enableSpatialSubsetting, setEnableSpatialSubsetting] = useState(false)
   const [enableConcatenateDownload, setEnableConcatenateDownload] = useState(defaultConcatenation)
   const [granuleList, setGranuleList] = useState([])
@@ -134,7 +134,6 @@ const AccessMethod = ({
       && accessMethods[selectedAccessMethod].name
       && selectedHarmonyMethodName === '') {
     setSelectedHarmonyMethodName(accessMethods[selectedAccessMethod].name)
-    setIsHarmony(true)
   }
 
   const handleHarmonyTypeAccessMethodSelection = () => {
