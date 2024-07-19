@@ -121,8 +121,6 @@ const AccessMethod = ({
     granuleListObj.push(granuleMetadata[id])
   })
 
-  // TODO does this useEffect actually work if I have a destructured value
-  // TODO can I specify this to be `granulesAllIds` in the dep array?
   useEffect(() => {
     setGranuleList(granuleListObj)
   }, [projectCollection])
@@ -137,6 +135,7 @@ const AccessMethod = ({
       && accessMethods[selectedAccessMethod].name
       && selectedHarmonyMethodName === '') {
     setSelectedHarmonyMethodName(accessMethods[selectedAccessMethod].name)
+    setIsHarmony(true)
   }
 
   const handleHarmonyTypeAccessMethodSelection = () => {
