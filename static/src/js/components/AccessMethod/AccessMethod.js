@@ -75,27 +75,27 @@ const AccessMethod = ({
     supportsVariableSubsetting = false,
     supportsConcatenation = false,
     supportsSwodlr = false,
-    defaultConcatenation = false
+    defaultConcatenation = false,
+    enableTemporalSubsetting: hasEnabledTemporalSubsetting
   } = selectedMethod || {}
 
   const { isRecurring } = temporal
 
+  // EnabledTemporalSubsetting by default
+  let setTemporal = true
+
+  // If enabledTemporalSubsetting is explictly false, set the initial value to false
+  if (hasEnabledTemporalSubsetting === false) {
+    setTemporal = false
+  }
+
   // Initialize State Variables
-  // TODO enableTemporalSubsetting initialize state
-  // TODO useEffect on the isRecurring changed
-  // Disable temporal subsetting if the user has a recurring date selected
-  const [enableTemporalSubsetting, setEnableTemporalSubsetting] = useState(!isRecurring)
+  const [enableTemporalSubsetting, setEnableTemporalSubsetting] = useState(setTemporal)
   const [selectedHarmonyMethodName, setSelectedHarmonyMethodName] = useState('')
   const [isHarmony, setIsHarmony] = useState(false)
   const [enableSpatialSubsetting, setEnableSpatialSubsetting] = useState(false)
   const [enableConcatenateDownload, setEnableConcatenateDownload] = useState(defaultConcatenation)
   const [granuleList, setGranuleList] = useState([])
-  // Only set state on re-render
-
-  // Disable temporal subsetting if the user has a recurring date selected
-  if (isRecurring) {
-    setEnableTemporalSubsetting(false)
-  }
 
   const {
     granules: projectCollectionGranules = {}
@@ -120,17 +120,21 @@ const AccessMethod = ({
     granuleListObj.push(granuleMetadata[id])
   })
 
-  // TODO does this useEffect actually work if I have a destructured value
-  // TODO can I specify this to be `granulesAllIds` in the dep array?
   useEffect(() => {
     setGranuleList(granuleListObj)
   }, [projectCollection])
+
+  // If enabledTemporalSubsetting is true, and isRecurring is true, disable temporal Subsetting
+  if (enableTemporalSubsetting && isRecurring) {
+    setEnableTemporalSubsetting(false)
+  }
 
   if (selectedAccessMethod
       && selectedAccessMethod.startsWith('harmony')
       && accessMethods[selectedAccessMethod].name
       && selectedHarmonyMethodName === '') {
     setSelectedHarmonyMethodName(accessMethods[selectedAccessMethod].name)
+    setIsHarmony(true)
   }
 
   const handleHarmonyTypeAccessMethodSelection = () => {

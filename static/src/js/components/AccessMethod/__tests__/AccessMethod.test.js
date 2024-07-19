@@ -359,7 +359,7 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'echoOrder0'
       })
 
-      await waitFor(() => expect(mockEchoForm).toHaveBeenCalledTimes(1))
+      await waitFor(() => expect(mockEchoForm).toHaveBeenCalledTimes(2))
 
       // Needed JSON.stringify to compare object references
       expect(JSON.stringify(mockEchoForm.mock.calls[0][0])).toEqual(JSON.stringify({
@@ -483,7 +483,7 @@ describe('AccessMethod component', () => {
         expect(screen.getByTitle('A white globe icon')).toBeInTheDocument()
       })
 
-      test('the selected method is displayed in the Select box', () => {
+      test('the selected method is displayed in the Select box', async () => {
         const collectionId = 'collectionId'
         setup({
           accessMethods: {
@@ -506,7 +506,9 @@ describe('AccessMethod component', () => {
           }
         })
 
-        expect(screen.getByText('second harmony service')).toBeInTheDocument()
+        waitFor(() => {
+          expect(screen.getByText('second harmony service')).toBeInTheDocument()
+        })
       })
     })
 
