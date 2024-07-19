@@ -1,9 +1,13 @@
 import { camelCase } from 'lodash'
 import { generateFormDigest } from '../generateFormDigest'
 
+/**
+ * Builds the ESI or Echo Ordering access method
+ * @param {object} serviceItem serviceItem in the Collection Metadata
+ * @param {boolean} disabledOrdering true if ordering is disabled
+ * @returns {object} Access method for ESI or Echo Orders
+ */
 export const buildEsiEcho = (serviceItem, disableOrdering) => {
-  const supportsOrderOptions = ['esi', 'echo orders']
-
   const accessMethods = {}
   // Only process orderOptions if the service type uses orderOptions
   // Do not include access if orders are disabled
@@ -15,13 +19,16 @@ export const buildEsiEcho = (serviceItem, disableOrdering) => {
     maxItemsPerOrder
   } = serviceItem
 
-  if (supportsOrderOptions.includes(serviceType.toLowerCase()) && (disableOrdering !== 'true')) {
+  if (disableOrdering !== 'true') {
     const { urlValue } = url
 
     const { items: orderOptionsItems } = orderOptions
     if (orderOptionsItems === null) return {}
 
-    orderOptionsItems.forEach((orderOptionItem, orderOptionIndex) => {
+    let esiIndex = 0
+    let echoIndex = 0
+
+    orderOptionsItems.forEach((orderOptionItem) => {
       const {
         conceptId: orderOptionConceptId,
         form,
@@ -45,9 +52,12 @@ export const buildEsiEcho = (serviceItem, disableOrdering) => {
       // `echoOrders` needs to be singular to match existing savedAccessConfigurations
       if (methodKey === 'echoOrders') {
         methodKey = 'echoOrder'
+        accessMethods[`${methodKey}${echoIndex}`] = method
+        echoIndex += 1
+      } else {
+        accessMethods[`${methodKey}${esiIndex}`] = method
+        esiIndex += 1
       }
-
-      accessMethods[`${methodKey}${orderOptionIndex}`] = method
     })
   }
 

@@ -1,5 +1,11 @@
 import { isDownloadable } from '../../../../../../sharedUtils/isDownloadable'
 
+/**
+ * Builds the Downloads access method
+ * @param {object} granules granules object pulled from the collectionMetdata
+ * @param {boolean} isOpenSearch Is the collection an open search collection
+ * @returns {object} Access method for Downloads
+ */
 export const buildDownload = (granules, isOpenSearch) => {
   const accessMethods = {}
 

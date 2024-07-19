@@ -35,6 +35,8 @@ describe('buildAccessMethods', () => {
     buildAccessMethods(collectionMetadata, isOpenSearch)
 
     expect(buildDownloadMock).toBeCalledTimes(1)
+
+    expect(buildDownloadMock).toBeCalledWith({ items: [{ online_access_flag: true }] }, false)
   })
 
   describe('when ordering is disabled', () => {
@@ -293,7 +295,7 @@ describe('buildAccessMethods', () => {
         }, {
           conceptId: 'V100003-EDSC',
           definition: 'Red channel value',
-          longName: 'Red channel',
+          longName: 'Red Channel',
           name: 'red_var',
           nativeId: 'mmt_variable_3969',
           scienceKeywords: null
@@ -305,6 +307,85 @@ describe('buildAccessMethods', () => {
     buildAccessMethods(collectionMetadata, isOpenSearch)
 
     expect(buildHarmonyMock).toBeCalledTimes(1)
+
+    expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+      1,
+      {
+        conceptId: 'S100000-EDSC',
+        longName: 'Mock Service Name',
+        name: 'mock-name',
+        serviceOptions: {
+          aggregation: {
+            concatenate: {
+              concatenateDefault: true
+            }
+          },
+          interpolationTypes: ['Bilinear Interpolation', 'Nearest Neighbor'],
+          subset: {
+            spatialSubset: { boundingBox: { allowMultipleValues: false } },
+            variableSubset: { allowMultipleValues: true }
+          },
+          supportedOutputProjections: [{ projectionName: 'Polar Stereographic' }, { projectionName: 'Geographic' }],
+          supportedReformattings: [{
+            supportedInputFormat: 'NETCDF-4',
+            supportedOutputFormats: ['GEOTIFF', 'PNG', 'TIFF', 'NETCDF-4']
+          }, {
+            supportedInputFormat: 'GEOTIFF',
+            supportedOutputFormats: ['GEOTIFF', 'PNG', 'TIFF', 'NETCDF-4']
+          }]
+        },
+        supportedOutputProjections: [{ projectionName: 'Polar Stereographic' }, { projectionName: 'Geographic' }],
+        supportedReformattings: [{
+          supportedInputFormat: 'NETCDF-4',
+          supportedOutputFormats: ['GEOTIFF', 'PNG', 'TIFF', 'NETCDF-4']
+        }, {
+          supportedInputFormat: 'GEOTIFF',
+          supportedOutputFormats: ['GEOTIFF', 'PNG', 'TIFF', 'NETCDF-4']
+        }],
+        type: 'Harmony',
+        url: {
+          description: 'Mock URL',
+          urlValue: 'https://example.com'
+        },
+        variables: {
+          count: 0,
+          items: null
+        }
+      },
+      {
+        count: 4,
+        items: [{
+          conceptId: 'V100000-EDSC',
+          definition: 'Alpha channel value',
+          longName: 'Alpha channel ',
+          name: 'alpha_var',
+          nativeId: 'mmt_variable_3972',
+          scienceKeywords: null
+        }, {
+          conceptId: 'V100001-EDSC',
+          definition: 'Blue channel value',
+          longName: 'Blue channel',
+          name: 'blue_var',
+          nativeId: 'mmt_variable_3971',
+          scienceKeywords: null
+        }, {
+          conceptId: 'V100002-EDSC',
+          definition: 'Green channel value',
+          longName: 'Green channel',
+          name: 'green_var',
+          nativeId: 'mmt_variable_3970',
+          scienceKeywords: null
+        }, {
+          conceptId: 'V100003-EDSC',
+          definition: 'Red channel value',
+          longName: 'Red Channel',
+          name: 'red_var',
+          nativeId: 'mmt_variable_3969',
+          scienceKeywords: null
+        }]
+      },
+      0
+    )
   })
 
   test('calls buildOpendap access method', () => {
@@ -453,9 +534,239 @@ describe('buildAccessMethods', () => {
     buildAccessMethods(collectionMetadata, isOpenSearch)
 
     expect(buildOpendapMock).toBeCalledTimes(1)
+
+    expect(buildOpendapMock).toBeCalledWith(
+      {
+        conceptId: 'S100000-EDSC',
+        longName: 'Mock Service Name',
+        name: 'mock-name',
+        orderOptions: {
+          count: 0,
+          items: null
+        },
+        serviceOptions: {
+          subset: {
+            spatialSubset: {
+              boundingBox: {
+                allowMultipleValues: false
+              }
+            },
+            variableSubset: {
+              allowMultipleValues: true
+            }
+          },
+          supportedInputProjections: [
+            {
+              projectionName: 'Geographic'
+            }
+          ],
+          supportedOutputProjections: [
+            {
+              projectionName: 'Geographic'
+            }
+          ],
+          supportedReformattings: [
+            {
+              supportedInputFormat: 'ASCII',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            },
+            {
+              supportedInputFormat: 'BINARY',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            },
+            {
+              supportedInputFormat: 'NETCDF-4',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            }
+          ]
+        },
+        supportedOutputProjections: [
+          {
+            projectionName: 'Geographic'
+          }
+        ],
+        supportedReformattings: [
+          {
+            supportedInputFormat: 'ASCII',
+            supportedOutputFormats: [
+              'ASCII',
+              'BINARY',
+              'NETCDF-4'
+            ]
+          },
+          {
+            supportedInputFormat: 'BINARY',
+            supportedOutputFormats: [
+              'ASCII',
+              'BINARY',
+              'NETCDF-4'
+            ]
+          },
+          {
+            supportedInputFormat: 'NETCDF-4',
+            supportedOutputFormats: [
+              'ASCII',
+              'BINARY',
+              'NETCDF-4'
+            ]
+          }
+        ],
+        type: 'OPeNDAP',
+        url: {
+          description: 'Mock URL',
+          urlValue: 'https://example.com'
+        },
+        variables: {
+          count: 4,
+          items: [
+            {
+              conceptId: 'V100000-EDSC',
+              definition: 'analysed_sst in units of kelvin',
+              longName: 'analysed_sst',
+              name: 'analysed_sst',
+              nativeId: 'e2eTestVarHiRes1',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100001-EDSC',
+              definition: 'analysis_error in units of kelvin',
+              longName: 'analysis_error',
+              name: 'analysis_error',
+              nativeId: 'e2eTestVarHiRes2',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100002-EDSC',
+              definition: 'mask in units of seconds since 1981-0',
+              longName: 'mask',
+              name: 'mask',
+              nativeId: 'e2eTestVarHiRes4',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100003-EDSC',
+              definition: 'sea_ice_fraction in units of fraction (between 0 ',
+              longName: 'sea_ice_fraction',
+              name: 'sea_ice_fraction',
+              nativeId: 'e2eTestVarHiRes3',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        count: 4,
+        items: [
+          {
+            conceptId: 'V100000-EDSC',
+            definition: 'analysed_sst in units of kelvin',
+            longName: 'analysed_sst',
+            name: 'analysed_sst',
+            nativeId: 'e2eTestVarHiRes1',
+            scienceKeywords: [
+              {
+                category: 'Earth Science',
+                term: 'Ocean Temperature',
+                topic: 'Oceans',
+                variableLevel1: 'Sea Surface Temperature'
+              }
+            ]
+          },
+          {
+            conceptId: 'V100001-EDSC',
+            definition: 'analysis_error in units of kelvin',
+            longName: 'analysis_error',
+            name: 'analysis_error',
+            nativeId: 'e2eTestVarHiRes2',
+            scienceKeywords: [
+              {
+                category: 'Earth Science',
+                term: 'Ocean Temperature',
+                topic: 'Oceans',
+                variableLevel1: 'Sea Surface Temperature'
+              }
+            ]
+          },
+          {
+            conceptId: 'V100002-EDSC',
+            definition: 'mask in units of seconds since 1981-0',
+            longName: 'mask',
+            name: 'mask',
+            nativeId: 'e2eTestVarHiRes4',
+            scienceKeywords: [
+              {
+                category: 'Earth Science',
+                term: 'Ocean Temperature',
+                topic: 'Oceans',
+                variableLevel1: 'Sea Surface Temperature'
+              }
+            ]
+          },
+          {
+            conceptId: 'V100003-EDSC',
+            definition: 'sea_ice_fraction in units of fraction (between 0 ',
+            longName: 'sea_ice_fraction',
+            name: 'sea_ice_fraction',
+            nativeId: 'e2eTestVarHiRes3',
+            scienceKeywords: [
+              {
+                category: 'Earth Science',
+                term: 'Ocean Temperature',
+                topic: 'Oceans',
+                variableLevel1: 'Sea Surface Temperature'
+              }
+            ]
+          }
+        ]
+      }
+    )
   })
 
   test('calls buildSwodlr access method', () => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      disableSwodlr: 'false'
+    }))
+
     const buildSwodlrMock = jest.spyOn(buildSwodlr, 'buildSwodlr')
     buildSwodlrMock.mockImplementationOnce(() => jest.fn())
 
@@ -506,6 +817,43 @@ describe('buildAccessMethods', () => {
     buildAccessMethods(collectionMetadata, isOpenSearch)
 
     expect(buildSwodlrMock).toBeCalledTimes(1)
+
+    expect(buildSwodlrMock).toHaveBeenCalledWith({
+      conceptId: 'S100000-EDSC',
+      longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
+      name: 'Mock PODAAC_SWODLR',
+      orderOptions: {
+        items: []
+      },
+      serviceOptions: {
+        supportedOutputProjections: [
+          {
+            projectionName: 'Universal Transverse Mercator'
+          },
+          {
+            projectionName: 'WGS84 - World Geodetic System 1984'
+          }
+        ]
+      },
+      supportedInputProjections: null,
+      supportedOutputProjections: [
+        {
+          projectionName: 'Universal Transverse Mercator'
+        },
+        {
+          projectionName: 'WGS84 - World Geodetic System 1984'
+        }
+      ],
+      supportedReformattings: null,
+      type: 'SWODLR',
+      url: {
+        description: 'Service top-level URL',
+        urlValue: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
+      },
+      variables: {
+        items: []
+      }
+    }, 'false')
   })
 
   describe('when swodlr is disabled', () => {
@@ -706,7 +1054,7 @@ describe('buildAccessMethods', () => {
               }, {
                 conceptId: 'V100003-EDSC',
                 definition: 'Red channel value',
-                longName: 'Red channel',
+                longName: 'Red Channel',
                 name: 'red_var',
                 nativeId: 'mmt_variable_3969',
                 scienceKeywords: null
@@ -807,7 +1155,7 @@ describe('buildAccessMethods', () => {
               }, {
                 conceptId: 'V100009-EDSC',
                 definition: 'Red channel value',
-                longName: 'Red channel',
+                longName: 'Red Channel',
                 name: 'red_var',
                 nativeId: 'mmt_variable_3966',
                 scienceKeywords: null
@@ -977,7 +1325,7 @@ describe('buildAccessMethods', () => {
             }, {
               conceptId: 'V100003-EDSC',
               definition: 'Red channel value',
-              longName: 'Red channel',
+              longName: 'Red Channel',
               name: 'red_var',
               nativeId: 'mmt_variable_3969',
               scienceKeywords: null
@@ -1010,7 +1358,7 @@ describe('buildAccessMethods', () => {
           }, {
             conceptId: 'V100003-EDSC',
             definition: 'Red channel value',
-            longName: 'Red channel',
+            longName: 'Red Channel',
             name: 'red_var',
             nativeId: 'mmt_variable_3969',
             scienceKeywords: null
@@ -1079,7 +1427,7 @@ describe('buildAccessMethods', () => {
             }, {
               conceptId: 'V100009-EDSC',
               definition: 'Red channel value',
-              longName: 'Red channel',
+              longName: 'Red Channel',
               name: 'red_var',
               nativeId: 'mmt_variable_3966',
               scienceKeywords: null
@@ -1112,7 +1460,7 @@ describe('buildAccessMethods', () => {
           }, {
             conceptId: 'V100009-EDSC',
             definition: 'Red channel value',
-            longName: 'Red channel',
+            longName: 'Red Channel',
             name: 'red_var',
             nativeId: 'mmt_variable_3966',
             scienceKeywords: null
@@ -1744,7 +2092,7 @@ describe('buildAccessMethods', () => {
               }, {
                 conceptId: 'V100003-EDSC',
                 definition: 'Red channel value',
-                longName: 'Red channel',
+                longName: 'Red Channel',
                 name: 'red_var',
                 nativeId: 'mmt_variable_3969',
                 scienceKeywords: null
@@ -1984,7 +2332,7 @@ describe('buildAccessMethods', () => {
             }, {
               conceptId: 'V100003-EDSC',
               definition: 'Red channel value',
-              longName: 'Red channel',
+              longName: 'Red Channel',
               name: 'red_var',
               nativeId: 'mmt_variable_3969',
               scienceKeywords: null
@@ -2018,7 +2366,7 @@ describe('buildAccessMethods', () => {
           }, {
             conceptId: 'V100003-EDSC',
             definition: 'Red channel value',
-            longName: 'Red channel',
+            longName: 'Red Channel',
             name: 'red_var',
             nativeId: 'mmt_variable_3969',
             scienceKeywords: null

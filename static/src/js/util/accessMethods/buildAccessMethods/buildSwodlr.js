@@ -1,3 +1,9 @@
+/**
+ * Builds the swodlr access method
+ * @param {object} serviceItem serviceItem in the Collection Metadata
+ * @param {boolean} disabledSwodlr true if the swodlr acceessMethod disabled
+ * @returns {object} Access method for SWODLR
+ */
 export const buildSwodlr = (serviceItem, disableSwodlr) => {
   const accessMethods = {}
 
@@ -11,7 +17,7 @@ export const buildSwodlr = (serviceItem, disableSwodlr) => {
 
   const { urlValue } = url
 
-  if (serviceType.toLowerCase() === 'swodlr' && (disableSwodlr !== 'true')) {
+  if (disableSwodlr !== 'true') {
     accessMethods.swodlr = {
       id: serviceConceptId,
       isValid: true,

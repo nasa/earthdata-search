@@ -19,43 +19,61 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     variables: collectionAssociatedVariables = {}
   } = collectionMetadata
 
-  let accessMethods = {}
   let harmonyIndex = 0
   const { items: serviceItems = null } = services
 
   const { disableOrdering, disableSwodlr } = getApplicationConfig()
 
-  if (serviceItems !== null) {
-    serviceItems.forEach((serviceItem) => {
-      let associatedVariables = collectionAssociatedVariables
-      const {
-        type: serviceType,
-        variables: serviceAssociatedVariables = {}
-      } = serviceItem
-
-      // Overwrite variables if there are variables associated to the service record
-      if (serviceAssociatedVariables.items && serviceAssociatedVariables.items.length > 0) {
-        associatedVariables = serviceAssociatedVariables
-      }
-
-      // Only process service types that EDSC supports
-      const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony', 'swodlr']
-      if (!supportedServiceTypes.includes(serviceType.toLowerCase())) return
-
-      accessMethods = {
-        ...buildEsiEcho(serviceItem, disableOrdering),
-        ...buildOpendap(serviceItem, associatedVariables),
-        // eslint-disable-next-line no-plusplus
-        ...buildHarmony(serviceItem, associatedVariables, harmonyIndex++),
-        ...buildSwodlr(serviceItem, disableSwodlr),
-        ...accessMethods
-      }
-    })
+  const buildMethods = {
+    esi: (serviceItem, params) => buildEsiEcho(serviceItem, params.disableOrdering),
+    'echo orders': (serviceItem, params) => buildEsiEcho(serviceItem, params.disableOrdering),
+    opendap: (serviceItem, params) => buildOpendap(serviceItem, params.associatedVariables),
+    // eslint-disable-next-line max-len
+    harmony: (serviceItem, params) => buildHarmony(serviceItem, params.associatedVariables, params.harmonyIndex),
+    swodlr: (serviceItem, params) => buildSwodlr(serviceItem, params.disableSwodlr),
+    downloads: () => buildDownload(granules, isOpenSearch)
   }
 
-  accessMethods = {
-    ...buildDownload(granules, isOpenSearch),
-    ...accessMethods
+  const nonDownloadMethods = serviceItems !== null ? serviceItems.reduce((methods, serviceItem) => {
+    let associatedVariables = collectionAssociatedVariables
+    const {
+      type: serviceType,
+      variables: serviceAssociatedVariables = {}
+    } = serviceItem
+
+    // Overwrite variables if there are variables associated to the service record
+    if (serviceAssociatedVariables.items && serviceAssociatedVariables.items.length > 0) {
+      associatedVariables = serviceAssociatedVariables
+    }
+
+    const lowerServiceType = serviceType.toLowerCase()
+
+    // Only process service types that EDSC supports
+    const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony', 'swodlr']
+    if (!supportedServiceTypes.includes(lowerServiceType)) return {}
+
+    const params = {
+      disableOrdering,
+      harmonyIndex,
+      associatedVariables,
+      disableSwodlr
+    }
+
+    const updatedMethods = {
+      ...methods,
+      ...buildMethods[lowerServiceType](serviceItem, params)
+    }
+
+    if (lowerServiceType === 'harmony') {
+      harmonyIndex += 1
+    }
+
+    return updatedMethods
+  }, {}) : {}
+
+  const accessMethods = {
+    ...nonDownloadMethods,
+    ...buildMethods.downloads()
   }
 
   return accessMethods
