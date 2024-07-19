@@ -9,6 +9,7 @@ provider:
   endpointType: PRIVATE
   memorySize: 128
   environment:
+    NODE_ENV: ${env:NODE_ENV, 'development'}
     # Variables for new Encrypted database
     databaseEndpoint:
       Fn::ImportValue: ${self:provider.stage}-EncryptedDatabaseEndpoint
@@ -77,14 +78,13 @@ provider:
     binaryMediaTypes: 'image/png'
 
 plugins:
+  - serverless-esbuild
   - serverless-finch
-  - serverless-webpack
   - serverless-step-functions
   - serverless-plugin-split-stacks
   - serverless-plugin-log-subscription
   - serverless-plugin-ifelse
   - serverless-offline
-  - ./serverless-plugins/serverless-webpack-include-migrations.js
 
 #
 # Lambda Functions
@@ -105,6 +105,9 @@ stepFunctions: ${file(./serverless-configs/${self:provider.name}-step-functions.
 # each lambda but increases the complexity of the compilation process slightly
 package:
   individually: true
+  patterns:
+  # TODO this adds migrations to every lambda package, we need to only provide them to the migrateDatabase function
+    - 'migrations/**'
 
 configValidationMode: error
 
@@ -188,14 +191,20 @@ custom:
     # https://github.com/dherault/serverless-offline#run-modes
     # useInProcess: true
 
-  # Serverless Webpack configurations
-  webpack:
-    webpackConfig: 'serverless.webpack.config.js'
-    includeModules:
-      forceExclude:
-        - aws-sdk
-    packager: 'npm'
-    excludeFiles: src/**/*.test.js
+  # Don't minify the build in development
+  minifyBuild:
+    dev: false
+    sit: true
+    uat: true
+    prod: true
+
+  # Serverless esbuild configurations
+  esbuild:
+    loader:
+      .svg: text
+    external: ['knex', 'pg', 'sharp']
+    bundle: true
+    minify: ${self:custom.minifyBuild.${self:provider.stage}}
 
   # Manage resource count (Maximum of 200) by splitting up the cloudformation templates
   splitStacks:

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { pick } from 'lodash'
+import { pick } from 'lodash-es'
 
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'

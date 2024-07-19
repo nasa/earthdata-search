@@ -111,7 +111,7 @@
   }
 
   &__action {
-    margin-right: $spacer/2;
+    margin-right: calc($spacer / 2);
 
     &:last-child {
       margin-right: 0;

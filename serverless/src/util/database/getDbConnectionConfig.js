@@ -15,7 +15,7 @@ export const getDbConnectionConfig = async () => {
       password: dbCredentials.password
     }
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.IS_OFFLINE) {
       const { dbHost, dbName, databasePort } = getEnvironmentConfig()
 
       return {

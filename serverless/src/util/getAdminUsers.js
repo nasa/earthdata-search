@@ -15,7 +15,7 @@ export const getAdminUsers = async () => {
       secretsManagerClient = new SecretsManagerClient(getSecretsManagerConfig())
     }
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.IS_OFFLINE) {
       adminUsers = getSecretAdminUsers()
 
       return adminUsers

@@ -1,12 +1,8 @@
-import { getEnvironmentConfig } from '../../sharedUtils/config'
+import { testJwtToken } from './getJwtToken'
 
 /**
  * Returns common authentication headers for integration tests
  */
-export const getAuthHeaders = () => {
-  const { jwtToken } = getEnvironmentConfig('test')
-
-  return {
-    'jwt-token': jwtToken
-  }
-}
+export const getAuthHeaders = () => ({
+  'jwt-token': testJwtToken
+})

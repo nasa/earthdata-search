@@ -6,10 +6,10 @@ set -eux
 # Deployment configuration/variables
 ####################################
 
-# read in static.config.json
+# Read in static.config.json
 config="`cat static.config.json`"
 
-# update keys for deployment
+# Update keys for deployment
 config="`jq '.application.version = $newValue' --arg newValue ${RELEASE_VERSION} <<< $config`"
 config="`jq '.application.env = $newValue' --arg newValue $bamboo_STAGE_NAME <<< $config`"
 config="`jq '.application.defaultPortal = $newValue' --arg newValue $bamboo_DEFAULT_PORTAL <<< $config`"
@@ -27,10 +27,13 @@ config="`jq '.application.linuxEddDownloadSize = $newValue' --arg newValue $bamb
 config="`jq '.environment.production.apiHost = $newValue' --arg newValue $bamboo_API_HOST <<< $config`"
 config="`jq '.environment.production.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
 
-# overwrite static.config.json with new values
+# Overwrite static.config.json with new values
 echo $config > tmp.$$.json && mv tmp.$$.json static.config.json
 
-# create a dummy secret.config.json for now
+# Create an empty overrideStatic.config.json
+echo {} > overrideStatic.config.json
+
+# Create a dummy secret.config.json for now
 cat <<EOF > secret.config.json
 {
   "earthdata": {

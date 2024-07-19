@@ -3,6 +3,10 @@ import { render } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import * as tinyCookie from 'tiny-cookie'
 
+jest.mock('tiny-cookie', () => ({
+  set: jest.fn()
+}))
+
 import {
   AuthCallbackContainer,
   mapDispatchToProps,
@@ -135,7 +139,6 @@ describe('AuthCallbackContainer component', () => {
 
     expect(setSpy).toBeCalledTimes(1)
     expect(setSpy).toBeCalledWith('authToken', '')
-
     expect(window.location.replace.mock.calls.length).toBe(1)
     expect(window.location.replace.mock.calls[0]).toEqual(['/'])
   })

@@ -1,4 +1,4 @@
-import { difference } from 'lodash'
+import { difference } from 'lodash-es'
 import murmurhash3 from './murmurhash3'
 
 /**

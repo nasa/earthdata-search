@@ -49,7 +49,7 @@
       display: inline-block;
       width: 60%;
       margin-bottom: 0;
-      padding-left: $spacer/2;
+      padding-left: calc($spacer / 2);
     }
   }
 }

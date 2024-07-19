@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle, new-cap */
 import L from 'leaflet'
-import { castArray } from 'lodash'
+
+import { castArray } from 'lodash-es'
 
 // Is the granule coordinate system cartesian?
 export function isCartesian(metadata = {}) {
@@ -179,7 +180,7 @@ export const buildLayer = (options, metadata) => {
         polyLayer = new L.polygon(polygon)
         polyLayer._interpolationFn = 'cartesian'
       } else {
-        polyLayer = new L.sphericalPolygon(polygon, options)
+        polyLayer = new L.SphericalPolygon(polygon, options)
       }
 
       layer.addLayer(polyLayer)
@@ -209,7 +210,7 @@ export const buildLayer = (options, metadata) => {
         shape = new L.polygon(rect, options)
         shape._interpolationFn = 'cartesian'
       } else {
-        shape = new L.sphericalPolygon(rect, options)
+        shape = new L.SphericalPolygon(rect, options)
       }
 
       layer.addLayer(shape)

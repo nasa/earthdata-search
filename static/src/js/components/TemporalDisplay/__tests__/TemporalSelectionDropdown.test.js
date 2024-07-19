@@ -236,9 +236,9 @@ describe('TemporalSelectionDropdown component', () => {
 
     // Select the end date
     await user.click(endField)
-    await user.click((await screen.findAllByText('2024')).at(1))
+    await user.click(await screen.findByText('2024'))
     await user.click(await screen.findByText('Jun'))
-    await user.click(await screen.findByText('15'))
+    await user.click((await screen.findAllByText('15')).at(1))
     expect(endField).toHaveValue(validEndDate)
 
     // Select Recurring
