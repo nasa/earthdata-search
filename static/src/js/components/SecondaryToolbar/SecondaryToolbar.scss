@@ -22,7 +22,7 @@
 
   &__project-name-dropdown {
     .dropdown-menu {
-      padding: $spacer/2;
+      padding: calc($spacer / 2);
     }
   }
 

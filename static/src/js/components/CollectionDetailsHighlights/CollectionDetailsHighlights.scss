@@ -57,7 +57,7 @@
     }
 
     &:last-child {
-      padding-top: $spacer/8;
+      padding-top: calc($spacer / 8);
     }
 
     .button {

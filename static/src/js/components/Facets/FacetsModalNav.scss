@@ -6,7 +6,7 @@
   border-bottom: 1px solid #dee2e6;
 
   &__heading {
-    margin-right: $spacer/2;
+    margin-right: calc($spacer / 2);
     color: $color__black--400;
   }
 

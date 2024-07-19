@@ -13,7 +13,7 @@
   }
 
   &__processed {
-    margin-right: $spacer/4;
+    margin-right: calc($spacer / 4);
   }
 
   &__info {
@@ -28,7 +28,7 @@
   }
 
   &__bar {
-    margin-top: $spacer/2;
+    margin-top: calc($spacer / 2);
 
     .progress-bar {
       background-color: $color__indigo;
@@ -37,7 +37,7 @@
   }
 
   &__badge {
-    margin-left: $spacer/2;
+    margin-left: calc($spacer / 2);
     color: $color__white;
     background-color: $color__indigo;
 

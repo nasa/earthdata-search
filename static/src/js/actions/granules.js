@@ -1,5 +1,5 @@
 import { isCancel } from 'axios'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 import { mbr } from '@edsc/geo-utils'
 import 'array-foreach-async'
 import { stringify } from 'qs'

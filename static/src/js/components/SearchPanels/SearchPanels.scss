@@ -1,7 +1,7 @@
 .search-panels {
   &__note {
     display: block;
-    margin-bottom: $spacer/2;
+    margin-bottom: calc($spacer / 2);
     color: $color__black--500;
     font-size: 0.875rem;
   }
@@ -19,7 +19,7 @@
   }
 
   &__actions {
-    padding: $spacer/2 $spacer;
+    padding: calc($spacer / 2) $spacer;
   }
 
   &__action {
@@ -48,4 +48,3 @@
     overflow: hidden;
   }
 }
-

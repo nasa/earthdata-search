@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from 'playwright-test-coverage'
 import singleCollection from './__mocks__/single_collection.json'
 
 const dragPanelToX = async (page, x) => {

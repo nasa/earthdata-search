@@ -34,7 +34,7 @@
       }
 
       &:last-child {
-        padding-top: $spacer/8;
+        padding-top:   calc($spacer / 8);
       }
 
       .button {
@@ -52,7 +52,7 @@
   &__direct-distribution-information-list {
     padding-left: 1.25rem;
   }
-  
+
   &__instance-field-title {
     display: inline;
     padding-right: 5px;

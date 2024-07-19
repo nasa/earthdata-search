@@ -4,7 +4,7 @@
   }
 
   &__button {
-    margin: 0 $spacer/2;
+    margin: 0 calc($spacer / 2);
     color: $color__black--300;
 
     &--share {

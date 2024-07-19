@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Create empty overrideStatic.config.json if it doesn't exist
+overrideFile=overrideStatic.config.json
+if [ ! -f $overrideFile ]; then
+    echo {} > overrideStatic.config.json
+fi
