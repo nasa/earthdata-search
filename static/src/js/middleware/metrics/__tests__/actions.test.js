@@ -1,12 +1,13 @@
 import {
   METRICS_CLICK,
+  METRICS_COLLECTION_SORT_CHANGE,
   METRICS_DATA_ACCESS,
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
+  METRICS_SPATIAL_SELECTION,
   METRICS_TIMELINE,
-  METRICS_TIMING,
-  METRICS_COLLECTION_SORT_CHANGE
+  METRICS_TIMING
 } from '../constants'
 
 import {
@@ -16,6 +17,7 @@ import {
   metricsMap,
   metricsRelatedCollection,
   metricsSpatialEdit,
+  metricsSpatialSelection,
   metricsTiming,
   metricsCollectionSortChange
 } from '../actions'
@@ -103,6 +105,24 @@ describe('actions', () => {
       } = action
 
       expect(type).toEqual(METRICS_SPATIAL_EDIT)
+      expect(payload).toEqual(data)
+    })
+  })
+
+  describe('metricsSpatialEdit', () => {
+    test('returns the correct action', () => {
+      const data = {
+        test: 'test payload'
+      }
+
+      const action = metricsSpatialSelection(data)
+
+      const {
+        type,
+        payload
+      } = action
+
+      expect(type).toEqual(METRICS_SPATIAL_SELECTION)
       expect(payload).toEqual(data)
     })
   })
