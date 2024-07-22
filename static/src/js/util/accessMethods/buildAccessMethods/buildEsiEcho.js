@@ -1,4 +1,7 @@
 import { camelCase } from 'lodash-es'
+
+import { getApplicationConfig } from '../../../../../../sharedUtils/config'
+
 import { generateFormDigest } from '../generateFormDigest'
 
 /**
@@ -7,10 +10,20 @@ import { generateFormDigest } from '../generateFormDigest'
  * @param {boolean} disabledOrdering true if ordering is disabled
  * @returns {object} Access method for ESI or Echo Orders
  */
-export const buildEsiEcho = (serviceItem, disableOrdering) => {
+export const buildEsiEcho = (serviceItem, params) => {
   const accessMethods = {}
   // Only process orderOptions if the service type uses orderOptions
   // Do not include access if orders are disabled
+  const { disableOrdering } = getApplicationConfig()
+
+  // Pull out the esi and echo indeces and increment them to have an accurate count
+  const {
+    esiIndex: initEsiIndex,
+    echoIndex: initEchoIndex
+  } = params
+
+  let esiIndex = initEsiIndex
+  let echoIndex = initEchoIndex
 
   const {
     orderOptions,
@@ -24,9 +37,6 @@ export const buildEsiEcho = (serviceItem, disableOrdering) => {
 
     const { items: orderOptionsItems } = orderOptions
     if (orderOptionsItems === null) return {}
-
-    let esiIndex = 0
-    let echoIndex = 0
 
     orderOptionsItems.forEach((orderOptionItem) => {
       const {
@@ -61,5 +71,9 @@ export const buildEsiEcho = (serviceItem, disableOrdering) => {
     })
   }
 
-  return accessMethods
+  return {
+    accessMethods,
+    echoIndex,
+    esiIndex
+  }
 }

@@ -1,5 +1,3 @@
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
-
 import { buildEsiEcho } from './buildAccessMethods/buildEsiEcho'
 import { buildOpendap } from './buildAccessMethods/buildOpendap'
 import { buildHarmony } from './buildAccessMethods/buildHarmony'
@@ -20,56 +18,69 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
   } = collectionMetadata
 
   let harmonyIndex = 0
+  let echoIndex = 0
+  let esiIndex = 0
+
   const { items: serviceItems = null } = services
 
-  const { disableOrdering, disableSwodlr } = getApplicationConfig()
-
   const buildMethods = {
-    esi: (serviceItem, params) => buildEsiEcho(serviceItem, params.disableOrdering),
-    'echo orders': (serviceItem, params) => buildEsiEcho(serviceItem, params.disableOrdering),
-    opendap: (serviceItem, params) => buildOpendap(serviceItem, params.associatedVariables),
-    // eslint-disable-next-line max-len
-    harmony: (serviceItem, params) => buildHarmony(serviceItem, params.associatedVariables, params.harmonyIndex),
-    swodlr: (serviceItem, params) => buildSwodlr(serviceItem, params.disableSwodlr),
+    esi: (serviceItem, params) => buildEsiEcho(serviceItem, params),
+    'echo orders': (serviceItem, params) => buildEsiEcho(serviceItem, params),
+    opendap: (serviceItem, params) => buildOpendap(serviceItem, params),
+    harmony: (serviceItem, params) => buildHarmony(serviceItem, params),
+    swodlr: (serviceItem) => buildSwodlr(serviceItem),
     downloads: () => buildDownload(granules, isOpenSearch)
   }
 
-  const nonDownloadMethods = serviceItems !== null ? serviceItems.reduce((methods, serviceItem) => {
-    let associatedVariables = collectionAssociatedVariables
-    const {
-      type: serviceType,
-      variables: serviceAssociatedVariables = {}
-    } = serviceItem
+  const nonDownloadMethods = serviceItems === null
+    ? {}
+    : serviceItems.reduce((methods, serviceItem) => {
+      let associatedVariables = collectionAssociatedVariables
+      const {
+        type: serviceType,
+        variables: serviceAssociatedVariables = {}
+      } = serviceItem
 
-    // Overwrite variables if there are variables associated to the service record
-    if (serviceAssociatedVariables.items && serviceAssociatedVariables.items.length > 0) {
-      associatedVariables = serviceAssociatedVariables
-    }
+      // Overwrite variables if there are variables associated to the service record
+      if (serviceAssociatedVariables.items && serviceAssociatedVariables.items.length > 0) {
+        associatedVariables = serviceAssociatedVariables
+      }
 
-    const lowerServiceType = serviceType.toLowerCase()
+      const lowerServiceType = serviceType.toLowerCase()
 
-    // Only process service types that EDSC supports
-    const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony', 'swodlr']
-    if (!supportedServiceTypes.includes(lowerServiceType)) return {}
+      // Only process service types that EDSC supports
+      const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony', 'swodlr']
+      if (!supportedServiceTypes.includes(lowerServiceType)) return {}
 
-    const params = {
-      disableOrdering,
-      harmonyIndex,
-      associatedVariables,
-      disableSwodlr
-    }
+      const params = {
+        harmonyIndex,
+        echoIndex,
+        esiIndex,
+        associatedVariables
+      }
 
-    const updatedMethods = {
-      ...methods,
-      ...buildMethods[lowerServiceType](serviceItem, params)
-    }
+      const builtMethod = buildMethods[lowerServiceType](serviceItem, params)
 
-    if (lowerServiceType === 'harmony') {
-      harmonyIndex += 1
-    }
+      const {
+        accessMethods: newAccessMethods,
+        esiIndex: newEsiIndex,
+        echoIndex: newEchoIndex
+      } = builtMethod
 
-    return updatedMethods
-  }, {}) : {}
+      esiIndex = newEsiIndex
+      echoIndex = newEchoIndex
+
+      const updatedMethods = {
+        ...methods,
+        ...newAccessMethods
+      }
+
+      if (lowerServiceType === 'harmony') {
+        harmonyIndex += 1
+      }
+
+      return updatedMethods
+    }, {})
 
   const accessMethods = {
     ...nonDownloadMethods,

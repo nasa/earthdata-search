@@ -1,5 +1,13 @@
 import { buildSwodlr } from '../buildSwodlr'
 
+import * as getApplicationConfig from '../../../../../../../sharedUtils/config'
+
+beforeEach(() => {
+  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    disableSwodlr: 'false'
+  }))
+})
+
 describe('buildSwodlr', () => {
   test('returns an swodlr access method', () => {
     const collectionMetadata = {
@@ -48,9 +56,7 @@ describe('buildSwodlr', () => {
     const { services } = collectionMetadata
     const serviceItem = services.items[0]
 
-    const disableSwodlr = false
-
-    const methods = buildSwodlr(serviceItem, disableSwodlr)
+    const methods = buildSwodlr(serviceItem)
 
     expect(methods).toEqual({
       swodlr: {
@@ -66,6 +72,12 @@ describe('buildSwodlr', () => {
   })
 
   describe('when swodlr is disabled', () => {
+    beforeEach(() => {
+      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        disableSwodlr: 'true'
+      }))
+    })
+
     test('no swodlr access method is returned', () => {
       const collectionMetadata = {
         services: {
@@ -113,9 +125,7 @@ describe('buildSwodlr', () => {
       const { services } = collectionMetadata
       const serviceItem = services.items[0]
 
-      const disableSwodlr = 'true'
-
-      const methods = buildSwodlr(serviceItem, disableSwodlr)
+      const methods = buildSwodlr(serviceItem)
 
       expect(methods).toEqual({})
     })

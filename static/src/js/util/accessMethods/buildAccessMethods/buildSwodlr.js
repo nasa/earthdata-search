@@ -1,11 +1,15 @@
+import { getApplicationConfig } from '../../../../../../sharedUtils/config'
+
 /**
  * Builds the swodlr access method
  * @param {object} serviceItem serviceItem in the Collection Metadata
  * @param {boolean} disabledSwodlr true if the swodlr acceessMethod disabled
  * @returns {object} Access method for SWODLR
  */
-export const buildSwodlr = (serviceItem, disableSwodlr) => {
+export const buildSwodlr = (serviceItem) => {
   const accessMethods = {}
+
+  const { disableSwodlr } = getApplicationConfig()
 
   const {
     conceptId: serviceConceptId,

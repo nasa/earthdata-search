@@ -16,8 +16,10 @@ import { supportsVariableSubsetting } from '../supportsVariableSubsetting'
  * @param {integer} index the harmony index for this harmony service item
  * @returns {object} Access method for Harmony
  */
-export const buildHarmony = (serviceItem, associatedVariables, index) => {
+export const buildHarmony = (serviceItem, params) => {
   const accessMethods = {}
+
+  const { associatedVariables, index } = params
 
   const {
     description,

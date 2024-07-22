@@ -87,7 +87,12 @@ describe('buildAccessMethods', () => {
         url: {
           urlValue: 'https://example.com'
         }
-      }, 'true')
+      }, {
+        associatedVariables: {},
+        echoIndex: 0,
+        esiIndex: 0,
+        harmonyIndex: 0
+      })
     })
   })
 
@@ -134,7 +139,12 @@ describe('buildAccessMethods', () => {
       url: {
         urlValue: 'https://example.com'
       }
-    }, 'false')
+    }, {
+      associatedVariables: {},
+      echoIndex: 0,
+      esiIndex: 0,
+      harmonyIndex: 0
+    })
   })
 
   test('calls buildEsiEcho access method with type ESI', () => {
@@ -180,7 +190,12 @@ describe('buildAccessMethods', () => {
       url: {
         urlValue: 'https://example.com'
       }
-    }, 'false')
+    }, {
+      associatedVariables: {},
+      echoIndex: 0,
+      esiIndex: 0,
+      harmonyIndex: 0
+    })
   })
 
   test('calls buildHarmony access method', () => {
@@ -353,38 +368,42 @@ describe('buildAccessMethods', () => {
         }
       },
       {
-        count: 4,
-        items: [{
-          conceptId: 'V100000-EDSC',
-          definition: 'Alpha channel value',
-          longName: 'Alpha channel ',
-          name: 'alpha_var',
-          nativeId: 'mmt_variable_3972',
-          scienceKeywords: null
-        }, {
-          conceptId: 'V100001-EDSC',
-          definition: 'Blue channel value',
-          longName: 'Blue channel',
-          name: 'blue_var',
-          nativeId: 'mmt_variable_3971',
-          scienceKeywords: null
-        }, {
-          conceptId: 'V100002-EDSC',
-          definition: 'Green channel value',
-          longName: 'Green channel',
-          name: 'green_var',
-          nativeId: 'mmt_variable_3970',
-          scienceKeywords: null
-        }, {
-          conceptId: 'V100003-EDSC',
-          definition: 'Red channel value',
-          longName: 'Red Channel',
-          name: 'red_var',
-          nativeId: 'mmt_variable_3969',
-          scienceKeywords: null
-        }]
-      },
-      0
+        associatedVariables: {
+          count: 4,
+          items: [{
+            conceptId: 'V100000-EDSC',
+            definition: 'Alpha channel value',
+            longName: 'Alpha channel ',
+            name: 'alpha_var',
+            nativeId: 'mmt_variable_3972',
+            scienceKeywords: null
+          }, {
+            conceptId: 'V100001-EDSC',
+            definition: 'Blue channel value',
+            longName: 'Blue channel',
+            name: 'blue_var',
+            nativeId: 'mmt_variable_3971',
+            scienceKeywords: null
+          }, {
+            conceptId: 'V100002-EDSC',
+            definition: 'Green channel value',
+            longName: 'Green channel',
+            name: 'green_var',
+            nativeId: 'mmt_variable_3970',
+            scienceKeywords: null
+          }, {
+            conceptId: 'V100003-EDSC',
+            definition: 'Red channel value',
+            longName: 'Red Channel',
+            name: 'red_var',
+            nativeId: 'mmt_variable_3969',
+            scienceKeywords: null
+          }]
+        },
+        echoIndex: 0,
+        esiIndex: 0,
+        harmonyIndex: 0
+      }
     )
   })
 
@@ -695,69 +714,74 @@ describe('buildAccessMethods', () => {
         }
       },
       {
-        count: 4,
-        items: [
-          {
-            conceptId: 'V100000-EDSC',
-            definition: 'analysed_sst in units of kelvin',
-            longName: 'analysed_sst',
-            name: 'analysed_sst',
-            nativeId: 'e2eTestVarHiRes1',
-            scienceKeywords: [
-              {
-                category: 'Earth Science',
-                term: 'Ocean Temperature',
-                topic: 'Oceans',
-                variableLevel1: 'Sea Surface Temperature'
-              }
-            ]
-          },
-          {
-            conceptId: 'V100001-EDSC',
-            definition: 'analysis_error in units of kelvin',
-            longName: 'analysis_error',
-            name: 'analysis_error',
-            nativeId: 'e2eTestVarHiRes2',
-            scienceKeywords: [
-              {
-                category: 'Earth Science',
-                term: 'Ocean Temperature',
-                topic: 'Oceans',
-                variableLevel1: 'Sea Surface Temperature'
-              }
-            ]
-          },
-          {
-            conceptId: 'V100002-EDSC',
-            definition: 'mask in units of seconds since 1981-0',
-            longName: 'mask',
-            name: 'mask',
-            nativeId: 'e2eTestVarHiRes4',
-            scienceKeywords: [
-              {
-                category: 'Earth Science',
-                term: 'Ocean Temperature',
-                topic: 'Oceans',
-                variableLevel1: 'Sea Surface Temperature'
-              }
-            ]
-          },
-          {
-            conceptId: 'V100003-EDSC',
-            definition: 'sea_ice_fraction in units of fraction (between 0 ',
-            longName: 'sea_ice_fraction',
-            name: 'sea_ice_fraction',
-            nativeId: 'e2eTestVarHiRes3',
-            scienceKeywords: [
-              {
-                category: 'Earth Science',
-                term: 'Ocean Temperature',
-                topic: 'Oceans',
-                variableLevel1: 'Sea Surface Temperature'
-              }
-            ]
-          }
-        ]
+        associatedVariables: {
+          count: 4,
+          items: [
+            {
+              conceptId: 'V100000-EDSC',
+              definition: 'analysed_sst in units of kelvin',
+              longName: 'analysed_sst',
+              name: 'analysed_sst',
+              nativeId: 'e2eTestVarHiRes1',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100001-EDSC',
+              definition: 'analysis_error in units of kelvin',
+              longName: 'analysis_error',
+              name: 'analysis_error',
+              nativeId: 'e2eTestVarHiRes2',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100002-EDSC',
+              definition: 'mask in units of seconds since 1981-0',
+              longName: 'mask',
+              name: 'mask',
+              nativeId: 'e2eTestVarHiRes4',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            },
+            {
+              conceptId: 'V100003-EDSC',
+              definition: 'sea_ice_fraction in units of fraction (between 0 ',
+              longName: 'sea_ice_fraction',
+              name: 'sea_ice_fraction',
+              nativeId: 'e2eTestVarHiRes3',
+              scienceKeywords: [
+                {
+                  category: 'Earth Science',
+                  term: 'Ocean Temperature',
+                  topic: 'Oceans',
+                  variableLevel1: 'Sea Surface Temperature'
+                }
+              ]
+            }
+          ]
+        },
+        echoIndex: 0,
+        esiIndex: 0,
+        harmonyIndex: 0
       }
     )
   })
@@ -853,7 +877,7 @@ describe('buildAccessMethods', () => {
       variables: {
         items: []
       }
-    }, 'false')
+    })
   })
 
   describe('when swodlr is disabled', () => {
@@ -948,7 +972,7 @@ describe('buildAccessMethods', () => {
         variables: {
           items: []
         }
-      }, 'true')
+      })
     })
   })
 
@@ -1333,38 +1357,42 @@ describe('buildAccessMethods', () => {
           }
         },
         {
-          count: 4,
-          items: [{
-            conceptId: 'V100000-EDSC',
-            definition: 'Alpha channel value',
-            longName: 'Alpha channel ',
-            name: 'alpha_var',
-            nativeId: 'mmt_variable_3972',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100001-EDSC',
-            definition: 'Blue channel value',
-            longName: 'Blue channel',
-            name: 'blue_var',
-            nativeId: 'mmt_variable_3971',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100002-EDSC',
-            definition: 'Green channel value',
-            longName: 'Green channel',
-            name: 'green_var',
-            nativeId: 'mmt_variable_3970',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100003-EDSC',
-            definition: 'Red channel value',
-            longName: 'Red Channel',
-            name: 'red_var',
-            nativeId: 'mmt_variable_3969',
-            scienceKeywords: null
-          }]
-        },
-        0
+          associatedVariables: {
+            count: 4,
+            items: [{
+              conceptId: 'V100000-EDSC',
+              definition: 'Alpha channel value',
+              longName: 'Alpha channel ',
+              name: 'alpha_var',
+              nativeId: 'mmt_variable_3972',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100001-EDSC',
+              definition: 'Blue channel value',
+              longName: 'Blue channel',
+              name: 'blue_var',
+              nativeId: 'mmt_variable_3971',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100002-EDSC',
+              definition: 'Green channel value',
+              longName: 'Green channel',
+              name: 'green_var',
+              nativeId: 'mmt_variable_3970',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100003-EDSC',
+              definition: 'Red channel value',
+              longName: 'Red Channel',
+              name: 'red_var',
+              nativeId: 'mmt_variable_3969',
+              scienceKeywords: null
+            }]
+          },
+          echoIndex: 0,
+          esiIndex: 0,
+          harmonyIndex: 0
+        }
       )
 
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
@@ -1435,38 +1463,42 @@ describe('buildAccessMethods', () => {
           }
         },
         {
-          count: 4,
-          items: [{
-            conceptId: 'V100006-EDSC',
-            definition: 'Alpha channel value',
-            longName: 'Alpha channel ',
-            name: 'alpha_var',
-            nativeId: 'mmt_variable_3973',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100007-EDSC',
-            definition: 'Blue channel value',
-            longName: 'Blue channel',
-            name: 'blue_var',
-            nativeId: 'mmt_variable_3974',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100008-EDSC',
-            definition: 'Green channel value',
-            longName: 'Green channel',
-            name: 'green_var',
-            nativeId: 'mmt_variable_3975',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100009-EDSC',
-            definition: 'Red channel value',
-            longName: 'Red Channel',
-            name: 'red_var',
-            nativeId: 'mmt_variable_3966',
-            scienceKeywords: null
-          }]
-        },
-        1
+          associatedVariables: {
+            count: 4,
+            items: [{
+              conceptId: 'V100006-EDSC',
+              definition: 'Alpha channel value',
+              longName: 'Alpha channel ',
+              name: 'alpha_var',
+              nativeId: 'mmt_variable_3973',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100007-EDSC',
+              definition: 'Blue channel value',
+              longName: 'Blue channel',
+              name: 'blue_var',
+              nativeId: 'mmt_variable_3974',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100008-EDSC',
+              definition: 'Green channel value',
+              longName: 'Green channel',
+              name: 'green_var',
+              nativeId: 'mmt_variable_3975',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100009-EDSC',
+              definition: 'Red channel value',
+              longName: 'Red Channel',
+              name: 'red_var',
+              nativeId: 'mmt_variable_3966',
+              scienceKeywords: null
+            }]
+          },
+          echoIndex: undefined,
+          esiIndex: undefined,
+          harmonyIndex: 1
+        }
       )
 
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
@@ -1505,31 +1537,35 @@ describe('buildAccessMethods', () => {
           }
         },
         {
-          count: 3,
-          items: [{
-            conceptId: 'V100003-EDSC',
-            definition: 'Beta channel value',
-            longName: 'Beta channel ',
-            name: 'beta_var',
-            nativeId: 'mmt_variable_4972',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100004-EDSC',
-            definition: 'Orange channel value',
-            longName: 'Orange channel',
-            name: 'orange_var',
-            nativeId: 'mmt_variable_4971',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100005-EDSC',
-            definition: 'Purple channel value',
-            longName: 'Purple channel',
-            name: 'purple_var',
-            nativeId: 'mmt_variable_4970',
-            scienceKeywords: null
-          }]
-        },
-        2
+          associatedVariables: {
+            count: 3,
+            items: [{
+              conceptId: 'V100003-EDSC',
+              definition: 'Beta channel value',
+              longName: 'Beta channel ',
+              name: 'beta_var',
+              nativeId: 'mmt_variable_4972',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100004-EDSC',
+              definition: 'Orange channel value',
+              longName: 'Orange channel',
+              name: 'orange_var',
+              nativeId: 'mmt_variable_4971',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100005-EDSC',
+              definition: 'Purple channel value',
+              longName: 'Purple channel',
+              name: 'purple_var',
+              nativeId: 'mmt_variable_4970',
+              scienceKeywords: null
+            }]
+          },
+          echoIndex: undefined,
+          esiIndex: undefined,
+          harmonyIndex: 2
+        }
       )
     })
   })
@@ -1831,31 +1867,35 @@ describe('buildAccessMethods', () => {
           }
         },
         {
-          count: 3,
-          items: [{
-            conceptId: 'V100003-EDSC',
-            definition: 'Beta channel value',
-            longName: 'Beta channel ',
-            name: 'beta_var',
-            nativeId: 'mmt_variable_4972',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100004-EDSC',
-            definition: 'Orange channel value',
-            longName: 'Orange channel',
-            name: 'orange_var',
-            nativeId: 'mmt_variable_4971',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100005-EDSC',
-            definition: 'Purple channel value',
-            longName: 'Purple channel',
-            name: 'purple_var',
-            nativeId: 'mmt_variable_4970',
-            scienceKeywords: null
-          }]
-        },
-        0
+          associatedVariables: {
+            count: 3,
+            items: [{
+              conceptId: 'V100003-EDSC',
+              definition: 'Beta channel value',
+              longName: 'Beta channel ',
+              name: 'beta_var',
+              nativeId: 'mmt_variable_4972',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100004-EDSC',
+              definition: 'Orange channel value',
+              longName: 'Orange channel',
+              name: 'orange_var',
+              nativeId: 'mmt_variable_4971',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100005-EDSC',
+              definition: 'Purple channel value',
+              longName: 'Purple channel',
+              name: 'purple_var',
+              nativeId: 'mmt_variable_4970',
+              scienceKeywords: null
+            }]
+          },
+          echoIndex: 0,
+          esiIndex: 0,
+          harmonyIndex: 0
+        }
       )
 
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
@@ -1898,31 +1938,35 @@ describe('buildAccessMethods', () => {
           }
         },
         {
-          count: 3,
-          items: [{
-            conceptId: 'V100003-EDSC',
-            definition: 'Beta channel value',
-            longName: 'Beta channel ',
-            name: 'beta_var',
-            nativeId: 'mmt_variable_4972',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100004-EDSC',
-            definition: 'Orange channel value',
-            longName: 'Orange channel',
-            name: 'orange_var',
-            nativeId: 'mmt_variable_4971',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100005-EDSC',
-            definition: 'Purple channel value',
-            longName: 'Purple channel',
-            name: 'purple_var',
-            nativeId: 'mmt_variable_4970',
-            scienceKeywords: null
-          }]
-        },
-        1
+          associatedVariables: {
+            count: 3,
+            items: [{
+              conceptId: 'V100003-EDSC',
+              definition: 'Beta channel value',
+              longName: 'Beta channel ',
+              name: 'beta_var',
+              nativeId: 'mmt_variable_4972',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100004-EDSC',
+              definition: 'Orange channel value',
+              longName: 'Orange channel',
+              name: 'orange_var',
+              nativeId: 'mmt_variable_4971',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100005-EDSC',
+              definition: 'Purple channel value',
+              longName: 'Purple channel',
+              name: 'purple_var',
+              nativeId: 'mmt_variable_4970',
+              scienceKeywords: null
+            }]
+          },
+          echoIndex: undefined,
+          esiIndex: undefined,
+          harmonyIndex: 1
+        }
       )
 
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
@@ -1961,31 +2005,35 @@ describe('buildAccessMethods', () => {
           }
         },
         {
-          count: 3,
-          items: [{
-            conceptId: 'V100003-EDSC',
-            definition: 'Beta channel value',
-            longName: 'Beta channel ',
-            name: 'beta_var',
-            nativeId: 'mmt_variable_4972',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100004-EDSC',
-            definition: 'Orange channel value',
-            longName: 'Orange channel',
-            name: 'orange_var',
-            nativeId: 'mmt_variable_4971',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100005-EDSC',
-            definition: 'Purple channel value',
-            longName: 'Purple channel',
-            name: 'purple_var',
-            nativeId: 'mmt_variable_4970',
-            scienceKeywords: null
-          }]
-        },
-        2
+          associatedVariables: {
+            count: 3,
+            items: [{
+              conceptId: 'V100003-EDSC',
+              definition: 'Beta channel value',
+              longName: 'Beta channel ',
+              name: 'beta_var',
+              nativeId: 'mmt_variable_4972',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100004-EDSC',
+              definition: 'Orange channel value',
+              longName: 'Orange channel',
+              name: 'orange_var',
+              nativeId: 'mmt_variable_4971',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100005-EDSC',
+              definition: 'Purple channel value',
+              longName: 'Purple channel',
+              name: 'purple_var',
+              nativeId: 'mmt_variable_4970',
+              scienceKeywords: null
+            }]
+          },
+          echoIndex: undefined,
+          esiIndex: undefined,
+          harmonyIndex: 2
+        }
       )
     })
   })
@@ -2340,39 +2388,43 @@ describe('buildAccessMethods', () => {
           }
         },
         {
-          count: 4,
-          items: [{
-            conceptId: 'V100000-EDSC',
-            definition: 'Alpha channel value',
-            longName: 'Alpha channel ',
-            name: 'alpha_var',
-            nativeId: 'mmt_variable_3972',
-            scienceKeywords: null
+          associatedVariables: {
+            count: 4,
+            items: [{
+              conceptId: 'V100000-EDSC',
+              definition: 'Alpha channel value',
+              longName: 'Alpha channel ',
+              name: 'alpha_var',
+              nativeId: 'mmt_variable_3972',
+              scienceKeywords: null
+            },
+            {
+              conceptId: 'V100001-EDSC',
+              definition: 'Blue channel value',
+              longName: 'Blue channel',
+              name: 'blue_var',
+              nativeId: 'mmt_variable_3971',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100002-EDSC',
+              definition: 'Green channel value',
+              longName: 'Green channel',
+              name: 'green_var',
+              nativeId: 'mmt_variable_3970',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100003-EDSC',
+              definition: 'Red channel value',
+              longName: 'Red Channel',
+              name: 'red_var',
+              nativeId: 'mmt_variable_3969',
+              scienceKeywords: null
+            }]
           },
-          {
-            conceptId: 'V100001-EDSC',
-            definition: 'Blue channel value',
-            longName: 'Blue channel',
-            name: 'blue_var',
-            nativeId: 'mmt_variable_3971',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100002-EDSC',
-            definition: 'Green channel value',
-            longName: 'Green channel',
-            name: 'green_var',
-            nativeId: 'mmt_variable_3970',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100003-EDSC',
-            definition: 'Red channel value',
-            longName: 'Red Channel',
-            name: 'red_var',
-            nativeId: 'mmt_variable_3969',
-            scienceKeywords: null
-          }]
-        },
-        0
+          echoIndex: 0,
+          esiIndex: 0,
+          harmonyIndex: 0
+        }
       )
 
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
@@ -2411,31 +2463,35 @@ describe('buildAccessMethods', () => {
           }
         },
         {
-          count: 3,
-          items: [{
-            conceptId: 'V100003-EDSC',
-            definition: 'Beta channel value',
-            longName: 'Beta channel ',
-            name: 'beta_var',
-            nativeId: 'mmt_variable_4972',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100004-EDSC',
-            definition: 'Orange channel value',
-            longName: 'Orange channel',
-            name: 'orange_var',
-            nativeId: 'mmt_variable_4971',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100005-EDSC',
-            definition: 'Purple channel value',
-            longName: 'Purple channel',
-            name: 'purple_var',
-            nativeId: 'mmt_variable_4970',
-            scienceKeywords: null
-          }]
-        },
-        1
+          associatedVariables: {
+            count: 3,
+            items: [{
+              conceptId: 'V100003-EDSC',
+              definition: 'Beta channel value',
+              longName: 'Beta channel ',
+              name: 'beta_var',
+              nativeId: 'mmt_variable_4972',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100004-EDSC',
+              definition: 'Orange channel value',
+              longName: 'Orange channel',
+              name: 'orange_var',
+              nativeId: 'mmt_variable_4971',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100005-EDSC',
+              definition: 'Purple channel value',
+              longName: 'Purple channel',
+              name: 'purple_var',
+              nativeId: 'mmt_variable_4970',
+              scienceKeywords: null
+            }]
+          },
+          echoIndex: undefined,
+          esiIndex: undefined,
+          harmonyIndex: 1
+        }
       )
 
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
@@ -2474,31 +2530,35 @@ describe('buildAccessMethods', () => {
           }
         },
         {
-          count: 3,
-          items: [{
-            conceptId: 'V100003-EDSC',
-            definition: 'Beta channel value',
-            longName: 'Beta channel ',
-            name: 'beta_var',
-            nativeId: 'mmt_variable_4972',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100004-EDSC',
-            definition: 'Orange channel value',
-            longName: 'Orange channel',
-            name: 'orange_var',
-            nativeId: 'mmt_variable_4971',
-            scienceKeywords: null
-          }, {
-            conceptId: 'V100005-EDSC',
-            definition: 'Purple channel value',
-            longName: 'Purple channel',
-            name: 'purple_var',
-            nativeId: 'mmt_variable_4970',
-            scienceKeywords: null
-          }]
-        },
-        2
+          associatedVariables: {
+            count: 3,
+            items: [{
+              conceptId: 'V100003-EDSC',
+              definition: 'Beta channel value',
+              longName: 'Beta channel ',
+              name: 'beta_var',
+              nativeId: 'mmt_variable_4972',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100004-EDSC',
+              definition: 'Orange channel value',
+              longName: 'Orange channel',
+              name: 'orange_var',
+              nativeId: 'mmt_variable_4971',
+              scienceKeywords: null
+            }, {
+              conceptId: 'V100005-EDSC',
+              definition: 'Purple channel value',
+              longName: 'Purple channel',
+              name: 'purple_var',
+              nativeId: 'mmt_variable_4970',
+              scienceKeywords: null
+            }]
+          },
+          echoIndex: undefined,
+          esiIndex: undefined,
+          harmonyIndex: 2
+        }
       )
     })
   })
