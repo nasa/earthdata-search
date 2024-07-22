@@ -100,7 +100,6 @@ const SpatialSelection = (props) => {
   const drawnLayers = useRef([])
   const drawControl = useRef(null)
   const featureGroupRef = useRef(null)
-  // https://stackoverflow.com/questions/57847594/accessing-up-to-date-state-from-within-a-callback/62453660#62453660
   const preEditBounds = useRef()
 
   const {
