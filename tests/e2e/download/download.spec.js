@@ -26,14 +26,14 @@ test.describe('Download spec', () => {
       'https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/012/MYD04_3K.A2020012.1825.061.2020013152621.hdf'
     ]
 
-    await page.route(/graphql/, async (route) => {
+    await page.route(/graphql$/, async (route) => {
       await route.fulfill({
         json: collectionsGraphJson.body,
         headers: authHeaders
       })
     })
 
-    await page.route(/timeline/, async (route) => {
+    await page.route(/timeline$/, async (route) => {
       await route.fulfill({
         json: timeline.body,
         headers: authHeaders
@@ -41,7 +41,7 @@ test.describe('Download spec', () => {
     })
 
     // Load the download data and mock the results
-    await page.route(/retrievals/, async (route) => {
+    await page.route(/retrievals$/, async (route) => {
       if (route.request().method() === 'GET') {
         await route.fulfill({
           json: retrieval.body,
@@ -82,7 +82,7 @@ test.describe('Download spec', () => {
       }
     })
 
-    await page.route(/dqs/, async (route) => {
+    await page.route(/dqs$/, async (route) => {
       await route.fulfill({
         json: []
       })
@@ -98,7 +98,7 @@ test.describe('Download spec', () => {
       })
     })
 
-    await page.route(/saved_access_configs/, async (route) => {
+    await page.route(/saved_access_configs$/, async (route) => {
       await route.fulfill({
         json: {}
       })
