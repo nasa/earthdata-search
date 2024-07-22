@@ -45,7 +45,6 @@ const permittedAccessMethodFields = [
   'supportsConcatenation',
   'defaultConcatenation',
   'swodlrData',
-  'json_data',
   'type',
   'url'
 ]

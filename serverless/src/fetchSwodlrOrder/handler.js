@@ -64,7 +64,7 @@ const fetchSwodlrOrder = async (input) => {
       }
     }
 
-    const statusGraphqlQuery = `query ($product: ID!, $limit: Int) {
+    const statusGraphqlQuery = `query GetStatusByProduct($product: ID!, $limit: Int) {
         status: statusByProduct(product: $product, limit: $limit) {
           id
           timestamp
@@ -84,13 +84,10 @@ const fetchSwodlrOrder = async (input) => {
 
     const {
       order_information: orderInformation,
-      access_method: accessMethod,
-      state
+      access_method: accessMethod
     } = retrievalOrderRecord
 
-    let currentState = state
-
-    const { productId } = orderInformation
+    const { productId, createdAt } = orderInformation
     const { url } = accessMethod
 
     const swodlrUrl = `${url}/api/graphql`
@@ -116,6 +113,7 @@ const fetchSwodlrOrder = async (input) => {
     const parsedResponse = parseSwodlrResponse(orderResponse.data.data)
 
     const {
+      jobId,
       status,
       updatedAt,
       granules,
@@ -124,34 +122,19 @@ const fetchSwodlrOrder = async (input) => {
 
     const prodStatus = getStateFromOrderStatus(status)
 
-    if (prodStatus === 'creating' && currentState === !['failed', 'in_progress', 'canceled'].includes(currentState)) {
-      currentState = 'creating'
-    } else if (prodStatus === 'in_progress' && !['failed', 'canceled'].includes(currentState)) {
-      currentState = 'in_progress'
-    } else if (prodStatus === 'failed' || currentState === 'failed') {
-      currentState = 'failed'
-    } else if (prodStatus === 'canceled' || currentState === 'canceled') {
-      currentState = 'canceled'
-    } else if (prodStatus === 'complete' && !['failed', 'in_progress', 'creating', 'canceled'].includes(currentState)) {
-      currentState = 'complete'
-    }
-    // When swodlr orders are submitted we store the response immediately giving us access to
-    // the payload in this job. Part of the response is a list of links, a link with rel equal
-    // to 'self' is the order status endpoint -- we'll use that to request the status
-    // const { links } = orderInformation
-    // const selfLink = links.find((link) => link.rel === 'self')
-    // const { href: orderStatusUrl } = selfLink
-
     // Updates the database with current order data
     await dbConnection('retrieval_orders')
       .update({
         order_information: {
+          jobId,
           status: prodStatus,
           productId,
           reason,
-          granules
+          granules,
+          createdAt,
+          updatedAt
         },
-        state: currentState,
+        state: prodStatus,
         updated_at: updatedAt
       })
       .where({
@@ -161,7 +144,7 @@ const fetchSwodlrOrder = async (input) => {
     return {
       accessToken,
       id,
-      orderStatus: currentState,
+      orderStatus: prodStatus,
       orderType
     }
   } catch (error) {

@@ -113,22 +113,6 @@ describe('Download project spec', () => {
       }
     )
 
-    cy.intercept(
-      'GET',
-      '**/granule_links*',
-      {
-        body: {
-          cursor: null,
-          links: {
-            browse: [],
-            download: [],
-            s3: []
-          }
-        },
-        headers: authHeaders
-      }
-    )
-
     // View download links
     cy.contains('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1720.061.2020008170450.hdf').should('be.visible')
     cy.contains('https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/006/MYD04_3K.A2020006.1900.061.2020008170003.hdf').should('be.visible')

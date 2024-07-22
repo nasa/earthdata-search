@@ -1,4 +1,8 @@
-import React, { Component } from 'react'
+import React, {
+  Component,
+  lazy,
+  Suspense
+} from 'react'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import {
@@ -14,16 +18,11 @@ import configureStore from './store/configureStore'
 import history from './util/history'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 
-import Admin from './routes/Admin/Admin'
-import ContactInfo from './routes/ContactInfo/ContactInfo'
-import Downloads from './routes/Downloads/Downloads'
-import EarthdataDownloadRedirect from './routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'
-import FooterContainer from './containers/FooterContainer/FooterContainer'
-import Preferences from './routes/Preferences/Preferences'
+// Routes
 import Project from './routes/Project/Project'
 import Search from './routes/Search/Search'
-import Subscriptions from './routes/Subscriptions/Subscriptions'
 
+// Components and Containers
 import AboutCSDAModalContainer from './containers/AboutCSDAModalContainer/AboutCSDAModalContainer'
 import AboutCwicModalContainer from './containers/AboutCwicModalContainer/AboutCwicModalContainer'
 import AppHeader from './components/AppHeader/AppHeader'
@@ -32,19 +31,20 @@ import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequir
 import AuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
 import ChunkedOrderModalContainer from './containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer'
 import DeprecatedParameterModalContainer from './containers/DeprecatedParameterModalContainer/DeprecatedParameterModalContainer'
-import EdscMapContainer from './containers/MapContainer/MapContainer'
+import EditSubscriptionModalContainer from './containers/EditSubscriptionModalContainer/EditSubscriptionModalContainer'
 import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
 import ErrorBoundary from './components/Errors/ErrorBoundary'
+import FooterContainer from './containers/FooterContainer/FooterContainer'
+import HistoryContainer from './containers/HistoryContainer/HistoryContainer'
 import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
 import NotFound from './components/Errors/NotFound'
 import PortalContainer from './containers/PortalContainer/PortalContainer'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
+import Spinner from './components/Spinner/Spinner'
 import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
 import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
-import EditSubscriptionModalContainer from './containers/EditSubscriptionModalContainer/EditSubscriptionModalContainer'
-import HistoryContainer from './containers/HistoryContainer/HistoryContainer'
 
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
@@ -58,6 +58,15 @@ window.reactToastProvider = React.createRef()
 //   const { whyDidYouUpdate } = require('why-did-you-update') // eslint-disable-line global-require
 //   whyDidYouUpdate(React, { include: [/Search/] })
 // }
+
+// Lazy loaded routes
+const Admin = lazy(() => import('./routes/Admin/Admin'))
+const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
+const Downloads = lazy(() => import('./routes/Downloads/Downloads'))
+const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
+const EdscMapContainer = lazy(() => import('./containers/MapContainer/MapContainer'))
+const Preferences = lazy(() => import('./routes/Preferences/Preferences'))
+const Subscriptions = lazy(() => import('./routes/Subscriptions/Subscriptions'))
 
 // Create the root App component
 class App extends Component {
@@ -117,7 +126,9 @@ class App extends Component {
                       render={
                         () => (
                           <AuthRequiredContainer>
-                            <Admin />
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                              <Admin />
+                            </Suspense>
                           </AuthRequiredContainer>
                         )
                       }
@@ -127,7 +138,9 @@ class App extends Component {
                       render={
                         () => (
                           <AuthRequiredContainer>
-                            <ContactInfo />
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                              <ContactInfo />
+                            </Suspense>
                           </AuthRequiredContainer>
                         )
                       }
@@ -137,7 +150,9 @@ class App extends Component {
                       render={
                         () => (
                           <AuthRequiredContainer>
-                            <Preferences />
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                              <Preferences />
+                            </Suspense>
                           </AuthRequiredContainer>
                         )
                       }
@@ -146,7 +161,9 @@ class App extends Component {
                       path={this.portalPaths('/earthdata-download-callback')}
                       render={
                         () => (
-                          <EarthdataDownloadRedirect />
+                          <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                            <EarthdataDownloadRedirect />
+                          </Suspense>
                         )
                       }
                     />
@@ -155,7 +172,9 @@ class App extends Component {
                       render={
                         () => (
                           <AuthRequiredContainer>
-                            <Subscriptions />
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                              <Subscriptions />
+                            </Suspense>
                           </AuthRequiredContainer>
                         )
                       }
@@ -167,12 +186,23 @@ class App extends Component {
                       render={
                         () => (
                           <AuthRequiredContainer>
-                            <Downloads />
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                              <Downloads />
+                            </Suspense>
                           </AuthRequiredContainer>
                         )
                       }
                     />
-                    <Route path={this.portalPaths('/projects')} component={Project} />
+                    <Route
+                      path={this.portalPaths('/projects')}
+                      render={
+                        () => (
+                          <AuthRequiredContainer>
+                            <Project />
+                          </AuthRequiredContainer>
+                        )
+                      }
+                    />
                     <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
                     <Redirect exact from="/" to="/search" />
                     <Route
@@ -181,7 +211,9 @@ class App extends Component {
                         () => (
                           <>
                             <Search />
-                            <EdscMapContainer />
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
+                              <EdscMapContainer />
+                            </Suspense>
                           </>
                         )
                       }

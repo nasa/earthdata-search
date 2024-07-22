@@ -694,8 +694,8 @@ describe('constructOrderPayload', () => {
     })
   })
 
-  describe('when supportsConcatenation = true and enableConcatenateDownload = true', () => {
-    test('constructs a payload containing concatenate = true', async () => {
+  describe('when the accessMethod supports concatenation and it has been selected', () => {
+    test('constructed payload sets concatenation to true', async () => {
       nock(/cmr/)
         .matchHeader('Authorization', 'Bearer access-token')
         .get('/search/granules.json?point%5B%5D=-77%2C%2034')
@@ -732,8 +732,8 @@ describe('constructOrderPayload', () => {
     })
   })
 
-  describe('when supportsConcatenation = false or enableConcatenateDownload = false', () => {
-    test('constructed payload does not contain concatenate', async () => {
+  describe('when the accessMethod supports concatenation, but it is not selected', () => {
+    test('constructed payload sets concatenation to false', async () => {
       nock(/cmr/)
         .matchHeader('Authorization', 'Bearer access-token')
         .get('/search/granules.json?point%5B%5D=-77%2C%2034')
@@ -764,12 +764,14 @@ describe('constructOrderPayload', () => {
         accessToken
       })
 
-      expect(response.getAll('concatenate')).not.toEqual([
-        'true'
+      expect(response.getAll('concatenate')).toEqual([
+        'false'
       ])
     })
+  })
 
-    test('constructed payload does not contain concatenate', async () => {
+  describe('when the accessMethod does not support concatenation', () => {
+    test('the constructed payload does not contain concatenate', async () => {
       nock(/cmr/)
         .matchHeader('Authorization', 'Bearer access-token')
         .get('/search/granules.json?point%5B%5D=-77%2C%2034')
@@ -799,9 +801,7 @@ describe('constructOrderPayload', () => {
         accessToken
       })
 
-      expect(response.getAll('concatenate')).not.toEqual([
-        'true'
-      ])
+      expect(response.getAll('concatenate')).toEqual([])
     })
   })
 

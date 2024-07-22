@@ -114,7 +114,7 @@ export class EDSCModalContainer extends Component {
 
         // If the element's type is a function then the element is a custom component, not a dom element
         // We can't add these props to dom elements
-        // This prevents usage of setModalOverlay and modealInnerRef on dom elements
+        // This prevents usage of setModalOverlay and modalInnerRef on dom elements
         if (typeof el.type === 'function') {
           returnObj = {
             setModalOverlay: (overlay) => {

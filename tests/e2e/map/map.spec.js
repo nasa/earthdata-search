@@ -1501,7 +1501,7 @@ test.describe('Map interactions', () => {
             // Zoom the map
             await page.locator('.leaflet-control-zoom-in').click()
 
-            await expect(page.locator('.leaflet-interactive').nth(1)).toHaveAttribute('d', 'M1287 465L1293 490L1324 483L1319 458L1287 465z')
+            await expect(page.locator('.leaflet-interactive').nth(1)).toHaveAttribute('d', 'M1287 466L1293 491L1324 484L1319 459L1287 466z')
             await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
           })
         })

@@ -40,6 +40,7 @@ function setup(overrideProps) {
       state: {}
     },
     isOpen: true,
+    search: '?p=C123456-EDSC',
     ...overrideProps
   }
 
@@ -174,5 +175,13 @@ describe('TimelineContainer component', () => {
         title: 'project'
       }
     })
+  })
+
+  test('Does not show the timeline if it is on the saved projects page', () => {
+    const { enzymeWrapper } = setup({
+      pathname: '/projects',
+      search: ''
+    })
+    expect(enzymeWrapper.find(Timeline).length).toBe(0)
   })
 })

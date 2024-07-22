@@ -1512,7 +1512,28 @@ describe('AccessMethod component', () => {
   })
 
   describe('when the selected access method is swodlr', () => {
-    test('selecting a output format calls onUpdateAccessMethod', async () => {
+    test('SWODLR Option displayed', async () => {
+      const collectionId = 'collectionId'
+      setup({
+        accessMethods: {
+          swodlr: {
+            type: 'SWODLR',
+            supportsSwodlr: true
+          }
+        },
+        metadata: {
+          conceptId: collectionId
+        },
+        selectedAccessMethod: 'swodlr'
+      })
+
+      const swodlrText = screen.getByText('Generate with SWODLR')
+      expect(swodlrText).toBeInTheDocument()
+    })
+
+    test('selecting a granuleExtent calls onUpdateAccessMethod', async () => {
+      const user = userEvent.setup()
+
       const collectionId = 'collectionId'
       const { onUpdateAccessMethod } = setup({
         accessMethods: {
@@ -1527,6 +1548,9 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'swodlr'
       })
 
+      const granuleExtent256Checkbox = screen.getByRole('radio', { name: '256 x 128 km' })
+      await user.click(granuleExtent256Checkbox)
+
       expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
       expect(onUpdateAccessMethod).toHaveBeenCalledWith({
         collectionId: 'collectionId',
@@ -1534,18 +1558,224 @@ describe('AccessMethod component', () => {
           swodlr: {
             swodlrData: {
               params: {
-                rasterResolution: 6,
+                rasterResolution: 90,
+                outputSamplingGridType: 'UTM',
+                outputGranuleExtentFlag: true
+              },
+              custom_params: {}
+            }
+          }
+        }
+      })
+    })
+
+    test('selecting a LAT/LON sampling grid type calls onUpdateAccessMethod with automatic rasterResolution value adjustment', async () => {
+      const user = userEvent.setup()
+
+      const collectionId = 'collectionId'
+      const { onUpdateAccessMethod } = setup({
+        accessMethods: {
+          swodlr: {
+            type: 'SWODLR',
+            supportsSwodlr: true
+          }
+        },
+        metadata: {
+          conceptId: collectionId
+        },
+        selectedAccessMethod: 'swodlr'
+      })
+
+      const latLonCheckbox = screen.getByRole('radio', { name: 'LAT/LON' })
+
+      await user.click(latLonCheckbox)
+
+      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+      expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+        collectionId: 'collectionId',
+        method: {
+          swodlr: {
+            swodlrData: {
+              params: {
+                rasterResolution: 3,
                 outputSamplingGridType: 'GEO',
                 outputGranuleExtentFlag: false
               },
+              custom_params: {}
+            }
+          }
+        }
+      })
+    })
+
+    test('can update individual granules MGRS band and UTM Zone Adjust', async () => {
+      const user = userEvent.setup()
+
+      const collectionId = 'collectionId'
+      const { onUpdateAccessMethod } = setup({
+        accessMethods: {
+          swodlr: {
+            type: 'SWODLR',
+            supportsSwodlr: true
+          }
+        },
+        metadata: {
+          conceptId: collectionId
+        },
+        selectedAccessMethod: 'swodlr',
+        granuleMetadata: {
+          'G1261369123-POCLOUD': {
+            value: 'test',
+            id: 'G1261369123-POCLOUD'
+          },
+          'G1261369376-POCLOUD': {
+            value: 'test',
+            id: 'G1261369376-POCLOUD'
+          }
+        },
+        projectCollection: {
+          granules: {
+            addedGranuleIds: [
+              'G1261369123-POCLOUD',
+              'G1261369376-POCLOUD'
+            ]
+          }
+        }
+      })
+
+      const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
+      await user.click(advancedOptionsToggleButton)
+
+      const firstGranuleUTMZonePlusOne = screen.getByTestId('G1261369123-POCLOUD-plus-1-UTM-zone')
+      await user.click(firstGranuleUTMZonePlusOne)
+
+      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+      expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+        collectionId: 'collectionId',
+        method: {
+          swodlr: {
+            swodlrData: {
+              params: {
+                rasterResolution: 90,
+                outputSamplingGridType: 'UTM',
+                outputGranuleExtentFlag: false
+              },
               custom_params: {
-                'G2938391118-POCLOUD': {
-                  utmZoneAdjust: null,
-                  mgrsBandAdjust: null
+                'G1261369123-POCLOUD': {
+                  utmZoneAdjust: 1,
+                  mgrsBandAdjust: 0
                 },
-                'G2938390924-POCLOUD': {
-                  utmZoneAdjust: null,
-                  mgrsBandAdjust: null
+                'G1261369376-POCLOUD': {
+                  utmZoneAdjust: 0,
+                  mgrsBandAdjust: 0
+                }
+              }
+            }
+          }
+        }
+      })
+    })
+
+    test('SWODLR does not show up if more than 10 granules were added', async () => {
+      const user = userEvent.setup()
+
+      const collectionId = 'collectionId'
+      const { onUpdateAccessMethod } = setup({
+        accessMethods: {
+          swodlr: {
+            type: 'SWODLR',
+            supportsSwodlr: true
+          }
+        },
+        metadata: {
+          conceptId: collectionId
+        },
+        selectedAccessMethod: 'swodlr',
+        granuleMetadata: {
+          'G1261369123-POCLOUD': {
+            value: 'test',
+            id: 'G1261369123-POCLOUD'
+          },
+          'G1261369376-POCLOUD': {
+            value: 'test',
+            id: 'G1261369376-POCLOUD'
+          },
+          'G1261369124-POCLOUD': {
+            value: 'test',
+            id: 'G1261369124-POCLOUD'
+          },
+          'G1261369377-POCLOUD': {
+            value: 'test',
+            id: 'G1261369377-POCLOUD'
+          },
+          'G1261369125-POCLOUD': {
+            value: 'test',
+            id: 'G1261369125-POCLOUD'
+          },
+          'G1261369378-POCLOUD': {
+            value: 'test',
+            id: 'G1261369378-POCLOUD'
+          },
+          'G1261369126-POCLOUD': {
+            value: 'test',
+            id: 'G1261369126-POCLOUD'
+          },
+          'G1261369379-POCLOUD': {
+            value: 'test',
+            id: 'G1261369379-POCLOUD'
+          },
+          'G1261369127-POCLOUD': {
+            value: 'test',
+            id: 'G1261369127-POCLOUD'
+          },
+          'G1261369380-POCLOUD': {
+            value: 'test',
+            id: 'G1261369380-POCLOUD'
+          },
+          'G1261369128-POCLOUD': {
+            value: 'test',
+            id: 'G1261369128-POCLOUD'
+          },
+          'G1261369381-POCLOUD': {
+            value: 'test',
+            id: 'G1261369381-POCLOUD'
+          }
+        },
+        projectCollection: {
+          granules: {
+            addedGranuleIds: [
+              'G1261369123-POCLOUD',
+              'G1261369376-POCLOUD'
+            ]
+          }
+        }
+      })
+
+      const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
+      await user.click(advancedOptionsToggleButton)
+
+      const firstGranuleUTMZonePlusOne = screen.getByTestId('G1261369123-POCLOUD-plus-1-UTM-zone')
+      await user.click(firstGranuleUTMZonePlusOne)
+
+      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+      expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+        collectionId: 'collectionId',
+        method: {
+          swodlr: {
+            swodlrData: {
+              params: {
+                rasterResolution: 90,
+                outputSamplingGridType: 'UTM',
+                outputGranuleExtentFlag: false
+              },
+              custom_params: {
+                'G1261369123-POCLOUD': {
+                  utmZoneAdjust: 1,
+                  mgrsBandAdjust: 0
+                },
+                'G1261369376-POCLOUD': {
+                  utmZoneAdjust: 0,
+                  mgrsBandAdjust: 0
                 }
               }
             }

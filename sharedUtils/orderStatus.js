@@ -24,7 +24,8 @@ export const orderStates = {
     'quote_failed',
     'quote_rejected',
     'submit_failed',
-    'submit_rejected'
+    'submit_rejected',
+    'unavailable'
   ],
   in_progress: [
     'accepted',

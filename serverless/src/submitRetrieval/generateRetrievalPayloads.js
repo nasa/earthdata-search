@@ -23,6 +23,7 @@ const maxGranulesPerOrder = (collectionMetadata, accessMethod) => {
 
   const { maxItemsPerOrder, type } = accessMethod
 
+  // Each swodlr order must be parsed separately
   if (type === 'SWODLR') {
     return 1
   }
@@ -76,12 +77,21 @@ export async function generateRetrievalPayloads(retrievalCollection, accessMetho
   Array.from(Array(totalPages)).forEach((_, pageNum) => {
     const adjustedPageNumber = pageNum + 1
 
+    const { concept_id: conceptId } = granuleParams
+
+    let conceptIds = conceptId
+
+    if (accessMethod.type === 'SWODLR') {
+      conceptIds = [conceptId[pageNum]]
+    }
+
     orderPayloads.push({
       ...granuleParams,
 
       // Override these values if they were provided with the current iterations values
       page_num: adjustedPageNumber,
-      page_size: pageSize
+      page_size: pageSize,
+      concept_id: conceptIds
     })
   })
 

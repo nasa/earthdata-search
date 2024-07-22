@@ -630,7 +630,8 @@ describe('buildAccessMethods', () => {
         longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
         name: 'Mock PODAAC_SWODLR',
         supportsSwodlr: true,
-        type: 'SWODLR'
+        type: 'SWODLR',
+        url: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
       }
     })
   })

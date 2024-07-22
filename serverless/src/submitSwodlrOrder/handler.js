@@ -110,6 +110,10 @@ const submitSwodlrOrder = async (event, context) => {
         const { swodlrData } = accessMethod
         const { params, custom_params: customParams } = swodlrData
 
+        if (Object.keys(customParams).length > 10) {
+          throw new Error('Too many granules')
+        }
+
         const {
           outputGranuleExtentFlag,
           outputSamplingGridType,
@@ -130,6 +134,15 @@ const submitSwodlrOrder = async (event, context) => {
           rasterResolution,
           utmZoneAdjust,
           mgrsBandAdjust
+        }
+
+        // Makes it easier on the frontend to null out the values if outputSamplingGridType is GEO (LAT/LON)
+        if (outputSamplingGridType === 'GEO') {
+          variables.utmZoneAdjust = null
+          variables.mgrsBandAdjust = null
+        } else {
+          variables.utmZoneAdjust = parseInt(variables.utmZoneAdjust, 10)
+          variables.mgrsBandAdjust = parseInt(variables.mgrsBandAdjust, 10)
         }
 
         const requestId = uuidv4()
@@ -154,9 +167,6 @@ const submitSwodlrOrder = async (event, context) => {
           console.error(errors)
           throw new Error(JSON.stringify(errors))
         }
-
-        console.log(responseData)
-        console.log(errors)
 
         const { data } = responseData
         const { generateL2RasterProduct } = data
