@@ -141,7 +141,7 @@ describe('processPartialShapefile', () => {
           '959220857ddbb3b2398ac31a58765df6', // File_hash
           'Limited-MockFile.geojson', // Filename
           1084815579, // Parent_shapefile_id
-          '["1"]', // SelectedFeatures
+          ['1'], // SelectedFeatures
           1 // User_id
         ])
 

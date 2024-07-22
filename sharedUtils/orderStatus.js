@@ -1,4 +1,4 @@
-import { upperFirst } from 'lodash'
+import { upperFirst } from 'lodash-es'
 
 export const orderStates = {
   canceled: [
@@ -40,6 +40,7 @@ export const orderStates = {
     'quoted',
     'quoting',
     'running',
+    'running_with_errors',
     'submitted_with_exceptions',
     'submitting',
     'validated'

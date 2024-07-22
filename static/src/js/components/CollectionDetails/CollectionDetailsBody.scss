@@ -98,7 +98,7 @@
       }
 
       &:last-child {
-        padding-top: $spacer/8;
+        padding-top:   calc($spacer / 8);
       }
 
       .button {
@@ -135,7 +135,7 @@
   }
 
   &__keywords {
-    margin: $spacer/4 0 $spacer/4;
+    margin: calc($spacer / 4) 0 calc($spacer / 4);
     padding: 0;
     list-style: none;
     overflow: hidden;

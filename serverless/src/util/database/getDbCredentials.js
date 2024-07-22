@@ -15,8 +15,8 @@ export const getDbCredentials = async () => {
       secretsManagerClient = new SecretsManagerClient(getSecretsManagerConfig())
     }
 
-    if (process.env.NODE_ENV === 'development') {
-      const { dbUsername, dbPassword } = getSecretEnvironmentConfig(process.env.NODE_ENV)
+    if (process.env.IS_OFFLINE) {
+      const { dbUsername, dbPassword } = getSecretEnvironmentConfig('development')
 
       return {
         username: dbUsername,

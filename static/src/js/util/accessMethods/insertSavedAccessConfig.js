@@ -1,5 +1,5 @@
 import { XMLValidator } from 'fast-xml-parser'
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash-es'
 
 /**
  * Return the provided access methods with the savedAccessConfig inserted if available.

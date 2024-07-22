@@ -10,7 +10,7 @@
   }
 
   &__label {
-    margin-right: $spacer/4;
+    margin-right: calc($spacer / 4);
     font-weight: 700;
     visibility: hidden;
     height: 0;

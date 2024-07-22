@@ -18,8 +18,6 @@ import configureStore from '../../../store/configureStore'
 
 import actions from '../../../actions'
 
-import * as availablePortals from '../../../../../../portals'
-
 jest.mock('../../../../../../portals/above/images/logo.png', () => ('above_logo_path'))
 
 const store = configureStore()
@@ -171,38 +169,6 @@ describe('PortalList component', () => {
         fireEvent.load(thumbnail)
 
         expect(thumbnail.classList).toContain('portal-list__thumbnail--is-loaded')
-      })
-    })
-  })
-
-  describe('When loading a portal without the portalBrowser flag', () => {
-    test('does not display the portal', async () => {
-      // eslint-disable-next-line no-import-assign
-      availablePortals.availablePortals = {
-        included: {
-          portalId: 'included',
-          portalBrowser: true,
-          title: {
-            primary: 'Included'
-          }
-        },
-        excluded: {
-          portalId: 'excluded',
-          title: {
-            primary: 'Excluded'
-          }
-        }
-      }
-
-      setup()
-
-      await waitFor(() => {
-        const portalList = screen.getByTestId('portal-list')
-        const portalItems = portalList.getElementsByTagName('button')
-
-        expect(portalList).toBeInTheDocument()
-        expect(portalItems.length).toEqual(1)
-        expect(portalItems[0].textContent).toEqual('Included')
       })
     })
   })

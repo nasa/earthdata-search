@@ -1,7 +1,9 @@
-import { cloneDeep, merge } from 'lodash'
+import { cloneDeep, merge } from 'lodash-es'
 
 import { getApplicationConfig } from '../../../../sharedUtils/config'
-import { availablePortals } from '../../../../portals'
+
+// eslint-disable-next-line import/no-unresolved
+import availablePortals from '../../../../portals/availablePortals.json'
 
 /**
  * Does the given portalId match the application defaultPortal

@@ -1,4 +1,4 @@
-import { isArray } from 'lodash'
+import { isArray } from 'lodash-es'
 
 /**
  * Returns true if passed a matching data center/organization

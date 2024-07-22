@@ -33,7 +33,7 @@
   }
 
   &__small {
-    margin-left: $spacer/4;
+    margin-left: calc($spacer / 4);
     font-size: 0.75rem;
     color: $color__black--500;
 

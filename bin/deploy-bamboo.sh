@@ -6,10 +6,10 @@ set -eux
 # Deployment configuration/variables
 ####################################
 
-# read in static.config.json
+# Read in static.config.json
 config="`cat static.config.json`"
 
-# update keys for deployment
+# Update keys for deployment
 config="`jq '.application.version = $newValue' --arg newValue ${RELEASE_VERSION} <<< $config`"
 config="`jq '.application.env = $newValue' --arg newValue $bamboo_STAGE_NAME <<< $config`"
 config="`jq '.application.defaultPortal = $newValue' --arg newValue $bamboo_DEFAULT_PORTAL <<< $config`"
@@ -17,19 +17,23 @@ config="`jq '.application.feedbackApp = $newValue' --arg newValue $bamboo_FEEDBA
 config="`jq '.application.analytics.gtmPropertyId = $newValue' --arg newValue $bamboo_GTM_ID <<< $config`"
 config="`jq '.application.granuleLinksPageSize = $newValue' --arg newValue $bamboo_GRANULE_LINKS_PAGE_SIZE <<< $config`"
 config="`jq '.application.openSearchGranuleLinksPageSize = $newValue' --arg newValue $bamboo_OPEN_SEARCH_GRANULE_LINKS_PAGE_SIZE <<< $config`"
+config="`jq '.application.disableDatabaseComponents = $newValue' --arg newValue $bamboo_DISABLE_DATABASE_COMPONENTS <<< $config`"
 config="`jq '.application.disableEddDownload = $newValue' --arg newValue $bamboo_DISABLE_EDD_DOWNLOAD <<< $config`"
 config="`jq '.application.disableOrdering = $newValue' --arg newValue $bamboo_DISABLE_ORDERING <<< $config`"
-config="`jq '.application.disableDatabaseComponents = $newValue' --arg newValue $bamboo_DISABLE_DATABASE_COMPONENTS <<< $config`"
+config="`jq '.application.disableSwodlr = $newValue' --arg newValue $bamboo_DISABLE_SWODLR <<< $config`"
 config="`jq '.application.macOSEddDownloadSize = $newValue' --arg newValue $bamboo_MACOS_EDD_DOWNLOAD_SIZE <<< $config`"
 config="`jq '.application.windowsEddDownloadSize = $newValue' --arg newValue $bamboo_WINDOWS_EDD_DOWNLOAD_SIZE <<< $config`"
 config="`jq '.application.linuxEddDownloadSize = $newValue' --arg newValue $bamboo_LINUX_EDD_DOWNLOAD_SIZE <<< $config`"
 config="`jq '.environment.production.apiHost = $newValue' --arg newValue $bamboo_API_HOST <<< $config`"
 config="`jq '.environment.production.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
 
-# overwrite static.config.json with new values
+# Overwrite static.config.json with new values
 echo $config > tmp.$$.json && mv tmp.$$.json static.config.json
 
-# create a dummy secret.config.json for now
+# Create an empty overrideStatic.config.json
+echo {} > overrideStatic.config.json
+
+# Create a dummy secret.config.json for now
 cat <<EOF > secret.config.json
 {
   "earthdata": {
