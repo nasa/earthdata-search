@@ -124,7 +124,12 @@ describe('buildHarmony', () => {
 
     const index = 0
 
-    const methods = buildHarmony(serviceItem, associatedVariables, index)
+    const params = {
+      associatedVariables,
+      index
+    }
+
+    const methods = buildHarmony(serviceItem, params)
 
     expect(methods).toEqual({
       harmony0: {
@@ -527,11 +532,18 @@ describe('buildHarmony', () => {
         associatedVariables = serviceAssociatedVariables
       }
 
+      const params = {
+        associatedVariables,
+        index
+      }
+
       methods = {
         // eslint-disable-next-line no-plusplus
-        ...buildHarmony(serviceItem, associatedVariables, index++),
+        ...buildHarmony(serviceItem, params),
         ...methods
       }
+
+      index += 1
     })
 
     expect(methods).toEqual({
