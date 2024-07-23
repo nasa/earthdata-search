@@ -19,8 +19,6 @@ export const getBrowseImageUrlFromConcept = (concept) => {
     return null
   }
 
-  console.log(`Found image link in ${id}: ${JSON.stringify(imgUrl, null, 4)}`)
-
   const { href } = imgUrl
 
   return href

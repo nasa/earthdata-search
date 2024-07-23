@@ -9,6 +9,7 @@ import {
   map,
   relatedCollection,
   spatialEdit,
+  spatialSelection,
   timing,
   collectionSortChange
 } from '../events'
@@ -20,6 +21,7 @@ import {
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
+  METRICS_SPATIAL_SELECTION,
   METRICS_TIMING
 } from '../constants'
 
@@ -355,6 +357,26 @@ describe('events', () => {
         spatialEditEventAction: 'Some Type',
         spatialEditEventLabel: '',
         spatialEditEventValue: 12
+      })
+    })
+  })
+
+  describe('spatialSelection', () => {
+    test('pushes to the dataLayer', () => {
+      const action = {
+        type: METRICS_SPATIAL_SELECTION,
+        payload: {
+          item: 'Some Item'
+        }
+      }
+
+      spatialSelection(action)
+
+      expect(dataLayerMock).toHaveBeenCalledTimes(1)
+      expect(dataLayerMock).toHaveBeenCalledWith({
+        event: 'spatialSelection',
+        spatialSelectionCategory: 'Spatial Selection',
+        spatialSelectionEventLabel: 'Some Item'
       })
     })
   })
