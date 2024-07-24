@@ -38,4 +38,20 @@ test.describe('Performance Benchmarking', () => {
       expect(paintTiming).toBeLessThan(2000)
     }
   })
+
+  // These tests run the performance metrics in the CI environment.
+  // They do not have performance-related failure conditions.
+  test.describe('Performance metrics logging', () => {
+    test('Run the collections load timer', async ({ page, browserName }) => {
+      const logs = []
+      page.on('console', (msg) => logs.push(msg.text()))
+      await page.goto('/')
+
+      await expect(page.getByTestId('collection-results-list')).toBeVisible()
+
+      const filteredLogs = logs.filter((value) => /^\[performance] Collections load time/.test(value))
+      const collectionsLoadTime = Number(filteredLogs.at(-1).split(': ')[1])
+      console.log('[performance] Collections load time,', browserName.concat(':'), collectionsLoadTime, 'ms')
+    })
+  })
 })

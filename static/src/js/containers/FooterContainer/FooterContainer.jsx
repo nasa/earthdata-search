@@ -34,6 +34,7 @@ export class FooterContainer extends Component {
 
     const searchTimeVisible = isPath(location.pathname, ['/search', '/projects'])
     const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
+    console.log('[performance] Collections load time:', loadTime)
 
     const {
       attributionText = '',
