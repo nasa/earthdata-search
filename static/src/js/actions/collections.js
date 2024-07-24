@@ -190,8 +190,6 @@ export const getCollections = () => (dispatch, getState) => {
         results: entry
       }
 
-      dispatch(finishCollectionsTimer())
-
       dispatch(onCollectionsLoaded({
         loaded: true
       }))
@@ -209,6 +207,8 @@ export const getCollections = () => (dispatch, getState) => {
       }))
 
       dispatch(updateFacets(payload))
+
+      dispatch(finishCollectionsTimer())
     })
     .catch((error) => {
       if (isCancel(error)) return
