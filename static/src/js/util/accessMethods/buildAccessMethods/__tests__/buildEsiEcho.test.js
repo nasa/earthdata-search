@@ -169,8 +169,8 @@ describe('buildEsiEcho', () => {
     })
   })
 
-  describe('diabledOrders', () => {
-    test('returns empty when ordering disabled', () => {
+  describe('when ordering is disabled', () => {
+    test('returns an empty object', () => {
       jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         disableOrdering: 'true'
       }))

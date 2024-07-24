@@ -10,7 +10,8 @@ import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 beforeEach(() => {
   jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-    disableOrdering: 'false'
+    disableOrdering: 'false',
+    disableSwodlr: 'false'
   }))
 })
 
@@ -18,7 +19,7 @@ afterEach(() => {
   jest.clearAllMocks()
 })
 
-describe('buildAccessMethods', () => {
+describe('when buildAccessMethods is called', () => {
   test('calls buildDownload access method', () => {
     const buildDownloadMock = jest.spyOn(buildDownload, 'buildDownload')
     buildDownloadMock.mockImplementationOnce(() => jest.fn())
@@ -37,63 +38,6 @@ describe('buildAccessMethods', () => {
     expect(buildDownloadMock).toBeCalledTimes(1)
 
     expect(buildDownloadMock).toBeCalledWith({ items: [{ online_access_flag: true }] }, false)
-  })
-
-  describe('when ordering is disabled', () => {
-    test('calls buildEcho access method and no echo-order access method is returned', () => {
-      const buildEsiEchoMock = jest.spyOn(buildEsiEcho, 'buildEsiEcho')
-      buildEsiEchoMock.mockImplementationOnce(() => jest.fn())
-
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-        disableOrdering: 'true'
-      }))
-
-      const collectionMetadata = {
-        services: {
-          items: [{
-            type: 'ECHO ORDERS',
-            url: {
-              urlValue: 'https://example.com'
-            },
-            maxItemsPerOrder: 2000,
-            orderOptions: {
-              items: [{
-                conceptId: 'OO10000-EDSC',
-                name: 'mock form',
-                form: 'mock form'
-              }]
-            }
-          }]
-        }
-      }
-      const isOpenSearch = false
-
-      buildAccessMethods(collectionMetadata, isOpenSearch)
-
-      expect(buildEsiEchoMock).toBeCalledTimes(1)
-
-      expect(buildEsiEchoMock).toHaveBeenCalledWith({
-        maxItemsPerOrder: 2000,
-        orderOptions: {
-          items: [
-            {
-              conceptId: 'OO10000-EDSC',
-              form: 'mock form',
-              name: 'mock form'
-            }
-          ]
-        },
-        type: 'ECHO ORDERS',
-        url: {
-          urlValue: 'https://example.com'
-        }
-      }, {
-        associatedVariables: {},
-        echoIndex: 0,
-        esiIndex: 0,
-        harmonyIndex: 0
-      })
-    })
   })
 
   test('calls buildEsiEcho access method with type ECHO ORDERS', () => {
@@ -787,10 +731,6 @@ describe('buildAccessMethods', () => {
   })
 
   test('calls buildSwodlr access method', () => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-      disableSwodlr: 'false'
-    }))
-
     const buildSwodlrMock = jest.spyOn(buildSwodlr, 'buildSwodlr')
     buildSwodlrMock.mockImplementationOnce(() => jest.fn())
 
@@ -880,103 +820,7 @@ describe('buildAccessMethods', () => {
     })
   })
 
-  describe('when swodlr is disabled', () => {
-    test('calls buildSwodlr but no swodlr access method is returned', () => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-        disableSwodlr: 'true'
-      }))
-
-      const buildSwodlrMock = jest.spyOn(buildSwodlr, 'buildSwodlr')
-      buildSwodlrMock.mockImplementationOnce(() => jest.fn())
-
-      const collectionMetadata = {
-        services: {
-          items: [
-            {
-              conceptId: 'S100000-EDSC',
-              longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
-              name: 'Mock PODAAC_SWODLR',
-              type: 'SWODLR',
-              url: {
-                description: 'Service top-level URL',
-                urlValue: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
-              },
-              serviceOptions: {
-                supportedOutputProjections: [
-                  {
-                    projectionName: 'Universal Transverse Mercator'
-                  },
-                  {
-                    projectionName: 'WGS84 - World Geodetic System 1984'
-                  }
-                ]
-              },
-              supportedOutputProjections: [
-                {
-                  projectionName: 'Universal Transverse Mercator'
-                },
-                {
-                  projectionName: 'WGS84 - World Geodetic System 1984'
-                }
-              ],
-              supportedReformattings: null,
-              supportedInputProjections: null,
-              orderOptions: {
-                items: []
-              },
-              variables: {
-                items: []
-              }
-            }
-          ]
-        }
-      }
-      const isOpenSearch = false
-
-      buildAccessMethods(collectionMetadata, isOpenSearch)
-
-      expect(buildSwodlrMock).toBeCalledTimes(1)
-
-      expect(buildSwodlrMock).toHaveBeenCalledWith({
-        conceptId: 'S100000-EDSC',
-        longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
-        name: 'Mock PODAAC_SWODLR',
-        orderOptions: {
-          items: []
-        },
-        serviceOptions: {
-          supportedOutputProjections: [
-            {
-              projectionName: 'Universal Transverse Mercator'
-            },
-            {
-              projectionName: 'WGS84 - World Geodetic System 1984'
-            }
-          ]
-        },
-        supportedInputProjections: null,
-        supportedOutputProjections: [
-          {
-            projectionName: 'Universal Transverse Mercator'
-          },
-          {
-            projectionName: 'WGS84 - World Geodetic System 1984'
-          }
-        ],
-        supportedReformattings: null,
-        type: 'SWODLR',
-        url: {
-          description: 'Service top-level URL',
-          urlValue: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
-        },
-        variables: {
-          items: []
-        }
-      })
-    })
-  })
-
-  describe('when the collection contains both variables associated to its services and variables directly associated to the collection', () => {
+  describe('when the collection contains both variables associated to its services and variables directly associated to the collection and 3 service records', () => {
     test('variables on the service are returned instead of variables directly associated to the collection and buildHarmony is called 3 times', () => {
       const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
       buildHarmonyMock.mockImplementationOnce(() => jest.fn())
@@ -1570,7 +1414,7 @@ describe('buildAccessMethods', () => {
     })
   })
 
-  describe('when the collection contains variables directly associated to the collection and no variables associated to it services (empty)', () => {
+  describe('when the collection contains variables directly associated to the collection and no variables associated to it services (empty) and 3 service records', () => {
     test('variables on the collection are returned instead of variables associated to the service and buildHarmony is called 3 times', () => {
       const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
       buildHarmonyMock.mockImplementationOnce(() => jest.fn())
@@ -2038,7 +1882,7 @@ describe('buildAccessMethods', () => {
     })
   })
 
-  describe('when the collection contains variables directly associated to the collection and some variables associated to some services', () => {
+  describe('when the collection contains variables directly associated to the collection and some variables associated to some services and 3 service records', () => {
     test('variables on the collection are returned for services without variables but, variables associated to the service are returned for services that have them and buildHarmony is called 3 times', () => {
       const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
       buildHarmonyMock.mockImplementationOnce(() => jest.fn())

@@ -11,17 +11,18 @@ export const buildSwodlr = (serviceItem) => {
 
   const { disableSwodlr } = getApplicationConfig()
 
-  const {
-    conceptId: serviceConceptId,
-    longName,
-    name,
-    type: serviceType,
-    url
-  } = serviceItem
-
-  const { urlValue } = url
-
   if (disableSwodlr !== 'true') {
+    const {
+      conceptId: serviceConceptId,
+      longName,
+      name,
+      type: serviceType,
+      url
+    } = serviceItem
+
+    const { urlValue } = url
+
+
     accessMethods.swodlr = {
       id: serviceConceptId,
       isValid: true,
