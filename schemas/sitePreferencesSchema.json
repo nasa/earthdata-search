@@ -17,6 +17,7 @@
 			"default": "default",
 			"enum": [
 				"default",
+				"-score",
 				"-usage_score",
 				"start_date",
 				"-ongoing"

@@ -2,7 +2,7 @@
 const esModulesToIgnore = ['nanoid', 'lodash-es', 'sinon'].join('|')
 
 module.exports = {
-  collectCoverage: false,
+  collectCoverage: true,
   collectCoverageFrom: [
     'serverless/src/**/*.js',
     'static/src/**/*.js',
