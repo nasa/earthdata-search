@@ -227,7 +227,7 @@ export class TemporalSelection extends Component {
               controlId={`${controlId}__recurring`}
             >
               <Form.Check>
-                <Form.Check.Input disabled={enableRecurring} type="checkbox" onChange={onRecurringToggle} checked={isRecurring} />
+                <Form.Check.Input aria-label="is-recurring-checkbox" disabled={enableRecurring} type="checkbox" onChange={onRecurringToggle} checked={isRecurring} />
                 <Form.Check.Label className="temporal-selection__label">
                   Recurring?
                 </Form.Check.Label>

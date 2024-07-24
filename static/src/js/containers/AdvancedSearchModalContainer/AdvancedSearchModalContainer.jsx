@@ -85,7 +85,7 @@ export const AdvancedSearchModalContainer = ({
     validateForm={validateForm}
   />
 )
-
+// TODO This one is the same
 const EnhancedAdvancedSearchModalContainer = withFormik({
   enableReinitialize: true,
   validationSchema: (props) => {

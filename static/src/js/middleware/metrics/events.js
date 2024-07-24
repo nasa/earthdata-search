@@ -152,6 +152,7 @@ export const defaultClick = (action) => {
 export const timeline = (action) => {
   const { payload } = action
   const { eventLabel } = payload
+  console.log('🚀 ~ file: events.js:155 ~ timeline ~ payload:', payload)
 
   dataLayer.push({
     event: 'timeline',
@@ -188,6 +189,7 @@ export const spatialEdit = (action) => {
     distanceSum,
     type
   } = payload
+  console.log('🚀 ~ file: events.js:191 ~ spatialEdit ~ payload:', payload)
 
   dataLayer.push({
     event: 'spatialEdit',
@@ -207,11 +209,34 @@ export const spatialSelection = (action) => {
   const {
     item: shapeType
   } = payload
+  console.log('🚀 ~ file: events.js:210 ~ spatialSelection ~ payload:', payload)
 
   dataLayer.push({
     event: 'spatialSelection',
     spatialSelectionCategory: 'Spatial Selection',
     spatialSelectionEventLabel: shapeType
+  })
+}
+
+/**
+* Pushes a granuleFilter event on the dataLayer.
+* @param {Object} action - The action.
+*/
+export const granuleFilter = (action) => {
+  const { payload } = action
+  const {
+    type,
+    value
+  } = payload
+  console.log('🚀 ~ file: events.js:231 ~ granuleFilter ~ type:', type)
+  console.log('🚀 ~ file: events.js:231 ~ granuleFilter ~ value:', value)
+  console.log('🚀 ~ file: events.js:231 ~ granuleFilter ~ payload:', payload)
+
+  dataLayer.push({
+    event: 'granuleFilter',
+    granuleFilterCategory: 'Granule Filter',
+    granuleEditEventEventAction: type,
+    granuleEditEventEventValue: value
   })
 }
 

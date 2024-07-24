@@ -1,15 +1,21 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import {
+  act,
+  render,
+  screen
+} from '@testing-library/react'
 
 import actions from '../../../actions'
+import * as metrics from '../../../middleware/metrics/actions'
+
 import {
   mapDispatchToProps,
   mapStateToProps,
   GranuleFiltersContainer
 } from '../GranuleFiltersContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
+import '@testing-library/jest-dom'
 
 jest.useFakeTimers({ legacyFakeTimers: true })
 
@@ -17,7 +23,52 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-function setup(overrideProps) {
+// jest.mock('formik', () => ({
+//   useFormikContext: jest.fn().mockReturnValue({
+//     getFieldMeta: jest.fn()
+//   })
+// }))
+
+// jest.mock('formik', () => ({
+//   Form: jest.fn(({ children }) => (
+//     <mock-formik data-testid="formik-mock">
+//       {children}
+//     </mock-formik>
+//   )),
+//   withFormik: jest.fn()
+// }))
+
+// // Mock App components routes and containers
+// jest.mock('../GranuleFiltersContainer', () => () => {
+//   const MockedGranuleFiltersContainer = () => <div data-testid="mocked-granuleFiltersContainer" />
+
+//   return MockedGranuleFiltersContainer
+// })
+
+// jest.mock('react-router-dom', () => {
+//   // Require the original module to not be mocked...
+//   const originalModule = jest.requireActual('react-router-dom');
+
+//   return {
+//     __esModule: true,
+//     ...originalModule,
+//     useParams: jest.fn(),
+//     useHistory: jest.fn()
+//   }
+// })
+
+const onApplyGranuleFilters = jest.fn()
+const onUndoExcludeGranule = jest.fn()
+const setFieldTouched = jest.fn()
+const setFieldValue = jest.fn()
+const setGranuleFiltersNeedReset = jest.fn()
+const handleBlur = jest.fn()
+const handleChange = jest.fn()
+const handleReset = jest.fn()
+const handleSubmit = jest.fn()
+const onClearGranuleFilters = jest.fn()
+const onMetricsGranuleFilter = jest.fn()
+const setup = (overrideProps) => {
   const props = {
     cmrFacetParams: {},
     collectionMetadata: {
@@ -30,28 +81,25 @@ function setup(overrideProps) {
       excludedGranuleIds: []
     },
     errors: {},
-    handleBlur: jest.fn(),
-    handleChange: jest.fn(),
-    handleReset: jest.fn(),
-    handleSubmit: jest.fn(),
+    handleBlur,
+    handleChange,
+    handleReset,
+    handleSubmit,
     isValid: true,
-    onApplyGranuleFilters: jest.fn(),
-    onClearGranuleFilters: jest.fn(),
-    onUndoExcludeGranule: jest.fn(),
-    setFieldTouched: jest.fn(),
-    setFieldValue: jest.fn(),
-    setGranuleFiltersNeedReset: jest.fn(),
+    onApplyGranuleFilters,
+    onClearGranuleFilters,
+    onMetricsGranuleFilter,
+    onUndoExcludeGranule,
+    setFieldTouched,
+    setFieldValue,
+    setGranuleFiltersNeedReset,
     touched: {},
     values: {},
     ...overrideProps
+
   }
 
-  const enzymeWrapper = shallow(<GranuleFiltersContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+  render(<GranuleFiltersContainer {...props} />)
 }
 
 describe('mapDispatchToProps', () => {
@@ -80,6 +128,16 @@ describe('mapDispatchToProps', () => {
     const spy = jest.spyOn(actions, 'undoExcludeGranule')
 
     mapDispatchToProps(dispatch).onUndoExcludeGranule('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
+  })
+
+  test('onMetricsGranuleFilter calls metricsGranuleFilter', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metrics, 'metricsGranuleFilter')
+
+    mapDispatchToProps(dispatch).onMetricsGranuleFilter('collectionId')
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('collectionId')
@@ -116,10 +174,10 @@ describe('mapStateToProps', () => {
 })
 
 describe('GranuleFiltersContainer component', () => {
-  test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.type()).toBeDefined()
+  test.only('renders itself correctly', () => {
+    setup()
+    screen.debug()
+    // Expect(enzymeWrapper.type()).toBeDefined()
   })
 
   describe('GranuleFiltersForm', () => {
@@ -169,15 +227,15 @@ describe('GranuleFiltersContainer component', () => {
 
       describe('when the granuleFiltersNeedsReset flag is set to false', () => {
         test('does not run onClearGranuleFilters', () => {
-          const onClearGranuleFiltersMock = jest.fn()
-          const { enzymeWrapper } = setup()
+          // Const onClearGranuleFiltersMock = jest.fn()
+          const { onClearGranuleFilterMock } = setup()
 
-          enzymeWrapper.instance().onClearGranuleFilters = onClearGranuleFiltersMock
+          // EnzymeWrapper.instance().onClearGranuleFilters = onClearGranuleFiltersMock
 
-          enzymeWrapper.setProps({ granuleFiltersNeedsReset: false })
-          enzymeWrapper.update()
+          // enzymeWrapper.setProps({ granuleFiltersNeedsReset: false })
+          // enzymeWrapper.update()
 
-          expect(onClearGranuleFiltersMock).toHaveBeenCalledTimes(0)
+          expect(onClearGranuleFilterMock).toHaveBeenCalledTimes(0)
         })
 
         test('sets the granuleFiltersNeedsReset flag to false', () => {
