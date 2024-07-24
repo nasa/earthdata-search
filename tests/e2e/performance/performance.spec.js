@@ -12,7 +12,7 @@ test.describe('Performance Benchmarking', () => {
       const request = await requestFinishedPromise
 
       const requestTime = request.timing().responseEnd
-      console.log('Request time:', Math.round(requestTime), 'ms')
+      console.log('[performance] Request time,', browserName.concat(':'), Math.round(requestTime), 'ms')
       expect(requestTime < 2000).toBe(true)
     }
   })
@@ -33,7 +33,7 @@ test.describe('Performance Benchmarking', () => {
       }))
 
       const paintTiming = JSON.parse(paintTimingJson)
-      console.log('LCP:', Math.round(paintTiming), 'ms')
+      console.log('[performance] LCP,', browserName.concat(':'), Math.round(paintTiming), 'ms')
 
       expect(paintTiming).toBeLessThan(2000)
     }
