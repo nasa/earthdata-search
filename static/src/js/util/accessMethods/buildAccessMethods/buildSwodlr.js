@@ -22,7 +22,6 @@ export const buildSwodlr = (serviceItem) => {
 
     const { urlValue } = url
 
-
     accessMethods.swodlr = {
       id: serviceConceptId,
       isValid: true,

@@ -1239,6 +1239,7 @@ describe('when buildAccessMethods is called', () => {
         }
       )
 
+      // Checks also that harmony increments it's index correctly
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
         2,
         {
@@ -1345,6 +1346,7 @@ describe('when buildAccessMethods is called', () => {
         }
       )
 
+      // Checks also that harmony increments it's index correctly
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
         3,
         {
