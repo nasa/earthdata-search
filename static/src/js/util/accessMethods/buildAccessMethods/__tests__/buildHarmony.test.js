@@ -209,7 +209,7 @@ describe('buildHarmony', () => {
     })
   })
 
-  test('increments index correctly for multiple harmony items', () => {
+  test('correctly builds multiple harmony items', () => {
     const collectionMetadata = {
       services: {
         items: [{
