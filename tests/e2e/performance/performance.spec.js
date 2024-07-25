@@ -1,10 +1,7 @@
+/* eslint-disable capitalized-comments */
 import { test, expect } from 'playwright-test-coverage'
 
 test.describe('Performance Benchmarking', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-  })
-
   test('Search page load time is less than 2 second', async ({ page, browserName }) => {
     if (['chromium'].includes(browserName)) {
       await page.goto('/')
@@ -43,6 +40,7 @@ test.describe('Performance Benchmarking', () => {
   // They do not have performance-related failure conditions.
   test.describe('Performance metrics logging', () => {
     test('Run the collections load timer', async ({ page, browserName }) => {
+      await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
       const logs = []
       page.on('console', (msg) => logs.push(msg.text()))
       await page.goto('/')
