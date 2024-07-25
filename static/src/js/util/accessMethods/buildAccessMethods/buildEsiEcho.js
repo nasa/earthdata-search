@@ -16,16 +16,16 @@ export const buildEsiEcho = (serviceItem, params) => {
   // Do not include access if orders are disabled
   const { disableOrdering } = getApplicationConfig()
 
+  const {
+    esiIndex: initEsiIndex,
+    echoIndex: initEchoIndex
+  } = params
+
+  let esiIndex = initEsiIndex
+  let echoIndex = initEchoIndex
+
   if (disableOrdering !== 'true') {
     // Pull out the esi and echo indeces and increment them to have an accurate count
-    const {
-      esiIndex: initEsiIndex,
-      echoIndex: initEchoIndex
-    } = params
-
-    let esiIndex = initEsiIndex
-    let echoIndex = initEchoIndex
-
     const {
       orderOptions,
       type: serviceType,
