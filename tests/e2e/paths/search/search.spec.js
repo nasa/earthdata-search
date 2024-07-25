@@ -92,7 +92,6 @@ test.describe('Path /search', () => {
             body: JSON.stringify(commonBody),
             headers: {
               ...commonHeaders,
-              'access-control-expose-headers': 'cmr-hits',
               'cmr-hits': cmrHits
             }
           })
@@ -125,7 +124,6 @@ test.describe('Path /search', () => {
             body: JSON.stringify(keywordBody),
             headers: {
               ...commonHeaders,
-              'access-control-expose-headers': 'cmr-hits',
               'cmr-hits': cmrHits
             }
           })
@@ -159,7 +157,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(temporalBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -196,7 +193,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(temporalRecurringBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -236,7 +232,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(spatialPointBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -274,7 +269,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(spatialPolygonBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -312,7 +306,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(spatialCircleBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -351,7 +344,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(spatialBoundingBoxBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -423,7 +415,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(spatialPolygonBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -467,7 +458,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(awsCloudBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -505,7 +495,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(customizableBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -543,7 +532,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(mapImageryBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -583,7 +571,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(keywordsBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -630,7 +617,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(platformsBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -677,7 +663,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(instrumentsBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -724,7 +709,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(organizationsBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -771,7 +755,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(projectsBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -818,7 +801,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(processingLevelsBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -865,7 +847,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(dataFormatBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -912,7 +893,6 @@ test.describe('Path /search', () => {
               body: JSON.stringify(tilingSystemBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -958,7 +938,6 @@ test.describe('Path /search', () => {
             body: JSON.stringify(horizontalDataResolutionBody),
             headers: {
               ...commonHeaders,
-              'access-control-expose-headers': 'cmr-hits',
               'cmr-hits': cmrHits
             }
           })
@@ -1003,7 +982,6 @@ test.describe('Path /search', () => {
             body: JSON.stringify(latencyBody),
             headers: {
               ...commonHeaders,
-              'access-control-expose-headers': 'cmr-hits',
               'cmr-hits': cmrHits
             }
           })
@@ -1050,7 +1028,6 @@ test.describe('Path /search', () => {
             body: JSON.stringify(noGranulesBody),
             headers: {
               ...commonHeaders,
-              'access-control-expose-headers': 'cmr-hits',
               'cmr-hits': cmrHits
             }
           })
@@ -1091,7 +1068,6 @@ test.describe('Path /search', () => {
             body: JSON.stringify(nonEosdisBody),
             headers: {
               ...commonHeaders,
-              'access-control-expose-headers': 'cmr-hits',
               'cmr-hits': cmrHits
             }
           })
@@ -1131,7 +1107,6 @@ test.describe('Path /search', () => {
           body: JSON.stringify(eeBody),
           headers: {
             ...commonHeaders,
-            'access-control-expose-headers': 'cmr-hits',
             'cmr-hits': cmrHits
           }
         })
