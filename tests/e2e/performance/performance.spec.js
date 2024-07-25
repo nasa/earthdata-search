@@ -47,7 +47,7 @@ test.describe('Performance Benchmarking', () => {
       page.on('console', (msg) => logs.push(msg.text()))
       await page.goto('/')
 
-      await expect(page.getByTestId('collection-results-list')).toBeVisible()
+      await expect(page.getByTestId('collection-results-item').first()).toBeVisible()
 
       const filteredLogs = logs.filter((value) => /^\[performance] Collections load time/.test(value))
       const collectionsLoadTime = Number(filteredLogs.at(-1).split(': ')[1])
