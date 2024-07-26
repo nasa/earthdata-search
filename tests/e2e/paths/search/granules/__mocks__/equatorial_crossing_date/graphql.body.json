@@ -1,0 +1,376 @@
+{
+  "data": {
+    "collection": {
+      "abstract": "ML2T is the EOS Aura Microwave Limb Sounder (MLS) standard product for temperature derived from radiances measured by the 118 and 240 GHz radiometers. The data version is 4.2. Spatial coverage is near-global (-82 degrees to +82 degrees latitude), with each profile spaced 1.5 degrees or ~165 km along the orbit track (roughly 15 orbits per day). The recommended useful vertical range is from 261 to 0.001 hPa, and the vertical resolution is between 3 and 6 km. Users of the ML2T data product should read section 3.22 of the EOS MLS Level 2 Version 4 Quality Document for more information.\n\nThe data are stored in the version 5 EOS Hierarchical Data Format (HDF-EOS5), which is based on the version 5 Hierarchical Data Format, or HDF-5. Each file contains two swath objects (profile and column data), each with a set of data and geolocation fields, swath attributes, and metadata.",
+      "archiveAndDistributionInformation": {
+        "fileDistributionInformation": [
+          {
+            "formatType": "Native",
+            "media": ["Online Archive"],
+            "format": "HDF-EOS5"
+          }
+        ]
+      },
+      "associatedDois": null,
+      "boxes": ["-82 -180 82 180"],
+      "conceptId": "C1251101828-GES_DISC",
+      "coordinateSystem": "CARTESIAN",
+      "dataCenter": "GES_DISC",
+      "dataCenters": [
+        {
+          "roles": ["ARCHIVER"],
+          "shortName": "NASA/GSFC/SED/ESD/GCDC/GESDISC",
+          "longName": "Goddard Earth Sciences Data and Information Services Center (formerly Goddard DAAC), Global Change Data Center, Earth Sciences Division, Science and Exploration Directorate, Goddard Space Flight Center, NASA",
+          "contactInformation": {
+            "relatedUrls": [
+              {
+                "urlContentType": "DataCenterURL",
+                "type": "HOME PAGE",
+                "url": "https://disc.gsfc.nasa.gov/",
+                "description": "NASA GES DISC Website"
+              }
+            ]
+          },
+          "contactGroups": [
+            {
+              "roles": ["Data Center Contact"],
+              "groupName": "GES DISC HELP DESK SUPPORT GROUP",
+              "contactInformation": {
+                "addresses": [
+                  {
+                    "streetAddresses": [
+                      "Goddard Earth Sciences Data and Information Services Center",
+                      "Code 610.2",
+                      "NASA Goddard Space Flight Center"
+                    ],
+                    "city": "Greenbelt",
+                    "stateProvince": "MD",
+                    "postalCode": "20771",
+                    "country": "USA"
+                  }
+                ],
+                "contactMechanisms": [
+                  {
+                    "type": "Telephone",
+                    "value": "301-614-5224"
+                  },
+                  {
+                    "type": "Fax",
+                    "value": "301-614-5268"
+                  },
+                  {
+                    "type": "Email",
+                    "value": "gsfc-dl-help-disc@mail.nasa.gov"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "directDistributionInformation": null,
+      "doi": {
+        "doi": "10.5067/Aura/MLS/DATA2021"
+      },
+      "hasGranules": true,
+      "lines": null,
+      "nativeDataFormats": ["HDF-EOS5"],
+      "points": null,
+      "polygons": null,
+      "relatedUrls": [
+        {
+          "url": "https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/ML2T_004.png",
+          "urlContentType": "VisualizationURL",
+          "type": "GET RELATED VISUALIZATION"
+        },
+        {
+          "type": "DATA SET LANDING PAGE",
+          "url": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html",
+          "description": "Access the dataset landing page from the GES DISC website.",
+          "urlContentType": "CollectionURL"
+        },
+        {
+          "type": "GET DATA",
+          "subtype": "DATA TREE",
+          "url": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/",
+          "description": "Access the data via HTTP.",
+          "urlContentType": "DistributionURL"
+        },
+        {
+          "type": "USE SERVICE API",
+          "subtype": "OPENDAP DATA",
+          "url": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html",
+          "description": "Access the data via the OPeNDAP protocol.",
+          "urlContentType": "DistributionURL"
+        },
+        {
+          "type": "GET DATA",
+          "subtype": "Earthdata Search",
+          "url": "https://search.earthdata.nasa.gov/search?q=ML2T_004",
+          "description": "Use the Earthdata Search to find and retrieve data sets across multiple data centers.",
+          "urlContentType": "DistributionURL"
+        },
+        {
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "USER'S GUIDE",
+          "url": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf",
+          "description": "Data Quality and Description Document",
+          "urlContentType": "PublicationURL"
+        },
+        {
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "PUBLICATIONS",
+          "url": "https://mls.jpl.nasa.gov/publications.php",
+          "description": "List of publications.",
+          "urlContentType": "PublicationURL"
+        },
+        {
+          "type": "VIEW RELATED INFORMATION",
+          "url": "https://mls.jpl.nasa.gov/forms/reguser.php",
+          "description": "Users are encouraged to register with the MLS science team to obtain updates and information about this data product.",
+          "urlContentType": "PublicationURL"
+        },
+        {
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)",
+          "url": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf",
+          "description": "EOS MLS Retrieval Process Algorithm Theoretical Basis",
+          "urlContentType": "PublicationURL"
+        },
+        {
+          "type": "PROJECT HOME PAGE",
+          "url": "https://mls.jpl.nasa.gov/",
+          "description": "MLS Science Team Home Page.",
+          "urlContentType": "CollectionURL"
+        }
+      ],
+      "scienceKeywords": [
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "ATMOSPHERE",
+          "term": "ATMOSPHERIC TEMPERATURE",
+          "variableLevel1": "UPPER AIR TEMPERATURE"
+        }
+      ],
+      "shortName": "ML2T",
+      "spatialExtent": {
+        "granuleSpatialRepresentation": "CARTESIAN",
+        "horizontalSpatialDomain": {
+          "geometry": {
+            "coordinateSystem": "CARTESIAN",
+            "boundingRectangles": [
+              {
+                "westBoundingCoordinate": -180,
+                "northBoundingCoordinate": 82,
+                "eastBoundingCoordinate": 180,
+                "southBoundingCoordinate": -82
+              }
+            ]
+          }
+        }
+      },
+      "tags": {
+        "edsc.extra.gibs": {
+          "data": [
+            {
+              "geo_resolution": "2km",
+              "format": "png",
+              "antarctic": false,
+              "group": "overlays",
+              "arctic_resolution": null,
+              "geo": true,
+              "source": "Aura / MLS",
+              "arctic": false,
+              "title": "Temperature (46 hPa, Night)",
+              "resolution": "2km",
+              "antarctic_resolution": null,
+              "product": "MLS_Temperature_46hPa_Night",
+              "maxNativeZoom": 5,
+              "match": {
+                "time_start": ">=2013-05-09T00:00:00Z"
+              }
+            },
+            {
+              "geo_resolution": "2km",
+              "format": "png",
+              "antarctic": false,
+              "group": "overlays",
+              "arctic_resolution": null,
+              "geo": true,
+              "source": "Aura / MLS",
+              "arctic": false,
+              "title": "Temperature (46 hPa, Day)",
+              "resolution": "2km",
+              "antarctic_resolution": null,
+              "product": "MLS_Temperature_46hPa_Day",
+              "maxNativeZoom": 5,
+              "match": {
+                "time_start": ">=2013-05-09T00:00:00Z"
+              }
+            }
+          ]
+        },
+        "edsc.extra.serverless.gibs": {
+          "data": [
+            {
+              "format": "png",
+              "antarctic": false,
+              "geographic": true,
+              "group": "overlays",
+              "geographic_resolution": "2km",
+              "arctic_resolution": null,
+              "source": "Aura / MLS",
+              "arctic": false,
+              "title": "Temperature (46 hPa, Day)",
+              "updated_at": "2021-06-02T12:00:18.148Z",
+              "antarctic_resolution": null,
+              "product": "MLS_Temperature_46hPa_Day",
+              "match": {
+                "time_start": ">=2013-05-09T00:00:00Z",
+                "day_night_flag": "day"
+              }
+            },
+            {
+              "format": "png",
+              "antarctic": false,
+              "geographic": true,
+              "group": "overlays",
+              "geographic_resolution": "2km",
+              "arctic_resolution": null,
+              "source": "Aura / MLS",
+              "arctic": false,
+              "title": "Temperature (46 hPa, Night)",
+              "updated_at": "2021-06-02T12:00:18.148Z",
+              "antarctic_resolution": null,
+              "product": "MLS_Temperature_46hPa_Night",
+              "match": {
+                "time_start": ">=2013-05-09T00:00:00Z",
+                "day_night_flag": "night"
+              }
+            }
+          ]
+        },
+        "edsc.extra.serverless.collection_capabilities": {
+          "data": {
+            "cloud_cover": false,
+            "day_night_flag": true,
+            "granule_online_access_flag": true,
+            "orbit_calculated_spatial_domains": true,
+            "updated_at": "2021-06-02T12:09:01.449Z"
+          }
+        },
+        "edsc.portal.cwic.collections": {}
+      },
+      "temporalExtents": [
+        {
+          "rangeDateTimes": [
+            {
+              "beginningDateTime": "2004-08-02T00:00:00.000Z"
+            }
+          ],
+          "endsAtPresentFlag": true
+        }
+      ],
+      "tilingIdentificationSystems": null,
+      "title": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+      "versionId": "004",
+      "services": {
+        "count": 0,
+        "items": null
+      },
+      "granules": {
+        "count": 6078,
+        "items": [
+          {
+            "conceptId": "G1280651075-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1280651059-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1280651100-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1280651101-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274254004-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274176506-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274254097-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274254031-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274254059-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274176477-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274254150-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274254038-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274254064-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274176503-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274254024-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274176419-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274253958-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274176411-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274253288-GES_DISC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1274254108-GES_DISC",
+            "onlineAccessFlag": true
+          }
+        ]
+      },
+      "subscriptions": {
+        "count": 0,
+        "items": []
+      },
+      "variables": {
+        "count": 0,
+        "items": null
+      }
+    }
+  }
+}

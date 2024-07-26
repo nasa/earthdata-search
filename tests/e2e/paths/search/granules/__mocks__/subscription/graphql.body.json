@@ -1,0 +1,984 @@
+{
+  "data": {
+    "collection": {
+      "abstract": "Sentinel-1A slant-range product",
+      "archiveAndDistributionInformation": null,
+      "associatedDois": null,
+      "boxes": ["-90 -180 90 180"],
+      "conceptId": "C1214470488-ASF",
+      "coordinateSystem": "CARTESIAN",
+      "dataCenter": "ASF",
+      "dataCenters": [
+        {
+          "roles": ["PROCESSOR"],
+          "shortName": "ESA/CS1CGS"
+        },
+        {
+          "roles": ["ARCHIVER"],
+          "shortName": "ASF",
+          "contactInformation": {
+            "contactMechanisms": [
+              {
+                "type": "Telephone",
+                "value": "907-474-5041"
+              },
+              {
+                "type": "Email",
+                "value": "uso@asf.alaska.edu"
+              }
+            ]
+          }
+        },
+        {
+          "roles": ["DISTRIBUTOR"],
+          "shortName": "ASF",
+          "contactInformation": {
+            "contactMechanisms": [
+              {
+                "type": "Telephone",
+                "value": "907-474-5041"
+              },
+              {
+                "type": "Email",
+                "value": "uso@asf.alaska.edu"
+              }
+            ]
+          }
+        }
+      ],
+      "directDistributionInformation": null,
+      "doi": {
+        "missingReason": "Unknown",
+        "explanation": "It is unknown if this record has a DOI."
+      },
+      "hasGranules": true,
+      "lines": null,
+      "nativeDataFormats": [],
+      "points": null,
+      "polygons": null,
+      "relatedUrls": [
+        {
+          "description": "Vertex, the ASF search and download interface",
+          "urlContentType": "DistributionURL",
+          "type": "GET DATA",
+          "url": "https://vertex.daac.asf.alaska.edu/"
+        }
+      ],
+      "scienceKeywords": [
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "AGRICULTURE",
+          "term": "FOREST SCIENCE",
+          "variableLevel1": "REFORESTATION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "BIOSPHERE",
+          "term": "TERRESTRIAL ECOSYSTEMS",
+          "variableLevel1": "AGRICULTURAL LANDS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "BIOSPHERE",
+          "term": "TERRESTRIAL ECOSYSTEMS",
+          "variableLevel1": "ALPINE/TUNDRA"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "BIOSPHERE",
+          "term": "TERRESTRIAL ECOSYSTEMS",
+          "variableLevel1": "BEACHES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "BIOSPHERE",
+          "term": "TERRESTRIAL ECOSYSTEMS",
+          "variableLevel1": "DESERTS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "BIOSPHERE",
+          "term": "TERRESTRIAL ECOSYSTEMS",
+          "variableLevel1": "DUNES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "BIOSPHERE",
+          "term": "TERRESTRIAL ECOSYSTEMS",
+          "variableLevel1": "FORESTS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "BIOSPHERE",
+          "term": "TERRESTRIAL ECOSYSTEMS",
+          "variableLevel1": "GRASSLANDS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "BIOSPHERE",
+          "term": "TERRESTRIAL ECOSYSTEMS",
+          "variableLevel1": "ISLANDS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "BIOSPHERE",
+          "term": "TERRESTRIAL ECOSYSTEMS",
+          "variableLevel1": "URBAN LANDS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "BIOSPHERE",
+          "term": "TERRESTRIAL ECOSYSTEMS",
+          "variableLevel1": "WETLANDS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "FROZEN GROUND",
+          "variableLevel1": "PERIGLACIAL PROCESSES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "FROZEN GROUND",
+          "variableLevel1": "PERMAFROST"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "FROZEN GROUND",
+          "variableLevel1": "ROCK GLACIERS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "GLACIERS/ICE SHEETS",
+          "variableLevel1": "GLACIER ELEVATION/ICE SHEET ELEVATION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "GLACIERS/ICE SHEETS",
+          "variableLevel1": "GLACIER MOTION/ICE SHEET MOTION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "GLACIERS/ICE SHEETS",
+          "variableLevel1": "GLACIER THICKNESS/ICE SHEET THICKNESS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "GLACIERS/ICE SHEETS",
+          "variableLevel1": "GLACIER TOPOGRAPHY/ICE SHEET TOPOGRAPHY"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "GLACIERS/ICE SHEETS",
+          "variableLevel1": "GLACIERS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "GLACIERS/ICE SHEETS",
+          "variableLevel1": "ICE SHEETS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "GLACIERS/ICE SHEETS",
+          "variableLevel1": "ICEBERGS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE DEFORMATION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE DEPTH/THICKNESS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE EDGES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE EXTENT"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE FLOES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE GROWTH/MELT"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE ROUGHNESS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE TEMPERATURE"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE TYPES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "ICEBERGS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "LEADS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "PACK ICE"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "POLYNYAS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "REFLECTANCE"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SEA ICE",
+          "variableLevel1": "SEA ICE MOTION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "ICE EXTENT"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "ICE GROWTH/MELT"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "ICE MOTION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "ICE VELOCITY"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "LAKE ICE"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "PERMAFROST"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "RIVER ICE"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "SNOW COVER"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "EROSION/SEDIMENTATION",
+          "variableLevel1": "LANDSLIDES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "AEOLIAN LANDFORMS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "COASTAL LANDFORMS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "FLUVIAL LANDFORMS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "GLACIAL LANDFORMS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "KARST LANDFORMS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "LAND USE/LAND COVER",
+          "variableLevel1": "LAND COVER"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "LAND USE/LAND COVER",
+          "variableLevel1": "LAND USE/LAND COVER CLASSIFICATION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "LANDSCAPE",
+          "variableLevel1": "LANDSCAPE ECOLOGY"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "LANDSCAPE",
+          "variableLevel1": "LANDSCAPE PATTERNS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "LANDSCAPE",
+          "variableLevel1": "LANDSCAPE PROCESSES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "LANDSCAPE",
+          "variableLevel1": "REFORESTATION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "TOPOGRAPHY",
+          "variableLevel1": "LANDFORMS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "TOPOGRAPHY",
+          "variableLevel1": "SURFACE ROUGHNESS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "TOPOGRAPHY",
+          "variableLevel1": "TERRAIN ELEVATION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "LAND SURFACE",
+          "term": "TOPOGRAPHY",
+          "variableLevel1": "TOPOGRAPHIC EFFECTS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "COASTAL PROCESSES",
+          "variableLevel1": "BARRIER ISLANDS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "COASTAL PROCESSES",
+          "variableLevel1": "BEACHES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "COASTAL PROCESSES",
+          "variableLevel1": "DELTAS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "COASTAL PROCESSES",
+          "variableLevel1": "DUNES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "COASTAL PROCESSES",
+          "variableLevel1": "ESTUARIES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "COASTAL PROCESSES",
+          "variableLevel1": "FJORDS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "COASTAL PROCESSES",
+          "variableLevel1": "INLETS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "COASTAL PROCESSES",
+          "variableLevel1": "LAGOONS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "COASTAL PROCESSES",
+          "variableLevel1": "MANGROVES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "COASTAL PROCESSES",
+          "variableLevel1": "MARSHES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "COASTAL PROCESSES",
+          "variableLevel1": "ROCKY COASTS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "COASTAL PROCESSES",
+          "variableLevel1": "SHORELINES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "OCEAN WAVES",
+          "variableLevel1": "WIND WAVES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "OCEAN WINDS",
+          "variableLevel1": "SURFACE WINDS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE DEFORMATION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE DEPTH/THICKNESS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE EDGES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE EXTENT"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE FLOES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE ROUGHNESS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "SEA ICE",
+          "variableLevel1": "ICE TYPES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "SEA ICE",
+          "variableLevel1": "ICEBERGS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "SEA ICE",
+          "variableLevel1": "LEADS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "SEA ICE",
+          "variableLevel1": "PACK ICE"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "SEA ICE",
+          "variableLevel1": "POLYNYAS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "OCEANS",
+          "term": "SEA ICE",
+          "variableLevel1": "SEA ICE MOTION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "GLACIAL LANDFORMS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "CALDERA"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "CINDER CONE"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "FAULTS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "FOLDS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "GEYSER"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "GRABEN"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "HORST"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "LAVA DOME"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "LAVA PLAIN"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "MAAR"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "MOUNTAINS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "PLATEAU"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "RIDGE"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "RIFT VALLEY"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "TUYA"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS",
+          "variableLevel2": "VOLCANO"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "GEOMORPHIC LANDFORMS/PROCESSES",
+          "variableLevel1": "TECTONIC LANDFORMS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "TECTONICS",
+          "variableLevel1": "EARTHQUAKES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "TECTONICS",
+          "variableLevel1": "EARTHQUAKES"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "TECTONICS",
+          "variableLevel1": "PLATE TECTONICS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "TECTONICS",
+          "variableLevel1": "PLATE TECTONICS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "TECTONICS",
+          "variableLevel1": "VOLCANIC ACTIVITY"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SOLID EARTH",
+          "term": "TECTONICS",
+          "variableLevel1": "VOLCANIC ACTIVITY"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "GLACIERS/ICE SHEETS",
+          "variableLevel1": "GLACIER ELEVATION/ICE SHEET ELEVATION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "GLACIERS/ICE SHEETS",
+          "variableLevel1": "GLACIER MOTION/ICE SHEET MOTION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "GLACIERS/ICE SHEETS",
+          "variableLevel1": "GLACIER TOPOGRAPHY/ICE SHEET TOPOGRAPHY"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "GLACIERS/ICE SHEETS",
+          "variableLevel1": "GLACIERS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "GLACIERS/ICE SHEETS",
+          "variableLevel1": "ICE SHEETS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "GLACIERS/ICE SHEETS",
+          "variableLevel1": "ICEBERGS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "ICE EXTENT"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "ICE GROWTH/MELT"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "ICE MOTION"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "ICE VELOCITY"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "LAKE ICE"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "PERMAFROST"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "RIVER ICE"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "SURFACE WATER",
+          "variableLevel1": "WETLANDS"
+        }
+      ],
+      "shortName": "SENTINEL-1A_SLC",
+      "spatialExtent": {
+        "horizontalSpatialDomain": {
+          "geometry": {
+            "coordinateSystem": "CARTESIAN",
+            "boundingRectangles": [
+              {
+                "westBoundingCoordinate": -180,
+                "northBoundingCoordinate": 90,
+                "eastBoundingCoordinate": 180,
+                "southBoundingCoordinate": -90
+              }
+            ]
+          }
+        },
+        "granuleSpatialRepresentation": "GEODETIC"
+      },
+      "tags": {
+        "edsc.extra.serverless.collection_capabilities": {
+          "data": {
+            "cloud_cover": false,
+            "day_night_flag": false,
+            "granule_online_access_flag": true,
+            "orbit_calculated_spatial_domains": true,
+            "updated_at": "2021-06-02T18:12:18.145Z"
+          }
+        }
+      },
+      "temporalExtents": [
+        {
+          "precisionOfSeconds": 1,
+          "endsAtPresentFlag": true,
+          "rangeDateTimes": [
+            {
+              "beginningDateTime": "2014-04-03T00:00:00.000Z"
+            }
+          ]
+        }
+      ],
+      "tilingIdentificationSystems": null,
+      "title": "SENTINEL-1A_SLC",
+      "versionId": "1",
+      "services": {
+        "count": 0,
+        "items": null
+      },
+      "granules": {
+        "count": 1059959,
+        "items": [
+          {
+            "conceptId": "G1287941210-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1287929050-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1287933582-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1287932922-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1287929749-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1287882692-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1287942141-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1287943804-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1287939050-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1287892485-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1287945447-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1287931122-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1001497657-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1001497658-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1001524733-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1001467048-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1001497659-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1001497618-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1001497660-ASF",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1001497661-ASF",
+            "onlineAccessFlag": true
+          }
+        ]
+      },
+      "subscriptions": {
+        "count": 1,
+        "items": [
+          {
+            "collectionConceptId": "C1214470488-ASF",
+            "conceptId": "SUB2061911616-ASF",
+            "name": "C1214470488-ASF Subscription - 2021-06-02T19:33:47.682Z",
+            "nativeId": "f26e8dfa-920a-4976-9fd7-e16eade3188b",
+            "query": "boundingBox[]=-77.40939,38.90069,-76.48929,39.68449&options[spatial][or]=true"
+          }
+        ]
+      },
+      "variables": {
+        "count": 0,
+        "items": null
+      }
+    }
+  }
+}

@@ -1,0 +1,1889 @@
+{
+  "feed": {
+    "updated": "2021-06-02T14:15:40.767Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?cloud_cover=&echo_collection_id=C1251101828-GES_DISC&equator_crossing_longitude%5Bmin%5D=-5&equator_crossing_longitude%5Bmax%5D=5&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20",
+    "title": "ECHO granule metadata",
+    "entry": [
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d215.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-02T00:00:00.000Z",
+        "updated": "2015-01-30T23:33:22.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-02T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "257",
+            "stop_orbit_number": "272"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d215.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-02T23:59:59.999Z",
+        "id": "G1280651075-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "0.485336303710938",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d215.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d215.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d216.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-03T00:00:00.000Z",
+        "updated": "2015-01-31T10:37:56.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-03T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "272",
+            "stop_orbit_number": "286"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d216.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-03T23:59:59.999Z",
+        "id": "G1280651059-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.216382026672363",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d216.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d216.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d217.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-04T00:00:00.000Z",
+        "updated": "2015-01-31T10:46:16.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-04T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "286",
+            "stop_orbit_number": "301"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d217.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-04T23:59:59.999Z",
+        "id": "G1280651100-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "1.798988342285156",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d217.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d217.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d220.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-07T00:00:00.000Z",
+        "updated": "2015-01-31T14:55:13.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-07T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "330",
+            "stop_orbit_number": "345"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d220.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-07T23:59:59.999Z",
+        "id": "G1280651101-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "0.788951873779297",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d220.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d220.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d221.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-08T00:00:00.000Z",
+        "updated": "2015-01-31T15:26:35.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-08T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "345",
+            "stop_orbit_number": "359"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d221.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-08T23:59:59.999Z",
+        "id": "G1274254004-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.427254676818848",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d221.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d221.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d222.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-09T00:00:00.000Z",
+        "updated": "2015-01-31T19:30:13.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-09T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "359",
+            "stop_orbit_number": "374"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d222.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-09T23:59:59.999Z",
+        "id": "G1274176506-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.298531532287598",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d222.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d222.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d223.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-10T00:00:00.000Z",
+        "updated": "2015-01-31T15:30:35.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-10T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "374",
+            "stop_orbit_number": "388"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d223.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-10T23:59:59.999Z",
+        "id": "G1274254097-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.020203590393066",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d223.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d223.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d224.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-11T00:00:00.000Z",
+        "updated": "2015-02-01T09:50:46.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-11T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "388",
+            "stop_orbit_number": "403"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d224.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-11T23:59:59.999Z",
+        "id": "G1274254031-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "1.691986083984375",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d224.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d224.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d225.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-12T00:00:00.000Z",
+        "updated": "2015-01-31T22:23:37.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-12T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "403",
+            "stop_orbit_number": "417"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d225.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-12T23:59:59.999Z",
+        "id": "G1274254059-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.421384811401367",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d225.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d225.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d226.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-13T00:00:00.000Z",
+        "updated": "2015-02-01T01:26:22.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-13T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "417",
+            "stop_orbit_number": "432"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d226.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-13T23:59:59.999Z",
+        "id": "G1274176477-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.441471099853516",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d226.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d226.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d227.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-14T00:00:00.000Z",
+        "updated": "2015-02-01T04:22:36.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-14T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "432",
+            "stop_orbit_number": "447"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d227.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-14T23:59:59.999Z",
+        "id": "G1274254150-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.44051456451416",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d227.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d227.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d228.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-15T00:00:00.000Z",
+        "updated": "2015-02-02T02:20:17.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-15T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "447",
+            "stop_orbit_number": "461"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d228.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-15T23:59:59.999Z",
+        "id": "G1274254038-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.441646575927734",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d228.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d228.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d229.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-16T00:00:00.000Z",
+        "updated": "2015-02-01T10:58:50.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-16T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "461",
+            "stop_orbit_number": "476"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d229.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-16T23:59:59.999Z",
+        "id": "G1274254064-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.403663635253906",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d229.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d229.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d230.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-17T00:00:00.000Z",
+        "updated": "2015-02-01T06:34:51.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-17T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "476",
+            "stop_orbit_number": "490"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d230.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-17T23:59:59.999Z",
+        "id": "G1274176503-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.437862396240234",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d230.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d230.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d231.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-18T00:00:00.000Z",
+        "updated": "2015-02-01T12:44:02.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-18T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "490",
+            "stop_orbit_number": "505"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d231.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-18T23:59:59.999Z",
+        "id": "G1274254024-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.253547668457031",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d231.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d231.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d232.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-19T00:00:00.000Z",
+        "updated": "2015-02-01T16:51:59.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-19T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "505",
+            "stop_orbit_number": "519"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d232.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-19T23:59:59.999Z",
+        "id": "G1274176419-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.414624214172363",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d232.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d232.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d233.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-20T00:00:00.000Z",
+        "updated": "2015-02-01T22:28:13.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-20T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "519",
+            "stop_orbit_number": "534"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d233.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-20T23:59:59.999Z",
+        "id": "G1274253958-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.426959991455078",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d233.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d233.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d234.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-21T00:00:00.000Z",
+        "updated": "2015-02-01T19:52:05.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-21T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "534",
+            "stop_orbit_number": "549"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d234.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-21T23:59:59.999Z",
+        "id": "G1274176411-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.439779281616211",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d234.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d234.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d235.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-22T00:00:00.000Z",
+        "updated": "2015-02-02T09:08:38.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-22T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "548",
+            "stop_orbit_number": "563"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d235.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-22T23:59:59.999Z",
+        "id": "G1274253288-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.439939498901367",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d235.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d235.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d236.he5",
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2004-08-23T00:00:00.000Z",
+        "updated": "2015-02-01T22:52:21.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "equator_crossing_date_time": "2004-08-23T00:00:00.000Z",
+            "equator_crossing_longitude": "0.0",
+            "start_orbit_number": "563",
+            "stop_orbit_number": "578"
+          }
+        ],
+        "dataset_id": "MLS/Aura Level 2 Temperature V004 (ML2T) at GES DISC",
+        "data_center": "GES_DISC",
+        "title": "ML2T.004:MLS-Aura_L2GP-Temperature_v04-20-c01_2004d236.he5",
+        "coordinate_system": "CARTESIAN",
+        "day_night_flag": "BOTH",
+        "time_end": "2004-08-23T23:59:59.999Z",
+        "id": "G1274254108-GES_DISC",
+        "original_format": "ECHO10",
+        "granule_size": "2.439982414245605",
+        "browse_flag": false,
+        "collection_concept_id": "C1251101828-GES_DISC",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data//Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d236.he5"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-hdf",
+            "title": "The OPENDAP location for the granule. (GET DATA : OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/2004/MLS-Aura_L2GP-Temperature_v04-20-c01_2004d236.he5"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://disc.gsfc.nasa.gov/datacollection/ML2T_004.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/data/Aura_MLS_Level2/ML2T.004/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_MLS_Level2/ML2T.004/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=ML2T_004"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/v4-2_data_quality_document.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/publications.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/forms/reguser.php"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/data/eos_algorithm_atbd.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://mls.jpl.nasa.gov/"
+          }
+        ]
+      }
+    ]
+  }
+}
