@@ -115,10 +115,8 @@ const { defaultCmrPageSize } = getApplicationConfig()
 
 const testResultsSize = async (page, cmrHits) => {
   const expectedSize = Math.min(defaultCmrPageSize, cmrHits)
-  // eslint-disable-next-line no-unused-vars
   const expectedText = `Showing ${expectedSize} of ${commafy(cmrHits)} matching ${pluralize('granule', cmrHits)}`
-  // eslint-disable-next-line capitalized-comments
-  // await expect(page.locator('[data-testid="panel-group_granule-results"] [data-testid="panel-group-header__heading-meta-text"]')).toHaveText(expectedText)
+  await expect(page.locator('[data-testid="panel-group_granule-results"] [data-testid="panel-group-header__heading-meta-text"]')).toHaveText(expectedText)
 }
 
 test.describe('Path /search/granules', () => {
@@ -1023,12 +1021,9 @@ test.describe('Path /search/granules', () => {
       await testResultsSize(page, cmrHits)
 
       // Granule is focused
-      // await expect(page.locator('.granule-results-item--active').filter({ hasText: 'MYD11A2.A2021137.h21v17.006.2021146041018.hdf' })).toBeVisible()
-      // await expect(page.getByRole('button', { name: 'granule-results-item' })).toHaveClass('granule-results-item--active')
-      // await expect(page.getByTestId('granule-results-item-MYD11A2.A2021137.h21v17.006.2021146041018.hdf')).toHaveClass('granule-results-item--active')
-      await expect(page.getByRole('button', { name: /MYD11A2.A2021137.h21v17.006.2021146041018.hdf/ })).toBeVisible()
-      // // Browse image is open
-      // await expect(page.locator('.granule-results-focused-meta')).toBeVisible()
+      await expect(page.locator('.granule-results-item--active').filter({ hasText: 'MYD11A2.A2021137.h21v17.006.2021146041018.hdf' })).toBeVisible()
+      // Browse image is open
+      await expect(page.locator('.granule-results-focused-meta')).toBeVisible()
     })
   })
 
