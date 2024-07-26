@@ -1,6 +1,7 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import { getByTestId } from '../../../../support/getByTestId'
+import { getAuthHeaders } from '../../../../support/getAuthHeaders'
 import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
 import { graphQlGetCollections } from '../../../../support/graphQlGetCollections'
 import { graphQlGetSubscriptionsQuery } from '../../../../support/graphQlGetSubscriptionsQuery'
@@ -112,11 +113,13 @@ import graphQlHeaders from './__mocks__/common/graphql.headers.json'
 import { login } from '../../../../support/login'
 
 const { defaultCmrPageSize } = getApplicationConfig()
+const authHeaders = getAuthHeaders()
 
 const testResultsSize = async (page, cmrHits) => {
   const expectedSize = Math.min(defaultCmrPageSize, cmrHits)
-  const expectedText = `Showing ${expectedSize} of ${commafy(cmrHits)} matching ${pluralize('granule', cmrHits)}`
-  await expect(page.locator('[data-testid="panel-group_granule-results"] [data-testid="panel-group-header__heading-meta-text"]')).toHaveText(expectedText)
+
+  const metaText = await page.locator('[data-testid="panel-group_granule-results"] [data-testid="panel-group-header__heading-meta-text"]').textContent()
+  expect(metaText).toBe(`Showing ${expectedSize} of ${commafy(cmrHits)} matching ${pluralize('granule', cmrHits)}`)
 }
 
 test.describe('Path /search/granules', () => {
