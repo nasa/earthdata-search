@@ -17,7 +17,7 @@
 			"default": "default",
 			"enum": [
 				"default",
-				"relevance",
+				"-score",
 				"-usage_score",
 				"start_date",
 				"-ongoing"

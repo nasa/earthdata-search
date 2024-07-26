@@ -1005,7 +1005,7 @@ describe('Path /search/granules', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
           req.reply({
             body: timelineCollectionsBody,
@@ -1390,7 +1390,7 @@ describe('Path /search/granules', () => {
             service_type: [],
             sort_key: [
               'has_granules_or_cwic',
-              '-usage_score'
+              '-score'
             ],
             tag_key: []
           })
