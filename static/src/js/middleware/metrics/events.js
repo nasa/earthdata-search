@@ -231,12 +231,12 @@ export const granuleFilter = (action) => {
   console.log('🚀 ~ file: events.js:231 ~ granuleFilter ~ type:', type)
   console.log('🚀 ~ file: events.js:231 ~ granuleFilter ~ value:', value)
   console.log('🚀 ~ file: events.js:231 ~ granuleFilter ~ payload:', payload)
-
+  // TODO data
   dataLayer.push({
     event: 'granuleFilter',
     granuleFilterCategory: 'Granule Filter',
-    granuleEditEventEventAction: type,
-    granuleEditEventEventValue: value
+    granuleFilterEventAction: type,
+    granuleFilterEventValue: value
   })
 }
 

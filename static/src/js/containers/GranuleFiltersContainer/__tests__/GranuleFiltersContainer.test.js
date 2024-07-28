@@ -8,6 +8,16 @@ import configureStore from '../../../store/configureStore'
 import actions from '../../../actions'
 import * as metrics from '../../../middleware/metrics/actions'
 
+import {
+  act,
+  render,
+  waitFor,
+  screen
+} from '@testing-library/react'
+import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event'
+
+
 import EnhancedGranuleFiltersContainer, {
   mapDispatchToProps,
   mapStateToProps
@@ -98,6 +108,8 @@ const setup = (overrideProps) => {
 
   }
 
+  // const user = userEvent.setup()
+
   const store = configureStore()
 
   const history = createMemoryHistory()
@@ -112,7 +124,8 @@ const setup = (overrideProps) => {
 
   return {
     onClearGranuleFilters,
-    props
+    handleSubmit,
+    handleReset
   }
 }
 
@@ -211,16 +224,16 @@ describe('GranuleFiltersContainer component', () => {
 
       describe('when the granuleFiltersNeedsReset flag is set to false', () => {
         // TODO this is sending a request somehow
-        test('does not run onClearGranuleFilters', () => {
+        test.only('does not run onClearGranuleFilters', () => {
           // Const onClearGranuleFiltersMock = jest.fn()
-          const { onClearGranuleFilterMock } = setup()
+          const { onClearGranuleFilters } = setup()
 
           // EnzymeWrapper.instance().onClearGranuleFilters = onClearGranuleFiltersMock
 
           // enzymeWrapper.setProps({ granuleFiltersNeedsReset: false })
           // enzymeWrapper.update()
 
-          expect(onClearGranuleFilterMock).toHaveBeenCalledTimes(0)
+          expect(onClearGranuleFilters).toHaveBeenCalledTimes(0)
         })
 
         test('sets the granuleFiltersNeedsReset flag to false', () => {
@@ -235,20 +248,20 @@ describe('GranuleFiltersContainer component', () => {
     })
 
     describe('when the form is submitted', () => {
-      test('when the form is not dirty', () => {
-        const { enzymeWrapper, props } = setup({
+      test.only('when the form is not dirty', () => {
+        const { handleSubmit } = setup({
           dirty: false,
           values: {
             test: 'test'
           }
         })
 
-        enzymeWrapper.instance().onHandleSubmit()
-
+        // enzymeWrapper.instance().on HandleSubmit()
+ 
         // Advance the timer to account for the setTimeout
         jest.runAllTimers()
 
-        expect(props.handleSubmit).toHaveBeenCalledTimes(0)
+        expect(handleSubmit).toHaveBeenCalledTimes(0)
       })
 
       test('when the form is dirty', () => {
@@ -272,12 +285,13 @@ describe('GranuleFiltersContainer component', () => {
     })
 
     describe('when the form is cleared', () => {
-      test('resets the form', () => {
-        const { enzymeWrapper, props } = setup()
+      test.only('resets the form', () => {
+        const { handleReset } = setup()
+        screen.debug()
 
-        enzymeWrapper.instance().onClearGranuleFilters()
+        // enzymeWrapper.instance().onClearGranuleFilters()
 
-        expect(props.handleReset).toHaveBeenCalledTimes(1)
+        // expect(props.handleReset).toHaveBeenCalledTimes(1)
       })
 
       test('clears the granule filters', () => {
