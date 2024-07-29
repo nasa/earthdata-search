@@ -176,7 +176,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-score'
           },
           {
             body: pointBodyEdited,
@@ -184,7 +184,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42,-2&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42,-2&sort_key[]=has_granules_or_cwic&sort_key[]=-score'
           }]
         )
 
@@ -1066,7 +1066,7 @@ test.describe('Map interactions', () => {
 
         const urlValues = {
           chromium: 'search?lat=13.999032615512775',
-          firefox: 'search?lat=13.99892766713073',
+          firefox: 'search?lat=13.999207532962274',
           webkit: 'search?lat=13.999032615512775'
         }
         await expect(page).toHaveURL(urlValues[browser])
@@ -1413,7 +1413,7 @@ test.describe('Map interactions', () => {
           })
         })
 
-        await page.route(/autocomplete/, async (route) => {
+        await page.route(/autocomplete$/, async (route) => {
           await route.fulfill({
             json: { feed: { entry: [] } }
           })
@@ -1599,7 +1599,7 @@ test.describe('Map interactions', () => {
           })
         })
 
-        await page.route(/autocomplete/, async (route) => {
+        await page.route(/autocomplete$/, async (route) => {
           await route.fulfill({
             json: { feed: { entry: [] } }
           })
@@ -1668,7 +1668,7 @@ test.describe('Map interactions', () => {
         }
       })
 
-      await page.route(/autocomplete/, async (route) => {
+      await page.route(/autocomplete$/, async (route) => {
         await route.fulfill({
           json: { feed: { entry: [] } }
         })

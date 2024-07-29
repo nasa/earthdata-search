@@ -7,6 +7,7 @@ import {
   map,
   relatedCollection,
   spatialEdit,
+  spatialSelection,
   timeline,
   timing,
   virtualPageview
@@ -19,6 +20,7 @@ import {
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
+  METRICS_SPATIAL_SELECTION,
   METRICS_TIMELINE,
   METRICS_TIMING
 } from './constants'
@@ -50,6 +52,10 @@ const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
 
   if (action.type === METRICS_SPATIAL_EDIT) {
     spatialEdit(action)
+  }
+
+  if (action.type === METRICS_SPATIAL_SELECTION) {
+    spatialSelection(action)
   }
 
   if (action.type === METRICS_TIMING) {

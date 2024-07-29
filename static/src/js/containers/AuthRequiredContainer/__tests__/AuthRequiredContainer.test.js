@@ -5,6 +5,12 @@ import '@testing-library/jest-dom'
 import * as tinyCookie from 'tiny-cookie'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
+jest.mock('tiny-cookie', () => ({
+  get: jest.fn(),
+  set: jest.fn(),
+  remove: jest.fn()
+}))
+
 import { AuthRequiredContainer, mapStateToProps } from '../AuthRequiredContainer'
 
 const setup = (overrideProps) => {

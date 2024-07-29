@@ -23,10 +23,12 @@ export const computeSpatialType = (state) => {
   const { spatial } = collection
   const {
     boundingBox,
+    circle,
     polygon,
     point
   } = spatial
   if (boundingBox) return 'Bounding Box'
+  if (circle) return 'Circle'
   if (polygon) return 'Polygon'
   if (point) return 'Point'
 

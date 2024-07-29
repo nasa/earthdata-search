@@ -1,4 +1,4 @@
-import { isPlainObject } from 'lodash'
+import { isPlainObject } from 'lodash-es'
 
 /**
  * Prunes the provided filters of empty values

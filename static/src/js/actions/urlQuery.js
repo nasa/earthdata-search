@@ -18,7 +18,9 @@ import { RESTORE_FROM_URL } from '../constants/actionTypes'
 import ProjectRequest from '../util/request/projectRequest'
 import { getCollectionSortPreference } from '../selectors/preferences'
 import { buildConfig } from '../util/portals'
-import availablePortals from '../../../../portals'
+
+// eslint-disable-next-line import/no-unresolved
+import availablePortals from '../../../../portals/availablePortals.json'
 
 const restoreFromUrl = (payload) => ({
   type: RESTORE_FROM_URL,

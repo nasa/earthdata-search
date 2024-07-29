@@ -24,8 +24,6 @@
   migrateDatabase:
     handler: serverless/src/migrateDatabase/handler.default
     timeout: 300
-    webpack:
-      includeMigrations: true
 
   storeUserData:
     timeout: 300
@@ -139,7 +137,7 @@
   fetchHarmonyOrder:
     handler: serverless/src/fetchHarmonyOrder/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
-  
+
   fetchSwodlrOrder:
     handler: serverless/src/fetchSwodlrOrder/handler.default
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
@@ -239,7 +237,7 @@
   # from servers anywhere in the world, to combat that we need to use a higher timeout here than normal.
   openSearchGranuleSearch:
     handler: serverless/src/openSearchGranuleSearch/handler.default
-    timeout: 60
+    timeout: 30
     events:
       - http:
           method: post
@@ -261,7 +259,7 @@
 
   exportSearch:
     handler: serverless/src/exportSearch/handler.default
-    timeout: 300
+    timeout: 30
     memorySize: 192
     events:
       - http:

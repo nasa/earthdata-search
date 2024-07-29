@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: $spacer/2 $spacer;
+  padding: calc($spacer / 2) $spacer;
 
   .panels--sm & {
     flex-direction: row;
