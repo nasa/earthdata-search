@@ -1,7 +1,17 @@
 /* eslint-disable capitalized-comments */
 import { test, expect } from 'playwright-test-coverage'
+import twentyCollections from './__mocks__/twenty_collections.json'
 
 test.describe('Performance Benchmarking', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.route(/collections/, async (route) => {
+      await route.fulfill({
+        json: twentyCollections.body,
+        headers: twentyCollections.headers
+      })
+    })
+  })
+
   test('Search page load time is less than 2 second', async ({ page, browserName }) => {
     if (['chromium'].includes(browserName)) {
       await page.goto('/')
