@@ -1,13 +1,8 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { getByTestId } from '../../../../support/getByTestId'
-import { getAuthHeaders } from '../../../../support/getAuthHeaders'
 import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
 import { graphQlGetCollections } from '../../../../support/graphQlGetCollections'
 import { graphQlGetSubscriptionsQuery } from '../../../../support/graphQlGetSubscriptionsQuery'
-import {
-  interceptUnauthenticatedCollections
-} from '../../../../support/interceptUnauthenticatedCollections'
 
 import { commafy } from '../../../../../static/src/js/util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
@@ -113,7 +108,6 @@ import graphQlHeaders from './__mocks__/common/graphql.headers.json'
 import { login } from '../../../../support/login'
 
 const { defaultCmrPageSize } = getApplicationConfig()
-const authHeaders = getAuthHeaders()
 
 const testResultsSize = async (page, cmrHits) => {
   const expectedSize = Math.min(defaultCmrPageSize, cmrHits)
@@ -1167,12 +1161,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const request = route.request()
-        const body = JSON.stringify(request.postData())
         const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
-
-        const requestBody = JSON.parse(body)
-        const expectedRequestBody = JSON.parse(expectedBody)
 
         if (expectedBody === JSON.stringify(graphQlGetCollection(conceptId))) {
           route.fulfill({
