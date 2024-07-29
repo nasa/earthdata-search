@@ -1133,74 +1133,62 @@ test.describe('Path /search/granules', () => {
   })
 
   test.describe('When the path is loaded with a project collection', () => {
-    test('loads with all granules in the project', async ({ page, context }) => {
-      const conceptId = 'C194001210-LPDAAC_ECS'
-      const cmrHits = 275361
+    test('loads with all granules in the project', async ({ page }) => {
+      const conceptId = 'C1214470488-ASF'
+      const cmrHits = 15073
 
-      login(context)
-
-      await interceptUnauthenticatedCollections({
-        page,
-        body: collectionsBody,
-        headers: collectionsHeaders
-      })
-
-      // Mock the granules endpoint
-      await page.route('**/search/granules.json', async (route) => {
+      await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
-        if (body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20') {
-          await route.fulfill({
-            body: JSON.stringify(projectCollectionGranulesBody),
-            headers: {
-              ...commonGranulesHeaders,
-              'access-control-expose-headers': 'cmr-hits',
-              'cmr-hits': cmrHits.toString()
-            }
-          })
-        }
-      })
-
-      // Mock the timeline endpoint
-      await page.route('**/search/granules/timeline', async (route) => {
-        const request = route.request()
-        const body = request.postData()
-        if (body === 'end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS') {
-          await route.fulfill({
-            body: JSON.stringify(projectCollectionTimelineBody),
-            headers: projectCollectionTimelineHeaders
-          })
-        }
-      })
-
-      // Mock the saved_access_configs endpoint
-      await page.route('POST', '**/saved_access_configs', (route) => {
+        expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
         route.fulfill({
-          body: JSON.stringify({})
+          body: JSON.stringify(noParamsGranulesBody),
+          headers: {
+            ...commonGranulesHeaders,
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
+          }
         })
       })
 
-      // Mock the GraphQL endpoint
-      await page.route('**/api', async (route) => {
+      await page.route('**/search/granules/timeline', (route) => {
+        const request = route.request()
+        const body = request.postData()
+        if (body) {
+          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+        }
+
+        route.fulfill({
+          body: JSON.stringify(noParamsTimelineBody),
+          headers: noParamsTimelineHeaders
+        })
+      })
+
+      await page.route('**/api', (route) => {
         const request = route.request()
         const body = JSON.stringify(request.postData())
         const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
 
-        if (body === expectedBody) {
-          await route.fulfill({
-            body: JSON.stringify(projectCollectionCollectionGraphQlBody),
-            headers: projectCollectionGraphQlHeaders
-          })
-        } else if (body === JSON.stringify(graphQlGetCollections('C194001210-LPDAAC_ECS'))) {
-          await route.fulfill({
-            body: JSON.stringify(projectCollectionCollectionsGraphQlBody),
-            headers: projectCollectionGraphQlHeaders
-          })
+        const requestBody = JSON.parse(body)
+        const expectedRequestBody = JSON.parse(expectedBody)
+
+        expect(requestBody).toEqual(expectedRequestBody)
+        route.fulfill({
+          body: JSON.stringify(noParamsGraphQlBody),
+          headers: noParamsGraphQlHeaders
+        })
+      })
+
+      // Capture and log headers to verify them
+      page.on('response', async (response) => {
+        if (response.url().includes('/search/granules.json')) {
+          const headers = response.headers()
+          console.log('Response headers:', headers)
         }
       })
 
-      // Navigate to the URL
-      await page.goto('/search/granules?p=C194001210-LPDAAC_ECS!C194001210-LPDAAC_ECS')
+      // Go to collection in the project context
+      await page.goto('/search/granules?p=C1214470488-ASF!C1214470488-ASF')
 
       // Ensure the correct number of results were loaded
       await testResultsSize(page, cmrHits)
