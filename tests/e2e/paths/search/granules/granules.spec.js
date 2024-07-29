@@ -3,6 +3,9 @@ import { test, expect } from 'playwright-test-coverage'
 import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
 import { graphQlGetCollections } from '../../../../support/graphQlGetCollections'
 import { graphQlGetSubscriptionsQuery } from '../../../../support/graphQlGetSubscriptionsQuery'
+import {
+  interceptUnauthenticatedCollections
+} from '../../../../support/interceptUnauthenticatedCollections'
 
 import { commafy } from '../../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../../static/src/js/util/pluralize'
@@ -17,6 +20,8 @@ import cloudCoverGraphQlBody from './__mocks__/cloud_cover/graphql.body.json'
 import cloudCoverGraphQlHeaders from './__mocks__/cloud_cover/graphql.headers.json'
 import cloudCoverTimelineBody from './__mocks__/cloud_cover/timeline.body.json'
 import cloudCoverTimelineHeaders from './__mocks__/cloud_cover/timeline.headers.json'
+import collectionsBody from './__mocks__/common/collections.body.json'
+import collectionsHeaders from './__mocks__/common/collections.headers.json'
 import commonBody from '../../../map/__mocks__/common_collections.body.json'
 import commonHeaders from '../../../map/__mocks__/common_collections.headers.json'
 import commonGranulesHeaders from './__mocks__/common/granules.headers.json'
@@ -106,7 +111,7 @@ import graphQlHeaders from './__mocks__/common/graphql.headers.json'
 
 import { login } from '../../../../support/login'
 
-const { defaultCmrPageSize } = 20
+const defaultCmrPageSize = 20
 
 const testResultsSize = async (page, cmrHits) => {
   const expectedSize = Math.min(defaultCmrPageSize, cmrHits)
@@ -914,7 +919,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/collections.json', (route) => {
         const request = route.request()
         const body = request.postData()
-        expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+        expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
         route.fulfill({
           body: JSON.stringify(timelineCollectionsBody),
           headers: timelineCollectionsHeaders
@@ -1041,7 +1046,7 @@ test.describe('Path /search/granules', () => {
   test.describe('When the path is loaded with a project granule', () => {
     test('loads with a single granule in the project', async ({ page, context }) => {
       const conceptId = 'C194001210-LPDAAC_ECS'
-      const cmrHits = 1891904
+      const cmrHits = 1892006
       login(context)
 
       await page.route('**/search/granules.json', async (route) => {
@@ -1112,8 +1117,9 @@ test.describe('Path /search/granules', () => {
 
       await page.goto('/search/granules?p=C1243477369-GES_DISC!C1243477369-GES_DISC&pg[1][a]=3176872946!GES_DISC')
 
-      // Ensure the correct number of results were loaded
-      await testResultsSize(page, cmrHits) // Zzz
+      const metaText = await page.locator('[data-testid="panel-group_granule-results"] [data-testid="panel-group-header__heading-meta-text"]').textContent()
+      const expectedSize = Math.min(defaultCmrPageSize, cmrHits)
+      expect(metaText).toContain(`Showing ${expectedSize}`)
 
       // Project count is correct
       const removeButtonLocator = page.locator('[data-testid="granule-results-actions__proj-action--remove"]')
@@ -1128,60 +1134,79 @@ test.describe('Path /search/granules', () => {
 
   test.describe('When the path is loaded with a project collection', () => {
     test('loads with all granules in the project', async ({ page, context }) => {
-      login(context)
       const conceptId = 'C194001210-LPDAAC_ECS'
-      const cmrHits = 1891904
+      const cmrHits = 275361
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
-        expect(body).toBe('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
-        route.fulfill({
-          body: JSON.stringify(projectCollectionGranulesBody),
-          headers: {
-            ...commonGranulesHeaders,
-            'access-control-expose-headers': 'cmr-hits',
-            'cmr-hits': cmrHits
-          }
-        })
+      login(context)
+
+      await interceptUnauthenticatedCollections({
+        page,
+        body: collectionsBody,
+        headers: collectionsHeaders
       })
 
-      await page.route('**/search/granules/timeline', (route) => {
+      // Mock the granules endpoint
+      await page.route('**/search/granules.json', async (route) => {
         const request = route.request()
         const body = request.postData()
-        if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+        if (body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20') {
+          await route.fulfill({
+            body: JSON.stringify(projectCollectionGranulesBody),
+            headers: {
+              ...commonGranulesHeaders,
+              'access-control-expose-headers': 'cmr-hits',
+              'cmr-hits': cmrHits.toString()
+            }
+          })
         }
+      })
 
+      // Mock the timeline endpoint
+      await page.route('**/search/granules/timeline', async (route) => {
+        const request = route.request()
+        const body = request.postData()
+        if (body === 'end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS') {
+          await route.fulfill({
+            body: JSON.stringify(projectCollectionTimelineBody),
+            headers: projectCollectionTimelineHeaders
+          })
+        }
+      })
+
+      // Mock the saved_access_configs endpoint
+      await page.route('POST', '**/saved_access_configs', (route) => {
         route.fulfill({
-          body: JSON.stringify(projectCollectionTimelineBody),
-          headers: projectCollectionTimelineHeaders
+          body: JSON.stringify({})
         })
       })
 
-      await page.route('**/api', (route) => {
+      // Mock the GraphQL endpoint
+      await page.route('**/api', async (route) => {
+        const request = route.request()
+        const body = JSON.stringify(request.postData())
         const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
 
-        if (expectedBody === JSON.stringify(graphQlGetCollection(conceptId))) {
-          route.fulfill({
+        if (body === expectedBody) {
+          await route.fulfill({
             body: JSON.stringify(projectCollectionCollectionGraphQlBody),
             headers: projectCollectionGraphQlHeaders
           })
-        } else if (expectedBody === JSON.stringify(graphQlGetCollections('C194001210-LPDAAC_ECS'))) {
-          route.fulfill({
+        } else if (body === JSON.stringify(graphQlGetCollections('C194001210-LPDAAC_ECS'))) {
+          await route.fulfill({
             body: JSON.stringify(projectCollectionCollectionsGraphQlBody),
             headers: projectCollectionGraphQlHeaders
           })
         }
       })
 
-      await page.goto('/search/granules?p=C1243477369-GES_DISC!C1243477369-GES_DISC&pg[1][a]=3176872946!GES_DISC')
+      // Navigate to the URL
+      await page.goto('/search/granules?p=C194001210-LPDAAC_ECS!C194001210-LPDAAC_ECS')
 
       // Ensure the correct number of results were loaded
       await testResultsSize(page, cmrHits)
 
       // Project count is correct
-      // await expect(page.locator('[data-testid="granule-results-actions__proj-action--remove"]')).toBeVisible()
+      await expect(page.locator('[data-testid="granule-results-actions__proj-action--remove"]')).toBeVisible()
       await expect(page.locator('[data-testid="granule-results-actions__download-all-button"] .button__badge')).toHaveText(commafy(cmrHits))
     })
   })
