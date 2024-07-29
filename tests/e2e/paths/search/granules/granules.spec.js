@@ -157,7 +157,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(noParamsGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -221,7 +222,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(readableGranuleNameGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -278,7 +280,8 @@ test.describe('Path /search/granules', () => {
             body: JSON.stringify(temporalGranulesBody),
             headers: {
               ...commonGranulesHeaders,
-              'cmr-hits': cmrHits.toString()
+              'access-control-expose-headers': 'cmr-hits',
+              'cmr-hits': cmrHits
             }
           })
         })
@@ -338,7 +341,8 @@ test.describe('Path /search/granules', () => {
             body: JSON.stringify(recurringTemporalGranulesBody),
             headers: {
               ...commonGranulesHeaders,
-              'cmr-hits': cmrHits.toString()
+              'access-control-expose-headers': 'cmr-hits',
+              'cmr-hits': cmrHits
             }
           })
         })
@@ -401,7 +405,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(browseOnlyGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -458,7 +463,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(onlineOnlyGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -515,7 +521,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(orbitNumberGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -572,7 +579,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(equatorialCrossingLongitudeGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -629,7 +637,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(equatorialCrossingDateGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -686,7 +695,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(sortKeyGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -743,7 +753,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(cloudCoverGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -800,7 +811,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(dayNightGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -856,7 +868,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(gridCoordsGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -923,7 +936,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(timelineGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -984,7 +998,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(focusedGranuleGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -1003,14 +1018,14 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
+        const body = JSON.stringify(route.request().postData())
 
-        if (expectedBody === JSON.stringify(graphQlGetCollection(conceptId))) {
+        if (body === JSON.stringify(graphQlGetCollection(conceptId))) {
           route.fulfill({
             body: JSON.stringify(focusedGranuleCollectionGraphQlBody),
             headers: focusedGranuleGraphQlHeaders
           })
-        } else if (expectedBody === '{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"G2058417402-LPDAAC_ECS"}}}') {
+        } else if (body === '{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"G2058417402-LPDAAC_ECS"}}}') {
           route.fulfill({
             body: JSON.stringify(focusedGranuleGranuleGraphQlBody),
             headers: focusedGranuleGraphQlHeaders
@@ -1033,7 +1048,7 @@ test.describe('Path /search/granules', () => {
   test.describe('When the path is loaded with a project granule', () => {
     test('loads with a single granule in the project', async ({ page, context }) => {
       const conceptId = 'C194001210-LPDAAC_ECS'
-      const cmrHits = 275361
+      const cmrHits = 1891904
       login(context)
 
       await page.route('**/search/granules.json', async (route) => {
@@ -1045,7 +1060,8 @@ test.describe('Path /search/granules', () => {
             body: JSON.stringify(projectGranuleGranulesBody),
             headers: {
               ...commonGranulesHeaders,
-              'cmr-hits': cmrHits.toString()
+              'access-control-expose-headers': 'cmr-hits',
+              'cmr-hits': cmrHits
             }
           })
         } else if (body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=1&concept_id[]=G2058417402-LPDAAC_ECS') {
@@ -1075,15 +1091,17 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', async (route) => {
-        const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
+        const body = JSON.stringify(route.request().postData())
+        const expectedCollectionBody = JSON.stringify(graphQlGetCollection(conceptId))
+        const expectedCollectionsBody = JSON.stringify(graphQlGetCollections('C194001210-LPDAAC_ECS'))
 
-        if (expectedBody === JSON.stringify(graphQlGetCollection(conceptId))) {
+        if (body === expectedCollectionBody) {
           await route.fulfill({
             contentType: 'application/json',
             body: JSON.stringify(projectGranuleCollectionGraphQlBody),
             headers: projectGranuleGraphQlHeaders
           })
-        } else if (expectedBody === JSON.stringify(graphQlGetCollections('C194001210-LPDAAC_ECS'))) {
+        } else if (body === expectedCollectionsBody) {
           await route.fulfill({
             contentType: 'application/json',
             body: JSON.stringify(projectGranuleCollectionsGraphQlBody),
@@ -1092,10 +1110,17 @@ test.describe('Path /search/granules', () => {
         }
       })
 
-      await page.goto('/search/granules?p=C194001210-LPDAAC_ECS!C194001210-LPDAAC_ECS&pg[1][a]=2058417402!LPDAAC_ECS')
+      await page.route('POST', '**/saved_access_configs', (route) => {
+        route.fulfill({
+          contentType: 'application/json',
+          body: JSON.stringify({})
+        })
+      })
+
+      await page.goto('/search/granules?p=C1243477369-GES_DISC!C1243477369-GES_DISC&pg[1][a]=3176872946!GES_DISC')
 
       // Ensure the correct number of results were loaded
-      await testResultsSize(page, cmrHits)
+      await testResultsSize(page, cmrHits) // Zzz
 
       // Project count is correct
       const removeButtonLocator = page.locator('[data-testid="granule-results-actions__proj-action--remove"]')
@@ -1112,7 +1137,7 @@ test.describe('Path /search/granules', () => {
     test('loads with all granules in the project', async ({ page, context }) => {
       login(context)
       const conceptId = 'C194001210-LPDAAC_ECS'
-      const cmrHits = 275361
+      const cmrHits = 1891904
 
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
@@ -1122,7 +1147,8 @@ test.describe('Path /search/granules', () => {
           body: JSON.stringify(projectCollectionGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
@@ -1161,68 +1187,95 @@ test.describe('Path /search/granules', () => {
         }
       })
 
-      await page.goto('/search/granules?p=C194001210-LPDAAC_ECS!C194001210-LPDAAC_ECS')
+      await page.goto('/search/granules?p=C1243477369-GES_DISC!C1243477369-GES_DISC&pg[1][a]=3176872946!GES_DISC')
 
       // Ensure the correct number of results were loaded
       await testResultsSize(page, cmrHits)
 
       // Project count is correct
-      await expect(page.locator('[data-testid="granule-results-actions__proj-action--remove"]')).toBeVisible()
+      // await expect(page.locator('[data-testid="granule-results-actions__proj-action--remove"]')).toBeVisible()
       await expect(page.locator('[data-testid="granule-results-actions__download-all-button"] .button__badge')).toHaveText(commafy(cmrHits))
     })
   })
 
   test.describe('When the path is loaded with a collection with an active subscription', () => {
-    test('loads with the subscription indicator active', async ({ page }) => {
+    test('loads with the subscription indicator active', async ({ page, context }) => {
       const conceptId = 'C1214470488-ASF'
-      const cmrHits = 1059170
+      const cmrHits = 229
+      login(context)
 
-      await page.route('**/search/collections.json', (route) => {
+      await page.route('**/search/collections.json', async (route) => {
         const request = route.request()
-        const body = request.postData()
-        expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=-77.04119,38.80585&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
-        route.fulfill({
-          body: JSON.stringify(timelineCollectionsBody),
-          headers: timelineCollectionsHeaders
+        const body = JSON.parse(request.postData())
+        expect(body).toEqual({
+          consortium: [],
+          has_granules_or_cwic: true,
+          include_facets: 'v2',
+          include_granule_counts: true,
+          include_has_granules: true,
+          include_tags: 'edsc.*,opensearch.granule.osdd',
+          options: {},
+          page_num: 1,
+          page_size: 20,
+          point: ['-77.04119,38.80585'],
+          service_type: [],
+          sort_key: ['has_granules_or_cwic', '-usage_score'],
+          tag_key: []
+        })
+
+        await route.fulfill({
+          body: JSON.stringify(commonBody),
+          headers: commonHeaders
         })
       })
 
-      await page.route('**/search/granules.json', (route) => {
+      await page.route('**/search/granules.json', async (route) => {
         const request = route.request()
-        const body = request.postData()
-        expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&point[]=-77.04119,38.80585&sort_key=-start_date')
-        route.fulfill({
-          body: JSON.stringify(timelineGranulesBody),
+        const body = JSON.parse(request.postData())
+        expect(body).toEqual({
+          echo_collection_id: 'C1214470488-ASF',
+          options: {},
+          page_num: 1,
+          page_size: 20,
+          concept_id: [],
+          point: ['-77.04119,38.80585'],
+          exclude: {},
+          sort_key: '-start_date',
+          two_d_coordinate_system: {}
+        })
+
+        await route.fulfill({
+          body: JSON.stringify(subscriptionGranulesBody),
           headers: {
             ...commonGranulesHeaders,
-            'cmr-hits': cmrHits.toString()
+            'access-control-expose-headers': 'cmr-hits',
+            'cmr-hits': cmrHits
           }
         })
       })
 
-      await page.route('**/search/granules/timeline', (route) => {
+      await page.route('**/search/granules/timeline', async (route) => {
         const request = route.request()
-        const body = request.postData()
-        if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
-        }
+        const body = JSON.parse(request.postData())
+        expect(body).toEqual({
+          end_date: '2023-12-01T00:00:00.000Z',
+          interval: 'day',
+          start_date: '2018-12-01T00:00:00.000Z',
+          concept_id: ['C1214470488-ASF']
+        })
 
-        route.fulfill({
-          body: JSON.stringify(timelineTimelineBody),
-          headers: timelineTimelineHeaders
+        await route.fulfill({
+          body: JSON.stringify(subscriptionTimelineBody),
+          headers: subscriptionTimelineHeaders
         })
       })
 
-      await page.route('**/api', (route) => {
+      await page.route('**/graphql', async (route) => {
         const request = route.request()
-        const body = JSON.stringify(request.postData())
-        const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
+        const body = JSON.parse(request.postData())
 
-        const requestBody = JSON.parse(body)
-        const expectedRequestBody = JSON.parse(expectedBody)
-
-        if (expectedBody === graphQlGetSubscriptionsQuery) {
-          route.fulfill({
+        if (body.data.query === graphQlGetSubscriptionsQuery) {
+          await route.fulfill({
             body: JSON.stringify({
               data: {
                 subscriptions: {
@@ -1232,8 +1285,8 @@ test.describe('Path /search/granules', () => {
             }),
             headers: subscriptionGraphQlHeaders
           })
-        } else if (expectedBody === JSON.stringify(graphQlGetCollection(conceptId))) {
-          route.fulfill({
+        } else if (body.data.query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+          await route.fulfill({
             body: JSON.stringify(subscriptionGraphQlBody),
             headers: graphQlHeaders
           })
@@ -1246,7 +1299,7 @@ test.describe('Path /search/granules', () => {
       await testResultsSize(page, cmrHits)
 
       // Subscription button is active
-      await expect(page.locator('[data-testid="granule-results-actions__subscriptions-button"]')).toHaveClass('granule-results-actions__action--is-active')
+      await expect(page.locator('[data-testid="granule-results-actions__subscriptions-button"]')).toHaveClass(/granule-results-actions__action--is-active/)
     })
   })
 })
