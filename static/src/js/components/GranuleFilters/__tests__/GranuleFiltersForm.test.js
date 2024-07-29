@@ -1069,9 +1069,28 @@ describe('GranuleFiltersForm component', () => {
       })
 
       const gridCoordsSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
-      gridCoordsSection.find(Form.Control).prop('onChange')({ target: { value: 'MISR' } })
+      gridCoordsSection.find(Form.Control).prop('onChange')({
+        target: {
+          name: 'tilingSystem',
+          value: 'MISR'
+        }
+      })
+
       expect(props.handleChange).toHaveBeenCalledTimes(1)
-      expect(props.handleChange).toHaveBeenCalledWith({ target: { value: 'MISR' } })
+      expect(props.handleChange).toHaveBeenCalledWith({
+        target: {
+          name: 'tilingSystem',
+          value: 'MISR'
+        }
+      })
+
+      expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+      expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith(
+        {
+          type: 'tilingSystem',
+          value: 'MISR'
+        }
+      )
     })
 
     test('tiling system onchange displays grid coordinates', () => {

@@ -356,6 +356,7 @@ export const GranuleFiltersForm = (props) => {
 
                         // Track tiling system used
                         handleEventMetrics(event)
+
                         // If the tiling system is empty clear the grid coordinates
                         if (value === '') {
                           setFieldValue('gridCoords', '')
@@ -446,6 +447,8 @@ export const GranuleFiltersForm = (props) => {
                       }
                     }
 
+                    // Collect metrics for event
+                    handleEventMetrics(event)
                     setTimeout(() => {
                       handleSubmit()
                     }, 0)
@@ -476,6 +479,7 @@ export const GranuleFiltersForm = (props) => {
 
                     handleSubmit()
                     // Add metrics for recurring temporal filter
+                    // TODO this is for updates
                     onMetricsGranuleFilter({
                       type: 'Set Recurring',
                       value
