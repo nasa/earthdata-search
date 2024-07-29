@@ -168,12 +168,11 @@ const GranuleResultsItem = forwardRef(({
       'granule-results-item--has-thumbnail': browseFlag
     }
   ])
-  const dataTestId = `granule-results-item-${title}`
 
   return (
     <div
       className={granuleResultsItemClasses}
-      data-testid={dataTestId}
+      data-testid="granule-results-item"
       onClick={enhancedHandleOnClick}
       aria-label="granule-results-item"
       onKeyPress={handleClick}
