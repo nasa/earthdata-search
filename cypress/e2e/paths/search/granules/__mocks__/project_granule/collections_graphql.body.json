@@ -1,0 +1,527 @@
+{
+  "data": {
+    "collections": {
+      "items": [
+        {
+          "abstract": "The MYD11A2 Version 6 product provides an average 8-day per-pixel Land Surface Temperature and Emissivity (LST&E) with a 1 kilometer (km) spatial resolution in a 1,200 by 1,200 km grid. Each pixel value in the MYD11A2 is a simple average of all the corresponding (MYD11A1) (https://doi.org/10.5067/MODIS/MYD11A1.006) LST pixels collected within that 8-day period. The 8-day compositing period was chosen because twice that period is the exact ground track repeat period of the Terra and Aqua platforms. Provided along with the daytime and nighttime surface temperature bands are associated quality control assessments, observation times, view zenith angles, and clear-sky coverages along with bands 31 and 32 emissivities from land cover types.\r\n\r\nImprovements/Changes from Previous Versions\r\n\r\n* Removed cloud-contaminated LSTs from Level 2 and Level 3 LST products.\r\n* Updated the coefficient look-up table (LUT) for the split-window algorithm with comprehensive regression analysis of Moderate Resolution Imaging Spectroradiometer (MODIS) simulation data in bands 31 and 32 over wide ranges of surface and atmospheric conditions, especially extending the upper boundary for (LST – Ts-air) in arid and semi-arid regions. Increased the overlap between various sub-ranges to reduce the sensitivity of the algorithm to uncertainties in the input data (i.e., column water vapor and air surface temperature from MYD07).\r\n* Made minor adjustments in the classification-based surface emissivity values, especially for bare soil and rocks land cover types.\r\n* Tuned the day/night algorithm by adjusting weights to improve performance in desert regions where the incorporated split-window algorithm may not work well.\r\n* Generated new gridded LST&E products with a 6 km spatial resolution for 8-day (MYD11B2) (https://doi.org/10.5067/MODIS/MYD11B2.006) and monthly (MYD11B3) (https://doi.org/10.5067/MODIS/MYD11B3.006) intervals in response to user community requests.",
+          "archiveAndDistributionInformation": {
+            "fileArchiveInformation": [
+              {
+                "format": "HDF-EOS2",
+                "formatType": "Native",
+                "formatDescription": "Hierarchical Data Format - Earth Observing System Version 2",
+                "averageFileSize": 3.86,
+                "averageFileSizeUnit": "MB",
+                "totalCollectionFileSizeBeginDate": "2002-07-04T00:00:00.000Z"
+              }
+            ],
+            "fileDistributionInformation": [
+              {
+                "format": "HDF-EOS2",
+                "formatType": "Native",
+                "formatDescription": "Hierarchical Data Format - Earth Observing System Version 2",
+                "media": ["https"],
+                "averageFileSize": 3.86,
+                "averageFileSizeUnit": "MB",
+                "totalCollectionFileSizeBeginDate": "2002-07-04T00:00:00.000Z"
+              }
+            ]
+          },
+          "associatedDois": null,
+          "boxes": ["-90 -180 90 180"],
+          "conceptId": "C194001210-LPDAAC_ECS",
+          "coordinateSystem": "CARTESIAN",
+          "dataCenter": "LPDAAC_ECS",
+          "dataCenters": [
+            {
+              "contactGroups": [
+                {
+                  "contactInformation": {
+                    "addresses": [
+                      {
+                        "city": "Sioux Falls",
+                        "country": "United States",
+                        "postalCode": "57198",
+                        "stateProvince": "South Dakota",
+                        "streetAddresses": [
+                          "U.S. Geological Survey, Earth Resources Observation and Science (EROS) Center"
+                        ]
+                      }
+                    ],
+                    "contactInstruction": "LP DAAC User Services is the point of contact for answering questions concerning data products, data access, and online applications.",
+                    "contactMechanisms": [
+                      {
+                        "type": "Telephone",
+                        "value": "605-594-6116"
+                      },
+                      {
+                        "type": "U.S. toll free",
+                        "value": "866-573-3222"
+                      },
+                      {
+                        "type": "Email",
+                        "value": "lpdaac@usgs.gov"
+                      }
+                    ],
+                    "relatedUrls": [
+                      {
+                        "description": "The LP DAAC website provides detailed information on discovery, distribution, access, and support of land data products.",
+                        "type": "HOME PAGE",
+                        "url": "https://lpdaac.usgs.gov/",
+                        "urlContentType": "DataContactURL"
+                      }
+                    ],
+                    "serviceHours": "M-F, 8 a.m. to 4 p.m. Central Time"
+                  },
+                  "groupName": "LP DAAC User Services",
+                  "roles": ["User Services"]
+                }
+              ],
+              "contactInformation": {
+                "addresses": [
+                  {
+                    "city": "Sioux Falls",
+                    "country": "United States",
+                    "postalCode": "57198",
+                    "stateProvince": "South Dakota",
+                    "streetAddresses": [
+                      "U.S. Geological Survey, Earth Resources Observation and Science (EROS) Center"
+                    ]
+                  }
+                ],
+                "contactInstruction": "LP DAAC User Services is the point of contact for answering questions concerning data products, data access, and online applications.",
+                "contactMechanisms": [
+                  {
+                    "type": "Telephone",
+                    "value": "605-594-6116"
+                  },
+                  {
+                    "type": "U.S. toll free",
+                    "value": "866-573-3222"
+                  },
+                  {
+                    "type": "Email",
+                    "value": "lpdaac@usgs.gov"
+                  }
+                ],
+                "relatedUrls": [
+                  {
+                    "description": "The LP DAAC website provides detailed information on discovery, distribution, access, and support of land data products.",
+                    "type": "HOME PAGE",
+                    "url": "https://lpdaac.usgs.gov/",
+                    "urlContentType": "DataCenterURL"
+                  }
+                ],
+                "serviceHours": "M-F, 8 a.m. to 4 p.m. Central Time"
+              },
+              "longName": "Land Processes Distributed Active Archive Center",
+              "roles": ["ARCHIVER"],
+              "shortName": "LP DAAC"
+            },
+            {
+              "contactInformation": {
+                "addresses": [
+                  {
+                    "city": "GREENBELT",
+                    "country": "United States",
+                    "postalCode": "20771",
+                    "stateProvince": "Maryland",
+                    "streetAddresses": ["NASA/GSFC Code 922"]
+                  }
+                ],
+                "contactInstruction": "Contact for data content concerns",
+                "contactMechanisms": [
+                  {
+                    "type": "Telephone",
+                    "value": "301-614-5515"
+                  },
+                  {
+                    "type": "Email",
+                    "value": "Edward.J.Masuoka@nasa.gov"
+                  }
+                ],
+                "relatedUrls": [
+                  {
+                    "type": "HOME PAGE",
+                    "url": "https://modaps.modaps.eosdis.nasa.gov/",
+                    "urlContentType": "DataCenterURL"
+                  }
+                ]
+              },
+              "longName": "MODIS Adaptive Processing System, Terrestrial Information Systems Laboratory, Earth Sciences Division, Science and Exploration Directorate, Goddard Space Flight Center, NASA",
+              "roles": ["PROCESSOR"],
+              "shortName": "NASA/GSFC/SED/ESD/TISL/MODAPS"
+            }
+          ],
+          "directDistributionInformation": null,
+          "doi": {
+            "authority": "https://doi.org",
+            "doi": "10.5067/MODIS/MYD11A2.006"
+          },
+          "hasGranules": true,
+          "lines": null,
+          "points": null,
+          "polygons": null,
+          "relatedCollections": {
+            "count": 243,
+            "items": [
+              {
+                "id": "C1240524032-SCIOPSTEST",
+                "title": "SENTINEL-1A_SINGLE_POL_METADATA_GRD_HIGH_RES"
+              },
+              {
+                "id": "C1212209075-ASF",
+                "title": "SENTINEL-1A_DUAL_POL_METADATA_GRD_FULL_RES"
+              },
+              {
+                "id": "C1240524082-SCIOPSTEST",
+                "title": "SENTINEL-1A_DUAL_POL_GRD_MEDIUM_RES"
+              }
+            ]
+          },
+          "relatedUrls": [
+            {
+              "description": "The LP DAAC product page provides information on Science Data Set layers and links for user guides, ATBDs, data access, tools, customer support, etc.",
+              "type": "DATA SET LANDING PAGE",
+              "url": "https://doi.org/10.5067/MODIS/MYD11A2.006",
+              "urlContentType": "CollectionURL"
+            },
+            {
+              "description": "LP DAAC Data Pool provides direct access to available products via HTTPS.",
+              "subtype": "DATA TREE",
+              "type": "GET DATA",
+              "url": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/",
+              "urlContentType": "DistributionURL"
+            },
+            {
+              "description": "USGS EarthExplorer provides users the ability to query, search, and order products available from the LP DAAC.",
+              "subtype": "USGS EARTH EXPLORER",
+              "type": "GET DATA",
+              "url": "http://earthexplorer.usgs.gov/",
+              "urlContentType": "DistributionURL"
+            },
+            {
+              "description": "The LP DAAC website provides detailed information on discovery, distribution, access, and support of land data products.",
+              "type": "PROJECT HOME PAGE",
+              "url": "https://lpdaac.usgs.gov/",
+              "urlContentType": "CollectionURL"
+            },
+            {
+              "description": "Earthdata Search allows users to search, discover, visualize, refine, and access NASA Earth Observation data.",
+              "subtype": "Earthdata Search",
+              "type": "GET DATA",
+              "url": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS",
+              "urlContentType": "DistributionURL"
+            },
+            {
+              "description": "OPeNDAP provides direct access to data via HTTPS.",
+              "subtype": "OPENDAP DATA",
+              "type": "USE SERVICE API",
+              "url": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html",
+              "urlContentType": "DistributionURL"
+            },
+            {
+              "description": "The technical information in the User's Guide enables users to interpret and use the data products.",
+              "subtype": "USER'S GUIDE",
+              "type": "VIEW RELATED INFORMATION",
+              "url": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf",
+              "urlContentType": "PublicationURL"
+            },
+            {
+              "description": "The ATBD provides physical theory and mathematical procedures for the calculations used to produce the data products.",
+              "subtype": "ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)",
+              "type": "VIEW RELATED INFORMATION",
+              "url": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf",
+              "urlContentType": "PublicationURL"
+            },
+            {
+              "description": "The File Specification provides a description of the product file including Scientific Data Sets and their attributes.",
+              "subtype": "GENERAL DOCUMENTATION",
+              "type": "VIEW RELATED INFORMATION",
+              "url": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2",
+              "urlContentType": "PublicationURL"
+            },
+            {
+              "description": "The Application for Extracting and Exploring Analysis Ready Samples (AρρEEARS) offers a simple and efficient way to perform data access and transformation processes.",
+              "subtype": "APPEEARS",
+              "type": "GET DATA",
+              "url": "https://lpdaacsvc.cr.usgs.gov/appeears/",
+              "urlContentType": "DistributionURL"
+            },
+            {
+              "description": "Browse image for Earthdata Search",
+              "type": "GET RELATED VISUALIZATION",
+              "url": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2019.12.28/BROWSE.MYD11A2.A2019353.h21v04.006.2019361231509.1.jpg?_ga=2.30916415.1452435467.1577973160-2066674673.1574795892",
+              "urlContentType": "VisualizationURL"
+            }
+          ],
+          "scienceKeywords": [
+            {
+              "category": "EARTH SCIENCE",
+              "term": "SURFACE THERMAL PROPERTIES",
+              "topic": "LAND SURFACE",
+              "variableLevel1": "LAND SURFACE TEMPERATURE"
+            },
+            {
+              "category": "EARTH SCIENCE",
+              "term": "SURFACE RADIATIVE PROPERTIES",
+              "topic": "LAND SURFACE",
+              "variableLevel1": "EMISSIVITY"
+            }
+          ],
+          "shortName": "MYD11A2",
+          "spatialExtent": {
+            "granuleSpatialRepresentation": "GEODETIC",
+            "horizontalSpatialDomain": {
+              "geometry": {
+                "boundingRectangles": [
+                  {
+                    "eastBoundingCoordinate": 180,
+                    "northBoundingCoordinate": 90,
+                    "southBoundingCoordinate": -90,
+                    "westBoundingCoordinate": -180
+                  }
+                ],
+                "coordinateSystem": "CARTESIAN"
+              },
+              "resolutionAndCoordinateSystem": {
+                "horizontalDataResolution": {
+                  "griddedResolutions": [
+                    {
+                      "unit": "Meters",
+                      "xDimension": 1000,
+                      "yDimension": 1000
+                    }
+                  ]
+                }
+              },
+              "zoneIdentifier": "MODIS Sinusoidal Tiling System"
+            },
+            "spatialCoverageType": "HORIZONTAL"
+          },
+          "tags": {
+            "edsc.extra.gibs": {
+              "data": [
+                {
+                  "geo_resolution": "1km",
+                  "format": "png",
+                  "antarctic": false,
+                  "group": "overlays",
+                  "arctic_resolution": null,
+                  "geo": true,
+                  "source": "Aqua / MODIS",
+                  "arctic": false,
+                  "title": "Land Surface Temperature (L3, 8-Day, Day)",
+                  "resolution": "1km",
+                  "antarctic_resolution": null,
+                  "product": "MODIS_Aqua_L3_Land_Surface_Temp_8Day_Day",
+                  "maxNativeZoom": 5,
+                  "match": {
+                    "time_start": ">=2002-07-04T00:00:00Z"
+                  }
+                },
+                {
+                  "geo_resolution": "1km",
+                  "format": "png",
+                  "antarctic": false,
+                  "group": "overlays",
+                  "arctic_resolution": null,
+                  "geo": true,
+                  "source": "Aqua / MODIS",
+                  "arctic": false,
+                  "title": "Land Surface Temperature (L3, 8-Day, Night)",
+                  "resolution": "1km",
+                  "antarctic_resolution": null,
+                  "product": "MODIS_Aqua_L3_Land_Surface_Temp_8Day_Night",
+                  "maxNativeZoom": 5,
+                  "match": {
+                    "time_start": ">=2002-07-04T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            "edsc.extra.subset_service.esi": {
+              "data": ["S1568897222-LPDAAC_ECS"]
+            },
+            "edsc.extra.serverless.gibs": {
+              "data": [
+                {
+                  "format": "png",
+                  "antarctic": false,
+                  "geographic": true,
+                  "group": "overlays",
+                  "geographic_resolution": "1km",
+                  "arctic_resolution": null,
+                  "source": "Aqua / MODIS",
+                  "arctic": false,
+                  "title": "Land Surface Temperature (L3, 8-Day, Day)",
+                  "updated_at": "2021-06-02T12:00:18.187Z",
+                  "antarctic_resolution": null,
+                  "product": "MODIS_Aqua_L3_Land_Surface_Temp_8Day_Day",
+                  "match": {
+                    "time_start": ">=2002-07-04T00:00:00Z",
+                    "day_night_flag": "day"
+                  }
+                },
+                {
+                  "format": "png",
+                  "antarctic": false,
+                  "geographic": true,
+                  "group": "overlays",
+                  "geographic_resolution": "1km",
+                  "arctic_resolution": null,
+                  "source": "Aqua / MODIS",
+                  "arctic": false,
+                  "title": "Land Surface Temperature (L3, 8-Day, Night)",
+                  "updated_at": "2021-06-02T12:00:18.187Z",
+                  "antarctic_resolution": null,
+                  "product": "MODIS_Aqua_L3_Land_Surface_Temp_8Day_Night",
+                  "match": {
+                    "time_start": ">=2002-07-04T00:00:00Z",
+                    "day_night_flag": "night"
+                  }
+                }
+              ]
+            },
+            "edsc.extra.serverless.collection_capabilities": {
+              "data": {
+                "cloud_cover": true,
+                "day_night_flag": true,
+                "granule_online_access_flag": true,
+                "orbit_calculated_spatial_domains": false,
+                "updated_at": "2021-06-02T18:08:38.765Z"
+              }
+            },
+            "edsc.portal.cwic.collections": {}
+          },
+          "temporalExtents": [
+            {
+              "endsAtPresentFlag": true,
+              "precisionOfSeconds": 4,
+              "rangeDateTimes": [
+                {
+                  "beginningDateTime": "2002-07-04T00:00:00.000Z"
+                }
+              ]
+            }
+          ],
+          "tilingIdentificationSystems": [
+            {
+              "coordinate1": {
+                "maximumValue": 35,
+                "minimumValue": 0
+              },
+              "coordinate2": {
+                "maximumValue": 17,
+                "minimumValue": 0
+              },
+              "tilingIdentificationSystemName": "MODIS Tile SIN"
+            }
+          ],
+          "title": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+          "versionId": "006",
+          "services": {
+            "count": 0,
+            "items": null
+          },
+          "granules": {
+            "count": 275365,
+            "items": [
+              {
+                "conceptId": "G1020421449-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020421811-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020422408-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020422483-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020422781-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020423482-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020424111-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020424256-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020424713-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020426839-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020426916-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020426973-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020427008-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020427035-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020427039-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020427086-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020427116-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020427117-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020427166-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              },
+              {
+                "conceptId": "G1020427206-LPDAAC_ECS",
+                "onlineAccessFlag": true
+              }
+            ]
+          },
+          "subscriptions": {
+            "count": 0,
+            "items": []
+          },
+          "tools": {
+            "items": null
+          },
+          "variables": {
+            "count": 0,
+            "items": null
+          }
+        }
+      ]
+    }
+  }
+}

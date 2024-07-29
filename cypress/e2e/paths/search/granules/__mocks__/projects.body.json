@@ -1,0 +1,3225 @@
+{
+  "feed": {
+    "updated": "2021-05-27T13:26:10.566Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=1&page_size=20&project_h%5B%5D=ABoVE&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score",
+    "title": "ECHO dataset metadata",
+    "entry": [
+      {
+        "processing_level_id": "1",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:16:19.269Z"
+            }
+          }
+        },
+        "time_start": "2008-07-24T21:06:27.000Z",
+        "version_id": "1",
+        "updated": "2021-05-27T01:55:54.000Z",
+        "dataset_id": "UAVSAR_POLSAR_METADATA",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "UAVSAR_POL_META",
+        "organizations": [
+          "ASF",
+          "NASA/JPL/ESSD"
+        ],
+        "title": "UAVSAR_POLSAR_METADATA",
+        "coordinate_system": "GEODETIC",
+        "summary": "UAVSAR PolSAR Scene Metadata",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214353986-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 8336,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "polygons": [
+          [
+            "64.623877 -9.140625 81.898451 -7.734375 83.84881 -34.453125 83.559717 -78.925781 77.915669 -124.804688 64.320872 -150.996094 55.776573 165.585938 45.58329 137.636719 36.456636 127.96875 29.840644 129.023438 18.646245 -159.433594 -47.989922 -76.640625 -47.989922 -64.6875 -37.160317 -52.382812 64.623877 -9.140625"
+          ]
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:16:19.331Z"
+            }
+          }
+        },
+        "time_start": "2008-07-24T21:06:27.000Z",
+        "version_id": "1",
+        "updated": "2021-05-27T01:55:49.000Z",
+        "dataset_id": "UAVSAR_POLSAR_ML_COMPLEX_GRD",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "UAVSAR_POL_ML_CMPLX_GRD",
+        "organizations": [
+          "ASF",
+          "NASA/JPL/ESSD"
+        ],
+        "title": "UAVSAR_POLSAR_ML_COMPLEX_GRD",
+        "coordinate_system": "GEODETIC",
+        "summary": "UAVSAR PolSAR Scene Projected",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214337770-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 8336,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "polygons": [
+          [
+            "64.623877 -9.140625 81.898451 -7.734375 83.84881 -34.453125 83.559717 -78.925781 77.915669 -124.804688 64.320872 -150.996094 55.776573 165.585938 45.58329 137.636719 36.456636 127.96875 29.840644 129.023438 18.646245 -159.433594 -47.989922 -76.640625 -47.989922 -64.6875 -37.160317 -52.382812 64.623877 -9.140625"
+          ]
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:16:19.586Z"
+            }
+          }
+        },
+        "time_start": "2008-07-24T21:06:27.000Z",
+        "version_id": "1",
+        "updated": "2021-05-27T01:55:55.000Z",
+        "dataset_id": "UAVSAR_POLSAR_ML_COMPLEX_SLANT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "UAVSAR_POL_ML_CMPLX_SLANT",
+        "organizations": [
+          "ASF",
+          "NASA/JPL/ESSD"
+        ],
+        "title": "UAVSAR_POLSAR_ML_COMPLEX_SLANT",
+        "coordinate_system": "GEODETIC",
+        "summary": "UAVSAR PolSAR Scene Complex",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214343609-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 8335,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "polygons": [
+          [
+            "64.623877 -9.140625 81.898451 -7.734375 83.84881 -34.453125 83.559717 -78.925781 77.915669 -124.804688 64.320872 -150.996094 55.776573 165.585938 45.58329 137.636719 36.456636 127.96875 29.840644 129.023438 18.646245 -159.433594 -47.989922 -76.640625 -47.989922 -64.6875 -37.160317 -52.382812 64.623877 -9.140625"
+          ]
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1A",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:02:45.358Z"
+            }
+          }
+        },
+        "boxes": [
+          "58.84 -168.11 71.56 -131.75"
+        ],
+        "time_start": "2012-05-23T15:58:41.000Z",
+        "version_id": "1",
+        "updated": "2019-04-15T18:56:04.000Z",
+        "dataset_id": "CARVE: L1 Daily Flight Path Geolocation and Aircraft Position Data, Alaska, 2012-2015",
+        "has_spatial_subsetting": true,
+        "has_transforms": true,
+        "associations": {
+          "services": [
+            "S1569163021-ORNL_DAAC"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "ORNL_DAAC",
+        "short_name": "CARVE_L1_FlightPath_1425",
+        "organizations": [
+          "ORNL_DAAC"
+        ],
+        "title": "CARVE: L1 Daily Flight Path Geolocation and Aircraft Position Data, Alaska, 2012-2015",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This data set provides high-frequency geolocation, time, height, pitch, roll, and heading information for the C-23 Sherpa aircraft during airborne campaigns over the Alaskan and Canadian Arctic as part of the Carbon in Arctic Reservoirs Vulnerability Experiment (CARVE). The data were collected in situ using the Digital Air Data System (DADS) onboard the aircraft and are presented at 1-second intervals throughout each flight. Flight campaigns took place from 2012 to 2015 between the months of March and November to enable investigation of both seasonal and inter-annual variability in atmospheric gas content. The measurements included in this data set are useful for matching aircraft position with the scientific data collected by other CARVE airborne instruments.",
+        "has_granules": true,
+        "time_end": "2015-11-13T01:12:44.000Z",
+        "orbit_parameters": {},
+        "id": "C1372808917-ORNL_DAAC",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 185,
+        "archive_center": "ORNL_DAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/carve/campaign/CARVE_L1_FlightPath/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/CARVE/guides/CARVE_L1_FlightPath.html"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.3334/ORNLDAAC/1425"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/carve/campaign/CARVE_L1_FlightPath/comp/CARVE_L1_FlightPath.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/graphics/browse/sdat-tds/1425_1_fit.png"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://thredds.daac.ornl.gov/thredds/catalog/ornldaac/1425/catalog.html"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1A",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:02:45.956Z"
+            }
+          }
+        },
+        "boxes": [
+          "58.84 -168.11 71.43 -131.75"
+        ],
+        "time_start": "2012-05-23T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2019-04-15T18:56:05.000Z",
+        "dataset_id": "CARVE: L1 Spectral Radiances from Airborne FTS, Alaska, 2012-2015",
+        "has_spatial_subsetting": true,
+        "has_transforms": true,
+        "associations": {
+          "services": [
+            "S1569163021-ORNL_DAAC"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "ORNL_DAAC",
+        "short_name": "CARVE_L1_FTS_Spectra_1426",
+        "organizations": [
+          "ORNL_DAAC"
+        ],
+        "title": "CARVE: L1 Spectral Radiances from Airborne FTS, Alaska, 2012-2015",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This data set contains Level 1 spectral radiance data collected using the Fourier Transform Spectrometer (FTS) during airborne campaigns over the Alaskan and Canadian Arctic for the Carbon in Arctic Reservoirs Vulnerability Experiment (CARVE). Flight campaigns took place from 2012 to 2015 between the months of March and November to enable investigation of both seasonal and inter-annual variability in atmospheric gas content. The measurements included in this data set are crucial for understanding changes in Arctic carbon cycling and the potential threats posed by thawing of Arctic permafrost.",
+        "has_granules": true,
+        "time_end": "2015-11-13T23:59:59.000Z",
+        "orbit_parameters": {},
+        "id": "C1373450312-ORNL_DAAC",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 2725,
+        "archive_center": "ORNL_DAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/carve/campaign/CARVE_L1_FTS_Spectra/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/CARVE/guides/CARVE_L1_FTS_Spectra.html"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.3334/ORNLDAAC/1426"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/carve/campaign/CARVE_L1_FTS_Spectra/comp/CARVE_L1_FTS_Spectra.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/graphics/browse/sdat-tds/1426_1_fit.png"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://thredds.daac.ornl.gov/thredds/catalog/ornldaac/1426/catalog.html"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:02:46.182Z"
+            }
+          }
+        },
+        "boxes": [
+          "60.21 -168.11 71.56 -131.76"
+        ],
+        "time_start": "2012-05-23T16:22:05.000Z",
+        "version_id": "1",
+        "updated": "2019-04-15T18:55:39.000Z",
+        "dataset_id": "CARVE: L2 Atmospheric CO2, CO and CH4 Concentrations, NOAA CRDS, Alaska, 2012-2015",
+        "has_spatial_subsetting": true,
+        "has_transforms": true,
+        "associations": {
+          "services": [
+            "S1569163021-ORNL_DAAC"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "ORNL_DAAC",
+        "short_name": "CARVE_L2_AtmosGas_NOAA_1401",
+        "organizations": [
+          "ORNL_DAAC"
+        ],
+        "title": "CARVE: L2 Atmospheric CO2, CO and CH4 Concentrations, NOAA CRDS, Alaska, 2012-2015",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This data set provides atmospheric carbon dioxide (CO2), methane (CH4), carbon monoxide (CO), and water vapor (H2O) concentrations from airborne campaigns over the Alaskan and Canadian arctic for the Carbon in Arctic Reservoirs Vulnerability Experiment (CARVE). The data were collected in situ using a cavity ring-down spectrometer (CRDS; Picarro Inc.) and are presented at 2-second intervals throughout each flight. Aircraft latitude, longitude, and altitude are also provided. Flight campaigns took place from 2012 to 2015 between the months of March and November to enable investigation of both seasonal and inter-annual variability in atmospheric gas content. The measurements included in this data set are crucial for understanding changes in Arctic carbon cycling and the potential threats posed by thawing of Arctic permafrost.",
+        "has_granules": true,
+        "time_end": "2014-11-09T22:59:57.000Z",
+        "orbit_parameters": {},
+        "id": "C1292500395-ORNL_DAAC",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 121,
+        "archive_center": "ORNL_DAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/carve/campaign/CARVE_L2_AtmosGas_NOAA/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/CARVE/guides/CARVE_L2_AtmosGas_NOAA.html"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.3334/ORNLDAAC/1401"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/carve/campaign/CARVE_L2_AtmosGas_NOAA/comp/CARVE_L2_AtmosGas_NOAA.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/graphics/browse/sdat-tds/1401_1_fit.png"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://thredds.daac.ornl.gov/thredds/catalog/ornldaac/1401/catalog.html"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:16:19.194Z"
+            }
+          }
+        },
+        "time_start": "2008-07-24T21:06:27.000Z",
+        "version_id": "1",
+        "updated": "2021-05-27T01:55:54.000Z",
+        "dataset_id": "UAVSAR_POLSAR_KMZ",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "UAVSAR_POL_KMZ",
+        "organizations": [
+          "ASF",
+          "NASA/JPL/ESSD"
+        ],
+        "title": "UAVSAR_POLSAR_KMZ",
+        "coordinate_system": "GEODETIC",
+        "summary": "UAVSAR PolSAR Scene KMZ",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214353859-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 8336,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "polygons": [
+          [
+            "64.623877 -9.140625 81.898451 -7.734375 83.84881 -34.453125 83.559717 -78.925781 77.915669 -124.804688 64.320872 -150.996094 55.776573 165.585938 45.58329 137.636719 36.456636 127.96875 29.840644 129.023438 18.646245 -159.433594 -47.989922 -76.640625 -47.989922 -64.6875 -37.160317 -52.382812 64.623877 -9.140625"
+          ]
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:16:18.701Z"
+            }
+          }
+        },
+        "time_start": "2008-07-24T21:06:27.000Z",
+        "version_id": "1",
+        "updated": "2021-05-27T01:55:55.000Z",
+        "dataset_id": "UAVSAR_POLSAR_DEM",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "UAVSAR_POL_DEM",
+        "organizations": [
+          "ASF",
+          "NASA/JPL/ESSD"
+        ],
+        "title": "UAVSAR_POLSAR_DEM",
+        "coordinate_system": "GEODETIC",
+        "summary": "UAVSAR PolSAR Scene DEM TIFF",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214353593-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 8308,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "polygons": [
+          [
+            "64.623877 -9.140625 81.898451 -7.734375 83.84881 -34.453125 83.559717 -78.925781 77.915669 -124.804688 64.320872 -150.996094 55.776573 165.585938 45.58329 137.636719 36.456636 127.96875 29.840644 129.023438 18.646245 -159.433594 -47.989922 -76.640625 -47.989922 -64.6875 -37.160317 -52.382812 64.623877 -9.140625"
+          ]
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:16:19.761Z"
+            }
+          }
+        },
+        "time_start": "2008-07-24T21:06:27.000Z",
+        "version_id": "1",
+        "updated": "2021-05-27T01:55:55.000Z",
+        "dataset_id": "UAVSAR_POLSAR_PAULI",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "associations": {
+          "variables": [
+            "V1949616888-ASF",
+            "V1949617374-ASF",
+            "V1949619738-ASF"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "ASF",
+        "short_name": "UAVSAR_POL_PAULI",
+        "organizations": [
+          "ASF",
+          "NASA/JPL/ESSD"
+        ],
+        "title": "UAVSAR_POLSAR_PAULI",
+        "coordinate_system": "GEODETIC",
+        "summary": "UAVSAR PolSAR Scene Pauli Decomposition",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214354031-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 8308,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "polygons": [
+          [
+            "64.623877 -9.140625 81.898451 -7.734375 83.84881 -34.453125 83.559717 -78.925781 77.915669 -124.804688 64.320872 -150.996094 55.776573 165.585938 45.58329 137.636719 36.456636 127.96875 29.840644 129.023438 18.646245 -159.433594 -47.989922 -76.640625 -47.989922 -64.6875 -37.160317 -52.382812 64.623877 -9.140625"
+          ]
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "4",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:00:13.859Z"
+            }
+          }
+        },
+        "boxes": [
+          "59.98 -154.52 61.05 -153.03"
+        ],
+        "time_start": "2005-09-01T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2019-10-15T22:07:37.000Z",
+        "dataset_id": "ABoVE: Dall Sheep Response to Snow and Landscape Covariates,  Alaska, 2005-2008",
+        "has_spatial_subsetting": true,
+        "has_transforms": true,
+        "associations": {
+          "services": [
+            "S1569163021-ORNL_DAAC"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "ORNL_DAAC",
+        "short_name": "Dall_Sheep_Snowpack_1602",
+        "organizations": [
+          "ORNL_DAAC"
+        ],
+        "title": "ABoVE: Dall Sheep Response to Snow and Landscape Covariates,  Alaska, 2005-2008",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This dataset provides daily estimates of snow depth and snow density for the study area in Lake Clark National Park and Preserve (LCNPP), Alaska. The data were generated using SnowModel and used as snow covariates along with landscape covariates in modeling efforts to study Dall sheep movements in response to dynamic snow conditions. Thirty adult Dall sheep (12 male, 18 female) were captured and outfitted with global positioning system (GPS) collars programmed to acquire locations every seven hours. Given the individual sheep locations, their distances to land cover (e.g., shrub, forest, glacier), landscape characteristics (e.g., elevation, terrain ruggedness index (TRI), vector ruggedness measure (VRM), slope, and aspect), snow depth and density, MODIS normalized difference snow index (NDSI), and other covariates were determined and are provided in the environmental data file. The snow density and depth data are provided at 25-m, 100-m, 500-m, 2000-m, and 10000-m grid resolutions, at 1-day increments, and cover the period September 1, 2005 through August 31, 2008. The sheep, snow, and landscape data cover the years 2006, 2007, and 2008.",
+        "has_granules": true,
+        "time_end": "2008-08-31T23:59:59.000Z",
+        "orbit_parameters": {},
+        "id": "C1542308295-ORNL_DAAC",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 42,
+        "archive_center": "ORNL_DAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/above/Dall_Sheep_Snowpack/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/ABOVE/guides/Dall_Sheep_Snowpack.html"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.3334/ORNLDAAC/1602"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/above/Dall_Sheep_Snowpack/comp/Dall_Sheep_Snowpack.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/above/Dall_Sheep_Snowpack/comp/SnowModel_Dall_Sheep_Snowpack.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/ABOVE/guides/Dall_Sheep_Snowpack_fig1.png"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://above.nasa.gov"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://thredds.daac.ornl.gov/thredds/catalog/ornldaac/1602/catalog.html"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "3",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:02:44.058Z"
+            }
+          }
+        },
+        "boxes": [
+          "68.3 -158 71.5 -155"
+        ],
+        "time_start": "2012-05-23T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2019-04-15T18:54:14.000Z",
+        "dataset_id": "CARVE-ARCSS: Methane Loss From Arctic- Fluxes From the Alaskan North Slope, 2012-2014",
+        "has_spatial_subsetting": true,
+        "has_transforms": true,
+        "associations": {
+          "services": [
+            "S1569163021-ORNL_DAAC"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "ORNL_DAAC",
+        "short_name": "CH4_Aircraft_STILT_footprints_1300",
+        "organizations": [
+          "ORNL_DAAC"
+        ],
+        "title": "CARVE-ARCSS: Methane Loss From Arctic- Fluxes From the Alaskan North Slope, 2012-2014",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This data set provides the results of (1) year-round measurements of methane (CH4) flux along with soil and air temperatures at five eddy covariance towers at sites located in the Alaskan Arctic tundra from June 2013 to December 2014 and (2) airborne CH4 and ozone (O3) measurements collected during Carbon in Arctic Reservoirs Vulnerability Experiment (CARVE) flight campaigns for years 2012 through 2014. The included site-level flux data at half-hourly intervals were calculated following standard eddy covariance data processing procedures. Also reported are daily mean methane flux, soil temperature with depth, and air temperature for each tower site. Also identified for each flux tower site were the \"zero curtain\" periods of extended cold when soil temperatures were poised near 0 degrees C. The reported CARVE airborne CH4 and O3 data were aggregated horizontally at 5 km intervals. Measurement heights are reported. These aircraft positions were treated as receptors in a Stochastic Time-Inverted Lagrangian Transport (STILT) model coupled with meteorology fields from the polar variant of the Weather and Research Forecasting model (WRF), in order to model the land surface influence on the aircraft-observed methane concentrations. The summed land surface influence on the aircraft data at each position is reported. For each airborne measurement, 2D surface influence fields (i.e. footprints) at two different spatial resolutions were derived using the WRF-STILT simulations. These gridded footprints are provided as netCDF formatted files. Regional C-CH4 fluxes were calculated from the CARVE CH4 data and footprints for the period 2012-2014 and are also included with this data set. Acknowledgements: Data collection efforts were funded by NSF ARCSS project \"Methane Loss From Arctic\" (ARCSS #1204263; http://www.nsf.gov/awardsearch/showAward?AWD_ID=1204263) and by NASA's Carbon in Arctic Reservoirs Vulnerability Experiment (CARVE).",
+        "has_granules": true,
+        "time_end": "2014-12-31T23:59:59.000Z",
+        "orbit_parameters": {},
+        "id": "C1000000661-ORNL_DAAC",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 3689,
+        "archive_center": "ORNL_DAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/carve/CH4_Aircraft_STILT_footprints/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/CARVE/guides/CH4_Aircraft_STILT_footprints.html"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.3334/ORNLDAAC/1300"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/carve/CH4_Aircraft_STILT_footprints/comp/CH4_Aircraft_STILT_footprints.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/graphics/browse/sdat-tds/1300_1_fit.png"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://thredds.daac.ornl.gov/thredds/catalog/ornldaac/1300/catalog.html"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1A",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:02:45.102Z"
+            }
+          }
+        },
+        "boxes": [
+          "58.84 -168.07 71.36 -132.24"
+        ],
+        "time_start": "2013-04-03T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2019-04-15T18:56:08.000Z",
+        "dataset_id": "CARVE: L1 Airborne Forward Looking Infrared Radiance Counts, Alaska, 2013-2015",
+        "has_spatial_subsetting": true,
+        "has_transforms": true,
+        "associations": {
+          "services": [
+            "S1569163021-ORNL_DAAC"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "ORNL_DAAC",
+        "short_name": "CARVE_L1_Infrared_1428",
+        "organizations": [
+          "ORNL_DAAC"
+        ],
+        "title": "CARVE: L1 Airborne Forward Looking Infrared Radiance Counts, Alaska, 2013-2015",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This data set provides earth referenced radiance counts measured by the Forward Looking Infrared (FLIR) camera aboard the CARVE aircraft between April 2013 and November 2015 for the Carbon in Arctic Reservoirs Vulnerability Experiment (CARVE). The FLIR camera records images of the surface temperature while measuring concentrations of atmospheric carbon dioxide, methane, and ozone. Thermal images from the FLIR camera will be used to characterize land surfaces underlain by permafrost during specific phases in the freeze-thaw cycle. The measurements included in this data set are crucial for understanding changes in Arctic carbon cycling and the potential threats posed by thawing of Arctic permafrost.",
+        "has_granules": true,
+        "time_end": "2015-11-13T23:59:59.000Z",
+        "orbit_parameters": {},
+        "id": "C1373782713-ORNL_DAAC",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 5031,
+        "archive_center": "ORNL_DAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/carve/campaign/CARVE_L1_Infrared/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/CARVE/guides/CARVE_L1_Infrared.html"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.3334/ORNLDAAC/1428"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/carve/campaign/CARVE_L1_Infrared/comp/CARVE_L1_Infrared.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/graphics/browse/sdat-tds/1428_1_fit.png"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://thredds.daac.ornl.gov/thredds/catalog/ornldaac/1428/catalog.html"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "3",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:00:15.279Z"
+            }
+          }
+        },
+        "boxes": [
+          "50.26 -170.01 76.23 -98.97"
+        ],
+        "time_start": "1984-01-01T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2020-11-13T13:14:23.000Z",
+        "dataset_id": "ABoVE: Landsat-derived Annual Dominant Land Cover Across ABoVE Core Domain, 1984-2014",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ORNL_DAAC",
+        "short_name": "Annual_Landcover_ABoVE_1691",
+        "organizations": [
+          "ORNL_DAAC"
+        ],
+        "title": "ABoVE: Landsat-derived Annual Dominant Land Cover Across ABoVE Core Domain, 1984-2014",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This dataset provides two 30-m resolution time series products of annual land cover classifications over the Arctic Boreal Vulnerability Experiment (ABoVE) core domain for each year of the period 1984-2014. The data are the annual dominant plant functional type in a given 30-m pixel derived from Landsat surface reflectance, landcover training data mapped across the ABoVE domain (using Random Forests modeling, with clustering and interpretation of field photography) and very high resolution imagery to assign land cover classifications. One product has a 15-class land cover classification that breaks out forest and shrub types into several additional classes; the other product provides a simplified, 10-class approach. Classification accuracy assessment results are provided per year. Assessments were based on a probability-based random sample of reference data that supported statistically robust estimation of areas and uncertainties in mapped areas.",
+        "has_granules": true,
+        "time_end": "2014-12-31T23:59:59.000Z",
+        "orbit_parameters": {},
+        "id": "C1631206170-ORNL_DAAC",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 352,
+        "archive_center": "ORNL_DAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/above/Annual_Landcover_ABoVE/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/ABOVE/guides/Annual_Landcover_ABoVE.html"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.3334/ORNLDAAC/1691"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/above/Annual_Landcover_ABoVE/comp/Annual_Landcover_ABoVE.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/ABOVE/guides/Annual_Landcover_ABoVE_Fig1.png"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://above.nasa.gov"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:16:18.776Z"
+            }
+          }
+        },
+        "time_start": "2008-07-24T21:06:27.000Z",
+        "version_id": "1",
+        "updated": "2021-05-27T01:55:47.000Z",
+        "dataset_id": "UAVSAR_POLSAR_INCIDENCE",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "UAVSAR_POL_INC",
+        "organizations": [
+          "ASF",
+          "NASA/JPL/ESSD"
+        ],
+        "title": "UAVSAR_POLSAR_INCIDENCE",
+        "coordinate_system": "GEODETIC",
+        "summary": "UAVSAR PolSAR Scene Incidence Angle",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214353754-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 4716,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "polygons": [
+          [
+            "64.623877 -9.140625 81.898451 -7.734375 83.84881 -34.453125 83.559717 -78.925781 77.915669 -124.804688 64.320872 -150.996094 55.776573 165.585938 45.58329 137.636719 36.456636 127.96875 29.840644 129.023438 18.646245 -159.433594 -47.989922 -76.640625 -47.989922 -64.6875 -37.160317 -52.382812 64.623877 -9.140625"
+          ]
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:16:19.890Z"
+            }
+          }
+        },
+        "time_start": "2008-07-24T21:06:27.000Z",
+        "version_id": "1",
+        "updated": "2021-05-27T01:56:01.000Z",
+        "dataset_id": "UAVSAR_POLSAR_STOKES",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "UAVSAR_POL_STOKES",
+        "organizations": [
+          "ASF",
+          "NASA/JPL/ESSD"
+        ],
+        "title": "UAVSAR_POLSAR_STOKES",
+        "coordinate_system": "GEODETIC",
+        "summary": "UAVSAR PolSAR Scene Stokes",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214419355-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 8335,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "polygons": [
+          [
+            "64.623877 -9.140625 81.898451 -7.734375 83.84881 -34.453125 83.559717 -78.925781 77.915669 -124.804688 64.320872 -150.996094 55.776573 165.585938 45.58329 137.636719 36.456636 127.96875 29.840644 129.023438 18.646245 -159.433594 -47.989922 -76.640625 -47.989922 -64.6875 -37.160317 -52.382812 64.623877 -9.140625"
+          ]
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:16:19.403Z"
+            }
+          }
+        },
+        "time_start": "2008-07-24T21:06:27.000Z",
+        "version_id": "1",
+        "updated": "2021-05-27T01:55:48.000Z",
+        "dataset_id": "UAVSAR_POLSAR_ML_COMPLEX_GRD_3X3",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "UAVSAR_POL_ML_CMPLX_GRD_3X3",
+        "organizations": [
+          "ASF",
+          "NASA/JPL/ESSD"
+        ],
+        "title": "UAVSAR_POLSAR_ML_COMPLEX_GRD_3X3",
+        "coordinate_system": "GEODETIC",
+        "summary": "UAVSAR PolSAR Scene Projected Multilook 3x3",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214354144-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 8308,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "polygons": [
+          [
+            "64.623877 -9.140625 81.898451 -7.734375 83.84881 -34.453125 83.559717 -78.925781 77.915669 -124.804688 64.320872 -150.996094 55.776573 165.585938 45.58329 137.636719 36.456636 127.96875 29.840644 129.023438 18.646245 -159.433594 -47.989922 -76.640625 -47.989922 -64.6875 -37.160317 -52.382812 64.623877 -9.140625"
+          ]
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:16:19.473Z"
+            }
+          }
+        },
+        "time_start": "2008-07-24T21:06:27.000Z",
+        "version_id": "1",
+        "updated": "2021-05-27T01:55:54.000Z",
+        "dataset_id": "UAVSAR_POLSAR_ML_COMPLEX_GRD_5X5",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "UAVSAR_POL_ML_CMPLX_GRD_5X5",
+        "organizations": [
+          "ASF",
+          "NASA/JPL/ESSD"
+        ],
+        "title": "UAVSAR_POLSAR_ML_COMPLEX_GRD_5X5",
+        "coordinate_system": "GEODETIC",
+        "summary": "UAVSAR PolSAR Scene Projected Multilook 5x5",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214354235-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 8308,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "polygons": [
+          [
+            "64.623877 -9.140625 81.898451 -7.734375 83.84881 -34.453125 83.559717 -78.925781 77.915669 -124.804688 64.320872 -150.996094 55.776573 165.585938 45.58329 137.636719 36.456636 127.96875 29.840644 129.023438 18.646245 -159.433594 -47.989922 -76.640625 -47.989922 -64.6875 -37.160317 -52.382812 64.623877 -9.140625"
+          ]
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-05-27T12:16:19.831Z"
+            }
+          }
+        },
+        "time_start": "2008-07-24T21:06:27.000Z",
+        "version_id": "1",
+        "updated": "2021-05-27T01:55:46.000Z",
+        "dataset_id": "UAVSAR_POLSAR_SLOPE",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "UAVSAR_POL_SLOPE",
+        "organizations": [
+          "ASF",
+          "NASA/JPL/ESSD"
+        ],
+        "title": "UAVSAR_POLSAR_SLOPE",
+        "coordinate_system": "GEODETIC",
+        "summary": "UAVSAR PolSAR Scene Slope",
+        "has_granules": true,
+        "orbit_parameters": {},
+        "id": "C1214408428-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 4716,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "polygons": [
+          [
+            "64.623877 -9.140625 81.898451 -7.734375 83.84881 -34.453125 83.559717 -78.925781 77.915669 -124.804688 64.320872 -150.996094 55.776573 165.585938 45.58329 137.636719 36.456636 127.96875 29.840644 129.023438 18.646245 -159.433594 -47.989922 -76.640625 -47.989922 -64.6875 -37.160317 -52.382812 64.623877 -9.140625"
+          ]
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:02:46.092Z"
+            }
+          }
+        },
+        "boxes": [
+          "60.21 -168.11 71.56 -131.76"
+        ],
+        "time_start": "2012-05-23T16:22:55.000Z",
+        "version_id": "1",
+        "updated": "2019-04-15T18:55:41.000Z",
+        "dataset_id": "CARVE: L2 Atmospheric CO2, CO and CH4 Concentrations, Harvard CRDS, Alaska, 2012-2014",
+        "has_spatial_subsetting": true,
+        "has_transforms": true,
+        "associations": {
+          "services": [
+            "S1569163021-ORNL_DAAC"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "ORNL_DAAC",
+        "short_name": "CARVE_L2_AtmosGas_Harvard_1403",
+        "organizations": [
+          "ORNL_DAAC"
+        ],
+        "title": "CARVE: L2 Atmospheric CO2, CO and CH4 Concentrations, Harvard CRDS, Alaska, 2012-2014",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This data set provides atmospheric carbon dioxide (CO2), methane (CH4), and carbon monoxide (CO) concentrations from airborne campaigns over the Alaskan and Canadian arctic for the Carbon in Arctic Reservoirs Vulnerability Experiment (CARVE). The data were collected in situ using a four-species cavity ring-down spectrometer system (CRDS; Picarro Inc.) provided by Harvard University and are presented at 5-second intervals throughout each flight. The Harvard CRDS instrument only collected data in 2012-2014; no Harvard data are available for year 2015. Aircraft latitude, longitude, and altitude are also provided. CARVE flight campaigns took place from 2012 to 2015 between the months of March and November to enable investigation of both seasonal and inter-annual variability in atmospheric gas content. The measurements included in this data set are crucial for understanding changes in Arctic carbon cycling and the potential threats posed by thawing of Arctic permafrost.",
+        "has_granules": true,
+        "time_end": "2014-11-09T22:57:10.000Z",
+        "orbit_parameters": {},
+        "id": "C1292501250-ORNL_DAAC",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 121,
+        "archive_center": "ORNL_DAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/carve/campaign/CARVE_L2_AtmosGas_Harvard/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/CARVE/guides/CARVE_L2_AtmosGas_Harvard.html"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.3334/ORNLDAAC/1403"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/carve/campaign/CARVE_L2_AtmosGas_Harvard/comp/CARVE_L2_AtmosGas_Harvard.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/graphics/browse/sdat-tds/1403_1_fit.png"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://thredds.daac.ornl.gov/thredds/catalog/ornldaac/1403/catalog.html"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2021-05-27T12:00:14.960Z"
+            }
+          },
+          "edsc.extra.serverless.subset_service.echo_orders": {
+            "data": {
+              "updated_at": "2021-05-26T20:01:20.436Z",
+              "id": "S1569163021-ORNL_DAAC",
+              "type": "ECHO ORDERS",
+              "url": "https://daacsvc.ornl.gov/OrderFulfillment/service.pl",
+              "option_definitions": [
+                {
+                  "id": "A52481EF-D0F1-13F5-7D32-2F54FC42B48C",
+                  "name": "Ftp_Pull_new"
+                }
+              ]
+            }
+          }
+        },
+        "boxes": [
+          "52.16 -166.65 71.38 -103.4"
+        ],
+        "time_start": "2017-06-24T09:44:00.000Z",
+        "version_id": "1.1",
+        "updated": "2019-04-15T18:55:04.000Z",
+        "dataset_id": "ABoVE: Hyperspectral Imagery from AVIRIS-NG, Alaskan and Canadian Arctic, 2017-2018",
+        "has_spatial_subsetting": true,
+        "has_transforms": true,
+        "associations": {
+          "services": [
+            "S1569163021-ORNL_DAAC"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "ORNL_DAAC",
+        "short_name": "ABoVE_Airborne_AVIRIS_NG_1569",
+        "organizations": [
+          "ORNL_DAAC"
+        ],
+        "title": "ABoVE: Hyperspectral Imagery from AVIRIS-NG, Alaskan and Canadian Arctic, 2017-2018",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This dataset provides Level 1 radiance and Level 2 surface reflectance measured by the Airborne Visible/Infrared Imaging Spectrometer-Next Generation (AVIRIS-NG) instrument during flights over the Arctic-Boreal Vulnerability Experiment (ABoVE) domain between June and August 2017 and again in July and August 2018. AVIRIS-NG measures reflected radiance at 5-nanometer (nm) intervals in the visible to shortwave infrared spectral range between 380 and 2510 nm. Measurements are radiometrically and geometrically calibrated and provided at approximately 5-meter spatial resolution. The data include 556 flight lines covering areas of interest to the ABoVE campaign over much of Alaska and western Canada. These data will allow researchers to characterize ecosystem structure and function near the height of the growing season. This dataset represents one part of a multisensor airborne sampling campaign conducted by eleven different aircraft teams for ABoVE.",
+        "has_granules": true,
+        "time_end": "2018-08-19T23:59:59.000Z",
+        "orbit_parameters": {},
+        "id": "C1598211873-ORNL_DAAC",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 1111,
+        "archive_center": "ORNL_DAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/above/ABoVE_Airborne_AVIRIS_NG/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/ABOVE/guides/ABoVE_Airborne_AVIRIS_NG.html"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.3334/ORNLDAAC/1569"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/above/ABoVE_Airborne_AVIRIS_NG/comp/ABoVE_Airborne_AVIRIS_NG.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/above/ABoVE_Airborne_AVIRIS_NG/comp/above_avirisng_boundaries_2017.zip"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/above/ABoVE_Airborne_AVIRIS_NG/comp/above_avirisng_boundaries_2018.zip"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/above/ABoVE_Airborne_AVIRIS_NG/comp/above_avirisng_quicklooks_2017.zip"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/daacdata/above/ABoVE_Airborne_AVIRIS_NG/comp/above_avirisng_quicklooks_2018.zip"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://daac.ornl.gov/ABOVE/guides/ABoVE_Airborne_AVIRIS_NG_Fig1.jpg"
+          }
+        ]
+      }
+    ],
+    "facets": {
+      "title": "Browse Collections",
+      "type": "group",
+      "has_children": true,
+      "children": [
+        {
+          "title": "Data Format",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "ASCII",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ASCII&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Binary",
+              "type": "filter",
+              "applied": false,
+              "count": 10,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=Binary&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CSV",
+              "type": "filter",
+              "applied": false,
+              "count": 13,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=CSV&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GeoTIFF",
+              "type": "filter",
+              "applied": false,
+              "count": 10,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=GeoTIFF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "HDF",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=HDF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ICARTT, NetCDF",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=ICARTT%2C+NetCDF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "JPEG",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=JPEG&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "JPS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=JPS&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NetCDF",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=NetCDF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Processing Levels",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "0 - Raw Data",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=0+-+Raw+Data&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "1 - Radiance",
+              "type": "filter",
+              "applied": false,
+              "count": 11,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=1+-+Radiance&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "1A - Radiance",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=1A+-+Radiance&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "1B - Radiance, Sensor Coordinates",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=1B+-+Radiance%2C+Sensor+Coordinates&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "2 - Geophys. Variables, Sensor Coordinates",
+              "type": "filter",
+              "applied": false,
+              "count": 44,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=2+-+Geophys.+Variables%2C+Sensor+Coordinates&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "3 - Gridded Observations",
+              "type": "filter",
+              "applied": false,
+              "count": 88,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=3+-+Gridded+Observations&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "4 - Gridded Model Output",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=4+-+Gridded+Model+Output&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Keywords",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Agriculture",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Agriculture"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Atmosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 43,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Atmosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Biological Classification",
+              "type": "filter",
+              "applied": false,
+              "count": 6,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Biological+Classification"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Biosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 92,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Biosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Climate Indicators",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Climate+Indicators"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Cryosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 19,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Cryosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Human Dimensions",
+              "type": "filter",
+              "applied": false,
+              "count": 19,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Human+Dimensions"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Land Surface",
+              "type": "filter",
+              "applied": false,
+              "count": 91,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Land+Surface"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Oceans",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Oceans"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Solid Earth",
+              "type": "filter",
+              "applied": false,
+              "count": 11,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Solid+Earth"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Spectral/Engineering",
+              "type": "filter",
+              "applied": false,
+              "count": 20,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Spectral%2FEngineering"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Terrestrial Hydrosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 33,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Terrestrial+Hydrosphere"
+              },
+              "has_children": true
+            }
+          ]
+        },
+        {
+          "title": "Platforms",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "ADEOS-II",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=ADEOS-II"
+              },
+              "has_children": false
+            },
+            {
+              "title": "AERIAL PHOTOGRAPHS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=AERIAL+PHOTOGRAPHS"
+              },
+              "has_children": false
+            },
+            {
+              "title": "AIRCRAFT",
+              "type": "filter",
+              "applied": false,
+              "count": 17,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=AIRCRAFT"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ALOS",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=ALOS"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Aqua",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Aqua"
+              },
+              "has_children": false
+            },
+            {
+              "title": "B-200",
+              "type": "filter",
+              "applied": false,
+              "count": 12,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=B-200"
+              },
+              "has_children": false
+            },
+            {
+              "title": "C-23 Sherpa",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=C-23+Sherpa"
+              },
+              "has_children": false
+            },
+            {
+              "title": "C-130",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=C-130"
+              },
+              "has_children": false
+            },
+            {
+              "title": "DC-8",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=DC-8"
+              },
+              "has_children": false
+            },
+            {
+              "title": "DEM",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=DEM"
+              },
+              "has_children": false
+            },
+            {
+              "title": "DMSP",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=DMSP"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Field Investigation",
+              "type": "filter",
+              "applied": false,
+              "count": 32,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Field+Investigation"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Field Survey",
+              "type": "filter",
+              "applied": false,
+              "count": 63,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Field+Survey"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Fixed Observation Stations",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Fixed+Observation+Stations"
+              },
+              "has_children": false
+            },
+            {
+              "title": "G-III",
+              "type": "filter",
+              "applied": false,
+              "count": 14,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=G-III"
+              },
+              "has_children": false
+            },
+            {
+              "title": "G-V",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=G-V"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GCOM-W1",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=GCOM-W1"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GOSAT",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=GOSAT"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Ground Station",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Ground+Station"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Ground-based Observation",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Ground-based+Observation"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GULFSTREAM 1000 (695A)",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=GULFSTREAM+1000+%28695A%29"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Helicopter",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Helicopter"
+              },
+              "has_children": false
+            },
+            {
+              "title": "HU-25C",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=HU-25C"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ICESat",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=ICESat"
+              },
+              "has_children": false
+            },
+            {
+              "title": "IKONOS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=IKONOS"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Laboratory",
+              "type": "filter",
+              "applied": false,
+              "count": 11,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Laboratory"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Landsat",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Landsat"
+              },
+              "has_children": false
+            },
+            {
+              "title": "LANDSAT-4",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=LANDSAT-4"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Landsat-5",
+              "type": "filter",
+              "applied": false,
+              "count": 12,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Landsat-5"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Landsat-7",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Landsat-7"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Landsat-8",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Landsat-8"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MERRA-2",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=MERRA-2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Meteorological Station",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Meteorological+Station"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MetOp-A",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=MetOp-A"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MetOp-B",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=MetOp-B"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Model",
+              "type": "filter",
+              "applied": false,
+              "count": 41,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Model"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NOAA POES",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=NOAA+POES"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NOAA-11",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=NOAA-11"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NOAA-14",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=NOAA-14"
+              },
+              "has_children": false
+            },
+            {
+              "title": "OCO-2",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=OCO-2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "P-3",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=P-3"
+              },
+              "has_children": false
+            },
+            {
+              "title": "QUICKBIRD",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=QUICKBIRD"
+              },
+              "has_children": false
+            },
+            {
+              "title": "RQ-4",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=RQ-4"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Satellite",
+              "type": "filter",
+              "applied": false,
+              "count": 7,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Satellite"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SMAP",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=SMAP"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SPOT-1",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=SPOT-1"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Terra",
+              "type": "filter",
+              "applied": false,
+              "count": 14,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Terra"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Weather Stations",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=Weather+Stations"
+              },
+              "has_children": false
+            },
+            {
+              "title": "WORLDVIEW-2",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platform_h%5B%5D=WORLDVIEW-2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Instruments",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "AirSWOT",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=AirSWOT&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Altimeter",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Altimeter&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "AMSR",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=AMSR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "AMSR2",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=AMSR2&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "AMSR-E",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=AMSR-E&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "AVHRR",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=AVHRR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "BALANCE",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=BALANCE&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Camera",
+              "type": "filter",
+              "applied": false,
+              "count": 16,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Camera&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CARBON ANALYZERS",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=CARBON+ANALYZERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CLINOMETERS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=CLINOMETERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CO2 ANALYZERS",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=CO2+ANALYZERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Computer",
+              "type": "filter",
+              "applied": false,
+              "count": 42,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Computer&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "EDDY CORRELATION DEVICES",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=EDDY+CORRELATION+DEVICES&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ETM+",
+              "type": "filter",
+              "applied": false,
+              "count": 10,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=ETM%2B&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "FLASKS",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=FLASKS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "FOURIER TRANSFORM SPECTROMETERS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=FOURIER+TRANSFORM+SPECTROMETERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GAS SENSORS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=GAS+SENSORS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GPR",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=GPR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GPS Receivers",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=GPS+Receivers&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "LASERS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=LASERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "LICOR PLANT CANOPY ANALYZER",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=LICOR+PLANT+CANOPY+ANALYZER&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "LICOR QUANTUM SENSOR",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=LICOR+QUANTUM+SENSOR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "LIDAR",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=LIDAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "LVIS",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=LVIS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "LVIS-Camera",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=LVIS-Camera&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MASS SPECTROMETERS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=MASS+SPECTROMETERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MODIS",
+              "type": "filter",
+              "applied": false,
+              "count": 21,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=MODIS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MSS",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=MSS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "OLI",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=OLI&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "P-SAR",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=P-SAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "PALSAR",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=PALSAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "PH METERS",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=PH+METERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Probes",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Probes&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Pyranometer",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Pyranometer&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Radiometer",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Radiometer&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SNOW DENSITY CUTTER",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SNOW+DENSITY+CUTTER&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SNOW MEASURING ROD",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SNOW+MEASURING+ROD&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Soil Depth Probe",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Soil+Depth+Probe&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Soil Moisture Probe",
+              "type": "filter",
+              "applied": false,
+              "count": 7,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Soil+Moisture+Probe&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Soil Sampler",
+              "type": "filter",
+              "applied": false,
+              "count": 11,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Soil+Sampler&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Soil Temperature Probe",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Soil+Temperature+Probe&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Spectrometer",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Spectrometer&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SSM/I",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SSM%2FI&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Steel Measuring Tape",
+              "type": "filter",
+              "applied": false,
+              "count": 8,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Steel+Measuring+Tape&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "TEMPERATURE LOGGERS",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=TEMPERATURE+LOGGERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "THERMOCOUPLES",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=THERMOCOUPLES&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Thermometer",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Thermometer&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "TM",
+              "type": "filter",
+              "applied": false,
+              "count": 14,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=TM&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "UAVSAR",
+              "type": "filter",
+              "applied": false,
+              "count": 13,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=UAVSAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Visual Observations",
+              "type": "filter",
+              "applied": false,
+              "count": 26,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Visual+Observations&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Organizations",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Alaska Satellite Facility",
+              "type": "filter",
+              "applied": false,
+              "count": 11,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Alaska+Satellite+Facility&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/SED/ESD/LRSL",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FGSFC%2FSED%2FESD%2FLRSL&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/JPL/ESSD",
+              "type": "filter",
+              "applied": false,
+              "count": 11,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FJPL%2FESSD&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "National Snow and Ice Data Center Distributed Active Archive Center (NSIDC DAAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=National+Snow+and+Ice+Data+Center+Distributed+Active+Archive+Center+%28NSIDC+DAAC%29&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Oak Ridge National Laboratory Distributed Active Archive Center (ORNL DAAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 155,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Oak+Ridge+National+Laboratory+Distributed+Active+Archive+Center+%28ORNL+DAAC%29&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Projects",
+          "type": "group",
+          "applied": true,
+          "has_children": true,
+          "children": [
+            {
+              "title": "ABoVE",
+              "type": "filter",
+              "applied": true,
+              "count": 175,
+              "links": {
+                "remove": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "AQUARIUS SAC-D",
+              "type": "filter",
+              "applied": false,
+              "count": 187,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=AQUARIUS+SAC-D&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ATDD",
+              "type": "filter",
+              "applied": false,
+              "count": 26,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ATDD&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ATom",
+              "type": "filter",
+              "applied": false,
+              "count": 31,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ATom&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "BOREAS",
+              "type": "filter",
+              "applied": false,
+              "count": 303,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=BOREAS&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CAMEX",
+              "type": "filter",
+              "applied": false,
+              "count": 62,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=CAMEX&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CARVE",
+              "type": "filter",
+              "applied": false,
+              "count": 19,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=CARVE&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CATS-ISS",
+              "type": "filter",
+              "applied": false,
+              "count": 25,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=CATS-ISS&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Central Valley, CA",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=Central+Valley%2C+CA&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CERES",
+              "type": "filter",
+              "applied": false,
+              "count": 146,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=CERES&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CMS",
+              "type": "filter",
+              "applied": false,
+              "count": 108,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=CMS&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "CWIC",
+              "type": "filter",
+              "applied": false,
+              "count": 93,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=CWIC&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "DISCOVER",
+              "type": "filter",
+              "applied": false,
+              "count": 30,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=DISCOVER&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ECCO",
+              "type": "filter",
+              "applied": false,
+              "count": 77,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ECCO&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "EOS",
+              "type": "filter",
+              "applied": false,
+              "count": 50,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=EOS&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "FedEO",
+              "type": "filter",
+              "applied": false,
+              "count": 225,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=FedEO&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "FIFE",
+              "type": "filter",
+              "applied": false,
+              "count": 115,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=FIFE&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "FIRE",
+              "type": "filter",
+              "applied": false,
+              "count": 131,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=FIRE&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GCPEx",
+              "type": "filter",
+              "applied": false,
+              "count": 40,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=GCPEx&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GHRSST",
+              "type": "filter",
+              "applied": false,
+              "count": 89,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=GHRSST&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GLDAS",
+              "type": "filter",
+              "applied": false,
+              "count": 21,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=GLDAS&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "IceBridge",
+              "type": "filter",
+              "applied": false,
+              "count": 76,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=IceBridge&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "IFloodS",
+              "type": "filter",
+              "applied": false,
+              "count": 26,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=IFloodS&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "IGS",
+              "type": "filter",
+              "applied": false,
+              "count": 94,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=IGS&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "IMPACTS",
+              "type": "filter",
+              "applied": false,
+              "count": 59,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=IMPACTS&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "IPHEx",
+              "type": "filter",
+              "applied": false,
+              "count": 42,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=IPHEx&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "ISLSCP II",
+              "type": "filter",
+              "applied": false,
+              "count": 43,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=ISLSCP+II&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "LANCE",
+              "type": "filter",
+              "applied": false,
+              "count": 68,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=LANCE&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "LBA",
+              "type": "filter",
+              "applied": false,
+              "count": 264,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=LBA&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "LPVEx",
+              "type": "filter",
+              "applied": false,
+              "count": 20,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=LPVEx&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MC3E",
+              "type": "filter",
+              "applied": false,
+              "count": 26,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=MC3E&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MEaSUREs",
+              "type": "filter",
+              "applied": false,
+              "count": 146,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=MEaSUREs&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MERRA TIME-MEAN OBSERVATION DATA",
+              "type": "filter",
+              "applied": false,
+              "count": 144,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=MERRA+TIME-MEAN+OBSERVATION+DATA&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NACP",
+              "type": "filter",
+              "applied": false,
+              "count": 70,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=NACP&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NARSTO",
+              "type": "filter",
+              "applied": false,
+              "count": 51,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=NARSTO&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Nimbus",
+              "type": "filter",
+              "applied": false,
+              "count": 47,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=Nimbus&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NPP-JPSS",
+              "type": "filter",
+              "applied": false,
+              "count": 144,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=NPP-JPSS&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "OCO-2",
+              "type": "filter",
+              "applied": false,
+              "count": 22,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=OCO-2&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "OLYMPEX",
+              "type": "filter",
+              "applied": false,
+              "count": 25,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=OLYMPEX&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "PN",
+              "type": "filter",
+              "applied": false,
+              "count": 25,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=PN&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SAFARI",
+              "type": "filter",
+              "applied": false,
+              "count": 110,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=SAFARI&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SCP",
+              "type": "filter",
+              "applied": false,
+              "count": 20,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=SCP&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Sentinel-5P",
+              "type": "filter",
+              "applied": false,
+              "count": 42,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=Sentinel-5P&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SMAPVEX",
+              "type": "filter",
+              "applied": false,
+              "count": 31,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=SMAPVEX&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SNF",
+              "type": "filter",
+              "applied": false,
+              "count": 32,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=SNF&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Soil",
+              "type": "filter",
+              "applied": false,
+              "count": 20,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=Soil&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SPURS",
+              "type": "filter",
+              "applied": false,
+              "count": 31,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=SPURS&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "SRB",
+              "type": "filter",
+              "applied": false,
+              "count": 43,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=SRB&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "TOVS Pathfinder",
+              "type": "filter",
+              "applied": false,
+              "count": 18,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=TOVS+Pathfinder&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Vegetation",
+              "type": "filter",
+              "applied": false,
+              "count": 72,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=Vegetation&project_h%5B%5D=ABoVE&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

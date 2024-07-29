@@ -1,0 +1,1375 @@
+{
+  "feed": {
+    "updated": "2022-03-03T14:26:34.662Z",
+    "id": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Copensearch.granule.osdd&page_num=1&page_size=20&latency%5B%5D=1%20to%203%20hours&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score",
+    "title": "ECHO dataset metadata",
+    "entry": [
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2022-03-03T12:06:36.744Z"
+            }
+          }
+        },
+        "boxes": [
+          "-66.15 -180 66.15 180"
+        ],
+        "time_start": "2020-11-30T00:00:00.000Z",
+        "version_id": "F",
+        "dataset_id": "Sentinel-6A MF Jason-CS L2 P4 Altimeter Low Resolution (LR) NRT Ocean Surface Topography",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "CMR_ONLY",
+        "short_name": "JASON_CS_S6A_L2_ALT_LR_STD_OST_NRT_F",
+        "organizations": [
+          "NASA/JPL/PODAAC"
+        ],
+        "title": "Sentinel-6A MF Jason-CS L2 P4 Altimeter Low Resolution (LR) NRT Ocean Surface Topography",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Provides low resolution (LR) near real time (NRT; 3-hour latency) measurements of sea surface height anomaly (SSHA), Significant Wave Height (SWH), and Wind Speed, along with 1 Hz and 20 Hz measurements from the radar altimeter, orbit altitude, environmental range corrections, instrument corrections, and geophysical models. The NRT product is analogous to the Jason-3 OGDR product. ",
+        "has_granules": true,
+        "service_features": {
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {
+          "swath_width": "11.0",
+          "period": "6480.0",
+          "inclination_angle": "66.04",
+          "number_of_orbits": "127.0",
+          "start_circular_latitude": "66.0"
+        },
+        "id": "C1200411502-CMR_ONLY",
+        "has_formats": false,
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
+        "original_format": "UMM_JSON",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 5,
+        "archive_center": "NASA/JPL/PODAAC",
+        "has_temporal_subsetting": false,
+        "browse_flag": true,
+        "platforms": [
+          "Sentinel-6A"
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/CitingPODAAC"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://github.com/podaac/sentinel6"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://www.eumetsat.int/altimetry-resources"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/forum/viewforum.php?f=97"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://www.jpl.nasa.gov/missions/sentinel-6/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://sealevel.jpl.nasa.gov/missions/jasoncs/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://www.esa.int/Applications/Observing_the_Earth/Copernicus/Sentinel-6"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Sentinel-6"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://www.eumetsat.int/sentinel-6"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/dataset/JASON_CS_S6A_L2_ALT_LR_STD_OST_NRT_F"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search/granules?p=C1968979597-POCLOUD"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://cmr.earthdata.nasa.gov/virtual-directory/collections/C1968979597-POCLOUD"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://github.com/podaac/data-readers"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "hreflang": "en-US",
+            "href": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/JASON_CS_S6A_L2_ALT_LR_STD_OST_NRT_F.jpg"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1B",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2022-03-03T12:04:07.615Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "1999-12-18T00:00:00.000Z",
+        "version_id": "001",
+        "updated": "2019-09-13T14:06:41.572Z",
+        "dataset_id": "MISR Near Real Time (NRT) Level 1B2 Ellipsoid Data V001",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "EDF_TS2",
+        "short_name": "MI1B2_ELLIPSOID_NRT",
+        "organizations": [
+          "EDF_TS2",
+          "NASA Langley ASDC User Services",
+          "NASA/LARC/SD/ASDC"
+        ],
+        "title": "MISR Near Real Time (NRT) Level 1B2 Ellipsoid Data V001",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This file contains Ellipsoid-projected TOA Radiance,resampled at the surface and topographically corrected, as well as geometrically corrected by PGE22.  It is used for MISR Near Real Time processing, and is derived from session-based Level 0 input files.",
+        "has_granules": true,
+        "service_features": {
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {
+          "swath_width": "400.0",
+          "period": "98.88",
+          "inclination_angle": "98.3",
+          "number_of_orbits": "1.0",
+          "start_circular_latitude": "0.0"
+        },
+        "id": "C1200353178-EDF_TS2",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 5,
+        "archive_center": "EDF_TS2",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": [
+          "Terra"
+        ],
+        "online_access_flag": false
+      },
+      {
+        "processing_level_id": "1B",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2022-03-03T12:04:07.758Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-09-01T00:19:40.875Z",
+        "version_id": "001",
+        "updated": "2019-08-27T07:15:53.224Z",
+        "dataset_id": "MISR Near Real Time (NRT) Level 1B2 Terrain Data V001",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "DEV08",
+        "short_name": "MI1B2_TERRAIN_NRT",
+        "organizations": [
+          "DEV08",
+          "NASA Langley ASDC User Services",
+          "NASA/LARC/SD/ASDC"
+        ],
+        "title": "MISR Near Real Time (NRT) Level 1B2 Terrain Data V001",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This file contains Terrain-projected TOA Radiance,resampled at the surface and topographically corrected, as well as geometrically corrected by PGE22.  It is used for MISR Near Real Time processing, and is derived from session-based Level 0 input files.",
+        "has_granules": true,
+        "service_features": {
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {
+          "swath_width": "400.0",
+          "period": "98.88",
+          "inclination_angle": "98.3",
+          "number_of_orbits": "1.0",
+          "start_circular_latitude": "0.0"
+        },
+        "id": "C1000001257-DEV08",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 8,
+        "archive_center": "DEV08",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": [
+          "Terra"
+        ],
+        "online_access_flag": false
+      },
+      {
+        "processing_level_id": "1B",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2022-03-03T12:04:08.408Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-09-01T00:19:40.875Z",
+        "version_id": "001",
+        "updated": "2015-05-04T09:10:48.203Z",
+        "dataset_id": "MISR Near Real Time (NRT) Level 1B2 Terrain Data V001",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "EDF_OPS",
+        "short_name": "MI1B2_TERRAIN_NRT",
+        "organizations": [
+          "EDF_OPS",
+          "Langley DAAC User Services",
+          "LaRC"
+        ],
+        "title": "MISR Near Real Time (NRT) Level 1B2 Terrain Data V001",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This file contains Terrain-projected TOA Radiance,resampled at the surface and topographically corrected, as well as geometrically corrected by PGE22.  It is used for MISR Near Real Time processing, and is derived from session-based Level 0 input files.",
+        "has_granules": true,
+        "service_features": {
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {
+          "swath_width": "400.0",
+          "period": "98.88",
+          "inclination_angle": "98.3",
+          "number_of_orbits": "1.0",
+          "start_circular_latitude": "0.0"
+        },
+        "id": "C1000001306-EDF_OPS",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 4,
+        "archive_center": "EDF_OPS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": [
+          "AM-1"
+        ],
+        "online_access_flag": false
+      },
+      {
+        "processing_level_id": "1B",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2022-03-03T12:04:08.555Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "1999-12-18T00:00:00.000Z",
+        "version_id": "001",
+        "updated": "2019-09-13T14:06:42.153Z",
+        "dataset_id": "MISR Near Real Time (NRT) Level 1B2 Terrain Data V001",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "EDF_TS2",
+        "short_name": "MI1B2_TERRAIN_NRT",
+        "organizations": [
+          "EDF_TS2",
+          "NASA Langley ASDC User Services",
+          "NASA/LARC/SD/ASDC"
+        ],
+        "title": "MISR Near Real Time (NRT) Level 1B2 Terrain Data V001",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This file contains Terrain-projected TOA Radiance,resampled at the surface and topographically corrected, as well as geometrically corrected by PGE22.  It is used for MISR Near Real Time processing, and is derived from session-based Level 0 input files.",
+        "has_granules": true,
+        "service_features": {
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {
+          "swath_width": "400.0",
+          "period": "98.88",
+          "inclination_angle": "98.3",
+          "number_of_orbits": "1.0",
+          "start_circular_latitude": "0.0"
+        },
+        "id": "C1200353177-EDF_TS2",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 3,
+        "archive_center": "EDF_TS2",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": [
+          "Terra"
+        ],
+        "online_access_flag": false
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.subset_service.echo_orders": {
+            "data": {
+              "updated_at": "2021-10-05T16:00:55.179Z",
+              "id": "S1200299157-DEV08",
+              "type": "ECHO ORDERS",
+              "url": "https://f7eil01.edn.ecs.nasa.gov/EWOC_DEV08/services/OrderFulfillmentPort",
+              "option_definitions": [
+                {
+                  "id": "8F21E5A0-A9BA-A157-6DCB-7E6500872B56",
+                  "name": "MI2TC_CMV_BFR_NRT.1 Order"
+                }
+              ]
+            }
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2022-03-03T12:04:09.118Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-09-01T00:20:28.041Z",
+        "version_id": "001",
+        "updated": "2019-08-27T07:15:53.809Z",
+        "dataset_id": "MISR Near Real Time (NRT) Level 2 Cloud Motion Vector parameters in BUFR format V001",
+        "has_spatial_subsetting": true,
+        "has_transforms": true,
+        "associations": {
+          "services": [
+            "S1200299157-DEV08"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "DEV08",
+        "short_name": "MI2TC_CMV_BFR_NRT",
+        "organizations": [
+          "DEV08",
+          "NASA Langley ASDC User Services",
+          "NASA/LARC/SD/ASDC"
+        ],
+        "title": "MISR Near Real Time (NRT) Level 2 Cloud Motion Vector parameters in BUFR format V001",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This is the MISR Level 2 Cloud Motion Vector Product containing height-resolved cloud motion vectors with associated data in BUFR format.  It is used for MISR Near Real Time processing, and is derived from session-based Level 0 input files.",
+        "has_granules": true,
+        "service_features": {
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {
+          "swath_width": "400.0",
+          "period": "98.88",
+          "inclination_angle": "98.3",
+          "number_of_orbits": "1.0",
+          "start_circular_latitude": "0.0"
+        },
+        "id": "C1000001300-DEV08",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 3,
+        "archive_center": "DEV08",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": [
+          "Terra"
+        ],
+        "online_access_flag": false
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2022-03-03T12:04:09.724Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "1999-12-18T00:00:00.000Z",
+        "version_id": "001",
+        "updated": "2019-09-13T14:06:42.745Z",
+        "dataset_id": "MISR Near Real Time (NRT) Level 2 Cloud Motion Vector parameters in BUFR format V001",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "EDF_TS2",
+        "short_name": "MI2TC_CMV_BFR_NRT",
+        "organizations": [
+          "EDF_TS2",
+          "NASA Langley ASDC User Services",
+          "NASA/LARC/SD/ASDC"
+        ],
+        "title": "MISR Near Real Time (NRT) Level 2 Cloud Motion Vector parameters in BUFR format V001",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This is the MISR Level 2 Cloud Motion Vector Product containing height-resolved cloud motion vectors with associated data in BUFR format.  It is used for MISR Near Real Time processing, and is derived from session-based Level 0 input files.",
+        "has_granules": true,
+        "service_features": {
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {
+          "swath_width": "400.0",
+          "period": "98.88",
+          "inclination_angle": "98.3",
+          "number_of_orbits": "1.0",
+          "start_circular_latitude": "0.0"
+        },
+        "id": "C1200353176-EDF_TS2",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 3,
+        "archive_center": "EDF_TS2",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": [
+          "Terra"
+        ],
+        "online_access_flag": false
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2022-03-03T12:04:10.687Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-09-01T00:20:28.041Z",
+        "version_id": "1",
+        "updated": "2015-01-31T12:46:38.975Z",
+        "dataset_id": "MISR Near Real Time (NRT) Level 2 Cloud Motion Vector parameters V001",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "EDF_OPS",
+        "short_name": "MI2TC_CMV_HDF_NRT",
+        "organizations": [
+          "EDF_OPS",
+          "Langley DAAC User Services",
+          "LaRC"
+        ],
+        "title": "MISR Near Real Time (NRT) Level 2 Cloud Motion Vector parameters V001",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This is the MISR Level 2 Cloud Motion Vector Product containing height-resolved cloud motion vectors with associated data.  It is used for MISR Near Real Time processing, and is derived from session-based Level 0 input files.",
+        "has_granules": true,
+        "service_features": {
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {
+          "swath_width": "400.0",
+          "period": "98.88",
+          "inclination_angle": "98.3",
+          "number_of_orbits": "1.0",
+          "start_circular_latitude": "0.0"
+        },
+        "id": "C1000001307-EDF_OPS",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 4,
+        "archive_center": "EDF_OPS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": [
+          "AM-1"
+        ],
+        "online_access_flag": false
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.subset_service.echo_orders": {
+            "data": {
+              "updated_at": "2021-10-05T16:00:55.217Z",
+              "id": "S1200299157-DEV08",
+              "type": "ECHO ORDERS",
+              "url": "https://f7eil01.edn.ecs.nasa.gov/EWOC_DEV08/services/OrderFulfillmentPort",
+              "option_definitions": [
+                {
+                  "id": "C9B69564-5901-ADF3-E2CE-A05FA9611A32",
+                  "name": "MI2TC_CMV_HDF_NRT.1 Order"
+                }
+              ]
+            }
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2022-03-03T12:04:10.051Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2014-09-01T00:20:28.041Z",
+        "version_id": "001",
+        "updated": "2019-08-27T07:15:54.388Z",
+        "dataset_id": "MISR Near Real Time (NRT) Level 2 Cloud Motion Vector parameters V001",
+        "has_spatial_subsetting": true,
+        "has_transforms": true,
+        "associations": {
+          "services": [
+            "S1200299157-DEV08"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "DEV08",
+        "short_name": "MI2TC_CMV_HDF_NRT",
+        "organizations": [
+          "DEV08",
+          "NASA Langley ASDC User Services",
+          "NASA/LARC/SD/ASDC"
+        ],
+        "title": "MISR Near Real Time (NRT) Level 2 Cloud Motion Vector parameters V001",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This is the MISR Level 2 Cloud Motion Vector Product containing height-resolved cloud motion vectors with associated data.  It is used for MISR Near Real Time processing, and is derived from session-based Level 0 input files.",
+        "has_granules": true,
+        "service_features": {
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {
+          "swath_width": "400.0",
+          "period": "98.88",
+          "inclination_angle": "98.3",
+          "number_of_orbits": "1.0",
+          "start_circular_latitude": "0.0"
+        },
+        "id": "C1000001339-DEV08",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 2,
+        "archive_center": "DEV08",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": [
+          "Terra"
+        ],
+        "online_access_flag": false
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2022-03-03T12:04:10.850Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "1999-12-18T00:00:00.000Z",
+        "version_id": "001",
+        "updated": "2019-09-13T14:06:43.321Z",
+        "dataset_id": "MISR Near Real Time (NRT) Level 2 Cloud Motion Vector parameters V001",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "EDF_TS2",
+        "short_name": "MI2TC_CMV_HDF_NRT",
+        "organizations": [
+          "EDF_TS2",
+          "NASA Langley ASDC User Services",
+          "NASA/LARC/SD/ASDC"
+        ],
+        "title": "MISR Near Real Time (NRT) Level 2 Cloud Motion Vector parameters V001",
+        "coordinate_system": "CARTESIAN",
+        "summary": "This is the MISR Level 2 Cloud Motion Vector Product containing height-resolved cloud motion vectors with associated data.  It is used for MISR Near Real Time processing, and is derived from session-based Level 0 input files.",
+        "has_granules": true,
+        "service_features": {
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {
+          "swath_width": "400.0",
+          "period": "98.88",
+          "inclination_angle": "98.3",
+          "number_of_orbits": "1.0",
+          "start_circular_latitude": "0.0"
+        },
+        "id": "C1200353175-EDF_TS2",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 3,
+        "archive_center": "EDF_TS2",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": [
+          "Terra"
+        ],
+        "online_access_flag": false
+      },
+      {
+        "processing_level_id": "2",
+        "tags": {
+          "edsc.extra.subset_service.esi": {
+            "data": [
+              "S1200278075-EDF_DEV01"
+            ]
+          },
+          "edsc.extra.serverless.subset_service.esi": {
+            "data": {
+              "updated_at": "2022-03-03T12:00:49.747Z",
+              "id": "S1200278075-EDF_DEV01",
+              "type": "ESI"
+            }
+          },
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2022-03-03T12:04:41.119Z"
+            }
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "time_start": "2002-05-04T00:00:00.000Z",
+        "version_id": "088",
+        "updated": "2015-07-29T13:59:34.230Z",
+        "dataset_id": "MODIS/Aqua Thermal Anomalies/Fire 5-Min L2 Swath 1km V088",
+        "has_spatial_subsetting": true,
+        "has_transforms": true,
+        "associations": {
+          "services": [
+            "S1200278075-EDF_DEV01"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "EDF_DEV01",
+        "short_name": "MYD14",
+        "organizations": [
+          "EDF_DEV01",
+          "LP DAAC User Services",
+          "MODAPS",
+          "MODIS Science Data Support Team"
+        ],
+        "title": "MODIS/Aqua Thermal Anomalies/Fire 5-Min L2 Swath 1km V088",
+        "coordinate_system": "CARTESIAN",
+        "summary": "MODIS/Aqua Thermal Anomalies/Fire 5-Min L2 Swath 1km",
+        "has_granules": true,
+        "service_features": {
+          "esi": {
+            "has_formats": false,
+            "has_variables": true,
+            "has_transforms": true,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": false
+          },
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {},
+        "id": "C1000000080-EDF_DEV01",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 3,
+        "archive_center": "EDF_DEV01",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": [
+          "Aqua"
+        ],
+        "online_access_flag": false,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=aqua"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://eosims.cr.usgs.gov:5725/daac_documents/catalog.html"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "http://lpdaac.usgs.gov/modis/dataprod.html"
+          }
+        ]
+      }
+    ],
+    "facets": {
+      "title": "Browse Collections",
+      "type": "group",
+      "has_children": true,
+      "children": [
+        {
+          "title": "Data Format",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "BUFR",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&granule_data_format_h%5B%5D=BUFR&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "HDF",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&granule_data_format_h%5B%5D=HDF&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NetCDF",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&granule_data_format_h%5B%5D=NetCDF&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Processing Levels",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "1B - Radiance, Sensor Coordinates",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=1B+-+Radiance%2C+Sensor+Coordinates&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "2 - Geophys. Variables, Sensor Coordinates",
+              "type": "filter",
+              "applied": false,
+              "count": 7,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=2+-+Geophys.+Variables%2C+Sensor+Coordinates&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Keywords",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Atmosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 5,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Atmosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Biosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Biosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Land Surface",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Land+Surface"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Oceans",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Oceans"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Spectral/Engineering",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Spectral%2FEngineering"
+              },
+              "has_children": true
+            }
+          ]
+        },
+        {
+          "title": "Platforms",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Space-based Platforms",
+              "type": "filter",
+              "applied": false,
+              "count": 11,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platforms_h%5B0%5D%5Bbasis%5D=Space-based+Platforms"
+              },
+              "has_children": true
+            }
+          ]
+        },
+        {
+          "title": "Instruments",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "AMR",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&instrument_h%5B%5D=AMR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "DORIS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&instrument_h%5B%5D=DORIS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "GNSS RECEIVER",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&instrument_h%5B%5D=GNSS+RECEIVER&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MISR",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&instrument_h%5B%5D=MISR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MODIS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&instrument_h%5B%5D=MODIS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Poseidon-4 Radar Altimeter",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&instrument_h%5B%5D=Poseidon-4+Radar+Altimeter&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Organizations",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Atmospheric Science Data Center (ASDC)",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Atmospheric+Science+Data+Center+%28ASDC%29&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "DEV08",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=DEV08&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "EDF_DEV01",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=EDF_DEV01&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "EDF_OPS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=EDF_OPS&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "EDF_TS2",
+              "type": "filter",
+              "applied": false,
+              "count": 4,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=EDF_TS2&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Land Process Distributed Active Archive Center (LPDAAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Land+Process+Distributed+Active+Archive+Center+%28LPDAAC%29&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MODIS Adaptive Processing System (MODAPS)",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=MODIS+Adaptive+Processing+System+%28MODAPS%29&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "MODIS Science Data Support Team (SDST)",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=MODIS+Science+Data+Support+Team+%28SDST%29&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Physical Oceanography Distributed Active Archive Center (PO.DAAC)",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Physical+Oceanography+Distributed+Active+Archive+Center+%28PO.DAAC%29&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Projects",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "LANCE",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=LANCE&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            },
+            {
+              "title": "Sentinel-6",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=Sentinel-6&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Tiling System",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "MISR",
+              "type": "filter",
+              "applied": false,
+              "count": 9,
+              "links": {
+                "apply": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&two_d_coordinate_system_name%5B%5D=MISR&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Latency",
+          "type": "group",
+          "applied": true,
+          "has_children": true,
+          "children": [
+            {
+              "title": "1 to 3 hours",
+              "type": "filter",
+              "applied": true,
+              "count": 11,
+              "links": {
+                "remove": "https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

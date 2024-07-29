@@ -1,0 +1,639 @@
+{
+  "data": {
+    "collection": {
+      "abstract": "This record is a Mapping Example.",
+      "archiveAndDistributionInformation": {
+        "fileArchiveInformation": [
+          {
+            "format": "Binary",
+            "formatType": "Native",
+            "formatDescription": "Use the something app to open the binary file.",
+            "averageFileSize": 3,
+            "averageFileSizeUnit": "MB",
+            "totalCollectionFileSize": 1095,
+            "totalCollectionFileSizeUnit": "MB",
+            "description": "These files are very difficult to use. If you want to use the binary data then contact us. These files are archived in CUMULUS."
+          },
+          {
+            "format": "netCDF-4",
+            "formatType": "Supported",
+            "formatDescription": "An acsii file also exists.",
+            "averageFileSize": 1,
+            "averageFileSizeUnit": "MB",
+            "totalCollectionFileSize": 365,
+            "totalCollectionFileSizeUnit": "MB",
+            "description": "These files are archived in CUMULUS."
+          }
+        ],
+        "fileDistributionInformation": [
+          {
+            "media": [
+              "Online",
+              "CD-ROM"
+            ],
+            "averageFileSize": 1,
+            "fees": "US $1.00 per CD-ROM",
+            "format": "netCDF-4",
+            "averageFileSizeUnit": "MB",
+            "formatType": "Supported",
+            "totalCollectionFileSizeUnit": "MB",
+            "description": "These files are available on line or CD-ROMS can be ordered for a fee.",
+            "totalCollectionFileSize": 365,
+            "formatDescription": "An acsii file also exists."
+          },
+          {
+            "media": [
+              "Online"
+            ],
+            "averageFileSize": 1.5,
+            "format": "netCDF-5",
+            "averageFileSizeUnit": "MB",
+            "formatType": "Supported",
+            "totalCollectionFileSizeUnit": "MB",
+            "description": "These files may take longer to download as they are only available on demand.",
+            "totalCollectionFileSize": 548,
+            "formatDescription": "An acsii file also exists."
+          }
+        ]
+      },
+      "associatedDois": [
+        {
+          "doi": "10.1234/ParentDOIID1",
+          "title": "DOI Title 1",
+          "authority": "https://doi.org/"
+        },
+        {
+          "doi": "10.1234/ParentDOIID2",
+          "title": "DOI Title 2",
+          "authority": "https://doi.org/"
+        }
+      ],
+      "boxes": null,
+      "conceptId": "C1240222820-ECHO_REST",
+      "coordinateSystem": "CARTESIAN",
+      "dataCenter": "ECHO_REST",
+      "dataCenters": [
+        {
+          "roles": [
+            "PROCESSOR"
+          ],
+          "shortName": "NASA/MSFC/AMSR-E SIPS"
+        },
+        {
+          "roles": [
+            "ARCHIVER"
+          ],
+          "shortName": "NSIDC"
+        },
+        {
+          "roles": [
+            "ORIGINATOR"
+          ],
+          "shortName": "NASA/MSFC/AMSR-E SIPS",
+          "longName": "Advanced Microwave Scanning Radiometer - Earth Observing System Science Investigator-led Processing System",
+          "contactPersons": [
+            {
+              "roles": [
+                "Science Contact",
+                "Investigator",
+                "Data Center Contact"
+              ],
+              "nonDataCenterAffiliation": "Not affiliated",
+              "contactInformation": {
+                "contactMechanisms": [
+                  {
+                    "type": "Email",
+                    "value": "anEmail1@server.com"
+                  },
+                  {
+                    "type": "Email",
+                    "value": "anEmail2@server.com"
+                  },
+                  {
+                    "type": "Fax",
+                    "value": "111-222-3458"
+                  },
+                  {
+                    "type": "Fax",
+                    "value": "111-222-3459"
+                  },
+                  {
+                    "type": "Telephone",
+                    "value": "111-222-3456"
+                  },
+                  {
+                    "type": "Telephone",
+                    "value": "111-222-3457"
+                  }
+                ],
+                "addresses": [
+                  {
+                    "streetAddresses": [
+                      "123 Main Street",
+                      "Suite 5"
+                    ],
+                    "city": "City",
+                    "stateProvince": "State",
+                    "country": "USA",
+                    "postalCode": "11111"
+                  }
+                ]
+              },
+              "firstName": "Data Center Personnel First Name",
+              "middleName": "Data Center Personnel Middle Name",
+              "lastName": "Data Center Personnel Last Name"
+            },
+            {
+              "roles": [
+                "Technical Contact",
+                "Data Center Contact"
+              ],
+              "contactInformation": {
+                "contactMechanisms": [
+                  {
+                    "type": "Email",
+                    "value": "anEmail1@server.com"
+                  },
+                  {
+                    "type": "Email",
+                    "value": "anEmail2@server.com"
+                  },
+                  {
+                    "type": "Fax",
+                    "value": "211-222-3458"
+                  },
+                  {
+                    "type": "Fax",
+                    "value": "211-222-3459"
+                  },
+                  {
+                    "type": "Telephone",
+                    "value": "211-222-3456"
+                  },
+                  {
+                    "type": "Telephone",
+                    "value": "211-222-3457"
+                  }
+                ],
+                "addresses": [
+                  {
+                    "streetAddresses": [
+                      "223 Main Street",
+                      "Suite 6"
+                    ],
+                    "city": "City",
+                    "stateProvince": "State",
+                    "country": "USA",
+                    "postalCode": "21111"
+                  }
+                ]
+              },
+              "firstName": "Data Center Personnel2 First Name",
+              "middleName": "Data Center Personnel2 Middle Name",
+              "lastName": "Data Center Personnel2 Last Name"
+            }
+          ],
+          "contactGroups": [
+            {
+              "roles": [
+                "User Services"
+              ],
+              "nonDataCenterAffiliation": "Not affiliated",
+              "contactInformation": {
+                "contactMechanisms": [
+                  {
+                    "type": "Email",
+                    "value": "anEmail1@server.com"
+                  },
+                  {
+                    "type": "Email",
+                    "value": "anEmail2@server.com"
+                  },
+                  {
+                    "type": "Fax",
+                    "value": "111-222-3458"
+                  },
+                  {
+                    "type": "Fax",
+                    "value": "111-222-3459"
+                  },
+                  {
+                    "type": "Telephone",
+                    "value": "111-222-3456"
+                  },
+                  {
+                    "type": "Telephone",
+                    "value": "111-222-3457"
+                  }
+                ],
+                "addresses": [
+                  {
+                    "streetAddresses": [
+                      "123 Main Street",
+                      "Suite 5"
+                    ],
+                    "city": "City",
+                    "stateProvince": "State",
+                    "country": "USA",
+                    "postalCode": "11111"
+                  }
+                ]
+              },
+              "groupName": "Data Center User Services"
+            },
+            {
+              "roles": [
+                "Science Software Development"
+              ],
+              "contactInformation": {
+                "contactMechanisms": [
+                  {
+                    "type": "Email",
+                    "value": "anEmail1@server.com"
+                  },
+                  {
+                    "type": "Email",
+                    "value": "anEmail2@server.com"
+                  },
+                  {
+                    "type": "Fax",
+                    "value": "211-222-3458"
+                  },
+                  {
+                    "type": "Fax",
+                    "value": "211-222-3459"
+                  },
+                  {
+                    "type": "Telephone",
+                    "value": "211-222-3456"
+                  },
+                  {
+                    "type": "Telephone",
+                    "value": "211-222-3457"
+                  }
+                ],
+                "addresses": [
+                  {
+                    "streetAddresses": [
+                      "223 Main Street",
+                      "Suite 6"
+                    ],
+                    "city": "City",
+                    "stateProvince": "State",
+                    "country": "USA",
+                    "postalCode": "21111"
+                  }
+                ],
+                "relatedUrls": [
+                  {
+                    "description": "AMSR-E/AMSR Product page at NSIDC",
+                    "urlContentType": "DataContactURL",
+                    "type": "HOME PAGE",
+                    "url": "http://nsidc.org/data/amsre/"
+                  }
+                ]
+              },
+              "groupName": "DAAC Software Development"
+            }
+          ]
+        },
+        {
+          "roles": [
+            "DISTRIBUTOR"
+          ],
+          "shortName": "NSIDC",
+          "longName": "National Snow and Ice Data Center",
+          "contactInformation": {
+            "serviceHours": "8am-5pm (Mountain Time) Monday through Friday",
+            "contactInstruction": "contact by e-mail first",
+            "contactMechanisms": [
+              {
+                "type": "Telephone",
+                "value": "303-492-6199"
+              },
+              {
+                "type": "Fax",
+                "value": "303-492-2468"
+              },
+              {
+                "type": "Email",
+                "value": "nsidc@kryos.colorado.edu"
+              }
+            ],
+            "addresses": [
+              {
+                "streetAddresses": [
+                  "1540 30th St Campus Box 449"
+                ],
+                "city": "Boulder",
+                "stateProvince": "CO",
+                "country": "USA",
+                "postalCode": "80303-0449"
+              }
+            ],
+            "relatedUrls": [
+              {
+                "description": "AMSR-E/AMSR Product page at NSIDC",
+                "urlContentType": "DataCenterURL",
+                "type": "HOME PAGE",
+                "url": "http://nsidc.org/data/amsre/"
+              }
+            ]
+          }
+        }
+      ],
+      "directDistributionInformation": {
+        "region": "us-east-2",
+        "s3BucketAndObjectPrefixNames": [
+          "TestBucketOrObjectPrefix"
+        ],
+        "s3CredentialsApiEndpoint": "https://DAACCredentialEndpoint.org",
+        "s3CredentialsApiDocumentationUrl": "https://DAACCredentialDocumentation.org"
+      },
+      "doi": {
+        "doi": "10.1234/DOIID",
+        "authority": "https://doi.org/"
+      },
+      "hasGranules": false,
+      "lines": null,
+      "nativeDataFormats": [],
+      "points": null,
+      "polygons": [
+        [
+          "-10 -10 -10 10 10 10 10 -10 -10 -10",
+          "-5 -5 -5 -1 -1 -1 -1 -5 -5 -5",
+          "0 0 0 5 5 5 5 0 0 0"
+        ]
+      ],
+      "relatedUrls": [
+        {
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "url": "http://wwwghcc.msfc.nasa.gov/AMSR/qa.html",
+          "description": "quality documentation"
+        },
+        {
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "PUBLICATIONS",
+          "url": "http://wwwghcc.msfc.nasa.gov/AMSR/qa.html",
+          "description": "quality documentation"
+        },
+        {
+          "description": "Guide Document for this product at NSIDC",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "USER'S GUIDE",
+          "url": "http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"
+        },
+        {
+          "description": "AMSR-E/AMSR Product page at NSIDC",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "url": "http://nsidc.org/data/amsre/"
+        },
+        {
+          "description": "Testing Related url GET DATA translations",
+          "urlContentType": "DistributionURL",
+          "type": "GET DATA",
+          "url": "http://www.foo.com",
+          "getData": {
+            "format": "ascii",
+            "mimeType": "text/html",
+            "size": 10,
+            "unit": "MB",
+            "fees": "fees",
+            "checksum": "12345"
+          }
+        }
+      ],
+      "scienceKeywords": [
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "TERRESTRIAL HYDROSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "SNOW WATER EQUIVALENT",
+          "detailedVariable": "RAIN"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "CRYOSPHERE",
+          "term": "SNOW/ICE",
+          "variableLevel1": "SNOW WATER EQUIVALENT",
+          "detailedVariable": "SLEET"
+        }
+      ],
+      "shortName": "Mapping Short Name 1.16.1",
+      "spatialExtent": {
+        "spatialCoverageType": "HORIZONTAL",
+        "horizontalSpatialDomain": {
+          "zoneIdentifier": "1",
+          "geometry": {
+            "coordinateSystem": "CARTESIAN",
+            "gPolygons": [
+              {
+                "boundary": {
+                  "points": [
+                    {
+                      "longitude": -10,
+                      "latitude": -10
+                    },
+                    {
+                      "longitude": 10,
+                      "latitude": -10
+                    },
+                    {
+                      "longitude": 10,
+                      "latitude": 10
+                    },
+                    {
+                      "longitude": -10,
+                      "latitude": 10
+                    },
+                    {
+                      "longitude": -10,
+                      "latitude": -10
+                    }
+                  ]
+                },
+                "exclusiveZone": {
+                  "boundaries": [
+                    {
+                      "points": [
+                        {
+                          "longitude": -5,
+                          "latitude": -5
+                        },
+                        {
+                          "longitude": -1,
+                          "latitude": -5
+                        },
+                        {
+                          "longitude": -1,
+                          "latitude": -1
+                        },
+                        {
+                          "longitude": -5,
+                          "latitude": -1
+                        },
+                        {
+                          "longitude": -5,
+                          "latitude": -5
+                        }
+                      ]
+                    },
+                    {
+                      "points": [
+                        {
+                          "longitude": 0,
+                          "latitude": 0
+                        },
+                        {
+                          "longitude": 5,
+                          "latitude": 0
+                        },
+                        {
+                          "longitude": 5,
+                          "latitude": 5
+                        },
+                        {
+                          "longitude": 0,
+                          "latitude": 5
+                        },
+                        {
+                          "longitude": 0,
+                          "latitude": 0
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "resolutionAndCoordinateSystem": {
+            "description": "3 of the 10 pixels are averaged at 64 samples per second this gives a horizontal resolution of 1.5 km at the tangent point location.",
+            "geodeticModel": {
+              "horizontalDatumName": "World Geodetic System of 1984 (WGS84)",
+              "ellipsoidName": "WGS 84",
+              "semiMajorAxis": 6378140,
+              "denominatorOfFlatteningRatio": 298.257
+            },
+            "horizontalDataResolution": {
+              "variesResolution": "Varies",
+              "pointResolution": "Point",
+              "nonGriddedResolutions": [
+                {
+                  "xDimension": 10,
+                  "yDimension": 10,
+                  "unit": "Meters",
+                  "viewingAngleType": "At Nadir",
+                  "scanDirection": "Cross Track"
+                }
+              ],
+              "nonGriddedRangeResolutions": [
+                {
+                  "minimumXDimension": 10,
+                  "minimumYDimension": 10,
+                  "maximumXDimension": 20,
+                  "maximumYDimension": 20,
+                  "unit": "Meters",
+                  "viewingAngleType": "At Nadir",
+                  "scanDirection": "Cross Track"
+                }
+              ],
+              "griddedResolutions": [
+                {
+                  "xDimension": 10,
+                  "yDimension": 10,
+                  "unit": "Meters"
+                },
+                {
+                  "xDimension": 20,
+                  "yDimension": 20,
+                  "unit": "Meters"
+                }
+              ],
+              "griddedRangeResolutions": [
+                {
+                  "minimumXDimension": 10,
+                  "minimumYDimension": 10,
+                  "maximumXDimension": 20,
+                  "unit": "Meters"
+                }
+              ],
+              "genericResolutions": [
+                {
+                  "xDimension": 15,
+                  "unit": "Not provided"
+                }
+              ]
+            }
+          }
+        },
+        "verticalSpatialDomains": [
+          {
+            "type": "Maximum Altitude",
+            "value": "100"
+          },
+          {
+            "type": "Minimum Altitude",
+            "value": "1"
+          }
+        ],
+        "orbitParameters": {
+          "swathWidth": 22,
+          "period": 1,
+          "inclinationAngle": 4,
+          "numberOfOrbits": 1,
+          "startCircularLatitude": 1
+        },
+        "granuleSpatialRepresentation": "CARTESIAN"
+      },
+      "tags": null,
+      "temporalExtents": [
+        {
+          "precisionOfSeconds": 1,
+          "endsAtPresentFlag": false,
+          "rangeDateTimes": [
+            {
+              "beginningDateTime": "2001-01-01T00:00:00.000Z",
+              "endingDateTime": "2001-06-01T00:00:00.000Z"
+            }
+          ]
+        }
+      ],
+      "tilingIdentificationSystems": [
+        {
+          "tilingIdentificationSystemName": "MODIS Tile EASE",
+          "coordinate1": {
+            "minimumValue": -100,
+            "maximumValue": -50
+          },
+          "coordinate2": {
+            "minimumValue": 50,
+            "maximumValue": 100
+          }
+        }
+      ],
+      "title": "Mapping Example for UMM-C 1.16.1",
+      "versionId": "1.16.1",
+      "services": {
+        "count": 0,
+        "items": null
+      },
+      "granules": {
+        "count": 0,
+        "items": []
+      },
+      "subscriptions": {
+        "count": 0,
+        "items": []
+      },
+      "variables": {
+        "count": 0,
+        "items": null
+      }
+    }
+  }
+}
