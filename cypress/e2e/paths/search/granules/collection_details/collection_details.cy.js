@@ -183,7 +183,7 @@ describe('Path /search/granules/collection-details', () => {
             page_size: 20,
             service_type: [],
             sort_key: [
-              '-usage_score'
+              '-score'
             ],
             tag_key: []
           })
@@ -289,7 +289,7 @@ describe('Path /search/granules/collection-details', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
           req.reply({
             body: collectionsBody,
@@ -411,7 +411,7 @@ describe('Path /search/granules/collection-details', () => {
           url: '**/search/collections.json'
         },
         (req) => {
-          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+          expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
           req.reply({
             body: collectionsBody,

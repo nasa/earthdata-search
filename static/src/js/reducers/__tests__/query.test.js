@@ -10,6 +10,7 @@ import {
   UPDATE_GRANULE_SEARCH_QUERY,
   UPDATE_REGION_QUERY
 } from '../../constants/actionTypes'
+import { collectionSortKeys } from '../../constants/collectionSortKeys'
 
 const initialState = {
   collection: {
@@ -17,7 +18,7 @@ const initialState = {
     keyword: '',
     hasGranulesOrCwic: true,
     pageNum: 1,
-    sortKey: ['-usage_score'],
+    sortKey: [collectionSortKeys.scoreDescending],
     spatial: {},
     temporal: {}
   },
@@ -54,7 +55,7 @@ describe('UPDATE_COLLECTION_QUERY', () => {
         ...payload,
         byId: {},
         hasGranulesOrCwic: true,
-        sortKey: ['-usage_score']
+        sortKey: [collectionSortKeys.scoreDescending]
       },
       region: {
         exact: false
@@ -154,11 +155,11 @@ describe('RESTORE_FROM_URL', () => {
     })
   })
 
-  describe('with the relevance collection sort preference', () => {
+  describe('with the usage collection sort preference', () => {
     test('returns the correct state', () => {
       const query = {
         collection: { pageNum: 1 },
-        collectionSortPreference: 'relevance',
+        collectionSortPreference: collectionSortKeys.usageDescending,
         granule: { pageNum: 1 },
         region: {
           exact: true
@@ -178,7 +179,7 @@ describe('RESTORE_FROM_URL', () => {
         collection: {
           ...initialState.collection,
           ...query.collection,
-          sortKey: undefined
+          sortKey: [collectionSortKeys.usageDescending]
         }
       }
 
@@ -190,7 +191,7 @@ describe('RESTORE_FROM_URL', () => {
     test('returns the correct state', () => {
       const query = {
         collection: { pageNum: 1 },
-        collectionSortPreference: '-ongoing',
+        collectionSortPreference: collectionSortKeys.endDateDescending,
         granule: { pageNum: 1 },
         region: {
           exact: true
@@ -210,7 +211,7 @@ describe('RESTORE_FROM_URL', () => {
         collection: {
           ...initialState.collection,
           ...query.collection,
-          sortKey: ['-ongoing']
+          sortKey: [collectionSortKeys.endDateDescending]
         }
       }
 
