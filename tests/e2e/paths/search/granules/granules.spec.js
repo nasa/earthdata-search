@@ -5,7 +5,6 @@ import { graphQlGetCollections } from '../../../../support/graphQlGetCollections
 import { graphQlGetSubscriptionsQuery } from '../../../../support/graphQlGetSubscriptionsQuery'
 
 import { commafy } from '../../../../../static/src/js/util/commafy'
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { pluralize } from '../../../../../static/src/js/util/pluralize'
 
 import browseOnlyGranulesBody from './__mocks__/browse_only/granules.body.json'
@@ -107,7 +106,7 @@ import graphQlHeaders from './__mocks__/common/graphql.headers.json'
 
 import { login } from '../../../../support/login'
 
-const { defaultCmrPageSize } = getApplicationConfig()
+const { defaultCmrPageSize } = 20
 
 const testResultsSize = async (page, cmrHits) => {
   const expectedSize = Math.min(defaultCmrPageSize, cmrHits)
