@@ -63,7 +63,7 @@ describe('buildEsiEcho', () => {
     })
   })
 
-  test('returns an echo orders access method', () => {
+  test('returns an echo orders access method and indexes are incremented correctly', () => {
     const collectionMetadata = {
       services: {
         items: [{

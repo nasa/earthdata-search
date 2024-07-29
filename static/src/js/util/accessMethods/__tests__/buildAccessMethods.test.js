@@ -820,6 +820,10 @@ describe('when buildAccessMethods is called', () => {
     })
   })
 
+  describe('calls complex compilation of mutliple different access methods', () => {
+
+  })
+
   describe('when the collection contains both variables associated to its services and variables directly associated to the collection and 3 service records', () => {
     test('variables on the service are returned instead of variables directly associated to the collection and buildHarmony is called 3 times', () => {
       const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
