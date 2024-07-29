@@ -86,13 +86,12 @@ test.describe('Path /search', () => {
       await page.route('**/search/collections.json', (route, request) => {
         if (request.method() === 'POST') {
           const body = request.postData()
-          expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+          expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
           route.fulfill({
             body: JSON.stringify(commonBody),
             headers: {
               ...commonHeaders,
-              'access-control-expose-headers': 'cmr-hits',
               'cmr-hits': cmrHits
             }
           })
@@ -119,13 +118,12 @@ test.describe('Path /search', () => {
       await page.route('**/search/collections.json', (route, request) => {
         if (request.method() === 'POST') {
           const body = request.postData()
-          expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=modis*&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+          expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=modis*&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
           route.fulfill({
             body: JSON.stringify(keywordBody),
             headers: {
               ...commonHeaders,
-              'access-control-expose-headers': 'cmr-hits',
               'cmr-hits': cmrHits
             }
           })
@@ -153,13 +151,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2020-01-01T00:00:00.000Z,2021-01-01T23:59:59.999Z&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2020-01-01T00:00:00.000Z,2021-01-01T23:59:59.999Z&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(temporalBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -190,13 +187,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2000-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z,1,31&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2000-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z,1,31&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(temporalRecurringBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -230,13 +226,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=65.44171,4.33676&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=65.44171,4.33676&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(spatialPointBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -268,13 +263,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=64.87748,1.3704,59.34354,-9.21839,78.35163,-11.89902,64.87748,1.3704&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=64.87748,1.3704,59.34354,-9.21839,78.35163,-11.89902,64.87748,1.3704&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(spatialPolygonBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -306,13 +300,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=62.18209,2.22154,100000&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&circle[]=62.18209,2.22154,100000&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(spatialCircleBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -345,13 +338,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=5.02679,0.99949,32.8678,26.17555&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&bounding_box[]=5.02679,0.99949,32.8678,26.17555&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(spatialBoundingBoxBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -417,13 +409,12 @@ test.describe('Path /search', () => {
           if (request.method() === 'POST') {
             // Const body = request.postData()
             // TODO: This intercept is called twice, the first time is cancelled because a new request is launched after the shapefile polygon is added. How do we only run this expect on the second run?
-            // expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=59.34354,-9.21839,78.35163,-11.89902,64.87748,1.3704,59.34354,-9.21839&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            // expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&polygon[]=59.34354,-9.21839,78.35163,-11.89902,64.87748,1.3704,59.34354,-9.21839&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(spatialPolygonBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -461,13 +452,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('cloud_hosted=true&has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('cloud_hosted=true&has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(awsCloudBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -499,13 +489,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&service_type[]=esi&service_type[]=opendap&service_type[]=harmony&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&service_type[]=esi&service_type[]=opendap&service_type[]=harmony&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(customizableBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -537,13 +526,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score&tag_key[]=edsc.extra.serverless.gibs')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&tag_key[]=edsc.extra.serverless.gibs')
 
             route.fulfill({
               body: JSON.stringify(mapImageryBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -577,13 +565,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&science_keywords_h[0][topic]=Aerosols&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&science_keywords_h[0][topic]=Aerosols&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(keywordsBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -624,13 +611,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&platforms_h[0][basis]=Aircraft&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&platforms_h[0][basis]=Aircraft&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(platformsBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -671,13 +657,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(instrumentsBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -718,13 +703,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&data_center_h[]=Alaska Satellite Facility&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&data_center_h[]=Alaska Satellite Facility&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(organizationsBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -765,13 +749,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&project_h[]=ABoVE&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&project_h[]=ABoVE&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(projectsBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -812,13 +795,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&processing_level_id_h[]=0 - Raw Data&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&processing_level_id_h[]=0 - Raw Data&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(processingLevelsBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -859,13 +841,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&granule_data_format_h[]=ArcGIS&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&granule_data_format_h[]=ArcGIS&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
             route.fulfill({
               body: JSON.stringify(dataFormatBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -906,13 +887,12 @@ test.describe('Path /search', () => {
         await page.route('**/search/collections.json', (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
-            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score&two_d_coordinate_system_name[]=CALIPSO')
+            expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&two_d_coordinate_system_name[]=CALIPSO')
 
             route.fulfill({
               body: JSON.stringify(tilingSystemBody),
               headers: {
                 ...commonHeaders,
-                'access-control-expose-headers': 'cmr-hits',
                 'cmr-hits': cmrHits.toString()
               }
             })
@@ -952,13 +932,12 @@ test.describe('Path /search', () => {
 
         await page.route('**/search/collections.json', (route) => {
           const req = route.request()
-          expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&horizontal_data_resolution_range[]=0 to 1 meter&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+          expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&horizontal_data_resolution_range[]=0 to 1 meter&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
           route.fulfill({
             body: JSON.stringify(horizontalDataResolutionBody),
             headers: {
               ...commonHeaders,
-              'access-control-expose-headers': 'cmr-hits',
               'cmr-hits': cmrHits
             }
           })
@@ -997,13 +976,12 @@ test.describe('Path /search', () => {
 
         await page.route('**/search/collections.json', (route) => {
           const req = route.request()
-          expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&latency[]=1 to 3 hours&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+          expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&latency[]=1 to 3 hours&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
           route.fulfill({
             body: JSON.stringify(latencyBody),
             headers: {
               ...commonHeaders,
-              'access-control-expose-headers': 'cmr-hits',
               'cmr-hits': cmrHits
             }
           })
@@ -1044,13 +1022,12 @@ test.describe('Path /search', () => {
 
         await page.route('**/search/collections.json', (route) => {
           const req = route.request()
-          expect(req.postData()).toBe('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=-usage_score')
+          expect(req.postData()).toBe('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=-score')
 
           route.fulfill({
             body: JSON.stringify(noGranulesBody),
             headers: {
               ...commonHeaders,
-              'access-control-expose-headers': 'cmr-hits',
               'cmr-hits': cmrHits
             }
           })
@@ -1085,13 +1062,12 @@ test.describe('Path /search', () => {
 
         await page.route('**/search/collections.json', (route) => {
           const req = route.request()
-          expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&consortium[]=EOSDIS&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+          expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&consortium[]=EOSDIS&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
           route.fulfill({
             body: JSON.stringify(nonEosdisBody),
             headers: {
               ...commonHeaders,
-              'access-control-expose-headers': 'cmr-hits',
               'cmr-hits': cmrHits
             }
           })
@@ -1131,7 +1107,6 @@ test.describe('Path /search', () => {
           body: JSON.stringify(eeBody),
           headers: {
             ...commonHeaders,
-            'access-control-expose-headers': 'cmr-hits',
             'cmr-hits': cmrHits
           }
         })

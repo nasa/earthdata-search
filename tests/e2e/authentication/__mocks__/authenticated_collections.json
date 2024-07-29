@@ -1,5 +1,6 @@
 {
   "headers": {
+    "access-control-expose-headers": "cmr-hits",
     "cmr-hits": "7648",
     "cmr-request-id": "5614bc1d-66fd-4bce-9ca2-504d5931ff25",
     "cmr-took": "130",

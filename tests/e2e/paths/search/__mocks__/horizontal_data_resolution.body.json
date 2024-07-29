@@ -1,7 +1,7 @@
 {
   "feed": {
     "updated": "2021-05-27T13:50:41.759Z",
-    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=2&page_size=20&horizontal_data_resolution_range%5B%5D=0%20to%201%20meter&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.extra.%2A%2Copensearch.granule.osdd&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Bspatial%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&page_num=2&page_size=20&horizontal_data_resolution_range%5B%5D=0%20to%201%20meter&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score",
     "title": "ECHO dataset metadata",
     "entry": [
       {
@@ -2052,7 +2052,7 @@
               "applied": false,
               "count": 8,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Atmosphere"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Atmosphere"
               },
               "has_children": true
             },
@@ -2062,7 +2062,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Cryosphere"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Cryosphere"
               },
               "has_children": true
             },
@@ -2072,7 +2072,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Land+Surface"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Land+Surface"
               },
               "has_children": true
             },
@@ -2082,7 +2082,7 @@
               "applied": false,
               "count": 37,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Oceans"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Oceans"
               },
               "has_children": true
             }
@@ -2100,7 +2100,7 @@
               "applied": false,
               "count": 3,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=ADCP&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=ADCP&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2110,7 +2110,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Anemometer&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Anemometer&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2120,7 +2120,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Barometer&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Barometer&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2130,7 +2130,7 @@
               "applied": false,
               "count": 22,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=CTD&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=CTD&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2140,7 +2140,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=CURRENT+METERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=CURRENT+METERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2150,7 +2150,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=FLUOROMETERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=FLUOROMETERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2160,7 +2160,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=GLISTIN-A&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=GLISTIN-A&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2170,7 +2170,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Headwall&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Headwall&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2180,7 +2180,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Humidity+Sensor&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Humidity+Sensor&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2190,7 +2190,7 @@
               "applied": false,
               "count": 8,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=MMS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=MMS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2200,7 +2200,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=OXYGEN+METERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=OXYGEN+METERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2210,7 +2210,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Pyrometers&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Pyrometers&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2220,7 +2220,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Riegl+Airborne+Lidar&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Riegl+Airborne+Lidar&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2230,7 +2230,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SEAPOL&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SEAPOL&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2240,7 +2240,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SPURS_METEO&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SPURS_METEO&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2250,7 +2250,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=SS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2260,7 +2260,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Temperature+Sensor&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Temperature+Sensor&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2270,7 +2270,7 @@
               "applied": false,
               "count": 4,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=THERMOSALINOGRAPHS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=THERMOSALINOGRAPHS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2280,7 +2280,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=TURBIDITY+METERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=TURBIDITY+METERS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2290,7 +2290,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=UCTD&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=UCTD&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2300,7 +2300,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=USPS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=USPS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2310,7 +2310,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=WAMOS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=WAMOS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2320,7 +2320,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Wind+Profiler&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=Wind+Profiler&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2330,7 +2330,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=XBT&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&instrument_h%5B%5D=XBT&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             }
@@ -2348,7 +2348,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&granule_data_format_h%5B%5D=GeoTIFF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&granule_data_format_h%5B%5D=GeoTIFF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2358,7 +2358,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&granule_data_format_h%5B%5D=KML&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&granule_data_format_h%5B%5D=KML&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2368,7 +2368,7 @@
               "applied": false,
               "count": 38,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&granule_data_format_h%5B%5D=NetCDF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&granule_data_format_h%5B%5D=NetCDF&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2378,7 +2378,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&granule_data_format_h%5B%5D=RAW&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&granule_data_format_h%5B%5D=RAW&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             }
@@ -2396,7 +2396,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Land+Process+Distributed+Active+Archive+Center+%28LPDAAC%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=Land+Process+Distributed+Active+Archive+Center+%28LPDAAC%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2406,7 +2406,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA+Earth+Sciences+Division+%28ESD%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=NASA+Earth+Sciences+Division+%28ESD%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2416,7 +2416,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=NASA%2FJPL%2FOMG&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=NASA%2FJPL%2FOMG&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2426,7 +2426,7 @@
               "applied": false,
               "count": 39,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Physical+Oceanography+Distributed+Active+Archive+Center+%28PO.DAAC%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=Physical+Oceanography+Distributed+Active+Archive+Center+%28PO.DAAC%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2436,7 +2436,7 @@
               "applied": false,
               "count": 38,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&data_center_h%5B%5D=Salinity+Processes+in+the+Upper+Ocean+Regional+Study+%28SPURS%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=Salinity+Processes+in+the+Upper+Ocean+Regional+Study+%28SPURS%29&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             }
@@ -2454,7 +2454,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=G-LiHT&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&project_h%5B%5D=G-LiHT&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2464,7 +2464,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=OMG&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&project_h%5B%5D=OMG&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2474,7 +2474,7 @@
               "applied": false,
               "count": 38,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&project_h%5B%5D=SPURS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&project_h%5B%5D=SPURS&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             }
@@ -2492,7 +2492,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Airborne"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Airborne"
               },
               "has_children": false
             },
@@ -2502,7 +2502,7 @@
               "applied": false,
               "count": 3,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=ARGO"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=ARGO"
               },
               "has_children": false
             },
@@ -2512,7 +2512,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Drifter"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Drifter"
               },
               "has_children": false
             },
@@ -2522,7 +2522,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Ecomapper"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Ecomapper"
               },
               "has_children": false
             },
@@ -2532,7 +2532,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=G-LiHT"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=G-LiHT"
               },
               "has_children": false
             },
@@ -2542,7 +2542,7 @@
               "applied": false,
               "count": 4,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Mooring"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Mooring"
               },
               "has_children": false
             },
@@ -2552,7 +2552,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=NeutrallyBuoyantFloat"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=NeutrallyBuoyantFloat"
               },
               "has_children": false
             },
@@ -2562,7 +2562,7 @@
               "applied": false,
               "count": 6,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Endeavor"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Endeavor"
               },
               "has_children": false
             },
@@ -2572,7 +2572,7 @@
               "applied": false,
               "count": 5,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Knorr"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Knorr"
               },
               "has_children": false
             },
@@ -2582,7 +2582,7 @@
               "applied": false,
               "count": 11,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Revelle"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Revelle"
               },
               "has_children": false
             },
@@ -2592,7 +2592,7 @@
               "applied": false,
               "count": 3,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Sarmiento"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Sarmiento"
               },
               "has_children": false
             },
@@ -2602,7 +2602,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Thalassa"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=R%2FV+Thalassa"
               },
               "has_children": false
             },
@@ -2612,7 +2612,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=RAWINSONDES"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=RAWINSONDES"
               },
               "has_children": false
             },
@@ -2622,7 +2622,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=S%2FV+Lady+Amber"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=S%2FV+Lady+Amber"
               },
               "has_children": false
             },
@@ -2632,7 +2632,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Saildrone"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Saildrone"
               },
               "has_children": false
             },
@@ -2642,7 +2642,7 @@
               "applied": false,
               "count": 3,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Seaglider"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Seaglider"
               },
               "has_children": false
             },
@@ -2652,7 +2652,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Seasoar"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Seasoar"
               },
               "has_children": false
             },
@@ -2662,7 +2662,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=TenuseGlider"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=TenuseGlider"
               },
               "has_children": false
             },
@@ -2672,7 +2672,7 @@
               "applied": false,
               "count": 2,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Waveglider"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2&platform_h%5B%5D=Waveglider"
               },
               "has_children": false
             }
@@ -2690,7 +2690,7 @@
               "applied": false,
               "count": 40,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=2+-+Geophys.+Variables%2C+Sensor+Coordinates&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&processing_level_id_h%5B%5D=2+-+Geophys.+Variables%2C+Sensor+Coordinates&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2700,7 +2700,7 @@
               "applied": false,
               "count": 1,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&processing_level_id_h%5B%5D=3+-+Gridded+Observations&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&processing_level_id_h%5B%5D=3+-+Gridded+Observations&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             }
@@ -2718,7 +2718,7 @@
               "applied": true,
               "count": 41,
               "links": {
-                "remove": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                "remove": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
               },
               "has_children": false
             },
@@ -2728,7 +2728,7 @@
               "applied": false,
               "count": 40,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=1+to+30+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=1+to+30+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2738,7 +2738,7 @@
               "applied": false,
               "count": 0,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=30+to+100+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=30+to+100+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2748,7 +2748,7 @@
               "applied": false,
               "count": 0,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=100+to+250+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=100+to+250+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2758,7 +2758,7 @@
               "applied": false,
               "count": 0,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=250+to+500+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=250+to+500+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2768,7 +2768,7 @@
               "applied": false,
               "count": 0,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=500+to+1000+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=500+to+1000+meters&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2778,7 +2778,7 @@
               "applied": false,
               "count": 0,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=1+to+10+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=1+to+10+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2788,7 +2788,7 @@
               "applied": false,
               "count": 0,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=10+to+50+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=10+to+50+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2798,7 +2798,7 @@
               "applied": false,
               "count": 0,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=50+to+100+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=50+to+100+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2808,7 +2808,7 @@
               "applied": false,
               "count": 0,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=100+to+250+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=100+to+250+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2818,7 +2818,7 @@
               "applied": false,
               "count": 0,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=250+to+500+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=250+to+500+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2828,7 +2828,7 @@
               "applied": false,
               "count": 0,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=500+to+1000+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=500+to+1000+km&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             },
@@ -2838,7 +2838,7 @@
               "applied": false,
               "count": 0,
               "links": {
-                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=1000+km+%26+beyond&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=2&include_granule_counts=true&options%5Bscience_keywords_h%5D%5Bor%5D=true&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&options%5Bspatial%5D%5Bor%5D=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&include_tags=edsc.extra.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=1000+km+%26+beyond&horizontal_data_resolution_range%5B%5D=0+to+1+meter&include_facets=v2"
               },
               "has_children": false
             }

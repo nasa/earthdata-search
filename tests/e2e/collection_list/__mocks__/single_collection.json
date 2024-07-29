@@ -1,5 +1,6 @@
 {
   "headers": {
+    "access-control-expose-headers": "cmr-hits",
     "cmr-hits": "1"
   },
   "body": {
