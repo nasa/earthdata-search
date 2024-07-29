@@ -182,10 +182,20 @@ export const GranuleFiltersForm = (props) => {
 
   // Handle parsing and submitting metrics for form events
   const handleEventMetrics = (event) => {
-    console.log('🚀 ~ file: GranuleFiltersForm.jsx:186 ~ handleEventMetrics ~ event:', event)
-    console.log('🚀 ~ file: GranuleFiltersForm.jsx:187 ~ handleEventMetrics ~ event.target:', event.target)
     const eventType = event.target.name
     const eventValue = event.target.value
+    const checkboxForms = ['onlineOnly', 'browseOnly']
+    if (checkboxForms.includes(eventType)) {
+      const eventChecked = event.target.checked
+      // Event checked is the current state of the checkbox which we want to take the metric for
+      onMetricsGranuleFilter({
+        type: eventType,
+        value: eventChecked
+      })
+
+      return
+    }
+
     onMetricsGranuleFilter({
       type: eventType,
       value: eventValue
@@ -447,8 +457,13 @@ export const GranuleFiltersForm = (props) => {
                       }
                     }
 
+                    // Take metric when the isRecurring toggle is turned on
+                    onMetricsGranuleFilter({
+                      type: 'Set Recurring',
+                      value: isChecked
+                    })
+
                     // Collect metrics for event
-                    handleEventMetrics(event)
                     setTimeout(() => {
                       handleSubmit()
                     }, 0)

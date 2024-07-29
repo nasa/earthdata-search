@@ -313,7 +313,7 @@ describe('GranuleFiltersForm component', () => {
         })
 
         // TODO the callback for onRecurringToggle is not working
-        test.skip('calls the correct callbacks on onRecurringToggle', () => {
+        test('calls the correct callbacks on onRecurringToggle', () => {
           const { enzymeWrapper, props } = setup({
             values: {
               temporal: {
@@ -336,7 +336,7 @@ describe('GranuleFiltersForm component', () => {
           expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
           expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set Recurring',
-            value: '2019-08-14T23:59:59:999Z'
+            value: true
           })
         })
 
@@ -465,23 +465,25 @@ describe('GranuleFiltersForm component', () => {
           const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
           dataAccessSection.find(Form.Check).at(0).prop('onChange')({
             target: {
-              name: 'test name',
-              value: 'test value'
+              name: 'browseOnly',
+              value: 'true',
+              checked: true
             }
           })
 
           expect(props.handleChange).toHaveBeenCalledTimes(1)
           expect(props.handleChange).toHaveBeenCalledWith({
             target: {
-              name: 'test name',
-              value: 'test value'
+              name: 'browseOnly',
+              value: 'true',
+              checked: true
             }
           })
 
           expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
           expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
-            type: 'test name',
-            value: 'test value'
+            type: 'browseOnly',
+            value: true
           })
         })
       })
@@ -511,23 +513,26 @@ describe('GranuleFiltersForm component', () => {
           const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
           dataAccessSection.find(Form.Check).at(1).prop('onChange')({
             target: {
-              name: 'test name',
-              value: 'test value'
+              name: 'onlineOnly',
+              value: 'true',
+              checked: true
             }
           })
 
           expect(props.handleChange).toHaveBeenCalledTimes(1)
           expect(props.handleChange).toHaveBeenCalledWith({
             target: {
-              name: 'test name',
-              value: 'test value'
+              name: 'onlineOnly',
+              value: 'true',
+              checked: true
+
             }
           })
 
           expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
           expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
-            type: 'test name',
-            value: 'test value'
+            type: 'onlineOnly',
+            value: true
           })
         })
       })
