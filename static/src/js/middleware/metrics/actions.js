@@ -4,6 +4,7 @@ import {
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
+  METRICS_SPATIAL_SELECTION,
   METRICS_TIMELINE,
   METRICS_TIMING,
   METRICS_COLLECTION_SORT_CHANGE
@@ -35,6 +36,11 @@ export const metricsMap = (type) => ({
 
 export const metricsSpatialEdit = (payload) => ({
   type: METRICS_SPATIAL_EDIT,
+  payload
+})
+
+export const metricsSpatialSelection = (payload) => ({
+  type: METRICS_SPATIAL_SELECTION,
   payload
 })
 

@@ -882,7 +882,7 @@
           "tilingIdentificationSystems": null,
           "title": "SENTINEL-1A_SLC",
           "versionId": "1",
-          "services": { "count": 0, "items": null },
+          "services": { "count": 0, "items": [] },
           "granules": {
             "count": 1443699,
             "items": [
@@ -999,8 +999,8 @@
               }
             ]
           },
-          "tools": { "count": 0, "items": null },
-          "variables": { "count": 0, "items": null }
+          "tools": { "count": 0, "items": [] },
+          "variables": { "count": 0, "items": [] }
         }
       ]
     }

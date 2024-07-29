@@ -8,14 +8,12 @@ import notFoundAsset from './image-unavailable.svg'
  * @return {Buffer<Image>} This is what you show the user when an image cannot be found or resized
  */
 export const buildUnavailableImageBuffer = async (height = null, width = null) => {
-  console.log('Not converted type', typeof (notFoundAsset))
   // Sharp svgs must be buffers
   const notFoundPass = Buffer.from(notFoundAsset)
   if (height || width) {
     return resizeImage(notFoundPass, height, width)
   }
 
-  console.log('converted type', typeof (notFoundPass))
   const notFound = await sharp(notFoundPass)
     .toFormat('png')
     .toBuffer()

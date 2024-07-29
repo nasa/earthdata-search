@@ -21,7 +21,7 @@ export const interceptUnauthenticatedCollections = (
     // This log can be useful for debugging failed tests
     // console.log('interceptUnauthenticatedCollections ~ req.body', req.body)
 
-      if (includeDefault && req.body === 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score') {
+      if (includeDefault && req.body === 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score') {
         req.alias = defaultAlias
         req.reply({
           body,

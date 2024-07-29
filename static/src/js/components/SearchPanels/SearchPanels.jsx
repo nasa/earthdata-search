@@ -19,6 +19,7 @@ import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import { collectionSortKeys } from '../../constants/collectionSortKeys'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import CollectionResultsBodyContainer
@@ -177,10 +178,10 @@ class SearchPanels extends PureComponent {
 
     const {
       pageNum: collectionsPageNum = 1,
-      sortKey: collectionsSortKey = ''
+      sortKey: collectionsSortKey = collectionSortKeys.scoreDescending
     } = collectionQuery
 
-    const [activeCollectionsSortKey = ''] = collectionsSortKey
+    const [activeCollectionsSortKey = collectionSortKeys.scoreDescending] = collectionsSortKey
 
     const {
       allIds: collectionAllIds,
@@ -247,8 +248,8 @@ class SearchPanels extends PureComponent {
       },
       {
         label: 'Start Date, Oldest First',
-        isActive: activeGranulesSortKey === 'start_date',
-        onClick: () => onApplyGranuleFilters({ sortKey: 'start_date' })
+        isActive: activeGranulesSortKey === collectionSortKeys.startDateAscending,
+        onClick: () => onApplyGranuleFilters({ sortKey: collectionSortKeys.startDateAscending })
       },
       {
         label: 'End Date, Newest First',
@@ -280,8 +281,7 @@ class SearchPanels extends PureComponent {
     ]
 
     const setCollectionSort = (value) => {
-      const sortKey = value === 'relevance' ? undefined : [value]
-
+      const sortKey = [value]
       onChangeQuery({
         collection: {
           sortKey
@@ -294,23 +294,23 @@ class SearchPanels extends PureComponent {
     const collectionsSortsArray = [
       {
         label: 'Relevance',
-        isActive: activeCollectionsSortKey === '',
-        onClick: () => setCollectionSort('relevance')
+        isActive: activeCollectionsSortKey === collectionSortKeys.scoreDescending,
+        onClick: () => setCollectionSort(collectionSortKeys.scoreDescending)
       },
       {
         label: 'Usage',
-        isActive: activeCollectionsSortKey === '-usage_score',
-        onClick: () => setCollectionSort('-usage_score')
+        isActive: activeCollectionsSortKey === collectionSortKeys.usageDescending,
+        onClick: () => setCollectionSort(collectionSortKeys.usageDescending)
       },
       {
         label: 'Start Date',
-        isActive: activeCollectionsSortKey === 'start_date',
-        onClick: () => setCollectionSort('start_date')
+        isActive: activeCollectionsSortKey === collectionSortKeys.startDateAscending,
+        onClick: () => setCollectionSort(collectionSortKeys.startDateAscending)
       },
       {
         label: 'End Date',
-        isActive: activeCollectionsSortKey === '-ongoing',
-        onClick: () => setCollectionSort('-ongoing')
+        isActive: activeCollectionsSortKey === collectionSortKeys.endDateDescending,
+        onClick: () => setCollectionSort(collectionSortKeys.endDateDescending)
       }
     ]
 

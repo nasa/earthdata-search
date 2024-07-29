@@ -100,8 +100,6 @@ const scaleImage = async (event) => {
 
       imageBuffer = await downloadImageFromSource(imageUrl)
 
-      console.log(`Successfully downloaded ${imageUrl}`)
-
       // Cache the original image, if the requested image was resized
       if (originalCacheKey !== cacheKey && useCache) {
         cacheImage(originalCacheKey, imageBuffer)

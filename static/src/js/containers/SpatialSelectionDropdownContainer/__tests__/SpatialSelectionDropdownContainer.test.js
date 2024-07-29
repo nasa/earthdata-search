@@ -1,27 +1,26 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import { render, screen } from '@testing-library/react'
+import '@testing-library/jest-dom'
 
 import actions from '../../../actions'
+import * as metricsSpatialSelection from '../../../middleware/metrics/actions'
+
 import {
   mapDispatchToProps,
   SpatialSelectionDropdownContainer
 } from '../SpatialSelectionDropdownContainer'
-import SpatialSelectionDropdown from '../../../components/SpatialDisplay/SpatialSelectionDropdown'
 
-Enzyme.configure({ adapter: new Adapter() })
+const onToggleShapefileUploadModal = jest.fn()
+const onMetricsSpatialSelection = jest.fn()
 
-function setup() {
+const setup = () => {
   const props = {
-    onToggleShapefileUploadModal: jest.fn()
+    onToggleShapefileUploadModal,
+    onMetricsSpatialSelection
   }
 
-  const enzymeWrapper = shallow(<SpatialSelectionDropdownContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+  render(<SpatialSelectionDropdownContainer {...props} />)
 }
 
 describe('mapDispatchToProps', () => {
@@ -34,13 +33,22 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith(false)
   })
+
+  test('onMetricsSpatialSelection calls metricsSpatialSelection', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metricsSpatialSelection, 'metricsSpatialSelection')
+
+    mapDispatchToProps(dispatch).onMetricsSpatialSelection({ item: 'value' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ item: 'value' })
+  })
 })
 
 describe('SpatialSelectionDropdownContainer component', () => {
   test('passes its props and renders a single SpatialSelectionDropdown component', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(SpatialSelectionDropdown).length).toBe(1)
-    expect(typeof enzymeWrapper.find(SpatialSelectionDropdown).props().onToggleShapefileUploadModal).toEqual('function')
+    expect(screen.getByRole('button', { name: 'spatial-selection-dropdown' })).toBeInTheDocument()
   })
 })

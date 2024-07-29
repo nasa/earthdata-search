@@ -176,7 +176,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42.1875,-2.40647&sort_key[]=has_granules_or_cwic&sort_key[]=-score'
           },
           {
             body: pointBodyEdited,
@@ -184,7 +184,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42,-2&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score'
+            params: 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=42,-2&sort_key[]=has_granules_or_cwic&sort_key[]=-score'
           }]
         )
 

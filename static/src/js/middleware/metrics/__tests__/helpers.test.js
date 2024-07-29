@@ -114,6 +114,23 @@ describe('helpers', () => {
       const value = computeSpatialType(state)
       expect(value).toEqual('Point')
     })
+
+    test('returns Circle when circle is applied', () => {
+      const state = {
+        query: {
+          collection: {
+            spatial: {
+              boundingBox: undefined,
+              polygon: undefined,
+              point: undefined,
+              circle: ['50.20313,41.0444,1042319']
+            }
+          }
+        }
+      }
+      const value = computeSpatialType(state)
+      expect(value).toEqual('Circle')
+    })
   })
 
   describe('computeTemporalType', () => {

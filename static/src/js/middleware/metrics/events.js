@@ -11,6 +11,7 @@ const { dataLayer = [] } = window
 
 /**
 * Pushes a virtualPageView event on the dataLayer. Only fires on PUSH events.
+* These `PUSH` events only fire during page transitions
 * @param {Object} action - The action.
 * @param {Object} state - The current state.
 */
@@ -178,6 +179,7 @@ export const map = (action) => {
 
 /**
 * Pushes a spatialEdit event on the dataLayer.
+* This event is fired when on the leaflet edit control we edit shapes on the map
 * @param {Object} action - The action.
 */
 export const spatialEdit = (action) => {
@@ -193,6 +195,23 @@ export const spatialEdit = (action) => {
     spatialEditEventAction: type,
     spatialEditEventLabel: '',
     spatialEditEventValue: Math.round(distanceSum)
+  })
+}
+
+/**
+* Pushes a spatialSelection event on the dataLayer.
+* @param {Object} action - The action.
+*/
+export const spatialSelection = (action) => {
+  const { payload } = action
+  const {
+    item: shapeType
+  } = payload
+
+  dataLayer.push({
+    event: 'spatialSelection',
+    spatialSelectionCategory: 'Spatial Selection',
+    spatialSelectionEventLabel: shapeType
   })
 }
 

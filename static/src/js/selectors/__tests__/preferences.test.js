@@ -3,6 +3,7 @@ import {
   getGranuleSortPreference,
   getMapPreferences
 } from '../preferences'
+import { collectionSortKeys } from '../../constants/collectionSortKeys'
 
 describe('getMapPreferences selector', () => {
   test('returns the map preferences', () => {
@@ -42,7 +43,7 @@ describe('getCollectionSortPreference selector', () => {
     const state = {
       preferences: {
         preferences: {
-          collectionSort: '-usage_score'
+          collectionSort: collectionSortKeys.usageDescending
         }
       }
     }
