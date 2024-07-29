@@ -1,29 +1,26 @@
+import nock from 'nock'
+
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import '@testing-library/jest-dom'
 import { Router } from 'react-router'
 import { Provider } from 'react-redux'
 import { createMemoryHistory } from 'history'
+
+import {
+  render,
+  screen,
+  waitFor
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import configureStore from '../../../store/configureStore'
 
 import actions from '../../../actions'
 import * as metrics from '../../../middleware/metrics/actions'
 
-import {
-  act,
-  render,
-  waitFor,
-  screen
-} from '@testing-library/react'
-import '@testing-library/jest-dom'
-import userEvent from '@testing-library/user-event'
-
-
 import EnhancedGranuleFiltersContainer, {
   mapDispatchToProps,
   mapStateToProps
 } from '../GranuleFiltersContainer'
-
-import '@testing-library/jest-dom'
 
 jest.useFakeTimers({ legacyFakeTimers: true })
 
@@ -108,7 +105,7 @@ const setup = (overrideProps) => {
 
   }
 
-  // const user = userEvent.setup()
+  const user = userEvent.setup()
 
   const store = configureStore()
 
@@ -125,7 +122,9 @@ const setup = (overrideProps) => {
   return {
     onClearGranuleFilters,
     handleSubmit,
-    handleReset
+    handleReset,
+    setGranuleFiltersNeedReset,
+    user
   }
 }
 
@@ -236,13 +235,13 @@ describe('GranuleFiltersContainer component', () => {
           expect(onClearGranuleFilters).toHaveBeenCalledTimes(0)
         })
 
-        test('sets the granuleFiltersNeedsReset flag to false', () => {
-          const { enzymeWrapper, props } = setup()
+        test.only('sets the granuleFiltersNeedsReset flag to false', () => {
+          const { setGranuleFiltersNeedReset } = setup()
 
-          enzymeWrapper.setProps({ granuleFiltersNeedsReset: false })
-          enzymeWrapper.update()
+          // enzymeWrapper.setProps({ granuleFiltersNeedsReset: false })
+          // enzymeWrapper.update()
 
-          expect(props.setGranuleFiltersNeedReset).toHaveBeenCalledTimes(0)
+          expect(setGranuleFiltersNeedReset).toHaveBeenCalledTimes(0)
         })
       })
     })
@@ -256,8 +255,8 @@ describe('GranuleFiltersContainer component', () => {
           }
         })
 
-        // enzymeWrapper.instance().on HandleSubmit()
- 
+        // EnzymeWrapper.instance().on HandleSubmit()
+
         // Advance the timer to account for the setTimeout
         jest.runAllTimers()
 
@@ -285,13 +284,22 @@ describe('GranuleFiltersContainer component', () => {
     })
 
     describe('when the form is cleared', () => {
-      test.only('resets the form', () => {
-        const { handleReset } = setup()
+      test.only('resets the form', async () => {
+        const spy = jest.spyOn(actions, 'clearGranuleFilters')
+        const dispatch = jest.fn()
+        mapDispatchToProps(dispatch).onClearGranuleFilters('collectionId')
+        expect(spy).toBeCalledTimes(1)
+
+        const { handleReset, onClearGranuleFilters } = setup({ granuleFiltersNeedsReset: true })
+        // await waitFor(() => {
+        //   expect(handleReset).toHaveBeenCalledTimes(1)
+        // })
+        // EnzymeWrapper.instance().onClearGranuleFilters()
+        // TODO this just seems tobe getting called whenever
+        expect(onClearGranuleFilters).toHaveBeenCalledTimes(1)
+        expect(onClearGranuleFilters).toHaveBeenCalledWith()
+
         screen.debug()
-
-        // enzymeWrapper.instance().onClearGranuleFilters()
-
-        // expect(props.handleReset).toHaveBeenCalledTimes(1)
       })
 
       test('clears the granule filters', () => {

@@ -84,12 +84,13 @@ export const GranuleFiltersContainer = (props) => {
 
   useEffect(() => {
     if (granuleFiltersNeedsReset) {
+      console.log('🚀 ~ file: GranuleFiltersContainer.jsx:87 ~ useEffect ~ granuleFiltersNeedsReset:', granuleFiltersNeedsReset)
       onClearGranuleFilters()
       setGranuleFiltersNeedReset(false)
     }
   }, [granuleFiltersNeedsReset])
 
-  // TODO why do we need ot wait for this
+  // TODO why do we need t wait for this
   const onHandleSubmit = () => {
     // Wait until Formik has changed the values internally with setTimeout
     setTimeout(() => {

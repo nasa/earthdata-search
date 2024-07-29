@@ -313,7 +313,7 @@ export const GranuleFiltersForm = (props) => {
                       type="text"
                       placeholder="Search Single or Multiple Granule IDs..."
                       value={readableGranuleName}
-                      onChange={submitOnChange}
+                      onChange={handleChange}
                       onBlur={submitOnBlur}
                       onKeyPress={submitOnKeypress}
                     />
@@ -346,12 +346,16 @@ export const GranuleFiltersForm = (props) => {
                     value={tilingSystem}
                     onChange={
                       (event) => {
-                      // Call the default change handler
+                        console.log('🚀 ~ file: GranuleFiltersForm.jsx:361 ~ GranuleFiltersForm ~ event:', event.target.value)
+                        // Call the default change handler
+                        console.log('🚀 ~ file: GranuleFiltersForm.jsx:361 ~ GranuleFiltersForm ~ handleChange:', handleChange)
                         handleChange(event)
 
                         const { target = {} } = event
                         const { value = '' } = target
 
+                        // Track tiling system used
+                        handleEventMetrics(event)
                         // If the tiling system is empty clear the grid coordinates
                         if (value === '') {
                           setFieldValue('gridCoords', '')
@@ -376,11 +380,12 @@ export const GranuleFiltersForm = (props) => {
                       <Form.Control
                         name="gridCoords"
                         data-testid="granule-filters__grid-coordinates"
+                        aria-label="granule-filters-grid-coordinates"
                         size="sm"
                         type="text"
                         placeholder="Coordinates..."
                         value={gridCoords}
-                        onChange={submitOnChange}
+                        onChange={handleChange}
                         onBlur={submitOnBlur}
                         onKeyPress={submitOnKeypress}
                         isInvalid={gridCoordsTouched && gridCoordsError}
@@ -448,6 +453,8 @@ export const GranuleFiltersForm = (props) => {
                 }
                 onChangeRecurring={
                   (value) => {
+                    console.log('Setting the recurring toggle 🚀')
+
                     const { temporal: newTemporal } = values
 
                     const newStartDate = moment(newTemporal.startDate || undefined)
@@ -470,7 +477,7 @@ export const GranuleFiltersForm = (props) => {
                     handleSubmit()
                     // Add metrics for recurring temporal filter
                     onMetricsGranuleFilter({
-                      type: 'Set Rec',
+                      type: 'Set Recurring',
                       value
                     })
                   }
@@ -712,7 +719,7 @@ export const GranuleFiltersForm = (props) => {
                             size="sm"
                             placeholder="Example: 30009"
                             value={orbitNumberMax}
-                            onChange={submitOnChange}
+                            onChange={handleChange}
                             onBlur={submitOnBlur}
                             onKeyPress={submitOnKeypress}
                             isInvalid={orbitNumberTouched.max && !!orbitNumberError.max}
@@ -748,7 +755,7 @@ export const GranuleFiltersForm = (props) => {
                             size="sm"
                             placeholder="Example: -45"
                             value={equatorCrossingLongitudeMin}
-                            onChange={submitOnChange}
+                            onChange={handleChange}
                             onBlur={submitOnBlur}
                             onKeyPress={submitOnKeypress}
                             isInvalid={
@@ -781,7 +788,7 @@ export const GranuleFiltersForm = (props) => {
                             size="sm"
                             placeholder="Example: 45"
                             value={equatorCrossingLongitudeMax}
-                            onChange={submitOnChange}
+                            onChange={handleChange}
                             onBlur={submitOnBlur}
                             onKeyPress={submitOnKeypress}
                             isInvalid={
