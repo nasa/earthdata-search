@@ -2,6 +2,7 @@ export const mapPropsToValues = (props) => {
   const {
     granuleQuery
   } = props
+  console.log('🚀 ~ file: mapPropsToValues.jsx:5 ~ mapPropsToValues ~ granuleQuery:', granuleQuery)
 
   const {
     browseOnly = false,

@@ -50,6 +50,7 @@ export const GranuleFiltersForm = (props) => {
     touched,
     values
   } = props
+  console.log('🚀 ~ file: GranuleFiltersForm.jsx:53 ~ GranuleFiltersForm ~ values:', values)
   // TODO readableGranuleName may not be a string
   const {
     browseOnly = false,
@@ -242,7 +243,6 @@ export const GranuleFiltersForm = (props) => {
     console.log('🚀 ~ file: GranuleFiltersForm.jsx:209 ~ submitOnChange ~ event:', event)
     handleChange(event)
     handleSubmit(event)
-    console.log('🚀 ~ file: GranuleFiltersForm.jsx:220 ~ submitOnChange ~ event:', event)
     // Console.log('🚀 ~ file: GranuleFiltersForm.jsx:225 ~ submitOnChange ~ e.target.value:', event.target.value)
     // console.log('🚀 ~ file: GranuleFiltersForm.jsx:225 ~ submitOnChange ~ e.target.value:', event.target)
     // console.log('🚀 ~ file: GranuleFiltersForm.jsx:225 ~ submitOnChange ~ e.target.name:', event.target.name)
@@ -463,7 +463,6 @@ export const GranuleFiltersForm = (props) => {
                       value: isChecked
                     })
 
-                    // Collect metrics for event
                     setTimeout(() => {
                       handleSubmit()
                     }, 0)
