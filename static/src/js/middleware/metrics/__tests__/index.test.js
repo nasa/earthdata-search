@@ -163,7 +163,6 @@ describe('metrics middleware', () => {
     expect(events.granuleFilter).toHaveBeenCalledWith(action)
   })
 
-
   test('calls timing event', () => {
     const { invoke } = createStore()
 

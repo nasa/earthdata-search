@@ -386,7 +386,7 @@ describe('events', () => {
   describe('granuleFilter', () => {
     test('pushes to the dataLayer', () => {
       const action = {
-        type: METRICS_GRANULE_FILTER, 
+        type: METRICS_GRANULE_FILTER,
         payload: {
           type: 'Some Type',
           value: 'Some Value'
