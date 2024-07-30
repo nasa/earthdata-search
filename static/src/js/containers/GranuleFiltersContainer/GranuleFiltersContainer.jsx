@@ -76,7 +76,6 @@ export const GranuleFiltersContainer = (props) => {
     touched,
     values
   } = props
-  console.log('🚀 ~ file: GranuleFiltersContainer.jsx:79 ~ GranuleFiltersContainer ~ dirty:', dirty)
 
   const onClearGranuleFilters = () => {
     handleReset()
@@ -85,24 +84,17 @@ export const GranuleFiltersContainer = (props) => {
 
   useEffect(() => {
     if (granuleFiltersNeedsReset) {
-      console.log('🚀 ~ file: GranuleFiltersContainer.jsx:87 ~ useEffect ~ granuleFiltersNeedsReset:', granuleFiltersNeedsReset)
       onClearGranuleFilters()
       setGranuleFiltersNeedReset(false)
     }
   }, [granuleFiltersNeedsReset])
 
-  // TODO why do we need t wait for this
+  // Wait until Formik has changed the values internally with setTimeout
   const onHandleSubmit = () => {
-    // Wait until Formik has changed the values internally with setTimeout
-    console.log('🚀 ~ file: GranuleFiltersContainer.jsx:101 ~ onHandleSubmit ~ dirty:', dirty)
     if (dirty) {
-      console.log('form was dirty 🤮')
-      console.log('🚀 ~ file: GranuleFiltersContainer.jsx:99 ~ onHandleSubmit ~ dirty:', dirty)
       setTimeout(() => {
         handleSubmit(values)
-
-        // Only submit the form if its values have changed
-      }, 10)
+      }, 0)
     }
   }
 

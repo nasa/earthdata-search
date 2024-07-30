@@ -26,12 +26,15 @@ import './GranuleFiltersForm.scss'
 /**
  * Renders GranuleFiltersForm.
  * @param {Object} props - The props passed into the component.
- * @param {Function} props.handleBlur - Callback function provided by Formik.
- * @param {Function} props.handleChange - Callback function provided by Formik.
- * @param {Function} props.setFieldTouched - Callback function provided by Formik.
- * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Object} props.collectionMetadata - The focused collection metadata.
  * @param {Object} props.errors - Form errors provided by Formik.
+ * @param {Function} props.handleBlur - Callback function provided by Formik.
+ * @param {Function} props.handleChange - Callback function provided by Formik.
+ * @param {Function} props.handleSubmit - Callback function passed from the container.
+ * @param {Object} props.onUndoExcludeGranule - Callback function passed from actions.
+ * @param {Object} props.onMetricsGranuleFilter - Callback function passed from actions.
+ * @param {Function} props.setFieldTouched - Callback function provided by Formik.
+ * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Object} props.touched - Form state provided by Formik.
  * @param {Object} props.values - Form values provided by Formik.
  */
@@ -50,8 +53,7 @@ export const GranuleFiltersForm = (props) => {
     touched,
     values
   } = props
-  console.log('🚀 ~ file: GranuleFiltersForm.jsx:53 ~ GranuleFiltersForm ~ values:', values)
-  // TODO readableGranuleName may not be a string
+
   const {
     browseOnly = false,
     cloudCover = {},
@@ -66,7 +68,6 @@ export const GranuleFiltersForm = (props) => {
     temporal = {}
   } = values
 
-  console.log('🚀 ~ file: GranuleFiltersForm.jsx:61 ~ GranuleFiltersForm ~ readableGranuleName:', readableGranuleName)
   const { isRecurring } = temporal
 
   // For recurring dates we don't show the year, it's displayed on the slider
@@ -93,7 +94,6 @@ export const GranuleFiltersForm = (props) => {
     tags,
     tilingIdentificationSystems = []
   } = collectionMetadata
-  console.log('🚀 ~ file: GranuleFiltersForm.jsx:94 ~ GranuleFiltersForm ~ isOpenSearch:', isOpenSearch)
 
   const capabilities = getValueForTag('collection_capabilities', tags)
 
@@ -151,7 +151,6 @@ export const GranuleFiltersForm = (props) => {
       )
     })
 
-    // TODO this block does not make sense
     // If the form field for tiling system has a value
     if (tilingSystem) {
       // Retrieve predefined coordinate system information
@@ -205,8 +204,6 @@ export const GranuleFiltersForm = (props) => {
 
   // Blur the field and submit the form. Should be used on text fields.
   const submitOnBlur = (event) => {
-    // TODO does this happen on the tab out?
-    console.log('submitting on blur')
     handleBlur(event)
     handleEventMetrics(event)
     handleSubmit(event)
@@ -217,35 +214,19 @@ export const GranuleFiltersForm = (props) => {
     const {
       key = ''
     } = event
-    console.log('🚀 ~ file: GranuleFiltersForm.jsx:192 ~ submitOnKeypress ~ event:', event)
     if (key === 'Enter') {
       handleBlur(event)
-      console.log('🚀 Searched for granule ID text field', readableGranuleName)
-      console.log('🚀 Searched for granule ID text field', orbitNumber)
-      console.log('🚀 Searched for granule ID text field', orbitNumberMin)
-      console.log('🚀 Searched for granule ID text field', orbitNumberMax)
       handleSubmit(event)
 
       // Get metrics for what text-field, strings are being used
       handleEventMetrics(event)
-
-      // Console.log('🚀 ~ file: GranuleFiltersForm.jsx:209 ~ submitOnKeypress ~ event:', event)
-      // onMetricsGranuleFilter({
-      //   type: 'GranuleID',
-      //   value: readableGranuleName
-      // })
     }
   }
 
-  // TODO What is this?
   // Change the field and submit the form. Should be used on checkboxes or selects.
   const submitOnChange = (event) => {
-    console.log('🚀 ~ file: GranuleFiltersForm.jsx:209 ~ submitOnChange ~ event:', event)
     handleChange(event)
     handleSubmit(event)
-    // Console.log('🚀 ~ file: GranuleFiltersForm.jsx:225 ~ submitOnChange ~ e.target.value:', event.target.value)
-    // console.log('🚀 ~ file: GranuleFiltersForm.jsx:225 ~ submitOnChange ~ e.target.value:', event.target)
-    // console.log('🚀 ~ file: GranuleFiltersForm.jsx:225 ~ submitOnChange ~ e.target.name:', event.target.name)
 
     // Get metrics for what checkbox was selected
     handleEventMetrics(event)
@@ -356,9 +337,7 @@ export const GranuleFiltersForm = (props) => {
                     value={tilingSystem}
                     onChange={
                       (event) => {
-                        console.log('🚀 ~ file: GranuleFiltersForm.jsx:361 ~ GranuleFiltersForm ~ event:', event.target.value)
                         // Call the default change handler
-                        console.log('🚀 ~ file: GranuleFiltersForm.jsx:361 ~ GranuleFiltersForm ~ handleChange:', handleChange)
                         handleChange(event)
 
                         const { target = {} } = event
@@ -463,6 +442,7 @@ export const GranuleFiltersForm = (props) => {
                       value: isChecked
                     })
 
+                    // TODO why here and not the other
                     setTimeout(() => {
                       handleSubmit()
                     }, 0)
@@ -470,8 +450,6 @@ export const GranuleFiltersForm = (props) => {
                 }
                 onChangeRecurring={
                   (value) => {
-                    console.log('Setting the recurring toggle 🚀')
-
                     const { temporal: newTemporal } = values
 
                     const newStartDate = moment(newTemporal.startDate || undefined)
@@ -492,8 +470,8 @@ export const GranuleFiltersForm = (props) => {
                     setFieldValue('temporal.recurringDayEnd', newEndDate.year(value.min).dayOfYear())
 
                     handleSubmit()
-                    // Add metrics for recurring temporal filter
-                    // TODO this is for updates
+
+                    // Add metrics for recurring temporal filter updates
                     onMetricsGranuleFilter({
                       type: 'Set Recurring',
                       value
@@ -512,13 +490,13 @@ export const GranuleFiltersForm = (props) => {
                       setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
                     }
 
+                    handleSubmit()
+
                     // Submit usage metric for setting Start Date granule filter
                     onMetricsGranuleFilter({
                       type: 'Set Start Date',
                       value
                     })
-
-                    handleSubmit()
                   }
                 }
                 onSubmitEnd={
@@ -533,13 +511,13 @@ export const GranuleFiltersForm = (props) => {
                       setFieldValue('temporal.recurringDayEnd', endDate.dayOfYear())
                     }
 
+                    handleSubmit()
+
                     // Submit usage metric for setting End Date granule filter
                     onMetricsGranuleFilter({
                       type: 'Set End Date',
                       value
                     })
-
-                    handleSubmit()
                   }
                 }
               />

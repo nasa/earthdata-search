@@ -152,7 +152,6 @@ export const defaultClick = (action) => {
 export const timeline = (action) => {
   const { payload } = action
   const { eventLabel } = payload
-  console.log('🚀 ~ file: events.js:155 ~ timeline ~ payload:', payload)
 
   dataLayer.push({
     event: 'timeline',
@@ -189,7 +188,6 @@ export const spatialEdit = (action) => {
     distanceSum,
     type
   } = payload
-  console.log('🚀 ~ file: events.js:191 ~ spatialEdit ~ payload:', payload)
 
   dataLayer.push({
     event: 'spatialEdit',
@@ -231,7 +229,6 @@ export const granuleFilter = (action) => {
   console.log('🚀 ~ file: events.js:231 ~ granuleFilter ~ type:', type)
   console.log('🚀 ~ file: events.js:231 ~ granuleFilter ~ value:', value)
   console.log('🚀 ~ file: events.js:231 ~ granuleFilter ~ payload:', payload)
-  // TODO data
   dataLayer.push({
     event: 'granuleFilter',
     granuleFilterCategory: 'Granule Filter',

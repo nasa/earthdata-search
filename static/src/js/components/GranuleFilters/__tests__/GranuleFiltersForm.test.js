@@ -156,7 +156,6 @@ describe('GranuleFiltersForm component', () => {
         expect(enzymeWrapper.find(SidebarFiltersItem).at(0).prop('heading')).toEqual('Granule Search')
 
         const granuleIdTextField = enzymeWrapper.find(SidebarFiltersItem).at(0)
-        console.log('🚀 ~ file: GranuleFiltersForm.test.js:156 ~ test ~ granuleIdTextField:', granuleIdTextField)
 
         console.log(enzymeWrapper.debug())
         expect(granuleIdTextField.find(FormControl).prop('value')).toEqual('')
