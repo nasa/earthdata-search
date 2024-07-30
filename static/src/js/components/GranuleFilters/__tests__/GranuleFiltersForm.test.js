@@ -309,7 +309,6 @@ describe('GranuleFiltersForm component', () => {
           })
         })
 
-        // TODO the callback for onRecurringToggle is not working
         test('calls the correct callbacks on onRecurringToggle', () => {
           const { enzymeWrapper, props } = setup({
             values: {

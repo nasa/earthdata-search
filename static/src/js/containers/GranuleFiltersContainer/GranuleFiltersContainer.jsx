@@ -89,13 +89,12 @@ export const GranuleFiltersContainer = (props) => {
     }
   }, [granuleFiltersNeedsReset])
 
-  // TODO why do we need ot wait for this
   const onHandleSubmit = () => {
     // Wait until Formik has changed the values internally with setTimeout
     setTimeout(() => {
       // Only submit the form if its values have changed
       if (dirty) handleSubmit(values)
-    }, 10)
+    }, 0)
   }
 
   const {
