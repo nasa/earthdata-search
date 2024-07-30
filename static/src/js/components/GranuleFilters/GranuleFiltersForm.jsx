@@ -922,7 +922,10 @@ GranuleFiltersForm.propTypes = {
     dayNightFlag: PropTypes.string,
     equatorCrossingDate: PropTypes.shape({}),
     equatorCrossingLongitude: PropTypes.shape({}),
-    readableGranuleName: PropTypes.string,
+    readableGranuleName: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
     gridCoords: PropTypes.string,
     onlineOnly: PropTypes.bool,
     orbitNumber: PropTypes.shape({}),
