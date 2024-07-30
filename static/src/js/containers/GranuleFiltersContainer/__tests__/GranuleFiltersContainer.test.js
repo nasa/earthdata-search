@@ -81,7 +81,7 @@ const setup = (overrideProps) => {
 
   // `Formik` wrapper mock around component to set context
   // `Validation schema` and `handleSubmit` are not needed for mock but, used here for better mock to the real component
-  const EnhancedGranuleFiltersContainerTest = withFormik({
+  const EnhancedGranuleFiltersContainer = withFormik({
     enableReinitialize: true,
     validationSchema,
     mapPropsToValues: () => ({ granuleQuery: {} }),
@@ -90,11 +90,11 @@ const setup = (overrideProps) => {
 
   // `formikBag` is the internal state of formik which we are manually going to override to match our passed props
   let formikBag
-
+  // TODO update with the new way `formik` wants us to render these inline without `render` prop
   render(
     <Provider store={store}>
       <Router history={history}>
-        <EnhancedGranuleFiltersContainerTest
+        <EnhancedGranuleFiltersContainer
           render={
             () => {
               formikBag = props
@@ -203,7 +203,7 @@ describe('GranuleFiltersContainer component', () => {
           expect(onClearGranuleFilters).toHaveBeenCalledTimes(1)
         })
 
-        test('calls onClearGranuleFilters ', () => {
+        test('calls handleReset ', () => {
           const { handleReset } = setup({ granuleFiltersNeedsReset: true })
 
           expect(handleReset).toHaveBeenCalledTimes(1)
