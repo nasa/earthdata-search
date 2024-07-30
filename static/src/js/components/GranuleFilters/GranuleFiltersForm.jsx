@@ -25,14 +25,18 @@ import './GranuleFiltersForm.scss'
 
 /**
  * Renders GranuleFiltersForm.
- * @param {Object} props - The props passed into the component.
- * @param {Object} props.collectionMetadata - The focused collection metadata.
+ * @param {Object} props.collectionMetadata - The focused collections metadata.
  * @param {Object} props.errors - Form errors provided by Formik.
+ * @param {Object} props.excludedGranuleIds - The list of excluded granules.
  * @param {Function} props.handleBlur - Callback function provided by Formik.
  * @param {Function} props.handleChange - Callback function provided by Formik.
  * @param {Function} props.handleSubmit - Callback function passed from the container.
- * @param {Object} props.onUndoExcludeGranule - Callback function passed from actions.
+ * @param {Function} props.setFieldTouched - Callback function provided by Formik.
+ * @param {Function} props.setFieldValue - Callback function provided by Formik.
+ * @param {Object} props - The props passed into the component.
+ * @param {Object} props.collectionMetadata - The focused collection metadata.
  * @param {Object} props.onMetricsGranuleFilter - Callback function passed from actions.
+ * @param {Object} props.onUndoExcludeGranule - Callback function passed from actions.
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
  * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Object} props.touched - Form state provided by Formik.
@@ -46,8 +50,8 @@ export const GranuleFiltersForm = (props) => {
     handleBlur,
     handleChange,
     handleSubmit,
-    onUndoExcludeGranule,
     onMetricsGranuleFilter,
+    onUndoExcludeGranule,
     setFieldTouched,
     setFieldValue,
     touched,
