@@ -13,8 +13,9 @@ export const interceptUnauthenticatedCollections = async ({
   page
 }) => {
   // Intercept collections call before every test, its generic and doesn't change between tests
-  await page.route(/search\/collections.json/, async (route) => {
+  await page.route(/search\/collections/, async (route) => {
     const query = route.request().postData()
+    console.log('🚀 ~ file: interceptUnauthenticatedCollections.js:18 ~ awaitpage.route ~ query:', query)
 
     if (includeDefault && query === 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score') {
       await route.fulfill({

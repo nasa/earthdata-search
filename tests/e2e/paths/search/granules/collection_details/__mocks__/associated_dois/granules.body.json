@@ -1,0 +1,8 @@
+{
+  "feed": {
+    "updated": "2021-06-04T16:25:02.293Z",
+    "id": "https://cmr.uat.earthdata.nasa.gov:443/search/granules.json?cloud_cover=&echo_collection_id=C1240222820-ECHO_REST&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20&sort_key=-start_date",
+    "title": "ECHO granule metadata",
+    "entry": []
+  }
+}
