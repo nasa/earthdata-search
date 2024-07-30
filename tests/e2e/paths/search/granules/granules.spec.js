@@ -1180,32 +1180,16 @@ test.describe('Path /search/granules', () => {
   })
 
   test.describe('When the path is loaded with a collection with an active subscription', () => {
-    test('loads with the subscription indicator active', async ({ page }) => {
-      page.on('console', (msg) => {
-        console.log(`Browser console: ${msg.text()}`)
-      })
-
+    test('loads with the subscription indicator active', async ({ page, context }) => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 229
 
+      await login(context)
+
       await page.route('**/search/collections.json', async (route) => {
         const request = route.request()
-        const body = JSON.parse(request.postData())
-        expect(body).toEqual({
-          consortium: [],
-          has_granules_or_cwic: true,
-          include_facets: 'v2',
-          include_granule_counts: true,
-          include_has_granules: true,
-          include_tags: 'edsc.*,opensearch.granule.osdd',
-          options: {},
-          page_num: 1,
-          page_size: 20,
-          point: ['-77.04119,38.80585'],
-          service_type: [],
-          sort_key: ['has_granules_or_cwic', '-usage_score'],
-          tag_key: []
-        })
+        const body = request.postData()
+        expect(body).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=-77.04119,38.80585&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
         await route.fulfill({
           body: JSON.stringify(commonBody),
@@ -1215,18 +1199,8 @@ test.describe('Path /search/granules', () => {
 
       await page.route('**/search/granules.json', async (route) => {
         const request = route.request()
-        const body = JSON.parse(request.postData())
-        expect(body).toEqual({
-          echo_collection_id: 'C1214470488-ASF',
-          options: {},
-          page_num: 1,
-          page_size: 20,
-          concept_id: [],
-          point: ['-77.04119,38.80585'],
-          exclude: {},
-          sort_key: '-start_date',
-          two_d_coordinate_system: {}
-        })
+        const body = request.postData()
+        expect(body).toEqual('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&point[]=-77.04119,38.80585&sort_key=-start_date')
 
         await route.fulfill({
           body: JSON.stringify(subscriptionGranulesBody),
@@ -1240,13 +1214,8 @@ test.describe('Path /search/granules', () => {
 
       await page.route('**/search/granules/timeline', async (route) => {
         const request = route.request()
-        const body = JSON.parse(request.postData())
-        expect(body).toEqual({
-          end_date: '2023-12-01T00:00:00.000Z',
-          interval: 'day',
-          start_date: '2018-12-01T00:00:00.000Z',
-          concept_id: ['C1214470488-ASF']
-        })
+        const body = request.postData()
+        expect(body).toEqual('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
         await route.fulfill({
           body: JSON.stringify(subscriptionTimelineBody),
@@ -1259,6 +1228,7 @@ test.describe('Path /search/granules', () => {
         const body = JSON.parse(request.postData())
 
         if (body.data.query === graphQlGetSubscriptionsQuery) {
+          console.log('Responding to GetSubscriptions query 🚀🚀🚀🚀🚀🚀')
           await route.fulfill({
             body: JSON.stringify({
               data: {
