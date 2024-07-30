@@ -226,9 +226,6 @@ export const granuleFilter = (action) => {
     type,
     value
   } = payload
-  console.log('🚀 ~ file: events.js:231 ~ granuleFilter ~ type:', type)
-  console.log('🚀 ~ file: events.js:231 ~ granuleFilter ~ value:', value)
-  console.log('🚀 ~ file: events.js:231 ~ granuleFilter ~ payload:', payload)
   dataLayer.push({
     event: 'granuleFilter',
     granuleFilterCategory: 'Granule Filter',
