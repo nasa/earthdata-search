@@ -19,6 +19,7 @@ jest.mock('../events', () => ({
   collectionSortChange: jest.fn(),
   dataAccess: jest.fn(),
   defaultClick: jest.fn(),
+  granuleFilter: jest.fn(),
   map: jest.fn(),
   relatedCollection: jest.fn(),
   spatialEdit: jest.fn(),
