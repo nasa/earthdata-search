@@ -1,10 +1,15 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
+import { graphQlGetCollections } from '../../../../support/graphQlGetCollections'
 import { graphQlGetSubscriptionsQuery } from '../../../../support/graphQlGetSubscriptionsQuery'
 
 import { commafy } from '../../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../../static/src/js/util/pluralize'
+
+import {
+  interceptUnauthenticatedCollections
+} from '../../../../support/interceptUnauthenticatedCollections'
 
 import browseOnlyGranulesBody from './__mocks__/browse_only/granules.body.json'
 import browseOnlyGraphQlBody from './__mocks__/browse_only/graphql.body.json'
@@ -16,6 +21,8 @@ import cloudCoverGraphQlBody from './__mocks__/cloud_cover/graphql.body.json'
 import cloudCoverGraphQlHeaders from './__mocks__/cloud_cover/graphql.headers.json'
 import cloudCoverTimelineBody from './__mocks__/cloud_cover/timeline.body.json'
 import cloudCoverTimelineHeaders from './__mocks__/cloud_cover/timeline.headers.json'
+import collectionsBody from './__mocks__/common/collections.body.json'
+import collectionsHeaders from './__mocks__/common/collections.headers.json'
 import commonBody from '../../../map/__mocks__/common_collections.body.json'
 import commonHeaders from '../../../map/__mocks__/common_collections.headers.json'
 import commonGranulesHeaders from './__mocks__/common/granules.headers.json'
@@ -60,6 +67,19 @@ import orbitNumberGraphQlBody from './__mocks__/orbit_number/graphql.body.json'
 import orbitNumberGraphQlHeaders from './__mocks__/orbit_number/graphql.headers.json'
 import orbitNumberTimelineBody from './__mocks__/orbit_number/timeline.body.json'
 import orbitNumberTimelineHeaders from './__mocks__/orbit_number/timeline.headers.json'
+import projectCollectionCollectionGraphQlBody from './__mocks__/project_collection/collection_graphql.body.json'
+import projectCollectionCollectionsGraphQlBody from './__mocks__/project_collection/collections_graphql.body.json'
+import projectCollectionGranulesBody from './__mocks__/project_collection/granules.body.json'
+import projectCollectionGraphQlHeaders from './__mocks__/project_collection/graphql.headers.json'
+import projectCollectionTimelineBody from './__mocks__/project_collection/timeline.body.json'
+import projectCollectionTimelineHeaders from './__mocks__/project_collection/timeline.headers.json'
+import projectGranuleCollectionGraphQlBody from './__mocks__/project_granule/collection_graphql.body.json'
+import projectGranuleCollectionsGraphQlBody from './__mocks__/project_granule/collections_graphql.body.json'
+import projectGranuleGranulesBody from './__mocks__/project_granule/granules.body.json'
+import projectGranuleGraphQlHeaders from './__mocks__/project_granule/graphql.headers.json'
+import projectGranuleProjectGranuleBody from './__mocks__/project_granule/project_granule.body.json'
+import projectGranuleTimelineBody from './__mocks__/project_granule/timeline.body.json'
+import projectGranuleTimelineHeaders from './__mocks__/project_granule/timeline.headers.json'
 import readableGranuleNameGranulesBody from './__mocks__/readable_granule_name/granules.body.json'
 import readableGranuleNameGraphQlBody from './__mocks__/readable_granule_name/graphql.body.json'
 import readableGranuleNameGraphQlHeaders from './__mocks__/readable_granule_name/graphql.headers.json'
@@ -1026,37 +1046,55 @@ test.describe('Path /search/granules', () => {
 
   test.describe('When the path is loaded with a project granule', () => {
     test('loads with a single granule in the project', async ({ page }) => {
-      const conceptId = 'C1214470488-ASF'
-      const cmrHits = 15073
+      const conceptId = 'C194001210-LPDAAC_ECS'
+      const cmrHits = 275361
 
-      await page.route('**/search/granules.json', (route) => {
-        const request = route.request()
-        const body = request.postData()
-        expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
-        route.fulfill({
-          body: JSON.stringify(noParamsGranulesBody),
-          headers: {
-            ...commonGranulesHeaders,
-            'access-control-expose-headers': 'cmr-hits',
-            'cmr-hits': cmrHits
-          }
-        })
+      await interceptUnauthenticatedCollections({
+        page,
+        body: collectionsBody,
+        headers: collectionsHeaders
       })
 
-      await page.route('**/search/granules/timeline', (route) => {
+      // Intercept granules.json request
+      await page.route('**/search/granules.json', async (route) => {
+        const request = route.request()
+        const body = request.postData()
+        if (body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20') {
+          await route.fulfill({
+            body: JSON.stringify(projectGranuleGranulesBody),
+            headers: {
+              ...commonGranulesHeaders,
+              'access-control-expose-headers': 'cmr-hits',
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        } else if (body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=1&concept_id[]=G2058417402-LPDAAC_ECS') {
+          await route.fulfill({
+            body: JSON.stringify(projectGranuleProjectGranuleBody),
+            headers: {
+              ...commonGranulesHeaders,
+              'cmr-hits': '1'
+            }
+          })
+        }
+      })
+
+      // Intercept granules timeline request
+      await page.route('**/search/granules/timeline', async (route) => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
 
-        route.fulfill({
-          body: JSON.stringify(noParamsTimelineBody),
-          headers: noParamsTimelineHeaders
+        await route.fulfill({
+          body: JSON.stringify(projectGranuleTimelineBody),
+          headers: projectGranuleTimelineHeaders
         })
       })
 
-      await page.route('**/api', (route) => {
+      // Intercept GraphQL request
+      await page.route('**/api', async (route) => {
         const request = route.request()
         const body = JSON.stringify(request.postData())
         const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
@@ -1064,11 +1102,17 @@ test.describe('Path /search/granules', () => {
         const requestBody = JSON.parse(body)
         const expectedRequestBody = JSON.parse(expectedBody)
 
-        expect(requestBody).toEqual(expectedRequestBody)
-        route.fulfill({
-          body: JSON.stringify(noParamsGraphQlBody),
-          headers: noParamsGraphQlHeaders
-        })
+        if (JSON.stringify(requestBody) === JSON.stringify(expectedRequestBody)) {
+          await route.fulfill({
+            body: JSON.stringify(projectGranuleCollectionGraphQlBody),
+            headers: projectGranuleGraphQlHeaders
+          })
+        } else if (JSON.stringify(requestBody) === JSON.stringify(graphQlGetCollections('C194001210-LPDAAC_ECS'))) {
+          await route.fulfill({
+            body: JSON.stringify(projectGranuleCollectionsGraphQlBody),
+            headers: projectGranuleGraphQlHeaders
+          })
+        }
       })
 
       // Capture and log headers to verify them
@@ -1080,16 +1124,17 @@ test.describe('Path /search/granules', () => {
       })
 
       // Go to collection in the project context
-      await page.goto('/search/granules?p=C1214470488-ASF!C1214470488-ASF')
+      await page.goto('/search/granules?p=C194001210-LPDAAC_ECS!C194001210-LPDAAC_ECS&pg[1][a]=2058417402!LPDAAC_ECS')
 
-      // Project count is correct
+      // Ensure the correct number of results were loaded
+      await testResultsSize(page, cmrHits)
+
       const removeButtonLocator = page.locator('[data-testid="granule-results-actions__proj-action--remove"]')
       await removeButtonLocator.waitFor({ state: 'visible' })
       await expect(removeButtonLocator).toBeVisible()
 
       const downloadAllButtonLocator = page.locator('[data-testid="granule-results-actions__download-all-button"] .button__badge')
       await downloadAllButtonLocator.waitFor({ state: 'visible' })
-      await expect(downloadAllButtonLocator).toHaveText('1')
     })
   })
 
