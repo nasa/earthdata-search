@@ -26,7 +26,6 @@ const savedProjectReducer = (state = initialState, action = {}) => {
       }
     }
 
-    // TODO this is likely where we can fix the project issue
     case LOCATION_CHANGE: {
       // If we are navigating to downloads, contact info, or saved projects,
       // forget about the current saved project

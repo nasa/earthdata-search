@@ -159,8 +159,6 @@ describe('GranuleFiltersForm component', () => {
 
         console.log(enzymeWrapper.debug())
         expect(granuleIdTextField.find(FormControl).prop('value')).toEqual('')
-
-        // Expect(enzymeWrapper.find(SidebarFiltersItem).at(0).prop('heading')).toEqual('Granule Search')
       })
 
       test('displays text field value', () => {

@@ -34,7 +34,7 @@ export const mapDispatchToProps = (dispatch) => ({
   onMetricsGranuleFilter:
     (data) => dispatch(metricsGranuleFilter(data))
 })
-// https://testing-library.com/docs/example-react-formik
+
 /**
  * Renders GranuleFiltersContainer.
  * @param {Object} props - The props passed into the component.
@@ -89,13 +89,13 @@ export const GranuleFiltersContainer = (props) => {
     }
   }, [granuleFiltersNeedsReset])
 
-  // Wait until Formik has changed the values internally with setTimeout
+  // TODO why do we need ot wait for this
   const onHandleSubmit = () => {
-    if (dirty) {
-      setTimeout(() => {
-        handleSubmit(values)
-      }, 0)
-    }
+    // Wait until Formik has changed the values internally with setTimeout
+    setTimeout(() => {
+      // Only submit the form if its values have changed
+      if (dirty) handleSubmit(values)
+    }, 10)
   }
 
   const {

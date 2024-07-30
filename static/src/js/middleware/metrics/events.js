@@ -207,7 +207,6 @@ export const spatialSelection = (action) => {
   const {
     item: shapeType
   } = payload
-  console.log('🚀 ~ file: events.js:210 ~ spatialSelection ~ payload:', payload)
 
   dataLayer.push({
     event: 'spatialSelection',
@@ -226,6 +225,7 @@ export const granuleFilter = (action) => {
     type,
     value
   } = payload
+
   dataLayer.push({
     event: 'granuleFilter',
     granuleFilterCategory: 'Granule Filter',
