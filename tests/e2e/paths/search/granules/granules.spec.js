@@ -1,11 +1,7 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
-import { graphQlGetCollections } from '../../../../support/graphQlGetCollections'
 import { graphQlGetSubscriptionsQuery } from '../../../../support/graphQlGetSubscriptionsQuery'
-import {
-  interceptUnauthenticatedCollections
-} from '../../../../support/interceptUnauthenticatedCollections'
 
 import { commafy } from '../../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../../static/src/js/util/pluralize'
@@ -20,8 +16,6 @@ import cloudCoverGraphQlBody from './__mocks__/cloud_cover/graphql.body.json'
 import cloudCoverGraphQlHeaders from './__mocks__/cloud_cover/graphql.headers.json'
 import cloudCoverTimelineBody from './__mocks__/cloud_cover/timeline.body.json'
 import cloudCoverTimelineHeaders from './__mocks__/cloud_cover/timeline.headers.json'
-import collectionsBody from './__mocks__/common/collections.body.json'
-import collectionsHeaders from './__mocks__/common/collections.headers.json'
 import commonBody from '../../../map/__mocks__/common_collections.body.json'
 import commonHeaders from '../../../map/__mocks__/common_collections.headers.json'
 import commonGranulesHeaders from './__mocks__/common/granules.headers.json'
@@ -66,19 +60,6 @@ import orbitNumberGraphQlBody from './__mocks__/orbit_number/graphql.body.json'
 import orbitNumberGraphQlHeaders from './__mocks__/orbit_number/graphql.headers.json'
 import orbitNumberTimelineBody from './__mocks__/orbit_number/timeline.body.json'
 import orbitNumberTimelineHeaders from './__mocks__/orbit_number/timeline.headers.json'
-import projectCollectionCollectionGraphQlBody from './__mocks__/project_collection/collection_graphql.body.json'
-import projectCollectionCollectionsGraphQlBody from './__mocks__/project_collection/collections_graphql.body.json'
-import projectCollectionGranulesBody from './__mocks__/project_collection/granules.body.json'
-import projectCollectionGraphQlHeaders from './__mocks__/project_collection/graphql.headers.json'
-import projectCollectionTimelineBody from './__mocks__/project_collection/timeline.body.json'
-import projectCollectionTimelineHeaders from './__mocks__/project_collection/timeline.headers.json'
-import projectGranuleCollectionGraphQlBody from './__mocks__/project_granule/collection_graphql.body.json'
-import projectGranuleCollectionsGraphQlBody from './__mocks__/project_granule/collections_graphql.body.json'
-import projectGranuleGranulesBody from './__mocks__/project_granule/granules.body.json'
-import projectGranuleGraphQlHeaders from './__mocks__/project_granule/graphql.headers.json'
-import projectGranuleProjectGranuleBody from './__mocks__/project_granule/project_granule.body.json'
-import projectGranuleTimelineBody from './__mocks__/project_granule/timeline.body.json'
-import projectGranuleTimelineHeaders from './__mocks__/project_granule/timeline.headers.json'
 import readableGranuleNameGranulesBody from './__mocks__/readable_granule_name/granules.body.json'
 import readableGranuleNameGraphQlBody from './__mocks__/readable_granule_name/graphql.body.json'
 import readableGranuleNameGraphQlHeaders from './__mocks__/readable_granule_name/graphql.headers.json'
@@ -1044,7 +1025,7 @@ test.describe('Path /search/granules', () => {
   })
 
   test.describe('When the path is loaded with a project granule', () => {
-    test('loads with a single granule in the project', async ({ page, context }) => {
+    test('loads with a single granule in the project', async ({ page }) => {
       const conceptId = 'C1214470488-ASF'
       const cmrHits = 15073
 
