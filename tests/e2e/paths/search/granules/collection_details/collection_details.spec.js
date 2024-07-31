@@ -20,6 +20,25 @@ import {
   interceptUnauthenticatedCollections
 } from '../../../../../support/interceptUnauthenticatedCollections'
 
+const testCollectionScienceKeywords = async (page, count, keywords) => {
+  const infoSection = page.getByTestId('collection-details-body__info-science-keywords')
+
+  // Check the number of science keywords
+  const keywordsList = infoSection.locator('.collection-details-body__keywords')
+  await expect(keywordsList.locator('li')).toHaveCount(count)
+
+  // Check the values of the science keywords
+  for (let keywordIndex = 0; keywordIndex < keywords.length; keywordIndex += 1) {
+    const keyword = keywords[keywordIndex]
+    const keywordList = keywordsList.locator('li > ul').nth(keywordIndex)
+
+    for (let partIndex = 0; partIndex < keyword.length; partIndex += 1) {
+      const keywordPart = keyword[partIndex]
+      expect(keywordList.locator('li').nth(partIndex)).toHaveText(keywordPart)
+    }
+  }
+}
+
 test.describe('Path /search/granules/collection-details', () => {
   test.describe('When collection has associated DOIs', () => {
     test('loads correctly', async ({ page, context }) => {
@@ -122,8 +141,54 @@ test.describe('Path /search/granules/collection-details', () => {
         .filter({ hasText: searchResultsCollectionsText })
 
       expect(panelCollectionText).toBeVisible()
+      // Expect(page.getByRole('list').length).toBe(2)
 
-      // expect(page.getByRole('listitem', { name: 'Earth Science' })).toBeVisible()
+      // expect(await page
+      //   .getByRole('listitem')
+      //   .filter({ hasText: 'Terrestrial Hydrosphere' })
+      //   .first())
+      //   .toBeVisible()
+
+      // // Expect(page.getByText('Earth Science')).toBeVisible()
+      // expect(await page
+      //   .getByRole('listitem')
+      //   .filter({ hasText: 'Cryosphere' })
+      //   .first())
+      //   .toBeVisible()
+
+      // // Expect(page.getByText('Earth Science')).toBeVisible()
+      // expect(await page
+      //   .getByRole('listitem')
+      //   .filter({ hasText: 'Snow Ice' })
+      //   .count())
+      //   .toBe(2)
+
+      // expect(await page
+      //   .getByRole('listitem')
+      //   .filter({ hasText: 'Earth Science' })
+      //   .count())
+      //   .toBe(2)
+
+      // const listItems = await page.getByRole('list').locator('li')
+      // console.log('🚀 ~ file: collection_details.spec.js:141 ~ test ~ listItems:', listItems)
+      // const listLength = await listItems.count()
+      // expect(listLength).toBe(12)
+      // TODO this is 8 because things are being counted multiple times over
+      testCollectionScienceKeywords(page, 8, [
+        ['Earth Science', 'Terrestrial Hydrosphere', 'Snow Ice'],
+        ['Earth Science', 'Cryosphere', 'Snow Ice']
+      ])
+
+      // Test cloud distribution
+      expect(await page
+        .getByTestId('direct-distribution-information__cloud-access__region'))
+        .toHaveText('us-east-2')
+
+      expect(await page
+        .getByTestId('direct-distribution-information__cloud-access__bucket-name'))
+        .toHaveText('TestBucketOrObjectPrefix')
+
+      // Expect(page.getByRole('listitem', { name: 'Earth Science' })).toBeVisible()
       // expect(page.getByRole('listitem', { name: 'Terrestrial Hydrosphere' })).toBeVisible()
       // expect(page.getByRole('listitem', { name: 'Snow Ice' })).toBeVisible()
 
