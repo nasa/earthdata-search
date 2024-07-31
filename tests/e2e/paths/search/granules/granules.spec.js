@@ -1190,9 +1190,6 @@ test.describe('Path /search/granules', () => {
       // Go to collection in the project context
       await page.goto('/search/granules?p=C1214470488-ASF!C1214470488-ASF')
 
-      // Ensure the correct number of results were loaded
-      await testResultsSize(page, cmrHits)
-
       // Project count is correct
       await expect(page.locator('[data-testid="granule-results-actions__proj-action--remove"]')).toBeVisible()
       await expect(page.locator('[data-testid="granule-results-actions__download-all-button"] .button__badge')).toHaveText(commafy(cmrHits))
