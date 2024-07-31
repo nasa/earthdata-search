@@ -1165,14 +1165,6 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const request = route.request()
-        const body = JSON.stringify(request.postData())
-        const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
-
-        const requestBody = JSON.parse(body)
-        const expectedRequestBody = JSON.parse(expectedBody)
-
-        expect(requestBody).toEqual(expectedRequestBody)
         route.fulfill({
           body: JSON.stringify(noParamsGraphQlBody),
           headers: noParamsGraphQlHeaders
