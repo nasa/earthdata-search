@@ -139,7 +139,8 @@ class DatepickerContainer extends Component {
     // A valid date will come be passed as an ISO string. Check to see if the date is a valid ISO string,
     // if so, we convert it to a UTC string in our desired format. If the value is not a valid ISO date,
     // then we leave it untouched and pass it to the input.
-    const isValidISO = moment.utc(value, moment.ISO_8601, true).isValid()
+    // We are using YYYY-MM-DDTHH:m:s.SSSZ instead of moment.ISO_8601 so that it doesn't autocomplete every time there's a valid ISO format
+    const isValidISO = moment.utc(value, 'YYYY-MM-DDTHH:mm:ss.SSSZ', true).isValid()
 
     if (isValidISO) {
       value = moment.utc(value).format(format)
