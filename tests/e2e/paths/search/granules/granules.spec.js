@@ -1256,9 +1256,6 @@ test.describe('Path /search/granules', () => {
 
       await page.goto('/search/granules?p=C1214470488-ASF&pg[0][gsk]=-start_date&sp[0]=-77.04119,38.80585')
 
-      // Ensure the correct number of results were loaded
-      // await testResultsSize(page, cmrHits)
-
       // Subscription button is active
       await expect(page.locator('[data-testid="granule-results-actions__subscriptions-button"]')).toHaveClass(/granule-results-actions__action--is-active/)
     })
