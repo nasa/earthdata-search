@@ -1134,7 +1134,6 @@ test.describe('Path /search/granules', () => {
 
   test.describe('When the path is loaded with a project collection', () => {
     test('loads with all granules in the project', async ({ page }) => {
-      const conceptId = 'C1214470488-ASF'
       const cmrHits = 15073
 
       await page.route('**/search/granules.json', (route) => {
