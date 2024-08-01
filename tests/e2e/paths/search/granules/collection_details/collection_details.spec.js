@@ -18,6 +18,7 @@ import { login } from '../../../../../support/login'
 /**
  * Tests the title displayed in the collection details
  * @param {String} title Title of the collection being displayed
+ * @param {Page} page Playwright page object
  */
 const testCollectionTitle = (page, title) => {
   const panelGroupGranuleResults = page.getByTestId('panel-group_granule-results')
@@ -31,6 +32,7 @@ const testCollectionTitle = (page, title) => {
 
 /**
  * Tests the search panel header and meta text for results size
+ * @param {Page} page Playwright page object
  * @param {Integer} cmrHits Total number of collections that match the query
  */
 const testCollectionResults = async (page, cmrHits) => {
@@ -98,6 +100,7 @@ const testCollectionDataCenters = async (page, dataCenters) => {
 
 /**
  * Test the granules that appear in the sidebar of collection details
+ * @param {Page} page Playwright page object
  * @param {Integer} pageSize Number of results per page
  * @param {Number} totalResults Total number of granules in the collection
  */
@@ -106,6 +109,12 @@ const testGranulesSidebar = async (page, pageSize, totalResults) => {
   // Await expect(page.locator('.granule-results-highlights__item')).toHaveCount(pageSize)
 }
 
+/**
+ * Test the display of science keywords in the collection details
+ * @param {Page} page Playwright page object
+ * @param {Integer} count Number of science keywords
+ * @param {Array<Array>} keywords An array of array of strings representing science keywords
+ */
 const testCollectionScienceKeywords = async (page, count, keywords) => {
   const infoSection = page.getByTestId('collection-details-body__info-science-keywords')
 
@@ -127,6 +136,7 @@ const testCollectionScienceKeywords = async (page, count, keywords) => {
 
 /**
  * Test the display of reformatting options in the collection details
+ * @param {Page} page Playwright page object
  * @param {Array} reformattingOptions Array of objects containing input and outputs
  */
 const testCollectionReformattingOptions = async (page, reformattingOptions) => {
@@ -150,24 +160,24 @@ const testCollectionReformattingOptions = async (page, reformattingOptions) => {
 
 /**
  * Test the display of native data formats in the collection details
+ * @param {Page} page Playwright page object
  * @param {String} format Native data format belonging to the collection
  */
 const testCollectionNativeDataFormats = async (page, format) => {
   const collectionDetailsBody = await page.getByTestId('collection-details-body__info-native-data-formats')
-  const ddElement = await collectionDetailsBody.locator('dd')
-  const textContent = await ddElement.innerText()
-  expect(textContent.trim()).toBe(format)
+  const nativeFormat = await collectionDetailsBody.locator('dd')
+  expect(nativeFormat).toHaveText(format)
 }
 
 /**
  * Test the display of native data formats in the collection details
- * @param {String} format Native data format belonging to the collection
+ * @param {Page} page Playwright page object
+ * @param {String} projections projections Projections supported by GIBS
  */
 const testCollectionGibsProjections = async (page, projections) => {
   const collectionDetailsBody = await page.getByTestId('collection-details-body__info-gibs-projections')
-  const ddElement = await collectionDetailsBody.locator('dd')
-  const textContent = await ddElement.innerText()
-  expect(textContent.trim()).toBe(projections)
+  const gibsProjections = await collectionDetailsBody.locator('dd')
+  expect(gibsProjections).toHaveText(projections)
 }
 
 test.describe('Path /search/granules/collection-details', () => {
