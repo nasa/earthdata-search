@@ -46,6 +46,7 @@ const SwodlrForm = ({
   const [sampleGrid, setSampleGrid] = useState('UTM')
   const [rasterResolution, setRasterResolution] = useState(90)
 
+  // When any key swodlr parameters are changed, update the accessMethod data
   const handleSwoldrOptions = () => {
     const customParams = {}
 
@@ -78,6 +79,7 @@ const SwodlrForm = ({
     })
   }
 
+  // Update the MGRSBand and UTMZone of the granule at the given index point
   const handleCollectionGranuleListUpdate = (indexVal, property, e) => {
     const granuleListCopy = granuleList
 
@@ -96,6 +98,7 @@ const SwodlrForm = ({
     setRasterResolution(Number(event.target.value))
   }
 
+  // Update when the value for Sample Grid type is changed
   const handleSampleGrid = (type) => {
     setSampleGrid(type)
     let defaultRasterValue
@@ -112,6 +115,7 @@ const SwodlrForm = ({
     setGranuleExtent(value)
   }
 
+  // When any of the key values in relation to the swodlr access method is changed, handle the values and update
   useEffect(() => {
     handleSwoldrOptions()
   }, [granuleExtent, granuleList, rasterResolution, sampleGrid])
@@ -268,7 +272,7 @@ const SwodlrForm = ({
 
           </Col>
         </Row>
-        <br />
+
         <Row hidden={sampleGrid !== 'UTM'}>
           <Col>
             <Accordion>
