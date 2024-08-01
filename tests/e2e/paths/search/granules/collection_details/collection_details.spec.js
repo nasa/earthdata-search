@@ -22,57 +22,54 @@ import { login } from '../../../../../support/login'
  */
 const testCollectionDataCenters = async (page, dataCenters) => {
   // Select the parent element containing the data centers list
-  const providerListElement = await page.locator("[data-testid='collection-details-body__provider-list']")
+  const providerListElement = await page.getByTestId('collection-details-body__provider-list')
 
   // Iterate through each data center
-  for (let index = 0; index < dataCenters.length; index += 1) {
+  dataCenters.forEach(async (dataCenter, index) => {
     const {
       email,
       fax,
       telephone,
       role,
       title
-    } = dataCenters[index]
+    } = dataCenter
 
     // Select each data center item within the provider list
-    const dataCenterElement = await providerListElement.locator(`[data-testid='collection-details-data-center-${index}']`)
+    const dataCenterElement = await providerListElement.getByTestId(`collection-details-data-center-${index}`)
 
     // Check if there is no contact information available
     if (!email && !fax && !telephone) {
-      const noContactInfoElement = await dataCenterElement.locator("[data-testid='collection-details-data-center__no-contact-info']")
+      const noContactInfoElement = await dataCenterElement.getByTestId('collection-details-data-center__no-contact-info')
       const noContactInfoText = await noContactInfoElement.innerText()
-      expect(noContactInfoText.trim()).toBe('No contact information for this data center.')
+      expect(noContactInfoText).toBe('No contact information for this data center.')
     } else {
       // Check for email, telephone, and fax if available
       if (email) {
-        const emailElement = await dataCenterElement.locator("[data-testid='collection-details-data-center__email']")
-        const emailText = await emailElement.innerText()
-        expect(emailText.trim()).toBe(email)
+        const emailElement = await dataCenterElement.getByTestId('collection-details-data-center__email')
+        expect(emailElement).toHaveText(email)
       }
 
       if (telephone) {
-        const telephoneElement = await dataCenterElement.locator("[data-testid='collection-details-data-center__telephone']")
-        const telephoneText = await telephoneElement.innerText()
-        expect(telephoneText.trim()).toBe(telephone)
+        const telephoneElement = await dataCenterElement.getByTestId('collection-details-data-center__telephone')
+        expect(telephoneElement).toHaveText(telephone)
       }
 
       if (fax) {
-        const faxElement = await dataCenterElement.locator("[data-testid='collection-details-data-center__fax']")
-        const faxText = await faxElement.innerText()
-        expect(faxText.trim()).toBe(fax)
+        const faxElement = await dataCenterElement.getByTestId('collection-details-data-center__fax')
+        expect(faxElement).toHaveText(fax)
       }
     }
 
     // Check for title and role
-    const titleElement = await dataCenterElement.locator("[data-testid='collection-details-data-center__title']")
-    const roleElement = await dataCenterElement.locator("[data-testid='collection-details-data-center__role']")
+    const titleElement = await dataCenterElement.getByTestId('collection-details-data-center__title')
+    const roleElement = await dataCenterElement.getByTestId('collection-details-data-center__role')
 
     const titleText = await titleElement.innerText()
     const roleText = await roleElement.innerText()
 
-    expect(titleText.trim()).toBe(title)
-    expect(roleText.trim()).toBe(role)
-  }
+    expect(titleText).toBe(title)
+    expect(roleText).toBe(role)
+  })
 }
 
 /**
