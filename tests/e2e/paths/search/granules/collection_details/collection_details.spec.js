@@ -123,15 +123,13 @@ const testCollectionScienceKeywords = async (page, count, keywords) => {
   await expect(keywordsList.locator('li')).toHaveCount(count)
 
   // Check the values of the science keywords
-  for (let keywordIndex = 0; keywordIndex < keywords.length; keywordIndex += 1) {
-    const keyword = keywords[keywordIndex]
+  keywords.forEach((keyword, keywordIndex) => {
     const keywordList = keywordsList.locator('li > ul').nth(keywordIndex)
 
-    for (let partIndex = 0; partIndex < keyword.length; partIndex += 1) {
-      const keywordPart = keyword[partIndex]
+    keyword.forEach((keywordPart, partIndex) => {
       expect(keywordList.locator('li').nth(partIndex)).toHaveText(keywordPart)
-    }
-  }
+    })
+  })
 }
 
 /**
@@ -280,6 +278,7 @@ test.describe('Path /search/granules/collection-details', () => {
       testCollectionTemporal(page, '2001-01-01 to 2001-06-01')
 
       // TODO this is 8 because things are being counted multiple times over
+      // TODO this is supposed to be 2
       testCollectionScienceKeywords(page, 8, [
         ['Earth Science', 'Terrestrial Hydrosphere', 'Snow Ice'],
         ['Earth Science', 'Cryosphere', 'Snow Ice']
@@ -380,7 +379,7 @@ test.describe('Path /search/granules/collection-details', () => {
       testCollectionGibsProjections(page, 'Geographic')
 
       // Testing the science keywords
-      // TODO why is this different count
+      // TODO why is this different count this is supposed to be 6
       const totalCount = 24
       testCollectionScienceKeywords(page, totalCount, [
         ['Earth Science', 'Spectral Engineering', 'Precipitation'],
