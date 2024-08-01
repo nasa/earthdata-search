@@ -16,6 +16,66 @@ import getSubscriptionsGraphQlBody from './__mocks__/common/getSubscriptions.gra
 import { login } from '../../../../../support/login'
 
 /**
+ * Test the display of the data centers in the collection details
+ * @param {Page} page Playwright page object
+ * @param {Array} dataCenters Array of data centers with properties like email, fax, telephone, role, title
+ */
+const testCollectionDataCenters = async (page, dataCenters) => {
+  // Select the parent element containing the data centers list
+  const providerListElement = await page.locator("[data-testid='collection-details-body__provider-list']")
+
+  // Iterate through each data center
+  for (let index = 0; index < dataCenters.length; index += 1) {
+    const {
+      email,
+      fax,
+      telephone,
+      role,
+      title
+    } = dataCenters[index]
+
+    // Select each data center item within the provider list
+    const dataCenterElement = await providerListElement.locator(`[data-testid='collection-details-data-center-${index}']`)
+
+    // Check if there is no contact information available
+    if (!email && !fax && !telephone) {
+      const noContactInfoElement = await dataCenterElement.locator("[data-testid='collection-details-data-center__no-contact-info']")
+      const noContactInfoText = await noContactInfoElement.innerText()
+      expect(noContactInfoText.trim()).toBe('No contact information for this data center.')
+    } else {
+      // Check for email, telephone, and fax if available
+      if (email) {
+        const emailElement = await dataCenterElement.locator("[data-testid='collection-details-data-center__email']")
+        const emailText = await emailElement.innerText()
+        expect(emailText.trim()).toBe(email)
+      }
+
+      if (telephone) {
+        const telephoneElement = await dataCenterElement.locator("[data-testid='collection-details-data-center__telephone']")
+        const telephoneText = await telephoneElement.innerText()
+        expect(telephoneText.trim()).toBe(telephone)
+      }
+
+      if (fax) {
+        const faxElement = await dataCenterElement.locator("[data-testid='collection-details-data-center__fax']")
+        const faxText = await faxElement.innerText()
+        expect(faxText.trim()).toBe(fax)
+      }
+    }
+
+    // Check for title and role
+    const titleElement = await dataCenterElement.locator("[data-testid='collection-details-data-center__title']")
+    const roleElement = await dataCenterElement.locator("[data-testid='collection-details-data-center__role']")
+
+    const titleText = await titleElement.innerText()
+    const roleText = await roleElement.innerText()
+
+    expect(titleText.trim()).toBe(title)
+    expect(roleText.trim()).toBe(role)
+  }
+}
+
+/**
  * Test the granules that appear in the sidebar of collection details
  * @param {Integer} pageSize Number of results per page
  * @param {Number} totalResults Total number of granules in the collection
@@ -458,6 +518,34 @@ test.describe('Path /search/granules/collection-details', () => {
 
       // Check projection
       testCollectionGibsProjections(page, 'Geographic')
+
+      // Testing the science keywords
+      // TODO why is this different
+      const totalCount = 24
+      testCollectionScienceKeywords(page, totalCount, [
+        ['Earth Science', 'Spectral Engineering', 'Precipitation'],
+        ['Earth Science', 'Oceans', 'Ocean Winds'],
+        ['Earth Science', 'Atmosphere', 'Precipitation'],
+        ['Earth Science', 'Atmosphere', 'Atmospheric Winds'],
+        ['Earth Science', 'Atmosphere', 'Clouds'],
+        ['Earth Science', 'Atmosphere', 'Atmospheric Water Vapor']
+      ])
+
+      const providersList = page.getByTestId('collection-details-body__provider-list')
+        .getByRole('listitem')
+      expect(providersList).toHaveCount(2)
+
+      // Test the data centers
+      testCollectionDataCenters(page, [{
+        title: 'NASA/MSFC/GHRC',
+        role: 'ARCHIVER'
+      }, {
+        title: 'Global Hydrology Resource Center, Marshall Space Flight Center, NASA',
+        role: 'ARCHIVER',
+        email: 'support-ghrc@earthdata.nasa.gov',
+        telephone: '+1 256-961-7932',
+        fax: '+1 256-824-5149'
+      }])
     })
   })
 
