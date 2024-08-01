@@ -39,9 +39,8 @@ const testCollectionDataCenters = async (page, dataCenters) => {
 
     // Check if there is no contact information available
     if (!email && !fax && !telephone) {
-      const noContactInfoElement = await dataCenterElement.getByTestId('collection-details-data-center__no-contact-info')
-      const noContactInfoText = await noContactInfoElement.innerText()
-      expect(noContactInfoText).toBe('No contact information for this data center.')
+      const noContactInfo = await dataCenterElement.getByTestId('collection-details-data-center__no-contact-info')
+      expect(noContactInfo).toHaveText('No contact information for this data center.')
     } else {
       // Check for email, telephone, and fax if available
       if (email) {
@@ -61,14 +60,11 @@ const testCollectionDataCenters = async (page, dataCenters) => {
     }
 
     // Check for title and role
-    const titleElement = await dataCenterElement.getByTestId('collection-details-data-center__title')
-    const roleElement = await dataCenterElement.getByTestId('collection-details-data-center__role')
+    const dataCenterTitle = await dataCenterElement.getByTestId('collection-details-data-center__title')
+    const dataCenterRole = await dataCenterElement.getByTestId('collection-details-data-center__role')
 
-    const titleText = await titleElement.innerText()
-    const roleText = await roleElement.innerText()
-
-    expect(titleText).toBe(title)
-    expect(roleText).toBe(role)
+    expect(dataCenterTitle).toHaveText(title)
+    expect(dataCenterRole).toHaveText(role)
   })
 }
 
