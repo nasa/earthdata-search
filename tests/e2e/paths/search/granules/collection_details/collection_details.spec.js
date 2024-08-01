@@ -5,20 +5,25 @@ import { graphQlGetSubscriptionsQuery } from '../../../../../support/graphQlGetS
 
 import { commafy } from '../../../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../../../static/src/js/util/pluralize'
-
+import reformattingGraphQlBody from './__mocks__/reformattings/graphql.body.json'
+import reformattingsGranulesBody from './__mocks__/reformattings/granules.body.json'
 import assocatedDoisGraphQlBody from './__mocks__/associated_dois/graphql.body.json'
 import collectionsBody from './__mocks__/common/collections.body.json'
 import commonHeaders from './__mocks__/common/common.headers.json'
 import associatedDoisGranulesBody from './__mocks__/associated_dois/granules.body.json'
 import graphQlHeaders from './__mocks__/common/graphql.headers.json'
-import reformattingGraphQlBody from './__mocks__/reformattings/graphql.body.json'
-import reformattingsGranulesBody from './__mocks__/reformattings/granules.body.json'
 import getSubscriptionsGraphQlBody from './__mocks__/common/getSubscriptions.graphql.body.json'
 import { login } from '../../../../../support/login'
-import { getAuthHeaders } from '../../../../../support/getAuthHeaders'
-import {
-  interceptUnauthenticatedCollections
-} from '../../../../../support/interceptUnauthenticatedCollections'
+
+/**
+ * Test the granules that appear in the sidebar of collection details
+ * @param {Integer} pageSize Number of results per page
+ * @param {Number} totalResults Total number of granules in the collection
+ */
+const testGranulesSidebar = async (page, pageSize, totalResults) => {
+  await expect(page.locator('.granule-results-highlights__count')).toHaveText(`Showing ${pageSize} of ${commafy(totalResults)} matching granules`)
+  // Await expect(page.locator('.granule-results-highlights__item')).toHaveCount(pageSize)
+}
 
 const testCollectionScienceKeywords = async (page, count, keywords) => {
   const infoSection = page.getByTestId('collection-details-body__info-science-keywords')
@@ -309,204 +314,120 @@ test.describe('Path /search/granules/collection-details', () => {
     })
   })
 
-  // Describe('When collection has multiple reformatting options', () => {
-  //   it('loads correctly', () => {
-  //     const conceptId = 'C1996546500-GHRC_DAAC'
-  //     const cmrHits = 8180
-  //     const granuleHits = 6338
+  test.describe('When collection has multiple reformatting options', () => {
+    test('loads correctly', async ({ page }) => {
+      const conceptId = 'C1996546500-GHRC_DAAC'
+      const cmrHits = 8180
+      const granuleHits = 6338
 
-  //     cy.intercept(
-  //       {
-  //         method: 'POST',
-  //         url: '**/search/collections.json'
-  //       },
-  //       (req) => {
-  //         expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
+      await page.route(/collections.json/, async (route) => {
+        await route.fulfill({
+          json: collectionsBody.body,
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': cmrHits.toString()
+          }
+        })
+      })
 
-  //         req.reply({
-  //           body: collectionsBody,
-  //           headers: {
-  //             ...commonHeaders,
-  //             'cmr-hits': cmrHits.toString()
-  //           }
-  //         })
-  //       }
-  //     )
+      await page.route(/granules.json/, async (route) => {
+        await route.fulfill({
+          json: reformattingsGranulesBody.body,
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': granuleHits.toString()
+          }
+        })
+      })
 
-  //     cy.intercept(
-  //       {
-  //         method: 'POST',
-  //         url: '**/search/granules.json'
-  //       },
-  //       (req) => {
-  //         expect(req.body).to.eq('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+      await page.route(/graphql/, async (route) => {
+        const { query } = JSON.parse(route.request().postData())
 
-  //         req.reply({
-  //           body: reformattingsGranulesBody,
-  //           headers: {
-  //             ...commonHeaders,
-  //             'cmr-hits': granuleHits.toString()
-  //           }
-  //         })
-  //       }
-  //     )
+        if (query === graphQlGetSubscriptionsQuery) {
+          await route.fulfill({
+            json: getSubscriptionsGraphQlBody,
+            headers: graphQlHeaders
+          })
+        }
 
-  //     cy.intercept(
-  //       {
-  //         method: 'POST',
-  //         url: '**/api'
-  //       },
-  //       (req) => {
-  //         expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
+        if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+          await route.fulfill({
+            json: reformattingGraphQlBody,
+            headers: graphQlHeaders
+          })
+        }
+      })
 
-  //         req.reply({
-  //           body: reformattingGraphQlBody,
-  //           headers: graphQlHeaders
-  //         })
-  //       }
-  //     )
+      await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
+      const collectionTitle = 'RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7'
+      // Expect(page.getByTitle(collectionTitle)).toBeVisible()
+      // TODO why do these have to be first etc
+      expect(page.getByRole('heading', { name: collectionTitle }).first()).toBeVisible()
 
-  //     cy.intercept(
-  //       {
-  //         method: 'POST',
-  //         url: '**/graphql'
-  //       },
-  //       (req) => {
-  //         expect(JSON.parse(req.body).data.query).to.eql(graphQlGetSubscriptionsQuery)
-  //         req.reply({
-  //           body: getSubscriptionsGraphQlBody,
-  //           headers: graphQlHeaders
-  //         })
-  //       }
-  //     )
+      // Ensure short-name, version are present
+      const shortName = 'rssmif16d'
+      expect(page.getByTestId('collection-details-header__short-name').filter({ hasText: shortName })).toBeVisible()
+      const version = 'Version 7'
+      expect(page.getByTestId('collection-details-header__version-id').filter({ hasText: version })).toBeVisible()
 
-  //     cy.visit('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
+      // Ensure that the collections request ocurred and the component is displaying the correct results
+      const searchResultsCollectionsText = `Search Results (${commafy(cmrHits)} ${pluralize('Collection', cmrHits)})`
+      const panelGroupCollectionsResults = page.getByTestId('panel-group_granules-collections-results')
+      const panelCollectionText = await panelGroupCollectionsResults
+        .filter({ has: page.getByTestId('panel-group-header__breadcrumbs') })
+        .filter({ hasText: searchResultsCollectionsText })
+      expect(panelCollectionText).toBeVisible()
 
-  //     testCollectionTitle('RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7')
+      // TestGranulesSidebar(page, )
+    })
+  })
 
-  //     getByTestId('collection-details-header__short-name').should('have.text', 'rssmif16d')
-  //     getByTestId('collection-details-header__version-id').should('have.text', 'Version 7')
+  test.describe('When collection has spatial', () => {
+    test('displays the spatial on the minimap', async ({ page }) => {
+      const conceptId = 'C1996546500-GHRC_DAAC'
+      const cmrHits = 8180
+      const granuleHits = 6338
 
-  //     // Ensure that the collections request ocurred and the component is displaying the correct results
-  //     testCollectionResults(cmrHits)
+      await page.route(/collections.json/, async (route) => {
+        await route.fulfill({
+          json: collectionsBody.body,
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': cmrHits.toString()
+          }
+        })
+      })
 
-  //     // Granules sidebar
-  //     testGranulesSidebar(5, granuleHits)
+      await page.route(/granules.json/, async (route) => {
+        await route.fulfill({
+          json: reformattingsGranulesBody.body,
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': granuleHits.toString()
+          }
+        })
+      })
 
-  //     testCollectionTemporal('2003-10-26 ongoing')
+      await page.route(/graphql/, async (route) => {
+        const { query } = JSON.parse(route.request().postData())
 
-  //     testCollectionNativeDataFormats('netCDF-4')
+        if (query === graphQlGetSubscriptionsQuery) {
+          await route.fulfill({
+            json: getSubscriptionsGraphQlBody,
+            headers: graphQlHeaders
+          })
+        }
 
-  //     testCollectionReformattingOptions([{
-  //       input: 'NETCDF-4',
-  //       outputs: 'ASCII, CSV, NETCDF-3, NETCDF-4'
-  //     }, {
-  //       input: 'HDF5',
-  //       outputs: 'ASCII, CSV, NETCDF-3, NETCDF-4'
-  //     }])
+        if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+          await route.fulfill({
+            json: reformattingGraphQlBody,
+            headers: graphQlHeaders
+          })
+        }
+      })
 
-  //     testCollectionGibsProjections('Geographic')
-
-  //     testCollectionScienceKeywords(6, [
-  //       ['Earth Science', 'Spectral Engineering', 'Precipitation'],
-  //       ['Earth Science', 'Oceans', 'Ocean Winds'],
-  //       ['Earth Science', 'Atmosphere', 'Precipitation'],
-  //       ['Earth Science', 'Atmosphere', 'Atmospheric Winds'],
-  //       ['Earth Science', 'Atmosphere', 'Clouds'],
-  //       ['Earth Science', 'Atmosphere', 'Atmospheric Water Vapor']
-  //     ])
-
-  //     getByTestId('collection-details-body__provider-list').children().should('have.length', 2)
-
-  //     testCollectionDataCenters([{
-  //       title: 'NASA/MSFC/GHRC',
-  //       role: 'ARCHIVER'
-  //     }, {
-  //       title: 'Global Hydrology Resource Center, Marshall Space Flight Center, NASA',
-  //       role: 'ARCHIVER',
-  //       email: 'support-ghrc@earthdata.nasa.gov',
-  //       telephone: '+1 256-961-7932',
-  //       fax: '+1 256-824-5149'
-  //     }])
-  //   })
-  // })
-
-  // describe('When collection has spatial', () => {
-  //   it('displays the spatial on the minimap', () => {
-  //     const conceptId = 'C1996546500-GHRC_DAAC'
-  //     const cmrHits = 8180
-  //     const granuleHits = 6338
-
-  //     cy.intercept(
-  //       {
-  //         method: 'POST',
-  //         url: '**/search/collections.json'
-  //       },
-  //       (req) => {
-  //         expect(req.body).to.eq('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-usage_score')
-
-  //         req.reply({
-  //           body: collectionsBody,
-  //           headers: {
-  //             ...commonHeaders,
-  //             'cmr-hits': cmrHits.toString()
-  //           }
-  //         })
-  //       }
-  //     )
-
-  //     // cy.intercept(
-  //     //   {
-  //     //     method: 'POST',
-  //     //     url: '**/search/granules.json'
-  //     //   },
-  //     //   (req) => {
-  //     //     expect(req.body).to.eq('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
-
-  //     //     req.reply({
-  //     //       body: reformattingsGranulesBody,
-  //     //       headers: {
-  //     //         ...commonHeaders,
-  //     //         'cmr-hits': granuleHits.toString()
-  //     //       }
-  //     //     })
-  //     //   }
-  //     // )
-
-  //     // cy.intercept(
-  //     //   {
-  //     //     method: 'POST',
-  //     //     url: '**/api'
-  //     //   },
-  //     //   (req) => {
-  //     //     expect(JSON.stringify(req.body)).to.eq(graphQlGetCollection(conceptId))
-
-  //     //     req.reply({
-  //     //       body: reformattingGraphQlBody,
-  //     //       headers: graphQlHeaders
-  //     //     })
-  //     //   }
-  //     // )
-
-  //     // cy.intercept(
-  //     //   {
-  //     //     method: 'POST',
-  //     //     url: '**/graphql'
-  //     //   },
-  //     //   (req) => {
-  //     //     expect(JSON.parse(req.body).data.query).to.eql(graphQlGetSubscriptionsQuery)
-  //     //     req.reply({
-  //     //       body: getSubscriptionsGraphQlBody,
-  //     //       headers: graphQlHeaders
-  //     //     })
-  //     //   }
-  //     // )
-
-  //     // cy.visit('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
-
-  //     // cy.get('.collection-details-minimap').within(() => {
-  //     //   cy.get('.leaflet-interactive').should('have.attr', 'd', 'M0 180L360 180L360 0L0 0L0 180z')
-  //     // })
-  //   })
-  // })
+      await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
+      await expect(page.locator('.collection-details-minimap .leaflet-interactive')).toHaveAttribute('d', 'M0 180L360 180L360 0L0 0z')
+    })
+  })
 })
