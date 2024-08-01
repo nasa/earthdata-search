@@ -20,10 +20,10 @@ import { login } from '../../../../../support/login'
  * @param {String} title Title of the collection being displayed
  * @param {Page} page Playwright page object
  */
-const testCollectionTitle = (page, title) => {
-  const panelGroupGranuleResults = page.getByTestId('panel-group_granule-results')
+const testCollectionTitle = async (page, title) => {
+  const panelGroupGranuleResults = await page.getByTestId('panel-group_granule-results')
 
-  const panelText = panelGroupGranuleResults
+  const panelText = await panelGroupGranuleResults
     .filter({ has: page.getByTestId('panel-group-header__heading-primary') })
     .filter({ hasText: title })
 
@@ -36,7 +36,7 @@ const testCollectionTitle = (page, title) => {
  * @param {Integer} cmrHits Total number of collections that match the query
  */
 const testCollectionResults = async (page, cmrHits) => {
-  const panelGroupCollectionsResults = page.getByTestId('panel-group_granules-collections-results')
+  const panelGroupCollectionsResults = await page.getByTestId('panel-group_granules-collections-results')
   const searchResultsCollectionsText = `Search Results (${commafy(cmrHits)} ${pluralize('Collection', cmrHits)})`
   const panelCollectionText = await panelGroupCollectionsResults
     .filter({ has: page.getByTestId('panel-group-header__breadcrumbs') })
@@ -116,18 +116,20 @@ const testGranulesSidebar = async (page, pageSize, totalResults) => {
  * @param {Array<Array>} keywords An array of array of strings representing science keywords
  */
 const testCollectionScienceKeywords = async (page, count, keywords) => {
-  const infoSection = page.getByTestId('collection-details-body__info-science-keywords')
+  const infoSection = await page.getByTestId('collection-details-body__info-science-keywords')
 
   // Check the number of science keywords
-  const keywordsList = infoSection.locator('.collection-details-body__keywords')
-  await expect(keywordsList.locator('li')).toHaveCount(count)
+  const keywordsList = await infoSection.locator('.collection-details-body__keywords')
+
+  // `<` prepend to match only the direct child elements
+  await expect(keywordsList.locator('>li')).toHaveCount(count)
 
   // Check the values of the science keywords
-  keywords.forEach((keyword, keywordIndex) => {
-    const keywordList = keywordsList.locator('li > ul').nth(keywordIndex)
+  keywords.forEach(async (keyword, keywordIndex) => {
+    const keywordList = await keywordsList.locator('li > ul').nth(keywordIndex)
 
-    keyword.forEach((keywordPart, partIndex) => {
-      expect(keywordList.locator('li').nth(partIndex)).toHaveText(keywordPart)
+    keyword.forEach(async (keywordPart, partIndex) => {
+      await expect(keywordList.locator('li').nth(partIndex)).toHaveText(keywordPart)
     })
   })
 }
@@ -267,9 +269,9 @@ test.describe('Path /search/granules/collection-details', () => {
 
       // Ensure short-name, version are present
       const shortName = 'Mapping Short Name 1.16.1'
-      expect(page.getByTestId('collection-details-header__short-name').filter({ hasText: shortName })).toBeVisible()
+      await expect(page.getByTestId('collection-details-header__short-name').filter({ hasText: shortName })).toBeVisible()
       const version = 'Version 1.16.1'
-      expect(page.getByTestId('collection-details-header__version-id').filter({ hasText: version })).toBeVisible()
+      await expect(page.getByTestId('collection-details-header__version-id').filter({ hasText: version })).toBeVisible()
 
       // Ensure that the collections request ocurred and the component is displaying the correct results
       testCollectionResults(page, cmrHits)
@@ -277,15 +279,12 @@ test.describe('Path /search/granules/collection-details', () => {
       // Test temporal range
       testCollectionTemporal(page, '2001-01-01 to 2001-06-01')
 
-      // TODO this is 8 because things are being counted multiple times over
-      // TODO this is supposed to be 2
-      testCollectionScienceKeywords(page, 8, [
+      testCollectionScienceKeywords(page, 2, [
         ['Earth Science', 'Terrestrial Hydrosphere', 'Snow Ice'],
         ['Earth Science', 'Cryosphere', 'Snow Ice']
       ])
 
-      // TODO we don't need to await getByTestId
-      const providersList = page.getByTestId('collection-details-body__provider-list')
+      const providersList = await page.getByTestId('collection-details-body__provider-list')
         .getByRole('listitem')
       expect(providersList).toHaveCount(4)
 
@@ -350,9 +349,9 @@ test.describe('Path /search/granules/collection-details', () => {
 
       // Ensure short-name, version are present
       const shortName = 'rssmif16d'
-      expect(page.getByTestId('collection-details-header__short-name').filter({ hasText: shortName })).toBeVisible()
+      await expect(page.getByTestId('collection-details-header__short-name').filter({ hasText: shortName })).toBeVisible()
       const version = 'Version 7'
-      expect(page.getByTestId('collection-details-header__version-id').filter({ hasText: version })).toBeVisible()
+      await expect(page.getByTestId('collection-details-header__version-id').filter({ hasText: version })).toBeVisible()
 
       // Ensure that the collections request ocurred and the component is displaying the correct results
       testCollectionResults(page, cmrHits)
@@ -379,9 +378,7 @@ test.describe('Path /search/granules/collection-details', () => {
       testCollectionGibsProjections(page, 'Geographic')
 
       // Testing the science keywords
-      // TODO why is this different count this is supposed to be 6
-      const totalCount = 24
-      testCollectionScienceKeywords(page, totalCount, [
+      testCollectionScienceKeywords(page, 6, [
         ['Earth Science', 'Spectral Engineering', 'Precipitation'],
         ['Earth Science', 'Oceans', 'Ocean Winds'],
         ['Earth Science', 'Atmosphere', 'Precipitation'],
