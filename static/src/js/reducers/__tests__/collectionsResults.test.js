@@ -23,6 +23,7 @@ const initialState = {
   isLoading: false,
   isLoaded: false,
   loadTime: 0,
+  renderingTime: 0,
   timerStart: null
 }
 
@@ -66,7 +67,7 @@ describe('FINISHED_COLLECTIONS_TIMER', () => {
 
     const expectedState = {
       ...initialState,
-      timerStart: null,
+      timerStart: start,
       loadTime: 5
     }
 
