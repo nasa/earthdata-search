@@ -85,7 +85,7 @@ class Datepicker extends PureComponent {
           }
         }
         isValidDate={isValidDate}
-        onBlur={onBlur}
+        onClose={onBlur}
         onChange={onChange}
         ref={picker}
         timeFormat={false}

@@ -140,9 +140,10 @@ class DatepickerContainer extends Component {
     // if so, we convert it to a UTC string in our desired format. If the value is not a valid ISO date,
     // then we leave it untouched and pass it to the input.
     // We are using YYYY-MM-DDTHH:m:s.SSSZ instead of moment.ISO_8601 so that it doesn't autocomplete every time there's a valid ISO format
-    const isValidISO = moment.utc(value, 'YYYY-MM-DDTHH:mm:ss.SSSZ', true).isValid()
+    // const isValidISO = moment.utc(value, 'YYYY-MM-DDTHH:mm:ss.SSSZ', true).isValid()
+    const datetimeRegex = /^(\d{4})-(\d{2})-(\d{2})[T](\d{2}):(\d{2}):(\d{2}).(\d{3})[Z]$/
 
-    if (isValidISO) {
+    if (value.match(datetimeRegex)) {
       value = moment.utc(value).format(format)
     }
 
