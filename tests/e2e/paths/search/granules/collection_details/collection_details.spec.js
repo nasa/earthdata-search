@@ -359,7 +359,6 @@ test.describe('Path /search/granules/collection-details', () => {
       testCollectionResults(page, cmrHits)
 
       // Granules sidebar
-      // TODO continue for now but, this does not actually render it on the screen oddly
       testGranulesSidebar(page, 5, granuleHits)
 
       // Check temporal time
@@ -381,7 +380,7 @@ test.describe('Path /search/granules/collection-details', () => {
       testCollectionGibsProjections(page, 'Geographic')
 
       // Testing the science keywords
-      // TODO why is this different
+      // TODO why is this different count
       const totalCount = 24
       testCollectionScienceKeywords(page, totalCount, [
         ['Earth Science', 'Spectral Engineering', 'Precipitation'],
@@ -418,8 +417,11 @@ test.describe('Path /search/granules/collection-details', () => {
       const granuleHits = 6338
 
       await page.route(/collections.json/, async (route) => {
+        const query = route.request().postData()
+        expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
         await route.fulfill({
-          json: collectionsBody.body,
+          json: collectionsBody,
           headers: {
             ...commonHeaders,
             'cmr-hits': cmrHits.toString()
@@ -428,8 +430,11 @@ test.describe('Path /search/granules/collection-details', () => {
       })
 
       await page.route(/granules.json/, async (route) => {
+        const query = route.request().postData()
+        expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+
         await route.fulfill({
-          json: reformattingsGranulesBody.body,
+          json: reformattingsGranulesBody,
           headers: {
             ...commonHeaders,
             'cmr-hits': granuleHits.toString()
