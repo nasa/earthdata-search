@@ -21,9 +21,9 @@ import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio'
 import RadioList from '../FormFields/RadioList/RadioList'
 import Spinner from '../Spinner/Spinner'
+import SwodlrForm from './SwodlrForm'
 
 import './AccessMethod.scss'
-import SwodlrForm from './SwodlrForm'
 
 const EchoForm = lazy(() => import('./EchoForm'))
 
@@ -31,19 +31,19 @@ const EchoForm = lazy(() => import('./EchoForm'))
  * Renders AccessMethod.
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.accessMethods - The accessMethods of the current collection.
+ * @param {Object} props.granuleMetadata - The metadata for the granules on the collection.
  * @param {Number} props.index - The index of the current collection.
  * @param {Object} props.metadata - The metadata of the current collection.
- * @param {String} props.selectedAccessMethod - The selected access method of the current collection.
- * @param {String} props.shapefileId - The shapefile id of the uploaded shapefile.
  * @param {Function} props.onSelectAccessMethod - Selects an access method.
  * @param {Function} props.onSetActivePanel - Switches the currently active panel.
  * @param {Function} props.onUpdateAccessMethod - Updates an access method.
- * @param {Object} projectCollection - The project collection.
- * @param {Object} granuleMetadata - The metadata for the granules on the collection.
+ * @param {Object} props.projectCollection - The project collection.
+ * @param {String} props.selectedAccessMethod - The selected access method of the current collection.
+ * @param {String} props.shapefileId - The shapefile id of the uploaded shapefile.
 */
-
 const AccessMethod = ({
   accessMethods,
+  granuleMetadata,
   index,
   isActive,
   metadata,
@@ -51,13 +51,12 @@ const AccessMethod = ({
   onSetActivePanel,
   onTogglePanels,
   onUpdateAccessMethod,
+  projectCollection,
   selectedAccessMethod,
   shapefileId,
   spatial,
   temporal,
-  ursProfile,
-  granuleMetadata,
-  projectCollection
+  ursProfile
 }) => {
   const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
 
@@ -96,7 +95,6 @@ const AccessMethod = ({
   const [enableSpatialSubsetting, setEnableSpatialSubsetting] = useState(false)
   const [enableConcatenateDownload, setEnableConcatenateDownload] = useState(defaultConcatenation)
   const [granuleList, setGranuleList] = useState([])
-  // Only set state on re-render
 
   const {
     granules: projectCollectionGranules = {}
@@ -435,6 +433,7 @@ const AccessMethod = ({
     let customizationOptions = null
     let disabled = false
     let errorMessage = ''
+
     // TODO pull out in the util
     switch (type) {
       case 'download': {
