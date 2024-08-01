@@ -79,6 +79,8 @@ describe('AdminRetrievals component', () => {
       const validEndDate = '2019-03-30T00:00:00.000Z'
       const validStartDate = '2019-03-29T00:00:00.000Z'
 
+      const updatedEndDate = '2019-03-30T23:59:59.999Z'
+
       const inputs = screen.getAllByRole('textbox')
 
       fireEvent.change(inputs[0], { target: { value: validStartDate } })
@@ -94,7 +96,7 @@ describe('AdminRetrievals component', () => {
       expect(onUpdateAdminMetricsRetrievalsStartDate).toHaveBeenCalledWith(validStartDate)
 
       expect(onUpdateAdminMetricsRetrievalsEndDate).toHaveBeenCalledTimes(1)
-      expect(onUpdateAdminMetricsRetrievalsEndDate).toHaveBeenCalledWith(validEndDate)
+      expect(onUpdateAdminMetricsRetrievalsEndDate).toHaveBeenCalledWith(updatedEndDate)
 
       expect(onFetchAdminMetricsRetrievals).toHaveBeenCalledTimes(1)
 
@@ -102,7 +104,7 @@ describe('AdminRetrievals component', () => {
       const endDateHeader = screen.getAllByRole('heading', { level: 5 })[1]
 
       expect(startDateHeader.textContent).toEqual(`Start Date:${validStartDate}`)
-      expect(endDateHeader.textContent).toEqual(`End Date:${validEndDate}`)
+      expect(endDateHeader.textContent).toEqual(`End Date:${updatedEndDate}`)
     })
   })
 })
