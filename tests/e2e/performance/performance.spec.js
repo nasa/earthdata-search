@@ -14,8 +14,8 @@ test.describe('Performance Benchmarking', () => {
 
   test('Search page load time is less than 2 second', async ({ page, browserName }) => {
     if (browserName === 'chromium') {
-      await page.goto('/')
       const requestFinishedPromise = page.waitForEvent('requestfinished')
+      await page.goto('/')
       const request = await requestFinishedPromise
 
       const requestTime = request.timing().responseEnd
