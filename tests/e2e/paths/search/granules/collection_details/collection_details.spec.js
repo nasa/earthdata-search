@@ -16,6 +16,34 @@ import getSubscriptionsGraphQlBody from './__mocks__/common/getSubscriptions.gra
 import { login } from '../../../../../support/login'
 
 /**
+ * Tests the title displayed in the collection details
+ * @param {String} title Title of the collection being displayed
+ */
+const testCollectionTitle = (page, title) => {
+  const panelGroupGranuleResults = page.getByTestId('panel-group_granule-results')
+
+  const panelText = panelGroupGranuleResults
+    .filter({ has: page.getByTestId('panel-group-header__heading-primary') })
+    .filter({ hasText: title })
+
+  expect(panelText).toBeVisible()
+}
+
+/**
+ * Tests the search panel header and meta text for results size
+ * @param {Integer} cmrHits Total number of collections that match the query
+ */
+const testCollectionResults = async (page, cmrHits) => {
+  const panelGroupCollectionsResults = page.getByTestId('panel-group_granules-collections-results')
+  const searchResultsCollectionsText = `Search Results (${commafy(cmrHits)} ${pluralize('Collection', cmrHits)})`
+  const panelCollectionText = await panelGroupCollectionsResults
+    .filter({ has: page.getByTestId('panel-group-header__breadcrumbs') })
+    .filter({ hasText: searchResultsCollectionsText })
+
+  expect(panelCollectionText).toBeVisible()
+}
+
+/**
  * Test the display of the data centers in the collection details
  * @param {Page} page Playwright page object
  * @param {Array} dataCenters Array of data centers with properties like email, fax, telephone, role, title
@@ -193,40 +221,13 @@ test.describe('Path /search/granules/collection-details', () => {
         }
       })
 
-      // Await interceptUnauthenticatedCollections({
-      //   page,
-      //   body: collectionsBody,
-      //   headers: {
-      //     ...commonHeaders,
-      //     'cmr-hits': '5151'
-      //   }
-      // })
-
-      // Await page.route(/graphql/, async (route) => {
-      //   await route.fulfill({
-      //     json: assocatedDoisGraphQlBody.body,
-      //     headers: graphQlHeaders
-      //   })
-      // })
-
       await page.goto('/search/granules/collection-details?p=C1240222820-ECHO_REST&ee=uat&ac=true')
       login(context)
 
-      // Within page.getByTestId('panel-group_granule-results').within(() => {
-      // })
-
+      // Ensure title renders on page correctly
       const title = 'Mapping Example for UMM-C 1.16.1'
 
-      // Expect(page.getByTestId('panel-group-header__heading-primary').getByText(title)).to
-      // await page.getByTestId('panel-group-header__heading-primary').should('have.text', 'Mapping Example for UMM-C 1.16.1')
-      const panelGroupGranuleResults = page.getByTestId('panel-group_granule-results')
-      // Const panelGroup = page.getByTestId('panel-group-header__heading-primary')
-      // TODO just come back and make sure this is really working
-      const panelText = panelGroupGranuleResults
-        .filter({ has: page.getByTestId('panel-group-header__heading-primary') })
-        .filter({ hasText: title })
-
-      expect(panelText).toBeVisible()
+      testCollectionTitle(page, title)
 
       // Ensure short-name, version are present
       const shortName = 'Mapping Short Name 1.16.1'
@@ -240,13 +241,7 @@ test.describe('Path /search/granules/collection-details', () => {
       expect(collectionTemporalSpane).toBeVisible()
 
       // Ensure that the collections request ocurred and the component is displaying the correct results
-      const panelGroupCollectionsResults = page.getByTestId('panel-group_granules-collections-results')
-      const searchResultsCollectionsText = `Search Results (${commafy(cmrHits)} ${pluralize('Collection', cmrHits)})`
-      const panelCollectionText = await panelGroupCollectionsResults
-        .filter({ has: page.getByTestId('panel-group-header__breadcrumbs') })
-        .filter({ hasText: searchResultsCollectionsText })
-
-      expect(panelCollectionText).toBeVisible()
+      testCollectionResults(page, cmrHits)
       // Expect(page.getByRole('list').length).toBe(2)
 
       // expect(await page
