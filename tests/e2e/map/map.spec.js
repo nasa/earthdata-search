@@ -1434,8 +1434,7 @@ test.describe('Map interactions', () => {
             }
           })
 
-          // Temporarily disabled
-          // await expect(page.getByRole('button', { name: /S1A_IW_SLC__1SDV_20210531T153052_20210531T153122_038133_04802B_C09D/ })).toHaveClass(/granule-results-item--active/)
+          await expect(page.getByRole('button', { name: /S1A_IW_SLC__1SDV_20210531T153052_20210531T153122_038133_04802B_C09D/ })).toHaveClass(/granule-results-item--active/)
         })
       })
 
@@ -1466,10 +1465,9 @@ test.describe('Map interactions', () => {
           await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
         })
 
-        // Temporarily disabled
-        // test('focuses the selected granule', async ({ page }) => {
-        //   await expect(page.getByRole('button', { name: /S1A_IW_SLC__1SDV_20210531T153052_20210531T153122_038133_04802B_C09D/ })).toHaveClass(/granule-results-item--active/)
-        // })
+        test('focuses the selected granule', async ({ page }) => {
+          await expect(page.getByRole('button', { name: /S1A_IW_SLC__1SDV_20210531T153052_20210531T153122_038133_04802B_C09D/ })).toHaveClass(/granule-results-item--active/)
+        })
 
         test('updates the URL', async ({ page }) => {
           await expect(page).toHaveURL(/\/search\/granules.*g=G2061166811-ASF/)

@@ -174,7 +174,6 @@ const GranuleResultsItem = forwardRef(({
       className={granuleResultsItemClasses}
       data-testid="granule-results-item"
       onClick={enhancedHandleOnClick}
-      aria-label="granule-results-item"
       onKeyPress={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
