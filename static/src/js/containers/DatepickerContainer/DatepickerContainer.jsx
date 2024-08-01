@@ -26,6 +26,7 @@ class DatepickerContainer extends Component {
 
     this.onBlur = this.onBlur.bind(this)
     this.onChange = this.onChange.bind(this)
+    this.onInputChange = this.onInputChange.bind(this)
     this.onClearClick = this.onClearClick.bind(this)
     this.onTodayClick = this.onTodayClick.bind(this)
     this.isValidDate = this.isValidDate.bind(this)
@@ -35,13 +36,33 @@ class DatepickerContainer extends Component {
 
   /**
    * Set view back to the default when a user closes the datepicker
+   * Also set the datetime to be the endOf or startOf day depending on the type
    */
-  onBlur() {
-    const { viewMode } = this.props
+  onBlur(value) {
+    const {
+      format,
+      onSubmit,
+      type,
+      viewMode
+    } = this.props
 
     this.picker.current.setState({
       currentView: viewMode
     })
+
+    let valueToSet = null
+
+    if (typeof value !== 'string' && moment.isMoment(value) && !isCustomTime(value)) {
+      if (type === 'start') {
+        valueToSet = value.startOf('day')
+      } else if (type === 'end') {
+        valueToSet = value.endOf('day')
+      }
+    } else {
+      valueToSet = moment.utc(value, format, true)
+    }
+
+    onSubmit(valueToSet)
   }
 
   /**
@@ -83,6 +104,20 @@ class DatepickerContainer extends Component {
     onSubmit(valueToSet)
   }
 
+  onInputChange(event) {
+    const {
+      format
+    } = this.props
+
+    const { currentTarget } = event
+
+    const { value: inputVal } = currentTarget
+
+    if (moment.utc(inputVal, 'YYYY-MM-DDTHH:mm:ss.SSSZ', true).isValid()) {
+      currentTarget.value = moment.utc(inputVal, 'YYYY-MM-DDTHH:mm:ss.SSSZ', true).format(format)
+    }
+  }
+
   /**
    * Set the date to today using the beginning of the day for "Start" and the end of the day for "End"
    */
@@ -115,9 +150,6 @@ class DatepickerContainer extends Component {
     // If validation is set to false, avoid checking validations
     if (!shouldValidate) return true
 
-    // If a validation callback was provided, execute it
-    if (typeof isValidDate === 'function') return this.isValidDate(date)
-
     // Handle disabled dates
     if (!date.isBetween(minDate, maxDate)) return false
 
@@ -140,9 +172,9 @@ class DatepickerContainer extends Component {
     // if so, we convert it to a UTC string in our desired format. If the value is not a valid ISO date,
     // then we leave it untouched and pass it to the input.
     // We are using YYYY-MM-DDTHH:m:s.SSSZ instead of moment.ISO_8601 so that it doesn't autocomplete every time there's a valid ISO format
-    const datetimeRegex = /^(\d{4})-(\d{2})-(\d{2})[T](\d{2}):(\d{2}):(\d{2}).(\d{3})[Z]$/
+    const isValidISO = moment.utc(value, moment.ISO_8601, true).isValid()
 
-    if (value.match(datetimeRegex)) {
+    if (isValidISO) {
       value = moment.utc(value).format(format)
     }
 
@@ -154,6 +186,7 @@ class DatepickerContainer extends Component {
         label={label}
         onBlur={this.onBlur}
         onChange={this.onChange}
+        onInputChange={this.onInputChange}
         onClearClick={this.onClearClick}
         onTodayClick={this.onTodayClick}
         picker={this.picker}

@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {
   act,
-  fireEvent,
   render,
   screen,
   waitFor
@@ -71,14 +70,17 @@ describe('TemporalSelectionDropdown component', () => {
       await user.click(screen.getByRole('button'))
     })
 
-    const inputs = screen.getAllByRole('textbox')
+    const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+    const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
     const startTestObj = moment.utc('2012-01-01 12:00:00', true).format('YYYY-MM-DD HH:mm:ss')
 
-    fireEvent.change(inputs[0], { target: { value: startTestObj } })
+    await act(async () => {
+      await user.type(startDateInput, startTestObj)
+    })
 
-    expect(inputs[0].value).toBe(startTestObj)
-    expect(inputs[1].value).not.toBe(startTestObj)
+    expect(startDateInput).toHaveValue(startTestObj)
+    expect(endDateInput).not.toHaveValue(startTestObj)
   })
 
   test('sets the end date correctly when an valid date is passed', async () => {
@@ -90,14 +92,17 @@ describe('TemporalSelectionDropdown component', () => {
       await user.click(screen.getByRole('button'))
     })
 
-    const inputs = screen.getAllByRole('textbox')
+    const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+    const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
     const endTestObj = moment.utc('2015-01-01 12:00:00', true).format('YYYY-MM-DD HH:mm:ss')
 
-    fireEvent.change(inputs[1], { target: { value: endTestObj } })
+    await act(async () => {
+      await user.type(endDateInput, endTestObj)
+    })
 
-    expect(inputs[0].value).not.toBe(endTestObj)
-    expect(inputs[1].value).toBe(endTestObj)
+    expect(startDateInput).not.toHaveValue(endTestObj)
+    expect(endDateInput).toHaveValue(endTestObj)
   })
 
   test('sets the state correctly with an invalid start date', async () => {
@@ -109,25 +114,27 @@ describe('TemporalSelectionDropdown component', () => {
       await user.click(screen.getByRole('button'))
     })
 
-    const inputs = screen.getAllByRole('textbox')
+    const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+    const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
     const invalidDate = '2012-01-efss 12:00:00'
     const validStartDate = moment.utc('2012-01-01 12:00:00').format('YYYY-MM-DD HH:mm:ss')
     const validEndDate = moment.utc('2012-01-02 12:00:00').format('YYYY-MM-DD HH:mm:ss')
 
-    try {
-      fireEvent.change(inputs[0], { target: { value: invalidDate } })
-    } catch (e) {
-      console.log(e)
-    }
+    await act(async () => {
+      await user.type(startDateInput, invalidDate)
+    })
 
     expect(screen.getByText(/Invalid start date/i)).toBeInTheDocument()
 
-    fireEvent.change(inputs[0], { target: { value: validStartDate } })
-    fireEvent.change(inputs[1], { target: { value: validEndDate } })
+    await act(async () => {
+      await user.clear(startDateInput)
+      await user.type(startDateInput, validStartDate)
+      await user.type(endDateInput, validEndDate)
+    })
 
-    expect(inputs[0].value).toBe(validStartDate)
-    expect(inputs[1].value).toBe(validEndDate)
+    expect(startDateInput).toHaveValue(validStartDate)
+    expect(endDateInput).toHaveValue(validEndDate)
   })
 
   test('clears the values onClearClick', async () => {
@@ -180,15 +187,22 @@ describe('TemporalSelectionDropdown component', () => {
     const validEndDate = '2019-03-30T00:00:00.000Z'
     const validStartDate = '2019-03-29T00:00:00.000Z'
 
-    fireEvent.click(screen.getByRole('button'))
+    const expectedEndDate = '2019-03-30T23:59:59.999Z'
 
-    const inputs = screen.getAllByRole('textbox')
+    await act(async () => {
+      await user.click(screen.getByRole('button'))
+    })
 
-    fireEvent.change(inputs[0], { target: { value: validStartDate } })
-    fireEvent.change(inputs[1], { target: { value: validEndDate } })
+    const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+    const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
-    expect(inputs[0].value).toBe(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
-    expect(inputs[1].value).toBe(moment.utc(validEndDate).format('YYYY-MM-DD HH:mm:ss'))
+    await act(async () => {
+      await user.type(startDateInput, validStartDate)
+      await user.type(endDateInput, validEndDate)
+    })
+
+    expect(startDateInput.value).toBe(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
+    expect(endDateInput.value).toBe(moment.utc(validEndDate).endOf('day').format('YYYY-MM-DD HH:mm:ss'))
 
     const applyBtn = screen.getByRole('button', { name: 'Apply' })
 
@@ -201,7 +215,7 @@ describe('TemporalSelectionDropdown component', () => {
         temporal: {
           isRecurring: false,
           startDate: validStartDate,
-          endDate: validEndDate
+          endDate: expectedEndDate
         }
       }
     })
@@ -236,9 +250,9 @@ describe('TemporalSelectionDropdown component', () => {
 
     // Select the end date
     await user.click(endField)
-    await user.click(await screen.findByText('2024'))
+    await user.click((await screen.findAllByText('2024')).at(1))
     await user.click(await screen.findByText('Jun'))
-    await user.click((await screen.findAllByText('15')).at(1))
+    await user.click(await screen.findByText('15'))
     expect(endField).toHaveValue(validEndDate)
 
     // Select Recurring

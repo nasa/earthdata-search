@@ -15,6 +15,7 @@ import './Datepicker.scss'
  * @param {Function} props.isValidDate - Callback function to determine if a date is valid
  * @param {Function} props.onBlur - Callback function to call when the field is blurred
  * @param {Function} props.onChange - Callback function to call when the field is changed
+ * @param {Function} props.onInputChange - Callback function to call when the input field is changed
  * @param {Function} props.onClearClick - Callback function to call when the clear button is clicked
  * @param {Function} props.onTodayClick - Callback function to call when the today button is clicked
  * @param {Node} props.picker - A ref for the datepicker
@@ -63,6 +64,7 @@ class Datepicker extends PureComponent {
       label,
       onBlur,
       onChange,
+      onInputChange,
       picker,
       size,
       value
@@ -81,7 +83,8 @@ class Datepicker extends PureComponent {
             placeholder: format,
             autoComplete: 'off',
             className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`,
-            'aria-label': label
+            'aria-label': label,
+            onChange: onInputChange
           }
         }
         isValidDate={isValidDate}
@@ -90,7 +93,7 @@ class Datepicker extends PureComponent {
         ref={picker}
         timeFormat={false}
         utc
-        value={value}
+        initialValue={value}
         initialViewMode={viewMode}
       />
     )
@@ -112,6 +115,7 @@ Datepicker.propTypes = {
   isValidDate: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
   onClearClick: PropTypes.func.isRequired,
   onTodayClick: PropTypes.func.isRequired,
   picker: PropTypes.oneOfType([
