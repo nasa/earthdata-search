@@ -111,30 +111,31 @@ const defaultCmrPageSize = 20
 const testResultsSize = async (page, cmrHits) => {
   const expectedSize = Math.min(defaultCmrPageSize, cmrHits)
 
-  const metaText = await page.locator('[data-testid="panel-group_granule-results"] [data-testid="panel-group-header__heading-meta-text"]').textContent()
+  const metaText = await page.getByTestId('panel-group_granule-results')
+    .getByTestId('panel-group-header__heading-meta-text')
+    .textContent()
   expect(metaText).toBe(`Showing ${expectedSize} of ${commafy(cmrHits)} matching ${pluralize('granule', cmrHits)}`)
 }
 
 test.describe('Path /search/granules', () => {
   test.beforeEach(async ({ page }) => {
-    await page.evaluate(() => {
-      class MockDate extends Date {
+    const fakeNow = new Date('2021-06-01').valueOf()
+
+    await page.addInitScript(`{
+      Date = class extends Date {
         constructor(...args) {
           if (args.length === 0) {
-            super('2021-06-01T00:00:00.000Z')
+            super(${fakeNow});
           } else {
-            super(...args)
+            super(...args);
           }
         }
       }
 
-      MockDate.now = () => new MockDate().getTime()
-      window.Date = MockDate
-    })
-
-    page.on('console', (msg) => {
-      console.log(`Console message: ${msg.text()}`)
-    })
+      const __DateNowOffset = ${fakeNow} - Date.now();
+      const __DateNow = Date.now;
+      Date.now = () => __DateNow() + __DateNowOffset;
+    }`)
   })
 
   test.describe('When the path is loaded with only the collectionId', () => {
@@ -160,7 +161,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
         }
 
         route.fulfill({
@@ -184,21 +185,13 @@ test.describe('Path /search/granules', () => {
         })
       })
 
-      // Capture and log headers to verify them
-      page.on('response', async (response) => {
-        if (response.url().includes('/search/granules.json')) {
-          const headers = response.headers()
-          console.log('Response headers:', headers)
-        }
-      })
-
       await page.goto('/search/granules?p=C1214470488-ASF')
 
       // Ensure the correct number of results were loaded
       await testResultsSize(page, cmrHits)
 
       // Readable granule name input is empty
-      await expect(page.locator('[data-testid="granule-filters__readable-granule-name"]')).toHaveValue('')
+      await expect(page.getByTestId('granule-filters__readable-granule-name')).toHaveValue('')
     })
   })
 
@@ -225,7 +218,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
         }
 
         route.fulfill({
@@ -255,7 +248,7 @@ test.describe('Path /search/granules', () => {
       await testResultsSize(page, cmrHits)
 
       // Readable granule name input is populated
-      await expect(page.locator('[data-testid="granule-filters__readable-granule-name"]')).toHaveValue('S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1')
+      await expect(page.getByTestId('granule-filters__readable-granule-name')).toHaveValue('S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1')
     })
   })
 
@@ -283,7 +276,7 @@ test.describe('Path /search/granules', () => {
           const request = route.request()
           const body = request.postData()
           if (body) {
-            expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+            expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
           }
 
           route.fulfill({
@@ -313,7 +306,7 @@ test.describe('Path /search/granules', () => {
         await testResultsSize(page, cmrHits)
 
         // Readable granule name input is empty
-        await expect(page.locator('[data-testid="granule-filters__readable-granule-name"]')).toHaveValue('')
+        await expect(page.getByTestId('granule-filters__readable-granule-name')).toHaveValue('')
 
         // Temporal is populated
         await expect(page.locator('#granule-filters__temporal-selection__temporal-form__start-date')).toHaveValue('2020-01-01 00:00:00')
@@ -344,7 +337,7 @@ test.describe('Path /search/granules', () => {
           const request = route.request()
           const body = request.postData()
           if (body) {
-            expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+            expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
           }
 
           route.fulfill({
@@ -374,7 +367,7 @@ test.describe('Path /search/granules', () => {
         await testResultsSize(page, cmrHits)
 
         // Readable granule name input is empty
-        await expect(page.locator('[data-testid="granule-filters__readable-granule-name"]')).toHaveValue('')
+        await expect(page.getByTestId('granule-filters__readable-granule-name')).toHaveValue('')
 
         // Temporal is populated
         await expect(page.locator('#granule-filters__temporal-selection__temporal-form__start-date')).toHaveValue('01-20 00:00:00')
@@ -408,7 +401,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
         }
 
         route.fulfill({
@@ -438,8 +431,8 @@ test.describe('Path /search/granules', () => {
       await testResultsSize(page, cmrHits)
 
       // Checkboxes are checked correctly
-      await expect(page.locator('[data-testid="granule-filters__browse-only"]')).toBeChecked()
-      await expect(page.locator('[data-testid="granule-filters__online-only"]')).not.toBeChecked()
+      await expect(page.getByTestId('granule-filters__browse-only')).toBeChecked()
+      await expect(page.getByTestId('granule-filters__online-only')).not.toBeChecked()
     })
   })
 
@@ -466,7 +459,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
         }
 
         route.fulfill({
@@ -496,8 +489,8 @@ test.describe('Path /search/granules', () => {
       await testResultsSize(page, cmrHits)
 
       // Checkboxes are checked correctly
-      await expect(page.locator('[data-testid="granule-filters__browse-only"]')).not.toBeChecked()
-      await expect(page.locator('[data-testid="granule-filters__online-only"]')).toBeChecked()
+      await expect(page.getByTestId('granule-filters__browse-only')).not.toBeChecked()
+      await expect(page.getByTestId('granule-filters__online-only')).toBeChecked()
     })
   })
 
@@ -524,7 +517,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
         }
 
         route.fulfill({
@@ -554,8 +547,8 @@ test.describe('Path /search/granules', () => {
       await testResultsSize(page, cmrHits)
 
       // Orbit number fields are populated
-      await expect(page.locator('[data-testid="granule-filters__orbit-number-min"]')).toHaveValue('30000')
-      await expect(page.locator('[data-testid="granule-filters__orbit-number-max"]')).toHaveValue('30005')
+      await expect(page.getByTestId('granule-filters__orbit-number-min')).toHaveValue('30000')
+      await expect(page.getByTestId('granule-filters__orbit-number-max')).toHaveValue('30005')
     })
   })
 
@@ -582,7 +575,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1251101828-GES_DISC')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1251101828-GES_DISC')
         }
 
         route.fulfill({
@@ -612,8 +605,8 @@ test.describe('Path /search/granules', () => {
       await testResultsSize(page, cmrHits)
 
       // Equatorial crossing longitude fields are populated
-      await expect(page.locator('[data-testid="granule-filters__equatorial-crossing-longitude-min"]')).toHaveValue('-5')
-      await expect(page.locator('[data-testid="granule-filters__equatorial-crossing-longitude-max"]')).toHaveValue('5')
+      await expect(page.getByTestId('granule-filters__equatorial-crossing-longitude-min')).toHaveValue('-5')
+      await expect(page.getByTestId('granule-filters__equatorial-crossing-longitude-max')).toHaveValue('5')
     })
   })
 
@@ -640,7 +633,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1251101828-GES_DISC')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1251101828-GES_DISC')
         }
 
         route.fulfill({
@@ -698,7 +691,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
         }
 
         route.fulfill({
@@ -728,7 +721,7 @@ test.describe('Path /search/granules', () => {
       await testResultsSize(page, cmrHits)
 
       // Correct sort key is selected
-      await page.locator('[data-testid="panel-group-header-dropdown__sort__1"]').click()
+      await page.getByTestId('panel-group-header-dropdown__sort__1').click()
       await expect(page.locator('.radio-setting-dropdown-item--is-active')).toHaveText('End Date, Newest First')
     })
   })
@@ -756,7 +749,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
 
         route.fulfill({
@@ -786,8 +779,8 @@ test.describe('Path /search/granules', () => {
       await testResultsSize(page, cmrHits)
 
       // Cloud cover fields are populated
-      await expect(page.locator('[data-testid="granule-filters__cloud-cover-min"]')).toHaveValue('10')
-      await expect(page.locator('[data-testid="granule-filters__cloud-cover-max"]')).toHaveValue('15')
+      await expect(page.getByTestId('granule-filters__cloud-cover-min')).toHaveValue('10')
+      await expect(page.getByTestId('granule-filters__cloud-cover-max')).toHaveValue('15')
     })
   })
 
@@ -814,7 +807,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
 
         route.fulfill({
@@ -844,7 +837,7 @@ test.describe('Path /search/granules', () => {
       await testResultsSize(page, cmrHits)
 
       // Day/Night field is populated
-      await expect(page.locator('[data-testid="granule-filters__day-night-flag"]')).toHaveValue('BOTH')
+      await expect(page.getByTestId('granule-filters__day-night-flag')).toHaveValue('BOTH')
     })
   })
 
@@ -871,7 +864,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
 
         route.fulfill({
@@ -901,8 +894,8 @@ test.describe('Path /search/granules', () => {
       await testResultsSize(page, cmrHits)
 
       // Tiling system and grid coords fields are populated
-      await expect(page.locator('[data-testid="granule-filters__tiling-system"]')).toHaveValue('MODIS Tile SIN')
-      await expect(page.locator('[data-testid="granule-filters__grid-coordinates"]')).toHaveValue('0,0 15,15')
+      await expect(page.getByTestId('granule-filters__tiling-system')).toHaveValue('MODIS Tile SIN')
+      await expect(page.getByTestId('granule-filters__grid-coordinates')).toHaveValue('0,0 15,15')
     })
   })
 
@@ -1001,7 +994,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
 
         route.fulfill({
@@ -1078,7 +1071,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
 
         await route.fulfill({
@@ -1109,25 +1102,19 @@ test.describe('Path /search/granules', () => {
         }
       })
 
-      // Capture and log headers to verify them
-      page.on('response', async (response) => {
-        if (response.url().includes('/search/granules.json')) {
-          const headers = response.headers()
-          console.log('Response headers:', headers)
-        }
-      })
-
       // Go to collection in the project context
       await page.goto('/search/granules?p=C194001210-LPDAAC_ECS!C194001210-LPDAAC_ECS&pg[1][a]=2058417402!LPDAAC_ECS')
 
       // Ensure the correct number of results were loaded
       await testResultsSize(page, cmrHits)
 
-      const removeButtonLocator = page.locator('[data-testid="granule-results-actions__proj-action--remove"]')
+      const removeButtonLocator = page.getByTestId('granule-results-actions__proj-action--remove')
       await removeButtonLocator.waitFor({ state: 'visible' })
       await expect(removeButtonLocator).toBeVisible()
 
-      const downloadAllButtonLocator = page.locator('[data-testid="granule-results-actions__download-all-button"] .button__badge')
+      const downloadAllButtonLocator = page
+        .getByTestId('granule-results-actions__download-all-button')
+        .locator('.button__badge')
       await downloadAllButtonLocator.waitFor({ state: 'visible' })
     })
   })
@@ -1154,7 +1141,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
         if (body) {
-          expect(body).toBe('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
         }
 
         route.fulfill({
@@ -1170,20 +1157,14 @@ test.describe('Path /search/granules', () => {
         })
       })
 
-      // Capture and log headers to verify them
-      page.on('response', async (response) => {
-        if (response.url().includes('/search/granules.json')) {
-          const headers = response.headers()
-          console.log('Response headers:', headers)
-        }
-      })
-
       // Go to collection in the project context
       await page.goto('/search/granules?p=C1214470488-ASF!C1214470488-ASF')
 
       // Project count is correct
-      await expect(page.locator('[data-testid="granule-results-actions__proj-action--remove"]')).toBeVisible()
-      await expect(page.locator('[data-testid="granule-results-actions__download-all-button"] .button__badge')).toHaveText(commafy(cmrHits))
+      await expect(page.getByTestId('granule-results-actions__proj-action--remove')).toBeVisible()
+      await expect(page
+        .getByTestId('granule-results-actions__download-all-button')
+        .locator('.button__badge')).toHaveText(commafy(cmrHits))
     })
   })
 
@@ -1223,7 +1204,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', async (route) => {
         const request = route.request()
         const body = request.postData()
-        expect(body).toEqual('end_date=2027-01-01T00:00:00.000Z&interval=day&start_date=2022-01-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+        expect(body).toEqual('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
         await route.fulfill({
           body: JSON.stringify(subscriptionTimelineBody),
@@ -1257,7 +1238,7 @@ test.describe('Path /search/granules', () => {
       await page.goto('/search/granules?p=C1214470488-ASF&pg[0][gsk]=-start_date&sp[0]=-77.04119,38.80585')
 
       // Subscription button is active
-      await expect(page.locator('[data-testid="granule-results-actions__subscriptions-button"]')).toHaveClass(/granule-results-actions__action--is-active/)
+      await expect(page.getByTestId('granule-results-actions__subscriptions-button')).toHaveClass(/granule-results-actions__action--is-active/)
     })
   })
 })
