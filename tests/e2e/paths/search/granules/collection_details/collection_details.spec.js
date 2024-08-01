@@ -213,9 +213,13 @@ test.describe('Path /search/granules/collection-details', () => {
 
       const conceptId = 'C1240222820-ECHO_REST'
       const cmrHits = 12345
-      const granuleHits = 100
+      const granuleHits = 0
 
       await page.route(/collections.json/, async (route) => {
+        const query = route.request().postData()
+        // TODO we probably want to assert these with JSON so its easier
+        expect(query).toEqual('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=-score')
+
         await route.fulfill({
           json: collectionsBody.body,
           headers: {
@@ -226,6 +230,9 @@ test.describe('Path /search/granules/collection-details', () => {
       })
 
       await page.route(/granules.json/, async (route) => {
+        const query = route.request().postData()
+        expect(query).toBe('echo_collection_id=C1240222820-ECHO_REST&page_num=1&page_size=20')
+
         await route.fulfill({
           json: associatedDoisGranulesBody.body,
           headers: {
@@ -254,6 +261,8 @@ test.describe('Path /search/granules/collection-details', () => {
       })
 
       await page.goto('/search/granules/collection-details?p=C1240222820-ECHO_REST&ee=uat&ac=true')
+
+      // Log in
       login(context)
 
       // Ensure title renders on page correctly
@@ -265,11 +274,11 @@ test.describe('Path /search/granules/collection-details', () => {
       const version = 'Version 1.16.1'
       expect(page.getByTestId('collection-details-header__version-id').filter({ hasText: version })).toBeVisible()
 
-      // Test temporal range
-      testCollectionTemporal(page, '2001-01-01 to 2001-06-01')
-
       // Ensure that the collections request ocurred and the component is displaying the correct results
       testCollectionResults(page, cmrHits)
+
+      // Test temporal range
+      testCollectionTemporal(page, '2001-01-01 to 2001-06-01')
 
       // TODO this is 8 because things are being counted multiple times over
       testCollectionScienceKeywords(page, 8, [
