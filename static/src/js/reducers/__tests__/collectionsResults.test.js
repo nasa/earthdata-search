@@ -3,6 +3,7 @@ import collectionsResultsReducer, { initialGranuleState } from '../collectionsRe
 import {
   ADD_MORE_COLLECTION_RESULTS,
   ADD_MORE_GRANULE_RESULTS,
+  FINISHED_COLLECTIONS_RENDERING_TIMER,
   FINISHED_COLLECTIONS_TIMER,
   FINISHED_GRANULES_TIMER,
   INITIALIZE_COLLECTION_GRANULES_RESULTS,
@@ -69,6 +70,32 @@ describe('FINISHED_COLLECTIONS_TIMER', () => {
       ...initialState,
       timerStart: start,
       loadTime: 5
+    }
+
+    expect(collectionsResultsReducer({
+      ...initialState,
+      timerStart: start
+    }, action))
+      .toEqual(expectedState)
+  })
+})
+
+describe('FINISHED_COLLECTIONS_RENDERING_TIMER', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: FINISHED_COLLECTIONS_RENDERING_TIMER
+    }
+
+    // Set current time to 10, and future time to 15
+    // Load time will equal 5
+    jest.spyOn(Date, 'now').mockImplementation(() => 15)
+
+    const start = 10
+
+    const expectedState = {
+      ...initialState,
+      timerStart: null,
+      renderingTime: 5
     }
 
     expect(collectionsResultsReducer({
