@@ -341,10 +341,9 @@ test.describe('Path /search/granules/collection-details', () => {
       })
 
       await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
-      const collectionTitle = 'RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7'
-      // Expect(page.getByTitle(collectionTitle)).toBeVisible()
-      // TODO why do these have to be first etc
-      expect(page.getByRole('heading', { name: collectionTitle }).first()).toBeVisible()
+
+      // Ensure title renders on page correctly
+      testCollectionTitle(page, 'RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7')
 
       // Ensure short-name, version are present
       const shortName = 'rssmif16d'
@@ -353,22 +352,14 @@ test.describe('Path /search/granules/collection-details', () => {
       expect(page.getByTestId('collection-details-header__version-id').filter({ hasText: version })).toBeVisible()
 
       // Ensure that the collections request ocurred and the component is displaying the correct results
-      const searchResultsCollectionsText = `Search Results (${commafy(cmrHits)} ${pluralize('Collection', cmrHits)})`
-      const panelGroupCollectionsResults = page.getByTestId('panel-group_granules-collections-results')
-      const panelCollectionText = await panelGroupCollectionsResults
-        .filter({ has: page.getByTestId('panel-group-header__breadcrumbs') })
-        .filter({ hasText: searchResultsCollectionsText })
-      expect(panelCollectionText).toBeVisible()
+      testCollectionResults(page, cmrHits)
 
       // Granules sidebar
       // TODO continue for now but, this does not actually render it on the screen oddly
       testGranulesSidebar(page, 5, granuleHits)
 
       // Check temporal time
-      const temporalSpan = '2003-10-26 ongoing'
-      const collectionTemporalSpane = page.getByTestId('collection-details-body__info-temporal')
-        .filter({ hasText: temporalSpan })
-      expect(collectionTemporalSpane).toBeVisible()
+      testCollectionTemporal(page, '2003-10-26 ongoing')
 
       // Check native-id
       testCollectionNativeDataFormats(page, 'netCDF-4')
