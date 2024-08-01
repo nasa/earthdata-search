@@ -115,8 +115,8 @@ Datepicker.propTypes = {
   isValidDate: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  onInputChange: PropTypes.func.isRequired,
   onClearClick: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
   onTodayClick: PropTypes.func.isRequired,
   picker: PropTypes.oneOfType([
     // Either a function

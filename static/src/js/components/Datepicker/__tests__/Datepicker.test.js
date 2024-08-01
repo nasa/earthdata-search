@@ -15,6 +15,7 @@ function setupMounted() {
     onBlur: jest.fn(),
     onChange: jest.fn(),
     onClearClick: jest.fn(),
+    onInputChange: jest.fn(),
     onTodayClick: jest.fn(),
     picker: React.createRef(),
     type: 'start',
@@ -38,6 +39,7 @@ function setupShallow() {
     onBlur: jest.fn(),
     onChange: jest.fn(),
     onClearClick: jest.fn(),
+    onInputChange: jest.fn(),
     onTodayClick: jest.fn(),
     picker: React.createRef(),
     value: '',
@@ -72,7 +74,7 @@ describe('Datepicker component', () => {
       enzymeWrapper.setProps({ value: '1988-09-0e 00:00:00' })
 
       const dateTime = enzymeWrapper.find(Datetime)
-      expect(dateTime.prop('value')).toEqual('1988-09-0e 00:00:00')
+      expect(dateTime.prop('initialValue')).toEqual('1988-09-0e 00:00:00')
     })
 
     test('handles ISO dates correctly', () => {
@@ -80,7 +82,7 @@ describe('Datepicker component', () => {
       enzymeWrapper.setProps({ value: '1988-09-03T00:00:00.000Z' })
 
       const dateTime = enzymeWrapper.find(Datetime)
-      expect(dateTime.prop('value')).toEqual('1988-09-03T00:00:00.000Z')
+      expect(dateTime.prop('initialValue')).toEqual('1988-09-03T00:00:00.000Z')
     })
   })
 
