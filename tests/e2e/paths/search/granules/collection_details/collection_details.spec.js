@@ -105,25 +105,19 @@ const testCollectionReformattingOptions = async (page, reformattingOptions) => {
   const collectionDetailsBody = await page.getByTestId('collection-details-body__info-reformattings')
 
   // Loop through each reformatting option
-  for (let index = 0; index < reformattingOptions.length; index += 1) {
-    const { input, outputs } = reformattingOptions[index]
-    console.log('🚀 ~ file: collection_details.spec.js:57 ~ testCollectionReformattingOptions ~ outputs:', outputs)
-    console.log('🚀 ~ file: collection_details.spec.js:57 ~ testCollectionReformattingOptions ~ input:', input)
+  reformattingOptions.forEach(async (currentReformatting, index) => {
+    const { input, outputs } = currentReformatting
 
     // Find the reformatting item within the collection details body
     const reformattingItem = await collectionDetailsBody.locator('.collection-details-body__reformatting-item').nth(index)
 
     // Assert the input and outputs within the reformatting item
-    const headingElement = await reformattingItem.locator('.collection-details-body__reformatting-item-heading')
-    const bodyElement = await reformattingItem.locator('.collection-details-body__reformatting-item-body')
+    const reformattingHeaderElement = await reformattingItem.locator('.collection-details-body__reformatting-item-heading')
+    const reformattingItemBody = await reformattingItem.locator('.collection-details-body__reformatting-item-body')
 
-    // Get text content and assert using Playwright's expect
-    const headingText = await headingElement.innerText()
-    const bodyText = await bodyElement.innerText()
-
-    expect(headingText.trim()).toBe(input)
-    expect(bodyText.trim()).toBe(outputs)
-  }
+    expect(reformattingHeaderElement).toHaveText(input)
+    expect(reformattingItemBody).toHaveText(outputs)
+  })
 }
 
 /**
