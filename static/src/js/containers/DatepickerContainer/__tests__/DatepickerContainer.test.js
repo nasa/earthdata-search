@@ -37,7 +37,7 @@ describe('DatepickerContainer component', () => {
       enzymeWrapper.instance().picker.current = {}
       enzymeWrapper.instance().picker.current.setState = jest.fn()
 
-      enzymeWrapper.instance().onBlur()
+      enzymeWrapper.instance().onBlur('1988-09-03 00:00:00')
 
       expect(enzymeWrapper.instance().picker.current.setState).toHaveBeenCalledTimes(1)
       expect(enzymeWrapper.instance().picker.current.setState)
