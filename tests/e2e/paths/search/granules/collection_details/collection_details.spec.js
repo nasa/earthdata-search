@@ -44,9 +44,63 @@ const testCollectionScienceKeywords = async (page, count, keywords) => {
   }
 }
 
+/**
+ * Test the display of reformatting options in the collection details
+ * @param {Array} reformattingOptions Array of objects containing input and outputs
+ */
+const testCollectionReformattingOptions = async (page, reformattingOptions) => {
+  const collectionDetailsBody = await page.getByTestId('collection-details-body__info-reformattings')
+
+  // Loop through each reformatting option
+  for (let index = 0; index < reformattingOptions.length; index += 1) {
+    const { input, outputs } = reformattingOptions[index]
+    console.log('🚀 ~ file: collection_details.spec.js:57 ~ testCollectionReformattingOptions ~ outputs:', outputs)
+    console.log('🚀 ~ file: collection_details.spec.js:57 ~ testCollectionReformattingOptions ~ input:', input)
+
+    // Find the reformatting item within the collection details body
+    const reformattingItem = await collectionDetailsBody.locator('.collection-details-body__reformatting-item').nth(index)
+
+    // Assert the input and outputs within the reformatting item
+    const headingElement = await reformattingItem.locator('.collection-details-body__reformatting-item-heading')
+    const bodyElement = await reformattingItem.locator('.collection-details-body__reformatting-item-body')
+
+    // Get text content and assert using Playwright's expect
+    const headingText = await headingElement.innerText()
+    const bodyText = await bodyElement.innerText()
+
+    expect(headingText.trim()).toBe(input)
+    expect(bodyText.trim()).toBe(outputs)
+  }
+}
+
+/**
+ * Test the display of native data formats in the collection details
+ * @param {String} format Native data format belonging to the collection
+ */
+const testCollectionNativeDataFormats = async (page, format) => {
+  const collectionDetailsBody = await page.getByTestId('collection-details-body__info-native-data-formats')
+  const ddElement = await collectionDetailsBody.locator('dd')
+  const textContent = await ddElement.innerText()
+  expect(textContent.trim()).toBe(format)
+}
+
+/**
+ * Test the display of native data formats in the collection details
+ * @param {String} format Native data format belonging to the collection
+ */
+const testCollectionGibsProjections = async (page, projections) => {
+  const collectionDetailsBody = await page.getByTestId('collection-details-body__info-gibs-projections')
+  const ddElement = await collectionDetailsBody.locator('dd')
+  const textContent = await ddElement.innerText()
+  expect(textContent.trim()).toBe(projections)
+}
+
 test.describe('Path /search/granules/collection-details', () => {
   test.describe('When collection has associated DOIs', () => {
     test('loads correctly', async ({ page, context }) => {
+      // TODO move globally
+      await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+
       const conceptId = 'C1240222820-ECHO_REST'
       const cmrHits = 12345
       const granuleHits = 100
@@ -316,13 +370,15 @@ test.describe('Path /search/granules/collection-details', () => {
 
   test.describe('When collection has multiple reformatting options', () => {
     test('loads correctly', async ({ page }) => {
+      // TODO move globally
+      await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
       const conceptId = 'C1996546500-GHRC_DAAC'
       const cmrHits = 8180
       const granuleHits = 6338
-
+      // TODO do we need the .body
       await page.route(/collections.json/, async (route) => {
         await route.fulfill({
-          json: collectionsBody.body,
+          json: collectionsBody,
           headers: {
             ...commonHeaders,
             'cmr-hits': cmrHits.toString()
@@ -332,7 +388,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
       await page.route(/granules.json/, async (route) => {
         await route.fulfill({
-          json: reformattingsGranulesBody.body,
+          json: reformattingsGranulesBody,
           headers: {
             ...commonHeaders,
             'cmr-hits': granuleHits.toString()
@@ -378,12 +434,36 @@ test.describe('Path /search/granules/collection-details', () => {
         .filter({ hasText: searchResultsCollectionsText })
       expect(panelCollectionText).toBeVisible()
 
-      // TestGranulesSidebar(page, )
+      // Granules sidebar
+      // TODO continue for now but, this does not actually render it on the screen oddly
+      testGranulesSidebar(page, 5, granuleHits)
+
+      // Check temporal time
+      const temporalSpan = '2003-10-26 ongoing'
+      const collectionTemporalSpane = page.getByTestId('collection-details-body__info-temporal')
+        .filter({ hasText: temporalSpan })
+      expect(collectionTemporalSpane).toBeVisible()
+
+      // Check native-id
+      testCollectionNativeDataFormats(page, 'netCDF-4')
+
+      // Check reformatting options
+      testCollectionReformattingOptions(page, [{
+        input: 'NETCDF-4',
+        outputs: 'ASCII, CSV, NETCDF-3, NETCDF-4'
+      }, {
+        input: 'HDF5',
+        outputs: 'ASCII, CSV, NETCDF-3, NETCDF-4'
+      }])
+
+      // Check projection
+      testCollectionGibsProjections(page, 'Geographic')
     })
   })
 
   test.describe('When collection has spatial', () => {
     test('displays the spatial on the minimap', async ({ page }) => {
+      // This test required us to make a call to the map (PNGs etc) which is problematic for isolated testing
       const conceptId = 'C1996546500-GHRC_DAAC'
       const cmrHits = 8180
       const granuleHits = 6338
