@@ -226,6 +226,8 @@ test.describe('Path /search/granules', () => {
       await page.route('**/api', (route) => {
         const requestBody = JSON.parse(route.request().postData())
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
+
+        expect(requestBody).toEqual(expectedBody)
         route.fulfill({
           body: JSON.stringify(readableGranuleNameGraphQlBody),
           headers: readableGranuleNameGraphQlHeaders
@@ -403,6 +405,8 @@ test.describe('Path /search/granules', () => {
       await page.route('**/api', (route) => {
         const requestBody = JSON.parse(route.request().postData())
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
+
+        expect(requestBody).toEqual(expectedBody)
         route.fulfill({
           body: JSON.stringify(browseOnlyGraphQlBody),
           headers: browseOnlyGraphQlHeaders
@@ -455,6 +459,8 @@ test.describe('Path /search/granules', () => {
       await page.route('**/api', (route) => {
         const requestBody = JSON.parse(route.request().postData())
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
+
+        expect(requestBody).toEqual(expectedBody)
         route.fulfill({
           body: JSON.stringify(onlineOnlyGraphQlBody),
           headers: onlineOnlyGraphQlHeaders
@@ -507,6 +513,8 @@ test.describe('Path /search/granules', () => {
       await page.route('**/api', (route) => {
         const requestBody = JSON.parse(route.request().postData())
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
+
+        expect(requestBody).toEqual(expectedBody)
         route.fulfill({
           body: JSON.stringify(orbitNumberGraphQlBody),
           headers: orbitNumberGraphQlHeaders
@@ -559,6 +567,8 @@ test.describe('Path /search/granules', () => {
       await page.route('**/api', (route) => {
         const requestBody = JSON.parse(route.request().postData())
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
+
+        expect(requestBody).toEqual(expectedBody)
         route.fulfill({
           body: JSON.stringify(equatorialCrossingLongitudeGraphQlBody),
           headers: equatorialCrossingLongitudeGraphQlHeaders
@@ -611,6 +621,8 @@ test.describe('Path /search/granules', () => {
       await page.route('**/api', (route) => {
         const requestBody = JSON.parse(route.request().postData())
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
+
+        expect(requestBody).toEqual(expectedBody)
         route.fulfill({
           body: JSON.stringify(equatorialCrossingDateGraphQlBody),
           headers: equatorialCrossingDateGraphQlHeaders
@@ -663,6 +675,8 @@ test.describe('Path /search/granules', () => {
       await page.route('**/api', (route) => {
         const requestBody = JSON.parse(route.request().postData())
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
+
+        expect(requestBody).toEqual(expectedBody)
         route.fulfill({
           body: JSON.stringify(sortKeyGraphQlBody),
           headers: sortKeyGraphQlHeaders
@@ -715,6 +729,8 @@ test.describe('Path /search/granules', () => {
       await page.route('**/api', (route) => {
         const requestBody = JSON.parse(route.request().postData())
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
+
+        expect(requestBody).toEqual(expectedBody)
         route.fulfill({
           body: JSON.stringify(cloudCoverGraphQlBody),
           headers: cloudCoverGraphQlHeaders
@@ -767,6 +783,8 @@ test.describe('Path /search/granules', () => {
       await page.route('**/api', (route) => {
         const requestBody = JSON.parse(route.request().postData())
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
+
+        expect(requestBody).toEqual(expectedBody)
         route.fulfill({
           body: JSON.stringify(dayNightGraphQlBody),
           headers: dayNightGraphQlHeaders
@@ -818,6 +836,8 @@ test.describe('Path /search/granules', () => {
       await page.route('**/api', (route) => {
         const requestBody = JSON.parse(route.request().postData())
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
+
+        expect(requestBody).toEqual(expectedBody)
         route.fulfill({
           body: JSON.stringify(gridCoordsGraphQlBody),
           headers: gridCoordsGraphQlHeaders
@@ -880,6 +900,8 @@ test.describe('Path /search/granules', () => {
       await page.route('**/api', (route) => {
         const requestBody = JSON.parse(route.request().postData())
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
+
+        expect(requestBody).toEqual(expectedBody)
         route.fulfill({
           body: JSON.stringify(timelineGraphQlBody),
           headers: timelineGraphQlHeaders
