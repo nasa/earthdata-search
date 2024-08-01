@@ -217,7 +217,6 @@ test.describe('Path /search/granules/collection-details', () => {
 
       await page.route(/collections.json/, async (route) => {
         const query = route.request().postData()
-        // TODO we probably want to assert these with JSON so its easier
         expect(query).toEqual('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=-score')
 
         await route.fulfill({
@@ -245,16 +244,16 @@ test.describe('Path /search/granules/collection-details', () => {
       await page.route(/graphql/, async (route) => {
         const { query } = JSON.parse(route.request().postData())
 
-        if (query === graphQlGetSubscriptionsQuery) {
+        if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
           await route.fulfill({
-            json: getSubscriptionsGraphQlBody,
+            json: assocatedDoisGraphQlBody,
             headers: graphQlHeaders
           })
         }
 
-        if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+        if (query === graphQlGetSubscriptionsQuery) {
           await route.fulfill({
-            json: assocatedDoisGraphQlBody,
+            json: getSubscriptionsGraphQlBody,
             headers: graphQlHeaders
           })
         }
@@ -262,7 +261,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
       await page.goto('/search/granules/collection-details?p=C1240222820-ECHO_REST&ee=uat&ac=true')
 
-      // Log in
+      // Log-in
       login(context)
 
       // Ensure title renders on page correctly
@@ -303,6 +302,9 @@ test.describe('Path /search/granules/collection-details', () => {
       const granuleHits = 6338
 
       await page.route(/collections.json/, async (route) => {
+        const query = route.request().postData()
+        expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
         await route.fulfill({
           json: collectionsBody,
           headers: {
@@ -313,6 +315,9 @@ test.describe('Path /search/granules/collection-details', () => {
       })
 
       await page.route(/granules.json/, async (route) => {
+        const query = route.request().postData()
+        expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+
         await route.fulfill({
           json: reformattingsGranulesBody,
           headers: {
@@ -324,17 +329,16 @@ test.describe('Path /search/granules/collection-details', () => {
 
       await page.route(/graphql/, async (route) => {
         const { query } = JSON.parse(route.request().postData())
-
-        if (query === graphQlGetSubscriptionsQuery) {
+        if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
           await route.fulfill({
-            json: getSubscriptionsGraphQlBody,
+            json: reformattingGraphQlBody,
             headers: graphQlHeaders
           })
         }
 
-        if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+        if (query === graphQlGetSubscriptionsQuery) {
           await route.fulfill({
-            json: reformattingGraphQlBody,
+            json: getSubscriptionsGraphQlBody,
             headers: graphQlHeaders
           })
         }
