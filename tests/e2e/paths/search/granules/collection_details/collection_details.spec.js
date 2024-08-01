@@ -135,6 +135,16 @@ const testCollectionScienceKeywords = async (page, count, keywords) => {
 }
 
 /**
+ * Tests the temporal string displayed in the collection details
+ * @param {String} temporal The temporal range of the collection represented as a string
+ */
+const testCollectionTemporal = async (page, temporalSpan) => {
+  const collectionTemporalSpane = await page.getByTestId('collection-details-body__info-temporal')
+    .filter({ hasText: temporalSpan })
+  expect(collectionTemporalSpane).toBeVisible()
+}
+
+/**
  * Test the display of reformatting options in the collection details
  * @param {Page} page Playwright page object
  * @param {Array} reformattingOptions Array of objects containing input and outputs
@@ -170,6 +180,22 @@ const testCollectionNativeDataFormats = async (page, format) => {
 }
 
 /**
+ * Tests the display of the cloud access details
+ * @param {Page} page Playwright page object
+ * @param {String} region The AWS region the data resides in
+ * @param {String} bucketName The AWS bucket the data resides in
+ */
+const testCollectionCloudAccessDetails = async (page, region, bucketName) => {
+  expect(await page
+    .getByTestId('direct-distribution-information__cloud-access__region'))
+    .toHaveText(region)
+
+  expect(await page
+    .getByTestId('direct-distribution-information__cloud-access__bucket-name'))
+    .toHaveText(bucketName)
+}
+
+/**
  * Test the display of native data formats in the collection details
  * @param {Page} page Playwright page object
  * @param {String} projections projections Projections supported by GIBS
@@ -183,14 +209,11 @@ const testCollectionGibsProjections = async (page, projections) => {
 test.describe('Path /search/granules/collection-details', () => {
   test.describe('When collection has associated DOIs', () => {
     test('loads correctly', async ({ page, context }) => {
-      // TODO move globally
       await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
 
       const conceptId = 'C1240222820-ECHO_REST'
       const cmrHits = 12345
       const granuleHits = 100
-
-      // Const authHeaders = getAuthHeaders()
 
       await page.route(/collections.json/, async (route) => {
         await route.fulfill({
@@ -202,7 +225,6 @@ test.describe('Path /search/granules/collection-details', () => {
         })
       })
 
-      // TODO Granule hits 0?
       await page.route(/granules.json/, async (route) => {
         await route.fulfill({
           json: associatedDoisGranulesBody.body,
@@ -235,9 +257,7 @@ test.describe('Path /search/granules/collection-details', () => {
       login(context)
 
       // Ensure title renders on page correctly
-      const title = 'Mapping Example for UMM-C 1.16.1'
-
-      testCollectionTitle(page, title)
+      testCollectionTitle(page, 'Mapping Example for UMM-C 1.16.1')
 
       // Ensure short-name, version are present
       const shortName = 'Mapping Short Name 1.16.1'
@@ -245,189 +265,34 @@ test.describe('Path /search/granules/collection-details', () => {
       const version = 'Version 1.16.1'
       expect(page.getByTestId('collection-details-header__version-id').filter({ hasText: version })).toBeVisible()
 
-      const temporalSpan = '2001-01-01 to 2001-06-01'
-      const collectionTemporalSpane = page.getByTestId('collection-details-body__info-temporal')
-        .filter({ hasText: temporalSpan })
-      expect(collectionTemporalSpane).toBeVisible()
+      // Test temporal range
+      testCollectionTemporal(page, '2001-01-01 to 2001-06-01')
 
       // Ensure that the collections request ocurred and the component is displaying the correct results
       testCollectionResults(page, cmrHits)
-      // Expect(page.getByRole('list').length).toBe(2)
 
-      // expect(await page
-      //   .getByRole('listitem')
-      //   .filter({ hasText: 'Terrestrial Hydrosphere' })
-      //   .first())
-      //   .toBeVisible()
-
-      // // Expect(page.getByText('Earth Science')).toBeVisible()
-      // expect(await page
-      //   .getByRole('listitem')
-      //   .filter({ hasText: 'Cryosphere' })
-      //   .first())
-      //   .toBeVisible()
-
-      // // Expect(page.getByText('Earth Science')).toBeVisible()
-      // expect(await page
-      //   .getByRole('listitem')
-      //   .filter({ hasText: 'Snow Ice' })
-      //   .count())
-      //   .toBe(2)
-
-      // expect(await page
-      //   .getByRole('listitem')
-      //   .filter({ hasText: 'Earth Science' })
-      //   .count())
-      //   .toBe(2)
-
-      // const listItems = await page.getByRole('list').locator('li')
-      // console.log('🚀 ~ file: collection_details.spec.js:141 ~ test ~ listItems:', listItems)
-      // const listLength = await listItems.count()
-      // expect(listLength).toBe(12)
       // TODO this is 8 because things are being counted multiple times over
       testCollectionScienceKeywords(page, 8, [
         ['Earth Science', 'Terrestrial Hydrosphere', 'Snow Ice'],
         ['Earth Science', 'Cryosphere', 'Snow Ice']
       ])
 
-      // Test cloud distribution
-      expect(await page
-        .getByTestId('direct-distribution-information__cloud-access__region'))
-        .toHaveText('us-east-2')
+      // TODO we don't need to await getByTestId
+      const providersList = page.getByTestId('collection-details-body__provider-list')
+        .getByRole('listitem')
+      expect(providersList).toHaveCount(4)
 
-      expect(await page
-        .getByTestId('direct-distribution-information__cloud-access__bucket-name'))
-        .toHaveText('TestBucketOrObjectPrefix')
-
-      // Expect(page.getByRole('listitem', { name: 'Earth Science' })).toBeVisible()
-      // expect(page.getByRole('listitem', { name: 'Terrestrial Hydrosphere' })).toBeVisible()
-      // expect(page.getByRole('listitem', { name: 'Snow Ice' })).toBeVisible()
-
-      // 2, [
-      //   ['Earth Science', 'Terrestrial Hydrosphere', 'Snow Ice'],
-      //   ['Earth Science', 'Cryosphere', 'Snow Ice']
-      // ]
-
-      // Await expect(page.getByTestId('panel-group-header__heading-primary')).toHaveText(title)
-      // Cy.intercept(
-      //   {
-      //     method: 'POST',
-      //     url: '**/collections'
-      //   },
-      //   (req) => {
-      //     expect(JSON.parse(req.body).params).to.eql({
-      //       consortium: [],
-      //       include_facets: 'v2',
-      //       include_granule_counts: true,
-      //       include_has_granules: true,
-      //       include_tags: 'edsc.*,opensearch.granule.osdd',
-      //       options: {},
-      //       page_num: 1,
-      //       page_size: 20,
-      //       service_type: [],
-      //       sort_key: [
-      //         '-usage_score'
-      //       ],
-      //       tag_key: []
-      //     })
-
-      //     req.reply({
-      //       body: collectionsBody,
-      //       headers: {
-      //         ...commonHeaders,
-      //         'cmr-hits': cmrHits.toString()
-      //       }
-      //     })
-      //   }
-      // )
-
-      // cy.intercept(
-      //   {
-      //     method: 'POST',
-      //     url: '**/granules'
-      //   },
-      //   (req) => {
-      //     expect(JSON.parse(req.body).params).to.eql({
-      //       concept_id: [],
-      //       echo_collection_id: 'C1240222820-ECHO_REST',
-      //       exclude: {},
-      //       options: {},
-      //       page_num: 1,
-      //       page_size: 20,
-      //       two_d_coordinate_system: {}
-      //     })
-
-      //     req.reply({
-      //       body: associatedDoisGranulesBody,
-      //       headers: {
-      //         ...commonHeaders,
-      //         'cmr-hits': granuleHits.toString()
-      //       }
-      //     })
-      //   }
-      // )
-
-      // cy.intercept(
-      //   {
-      //     method: 'POST',
-      //     url: '**/graphql'
-      //   },
-      //   (req) => {
-      //     if (JSON.parse(req.body).data.query === graphQlGetSubscriptionsQuery) {
-      //       req.alias = 'graphQlSubscriptionsQuery'
-      //       req.reply({
-      //         body: getSubscriptionsGraphQlBody,
-      //         headers: graphQlHeaders
-      //       })
-      //     }
-
-      //     if (
-      //       JSON.parse(req.body).data.query === JSON.parse(graphQlGetCollection(conceptId)).query
-      //     ) {
-      //       req.alias = 'graphQlCollectionQuery'
-      //       req.reply({
-      //         body: assocatedDoisGraphQlBody,
-      //         headers: graphQlHeaders
-      //       })
-      //     }
-      //   }
-      // )
-
-      // Cy.visit('/search/granules/collection-details?p=C1240222820-ECHO_REST&ee=uat&ac=true')
-      // cy.wait('@graphQlSubscriptionsQuery')
-      // cy.wait('@graphQlCollectionQuery')
-
-      // testCollectionTitle('Mapping Example for UMM-C 1.16.1')
-
-      // getByTestId('collection-details-header__short-name').should('have.text', 'Mapping Short Name 1.16.1')
-      // getByTestId('collection-details-header__version-id').should('have.text', 'Version 1.16.1')
-
-      // // Ensure that the collections request ocurred and the component is displaying the correct results
-      // testCollectionResults(cmrHits)
-
-      // testCollectionTemporal('2001-01-01 to 2001-06-01')
-
-      // testCollectionGibsProjections('None')
-
-      // testCollectionScienceKeywords(2, [
-      //   ['Earth Science', 'Terrestrial Hydrosphere', 'Snow Ice'],
-      //   ['Earth Science', 'Cryosphere', 'Snow Ice']
-      // ])
-
-      // getByTestId('collection-details-body__provider-list').children().should('have.length', 4)
-
-      // testCollectionCloudAccessDetails('us-east-2', 'TestBucketOrObjectPrefix')
+      testCollectionCloudAccessDetails(page, 'us-east-2', 'TestBucketOrObjectPrefix')
     })
   })
 
   test.describe('When collection has multiple reformatting options', () => {
     test('loads correctly', async ({ page }) => {
-      // TODO move globally
       await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
       const conceptId = 'C1996546500-GHRC_DAAC'
       const cmrHits = 8180
       const granuleHits = 6338
-      // TODO do we need the .body
+
       await page.route(/collections.json/, async (route) => {
         await route.fulfill({
           json: collectionsBody,
