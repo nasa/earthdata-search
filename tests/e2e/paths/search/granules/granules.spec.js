@@ -119,23 +119,7 @@ const testResultsSize = async (page, cmrHits) => {
 
 test.describe('Path /search/granules', () => {
   test.beforeEach(async ({ page }) => {
-    const fakeNow = new Date('2021-06-01').valueOf()
-
-    await page.addInitScript(`{
-      Date = class extends Date {
-        constructor(...args) {
-          if (args.length === 0) {
-            super(${fakeNow});
-          } else {
-            super(...args);
-          }
-        }
-      }
-
-      const __DateNowOffset = ${fakeNow} - Date.now();
-      const __DateNow = Date.now;
-      Date.now = () => __DateNow() + __DateNowOffset;
-    }`)
+    await page.clock.setFixedTime(new Date('2021-06-01'))
   })
 
   test.describe('When the path is loaded with only the collectionId', () => {
