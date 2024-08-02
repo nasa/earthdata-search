@@ -108,6 +108,11 @@ import { login } from '../../../../support/login'
 
 const defaultCmrPageSize = 20
 
+/**
+ * Tests the search panel header and meta text for results size
+ * @param {Page} page Playwright page object
+ * @param {Integer} cmrHits Total number of collections that match the query
+ */
 const testResultsSize = async (page, cmrHits) => {
   const expectedSize = Math.min(defaultCmrPageSize, cmrHits)
 
@@ -256,7 +261,7 @@ test.describe('Path /search/granules', () => {
           }
 
           route.fulfill({
-            body: JSON.stringify(temporalTimelineBody),
+            json: temporalTimelineBody,
             headers: temporalTimelineHeaders
           })
         })
@@ -317,7 +322,7 @@ test.describe('Path /search/granules', () => {
           }
 
           route.fulfill({
-            body: JSON.stringify(temporalTimelineBody),
+            json: temporalTimelineBody,
             headers: temporalTimelineHeaders
           })
         })
@@ -971,7 +976,6 @@ test.describe('Path /search/granules', () => {
     test('loads with a single granule in the project', async ({ page }) => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 275361
-
       await interceptUnauthenticatedCollections({
         page,
         body: collectionsBody,
@@ -996,6 +1000,7 @@ test.describe('Path /search/granules', () => {
             body: JSON.stringify(projectGranuleProjectGranuleBody),
             headers: {
               ...commonGranulesHeaders,
+              'access-control-expose-headers': 'cmr-hits',
               'cmr-hits': '1'
             }
           })
@@ -1013,6 +1018,12 @@ test.describe('Path /search/granules', () => {
         await route.fulfill({
           body: JSON.stringify(projectGranuleTimelineBody),
           headers: projectGranuleTimelineHeaders
+        })
+      })
+
+      await page.route(/saved_access_configs/, async (route) => {
+        await route.fulfill({
+          json: {}
         })
       })
 
@@ -1083,6 +1094,12 @@ test.describe('Path /search/granules', () => {
         route.fulfill({
           body: JSON.stringify(noParamsTimelineBody),
           headers: noParamsTimelineHeaders
+        })
+      })
+
+      await page.route(/saved_access_configs/, async (route) => {
+        await route.fulfill({
+          json: {}
         })
       })
 
