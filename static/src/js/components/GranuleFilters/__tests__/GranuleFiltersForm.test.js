@@ -157,7 +157,6 @@ describe('GranuleFiltersForm component', () => {
 
         const granuleIdTextField = enzymeWrapper.find(SidebarFiltersItem).at(0)
 
-        console.log(enzymeWrapper.debug())
         expect(granuleIdTextField.find(FormControl).prop('value')).toEqual('')
       })
 
@@ -171,7 +170,6 @@ describe('GranuleFiltersForm component', () => {
 
         const granuleIdTextSection = enzymeWrapper.find(SidebarFiltersItem).at(0)
 
-        console.log(enzymeWrapper.debug())
         expect(granuleIdTextSection.find(FormControl).prop('value')).toEqual('test granule name')
       })
 
@@ -185,8 +183,6 @@ describe('GranuleFiltersForm component', () => {
           expect(enzymeWrapper.find(SidebarFiltersItem).at(0).prop('heading')).toEqual('Granule Search')
 
           const granuleIdTextSection = enzymeWrapper.find(SidebarFiltersItem).at(0)
-
-          console.log(enzymeWrapper.debug())
 
           const granuleIdTextField = granuleIdTextSection.find(FormControl)
 

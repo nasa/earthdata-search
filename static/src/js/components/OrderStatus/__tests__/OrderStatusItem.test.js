@@ -2267,7 +2267,6 @@ describe('OrderStatusItem', () => {
         expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
 
         const orderStatusTab = tabs.childAt(1)
-        console.log(enzymeWrapper.debug())
         expect(orderStatusTab.props().title).toEqual('Order Status')
         expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })

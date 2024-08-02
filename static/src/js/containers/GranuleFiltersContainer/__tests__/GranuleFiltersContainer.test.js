@@ -237,7 +237,7 @@ describe('GranuleFiltersContainer component', () => {
         const readableGranuleNameTextField = screen.getByRole('textbox', { name: 'Granule ID(s)' })
 
         await act(async () => {
-          await user.type(readableGranuleNameTextField, '{orange}')
+          await user.type(readableGranuleNameTextField, '{test-granule-name}')
           await user.type(readableGranuleNameTextField, '{Enter}')
         })
 

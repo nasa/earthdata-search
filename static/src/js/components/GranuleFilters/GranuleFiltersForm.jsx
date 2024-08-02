@@ -374,7 +374,6 @@ export const GranuleFiltersForm = (props) => {
                       <Form.Control
                         name="gridCoords"
                         data-testid="granule-filters__grid-coordinates"
-                        aria-label="granule-filters-grid-coordinates"
                         size="sm"
                         type="text"
                         placeholder="Coordinates..."
@@ -446,7 +445,6 @@ export const GranuleFiltersForm = (props) => {
                       value: isChecked
                     })
 
-                    // TODO why here and not the other
                     setTimeout(() => {
                       handleSubmit()
                     }, 0)
@@ -682,7 +680,6 @@ export const GranuleFiltersForm = (props) => {
                         <Col sm={7}>
                           <Form.Control
                             name="orbitNumber.min"
-                            aria-label="granule-filters-orbit-number-min"
                             data-testid="granule-filters__orbit-number-min"
                             type="text"
                             size="sm"
