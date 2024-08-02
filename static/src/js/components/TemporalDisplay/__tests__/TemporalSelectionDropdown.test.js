@@ -156,9 +156,11 @@ describe('TemporalSelectionDropdown component', () => {
       await user.click(getByRole('button'))
     })
 
-    const inputs = getAllByRole('textbox')
-    expect(inputs[0].value).toBe(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
-    expect(inputs[1].value).toBe(moment.utc(validEndDate).format('YYYY-MM-DD HH:mm:ss'))
+    const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+    const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
+
+    expect(startDateInput).toHaveValue(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
+    expect(endDateInput).toHaveValue(moment.utc(validEndDate).format('YYYY-MM-DD HH:mm:ss'))
 
     const clearBtn = getAllByRole('button', { name: 'Clear' })[2]
     await waitFor(async () => {
@@ -169,9 +171,10 @@ describe('TemporalSelectionDropdown component', () => {
       await user.click(getByRole('button'))
     })
 
-    const updatedInputs = getAllByRole('textbox')
-    expect(updatedInputs[0].value).toBe('')
-    expect(updatedInputs[1].value).toBe('')
+    const updatedStartDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+    const updatedEndtDateInput = screen.getByRole('textbox', { name: 'End Date' })
+    expect(updatedStartDateInput).toHaveValue('')
+    expect(updatedEndtDateInput).toHaveValue('')
 
     expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
   })
@@ -201,8 +204,8 @@ describe('TemporalSelectionDropdown component', () => {
       await user.type(endDateInput, validEndDate)
     })
 
-    expect(startDateInput.value).toBe(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
-    expect(endDateInput.value).toBe(moment.utc(validEndDate).endOf('day').format('YYYY-MM-DD HH:mm:ss'))
+    expect(startDateInput).toHaveValue(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
+    expect(endDateInput).toHaveValue(moment.utc(validEndDate).endOf('day').format('YYYY-MM-DD HH:mm:ss'))
 
     const applyBtn = screen.getByRole('button', { name: 'Apply' })
 
