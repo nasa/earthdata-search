@@ -49,7 +49,7 @@ describe('TemporalSelectionDropdown component', () => {
     const user = userEvent.setup()
     setup({})
 
-    const btn = screen.getByRole('button')
+    const btn = screen.getByRole('button', { name: 'temporal-selection-dropdown' })
     expect(btn).toBeInTheDocument()
 
     await waitFor(async () => {
@@ -67,7 +67,7 @@ describe('TemporalSelectionDropdown component', () => {
     setup()
 
     await waitFor(async () => {
-      await user.click(screen.getByRole('button'))
+      await user.click(screen.getByRole('button', { name: 'temporal-selection-dropdown' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -89,7 +89,7 @@ describe('TemporalSelectionDropdown component', () => {
     setup()
 
     await waitFor(async () => {
-      await user.click(screen.getByRole('button'))
+      await user.click(screen.getByRole('button', { name: 'temporal-selection-dropdown' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -111,7 +111,7 @@ describe('TemporalSelectionDropdown component', () => {
     setup()
 
     await waitFor(async () => {
-      await user.click(screen.getByRole('button'))
+      await user.click(screen.getByRole('button', { name: 'temporal-selection-dropdown' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -193,7 +193,7 @@ describe('TemporalSelectionDropdown component', () => {
     const expectedEndDate = '2019-03-30T23:59:59.999Z'
 
     await act(async () => {
-      await user.click(screen.getByRole('button'))
+      await user.click(screen.getByRole('button', { name: 'temporal-selection-dropdown' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -238,7 +238,7 @@ describe('TemporalSelectionDropdown component', () => {
     const validEndDate = '2024-06-15 23:59:59'
 
     await act(async () => {
-      await user.click(screen.getByRole('button'))
+      await user.click(screen.getByRole('button', { name: 'temporal-selection-dropdown' }))
     })
 
     const startField = await screen.findByRole('textbox', { name: 'Start Date' })
