@@ -262,7 +262,7 @@ test.describe('Path /search/granules/collection-details', () => {
       await page.goto('/search/granules/collection-details?p=C1240222820-ECHO_REST&ee=uat&ac=true')
 
       // Log-in
-      login(context)
+      await login(context)
 
       // Ensure title renders on page correctly
       testCollectionTitle(page, 'Mapping Example for UMM-C 1.16.1')
@@ -457,6 +457,8 @@ test.describe('Path /search/granules/collection-details', () => {
       })
 
       await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
+
+      // Use regex here to account for small differences between browsers and flakiness with the tests on CI
       await expect(page.locator('.collection-details-minimap .leaflet-interactive')).toHaveAttribute('d', /M0 180L360 180L360 0L0/)
     })
   })
