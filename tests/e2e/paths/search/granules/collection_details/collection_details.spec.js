@@ -457,7 +457,7 @@ test.describe('Path /search/granules/collection-details', () => {
       })
 
       await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
-      await expect(page.locator('.collection-details-minimap .leaflet-interactive')).toHaveAttribute('d', 'M0 180L360 180L360 0L0 0z')
+      await expect(page.locator('.collection-details-minimap .leaflet-interactive')).toHaveAttribute('d', 'M0 180L360 180L360 0L0 0L0 180z')
     })
   })
 })
