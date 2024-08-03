@@ -39,7 +39,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * Renders GranuleFiltersContainer.
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.collectionMetadata - The focused collections metadata.
- * @param {Boolean} props.dirty - Flag from Formik set true if the form has been changed since the last submit.
  * @param {Object} props.errors - Form errors provided by Formik.
  * @param {Boolean} props.granuleFiltersNeedsReset - Flag to trigger a form reset.
  * @param {Object} props.granuleQuery - Granule query state
@@ -62,7 +61,6 @@ export const mapDispatchToProps = (dispatch) => ({
 export const GranuleFiltersContainer = (props) => {
   const {
     collectionMetadata,
-    dirty,
     errors,
     granuleFiltersNeedsReset,
     granuleQuery,
@@ -94,10 +92,11 @@ export const GranuleFiltersContainer = (props) => {
 
   const onHandleSubmit = () => {
     // Wait until Formik has changed the values internally with setTimeout
-    setTimeout(() => {
-      // Only submit the form if its values have changed
-      if (dirty) handleSubmit(values)
-    }, 0)
+    // setTimeout(() => {
+    // Only submit the form if its values have changed
+    // Pass the internal `Formik` values
+    handleSubmit(values)
+    // }, 0)
   }
 
   const {
@@ -131,7 +130,6 @@ const EnhancedGranuleFiltersContainer = withFormik({
 
 GranuleFiltersContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
-  dirty: PropTypes.bool.isRequired,
   errors: PropTypes.shape({}).isRequired,
   granuleFiltersNeedsReset: PropTypes.bool.isRequired,
   granuleQuery: PropTypes.shape({

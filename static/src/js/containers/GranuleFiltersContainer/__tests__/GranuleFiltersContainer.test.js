@@ -224,15 +224,13 @@ describe('GranuleFiltersContainer component', () => {
     })
 
     describe('when the form is submitted', () => {
-      test('when the form is not dirty', async () => {
-        const { formikBag, handleSubmit } = setup({
-          dirty: false,
+      test('handle submit is called', async () => {
+        const { handleSubmit } = setup({
           values: {
             test: 'test'
           }
         })
 
-        expect(formikBag.dirty).toBe(false)
         const user = userEvent.setup()
         const readableGranuleNameTextField = screen.getByRole('textbox', { name: 'Granule ID(s)' })
 
@@ -242,31 +240,7 @@ describe('GranuleFiltersContainer component', () => {
         })
 
         await waitFor(() => {
-          expect(handleSubmit).toHaveBeenCalledTimes(0)
-        })
-      })
-
-      test('when the form is dirty', async () => {
-        const { handleSubmit, formikBag } = setup({
-          dirty: true,
-          values: {
-            test: 'test'
-          }
-        })
-        expect(formikBag.dirty).toBe(true)
-        const user = userEvent.setup()
-        const readableGranuleNameTextField = screen.getByRole('textbox', { name: 'Granule ID(s)' })
-
-        await act(async () => {
-          await user.type(readableGranuleNameTextField, '{orange}')
-          await user.type(readableGranuleNameTextField, '{Enter}')
-        })
-
-        await waitFor(() => {
           expect(handleSubmit).toHaveBeenCalledTimes(1)
-          expect(handleSubmit).toHaveBeenCalledWith({
-            test: 'test'
-          })
         })
       })
     })

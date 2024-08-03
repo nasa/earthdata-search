@@ -209,8 +209,8 @@ export const GranuleFiltersForm = (props) => {
   // Blur the field and submit the form. Should be used on text fields.
   const submitOnBlur = (event) => {
     handleBlur(event)
-    handleEventMetrics(event)
     handleSubmit(event)
+    handleEventMetrics(event)
   }
 
   // Submit the form when the enter key is pressed. Should be used on text fields.
@@ -445,9 +445,8 @@ export const GranuleFiltersForm = (props) => {
                       value: isChecked
                     })
 
-                    setTimeout(() => {
-                      handleSubmit()
-                    }, 0)
+                    // This timeout is needed for there to be no delay in the checkbox working
+                    handleSubmit()
                   }
                 }
                 onChangeRecurring={
