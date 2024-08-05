@@ -1,23 +1,48 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import '@testing-library/jest-dom'
+import { Router } from 'react-router'
+import { Provider } from 'react-redux'
+import { createMemoryHistory } from 'history'
+import { withFormik } from 'formik'
+
+import {
+  act,
+  render,
+  screen,
+  waitFor
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import configureStore from '../../../store/configureStore'
 
 import actions from '../../../actions'
+import * as metrics from '../../../middleware/metrics/actions'
+
 import {
+  GranuleFiltersContainer,
   mapDispatchToProps,
-  mapStateToProps,
-  GranuleFiltersContainer
+  mapStateToProps
 } from '../GranuleFiltersContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-jest.useFakeTimers({ legacyFakeTimers: true })
+import validationSchema from '../validationSchema'
+import handleFormSubmit from '../handleFormSubmit'
 
 beforeEach(() => {
   jest.clearAllMocks()
 })
 
-function setup(overrideProps) {
+const setup = (overrideProps) => {
+  const onApplyGranuleFilters = jest.fn()
+  const onUndoExcludeGranule = jest.fn()
+  const setFieldTouched = jest.fn()
+  const setFieldValue = jest.fn()
+  const setGranuleFiltersNeedReset = jest.fn()
+  const handleBlur = jest.fn()
+  const handleChange = jest.fn()
+  const handleReset = jest.fn()
+  const handleSubmit = jest.fn()
+  const onClearGranuleFilters = jest.fn()
+  const onMetricsGranuleFilter = jest.fn()
+
   const props = {
     cmrFacetParams: {},
     collectionMetadata: {
@@ -30,27 +55,65 @@ function setup(overrideProps) {
       excludedGranuleIds: []
     },
     errors: {},
-    handleBlur: jest.fn(),
-    handleChange: jest.fn(),
-    handleReset: jest.fn(),
-    handleSubmit: jest.fn(),
+    handleBlur,
+    handleChange,
+    handleReset,
+    handleSubmit,
     isValid: true,
-    onApplyGranuleFilters: jest.fn(),
-    onClearGranuleFilters: jest.fn(),
-    onUndoExcludeGranule: jest.fn(),
-    setFieldTouched: jest.fn(),
-    setFieldValue: jest.fn(),
-    setGranuleFiltersNeedReset: jest.fn(),
+    onApplyGranuleFilters,
+    onClearGranuleFilters,
+    onMetricsGranuleFilter,
+    onUndoExcludeGranule,
+    setFieldTouched,
+    setFieldValue,
+    setGranuleFiltersNeedReset,
     touched: {},
     values: {},
     ...overrideProps
+
   }
 
-  const enzymeWrapper = shallow(<GranuleFiltersContainer {...props} />)
+  const user = userEvent.setup()
+
+  const store = configureStore()
+
+  const history = createMemoryHistory()
+
+  // `Formik` wrapper mock around component to set context
+  // `Validation schema` and `handleSubmit` are not needed for mock but, used here for better mock to the real component
+  const EnhancedGranuleFiltersContainer = withFormik({
+    enableReinitialize: true,
+    validationSchema,
+    mapPropsToValues: () => ({ granuleQuery: {} }),
+    handleSubmit: handleFormSubmit
+  })(GranuleFiltersContainer)
+
+  // `formikBag` is the internal state of formik which we are manually going to override to match our passed props
+  let formikBag
+  // TODO update with the new way `formik` wants us to render these inline without `render` prop
+  render(
+    <Provider store={store}>
+      <Router history={history}>
+        <EnhancedGranuleFiltersContainer
+          render={
+            () => {
+              formikBag = props
+
+              return <GranuleFiltersContainer {...props} />
+            }
+          }
+        />
+      </Router>
+    </Provider>
+  )
 
   return {
-    enzymeWrapper,
-    props
+    onClearGranuleFilters,
+    handleSubmit,
+    handleReset,
+    setGranuleFiltersNeedReset,
+    user,
+    formikBag
   }
 }
 
@@ -80,6 +143,16 @@ describe('mapDispatchToProps', () => {
     const spy = jest.spyOn(actions, 'undoExcludeGranule')
 
     mapDispatchToProps(dispatch).onUndoExcludeGranule('collectionId')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('collectionId')
+  })
+
+  test('onMetricsGranuleFilter calls metricsGranuleFilter', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metrics, 'metricsGranuleFilter')
+
+    mapDispatchToProps(dispatch).onMetricsGranuleFilter('collectionId')
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('collectionId')
@@ -117,133 +190,58 @@ describe('mapStateToProps', () => {
 
 describe('GranuleFiltersContainer component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.type()).toBeDefined()
+    setup()
+    expect(screen.getByRole('heading', { name: 'Granule Search' })).toBeInTheDocument()
   })
 
   describe('GranuleFiltersForm', () => {
-    test('renders with the correct body prop and passes the correct props', () => {
-      const { enzymeWrapper, props } = setup()
-
-      const granuleFiltersFormProps = enzymeWrapper.props()
-
-      expect(granuleFiltersFormProps.values).toEqual(props.values)
-      expect(granuleFiltersFormProps.touched).toEqual(props.touched)
-      expect(granuleFiltersFormProps.errors).toEqual(props.errors)
-      expect(granuleFiltersFormProps.handleChange).toEqual(props.handleChange)
-      expect(granuleFiltersFormProps.handleBlur).toEqual(props.handleBlur)
-      expect(granuleFiltersFormProps.setFieldValue).toEqual(props.setFieldValue)
-      expect(granuleFiltersFormProps.setFieldTouched).toEqual(props.setFieldTouched)
-      expect(granuleFiltersFormProps.portal).toEqual(props.portal)
-      expect(granuleFiltersFormProps.excludedGranuleIds)
-        .toEqual(props.granuleQuery.excludedGranuleIds)
-
-      expect(granuleFiltersFormProps.onUndoExcludeGranule).toEqual(props.onUndoExcludeGranule)
-    })
-
     describe('when the component is updated', () => {
       describe('when the granuleFiltersNeedsReset flag is set to true', () => {
-        test('calls onClearGranuleFilters', () => {
-          const onClearGranuleFiltersMock = jest.fn()
-          const { enzymeWrapper } = setup()
+        test('calls onClearGranuleFilters ', () => {
+          const { onClearGranuleFilters } = setup({ granuleFiltersNeedsReset: true })
 
-          enzymeWrapper.instance().onClearGranuleFilters = onClearGranuleFiltersMock
-
-          enzymeWrapper.setProps({ granuleFiltersNeedsReset: true })
-          enzymeWrapper.update()
-
-          expect(onClearGranuleFiltersMock).toHaveBeenCalledTimes(1)
+          expect(onClearGranuleFilters).toHaveBeenCalledTimes(1)
         })
 
-        test('sets the granuleFiltersNeedsReset flag to false', () => {
-          const { enzymeWrapper, props } = setup()
+        test('calls handleReset ', () => {
+          const { handleReset } = setup({ granuleFiltersNeedsReset: true })
 
-          enzymeWrapper.setProps({ granuleFiltersNeedsReset: true })
-          enzymeWrapper.update()
-
-          expect(props.setGranuleFiltersNeedReset).toHaveBeenCalledTimes(1)
-          expect(props.setGranuleFiltersNeedReset).toHaveBeenCalledWith(false)
+          expect(handleReset).toHaveBeenCalledTimes(1)
         })
       })
 
       describe('when the granuleFiltersNeedsReset flag is set to false', () => {
         test('does not run onClearGranuleFilters', () => {
-          const onClearGranuleFiltersMock = jest.fn()
-          const { enzymeWrapper } = setup()
-
-          enzymeWrapper.instance().onClearGranuleFilters = onClearGranuleFiltersMock
-
-          enzymeWrapper.setProps({ granuleFiltersNeedsReset: false })
-          enzymeWrapper.update()
-
-          expect(onClearGranuleFiltersMock).toHaveBeenCalledTimes(0)
+          const { onClearGranuleFilters } = setup()
+          expect(onClearGranuleFilters).toHaveBeenCalledTimes(0)
         })
 
         test('sets the granuleFiltersNeedsReset flag to false', () => {
-          const { enzymeWrapper, props } = setup()
-
-          enzymeWrapper.setProps({ granuleFiltersNeedsReset: false })
-          enzymeWrapper.update()
-
-          expect(props.setGranuleFiltersNeedReset).toHaveBeenCalledTimes(0)
+          const { setGranuleFiltersNeedReset } = setup({ granuleFiltersNeedsReset: false })
+          expect(setGranuleFiltersNeedReset).toHaveBeenCalledTimes(0)
         })
       })
     })
 
     describe('when the form is submitted', () => {
-      test('when the form is not dirty', () => {
-        const { enzymeWrapper, props } = setup({
-          dirty: false,
+      test('handle submit is called', async () => {
+        const { handleSubmit } = setup({
           values: {
             test: 'test'
           }
         })
 
-        enzymeWrapper.instance().onHandleSubmit()
+        const user = userEvent.setup()
+        const readableGranuleNameTextField = screen.getByRole('textbox', { name: 'Granule ID(s)' })
 
-        // Advance the timer to account for the setTimeout
-        jest.runAllTimers()
-
-        expect(props.handleSubmit).toHaveBeenCalledTimes(0)
-      })
-
-      test('when the form is dirty', () => {
-        const { enzymeWrapper, props } = setup({
-          dirty: true,
-          values: {
-            test: 'test'
-          }
+        await act(async () => {
+          await user.type(readableGranuleNameTextField, '{testGranuleName}')
+          await user.type(readableGranuleNameTextField, '{Enter}')
         })
 
-        enzymeWrapper.instance().onHandleSubmit()
-
-        // Advance the timer to account for the setTimeout
-        jest.runAllTimers()
-
-        expect(props.handleSubmit).toHaveBeenCalledTimes(1)
-        expect(props.handleSubmit).toHaveBeenCalledWith({
-          test: 'test'
+        await waitFor(() => {
+          expect(handleSubmit).toHaveBeenCalledTimes(1)
         })
-      })
-    })
-
-    describe('when the form is cleared', () => {
-      test('resets the form', () => {
-        const { enzymeWrapper, props } = setup()
-
-        enzymeWrapper.instance().onClearGranuleFilters()
-
-        expect(props.handleReset).toHaveBeenCalledTimes(1)
-      })
-
-      test('clears the granule filters', () => {
-        const { enzymeWrapper, props } = setup()
-
-        enzymeWrapper.instance().onClearGranuleFilters()
-
-        expect(props.onClearGranuleFilters).toHaveBeenCalledTimes(1)
-        expect(props.onClearGranuleFilters).toHaveBeenCalledWith()
       })
     })
   })

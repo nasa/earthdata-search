@@ -4,6 +4,7 @@ import {
   collectionSortChange,
   dataAccess,
   defaultClick,
+  granuleFilter,
   map,
   relatedCollection,
   spatialEdit,
@@ -17,6 +18,7 @@ import {
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
   METRICS_DATA_ACCESS,
+  METRICS_GRANULE_FILTER,
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
@@ -44,6 +46,10 @@ const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
 
   if (action.type === METRICS_MAP) {
     map(action)
+  }
+
+  if (action.type === METRICS_GRANULE_FILTER) {
+    granuleFilter(action)
   }
 
   if (action.type === METRICS_RELATED_COLLECTION) {

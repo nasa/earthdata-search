@@ -216,6 +216,25 @@ export const spatialSelection = (action) => {
 }
 
 /**
+* Pushes a granuleFilter event on the dataLayer.
+* @param {Object} action - The action.
+*/
+export const granuleFilter = (action) => {
+  const { payload } = action
+  const {
+    type,
+    value
+  } = payload
+
+  dataLayer.push({
+    event: 'granuleFilter',
+    granuleFilterCategory: 'Granule Filter',
+    granuleFilterEventAction: type,
+    granuleFilterEventValue: value
+  })
+}
+
+/**
 * Pushes a timing event on the dataLayer.
 * @param {Object} action - The action.
 */
