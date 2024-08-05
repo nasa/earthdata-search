@@ -26,9 +26,9 @@ import './GranuleResultsFocusedMeta.scss'
 /**
  * Renders GranuleResultsFocusedMeta.
  * @param {Object} props - The props passed into the component.
- * @param {String} props.earthdataEnvironment - The current Earthdata environment.
  * @param {String} props.focusedGranuleMetadata - The metadata for any currently focused granule.
  * @param {String} props.focusedGranuleId - The id for the focused granule.
+ * @param {String} props.onMetricsBrowseGranuleImage - Callback function passed from actions to track metrics.
  */
 const GranuleResultsFocusedMeta = ({
   focusedGranuleMetadata,
