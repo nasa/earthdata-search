@@ -15,13 +15,6 @@ export default defineConfig({
   e2e: {
     setupNodeEvents(on) {
       on('file:preprocessor', vitePreprocessor())
-      on('after:run', (results) => {
-        if (results.totalTests === 0) {
-          console.log('No tests found. Exiting with success.')
-        }
-
-        return Promise.resolve({ exitCode: 0 })
-      })
     },
     baseUrl: 'http://localhost:8080',
     specPattern: 'cypress/e2e/**/*.cy.js'
