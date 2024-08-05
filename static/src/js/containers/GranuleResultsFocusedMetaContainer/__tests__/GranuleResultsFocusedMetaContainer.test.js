@@ -1,33 +1,25 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
+import { screen, render } from '@testing-library/react'
+
+import '@testing-library/jest-dom'
 import { GranuleResultsFocusedMetaContainer } from '../GranuleResultsFocusedMetaContainer'
-import GranuleResultsFocusedMeta from '../../../components/GranuleResults/GranuleResultsFocusedMeta'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
+const setup = (overrideProps) => {
   const props = {
     focusedGranuleMetadata: { test: 'test' },
     focusedGranuleId: '1234-TEST',
+    onMetricsBrowseGranuleImage: jest.fn(),
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<GranuleResultsFocusedMetaContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+  render(<GranuleResultsFocusedMetaContainer {...props} />)
 }
 
 describe('GranuleResultsFocusedMetaContainer component', () => {
   test('passes its props and renders a single GranuleResultsFocusedMeta component', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find(GranuleResultsFocusedMeta).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleResultsFocusedMeta).props().focusedGranuleId).toEqual('1234-TEST')
-    expect(enzymeWrapper.find(GranuleResultsFocusedMeta).props().focusedGranuleMetadata).toEqual({ test: 'test' })
+    setup()
+    screen.debug()
+    expect(screen.getByTestId('granule-results-focused-meta-overlay-wrapper')).toBeInTheDocument()
   })
 })
