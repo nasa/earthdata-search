@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withFormik } from 'formik'
@@ -13,6 +13,7 @@ import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
 import GranuleFiltersForm from '../../components/GranuleFilters/GranuleFiltersForm'
+import { metricsGranuleFilter } from '../../middleware/metrics/actions'
 
 export const mapStateToProps = (state) => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
@@ -29,107 +30,91 @@ export const mapDispatchToProps = (dispatch) => ({
     actions.clearGranuleFilters(collectionId)
   ),
   onUndoExcludeGranule:
-    (collectionId) => dispatch(actions.undoExcludeGranule(collectionId))
+    (collectionId) => dispatch(actions.undoExcludeGranule(collectionId)),
+  onMetricsGranuleFilter:
+    (data) => dispatch(metricsGranuleFilter(data))
 })
 
 /**
  * Renders GranuleFiltersContainer.
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.collections - The collections.
- * @param {Boolean} props.dirty - Flag from Formik set true if the form has been changed since the last submit.
- * @param {Boolean} props.granuleFiltersNeedsReset - Flag to trigger a form reset.
+ * @param {Object} props.collectionMetadata - The focused collections metadata.
  * @param {Object} props.errors - Form errors provided by Formik.
- * @param {String} props.focusedCollection - The focused collection id.
+ * @param {Boolean} props.granuleFiltersNeedsReset - Flag to trigger a form reset.
+ * @param {Object} props.granuleQuery - Granule query state
  * @param {Function} props.handleBlur - Callback function provided by Formik.
  * @param {Function} props.handleChange - Callback function provided by Formik.
- * @param {Object} props.metadata - The focused collection metadata.
- * @param {Function} props.onApplyGranuleFilters - Callback function to apply the granule filters.
+ * @param {Function} props.handleReset - Callback function provided by Formik.
+ * @param {Function} props.handleSubmit - Callback function provided by Formik.
  * @param {Function} props.onClearGranuleFilters - Callback function to clear the granule filters.
- * @param {Function} props.setGranuleFiltersNeedReset - Callback to reset the granuleFiltersNeedsReset flag.
- * @param {Function} props.setFieldValue - Callback function provided by Formik.
+ * @param {Function} props.onApplyGranuleFilters - Callback function to apply the granule filters.
+ * @param {Function} props.onMetricsGranuleFilter - Callback function to send metrics for the granule filters.
+ * @param {Function} props.onUndoExcludeGranule - Callback function to undo the granule filters.
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
- * @param {Object} props.temporal - The query temporal.
+ * @param {Function} props.setFieldValue - Callback function provided by Formik.
+ * @param {Function} props.setGranuleFiltersNeedReset - Callback to reset the granuleFiltersNeedsReset flag.
  * @param {Object} props.touched - Form state provided by Formik.
+ * @param {Object} props.temporal - The query temporal.
  * @param {Object} props.values - Form values provided by Formik.
  */
 
-export class GranuleFiltersContainer extends Component {
-  constructor(props) {
-    super(props)
-    this.onClearGranuleFilters = this.onClearGranuleFilters.bind(this)
-    this.onHandleSubmit = this.onHandleSubmit.bind(this)
+export const GranuleFiltersContainer = (props) => {
+  const {
+    collectionMetadata,
+    errors,
+    granuleFiltersNeedsReset,
+    granuleQuery,
+    handleBlur,
+    handleChange,
+    handleReset,
+    handleSubmit,
+    onClearGranuleFilters: onClearGranuleFiltersProp,
+    onMetricsGranuleFilter,
+    onUndoExcludeGranule,
+    setFieldTouched,
+    setFieldValue,
+    setGranuleFiltersNeedReset,
+    touched,
+    values
+  } = props
+
+  const onClearGranuleFilters = () => {
+    handleReset()
+    onClearGranuleFiltersProp()
   }
 
-  componentDidUpdate() {
-    const {
-      granuleFiltersNeedsReset,
-      setGranuleFiltersNeedReset
-    } = this.props
-
+  useEffect(() => {
     if (granuleFiltersNeedsReset) {
-      this.onClearGranuleFilters()
+      onClearGranuleFilters()
       setGranuleFiltersNeedReset(false)
     }
+  }, [granuleFiltersNeedsReset])
+
+  const onHandleSubmit = () => {
+    // Pass the internal `Formik` values
+    handleSubmit(values)
   }
 
-  onHandleSubmit() {
-    // Wait until Formik has changed the values internally with setTimeout
-    setTimeout(() => {
-      const {
-        dirty,
-        values,
-        handleSubmit
-      } = this.props
+  const {
+    excludedGranuleIds = []
+  } = granuleQuery
 
-      // Only submit the form if its values have changed
-      if (dirty) handleSubmit(values)
-    }, 0)
-  }
-
-  onClearGranuleFilters() {
-    const {
-      onClearGranuleFilters,
-      handleReset
-    } = this.props
-
-    handleReset()
-    onClearGranuleFilters()
-  }
-
-  render() {
-    const {
-      collectionMetadata,
-      errors,
-      granuleQuery,
-      handleBlur,
-      handleChange,
-      setFieldTouched,
-      setFieldValue,
-      onUndoExcludeGranule,
-      touched,
-      values
-    } = this.props
-
-    const {
-      excludedGranuleIds = []
-    } = granuleQuery
-
-    return (
-      <GranuleFiltersForm
-        collectionMetadata={collectionMetadata}
-        values={values}
-        touched={touched}
-        errors={errors}
-        handleChange={handleChange}
-        handleBlur={handleBlur}
-        handleSubmit={this.onHandleSubmit}
-        setFieldValue={setFieldValue}
-        setFieldTouched={setFieldTouched}
-        excludedGranuleIds={excludedGranuleIds}
-        onUndoExcludeGranule={onUndoExcludeGranule}
-      />
-    )
-  }
+  return (
+    <GranuleFiltersForm
+      collectionMetadata={collectionMetadata}
+      values={values}
+      touched={touched}
+      errors={errors}
+      handleChange={handleChange}
+      handleBlur={handleBlur}
+      handleSubmit={onHandleSubmit}
+      setFieldValue={setFieldValue}
+      setFieldTouched={setFieldTouched}
+      excludedGranuleIds={excludedGranuleIds}
+      onMetricsGranuleFilter={onMetricsGranuleFilter}
+      onUndoExcludeGranule={onUndoExcludeGranule}
+    />
+  )
 }
 
 const EnhancedGranuleFiltersContainer = withFormik({
@@ -141,7 +126,6 @@ const EnhancedGranuleFiltersContainer = withFormik({
 
 GranuleFiltersContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
-  dirty: PropTypes.bool.isRequired,
   errors: PropTypes.shape({}).isRequired,
   granuleFiltersNeedsReset: PropTypes.bool.isRequired,
   granuleQuery: PropTypes.shape({
@@ -153,6 +137,7 @@ GranuleFiltersContainer.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   onClearGranuleFilters: PropTypes.func.isRequired,
   onUndoExcludeGranule: PropTypes.func.isRequired,
+  onMetricsGranuleFilter: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setGranuleFiltersNeedReset: PropTypes.func.isRequired,

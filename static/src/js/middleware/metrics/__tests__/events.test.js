@@ -5,6 +5,7 @@ import {
   virtualPageview,
   dataAccess,
   defaultClick,
+  granuleFilter,
   timeline,
   map,
   relatedCollection,
@@ -17,6 +18,7 @@ import {
   METRICS_DATA_ACCESS,
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
+  METRICS_GRANULE_FILTER,
   METRICS_TIMELINE,
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
@@ -377,6 +379,28 @@ describe('events', () => {
         event: 'spatialSelection',
         spatialSelectionCategory: 'Spatial Selection',
         spatialSelectionEventLabel: 'Some Item'
+      })
+    })
+  })
+
+  describe('granuleFilter', () => {
+    test('pushes to the dataLayer', () => {
+      const action = {
+        type: METRICS_GRANULE_FILTER,
+        payload: {
+          type: 'Some Type',
+          value: 'Some Value'
+        }
+      }
+
+      granuleFilter(action)
+
+      expect(dataLayerMock).toHaveBeenCalledTimes(1)
+      expect(dataLayerMock).toHaveBeenCalledWith({
+        event: 'granuleFilter',
+        granuleFilterCategory: 'Granule Filter',
+        granuleFilterEventAction: 'Some Type',
+        granuleFilterEventValue: 'Some Value'
       })
     })
   })

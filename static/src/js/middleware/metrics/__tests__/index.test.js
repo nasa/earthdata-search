@@ -4,6 +4,7 @@ import {
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
   METRICS_DATA_ACCESS,
+  METRICS_GRANULE_FILTER,
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
@@ -18,6 +19,7 @@ jest.mock('../events', () => ({
   collectionSortChange: jest.fn(),
   dataAccess: jest.fn(),
   defaultClick: jest.fn(),
+  granuleFilter: jest.fn(),
   map: jest.fn(),
   relatedCollection: jest.fn(),
   spatialEdit: jest.fn(),
@@ -146,6 +148,20 @@ describe('metrics middleware', () => {
     invoke(action)
     expect(events.spatialSelection).toHaveBeenCalledTimes(1)
     expect(events.spatialSelection).toHaveBeenCalledWith(action)
+  })
+
+  test('calls granuleFilter event', () => {
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_GRANULE_FILTER,
+      payload: {
+        item: 'Test'
+      }
+    }
+    invoke(action)
+    expect(events.granuleFilter).toHaveBeenCalledTimes(1)
+    expect(events.granuleFilter).toHaveBeenCalledWith(action)
   })
 
   test('calls timing event', () => {
