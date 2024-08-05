@@ -244,7 +244,6 @@ export const browseGranuleImage = (action) => {
     granuleId,
     value
   } = payload
-  console.log('🚀 ~ file: events.js:247 ~ browseGranuleImage ~ payload:', payload)
 
   dataLayer.push({
     event: 'browseGranuleImage',
