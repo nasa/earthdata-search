@@ -181,6 +181,15 @@ const TemporalSelectionDropdown = ({
       newStartDate.year(startDateObject.year())
     }
 
+    if (!newStartDate) {
+      setTemporal({
+        ...temporal,
+        startDate: ''
+      })
+
+      return
+    }
+
     setTemporal({
       ...temporal,
       // eslint-disable-next-line no-underscore-dangle
@@ -197,6 +206,15 @@ const TemporalSelectionDropdown = ({
       endDate: existingEndDate,
       isRecurring: existingIsRecurring
     } = temporal
+
+    if (!newEndDate) {
+      setTemporal({
+        ...temporal,
+        endDate: ''
+      })
+
+      return
+    }
 
     if (existingIsRecurring) {
       const applicationConfig = getApplicationConfig()

@@ -169,7 +169,7 @@ export class TemporalSelection extends Component {
                   type="start"
                   size={size}
                   format={format}
-                  value={temporal.startDate}
+                  value={temporal.startDate ? temporal.startDate : ''}
                   minDate={minimumTemporalDateString}
                   maxDate={moment().utc().toISOString()}
                   shouldValidate={!isRecurring}
@@ -189,7 +189,7 @@ export class TemporalSelection extends Component {
                   type="end"
                   size={size}
                   format={format}
-                  value={temporal.endDate}
+                  value={temporal.endDate ? temporal.endDate : ''}
                   minDate={minimumTemporalDateString}
                   maxDate={moment().utc().toISOString()}
                   shouldValidate={!isRecurring}

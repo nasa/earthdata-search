@@ -14,7 +14,6 @@ import './Datepicker.scss'
  * @param {String} props.format - A string temporal format
  * @param {Function} props.isValidDate - Callback function to determine if a date is valid
  * @param {Function} props.onBlur - Callback function to call when the field is blurred
- * @param {Function} props.onChange - Callback function to call when the field is changed
  * @param {Function} props.onInputChange - Callback function to call when the input field is changed
  * @param {Function} props.onClearClick - Callback function to call when the clear button is clicked
  * @param {Function} props.onTodayClick - Callback function to call when the today button is clicked
@@ -63,7 +62,6 @@ class Datepicker extends PureComponent {
       isValidDate,
       label,
       onBlur,
-      onChange,
       onInputChange,
       picker,
       size,
@@ -89,11 +87,12 @@ class Datepicker extends PureComponent {
         }
         isValidDate={isValidDate}
         onClose={onBlur}
-        onChange={onChange}
         ref={picker}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        renderInput={(props) => (<input {...props} value={value || ''} />)}
         timeFormat={false}
         utc
-        initialValue={value}
+        value={value}
         initialViewMode={viewMode}
       />
     )
@@ -114,7 +113,6 @@ Datepicker.propTypes = {
   id: PropTypes.string.isRequired,
   isValidDate: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
   onClearClick: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onTodayClick: PropTypes.func.isRequired,
