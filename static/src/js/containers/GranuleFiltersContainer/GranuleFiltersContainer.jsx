@@ -91,12 +91,8 @@ export const GranuleFiltersContainer = (props) => {
   }, [granuleFiltersNeedsReset])
 
   const onHandleSubmit = () => {
-    // Wait until Formik has changed the values internally with setTimeout
-    // setTimeout(() => {
-    // Only submit the form if its values have changed
     // Pass the internal `Formik` values
     handleSubmit(values)
-    // }, 0)
   }
 
   const {
