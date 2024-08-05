@@ -407,10 +407,12 @@ test.describe('Path /search/granules/collection-details', () => {
 
   test.describe('When collection has spatial', () => {
     test('displays the spatial on the minimap', async ({ page }) => {
-      // This test required us to make a call to the map (PNGs etc) which is problematic for isolated testing
       const conceptId = 'C1996546500-GHRC_DAAC'
       const cmrHits = 8180
       const granuleHits = 6338
+
+      // The minim-map is coming from `static/src/assets/images/plate_carree_earth_scaled@2x.png` stored locally in the component
+      await page.route('**/*.{/^(?!.*plate_carree_earth_scaled@2x.png$).*.png$/,jpg,jpeg}', (route) => route.abort())
 
       await page.route(/collections.json/, async (route) => {
         const query = route.request().postData()
