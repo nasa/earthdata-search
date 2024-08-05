@@ -235,6 +235,26 @@ export const granuleFilter = (action) => {
 }
 
 /**
+* Pushes a browse-granule-image event on the dataLayer.
+* @param {Object} action - The action.
+*/
+export const browseGranuleImage = (action) => {
+  const { payload } = action
+  const {
+    granuleId,
+    value
+  } = payload
+  console.log('🚀 ~ file: events.js:247 ~ browseGranuleImage ~ payload:', payload)
+
+  dataLayer.push({
+    event: 'browseGranuleImage',
+    browseGranuleImageCategory: 'Browse Granule Image',
+    browseGranuleImageGranuleId: granuleId,
+    browseGranuleImageValue: value
+  })
+}
+
+/**
 * Pushes a timing event on the dataLayer.
 * @param {Object} action - The action.
 */

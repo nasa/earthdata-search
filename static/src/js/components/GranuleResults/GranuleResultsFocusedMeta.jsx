@@ -32,7 +32,8 @@ import './GranuleResultsFocusedMeta.scss'
  */
 const GranuleResultsFocusedMeta = ({
   focusedGranuleMetadata,
-  focusedGranuleId
+  focusedGranuleId,
+  onMetricsBrowseGranuleImage
 }) => {
   const { title, links = [], browseFlag } = focusedGranuleMetadata
   const [activeBrowseImageIndex, setActiveBrowseImageIndex] = useState(0)
@@ -107,6 +108,14 @@ const GranuleResultsFocusedMeta = ({
       className="granule-results-focused-meta__image-nav-button"
       type="button"
       label="View available browse imagery"
+      onClick={
+        () => {
+          onMetricsBrowseGranuleImage({
+            granuleId: focusedGranuleId,
+            value: 'View List'
+          })
+        }
+      }
       icon={FaList}
     />
   )
@@ -249,7 +258,17 @@ const GranuleResultsFocusedMeta = ({
                     type="button"
                     icon={FaExpand}
                     label="Expand browse image"
-                    onClick={() => onModalOpen(true)}
+                    onClick={
+                      () => {
+                        onModalOpen(true)
+                        onMetricsBrowseGranuleImage({
+                          granuleId: focusedGranuleId,
+                          value: 'Expand'
+                        })
+
+                        console.log('🚀🚀opening granule image', focusedGranuleId)
+                      }
+                    }
                   />
                 </div>
                 {
@@ -261,7 +280,17 @@ const GranuleResultsFocusedMeta = ({
                           type="button"
                           icon={FaChevronLeft}
                           label="Previous browse image thumbnail"
-                          onClick={() => onClickPreviousButton()}
+                          onClick={
+                            () => {
+                              onClickPreviousButton()
+                              onMetricsBrowseGranuleImage({
+                                granuleId: focusedGranuleId,
+                                value: 'Previous'
+                              })
+
+                              console.log('🚀🚀hitting previous button on granule image', focusedGranuleId)
+                            }
+                          }
                           data-testid="granule-results-focused-meta-nav-previous"
                         />
                         <Button
@@ -269,7 +298,17 @@ const GranuleResultsFocusedMeta = ({
                           type="button"
                           icon={FaChevronRight}
                           label="Next browse image thumbnail"
-                          onClick={() => onClickNextButton()}
+                          onClick={
+                            () => {
+                              onClickNextButton()
+                              onMetricsBrowseGranuleImage({
+                                granuleId: focusedGranuleId,
+                                value: 'Next'
+                              })
+
+                              console.log('🚀🚀 hitting next button on granule image', focusedGranuleId)
+                            }
+                          }
                         />
                       </div>
                       <div className="granule-results-focused-meta__image-nav-secondary">
@@ -390,10 +429,19 @@ const GranuleResultsFocusedMeta = ({
                             className="granule-results-focused-meta__image-nav-button"
                             type="button"
                             target="__blank"
+                            onClick={
+                              () => {
+                                onMetricsBrowseGranuleImage({
+                                  granuleId: focusedGranuleId,
+                                  value: 'Download'
+                                })
+                              }
+                            }
                             rel="noopener noreferrer"
                             icon={FaDownload}
                             label="Download browse image"
-                            href={activeModalHref}
+                            // TODO put back just for testing right now
+                            // Href={activeModalHref}
                           />
                         </div>
                       )
@@ -422,7 +470,8 @@ GranuleResultsFocusedMeta.propTypes = {
       })
     ),
     title: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  onMetricsBrowseGranuleImage: PropTypes.func.isRequired
 }
 
 export default GranuleResultsFocusedMeta
