@@ -1,4 +1,5 @@
 import {
+  METRICS_BROWSE_GRANULE_IMAGE,
   METRICS_CLICK,
   METRICS_DATA_ACCESS,
   METRICS_GRANULE_FILTER,
@@ -33,6 +34,11 @@ export const metricsMap = (type) => ({
   payload: {
     eventLabel: type
   }
+})
+
+export const metricsBrowseGranuleImage = (payload) => ({
+  type: METRICS_BROWSE_GRANULE_IMAGE,
+  payload
 })
 
 export const metricsSpatialEdit = (payload) => ({

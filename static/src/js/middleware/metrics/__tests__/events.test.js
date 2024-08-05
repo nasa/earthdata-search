@@ -4,6 +4,7 @@ import * as helpers from '../helpers'
 import {
   virtualPageview,
   dataAccess,
+  browseGranuleImage,
   defaultClick,
   granuleFilter,
   timeline,
@@ -19,6 +20,7 @@ import {
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
   METRICS_GRANULE_FILTER,
+  METRICS_BROWSE_GRANULE_IMAGE,
   METRICS_TIMELINE,
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
@@ -401,6 +403,28 @@ describe('events', () => {
         granuleFilterCategory: 'Granule Filter',
         granuleFilterEventAction: 'Some Type',
         granuleFilterEventValue: 'Some Value'
+      })
+    })
+  })
+
+  describe('browseGranuleImage', () => {
+    test('pushes to the dataLayer', () => {
+      const action = {
+        type: METRICS_BROWSE_GRANULE_IMAGE,
+        payload: {
+          granuleId: 'TEST_GRAN_ID',
+          value: 'Some Value'
+        }
+      }
+
+      browseGranuleImage(action)
+
+      expect(dataLayerMock).toHaveBeenCalledTimes(1)
+      expect(dataLayerMock).toHaveBeenCalledWith({
+        event: 'browseGranuleImage',
+        browseGranuleImageCategory: 'Browse Granule Image',
+        browseGranuleImageGranuleId: 'TEST_GRAN_ID',
+        browseGranuleImageValue: 'Some Value'
       })
     })
   })
