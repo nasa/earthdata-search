@@ -60,6 +60,17 @@ test.describe('Performance Benchmarking', () => {
       const filteredLogs = logs.filter((value) => /^\[performance] Collections load time/.test(value))
       const collectionsLoadTime = Number(filteredLogs.at(-1).split(': ')[1])
       console.log('[performance] Collections load time,', browserName.concat(':'), collectionsLoadTime, 'ms')
+      console.log(
+        '[env var test]',
+        'GITHUB_REF: ',
+        process.env.GITHUB_REF,
+        'GITHUB_HEAD_REF: ',
+        process.env.GITHUB_HEAD_REF,
+        'GITHUB_EVENT_NAME: ',
+        process.env.GITHUB_EVENT_NAME,
+        'GITHUB_SHA: ',
+        process.env.GITHUB_SHA
+      )
     })
   })
 })
