@@ -265,8 +265,6 @@ const GranuleResultsFocusedMeta = ({
                           granuleId: focusedGranuleId,
                           value: 'Expand'
                         })
-
-                        console.log('🚀🚀opening granule image', focusedGranuleId)
                       }
                     }
                   />
@@ -287,8 +285,6 @@ const GranuleResultsFocusedMeta = ({
                                 granuleId: focusedGranuleId,
                                 value: 'Previous'
                               })
-
-                              console.log('🚀🚀hitting previous button on granule image', focusedGranuleId)
                             }
                           }
                           data-testid="granule-results-focused-meta-nav-previous"
@@ -305,8 +301,6 @@ const GranuleResultsFocusedMeta = ({
                                 granuleId: focusedGranuleId,
                                 value: 'Next'
                               })
-
-                              console.log('🚀🚀 hitting next button on granule image', focusedGranuleId)
                             }
                           }
                         />
@@ -440,8 +434,7 @@ const GranuleResultsFocusedMeta = ({
                             rel="noopener noreferrer"
                             icon={FaDownload}
                             label="Download browse image"
-                            // TODO put back just for testing right now
-                            // Href={activeModalHref}
+                            href={activeModalHref}
                           />
                         </div>
                       )
