@@ -167,6 +167,12 @@ This will provide access to API Gateway at [http://localhost:3001](http://localh
 
 Additionally, this ties in with the `serverless webpack` plugin which will ensure that your lambdas are re-built when changes are detected.
 
+### Invoking lambdas locally
+
+To invoke lambdas locally we must create a stringified JSON file with the order information to the specific lambda we are trying to run the structure of the events will differ between the lambda. Typically this will include data from your local database instance which is used in the event information.
+
+    npm run invoke-local -- --function <name-of-lambda-function> --path ./event.json
+
 ### Run the Automated [Jest](https://jestjs.io/) tests
 
 Once the project is built, you must ensure that the automated unit tests pass:
