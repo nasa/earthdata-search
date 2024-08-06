@@ -430,7 +430,7 @@ export class OrderStatusItem extends PureComponent {
             } = requestStatus
             console.log('🚀 ~ file: OrderStatusItem.jsx:431 ~ OrderStatusItem ~ orders.forEach ~ currentStatus:', currentStatus)
             // Const orderStatus = aggregatedOrderStatus(orders)
-            if (currentStatus === 'complete' || currentStatus === 'complete_with_errors' || currentStatus === 'failed') {
+            if (currentStatus === 'complete' || currentStatus === 'failed') {
               totalCompleteOrders += 1
             }
 
@@ -463,7 +463,7 @@ export class OrderStatusItem extends PureComponent {
             } = orderInformation
             console.log('🚀 ~ file: OrderStatusItem.jsx:463 ~ OrderStatusItem ~ orders.forEach ~ orderInformation:', orderInformation)
             // TODO this seems off why check exactly 'successful' here
-            if (status === 'successful' || status === 'failed' || status === 'canceled') {
+            if (status === 'successful' || status === 'complete_with_errors' || status === 'failed' || status === 'canceled') {
               totalCompleteOrders += 1
             }
 
