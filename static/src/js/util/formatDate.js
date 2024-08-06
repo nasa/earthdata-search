@@ -2,21 +2,26 @@ import moment from 'moment'
 
 import isCustomTime from './datepicker'
 
+/**
+ * Formats the datetime value (moment or string)
+ * @param {Object} value datetime or datetime string
+ * @param {Array} timeOfDay string that is either start or end though we only check for end date
+ * @returns {moment} returns formatted moment that is either the date passed in or makes it the end of the day/month/year
+ */
 export const formatDate = (value, timeOfDay) => {
-  if (isCustomTime(value) || !value.isValid()) {
-    console.log(`isCustomTime === true: ${value}`)
-
-    return value
-  }
-
   let dateMoment = null
+
+  // Convert the string to be a moment if is not one yet
   if (!moment.isMoment(value)) {
-    dateMoment = moment.utc(value, moment.ISO_8601, true)
+    dateMoment = moment.utc(value, [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true)
   } else {
-    dateMoment = value.clone()
+    dateMoment = value
   }
 
-  console.log(dateMoment)
+  // Check if the time is a custom time (not a 00:00:00 time) or if it's invalid
+  if (isCustomTime(dateMoment) || !dateMoment.isValid()) {
+    return dateMoment
+  }
 
   // eslint-disable-next-line no-underscore-dangle
   const format = dateMoment._f
@@ -27,8 +32,6 @@ export const formatDate = (value, timeOfDay) => {
         return dateMoment.endOf('year')
       case 'YYYY-MM':
         return dateMoment.endOf('month')
-      case 'YYYY-MM-DD':
-        return dateMoment.endOf('day')
       default:
         return dateMoment.endOf('day')
     }
@@ -36,63 +39,3 @@ export const formatDate = (value, timeOfDay) => {
 
   return dateMoment
 }
-
-//   Const dateExpressions = [
-//     {
-//       // format: 'YYYY-MM',
-//       regex: /^(\d{4}-\d{2})$/,
-//       missing: 'day'
-//     },
-//     {
-//       // format: 'YYYY-MM-DD',
-//       regex: /^(\d{4}-\d{2}-\d{2})$/,
-//       missing: 'hours'
-//     },
-//     {
-//       // format: 'YYYY-MM-DD HH:MM',
-//       regex: /^(\d{4}-\d{2}-\d{2} \d{2}:\d{2})$/,
-//       missing: 'minutes'
-//     },
-//     {
-//       // format: 'YYYY-MM-DD HH:MM:SS',
-//       regex: /^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})$/,
-//       missing: null
-//     }
-//   ]
-
-//   console.log('doin\' it')
-
-//   const result = dateExpressions.filter((obj) => {
-//     const {
-//       regex
-//     } = obj
-
-//     return dateStr.match(regex)
-//   })
-
-//   const cleanedDateStr = result.map((obj) => {
-//     const {
-//       missing
-//     } = obj
-
-//     if (missing === null) {
-//       return moment(dateStr).toISOString()
-//     }
-
-//     if (timeOfDay === 'start') {
-//       return moment(dateStr).startOf(missing).utc(true).toISOString()
-//     }
-
-//     if (timeOfDay === 'end') {
-//       return moment(dateStr).endOf(missing).utc(true).toISOString()
-//     }
-
-//     return dateStr
-//   })
-
-//   console.log(result)
-//   console.log(cleanedDateStr)
-//   console.log(dateStr)
-
-//   return cleanedDateStr.length === 0 ? dateStr : cleanedDateStr[0]
-// }
