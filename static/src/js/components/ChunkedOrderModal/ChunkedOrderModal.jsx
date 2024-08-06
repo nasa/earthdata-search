@@ -26,6 +26,7 @@ const ChunkedOrderModal = ({
   }
 
   const onClickContinue = () => {
+    console.log('In the `onClickContinue` method')
     onToggleChunkedOrderModal(false)
     onSubmitRetrieval()
   }

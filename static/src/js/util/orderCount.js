@@ -1,13 +1,14 @@
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 /**
- * Calulate the number of granules per order supported
+ * Calculate the number of granules per order supported
  * @param {Object} accessMethods Available access methods for a project collection
  * @param {String} selectedAccessMethod Selected access method
  */
 export const calculateGranulesPerOrder = (accessMethods, selectedAccessMethod) => {
   const { [selectedAccessMethod]: accessMethod = {} } = accessMethods
   const { maxItemsPerOrder } = accessMethod
+  console.log('🚀 ~ file: orderCount.js:11 ~ calculateGranulesPerOrder ~ maxItemsPerOrder:', maxItemsPerOrder)
 
   const { defaultGranulesPerOrder } = getApplicationConfig()
 
@@ -36,6 +37,7 @@ export const calculateOrderCount = (projectCollection) => {
 
   const { hits: granuleCount } = projectCollectionGranules
 
+  // SWODLR requires each granule requested to be its own order
   if (selectedAccessMethod === 'SWODLR') {
     return granuleCount
   }
