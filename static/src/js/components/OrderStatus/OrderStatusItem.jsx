@@ -131,7 +131,6 @@ export class OrderStatusItem extends PureComponent {
       orders = []
     } = collection
 
-    console.log('🚀 ~ file: OrderStatusItem.jsx:135 ~ OrderStatusItem ~ shouldRefresh ~ orders:', orders)
     const orderStatus = aggregatedOrderStatus(orders)
     // TODO is it never getting into a terminal state? according to this
     // If the order is in a terminal state stop asking for order status
@@ -428,7 +427,6 @@ export class OrderStatusItem extends PureComponent {
               numberProcessed: currentNumberProcessed = 0,
               totalNumber: currentTotalNumber = 0
             } = requestStatus
-            console.log('🚀 ~ file: OrderStatusItem.jsx:431 ~ OrderStatusItem ~ orders.forEach ~ currentStatus:', currentStatus)
             // Const orderStatus = aggregatedOrderStatus(orders)
             if (currentStatus === 'complete' || currentStatus === 'failed') {
               totalCompleteOrders += 1
@@ -461,8 +459,7 @@ export class OrderStatusItem extends PureComponent {
               message: harmonyMessage,
               jobId = false
             } = orderInformation
-            console.log('🚀 ~ file: OrderStatusItem.jsx:463 ~ OrderStatusItem ~ orders.forEach ~ orderInformation:', orderInformation)
-            // TODO this seems off why check exactly 'successful' here
+
             if (status === 'successful' || status === 'complete_with_errors' || status === 'failed' || status === 'canceled') {
               totalCompleteOrders += 1
             }
