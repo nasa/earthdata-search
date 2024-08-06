@@ -428,8 +428,9 @@ export class OrderStatusItem extends PureComponent {
               numberProcessed: currentNumberProcessed = 0,
               totalNumber: currentTotalNumber = 0
             } = requestStatus
-
-            if (currentStatus === 'complete' || currentStatus === 'failed') {
+            console.log('🚀 ~ file: OrderStatusItem.jsx:431 ~ OrderStatusItem ~ orders.forEach ~ currentStatus:', currentStatus)
+            // Const orderStatus = aggregatedOrderStatus(orders)
+            if (currentStatus === 'complete' || currentStatus === 'completecomplete_with_errors' || currentStatus === 'failed') {
               totalCompleteOrders += 1
             }
 
