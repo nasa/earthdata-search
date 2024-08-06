@@ -32,8 +32,6 @@ export const submitRetrieval = () => (dispatch, getState) => {
   const earthdataEnvironment = getEarthdataEnvironment(state)
 
   const { authToken, project } = state
-  console.log('🚀 ~ file: retrieval.js:35 ~ submitRetrieval ~ project:', project)
-
   const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
 
   const { collections: projectCollections } = project
@@ -50,7 +48,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
 
     let selectedService
     let selectedType
-    // TODO make case statement
+
     if (type === 'download') {
       selectedService = 'Download'
       selectedType = 'download'

@@ -158,8 +158,6 @@ const submitRetrieval = async (event, context) => {
         let sqsEntries = []
 
         await orderPayloads.forEachAsync(async (orderPayload) => {
-          console.log('🚀 ~ file: handler.js:209 ~ awaitorderPayloads.forEachAsync ~ orderPayload:', orderPayload)
-
           // Avoid having to deal with paging again, pull out the page
           // number from the order payload
           const { page_num: pageNum } = orderPayload

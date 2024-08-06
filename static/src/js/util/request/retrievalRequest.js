@@ -23,8 +23,6 @@ export default class RetrievalRequest extends Request {
   }
 
   submit(params) {
-    console.log('🚀 ~ file: retrievalRequest.js:27 ~ RetrievalRequest ~ submit ~ params:', params)
-
     return this.post('retrievals', params)
   }
 

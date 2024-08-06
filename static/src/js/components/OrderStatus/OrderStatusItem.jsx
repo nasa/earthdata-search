@@ -132,7 +132,6 @@ export class OrderStatusItem extends PureComponent {
     } = collection
 
     const orderStatus = aggregatedOrderStatus(orders)
-    // TODO is it never getting into a terminal state? according to this
     // If the order is in a terminal state stop asking for order status
     if (['complete', 'failed', 'canceled'].includes(orderStatus)) {
       clearInterval(this.intervalId)
@@ -427,7 +426,7 @@ export class OrderStatusItem extends PureComponent {
               numberProcessed: currentNumberProcessed = 0,
               totalNumber: currentTotalNumber = 0
             } = requestStatus
-            // Const orderStatus = aggregatedOrderStatus(orders)
+
             if (currentStatus === 'complete' || currentStatus === 'failed') {
               totalCompleteOrders += 1
             }

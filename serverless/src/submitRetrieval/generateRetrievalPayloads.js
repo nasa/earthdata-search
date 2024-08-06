@@ -64,11 +64,9 @@ export async function generateRetrievalPayloads(retrievalCollection, accessMetho
 
   // Determine the size of the entire order
   const orderGranuleCount = adjustedGranuleCount(collectionMetadata, granuleCount)
-  console.log('🚀 ~ file: generateRetrievalPayloads.js:67 ~ generateRetrievalPayloads ~ orderGranuleCount:', orderGranuleCount)
 
   // Determine the size of each chunked order adjusting for provider limitations
   const pageSize = maxGranulesPerOrder(collectionMetadata, accessMethod)
-  console.log('🚀 ~ file: generateRetrievalPayloads.js:71 ~ generateRetrievalPayloads ~ pageSize:', pageSize)
 
   // Determine how many orders we'll need to create given how many
   // granules the user requested

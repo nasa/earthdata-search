@@ -361,8 +361,6 @@ const GranuleResultsFocusedMeta = ({
                 }
               </div>
               {
-                // TODO why are the onClicks for large and small different
-                // TODO: Are we interested in one or both etc
                 (browseThumbnails.length && browseThumbnails.length > 1) && (
                   <nav className="granule-results-focused-meta__modal-primary-actions">
                     <div className="granule-results-focused-meta__modal-nav-primary">

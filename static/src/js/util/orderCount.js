@@ -8,8 +8,6 @@ import { getApplicationConfig } from '../../../../sharedUtils/config'
 export const calculateGranulesPerOrder = (accessMethods, selectedAccessMethod) => {
   const { [selectedAccessMethod]: accessMethod = {} } = accessMethods
   const { maxItemsPerOrder } = accessMethod
-  console.log('🚀 ~ file: orderCount.js:11 ~ calculateGranulesPerOrder ~ maxItemsPerOrder:', maxItemsPerOrder)
-
   const { defaultGranulesPerOrder } = getApplicationConfig()
 
   // SWODLR requires us to process each granule as a separate order
