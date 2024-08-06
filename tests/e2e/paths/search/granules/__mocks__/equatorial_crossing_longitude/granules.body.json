@@ -6,7 +6,9 @@
     "entry": [
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d215.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-02T00:00:00.000Z",
         "updated": "2015-01-30T23:33:22.000Z",
         "orbit_calculated_spatial_domains": [
@@ -100,7 +102,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d216.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-03T00:00:00.000Z",
         "updated": "2015-01-31T10:37:56.000Z",
         "orbit_calculated_spatial_domains": [
@@ -194,7 +198,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d217.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-04T00:00:00.000Z",
         "updated": "2015-01-31T10:46:16.000Z",
         "orbit_calculated_spatial_domains": [
@@ -288,7 +294,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d220.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-07T00:00:00.000Z",
         "updated": "2015-01-31T14:55:13.000Z",
         "orbit_calculated_spatial_domains": [
@@ -382,7 +390,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d221.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-08T00:00:00.000Z",
         "updated": "2015-01-31T15:26:35.000Z",
         "orbit_calculated_spatial_domains": [
@@ -476,7 +486,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d222.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-09T00:00:00.000Z",
         "updated": "2015-01-31T19:30:13.000Z",
         "orbit_calculated_spatial_domains": [
@@ -570,7 +582,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d223.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-10T00:00:00.000Z",
         "updated": "2015-01-31T15:30:35.000Z",
         "orbit_calculated_spatial_domains": [
@@ -664,7 +678,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d224.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-11T00:00:00.000Z",
         "updated": "2015-02-01T09:50:46.000Z",
         "orbit_calculated_spatial_domains": [
@@ -758,7 +774,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d225.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-12T00:00:00.000Z",
         "updated": "2015-01-31T22:23:37.000Z",
         "orbit_calculated_spatial_domains": [
@@ -852,7 +870,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d226.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-13T00:00:00.000Z",
         "updated": "2015-02-01T01:26:22.000Z",
         "orbit_calculated_spatial_domains": [
@@ -946,7 +966,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d227.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-14T00:00:00.000Z",
         "updated": "2015-02-01T04:22:36.000Z",
         "orbit_calculated_spatial_domains": [
@@ -1040,7 +1062,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d228.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-15T00:00:00.000Z",
         "updated": "2015-02-02T02:20:17.000Z",
         "orbit_calculated_spatial_domains": [
@@ -1134,7 +1158,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d229.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-16T00:00:00.000Z",
         "updated": "2015-02-01T10:58:50.000Z",
         "orbit_calculated_spatial_domains": [
@@ -1228,7 +1254,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d230.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-17T00:00:00.000Z",
         "updated": "2015-02-01T06:34:51.000Z",
         "orbit_calculated_spatial_domains": [
@@ -1322,7 +1350,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d231.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-18T00:00:00.000Z",
         "updated": "2015-02-01T12:44:02.000Z",
         "orbit_calculated_spatial_domains": [
@@ -1416,7 +1446,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d232.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-19T00:00:00.000Z",
         "updated": "2015-02-01T16:51:59.000Z",
         "orbit_calculated_spatial_domains": [
@@ -1510,7 +1542,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d233.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-20T00:00:00.000Z",
         "updated": "2015-02-01T22:28:13.000Z",
         "orbit_calculated_spatial_domains": [
@@ -1604,7 +1638,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d234.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-21T00:00:00.000Z",
         "updated": "2015-02-01T19:52:05.000Z",
         "orbit_calculated_spatial_domains": [
@@ -1698,7 +1734,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d235.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-22T00:00:00.000Z",
         "updated": "2015-02-02T09:08:38.000Z",
         "orbit_calculated_spatial_domains": [
@@ -1792,7 +1830,9 @@
       },
       {
         "producer_granule_id": "MLS-Aura_L2GP-Temperature_v04-20-c01_2004d236.he5",
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2004-08-23T00:00:00.000Z",
         "updated": "2015-02-01T22:52:21.000Z",
         "orbit_calculated_spatial_domains": [

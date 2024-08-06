@@ -17,7 +17,9 @@
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-07-15T19:16:39.000Z",
@@ -27,7 +29,10 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_SLC",
-        "organizations": ["ASF", "ESA/CS1CGS"],
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
         "title": "SENTINEL-1A_SLC",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1A slant-range product",
@@ -58,13 +63,18 @@
         "orbit_parameters": {},
         "id": "C1214470488-ASF",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "ECHO10",
         "granule_count": 1336883,
         "archive_center": "ASF",
         "has_temporal_subsetting": false,
         "browse_flag": false,
-        "platforms": ["Sentinel-1A"],
+        "platforms": [
+          "Sentinel-1A"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -87,7 +97,9 @@
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-07-15T19:15:56.000Z",
@@ -97,7 +109,10 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_DP_GRD_HIGH",
-        "organizations": ["ASF", "ESA/CS1CGS"],
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
         "title": "SENTINEL-1A_DUAL_POL_GRD_HIGH_RES",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1A Dual-pol ground projected high and full resolution images",
@@ -128,13 +143,18 @@
         "orbit_parameters": {},
         "id": "C1214470533-ASF",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "ECHO10",
         "granule_count": 1142671,
         "archive_center": "ASF",
         "has_temporal_subsetting": false,
         "browse_flag": false,
-        "platforms": ["Sentinel-1A"],
+        "platforms": [
+          "Sentinel-1A"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -157,7 +177,9 @@
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2016-04-25T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-07-15T19:17:22.000Z",
@@ -167,7 +189,10 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1B_SLC",
-        "organizations": ["ASF", "ESA/CS1CGS"],
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
         "title": "SENTINEL-1B_SLC",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1B slant-range product",
@@ -198,13 +223,18 @@
         "orbit_parameters": {},
         "id": "C1327985661-ASF",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "ECHO10",
         "granule_count": 789393,
         "archive_center": "ASF",
         "has_temporal_subsetting": false,
         "browse_flag": false,
-        "platforms": ["Sentinel-1B"],
+        "platforms": [
+          "Sentinel-1B"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -227,7 +257,9 @@
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2016-04-25T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-07-15T19:16:47.000Z",
@@ -237,7 +269,10 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1B_DP_GRD_HIGH",
-        "organizations": ["ASF", "ESA/CS1CGS"],
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
         "title": "SENTINEL-1B_DUAL_POL_GRD_HIGH_RES",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1B Dual-pol ground projected high and full resolution images",
@@ -268,13 +303,18 @@
         "orbit_parameters": {},
         "id": "C1327985645-ASF",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "ECHO10",
         "granule_count": 694859,
         "archive_center": "ASF",
         "has_temporal_subsetting": false,
         "browse_flag": false,
-        "platforms": ["Sentinel-1B"],
+        "platforms": [
+          "Sentinel-1B"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -320,18 +360,27 @@
             ]
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2015-11-28T00:00:00.000Z",
         "version_id": "2.0",
         "updated": "2020-03-04T07:19:53.396Z",
         "dataset_id": "HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0",
         "has_spatial_subsetting": false,
         "has_transforms": false,
-        "associations": { "tools": ["TL1860232272-LPDAAC_ECS"] },
+        "associations": {
+          "tools": [
+            "TL1860232272-LPDAAC_ECS"
+          ]
+        },
         "has_variables": false,
         "data_center": "LPCLOUD",
         "short_name": "HLSS30",
-        "organizations": ["LP DAAC", "NASA/IMPACT"],
+        "organizations": [
+          "LP DAAC",
+          "NASA/IMPACT"
+        ],
         "title": "HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0",
         "coordinate_system": "CARTESIAN",
         "summary": "The Harmonized Landsat Sentinel-2 (HLS) project provides consistent surface reflectance data from the Operational Land Imager (OLI) aboard the joint NASA/USGS Landsat 8 satellite and the Multi-Spectral Instrument (MSI) aboard Europe’s Copernicus Sentinel-2A and Sentinel-2B satellites. The combined measurement enables global observations of the land every 2–3 days at 30-meter (m) spatial resolution. The HLS project uses a set of algorithms to obtain seamless products from OLI and MSI that include atmospheric correction, cloud and cloud-shadow masking, spatial co-registration and common gridding, illumination and view angle normalization, and spectral bandpass adjustment. \r\n\r\nThe HLSS30 product provides 30-m Nadir Bidirectional Reflectance Distribution Function (BRDF)-Adjusted Reflectance (NBAR) and is derived from Sentinel-2A and Sentinel-2B MSI data products. The HLSS30 and HLSL30 products are gridded to the same resolution and Military Grid Reference System (MGRS) (https://hls.gsfc.nasa.gov/products-description/tiling-system/) tiling system, and thus are “stackable” for time series analysis.\r\n\r\nThe HLSS30 product is provided in Cloud Optimized GeoTIFF (COG) format, and each band is distributed as a separate COG. There are 13 bands included in the HLSS30 product along with four angle bands and a quality assessment (QA) band. See the User Guide for a more detailed description of the individual bands provided in the HLSS30 product.\r\n",
@@ -362,14 +411,20 @@
         "orbit_parameters": {},
         "id": "C2021957295-LPCLOUD",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "UMM_JSON",
         "collection_data_type": "OTHER",
         "granule_count": 4560314,
         "archive_center": "LP DAAC",
         "has_temporal_subsetting": false,
         "browse_flag": true,
-        "platforms": ["Sentinel-2A", "Sentinel-2B"],
+        "platforms": [
+          "Sentinel-2A",
+          "Sentinel-2B"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -480,18 +535,27 @@
             ]
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2013-04-11T00:00:00.000Z",
         "version_id": "2.0",
         "updated": "2015-12-03T10:57:07.000Z",
         "dataset_id": "HLS Landsat Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30m v2.0",
         "has_spatial_subsetting": false,
         "has_transforms": false,
-        "associations": { "tools": ["TL1860232272-LPDAAC_ECS"] },
+        "associations": {
+          "tools": [
+            "TL1860232272-LPDAAC_ECS"
+          ]
+        },
         "has_variables": false,
         "data_center": "LPCLOUD",
         "short_name": "HLSL30",
-        "organizations": ["LP DAAC", "NASA/IMPACT"],
+        "organizations": [
+          "LP DAAC",
+          "NASA/IMPACT"
+        ],
         "title": "HLS Landsat Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30m v2.0",
         "coordinate_system": "CARTESIAN",
         "summary": "The Harmonized Landsat Sentinel-2 (HLS) project provides consistent surface reflectance (SR) and top of atmosphere (TOA) brightness data from a virtual constellation of satellite sensors. The Operational Land Imager (OLI) is housed aboard the joint NASA/USGS Landsat 8 and Landsat 9 satellites, while the Multi-Spectral Instrument (MSI) is mounted aboard Europe’s Copernicus Sentinel-2A and Sentinel-2B satellites. The combined measurement enables global observations of the land every 2–3 days at 30-meter (m) spatial resolution. The HLS project uses a set of algorithms to obtain seamless products from OLI and MSI that include atmospheric correction, cloud and cloud-shadow masking, spatial co-registration and common gridding, illumination and view angle normalization, and spectral bandpass adjustment.\r\n\r\nThe HLSL30 product provides 30-m Nadir Bidirectional Reflectance Distribution Function (BRDF)-Adjusted Reflectance (NBAR) and is derived from Landsat 8/9 OLI data products. The HLSS30 and HLSL30 products are gridded to the same resolution and Military Grid Reference System (MGRS)(https://hls.gsfc.nasa.gov/products-description/tiling-system/) tiling system, and thus are “stackable” for time series analysis.\r\n\r\nThe HLSL30 product is provided in Cloud Optimized GeoTIFF (COG) format, and each band is distributed as a separate file. There are 11 bands included in the HLSL30 product along with one quality assessment (QA) band and four angle bands. See the User Guide for a more detailed description of the individual bands provided in the HLSL30 product.",
@@ -522,14 +586,20 @@
         "orbit_parameters": {},
         "id": "C2021957657-LPCLOUD",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "UMM_JSON",
         "collection_data_type": "OTHER",
         "granule_count": 8926337,
         "archive_center": "LP DAAC",
         "has_temporal_subsetting": false,
         "browse_flag": true,
-        "platforms": ["LANDSAT-8", "LANDSAT-9"],
+        "platforms": [
+          "LANDSAT-8",
+          "LANDSAT-9"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -607,7 +677,9 @@
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-07-15T19:16:17.000Z",
@@ -617,7 +689,10 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_OCN",
-        "organizations": ["ASF", "ESA/CS1CGS"],
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
         "title": "SENTINEL-1A_OCN",
         "coordinate_system": "CARTESIAN",
         "summary": "SENTINEL-1A Level 2 Ocean wind, wave and current data",
@@ -648,13 +723,18 @@
         "orbit_parameters": {},
         "id": "C1214472977-ASF",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "ECHO10",
         "granule_count": 604023,
         "archive_center": "ASF",
         "has_temporal_subsetting": false,
         "browse_flag": false,
-        "platforms": ["Sentinel-1A"],
+        "platforms": [
+          "Sentinel-1A"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -685,7 +765,9 @@
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2002-07-04T00:00:00.000Z",
         "version_id": "2019.0",
         "updated": "2019-12-02T22:59:24.849Z",
@@ -716,12 +798,17 @@
             "S2153799015-POCLOUD",
             "S2227193226-POCLOUD"
           ],
-          "tools": ["TL2108419875-POCLOUD", "TL2092786348-POCLOUD"]
+          "tools": [
+            "TL2108419875-POCLOUD",
+            "TL2092786348-POCLOUD"
+          ]
         },
         "has_variables": true,
         "data_center": "POCLOUD",
         "short_name": "MODIS_A-JPL-L2P-v2019.0",
-        "organizations": ["NASA/JPL/PODAAC"],
+        "organizations": [
+          "NASA/JPL/PODAAC"
+        ],
         "title": "GHRSST Level 2P Global Sea Surface Skin Temperature from the Moderate Resolution Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite (GDS2)",
         "coordinate_system": "CARTESIAN",
         "summary": "NASA produces skin sea surface temperature (SST) products from the Infrared (IR) channels of the Moderate-resolution Imaging Spectroradiometer (MODIS) onboard the Aqua satellite. Aqua was launched by NASA on May 4, 2002, into a sun synchronous, polar orbit with a daylight ascending node at 1:30 pm, formation flying in the A-train with other Earth Observation Satellites (EOS), to study the global dynamics of the Earth atmosphere, land and oceans. MODIS captures data in 36 spectral bands at a variety of spatial resolutions.  Two SST products can be present in these files. The first is a skin SST produced for both day and night (NSST) observations, derived from the long wave IR 11 and 12 micron wavelength channels, using a modified nonlinear SST algorithm intended to provide continuity of SST derived from heritage and current NASA sensors. At night, a second SST product is generated using the mid-infrared 3.95 and 4.05 micron  wavelength channels which are unique to MODIS; the SST derived from these measurements is identified as SST4. The SST4 product has lower uncertainty, but due to sun glint can only be used at night. MODIS L2P SST data have a 1 km spatial resolution at nadir and are stored in 288 five minute granules per day. Full global coverage is obtained every two days, with coverage poleward of 32.3 degree being complete each day.  The production of MODIS L2P SST files is part of the Group for High Resolution Sea Surface Temperature (GHRSST) project and is a joint collaboration between the NASA Jet Propulsion Laboratory (JPL), the NASA Ocean Biology Processing Group (OBPG), and the Rosenstiel School of Marine and Atmospheric Science (RSMAS). Researchers at RSMAS are responsible for SST algorithm development, error statistics and quality flagging, while the OBPG, as the NASA ground data system, is responsible for the production of daily MODIS ocean products. JPL acquires MODIS ocean granules from the OBPG and reformats them to the GHRSST L2P netCDF specification with complete metadata and ancillary variables, and distributes the data as the official Physical Oceanography Data Archive (PO.DAAC) for SST.  The R2019.0 supersedes the previous R2014.0 datasets which can be found at https://doi.org/10.5067/GHMDA-2PJ02",
@@ -757,14 +844,19 @@
         },
         "id": "C1940473819-POCLOUD",
         "has_formats": true,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "UMM_JSON",
         "collection_data_type": "SCIENCE_QUALITY",
         "granule_count": 2428866,
         "archive_center": "NASA/JPL/PODAAC",
         "has_temporal_subsetting": true,
         "browse_flag": true,
-        "platforms": ["Aqua"],
+        "platforms": [
+          "Aqua"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -908,7 +1000,9 @@
             ]
           }
         },
-        "boxes": ["-83 -180 82 180"],
+        "boxes": [
+          "-83 -180 82 180"
+        ],
         "time_start": "2000-03-01T00:00:00.000Z",
         "version_id": "003",
         "updated": "2015-09-30T10:42:35.418Z",
@@ -918,7 +1012,10 @@
         "has_variables": false,
         "data_center": "LPCLOUD",
         "short_name": "ASTGTM",
-        "organizations": ["LP DAAC", "NASA/JPL/ASTER"],
+        "organizations": [
+          "LP DAAC",
+          "NASA/JPL/ASTER"
+        ],
         "title": "ASTER Global Digital Elevation Model V003",
         "coordinate_system": "CARTESIAN",
         "summary": "The ASTER Global Digital Elevation Model (GDEM) Version 3 (ASTGTM) provides a global digital elevation model (DEM) of land areas on Earth at a spatial resolution of 1 arc second (approximately 30 meter horizontal posting at the equator).\r\n\r\nThe development of the ASTER GDEM data products is a collaborative effort between National Aeronautics and Space Administration (NASA) and Japan’s Ministry of Economy, Trade, and Industry (METI). The ASTER GDEM data products are created by the Sensor Information Laboratory Corporation (SILC) in Tokyo. \r\n\r\nThe ASTER GDEM Version 3 data product was created from the automated processing of the entire ASTER Level 1A (https://doi.org/10.5067/ASTER/AST_L1A.003) archive of scenes acquired between March 1, 2000, and November 30, 2013. Stereo correlation was used to produce over one million individual scene based ASTER DEMs, to which cloud masking was applied. All cloud screened DEMs and non-cloud screened DEMs were stacked. Residual bad values and outliers were removed. In areas with limited data stacking, several existing reference DEMs were used to supplement ASTER data to correct for residual anomalies. Selected data were averaged to create final pixel values before partitioning the data into 1 degree latitude by 1 degree longitude tiles with a one pixel overlap. To correct elevation values of water body surfaces, the ASTER Global Water Bodies Database (ASTWBD) (https://doi.org/10.5067/ASTER/ASTWBD.001) Version 1 data product was also generated. \r\n\r\nThe geographic coverage of the ASTER GDEM extends from 83° North to 83° South. Each tile is distributed in GeoTIFF format and projected on the 1984 World Geodetic System (WGS84)/1996 Earth Gravitational Model (EGM96) geoid. Each of the 22,912 tiles in the collection contain at least 0.01% land area. \r\n\r\nProvided in the ASTER GDEM product are layers for DEM and number of scenes (NUM). The NUM layer indicates the number of scenes that were processed for each pixel and the source of the data.\r\n\r\nWhile the ASTER GDEM Version 3 data products offer substantial improvements over Version 2, users are advised that the products still may contain anomalies and artifacts that will reduce its usability for certain applications. \r\n\r\nImprovements/Changes from Previous Versions \r\n• Expansion of acquisition coverage to increase the amount of cloud-free input scenes from about 1.5 million in Version 2 to about 1.88 million scenes in Version 3.\r\n• Separation of rivers from lakes in the water body processing. \r\n• Minimum water body detection size decreased from 1 km2 to 0.2 km2. ",
@@ -950,13 +1047,18 @@
         "orbit_parameters": {},
         "id": "C1711961296-LPCLOUD",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "UMM_JSON",
         "granule_count": 22912,
         "archive_center": "LP DAAC",
         "has_temporal_subsetting": false,
         "browse_flag": true,
-        "platforms": ["Terra"],
+        "platforms": [
+          "Terra"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -1004,7 +1106,9 @@
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-07-15T19:16:20.000Z",
@@ -1014,7 +1118,10 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_RAW",
-        "organizations": ["ASF", "ESA/CS1CGS"],
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
         "title": "SENTINEL-1A_RAW",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1A level zero product",
@@ -1045,13 +1152,18 @@
         "orbit_parameters": {},
         "id": "C1214470561-ASF",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "ECHO10",
         "granule_count": 1507761,
         "archive_center": "ASF",
         "has_temporal_subsetting": false,
         "browse_flag": false,
-        "platforms": ["Sentinel-1A"],
+        "platforms": [
+          "Sentinel-1A"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -1082,7 +1194,9 @@
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2000-02-24T00:00:00.000Z",
         "version_id": "2019.0",
         "updated": "2019-12-31T19:19:57.627Z",
@@ -1113,12 +1227,17 @@
             "S2153799015-POCLOUD",
             "S2227193226-POCLOUD"
           ],
-          "tools": ["TL2108419875-POCLOUD", "TL2092786348-POCLOUD"]
+          "tools": [
+            "TL2108419875-POCLOUD",
+            "TL2092786348-POCLOUD"
+          ]
         },
         "has_variables": true,
         "data_center": "POCLOUD",
         "short_name": "MODIS_T-JPL-L2P-v2019.0",
-        "organizations": ["NASA/JPL/PODAAC"],
+        "organizations": [
+          "NASA/JPL/PODAAC"
+        ],
         "title": "GHRSST Level 2P Global Sea Surface Skin Temperature from the Moderate Resolution Imaging Spectroradiometer (MODIS) on the NASA Terra satellite (GDS2)",
         "coordinate_system": "CARTESIAN",
         "summary": "NASA produces skin sea surface temperature (SST) products from the Infrared (IR) channels of the Moderate-resolution Imaging Spectroradiometer (MODIS) onboard the Terra satellite. Terra was launched by NASA on December 18, 1999, into a sun synchronous, polar orbit with a daylight descending node at 10:30 am, to study the global dynamics of the Earth atmosphere, land and oceans. The MODIS captures data in 36 spectral bands at a variety of spatial resolutions.  Two SST products can be present in these files. The first is a skin SST produced for both day and night observations, derived from the long wave IR 11 and 12 micron wavelength channels, using a modified nonlinear SST algorithm intended to provide continuity with SST derived from heritage and current NASA sensors. At night, a second SST product is produced using the mid-infrared 3.95 and 4.05 micron channels which are unique to MODIS; the SST derived from these measurements is identified as SST4. The SST4 product has lower uncertainty, but due to sun glint can only be produced at night. MODIS L2P SST data have a 1 km spatial resolution at nadir and are stored in 288 five minute granules per day. Full global coverage is obtained every two days, with coverage poleward of 32.3 degree being complete each day. The production of MODIS L2P SST files is part of the Group for High Resolution Sea Surface Temperature (GHRSST) project, and is a joint collaboration between the NASA Jet Propulsion Laboratory (JPL), the NASA Ocean Biology Processing Group (OBPG), and the Rosenstiel School of Marine and Atmospheric Science (RSMAS). Researchers at RSMAS are responsible for SST algorithm development, error statistics and quality flagging, while the OBPG, as the NASA ground data system, is responsible for the production of daily MODIS ocean products. JPL acquires MODIS ocean granules from the OBPG and reformats them to the GHRSST L2P netCDF specification with complete metadata and ancillary variables, and distributes the data as the official Physical Oceanography Data Archive (PO.DAAC) for SST.  The R2019.0 supersedes the previous R2014.0 datasets which can be found at  https://doi.org/10.5067/GHMDT-2PJ02",
@@ -1154,14 +1273,19 @@
         },
         "id": "C1940475563-POCLOUD",
         "has_formats": true,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "UMM_JSON",
         "collection_data_type": "SCIENCE_QUALITY",
         "granule_count": 2698574,
         "archive_center": "NASA/JPL/PODAAC",
         "has_temporal_subsetting": true,
         "browse_flag": true,
-        "platforms": ["Terra"],
+        "platforms": [
+          "Terra"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -1257,71 +1381,164 @@
           "edsc.extra.serverless.collection_details": {
             "data": {
               "data_centers": [
-                { "shortname": "ASF", "roles": ["PROCESSOR"] },
                 {
                   "shortname": "ASF",
-                  "roles": ["ARCHIVER"],
+                  "roles": [
+                    "PROCESSOR"
+                  ]
+                },
+                {
+                  "shortname": "ASF",
+                  "roles": [
+                    "ARCHIVER"
+                  ],
                   "contactInformation": {
                     "ContactMechanisms": [
-                      { "Type": "Telephone", "Value": "907-474-5041" },
-                      { "Type": "Email", "Value": "uso@asf.alaska.edu" }
+                      {
+                        "Type": "Telephone",
+                        "Value": "907-474-5041"
+                      },
+                      {
+                        "Type": "Email",
+                        "Value": "uso@asf.alaska.edu"
+                      }
                     ]
                   }
                 },
                 {
                   "shortname": "ASF",
-                  "roles": ["DISTRIBUTOR"],
+                  "roles": [
+                    "DISTRIBUTOR"
+                  ],
                   "contactInformation": {
                     "ContactMechanisms": [
-                      { "Type": "Telephone", "Value": "907-474-5041" },
-                      { "Type": "Email", "Value": "uso@asf.alaska.edu" }
+                      {
+                        "Type": "Telephone",
+                        "Value": "907-474-5041"
+                      },
+                      {
+                        "Type": "Email",
+                        "Value": "uso@asf.alaska.edu"
+                      }
                     ]
                   }
                 }
               ],
               "relatedUrls": [],
               "scienceKeywords": [
-                ["Earth Science", "Agriculture", "Forest Science"],
-                ["Earth Science", "Biosphere", "Terrestrial Ecosystems"],
-                ["Earth Science", "Cryosphere", "Frozen Ground"],
-                ["Earth Science", "Cryosphere", "Glaciers Ice Sheets"],
-                ["Earth Science", "Cryosphere", "Sea Ice"],
-                ["Earth Science", "Cryosphere", "Snow Ice"],
-                ["Earth Science", "Land Surface", "Erosion Sedimentation"],
+                [
+                  "Earth Science",
+                  "Agriculture",
+                  "Forest Science"
+                ],
+                [
+                  "Earth Science",
+                  "Biosphere",
+                  "Terrestrial Ecosystems"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Frozen Ground"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Glaciers Ice Sheets"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Sea Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Snow Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Erosion Sedimentation"
+                ],
                 [
                   "Earth Science",
                   "Land Surface",
                   "Geomorphic Landforms Processes"
                 ],
-                ["Earth Science", "Land Surface", "Land Use Land Cover"],
-                ["Earth Science", "Land Surface", "Landscape"],
-                ["Earth Science", "Land Surface", "Topography"],
-                ["Earth Science", "Oceans", "Coastal Processes"],
-                ["Earth Science", "Oceans", "Ocean Waves"],
-                ["Earth Science", "Oceans", "Ocean Winds"],
-                ["Earth Science", "Oceans", "Sea Ice"],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Land Use Land Cover"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Landscape"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Topography"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Coastal Processes"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Ocean Waves"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Ocean Winds"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Sea Ice"
+                ],
                 [
                   "Earth Science",
                   "Solid Earth",
                   "Geomorphic Landforms Processes"
                 ],
-                ["Earth Science", "Solid Earth", "Tectonics"],
+                [
+                  "Earth Science",
+                  "Solid Earth",
+                  "Tectonics"
+                ],
                 [
                   "Earth Science",
                   "Terrestrial Hydrosphere",
                   "Glaciers Ice Sheets"
                 ],
-                ["Earth Science", "Terrestrial Hydrosphere", "Snow Ice"],
-                ["Earth Science", "Terrestrial Hydrosphere", "Surface Water"]
+                [
+                  "Earth Science",
+                  "Terrestrial Hydrosphere",
+                  "Snow Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Terrestrial Hydrosphere",
+                  "Surface Water"
+                ]
               ],
-              "temporal": ["2006-05-16 to 2011-04-22"],
+              "temporal": [
+                "2006-05-16 to 2011-04-22"
+              ],
               "spatial": [
                 "Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)"
               ]
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2006-03-23T16:10:55.000Z",
         "version_id": "1",
         "updated": "2019-08-21T05:58:52.000Z",
@@ -1342,7 +1559,9 @@
         "has_variables": true,
         "data_center": "ASF",
         "short_name": "ALOS_PSR_RTC_HIGH",
-        "organizations": ["ASF"],
+        "organizations": [
+          "ASF"
+        ],
         "title": "ALOS_PALSAR_RTC_HIGH_RES",
         "coordinate_system": "CARTESIAN",
         "summary": "PALSAR_Radiometric_Terrain_Corrected_high_res",
@@ -1374,13 +1593,18 @@
         "orbit_parameters": {},
         "id": "C1206487504-ASF",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "ECHO10",
         "granule_count": 506657,
         "archive_center": "ASF",
         "has_temporal_subsetting": false,
         "browse_flag": false,
-        "platforms": ["ALOS"],
+        "platforms": [
+          "ALOS"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -1403,7 +1627,9 @@
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-07-15T19:16:04.000Z",
@@ -1413,7 +1639,9 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_DP_META_GRD_HIGH",
-        "organizations": ["ASF"],
+        "organizations": [
+          "ASF"
+        ],
         "title": "SENTINEL-1A_DUAL_POL_METADATA_GRD_HIGH_RES",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1A Dual-pol ground projected high and full resolution metadata",
@@ -1444,13 +1672,18 @@
         "orbit_parameters": {},
         "id": "C1214470576-ASF",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "ECHO10",
         "granule_count": 1142667,
         "archive_center": "ASF",
         "has_temporal_subsetting": false,
         "browse_flag": false,
-        "platforms": ["Sentinel-1A"],
+        "platforms": [
+          "Sentinel-1A"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -1473,7 +1706,9 @@
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-07-15T19:16:26.000Z",
@@ -1483,7 +1718,10 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_SP_GRD_HIGH",
-        "organizations": ["ASF", "ESA/CS1CGS"],
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
         "title": "SENTINEL-1A_SINGLE_POL_GRD_HIGH_RES",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1A Single-pol ground projected high and full resolution images",
@@ -1514,13 +1752,18 @@
         "orbit_parameters": {},
         "id": "C1214470682-ASF",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "ECHO10",
         "granule_count": 158324,
         "archive_center": "ASF",
         "has_temporal_subsetting": false,
         "browse_flag": false,
-        "platforms": ["Sentinel-1A"],
+        "platforms": [
+          "Sentinel-1A"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -1555,7 +1798,9 @@
             ]
           },
           "edsc.extra.subset_service.esi": {
-            "data": ["S1568897222-LPDAAC_ECS"]
+            "data": [
+              "S1568897222-LPDAAC_ECS"
+            ]
           },
           "edsc.extra.serverless.gibs": {
             "data": [
@@ -1587,7 +1832,9 @@
           },
           "edsc.portal.cwic.collections": {}
         },
-        "boxes": ["-56 -180 60 180"],
+        "boxes": [
+          "-56 -180 60 180"
+        ],
         "time_start": "2000-02-11T00:00:00.000Z",
         "version_id": "003",
         "updated": "2015-09-02T10:31:05.569Z",
@@ -1597,7 +1844,10 @@
         "has_variables": false,
         "data_center": "LPDAAC_ECS",
         "short_name": "SRTMGL1",
-        "organizations": ["LP DAAC", "NASA/JPL/SRTM"],
+        "organizations": [
+          "LP DAAC",
+          "NASA/JPL/SRTM"
+        ],
         "title": "NASA Shuttle Radar Topography Mission Global 1 arc second V003",
         "coordinate_system": "CARTESIAN",
         "summary": "The Land Processes Distributed Active Archive Center (LP DAAC) is responsible for the archive and distribution of the NASA Making Earth System Data Records for Use in Research Environments (MEaSUREs) (https://earthdata.nasa.gov/community/community-data-system-programs/measures-projects) version SRTM, which includes the global 1 arc second (~30 meter) product.\r\n\r\nNASA Shuttle Radar Topography Mission (SRTM) datasets result from a collaborative effort by the National Aeronautics and Space Administration (NASA) and the National Geospatial-Intelligence Agency (NGA - previously known as the National Imagery and Mapping Agency, or NIMA), as well as the participation of the German and Italian space agencies. The purpose of SRTM was to generate a near-global digital elevation model (DEM) of the Earth using radar interferometry. SRTM was a primary component of the payload on the Space Shuttle Endeavour during its STS-99 mission. Endeavour launched February 11, 2000 and ﬂew for 11 days.\r\n\r\nEach SRTMGL1 data tile contains a mosaic and blending of elevations generated by averaging all \"data takes\" that fall within that tile. These elevation files use the extension “.HGT”, meaning height (such as N37W105.SRTMGL1.HGT). The primary goal of creating the Version 3 data was to eliminate voids that were present in earlier versions of SRTM data. In areas with limited data, existing topographical data were used to supplement the SRTM data to fill the voids. The source of each elevation pixel is identified in the corresponding (SRTMGL1N) (https://doi.org/10.5067/MEaSUREs/SRTM/SRTMGL1N.003) product (such as N37W105.SRTMGL1N.NUM).\r\n\r\nSRTM collected data in swaths, which extend from ~30 degrees off-nadir to ~58 degrees off-nadir from an altitude of 233 kilometers (km). These swaths are ~225 km wide, and consisted of all land between 60° N and 56° S latitude. This accounts for about 80% of Earth’s total landmass. \r\n\r\n",
@@ -1629,13 +1879,18 @@
         "orbit_parameters": {},
         "id": "C1000000240-LPDAAC_ECS",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "UMM_JSON",
         "granule_count": 14297,
         "archive_center": "LP DAAC",
         "has_temporal_subsetting": false,
         "browse_flag": true,
-        "platforms": ["STS-99"],
+        "platforms": [
+          "STS-99"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -1720,71 +1975,164 @@
           "edsc.extra.serverless.collection_details": {
             "data": {
               "data_centers": [
-                { "shortname": "ASF", "roles": ["PROCESSOR"] },
                 {
                   "shortname": "ASF",
-                  "roles": ["ARCHIVER"],
+                  "roles": [
+                    "PROCESSOR"
+                  ]
+                },
+                {
+                  "shortname": "ASF",
+                  "roles": [
+                    "ARCHIVER"
+                  ],
                   "contactInformation": {
                     "ContactMechanisms": [
-                      { "Type": "Telephone", "Value": "907-474-5041" },
-                      { "Type": "Email", "Value": "uso@asf.alaska.edu" }
+                      {
+                        "Type": "Telephone",
+                        "Value": "907-474-5041"
+                      },
+                      {
+                        "Type": "Email",
+                        "Value": "uso@asf.alaska.edu"
+                      }
                     ]
                   }
                 },
                 {
                   "shortname": "ASF",
-                  "roles": ["DISTRIBUTOR"],
+                  "roles": [
+                    "DISTRIBUTOR"
+                  ],
                   "contactInformation": {
                     "ContactMechanisms": [
-                      { "Type": "Telephone", "Value": "907-474-5041" },
-                      { "Type": "Email", "Value": "uso@asf.alaska.edu" }
+                      {
+                        "Type": "Telephone",
+                        "Value": "907-474-5041"
+                      },
+                      {
+                        "Type": "Email",
+                        "Value": "uso@asf.alaska.edu"
+                      }
                     ]
                   }
                 }
               ],
               "relatedUrls": [],
               "scienceKeywords": [
-                ["Earth Science", "Agriculture", "Forest Science"],
-                ["Earth Science", "Biosphere", "Terrestrial Ecosystems"],
-                ["Earth Science", "Cryosphere", "Frozen Ground"],
-                ["Earth Science", "Cryosphere", "Glaciers Ice Sheets"],
-                ["Earth Science", "Cryosphere", "Sea Ice"],
-                ["Earth Science", "Cryosphere", "Snow Ice"],
-                ["Earth Science", "Land Surface", "Erosion Sedimentation"],
+                [
+                  "Earth Science",
+                  "Agriculture",
+                  "Forest Science"
+                ],
+                [
+                  "Earth Science",
+                  "Biosphere",
+                  "Terrestrial Ecosystems"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Frozen Ground"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Glaciers Ice Sheets"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Sea Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Cryosphere",
+                  "Snow Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Erosion Sedimentation"
+                ],
                 [
                   "Earth Science",
                   "Land Surface",
                   "Geomorphic Landforms Processes"
                 ],
-                ["Earth Science", "Land Surface", "Land Use Land Cover"],
-                ["Earth Science", "Land Surface", "Landscape"],
-                ["Earth Science", "Land Surface", "Topography"],
-                ["Earth Science", "Oceans", "Coastal Processes"],
-                ["Earth Science", "Oceans", "Ocean Waves"],
-                ["Earth Science", "Oceans", "Ocean Winds"],
-                ["Earth Science", "Oceans", "Sea Ice"],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Land Use Land Cover"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Landscape"
+                ],
+                [
+                  "Earth Science",
+                  "Land Surface",
+                  "Topography"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Coastal Processes"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Ocean Waves"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Ocean Winds"
+                ],
+                [
+                  "Earth Science",
+                  "Oceans",
+                  "Sea Ice"
+                ],
                 [
                   "Earth Science",
                   "Solid Earth",
                   "Geomorphic Landforms Processes"
                 ],
-                ["Earth Science", "Solid Earth", "Tectonics"],
+                [
+                  "Earth Science",
+                  "Solid Earth",
+                  "Tectonics"
+                ],
                 [
                   "Earth Science",
                   "Terrestrial Hydrosphere",
                   "Glaciers Ice Sheets"
                 ],
-                ["Earth Science", "Terrestrial Hydrosphere", "Snow Ice"],
-                ["Earth Science", "Terrestrial Hydrosphere", "Surface Water"]
+                [
+                  "Earth Science",
+                  "Terrestrial Hydrosphere",
+                  "Snow Ice"
+                ],
+                [
+                  "Earth Science",
+                  "Terrestrial Hydrosphere",
+                  "Surface Water"
+                ]
               ],
-              "temporal": ["2006-05-16 to 2011-04-22"],
+              "temporal": [
+                "2006-05-16 to 2011-04-22"
+              ],
               "spatial": [
                 "Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)"
               ]
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2006-01-23T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-05-25T18:49:56.000Z",
@@ -1794,7 +2142,9 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "ALOS_PSR_L1.1",
-        "organizations": ["ASF"],
+        "organizations": [
+          "ASF"
+        ],
         "title": "ALOS_PALSAR_LEVEL1.1",
         "coordinate_system": "CARTESIAN",
         "summary": "ALOS PALSAR Level 1.1",
@@ -1826,13 +2176,18 @@
         "orbit_parameters": {},
         "id": "C1206485527-ASF",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "ECHO10",
         "granule_count": 949994,
         "archive_center": "ASF",
         "has_temporal_subsetting": false,
         "browse_flag": false,
-        "platforms": ["ALOS"],
+        "platforms": [
+          "ALOS"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -1855,7 +2210,9 @@
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-07-15T19:16:15.000Z",
@@ -1865,7 +2222,9 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_META_SLC",
-        "organizations": ["ASF"],
+        "organizations": [
+          "ASF"
+        ],
         "title": "SENTINEL-1A_METADATA_SLC",
         "coordinate_system": "CARTESIAN",
         "summary": "Metadata for Sentinel-1A slant-range product",
@@ -1896,13 +2255,18 @@
         "orbit_parameters": {},
         "id": "C1214470496-ASF",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "ECHO10",
         "granule_count": 1336880,
         "archive_center": "ASF",
         "has_temporal_subsetting": false,
         "browse_flag": false,
-        "platforms": ["Sentinel-1A"],
+        "platforms": [
+          "Sentinel-1A"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -1933,7 +2297,9 @@
             }
           }
         },
-        "boxes": ["-89.6 -180 89.6 180"],
+        "boxes": [
+          "-89.6 -180 89.6 180"
+        ],
         "time_start": "2012-10-29T01:00:01.000Z",
         "version_id": "Operational/Near-Real-Time",
         "updated": "2017-04-28T05:01:45.000Z",
@@ -1955,13 +2321,21 @@
             "V2112017040-POCLOUD",
             "V2112017032-POCLOUD"
           ],
-          "services": ["S2004184019-POCLOUD", "S1962070864-POCLOUD"],
-          "tools": ["TL2108419875-POCLOUD"]
+          "services": [
+            "S2004184019-POCLOUD",
+            "S1962070864-POCLOUD"
+          ],
+          "tools": [
+            "TL2108419875-POCLOUD"
+          ]
         },
         "has_variables": true,
         "data_center": "POCLOUD",
         "short_name": "ASCATB-L2-25km",
-        "organizations": ["NASA/JPL/PODAAC", "EUMETSAT/OSISAF"],
+        "organizations": [
+          "NASA/JPL/PODAAC",
+          "EUMETSAT/OSISAF"
+        ],
         "title": "MetOp-B ASCAT Level 2 25.0km Ocean Surface Wind Vectors in Full Orbit Swath",
         "coordinate_system": "CARTESIAN",
         "summary": "This dataset contains operational near-real-time Level 2 ocean surface wind vector retrievals from the Advanced Scatterometer (ASCAT) on MetOp-B at 25 km sampling resolution (note: the effective resolution is 50 km). It is a product of the European Organization for the Exploitation of Meteorological Satellites (EUMETSAT) Ocean and Sea Ice Satellite Application Facility (OSI SAF) provided through the Royal Netherlands Meteorological Institute (KNMI). The wind vector retrievals are currently processed using the CMOD.n geophysical model function using a Hamming filter to spatially average the Sigma-0 data in the ASCAT L1B data. Each file is provided in netCDF version 3 format, and contains one full orbit derived from 3-minute orbit granules. Latency is approximately 2 hours from the latest measurement. The beginning of the orbit is defined by the first wind vector cell measurement within the first 3-minute orbit granule that starts north of the Equator in the ascending node. ASCAT is a C-band dual swath fan beam radar scatterometer providing two independent swaths of backscatter retrievals in sun-synchronous polar orbit aboard the MetOp-B platform. For more information on the MetOp-B mission, please visit: https://www.eumetsat.int/our-satellites/metop-series . For more timely announcements, users are encouraged to register with the KNMI scatterometer email list: scat@knmi.nl. Users are also highly advised to check the dataset user guide periodically for updates and new information on known problems and issues. All intellectual property rights of the OSI SAF products belong to EUMETSAT. The use of these products is granted to every interested user, free of charge. If you wish to use these products, EUMETSAT's copyright credit must be shown by displaying the words \"copyright (year) EUMETSAT\" on each of the products used.",
@@ -1997,14 +2371,19 @@
         },
         "id": "C2075141559-POCLOUD",
         "has_formats": true,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "UMM_JSON",
         "collection_data_type": "NEAR_REAL_TIME",
         "granule_count": 51439,
         "archive_center": "NASA/JPL/PODAAC",
         "has_temporal_subsetting": true,
         "browse_flag": true,
-        "platforms": ["METOP-B"],
+        "platforms": [
+          "METOP-B"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -2089,7 +2468,9 @@
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2014-04-03T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-07-15T19:15:58.000Z",
@@ -2099,7 +2480,10 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1A_DP_GRD_MEDIUM",
-        "organizations": ["ASF", "ESA/CS1CGS"],
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
         "title": "SENTINEL-1A_DUAL_POL_GRD_MEDIUM_RES",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1A Dual-pol ground projected medium resolution images",
@@ -2130,13 +2514,18 @@
         "orbit_parameters": {},
         "id": "C1214471521-ASF",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "ECHO10",
         "granule_count": 186953,
         "archive_center": "ASF",
         "has_temporal_subsetting": false,
         "browse_flag": false,
-        "platforms": ["Sentinel-1A"],
+        "platforms": [
+          "Sentinel-1A"
+        ],
         "online_access_flag": true,
         "links": [
           {
@@ -2159,7 +2548,9 @@
             }
           }
         },
-        "boxes": ["-90 -180 90 180"],
+        "boxes": [
+          "-90 -180 90 180"
+        ],
         "time_start": "2016-04-25T00:00:00.000Z",
         "version_id": "1",
         "updated": "2021-07-15T19:17:05.000Z",
@@ -2169,7 +2560,10 @@
         "has_variables": false,
         "data_center": "ASF",
         "short_name": "SENTINEL-1B_OCN",
-        "organizations": ["ASF", "ESA/CS1CGS"],
+        "organizations": [
+          "ASF",
+          "ESA/CS1CGS"
+        ],
         "title": "SENTINEL-1B_OCN",
         "coordinate_system": "CARTESIAN",
         "summary": "Sentinel-1B Level 2 Ocean wind, wave and current data",
@@ -2200,13 +2594,18 @@
         "orbit_parameters": {},
         "id": "C1327985579-ASF",
         "has_formats": false,
-        "consortiums": ["GEOSS", "EOSDIS"],
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
         "original_format": "ECHO10",
         "granule_count": 374262,
         "archive_center": "ASF",
         "has_temporal_subsetting": false,
         "browse_flag": false,
-        "platforms": ["Sentinel-1B"],
+        "platforms": [
+          "Sentinel-1B"
+        ],
         "online_access_flag": true,
         "links": [
           {

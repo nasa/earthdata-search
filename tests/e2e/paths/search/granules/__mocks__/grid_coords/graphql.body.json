@@ -18,7 +18,9 @@
             "format": "HDF-EOS2",
             "formatType": "Native",
             "formatDescription": "Hierarchical Data Format - Earth Observing System Version 2",
-            "media": ["https"],
+            "media": [
+              "https"
+            ],
             "averageFileSize": 3.86,
             "averageFileSizeUnit": "MB",
             "totalCollectionFileSizeBeginDate": "2002-07-04T00:00:00.000Z"
@@ -26,7 +28,9 @@
         ]
       },
       "associatedDois": null,
-      "boxes": ["-90 -180 90 180"],
+      "boxes": [
+        "-90 -180 90 180"
+      ],
       "conceptId": "C194001210-LPDAAC_ECS",
       "coordinateSystem": "CARTESIAN",
       "dataCenter": "LPDAAC_ECS",
@@ -72,7 +76,9 @@
                 "serviceHours": "M-F, 8 a.m. to 4 p.m. Central Time"
               },
               "groupName": "LP DAAC User Services",
-              "roles": ["User Services"]
+              "roles": [
+                "User Services"
+              ]
             }
           ],
           "contactInformation": {
@@ -113,7 +119,9 @@
             "serviceHours": "M-F, 8 a.m. to 4 p.m. Central Time"
           },
           "longName": "Land Processes Distributed Active Archive Center",
-          "roles": ["ARCHIVER"],
+          "roles": [
+            "ARCHIVER"
+          ],
           "shortName": "LP DAAC"
         },
         {
@@ -124,7 +132,9 @@
                 "country": "United States",
                 "postalCode": "20771",
                 "stateProvince": "Maryland",
-                "streetAddresses": ["NASA/GSFC Code 922"]
+                "streetAddresses": [
+                  "NASA/GSFC Code 922"
+                ]
               }
             ],
             "contactInstruction": "Contact for data content concerns",
@@ -147,7 +157,9 @@
             ]
           },
           "longName": "MODIS Adaptive Processing System, Terrestrial Information Systems Laboratory, Earth Sciences Division, Science and Exploration Directorate, Goddard Space Flight Center, NASA",
-          "roles": ["PROCESSOR"],
+          "roles": [
+            "PROCESSOR"
+          ],
           "shortName": "NASA/GSFC/SED/ESD/TISL/MODAPS"
         }
       ],
@@ -158,7 +170,9 @@
       },
       "hasGranules": true,
       "lines": null,
-      "nativeDataFormats": ["HDF-EOS2"],
+      "nativeDataFormats": [
+        "HDF-EOS2"
+      ],
       "points": null,
       "polygons": null,
       "relatedUrls": [
@@ -323,7 +337,9 @@
           ]
         },
         "edsc.extra.subset_service.esi": {
-          "data": ["S1568897222-LPDAAC_ECS"]
+          "data": [
+            "S1568897222-LPDAAC_ECS"
+          ]
         },
         "edsc.extra.serverless.gibs": {
           "data": [

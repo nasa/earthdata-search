@@ -6,19 +6,25 @@
         "fileDistributionInformation": [
           {
             "formatType": "Native",
-            "media": ["Online Archive"],
+            "media": [
+              "Online Archive"
+            ],
             "format": "HDF-EOS5"
           }
         ]
       },
       "associatedDois": null,
-      "boxes": ["-82 -180 82 180"],
+      "boxes": [
+        "-82 -180 82 180"
+      ],
       "conceptId": "C1251101828-GES_DISC",
       "coordinateSystem": "CARTESIAN",
       "dataCenter": "GES_DISC",
       "dataCenters": [
         {
-          "roles": ["ARCHIVER"],
+          "roles": [
+            "ARCHIVER"
+          ],
           "shortName": "NASA/GSFC/SED/ESD/GCDC/GESDISC",
           "longName": "Goddard Earth Sciences Data and Information Services Center (formerly Goddard DAAC), Global Change Data Center, Earth Sciences Division, Science and Exploration Directorate, Goddard Space Flight Center, NASA",
           "contactInformation": {
@@ -33,7 +39,9 @@
           },
           "contactGroups": [
             {
-              "roles": ["Data Center Contact"],
+              "roles": [
+                "Data Center Contact"
+              ],
               "groupName": "GES DISC HELP DESK SUPPORT GROUP",
               "contactInformation": {
                 "addresses": [
@@ -74,7 +82,9 @@
       },
       "hasGranules": true,
       "lines": null,
-      "nativeDataFormats": ["HDF-EOS5"],
+      "nativeDataFormats": [
+        "HDF-EOS5"
+      ],
       "points": null,
       "polygons": null,
       "relatedUrls": [

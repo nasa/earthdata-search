@@ -4,17 +4,23 @@
       "abstract": "Sentinel-1A slant-range product",
       "archiveAndDistributionInformation": null,
       "associatedDois": null,
-      "boxes": ["-90 -180 90 180"],
+      "boxes": [
+        "-90 -180 90 180"
+      ],
       "conceptId": "C1214470488-ASF",
       "coordinateSystem": "CARTESIAN",
       "dataCenter": "ASF",
       "dataCenters": [
         {
-          "roles": ["PROCESSOR"],
+          "roles": [
+            "PROCESSOR"
+          ],
           "shortName": "ESA/CS1CGS"
         },
         {
-          "roles": ["ARCHIVER"],
+          "roles": [
+            "ARCHIVER"
+          ],
           "shortName": "ASF",
           "contactInformation": {
             "contactMechanisms": [
@@ -30,7 +36,9 @@
           }
         },
         {
-          "roles": ["DISTRIBUTOR"],
+          "roles": [
+            "DISTRIBUTOR"
+          ],
           "shortName": "ASF",
           "contactInformation": {
             "contactMechanisms": [
