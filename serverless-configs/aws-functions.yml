@@ -523,6 +523,7 @@
 
   retrieveGranuleLinks:
     handler: serverless/src/retrieveGranuleLinks/handler.default
+    memorySize: 256
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
