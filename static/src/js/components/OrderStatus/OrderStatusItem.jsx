@@ -463,7 +463,7 @@ export class OrderStatusItem extends PureComponent {
               totalCompleteOrders += 1
             }
 
-            if (status === 'successful' && !jobId) {
+            if ((status === 'successful' || status === 'complete_with_errors') && !jobId) {
               messages.push(harmonyMessage)
             }
 
