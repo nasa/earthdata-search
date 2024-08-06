@@ -144,7 +144,7 @@ describe('TemporalSelectionDropdown component', () => {
     const validEndDate = '2019-03-30T00:00:00.000Z'
     const validStartDate = '2019-03-29T00:00:00.000Z'
 
-    const { getByRole, getAllByRole } = setup({
+    const { getByRole } = setup({
       onChangeQuery: onChangeQueryMock,
       temporalSearch: {
         endDate: validEndDate,
@@ -153,7 +153,7 @@ describe('TemporalSelectionDropdown component', () => {
     })
 
     await waitFor(async () => {
-      await user.click(getByRole('button'))
+      await user.click(getByRole('button', { name: 'temporal-selection-dropdown' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -162,17 +162,20 @@ describe('TemporalSelectionDropdown component', () => {
     expect(startDateInput).toHaveValue(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
     expect(endDateInput).toHaveValue(moment.utc(validEndDate).format('YYYY-MM-DD HH:mm:ss'))
 
-    const clearBtn = getAllByRole('button', { name: 'Clear' })[2]
+    console.log(screen.getByRole('button', { name: 'Clear' }))
+
+    const clearBtn = getByRole('button', { name: 'Clear' })
     await waitFor(async () => {
       await user.click(clearBtn)
     })
 
     await waitFor(async () => {
-      await user.click(getByRole('button'))
+      await user.click(getByRole('button', { name: 'temporal-selection-dropdown' }))
     })
 
     const updatedStartDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const updatedEndtDateInput = screen.getByRole('textbox', { name: 'End Date' })
+
     expect(updatedStartDateInput).toHaveValue('')
     expect(updatedEndtDateInput).toHaveValue('')
 
@@ -202,6 +205,8 @@ describe('TemporalSelectionDropdown component', () => {
     await act(async () => {
       await user.type(startDateInput, validStartDate)
       await user.type(endDateInput, validEndDate)
+
+      await user.click(startDateInput)
     })
 
     expect(startDateInput).toHaveValue(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))

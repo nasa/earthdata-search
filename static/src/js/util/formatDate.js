@@ -19,7 +19,7 @@ export const formatDate = (value, timeOfDay) => {
   }
 
   // Check if the time is a custom time (not a 00:00:00 time) or if it's invalid
-  if (isCustomTime(dateMoment) || !dateMoment.isValid()) {
+  if (!dateMoment || isCustomTime(dateMoment) || !dateMoment.isValid()) {
     return dateMoment
   }
 

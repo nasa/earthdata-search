@@ -14,6 +14,7 @@ import './Datepicker.scss'
  * @param {String} props.format - A string temporal format
  * @param {Function} props.isValidDate - Callback function to determine if a date is valid
  * @param {Function} props.onBlur - Callback function to call when the field is blurred
+ * @param {Function} props.onChange - Callback function to call when the field is changed
  * @param {Function} props.onInputChange - Callback function to call when the input field is changed
  * @param {Function} props.onClearClick - Callback function to call when the clear button is clicked
  * @param {Function} props.onTodayClick - Callback function to call when the today button is clicked
@@ -42,6 +43,7 @@ class Datepicker extends PureComponent {
     buttonToday.innerHTML = 'Today'
     buttonToday.type = 'button'
     buttonToday.classList.add('datetime__button', 'datetime__button--today')
+    buttonToday.setAttribute('aria-label', 'datetime__button--today')
     buttonToday.addEventListener('click', onTodayClick)
     buttonContainer.appendChild(buttonToday)
 
@@ -50,6 +52,7 @@ class Datepicker extends PureComponent {
     buttonClear.innerHTML = 'Clear'
     buttonClear.type = 'button'
     buttonClear.classList.add('datetime__button', 'datetime__button--clear')
+    buttonClear.setAttribute('aria-label', 'datetime__button--clear')
     buttonClear.addEventListener('click', onClearClick)
     buttonContainer.appendChild(buttonClear)
 
@@ -62,6 +65,7 @@ class Datepicker extends PureComponent {
       isValidDate,
       label,
       onBlur,
+      onChange,
       onInputChange,
       picker,
       size,
@@ -74,6 +78,8 @@ class Datepicker extends PureComponent {
       <Datetime
         className="datetime"
         closeOnSelect
+        closeOnTab
+        closeOnClickOutside
         dateFormat={format}
         inputProps={
           {
@@ -82,11 +88,12 @@ class Datepicker extends PureComponent {
             autoComplete: 'off',
             className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`,
             'aria-label': label,
-            onChange: onInputChange
+            onChange: async (event) => onInputChange(event)
           }
         }
         isValidDate={isValidDate}
         onClose={onBlur}
+        onChange={onChange}
         ref={picker}
         // eslint-disable-next-line react/jsx-props-no-spreading
         renderInput={(props) => (<input {...props} value={value || ''} />)}
@@ -113,6 +120,7 @@ Datepicker.propTypes = {
   id: PropTypes.string.isRequired,
   isValidDate: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onClearClick: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onTodayClick: PropTypes.func.isRequired,

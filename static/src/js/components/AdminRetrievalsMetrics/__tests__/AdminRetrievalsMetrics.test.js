@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
-  fireEvent,
   render,
   screen,
   waitFor
@@ -76,19 +75,24 @@ describe('AdminRetrievals component', () => {
         await user.click(temporalFilterButton)
       })
 
-      const validEndDate = '2019-03-30T00:00:00.000Z'
       const validStartDate = '2019-03-29T00:00:00.000Z'
+      const validEndDate = '2019-03-30T00:00:00.000Z'
 
       const updatedEndDate = '2019-03-30T23:59:59.999Z'
 
-      const inputs = screen.getAllByRole('textbox')
+      const startDate = screen.getByRole('textbox', { name: 'Start Date' })
+      const endDate = screen.getByRole('textbox', { name: 'End Date' })
 
-      fireEvent.change(inputs[0], { target: { value: validStartDate } })
-      fireEvent.change(inputs[1], { target: { value: validEndDate } })
+      await userEvent.click(startDate)
+      await userEvent.type(startDate, validStartDate)
+
+      await userEvent.click(endDate)
+      await userEvent.type(endDate, validEndDate)
 
       const applyBtn = screen.getByRole('button', { name: 'Apply' })
 
       await waitFor(async () => {
+        await user.click(startDate)
         await user.click(applyBtn)
       })
 

@@ -25,50 +25,51 @@ class DatepickerContainer extends Component {
     super(props)
 
     this.onBlur = this.onBlur.bind(this)
+    this.onChange = this.onChange.bind(this)
     this.onInputChange = this.onInputChange.bind(this)
     this.onClearClick = this.onClearClick.bind(this)
     this.onTodayClick = this.onTodayClick.bind(this)
     this.isValidDate = this.isValidDate.bind(this)
 
     this.picker = React.createRef()
-
-    this.cleared = false
   }
 
   /**
    * Set view back to the default when a user closes the datepicker
    * Also set the datetime to be the endOf or startOf day depending on the type
+   * @param value value being changed by the Datepicker
    */
   onBlur(value) {
     const {
       type,
       onSubmit,
-      value: oldValue,
       viewMode
     } = this.props
+
+    const inputMoment = formatDate(value, type)
+
+    onSubmit(inputMoment)
 
     this.picker.current.setState({
       currentView: viewMode
     })
-
-    if (this.cleared && oldValue === '') {
-      this.cleared = false
-
-      return
-    }
-
-    const inputMoment = formatDate(moment.utc(value, [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true), type)
-
-    onSubmit(inputMoment)
   }
 
   /**
   * Clear out the currently selected date
   */
   onClearClick() {
-    this.cleared = true
+    const {
+      onSubmit
+    } = this.props
 
-    this.onBlur(null)
+    this.picker.current.setState({
+      inputValue: '',
+      value: '',
+      selectedDate: undefined
+    })
+
+    onSubmit(null)
   }
 
   /**
@@ -76,44 +77,61 @@ class DatepickerContainer extends Component {
   * @param {event} event - The event passed from the Datetime input component
   */
   async onInputChange(event) {
+    const { target } = event
+    const { selectionStart: cursorPosition } = target
+
+    // Restore the cursor position
+    await setTimeout(() => target.setSelectionRange(cursorPosition, cursorPosition), 0)
+  }
+
+  onChange(value) {
     const {
       format,
-      onSubmit
+      onSubmit,
+      type
     } = this.props
 
-    const { target } = event
-    const { selectionStart: cursorPosition, value } = target
+    if (type === null) {
+      onSubmit(null)
+
+      return
+    }
 
     const valueToSet = moment.utc(value, format, true)
 
     onSubmit(valueToSet)
-
-    await setTimeout(() => {
-      // Restore the cursor position
-      target.setSelectionRange(cursorPosition, cursorPosition)
-    }, 0)
   }
 
   /**
    * Set the date to today using the beginning of the day for "Start" and the end of the day for "End"
    */
   onTodayClick() {
-    const { type } = this.props
+    const {
+      type,
+      onSubmit,
+      format
+    } = this.props
 
-    const today = moment().utc()
-    let valueToSet = null
+    if (type === null) {
+      onSubmit(null)
 
-    if (type === 'start') {
-      valueToSet = today.startOf('day')
-    } else if (type === 'end') {
-      valueToSet = today.endOf('day')
+      return
     }
 
-    this.onBlur(valueToSet)
+    const valueToSet = formatDate(moment().utc().startOf('day'), type)
+
+    onSubmit(valueToSet)
+
+    this.picker.current.setState({
+      inputValue: valueToSet.format(format),
+      value: valueToSet.format(format),
+      selectedDate: valueToSet
+    })
   }
 
   /**
   * Check to see if a date should be clickable in the picker
+  * @param date date that is checking when finishing selecting the date of choice
   */
   isValidDate(date) {
     // TODO: This method is SUPER slow because it gets called for every single date.
@@ -161,6 +179,7 @@ class DatepickerContainer extends Component {
         isValidDate={this.isValidDate}
         label={label}
         onBlur={this.onBlur}
+        onChange={this.onChange}
         onInputChange={this.onInputChange}
         onClearClick={this.onClearClick}
         onTodayClick={this.onTodayClick}
@@ -175,7 +194,7 @@ class DatepickerContainer extends Component {
 
 DatepickerContainer.defaultProps = {
   format: 'YYYY-MM-DD HH:mm:ss',
-  label: '',
+  label: 'datepicker',
   maxDate: '',
   minDate: '',
   shouldValidate: true,
