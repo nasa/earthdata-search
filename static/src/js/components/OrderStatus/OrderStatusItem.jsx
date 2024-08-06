@@ -132,6 +132,7 @@ export class OrderStatusItem extends PureComponent {
     } = collection
 
     const orderStatus = aggregatedOrderStatus(orders)
+
     // If the order is in a terminal state stop asking for order status
     if (['complete', 'failed', 'canceled'].includes(orderStatus)) {
       clearInterval(this.intervalId)

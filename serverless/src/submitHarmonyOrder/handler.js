@@ -14,7 +14,6 @@ import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWo
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 const submitHarmonyOrder = async (event, context) => {
-  console.log('🚀 ~ file: handler.js:17 ~ submitHarmonyOrder ~ event:', event)
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
@@ -62,7 +61,6 @@ const submitHarmonyOrder = async (event, context) => {
       jsondata,
       user_id: userId
     } = retrievalRecord
-    console.log('🚀 ~ file: handler.js:65 ~ awaitsqsRecords.forEachAsync ~ collectionId:', collectionId)
 
     const {
       type
@@ -128,11 +126,9 @@ const submitHarmonyOrder = async (event, context) => {
         await startOrderStatusUpdateWorkflow(id, accessToken, type)
       }
     } catch (error) {
-      console.log('🚀 ~ file: handler.js:130 ~ awaitsqsRecords.forEachAsync ~ error:', error)
       const parsedErrorMessage = parseError(error, { asJSON: false })
 
       const [errorMessage] = parsedErrorMessage
-      console.log('🚀 ~ file: handler.js:135 ~ awaitsqsRecords.forEachAsync ~ errorMessage:', errorMessage)
 
       await dbConnection('retrieval_orders').update({
         state: 'create_failed',

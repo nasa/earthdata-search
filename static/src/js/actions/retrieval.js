@@ -32,6 +32,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
   const earthdataEnvironment = getEarthdataEnvironment(state)
 
   const { authToken, project } = state
+
   const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
 
   const { collections: projectCollections } = project
