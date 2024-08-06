@@ -119,6 +119,7 @@ const testResultsSize = async (page, cmrHits) => {
   const metaText = await page.getByTestId('panel-group_granule-results')
     .getByTestId('panel-group-header__heading-meta-text')
     .textContent()
+
   expect(metaText).toBe(`Showing ${expectedSize} of ${commafy(cmrHits)} matching ${pluralize('granule', cmrHits)}`)
 }
 
@@ -135,7 +136,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
+
         route.fulfill({
           body: JSON.stringify(noParamsGranulesBody),
           headers: {
@@ -164,6 +167,7 @@ test.describe('Path /search/granules', () => {
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
 
         expect(requestBody).toEqual(expectedBody)
+
         route.fulfill({
           body: JSON.stringify(noParamsGraphQlBody),
           headers: noParamsGraphQlHeaders
@@ -188,7 +192,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('echo_collection_id=C1214470488-ASF&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1')
+
         route.fulfill({
           body: JSON.stringify(readableGranuleNameGranulesBody),
           headers: {
@@ -202,6 +208,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
         }
@@ -217,6 +224,7 @@ test.describe('Path /search/granules', () => {
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
 
         expect(requestBody).toEqual(expectedBody)
+
         route.fulfill({
           body: JSON.stringify(readableGranuleNameGraphQlBody),
           headers: readableGranuleNameGraphQlHeaders
@@ -242,7 +250,9 @@ test.describe('Path /search/granules', () => {
         await page.route('**/search/granules.json', (route) => {
           const request = route.request()
           const body = request.postData()
+
           expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z')
+
           route.fulfill({
             body: JSON.stringify(temporalGranulesBody),
             headers: {
@@ -256,6 +266,7 @@ test.describe('Path /search/granules', () => {
         await page.route('**/search/granules/timeline', (route) => {
           const request = route.request()
           const body = request.postData()
+
           if (body) {
             expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
           }
@@ -270,11 +281,11 @@ test.describe('Path /search/granules', () => {
           const request = route.request()
           const body = JSON.stringify(request.postData())
           const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
-
           const requestBody = JSON.parse(body)
           const expectedRequestBody = JSON.parse(expectedBody)
 
           expect(requestBody).toEqual(expectedRequestBody)
+
           route.fulfill({
             body: JSON.stringify(temporalGraphQlBody),
             headers: temporalGraphQlHeaders
@@ -303,7 +314,9 @@ test.describe('Path /search/granules', () => {
         await page.route('**/search/granules.json', (route) => {
           const request = route.request()
           const body = request.postData()
+
           expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2000-01-20T00:00:00.000Z,2020-01-31T23:59:59.999Z,1,31')
+
           route.fulfill({
             body: JSON.stringify(recurringTemporalGranulesBody),
             headers: {
@@ -317,6 +330,7 @@ test.describe('Path /search/granules', () => {
         await page.route('**/search/granules/timeline', (route) => {
           const request = route.request()
           const body = request.postData()
+
           if (body) {
             expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
           }
@@ -331,11 +345,11 @@ test.describe('Path /search/granules', () => {
           const request = route.request()
           const body = JSON.stringify(request.postData())
           const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
-
           const requestBody = JSON.parse(body)
           const expectedRequestBody = JSON.parse(expectedBody)
 
           expect(requestBody).toEqual(expectedRequestBody)
+
           route.fulfill({
             body: JSON.stringify(temporalGraphQlBody),
             headers: temporalGraphQlHeaders
@@ -367,7 +381,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('browse_only=true&echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
+
         route.fulfill({
           body: JSON.stringify(browseOnlyGranulesBody),
           headers: {
@@ -381,6 +397,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
         }
@@ -396,6 +413,7 @@ test.describe('Path /search/granules', () => {
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
 
         expect(requestBody).toEqual(expectedBody)
+
         route.fulfill({
           body: JSON.stringify(browseOnlyGraphQlBody),
           headers: browseOnlyGraphQlHeaders
@@ -421,7 +439,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('echo_collection_id=C1214470488-ASF&online_only=true&page_num=1&page_size=20')
+
         route.fulfill({
           body: JSON.stringify(onlineOnlyGranulesBody),
           headers: {
@@ -435,6 +455,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
         }
@@ -450,6 +471,7 @@ test.describe('Path /search/granules', () => {
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
 
         expect(requestBody).toEqual(expectedBody)
+
         route.fulfill({
           body: JSON.stringify(onlineOnlyGraphQlBody),
           headers: onlineOnlyGraphQlHeaders
@@ -475,7 +497,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('echo_collection_id=C1214470488-ASF&orbit_number[min]=30000&orbit_number[max]=30005&page_num=1&page_size=20')
+
         route.fulfill({
           body: JSON.stringify(orbitNumberGranulesBody),
           headers: {
@@ -489,6 +513,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
         }
@@ -504,6 +529,7 @@ test.describe('Path /search/granules', () => {
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
 
         expect(requestBody).toEqual(expectedBody)
+
         route.fulfill({
           body: JSON.stringify(orbitNumberGraphQlBody),
           headers: orbitNumberGraphQlHeaders
@@ -529,7 +555,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('echo_collection_id=C1251101828-GES_DISC&equator_crossing_longitude[min]=-5&equator_crossing_longitude[max]=5&page_num=1&page_size=20')
+
         route.fulfill({
           body: JSON.stringify(equatorialCrossingLongitudeGranulesBody),
           headers: {
@@ -543,6 +571,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1251101828-GES_DISC')
         }
@@ -558,6 +587,7 @@ test.describe('Path /search/granules', () => {
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
 
         expect(requestBody).toEqual(expectedBody)
+
         route.fulfill({
           body: JSON.stringify(equatorialCrossingLongitudeGraphQlBody),
           headers: equatorialCrossingLongitudeGraphQlHeaders
@@ -583,7 +613,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('echo_collection_id=C1251101828-GES_DISC&equator_crossing_date=2021-01-01T00:00:00.000Z,2021-01-31T23:59:59.999Z&page_num=1&page_size=20')
+
         route.fulfill({
           body: JSON.stringify(equatorialCrossingDateGranulesBody),
           headers: {
@@ -597,6 +629,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1251101828-GES_DISC')
         }
@@ -612,6 +645,7 @@ test.describe('Path /search/granules', () => {
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
 
         expect(requestBody).toEqual(expectedBody)
+
         route.fulfill({
           body: JSON.stringify(equatorialCrossingDateGraphQlBody),
           headers: equatorialCrossingDateGraphQlHeaders
@@ -637,7 +671,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-end_date')
+
         route.fulfill({
           body: JSON.stringify(sortKeyGranulesBody),
           headers: {
@@ -651,6 +687,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
         }
@@ -666,6 +703,7 @@ test.describe('Path /search/granules', () => {
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
 
         expect(requestBody).toEqual(expectedBody)
+
         route.fulfill({
           body: JSON.stringify(sortKeyGraphQlBody),
           headers: sortKeyGraphQlHeaders
@@ -691,7 +729,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('cloud_cover=10,15&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
+
         route.fulfill({
           body: JSON.stringify(cloudCoverGranulesBody),
           headers: {
@@ -705,6 +745,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
@@ -720,6 +761,7 @@ test.describe('Path /search/granules', () => {
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
 
         expect(requestBody).toEqual(expectedBody)
+
         route.fulfill({
           body: JSON.stringify(cloudCoverGraphQlBody),
           headers: cloudCoverGraphQlHeaders
@@ -745,7 +787,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('day_night_flag=BOTH&echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20')
+
         route.fulfill({
           body: JSON.stringify(dayNightGranulesBody),
           headers: {
@@ -759,6 +803,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
@@ -774,6 +819,7 @@ test.describe('Path /search/granules', () => {
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
 
         expect(requestBody).toEqual(expectedBody)
+
         route.fulfill({
           body: JSON.stringify(dayNightGraphQlBody),
           headers: dayNightGraphQlHeaders
@@ -798,7 +844,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&two_d_coordinate_system[name]=MODIS Tile SIN&two_d_coordinate_system[coordinates]=0-0:0-0,15-15:15-15')
+
         route.fulfill({
           body: JSON.stringify(gridCoordsGranulesBody),
           headers: {
@@ -812,6 +860,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
@@ -827,6 +876,7 @@ test.describe('Path /search/granules', () => {
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
 
         expect(requestBody).toEqual(expectedBody)
+
         route.fulfill({
           body: JSON.stringify(gridCoordsGraphQlBody),
           headers: gridCoordsGraphQlHeaders
@@ -852,7 +902,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/collections.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
         route.fulfill({
           body: JSON.stringify(timelineCollectionsBody),
           headers: timelineCollectionsHeaders
@@ -862,7 +914,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&temporal=2015-01-03T00:00:00.000Z,2015-01-03T23:59:59.999Z')
+
         route.fulfill({
           body: JSON.stringify(timelineGranulesBody),
           headers: {
@@ -876,6 +930,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2015-02-02T00:00:00.000Z&interval=hour&start_date=2014-12-04T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
@@ -891,6 +946,7 @@ test.describe('Path /search/granules', () => {
         const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
 
         expect(requestBody).toEqual(expectedBody)
+
         route.fulfill({
           body: JSON.stringify(timelineGraphQlBody),
           headers: timelineGraphQlHeaders
@@ -920,7 +976,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20&sort_key=-start_date')
+
         route.fulfill({
           body: JSON.stringify(focusedGranuleGranulesBody),
           headers: {
@@ -934,6 +992,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
@@ -976,6 +1035,7 @@ test.describe('Path /search/granules', () => {
     test('loads with a single granule in the project', async ({ page }) => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 275361
+
       await interceptUnauthenticatedCollections({
         page,
         body: collectionsBody,
@@ -986,6 +1046,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', async (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body === 'echo_collection_id=C194001210-LPDAAC_ECS&page_num=1&page_size=20') {
           await route.fulfill({
             body: JSON.stringify(projectGranuleGranulesBody),
@@ -1011,6 +1072,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', async (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
@@ -1032,7 +1094,6 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = JSON.stringify(request.postData())
         const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
-
         const requestBody = JSON.parse(body)
         const expectedRequestBody = JSON.parse(expectedBody)
 
@@ -1056,12 +1117,14 @@ test.describe('Path /search/granules', () => {
       await testResultsSize(page, cmrHits)
 
       const removeButtonLocator = page.getByTestId('granule-results-actions__proj-action--remove')
+
       await removeButtonLocator.waitFor({ state: 'visible' })
       await expect(removeButtonLocator).toBeVisible()
 
       const downloadAllButtonLocator = page
         .getByTestId('granule-results-actions__download-all-button')
         .locator('.button__badge')
+
       await downloadAllButtonLocator.waitFor({ state: 'visible' })
     })
   })
@@ -1073,7 +1136,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
+
         route.fulfill({
           body: JSON.stringify(noParamsGranulesBody),
           headers: {
@@ -1087,6 +1152,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', (route) => {
         const request = route.request()
         const body = request.postData()
+
         if (body) {
           expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
         }
@@ -1131,6 +1197,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/collections.json', async (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=-77.04119,38.80585&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
         await route.fulfill({
@@ -1142,6 +1209,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules.json', async (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toEqual('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&point[]=-77.04119,38.80585&sort_key=-start_date')
 
         await route.fulfill({
@@ -1157,6 +1225,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/search/granules/timeline', async (route) => {
         const request = route.request()
         const body = request.postData()
+
         expect(body).toEqual('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
 
         await route.fulfill({
