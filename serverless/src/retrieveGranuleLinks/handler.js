@@ -131,8 +131,6 @@ const retrieveGranuleLinks = async (event, context) => {
       })
     }
   } catch (error) {
-    console.log('🚀 ~ file: handler.js:134 ~ retrieveGranuleLinks ~ error:', error)
-
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,
