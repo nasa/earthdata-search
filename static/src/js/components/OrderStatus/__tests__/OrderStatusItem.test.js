@@ -2014,12 +2014,14 @@ describe('OrderStatusItem', () => {
         expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
 
         const header = enzymeWrapper.find('.order-status-item__header')
+
         expect(header.find(ProgressRing).props().progress).toEqual(100)
         expect(header.find('.order-status-item__status').text()).toEqual('Complete')
         expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
         expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
 
         let body = enzymeWrapper.find('.order-status-item__body')
+
         expect(body.length).toBe(0)
 
         // Expand the body
@@ -2043,6 +2045,7 @@ describe('OrderStatusItem', () => {
         expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:The job has completed with errors. See the errors field for more details')
 
         const tabs = body.find('EDSCTabs')
+
         expect(tabs.children().length).toEqual(3)
 
         const linksTab = tabs.childAt(0)
