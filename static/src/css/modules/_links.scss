@@ -1,6 +1,20 @@
 .link {
   color: $color__blue--dark;
-  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+  text-decoration: underline dashed; 
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus {
+    text-decoration: none; 
+    outline: 1px dashed #0000FF;
+  }
+
+  &:disabled {
+    color: $color__blue--light;
+  }
 
   &--separated {
     &:before {

@@ -118,6 +118,7 @@ export class DownloadHistory extends Component {
                           <td>
                             <PortalLinkContainer
                               portalId={portalId}
+                              className="link"
                               to={
                                 {
                                   pathname: `/downloads/${id}`,

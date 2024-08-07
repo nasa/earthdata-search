@@ -37,13 +37,13 @@ export const DownloadScriptPanel = ({
             <strong>Linux: </strong>
             { 'You must first make the script an executable by running the line \'chmod 777 download.sh\' from the command line. After that is complete, the file can be executed by typing \'./download.sh\'. ' }
             { 'For a detailed walk through of this process, please reference this ' }
-            <a href="https://wiki.earthdata.nasa.gov/display/EDSC/How+To%3A+Use+the+Download+Access+Script">How To guide</a>
+            <a href="https://wiki.earthdata.nasa.gov/display/EDSC/How+To%3A+Use+the+Download+Access+Script" className="link">How To guide</a>
             .
           </p>
           <p>
             <strong>Windows: </strong>
             {'The file can be executed within Windows by first installing a Unix-like command line utility such as '}
-            <a href="https://www.cygwin.com/">Cygwin</a>
+            <a href="https://www.cygwin.com/" className="link">Cygwin</a>
             {'. After installing Cygwin (or a similar utility), run the line \'chmod 777 download.sh\' from the utility\'s command line, and then execute by typing \'./download.sh\'.'}
           </p>
           <span className="order-status-item__status-text">

@@ -100,7 +100,7 @@ const buildDoiLink = (doiLink, doiText) => {
 
   if (doiLink) {
     return (
-      <a className="collection-details-body__doi" href={doiLink} target="_blank" rel="noopener noreferrer">
+      <a className="link collection-details-body__doi" href={doiLink} target="_blank" rel="noopener noreferrer">
         {DoiBadge}
       </a>
     )
@@ -115,7 +115,7 @@ const buildForDeveloperLink = (linkData, token) => {
 
   return (
     <li>
-      <a href={link.href}>{link.title}</a>
+      <a href={link.href} className="link">{link.title}</a>
     </li>
   )
 }
@@ -541,7 +541,7 @@ export const CollectionDetailsBody = ({
                             >
                               <RelatedCollection
                                 key={`related-collection-${id}`}
-                                className="collection-body__related-collection-link"
+                                className="link collection-details-body__related-collection-link"
                                 location={location}
                                 onFocusedCollectionChange={onFocusedCollectionChange}
                                 onMetricsRelatedCollection={onMetricsRelatedCollection}

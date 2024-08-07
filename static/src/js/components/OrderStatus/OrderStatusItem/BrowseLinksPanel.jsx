@@ -64,7 +64,7 @@ export const BrowseLinksPanel = ({
 
               return (
                 <li key={key}>
-                  <a href={link}>{link}</a>
+                  <a href={link} className="link">{link}</a>
                 </li>
               )
             })

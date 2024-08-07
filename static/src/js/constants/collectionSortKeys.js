@@ -1,6 +1,6 @@
 export const collectionSortKeys = {
   scoreDescending: '-score',
   usageDescending: '-usage_score',
-  startDateAscending: 'start-date',
+  startDateAscending: 'start_date',
   endDateDescending: '-ongoing'
 }

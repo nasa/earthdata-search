@@ -17,12 +17,14 @@ export const FooterLink = ({
   secondary
 }) => {
   const spanClassName = classNames([
+    'link',
     'footer-link__info-bit',
     {
       'footer-link__info-bit--clean footer-link__info-bit--emph': secondary
     }
   ])
   const linkClassName = classNames([
+    'link',
     'footer-link__info-link',
     {
       'footer-link__info-link--underline': secondary
