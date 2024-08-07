@@ -328,7 +328,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           const nextButton = screen.getByLabelText('Next browse image thumbnail')
           const prevButton = screen.getByLabelText('Previous browse image thumbnail')
-          
+
           await act(async () => {
             await user.click(nextButton)
             await user.click(prevButton)
