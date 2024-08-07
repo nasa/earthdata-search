@@ -1,5 +1,5 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { shallow, mount } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import MockDate from 'mockdate'
 import moment from 'moment'
@@ -27,6 +27,25 @@ function setup(overrideProps) {
   }
 }
 
+// Function setupMount(overrideProps) {
+//   const { minimumTemporalDateString, temporalDateFormatFull } = getApplicationConfig()
+
+//   const props = {
+//     id: 'test-id',
+//     minDate: minimumTemporalDateString,
+//     maxDate: moment.utc().format(temporalDateFormatFull),
+//     onSubmit: jest.fn(),
+//     ...overrideProps
+//   }
+
+//   const enzymeWrapper = mount(<DatepickerContainer {...props} />)
+
+//   return {
+//     enzymeWrapper,
+//     props
+//   }
+// }
+
 describe('DatepickerContainer component', () => {
   describe('onBlur', () => {
     test('sets the picker state', () => {
@@ -42,6 +61,105 @@ describe('DatepickerContainer component', () => {
       expect(enzymeWrapper.instance().picker.current.setState).toHaveBeenCalledTimes(1)
       expect(enzymeWrapper.instance().picker.current.setState)
         .toHaveBeenCalledWith({ currentView: 'years' })
+    })
+
+    describe('when type is start', () => {
+      test('returns date as entered', () => {
+        const { enzymeWrapper, props } = setup({ type: 'start' })
+        const { onSubmit } = props
+
+        // Because this is a shallow render the Datepicker component doesn't render so we have
+        // to manually create a 'current' instance of the component
+        enzymeWrapper.instance().picker.current = {}
+        enzymeWrapper.instance().picker.current.setState = jest.fn()
+
+        enzymeWrapper.instance().onBlur('1990-09-03 00:00:00')
+
+        expect(enzymeWrapper.instance().picker.current.setState).toHaveBeenCalledTimes(1)
+        expect(enzymeWrapper.instance().picker.current.setState)
+          .toHaveBeenCalledWith({ currentView: 'years' })
+
+        expect(onSubmit).toHaveBeenCalledTimes(1)
+        expect(onSubmit).toHaveBeenCalledWith(moment.utc('1990-09-03 00:00:00', [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true))
+      })
+    })
+
+    test('returns unchanged datetime when date is not a \'startOf\' day', () => {
+      const { enzymeWrapper, props } = setup({ type: 'start' })
+      const { onSubmit } = props
+
+      // Because this is a shallow render the Datepicker component doesn't render so we have
+      // to manually create a 'current' instance of the component
+      enzymeWrapper.instance().picker.current = {}
+      enzymeWrapper.instance().picker.current.setState = jest.fn()
+
+      enzymeWrapper.instance().onBlur('1990-09-03 00:40:00')
+
+      expect(enzymeWrapper.instance().picker.current.setState).toHaveBeenCalledTimes(1)
+      expect(enzymeWrapper.instance().picker.current.setState)
+        .toHaveBeenCalledWith({ currentView: 'years' })
+
+      expect(onSubmit).toHaveBeenCalledTimes(1)
+      expect(onSubmit).toHaveBeenCalledWith(moment.utc('1990-09-03 00:40:00', [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true))
+    })
+  })
+
+  describe('when type is end', () => {
+    test('returns date as entered', () => {
+      const { enzymeWrapper, props } = setup({ type: 'end' })
+      const { onSubmit } = props
+
+      // Because this is a shallow render the Datepicker component doesn't render so we have
+      // to manually create a 'current' instance of the component
+      enzymeWrapper.instance().picker.current = {}
+      enzymeWrapper.instance().picker.current.setState = jest.fn()
+
+      enzymeWrapper.instance().onBlur('1990-09-03 00:00:00')
+
+      expect(enzymeWrapper.instance().picker.current.setState).toHaveBeenCalledTimes(1)
+      expect(enzymeWrapper.instance().picker.current.setState)
+        .toHaveBeenCalledWith({ currentView: 'years' })
+
+      expect(onSubmit).toHaveBeenCalledTimes(1)
+      expect(onSubmit).toHaveBeenCalledWith(moment.utc('1990-09-03 00:00:00', [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true).endOf('day'))
+    })
+
+    test('returns date as entered', () => {
+      const { enzymeWrapper, props } = setup({ type: 'end' })
+      const { onSubmit } = props
+
+      // Because this is a shallow render the Datepicker component doesn't render so we have
+      // to manually create a 'current' instance of the component
+      enzymeWrapper.instance().picker.current = {}
+      enzymeWrapper.instance().picker.current.setState = jest.fn()
+
+      enzymeWrapper.instance().onBlur('1990-09-03 00:00:00')
+
+      expect(enzymeWrapper.instance().picker.current.setState).toHaveBeenCalledTimes(1)
+      expect(enzymeWrapper.instance().picker.current.setState)
+        .toHaveBeenCalledWith({ currentView: 'years' })
+
+      expect(onSubmit).toHaveBeenCalledTimes(1)
+      expect(onSubmit).toHaveBeenCalledWith(moment.utc('1990-09-03 00:00:00', [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true).endOf('day'))
+    })
+
+    test('returns unchanged datetime when date is not a \'startOf\' day', () => {
+      const { enzymeWrapper, props } = setup({ type: 'start' })
+      const { onSubmit } = props
+
+      // Because this is a shallow render the Datepicker component doesn't render so we have
+      // to manually create a 'current' instance of the component
+      enzymeWrapper.instance().picker.current = {}
+      enzymeWrapper.instance().picker.current.setState = jest.fn()
+
+      enzymeWrapper.instance().onBlur('1990-09-03 00:40:00')
+
+      expect(enzymeWrapper.instance().picker.current.setState).toHaveBeenCalledTimes(1)
+      expect(enzymeWrapper.instance().picker.current.setState)
+        .toHaveBeenCalledWith({ currentView: 'years' })
+
+      expect(onSubmit).toHaveBeenCalledTimes(1)
+      expect(onSubmit).toHaveBeenCalledWith(moment.utc('1990-09-03 00:40:00', [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true))
     })
   })
 
@@ -126,13 +244,13 @@ describe('DatepickerContainer component', () => {
       const { onSubmit } = props
 
       enzymeWrapper.instance().onBlur = jest.fn()
-      const { onBlur } = enzymeWrapper.instance()
+      const { onBlur, onTodayClick } = enzymeWrapper.instance()
 
       enzymeWrapper.setProps({ type: 'end' })
 
       MockDate.set('09/03/1988')
 
-      enzymeWrapper.instance().onTodayClick()
+      onTodayClick()
 
       expect(onBlur).toHaveBeenCalledTimes(0)
       expect(onSubmit).toHaveBeenCalledTimes(1)
@@ -146,7 +264,7 @@ describe('DatepickerContainer component', () => {
   })
 
   describe('onClearClick', () => {
-    test('triggers the onChange function with an empty string', () => {
+    test('does not trigger the onChange and calls onSubmit with a null value', () => {
       const { enzymeWrapper, props } = setup()
       const { onSubmit } = props
 
@@ -158,6 +276,12 @@ describe('DatepickerContainer component', () => {
 
       onClearClick()
 
+      expect(enzymeWrapper.instance().picker.current.setState).toHaveBeenCalledWith({
+        inputValue: '',
+        value: '',
+        selectedDate: undefined
+      })
+
       expect(onChange).toHaveBeenCalledTimes(0)
 
       expect(onSubmit).toHaveBeenCalledTimes(1)
@@ -165,6 +289,27 @@ describe('DatepickerContainer component', () => {
         .toEqual(null)
     })
   })
+
+  // Describe('onInputChange', () => {
+  //   test.only('sets cursor position when called', () => {
+  //     const { enzymeWrapper } = setupMount({ value: '' })
+
+  //     const onInputChangeSpy = jest.spyOn(enzymeWrapper.instance(), 'onInputChange')
+  //     const onChangeSpy = jest.spyOn(enzymeWrapper.instance(), 'onChange')
+
+  //     enzymeWrapper.find('input').at(0).simulate('change', {
+  //       target: {
+  //         name: 'datepicker',
+  //         value: '1995'
+  //       }
+  //     })
+
+  //     console.log(enzymeWrapper.find('input').at(0).getDOMNode().nodeValue)
+
+  //     expect(onChangeSpy).toHaveBeenCalled()
+  //     expect(onInputChangeSpy).toHaveBeenCalled()
+  //   })
+  // })
 
   describe('onChange', () => {
     test('when given an empty string, passes an invalid moment object', () => {
