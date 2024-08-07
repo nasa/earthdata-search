@@ -241,6 +241,7 @@ export const granuleFilter = (action) => {
 export const browseGranuleImage = (action) => {
   const { payload } = action
   const {
+    modalOpen,
     granuleId,
     value
   } = payload
@@ -248,6 +249,7 @@ export const browseGranuleImage = (action) => {
   dataLayer.push({
     event: 'browseGranuleImage',
     browseGranuleImageCategory: 'Browse Granule Image',
+    browseGranuleImageModalOpen: modalOpen,
     browseGranuleImageGranuleId: granuleId,
     browseGranuleImageValue: value
   })

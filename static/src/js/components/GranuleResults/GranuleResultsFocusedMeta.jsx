@@ -103,22 +103,27 @@ const GranuleResultsFocusedMeta = ({
     setShowTitleTooltip(show)
   }
 
-  const browseImageSelectionButton = (
-    <Button
-      className="granule-results-focused-meta__image-nav-button"
-      type="button"
-      label="View available browse imagery"
-      onClick={
-        () => {
-          onMetricsBrowseGranuleImage({
-            granuleId: focusedGranuleId,
-            value: 'View List'
-          })
+  const browseImageSelectionButton = (listProps) => {
+    const { modalIsOpen } = listProps
+
+    return (
+      <Button
+        className="granule-results-focused-meta__image-nav-button"
+        type="button"
+        label="View available browse imagery"
+        onClick={
+          () => {
+            onMetricsBrowseGranuleImage({
+              browseGranuleImageModalOpen: modalIsOpen,
+              granuleId: focusedGranuleId,
+              value: 'View List'
+            })
+          }
         }
-      }
-      icon={FaList}
-    />
-  )
+        icon={FaList}
+      />
+    )
+  }
 
   const browseImageSelectionPopover = (
     <OverlayTrigger
@@ -161,7 +166,7 @@ const GranuleResultsFocusedMeta = ({
         )
       }
     >
-      {browseImageSelectionButton}
+      {browseImageSelectionButton({ modalIsOpen: false })}
     </OverlayTrigger>
   )
 
@@ -206,7 +211,7 @@ const GranuleResultsFocusedMeta = ({
         )
       }
     >
-      {browseImageSelectionButton}
+      {browseImageSelectionButton({ modalIsOpen: true })}
     </OverlayTrigger>
   )
 
@@ -262,6 +267,7 @@ const GranuleResultsFocusedMeta = ({
                       () => {
                         onModalOpen(true)
                         onMetricsBrowseGranuleImage({
+                          browseGranuleImageModalOpen: false,
                           granuleId: focusedGranuleId,
                           value: 'Expand'
                         })
@@ -270,6 +276,7 @@ const GranuleResultsFocusedMeta = ({
                   />
                 </div>
                 {
+                  // TODO can we consolidate and reuse the logic between the expanded modal and the panel?
                   (browseThumbnails.length && browseThumbnails.length > 1) && (
                     <nav className="granule-results-focused-meta__primary-actions">
                       <div className="granule-results-focused-meta__image-nav-primary">
@@ -282,6 +289,7 @@ const GranuleResultsFocusedMeta = ({
                             () => {
                               onClickPreviousButton()
                               onMetricsBrowseGranuleImage({
+                                browseGranuleImageModalOpen: false,
                                 granuleId: focusedGranuleId,
                                 value: 'Previous'
                               })
@@ -298,6 +306,7 @@ const GranuleResultsFocusedMeta = ({
                             () => {
                               onClickNextButton()
                               onMetricsBrowseGranuleImage({
+                                browseGranuleImageModalOpen: false,
                                 granuleId: focusedGranuleId,
                                 value: 'Next'
                               })
@@ -402,14 +411,32 @@ const GranuleResultsFocusedMeta = ({
                         type="button"
                         icon={FaChevronLeft}
                         label="Previous browse image"
-                        onClick={() => onClickModalPreviousButton()}
+                        onClick={
+                          () => {
+                            onClickModalPreviousButton()
+                            onMetricsBrowseGranuleImage({
+                              browseGranuleImageModalOpen: true,
+                              granuleId: focusedGranuleId,
+                              value: 'Previous'
+                            })
+                          }
+                        }
                       />
                       <Button
                         className="granule-results-focused-meta__image-nav-button"
                         type="button"
                         icon={FaChevronRight}
                         label="Next browse image"
-                        onClick={() => onClickModalNextButton()}
+                        onClick={
+                          () => {
+                            onClickModalNextButton()
+                            onMetricsBrowseGranuleImage({
+                              browseGranuleImageModalOpen: true,
+                              granuleId: focusedGranuleId,
+                              value: 'Next'
+                            })
+                          }
+                        }
                       />
                       <span className="granule-results-focused-meta__pagination">
                         {`${activeModalBrowseImageIndex + 1}/${browseThumbnails.length}`}
@@ -426,6 +453,7 @@ const GranuleResultsFocusedMeta = ({
                             onClick={
                               () => {
                                 onMetricsBrowseGranuleImage({
+                                  browseGranuleImageModalOpen: false,
                                   granuleId: focusedGranuleId,
                                   value: 'Download'
                                 })

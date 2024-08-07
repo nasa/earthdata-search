@@ -106,6 +106,7 @@ describe('GranuleResultsFocusedMeta component', () => {
         expect(modal).toBeInTheDocument()
         expect(onMetricsBrowseGranuleImage).toHaveBeenCalledTimes(1)
         expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+          browseGranuleImageModalOpen: false,
           granuleId: 'G-1234-TEST',
           value: 'Expand'
         })
@@ -295,6 +296,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           expect(onMetricsBrowseGranuleImage).toBeCalledTimes(1)
           expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+            browseGranuleImageModalOpen: false,
             granuleId: 'G-1234-TEST',
             value: 'Next'
           })
@@ -341,6 +343,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           expect(onMetricsBrowseGranuleImage).toBeCalledTimes(2)
           expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+            browseGranuleImageModalOpen: false,
             granuleId: 'G-1234-TEST',
             value: 'Previous'
           })
@@ -351,7 +354,7 @@ describe('GranuleResultsFocusedMeta component', () => {
         test('should select the image and close the popover', async () => {
           const user = userEvent.setup()
 
-          setup({
+          const { onMetricsBrowseGranuleImage } = setup({
             focusedGranuleMetadata: {
               browseFlag: true,
               links: [{
@@ -388,6 +391,13 @@ describe('GranuleResultsFocusedMeta component', () => {
           expect(popoverList).not.toBeInTheDocument()
           expect(images[2]).toHaveClass('granule-results-focused-meta__thumb--is-active')
           expect(pagination).toBeInTheDocument()
+
+          expect(onMetricsBrowseGranuleImage).toBeCalledTimes(1)
+          expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+            browseGranuleImageModalOpen: false,
+            granuleId: 'G-1234-TEST',
+            value: 'View List'
+          })
         })
       })
 
@@ -461,6 +471,7 @@ describe('GranuleResultsFocusedMeta component', () => {
         })
       })
 
+      // TODO add metric checks here
       describe('when clicking the expand button', () => {
         test('should render modal navigation', async () => {
           const user = userEvent.setup()
@@ -547,7 +558,7 @@ describe('GranuleResultsFocusedMeta component', () => {
           test('should cycle the images', async () => {
             const user = userEvent.setup()
 
-            setup({
+            const { onMetricsBrowseGranuleImage } = setup({
               focusedGranuleMetadata: {
                 browseFlag: true,
                 links: [{
@@ -583,6 +594,14 @@ describe('GranuleResultsFocusedMeta component', () => {
             expect(images.length).toEqual(3)
             expect(images[1]).toHaveClass('granule-results-focused-meta__full--is-active')
             expect(pagination).toBeInTheDocument()
+
+            // Tracks Expand and Next
+            expect(onMetricsBrowseGranuleImage).toBeCalledTimes(2)
+            expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+              browseGranuleImageModalOpen: true,
+              granuleId: 'G-1234-TEST',
+              value: 'Next'
+            })
           })
         })
 
@@ -590,7 +609,7 @@ describe('GranuleResultsFocusedMeta component', () => {
           test('should cycle the images', async () => {
             const user = userEvent.setup()
 
-            setup({
+            const { onMetricsBrowseGranuleImage } = setup({
               focusedGranuleMetadata: {
                 browseFlag: true,
                 links: [{
@@ -628,6 +647,14 @@ describe('GranuleResultsFocusedMeta component', () => {
             expect(images.length).toEqual(3)
             expect(images[0]).toHaveClass('granule-results-focused-meta__full--is-active')
             expect(pagination).toBeInTheDocument()
+
+            // Tracks Expand, Next, and Previous
+            expect(onMetricsBrowseGranuleImage).toBeCalledTimes(3)
+            expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+              browseGranuleImageModalOpen: true,
+              granuleId: 'G-1234-TEST',
+              value: 'Previous'
+            })
           })
         })
 
@@ -635,7 +662,7 @@ describe('GranuleResultsFocusedMeta component', () => {
           test('should select the image and close the popover', async () => {
             const user = userEvent.setup()
 
-            setup({
+            const { onMetricsBrowseGranuleImage } = setup({
               focusedGranuleMetadata: {
                 browseFlag: true,
                 links: [{
@@ -679,6 +706,13 @@ describe('GranuleResultsFocusedMeta component', () => {
             expect(popoverList).not.toBeInTheDocument()
             expect(images[2]).toHaveClass('granule-results-focused-meta__full--is-active')
             expect(pagination).toBeInTheDocument()
+
+            expect(onMetricsBrowseGranuleImage).toBeCalledTimes(2)
+            expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+              browseGranuleImageModalOpen: true,
+              granuleId: 'G-1234-TEST',
+              value: 'View List'
+            })
           })
         })
 
