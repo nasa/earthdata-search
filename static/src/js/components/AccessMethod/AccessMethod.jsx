@@ -91,7 +91,8 @@ const AccessMethod = ({
   // Initialize State Variables
   const [enableTemporalSubsetting, setEnableTemporalSubsetting] = useState(setTemporal)
   const [selectedHarmonyMethodName, setSelectedHarmonyMethodName] = useState('')
-  const [isHarmony, setIsHarmony] = useState(selectedAccessMethod.startsWith('harmony'))
+  // TODO this should be startsWith or something similar
+  const [isHarmony, setIsHarmony] = useState(false)
   const [enableSpatialSubsetting, setEnableSpatialSubsetting] = useState(false)
   const [enableConcatenateDownload, setEnableConcatenateDownload] = useState(defaultConcatenation)
   const [granuleList, setGranuleList] = useState([])
