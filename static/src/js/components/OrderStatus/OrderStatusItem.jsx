@@ -791,7 +791,7 @@ export class OrderStatusItem extends PureComponent {
                           (contactName && contactEmail) && (
                             <p className="order-status-item-body__contact">
                               {`For assistance, please contact ${contactName} at `}
-                              <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+                              <a href={`mailto:${contactEmail}`} className="link">{contactEmail}</a>
                             </p>
                           )
                         }

@@ -69,7 +69,7 @@ export const DownloadFilesPanel = ({
 
               return (
                 <li key={key}>
-                  <a href={link}>{link}</a>
+                  <a href={link} className="link">{link}</a>
                 </li>
               )
             })

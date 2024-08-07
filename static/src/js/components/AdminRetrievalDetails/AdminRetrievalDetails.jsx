@@ -55,7 +55,7 @@ export const AdminRetrievalDetails = ({
           <Row className="admin-retrieval-details__metadata-display mb-2">
             <Col className="admin-retrieval-details__metadata-display-item">
               <span className="admin-retrieval-details__metadata-display-heading">Source Path</span>
-              <a data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content" href={sourcePath} target="_blank" rel="noopener noreferrer">
+              <a data-testid="admin-retrieval-details__metadata-display-content" className="link admin-retrieval-details__metadata-display-content" href={sourcePath} target="_blank" rel="noopener noreferrer">
                 {sourcePath}
               </a>
             </Col>
