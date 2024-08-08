@@ -1,33 +1,41 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
+import { screen, render } from '@testing-library/react'
+
+import '@testing-library/jest-dom'
 import { GranuleResultsFocusedMetaContainer } from '../GranuleResultsFocusedMetaContainer'
 import GranuleResultsFocusedMeta from '../../../components/GranuleResults/GranuleResultsFocusedMeta'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/GranuleResults/GranuleResultsFocusedMeta', () => jest.fn(() => <div data-testid="granule-results-focused-meta-overlay-wrapper" />))
 
-function setup(overrideProps) {
+const setup = (overrideProps) => {
+  const onMetricsBrowseGranuleImage = jest.fn()
   const props = {
     focusedGranuleMetadata: { test: 'test' },
     focusedGranuleId: '1234-TEST',
+    onMetricsBrowseGranuleImage,
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<GranuleResultsFocusedMetaContainer {...props} />)
+  render(<GranuleResultsFocusedMetaContainer {...props} />)
 
-  return {
-    enzymeWrapper,
-    props
-  }
+  return { onMetricsBrowseGranuleImage }
 }
 
 describe('GranuleResultsFocusedMetaContainer component', () => {
   test('passes its props and renders a single GranuleResultsFocusedMeta component', () => {
-    const { enzymeWrapper } = setup()
+    const { onMetricsBrowseGranuleImage } = setup()
 
-    expect(enzymeWrapper.find(GranuleResultsFocusedMeta).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleResultsFocusedMeta).props().focusedGranuleId).toEqual('1234-TEST')
-    expect(enzymeWrapper.find(GranuleResultsFocusedMeta).props().focusedGranuleMetadata).toEqual({ test: 'test' })
+    expect(screen.getByTestId('granule-results-focused-meta-overlay-wrapper')).toBeInTheDocument()
+    expect(GranuleResultsFocusedMeta).toHaveBeenCalledTimes(1)
+
+    // Using the `toHaveBeenCalledWith` assertion also have the deprecated react context object in it making it less readable
+    expect(GranuleResultsFocusedMeta.mock.calls[0][0]).toEqual(
+      {
+        focusedGranuleMetadata: { test: 'test' },
+        focusedGranuleId: '1234-TEST',
+        onMetricsBrowseGranuleImage
+      }
+    )
   })
 })

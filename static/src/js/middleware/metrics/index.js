@@ -2,6 +2,7 @@ import { LOCATION_CHANGE } from 'connected-react-router'
 
 import {
   collectionSortChange,
+  browseGranuleImage,
   dataAccess,
   defaultClick,
   granuleFilter,
@@ -15,6 +16,7 @@ import {
 } from './events'
 
 import {
+  METRICS_BROWSE_GRANULE_IMAGE,
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
   METRICS_DATA_ACCESS,
@@ -50,6 +52,10 @@ const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
 
   if (action.type === METRICS_GRANULE_FILTER) {
     granuleFilter(action)
+  }
+
+  if (action.type === METRICS_BROWSE_GRANULE_IMAGE) {
+    browseGranuleImage(action)
   }
 
   if (action.type === METRICS_RELATED_COLLECTION) {

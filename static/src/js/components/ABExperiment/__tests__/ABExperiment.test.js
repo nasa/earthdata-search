@@ -8,10 +8,10 @@ import ABExperiment from '../ABExperiment'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup(overideProps) {
+function setup(overrideProps) {
   const props = {
     experimentId: 'test',
-    ...overideProps
+    ...overrideProps
   }
 
   const enzymeWrapper = shallow(

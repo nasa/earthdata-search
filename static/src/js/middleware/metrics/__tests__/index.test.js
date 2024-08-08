@@ -3,6 +3,7 @@ import { LOCATION_CHANGE } from 'connected-react-router'
 import {
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
+  METRICS_BROWSE_GRANULE_IMAGE,
   METRICS_DATA_ACCESS,
   METRICS_GRANULE_FILTER,
   METRICS_MAP,
@@ -16,6 +17,7 @@ import * as events from '../events'
 import metricsMiddleware from '../index'
 
 jest.mock('../events', () => ({
+  browseGranuleImage: jest.fn(),
   collectionSortChange: jest.fn(),
   dataAccess: jest.fn(),
   defaultClick: jest.fn(),
@@ -92,6 +94,21 @@ describe('metrics middleware', () => {
     invoke(action)
     expect(events.defaultClick).toHaveBeenCalledTimes(1)
     expect(events.defaultClick).toHaveBeenCalledWith(action)
+  })
+
+  test('calls browseGranuleImage event', () => {
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_BROWSE_GRANULE_IMAGE,
+      payload: {
+        value: 'Test Value',
+        granuleId: 'TEST_ID'
+      }
+    }
+    invoke(action)
+    expect(events.browseGranuleImage).toHaveBeenCalledTimes(1)
+    expect(events.browseGranuleImage).toHaveBeenCalledWith(action)
   })
 
   test('calls timeline event', () => {

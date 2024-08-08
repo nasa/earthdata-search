@@ -1,4 +1,5 @@
 import {
+  METRICS_BROWSE_GRANULE_IMAGE,
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
   METRICS_DATA_ACCESS,
@@ -14,6 +15,7 @@ import {
 import {
   metricsDataAccess,
   metricsClick,
+  metricsBrowseGranuleImage,
   metricsGranuleFilter,
   metricsTimeline,
   metricsMap,
@@ -125,6 +127,24 @@ describe('actions', () => {
       } = action
 
       expect(type).toEqual(METRICS_SPATIAL_SELECTION)
+      expect(payload).toEqual(data)
+    })
+  })
+
+  describe('metricsSpatialSelection', () => {
+    test('returns the correct action', () => {
+      const data = {
+        test: 'test payload'
+      }
+
+      const action = metricsBrowseGranuleImage(data)
+
+      const {
+        type,
+        payload
+      } = action
+
+      expect(type).toEqual(METRICS_BROWSE_GRANULE_IMAGE)
       expect(payload).toEqual(data)
     })
   })
