@@ -19,11 +19,26 @@
               {
                 "boundary": {
                   "points": [
-                    { "longitude": 25.048717, "latitude": -31.438196 },
-                    { "longitude": 25.543564, "latitude": -29.763071 },
-                    { "longitude": 24.667177, "latitude": -29.560961 },
-                    { "longitude": 24.155773, "latitude": -31.232344 },
-                    { "longitude": 25.048717, "latitude": -31.438196 }
+                    {
+                      "longitude": 25.048717,
+                      "latitude": -31.438196
+                    },
+                    {
+                      "longitude": 25.543564,
+                      "latitude": -29.763071
+                    },
+                    {
+                      "longitude": 24.667177,
+                      "latitude": -29.560961
+                    },
+                    {
+                      "longitude": 24.155773,
+                      "latitude": -31.232344
+                    },
+                    {
+                      "longitude": 25.048717,
+                      "latitude": -31.438196
+                    }
                   ]
                 }
               }
@@ -73,8 +88,14 @@
       },
       "measuredParameters": null,
       "providerDates": [
-        { "date": "2020-03-01T01:22:31.000Z", "type": "Insert" },
-        { "date": "2020-03-01T01:22:31.000Z", "type": "Update" }
+        {
+          "date": "2020-03-01T01:22:31.000Z",
+          "type": "Insert"
+        },
+        {
+          "date": "2020-03-01T01:22:31.000Z",
+          "type": "Update"
+        }
       ]
     }
   }

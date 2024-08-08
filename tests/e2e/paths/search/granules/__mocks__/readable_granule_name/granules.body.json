@@ -1,0 +1,62 @@
+{
+  "feed": {
+    "updated": "2021-06-01T18:53:40.411Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?cloud_cover=&echo_collection_id=C1214470488-ASF&options%5Breadable_granule_name%5D%5Bpattern%5D=true&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20&readable_granule_name%5B%5D=S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1&sort_key=-start_date",
+    "title": "ECHO granule metadata",
+    "entry": [
+      {
+        "producer_granule_id": "S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1",
+        "time_start": "2014-06-15T03:44:44.000Z",
+        "updated": "2020-03-01T01:22:31.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "orbit_number": "1055"
+          }
+        ],
+        "dataset_id": "SENTINEL-1A_SLC",
+        "data_center": "ASF",
+        "title": "S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1-SLC",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2014-06-15T03:45:12.000Z",
+        "id": "G1287941210-ASF",
+        "original_format": "ECHO10",
+        "granule_size": "3989.2002868652344",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "-31.438196 25.048717 -29.763071 25.543564 -29.560961 24.667177 -31.232344 24.155773 -31.438196 25.048717"
+          ]
+        ],
+        "collection_concept_id": "C1214470488-ASF",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "This link provides direct download access to the granule.",
+            "hreflang": "en-US",
+            "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1.zip"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,2409 @@
+{
+  "feed": {
+    "updated": "2021-06-02T17:35:07.399Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?cloud_cover=&echo_collection_id=C194001210-LPDAAC_ECS&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20&sort_key=-start_date",
+    "title": "ECHO granule metadata",
+    "entry": [
+      {
+        "producer_granule_id": "MYD11A2.A2021145.h16v17.006.2021153171022.hdf",
+        "time_start": "2021-05-25T00:00:00.000Z",
+        "cloud_cover": "65.0",
+        "updated": "2021-06-02T12:16:50.327Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2458664881",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-06-01T23:59:59.000Z",
+        "id": "G2061874003-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "3.5531",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-83.6208333 -180 -86.8041667 -179.6846645 -80.0041667 -57.6593079 -80.0041667 -115.2944598 -83.6208333 -180"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021145.h16v17.006.2021153171022.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.25/MYD11A2.A2021145.h16v17.006.2021153171022.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.25/MYD11A2.A2021145.h16v17.006.2021153171022.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.06.02/BROWSE.MYD11A2.A2021145.h16v17.006.2021153131022.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.06.02/BROWSE.MYD11A2.A2021145.h16v17.006.2021153131022.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.25/MYD11A2.A2021145.h16v17.006.2021153171022.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021145.h17v17.006.2021153171017.hdf",
+        "time_start": "2021-05-25T00:00:00.000Z",
+        "cloud_cover": "16.0",
+        "updated": "2021-06-02T12:16:52.249Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2458664886",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-06-01T23:59:59.000Z",
+        "id": "G2061874045-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "5.80157",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-86.8125 -180 -89.9875 -28.7051848 -80.0041667 -0.0240599 -80.0041667 -57.6592118 -86.8125 -180"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021145.h17v17.006.2021153171017.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.25/MYD11A2.A2021145.h17v17.006.2021153171017.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.25/MYD11A2.A2021145.h17v17.006.2021153171017.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.06.02/BROWSE.MYD11A2.A2021145.h17v17.006.2021153131018.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.06.02/BROWSE.MYD11A2.A2021145.h17v17.006.2021153131018.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.25/MYD11A2.A2021145.h17v17.006.2021153171017.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021145.h15v17.006.2021153171020.hdf",
+        "time_start": "2021-05-25T00:00:00.000Z",
+        "cloud_cover": "81.0",
+        "updated": "2021-06-02T12:16:50.283Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2458664853",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-06-01T23:59:59.000Z",
+        "id": "G2061874057-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "1.70102",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-80.4041667 -180 -83.6125 -179.9262665 -80.0041667 -115.2945558 -80.0041667 -172.9297078 -80.4041667 -180"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021145.h15v17.006.2021153171020.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.25/MYD11A2.A2021145.h15v17.006.2021153171020.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.25/MYD11A2.A2021145.h15v17.006.2021153171020.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.06.02/BROWSE.MYD11A2.A2021145.h15v17.006.2021153131020.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.06.02/BROWSE.MYD11A2.A2021145.h15v17.006.2021153131020.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.25/MYD11A2.A2021145.h15v17.006.2021153171020.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021145.h21v17.006.2021153170351.hdf",
+        "time_start": "2021-05-25T00:00:00.000Z",
+        "cloud_cover": "99.0",
+        "updated": "2021-06-02T12:18:50.799Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2458664970",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-06-01T23:59:59.000Z",
+        "id": "G2061874618-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "1.16033",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-80.3958333 179.8648799 -80.0125 180 -80.0041667 179.9420019 -80.0041667 172.8817801 -80.3958333 179.8648799"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021145.h21v17.006.2021153170351.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.25/MYD11A2.A2021145.h21v17.006.2021153170351.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.25/MYD11A2.A2021145.h21v17.006.2021153170351.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.06.02/BROWSE.MYD11A2.A2021145.h21v17.006.2021153130352.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.06.02/BROWSE.MYD11A2.A2021145.h21v17.006.2021153130352.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.25/MYD11A2.A2021145.h21v17.006.2021153170351.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h21v17.006.2021146041018.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "99.0",
+        "updated": "2021-05-25T23:20:42.430Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456476880",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058417402-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "1.15948",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-80.3958333 179.8648799 -80.0125 180 -80.0041667 179.9420019 -80.0041667 172.8817801 -80.3958333 179.8648799"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h21v17.006.2021146041018.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h21v17.006.2021146041018.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h21v17.006.2021146041018.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h21v17.006.2021146001018.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h21v17.006.2021146001018.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h21v17.006.2021146041018.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h16v17.006.2021146041053.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "49.0",
+        "updated": "2021-05-25T23:23:37.157Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456478320",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058421597-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "4.44015",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-83.6208333 -180 -86.8041667 -179.6846645 -80.0041667 -57.6593079 -80.0041667 -115.2944598 -83.6208333 -180"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h16v17.006.2021146041053.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h16v17.006.2021146041053.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h16v17.006.2021146041053.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h16v17.006.2021146001054.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h16v17.006.2021146001054.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h16v17.006.2021146041053.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h14v17.006.2021146041051.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "99.0",
+        "updated": "2021-05-25T23:21:21.138Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456477387",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058421600-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "1.16174",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-80.0125 -179.994526 -80.3958333 -179.9148556 -80.0041667 -172.9298038 -80.0041667 -179.9900256 -80.0125 -179.994526"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h14v17.006.2021146041051.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h14v17.006.2021146041051.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h14v17.006.2021146041051.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h14v17.006.2021146001051.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h14v17.006.2021146001051.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h14v17.006.2021146041051.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h15v17.006.2021146042127.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "80.0",
+        "updated": "2021-05-25T23:27:20.047Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456480711",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058429093-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "1.74463",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-80.4041667 -180 -83.6125 -179.9262665 -80.0041667 -115.2945558 -80.0041667 -172.9297078 -80.4041667 -180"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h15v17.006.2021146042127.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h15v17.006.2021146042127.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h15v17.006.2021146042127.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h15v17.006.2021146002127.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h15v17.006.2021146002127.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h15v17.006.2021146042127.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h20v17.006.2021146042126.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "80.0",
+        "updated": "2021-05-25T23:27:20.014Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456480708",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058429177-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "2.064",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-83.6125 179.8513018 -80.4041667 180 -80.0041667 172.881684 -80.0041667 115.2465321 -83.6125 179.8513018"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h20v17.006.2021146042126.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h20v17.006.2021146042126.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h20v17.006.2021146042126.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h20v17.006.2021146002127.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h20v17.006.2021146002127.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h20v17.006.2021146042126.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h17v16.006.2021146061739.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "0.0",
+        "updated": "2021-05-26T01:21:23.194Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456529469",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058477748-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "4.57883",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-79.9958333 -57.6116554 -79.9958333 -0.0240479 -70.0041667 -0.0122087 -70.0041667 -29.2618928 -79.9958333 -57.6116554"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h17v16.006.2021146061739.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h17v16.006.2021146061739.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h17v16.006.2021146061739.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h17v16.006.2021146021740.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h17v16.006.2021146021740.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h17v16.006.2021146061739.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h14v16.006.2021146062055.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "13.0",
+        "updated": "2021-05-26T01:25:28.181Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456531071",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058477779-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "2.65728",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-77.1625 -179.9924302 -79.9958333 -172.7871583 -70.0041667 -87.7614072 -70.0041667 -117.0110913 -77.1625 -179.9924302"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h14v16.006.2021146062055.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h14v16.006.2021146062055.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h14v16.006.2021146062055.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h14v16.006.2021146022056.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h14v16.006.2021146022056.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h14v16.006.2021146062055.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h21v16.006.2021146061832.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "12.0",
+        "updated": "2021-05-26T01:21:23.190Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456529474",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058477875-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "5.34128",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-79.9958333 172.7391584 -77.1625 180 -70.0041667 116.9867226 -70.0041667 87.7370385 -79.9958333 172.7391584"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h21v16.006.2021146061832.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h21v16.006.2021146061832.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h21v16.006.2021146061832.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h21v16.006.2021146021832.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h21v16.006.2021146021832.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h21v16.006.2021146061832.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h18v17.006.2021146061742.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "16.0",
+        "updated": "2021-05-26T01:21:23.195Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456529476",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058477984-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "5.86145",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-89.9875 -28.5905947 -86.8125 180 -80.0041667 57.6111881 -80.0041667 -0.0239638 -89.9875 -28.5905947"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h18v17.006.2021146061742.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h18v17.006.2021146061742.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h18v17.006.2021146061742.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h18v17.006.2021146021743.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h18v17.006.2021146021743.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h18v17.006.2021146061742.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h20v16.006.2021146062534.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "0.0",
+        "updated": "2021-05-26T01:29:19.270Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456532626",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058482661-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "6.95414",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-79.9958333 115.1514549 -79.9958333 172.7390624 -70.0041667 87.7369898 -70.0041667 58.4873057 -79.9958333 115.1514549"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h20v16.006.2021146062534.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h20v16.006.2021146062534.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h20v16.006.2021146062534.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h20v16.006.2021146022534.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h20v16.006.2021146022534.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h20v16.006.2021146062534.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h23v16.006.2021146062344.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "78.0",
+        "updated": "2021-05-26T01:28:24.330Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456532436",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058482752-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "1.9156",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-73.8625 179.9230031 -70.5291667 180 -70.0041667 175.4861883 -70.0041667 146.2365042 -73.8625 179.9230031"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h23v16.006.2021146062344.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h23v16.006.2021146062344.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h23v16.006.2021146062344.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h23v16.006.2021146022344.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h23v16.006.2021146022344.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h23v16.006.2021146062344.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h16v16.006.2021146062531.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "2.0",
+        "updated": "2021-05-26T01:29:15.175Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456532598",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058482833-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "3.43198",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-79.9958333 -115.1993589 -79.9958333 -57.6117514 -70.0041667 -29.2619416 -70.0041667 -58.5116256 -79.9958333 -115.1993589"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h16v16.006.2021146062531.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h16v16.006.2021146062531.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h16v16.006.2021146062531.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h16v16.006.2021146022532.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h16v16.006.2021146022532.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h16v16.006.2021146062531.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h17v17.006.2021146062659.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "16.0",
+        "updated": "2021-05-26T01:31:27.851Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456533439",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058485006-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "5.9008",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-86.8125 -180 -89.9875 -28.7051848 -80.0041667 -0.0240599 -80.0041667 -57.6592118 -86.8125 -180"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h17v17.006.2021146062659.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h17v17.006.2021146062659.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h17v17.006.2021146062659.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h17v17.006.2021146022659.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h17v17.006.2021146022659.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h17v17.006.2021146062659.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h19v16.006.2021146063342.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "1.0",
+        "updated": "2021-05-26T01:39:07.777Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456536323",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058487881-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "8.11639",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-79.9958333 57.5637515 -79.9958333 115.151359 -70.0041667 58.4872569 -70.0041667 29.2375729 -79.9958333 57.5637515"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h19v16.006.2021146063342.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h19v16.006.2021146063342.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h19v16.006.2021146063342.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h19v16.006.2021146023343.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h19v16.006.2021146023343.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h19v16.006.2021146063342.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h15v16.006.2021146064001.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "1.0",
+        "updated": "2021-05-26T01:43:54.511Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456538772",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058489842-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "6.43211",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-79.9958333 -172.7870623 -79.9958333 -115.1994548 -70.0041667 -58.5116744 -70.0041667 -87.7613585 -79.9958333 -172.7870623"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h15v16.006.2021146064001.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h15v16.006.2021146064001.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h15v16.006.2021146064001.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h15v16.006.2021146024001.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h15v16.006.2021146024001.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h15v16.006.2021146064001.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "MYD11A2.A2021137.h22v16.006.2021146063957.hdf",
+        "time_start": "2021-05-17T00:00:00.000Z",
+        "cloud_cover": "45.0",
+        "updated": "2021-05-26T01:43:19.930Z",
+        "dataset_id": "MODIS/Aqua Land Surface Temperature/Emissivity 8-Day L3 Global 1km SIN Grid V006",
+        "data_center": "LPDAAC_ECS",
+        "title": "SC:MYD11A2.006:2456538715",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "BOTH",
+        "time_end": "2021-05-24T23:59:59.000Z",
+        "id": "G2058489938-LPDAAC_ECS",
+        "original_format": "ECHO10",
+        "granule_size": "3.38599",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "-77.1458333 179.8379148 -73.8708333 180 -70.0041667 146.2364555 -70.0041667 116.9867714 -77.1458333 179.8379148"
+          ]
+        ],
+        "collection_concept_id": "C194001210-LPDAAC_ECS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "title": "MYD11A2.A2021137.h22v16.006.2021146063957.hdf. MimeType: application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h22v16.006.2021146063957.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h22v16.006.2021146063957.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h22v16.006.2021146023957.1.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link (BROWSE)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h22v16.006.2021146023957.2.jpg"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "type": "text/xml",
+            "title": "This Metadata file may be downloaded directly from this link (EXTENDED METADATA)",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h22v16.006.2021146063957.hdf.xml"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MYD11A2.006"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://e4ftl01.cr.usgs.gov/MOLA/MYD11A2.006/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://earthexplorer.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.earthdata.nasa.gov/search?q=C194001210-LPDAAC_ECS"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "hreflang": "en-US",
+            "href": "https://opendap.cr.usgs.gov/opendap/hyrax/MYD11A2.006/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/118/MOD11_User_Guide_V6.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://lpdaac.usgs.gov/documents/119/MOD11_ATBD.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/filespec/MODIS/6/MYD11A2"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://lpdaacsvc.cr.usgs.gov/appeears/"
+          }
+        ]
+      }
+    ]
+  }
+}
