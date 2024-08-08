@@ -15,7 +15,6 @@ import './Datepicker.scss'
  * @param {Function} props.isValidDate - Callback function to determine if a date is valid
  * @param {Function} props.onBlur - Callback function to call when the field is blurred
  * @param {Function} props.onChange - Callback function to call when the field is changed
- * @param {Function} props.onInputChange - Callback function to call when the input field is changed
  * @param {Function} props.onClearClick - Callback function to call when the clear button is clicked
  * @param {Function} props.onTodayClick - Callback function to call when the today button is clicked
  * @param {Node} props.picker - A ref for the datepicker
@@ -43,7 +42,6 @@ class Datepicker extends PureComponent {
     buttonToday.innerHTML = 'Today'
     buttonToday.type = 'button'
     buttonToday.classList.add('datetime__button', 'datetime__button--today')
-    buttonToday.setAttribute('aria-label', 'datetime__button--today')
     buttonToday.addEventListener('click', onTodayClick)
     buttonContainer.appendChild(buttonToday)
 
@@ -52,7 +50,6 @@ class Datepicker extends PureComponent {
     buttonClear.innerHTML = 'Clear'
     buttonClear.type = 'button'
     buttonClear.classList.add('datetime__button', 'datetime__button--clear')
-    buttonClear.setAttribute('aria-label', 'datetime__button--clear')
     buttonClear.addEventListener('click', onClearClick)
     buttonContainer.appendChild(buttonClear)
 
@@ -60,19 +57,49 @@ class Datepicker extends PureComponent {
     container.appendChild(buttonContainer)
   }
 
+  componentDidUpdate(prevProps) {
+    const {
+      viewMode: previousViewMode
+    } = prevProps
+
+    const {
+      viewMode,
+      picker
+    } = this.props
+
+    // If the viewMode has changed, navigate to the new viewMode
+    if (previousViewMode !== viewMode) picker.current.navigate(viewMode)
+  }
+
+  onInputChange(event) {
+    const caret = event.target.selectionStart
+    const element = event.target
+
+    // Set the current cursor selection to prevent cursor moving to the end of the field when editing
+    window.requestAnimationFrame(() => {
+      element.selectionStart = caret
+      element.selectionEnd = caret
+    })
+  }
+
   render() {
     const {
       isValidDate,
       label,
-      onBlur,
       onChange,
-      onInputChange,
       picker,
       size,
-      value
+      value,
+      onInputBlur
     } = this.props
-
     const { format, id, viewMode } = this.props
+    const conditionalInputProps = {}
+
+    // React-datetime does not clear out the input field when a empty string is received. When
+    // the value is an empty string, the value is manually set on the input via `inputProps`.
+    if (!value) {
+      conditionalInputProps.value = ''
+    }
 
     return (
       <Datetime
@@ -88,18 +115,24 @@ class Datepicker extends PureComponent {
             autoComplete: 'off',
             className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`,
             'aria-label': label,
-            onChange: async (event) => onInputChange(event)
+            onChange: (e) => {
+              this.onInputChange(e)
+
+              // eslint-disable-next-line no-underscore-dangle
+              picker.current._closeCalendar()
+            },
+            onBlur: onInputBlur,
+            ...conditionalInputProps
           }
         }
         isValidDate={isValidDate}
-        onClose={onBlur}
         onChange={onChange}
         ref={picker}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        renderInput={(props) => (<input {...props} value={value || ''} />)}
         timeFormat={false}
         utc
         value={value}
+        strictParsing
+        viewMode={viewMode}
         initialViewMode={viewMode}
       />
     )
@@ -119,10 +152,9 @@ Datepicker.propTypes = {
   label: PropTypes.string,
   id: PropTypes.string.isRequired,
   isValidDate: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
+  onInputBlur: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onClearClick: PropTypes.func.isRequired,
-  onInputChange: PropTypes.func.isRequired,
   onTodayClick: PropTypes.func.isRequired,
   picker: PropTypes.oneOfType([
     // Either a function

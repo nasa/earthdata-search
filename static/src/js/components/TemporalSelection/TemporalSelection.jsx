@@ -72,7 +72,7 @@ export class TemporalSelection extends Component {
    * @param {object} temporal - An object containing temporal values
    */
   checkTemporal(temporal) {
-    const format = 'YYYY-MM-DDTHH:mm:ss.SSSZ'
+    const format = moment.ISO_8601
     const start = moment.utc(temporal.startDate, format, true)
 
     const end = moment.utc(temporal.endDate, format, true)
@@ -155,7 +155,7 @@ export class TemporalSelection extends Component {
 
     return (
       <div className={classes.temporalSelection}>
-        <div className="temporal-selection__inputs">
+        <div className="temporal-selection__inputs mb-1">
           <Row>
             <Col>
               <Form.Group controlId={`${controlId}__start-date`} className={classes.inputStart}>
@@ -165,11 +165,11 @@ export class TemporalSelection extends Component {
                 <DatepickerContainer
                   id={`${controlId}__temporal-form__start-date`}
                   label="Start Date"
-                  onSubmit={(value) => onSubmitStart(value)}
+                  onSubmit={onSubmitStart}
                   type="start"
                   size={size}
                   format={format}
-                  value={temporal.startDate ? temporal.startDate : ''}
+                  value={temporal.startDate}
                   minDate={minimumTemporalDateString}
                   maxDate={moment().utc().toISOString()}
                   shouldValidate={!isRecurring}
@@ -185,11 +185,11 @@ export class TemporalSelection extends Component {
                 <DatepickerContainer
                   id={`${controlId}__temporal-form__end-date`}
                   label="End Date"
-                  onSubmit={(value) => onSubmitEnd(value)}
+                  onSubmit={onSubmitEnd}
                   type="end"
                   size={size}
                   format={format}
-                  value={temporal.endDate ? temporal.endDate : ''}
+                  value={temporal.endDate}
                   minDate={minimumTemporalDateString}
                   maxDate={moment().utc().toISOString()}
                   shouldValidate={!isRecurring}
@@ -223,7 +223,7 @@ export class TemporalSelection extends Component {
         {
           (allowRecurring && onRecurringToggle) && (
             <Form.Group
-              className="mb-0"
+              className="mb-1"
               controlId={`${controlId}__recurring`}
             >
               <Form.Check>
@@ -237,7 +237,7 @@ export class TemporalSelection extends Component {
         }
         {
           (allowRecurring && onChangeRecurring && isRecurring) && (
-            <Form.Group className="mb-1">
+            <Form.Group className="mb-3">
               <Form.Label className="temporal-selection__label">
                 Year Range:
               </Form.Label>

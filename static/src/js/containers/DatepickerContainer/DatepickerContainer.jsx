@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
-import { formatDate } from '../../util/formatDate'
+import isCustomTime from '../../util/datepicker'
 import Datepicker from '../../components/Datepicker/Datepicker'
 
 /**
@@ -24,9 +24,8 @@ class DatepickerContainer extends Component {
   constructor(props) {
     super(props)
 
-    this.onBlur = this.onBlur.bind(this)
+    this.onInputBlur = this.onInputBlur.bind(this)
     this.onChange = this.onChange.bind(this)
-    this.onInputChange = this.onInputChange.bind(this)
     this.onClearClick = this.onClearClick.bind(this)
     this.onTodayClick = this.onTodayClick.bind(this)
     this.isValidDate = this.isValidDate.bind(this)
@@ -35,55 +34,36 @@ class DatepickerContainer extends Component {
   }
 
   /**
-   * Set view back to the default when a user closes the datepicker
-   * Also set the datetime to be the endOf or startOf day depending on the type
-   * @param value value being changed by the Datepicker
-   */
-  onBlur(value) {
+  * Autocomplete the field on blur
+  */
+  onInputBlur(e) {
     const {
-      type,
-      onSubmit,
-      viewMode
+      format
     } = this.props
 
-    const inputMoment = formatDate(value, type)
+    console.log(e)
+    const { value } = e.target
 
-    onSubmit(inputMoment)
+    if (moment.utc(value, [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true).isValid()) {
+      const newValue = moment.utc(value, format)
 
-    this.picker.current.setState({
-      currentView: viewMode
-    })
+      this.onChange(newValue)
+    }
   }
 
   /**
   * Clear out the currently selected date
   */
   onClearClick() {
-    const {
-      onSubmit
-    } = this.props
-
-    this.picker.current.setState({
-      inputValue: '',
-      value: '',
-      selectedDate: undefined
-    })
-
-    onSubmit(null)
+    // Reset the time to a default value to override any previous custom time entry
+    this.onChange(moment().utc().startOf('day'))
+    this.onChange('')
   }
 
   /**
-  * Set up the onChange event for the datepicker input
-  * @param {event} event - The event passed from the Datetime input component
+  * Set up the onChange event for the datepicker
+  * @param {moment|string} value - The value passed from the Datetime component
   */
-  async onInputChange(event) {
-    const { target } = event
-    const { selectionStart: cursorPosition } = target
-
-    // Restore the cursor position
-    await setTimeout(() => target.setSelectionRange(cursorPosition, cursorPosition), 0)
-  }
-
   onChange(value) {
     const {
       format,
@@ -91,13 +71,23 @@ class DatepickerContainer extends Component {
       type
     } = this.props
 
-    if (type === null) {
-      onSubmit(null)
+    let valueToSet = null
 
-      return
+    // Check to see if the current date is a moment object, and whether or not it has a
+    // custom time set (i.e. not 00:00:00 or 23:59:59), if it doesn't, set the time to either
+    // the start or end of the day based on the input 'type'. If it does have a custom time, or
+    // it is a string from an invalid date, we wrap it in a moment object to pass to the callback.
+    // We do this for the invalid date strings so we can call moment.isValid on any value passed
+    // out of the callback.
+    if (typeof value !== 'string' && moment.isMoment(value) && !isCustomTime(value)) {
+      if (type === 'start') {
+        valueToSet = value.startOf('day')
+      } else if (type === 'end') {
+        valueToSet = value.endOf('day')
+      }
+    } else {
+      valueToSet = moment.utc(value, format, true)
     }
-
-    const valueToSet = moment.utc(value, format, true)
 
     onSubmit(valueToSet)
   }
@@ -107,31 +97,24 @@ class DatepickerContainer extends Component {
    */
   onTodayClick() {
     const {
-      type,
-      onSubmit,
-      format
+      format,
+      type
     } = this.props
 
-    if (type === null) {
-      onSubmit(null)
+    const today = moment().utc()
+    let valueToSet = null
 
-      return
+    if (type === 'start') {
+      valueToSet = today.startOf('day')
+    } else if (type === 'end') {
+      valueToSet = today.endOf('day')
     }
 
-    const valueToSet = formatDate(moment().utc().startOf('day'), type)
-
-    onSubmit(valueToSet)
-
-    this.picker.current.setState({
-      inputValue: valueToSet.format(format),
-      value: valueToSet.format(format),
-      selectedDate: valueToSet
-    })
+    this.onChange(valueToSet ? valueToSet.format(format) : valueToSet)
   }
 
   /**
   * Check to see if a date should be clickable in the picker
-  * @param date date that is checking when finishing selecting the date of choice
   */
   isValidDate(date) {
     // TODO: This method is SUPER slow because it gets called for every single date.
@@ -143,6 +126,9 @@ class DatepickerContainer extends Component {
 
     // If validation is set to false, avoid checking validations
     if (!shouldValidate) return true
+
+    // If a validation callback was provided, execute it
+    if (typeof isValidDate === 'function') return this.isValidDate(date)
 
     // Handle disabled dates
     if (!date.isBetween(minDate, maxDate)) return false
@@ -165,7 +151,6 @@ class DatepickerContainer extends Component {
     // A valid date will come be passed as an ISO string. Check to see if the date is a valid ISO string,
     // if so, we convert it to a UTC string in our desired format. If the value is not a valid ISO date,
     // then we leave it untouched and pass it to the input.
-    // We are using YYYY-MM-DDTHH:m:s.SSSZ instead of moment.ISO_8601 so that it doesn't autocomplete every time there's a valid ISO format
     const isValidISO = moment.utc(value, 'YYYY-MM-DDTHH:mm:ss.SSSZ', true).isValid()
 
     if (isValidISO) {
@@ -178,9 +163,8 @@ class DatepickerContainer extends Component {
         format={format}
         isValidDate={this.isValidDate}
         label={label}
-        onBlur={this.onBlur}
+        onInputBlur={this.onInputBlur}
         onChange={this.onChange}
-        onInputChange={this.onInputChange}
         onClearClick={this.onClearClick}
         onTodayClick={this.onTodayClick}
         picker={this.picker}
@@ -194,7 +178,7 @@ class DatepickerContainer extends Component {
 
 DatepickerContainer.defaultProps = {
   format: 'YYYY-MM-DD HH:mm:ss',
-  label: 'datepicker',
+  label: '',
   maxDate: '',
   minDate: '',
   shouldValidate: true,

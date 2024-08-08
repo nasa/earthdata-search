@@ -13,20 +13,18 @@ import '@testing-library/jest-dom'
 import Datepicker from '../Datepicker'
 
 const setup = (overrideProps) => {
-  const onBlur = jest.fn()
+  const onInputBlur = jest.fn()
   const onChange = jest.fn()
   const onClearClick = jest.fn()
-  const onInputChange = jest.fn()
   const onTodayClick = jest.fn()
 
   const props = {
     id: 'test-id',
     label: 'Date Time',
     isValidDate: jest.fn(),
-    onBlur,
     onChange,
     onClearClick,
-    onInputChange,
+    onInputBlur,
     onTodayClick,
     picker: React.createRef(),
     type: 'start',
@@ -44,10 +42,9 @@ const setup = (overrideProps) => {
   )
 
   return {
-    onBlur,
+    onInputBlur,
     onChange,
     onClearClick,
-    onInputChange,
     onTodayClick
   }
 }
@@ -57,8 +54,8 @@ describe('Datepicker component', () => {
     test('creates the custom buttons', () => {
       setup()
 
-      const buttonToday = screen.getByRole('button', { name: 'datetime__button--today' })
-      const buttonClear = screen.getByRole('button', { name: 'datetime__button--clear' })
+      const buttonToday = screen.getByText('Today')
+      const buttonClear = screen.getByText('Clear')
 
       expect(buttonToday).toBeInTheDocument()
       expect(buttonClear).toBeInTheDocument()
@@ -103,7 +100,7 @@ describe('Datepicker component', () => {
     test('onInputChange gets triggered', async () => {
       const user = userEvent.setup()
 
-      const { onInputChange, onChange } = setup()
+      const { onChange } = setup()
 
       const datePickerInput = screen.getByRole('textbox', { name: 'Date Time' })
 
@@ -113,7 +110,6 @@ describe('Datepicker component', () => {
         await user.type(datePickerInput, '1967')
       })
 
-      expect(onInputChange).toHaveBeenCalledTimes(4)
       expect(onChange).toHaveBeenCalledTimes(4)
     })
   })
@@ -124,7 +120,7 @@ describe('Datepicker component', () => {
 
       const { onTodayClick } = setup()
 
-      const buttonToday = screen.getByRole('button', { name: 'datetime__button--today' })
+      const buttonToday = screen.getByText('Today')
 
       await act(async () => {
         await user.click(buttonToday)
@@ -140,7 +136,7 @@ describe('Datepicker component', () => {
 
       const { onClearClick } = setup()
 
-      const buttonClear = screen.getByRole('button', { name: 'datetime__button--clear' })
+      const buttonClear = screen.getByText('Clear')
 
       await act(async () => {
         await user.click(buttonClear)
@@ -151,13 +147,12 @@ describe('Datepicker component', () => {
   })
 
   describe('when loosing focus of input', () => {
-    test('onBlur gets triggered', async () => {
+    test('onInputBlur gets triggered', async () => {
       const user = userEvent.setup()
 
       const {
-        onBlur,
-        onChange,
-        onInputChange
+        onInputBlur,
+        onChange
       } = setup()
 
       const datePickerInput = screen.getByRole('textbox', { name: 'Date Time' })
@@ -168,8 +163,7 @@ describe('Datepicker component', () => {
       await user.click(screen.getByRole('textbox', { name: 'basic-input' }))
 
       expect(onChange).toHaveBeenCalledTimes(6)
-      expect(onInputChange).toHaveBeenCalledTimes(6)
-      expect(onBlur).toHaveBeenCalledTimes(1)
+      expect(onInputBlur).toHaveBeenCalledTimes(1)
     })
   })
 })

@@ -61,12 +61,12 @@ const TemporalSelectionDropdownMenu = ({
         onRecurringToggle={onRecurringToggle}
         onChangeRecurring={onChangeRecurring}
         onChangeQuery={onChangeQuery}
-        onSubmitStart={(value) => setStartDate(value)}
-        onSubmitEnd={(value) => setEndDate(value)}
+        onSubmitStart={setStartDate}
+        onSubmitEnd={setEndDate}
         onValid={onValid}
         onInvalid={onInvalid}
       />
-      <div>
+      <div className="temporal-selection-dropdown-menu__actions">
         <Button
           className={classes.btnApply}
           bootstrapVariant="primary"
