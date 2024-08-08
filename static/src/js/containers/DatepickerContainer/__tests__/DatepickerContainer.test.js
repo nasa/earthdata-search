@@ -27,25 +27,6 @@ function setup(overrideProps) {
   }
 }
 
-// Function setupMount(overrideProps) {
-//   const { minimumTemporalDateString, temporalDateFormatFull } = getApplicationConfig()
-
-//   const props = {
-//     id: 'test-id',
-//     minDate: minimumTemporalDateString,
-//     maxDate: moment.utc().format(temporalDateFormatFull),
-//     onSubmit: jest.fn(),
-//     ...overrideProps
-//   }
-
-//   const enzymeWrapper = mount(<DatepickerContainer {...props} />)
-
-//   return {
-//     enzymeWrapper,
-//     props
-//   }
-// }
-
 describe('DatepickerContainer component', () => {
   describe('onInputBlur', () => {
     test('sets the picker state', () => {
@@ -243,27 +224,6 @@ describe('DatepickerContainer component', () => {
       expect(onChange).toHaveBeenCalledWith('')
     })
   })
-
-  // Describe('onInputChange', () => {
-  //   test.only('sets cursor position when called', () => {
-  //     const { enzymeWrapper } = setupMount({ value: '' })
-
-  //     const onInputChangeSpy = jest.spyOn(enzymeWrapper.instance(), 'onInputChange')
-  //     const onChangeSpy = jest.spyOn(enzymeWrapper.instance(), 'onChange')
-
-  //     enzymeWrapper.find('input').at(0).simulate('change', {
-  //       target: {
-  //         name: 'datepicker',
-  //         value: '1995'
-  //       }
-  //     })
-
-  //     console.log(enzymeWrapper.find('input').at(0).getDOMNode().nodeValue)
-
-  //     expect(onChangeSpy).toHaveBeenCalled()
-  //     expect(onInputChangeSpy).toHaveBeenCalled()
-  //   })
-  // })
 
   describe('onChange', () => {
     test('when given an empty string, passes an invalid moment object', () => {
