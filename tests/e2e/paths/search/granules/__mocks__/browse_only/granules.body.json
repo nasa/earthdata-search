@@ -1,0 +1,8 @@
+{
+  "feed": {
+    "updated": "2021-06-01T20:26:06.534Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?browse_only=true&cloud_cover=&echo_collection_id=C1214470488-ASF&options%5Bspatial%5D%5Bor%5D=true&page_num=1&page_size=20&sort_key=-start_date",
+    "title": "ECHO granule metadata",
+    "entry": []
+  }
+}
