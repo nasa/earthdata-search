@@ -34,6 +34,7 @@
     width: 30px;
     height: 24px;
     flex-shrink: 0;
+    text-decoration: none;
 
     &:hover {
       background-image: url('~Images/app-logo_hover.png');
@@ -63,6 +64,7 @@
     text-transform: uppercase;
     letter-spacing: 0.05rem;
     font-weight: 300;
+    text-decoration: none;
 
     &:hover {
       text-decoration: none;

@@ -24,14 +24,21 @@
 
   &__info-bit--emph {
     color: $color__white;
+    text-decoration-color: $color__white;
   }
 
   &__info-link {
     white-space:nowrap;
     color: $color__blue--light;
 
-    &__info-bit--emph & {
+    .footer-link__info-bit--emph & {
       color: $color__white;
+      text-decoration-color: $color__white;
+
+      &:hover {
+        color: $color__white;
+        text-decoration-color: $color__white;
+      }
     }
 
     &:hover {
