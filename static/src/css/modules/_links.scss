@@ -1,6 +1,23 @@
-.link {
+.link, a {
   color: $color__blue--dark;
-  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+  text-decoration: underline dashed;
+  text-decoration-thickness: 1px;
+  text-decoration-color: inherit;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus {
+    text-decoration: none;
+    outline: 1px dashed $color__blue;
+    outline-offset: 0.125rem;
+  }
+
+  &:disabled {
+    color: $color__blue--light;
+  }
 
   &--separated {
     &:before {

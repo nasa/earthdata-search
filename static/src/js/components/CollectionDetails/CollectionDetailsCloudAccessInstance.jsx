@@ -26,15 +26,15 @@ export const CollectionDetailsCloudAccessInstance = ({
       <dl>
         <dt className="collection-details-cloud-access-variable-instance-information__instance-field-title">URL</dt>
         <dd>
-          <a className="collection-details-cloud-access-variable-instance-information__instance-field-value text-break" href={url}>
+          <a className="link collection-details-cloud-access-variable-instance-information__instance-field-value text-break" href={url}>
             {url}
           </a>
         </dd>
-        <dt className="collection-details-cloud-access-variable-instance-information__instance-field-title">Format</dt>
+        <dt className="link collection-details-cloud-access-variable-instance-information__instance-field-title">Format</dt>
         <dd>
           {format}
         </dd>
-        <dt className="collection-details-cloud-access-variable-instance-information__instance-field-title">Description</dt>
+        <dt className="link collection-details-cloud-access-variable-instance-information__instance-field-title">Description</dt>
         <dd>
           {description}
         </dd>

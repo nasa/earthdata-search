@@ -65,7 +65,7 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
                         className="collection-details-data-center__email"
                         data-testid="collection-details-data-center__email"
                       >
-                        <a href={`mailto:${contact.value}`}>
+                        <a href={`mailto:${contact.value}`} className="link">
                           {contact.value}
                         </a>
                       </p>
@@ -87,7 +87,7 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
                           <React.Fragment key={key}>
                             <dt>{`${contact.type}:`}</dt>
                             <dd>
-                              <a href={contact.value} title={contact.value}>
+                              <a href={contact.value} title={contact.value} className="link">
                                 Profile Link
                               </a>
                             </dd>

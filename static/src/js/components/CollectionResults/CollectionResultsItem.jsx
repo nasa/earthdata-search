@@ -310,7 +310,7 @@ export const CollectionResultsItem = forwardRef(({
                         }
                       >
                         <li className="collection-results-item__attribution-list-item">
-                          <span className="collection-results-item__list-text collection-results-item__list-text--tooltip">
+                          <span className="collection-results-item__list-text collection-results-item__list-text--tooltip link">
                             <EDSCIcon
                               className="collection-results-item__icon collection-results-item__icon--csda d-inline-block mr-1"
                               icon={FaLock}
@@ -342,7 +342,7 @@ export const CollectionResultsItem = forwardRef(({
                               )
                             }
                           >
-                            <span className="collection-results-item__list-text collection-results-item__list-text--tooltip">{consortiumDisplay}</span>
+                            <span className="collection-results-item__list-text collection-results-item__list-text--tooltip link">{consortiumDisplay}</span>
                           </OverlayTrigger>
                         )
                       }

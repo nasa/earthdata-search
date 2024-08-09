@@ -7,6 +7,8 @@ import { commafy } from '../../../util/commafy'
 
 import TextWindowActions from '../../TextWindowActions/TextWindowActions'
 
+import './BrowseLinksPanel.scss'
+
 /**
  * Renders BrowseLinksPanel.
  * @param {Object} arg0 - The props passed into the component.
@@ -64,7 +66,7 @@ export const BrowseLinksPanel = ({
 
               return (
                 <li key={key}>
-                  <a href={link}>{link}</a>
+                  <a href={link} className="link">{link}</a>
                 </li>
               )
             })

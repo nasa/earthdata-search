@@ -52,10 +52,6 @@
     line-height: 1;
     vertical-align: baseline;
 
-    &:hover {
-      text-decoration: underline;
-    }
-
     &:last-child {
       padding-top: calc($spacer / 8);
     }

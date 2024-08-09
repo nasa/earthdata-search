@@ -29,8 +29,8 @@ $btn-border-radius: 0.125rem;
 /* Links */
 $color__link: $color__blue;
 $link-hover-color: $color__blue--dark;
-$link-decoration: none;
-$link-hover-decoration: none;
+$link-decoration: underline dashed;
+$link-hover-decoration: underline;
 
 /* Badges */
 $badge-padding-y: 0.3125rem;

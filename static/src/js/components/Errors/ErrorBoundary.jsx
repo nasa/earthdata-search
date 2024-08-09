@@ -71,11 +71,11 @@ class ErrorBoundary extends Component {
             {' '}
             when contacting
             {' '}
-            <a href="mailto:support@earthdata.nasa.gov">Earthdata Operations</a>
+            <a href="mailto:support@earthdata.nasa.gov" className="link">Earthdata Operations</a>
             .
           </p>
           <p>
-            <a href="/">Click here</a>
+            <a href="/" className="link">Click here</a>
             {' '}
             to return to the home page.
           </p>

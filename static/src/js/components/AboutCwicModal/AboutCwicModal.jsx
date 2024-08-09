@@ -53,21 +53,21 @@ export class AboutCwicModal extends Component {
           <p>Here are some places where you can find more information about CWIC and OpenSearch:</p>
           <ul>
             <li>
-              <a href="http://ceos.org/wp-content/uploads/2014/12/CEOSOpenSearchBestPracticeDocument-PublicComment.pdf" target="_blank" rel="noopener noreferrer">
+              <a href="http://ceos.org/wp-content/uploads/2014/12/CEOSOpenSearchBestPracticeDocument-PublicComment.pdf" className="link" target="_blank" rel="noopener noreferrer">
                 CEOS OpenSearch Best Practice
                 {' '}
                 <EDSCIcon icon={FaRegFilePdf} />
               </a>
             </li>
             <li>
-              <a href="http://ceos.org/document_management/Working_Groups/WGISS/Projects/CWIC/OpenSearch/CEOS%20Open%20Search%20Developer%20Guide.docx" target="_blank" rel="noopener noreferrer">
+              <a href="http://ceos.org/document_management/Working_Groups/WGISS/Projects/CWIC/OpenSearch/CEOS%20Open%20Search%20Developer%20Guide.docx" className="link" target="_blank" rel="noopener noreferrer">
                 CEOS OpenSearch Developer Guide
                 {' '}
                 <EDSCIcon icon={FaRegFileWord} />
               </a>
             </li>
             <li>
-              <a href="https://wiki.earthdata.nasa.gov/display/CWIC/CWIC+Open+Search+Architecture" target="_blank" rel="noopener noreferrer">
+              <a href="https://wiki.earthdata.nasa.gov/display/CWIC/CWIC+Open+Search+Architecture" className="link" target="_blank" rel="noopener noreferrer">
                 CWIC OpenSearch Architecture
                 {' '}
                 <EDSCIcon icon={FaExternalLinkAlt} />
