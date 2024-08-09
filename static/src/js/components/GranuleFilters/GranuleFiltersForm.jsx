@@ -445,7 +445,7 @@ export const GranuleFiltersForm = (props) => {
                       value: isChecked
                     })
 
-                    // This timeout is needed for there to be no delay in the checkbox working
+                    // Previously there was a timeout here to await the event loop
                     handleSubmit()
                   }
                 }
