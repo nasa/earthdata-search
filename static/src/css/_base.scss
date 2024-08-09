@@ -13,8 +13,8 @@
 
   &:focus-visible {
     border-color: transparent;
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(83,130,177, 0.3);
+    outline: 1px dashed $color__blue;
+    outline-offset: 0.125rem;
   }
 
   &.disabled,
@@ -63,8 +63,9 @@ body.is-panels-will-minimize {
 button {
   &:focus-visible {
     border-color: $color__blue--dark;
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba($color__blue--dark, 0.5);
+    text-decoration: none;
+    outline: 1px dashed $color__blue;
+    outline-offset: 0.125rem;
   }
 }
 

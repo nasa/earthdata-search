@@ -165,7 +165,7 @@ class SecondaryToolbar extends Component {
       <PortalLinkContainer
         type="button"
         className="secondary-toolbar__back"
-        bootstrapVariant="light"
+        bootstrapVariant="naked"
         icon={FaArrowCircleLeft}
         label="Back to Project"
         to={
@@ -221,7 +221,7 @@ class SecondaryToolbar extends Component {
     const loginLink = (
       <Button
         className="secondary-toolbar__login"
-        bootstrapVariant="light"
+        bootstrapVariant="naked"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
         icon={FaLock}
         label="Login"

@@ -7,6 +7,8 @@ import { commafy } from '../../../util/commafy'
 
 import TextWindowActions from '../../TextWindowActions/TextWindowActions'
 
+import './DownloadFilesPanel.scss'
+
 /**
  * Renders DownloadFilesPanel.
  * @param {Object} arg0 - The props passed into the component.
@@ -62,7 +64,7 @@ export const DownloadFilesPanel = ({
         disableSave={!showTextWindowActions}
         disableEdd={collectionIsCSDA}
       >
-        <ul className="download-links-panel__list">
+        <ul className="download-files-panel__list">
           {
             downloadLinks.map((link, i) => {
               const key = `link_${i}`
