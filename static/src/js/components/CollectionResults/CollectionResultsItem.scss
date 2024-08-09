@@ -300,15 +300,7 @@
 
   &__list-text {
     display: inline-block;
-
-    &--tooltip {
-      text-decoration:underline;
-      text-decoration-style: dotted;
-
-      &:hover {
-        text-decoration: none;
-      }
-    }
+    color: inherit;
   }
 
   &__attribution-list-item {
