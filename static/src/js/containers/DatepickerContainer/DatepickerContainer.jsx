@@ -24,7 +24,7 @@ class DatepickerContainer extends Component {
   constructor(props) {
     super(props)
 
-    this.onBlur = this.onBlur.bind(this)
+    this.onInputBlur = this.onInputBlur.bind(this)
     this.onChange = this.onChange.bind(this)
     this.onClearClick = this.onClearClick.bind(this)
     this.onTodayClick = this.onTodayClick.bind(this)
@@ -34,20 +34,29 @@ class DatepickerContainer extends Component {
   }
 
   /**
-   * Set view back to the default when a user closes the datepicker
-   */
-  onBlur() {
-    const { viewMode } = this.props
+  * Autocomplete the field on blur
+  */
+  onInputBlur(e) {
+    const {
+      format
+    } = this.props
 
-    this.picker.current.setState({
-      currentView: viewMode
-    })
+    console.log(e)
+    const { value } = e.target
+
+    if (moment.utc(value, [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true).isValid()) {
+      const newValue = moment.utc(value, format)
+
+      this.onChange(newValue)
+    }
   }
 
   /**
   * Clear out the currently selected date
   */
   onClearClick() {
+    // Reset the time to a default value to override any previous custom time entry
+    this.onChange(moment().utc().startOf('day'))
     this.onChange('')
   }
 
@@ -87,7 +96,10 @@ class DatepickerContainer extends Component {
    * Set the date to today using the beginning of the day for "Start" and the end of the day for "End"
    */
   onTodayClick() {
-    const { type } = this.props
+    const {
+      format,
+      type
+    } = this.props
 
     const today = moment().utc()
     let valueToSet = null
@@ -98,7 +110,7 @@ class DatepickerContainer extends Component {
       valueToSet = today.endOf('day')
     }
 
-    this.onChange(valueToSet)
+    this.onChange(valueToSet ? valueToSet.format(format) : valueToSet)
   }
 
   /**
@@ -139,7 +151,6 @@ class DatepickerContainer extends Component {
     // A valid date will come be passed as an ISO string. Check to see if the date is a valid ISO string,
     // if so, we convert it to a UTC string in our desired format. If the value is not a valid ISO date,
     // then we leave it untouched and pass it to the input.
-    // We are using YYYY-MM-DDTHH:m:s.SSSZ instead of moment.ISO_8601 so that it doesn't autocomplete every time there's a valid ISO format
     const isValidISO = moment.utc(value, 'YYYY-MM-DDTHH:mm:ss.SSSZ', true).isValid()
 
     if (isValidISO) {
@@ -152,7 +163,7 @@ class DatepickerContainer extends Component {
         format={format}
         isValidDate={this.isValidDate}
         label={label}
-        onBlur={this.onBlur}
+        onInputBlur={this.onInputBlur}
         onChange={this.onChange}
         onClearClick={this.onClearClick}
         onTodayClick={this.onTodayClick}

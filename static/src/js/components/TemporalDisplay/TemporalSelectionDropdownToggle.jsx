@@ -9,6 +9,7 @@ const TemporalSelectionDropdownToggle = ({ onToggleClick }) => (
   <Dropdown.Toggle
     variant="inline-block"
     id="temporal-selection-dropdown"
+    aria-label="temporal-selection-dropdown"
     className="search-form__button search-form__button--dark"
     onClick={onToggleClick}
   >

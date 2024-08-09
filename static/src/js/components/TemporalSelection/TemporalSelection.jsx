@@ -155,7 +155,7 @@ export class TemporalSelection extends Component {
 
     return (
       <div className={classes.temporalSelection}>
-        <div className="temporal-selection__inputs">
+        <div className="temporal-selection__inputs mb-1">
           <Row>
             <Col>
               <Form.Group controlId={`${controlId}__start-date`} className={classes.inputStart}>
@@ -165,7 +165,7 @@ export class TemporalSelection extends Component {
                 <DatepickerContainer
                   id={`${controlId}__temporal-form__start-date`}
                   label="Start Date"
-                  onSubmit={(value) => onSubmitStart(value)}
+                  onSubmit={onSubmitStart}
                   type="start"
                   size={size}
                   format={format}
@@ -185,7 +185,7 @@ export class TemporalSelection extends Component {
                 <DatepickerContainer
                   id={`${controlId}__temporal-form__end-date`}
                   label="End Date"
-                  onSubmit={(value) => onSubmitEnd(value)}
+                  onSubmit={onSubmitEnd}
                   type="end"
                   size={size}
                   format={format}
@@ -223,7 +223,7 @@ export class TemporalSelection extends Component {
         {
           (allowRecurring && onRecurringToggle) && (
             <Form.Group
-              className="mb-0"
+              className="mb-1"
               controlId={`${controlId}__recurring`}
             >
               <Form.Check>
@@ -237,7 +237,7 @@ export class TemporalSelection extends Component {
         }
         {
           (allowRecurring && onChangeRecurring && isRecurring) && (
-            <Form.Group className="mb-1">
+            <Form.Group className="mb-3">
               <Form.Label className="temporal-selection__label">
                 Year Range:
               </Form.Label>

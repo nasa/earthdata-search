@@ -935,7 +935,7 @@ export class AccessMethod extends Component {
     } = temporal
 
     const temporalDateFormat = getTemporalDateFormat(isRecurring)
-    const format = moment.ISO_8601
+    const format = 'YYYY-MM-DDTHH:mm:ss.SSSZ'
 
     let startDateObject
     let endDateObject = moment.utc(endDate, format, true)
