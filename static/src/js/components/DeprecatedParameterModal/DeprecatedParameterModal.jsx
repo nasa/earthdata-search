@@ -50,7 +50,7 @@ export class DeprecatedParameterModal extends Component {
         <p className="mb-0">
           {'Please visit the '}
           <a
-            className="link link--external"
+            className="link--external"
             target="_blank"
             rel="noreferrer"
             href="https://wiki.earthdata.nasa.gov/display/EDSC/Earthdata+Search+URL+Parameters"

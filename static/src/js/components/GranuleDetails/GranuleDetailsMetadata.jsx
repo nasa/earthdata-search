@@ -52,7 +52,7 @@ export const GranuleDetailsMetadata = ({
                           key={`metadata_url_${title}`}
                           className="granule-details-metadata__list"
                         >
-                          <a href={cmrGranulesUrl} className="link">
+                          <a href={cmrGranulesUrl}>
                             {title}
                           </a>
                         </li>

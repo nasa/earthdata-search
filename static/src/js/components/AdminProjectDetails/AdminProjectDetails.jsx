@@ -41,7 +41,7 @@ export const AdminProjectDetails = ({ project }) => {
           <Row className="admin-project-details__metadata-display mb-2">
             <Col className="admin-project-details__metadata-display-item">
               <span className="admin-project-details__metadata-display-heading">Source Path</span>
-              <a className="link admin-project-details__metadata-display-content" href={path} target="_blank" rel="noopener noreferrer">
+              <a className="admin-project-details__metadata-display-content" href={path} target="_blank" rel="noopener noreferrer">
                 {path}
               </a>
             </Col>

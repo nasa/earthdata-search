@@ -34,7 +34,7 @@ export const RelatedUrlsModal = ({
                       <ul key={urlKey} className="related-urls-modal__url">
                         <ArrowTags tags={[url.type, url.subtype]} />
                         {/* eslint-disable-next-line react/jsx-no-target-blank */}
-                        <a className="link related-urls-modal__link" href={url.url} target="_blank">{url.url}</a>
+                        <a className="related-urls-modal__link" href={url.url} target="_blank">{url.url}</a>
                       </ul>
                     )
                   })

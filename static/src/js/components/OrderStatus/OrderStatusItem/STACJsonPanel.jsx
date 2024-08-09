@@ -50,7 +50,7 @@ export const STACJsonPanel = ({
 
               return (
                 <li key={key}>
-                  <a href={link} className="link">{link}</a>
+                  <a href={link}>{link}</a>
                 </li>
               )
             })

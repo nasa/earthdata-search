@@ -191,7 +191,7 @@ const GranuleResultsActions = ({
                     handoffLinks.map((link) => (
                       <Dropdown.Item
                         key={link.title}
-                        className="link link--external more-actions-dropdown__item more-actions-dropdown__vis analytics__smart-handoff-link"
+                        className="link--external more-actions-dropdown__item more-actions-dropdown__vis analytics__smart-handoff-link"
                         href={link.href}
                         target="_blank"
                       >

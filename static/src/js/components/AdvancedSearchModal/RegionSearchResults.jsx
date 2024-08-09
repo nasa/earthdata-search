@@ -90,7 +90,7 @@ export class RegionSearch extends Component {
                 Your search returned no results.
                 {' '}
                 <Button
-                  className="link region-search-results__status-link"
+                  className="region-search-results__status-link"
                   variant="link"
                   bootstrapVariant="link"
                   label="Try again"

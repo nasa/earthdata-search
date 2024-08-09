@@ -204,7 +204,7 @@ export class RegionSearchForm extends Component {
                         Find more information about Hydrological Units at
                         {' '}
                         <a
-                          className="link link--external"
+                          className="link--external"
                           target="_blank"
                           rel="noreferrer noopener"
                           href="https://water.usgs.gov/GIS/huc.html"

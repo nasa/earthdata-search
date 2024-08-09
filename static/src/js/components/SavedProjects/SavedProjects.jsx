@@ -116,7 +116,6 @@ export class SavedProjects extends Component {
                         <tr key={id}>
                           <td className="saved-projects-table__project-name">
                             <PortalLinkContainer
-                              className="link"
                               to={projectPath}
                               onClick={() => { onChangePath(projectPath) }}
                             >

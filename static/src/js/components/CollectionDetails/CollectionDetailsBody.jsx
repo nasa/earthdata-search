@@ -37,7 +37,7 @@ const buildRelatedUrlsList = (relatedUrls) => {
       relatedUrlsList.push(
         <a
           key={key}
-          className="link link--separated collection-details-body__link"
+          className="link--separated collection-details-body__link"
           href={url.url}
           target="_blank"
           rel="noopener noreferrer"
@@ -100,7 +100,7 @@ const buildDoiLink = (doiLink, doiText) => {
 
   if (doiLink) {
     return (
-      <a className="link collection-details-body__doi" href={doiLink} target="_blank" rel="noopener noreferrer">
+      <a className="collection-details-body__doi" href={doiLink} target="_blank" rel="noopener noreferrer">
         {DoiBadge}
       </a>
     )
@@ -115,7 +115,7 @@ const buildForDeveloperLink = (linkData, token) => {
 
   return (
     <li>
-      <a href={link.href} className="link">{link.title}</a>
+      <a href={link.href}>{link.title}</a>
     </li>
   )
 }
@@ -281,7 +281,7 @@ export const CollectionDetailsBody = ({
                               key={doiValue}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="link collection-details-body__link"
+                              className="collection-details-body__link"
                               title={`View ${title}`}
                               aria-label={`View ${title}`}
                               href={`${authority}${doiValue}`}
@@ -319,7 +319,7 @@ export const CollectionDetailsBody = ({
                     )
                   }
                   <a
-                    className="link link--separated link--external collection-details-body__link"
+                    className="link--separated link--external collection-details-body__link"
                     href={urls.html.href}
                     rel="noopener noreferrer"
                     target="_blank"
@@ -541,7 +541,7 @@ export const CollectionDetailsBody = ({
                             >
                               <RelatedCollection
                                 key={`related-collection-${id}`}
-                                className="link collection-details-body__related-collection-link"
+                                className="collection-details-body__related-collection-link"
                                 location={location}
                                 onFocusedCollectionChange={onFocusedCollectionChange}
                                 onMetricsRelatedCollection={onMetricsRelatedCollection}

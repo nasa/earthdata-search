@@ -34,7 +34,7 @@ export const OrderDropdownItem = ({
               key={href}
               className="order-dropdown-item__list-item"
             >
-              <a className="link order-dropdown-item__link" href={href}>{href}</a>
+              <a className="order-dropdown-item__link" href={href}>{href}</a>
             </li>
           ))
         }

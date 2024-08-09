@@ -123,7 +123,7 @@ export const PortalList = ({
                       {
                         moreInfoUrl && (
                           <a
-                            className="link link--external"
+                            className="link--external"
                             href={moreInfoUrl}
                             target="_blank"
                             rel="noreferrer"

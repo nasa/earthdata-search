@@ -26,15 +26,15 @@ export const CollectionDetailsCloudAccessInstance = ({
       <dl>
         <dt className="collection-details-cloud-access-variable-instance-information__instance-field-title">URL</dt>
         <dd>
-          <a className="link collection-details-cloud-access-variable-instance-information__instance-field-value text-break" href={url}>
+          <a className="collection-details-cloud-access-variable-instance-information__instance-field-value text-break" href={url}>
             {url}
           </a>
         </dd>
-        <dt className="link collection-details-cloud-access-variable-instance-information__instance-field-title">Format</dt>
+        <dt className="collection-details-cloud-access-variable-instance-information__instance-field-title">Format</dt>
         <dd>
           {format}
         </dd>
-        <dt className="link collection-details-cloud-access-variable-instance-information__instance-field-title">Description</dt>
+        <dt className="collection-details-cloud-access-variable-instance-information__instance-field-title">Description</dt>
         <dd>
           {description}
         </dd>
@@ -116,7 +116,7 @@ export const CollectionDetailsCloudAccessInstance = ({
         <dt>AWS S3 Credentials</dt>
         <dd className="direct-distribution-information__links--horizontal">
           <a
-            className="link link--external collection-details-cloud-access-direct-distribution-information__link"
+            className="link--external collection-details-cloud-access-direct-distribution-information__link"
             href={s3CredentialsApiEndpoint}
             rel="noopener noreferrer"
             target="_blank"
@@ -124,7 +124,7 @@ export const CollectionDetailsCloudAccessInstance = ({
             Get AWS S3 Credentials
           </a>
           <a
-            className="link link--separated link--external collection-details-cloud-access-direct-distribution-information__link"
+            className="link--separated link--external collection-details-cloud-access-direct-distribution-information__link"
             href={s3CredentialsApiDocumentationUrl}
             rel="noopener noreferrer"
             target="_blank"

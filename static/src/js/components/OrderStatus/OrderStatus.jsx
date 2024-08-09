@@ -146,12 +146,11 @@ export const OrderStatus = ({
   const introduction = (
     <p>
       {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
-      <a href={`${edscHost}/downloads/${id}${eeLink}`} className="link">
+      <a href={`${edscHost}/downloads/${id}${eeLink}`}>
         {`${edscHost}/downloads/${id}${eeLink}`}
       </a>
       {' or the '}
       <PortalLinkContainer
-        className="link"
         to={
           {
             pathname: '/downloads',
@@ -336,7 +335,7 @@ export const OrderStatus = ({
               <li className="order-status__footer-link-item">
                 <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
                 <PortalLinkContainer
-                  className="link order-status__footer-link"
+                  className="order-status__footer-link"
                   to={
                     {
                       pathname: '/search',
@@ -351,7 +350,7 @@ export const OrderStatus = ({
               <li className="order-status__footer-link-item">
                 <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
                 <PortalLinkContainer
-                  className="link order-status__footer-link"
+                  className="order-status__footer-link"
                   to={
                     {
                       pathname: '/search',
@@ -366,7 +365,7 @@ export const OrderStatus = ({
               <li className="order-status__footer-link-item">
                 <EDSCIcon library="fa" icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
                 <PortalLinkContainer
-                  className="link order-status__footer-link"
+                  className="order-status__footer-link"
                   to={
                     {
                       pathname: '/downloads',
