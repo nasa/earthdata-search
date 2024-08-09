@@ -8,6 +8,7 @@ import {
   ADD_MORE_COLLECTION_RESULTS,
   ERRORED_COLLECTIONS,
   ERRORED_FACETS,
+  FINISHED_COLLECTIONS_RENDERING_TIMER,
   FINISHED_COLLECTIONS_TIMER,
   LOADED_COLLECTIONS,
   LOADED_FACETS,
@@ -76,6 +77,10 @@ export const startCollectionsTimer = () => ({
 
 export const finishCollectionsTimer = () => ({
   type: FINISHED_COLLECTIONS_TIMER
+})
+
+export const finishCollectionsRenderingTimer = () => ({
+  type: FINISHED_COLLECTIONS_RENDERING_TIMER
 })
 
 /**
@@ -209,6 +214,8 @@ export const getCollections = () => (dispatch, getState) => {
       }))
 
       dispatch(updateFacets(payload))
+
+      dispatch(finishCollectionsRenderingTimer())
     })
     .catch((error) => {
       if (isCancel(error)) return
