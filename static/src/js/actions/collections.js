@@ -8,7 +8,6 @@ import {
   ADD_MORE_COLLECTION_RESULTS,
   ERRORED_COLLECTIONS,
   ERRORED_FACETS,
-  FINISHED_COLLECTIONS_RENDERING_TIMER,
   FINISHED_COLLECTIONS_TIMER,
   LOADED_COLLECTIONS,
   LOADED_FACETS,
@@ -21,6 +20,7 @@ import {
   UPDATE_GRANULE_FILTERS
 } from '../constants/actionTypes'
 
+import { metricsFinishedCollectionsRendering } from '../middleware/metrics/actions'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { pruneFilters } from '../util/pruneFilters'
@@ -77,10 +77,6 @@ export const startCollectionsTimer = () => ({
 
 export const finishCollectionsTimer = () => ({
   type: FINISHED_COLLECTIONS_TIMER
-})
-
-export const finishCollectionsRenderingTimer = () => ({
-  type: FINISHED_COLLECTIONS_RENDERING_TIMER
 })
 
 /**
@@ -215,7 +211,7 @@ export const getCollections = () => (dispatch, getState) => {
 
       dispatch(updateFacets(payload))
 
-      dispatch(finishCollectionsRenderingTimer())
+      dispatch(metricsFinishedCollectionsRendering())
     })
     .catch((error) => {
       if (isCancel(error)) return

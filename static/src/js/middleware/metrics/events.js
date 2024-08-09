@@ -7,6 +7,8 @@ import {
   computeFacets
 } from './helpers'
 
+import staticConfig from '../../../../../static.config.json'
+
 const { dataLayer = [] } = window
 
 /**
@@ -47,7 +49,6 @@ export const virtualPageview = (action, state) => {
 *  method,
 *  type
 * }]
-
 */
 export const dataAccess = (action) => {
   const { payload } = action
@@ -304,4 +305,18 @@ export const relatedCollection = (action) => {
     relatedCollectionAction: type,
     relatedCollectionLabel: collectionId
   })
+}
+
+/**
+ * Calculates the time it took to request and render the collection search results.
+ * Logs to console in dev environment for use in CI to detect performance regressions.
+ * TODO: push metric to datalayer for use with Google Analytics
+ * @param {Object} state - The current state.
+ */
+export const finishedCollectionsRendering = (state) => {
+  const { timerStart } = state.searchResults.collections
+  if (staticConfig.application.version === 'dev') {
+    const renderingTime = Date.now() - timerStart
+    console.log('[performance] Collections load time:', renderingTime)
+  }
 }
