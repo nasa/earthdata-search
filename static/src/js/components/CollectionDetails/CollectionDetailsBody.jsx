@@ -306,7 +306,7 @@ export const CollectionDetailsBody = ({
                       <>
                         {formattedRelatedUrls}
                         <Button
-                          className="link link--separated collection-details-body__link"
+                          className="link--separated collection-details-body__link"
                           type="button"
                           variant="link"
                           bootstrapVariant="link"
