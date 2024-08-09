@@ -51,6 +51,10 @@
     }
   }
 
+  &__error {
+    color: red;
+  }
+
   &__radio-icon {
     color: $color__white;
     width: 0.625rem;
@@ -147,5 +151,10 @@
 
   &__icons-rightside {
     margin-left: auto;
+  }
+
+  &--disable-button {
+    pointer-events: none;
+    opacity: 0.4;
   }
 }
