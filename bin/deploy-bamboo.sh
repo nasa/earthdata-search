@@ -62,7 +62,6 @@ node_modules
 .serverless
 .webpack
 coverage
-cypress
 dist
 node_modules
 tmp

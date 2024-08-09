@@ -4,7 +4,6 @@
     "browser": true,
     "node": true,
     "jest": true,
-    "cypress/globals": true
   },
   "rules": {
     // Allowing cyclic dependancies

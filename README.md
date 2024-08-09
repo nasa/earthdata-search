@@ -173,29 +173,6 @@ Once the project is built, you must ensure that the automated unit tests pass:
 
     npm run test
 
-### Run the Automated [Cypress](https://www.cypress.io/) tests
-
-You must also ensure that the automated integration tests pass:
-
-    npm run cypress:run
-
-You can also use the Cypress GUI with:
-
-    npm run cypress:open
-
-##### Configuration
-
-###### Cypress Secrets
-
-When adding new Cypress tests, you will need to modify the secrets.config.json file. You will need to edit the "cypress" object to include data from your local database:
-
-    "cypress": {
-        "user": {
-        "id": 1, // This should match the ID of your user in the 'users' database table
-        "username": "your username here" // Replace with the urs_id field of your user in the 'users' database table
-        }
-    }
-
 ### Deployment
 
 When the time comes to deploy the application, first ensure that you have the required ENV vars set:
