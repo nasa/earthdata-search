@@ -449,6 +449,8 @@ export class OrderStatusItem extends PureComponent {
         if (isHarmony) {
           let totalProgress = 0
 
+          const harmonyCompletedSuccessfullyStates = ['successful', 'complete_with_errors']
+
           orders.forEach((order) => {
             const { order_information: orderInformation } = order
 
@@ -460,11 +462,11 @@ export class OrderStatusItem extends PureComponent {
               jobId = false
             } = orderInformation
 
-            if (status === 'successful' || status === 'failed' || status === 'canceled') {
+            if (harmonyCompletedSuccessfullyStates.includes(status) || status === 'failed' || status === 'canceled') {
               totalCompleteOrders += 1
             }
 
-            if (status === 'successful' && !jobId) {
+            if (harmonyCompletedSuccessfullyStates.includes(status) && !jobId) {
               messages.push(harmonyMessage)
             }
 
