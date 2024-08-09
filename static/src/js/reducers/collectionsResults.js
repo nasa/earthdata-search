@@ -1,7 +1,6 @@
 import {
   ADD_MORE_COLLECTION_RESULTS,
   ADD_MORE_GRANULE_RESULTS,
-  FINISHED_COLLECTIONS_RENDERING_TIMER,
   FINISHED_COLLECTIONS_TIMER,
   FINISHED_GRANULES_TIMER,
   INITIALIZE_COLLECTION_GRANULES_RESULTS,
@@ -22,7 +21,6 @@ const initialState = {
   isLoaded: false,
   isLoading: false,
   loadTime: 0,
-  renderingTime: 0,
   timerStart: null
 }
 
@@ -80,19 +78,6 @@ const collectionsResultsReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         loadTime: Date.now() - timerStart
-      }
-    }
-
-    case FINISHED_COLLECTIONS_RENDERING_TIMER: {
-      const { timerStart } = state
-
-      const renderingTime = Date.now() - timerStart
-      console.log('[performance] Collections load time:', renderingTime)
-
-      return {
-        ...state,
-        timerStart: null,
-        renderingTime
       }
     }
 

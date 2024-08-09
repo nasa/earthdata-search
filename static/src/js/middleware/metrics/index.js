@@ -5,6 +5,7 @@ import {
   browseGranuleImage,
   dataAccess,
   defaultClick,
+  finishedCollectionsRendering,
   granuleFilter,
   map,
   relatedCollection,
@@ -20,6 +21,7 @@ import {
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
   METRICS_DATA_ACCESS,
+  METRICS_FINISHED_COLLECTIONS_RENDERING,
   METRICS_GRANULE_FILTER,
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
@@ -76,6 +78,10 @@ const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
 
   if (action.type === METRICS_COLLECTION_SORT_CHANGE) {
     collectionSortChange(action)
+  }
+
+  if (action.type === METRICS_FINISHED_COLLECTIONS_RENDERING) {
+    finishedCollectionsRendering(getState())
   }
 
   return next(action)
