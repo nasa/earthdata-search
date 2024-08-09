@@ -41,7 +41,6 @@ class DatepickerContainer extends Component {
       format
     } = this.props
 
-    console.log(e)
     const { value } = e.target
 
     if (moment.utc(value, [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true).isValid()) {
