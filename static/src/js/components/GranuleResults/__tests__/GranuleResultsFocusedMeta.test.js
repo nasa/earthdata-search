@@ -106,7 +106,7 @@ describe('GranuleResultsFocusedMeta component', () => {
         expect(modal).toBeInTheDocument()
         expect(onMetricsBrowseGranuleImage).toHaveBeenCalledTimes(1)
         expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
-          browseGranuleImageModalOpen: false,
+          modalOpen: false,
           granuleId: 'G-1234-TEST',
           value: 'Expand'
         })
@@ -296,7 +296,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           expect(onMetricsBrowseGranuleImage).toBeCalledTimes(1)
           expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
-            browseGranuleImageModalOpen: false,
+            modalOpen: false,
             granuleId: 'G-1234-TEST',
             value: 'Next'
           })
@@ -343,7 +343,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           expect(onMetricsBrowseGranuleImage).toBeCalledTimes(2)
           expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
-            browseGranuleImageModalOpen: false,
+            modalOpen: false,
             granuleId: 'G-1234-TEST',
             value: 'Previous'
           })
@@ -394,7 +394,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           expect(onMetricsBrowseGranuleImage).toBeCalledTimes(1)
           expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
-            browseGranuleImageModalOpen: false,
+            modalOpen: false,
             granuleId: 'G-1234-TEST',
             value: 'View List'
           })
@@ -598,7 +598,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             // Tracks Expand and Next
             expect(onMetricsBrowseGranuleImage).toBeCalledTimes(2)
             expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
-              browseGranuleImageModalOpen: true,
+              modalOpen: true,
               granuleId: 'G-1234-TEST',
               value: 'Next'
             })
@@ -651,7 +651,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             // Tracks Expand, Next, and Previous
             expect(onMetricsBrowseGranuleImage).toBeCalledTimes(3)
             expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
-              browseGranuleImageModalOpen: true,
+              modalOpen: true,
               granuleId: 'G-1234-TEST',
               value: 'Previous'
             })
@@ -709,7 +709,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             expect(onMetricsBrowseGranuleImage).toBeCalledTimes(2)
             expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
-              browseGranuleImageModalOpen: true,
+              modalOpen: true,
               granuleId: 'G-1234-TEST',
               value: 'View List'
             })

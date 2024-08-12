@@ -114,7 +114,7 @@ const GranuleResultsFocusedMeta = ({
         onClick={
           () => {
             onMetricsBrowseGranuleImage({
-              browseGranuleImageModalOpen: modalIsOpen,
+              modalOpen: modalIsOpen,
               granuleId: focusedGranuleId,
               value: 'View List'
             })
@@ -267,7 +267,7 @@ const GranuleResultsFocusedMeta = ({
                       () => {
                         onModalOpen(true)
                         onMetricsBrowseGranuleImage({
-                          browseGranuleImageModalOpen: false,
+                          modalOpen: false,
                           granuleId: focusedGranuleId,
                           value: 'Expand'
                         })
@@ -289,7 +289,7 @@ const GranuleResultsFocusedMeta = ({
                             () => {
                               onClickPreviousButton()
                               onMetricsBrowseGranuleImage({
-                                browseGranuleImageModalOpen: false,
+                                modalOpen: false,
                                 granuleId: focusedGranuleId,
                                 value: 'Previous'
                               })
@@ -306,7 +306,7 @@ const GranuleResultsFocusedMeta = ({
                             () => {
                               onClickNextButton()
                               onMetricsBrowseGranuleImage({
-                                browseGranuleImageModalOpen: false,
+                                modalOpen: false,
                                 granuleId: focusedGranuleId,
                                 value: 'Next'
                               })
@@ -415,7 +415,7 @@ const GranuleResultsFocusedMeta = ({
                           () => {
                             onClickModalPreviousButton()
                             onMetricsBrowseGranuleImage({
-                              browseGranuleImageModalOpen: true,
+                              modalOpen: true,
                               granuleId: focusedGranuleId,
                               value: 'Previous'
                             })
@@ -431,7 +431,7 @@ const GranuleResultsFocusedMeta = ({
                           () => {
                             onClickModalNextButton()
                             onMetricsBrowseGranuleImage({
-                              browseGranuleImageModalOpen: true,
+                              modalOpen: true,
                               granuleId: focusedGranuleId,
                               value: 'Next'
                             })
@@ -453,7 +453,7 @@ const GranuleResultsFocusedMeta = ({
                             onClick={
                               () => {
                                 onMetricsBrowseGranuleImage({
-                                  browseGranuleImageModalOpen: false,
+                                  modalOpen: true,
                                   granuleId: focusedGranuleId,
                                   value: 'Download'
                                 })
