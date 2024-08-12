@@ -49,7 +49,7 @@ describe('TemporalSelectionDropdown component', () => {
     const user = userEvent.setup()
     setup({})
 
-    const btn = screen.getByRole('button', { name: 'temporal-selection-dropdown' })
+    const btn = screen.getByRole('button', { name: 'Temporal Selection Dropdown' })
     expect(btn).toBeInTheDocument()
 
     await waitFor(async () => {
@@ -67,7 +67,7 @@ describe('TemporalSelectionDropdown component', () => {
     setup()
 
     await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'temporal-selection-dropdown' }))
+      await user.click(screen.getByRole('button', { name: 'Temporal Selection Dropdown' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -89,7 +89,7 @@ describe('TemporalSelectionDropdown component', () => {
     setup()
 
     await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'temporal-selection-dropdown' }))
+      await user.click(screen.getByRole('button', { name: 'Temporal Selection Dropdown' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -111,7 +111,7 @@ describe('TemporalSelectionDropdown component', () => {
     setup()
 
     await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'temporal-selection-dropdown' }))
+      await user.click(screen.getByRole('button', { name: 'Temporal Selection Dropdown' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -153,7 +153,7 @@ describe('TemporalSelectionDropdown component', () => {
     })
 
     await waitFor(async () => {
-      await user.click(screen.getAllByRole('button', { name: 'temporal-selection-dropdown' }).at(0))
+      await user.click(screen.getAllByRole('button', { name: 'Temporal Selection Dropdown' }).at(0))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -168,7 +168,7 @@ describe('TemporalSelectionDropdown component', () => {
     })
 
     await waitFor(async () => {
-      await user.click(await screen.getByRole('button', { name: 'temporal-selection-dropdown' }))
+      await user.click(await screen.getByRole('button', { name: 'Temporal Selection Dropdown' }))
     })
 
     const updatedStartDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -194,7 +194,7 @@ describe('TemporalSelectionDropdown component', () => {
     const expectedEndDate = '2019-03-30T23:59:59.999Z'
 
     await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'temporal-selection-dropdown' }))
+      await user.click(screen.getByRole('button', { name: 'Temporal Selection Dropdown' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -241,7 +241,7 @@ describe('TemporalSelectionDropdown component', () => {
     const validEndDate = '2024-06-15 23:59:59'
 
     await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'temporal-selection-dropdown' }))
+      await user.click(screen.getByRole('button', { name: 'Temporal Selection Dropdown' }))
     })
 
     const startField = await screen.findByRole('textbox', { name: 'Start Date' })

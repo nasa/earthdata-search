@@ -209,7 +209,7 @@ describe('DatepickerContainer component', () => {
   })
 
   describe('onClearClick', () => {
-    test('does not trigger the onChange and calls onSubmit with a null value', () => {
+    test('triggers the onChange function with an empty string', () => {
       const { enzymeWrapper } = setup()
 
       enzymeWrapper.instance().picker.current = {}

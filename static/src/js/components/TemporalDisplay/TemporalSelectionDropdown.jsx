@@ -181,15 +181,6 @@ const TemporalSelectionDropdown = ({
       newStartDate.year(startDateObject.year())
     }
 
-    if (!newStartDate) {
-      setTemporal({
-        ...temporal,
-        startDate: ''
-      })
-
-      return
-    }
-
     setTemporal({
       ...temporal,
       // eslint-disable-next-line no-underscore-dangle
