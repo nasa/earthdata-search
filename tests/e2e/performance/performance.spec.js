@@ -4,7 +4,7 @@ import twentyCollections from './__mocks__/twenty_collections.json'
 test.describe('Performance Benchmarking', () => {
   test.beforeEach(async ({ page }) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route(/collections/, async (route) => {
+    await page.route(/collections\.json/, async (route) => {
       await route.fulfill({
         json: twentyCollections.body,
         headers: twentyCollections.headers
