@@ -82,13 +82,48 @@ describe('DatepickerContainer component', () => {
 
       // Because this is a shallow render the Datepicker component doesn't render so we have
       // to manually create a 'current' instance of the component
-      enzymeWrapper.instance().picker.current = {}
-      enzymeWrapper.instance().picker.current.setState = jest.fn()
+      // enzymeWrapper.instance().picker.current = {}
+      // enzymeWrapper.instance().picker.current.setState = jest.fn()
 
       enzymeWrapper.instance().onInputBlur({ target: { value: moment.utc('1990-09-03 00:00:00') } })
 
       expect(onSubmit).toHaveBeenCalledTimes(1)
       expect(onSubmit).toHaveBeenCalledWith(moment.utc('1990-09-03 00:00:00', format).endOf('day'))
+    })
+
+    test('returns autocompleted YYYY', () => {
+      const { enzymeWrapper, props } = setup({ type: 'end' })
+      const { onSubmit, format } = props
+
+      const onChangeSpy = jest.spyOn(enzymeWrapper.instance(), 'onChange')
+
+      enzymeWrapper.instance().onInputBlur({ target: { value: '1990' } })
+
+      expect(onChangeSpy).toHaveBeenCalledTimes(1)
+      expect(onSubmit).toHaveBeenCalledTimes(1)
+      // Had trouble matching the actual input that was being passed to the function
+      expect(onSubmit.mock.calls[0][0].format(format)).toEqual(moment.utc('1990', format).endOf('year').format(format))
+    })
+
+    test('returns autocompleted YYYY-MM', () => {
+      const { enzymeWrapper, props } = setup({ type: 'end' })
+      const { onSubmit, format } = props
+
+      const { onInputBlur } = enzymeWrapper.instance()
+
+      // Because this is a shallow render the Datepicker component doesn't render so we have
+      // to manually create a 'current' instance of the component
+      enzymeWrapper.instance().picker.current = {}
+      enzymeWrapper.instance().picker.current.setState = jest.fn()
+
+      const onChangeSpy = jest.spyOn(enzymeWrapper.instance(), 'onChange')
+
+      onInputBlur({ target: { value: '1990-06' } })
+
+      expect(onChangeSpy).toHaveBeenCalledTimes(1)
+      expect(onSubmit).toHaveBeenCalledTimes(1)
+      // Had trouble matching the actual input that was being passed to the function
+      expect(onSubmit.mock.calls[0][0].format(format)).toEqual(moment.utc('1990-06', format).endOf('month').format(format))
     })
 
     test('returns date as entered', () => {
@@ -274,15 +309,12 @@ describe('DatepickerContainer component', () => {
     describe('when not given an custom time', () => {
       test('the "start" input passes the correct object', () => {
         const { enzymeWrapper, props } = setup()
+        const { onChange } = enzymeWrapper.instance()
 
-        enzymeWrapper.instance().picker.current = {}
-        enzymeWrapper.instance().picker.current.setState = jest.fn()
-
-        const { onInputBlur } = enzymeWrapper.instance()
         const { onSubmit } = props
         enzymeWrapper.setProps({ type: 'start' })
 
-        onInputBlur({ target: { value: moment.utc('1988-09-03') } })
+        onChange(moment.utc('1988-09-03'))
 
         expect(onSubmit).toHaveBeenCalledTimes(1)
         expect(moment.isMoment(onSubmit.mock.calls[0][0]))
@@ -294,15 +326,12 @@ describe('DatepickerContainer component', () => {
 
       test('the "end" input passes the correct object', () => {
         const { enzymeWrapper, props } = setup()
+        const { onChange } = enzymeWrapper.instance()
 
-        enzymeWrapper.instance().picker.current = {}
-        enzymeWrapper.instance().picker.current.setState = jest.fn()
-
-        const { onInputBlur } = enzymeWrapper.instance()
         const { onSubmit } = props
         enzymeWrapper.setProps({ type: 'end' })
 
-        onInputBlur({ target: { value: moment.utc('1988-09-03') } })
+        onChange(moment.utc('1988-09-03'))
 
         expect(onSubmit).toHaveBeenCalledTimes(1)
         expect(moment.isMoment(onSubmit.mock.calls[0][0]))

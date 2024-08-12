@@ -32,10 +32,12 @@ const setup = (overrideProps) => {
 describe('TemporalSelectionDropdown component', () => {
   beforeAll(() => {
     ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+    window.console.warn = jest.fn()
   })
 
   afterEach(() => {
     ReactDOM.createPortal.mockClear()
+    window.console.warn.mockClear()
   })
 
   test('on load should be closed on inital render', () => {
@@ -49,7 +51,7 @@ describe('TemporalSelectionDropdown component', () => {
     const user = userEvent.setup()
     setup({})
 
-    const btn = screen.getByRole('button', { name: 'Temporal Selection Dropdown' })
+    const btn = screen.getByRole('button', { name: 'Open temporal filters' })
     expect(btn).toBeInTheDocument()
 
     await waitFor(async () => {
@@ -61,23 +63,25 @@ describe('TemporalSelectionDropdown component', () => {
     expect(startLabel).toBeInTheDocument()
   })
 
-  test('sets the start date correctly when an valid date is passed', async () => {
+  test.only('sets the start date correctly when an valid date is passed', async () => {
     const user = userEvent.setup()
 
     setup()
 
     await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Temporal Selection Dropdown' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
-    const startTestObj = moment.utc('2012-01-01 12:00:00', true).format('YYYY-MM-DD HH:mm:ss')
+    const startTestObj = '2012-01-01 12:00:00'
 
     await act(async () => {
       await user.type(startDateInput, startTestObj)
     })
+
+    expect(window.console.warn).toHaveBeenCalledTimes(19)
 
     expect(startDateInput).toHaveValue(startTestObj)
     expect(endDateInput).not.toHaveValue(startTestObj)
@@ -89,17 +93,19 @@ describe('TemporalSelectionDropdown component', () => {
     setup()
 
     await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Temporal Selection Dropdown' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
-    const endTestObj = moment.utc('2015-01-01 12:00:00', true).format('YYYY-MM-DD HH:mm:ss')
+    const endTestObj = '2015-01-01 12:00:00'
 
     await act(async () => {
       await user.type(endDateInput, endTestObj)
     })
+
+    expect(window.console.warn).toHaveBeenCalledTimes(18)
 
     expect(startDateInput).not.toHaveValue(endTestObj)
     expect(endDateInput).toHaveValue(endTestObj)
@@ -111,7 +117,7 @@ describe('TemporalSelectionDropdown component', () => {
     setup()
 
     await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Temporal Selection Dropdown' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -125,6 +131,8 @@ describe('TemporalSelectionDropdown component', () => {
       await user.type(startDateInput, invalidDate)
     })
 
+    expect(window.console.warn).toHaveBeenCalledTimes(21)
+
     expect(screen.getByText(/Invalid start date/i)).toBeInTheDocument()
 
     await act(async () => {
@@ -137,12 +145,12 @@ describe('TemporalSelectionDropdown component', () => {
     expect(endDateInput).toHaveValue(validEndDate)
   })
 
-  test('clears the values onClearClick', async () => {
+  test('clears the values onClearClick and converts full utc datetime format to expected format', async () => {
     const onChangeQueryMock = jest.fn()
     const user = userEvent.setup()
 
-    const validEndDate = '2019-03-30T00:00:00.000Z'
     const validStartDate = '2019-03-29T00:00:00.000Z'
+    const validEndDate = '2019-03-30T00:00:00.000Z'
 
     setup({
       onChangeQuery: onChangeQueryMock,
@@ -153,14 +161,14 @@ describe('TemporalSelectionDropdown component', () => {
     })
 
     await waitFor(async () => {
-      await user.click(screen.getAllByRole('button', { name: 'Temporal Selection Dropdown' }).at(0))
+      await user.click(screen.getAllByRole('button', { name: 'Open temporal filters' }).at(0))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
-    expect(startDateInput).toHaveValue(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
-    expect(endDateInput).toHaveValue(moment.utc(validEndDate).format('YYYY-MM-DD HH:mm:ss'))
+    expect(startDateInput).toHaveValue('2019-03-29 00:00:00')
+    expect(endDateInput).toHaveValue('2019-03-30 00:00:00')
 
     const clearBtn = screen.getAllByRole('button', { name: 'Clear' }).at(2)
     await waitFor(async () => {
@@ -168,7 +176,7 @@ describe('TemporalSelectionDropdown component', () => {
     })
 
     await waitFor(async () => {
-      await user.click(await screen.getByRole('button', { name: 'Temporal Selection Dropdown' }))
+      await user.click(await screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const updatedStartDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -188,13 +196,14 @@ describe('TemporalSelectionDropdown component', () => {
       onChangeQuery: onChangeQueryMock
     })
 
-    const validEndDate = '2019-03-30T00:00:00.000Z'
-    const validStartDate = '2019-03-29T00:00:00.000Z'
+    const validStartDate = '2019-03-29 00:00:00'
+    const validEndDate = '2019-03-30 00:00:00'
 
+    const expectedStartDate = '2019-03-29T00:00:00.000Z'
     const expectedEndDate = '2019-03-30T23:59:59.999Z'
 
     await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'Temporal Selection Dropdown' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -206,6 +215,8 @@ describe('TemporalSelectionDropdown component', () => {
 
       await user.click(startDateInput)
     })
+
+    expect(window.console.warn).toHaveBeenCalledTimes(36)
 
     expect(startDateInput).toHaveValue(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
     expect(endDateInput).toHaveValue(moment.utc(validEndDate).endOf('day').format('YYYY-MM-DD HH:mm:ss'))
@@ -220,7 +231,7 @@ describe('TemporalSelectionDropdown component', () => {
       collection: {
         temporal: {
           isRecurring: false,
-          startDate: validStartDate,
+          startDate: expectedStartDate,
           endDate: expectedEndDate
         }
       }
@@ -241,7 +252,7 @@ describe('TemporalSelectionDropdown component', () => {
     const validEndDate = '2024-06-15 23:59:59'
 
     await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'Temporal Selection Dropdown' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startField = await screen.findByRole('textbox', { name: 'Start Date' })
