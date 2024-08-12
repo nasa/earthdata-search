@@ -83,7 +83,7 @@ const AccessMethod = ({
   // EnabledTemporalSubsetting by default
   let setTemporal = true
 
-  // If enabledTemporalSubsetting is explictly false, set the initial value to false
+  // If enabledTemporalSubsetting is explicitly false, set the initial value to false
   if (hasEnabledTemporalSubsetting === false) {
     setTemporal = false
   }
@@ -95,6 +95,7 @@ const AccessMethod = ({
   const [isHarmony, setIsHarmony] = useState(false)
   const [enableSpatialSubsetting, setEnableSpatialSubsetting] = useState(false)
   const [enableConcatenateDownload, setEnableConcatenateDownload] = useState(defaultConcatenation)
+  // TODO granule list useState with Arrays does not always catch updates
   const [granuleList, setGranuleList] = useState([])
 
   const {
@@ -121,6 +122,7 @@ const AccessMethod = ({
   })
 
   useEffect(() => {
+    console.log('AccessMethod useEffect getting called')
     setGranuleList(granuleListObj)
   }, [projectCollection])
 
@@ -140,6 +142,7 @@ const AccessMethod = ({
     setIsHarmony(true)
 
     const { conceptId: collectionId } = metadata
+    console.log('🚀 ~ file: AccessMethod.jsx:145 ~ handleHarmonyTypeAccessMethodSelection ~ collectionId:', collectionId)
 
     onSelectAccessMethod({
       collectionId,
@@ -156,6 +159,8 @@ const AccessMethod = ({
     if (!method.includes('harmony')) {
       setIsHarmony(false)
     }
+
+    console.log('🚀 ~ file: AccessMethod.jsx:162 ~ handleAccessMethodSelection ~ setIsHarmony:', setIsHarmony)
 
     onSelectAccessMethod({
       collectionId,
@@ -233,6 +238,7 @@ const AccessMethod = ({
 
   const handleToggleSpatialSubsetting = (event) => {
     const { conceptId: collectionId } = metadata
+    console.log('🚀 ~ file: AccessMethod.jsx:238 ~ handleToggleSpatialSubsetting ~ collectionId:', collectionId)
 
     const { target } = event
     const { checked } = target
@@ -617,6 +623,7 @@ const AccessMethod = ({
     : false
 
   const harmonyMethods = accessMethodsByType.Harmony
+  console.log('🚀 ~ file: AccessMethod.jsx:626 ~ harmonyMethods:', harmonyMethods)
 
   return (
     <div className="access-method">
@@ -927,7 +934,7 @@ const AccessMethod = ({
           )
         }
         {
-          (supportsSwodlr) && (
+          supportsSwodlr && (
             <SwodlrForm
               granuleList={granuleList}
               collectionId={collectionId}

@@ -56,6 +56,7 @@ export const Project = (props) => {
   } = props
   const { search } = location
   const { edscHost } = getEnvironmentConfig()
+  console.log('🚀 ~ file: Project.jsx:59 ~ Project ~ edscHost:', edscHost)
 
   // If there are no params in the URL, show the saved projects page
   if (search === '') {

@@ -1,6 +1,11 @@
 import React from 'react'
 
-import { render, screen } from '@testing-library/react'
+import {
+  act,
+  render,
+  screen,
+  waitFor
+} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
@@ -52,14 +57,15 @@ describe('SwodlrForm component', () => {
     expect(swodlrText).toBeInTheDocument()
   })
 
+  // TODO maybe cant fire other one sine that is what is starts with
   describe('when the selected access method is swodlr', () => {
     test('selecting a granuleExtent calls onUpdateAccessMethod', async () => {
       const user = userEvent.setup()
       const { onUpdateAccessMethod } = setup()
-
       const granuleExtent256Checkbox = screen.getByRole('radio', { name: '256 x 128 km' })
       await user.click(granuleExtent256Checkbox)
 
+      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
       expect(onUpdateAccessMethod).toHaveBeenCalledWith({
         collectionId: 'collectionId',
         method: {
@@ -80,6 +86,7 @@ describe('SwodlrForm component', () => {
           }
         }
       })
+      // TODO is this getting called twice because its in the useEffect?
     })
 
     test('selecting a LAT/LON sampling grid type calls onUpdateAccessMethod with automatic rasterResolution value adjustment', async () => {
@@ -91,6 +98,7 @@ describe('SwodlrForm component', () => {
 
       await user.click(latLonCheckbox)
 
+      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
       expect(onUpdateAccessMethod).toHaveBeenCalledWith({
         collectionId: 'collectionId',
         method: {

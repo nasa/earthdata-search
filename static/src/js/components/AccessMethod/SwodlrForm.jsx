@@ -26,12 +26,12 @@ import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import './SwodlrForm.scss'
 
 /**
-   * Renders Swodlr Form.
+   * Renders Swodlr service Form.
    * @param {Object} props - The props passed into the component.
    * @param {Array} props.granuleList - The list of selected granules for the current collection.
    * @param {String} props.collectionId - The project collection id.
    * @param {Function} props.onUpdateAccessMethod - Function to update metadata for the currently selected access method.
-   * @param {String} props.selectedAccessMethod - The currently seletected access method.
+   * @param {String} props.selectedAccessMethod - The currently selected access method.
    * @param {Function} props.setGranuleList - Function to update the granule list of the parent component.
   */
 
@@ -42,11 +42,17 @@ const SwodlrForm = ({
   selectedAccessMethod,
   setGranuleList
 }) => {
+  console.log('🚀 ~ file: SwodlrForm.jsx:45 ~ collectionId:', collectionId)
+  if (!collectionId) {
+    console.log('The value was null 🛑')
+  }
+
+  // TODO somehow react thinks that after the initial update here that this is not false
   const [granuleExtent, setGranuleExtent] = useState(false)
   const [sampleGrid, setSampleGrid] = useState('UTM')
   const [rasterResolution, setRasterResolution] = useState(90)
 
-  // When any key swodlr parameters are changed, update the accessMethod data
+  // When any key Swodlr parameters are changed, update the accessMethod data
   const handleSwoldrOptions = () => {
     const customParams = {}
 
@@ -54,6 +60,7 @@ const SwodlrForm = ({
       const { id } = granule
       customParams[id] = {}
       if (sampleGrid === 'UTM') {
+        console.log('🚀 ~ file: SwodlrForm.jsx:60 ~ granuleList.forEach ~ sampleGrid:', sampleGrid)
         customParams[id].utmZoneAdjust = granule.utmZoneAdjust ? granule.utmZoneAdjust : 0
         customParams[id].mgrsBandAdjust = granule.mgrsBandAdjust ? granule.mgrsBandAdjust : 0
       } else {
@@ -61,6 +68,8 @@ const SwodlrForm = ({
         customParams[id].mgrsBandAdjust = null
       }
     })
+
+    console.log('🚀 ~ file: SwodlrForm.jsx:83 ~ handleSwoldrOptions ~ granuleExtent:', granuleExtent)
 
     onUpdateAccessMethod({
       collectionId,
@@ -81,6 +90,8 @@ const SwodlrForm = ({
 
   // Update the MGRSBand and UTMZone of the granule at the given index point
   const handleCollectionGranuleListUpdate = (indexVal, property, e) => {
+    console.log('🚀 ~ file: SwodlrForm.jsx:104 ~ handleCollectionGranuleListUpdate ~ e:', e)
+
     const granuleListCopy = granuleList
 
     if (property === 'utm') {
@@ -92,10 +103,13 @@ const SwodlrForm = ({
     }
 
     setGranuleList(granuleList)
+    // TODO Does this need to be called here
+    handleSwoldrOptions()
   }
 
   const handleRasterResolutionUpdate = (event) => {
     setRasterResolution(Number(event.target.value))
+    // HandleSwoldrOptions()
   }
 
   // Update when the value for Sample Grid type is changed
@@ -109,16 +123,21 @@ const SwodlrForm = ({
     }
 
     setRasterResolution(defaultRasterValue)
+    // HandleSwoldrOptions()
   }
 
-  const handleGranuleExtent = (value) => {
-    setGranuleExtent(value)
+  const handleGranuleExtent = (updatedGranuleExtent) => {
+    console.log('🚀 ~ file: SwodlrForm.jsx:120 ~ handleGranuleExtent ~ updatedGranuleExtent:', updatedGranuleExtent)
+    setGranuleExtent(updatedGranuleExtent)
+    // HandleSwoldrOptions()
   }
 
-  // When any of the key values in relation to the swodlr access method is changed, handle the values and update
+  // When any of the key values in relation to the Swodlr access method is changed, handle the values and update
   useEffect(() => {
     handleSwoldrOptions()
-  }, [granuleExtent, granuleList, rasterResolution, sampleGrid])
+  }, [granuleExtent, sampleGrid, rasterResolution])
+  // TODO so if the granuleList is in the dep arr then too many re-renderings
+  // GranuleExtent, granuleList, rasterResolution, sampleGrid
 
   return (
     <ProjectPanelSection
@@ -141,10 +160,9 @@ const SwodlrForm = ({
             >
               <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
             </OverlayTrigger>
-
           </Col>
           <Col>
-            <Form>
+            <Form.Group>
               <div className="mb-3">
                 <Form.Check
                   inline
@@ -155,6 +173,7 @@ const SwodlrForm = ({
                   checked={!granuleExtent}
                   onChange={
                     () => {
+                      console.log('running func')
                       handleGranuleExtent(false)
                     }
 
@@ -174,7 +193,7 @@ const SwodlrForm = ({
                   }
                 />
               </div>
-            </Form>
+            </Form.Group>
           </Col>
         </Row>
         <Row>
@@ -194,7 +213,7 @@ const SwodlrForm = ({
             </OverlayTrigger>
           </Col>
           <Col>
-            <Form>
+            <Form.Group>
               <div className="mb-3">
                 <Form.Check
                   inline
@@ -223,7 +242,7 @@ const SwodlrForm = ({
                   }
                 />
               </div>
-            </Form>
+            </Form.Group>
           </Col>
         </Row>
         <Row>
@@ -243,7 +262,7 @@ const SwodlrForm = ({
             </OverlayTrigger>
           </Col>
           <Col>
-            <Form>
+            <Form.Group>
               <Form.Control
                 as="select"
                 onChange={
@@ -255,6 +274,7 @@ const SwodlrForm = ({
                 value={rasterResolution}
               >
                 {
+                  // Raster Resolution Dropdown
                   sampleGrid === 'GEO'
                     ? geoRasterOptions.map((option) => (
                       <option value={option.value} key={option.value} data-testid={`geo-raster-selection-${option.value}`}>
@@ -268,11 +288,9 @@ const SwodlrForm = ({
                     ))
                 }
               </Form.Control>
-            </Form>
-
+            </Form.Group>
           </Col>
         </Row>
-
         <Row hidden={sampleGrid !== 'UTM'}>
           <Col>
             <Accordion>
@@ -325,6 +343,7 @@ const SwodlrForm = ({
                       </thead>
                       <tbody>
                         {
+                          // UTM Zone Adjust and MGRS Band Adjust Form
                           granuleList && granuleList.map((granule, i) => (
                             <tr key={granule.id}>
                               <td>{granule.id}</td>
@@ -433,11 +452,17 @@ SwodlrForm.propTypes = {
   onUpdateAccessMethod: PropTypes.func.isRequired,
   selectedAccessMethod: PropTypes.string.isRequired,
   setGranuleList: PropTypes.func.isRequired,
-  collectionId: PropTypes.string.isRequired,
+  collectionId: PropTypes.string,
   granuleList: PropTypes.arrayOf(PropTypes.shape({
     utmZoneAdjust: PropTypes.number,
     mgrsBandAdjust: PropTypes.number
   })).isRequired
+}
+
+// TODO AccessMethod does not have this field as required which we are getting sometimes it does not have it before rendering
+// Therefore the Swodlr form cannot guarantee when it tries to render it will have the collectionId
+SwodlrForm.defaultProps = {
+  collectionId: {}
 }
 
 export default SwodlrForm
