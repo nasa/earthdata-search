@@ -82,7 +82,16 @@ class DatepickerContainer extends Component {
       if (type === 'start') {
         valueToSet = value.startOf('day')
       } else if (type === 'end') {
-        valueToSet = value.endOf('day')
+        // Using moment.ISO_8601 to determine format of the user input
+        const iso2806Date = moment.utc(value.creationData().input, moment.ISO_8601)
+        const { format: dateFormat } = iso2806Date.creationData()
+        if (dateFormat === 'YYYY') {
+          valueToSet = value.endOf('year')
+        } else if (dateFormat === 'YYYY-MM') {
+          valueToSet = value.endOf('month')
+        } else {
+          valueToSet = value.endOf('day')
+        }
       }
     } else {
       valueToSet = moment.utc(value, format, true)
