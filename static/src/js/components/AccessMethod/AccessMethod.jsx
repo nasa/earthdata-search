@@ -116,6 +116,7 @@ const AccessMethod = ({
   }
 
   const granuleListObj = []
+  // TODO this should be a map
 
   granulesToDisplay.forEach((id) => {
     granuleListObj.push(granuleMetadata[id])
@@ -127,6 +128,7 @@ const AccessMethod = ({
   }, [projectCollection])
 
   // If enabledTemporalSubsetting is true, and isRecurring is true, disable temporal Subsetting
+  // TODO don't set state on every render here
   if (enableTemporalSubsetting && isRecurring) {
     setEnableTemporalSubsetting(false)
   }

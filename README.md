@@ -179,6 +179,11 @@ Once the project is built, you must ensure that the automated unit tests pass:
 
     npm run test
 
+To get coverage on tests run
+    npm run test:watch-lite
+
+test coverage will be updated in the coverage/ directory
+
 ### Deployment
 
 When the time comes to deploy the application, first ensure that you have the required ENV vars set:

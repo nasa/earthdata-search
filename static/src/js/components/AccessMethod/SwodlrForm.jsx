@@ -26,15 +26,14 @@ import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import './SwodlrForm.scss'
 
 /**
-   * Renders Swodlr service Form.
-   * @param {Object} props - The props passed into the component.
-   * @param {Array} props.granuleList - The list of selected granules for the current collection.
-   * @param {String} props.collectionId - The project collection id.
-   * @param {Function} props.onUpdateAccessMethod - Function to update metadata for the currently selected access method.
-   * @param {String} props.selectedAccessMethod - The currently selected access method.
-   * @param {Function} props.setGranuleList - Function to update the granule list of the parent component.
-  */
-
+ * Renders Swodlr service Form.
+ * @param {Object} props - The props passed into the component.
+ * @param {Array} props.granuleList - The list of selected granules for the current collection.
+ * @param {String} props.collectionId - The project collection id.
+ * @param {Function} props.onUpdateAccessMethod - Function to update metadata for the currently selected access method.
+ * @param {String} props.selectedAccessMethod - The currently selected access method.
+ * @param {Function} props.setGranuleList - Function to update the granule list of the parent component.
+*/
 const SwodlrForm = ({
   granuleList,
   collectionId,
@@ -107,6 +106,7 @@ const SwodlrForm = ({
     handleSwoldrOptions()
   }
 
+  // Update the Raster Resolution of the granule at the given index point
   const handleRasterResolutionUpdate = (event) => {
     setRasterResolution(Number(event.target.value))
     // HandleSwoldrOptions()
@@ -433,7 +433,6 @@ const SwodlrForm = ({
                               </td>
                             </tr>
                           ))
-
                         }
                       </tbody>
                     </Table>
