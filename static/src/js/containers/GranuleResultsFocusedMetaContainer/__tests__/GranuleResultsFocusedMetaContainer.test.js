@@ -30,12 +30,10 @@ describe('GranuleResultsFocusedMetaContainer component', () => {
     expect(GranuleResultsFocusedMeta).toHaveBeenCalledTimes(1)
 
     // Using the `toHaveBeenCalledWith` assertion also have the deprecated react context object in it making it less readable
-    expect(GranuleResultsFocusedMeta.mock.calls[0][0]).toEqual(
-      {
-        focusedGranuleMetadata: { test: 'test' },
-        focusedGranuleId: '1234-TEST',
-        onMetricsBrowseGranuleImage
-      }
-    )
+    expect(GranuleResultsFocusedMeta.mock.calls[0][0]).toEqual({
+      focusedGranuleMetadata: { test: 'test' },
+      focusedGranuleId: '1234-TEST',
+      onMetricsBrowseGranuleImage
+    })
   })
 })

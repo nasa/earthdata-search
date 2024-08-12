@@ -73,7 +73,6 @@ const GranuleResultsItem = forwardRef(({
   }
 
   const handleClickGranuleDetails = (granuleId) => {
-    // TODO so here we don't want to fire metric because that is a different page
     onFocusedGranuleChange(granuleId)
   }
 
