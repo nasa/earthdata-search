@@ -716,7 +716,6 @@ const AccessMethod = ({
                     <p>{accessMethods[selectedAccessMethod].description}</p>
                     <p>
                       <a
-                        className="link"
                         href="https://harmony.earthdata.nasa.gov/docs#service-capabilities"
                         target="_blank"
                         rel="noreferrer"
