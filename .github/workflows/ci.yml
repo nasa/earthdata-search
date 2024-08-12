@@ -74,16 +74,6 @@ jobs:
       uses: codecov/codecov-action@v4
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-  cypress:
-    needs: [eslint]
-    runs-on: ubuntu-latest
-    strategy:
-        matrix:
-          node-version: ['lts/hydrogen']
-    steps:
-    - name: Dummy Cypress step
-      run: echo "Cypress tests are temporarily bypassed." > /dev/null
-
   playwright:
     needs: [eslint]
     runs-on: ubuntu-latest
@@ -139,7 +129,7 @@ jobs:
 
   deploy:
     if: success() && github.ref == 'refs/heads/main' # only run on main success
-    needs: [jest, playwright] # only run after jest jobs complete
+    needs: [jest, playwright] # only run after jest and playwright jobs complete
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
