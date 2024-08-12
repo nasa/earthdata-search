@@ -102,7 +102,7 @@ describe('DatepickerContainer component', () => {
       expect(onChangeSpy).toHaveBeenCalledTimes(1)
       expect(onSubmit).toHaveBeenCalledTimes(1)
       // Had trouble matching the actual input that was being passed to the function
-      expect(onSubmit.mock.calls[0][0].format(format)).toEqual(moment.utc('1990', format).endOf('year').format(format))
+      expect(onSubmit.mock.calls[0][0].format(format)).toEqual('1990-12-31T23:59:59Z')
     })
 
     test('returns autocompleted YYYY-MM', () => {
@@ -123,7 +123,7 @@ describe('DatepickerContainer component', () => {
       expect(onChangeSpy).toHaveBeenCalledTimes(1)
       expect(onSubmit).toHaveBeenCalledTimes(1)
       // Had trouble matching the actual input that was being passed to the function
-      expect(onSubmit.mock.calls[0][0].format(format)).toEqual(moment.utc('1990-06', format).endOf('month').format(format))
+      expect(onSubmit.mock.calls[0][0].format(format)).toEqual('1990-06-30T23:59:59Z')
     })
 
     test('returns date as entered', () => {
