@@ -737,7 +737,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             const expandButton = screen.getByLabelText('Expand browse image')
 
-            await waitFor(async () => {
+            await act(async () => {
               await user.click(expandButton)
             })
 
@@ -753,6 +753,46 @@ describe('GranuleResultsFocusedMeta component', () => {
             expect(images.length).toEqual(2)
             expect(images[0]).toHaveClass('granule-results-focused-meta__full--is-active')
             expect(pagination).toBeInTheDocument()
+          })
+        })
+
+        describe('when attempting to download the image', () => {
+          test('should select granule link to open', async () => {
+            const user = userEvent.setup()
+            const focusedGranuleLink = 'http://test.com/test.jpg'
+
+            const { onMetricsBrowseGranuleImage } = setup({
+              focusedGranuleMetadata: {
+                browseFlag: true,
+                links: [{
+                  href: focusedGranuleLink,
+                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                },
+                {
+                  href: 'http://test.com/test-2.jpg',
+                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                }],
+                title: '1234 Test'
+              }
+            })
+
+            const expandButton = screen.getByLabelText('Expand browse image')
+            await act(async () => {
+              await user.click(expandButton)
+            })
+
+            const downloadButton = screen.getByRole('button', { name: 'Download browse image' })
+
+            expect(downloadButton).toHaveAttribute('href', focusedGranuleLink)
+
+            await user.click(downloadButton)
+
+            expect(onMetricsBrowseGranuleImage).toBeCalledTimes(2)
+            expect(onMetricsBrowseGranuleImage).toHaveBeenCalledWith({
+              modalOpen: true,
+              granuleId: 'G-1234-TEST',
+              value: 'Download'
+            })
           })
         })
 
