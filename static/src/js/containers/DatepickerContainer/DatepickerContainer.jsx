@@ -43,8 +43,6 @@ class DatepickerContainer extends Component {
 
     const { value } = e.target
 
-    console.log(value)
-
     if (moment.utc(value, [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true).isValid()) {
       const newValue = moment.utc(value, format)
 
@@ -73,7 +71,6 @@ class DatepickerContainer extends Component {
     } = this.props
 
     let valueToSet = null
-    console.log(value)
 
     // Check to see if the current date is a moment object, and whether or not it has a
     // custom time set (i.e. not 00:00:00 or 23:59:59), if it doesn't, set the time to either
@@ -88,6 +85,7 @@ class DatepickerContainer extends Component {
         // Using moment.ISO_8601 to determine format of the user input
         const iso2806Date = moment.utc(value.creationData().input, moment.ISO_8601)
         const { format: dateFormat } = iso2806Date.creationData()
+
         if (dateFormat === 'YYYY') {
           valueToSet = value.endOf('year')
         } else if (dateFormat === 'YYYY-MM') {

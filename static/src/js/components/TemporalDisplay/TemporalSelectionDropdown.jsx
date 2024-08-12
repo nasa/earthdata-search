@@ -198,15 +198,6 @@ const TemporalSelectionDropdown = ({
       isRecurring: existingIsRecurring
     } = temporal
 
-    if (!newEndDate) {
-      setTemporal({
-        ...temporal,
-        endDate: ''
-      })
-
-      return
-    }
-
     if (existingIsRecurring) {
       const applicationConfig = getApplicationConfig()
       const { temporalDateFormatFull } = applicationConfig

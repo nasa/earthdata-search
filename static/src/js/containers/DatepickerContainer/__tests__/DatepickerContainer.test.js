@@ -82,9 +82,6 @@ describe('DatepickerContainer component', () => {
 
       // Because this is a shallow render the Datepicker component doesn't render so we have
       // to manually create a 'current' instance of the component
-      // enzymeWrapper.instance().picker.current = {}
-      // enzymeWrapper.instance().picker.current.setState = jest.fn()
-
       enzymeWrapper.instance().onInputBlur({ target: { value: moment.utc('1990-09-03 00:00:00') } })
 
       expect(onSubmit).toHaveBeenCalledTimes(1)
