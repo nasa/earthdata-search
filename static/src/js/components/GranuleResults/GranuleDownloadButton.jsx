@@ -127,19 +127,16 @@ export const GranuleDownloadButton = (props) => {
           })
         }
       }
+      type="button"
+      badge={badge}
+      bootstrapVariant="success"
+      dataTestId="granule-results-actions__download-all-button"
+      disabled={granuleCount === 0 || initialLoading || (disableDatabaseComponents === 'true')}
+      icon={FaDownload}
+      label={buttonText}
+      variant="full"
     >
-      <Button
-        badge={badge}
-        bootstrapVariant="success"
-        className="granule-results-actions__download-all-button"
-        dataTestId="granule-results-actions__download-all-button"
-        disabled={granuleCount === 0 || initialLoading || (disableDatabaseComponents === 'true')}
-        icon={FaDownload}
-        label={buttonText}
-        variant="full"
-      >
-        {buttonText}
-      </Button>
+      {buttonText}
     </PortalLinkContainer>
   )
 }

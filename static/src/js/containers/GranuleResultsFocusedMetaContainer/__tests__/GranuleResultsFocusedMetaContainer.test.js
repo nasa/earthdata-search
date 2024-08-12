@@ -1,33 +1,63 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
-import { GranuleResultsFocusedMetaContainer } from '../GranuleResultsFocusedMetaContainer'
+import { screen, render } from '@testing-library/react'
+import '@testing-library/jest-dom'
+
+import * as actions from '../../../middleware/metrics/actions'
 import GranuleResultsFocusedMeta from '../../../components/GranuleResults/GranuleResultsFocusedMeta'
+import {
+  GranuleResultsFocusedMetaContainer,
+  mapDispatchToProps
+} from '../GranuleResultsFocusedMetaContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/GranuleResults/GranuleResultsFocusedMeta', () => jest.fn(() => <div data-testid="granule-results-focused-meta-overlay-wrapper" />))
 
-function setup(overrideProps) {
+const setup = (overrideProps) => {
+  const onMetricsBrowseGranuleImage = jest.fn()
   const props = {
     focusedGranuleMetadata: { test: 'test' },
     focusedGranuleId: '1234-TEST',
+    onMetricsBrowseGranuleImage,
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<GranuleResultsFocusedMetaContainer {...props} />)
+  render(<GranuleResultsFocusedMetaContainer {...props} />)
 
-  return {
-    enzymeWrapper,
-    props
-  }
+  return { onMetricsBrowseGranuleImage }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onMetricsBrowseGranuleImage calls metrics actions.metricsBrowseGranuleImage', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'metricsBrowseGranuleImage')
+
+    mapDispatchToProps(dispatch).onMetricsBrowseGranuleImage({
+      modalOpen: true,
+      granuleId: 'G-1234-TEST',
+      value: 'Test'
+    })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({
+      modalOpen: true,
+      granuleId: 'G-1234-TEST',
+      value: 'Test'
+    })
+  })
+})
 
 describe('GranuleResultsFocusedMetaContainer component', () => {
   test('passes its props and renders a single GranuleResultsFocusedMeta component', () => {
-    const { enzymeWrapper } = setup()
+    const { onMetricsBrowseGranuleImage } = setup()
 
-    expect(enzymeWrapper.find(GranuleResultsFocusedMeta).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleResultsFocusedMeta).props().focusedGranuleId).toEqual('1234-TEST')
-    expect(enzymeWrapper.find(GranuleResultsFocusedMeta).props().focusedGranuleMetadata).toEqual({ test: 'test' })
+    expect(screen.getByTestId('granule-results-focused-meta-overlay-wrapper')).toBeInTheDocument()
+    expect(GranuleResultsFocusedMeta).toHaveBeenCalledTimes(1)
+
+    // Using the `toHaveBeenCalledWith` assertion also have the deprecated react context object in it making it less readable
+    expect(GranuleResultsFocusedMeta.mock.calls[0][0]).toEqual({
+      focusedGranuleMetadata: { test: 'test' },
+      focusedGranuleId: '1234-TEST',
+      onMetricsBrowseGranuleImage
+    })
   })
 })

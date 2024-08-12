@@ -599,7 +599,7 @@ describe('Facets Features Map Imagery component', () => {
     const facetGroup = screen.getByRole('checkbox', { name: 'Mock Keyword Facet' })
 
     await user.click(facetGroup)
-
+    // TODO we should fix any expect.anything() and not use a container if we can help it
     expect(mock).toBeCalledWith(
       expect.anything(),
       {

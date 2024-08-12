@@ -33,17 +33,17 @@ export class AboutCSDAModal extends Component {
           </p>
           <ul>
             <li>
-              <a className="link link--external" href="https://earthdata.nasa.gov/esds/csdap/" target="_blank" rel="noopener noreferrer">
+              <a className="link--external" href="https://earthdata.nasa.gov/esds/csdap/" target="_blank" rel="noopener noreferrer">
                 Commercial Smallsat Data Acquisition (CSDA) Program
               </a>
             </li>
             <li>
-              <a className="link link--external" href="https://earthdata.nasa.gov/esds/csdap/faq-commercial-data/" target="_blank" rel="noopener noreferrer">
+              <a className="link--external" href="https://earthdata.nasa.gov/esds/csdap/faq-commercial-data/" target="_blank" rel="noopener noreferrer">
                 Accessing and Requesting Commercial Smallsat Data FAQ
               </a>
             </li>
             <li>
-              <a className="link link--external" href="https://csdap.earthdata.nasa.gov/signup/" target="_blank" rel="noopener noreferrer">
+              <a className="link--external" href="https://csdap.earthdata.nasa.gov/signup/" target="_blank" rel="noopener noreferrer">
                 CSDA Program Authorization Request Form
               </a>
             </li>
@@ -58,7 +58,7 @@ export class AboutCSDAModal extends Component {
             { /* eslint-disable-next-line max-len */}
             Users that meet the requirements set forth by NASA for access to Commercial Smallsat Data Acquisition (CSDA) Program data can request access to the program
             {' '}
-            <a className="link link--external" href="https://csdap.earthdata.nasa.gov/signup/" target="_blank" rel="noopener noreferrer">here</a>
+            <a className="link--external" href="https://csdap.earthdata.nasa.gov/signup/" target="_blank" rel="noopener noreferrer">here</a>
             { /* eslint-disable-next-line max-len */}
             . Once access has been approved and an account has been created, users can use their account credentials when downloading data from Earthdata Search.
           </p>

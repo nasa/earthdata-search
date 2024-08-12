@@ -273,7 +273,7 @@ export const TextWindowActions = ({
                 <br />
                 Go To the
                 {' '}
-                <a className="link link--external" href="https://nasa.github.io/earthdata-download/" target="_blank" rel="nofollow noreferrer">Downloads Page</a>
+                <a className="link--external" href="https://nasa.github.io/earthdata-download/" target="_blank" rel="nofollow noreferrer">Downloads Page</a>
               </Alert>
             </div>
           )

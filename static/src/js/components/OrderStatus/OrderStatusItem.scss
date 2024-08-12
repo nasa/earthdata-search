@@ -333,25 +333,6 @@ $item-height: 3rem;
   }
 }
 
-.download-links-panel, .browse-links-panel {
-  &__list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    li {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-  }
-
-  &__pre {
-    margin: 0;
-    padding: 0;
-  }
-}
-
 @keyframes pulse {
   from {
     stroke: $color__black--300;
