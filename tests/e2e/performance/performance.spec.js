@@ -3,6 +3,7 @@ import twentyCollections from './__mocks__/twenty_collections.json'
 
 test.describe('Performance Benchmarking', () => {
   test.beforeEach(async ({ page }) => {
+    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
     await page.route(/collections/, async (route) => {
       await route.fulfill({
         json: twentyCollections.body,
@@ -64,7 +65,6 @@ test.describe('Performance Benchmarking', () => {
   // They do not have performance-related failure conditions.
   test.describe('Performance metrics logging', () => {
     test('Run the collections load timer', async ({ page, browserName, browser }) => {
-      await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
       const logs = []
       page.on('console', (msg) => logs.push(msg.text()))
       await page.goto('/')
