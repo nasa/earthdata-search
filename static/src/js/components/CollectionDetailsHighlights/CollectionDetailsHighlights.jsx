@@ -99,7 +99,7 @@ export const CollectionDetailsHighlights = ({
         <div className="collection-details-highlights__item-body">
           <div className="collection-details-highlights__item-value">
             <Button
-              className="link collection-details-highlights__related-link"
+              className="collection-details-highlights__related-link"
               type="button"
               variant="link"
               bootstrapVariant="link"

@@ -19,19 +19,10 @@
     font-weight: 700;
     font-size: .925rem;
     line-height: 1.5rem;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline !important;
-    }
 
     .direct-distribution-information__links--horizontal & {
       display: inline-block;
       vertical-align: baseline;
-
-      &:hover {
-        text-decoration: underline;
-      }
 
       &:last-child {
         padding-top:   calc($spacer / 8);

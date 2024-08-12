@@ -30,6 +30,7 @@
     line-height: 1.5em;
     display: inline-flex;
     align-items: center;
+    text-decoration: inherit;
 
     .button--link & {
       vertical-align: baseline;
