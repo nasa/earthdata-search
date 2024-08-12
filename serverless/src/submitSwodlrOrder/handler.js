@@ -57,7 +57,7 @@ const submitSwodlrOrder = async (event, context) => {
     const {
       accessToken,
       id
-    } = body
+    } = JSON.parse(body)
 
     try {
       // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page

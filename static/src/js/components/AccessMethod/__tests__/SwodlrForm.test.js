@@ -230,7 +230,27 @@ describe('SwodlrForm component', () => {
 
       // Because the setGranuleList fn updates the granuleList, we can't check that the right value
       // was also used in the updateAccessCalled as they are chained together by the useEffect.
-      expect(onUpdateAccessMethod).toHaveBeenCalled()
+      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
+      expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+        collectionId: 'collectionId',
+        method: {
+          swodlr: {
+            swodlrData: {
+              params: {
+                rasterResolution: 90,
+                outputSamplingGridType: 'UTM',
+                outputGranuleExtentFlag: false
+              },
+              custom_params: {
+                'G3161846518-POCLOUD': {
+                  mgrsBandAdjust: 0,
+                  utmZoneAdjust: 1
+                }
+              }
+            }
+          }
+        }
+      })
     })
 
     test('can update individual granules MGRS Adjust', async () => {
@@ -261,27 +281,26 @@ describe('SwodlrForm component', () => {
       // Because the setGranuleList fn updates the granuleList, we can't check that the right value
       // was also used in the updateAccessCalled as they are chained together by the useEffect.
       expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
-      // Expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
-      // expect(onUpdateAccessMethod).toHaveBeenCalledWith({
-      //   collectionId: 'collectionId',
-      //   method: {
-      //     swodlr: {
-      //       swodlrData: {
-      //         params: {
-      //           rasterResolution: 90,
-      //           outputSamplingGridType: 'UTM',
-      //           outputGranuleExtentFlag: false
-      //         },
-      //         custom_params: {
-      //           'G3161846518-POCLOUD': {
-      //             mgrsBandAdjust: 1,
-      //             utmZoneAdjust: 0
-      //           }
-      //         }
-      //       }
-      //     }
-      //   }
-      // })
+      expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+        collectionId: 'collectionId',
+        method: {
+          swodlr: {
+            swodlrData: {
+              params: {
+                rasterResolution: 90,
+                outputSamplingGridType: 'UTM',
+                outputGranuleExtentFlag: false
+              },
+              custom_params: {
+                'G3161846518-POCLOUD': {
+                  mgrsBandAdjust: 1,
+                  utmZoneAdjust: 0
+                }
+              }
+            }
+          }
+        }
+      })
     })
   })
 })
