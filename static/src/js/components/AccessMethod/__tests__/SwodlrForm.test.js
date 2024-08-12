@@ -261,7 +261,7 @@ describe('SwodlrForm component', () => {
       // Because the setGranuleList fn updates the granuleList, we can't check that the right value
       // was also used in the updateAccessCalled as they are chained together by the useEffect.
       expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
-      // expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
+      // Expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
       // expect(onUpdateAccessMethod).toHaveBeenCalledWith({
       //   collectionId: 'collectionId',
       //   method: {
