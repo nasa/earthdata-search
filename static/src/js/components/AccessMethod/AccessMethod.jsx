@@ -59,6 +59,7 @@ const AccessMethod = ({
   ursProfile
 }) => {
   const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
+  console.log('🚀 ~ file: AccessMethod.jsx:62 ~ selectedAccessMethod:', selectedAccessMethod)
 
   const {
     form,
@@ -92,7 +93,9 @@ const AccessMethod = ({
   const [enableTemporalSubsetting, setEnableTemporalSubsetting] = useState(setTemporal)
   const [selectedHarmonyMethodName, setSelectedHarmonyMethodName] = useState('')
   // TODO this should be startsWith or something similar
+  // const [isHarmony, setIsHarmony] = useState(selectedAccessMethod.startsWith('harmony'))
   const [isHarmony, setIsHarmony] = useState(false)
+
   const [enableSpatialSubsetting, setEnableSpatialSubsetting] = useState(false)
   const [enableConcatenateDownload, setEnableConcatenateDownload] = useState(defaultConcatenation)
   // TODO granule list useState with Arrays does not always catch updates
@@ -115,30 +118,51 @@ const AccessMethod = ({
     granulesToDisplay = granulesAllIds
   }
 
-  const granuleListObj = []
-  // TODO this should be a map
+  // Const granuleListObj = []
+  // // TODO this should be a map
 
-  granulesToDisplay.forEach((id) => {
-    granuleListObj.push(granuleMetadata[id])
-  })
+  // granulesToDisplay.forEach((id) => {
+  //   granuleListObj.push(granuleMetadata[id])
+  // })
+  const granuleListObj = granulesToDisplay.map((id) => granuleMetadata[id])
 
   useEffect(() => {
     console.log('AccessMethod useEffect getting called')
     setGranuleList(granuleListObj)
+
+    if (enableTemporalSubsetting && isRecurring) {
+      setEnableTemporalSubsetting(false)
+    }
   }, [projectCollection])
 
-  // If enabledTemporalSubsetting is true, and isRecurring is true, disable temporal Subsetting
-  // TODO don't set state on every render here
-  if (enableTemporalSubsetting && isRecurring) {
-    setEnableTemporalSubsetting(false)
-  }
+  useEffect(() => {
+    if (selectedAccessMethod) {
+      console.log('🚀 ~ file: AccessMethod.jsx:140 ~ useEffect ~ selectedAccessMethod:', selectedAccessMethod)
+      setIsHarmony(selectedAccessMethod.startsWith('harmony'))
+    }
 
-  if (selectedAccessMethod
-      && selectedAccessMethod.startsWith('harmony')
-      && accessMethods[selectedAccessMethod].name
-      && selectedHarmonyMethodName === '') {
-    setSelectedHarmonyMethodName(accessMethods[selectedAccessMethod].name)
-  }
+    console.log('🚀 ~ file: AccessMethod.jsx:137 ~ useEffect ~ selectedHarmonyMethodName:', selectedHarmonyMethodName)
+    console.log('🚀 ~ file: AccessMethod.jsx:137 ~ useEffect ~ selectedAccessMethod:', selectedAccessMethod)
+    if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')
+    && accessMethods[selectedAccessMethod].name
+    && selectedHarmonyMethodName === '') {
+      console.log('AccessMethod useEffect harmony getting called')
+      setSelectedHarmonyMethodName(accessMethods[selectedAccessMethod].name)
+    }
+  }, [])
+
+  // // If enabledTemporalSubsetting is true, and isRecurring is true, disable temporal Subsetting
+  // // TODO don't set state on every render here
+  // if (enableTemporalSubsetting && isRecurring) {
+  //   setEnableTemporalSubsetting(false)
+  // }
+
+  // if (selectedAccessMethod
+  //     && selectedAccessMethod.startsWith('harmony')
+  //     && accessMethods[selectedAccessMethod].name
+  //     && selectedHarmonyMethodName === '') {
+  //   setSelectedHarmonyMethodName(accessMethods[selectedAccessMethod].name)
+  // }
 
   const handleHarmonyTypeAccessMethodSelection = () => {
     setIsHarmony(true)

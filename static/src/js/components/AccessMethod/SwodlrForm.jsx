@@ -42,6 +42,8 @@ const SwodlrForm = ({
   setGranuleList
 }) => {
   console.log('🚀 ~ file: SwodlrForm.jsx:45 ~ collectionId:', collectionId)
+  console.log('🚀 ~ file: SwodlrForm.jsx:70 ~ granuleList.forEach ~ granuleList:', granuleList)
+
   if (!collectionId) {
     console.log('The value was null 🛑')
   }
@@ -57,6 +59,7 @@ const SwodlrForm = ({
 
     granuleList.forEach((granule) => {
       const { id } = granule
+      console.log('🚀 ~ file: SwodlrForm.jsx:62 ~ granuleList.forEach ~ id:', id)
       customParams[id] = {}
       if (sampleGrid === 'UTM') {
         console.log('🚀 ~ file: SwodlrForm.jsx:60 ~ granuleList.forEach ~ sampleGrid:', sampleGrid)
@@ -134,6 +137,7 @@ const SwodlrForm = ({
 
   // When any of the key values in relation to the Swodlr access method is changed, handle the values and update
   useEffect(() => {
+    // TODO consider removing this function and instead just putting the login in the use-effect for clarity
     handleSwoldrOptions()
   }, [granuleExtent, sampleGrid, rasterResolution])
   // TODO so if the granuleList is in the dep arr then too many re-renderings
@@ -152,7 +156,7 @@ const SwodlrForm = ({
               placement="top"
               overlay={
                 (
-                  <Tooltip style={{ width: '20rem' }}>
+                  <Tooltip className="swodlr-tooltip">
                     {swodlrToolTips.GranuleExtent}
                   </Tooltip>
                 )
@@ -173,7 +177,6 @@ const SwodlrForm = ({
                   checked={!granuleExtent}
                   onChange={
                     () => {
-                      console.log('running func')
                       handleGranuleExtent(false)
                     }
 
@@ -203,7 +206,7 @@ const SwodlrForm = ({
               placement="top"
               overlay={
                 (
-                  <Tooltip style={{ width: '20rem' }}>
+                  <Tooltip className="swodlr-tooltip">
                     {swodlrToolTips.SamplingGridResolution}
                   </Tooltip>
                 )
@@ -252,7 +255,7 @@ const SwodlrForm = ({
               placement="top"
               overlay={
                 (
-                  <Tooltip style={{ width: '20rem' }}>
+                  <Tooltip className="swodlr-tooltip">
                     {swodlrToolTips.RasterResolution}
                   </Tooltip>
                 )
@@ -265,11 +268,7 @@ const SwodlrForm = ({
             <Form.Group>
               <Form.Control
                 as="select"
-                onChange={
-                  (e) => {
-                    handleRasterResolutionUpdate(e)
-                  }
-                }
+                onChange={handleRasterResolutionUpdate}
                 data-testid="rasterResolutionSelection"
                 value={rasterResolution}
               >
@@ -315,7 +314,7 @@ const SwodlrForm = ({
                               placement="top"
                               overlay={
                                 (
-                                  <Tooltip style={{ width: '20rem' }}>
+                                  <Tooltip className="swodlr-tooltip">
                                     {swodlrToolTips.UTM}
                                   </Tooltip>
                                 )
@@ -330,7 +329,7 @@ const SwodlrForm = ({
                               placement="top"
                               overlay={
                                 (
-                                  <Tooltip style={{ width: '20rem' }}>
+                                  <Tooltip className="swodlr-tooltip">
                                     {swodlrToolTips.MGRS}
                                   </Tooltip>
                                 )

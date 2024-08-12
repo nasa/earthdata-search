@@ -13,10 +13,16 @@ import ResizeObserver from 'resize-observer-polyfill'
 
 import AccessMethod from '../AccessMethod'
 
-global.ResizeObserver = ResizeObserver
+// https://github.com/ZeeCoder/use-resize-observer/issues/40
 
 beforeEach(() => {
+  global.ResizeObserver = ResizeObserver
   jest.clearAllMocks()
+})
+
+afterEach(() => {
+  // Don't share global state between the tests
+  delete global.ResizeObserver
 })
 
 const mockEchoForm = jest.fn(() => (
@@ -513,7 +519,7 @@ describe('AccessMethod component', () => {
     })
 
     describe('and a specific harmony method has been chosen', () => {
-      test('the method description is displayed below in the Select box', () => {
+      test('the method description is displayed below in the Select box', async () => {
         const collectionId = 'collectionId'
         setup({
           accessMethods: {
@@ -531,7 +537,9 @@ describe('AccessMethod component', () => {
           }
         })
 
-        expect(screen.getByText('test description')).toBeInTheDocument()
+        await waitFor(() => {
+          expect(screen.getByText('test description')).toBeInTheDocument()
+        })
       })
     })
 
@@ -559,8 +567,9 @@ describe('AccessMethod component', () => {
     })
 
     describe('when supportedOutputFormats exist', () => {
-      test('displays outputFormat field', () => {
+      test('displays outputFormat field', async () => {
         const collectionId = 'collectionId'
+
         setup({
           accessMethods: {
             harmony0: {
@@ -577,8 +586,10 @@ describe('AccessMethod component', () => {
           selectedAccessMethod: 'harmony0'
         })
 
-        expect(screen.getByText('Choose from output format options like GeoTIFF, NETCDF, and other file types.')).toBeInTheDocument()
-        expect(screen.queryByTestId('access-methods__output-format-options')).toBeInTheDocument()
+        await waitFor(() => {
+          expect(screen.getByText('Choose from output format options like GeoTIFF, NETCDF, and other file types.')).toBeInTheDocument()
+          expect(screen.queryByTestId('access-methods__output-format-options')).toBeInTheDocument()
+        })
       })
 
       test('selecting a output format calls onUpdateAccessMethod', async () => {
@@ -599,20 +610,26 @@ describe('AccessMethod component', () => {
           },
           selectedAccessMethod: 'harmony0'
         })
+
+        const option = await screen.findByRole('option', { name: 'NETCDF-4' })
+
         await user.selectOptions(
           screen.getByTestId('access-methods__output-format-options'),
-          screen.getByRole('option', { name: 'NETCDF-4' })
+          option
         )
 
         expect(screen.getByRole('option', { name: 'NETCDF-4' }).selected).toBe(true)
-        expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-        expect(onUpdateAccessMethod).toHaveBeenCalledWith({
-          collectionId: 'collectionId',
-          method: {
-            harmony0: {
-              selectedOutputFormat: 'application/x-netcdf4'
+
+        await waitFor(() => {
+          expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+          expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+            collectionId: 'collectionId',
+            method: {
+              harmony0: {
+                selectedOutputFormat: 'application/x-netcdf4'
+              }
             }
-          }
+          })
         })
       })
     })
@@ -640,8 +657,8 @@ describe('AccessMethod component', () => {
       })
     })
 
-    describe('when supportedOutputProjections exist', () => {
-      test('displays outputProjection field', () => {
+    describe('when supportedOutputProjections exist THIS IS FAILING', () => {
+      test('displays outputProjection field', async () => {
         const collectionId = 'collectionId'
         setup({
           accessMethods: {
@@ -659,8 +676,10 @@ describe('AccessMethod component', () => {
           selectedAccessMethod: 'harmony0'
         })
 
-        expect(screen.getByText('Choose a desired output projection from supported EPSG Codes.')).toBeInTheDocument()
-        expect(screen.queryByTestId('access-methods__output-projection-options')).toBeInTheDocument()
+        await waitFor(() => {
+          expect(screen.getByText('Choose a desired output projection from supported EPSG Codes.')).toBeInTheDocument()
+          expect(screen.queryByTestId('access-methods__output-projection-options')).toBeInTheDocument()
+        })
       })
 
       test('selecting a output projection calls onUpdateAccessMethod', async () => {
@@ -681,21 +700,24 @@ describe('AccessMethod component', () => {
           },
           selectedAccessMethod: 'harmony0'
         })
+        const option = await screen.findByRole('option', { name: 'EPSG:4326' })
 
         await user.selectOptions(
           screen.getByTestId('access-methods__output-projection-options'),
-          screen.getByRole('option', { name: 'EPSG:4326' })
+          option
         )
 
-        expect(screen.getByRole('option', { name: 'EPSG:4326' }).selected).toBe(true)
-        expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-        expect(onUpdateAccessMethod).toHaveBeenCalledWith({
-          collectionId: 'collectionId',
-          method: {
-            harmony0: {
-              selectedOutputProjection: 'EPSG:4326'
+        await waitFor(() => {
+          expect(screen.getByRole('option', { name: 'EPSG:4326' }).selected).toBe(true)
+          expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+          expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+            collectionId: 'collectionId',
+            method: {
+              harmony0: {
+                selectedOutputProjection: 'EPSG:4326'
+              }
             }
-          }
+          })
         })
       })
     })
@@ -888,7 +910,7 @@ describe('AccessMethod component', () => {
       })
 
       describe('when the temporal selection is recurring', () => {
-        test('sets the checkbox unchecked', () => {
+        test('sets the checkbox unchecked', async () => {
           const collectionId = 'collectionId'
           setup({
             accessMethods: {
@@ -913,7 +935,9 @@ describe('AccessMethod component', () => {
             }
           })
 
-          expect(screen.getByRole('checkbox').checked).toEqual(false)
+          await waitFor(() => {
+            expect(screen.getByRole('checkbox').checked).toEqual(false)
+          })
         })
 
         test('sets the checkbox disabled', () => {

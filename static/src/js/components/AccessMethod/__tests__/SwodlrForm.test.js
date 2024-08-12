@@ -1,11 +1,6 @@
 import React from 'react'
 
-import {
-  act,
-  render,
-  screen,
-  waitFor
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
@@ -262,9 +257,31 @@ describe('SwodlrForm component', () => {
         }
       ])
 
+      // TODO I think we can fix this
       // Because the setGranuleList fn updates the granuleList, we can't check that the right value
       // was also used in the updateAccessCalled as they are chained together by the useEffect.
-      expect(onUpdateAccessMethod).toHaveBeenCalled()
+      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
+      // expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
+      // expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+      //   collectionId: 'collectionId',
+      //   method: {
+      //     swodlr: {
+      //       swodlrData: {
+      //         params: {
+      //           rasterResolution: 90,
+      //           outputSamplingGridType: 'UTM',
+      //           outputGranuleExtentFlag: false
+      //         },
+      //         custom_params: {
+      //           'G3161846518-POCLOUD': {
+      //             mgrsBandAdjust: 1,
+      //             utmZoneAdjust: 0
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }
+      // })
     })
   })
 })
