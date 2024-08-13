@@ -7,6 +7,7 @@ import {
   browseGranuleImage,
   defaultClick,
   granuleFilter,
+  finishedCollectionsRendering,
   timeline,
   map,
   relatedCollection,
@@ -491,6 +492,25 @@ describe('events', () => {
         relatedCollectionAction: 'view',
         relatedCollectionLabel: 'TEST_ID'
       })
+    })
+  })
+
+  describe('finishedCollectionsRendering', () => {
+    test('prints the correct timing to the console', () => {
+      // Set start time to 10, current time to 15 and expect a difference of 5
+      const logSpy = jest.spyOn(console, 'log')
+      jest.spyOn(Date, 'now').mockImplementation(() => 15)
+      const initialState = {
+        searchResults: {
+          collections: {
+            timerStart: 10
+          }
+        }
+      }
+
+      finishedCollectionsRendering(initialState)
+
+      expect(logSpy).toHaveBeenCalledWith('[performance] Collections load time:', 5)
     })
   })
 })
