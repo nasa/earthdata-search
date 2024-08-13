@@ -42,6 +42,7 @@ const setup = (overrideProps) => {
   )
 
   return {
+    props,
     onInputBlur,
     onChange,
     onClearClick,
@@ -100,7 +101,11 @@ describe('Datepicker component', () => {
     test('onInputChange gets triggered', async () => {
       const user = userEvent.setup()
 
-      const { onChange } = setup()
+      const { onChange, props } = setup()
+      const { picker } = props
+
+      const requestAnimationFrameSpy = jest.spyOn(window, 'requestAnimationFrame')
+      const closeCalendarSpy = jest.spyOn(picker.current, '_closeCalendar')
 
       const datePickerInput = screen.getByRole('textbox', { name: 'Date Time' })
 
@@ -110,6 +115,8 @@ describe('Datepicker component', () => {
         await user.type(datePickerInput, '1967')
       })
 
+      expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(4)
+      expect(closeCalendarSpy).toHaveBeenCalledTimes(4)
       expect(onChange).toHaveBeenCalledTimes(4)
     })
   })
