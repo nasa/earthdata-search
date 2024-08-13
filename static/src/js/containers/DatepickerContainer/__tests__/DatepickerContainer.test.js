@@ -28,6 +28,24 @@ function setup(overrideProps) {
 }
 
 describe('DatepickerContainer component', () => {
+  describe('when input is of type YYYY-MM-DDTHH:mm:ss.SSSZ', () => {
+    test('validate  date is parsed correctly', () => {
+      const { enzymeWrapper } = setup(
+        {
+          type: 'start',
+          value: '2006-04-01T13:01:00.000Z'
+        }
+      )
+
+      // Because this is a shallow render the Datepicker component doesn't render so we have
+      // to manually create a 'current' instance of the component
+      enzymeWrapper.instance().picker.current = {}
+      enzymeWrapper.instance().picker.current.setState = jest.fn()
+
+      expect(enzymeWrapper.instance().props.value).toEqual('2006-04-01T13:01:00.000Z')
+    })
+  })
+
   describe('onInputBlur', () => {
     test('sets the picker state', () => {
       const { enzymeWrapper } = setup()
