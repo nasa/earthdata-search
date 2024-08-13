@@ -7,7 +7,7 @@ import {
   computeFacets
 } from './helpers'
 
-import staticConfig from '../../../../../static.config.json'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 const { dataLayer = [] } = window
 
@@ -315,7 +315,8 @@ export const relatedCollection = (action) => {
  */
 export const finishedCollectionsRendering = (state) => {
   const { timerStart } = state.searchResults.collections
-  if (staticConfig.application.version === 'dev') {
+  const { version } = getApplicationConfig()
+  if (version === 'dev') {
     const renderingTime = Date.now() - timerStart
     console.log('[performance] Collections load time:', renderingTime)
   }
