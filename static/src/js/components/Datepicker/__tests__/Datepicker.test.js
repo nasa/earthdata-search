@@ -34,7 +34,7 @@ const setup = (overrideProps) => {
   }
 
   // Rendering like this so that we can check the onBlur of Datepicker
-  render(
+  const { rerender } = render(
     <div>
       <input aria-label="basic-input" />
       <Datepicker {...props} />
@@ -43,6 +43,7 @@ const setup = (overrideProps) => {
 
   return {
     props,
+    rerender,
     onInputBlur,
     onChange,
     onClearClick,
@@ -55,8 +56,8 @@ describe('Datepicker component', () => {
     test('creates the custom buttons', () => {
       setup()
 
-      const buttonToday = screen.getByText('Today')
-      const buttonClear = screen.getByText('Clear')
+      const buttonToday = screen.getByRole('button', { name: 'Today' })
+      const buttonClear = screen.getByRole('button', { name: 'Clear' })
 
       expect(buttonToday).toBeInTheDocument()
       expect(buttonClear).toBeInTheDocument()
@@ -171,6 +172,39 @@ describe('Datepicker component', () => {
 
       expect(onChange).toHaveBeenCalledTimes(6)
       expect(onInputBlur).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('when rerendering the input', () => {
+    test('picker navigates as expected', async () => {
+      const {
+        rerender,
+        props
+      } = setup()
+
+      const { picker } = props
+
+      const navigateSpy = jest.spyOn(picker.current, 'navigate')
+
+      rerender(
+        <div>
+          <input aria-label="basic-input" />
+          <Datepicker {...props} />
+        </div>
+      )
+
+      expect(navigateSpy).not.toHaveBeenCalled()
+
+      props.viewMode = 'month'
+
+      rerender(
+        <div>
+          <input aria-label="basic-input" />
+          <Datepicker {...props} />
+        </div>
+      )
+
+      expect(navigateSpy).toHaveBeenCalled()
     })
   })
 })
