@@ -58,24 +58,20 @@ const SwodlrForm = ({
     const customParams = {}
     // TODO we need a guard in case it comes back as [undefined, undefined]
 
-    if (!granuleList[0] === undefined) {
-      // The first element is undefined
-      granuleList.forEach((granule) => {
-        const { id } = granule
-        console.log('🚀 ~ file: SwodlrForm.jsx:62 ~ granuleList.forEach ~ id:', id)
-        customParams[id] = {}
-        if (sampleGrid === 'UTM') {
-          console.log('🚀 ~ file: SwodlrForm.jsx:60 ~ granuleList.forEach ~ sampleGrid:', sampleGrid)
-          customParams[id].utmZoneAdjust = granule.utmZoneAdjust ? granule.utmZoneAdjust : 0
-          customParams[id].mgrsBandAdjust = granule.mgrsBandAdjust ? granule.mgrsBandAdjust : 0
-        } else {
-          customParams[id].utmZoneAdjust = null
-          customParams[id].mgrsBandAdjust = null
-        }
-      })
-    } else {
-      console.log('Granule array was undefiend')
-    }
+    // The first element is undefined
+    granuleList.forEach((granule) => {
+      const { id } = granule
+      console.log('🚀 ~ file: SwodlrForm.jsx:62 ~ granuleList.forEach ~ id:', id)
+      customParams[id] = {}
+      if (sampleGrid === 'UTM') {
+        console.log('🚀 ~ file: SwodlrForm.jsx:60 ~ granuleList.forEach ~ sampleGrid:', sampleGrid)
+        customParams[id].utmZoneAdjust = granule.utmZoneAdjust ? granule.utmZoneAdjust : 0
+        customParams[id].mgrsBandAdjust = granule.mgrsBandAdjust ? granule.mgrsBandAdjust : 0
+      } else {
+        customParams[id].utmZoneAdjust = null
+        customParams[id].mgrsBandAdjust = null
+      }
+    })
 
     console.log('🚀 ~ file: SwodlrForm.jsx:83 ~ handleSwoldrOptions ~ granuleExtent:', granuleExtent)
 
