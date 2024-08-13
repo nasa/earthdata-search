@@ -5,7 +5,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'serverless/src/**/*.js',
-    'static/src/**/*.js',
+    'static/src/**/*.{js,jsx}',
     'sharedUtils/**/*.js'
   ],
   moduleNameMapper: {
