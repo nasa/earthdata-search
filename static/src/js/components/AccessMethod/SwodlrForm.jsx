@@ -269,19 +269,19 @@ const SwodlrForm = ({
               <Form.Control
                 as="select"
                 onChange={handleRasterResolutionUpdate}
-                data-testid="rasterResolutionSelection"
+                aria-label="rasterResolutionSelection"
                 value={rasterResolution}
               >
                 {
                   // Raster Resolution Dropdown
                   sampleGrid === 'GEO'
                     ? geoRasterOptions.map((option) => (
-                      <option value={option.value} key={option.value} data-testid={`geo-raster-selection-${option.value}`}>
+                      <option value={option.value} key={option.value} aria-label={`geo-raster-selection-${option.value}`}>
                         {option.title}
                       </option>
                     ))
                     : utmRasterOptions.map((option) => (
-                      <option value={option.value} key={option.value} data-testid={`utm-raster-selection-${option.value}`}>
+                      <option value={option.value} key={option.value} aria-label={`utm-raster-selection-${option.value}`}>
                         {option.title}
                       </option>
                     ))
@@ -352,7 +352,7 @@ const SwodlrForm = ({
                                   label="+1"
                                   name={`${granule.id}-UTM-zone`}
                                   type="radio"
-                                  data-testid={`${granule.id}-plus-1-UTM-zone`}
+                                  aria-label={`${granule.id}-plus-1-UTM-zone`}
                                   value={1}
                                   onChange={
                                     (e) => {
@@ -365,7 +365,7 @@ const SwodlrForm = ({
                                   label="0"
                                   name={`${granule.id}-UTM-zone`}
                                   type="radio"
-                                  data-testid={`${granule.id}-0-UTM-zone`}
+                                  aria-label={`${granule.id}-0-UTM-zone`}
                                   value={0}
                                   defaultChecked
                                   onChange={
@@ -379,7 +379,7 @@ const SwodlrForm = ({
                                   label="-1"
                                   name={`${granule.id}-UTM-zone`}
                                   type="radio"
-                                  data-testid={`${granule.id}-minus-1-UTM-zone`}
+                                  aria-label={`${granule.id}-minus-1-UTM-zone`}
                                   value={-1}
                                   onChange={
                                     (e) => {
@@ -394,7 +394,7 @@ const SwodlrForm = ({
                                   label="+1"
                                   name={`${granule.id}-MGRS-band`}
                                   type="radio"
-                                  data-testid={`${granule.id}-plus-1-MGRS-band`}
+                                  aria-label={`${granule.id}-plus-1-MGRS-band`}
                                   value={1}
                                   onChange={
                                     (e) => {
@@ -407,7 +407,7 @@ const SwodlrForm = ({
                                   label="0"
                                   name={`${granule.id}-MGRS-band`}
                                   type="radio"
-                                  data-testid={`${granule.id}-0-MGRS-band`}
+                                  aria-label={`${granule.id}-0-MGRS-band`}
                                   value={0}
                                   defaultChecked
                                   onChange={
@@ -421,7 +421,7 @@ const SwodlrForm = ({
                                   label="-1"
                                   name={`${granule.id}-MGRS-band`}
                                   type="radio"
-                                  data-testid={`${granule.id}-minus-1-MGRS-band`}
+                                  aria-label={`${granule.id}-minus-1-MGRS-band`}
                                   value={-1}
                                   onChange={
                                     (e) => {

@@ -121,7 +121,7 @@ describe('SwodlrForm component', () => {
 
       const { onUpdateAccessMethod } = setup()
 
-      const rasterResolutionSelect = screen.getByTestId('rasterResolutionSelection')
+      const rasterResolutionSelect = screen.getByRole('combobox', { name: 'rasterResolutionSelection' })
 
       await user.selectOptions(rasterResolutionSelect, '120')
 
@@ -211,7 +211,7 @@ describe('SwodlrForm component', () => {
       const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
       await user.click(advancedOptionsToggleButton)
 
-      const firstGranuleUTMZonePlusOne = screen.getByTestId('G3161846518-POCLOUD-plus-1-UTM-zone')
+      const firstGranuleUTMZonePlusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-plus-1-UTM-zone' })
       await user.click(firstGranuleUTMZonePlusOne)
 
       expect(setGranuleList).toHaveBeenCalledWith([
@@ -260,7 +260,7 @@ describe('SwodlrForm component', () => {
       const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
       await user.click(advancedOptionsToggleButton)
 
-      const firstGranuleUTMZonePlusOne = screen.getByTestId('G3161846518-POCLOUD-plus-1-MGRS-band')
+      const firstGranuleUTMZonePlusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-plus-1-MGRS-band' })
       await user.click(firstGranuleUTMZonePlusOne)
 
       expect(setGranuleList).toHaveBeenCalledWith([
