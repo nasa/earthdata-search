@@ -65,14 +65,25 @@ export const isAccessMethodValid = (projectCollection, collectionMetadata) => {
     hasChanged = false
   } = selectedMethod
 
+  console.log('🚀 ~ file: accessMethods.js:65 ~ isAccessMethodValid ~ isValid:', isValid)
   let esiNeedsCustomization = false
+  let swoldrTooManyGranules = false
+
   if (selectedAccessMethod.startsWith('esi') && !hasChanged) {
     esiNeedsCustomization = true
   }
 
+  console.log('🚀 ~ file: accessMethods.js:77 ~ isAccessMethodValid ~ selectedAccessMethod:', selectedAccessMethod)
+  // TODO prevent from selecting swodlr if count it too high
+  if (selectedAccessMethod.startsWith('swodlr') && granuleCount > 10) {
+    console.log('🚀 ~ file: accessMethods.js:75 ~ isAccessMethodValid ~ granuleCount:', granuleCount)
+    console.log('Granule count is too high 🚀')
+    swoldrTooManyGranules = true
+  }
+
   return {
     ...validAccessMethod,
-    valid: isValid && !esiNeedsCustomization,
+    valid: isValid && !esiNeedsCustomization && !swoldrTooManyGranules,
     needsCustomization: esiNeedsCustomization
   }
 }

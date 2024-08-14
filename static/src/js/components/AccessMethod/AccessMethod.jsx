@@ -959,7 +959,7 @@ const AccessMethod = ({
           )
         }
         {
-          supportsSwodlr && (
+          (supportsSwodlr && granuleList.length <= 10) && (
             <SwodlrForm
               granuleList={granuleList}
               collectionId={collectionId}

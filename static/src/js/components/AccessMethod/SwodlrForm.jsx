@@ -460,7 +460,11 @@ SwodlrForm.propTypes = {
   selectedAccessMethod: PropTypes.string.isRequired,
   setGranuleList: PropTypes.func.isRequired,
   // TODO collectionId can be an array from AccessMethod
-  collectionId: PropTypes.string,
+  // Metadata default props are metadata: {} of which collectionId is from
+  collectionId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({})
+  ]),
   granuleList: PropTypes.arrayOf(PropTypes.shape({
     utmZoneAdjust: PropTypes.number,
     mgrsBandAdjust: PropTypes.number
