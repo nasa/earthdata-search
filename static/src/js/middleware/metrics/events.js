@@ -9,6 +9,8 @@ import {
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
+const { version } = getApplicationConfig()
+
 const { dataLayer = [] } = window
 
 /**
@@ -313,11 +315,9 @@ export const relatedCollection = (action) => {
  * TODO: push metric to datalayer for use with Google Analytics
  * @param {Object} state - The current state.
  */
-export const finishedCollectionsRendering = (state) => {
-  const { timerStart } = state.searchResults.collections
-  const { version } = getApplicationConfig()
+export const finishedCollectionsRendering = (action) => () => {
   if (version === 'dev') {
-    const renderingTime = Date.now() - timerStart
-    console.log('[performance] Collections load time:', renderingTime)
+    const { duration } = action.payload
+    console.log('[performance] Collections load time:', duration)
   }
 }
