@@ -31,7 +31,7 @@ import {
   METRICS_TIMING
 } from './constants'
 
-const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
+const createMetricsMiddleware = () => ({ getState, dispatch }) => (next) => (action) => {
   if (action.type === LOCATION_CHANGE) {
     virtualPageview(action, getState())
   }
@@ -81,7 +81,8 @@ const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
   }
 
   if (action.type === METRICS_FINISHED_COLLECTIONS_RENDERING) {
-    finishedCollectionsRendering(getState())
+    console.log('🚀 ~ createMetricsMiddleware ~ action:', action)
+    dispatch(finishedCollectionsRendering(action))
   }
 
   return next(action)

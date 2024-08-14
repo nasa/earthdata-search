@@ -62,8 +62,9 @@ export const metricsTiming = (payload) => ({
   payload
 })
 
-export const metricsFinishedCollectionsRendering = () => ({
-  type: METRICS_FINISHED_COLLECTIONS_RENDERING
+export const metricsFinishedCollectionsRendering = (payload) => ({
+  type: METRICS_FINISHED_COLLECTIONS_RENDERING,
+  payload
 })
 
 export const metricsCollectionSortChange = (payload) => ({

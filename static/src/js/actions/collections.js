@@ -211,7 +211,11 @@ export const getCollections = () => (dispatch, getState) => {
 
       dispatch(updateFacets(payload))
 
-      dispatch(metricsFinishedCollectionsRendering())
+      const { searchResults } = getState()
+
+      dispatch(metricsFinishedCollectionsRendering({
+        duration: Date.now() - searchResults.collections.timerStart
+      }))
     })
     .catch((error) => {
       if (isCancel(error)) return
