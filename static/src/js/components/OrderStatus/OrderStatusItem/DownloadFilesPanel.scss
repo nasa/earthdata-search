@@ -4,12 +4,12 @@
     margin: 0;
     padding: 0;
     list-style: none;
-  }
 
-  li {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+    li {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
 
   &__pre {
