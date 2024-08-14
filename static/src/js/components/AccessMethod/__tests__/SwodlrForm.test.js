@@ -250,6 +250,7 @@ describe('SwodlrForm component', () => {
         const firstGranuleUTMZonePlusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-plus-1-UTM-zone' })
         await user.click(firstGranuleUTMZonePlusOne)
 
+        expect(setGranuleList).toHaveBeenCalledTimes(1)
         expect(setGranuleList).toHaveBeenCalledWith([
           {
             boxes: [
@@ -299,6 +300,7 @@ describe('SwodlrForm component', () => {
         const firstGranuleUTMZoneMinusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-minus-1-UTM-zone' })
         await user.click(firstGranuleUTMZoneMinusOne)
 
+        expect(setGranuleList).toHaveBeenCalledTimes(1)
         expect(setGranuleList).toHaveBeenCalledWith([
           {
             boxes: [
@@ -341,31 +343,36 @@ describe('SwodlrForm component', () => {
       // TODO this is only called once because its the default condition
       test('updates utmZoneAdjust to `0` calls onUpdateAccessMethod correctly', async () => {
         const user = userEvent.setup()
-        const { onUpdateAccessMethod } = setup()
+        const { setGranuleList, onUpdateAccessMethod } = setup()
 
         const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
         await user.click(advancedOptionsToggleButton)
 
+        // Set to negative 1 first since 0 is the default
+        const firstGranuleUTMZoneMinusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-minus-1-UTM-zone' })
+        await user.click(firstGranuleUTMZoneMinusOne)
+
         const firstGranuleUTMZoneZero = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-0-UTM-zone' })
         await user.click(firstGranuleUTMZoneZero)
-        // Expect(setGranuleList).toHaveBeenCalledWith([
-        //   {
-        //     boxes: [
-        //       '69.2764124 19.7592281 70.8859329 24.4776719'
-        //     ],
-        //     browseFlag: true,
-        //     id: 'G3161846518-POCLOUD',
-        //     isOpenSearch: false,
-        //     title: 'SWOT_L2_HR_Raster_250m_UTM34W_N_x_x_x_018_113_141F_20240713T230857_20240713T230911_PIC0_01',
-        //     updated: '2024-07-17T09:48:54.667Z',
-        //     utmZoneAdjust: 0
-        //   }
-        // ])
+        expect(setGranuleList).toBeCalledTimes(2)
+        expect(setGranuleList).toHaveBeenCalledWith([
+          {
+            boxes: [
+              '69.2764124 19.7592281 70.8859329 24.4776719'
+            ],
+            browseFlag: true,
+            id: 'G3161846518-POCLOUD',
+            isOpenSearch: false,
+            title: 'SWOT_L2_HR_Raster_250m_UTM34W_N_x_x_x_018_113_141F_20240713T230857_20240713T230911_PIC0_01',
+            updated: '2024-07-17T09:48:54.667Z',
+            utmZoneAdjust: 0
+          }
+        ])
 
-        // Because the setGranuleList fn updates the granuleList, we can't check that the right value
-        // was also used in the updateAccessCalled as they are chained together by the useEffect.
-        expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-        expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+        // TODO does 3 times make sense here
+        expect(onUpdateAccessMethod).toHaveBeenCalledTimes(3)
+        // OnUpdateAccessMethod.mock.calls[2][0]
+        expect(onUpdateAccessMethod.mock.calls[2][0]).toEqual({
           collectionId: 'collectionId',
           method: {
             swodlr: {
@@ -388,53 +395,161 @@ describe('SwodlrForm component', () => {
       })
     })
 
-    test('can update individual granules MGRS Adjust', async () => {
-      const user = userEvent.setup()
-      const { setGranuleList, onUpdateAccessMethod } = setup()
+    describe('when updating individual granules MGRS Adjust', () => {
+      test('updates MGRS to `1 `calls onUpdateAccessMethod correctly', async () => {
+        const user = userEvent.setup()
+        const { setGranuleList, onUpdateAccessMethod } = setup()
 
-      const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
-      await user.click(advancedOptionsToggleButton)
+        const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
+        await user.click(advancedOptionsToggleButton)
 
-      const firstGranuleUTMZonePlusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-plus-1-MGRS-band' })
-      await user.click(firstGranuleUTMZonePlusOne)
+        const firstGranuleMGRSPlusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-plus-1-MGRS-band' })
+        await user.click(firstGranuleMGRSPlusOne)
 
-      expect(setGranuleList).toHaveBeenCalledWith([
-        {
-          boxes: [
-            '69.2764124 19.7592281 70.8859329 24.4776719'
-          ],
-          browseFlag: true,
-          id: 'G3161846518-POCLOUD',
-          isOpenSearch: false,
-          title: 'SWOT_L2_HR_Raster_250m_UTM34W_N_x_x_x_018_113_141F_20240713T230857_20240713T230911_PIC0_01',
-          updated: '2024-07-17T09:48:54.667Z',
-          mgrsBandAdjust: 1
-        }
-      ])
+        expect(setGranuleList).toHaveBeenCalledTimes(1)
+        expect(setGranuleList).toHaveBeenCalledWith([
+          {
+            boxes: [
+              '69.2764124 19.7592281 70.8859329 24.4776719'
+            ],
+            browseFlag: true,
+            id: 'G3161846518-POCLOUD',
+            isOpenSearch: false,
+            title: 'SWOT_L2_HR_Raster_250m_UTM34W_N_x_x_x_018_113_141F_20240713T230857_20240713T230911_PIC0_01',
+            updated: '2024-07-17T09:48:54.667Z',
+            mgrsBandAdjust: 1
+          }
+        ])
 
-      // TODO I think we can fix this
-      // Because the setGranuleList fn updates the granuleList, we can't check that the right value
-      // was also used in the updateAccessCalled as they are chained together by the useEffect.
-      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
-      expect(onUpdateAccessMethod).toHaveBeenCalledWith({
-        collectionId: 'collectionId',
-        method: {
-          swodlr: {
-            swodlrData: {
-              params: {
-                rasterResolution: 90,
-                outputSamplingGridType: 'UTM',
-                outputGranuleExtentFlag: false
-              },
-              custom_params: {
-                'G3161846518-POCLOUD': {
-                  mgrsBandAdjust: 1,
-                  utmZoneAdjust: 0
+        // TODO I think we can fix this
+        // Because the setGranuleList fn updates the granuleList, we can't check that the right value
+        // was also used in the updateAccessCalled as they are chained together by the useEffect.
+        expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
+        expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+          collectionId: 'collectionId',
+          method: {
+            swodlr: {
+              swodlrData: {
+                params: {
+                  rasterResolution: 90,
+                  outputSamplingGridType: 'UTM',
+                  outputGranuleExtentFlag: false
+                },
+                custom_params: {
+                  'G3161846518-POCLOUD': {
+                    mgrsBandAdjust: 1,
+                    utmZoneAdjust: 0
+                  }
                 }
               }
             }
           }
-        }
+        })
+      })
+
+      test('updates MGRS to `-1 `calls onUpdateAccessMethod correctly', async () => {
+        const user = userEvent.setup()
+        const { setGranuleList, onUpdateAccessMethod } = setup()
+
+        const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
+        await user.click(advancedOptionsToggleButton)
+
+        const firstGranuleMGRSMinusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-minus-1-MGRS-band' })
+        await user.click(firstGranuleMGRSMinusOne)
+
+        expect(setGranuleList).toHaveBeenCalledTimes(1)
+        expect(setGranuleList).toHaveBeenCalledWith([
+          {
+            boxes: [
+              '69.2764124 19.7592281 70.8859329 24.4776719'
+            ],
+            browseFlag: true,
+            id: 'G3161846518-POCLOUD',
+            isOpenSearch: false,
+            title: 'SWOT_L2_HR_Raster_250m_UTM34W_N_x_x_x_018_113_141F_20240713T230857_20240713T230911_PIC0_01',
+            updated: '2024-07-17T09:48:54.667Z',
+            mgrsBandAdjust: -1
+          }
+        ])
+
+        // TODO I think we can fix this
+        // Because the setGranuleList fn updates the granuleList, we can't check that the right value
+        // was also used in the updateAccessCalled as they are chained together by the useEffect.
+        expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
+        expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+          collectionId: 'collectionId',
+          method: {
+            swodlr: {
+              swodlrData: {
+                params: {
+                  rasterResolution: 90,
+                  outputSamplingGridType: 'UTM',
+                  outputGranuleExtentFlag: false
+                },
+                custom_params: {
+                  'G3161846518-POCLOUD': {
+                    mgrsBandAdjust: -1,
+                    utmZoneAdjust: 0
+                  }
+                }
+              }
+            }
+          }
+        })
+      })
+
+      test('updates MGRS to `0 `calls onUpdateAccessMethod correctly', async () => {
+        const user = userEvent.setup()
+        const { setGranuleList, onUpdateAccessMethod } = setup()
+
+        const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
+        await user.click(advancedOptionsToggleButton)
+
+        const firstGranuleMGRSMinusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-minus-1-MGRS-band' })
+        await user.click(firstGranuleMGRSMinusOne)
+
+        const firstGranuleMGRSZero = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-0-MGRS-band' })
+        await user.click(firstGranuleMGRSZero)
+        expect(setGranuleList).toBeCalledTimes(2)
+
+        expect(setGranuleList).toHaveBeenCalledWith([
+          {
+            boxes: [
+              '69.2764124 19.7592281 70.8859329 24.4776719'
+            ],
+            browseFlag: true,
+            id: 'G3161846518-POCLOUD',
+            isOpenSearch: false,
+            title: 'SWOT_L2_HR_Raster_250m_UTM34W_N_x_x_x_018_113_141F_20240713T230857_20240713T230911_PIC0_01',
+            updated: '2024-07-17T09:48:54.667Z',
+            mgrsBandAdjust: 0
+          }
+        ])
+
+        // TODO I think we can fix this
+        // Because the setGranuleList fn updates the granuleList, we can't check that the right value
+        // was also used in the updateAccessCalled as they are chained together by the useEffect.
+        expect(onUpdateAccessMethod).toHaveBeenCalledTimes(3)
+        expect(onUpdateAccessMethod.mock.calls[2][0]).toEqual({
+          collectionId: 'collectionId',
+          method: {
+            swodlr: {
+              swodlrData: {
+                params: {
+                  rasterResolution: 90,
+                  outputSamplingGridType: 'UTM',
+                  outputGranuleExtentFlag: false
+                },
+                custom_params: {
+                  'G3161846518-POCLOUD': {
+                    mgrsBandAdjust: 0,
+                    utmZoneAdjust: 0
+                  }
+                }
+              }
+            }
+          }
+        })
       })
     })
   })
