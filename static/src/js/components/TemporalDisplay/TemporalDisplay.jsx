@@ -48,7 +48,7 @@ export const TemporalDisplay = memo(({
     return null
   }
 
-  const format = moment.ISO_8601
+  const format = 'YYYY-MM-DDTHH:mm:ss.SSSZ'
   const startDateObject = moment.utc(startDate, format, true)
   const endDateObject = moment.utc(endDate, format, true)
   const temporalStartDisplay = startDate

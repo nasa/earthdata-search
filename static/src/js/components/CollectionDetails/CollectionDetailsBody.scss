@@ -83,19 +83,10 @@
     font-weight: 700;
     font-size: .925rem;
     line-height: 1.5rem;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline !important;
-    }
 
     .collection-details-body__links--horizontal & {
       display: inline-block;
       vertical-align: baseline;
-
-      &:hover {
-        text-decoration: underline;
-      }
 
       &:last-child {
         padding-top:   calc($spacer / 8);
@@ -219,11 +210,5 @@
     font-size: 0.925rem;
     line-height: 0.925rem;
     color: $color__blue--dark;
-
-    &:hover,
-    &:focus,
-    &:active {
-      text-decoration: underline;
-    }
   }
 }

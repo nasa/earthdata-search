@@ -593,7 +593,7 @@ export class Panels extends PureComponent {
           draggable && (
             <>
               <div
-                className="panels__handle"
+                className="panels__handle link"
                 data-testid="panels__handle"
                 aria-label={`${handleTooltipState} panel (${keyboardShortcuts.togglePanel})`}
                 role="button"

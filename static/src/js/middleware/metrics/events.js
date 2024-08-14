@@ -216,6 +216,46 @@ export const spatialSelection = (action) => {
 }
 
 /**
+* Pushes a granuleFilter event on the dataLayer.
+* @param {Object} action - The action.
+*/
+export const granuleFilter = (action) => {
+  const { payload } = action
+  const {
+    type,
+    value
+  } = payload
+
+  dataLayer.push({
+    event: 'granuleFilter',
+    granuleFilterCategory: 'Granule Filter',
+    granuleFilterEventAction: type,
+    granuleFilterEventValue: value
+  })
+}
+
+/**
+* Pushes a browse-granule-image event on the dataLayer.
+* @param {Object} action - The action.
+*/
+export const browseGranuleImage = (action) => {
+  const { payload } = action
+  const {
+    modalOpen,
+    granuleId,
+    value
+  } = payload
+
+  dataLayer.push({
+    event: 'browseGranuleImage',
+    browseGranuleImageCategory: 'Browse Granule Image',
+    browseGranuleImageModalOpen: modalOpen,
+    browseGranuleImageGranuleId: granuleId,
+    browseGranuleImageValue: value
+  })
+}
+
+/**
 * Pushes a timing event on the dataLayer.
 * @param {Object} action - The action.
 */

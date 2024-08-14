@@ -1,6 +1,8 @@
 import {
+  METRICS_BROWSE_GRANULE_IMAGE,
   METRICS_CLICK,
   METRICS_DATA_ACCESS,
+  METRICS_GRANULE_FILTER,
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
@@ -34,8 +36,18 @@ export const metricsMap = (type) => ({
   }
 })
 
+export const metricsBrowseGranuleImage = (payload) => ({
+  type: METRICS_BROWSE_GRANULE_IMAGE,
+  payload
+})
+
 export const metricsSpatialEdit = (payload) => ({
   type: METRICS_SPATIAL_EDIT,
+  payload
+})
+
+export const metricsGranuleFilter = (payload) => ({
+  type: METRICS_GRANULE_FILTER,
   payload
 })
 

@@ -104,6 +104,7 @@
 
   submitHarmonyOrder:
     handler: serverless/src/submitHarmonyOrder/handler.default
+    memorySize: 256
     timeout: 600
     events:
       - sqs:
@@ -522,6 +523,7 @@
 
   retrieveGranuleLinks:
     handler: serverless/src/retrieveGranuleLinks/handler.default
+    memorySize: 256
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:

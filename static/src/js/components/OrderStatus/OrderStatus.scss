@@ -20,12 +20,10 @@
 
   &__collection-link {
     color: inherit;
-    text-decoration: underline;
 
     &:hover,
     &:active {
       color: inherit;
-      text-decoration: underline;
     }
   }
 
@@ -56,12 +54,10 @@
 
   &__footer-link {
     color: $color__white;
-    text-decoration: underline;
 
     &:hover,
     &:active {
       color: $color__white;
-      text-decoration: underline;
     }
   }
 }

@@ -62,11 +62,9 @@ describe('GranuleDownloadButton component', () => {
         }
       })
 
-      const button = enzymeWrapper.find(Button)
-
-      expect(button.props().disabled).toBeFalsy()
-
       const portalLinkContainer = enzymeWrapper.find(PortalLinkContainer)
+
+      expect(portalLinkContainer.props().disabled).toBeFalsy()
 
       portalLinkContainer.props().onClick()
 
@@ -82,11 +80,9 @@ describe('GranuleDownloadButton component', () => {
       test('clicking the button calls onAddProjectCollection and onChangePath', () => {
         const { enzymeWrapper, props } = setup()
 
-        const button = enzymeWrapper.find(Button)
-
-        expect(button.props().disabled).toBeFalsy()
-
         const portalLinkContainer = enzymeWrapper.find(PortalLinkContainer)
+
+        expect(portalLinkContainer.props().disabled).toBeFalsy()
 
         portalLinkContainer.props().onClick()
 
@@ -106,11 +102,8 @@ describe('GranuleDownloadButton component', () => {
           }
         })
 
-        const button = enzymeWrapper.find(Button)
-
-        expect(button.props().disabled).toBeFalsy()
-
         const portalLinkContainer = enzymeWrapper.find(PortalLinkContainer)
+        expect(portalLinkContainer.props().disabled).toBeFalsy()
 
         portalLinkContainer.props().onClick()
 
@@ -136,9 +129,9 @@ describe('GranuleDownloadButton component', () => {
         }
       })
 
-      const button = enzymeWrapper.find(Button)
+      const portalLinkContainer = enzymeWrapper.find(PortalLinkContainer)
 
-      expect(button.props().disabled).toBeTruthy()
+      expect(portalLinkContainer.props().disabled).toBeTruthy()
     })
   })
 })

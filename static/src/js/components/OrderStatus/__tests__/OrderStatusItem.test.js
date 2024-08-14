@@ -1942,6 +1942,132 @@ describe('OrderStatusItem', () => {
         expect(orderStatusTab.props().title).toEqual('Order Status')
         expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
+
+      test('renders an updated progress state', () => {
+        const { enzymeWrapper, props } = setup({
+          type: 'harmony',
+          collection: {
+            id: 1,
+            collection_id: 'TEST_COLLECTION_111',
+            retrieval_collection_id: '42',
+            retrieval_id: '54',
+            collection_metadata: {
+              id: 'TEST_COLLECTION_111',
+              title: 'Test Dataset ID',
+              shortName: 'testDataset',
+              versionId: '1'
+            },
+            access_method: {
+              type: 'Harmony'
+            },
+            granule_count: 100,
+            orders: [{
+              type: 'Harmony',
+              state: 'successful',
+              order_information: {
+                jobID: 'e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
+                links: [
+                  {
+                    rel: 'self',
+                    href: 'https://harmony.uat.earthdata.nasa.gov/jobs/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
+                    type: 'application/json',
+                    title: 'Job Status'
+                  },
+                  {
+                    title: 'STAC catalog',
+                    href: 'https://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/',
+                    rel: 'stac-catalog-json',
+                    type: 'application/json'
+                  },
+                  {
+                    href: 'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png',
+                    title: 'G1233800390-EEDTEST',
+                    type: 'image/png',
+                    rel: 'data',
+                    bbox: [
+                      -180,
+                      64.2,
+                      -169.6,
+                      71.6
+                    ],
+                    temporal: {
+                      start: '2020-01-06T08:00:00.000Z',
+                      end: '2020-01-06T09:59:59.000Z'
+                    }
+                  }
+                ],
+                status: 'complete_with_errors',
+                message: 'The job has completed with errors. See the errors field for more details',
+                request: 'https://harmony.uat.earthdata.nasa.gov/C1233800302-EEDTEST/ogc-api-coverages/1.0.0/collections/all/coverage/rangeset?forceAsync=true&granuleIds=G1233800432-EEDTEST%2CG1233800431-EEDTEST%2CG1233800430-EEDTEST%2CG1233800429-EEDTEST%2CG1233800428-EEDTEST%2CG1233800427-EEDTEST%2CG1233800426-EEDTEST%2CG1233800513-EEDTEST%2CG1233800512-EEDTEST%2CG1233800425-EEDTEST%2CG1233800424-EEDTEST%2CG1233800423-EEDTEST%2CG1233800422-EEDTEST%2CG1233800421-EEDTEST%2CG1233800420-EEDTEST%2CG1233800419-EEDTEST%2CG1233800418-EEDTEST%2CG1233800417-EEDTEST%2CG1233800511-EEDTEST%2CG1233800510-EEDTEST%2CG1233800416-EEDTEST%2CG1233800415-EEDTEST%2CG1233800414-EEDTEST%2CG1233800413-EEDTEST%2CG1233800412-EEDTEST%2CG1233800411-EEDTEST%2CG1233800410-EEDTEST%2CG1233800409-EEDTEST%2CG1233800408-EEDTEST%2CG1233800509-EEDTEST%2CG1233800508-EEDTEST%2CG1233800407-EEDTEST%2CG1233800406-EEDTEST%2CG1233800405-EEDTEST%2CG1233800404-EEDTEST%2CG1233800403-EEDTEST%2CG1233800402-EEDTEST%2CG1233800401-EEDTEST%2CG1233800400-EEDTEST%2CG1233800399-EEDTEST%2CG1233800507-EEDTEST%2CG1233800506-EEDTEST%2CG1233800398-EEDTEST%2CG1233800397-EEDTEST%2CG1233800396-EEDTEST%2CG1233800395-EEDTEST%2CG1233800394-EEDTEST%2CG1233800393-EEDTEST%2CG1233800392-EEDTEST%2CG1233800391-EEDTEST%2CG1233800390-EEDTEST&subset=time(%222020-01-06T08%3A18%3A35.096Z%22%3A%222020-01-10T20%3A38%3A58.262Z%22)&format=image%2Fpng&outputCrs=EPSG%3A4326',
+                progress: 100,
+                username: 'rabbott',
+                createdAt: '2020-09-10T13:50:22.372Z',
+                updatedAt: '2020-09-10T13:50:22.372Z'
+              }
+            }],
+            isLoaded: true
+          }
+        })
+
+        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(true)
+        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
+        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+
+        const header = enzymeWrapper.find('.order-status-item__header')
+
+        expect(header.find(ProgressRing).props().progress).toEqual(100)
+        expect(header.find('.order-status-item__status').text()).toEqual('Complete')
+        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
+        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+
+        let body = enzymeWrapper.find('.order-status-item__body')
+
+        expect(body.length).toBe(0)
+
+        // Expand the body
+        enzymeWrapper.find('.order-status-item__button').simulate('click')
+
+        expect(header.find(ProgressRing).props().progress).toEqual(100)
+        expect(header.find('.order-status-item__status').text()).toEqual('Complete')
+        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
+        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+
+        body = enzymeWrapper.find('.order-status-item__body')
+        expect(body.find(ProgressRing).props().progress).toEqual(100)
+        expect(body.find('.order-status-item__status').text()).toEqual('Complete')
+        expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+
+        expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
+        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Harmony')
+        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+
+        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are done processing and are available for download.')
+        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:The job has completed with errors. See the errors field for more details')
+
+        const tabs = body.find('EDSCTabs')
+
+        expect(tabs.children().length).toEqual(3)
+
+        const linksTab = tabs.childAt(0)
+
+        expect(linksTab.props().title).toEqual('Download Files')
+        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
+        expect(linksTab.childAt(0).props().downloadLinks).toEqual([
+          'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
+        ])
+
+        expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=testDataset_1&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
+
+        const stacLinksTab = tabs.childAt(1)
+        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
+        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([
+          'https://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/'
+        ])
+
+        const orderStatusTab = tabs.childAt(2)
+        expect(orderStatusTab.props().title).toEqual('Order Status')
+        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+      })
     })
 
     describe('when the order failed', () => {
@@ -2267,7 +2393,6 @@ describe('OrderStatusItem', () => {
         expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
 
         const orderStatusTab = tabs.childAt(1)
-        console.log(enzymeWrapper.debug())
         expect(orderStatusTab.props().title).toEqual('Order Status')
         expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })

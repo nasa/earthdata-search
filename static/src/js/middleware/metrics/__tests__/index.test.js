@@ -3,7 +3,9 @@ import { LOCATION_CHANGE } from 'connected-react-router'
 import {
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
+  METRICS_BROWSE_GRANULE_IMAGE,
   METRICS_DATA_ACCESS,
+  METRICS_GRANULE_FILTER,
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
@@ -15,9 +17,11 @@ import * as events from '../events'
 import metricsMiddleware from '../index'
 
 jest.mock('../events', () => ({
+  browseGranuleImage: jest.fn(),
   collectionSortChange: jest.fn(),
   dataAccess: jest.fn(),
   defaultClick: jest.fn(),
+  granuleFilter: jest.fn(),
   map: jest.fn(),
   relatedCollection: jest.fn(),
   spatialEdit: jest.fn(),
@@ -92,6 +96,21 @@ describe('metrics middleware', () => {
     expect(events.defaultClick).toHaveBeenCalledWith(action)
   })
 
+  test('calls browseGranuleImage event', () => {
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_BROWSE_GRANULE_IMAGE,
+      payload: {
+        value: 'Test Value',
+        granuleId: 'TEST_ID'
+      }
+    }
+    invoke(action)
+    expect(events.browseGranuleImage).toHaveBeenCalledTimes(1)
+    expect(events.browseGranuleImage).toHaveBeenCalledWith(action)
+  })
+
   test('calls timeline event', () => {
     const { invoke } = createStore()
 
@@ -146,6 +165,20 @@ describe('metrics middleware', () => {
     invoke(action)
     expect(events.spatialSelection).toHaveBeenCalledTimes(1)
     expect(events.spatialSelection).toHaveBeenCalledWith(action)
+  })
+
+  test('calls granuleFilter event', () => {
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_GRANULE_FILTER,
+      payload: {
+        item: 'Test'
+      }
+    }
+    invoke(action)
+    expect(events.granuleFilter).toHaveBeenCalledTimes(1)
+    expect(events.granuleFilter).toHaveBeenCalledWith(action)
   })
 
   test('calls timing event', () => {

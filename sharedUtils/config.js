@@ -23,5 +23,4 @@ export const getExperimentsConfig = () => getConfig().experiments
 
 export const getSecretEarthdataConfig = (env) => secretConfig.earthdata[env]
 export const getSecretEnvironmentConfig = () => secretConfig.environment[process.env.NODE_ENV || 'development']
-export const getSecretCypressConfig = () => secretConfig.cypress
 export const getSecretAdminUsers = () => secretConfig.admins

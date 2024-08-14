@@ -1,10 +1,12 @@
 import {
+  METRICS_BROWSE_GRANULE_IMAGE,
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
   METRICS_DATA_ACCESS,
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
+  METRICS_GRANULE_FILTER,
   METRICS_SPATIAL_SELECTION,
   METRICS_TIMELINE,
   METRICS_TIMING
@@ -13,6 +15,8 @@ import {
 import {
   metricsDataAccess,
   metricsClick,
+  metricsBrowseGranuleImage,
+  metricsGranuleFilter,
   metricsTimeline,
   metricsMap,
   metricsRelatedCollection,
@@ -109,7 +113,7 @@ describe('actions', () => {
     })
   })
 
-  describe('metricsSpatialEdit', () => {
+  describe('metricsSpatialSelection', () => {
     test('returns the correct action', () => {
       const data = {
         test: 'test payload'
@@ -123,6 +127,42 @@ describe('actions', () => {
       } = action
 
       expect(type).toEqual(METRICS_SPATIAL_SELECTION)
+      expect(payload).toEqual(data)
+    })
+  })
+
+  describe('metricsSpatialSelection', () => {
+    test('returns the correct action', () => {
+      const data = {
+        test: 'test payload'
+      }
+
+      const action = metricsBrowseGranuleImage(data)
+
+      const {
+        type,
+        payload
+      } = action
+
+      expect(type).toEqual(METRICS_BROWSE_GRANULE_IMAGE)
+      expect(payload).toEqual(data)
+    })
+  })
+
+  describe('metricsGranuleFilter', () => {
+    test('returns the correct action', () => {
+      const data = {
+        test: 'test payload'
+      }
+
+      const action = metricsGranuleFilter(data)
+
+      const {
+        type,
+        payload
+      } = action
+
+      expect(type).toEqual(METRICS_GRANULE_FILTER)
       expect(payload).toEqual(data)
     })
   })
