@@ -1,91 +1,210 @@
 import React from 'react'
-import Enzyme, { mount, shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
-import Datetime from 'react-datetime'
+import {
+  act,
+  render,
+  screen
+} from '@testing-library/react'
+
+import userEvent from '@testing-library/user-event'
+
+import '@testing-library/jest-dom'
 
 import Datepicker from '../Datepicker'
 
-Enzyme.configure({ adapter: new Adapter() })
+const setup = (overrideProps) => {
+  const onInputBlur = jest.fn()
+  const onChange = jest.fn()
+  const onClearClick = jest.fn()
+  const onTodayClick = jest.fn()
 
-function setupMounted() {
   const props = {
     id: 'test-id',
+    label: 'Date Time',
     isValidDate: jest.fn(),
-    onBlur: jest.fn(),
-    onChange: jest.fn(),
-    onClearClick: jest.fn(),
-    onTodayClick: jest.fn(),
+    onChange,
+    onClearClick,
+    onInputBlur,
+    onTodayClick,
     picker: React.createRef(),
     type: 'start',
     value: '',
-    viewMode: 'years'
+    viewMode: 'years',
+    ...overrideProps
   }
 
-  const enzymeWrapper = mount(<Datepicker {...props} />)
+  // Rendering like this so that we can check the onBlur of Datepicker
+  const { rerender } = render(
+    <div>
+      <input aria-label="basic-input" />
+      <Datepicker {...props} />
+    </div>
+  )
 
   return {
-    enzymeWrapper,
-    props
-  }
-}
-
-function setupShallow() {
-  const props = {
-    id: 'test-id',
-    format: '',
-    isValidDate: jest.fn(),
-    onBlur: jest.fn(),
-    onChange: jest.fn(),
-    onClearClick: jest.fn(),
-    onTodayClick: jest.fn(),
-    picker: React.createRef(),
-    value: '',
-    viewMode: 'years'
-  }
-
-  const enzymeWrapper = shallow(<Datepicker {...props} />, { disableLifecycleMethods: true })
-
-  return {
-    enzymeWrapper,
-    props
+    props,
+    rerender,
+    onInputBlur,
+    onChange,
+    onClearClick,
+    onTodayClick
   }
 }
 
 describe('Datepicker component', () => {
   describe('on render', () => {
     test('creates the custom buttons', () => {
-      const { enzymeWrapper } = setupMounted()
-      const buttonContainer = enzymeWrapper.getDOMNode().querySelectorAll('.datetime__buttons')
-      const buttons = buttonContainer[0].querySelectorAll('.datetime__button')
-      const buttonToday = buttonContainer[0].querySelectorAll('.datetime__button--today')
-      const buttonClear = buttonContainer[0].querySelectorAll('.datetime__button--clear')
+      setup()
 
-      expect(buttonContainer.length).toEqual(1)
-      expect(buttons.length).toEqual(2)
-      expect(buttonToday.length).toEqual(1)
-      expect(buttonClear.length).toEqual(1)
+      const buttonToday = screen.getByRole('button', { name: 'Today' })
+      const buttonClear = screen.getByRole('button', { name: 'Clear' })
+
+      expect(buttonToday).toBeInTheDocument()
+      expect(buttonClear).toBeInTheDocument()
     })
 
-    test('handles non-ISO dates correctly', () => {
-      const { enzymeWrapper } = setupShallow()
-      enzymeWrapper.setProps({ value: '1988-09-0e 00:00:00' })
+    test('handles invalid dates correctly', async () => {
+      setup({
+        label: 'datepicker--start',
+        value: '1988-09-0e 00:00:00'
+      })
 
-      const dateTime = enzymeWrapper.find(Datetime)
-      expect(dateTime.prop('value')).toEqual('1988-09-0e 00:00:00')
+      const dateTime = screen.getByRole('textbox', { name: 'datepicker--start' })
+
+      expect(dateTime).toBeInTheDocument()
+      expect(dateTime).toHaveValue('1988-09-0e 00:00:00')
+    })
+
+    test('handles iso dates correctly', async () => {
+      setup({
+        label: 'datepicker--start',
+        value: '1988-09-04 00:00:00'
+      })
+
+      const dateTime = screen.getByRole('textbox', { name: 'datepicker--start' })
+
+      expect(dateTime).toBeInTheDocument()
+      expect(dateTime).toHaveValue('1988-09-04 00:00:00')
     })
 
     test('handles ISO dates correctly', () => {
-      const { enzymeWrapper } = setupShallow()
-      enzymeWrapper.setProps({ value: '1988-09-03T00:00:00.000Z' })
+      setup({
+        label: 'datepicker--start',
+        value: '1988-09-03T00:00:00.000Z'
+      })
 
-      const dateTime = enzymeWrapper.find(Datetime)
-      expect(dateTime.prop('value')).toEqual('1988-09-03T00:00:00.000Z')
+      const datePickerInput = screen.getByRole('textbox', { name: 'datepicker--start' })
+      expect(datePickerInput).toHaveValue('1988-09-03T00:00:00.000Z')
     })
   })
 
-  test('renders a single Datetime component', () => {
-    const { enzymeWrapper } = setupShallow()
-    expect(enzymeWrapper.find(Datetime).length).toEqual(1)
+  describe('when the input value changes', () => {
+    test('onInputChange gets triggered', async () => {
+      const user = userEvent.setup()
+
+      const { onChange, props } = setup()
+      const { picker } = props
+
+      const requestAnimationFrameSpy = jest.spyOn(window, 'requestAnimationFrame')
+      const closeCalendarSpy = jest.spyOn(picker.current, '_closeCalendar')
+
+      const datePickerInput = screen.getByRole('textbox', { name: 'Date Time' })
+
+      expect(datePickerInput).toHaveValue('')
+      await act(async () => {
+        await user.click(datePickerInput)
+        await user.type(datePickerInput, '1967')
+      })
+
+      expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(4)
+      expect(closeCalendarSpy).toHaveBeenCalledTimes(4)
+      expect(onChange).toHaveBeenCalledTimes(4)
+    })
+  })
+
+  describe('when Today button gets clicked', () => {
+    test('onTodayClick gets triggered', async () => {
+      const user = userEvent.setup()
+
+      const { onTodayClick } = setup()
+
+      const buttonToday = screen.getByText('Today')
+
+      await act(async () => {
+        await user.click(buttonToday)
+      })
+
+      expect(onTodayClick).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('when Clear button gets clicked', () => {
+    test('onClearClick gets triggered', async () => {
+      const user = userEvent.setup()
+
+      const { onClearClick } = setup()
+
+      const buttonClear = screen.getByText('Clear')
+
+      await act(async () => {
+        await user.click(buttonClear)
+      })
+
+      expect(onClearClick).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('when loosing focus of input', () => {
+    test('onInputBlur gets triggered', async () => {
+      const user = userEvent.setup()
+
+      const {
+        onInputBlur,
+        onChange
+      } = setup()
+
+      const datePickerInput = screen.getByRole('textbox', { name: 'Date Time' })
+
+      await user.click(datePickerInput)
+      await user.type(datePickerInput, 'abc123')
+
+      await user.click(screen.getByRole('textbox', { name: 'basic-input' }))
+
+      expect(onChange).toHaveBeenCalledTimes(6)
+      expect(onInputBlur).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('when rerendering the input', () => {
+    test('picker navigates as expected', async () => {
+      const {
+        rerender,
+        props
+      } = setup()
+
+      const { picker } = props
+
+      const navigateSpy = jest.spyOn(picker.current, 'navigate')
+
+      rerender(
+        <div>
+          <input aria-label="basic-input" />
+          <Datepicker {...props} />
+        </div>
+      )
+
+      expect(navigateSpy).not.toHaveBeenCalled()
+
+      props.viewMode = 'month'
+
+      rerender(
+        <div>
+          <input aria-label="basic-input" />
+          <Datepicker {...props} />
+        </div>
+      )
+
+      expect(navigateSpy).toHaveBeenCalled()
+    })
   })
 })

@@ -57,23 +57,56 @@ class Datepicker extends PureComponent {
     container.appendChild(buttonContainer)
   }
 
+  componentDidUpdate(prevProps) {
+    const {
+      viewMode: previousViewMode
+    } = prevProps
+
+    const {
+      viewMode,
+      picker
+    } = this.props
+
+    // If the viewMode has changed, navigate to the new viewMode
+    if (previousViewMode !== viewMode) picker.current.navigate(viewMode)
+  }
+
+  onInputChange(event) {
+    const caret = event.target.selectionStart
+    const element = event.target
+
+    // Set the current cursor selection to prevent cursor moving to the end of the field when editing
+    window.requestAnimationFrame(() => {
+      element.selectionStart = caret
+      element.selectionEnd = caret
+    })
+  }
+
   render() {
     const {
       isValidDate,
       label,
-      onBlur,
       onChange,
       picker,
       size,
-      value
+      value,
+      onInputBlur
     } = this.props
-
     const { format, id, viewMode } = this.props
+    const conditionalInputProps = {}
+
+    // React-datetime does not clear out the input field when a empty string is received. When
+    // the value is an empty string, the value is manually set on the input via `inputProps`.
+    if (!value) {
+      conditionalInputProps.value = ''
+    }
 
     return (
       <Datetime
         className="datetime"
         closeOnSelect
+        closeOnTab
+        closeOnClickOutside
         dateFormat={format}
         inputProps={
           {
@@ -81,16 +114,25 @@ class Datepicker extends PureComponent {
             placeholder: format,
             autoComplete: 'off',
             className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`,
-            'aria-label': label
+            'aria-label': label,
+            onChange: (e) => {
+              this.onInputChange(e)
+
+              // eslint-disable-next-line no-underscore-dangle
+              picker.current._closeCalendar()
+            },
+            onBlur: onInputBlur,
+            ...conditionalInputProps
           }
         }
         isValidDate={isValidDate}
-        onBlur={onBlur}
         onChange={onChange}
         ref={picker}
         timeFormat={false}
         utc
         value={value}
+        strictParsing
+        viewMode={viewMode}
         initialViewMode={viewMode}
       />
     )
@@ -110,7 +152,7 @@ Datepicker.propTypes = {
   label: PropTypes.string,
   id: PropTypes.string.isRequired,
   isValidDate: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
+  onInputBlur: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onClearClick: PropTypes.func.isRequired,
   onTodayClick: PropTypes.func.isRequired,
