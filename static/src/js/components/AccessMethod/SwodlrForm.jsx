@@ -57,6 +57,11 @@ const SwodlrForm = ({
   const handleSwoldrOptions = () => {
     const customParams = {}
     // TODO we need a guard in case it comes back as [undefined, undefined]
+    if (granuleList[0] === undefined) {
+      console.log('granule list was empty')
+
+      return
+    }
 
     // The first element is undefined
     granuleList.forEach((granule) => {
@@ -108,6 +113,8 @@ const SwodlrForm = ({
 
     setGranuleList(granuleList)
     // TODO Does this need to be called here
+    // TODO final test
+    // This is needed if there are only changes to the granuleList we need to pick them up
     handleSwoldrOptions()
   }
 
@@ -452,6 +459,7 @@ SwodlrForm.propTypes = {
   onUpdateAccessMethod: PropTypes.func.isRequired,
   selectedAccessMethod: PropTypes.string.isRequired,
   setGranuleList: PropTypes.func.isRequired,
+  // TODO collectionId can be an array from AccessMethod
   collectionId: PropTypes.string,
   granuleList: PropTypes.arrayOf(PropTypes.shape({
     utmZoneAdjust: PropTypes.number,
