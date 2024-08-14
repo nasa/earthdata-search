@@ -92,7 +92,11 @@ export const GranuleFiltersContainer = (props) => {
 
   const onHandleSubmit = () => {
     // Pass the internal `Formik` values
-    handleSubmit(values)
+    // Waits for the next event cycle to execute
+    // Allows validation for temporal selection to work as expected
+    setTimeout(() => {
+      handleSubmit(values)
+    }, 0)
   }
 
   const {
