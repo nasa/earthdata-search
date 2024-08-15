@@ -173,16 +173,21 @@ To invoke lambdas locally we must create a stringified JSON file with the order 
 
     npm run invoke-local -- --function <name-of-lambda-function> --path ./event.json
 
+You may need to also set the `IS_OFFLINE` environment variable when invoking the lambda locally
+
+    export IS_OFFLINE=true
+
 ### Run the Automated [Jest](https://jestjs.io/) tests
 
 Once the project is built, you must ensure that the automated unit tests pass:
 
     npm run test
 
-To get coverage on tests run
+To get coverage on modules run
     npm run test:watch-lite
 
-test coverage will be updated in the coverage/ directory
+test coverage will be updated in the coverage directory to see breakdown use
+    open coverage/lcov-report/index.html
 
 ### Deployment
 

@@ -57,8 +57,8 @@ const SwodlrForm = ({
   const handleSwoldrOptions = () => {
     const customParams = {}
     // TODO we need a guard in case it comes back as [undefined, undefined]
-    if (granuleList[0] === undefined) {
-      console.log('granule list was empty')
+    if (!granuleList[0]) {
+      console.log('granule list was empty 🚀')
 
       return
     }
