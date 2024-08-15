@@ -10,10 +10,16 @@ import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
 import ResizeObserver from 'resize-observer-polyfill'
+// Import * as swodlrConstants from '../../../constants/swodlrConstants'
 
 import AccessMethod from '../AccessMethod'
 
 // https://github.com/ZeeCoder/use-resize-observer/issues/40
+
+jest.mock('../../../constants/swodlrConstants', () => ({
+  ...jest.requireActual('../../../constants/swodlrConstants'),
+  maxSwodlrGranuleCount: 2
+}))
 
 beforeEach(() => {
   global.ResizeObserver = ResizeObserver
@@ -52,6 +58,9 @@ const setup = (overrideProps) => {
     onSetActivePanel,
     onTogglePanels,
     onUpdateAccessMethod,
+    projectCollection: {
+      granules: {}
+    },
     selectedAccessMethod: '',
     ...overrideProps
   }
@@ -1538,23 +1547,90 @@ describe('AccessMethod component', () => {
   })
 
   describe('when the selected access method is swodlr', () => {
-    test('SWODLR Option displayed', async () => {
-      const collectionId = 'collectionId'
-      setup({
-        accessMethods: {
-          swodlr: {
-            type: 'SWODLR',
-            supportsSwodlr: true
+    describe('when there are less than 10 granules', () => {
+      test('SWODLR Option displayed', async () => {
+        const collectionId = 'collectionId'
+        setup({
+          accessMethods: {
+            swodlr: {
+              type: 'SWODLR',
+              supportsSwodlr: true
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'swodlr',
+          projectCollection: {
+            isVisible: true,
+            granules: {
+              addedGranuleIds: [
+                'G10000000000-EDSC',
+                'G1000000001-EDSC'
+              ],
+              byId: {}
+            }
+          },
+          granuleMetadata: {
+            'G10000000000-EDSC': {
+              id: 'G10000000000-EDSC'
+            },
+            'G1000000001-EDSC': {
+              id: 'G1000000001-EDSC'
+            }
           }
-        },
-        metadata: {
-          conceptId: collectionId
-        },
-        selectedAccessMethod: 'swodlr'
-      })
+        })
 
-      const swodlrText = screen.getByText('Generate with SWODLR')
-      expect(swodlrText).toBeInTheDocument()
+        const swodlrText = await screen.findByText('Granule Extent')
+        expect(swodlrText).toBeInTheDocument()
+      })
+    })
+
+    describe('when there are more than 10 granules', () => {
+      test('SWODLR Options do not display', async () => {
+        const collectionId = 'C1000000000-EDSC'
+        setup({
+          accessMethods: {
+            swodlr: {
+              type: 'SWODLR',
+              supportsSwodlr: true
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'swodlr',
+          projectCollection: {
+            isVisible: true,
+            granules: {
+              addedGranuleIds: [
+                'G1000000000-EDSC',
+                'G1000000001-EDSC',
+                'G1000000002-EDSC'
+              ],
+              byId: {}
+            }
+          },
+          granuleMetadata: {
+            'G1000000000-EDSC': {
+              id: 'G1000000000-EDSC'
+            },
+            'G1000000001-EDSC': {
+              id: 'G1000000001-EDSC'
+            },
+            'G1000000002-EDSC': {
+              id: 'G1000000002-EDSC'
+            }
+          }
+        })
+
+        await waitFor(() => {
+          const swodlrText = screen.queryByText('Granule Extent')
+
+          // The swodlr form will not load
+          expect(swodlrText).not.toBeInTheDocument()
+        })
+      })
     })
   })
 })

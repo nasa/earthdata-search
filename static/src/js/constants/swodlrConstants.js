@@ -91,3 +91,5 @@ export const geoRasterOptions = [
     value: 300
   }
 ]
+
+export const maxSwodlrGranuleCount = 10

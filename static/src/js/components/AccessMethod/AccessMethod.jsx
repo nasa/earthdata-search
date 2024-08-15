@@ -23,6 +23,8 @@ import RadioList from '../FormFields/RadioList/RadioList'
 import Spinner from '../Spinner/Spinner'
 import SwodlrForm from './SwodlrForm'
 
+import { maxSwodlrGranuleCount } from '../../constants/swodlrConstants'
+
 import './AccessMethod.scss'
 
 const EchoForm = lazy(() => import('./EchoForm'))
@@ -58,6 +60,9 @@ const AccessMethod = ({
   temporal,
   ursProfile
 }) => {
+  console.log('max swodlr avlue', maxSwodlrGranuleCount)
+  console.log('🚀 ~ file: AccessMethod.jsx:61 ~ granuleMetadata:', granuleMetadata)
+  console.log('🚀 ~ file: AccessMethod.jsx:61 ~ projectCollection:', projectCollection)
   const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
   console.log('🚀 ~ file: AccessMethod.jsx:62 ~ selectedAccessMethod:', selectedAccessMethod)
 
@@ -109,11 +114,13 @@ const AccessMethod = ({
     addedGranuleIds = [],
     allIds: granulesAllIds = []
   } = projectCollectionGranules
+  console.log('🚀 ~ file: AccessMethod.jsx:111 ~ addedGranuleIds:', addedGranuleIds)
 
   let granulesToDisplay = []
 
   if (addedGranuleIds.length > 0) {
     granulesToDisplay = addedGranuleIds
+    console.log('🚀 ~ file: AccessMethod.jsx:119 ~ granulesToDisplay:', granulesToDisplay)
   } else {
     granulesToDisplay = granulesAllIds
   }
@@ -124,7 +131,19 @@ const AccessMethod = ({
   // granulesToDisplay.forEach((id) => {
   //   granuleListObj.push(granuleMetadata[id])
   // })
+  // TODO I mean it looks like the issue is that granuleMetadata is empty sometimes but,
   const granuleListObj = granulesToDisplay.map((id) => granuleMetadata[id])
+  console.log('🚀 ~ file: AccessMethod.jsx:129 ~ granuleListObj:', granuleListObj)
+
+  // // This needs to be its own use-effect otherwise swoldr can't get the granuleList to update
+  // useEffect(() => {
+  //   console.log('AccessMethod useEffect getting called')
+  //   setGranuleList(granuleListObj)
+
+  //   if (enableTemporalSubsetting && isRecurring) {
+  //     setEnableTemporalSubsetting(false)
+  //   }
+  // }, [projectCollection])
 
   useEffect(() => {
     console.log('AccessMethod useEffect getting called')
@@ -133,9 +152,7 @@ const AccessMethod = ({
     if (enableTemporalSubsetting && isRecurring) {
       setEnableTemporalSubsetting(false)
     }
-  }, [projectCollection])
 
-  useEffect(() => {
     if (selectedAccessMethod) {
       console.log('🚀 ~ file: AccessMethod.jsx:140 ~ useEffect ~ selectedAccessMethod:', selectedAccessMethod)
       setIsHarmony(selectedAccessMethod.startsWith('harmony'))
@@ -149,7 +166,7 @@ const AccessMethod = ({
       console.log('AccessMethod useEffect harmony getting called')
       setSelectedHarmonyMethodName(accessMethods[selectedAccessMethod].name)
     }
-  }, [])
+  }, [projectCollection])
 
   // // If enabledTemporalSubsetting is true, and isRecurring is true, disable temporal Subsetting
   // // TODO don't set state on every render here
@@ -959,7 +976,7 @@ const AccessMethod = ({
           )
         }
         {
-          (supportsSwodlr && granuleList.length <= 10) && (
+          (supportsSwodlr && granuleList.length <= maxSwodlrGranuleCount) && (
             <SwodlrForm
               granuleList={granuleList}
               collectionId={collectionId}
