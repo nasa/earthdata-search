@@ -10,16 +10,7 @@ import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
 import ResizeObserver from 'resize-observer-polyfill'
-// Import * as swodlrConstants from '../../../constants/swodlrConstants'
-
 import AccessMethod from '../AccessMethod'
-
-// https://github.com/ZeeCoder/use-resize-observer/issues/40
-
-jest.mock('../../../constants/swodlrConstants', () => ({
-  ...jest.requireActual('../../../constants/swodlrConstants'),
-  maxSwodlrGranuleCount: 2
-}))
 
 beforeEach(() => {
   global.ResizeObserver = ResizeObserver
@@ -30,6 +21,12 @@ afterEach(() => {
   // Don't share global state between the tests
   delete global.ResizeObserver
 })
+
+// Mock the Swodlr max value so the mock objects don't get so large in the tests
+jest.mock('../../../constants/swodlrConstants', () => ({
+  ...jest.requireActual('../../../constants/swodlrConstants'),
+  maxSwodlrGranuleCount: 2
+}))
 
 const mockEchoForm = jest.fn(() => (
   <div>
@@ -311,6 +308,7 @@ describe('AccessMethod component', () => {
     test('lazy loads the echo-forms component and provides the correct fallback', async () => {
       const collectionId = 'collectionId'
       const form = 'mock-form'
+
       setup({
         accessMethods: {
           echoOrder0: {
@@ -350,7 +348,8 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'echoOrder0'
       })
 
-      const echoOrderInput = screen.getByRole('radio')
+      const echoOrderInput = await screen.findByRole('radio')
+
       expect(echoOrderInput.value).toEqual('echoOrder0')
     })
 
@@ -374,6 +373,8 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'echoOrder0'
       })
 
+      // TODO this gets called once if ran with `.only` jest is not clearing this correctly between
+      // This and the other `echoform` tests
       await waitFor(() => expect(mockEchoForm).toHaveBeenCalledTimes(2))
 
       // Needed JSON.stringify to compare object references
@@ -666,7 +667,7 @@ describe('AccessMethod component', () => {
       })
     })
 
-    describe('when supportedOutputProjections exist THIS IS FAILING', () => {
+    describe('when supportedOutputProjections exist', () => {
       test('displays outputProjection field', async () => {
         const collectionId = 'collectionId'
         setup({
