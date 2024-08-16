@@ -8,6 +8,8 @@ import { commafy } from '../../../util/commafy'
 import TextWindowActions from '../../TextWindowActions/TextWindowActions'
 import CopyableText from '../../CopyableText/CopyableText'
 
+import './DownloadFilesPanel.scss'
+
 /**
  * Renders S3LinksPanel.
  * @param {Object} arg0 - The props passed into the component.
