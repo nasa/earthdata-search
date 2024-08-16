@@ -313,7 +313,6 @@ class ProjectPanels extends PureComponent {
 
     const collectionMetadataLoaded = projectIds.some((collectionId) => {
       const { [collectionId]: collectionMetadata = {} } = projectCollectionsMetadata
-      console.log('🚀 ~ file: ProjectPanels.jsx:316 ~ ProjectPanels ~ collectionMetadataLoaded ~ collectionMetadata:', collectionMetadata)
 
       const { hasAllMetadata = false } = collectionMetadata
 
@@ -335,7 +334,6 @@ class ProjectPanels extends PureComponent {
       } = projectCollectionGranules
 
       const { [collectionId]: collectionMetadata = {} } = projectCollectionsMetadata
-      console.log('🚀 ~ file: ProjectPanels.jsx:338 ~ ProjectPanels ~ projectIds.forEach ~ collectionId:', collectionId)
 
       const {
         title,
@@ -361,19 +359,21 @@ class ProjectPanels extends PureComponent {
 
       const hasDuplicateCollection = duplicateCollections.length > 0
 
-      let dataQualityHeader = ''
+      const dataQualityHeader = (() => {
+        if (hasDataQualitySummary && hasDuplicateCollection) {
+          return 'Important data quality and availability information'
+        }
 
-      if (hasDataQualitySummary && hasDuplicateCollection) {
-        dataQualityHeader = 'Important data quality and availability information'
-      }
+        if (hasDataQualitySummary) {
+          return 'Important data quality information'
+        }
 
-      if (hasDataQualitySummary) {
-        dataQualityHeader = 'Important data quality information'
-      }
+        if (hasDuplicateCollection) {
+          return 'Important data availability information'
+        }
 
-      if (hasDuplicateCollection) {
-        dataQualityHeader = 'Important data availability information'
-      }
+        return ''
+      })()
 
       if (hasDuplicateCollection) {
         const duplicateCollectionId = duplicateCollections[0]

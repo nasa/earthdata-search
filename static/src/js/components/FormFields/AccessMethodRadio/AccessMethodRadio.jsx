@@ -25,20 +25,6 @@ export const AccessMethodRadio = ({
   disabled,
   errorMessage
 }) => {
-  // Const labelClasses = [
-  //   'access-method-radio',
-  //   {
-  //     'access-method-radio--is-selected': checked
-  //   }
-  // ]
-  // if (isHarmony) {
-  //   labelClasses.push('access-method-radio--is-harmony')
-  // }
-
-  // if (disabled) {
-  //   labelClasses.push('access-method-radio--disable-button')
-  // }
-
   const labelClasses = [
     'access-method-radio',
     {
