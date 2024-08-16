@@ -17,7 +17,7 @@ beforeEach(() => {
 const setup = (overrideProps) => {
   const setGranuleList = jest.fn()
   const onUpdateAccessMethod = jest.fn()
-
+  const user = userEvent.setup()
   const props = {
     granuleList: [
       {
@@ -40,6 +40,7 @@ const setup = (overrideProps) => {
   render(<SwodlrForm {...props} />)
 
   return {
+    user,
     setGranuleList,
     onUpdateAccessMethod
   }
@@ -48,16 +49,16 @@ const setup = (overrideProps) => {
 describe('SwodlrForm component', () => {
   test('can render', () => {
     setup()
+
     const swodlrText = screen.getByText('Granule Extent')
     expect(swodlrText).toBeInTheDocument()
   })
 
-  // TODO maybe cant fire other one sine that is what is starts with
   describe('when the selected access method is swodlr', () => {
     test('selecting a granuleExtent calls onUpdateAccessMethod', async () => {
-      const user = userEvent.setup()
-      const { onUpdateAccessMethod } = setup()
+      const { user, onUpdateAccessMethod } = setup()
       const granuleExtent256Checkbox = screen.getByRole('radio', { name: '256 x 128 km' })
+
       await user.click(granuleExtent256Checkbox)
 
       expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
@@ -81,17 +82,15 @@ describe('SwodlrForm component', () => {
           }
         }
       })
-      // TODO is this getting called twice because its in the useEffect?
     })
 
-    // TODO this is not workign correctly in the test
     test('selecting a granuleExtent for 128km calls onUpdateAccessMethod', async () => {
-      const user = userEvent.setup()
-      const { onUpdateAccessMethod } = setup()
+      const { user, onUpdateAccessMethod } = setup()
       const granuleExtent256Checkbox = screen.getByRole('radio', { name: '256 x 128 km' })
-      await user.click(granuleExtent256Checkbox)
-
       const granuleExtent128Checkbox = await screen.findByRole('radio', { name: '128 x 128 km' })
+
+      // Click 128 x 128 after selecting because it is the default
+      await user.click(granuleExtent256Checkbox)
       await user.click(granuleExtent128Checkbox)
 
       expect(onUpdateAccessMethod).toHaveBeenCalledTimes(3)
@@ -116,14 +115,10 @@ describe('SwodlrForm component', () => {
           }
         }
       })
-      // TODO is this getting called twice because its in the useEffect?
     })
 
     test('selecting a LAT/LON sampling grid type calls onUpdateAccessMethod with automatic rasterResolution value adjustment', async () => {
-      const user = userEvent.setup()
-
-      const { onUpdateAccessMethod } = setup()
-
+      const { user, onUpdateAccessMethod } = setup()
       const latLonCheckbox = screen.getByRole('radio', { name: 'LAT/LON' })
 
       await user.click(latLonCheckbox)
@@ -152,9 +147,7 @@ describe('SwodlrForm component', () => {
     })
 
     test('updating raster resolution calls onUpdateAccessMethod', async () => {
-      const user = userEvent.setup()
-
-      const { onUpdateAccessMethod } = setup()
+      const { user, onUpdateAccessMethod } = setup()
 
       const rasterResolutionSelect = screen.getByRole('combobox', { name: 'rasterResolutionSelection' })
 
@@ -184,9 +177,7 @@ describe('SwodlrForm component', () => {
     })
 
     test('rasterResolution options automatically update on sample grid type changes', async () => {
-      const user = userEvent.setup()
-
-      const { onUpdateAccessMethod } = setup()
+      const { user, onUpdateAccessMethod } = setup()
 
       const latLonCheckbox = screen.getByRole('radio', { name: 'LAT/LON' })
 
@@ -241,8 +232,7 @@ describe('SwodlrForm component', () => {
 
     describe('when updating individual granules UTM Zone Adjust', () => {
       test('updates utmZoneAdjust to `1 `calls onUpdateAccessMethod correctly', async () => {
-        const user = userEvent.setup()
-        const { setGranuleList, onUpdateAccessMethod } = setup()
+        const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
         const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
         await user.click(advancedOptionsToggleButton)
@@ -265,8 +255,6 @@ describe('SwodlrForm component', () => {
           }
         ])
 
-        // Because the setGranuleList fn updates the granuleList, we can't check that the right value
-        // was also used in the updateAccessCalled as they are chained together by the useEffect.
         expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
         expect(onUpdateAccessMethod).toHaveBeenCalledWith({
           collectionId: 'collectionId',
@@ -291,8 +279,7 @@ describe('SwodlrForm component', () => {
       })
 
       test('updates utmZoneAdjust to `-1` calls onUpdateAccessMethod correctly', async () => {
-        const user = userEvent.setup()
-        const { setGranuleList, onUpdateAccessMethod } = setup()
+        const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
         const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
         await user.click(advancedOptionsToggleButton)
@@ -315,8 +302,6 @@ describe('SwodlrForm component', () => {
           }
         ])
 
-        // Because the setGranuleList fn updates the granuleList, we can't check that the right value
-        // was also used in the updateAccessCalled as they are chained together by the useEffect.
         expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
         expect(onUpdateAccessMethod).toHaveBeenCalledWith({
           collectionId: 'collectionId',
@@ -340,10 +325,8 @@ describe('SwodlrForm component', () => {
         })
       })
 
-      // TODO this is only called once because its the default condition
       test('updates utmZoneAdjust to `0` calls onUpdateAccessMethod correctly', async () => {
-        const user = userEvent.setup()
-        const { setGranuleList, onUpdateAccessMethod } = setup()
+        const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
         const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
         await user.click(advancedOptionsToggleButton)
@@ -354,6 +337,7 @@ describe('SwodlrForm component', () => {
 
         const firstGranuleUTMZoneZero = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-0-UTM-zone' })
         await user.click(firstGranuleUTMZoneZero)
+
         expect(setGranuleList).toBeCalledTimes(2)
         expect(setGranuleList).toHaveBeenCalledWith([
           {
@@ -369,9 +353,8 @@ describe('SwodlrForm component', () => {
           }
         ])
 
-        // TODO does 3 times make sense here
+        // Once during onMount and twice in the user actions
         expect(onUpdateAccessMethod).toHaveBeenCalledTimes(3)
-        // OnUpdateAccessMethod.mock.calls[2][0]
         expect(onUpdateAccessMethod.mock.calls[2][0]).toEqual({
           collectionId: 'collectionId',
           method: {
@@ -397,8 +380,7 @@ describe('SwodlrForm component', () => {
 
     describe('when updating individual granules MGRS Adjust', () => {
       test('updates MGRS to `1 `calls onUpdateAccessMethod correctly', async () => {
-        const user = userEvent.setup()
-        const { setGranuleList, onUpdateAccessMethod } = setup()
+        const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
         const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
         await user.click(advancedOptionsToggleButton)
@@ -421,9 +403,6 @@ describe('SwodlrForm component', () => {
           }
         ])
 
-        // TODO I think we can fix this
-        // Because the setGranuleList fn updates the granuleList, we can't check that the right value
-        // was also used in the updateAccessCalled as they are chained together by the useEffect.
         expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
         expect(onUpdateAccessMethod).toHaveBeenCalledWith({
           collectionId: 'collectionId',
@@ -448,8 +427,7 @@ describe('SwodlrForm component', () => {
       })
 
       test('updates MGRS to `-1 `calls onUpdateAccessMethod correctly', async () => {
-        const user = userEvent.setup()
-        const { setGranuleList, onUpdateAccessMethod } = setup()
+        const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
         const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
         await user.click(advancedOptionsToggleButton)
@@ -472,9 +450,6 @@ describe('SwodlrForm component', () => {
           }
         ])
 
-        // TODO I think we can fix this
-        // Because the setGranuleList fn updates the granuleList, we can't check that the right value
-        // was also used in the updateAccessCalled as they are chained together by the useEffect.
         expect(onUpdateAccessMethod).toHaveBeenCalledTimes(2)
         expect(onUpdateAccessMethod).toHaveBeenCalledWith({
           collectionId: 'collectionId',
@@ -499,8 +474,7 @@ describe('SwodlrForm component', () => {
       })
 
       test('updates MGRS to `0 `calls onUpdateAccessMethod correctly', async () => {
-        const user = userEvent.setup()
-        const { setGranuleList, onUpdateAccessMethod } = setup()
+        const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
         const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
         await user.click(advancedOptionsToggleButton)
@@ -510,6 +484,7 @@ describe('SwodlrForm component', () => {
 
         const firstGranuleMGRSZero = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-0-MGRS-band' })
         await user.click(firstGranuleMGRSZero)
+
         expect(setGranuleList).toBeCalledTimes(2)
 
         expect(setGranuleList).toHaveBeenCalledWith([
@@ -526,9 +501,6 @@ describe('SwodlrForm component', () => {
           }
         ])
 
-        // TODO I think we can fix this
-        // Because the setGranuleList fn updates the granuleList, we can't check that the right value
-        // was also used in the updateAccessCalled as they are chained together by the useEffect.
         expect(onUpdateAccessMethod).toHaveBeenCalledTimes(3)
         expect(onUpdateAccessMethod.mock.calls[2][0]).toEqual({
           collectionId: 'collectionId',
