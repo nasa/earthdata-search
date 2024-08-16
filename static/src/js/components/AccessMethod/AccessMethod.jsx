@@ -60,11 +60,7 @@ const AccessMethod = ({
   temporal,
   ursProfile
 }) => {
-  console.log('max swodlr avlue', maxSwodlrGranuleCount)
-  console.log('🚀 ~ file: AccessMethod.jsx:61 ~ granuleMetadata:', granuleMetadata)
-  console.log('🚀 ~ file: AccessMethod.jsx:61 ~ projectCollection:', projectCollection)
   const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
-  console.log('🚀 ~ file: AccessMethod.jsx:62 ~ selectedAccessMethod:', selectedAccessMethod)
 
   const {
     form,
@@ -96,14 +92,10 @@ const AccessMethod = ({
 
   // Initialize State Variables
   const [enableTemporalSubsetting, setEnableTemporalSubsetting] = useState(setTemporal)
-  const [selectedHarmonyMethodName, setSelectedHarmonyMethodName] = useState('')
-  // TODO this should be startsWith or something similar
-  // const [isHarmony, setIsHarmony] = useState(selectedAccessMethod.startsWith('harmony'))
-  const [isHarmony, setIsHarmony] = useState(false)
-
   const [enableSpatialSubsetting, setEnableSpatialSubsetting] = useState(false)
   const [enableConcatenateDownload, setEnableConcatenateDownload] = useState(defaultConcatenation)
-  // TODO granule list useState with Arrays does not always catch updates
+  const [isHarmony, setIsHarmony] = useState(false)
+  const [selectedHarmonyMethodName, setSelectedHarmonyMethodName] = useState('')
   const [granuleList, setGranuleList] = useState([])
 
   const {
@@ -114,78 +106,43 @@ const AccessMethod = ({
     addedGranuleIds = [],
     allIds: granulesAllIds = []
   } = projectCollectionGranules
-  console.log('🚀 ~ file: AccessMethod.jsx:111 ~ addedGranuleIds:', addedGranuleIds)
 
   let granulesToDisplay = []
 
-  if (addedGranuleIds.length > 0) {
-    granulesToDisplay = addedGranuleIds
-    console.log('🚀 ~ file: AccessMethod.jsx:119 ~ granulesToDisplay:', granulesToDisplay)
-  } else {
-    granulesToDisplay = granulesAllIds
-  }
-
-  // Const granuleListObj = []
-  // // TODO this should be a map
-
-  // granulesToDisplay.forEach((id) => {
-  //   granuleListObj.push(granuleMetadata[id])
-  // })
-  // TODO I mean it looks like the issue is that granuleMetadata is empty sometimes but,
-  const granuleListObj = granulesToDisplay.map((id) => granuleMetadata[id])
-  console.log('🚀 ~ file: AccessMethod.jsx:129 ~ granuleListObj:', granuleListObj)
-
-  // // This needs to be its own use-effect otherwise swoldr can't get the granuleList to update
-  // useEffect(() => {
-  //   console.log('AccessMethod useEffect getting called')
-  //   setGranuleList(granuleListObj)
-
-  //   if (enableTemporalSubsetting && isRecurring) {
-  //     setEnableTemporalSubsetting(false)
-  //   }
-  // }, [projectCollection])
+  // TODO should this be in the useEffect?
 
   useEffect(() => {
-    console.log('AccessMethod useEffect getting called')
+    if (addedGranuleIds.length > 0) {
+      granulesToDisplay = addedGranuleIds
+    } else {
+      granulesToDisplay = granulesAllIds
+    }
+
+    // Build the list of granules
+    const granuleListObj = granulesToDisplay.map((id) => granuleMetadata[id])
+    console.log('rerendering')
     setGranuleList(granuleListObj)
 
+    // Disable temporal subsetting if the user has a recurring date selected
     if (enableTemporalSubsetting && isRecurring) {
       setEnableTemporalSubsetting(false)
     }
 
     if (selectedAccessMethod) {
-      console.log('🚀 ~ file: AccessMethod.jsx:140 ~ useEffect ~ selectedAccessMethod:', selectedAccessMethod)
       setIsHarmony(selectedAccessMethod.startsWith('harmony'))
     }
 
-    console.log('🚀 ~ file: AccessMethod.jsx:137 ~ useEffect ~ selectedHarmonyMethodName:', selectedHarmonyMethodName)
-    console.log('🚀 ~ file: AccessMethod.jsx:137 ~ useEffect ~ selectedAccessMethod:', selectedAccessMethod)
     if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')
     && accessMethods[selectedAccessMethod].name
     && selectedHarmonyMethodName === '') {
-      console.log('AccessMethod useEffect harmony getting called')
       setSelectedHarmonyMethodName(accessMethods[selectedAccessMethod].name)
     }
   }, [projectCollection])
-
-  // // If enabledTemporalSubsetting is true, and isRecurring is true, disable temporal Subsetting
-  // // TODO don't set state on every render here
-  // if (enableTemporalSubsetting && isRecurring) {
-  //   setEnableTemporalSubsetting(false)
-  // }
-
-  // if (selectedAccessMethod
-  //     && selectedAccessMethod.startsWith('harmony')
-  //     && accessMethods[selectedAccessMethod].name
-  //     && selectedHarmonyMethodName === '') {
-  //   setSelectedHarmonyMethodName(accessMethods[selectedAccessMethod].name)
-  // }
 
   const handleHarmonyTypeAccessMethodSelection = () => {
     setIsHarmony(true)
 
     const { conceptId: collectionId } = metadata
-    console.log('🚀 ~ file: AccessMethod.jsx:145 ~ handleHarmonyTypeAccessMethodSelection ~ collectionId:', collectionId)
 
     onSelectAccessMethod({
       collectionId,
@@ -202,8 +159,6 @@ const AccessMethod = ({
     if (!method.includes('harmony')) {
       setIsHarmony(false)
     }
-
-    console.log('🚀 ~ file: AccessMethod.jsx:162 ~ handleAccessMethodSelection ~ setIsHarmony:', setIsHarmony)
 
     onSelectAccessMethod({
       collectionId,
@@ -281,7 +236,6 @@ const AccessMethod = ({
 
   const handleToggleSpatialSubsetting = (event) => {
     const { conceptId: collectionId } = metadata
-    console.log('🚀 ~ file: AccessMethod.jsx:238 ~ handleToggleSpatialSubsetting ~ collectionId:', collectionId)
 
     const { target } = event
     const { checked } = target
@@ -484,7 +438,6 @@ const AccessMethod = ({
     let disabled = false
     let errorMessage = ''
 
-    // TODO pull out in the util
     switch (type) {
       case 'download': {
         id = `${collectionId}_access-method__direct-download`
@@ -559,9 +512,9 @@ const AccessMethod = ({
         title = 'Generate with SWODLR'
         description = 'Set options and generate new standard products'
         details = 'Select options and generate customized products using the SWODLR service. Data will be avaliable for access once any necessary processing is complete.'
-        disabled = granuleList && granuleList.length > 10
+        disabled = granuleList && granuleList.length > maxSwodlrGranuleCount
         // Update the error message if more than 10 granules are selected
-        errorMessage = granuleList && granuleList.length > 10 ? 'SWODLR customization is only available with a maximum of 10 granules. Reduce your granule selection to enable this option.' : ''
+        errorMessage = granuleList && granuleList.length > maxSwodlrGranuleCount ? 'SWODLR customization is only available with a maximum of 10 granules. Reduce your granule selection to enable this option.' : ''
         break
       }
 
@@ -666,7 +619,6 @@ const AccessMethod = ({
     : false
 
   const harmonyMethods = accessMethodsByType.Harmony
-  console.log('🚀 ~ file: AccessMethod.jsx:626 ~ harmonyMethods:', harmonyMethods)
 
   return (
     <div className="access-method">

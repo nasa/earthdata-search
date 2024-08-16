@@ -41,14 +41,6 @@ const SwodlrForm = ({
   selectedAccessMethod,
   setGranuleList
 }) => {
-  console.log('🚀 ~ file: SwodlrForm.jsx:45 ~ collectionId:', collectionId)
-  console.log('🚀 ~ file: SwodlrForm.jsx:70 ~ granuleList.forEach ~ granuleList:', granuleList)
-
-  if (!collectionId) {
-    console.log('The value was null 🛑')
-  }
-
-  // TODO somehow react thinks that after the initial update here that this is not false
   const [granuleExtent, setGranuleExtent] = useState(false)
   const [sampleGrid, setSampleGrid] = useState('UTM')
   const [rasterResolution, setRasterResolution] = useState(90)
@@ -56,20 +48,12 @@ const SwodlrForm = ({
   // When any key Swodlr parameters are changed, update the accessMethod data
   const handleSwoldrOptions = () => {
     const customParams = {}
-    // TODO we need a guard in case it comes back as [undefined, undefined]
-    if (!granuleList[0]) {
-      console.log('granule list was empty 🚀')
-
-      return
-    }
 
     // The first element is undefined
     granuleList.forEach((granule) => {
       const { id } = granule
-      console.log('🚀 ~ file: SwodlrForm.jsx:62 ~ granuleList.forEach ~ id:', id)
       customParams[id] = {}
       if (sampleGrid === 'UTM') {
-        console.log('🚀 ~ file: SwodlrForm.jsx:60 ~ granuleList.forEach ~ sampleGrid:', sampleGrid)
         customParams[id].utmZoneAdjust = granule.utmZoneAdjust ? granule.utmZoneAdjust : 0
         customParams[id].mgrsBandAdjust = granule.mgrsBandAdjust ? granule.mgrsBandAdjust : 0
       } else {
@@ -77,8 +61,6 @@ const SwodlrForm = ({
         customParams[id].mgrsBandAdjust = null
       }
     })
-
-    console.log('🚀 ~ file: SwodlrForm.jsx:83 ~ handleSwoldrOptions ~ granuleExtent:', granuleExtent)
 
     onUpdateAccessMethod({
       collectionId,
@@ -99,8 +81,6 @@ const SwodlrForm = ({
 
   // Update the MGRSBand and UTMZone of the granule at the given index point
   const handleCollectionGranuleListUpdate = (indexVal, property, e) => {
-    console.log('🚀 ~ file: SwodlrForm.jsx:104 ~ handleCollectionGranuleListUpdate ~ e:', e)
-
     const granuleListCopy = granuleList
 
     if (property === 'utm') {
@@ -112,8 +92,6 @@ const SwodlrForm = ({
     }
 
     setGranuleList(granuleList)
-    // TODO Does this need to be called here
-    // TODO final test
     // This is needed if there are only changes to the granuleList we need to pick them up
     handleSwoldrOptions()
   }
@@ -121,7 +99,6 @@ const SwodlrForm = ({
   // Update the Raster Resolution of the granule at the given index point
   const handleRasterResolutionUpdate = (event) => {
     setRasterResolution(Number(event.target.value))
-    // HandleSwoldrOptions()
   }
 
   // Update when the value for Sample Grid type is changed
@@ -135,22 +112,17 @@ const SwodlrForm = ({
     }
 
     setRasterResolution(defaultRasterValue)
-    // HandleSwoldrOptions()
   }
 
+  // Update when the value for Granule Extent is changed
   const handleGranuleExtent = (updatedGranuleExtent) => {
-    console.log('🚀 ~ file: SwodlrForm.jsx:120 ~ handleGranuleExtent ~ updatedGranuleExtent:', updatedGranuleExtent)
     setGranuleExtent(updatedGranuleExtent)
-    // HandleSwoldrOptions()
   }
 
   // When any of the key values in relation to the Swodlr access method is changed, handle the values and update
   useEffect(() => {
-    // TODO consider removing this function and instead just putting the login in the use-effect for clarity
     handleSwoldrOptions()
   }, [granuleExtent, sampleGrid, rasterResolution])
-  // TODO so if the granuleList is in the dep arr then too many re-renderings
-  // GranuleExtent, granuleList, rasterResolution, sampleGrid
 
   return (
     <ProjectPanelSection
@@ -459,8 +431,7 @@ SwodlrForm.propTypes = {
   onUpdateAccessMethod: PropTypes.func.isRequired,
   selectedAccessMethod: PropTypes.string.isRequired,
   setGranuleList: PropTypes.func.isRequired,
-  // TODO collectionId can be an array from AccessMethod
-  // Metadata default props are metadata: {} of which collectionId is from
+  // Metadata default prop is {} in parent
   collectionId: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({})
@@ -471,8 +442,6 @@ SwodlrForm.propTypes = {
   })).isRequired
 }
 
-// TODO AccessMethod does not have this field as required which we are getting sometimes it does not have it before rendering
-// Therefore the Swodlr form cannot guarantee when it tries to render it will have the collectionId
 SwodlrForm.defaultProps = {
   collectionId: {}
 }
