@@ -73,8 +73,6 @@ export const isAccessMethodValid = (projectCollection, collectionMetadata) => {
   }
 
   if (selectedAccessMethod.startsWith('swodlr') && granuleCount > 10) {
-    console.log('🚀 ~ file: accessMethods.js:75 ~ isAccessMethodValid ~ granuleCount:', granuleCount)
-    console.log('Granule count is too high 🚀')
     swoldrTooManyGranules = true
   }
 
