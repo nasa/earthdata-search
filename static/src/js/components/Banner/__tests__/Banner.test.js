@@ -27,7 +27,7 @@ describe('Bannner component', () => {
   test('should render self', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('h2.banner__title').text()).toEqual('title')
+    expect(enzymeWrapper.find('h2.banner__title').text()).toEqual('<AlertHighPriority />title')
     expect(enzymeWrapper.find('p.banner__message').text()).toEqual('message')
   })
 
