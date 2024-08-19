@@ -6,11 +6,9 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
-import {
-  FaEdit,
-  FaInfoCircle,
-  FaTimesCircle
-} from 'react-icons/fa'
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+import { Close } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { FaEdit } from 'react-icons/fa'
 import camelcaseKeys from 'camelcase-keys'
 import moment from 'moment'
 
@@ -31,6 +29,7 @@ export const SubscriptionsListTable = ({
   onDeleteSubscription,
   onFocusedCollectionChange
 }) => {
+  console.log('🚀 ~ file: SubscriptionsListTable.jsx:34 ~ subscriptionType:', subscriptionType)
   const onHandleRemove = (conceptId, nativeId, collectionId) => {
     // eslint-disable-next-line no-alert
     const confirmDeletion = window.confirm('Are you sure you want to remove this subscription? This action cannot be undone.')
@@ -116,7 +115,7 @@ export const SubscriptionsListTable = ({
                         )
                       }
                     >
-                      <EDSCIcon icon={FaInfoCircle} className="subscriptions-list__button" />
+                      <EDSCIcon icon={AlertInformation} className="subscriptions-list__button" />
                     </OverlayTrigger>
                     <PortalLinkContainer
                       className="subscriptions-list__button subscriptions-list__button--edit"
@@ -140,7 +139,7 @@ export const SubscriptionsListTable = ({
                       className="subscriptions-list__button subscriptions-list__button--remove"
                       onClick={() => onHandleRemove(conceptId, nativeId, collectionConceptId)}
                       variant="naked"
-                      icon={FaTimesCircle}
+                      icon={Close}
                       label="Delete Subscription"
                     />
                   </td>

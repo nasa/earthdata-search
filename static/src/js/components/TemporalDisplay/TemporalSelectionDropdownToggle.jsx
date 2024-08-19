@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Dropdown from 'react-bootstrap/Dropdown'
+// TODO they were using bootstrap calander on the mockup
 import { FaCalendarAlt } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'

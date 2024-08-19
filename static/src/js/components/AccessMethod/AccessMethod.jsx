@@ -8,7 +8,14 @@ import PropTypes from 'prop-types'
 import { Alert, Form } from 'react-bootstrap'
 import * as Select from '@radix-ui/react-select'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
-import { FaFileAlt, FaExternalLinkAlt } from 'react-icons/fa'
+
+import {
+  FileGeneric,
+  ArrowChevronRight,
+  ArrowChevronDown
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
+import { FaQuestionCircle } from 'react-icons/fa'
 
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'

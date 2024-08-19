@@ -3,10 +3,10 @@
   "env": {
     "browser": true,
     "node": true,
-    "jest": true,
+    "jest": true
   },
   "rules": {
-    // Allowing cyclic dependancies
+    // Allowing cyclic dependencies
     "import/no-cycle": "off",
     "import/no-unresolved": [
       "error",

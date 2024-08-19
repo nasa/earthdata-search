@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Col, Row } from 'react-bootstrap'
 import classNames from 'classnames'
-import { FaChevronLeft } from 'react-icons/fa'
+
+import { ArrowChevronLeft } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Button from '../Button/Button'
 import Spinner from '../Spinner/Spinner'
@@ -63,7 +64,7 @@ export class RegionSearch extends Component {
             <Button
               className="region-search-results__back-button"
               variant="naked"
-              icon={FaChevronLeft}
+              icon={ArrowChevronLeft}
               label="Back to Feature"
               onClick={
                 () => {
