@@ -1,15 +1,15 @@
-.download-files-panel {
+.download-files-panel, .download-links-panel {
   &__list {
     line-height: 1.625rem;
     margin: 0;
     padding: 0;
     list-style: none;
-  }
 
-  li {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+    li {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
 
   &__pre {

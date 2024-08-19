@@ -7,6 +7,8 @@ import { commafy } from '../../../util/commafy'
 
 import TextWindowActions from '../../TextWindowActions/TextWindowActions'
 
+import './DownloadFilesPanel.scss'
+
 /**
  * Renders DownloadScriptPanel.
  * @param {Object} arg0 - The props passed into the component.
