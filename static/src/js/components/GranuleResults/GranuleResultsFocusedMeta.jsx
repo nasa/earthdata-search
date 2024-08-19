@@ -336,13 +336,13 @@ const GranuleResultsFocusedMeta = ({
                         }
                       ])
                       const imgSrc = `${getEnvironmentConfig().apiHost}/scale/granules/${focusedGranuleId}?h=175&w=175&imageSrc=${href}`
+                      const key = `thumb-${href}-${i}`
 
                       return (
                         href && (
                           <EDSCImage
-                            key={href}
+                            key={key}
                             className={thumbnailClassName}
-                            dataTestId="granule-results-focused-meta-image"
                             src={imgSrc}
                             alt={description || `Browse image for ${title}`}
                             width={175}
@@ -383,18 +383,18 @@ const GranuleResultsFocusedMeta = ({
                       }
                     ])
 
-                    const modalImage = `${getEnvironmentConfig().apiHost}/scale/granules/${focusedGranuleId}?h=175&w=175&imageSrc=${href}`
+                    const modalImage = `${getEnvironmentConfig().apiHost}/scale/granules/${focusedGranuleId}?h=538&w=538&imageSrc=${href}`
+                    const key = `modal-${href}-${i}`
 
                     return (
                       href && (
                         <EDSCImage
-                          key={href}
-                          dataTestId="granule-results-focused-meta-modal-image"
+                          key={key}
                           className={thumbnailClassName}
                           src={modalImage}
                           alt={description || `Browse image for ${title}`}
-                          width={528}
-                          height={528}
+                          width={538}
+                          height={538}
                           isBase64Image
                         />
                       )
