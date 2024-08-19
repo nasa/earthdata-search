@@ -50,5 +50,7 @@ export const buildOpendap = (serviceItem, associatedVariables) => {
     variables
   }
 
-  return accessMethods
+  return {
+    accessMethods
+  }
 }

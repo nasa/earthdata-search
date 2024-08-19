@@ -19,7 +19,7 @@ import { supportsVariableSubsetting } from '../supportsVariableSubsetting'
 export const buildHarmony = (serviceItem, params) => {
   const accessMethods = {}
 
-  const { associatedVariables, index } = params
+  const { associatedVariables, harmonyIndex: index } = params
 
   const {
     description,
@@ -90,5 +90,7 @@ export const buildHarmony = (serviceItem, params) => {
     variables
   }
 
-  return accessMethods
+  return {
+    accessMethods
+  }
 }

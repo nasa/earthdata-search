@@ -153,8 +153,9 @@ describe('buildOpendap', () => {
       associatedVariables = serviceAssociatedVariables
     }
 
-    const methods = buildOpendap(serviceItem, associatedVariables)
-    expect(methods).toEqual({
+    const { accessMethods } = buildOpendap(serviceItem, associatedVariables)
+
+    expect(accessMethods).toEqual({
       opendap: {
         hierarchyMappings: [{
           id: 'V100000-EDSC'

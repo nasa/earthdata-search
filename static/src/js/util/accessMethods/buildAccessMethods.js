@@ -21,6 +21,9 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
   let echoIndex = 0
   let esiIndex = 0
 
+  console.log(collectionMetadata)
+  console.log(services)
+
   const { items: serviceItems = null } = services
 
   const buildMethods = {
@@ -32,9 +35,13 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     downloads: () => buildDownload(granules, isOpenSearch)
   }
 
+  console.log(serviceItems)
+
   const nonDownloadMethods = serviceItems === null
     ? {}
     : serviceItems.reduce((methods, serviceItem) => {
+      console.log(methods)
+      console.log(serviceItem)
       let associatedVariables = collectionAssociatedVariables
       const {
         type: serviceType,

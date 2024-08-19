@@ -33,5 +33,7 @@ export const buildSwodlr = (serviceItem) => {
     }
   }
 
-  return accessMethods
+  return {
+    accessMethods
+  }
 }

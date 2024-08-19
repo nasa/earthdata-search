@@ -56,9 +56,9 @@ describe('buildSwodlr', () => {
     const { services } = collectionMetadata
     const serviceItem = services.items[0]
 
-    const methods = buildSwodlr(serviceItem)
+    const { accessMethods } = buildSwodlr(serviceItem)
 
-    expect(methods).toEqual({
+    expect(accessMethods).toEqual({
       swodlr: {
         id: 'S100000-EDSC',
         isValid: true,
@@ -125,9 +125,9 @@ describe('buildSwodlr', () => {
       const { services } = collectionMetadata
       const serviceItem = services.items[0]
 
-      const methods = buildSwodlr(serviceItem)
+      const { accessMethods } = buildSwodlr(serviceItem)
 
-      expect(methods).toEqual({})
+      expect(accessMethods).toEqual({})
     })
   })
 })
