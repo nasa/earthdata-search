@@ -25,7 +25,7 @@ export const Banner = ({
     <div className={bannerClassNames}>
       <div className="banner__content">
         <h2 className="banner__title">
-          <span className="banner__icon icon"><AlertHighPriority size={20} /></span>
+          <AlertHighPriority className="banner__icon icon" size="1.375rem" />
           {title}
         </h2>
         {
