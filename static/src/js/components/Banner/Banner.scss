@@ -1,9 +1,10 @@
 .banner {
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   padding: $spacer;
+  padding-left: 15%;
   overflow: hidden;
   transition: top 0.2s ease-in-out;
   z-index: 1;
@@ -12,22 +13,37 @@
     top: -3em;
   }
 
+  .banner__content {
+    display: inline-flex;
+  }
+
+  .banner__icon {
+    display: inherit;
+    padding-right: 0.6em;
+    transform: scale(1.15);
+    transform-origin: bottom;
+  }
+
   &--error {
-    background-color: #c0392b;
+    // change to a6221b
+    background-color: #a4000c;
     color: #fff;
 
     .banner__title {
       font-weight: 700;
+      display: inline-flex;
     }
 
     .banner__message {
       color: #fff;
+      display: flex
     }
 
     .banner__close {
       color: #fff;
       color: rgba(255,255,255,0.7);
       transition: color 0.15s ease-in-out;
+      display: flex;
 
       &:hover {
         color: #fff;
@@ -37,7 +53,7 @@
   }
 
   &__title {
-    display: inline;
+    display: inline-flex;
     margin: 0;
     margin-right: calc($spacer / 2);
     padding: 0;
@@ -46,7 +62,7 @@
   }
 
   &__message {
-    display: inline;
+    display: inline-flex;
     margin: 0;
     padding: 0;
     line-height: 1rem;

@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { FaTimesCircle } from 'react-icons/fa'
+import { Close } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { AlertHighPriority } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
 import Button from '../Button/Button'
 
@@ -23,7 +24,10 @@ export const Banner = ({
   return (
     <div className={bannerClassNames}>
       <div className="banner__content">
-        <h2 className="banner__title">{title}</h2>
+        <h2 className="banner__title">
+          <span className="banner__icon icon"><AlertHighPriority size={20} /></span>
+          {title}
+        </h2>
         {
           message && (
             <>
@@ -37,7 +41,7 @@ export const Banner = ({
         className="banner__close"
         label="close"
         onClick={onClose}
-        icon={FaTimesCircle}
+        icon={Close}
       />
     </div>
   )
