@@ -10,7 +10,11 @@ import {
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 
+import EDSCImage from '../../EDSCImage/EDSCImage'
+
 import GranuleResultsFocusedMeta from '../GranuleResultsFocusedMeta'
+
+jest.mock('../../EDSCImage/EDSCImage', () => jest.fn(({ className }) => <div className={className} data-testid="mock-edsc-image">EDSC Image</div>))
 
 const setup = (overrideProps) => {
   const onMetricsBrowseGranuleImage = jest.fn()
@@ -34,6 +38,10 @@ const setup = (overrideProps) => {
 }
 
 describe('GranuleResultsFocusedMeta component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   describe('when no links are provided', () => {
     test('should not render', () => {
       setup()
@@ -287,7 +295,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             await user.click(nextButton)
           })
 
-          const images = await screen.findAllByTestId('granule-results-focused-meta-image')
+          const images = await screen.findAllByTestId('mock-edsc-image')
           const pagination = screen.queryByText('2/3')
 
           expect(images.length).toEqual(3)
@@ -334,7 +342,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             await user.click(prevButton)
           })
 
-          const images = screen.queryAllByTestId('granule-results-focused-meta-image')
+          const images = screen.queryAllByTestId('mock-edsc-image')
           const pagination = screen.queryByText('1/3')
 
           expect(images.length).toEqual(3)
@@ -386,7 +394,7 @@ describe('GranuleResultsFocusedMeta component', () => {
           await user.click(popoverListItem)
 
           const pagination = screen.queryByText('3/3')
-          const images = screen.queryAllByTestId('granule-results-focused-meta-image')
+          const images = screen.queryAllByTestId('mock-edsc-image')
 
           expect(popoverList).not.toBeInTheDocument()
           expect(images[2]).toHaveClass('granule-results-focused-meta__thumb--is-active')
@@ -427,7 +435,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             await user.click(nextButton)
           })
 
-          const images = screen.queryAllByTestId('granule-results-focused-meta-image')
+          const images = screen.queryAllByTestId('mock-edsc-image')
           const pagination = screen.queryByText('1/2')
 
           expect(images.length).toEqual(2)
@@ -462,7 +470,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             await user.click(prevButton)
           })
 
-          const images = screen.queryAllByTestId('granule-results-focused-meta-image')
+          const images = screen.queryAllByTestId('mock-edsc-image')
           const pagination = screen.queryByText('2/2')
 
           expect(images.length).toEqual(2)
@@ -509,6 +517,39 @@ describe('GranuleResultsFocusedMeta component', () => {
           expect(modalPrev).toBeInTheDocument()
           expect(modalNext).toBeInTheDocument()
           expect(modalPopoverButton).toBeInTheDocument()
+        })
+
+        test('displays a larger image', async () => {
+          const user = userEvent.setup()
+
+          setup({
+            focusedGranuleMetadata: {
+              browseFlag: true,
+              links: [{
+                href: 'http://test.com/test.jpg',
+                rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+              }],
+              title: '1234 Test'
+            }
+          })
+
+          const expandButton = screen.getByLabelText('Expand browse image')
+
+          expect(EDSCImage).toHaveBeenCalledTimes(1)
+
+          EDSCImage.mockClear()
+
+          await act(async () => {
+            await user.click(expandButton)
+          })
+
+          const modal = await screen.findByTestId('granule-results-focused-meta-modal')
+          const image = within(modal).getByTestId('mock-edsc-image')
+
+          expect(image).toBeInTheDocument()
+          expect(EDSCImage).toHaveBeenLastCalledWith(expect.objectContaining({
+            src: expect.stringContaining('/scale/granules/G-1234-TEST?h=538&w=538&imageSrc=http://test.com/test.jpg')
+          }), {})
         })
 
         describe('when clicking the close button', () => {
@@ -588,7 +629,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             await user.click(modalNext)
 
-            const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
+            const images = within(modal).queryAllByTestId('mock-edsc-image')
             const pagination = within(modal).queryByText('2/3')
 
             expect(images.length).toEqual(3)
@@ -641,7 +682,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             await user.click(modalNext)
             await user.click(modalPrev)
 
-            const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
+            const images = within(modal).queryAllByTestId('mock-edsc-image')
             const pagination = within(modal).queryByText('1/3')
 
             expect(images.length).toEqual(3)
@@ -701,7 +742,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             await user.click(popoverListItem)
 
             const pagination = within(modal).queryByText('3/3')
-            const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
+            const images = within(modal).queryAllByTestId('mock-edsc-image')
 
             expect(popoverList).not.toBeInTheDocument()
             expect(images[2]).toHaveClass('granule-results-focused-meta__full--is-active')
@@ -747,7 +788,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             await user.click(modalNext)
             await user.click(modalNext)
 
-            const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
+            const images = within(modal).queryAllByTestId('mock-edsc-image')
             const pagination = within(modal).queryByText('1/2')
 
             expect(images.length).toEqual(2)
@@ -832,7 +873,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             })
 
             await waitFor(() => {
-              const images = within(modal).queryAllByTestId('granule-results-focused-meta-modal-image')
+              const images = within(modal).queryAllByTestId('mock-edsc-image')
               const pagination = within(modal).queryByText('2/2')
 
               expect(images.length).toEqual(2)
