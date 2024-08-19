@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty, isEqual } from 'lodash-es'
 import Autosuggest from 'react-autosuggest'
+// TODO they have a filters icon but, on the mock up it looks like they are using what we had before
 import {
   FaEraser,
   FaChevronUp,
-  FaBars,
-  FaSlidersH
+  FaBars
 } from 'react-icons/fa'
+import { Filter } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Button from '../Button/Button'
 import AdvancedSearchDisplayContainer
@@ -109,7 +110,7 @@ class SearchForm extends Component {
   /**
    * AutoSuggest callback when a suggestion is selected
    * @param {Object} data object with info about the selected suggestion. Value
-   * is null when no suggestion is highligted
+   * is null when no suggestion is highlighted
    */
   onSuggestionHighlighted(data) {
     const { suggestion: newSuggestion } = data
@@ -277,6 +278,7 @@ class SearchForm extends Component {
       onClearAutocompleteSuggestions,
       onFetchAutocomplete
     } = this.props
+    console.log('🚀 ~ file: SearchForm.jsx:281 ~ SearchForm ~ render ~ showFilterStackToggle:', showFilterStackToggle)
 
     const {
       isLoading,
@@ -344,6 +346,7 @@ class SearchForm extends Component {
             iconSize="0.825rem"
           />
           {
+            // TODO I think this code is
             showFilterStackToggle && (
               showFilterStack
                 ? (
@@ -381,7 +384,7 @@ class SearchForm extends Component {
                 className="search-form__button search-form__button--dark search-form__button--advanced-search"
                 label="Advanced search"
                 onClick={this.onToggleAdvancedSearch}
-                icon={FaSlidersH}
+                icon={Filter}
                 iconSize="0.825rem"
               />
             </PortalFeatureContainer>

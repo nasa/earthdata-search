@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+// TODO be the most careful here
 import {
   FaClock,
   FaCogs,

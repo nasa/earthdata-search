@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { difference } from 'lodash-es'
 import classNames from 'classnames'
-import { FaInfoCircle, FaMinus } from 'react-icons/fa'
+import { FaInfoCircle } from 'react-icons/fa'
+import { Minus } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { eventEmitter } from '../../events/events'
 import { locationPropType } from '../../util/propTypes/location'
@@ -134,7 +135,7 @@ export const CollectionDetails = ({
                         bootstrapSize="sm"
                         type="button"
                         label="Remove granule"
-                        icon={FaMinus}
+                        icon={Minus}
                         iconSize="0.875rem"
                         onClick={
                           (event) => {
