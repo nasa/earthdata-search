@@ -6,7 +6,7 @@ import React, {
 import moment from 'moment'
 import PropTypes from 'prop-types'
 // TODO they are using the same calander in the mock up instead of their own icon
-import { FaCalendarAlt } from 'react-icons/fa'
+import { Calendar } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import TemporalDisplayEntry from './TemporalDisplayEntry'
 import FilterStackItem from '../FilterStack/FilterStackItem'
@@ -64,7 +64,7 @@ export const TemporalDisplay = memo(({
 
   return (
     <FilterStackItem
-      icon={FaCalendarAlt}
+      icon={Calendar}
       title="Temporal"
       onRemove={onTimelineRemove}
     >
