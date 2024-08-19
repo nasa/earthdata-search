@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty, isObject } from 'lodash-es'
-// TODO I don't think we want this
-import { Slideshow } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { Filter } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import AdvancedSearchDisplayEntry from './AdvancedSearchDisplayEntry'
 import FilterStackItem from '../FilterStack/FilterStackItem'
@@ -34,7 +33,7 @@ class AdvancedSearchDisplay extends PureComponent {
 
     return (
       <FilterStackItem
-        icon={Slideshow}
+        icon={Filter}
         title="Advanced Search"
         onRemove={
           () => {

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+// TODO what is this?
 import {
   FaSortAmountDownAlt,
   FaSortAmountDown,
@@ -32,7 +33,7 @@ import './PanelGroupHeader.scss'
  * @param {Boolean} props.headerMetaPrimaryLoading - A flag designating the header primary loading state
  * @param {String} props.headerMetaPrimaryText - A string designating the header primary loading text
  * @param {Boolean} props.isActive -  A flag to designate the PanelGroup as active. Active PanelGroups are lifted to the highest index
- * @param {Boolean} props.isOpen - A flag to desingate the PanelGroup as open
+ * @param {Boolean} props.isOpen - A flag to designate the PanelGroup as open
  * @param {Array} props.moreActionsDropdownItems - An array of objects used to configure the more actions dropdown items
  * @param {String} props.panelGroupId - The element to be used as the header
  * @param {String} props.primaryHeading - The text to be used as the primary heading
