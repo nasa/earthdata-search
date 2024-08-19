@@ -9,12 +9,12 @@ import {
 } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { parse } from 'qs'
+import { DataUserStory } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/tag'
+import { ArrowCircleLeft } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import {
-  FaArrowCircleLeft,
   FaFolder,
   FaLock,
-  FaSave,
-  FaUser
+  FaSave
 } from 'react-icons/fa'
 
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
@@ -144,7 +144,7 @@ class SecondaryToolbar extends Component {
         type="button"
         className="secondary-toolbar__back"
         bootstrapVariant="light"
-        icon={FaArrowCircleLeft}
+        icon={ArrowCircleLeft}
         label="Back to Search"
         dataTestId="back-to-search-button"
         to={
@@ -166,7 +166,7 @@ class SecondaryToolbar extends Component {
         type="button"
         className="secondary-toolbar__back"
         bootstrapVariant="naked"
-        icon={FaArrowCircleLeft}
+        icon={ArrowCircleLeft}
         label="Back to Project"
         to={
           {
@@ -245,7 +245,7 @@ class SecondaryToolbar extends Component {
               </span>
             )
           }
-          <EDSCIcon size="0.825rem" icon={FaUser} />
+          <EDSCIcon size="1rem" icon={DataUserStory} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer

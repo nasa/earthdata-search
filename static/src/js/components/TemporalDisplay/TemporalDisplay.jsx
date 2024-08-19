@@ -5,6 +5,7 @@ import React, {
 } from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
+// TODO they are using the same calander in the mock up instead of their own icon
 import { FaCalendarAlt } from 'react-icons/fa'
 
 import TemporalDisplayEntry from './TemporalDisplayEntry'

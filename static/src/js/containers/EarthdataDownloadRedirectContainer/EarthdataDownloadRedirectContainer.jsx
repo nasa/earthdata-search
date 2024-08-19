@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { FaExternalLinkAlt } from 'react-icons/fa'
+import { ArrowChevronRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Button from '../../components/Button/Button'
-import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 import Spinner from '../../components/Spinner/Spinner'
+import eddIcon from '../../../assets/images/edd-icon-small.png'
 
 export const mapStateToProps = (state) => ({
   earthdataDownloadRedirect: state.earthdataDownloadRedirect
@@ -20,14 +20,11 @@ export const EarthdataDownloadRedirectContainer = ({
     window.location.replace(redirect)
   }, [])
 
+  // TODO we should improve the styling for this
   return (
     <div className="container d-flex flex-column align-items-center text-center">
       <h3 className="font-weight-bolder h5 mt-3 text-center w-75">Opening Earthdata Download to download your files...</h3>
-      <EDSCIcon
-        className="mt-4 text-window-actions__modal-icon"
-        icon={FaExternalLinkAlt}
-        size="4rem"
-      />
+      <img src={eddIcon} alt="earthdata-download" />
       <Spinner
         className="mt-4"
         type="dots"
@@ -48,9 +45,10 @@ export const EarthdataDownloadRedirectContainer = ({
         className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--open-edd mt-3"
         bootstrapSize="sm"
         label="Open Earthdata Download"
-        icon={FaExternalLinkAlt}
+        icon={ArrowChevronRight}
         href={redirect}
         bootstrapVariant="primary"
+        iconPosition="right"
         dataTestId="earthdata-download-redirect-button"
       >
         Open Earthdata Download

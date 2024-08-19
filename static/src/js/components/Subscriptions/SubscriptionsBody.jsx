@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { isEmpty, isEqual } from 'lodash-es'
-import { FaBell, FaPlus } from 'react-icons/fa'
+import { Plus, Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
 import { Form } from 'react-bootstrap'
 import snakecaseKeys from 'snakecase-keys'
 
@@ -133,7 +134,7 @@ export const SubscriptionsBody = ({
                     {
                       displayWarning && (
                         <div className="subscriptions-body__warning">
-                          <EDSCIcon className="subscriptions-body__warning-icon" icon={FaBell} />
+                          <EDSCIcon className="subscriptions-body__warning-icon" icon={Subscribe} />
                           <div>
                             {
                               hasExactlyMatchingGranuleQuery
@@ -183,7 +184,7 @@ export const SubscriptionsBody = ({
                     bootstrapVariant="primary"
                     label="Create Subscription"
                     spinner={submittingNewSubscription}
-                    icon={FaPlus}
+                    icon={Plus}
                     onClick={
                       async () => {
                         setSubmittingNewSubscription(true)

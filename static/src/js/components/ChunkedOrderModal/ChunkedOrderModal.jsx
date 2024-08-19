@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
-import { FaArrowCircleLeft } from 'react-icons/fa'
+import { ArrowCircleLeft } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { calculateGranulesPerOrder, calculateOrderCount } from '../../util/orderCount'
 import { commafy } from '../../util/commafy'
@@ -10,7 +10,6 @@ import { stringify } from '../../util/url/url'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import { locationPropType } from '../../util/propTypes/location'
-
 import './ChunkedOrderModal.scss'
 
 const ChunkedOrderModal = ({
@@ -43,7 +42,7 @@ const ChunkedOrderModal = ({
       className="chunked-order-modal__action chunked-order-modal__action--secondary"
       bootstrapVariant="primary"
       type="button"
-      icon={FaArrowCircleLeft}
+      icon={ArrowCircleLeft}
       label="Refine your search"
       onClick={onModalClose}
       to={
