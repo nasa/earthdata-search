@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty, isObject } from 'lodash-es'
-import { FaSlidersH } from 'react-icons/fa'
+// TODO I don't think we want this
+import { Slideshow } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import AdvancedSearchDisplayEntry from './AdvancedSearchDisplayEntry'
 import FilterStackItem from '../FilterStack/FilterStackItem'
@@ -29,9 +30,11 @@ class AdvancedSearchDisplay extends PureComponent {
 
     const valueToDisplay = `(${advancedSearchFiltersApplied} applied)`
 
+    console.log('🚀 ~ file: AdvancedSearchDisplay.jsx:33 ~ AdvancedSearchDisplay ~ render ~ valueToDisplay:', valueToDisplay)
+
     return (
       <FilterStackItem
-        icon={FaSlidersH}
+        icon={Slideshow}
         title="Advanced Search"
         onRemove={
           () => {

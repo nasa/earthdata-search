@@ -15,6 +15,7 @@ import './ButtonDropdown.scss'
 /**
  * A button that toggles a custom react-bootstrap dropdown
  */
+// TODO is this not being used?
 export const ButtonDropdown = memo(({
   buttonLabel,
   buttonContent,

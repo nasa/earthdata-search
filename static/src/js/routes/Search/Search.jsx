@@ -15,13 +15,16 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
+
+// TODO I'm confused alot of the edsc-react-icons don't look good
 import {
-  FaMap,
-  FaFilter,
-  FaInfoCircle,
   FaSitemap,
-  FaQuestionCircle
+  FaQuestionCircle,
+  FaFilter,
+  FaMap
 } from 'react-icons/fa'
+
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
 import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
@@ -157,7 +160,7 @@ export const Search = ({
           <Route exact path={`${path}/granules/granule-details`}>
             <SidebarSection
               sectionTitle="Collection Details"
-              titleIcon={FaInfoCircle}
+              titleIcon={AlertInformation}
             >
               <Suspense fallback={<div />}>
                 <CollectionDetailsHighlightsContainer />
