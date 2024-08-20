@@ -29,8 +29,6 @@ class AdvancedSearchDisplay extends PureComponent {
 
     const valueToDisplay = `(${advancedSearchFiltersApplied} applied)`
 
-    console.log('🚀 ~ file: AdvancedSearchDisplay.jsx:33 ~ AdvancedSearchDisplay ~ render ~ valueToDisplay:', valueToDisplay)
-
     return (
       <FilterStackItem
         icon={Filter}

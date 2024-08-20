@@ -16,8 +16,6 @@ const AutocompleteSuggestion = ({ suggestion }) => {
     value,
     fields = ''
   } = suggestion
-  console.log('🚀 ~ file: AutocompleteSuggestion.jsx:19 ~ AutocompleteSuggestion ~ suggestion:', suggestion)
-
   const title = buildHierarchicalAutocompleteTitle(suggestion)
   const hierarchy = buildHierarchy({ fields })
 

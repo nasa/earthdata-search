@@ -8,7 +8,6 @@ import {
   capitalize,
   isEqual
 } from 'lodash-es'
-// TODO what is this?
 import { Close } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { dividePolygon } from '@edsc/geo-utils'
