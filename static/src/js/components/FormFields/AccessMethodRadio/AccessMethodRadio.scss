@@ -5,17 +5,17 @@
   justify-content: flex-start;
   flex-flow: row;
   width: 100%;
-  border: 1px solid $color__black--200;
+  border: 1px solid $color__carbon--20;
   border-radius: 0.125rem;
   vertical-align: middle;
   transition: all 0.2s ease-in-out;
-  color: $color__black--700;
+  color: $color__carbon--70;
 
   &--is-selected {
-    box-shadow: 0 0.125rem 0.25rem 0.125rem rgba($color__black, 0.1);
-    border: 1px solid darken($color__black--200, 10);
-    background-color: $color__black--100;
-    color: $color__black--800;
+    box-shadow: 0 0.125rem 0.25rem 0.125rem rgba($color__carbon-black, 0.1);
+    border: 1px solid darken($color__carbon--20, 10);
+    background-color: $color__carbon--10;
+    color: $color__carbon--80;
   }
 
   &--is-harmony {
@@ -40,14 +40,14 @@
     height: 1rem;
     width: 1rem;
     border-radius: 100%;
-    border: 1px solid $color__black--300;
-    background-color: $color__white;
+    border: 1px solid $color__carbon--30;
+    background-color: $color__spacesuit-white;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
 
     .access-method-radio--is-selected & {
-      border: 1px solid $color__blue--dark;
-      background-color: $color__blue;
+      border: 1px solid $color__nasa-blue--shade;
+      background-color: $color__nasa-blue;
     }
   }
 
@@ -56,7 +56,7 @@
   }
 
   &__radio-icon {
-    color: $color__white;
+    color: $color__spacesuit-white;
     width: 0.625rem;
     height: 0.625rem;
   }
@@ -87,8 +87,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: $color__black--200;
-    color: $color__black--900;
+    background: $color__carbon--20;
+    color: $color__carbon--90;
     border-radius: 1rem;
     font-size: 0.625rem;
     font-weight: 700;
@@ -114,11 +114,11 @@
     margin: 0;
     padding: 0;
     font-weight: 700;
-    color: $color__black--700;
+    color: $color__carbon--70;
     font-size: 0.875rem;
 
     .access-method-radio--is-selected & {
-      color: $color__black--800;
+      color: $color__carbon--80;
     }
   }
 
@@ -127,7 +127,7 @@
     margin: 0;
     padding: 0;
     margin-left: 0.5rem;
-    color: $color__black--500;
+    color: $color__carbon--50;
     font-size: 0.825rem;
   }
 

@@ -2,7 +2,7 @@
   transition: all 0.2s ease;
 
   .is-dragging & {
-    background-color: $color__green;
+    background-color: $color__active-green;
   }
 }
 

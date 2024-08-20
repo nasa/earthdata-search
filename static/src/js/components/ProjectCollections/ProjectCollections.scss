@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 0;
-  background-color: $color__white;
+  background-color: $color__spacesuit-white;
 
   &__footer {
     flex-shrink: 0;
@@ -19,7 +19,7 @@
   &__footer-message {
     margin-bottom: calc($spacer / 2);
     font-size: 0.825rem;
-    color: $color__black--400;
+    color: $color__carbon--40;
   }
 
   .simplebar-content {

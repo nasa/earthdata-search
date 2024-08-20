@@ -3,14 +3,14 @@
     display: flex;
     align-items: stretch;
     width: 100%;
-    border: 1px solid $color__black--200;
+    border: 1px solid $color__carbon--20;
     border-radius: .25rem;
     margin-bottom: 1.25rem;
     text-align: left;
     overflow: hidden;
 
     &:hover {
-      border: 1px solid $color__black--300;
+      border: 1px solid $color__carbon--30;
     }
 
     .button__contents {
@@ -69,10 +69,10 @@
     flex-grow: 1;
     padding: 1rem;
     padding-bottom: 0.825rem;
-    background-color: $color__black--100;
+    background-color: $color__carbon--10;
 
     .portal-list__item:hover & {
-      background-color: darken($color__black--100, 2);
+      background-color: darken($color__carbon--10, 2);
     }
   }
 
@@ -86,7 +86,7 @@
     display: block;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    color: $color__black--500;
+    color: $color__carbon--50;
   }
 
   &__item-description {
@@ -97,7 +97,7 @@
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     font-size: 0.8rem;
-    color: $color__black--600;
+    color: $color__carbon--60;
   }
 
   &__item-details-link {
@@ -106,15 +106,15 @@
     margin-top: 0.25rem;
     font-size: 0.825rem;
     font-weight: 500;
-    color: $color__black--500;
+    color: $color__carbon--50;
 
     .link--external:after {
-      color: $color__black--400;
+      color: $color__carbon--40;
     }
 
     &:hover {
       .link--external:after {
-        color: $color__black--500;
+        color: $color__carbon--50;
       }
     }
   }

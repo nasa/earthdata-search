@@ -7,11 +7,11 @@ $color__indigo: #34495e;
 $color__neon-green: #01cf6b;
 $color__orange: #ec8101;
 $color__orange--dark: #c86d00;
-$color__pale-yellow--dark: #e2dcbb;
-$color__pale-yellow: #fcf8e3;
+$color__pale-yellow--dark: #e2dcbb; // not sure
+$color__pale-yellow: #fcf8e3; // not sure
 $color__pale-red--dark: #d48c84;
 $color__pale-red: #ecc6c3;
-$color__purple: #7f33a0;
+$color__purple: #7f33a0; // not sure
 $color__red--dark: #94261a;
 $color__red: #c0392b;
 $color__yellow: #ccaa00;
@@ -33,3 +33,31 @@ $color__theme--blue: #5382b1;
 $color__theme--light: #ebedef;
 $color__theme--yellow: $color__yellow;
 $color__theme--green: $color__green;
+
+// HDS Primary Palette
+$color__carbon-black: #000000;
+$color__spacesuit-white: #FFFFFF;
+$color__nasa-red: #F64137;
+$color__nasa-blue: #1C67E3;
+
+// HDS Extended Palette
+$color__nasa-red--tint: #FF5C52;
+$color__nasa-red--shade: #B60109;
+$color__nasa-blue--tint: #288BFF;
+$color__nasa-blue--shade: #0B3D91;
+
+// Neutrals 
+$color__carbon--90: #17171B;
+$color__carbon--80: #2E2E32;
+$color__carbon--70: #444447;
+$color__carbon--60: #58585B; // Text on white.
+$color__carbon--50: #77777A;
+$color__carbon--40: #959599;
+$color__carbon--30: #B9B9BB;
+$color__carbon--20: #D1D1D1;
+$color__carbon--10: #E3E3E3;
+$color__carbon--5: #F6F6F6;
+
+// Additional Colors
+$color__international-orange: #EA6F24;
+$color__active-green: #47DA84;

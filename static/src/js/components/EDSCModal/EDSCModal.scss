@@ -63,7 +63,7 @@
     align-items: center;
     justify-content: center;
     z-index: 3;
-    background-color: $color__white;
+    background-color: $color__spacesuit-white;
   }
 
   &__inner-body {
@@ -76,7 +76,7 @@
   }
 
   &__header {
-    background-color: $color__theme--light;
+    background-color: $color__carbon--10;
     border-bottom: 0;
 
     &--is-empty {
@@ -90,7 +90,7 @@
 
   &__title {
     font-weight: 700;
-    color: $color__black--600;
+    color: $color__carbon--60;
   }
 
   &__footer {
@@ -127,8 +127,8 @@
     margin-top: 0.5rem;
     border-radius: 0.25rem;
     transform: translate(-50%, 0%);
-    background-color: #000;
-    color: #fff;
+    background-color: $color__carbon-black;
+    color: $color__spacesuit-white;
     white-space: nowrap;
   }
 }

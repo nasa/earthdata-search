@@ -1,6 +1,6 @@
 .facets-group {
   display: block;
-  color: $color__white;
+  color: $color__spacesuit-white;
 
   &__heading {
     margin: 0;
@@ -32,8 +32,8 @@
     top: 0.01rem;
     margin-left: 0.5rem;
     padding: 0.0625rem 0.5rem;
-    background-color: $color__blue;
-    color: $color__white;
+    background-color: $color__nasa-blue;
+    color: $color__spacesuit-white;
     font-size: 0.725rem;
     font-weight: 400;
     border-radius: 1rem;
@@ -51,7 +51,7 @@
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      background: $color__black--100;
+      background: $color__carbon--10;
     }
 
     &:focus {
@@ -60,14 +60,14 @@
     }
 
     &:disabled {
-      background-color: #fff;
+      background-color: $color__spacesuit-white;
       cursor: not-allowed;
     }
   }
 
   &__action {
     align-self: flex-end;
-    color: $color__black--300;
+    color: $color__carbon--30;
 
     .facets-group__button:disabled & {
       display: none;
@@ -77,13 +77,13 @@
   &__header {
     display: flex;
     padding: 0.2rem 0.5rem 0.325rem 0.7rem;
-    background-color: $color__black--100;
-    color:#fff;
+    background-color: $color__carbon--10;
+    color:$color__spacesuit-white;
   }
 
   &__meta {
     font-size: 0.8rem;
-    color: $color__black--600;
+    color: $color__carbon--60;
     font-weight: 500;
   }
 
@@ -92,13 +92,13 @@
     padding: 0;
     font-size: 0.8rem;
     font-weight: 500;
-    color: $color__blue;
+    color: $color__nasa-blue;
     background: none;
     outline: none;
     border: 0;
 
     &:hover {
-      color: $color__blue--dark;
+      color: $color__nasa-blue--shade;
     }
 
     &:focus {
@@ -111,7 +111,7 @@
     align-items: center;
     justify-content: center;
     margin-left: 0.5rem;
-    color: $color__black--400;
+    color: $color__carbon--40;
 
     svg {
       transform: translateY(-0.125rem)

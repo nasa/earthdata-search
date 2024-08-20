@@ -3,17 +3,17 @@ $item-height: 3rem;
 .order-status-item {
   position: relative;
   margin-bottom: 0.5rem;
-  border: 1px solid $color__black--300;
+  border: 1px solid $color__carbon--30;
   z-index: 0;
-  background: $color__white;
+  background: $color__spacesuit-white;
   border-radius: $border-radius;
 
   &:last-child {
-    border-bottom: 1px solid $color__black--300;
+    border-bottom: 1px solid $color__carbon--30;
   }
 
   &--is-opened {
-    box-shadow: 0 0 0.75rem -0.125rem rgba($color__black, 0.15);
+    box-shadow: 0 0 0.75rem -0.125rem rgba($color__carbon-black, 0.15);
     z-index: 1;
   }
 
@@ -50,7 +50,7 @@ $item-height: 3rem;
     padding: 0.5*$spacer;
     width: 15%;
     font-size: 0.775rem;
-    color: $color__black--600;
+    color: $color__carbon--60;
 
     &--progress {
       justify-content: flex-start;
@@ -71,13 +71,13 @@ $item-height: 3rem;
     margin-bottom: $spacer;
     width: auto;
     font-size: 0.875rem;
-    color: $color__black--600;
+    color: $color__carbon--60;
   }
 
   &__meta-heading {
     margin-bottom: 0.125*$spacer;
     font-size: 0.875rem;
-    color: $color__black--400;
+    color: $color__carbon--40;
   }
 
   &__meta-body {
@@ -127,29 +127,29 @@ $item-height: 3rem;
     .order-status-item &,
     .order-status-item--in_progress & {
       .progress-ring__progress {
-        stroke: $color__indigo;
+        stroke: $color__nasa-blue;
       }
     }
 
     .order-status-item--complete & {
       .progress-ring__progress {
-        stroke: $color__green;
+        stroke: $color__active-green;
       }
     }
 
     .order-status-item--failed & {
       .progress-ring__progress {
-        stroke: $color__red;
+        stroke: $color__nasa-red;
       }
     }
   }
 
   &__button {
     width: 5%;
-    color: $color__black--400;
+    color: $color__carbon--40;
 
     &:hover {
-      color: $color__black--500;
+      color: $color__carbon--50;
     }
   }
 
@@ -171,7 +171,7 @@ $item-height: 3rem;
     font-weight: 300;
     font-size: 0.725rem;
     line-height: 1rem;
-    color: $color__black--500;
+    color: $color__carbon--50;
   }
 
   &__orders-processed {
@@ -179,13 +179,13 @@ $item-height: 3rem;
     font-size: 0.725rem;
     line-height: 1rem;
     font-weight: 300;
-    color: $color__black--500;
+    color: $color__carbon--50;
   }
 
   &__additional-info {
     max-height: 7rem;
     overflow-y: scroll;
-    background-color: $color__black--200;
+    background-color: $color__carbon--20;
   }
 
   &__order-info {
@@ -195,7 +195,7 @@ $item-height: 3rem;
   &__note {
     display: block;
     margin-bottom: calc($spacer / 2);
-    color: $color__black--500;
+    color: $color__carbon--50;
     font-size: 0.875rem;
   }
 
@@ -203,7 +203,7 @@ $item-height: 3rem;
     font-weight: 500;
 
     &--opensearch {
-      color: $color__yellow;
+      color: $color__international-orange;
     }
 
     &--csda {
@@ -219,21 +219,21 @@ $item-height: 3rem;
     border-right: 0;
 
     &--is-error {
-      background-color: $color__pale-red;
-      border-color: $color__pale-red--dark;
+      background-color: $color__nasa-red--tint;
+      border-color: $color__nasa-red--tint;
     }
   }
 
   &__message-heading {
     margin-bottom: $spacer*0.25;
     font-size: 0.775rem;
-    color: rgba($color__black, 0.5);
+    color: rgba($color__carbon-black, 0.5);
   }
 
   &__message-body {
     margin-bottom: 0;
     font-size: 0.775rem;
-    color: rgba($color__black, 0.7);
+    color: rgba($color__carbon-black, 0.7);
   }
 
   &__body {
@@ -246,8 +246,8 @@ $item-height: 3rem;
   }
 
   &__tabs {
-    border-top: 1px solid $color__black--300;
-    background-color: $color__black--200;
+    border-top: 1px solid $color__carbon--30;
+    background-color: $color__carbon--20;
 
     .tab-content {
       display: flex;
@@ -278,7 +278,7 @@ $item-height: 3rem;
 
     .order-status-item__tab-status & {
       font-size: 1.125rem;
-      color: $color__black--500;
+      color: $color__carbon--50;
       max-width: 30rem;
       text-align: center;
     }
@@ -287,7 +287,7 @@ $item-height: 3rem;
   &__status-text {
     font-style: italic;
     font-size: 0.825rem;
-    color: $color__black--500;
+    color: $color__carbon--50;
     display: block;
     margin-bottom: 0.5rem;
   }
@@ -304,17 +304,17 @@ $item-height: 3rem;
 
     .link--external {
       &:after {
-        color: $color__black--500;
+        color: $color__carbon--50;
       }
 
       &:hover:after {
-        color: $color__black--500;
+        color: $color__carbon--50;
       }
     }
   }
 
   &__subtitle {
-    color: $color__black--500;
+    color: $color__carbon--50;
     font-weight: 500;
     font-size: 0.925rem;
   }
@@ -322,23 +322,23 @@ $item-height: 3rem;
   &__direct-distribution-item {
     display: inline-block;
     margin-right: 1rem;
-    color: $color__black--500;
+    color: $color__carbon--50;
     font-weight: 500;
   }
 
   &__direct-distribution-item-value {
     display: block;
     font-weight: 700;
-    color: $color__black--600;
+    color: $color__carbon--60;
   }
 }
 
 @keyframes pulse {
   from {
-    stroke: $color__black--300;
+    stroke: $color__carbon--30;
   }
 
   to {
-    stroke: $color__black--500;
+    stroke: $color__carbon--50;
   }
 }

@@ -10,7 +10,7 @@
     font-weight: 700;
 
     &:hover {
-      background-color: $color__black--200;
+      background-color: $color__carbon--20;
     }
   }
 
@@ -26,9 +26,9 @@
     flex-direction: column;
     width: 13.4375rem;
     font-size: 0.8125rem;
-    border: 1px solid $color__black--200;
+    border: 1px solid $color__carbon--20;
     border-radius: $border-radius;
-    color: $color__black--700;
+    color: $color__carbon--70;
     @include carat('topleft');
 
     .rdtYears,

@@ -7,17 +7,17 @@
   &__item-button {
     margin-left: calc($spacer / 2);
     padding: 0.075rem 0.425rem;
-    background-color: $color__blue--dark;
-    border-color: $color__blue--dark;
+    background-color: $color__nasa-blue--shade;
+    border-color: $color__nasa-blue--shade;
 
     &:hover {
-      background-color: darken($color__blue--dark, 5);
-      border-color: darken($color__blue--dark, 5);
+      background-color: darken($color__nasa-blue--shade, 5);
+      border-color: darken($color__nasa-blue--shade, 5);
     }
   }
 
   ::placeholder {
-    color: $color__black--300;
+    color: $color__carbon--30;
     opacity: 1;
   }
 

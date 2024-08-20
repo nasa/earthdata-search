@@ -18,25 +18,26 @@ $headings-font-family: "Inter", $font-family-sans-serif;
 $font-family-monospace: "DM Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
 /* Body */
-$body-bg: #000;
-$body-color: #333;
+$body-bg: $color__carbon-black;
+$body-color: $color__carbon--80;
 
 /* Theme Colors */
 $theme-colors: (
-  "primary": $color__theme--blue,
-  "light": $color__theme--light,
-  "success": $color__theme--green,
-  "yellow": $color__theme--yellow
+  "primary": $color__nasa-blue,
+  "light": $color__carbon--10,
+  "success": $color__active-green,
+  "yellow": $color__international-orange
 );
 
-$border-color: $color__black--200;
+$border-color: $color__carbon--20;
 
 /* Buttons */
 $btn-border-radius: 0.125rem;
 
 /* Links */
-$color__link: $color__blue;
-$link-hover-color: $color__blue--dark;
+$link-color: $color__carbon-black;
+$color__link: $color__carbon-black;
+$link-hover-color: $color__carbon-black;
 $link-decoration: underline dashed;
 $link-hover-decoration: underline;
 

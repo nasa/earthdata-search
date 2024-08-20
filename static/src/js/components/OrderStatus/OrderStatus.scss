@@ -29,8 +29,8 @@
 
   .well__footer {
     margin-top: 1rem;
-    background-color: $color__green;
-    color: $color__white;
+    background-color: $color__nasa-blue;
+    color: $color__spacesuit-white;
     border-radius: $border-radius;
   }
 
@@ -53,11 +53,11 @@
   }
 
   &__footer-link {
-    color: $color__white;
+    color: $color__spacesuit-white;
 
     &:hover,
     &:active {
-      color: $color__white;
+      color: $color__spacesuit-white;
     }
   }
 }

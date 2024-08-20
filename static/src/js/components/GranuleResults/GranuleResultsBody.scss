@@ -45,14 +45,14 @@
     display: flex;
     justify-content: center;
     min-width: 7rem;
-    background-color: rgba($color__black--200, 0.95);
-    color: $color__black--600;
+    background-color: rgba($color__carbon--20, 0.95);
+    color: $color__carbon--60;
     font-size: 0.7rem;
     border-top-left-radius: 0.125rem;
     transition: all 0.1s ease-in-out;
 
     &:hover {
-      background-color: rgba($color__black--200, 1);
+      background-color: rgba($color__carbon--20, 1);
     }
   }
 

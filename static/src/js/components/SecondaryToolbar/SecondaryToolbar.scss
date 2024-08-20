@@ -49,15 +49,15 @@
     border: 0;
     border-radius: 0;
     outline: 0;
-    border-left: 1px solid $color__black--700 !important;
+    border-left: 1px solid $color__carbon--70 !important;
     border-right: 1px solid transparent !important;
     background: transparent;
-    color: $color__black--300;
+    color: $color__carbon--30;
 
     .show > &,
     &:hover {
-      background-color: rgba($color__black, 0.2) !important;
-      color: $color__black--100 !important;
+      background-color: rgba($color__carbon-black, 0.2) !important;
+      color: $color__carbon--10 !important;
     }
   }
 
@@ -79,21 +79,21 @@
 
   &__user-dropdown {
     .dropdown-item {
-      background-color: $color__white;
-      background-color: $color__white;
+      background-color: $color__spacesuit-white;
+      background-color: $color__spacesuit-white;
 
       &:hover {
-        background-color: $color__black--200;
+        background-color: $color__carbon--20;
       }
     }
 
     .dropdown-item.active,
     .dropdown-item:active {
-      color: $color__black--800;
-      background-color: $color__white;
+      color: $color__carbon--80;
+      background-color: $color__spacesuit-white;
 
       &:hover {
-        background-color: $color__black--200;
+        background-color: $color__carbon--20;
       }
     }
   }

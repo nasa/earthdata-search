@@ -1,10 +1,10 @@
 .granule-results-highlights {
   &__count {
     padding: 0.25rem 0.75rem;
-    color: $color__black--700;
+    color: $color__carbon--70;
     font-size: 0.75rem;
-    background-color: $color__black--100;
-    border-bottom: 1px solid $color__black--200;
+    background-color: $color__carbon--10;
+    border-bottom: 1px solid $color__carbon--20;
   }
 
   &__list {
@@ -14,8 +14,8 @@
   }
 
   &__item {
-    border-bottom: 1px solid $color__black--200;
-    color: $color__black--700;
+    border-bottom: 1px solid $color__carbon--20;
+    color: $color__carbon--70;
   }
 
   &__item-header {
@@ -35,14 +35,14 @@
     align-items: center;
     justify-content: space-between;
     font-size: 0.75rem;
-    color: $color__black--700;
-    background-color: rgba($color__green, 0.2);
+    color: $color__carbon--70;
+    background-color: rgba($color__active-green, 0.2);
 
     &--start {
       background-color: rgba(39, 174, 96, 0.1);
 
       h5 {
-        color: #27ae60;
+        color: $color__active-green;
       }
     }
 
@@ -50,7 +50,7 @@
       background: rgba(192, 57, 43, 0.1);
 
       h5 {
-        color: #c0392b;
+        color: $color__nasa-red;
       }
     }
   }
@@ -60,7 +60,7 @@
     font-size: 0.725rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: $color__black--500;
+    color: $color__carbon--50;
   }
 
   &__temporal-value {
