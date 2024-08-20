@@ -33,8 +33,6 @@ export const TreeItem = ({
     value,
     variable = {}
   } = item
-  console.log('🚀 ~ file: TreeItem.jsx:37 ~ variable:', variable)
-
   const {
     longName
   } = variable

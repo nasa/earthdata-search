@@ -29,7 +29,6 @@ export const SubscriptionsListTable = ({
   onDeleteSubscription,
   onFocusedCollectionChange
 }) => {
-  console.log('🚀 ~ file: SubscriptionsListTable.jsx:34 ~ subscriptionType:', subscriptionType)
   const onHandleRemove = (conceptId, nativeId, collectionId) => {
     // eslint-disable-next-line no-alert
     const confirmDeletion = window.confirm('Are you sure you want to remove this subscription? This action cannot be undone.')

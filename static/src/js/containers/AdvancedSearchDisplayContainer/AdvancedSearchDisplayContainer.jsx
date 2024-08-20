@@ -21,17 +21,13 @@ export const AdvancedSearchDisplayContainer = ({
   advancedSearch,
   onChangeQuery,
   onUpdateAdvancedSearch
-}) => {
-  console.log('🚀 ~ file: AdvancedSearchDisplayContainer.jsx:25 ~ advancedSearch:', advancedSearch)
-
-  return (
-    <AdvancedSearchDisplay
-      advancedSearch={advancedSearch}
-      onUpdateAdvancedSearch={onUpdateAdvancedSearch}
-      onChangeQuery={onChangeQuery}
-    />
-  )
-}
+}) => (
+  <AdvancedSearchDisplay
+    advancedSearch={advancedSearch}
+    onUpdateAdvancedSearch={onUpdateAdvancedSearch}
+    onChangeQuery={onChangeQuery}
+  />
+)
 
 AdvancedSearchDisplayContainer.defaultProps = {
   advancedSearch: {}

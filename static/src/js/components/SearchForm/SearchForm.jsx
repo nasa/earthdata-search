@@ -270,12 +270,9 @@ class SearchForm extends Component {
     const {
       advancedSearch,
       autocomplete,
-      showFilterStackToggle,
       onClearAutocompleteSuggestions,
       onFetchAutocomplete
     } = this.props
-    console.log('🚀 ~ file: SearchForm.jsx:281 ~ SearchForm ~ render ~ showFilterStackToggle:', showFilterStackToggle)
-
     const {
       isLoading,
       isLoaded,
@@ -394,8 +391,7 @@ SearchForm.propTypes = {
   onClearFilters: PropTypes.func.isRequired,
   onFetchAutocomplete: PropTypes.func.isRequired,
   onSelectAutocompleteSuggestion: PropTypes.func.isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired,
-  showFilterStackToggle: PropTypes.bool.isRequired
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }
 
 export default SearchForm
