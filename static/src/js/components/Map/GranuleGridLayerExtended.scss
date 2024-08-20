@@ -8,13 +8,13 @@
     margin: 0.5rem auto;
     border: 0;
     outline: 0;
-    background-color: rgba($color__black--400, 0.5);
-    color: $color__white;
+    background-color: rgba($color__carbon--40, 0.5);
+    color: $color__spacesuit-white;
     border-radius: 50%;
 
     &:hover,
     &:focus {
-      background-color: $color__red;
+      background-color: $color__nasa-red;
     }
   }
 

@@ -2,34 +2,34 @@
 which would be done to overcome overflow issues. */
 #root,
 .dropdown-menu {
-  box-shadow: 0 0 1rem rgba($color__black, 0.15);
+  box-shadow: 0 0 1rem rgba($color__carbon-black, 0.15);
 
   .dropdown-menu-dark,
   .dropdown-dark & {
-    background-color: $color__black--800;
-    color: $color__black--200;
-    border: 1px solid $color__black--700;
-    box-shadow: 0 0 1rem rgba($color__black, 1);
+    background-color: $color__carbon--80;
+    color: $color__carbon--20;
+    border: 1px solid $color__carbon--70;
+    box-shadow: 0 0 1rem rgba($color__carbon-black, 1);
 
     .dropdown-item {
-      color: $color__black--100;
+      color: $color__carbon--10;
 
       &:hover {
-        color: $color__black--100;
-        background-color: $color__black--900;
+        color: $color__carbon--10;
+        background-color: $color__carbon--90;
       }
     }
 
     &:before {
-      border-bottom-color: $color__black--700;
+      border-bottom-color: $color__carbon--70;
     }
 
     &:after {
-      border-bottom-color: $color__black--800;
+      border-bottom-color: $color__carbon--80;
     }
 
     .button__icon {
-      color: $color__black--500;
+      color: $color__carbon--50;
     }
   }
 }

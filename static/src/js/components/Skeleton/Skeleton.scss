@@ -21,10 +21,10 @@
     overflow: hidden;
     max-width: 100%;
     z-index: 1;
-    background-color: $color__black--300;
+    background-color: $color__carbon--30;
 
     .skeleton--dark & {
-      background-color: $color__black--600;
+      background-color: $color__carbon--60;
     }
   }
 
@@ -43,16 +43,16 @@
       position: absolute;
       height: 100%;
       width: 100%;
-      background-color: $color__black--200;
+      background-color: $color__carbon--20;
       animation: pulse 2s infinite;
 
       .skeleton--light & {
-        background-color: $color__black--300;
+        background-color: $color__carbon--30;
         mix-blend-mode: multiply;
       }
 
       .skeleton--dark & {
-        background-color: $color__black--500;
+        background-color: $color__carbon--50;
         mix-blend-mode: lighten;
       }
     }

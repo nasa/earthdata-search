@@ -1,5 +1,5 @@
 .app-logo {
-  color: $color__white;
+  color: $color__spacesuit-white;
   display: flex;
   align-items: center;
 
@@ -59,7 +59,7 @@
 
   &__site-name {
     display: inline-block;
-    color: $color__white;
+    color: $color__spacesuit-white;
     font-size: 1.125rem;
     text-transform: uppercase;
     letter-spacing: 0.05rem;
@@ -68,21 +68,21 @@
 
     &:hover {
       text-decoration: none;
-      color: $color__white;
+      color: $color__spacesuit-white;
     }
 
     .route-wrapper--light & {
-      color: $color__black--800;
+      color: $color__carbon--80;
 
       &:hover {
-        color: $color__black--800;
+        color: $color__carbon--80;
       }
     }
   }
 
   &__site-name-ent--e {
     margin-right: 0.125rem;
-    color: rgba($color__white, 0.8)
+    color: rgba($color__spacesuit-white, 0.8)
   }
 
   &__site-name-ent--s {
@@ -96,7 +96,7 @@
     color: white;
     padding: 0.2rem 0.3rem;
     font-size: 0.625rem;
-    background: $color__blue;
+    background: $color__nasa-blue;
     border-radius: 0 0 0 0.125rem;
   }
 
@@ -130,6 +130,6 @@
     margin: 0;
     font-weight: 500;
     font-size: 1.125rem;
-    color: $color__blue;
+    color: $color__nasa-blue;
   }
 }

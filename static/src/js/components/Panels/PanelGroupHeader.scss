@@ -6,13 +6,13 @@
   flex-wrap: nowrap;
   flex-shrink: 0;
   padding: 0;
-  border-bottom: 1px solid $color__black--200;
-  background-color: $color__white;
+  border-bottom: 1px solid $color__carbon--20;
+  background-color: $color__spacesuit-white;
 
   &__breadcrumbs {
     display: flex;
     width: 100%;
-    border-bottom: 1px solid $color__black--200;
+    border-bottom: 1px solid $color__carbon--20;
     padding: 0.325rem 1rem;
     font-size: 0.825rem;
   }
@@ -44,7 +44,7 @@
     padding: 0 0.25rem;
     font-weight: 700;
     font-size: 0.875rem;
-    color: $color__black--300;
+    color: $color__carbon--30;
   }
 
   &__heading {
@@ -78,7 +78,7 @@
     align-items: stretch;
     justify-content: space-between;
     width: 100%;
-    background-color: darken($color__black--100, 7);
+    background-color: darken($color__carbon--10, 7);
     font-size: 0.725rem;
 
     .panels--md & {
@@ -91,7 +91,7 @@
     align-items: center;
     height: auto;
     padding: 0.325rem calc($spacer / 2) 0.325rem $spacer;
-    color: $color__black--600;
+    color: $color__carbon--60;
   }
 
   &__heading-meta-secondary {
@@ -103,14 +103,14 @@
 
   &__setting-dropdown {
     height: 100%;
-    border-left: 1px solid $color__black--300;
+    border-left: 1px solid $color__carbon--30;
     transition: 0.2s ease-in-out;
 
     &:hover {
-      background-color: darken($color__black--200, 5);
+      background-color: darken($color__carbon--20, 5);
 
       .custom-toggle__icon {
-        color: $color__black--500;
+        color: $color__carbon--50;
       }
     }
 
@@ -142,7 +142,7 @@
     display: block;
     margin-bottom: calc($spacer / 4);
     font-size: 0.825rem;
-    color: $color__black--900;
+    color: $color__carbon--90;
   }
 
 
@@ -152,7 +152,7 @@
     margin-right: 0.75rem;
     font-size: 1rem;
     font-weight: 500;
-    color: $color__black--700;
+    color: $color__carbon--70;
   }
 
   &__heading-badge {
@@ -168,16 +168,16 @@
     padding: 0;
     font-size: 0.875rem;
     vertical-align: middle;
-    color: $color__blue;
+    color: $color__nasa-blue;
   }
 
   &__heading-primary-link:hover {
-    color: $color__blue;
+    color: $color__nasa-blue;
   }
 
   &__spinner-export {
     margin: 0 0.75*$spacer;
-    border-left: 1px solid $color__black--300;
+    border-left: 1px solid $color__carbon--30;
     height: 2rem;
   }
 }

@@ -13,7 +13,7 @@
       flex-shrink: 0;
       flex-grow: 0;
       padding-bottom: 1rem;
-      border-bottom: 1px solid $color__black--200;
+      border-bottom: 1px solid $color__carbon--20;
       border-radius: $border-radius;
     }
 
@@ -36,7 +36,7 @@
     margin-bottom: 0.5rem;
     padding: 1rem;
     border-radius: 0.125rem;
-    background-color: $color__black--100;
+    background-color: $color__carbon--10;
   }
 
   &__query-secondary {
@@ -45,13 +45,13 @@
 
   &__query-primary-heading {
     font-weight: 700;
-    color: $color__black--700;
+    color: $color__carbon--70;
   }
 
   &__query-list-heading {
     padding-bottom: 0.325rem;
     margin-bottom: 0.325rem;
-    color: $color__black--500;
+    color: $color__carbon--50;
     font-size: 0.875rem;
   }
 
@@ -62,8 +62,8 @@
     padding: 0.5rem 1rem 0.5rem 0.75rem;
     align-items: center;
     font-size: 0.825rem;
-    color: darken($color__yellow, 7);
-    background-color: lighten($color__yellow, 46);
+    color: darken($color__international-orange, 7);
+    background-color: lighten($color__international-orange, 46);
     border-radius: 0.125rem;
   }
 

@@ -9,7 +9,7 @@
 
   &__button {
     margin: 0 calc($spacer / 2);
-    color: $color__black--300;
+    color: $color__carbon--30;
 
     &--share {
       i {
@@ -19,7 +19,7 @@
     }
 
     &:hover {
-      color: $color__black--600;
+      color: $color__carbon--60;
     }
   }
 }

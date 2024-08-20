@@ -13,7 +13,7 @@
       width: 1rem;
       text-align: center;
       flex-shrink: 0;
-      color: $color__black--400;
+      color: $color__carbon--40;
     }
 
     .button__contents {
@@ -35,10 +35,10 @@
   &__small {
     margin-left: calc($spacer / 4);
     font-size: 0.75rem;
-    color: $color__black--500;
+    color: $color__carbon--50;
 
     .dropdown-item:hover & {
-      color: $color__black--500;
+      color: $color__carbon--50;
     }
 
     .dropdown-item:disabled & {

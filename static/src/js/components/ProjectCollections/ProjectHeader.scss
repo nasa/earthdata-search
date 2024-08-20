@@ -80,15 +80,15 @@
     padding: 0;
     font-size: 0.925rem;
     border: 0;
-    color: $color__black--300;
+    color: $color__carbon--30;
     border-radius: 50%;
     z-index: 1;
     background: none;
 
     &:focus,
     &:hover {
-      color: $color__black--400;
-      background-color: $color__black--200;
+      color: $color__carbon--40;
+      background-color: $color__carbon--20;
     }
 
     .edsc-icon {
@@ -114,7 +114,7 @@
 
     .project-header__name--is-editing & {
       margin-bottom: 0.1rem;
-      border-bottom: 2px solid $color__blue--dark;
+      border-bottom: 2px solid $color__nasa-blue--shade;
     }
   }
 
@@ -130,7 +130,7 @@
     display: inline-block;
     font-size: 0.775rem;
     line-height: 1.25rem;
-    color: $color__black--500;
+    color: $color__carbon--50;
     vertical-align: middle;
   }
 
@@ -145,6 +145,6 @@
     height: 0.75rem;
     width: 0.75rem;
     margin-left: calc($spacer / 4);
-    color: $color__black--400;
+    color: $color__carbon--40;
   }
 }
