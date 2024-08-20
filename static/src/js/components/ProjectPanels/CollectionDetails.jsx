@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { difference } from 'lodash-es'
 import classNames from 'classnames'
-import { FaInfoCircle } from 'react-icons/fa'
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+
 import { Minus } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { eventEmitter } from '../../events/events'
@@ -121,7 +122,7 @@ export const CollectionDetails = ({
                           }
                         }
                         label="View granule details"
-                        icon={FaInfoCircle}
+                        icon={AlertInformation}
                         iconSize="0.875rem"
                         to={
                           {

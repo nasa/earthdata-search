@@ -4,10 +4,10 @@ import classNames from 'classnames'
 import { Col, Tab } from 'react-bootstrap'
 import { upperFirst } from 'lodash-es'
 import {
-  FaChevronUp,
-  FaChevronDown,
-  FaQuestionCircle
-} from 'react-icons/fa'
+  ArrowChevronUp,
+  ArrowChevronDown
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { FaQuestionCircle } from 'react-icons/fa'
 
 import { getClientId } from '../../../../../sharedUtils/getClientId'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
@@ -560,7 +560,7 @@ export class OrderStatusItem extends PureComponent {
             <Button
               className="order-status-item__button"
               type="icon"
-              icon={opened ? FaChevronUp : FaChevronDown}
+              icon={opened ? ArrowChevronUp : ArrowChevronDown}
               label={opened ? 'Close details' : 'Show details'}
               title={opened ? 'Close details' : 'Show details'}
               onClick={this.onOpenClick}

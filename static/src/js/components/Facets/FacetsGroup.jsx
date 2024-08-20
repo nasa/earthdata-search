@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
+import {
+  ArrowChevronDown,
+  ArrowChevronUp
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { kebabCase } from 'lodash-es'
 
@@ -90,11 +93,11 @@ class FacetsGroup extends Component {
               {
                 !isOpen
                   ? (
-                    <EDSCIcon icon={FaChevronDown}>
+                    <EDSCIcon icon={ArrowChevronDown}>
                       <span className="visually-hidden">Open</span>
                     </EDSCIcon>
                   ) : (
-                    <EDSCIcon icon={FaChevronUp}>
+                    <EDSCIcon icon={ArrowChevronUp}>
                       <span className="visually-hidden">Close</span>
                     </EDSCIcon>
                   )

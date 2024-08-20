@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+
 import {
-  FaChevronLeft,
-  FaChevronRight,
-  FaDownload,
-  FaExpand,
-  FaList
-} from 'react-icons/fa'
+  ArrowChevronRight,
+  ArrowChevronLeft,
+  Download,
+  Expand,
+  List
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
 import {
   ListGroup,
   OverlayTrigger,
@@ -120,7 +122,7 @@ const GranuleResultsFocusedMeta = ({
             })
           }
         }
-        icon={FaList}
+        icon={List}
       />
     )
   }
@@ -261,7 +263,7 @@ const GranuleResultsFocusedMeta = ({
                   <Button
                     className="granule-results-focused-meta__image-nav-button"
                     type="button"
-                    icon={FaExpand}
+                    icon={Expand}
                     label="Expand browse image"
                     onClick={
                       () => {
@@ -283,7 +285,7 @@ const GranuleResultsFocusedMeta = ({
                         <Button
                           className="granule-results-focused-meta__image-nav-button"
                           type="button"
-                          icon={FaChevronLeft}
+                          icon={ArrowChevronLeft}
                           label="Previous browse image thumbnail"
                           onClick={
                             () => {
@@ -300,7 +302,7 @@ const GranuleResultsFocusedMeta = ({
                         <Button
                           className="granule-results-focused-meta__image-nav-button"
                           type="button"
-                          icon={FaChevronRight}
+                          icon={ArrowChevronRight}
                           label="Next browse image thumbnail"
                           onClick={
                             () => {
@@ -409,7 +411,7 @@ const GranuleResultsFocusedMeta = ({
                       <Button
                         className="granule-results-focused-meta__image-nav-button"
                         type="button"
-                        icon={FaChevronLeft}
+                        icon={ArrowChevronLeft}
                         label="Previous browse image"
                         onClick={
                           () => {
@@ -425,7 +427,7 @@ const GranuleResultsFocusedMeta = ({
                       <Button
                         className="granule-results-focused-meta__image-nav-button"
                         type="button"
-                        icon={FaChevronRight}
+                        icon={ArrowChevronRight}
                         label="Next browse image"
                         onClick={
                           () => {
@@ -460,7 +462,7 @@ const GranuleResultsFocusedMeta = ({
                               }
                             }
                             rel="noopener noreferrer"
-                            icon={FaDownload}
+                            icon={Download}
                             label="Download browse image"
                             href={activeModalHref}
                           />
