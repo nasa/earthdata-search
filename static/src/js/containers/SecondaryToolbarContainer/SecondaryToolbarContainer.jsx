@@ -44,7 +44,8 @@ export const SecondaryToolbarContainer = (props) => {
     savedProject,
     retrieval,
     ursProfile,
-    onFetchContactInfo
+    onFetchContactInfo,
+    onStartTour
   } = props
 
   useEffect(() => {
@@ -66,6 +67,7 @@ export const SecondaryToolbarContainer = (props) => {
       retrieval={retrieval}
       secondaryToolbarEnabled={secondaryToolbarEnabled}
       ursProfile={ursProfile}
+      onStartTour={onStartTour}
     />
   )
 }
@@ -82,7 +84,8 @@ SecondaryToolbarContainer.propTypes = {
   savedProject: PropTypes.shape({}).isRequired,
   ursProfile: PropTypes.shape({
     first_name: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  onStartTour: PropTypes.func.isRequired
 }
 
 export default withRouter(

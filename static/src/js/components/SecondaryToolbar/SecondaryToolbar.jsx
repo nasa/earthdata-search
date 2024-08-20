@@ -12,9 +12,10 @@ import { parse } from 'qs'
 import {
   FaArrowCircleLeft,
   FaFolder,
+  FaWalking,
   FaLock,
   FaSave,
-  FaUser
+  FaUser,
 } from 'react-icons/fa'
 
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
@@ -117,7 +118,8 @@ class SecondaryToolbar extends Component {
       location,
       retrieval = {},
       secondaryToolbarEnabled,
-      ursProfile
+      ursProfile,
+      onStartTour
     } = this.props
 
     const { first_name: firstName = '' } = ursProfile
@@ -320,6 +322,14 @@ class SecondaryToolbar extends Component {
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
+        <Dropdown.Toggle
+          className="secondary-toolbar__project-name-dropdown-toggle"
+          as={Button}
+          onClick={onStartTour}
+          icon={FaWalking}
+          iconSize="0.825rem"
+          label="Want to learn more? Click here to take a tour of our site."
+        />
         <Dropdown.Toggle
           className="secondary-toolbar__project-name-dropdown-toggle"
           as={Button}

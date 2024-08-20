@@ -40,6 +40,7 @@ import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModal
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
 import NotFound from './components/Errors/NotFound'
 import PortalContainer from './containers/PortalContainer/PortalContainer'
+import SearchTour from './components/Tour/SearchTour'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 import Spinner from './components/Spinner/Spinner'
@@ -72,12 +73,24 @@ const Subscriptions = lazy(() => import('./routes/Subscriptions/Subscriptions'))
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      runTour: false,
+    }
     this.store = configureStore()
     const { edscHost } = getEnvironmentConfig()
     const { env } = getApplicationConfig()
     this.edscHost = edscHost
     this.env = env
+    this.startTour = this.startTour.bind(this)
+    this.setRunTour = this.setRunTour.bind(this)
+  }
+
+  startTour() {
+    this.setState({ runTour: true })
+  }
+
+  setRunTour(value) {
+    this.setState({ runTour: value })
   }
 
   // Portal paths have been removed, but this needs to stay in order to redirect users using
@@ -119,7 +132,7 @@ class App extends Component {
               <ErrorBannerContainer />
               <AuthTokenContainer>
                 <UrlQueryContainer>
-                  <AppHeader />
+                  <AppHeader onStartTour={this.startTour} />
                   <Switch>
                     <Route
                       path="/admin"
@@ -210,6 +223,7 @@ class App extends Component {
                       render={
                         () => (
                           <>
+                            <SearchTour runTour={this.state.runTour} setRunTour={this.setRunTour} />
                             <Search />
                             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
                               <EdscMapContainer />
