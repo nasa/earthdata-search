@@ -21,7 +21,7 @@
     "defaultCmrPageSize": 20,
     "maxCmrPageSize": 2000,
     "granuleLinksPageSize": "500",
-    "collectionSearchResultsSortKey": "-usage_score",
+    "collectionSearchResultsSortKey": "-score",
     "openSearchGranuleLinksPageSize": "50",
     "defaultCmrSearchTags": [
       "edsc.*",
