@@ -6,7 +6,7 @@
   &__share-popover {
     min-width: 230px;
     max-width: 400px;
-    color: $color__black--600;
+    color: $color__carbon--60;
   }
 
   &__share-input {
@@ -15,7 +15,7 @@
 
   &__button {
     margin: 0 calc($spacer / 2);
-    color: $color__black--300;
+    color: $color__carbon--30;
     display: inline-block;
 
     &--share {
@@ -26,21 +26,12 @@
     }
 
     &:hover {
-      color: $color__black--600;
+      color: $color__carbon--60;
     }
   }
 }
 
 .saved-projects-table {
-  a {
-    color: $color__blue;
-
-    &:hover,
-    &:active {
-      color: $color__blue--dark;
-    }
-  }
-
   &__actions,
   &__actions-heading {
     text-align: center;

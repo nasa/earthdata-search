@@ -13,24 +13,24 @@
   }
 
   &--error {
-    background-color: #c0392b;
-    color: #fff;
+    background-color: $color__nasa-red;
+    color: $color__spacesuit-white;
 
     .banner__title {
       font-weight: 700;
     }
 
     .banner__message {
-      color: #fff;
+      color: $color__spacesuit-white;
     }
 
     .banner__close {
-      color: #fff;
+      color: $color__spacesuit-white;
       color: rgba(255,255,255,0.7);
       transition: color 0.15s ease-in-out;
 
       &:hover {
-        color: #fff;
+        color: $color__spacesuit-white;
         color: rgba(255,255,255,1);
       }
     }
@@ -57,11 +57,11 @@
     top: 50%;
     top: calc(50% + 1px);
     right: 0.5rem;
-    color: $color__black--700;
+    color: $color__carbon--70;
     transform: translateY(-50%);
 
     &:hover {
-     color: $color__black--600;
+     color: $color__carbon--60;
     }
 
     &:focus {

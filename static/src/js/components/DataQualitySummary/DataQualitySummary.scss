@@ -10,7 +10,7 @@
       font-size: 0.825rem;
       font-weight: 300;
       border: none;
-      color: rgba($color__black, 0.75);
+      color: rgba($color__carbon-black, 0.75);
 
       &:hover {
         background-color: $color__pale-yellow--dark;
@@ -27,7 +27,7 @@
     }
 
     .collapse-panel__button-secondary {
-      color: rgba($color__black, 0.4)
+      color: rgba($color__carbon-black, 0.4)
     }
 
     .collapse-panel__panel {
@@ -53,7 +53,7 @@
 
   &__icon {
     margin-right: 0.5rem;
-    color: rgba($color__black, 0.75);    width: 0.725rem;
+    color: rgba($color__carbon-black, 0.75);    width: 0.725rem;
     height: 0.725rem;
   }
 }

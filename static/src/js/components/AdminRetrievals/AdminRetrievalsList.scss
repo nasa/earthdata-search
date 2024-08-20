@@ -3,7 +3,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: $color__black--200 !important;
+      background-color: $color__carbon--20 !important;
     }
   }
 
@@ -30,9 +30,9 @@
     display: inline-block;
 
     .rc-pagination-item-active {
-      background-color: $color__blue;
-      border-color: $color__blue--dark;
-      color: $color__white;
+      background-color: $color__nasa-blue;
+      border-color: $color__nasa-blue--shade;
+      color: $color__spacesuit-white;
     }
 
     .rc-pagination-jump-next,
@@ -49,31 +49,31 @@
     .rc-pagination-next,
     .rc-pagination-prev {
       border-color: transparent;
-      color: $color__black--500;
+      color: $color__carbon--50;
 
       &.rc-pagination-disabled {
-        color: $color__black--200;
+        color: $color__carbon--20;
       }
 
       &:hover {
-        color: $color__black--900;
+        color: $color__carbon--90;
 
         &.rc-pagination-disabled {
-          color: $color__black--200;
+          color: $color__carbon--20;
         }
       }
     }
 
     .rc-pagination-item {
       &:hover {
-        border-color: $color__black--300;
-        background-color: $color__black--200;
-        color: $color__black--500;
+        border-color: $color__carbon--30;
+        background-color: $color__carbon--20;
+        color: $color__carbon--50;
 
         &.rc-pagination-item-active {
-          background-color: $color__blue--dark;
-          border-color: $color__blue--dark;
-          color: $color__white;
+          background-color: $color__nasa-blue--shade;
+          border-color: $color__nasa-blue--shade;
+          color: $color__spacesuit-white;
 
           a {
             color: $color__white
@@ -81,7 +81,7 @@
         }
 
         a {
-          color: $color__black--500;
+          color: $color__carbon--50;
         }
       }
     }

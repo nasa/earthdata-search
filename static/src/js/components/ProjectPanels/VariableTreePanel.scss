@@ -15,22 +15,22 @@
 
   &__tree-switcher-button {
     margin-right: 0.5rem;
-    color: $color__black--500;
-    background-color: $color__black--100;
+    color: $color__carbon--50;
+    background-color: $color__carbon--10;
 
     &:hover,
     &:focus {
-      background-color: $color__black--200;
+      background-color: $color__carbon--20;
     }
 
     &--is-active {
-      background-color: $color__black--200;
-      color: $color__black--700;
+      background-color: $color__carbon--20;
+      color: $color__carbon--70;
 
       &:hover,
       &:focus {
-        background-color: $color__black--200;
-        color: $color__black--700;
+        background-color: $color__carbon--20;
+        color: $color__carbon--70;
       }
     }
   }
@@ -49,7 +49,7 @@
     position: relative;
     display: flex;
     &:nth-child(odd) {
-      background-color: $color__black--100;
+      background-color: $color__carbon--10;
     }
   }
 
@@ -58,13 +58,13 @@
     top: 50%;
     right: $spacer;
     padding: 0 0.5rem;
-    background-color: $color__blue--dark;
+    background-color: $color__nasa-blue--shade;
     font-size: 0.75rem;
-    color: $color__white;
+    color: $color__spacesuit-white;
     transform: translateY(-50%);
     border-radius: 0.75rem;
     .variable-tree-panel__button:hover {
-      background-color: darken($color__blue--dark, 50%);
+      background-color: darken($color__nasa-blue--shade, 50%);
     }
   }
 }

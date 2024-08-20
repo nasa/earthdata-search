@@ -1,10 +1,10 @@
 .sidebar-section {
   margin: 0.75rem;
   min-height: 0;
-  color: $color__black--900;
-  background-color: $color__white;
+  color: $color__carbon--90;
+  background-color: $color__spacesuit-white;
   border-radius: 0.25rem;
-  border: 1px solid darken($color__black--200, 5);
+  border: 1px solid darken($color__carbon--20, 5);
   box-shadow: 0 0.25rem 0.75rem 0 rgba(0, 0, 0, 0.1);
 
   &--padded {
@@ -14,18 +14,18 @@
   &__header {
     display: flex;
     align-items: center;
-    background-color: $color__black--600;
-    color: $color__black--100;
-    border-bottom: 1px solid $color__black--200;
+    background-color: $color__carbon--60;
+    color: $color__carbon--10;
+    border-bottom: 1px solid $color__carbon--20;
   }
 
   &__header-action {
     margin-right: 0.5rem;
     padding: 0.075rem 0.425rem;
-    background-color: $color__blue;
+    background-color: $color__nasa-blue;
 
     &:hover {
-      background-color: darken($color__blue, 5);
+      background-color: darken($color__nasa-blue, 5);
     }
   }
 
@@ -65,7 +65,7 @@
 
     label {
       font-size: 0.8rem;
-      color: $color__black--700;
+      color: $color__carbon--70;
       letter-spacing: 0.005rem;
       font-weight: 400;
     }
@@ -92,7 +92,7 @@
     label {
       position: relative;
       top: 0.075rem;
-      color: $color__black--600;
+      color: $color__carbon--60;
     }
 
     input[type='checkbox'] {
@@ -118,11 +118,11 @@
   }
 
   .btn-light {
-    background-color: $color__white;
+    background-color: $color__spacesuit-white;
 
     &:hover,
     &:active {
-      background-color: $color__black--100;
+      background-color: $color__carbon--10;
     }
   }
 }

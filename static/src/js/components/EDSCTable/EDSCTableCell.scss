@@ -3,11 +3,11 @@
   width: 100%;
   padding: 0.25rem 0.5rem;
   font-size: 0.7rem;
-  border-top: 1px solid $color__white;
-  border-bottom: 1px solid $color__black--200;
+  border-top: 1px solid $color__spacesuit-white;
+  border-bottom: 1px solid $color__carbon--20;
 
   .edsc-table__tr--odd & {
-    border-top: 1px solid darken($color__black--100, 1);
+    border-top: 1px solid darken($color__carbon--10, 1);
   }
 
   .edsc-table__td--centered & {

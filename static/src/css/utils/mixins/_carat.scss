@@ -9,7 +9,7 @@
       left: 50%;
       border-left: 0.4375rem solid transparent;
       border-right: 0.4375rem solid transparent;
-      border-bottom: 0.4375rem solid $color__black--200;
+      border-bottom: 0.4375rem solid $color__carbon--20;
       border-top: 0;
       transform: translateX(-50%)
     }
@@ -19,7 +19,7 @@
       left: 0.46rem;
       border-left: 0.4375rem solid transparent;
       border-right: 0.4375rem solid transparent;
-      border-bottom: 0.4375rem solid $color__black--200;
+      border-bottom: 0.4375rem solid $color__carbon--20;
       border-top: 0;
     }
 
@@ -29,7 +29,7 @@
       border-left: 0.4375rem solid transparent;
       border-right: 0.4375rem solid transparent;
       border-bottom: 0;
-      border-top: 0.4375rem solid $color__black--200;
+      border-top: 0.4375rem solid $color__carbon--20;
     }
 
     @if $location == 'topright' {
@@ -37,7 +37,7 @@
       right: 0.46rem;
       border-left: 0.4375rem solid transparent;
       border-right: 0.4375rem solid transparent;
-      border-bottom: 0.4375rem solid $color__black--200;
+      border-bottom: 0.4375rem solid $color__carbon--20;
       border-top: 0;
     }
   }
@@ -52,7 +52,7 @@
       left: 50%;
       border-left: 0.375rem solid transparent;
       border-right: 0.375rem solid transparent;
-      border-bottom: 0.375rem solid $color__white;
+      border-bottom: 0.375rem solid $color__spacesuit-white;
       border-top: 0;
       transform: translateX(-50%)
     }
@@ -62,7 +62,7 @@
       left: 0.54rem;
       border-left: 0.375rem solid transparent;
       border-right: 0.375rem solid transparent;
-      border-bottom: 0.375rem solid $color__white;
+      border-bottom: 0.375rem solid $color__spacesuit-white;
       border-top: 0;
     }
 
@@ -71,7 +71,7 @@
       left: 0.54rem;
       border-left: 0.375rem solid transparent;
       border-right: 0.375rem solid transparent;
-      border-top: 0.375rem solid $color__white;
+      border-top: 0.375rem solid $color__spacesuit-white;
       border-bottom: 0;
     }
 
@@ -80,7 +80,7 @@
       right: 0.54rem;
       border-left: 0.375rem solid transparent;
       border-right: 0.375rem solid transparent;
-      border-bottom: 0.375rem solid $color__white;
+      border-bottom: 0.375rem solid $color__spacesuit-white;
       border-top: 0;
     }
   }

@@ -5,7 +5,7 @@
   flex-shrink: 0;
   font-size: 0.825rem;
   font-weight: 500;
-  color: $color__black--700;
+  color: $color__carbon--70;
   letter-spacing: 0.01em;
 
   &__accessMethod {
@@ -15,11 +15,11 @@
   }
 
   &__icon {
-    color: $color__black--500;
+    color: $color__carbon--50;
     font-size: 0.75rem;
 
     .meta-icon:hover & {
-      color: $color__black--600;
+      color: $color__carbon--60;
     }
   }
 
@@ -27,14 +27,14 @@
     margin-left: 0.25rem;
     padding: 0.075rem 0.5rem;
     border-radius: 1rem;
-    background-color: $color__black--200;
-    color: $color__black--600;
+    background-color: $color__carbon--20;
+    color: $color__carbon--60;
     font-size: 0.625rem;
     font-weight: 700;
 
     .meta-icon:hover & {
-      background-color: $color__black--300;
-      color: $color__black--900;
+      background-color: $color__carbon--30;
+      color: $color__carbon--90;
     }
   }
 }

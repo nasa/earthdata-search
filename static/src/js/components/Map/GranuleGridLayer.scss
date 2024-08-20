@@ -1,9 +1,9 @@
 .granule-spatial-label {
   white-space: nowrap;
   font-size: 1.2em;
-  color: #ffffff;
+  color: $color__spacesuit-white;
   text-align: center;
-  text-shadow: 1px 1px 1px #000;
+  text-shadow: 1px 1px 1px $color__carbon-black;
 
   /* Need to override styles placed on the icon by leaflet */
   width: 40em !important;
@@ -16,7 +16,7 @@
 
   a {
     padding: 0 0 0 10px;
-    color: #fff;
+    color: $color__spacesuit-white;
     text-shadow: none;
 
     &:hover i.fa-stack-2x {

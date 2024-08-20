@@ -4,7 +4,7 @@
   &__link {
     display: flex;
     padding: 0.625rem 1rem;
-    background-color: $color__white;
+    background-color: $color__spacesuit-white;
     // Prevent overflow in parent container
     overflow: hidden;
 
@@ -12,7 +12,7 @@
     &:active,
     &--active {
       cursor: pointer;
-      background-color: $color__black--100;
+      background-color: $color__carbon--10;
     }
   }
 
@@ -33,7 +33,7 @@
     line-height: 1;
     font-size: 0.725rem;
     font-weight: 500;
-    color: $color__black--500;
+    color: $color__carbon--50;
     letter-spacing: 0.01rem;
 
     & > {
@@ -80,7 +80,7 @@
     flex-grow: 0;
     width: 4rem;
     height: 4rem;
-    background: $color__black--900;
+    background: $color__carbon--90;
     font-size: 0.5rem;
     overflow: hidden;
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.175);
@@ -120,7 +120,7 @@
     font-size: 0.875rem;
     line-height: 1.325em;
     font-weight: 700;
-    color: $color__black--800;
+    color: $color__carbon--80;
 
     .panels--md & {
       display: block;
@@ -143,16 +143,16 @@
     flex-shrink: 0;
     font-size: 0.825rem;
     font-weight: 500;
-    color: $color__black--700;
+    color: $color__carbon--70;
     letter-spacing: 0.01em;
   }
 
   &__meta-icon {
-    color: $color__blue;
+    color: $color__nasa-blue;
     font-size: 0.75rem;
 
     &:hover {
-      color: $color__blue--dark;
+      color: $color__nasa-blue--shade;
     }
   }
 
@@ -165,14 +165,14 @@
     margin-left: 0.25rem;
     padding: 0.075rem 0.5rem;
     border-radius: 1rem;
-    background-color: $color__black--200;
-    color: $color__black--600;
+    background-color: $color__carbon--20;
+    color: $color__carbon--60;
     font-size: 0.625rem;
     font-weight: 700;
 
     .collection-results-item__meta-item:hover & {
-      background-color: $color__black--300;
-      color: $color__black--900;
+      background-color: $color__carbon--30;
+      color: $color__carbon--90;
     }
   }
 
@@ -183,7 +183,7 @@
     overflow: hidden;
     margin-bottom: $spacer * 0.25;
     font-size: 0.825rem;
-    color: $color__black--600;
+    color: $color__carbon--60;
 
     .panels--sm & {
       -webkit-line-clamp: 2;
@@ -215,7 +215,7 @@
     flex-shrink: 0;
     padding: 0.5rem 0.5rem;
     margin-right: calc($spacer / 4);
-    color: $color__black--500;
+    color: $color__carbon--50;
     font-size: 0.925rem;
 
     .panels--sm & {
@@ -228,8 +228,8 @@
 
     .collection-results-item__link:hover &,
     .collection-results-item__link--active & {
-      background-color: $color__black--200;
-      color: $color__black--600;
+      background-color: $color__carbon--20;
+      color: $color__carbon--60;
     }
 
     .edsc-icon {
@@ -238,29 +238,29 @@
     }
 
     &--add {
-      color: $color__green;
+      color: $color__active-green;
 
       .collection-results-item__link:hover &,
       .collection-results-item__link--active &  {
-        color: $color__green;
+        color: $color__active-green;
       }
 
       &:hover {
-        color: darken($color__green, 20);
+        color: darken($color__active-green, 20);
       }
 
     }
 
     &--remove {
-      color: $color__red;
+      color: $color__nasa-red;
 
       .collection-results-item__link:hover &,
       .collection-results-item__link--active & {
-        color: $color__red;
+        color: $color__nasa-red;
       }
 
       &:hover {
-        color: darken($color__red, 20);
+        color: darken($color__nasa-red, 20);
       }
     }
   }
@@ -271,7 +271,7 @@
     white-space: normal;
     margin-right: calc($spacer / 4);
     margin-bottom:   calc($spacer / 8);
-    color: $color__white;
+    color: $color__spacesuit-white;
     text-transform: uppercase;
 
     &:hover {
@@ -350,7 +350,7 @@
 
   &__tooltip-feature-icon {
     margin-right: 0.325rem;
-    color: $color__black--300;
+    color: $color__carbon--30;
   }
 
   &__popover {
@@ -386,7 +386,7 @@
     width: 7rem;
     height: 7rem;
     margin-bottom: 0.75rem;
-    background: $color__black--900;
+    background: $color__carbon--90;
     font-size: 0.5rem;
     overflow: hidden;
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.175);

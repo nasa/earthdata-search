@@ -11,28 +11,28 @@
   }
 
   &__toggle-button {
-    color: #bfbfbf;
+    color: $color__carbon--30;
 
     &:hover,
     &:active {
-      color: #f2f2f2
+      color: $color__carbon--5
     }
 
     &--open {
       position: absolute;
       bottom: 0;
       z-index: 3;
-      background-color: #1a1a1a;
+      background-color: $color__carbon--90;
       font-size: 0.825rem;
       border-radius: 0;
       border-top-right-radius: 0.25rem;
     }
 
     &--close {
-      border-right: 1px solid #4d4d4d;
+      border-right: 1px solid $color__carbon--70;
       padding: 0.125rem;
-      background-color: #1a1a1a;
-      border-top: 1px solid #393939;
+      background-color: $color__carbon--90;
+      border-top: 1px solid $color__carbon--80;
     }
   }
 }

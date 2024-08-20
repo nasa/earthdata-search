@@ -40,8 +40,8 @@
     }
 
     &:hover {
-      background: $color__black--200;
-      border-left: .2rem solid $color__green;
+      background: $color__carbon--20;
+      border-left: .2rem solid $color__active-green;
       cursor: pointer;
     }
   }
@@ -51,19 +51,19 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    color: $color__black--600;
+    color: $color__carbon--60;
     font-weight: 400;
     font-size: 0.875rem;
 
     .facets-item:hover & {
-      color: $color__black--900;
+      color: $color__carbon--90;
     }
   }
 
   &__total {
     margin-left: auto;
     padding-left: 0.125rem;
-    color: $color__black--400;
+    color: $color__carbon--40;
     font-size: 0.825rem;
   }
 }

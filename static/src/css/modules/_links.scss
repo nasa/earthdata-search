@@ -1,5 +1,5 @@
 .link, a {
-  color: $color__blue--dark;
+  color: $color__carbon-black;
   text-underline-offset: 0.25rem;
   text-decoration: underline dashed;
   text-decoration-thickness: 1px;
@@ -11,12 +11,12 @@
 
   &:focus {
     text-decoration: none;
-    outline: 1px dashed $color__blue;
+    outline: 1px dashed $color__carbon-black;
     outline-offset: 0.125rem;
   }
 
   &:disabled {
-    color: $color__blue--light;
+    color: $color__nasa-blue--tint;
   }
 
   &--separated {
@@ -25,7 +25,7 @@
       margin-left: calc($spacer / 2);
       content: '|';
       color: transparent;
-      border-left: 1px solid $color__black--300;
+      border-left: 1px solid $color__carbon--30;
     }
 
     &:first-child:before {
@@ -40,12 +40,12 @@
       content: "\f111";
       font-size: 0.6rem;
       font-family: "EUI-Icon-Library";
-      color: $color__black--300;
+      color: $color__carbon--30;
     }
 
     &:hover {
       &:after {
-        color: $color__black--400;
+        color: $color__carbon--40;
       }
     }
   }

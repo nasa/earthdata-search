@@ -1,7 +1,7 @@
 .footer-link {
   &__info-bit {
     margin-left: 0.55rem;
-    color: $color__blue--light;
+    color: $color__spacesuit-white;
     vertical-align: middle;
 
     &:before {
@@ -9,7 +9,7 @@
       transform: translate(-0.275rem,-.165rem) scale(0.5);
       content: '\f111';
       font-family: 'FontAwesome';
-      color: $color__white;
+      color: $color__spacesuit-white;
       font-size: 3px;
     }
   }
@@ -23,30 +23,31 @@
   }
 
   &__info-bit--emph {
-    color: $color__white;
-    text-decoration-color: $color__white;
+    color: $color__spacesuit-white;
+    text-decoration-color: $color__spacesuit-white;
   }
 
   &__info-link {
     white-space:nowrap;
-    color: $color__blue--light;
+    // color: $color__spacesuit-white;
+    color: $color__spacesuit-white;
 
     .footer-link__info-bit--emph & {
-      color: $color__white;
-      text-decoration-color: $color__white;
+      color: $color__spacesuit-white;
+      text-decoration-color: $color__spacesuit-white;
 
       &:hover {
-        color: $color__white;
-        text-decoration-color: $color__white;
+        color: $color__spacesuit-white;
+        text-decoration-color: $color__spacesuit-white;
       }
     }
 
     &:hover {
-      color: $color__blue--light;
+      color: $color__spacesuit-white;
       text-decoration: none;
 
       &__info-bit--emph & {
-        color: $color__white;
+        color: $color__spacesuit-white;
       }
     }
   }
