@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types'
 import React, { useRef, useState } from 'react'
+
 import {
-  FaCopy,
-  FaSave,
-  FaExpand,
-  FaDownload,
-  FaExternalLinkAlt
-} from 'react-icons/fa'
+  Copy,
+  Expand,
+  Download,
+  ArrowChevronRight
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
+import { FaSave } from 'react-icons/fa'
 
 import { Alert } from 'react-bootstrap'
 
@@ -16,11 +18,12 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import Spinner from '../Spinner/Spinner'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import Button from '../Button/Button'
 
 import './TextWindowActions.scss'
+
+import eddIcon from '../../../assets/images/edd-icon-small-modal.png'
 
 /**
  * Renders TextWindowActions.
@@ -90,7 +93,7 @@ export const TextWindowActions = ({
               className="text-window-actions__action text-window-actions__action--edd"
               bootstrapSize="sm"
               bootstrapVariant="success"
-              icon={FaDownload}
+              icon={Download}
               onClick={handleEddModalOpen}
               tooltipId={`text-window-actions__tooltip--${id}`}
               tooltip={(
@@ -106,7 +109,7 @@ export const TextWindowActions = ({
             <Button
               className="text-window-actions__action text-window-actions__action--copy"
               bootstrapSize="sm"
-              icon={FaCopy}
+              icon={Copy}
               onClick={copyToClipboard}
               label="Copy"
             >
@@ -137,7 +140,7 @@ export const TextWindowActions = ({
           bootstrapSize="sm"
           onClick={handleLinksModalOpen}
           label="Expand"
-          icon={FaExpand}
+          icon={Expand}
         >
           Expand
         </Button>
@@ -191,7 +194,7 @@ export const TextWindowActions = ({
                         <Button
                           className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--copy"
                           bootstrapSize="sm"
-                          icon={FaCopy}
+                          icon={Copy}
                           onClick={copyToClipboard}
                           label="Copy"
                         >
@@ -237,10 +240,9 @@ export const TextWindowActions = ({
           (
             <div className="d-flex flex-column align-items-center">
               <h3 className="font-weight-bolder h5 mt-3 text-center w-75">Opening Earthdata Download to download your files...</h3>
-              <EDSCIcon
-                className="mt-4 text-window-actions__modal-icon"
-                icon={FaExternalLinkAlt}
-                size="4rem"
+              <img
+                src={eddIcon}
+                alt="edd"
               />
               <Spinner
                 className="mt-4"
@@ -262,7 +264,7 @@ export const TextWindowActions = ({
                 className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--open-edd mt-3"
                 bootstrapSize="sm"
                 label="Open Earthdata Download"
-                icon={FaExternalLinkAlt}
+                icon={ArrowChevronRight}
                 href={eddLink}
                 bootstrapVariant="primary"
               >

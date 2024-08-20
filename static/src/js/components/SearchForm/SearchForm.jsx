@@ -3,11 +3,7 @@ import PropTypes from 'prop-types'
 import { isEmpty, isEqual } from 'lodash-es'
 import Autosuggest from 'react-autosuggest'
 // TODO they have a filters icon but, on the mock up it looks like they are using what we had before
-import {
-  FaEraser,
-  FaChevronUp,
-  FaBars
-} from 'react-icons/fa'
+import { FaEraser } from 'react-icons/fa'
 import { Filter } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Button from '../Button/Button'
@@ -345,34 +341,6 @@ class SearchForm extends Component {
             icon={FaEraser}
             iconSize="0.825rem"
           />
-          {
-            // TODO I think this code is
-            showFilterStackToggle && (
-              showFilterStack
-                ? (
-                  <Button
-                    bootstrapVariant="inline-block"
-                    className="search-form__button search-form__button--dark search-form__button--toggle"
-                    onClick={this.onToggleFilterStack}
-                    title="Close filter stack"
-                    label="Close filter stack"
-                    icon={FaChevronUp}
-                    iconSize="0.825rem"
-                  />
-                )
-                : (
-                  <Button
-                    bootstrapVariant="inline-block"
-                    className="search-form__button search-form__button--dark search-form__button--toggle"
-                    onClick={this.onToggleFilterStack}
-                    title="Open filter stack"
-                    label="Open filter stack"
-                    icon={FaBars}
-                    iconSize="0.825rem"
-                  />
-                )
-            )
-          }
         </div>
         <div className="search-form__secondary">
           <div className="search-form__secondary-actions">

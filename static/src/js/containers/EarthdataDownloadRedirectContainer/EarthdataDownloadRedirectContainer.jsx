@@ -5,6 +5,7 @@ import { ArrowChevronRight } from '@edsc/earthdata-react-icons/horizon-design-sy
 
 import Button from '../../components/Button/Button'
 import Spinner from '../../components/Spinner/Spinner'
+
 import eddIcon from '../../../assets/images/edd-icon-small.png'
 
 export const mapStateToProps = (state) => ({

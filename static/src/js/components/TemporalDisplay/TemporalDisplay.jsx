@@ -5,7 +5,6 @@ import React, {
 } from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-// TODO they are using the same calander in the mock up instead of their own icon
 import { Calendar } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import TemporalDisplayEntry from './TemporalDisplayEntry'
