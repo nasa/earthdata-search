@@ -120,7 +120,6 @@ const AccessMethod = ({
 
     // Build the list of granules
     const granuleListObj = granulesToDisplay.map((id) => granuleMetadata[id])
-    console.log('rerendering')
     setGranuleList(granuleListObj)
 
     // Disable temporal subsetting if the user has a recurring date selected
