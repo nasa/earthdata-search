@@ -4,16 +4,16 @@ import { Route, Switch } from 'react-router-dom'
 import { isEqual } from 'lodash-es'
 import { Badge, Col } from 'react-bootstrap'
 // TODO is there even value in switching these if they can't all be switched
+
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+
+import { List, Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import {
   FaMap,
   FaQuestionCircle,
   FaTable,
   FaLock
 } from 'react-icons/fa'
-
-import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
-
-import { List, Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import classNames from 'classnames'
 import Helmet from 'react-helmet'
