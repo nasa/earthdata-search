@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+// TODO make sure passing non react-icons does work here
 import { IconContext } from 'react-icons'
 
 import './EDSCIcon.scss'

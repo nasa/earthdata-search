@@ -2,12 +2,15 @@ import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import {
-  FaBell,
   FaFolder,
   FaFolderPlus,
   FaFolderMinus
 } from 'react-icons/fa'
+// TODO keep smarthandoff the same they don't have anything like this
 import { IoShare } from 'react-icons/io5'
+
+import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
 import { Dropdown } from 'react-bootstrap'
 
 import { commafy } from '../../util/commafy'
@@ -147,7 +150,7 @@ const GranuleResultsActions = ({
             <AuthRequiredContainer noRedirect>
               <PortalLinkContainer
                 type="button"
-                icon={FaBell}
+                icon={Subscribe}
                 className={subscriptionButtonClassnames}
                 dataTestId="granule-results-actions__subscriptions-button"
                 label={subscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}

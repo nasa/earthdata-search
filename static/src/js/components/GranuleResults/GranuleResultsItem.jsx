@@ -3,12 +3,13 @@ import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
 
 import { LinkContainer } from 'react-router-bootstrap'
+
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import {
-  FaInfoCircle,
-  FaMinus,
-  FaPlus,
-  FaTimesCircle
-} from 'react-icons/fa'
+  Minus,
+  Plus,
+  XCircled
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
@@ -210,12 +211,12 @@ const GranuleResultsItem = forwardRef(({
           >
             <MoreActionsDropdownItem
               title="View details"
-              icon={FaInfoCircle}
+              icon={AlertInformation}
             />
           </LinkContainer>
           <MoreActionsDropdownItem
             title="Filter granule"
-            icon={FaTimesCircle}
+            icon={XCircled}
             onClick={handleFilterClick}
           />
         </MoreActionsDropdown>
@@ -254,7 +255,7 @@ const GranuleResultsItem = forwardRef(({
                           }
                         }
                       >
-                        <EDSCIcon icon={FaPlus} />
+                        <EDSCIcon icon={Plus} />
                       </Button>
                     )
                     : (
@@ -274,7 +275,7 @@ const GranuleResultsItem = forwardRef(({
                           }
                         }
                       >
-                        <EDSCIcon icon={FaMinus} />
+                        <EDSCIcon icon={Minus} />
                       </Button>
                     )
                 }
