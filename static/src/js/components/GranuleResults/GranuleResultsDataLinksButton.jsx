@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Dropdown, Tab } from 'react-bootstrap'
 import { PropTypes } from 'prop-types'
 // TODO How do I get here
-import { FaDownload, FaCloud } from 'react-icons/fa'
+import { Download, CloudFill } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Button from '../Button/Button'
 import CopyableText from '../CopyableText/CopyableText'
@@ -34,7 +34,7 @@ export const CustomDataLinksToggle = React.forwardRef(({
     <Button
       className="button granule-results-data-links-button__button"
       type="button"
-      icon={FaDownload}
+      icon={Download}
       ref={ref}
       label="Download single granule data"
       onClick={handleClick}
@@ -98,7 +98,7 @@ export const GranuleResultsDataLinksButton = ({
           }
         >
           {dataLinkTitle}
-          <FaDownload className="granule-results-data-links-button__icon granule-results-data-links-button__icon--download" />
+          <Download className="granule-results-data-links-button__icon granule-results-data-links-button__icon--download" />
         </Dropdown.Item>
       )
     })
@@ -224,7 +224,7 @@ export const GranuleResultsDataLinksButton = ({
                         title={
                           (
                             <span className="granule-results-data-links-button__tab-text">
-                              <FaDownload className="granule-results-data-links-button__tab-icon" />
+                              <Download className="granule-results-data-links-button__tab-icon" />
                               Download Files
                             </span>
                           )
@@ -241,7 +241,7 @@ export const GranuleResultsDataLinksButton = ({
                         title={
                           (
                             <span className="granule-results-data-links-button__tab-text">
-                              <FaCloud className="granule-results-data-links-button__tab-icon" />
+                              <CloudFill className="granule-results-data-links-button__tab-icon" />
                               AWS S3 Access
                             </span>
                           )
@@ -290,7 +290,7 @@ export const GranuleResultsDataLinksButton = ({
     return (
       <Button
         className="button granule-results-data-links-button__button"
-        icon={FaDownload}
+        icon={Download}
         variant={buttonVariant}
         href={dataLinks[0].href}
         onClick={
@@ -313,7 +313,7 @@ export const GranuleResultsDataLinksButton = ({
       className="button granule-results-data-links-button__button"
       variant={buttonVariant}
       type="button"
-      icon={FaDownload}
+      icon={Download}
       label="No download link available"
       disabled
       onClick={(event) => event.preventDefault()}
