@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { FaCheck, FaQuestionCircle } from 'react-icons/fa'
+import { Check } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import CustomizableIcons from '../../CustomizableIcons/CustomizableIcons'
@@ -80,7 +81,7 @@ export const AccessMethodRadio = ({
         )
       }
       <div className="access-method-radio__radio">
-        { checked && <EDSCIcon icon={FaCheck} className="access-method-radio__radio-icon" /> }
+        { checked && <EDSCIcon icon={Check} className="access-method-radio__radio-icon" /> }
       </div>
       <div className="access-method-radio__content">
         <header className="access-method-radio__header">
