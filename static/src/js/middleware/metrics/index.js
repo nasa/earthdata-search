@@ -81,7 +81,6 @@ const createMetricsMiddleware = () => ({ getState, dispatch }) => (next) => (act
   }
 
   if (action.type === METRICS_FINISHED_COLLECTIONS_RENDERING) {
-    console.log('🚀 ~ createMetricsMiddleware ~ action:', action)
     dispatch(finishedCollectionsRendering(action))
   }
 
