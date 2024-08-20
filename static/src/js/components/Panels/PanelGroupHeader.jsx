@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-// TODO what is this?
+import { List } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import {
   FaSortAmountDownAlt,
   FaSortAmountDown,
   FaTable,
-  FaList,
   FaFileExport
 } from 'react-icons/fa'
 
@@ -78,7 +77,7 @@ export const PanelGroupHeader = ({
   if (activeView === 'table') {
     ActiveViewIcon = FaTable
   } else {
-    ActiveViewIcon = FaList
+    ActiveViewIcon = List
   }
 
   return (
