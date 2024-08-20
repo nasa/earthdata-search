@@ -6,8 +6,9 @@ import CollectionDetailsFeatureGroup from './CollectionDetailsFeatureGroup'
 
 import crsProjections from '../../util/map/crs'
 
-import MapThumb from '../../../assets/images/plate_carree_earth_scaled@2x.png'
 import './CollectionDetailsMinimap.scss'
+
+import MapThumb from '../../../assets/images/plate_carree_earth_scaled@2x.png'
 
 export const CollectionDetailsMinimap = ({ metadata }) => (
   <MapContainer
