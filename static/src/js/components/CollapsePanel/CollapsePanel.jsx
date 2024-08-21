@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Collapse } from 'react-bootstrap'
-import { FaChevronUp, FaChevronDown } from 'react-icons/fa'
+import {
+  ArrowChevronUp,
+  ArrowChevronDown
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -38,8 +41,8 @@ export class CollapsePanel extends Component {
     const panelClassNames = `collapse-panel__panel ${panelClassName}`
 
     const icon = open
-      ? <EDSCIcon className="collapse-panel__button-secondary-icon" icon={FaChevronUp} />
-      : <EDSCIcon className="collapse-panel__button-secondary-icon" icon={FaChevronDown} />
+      ? <EDSCIcon className="collapse-panel__button-secondary-icon" icon={ArrowChevronUp} />
+      : <EDSCIcon className="collapse-panel__button-secondary-icon" icon={ArrowChevronDown} />
 
     return (
       <div className={classNames}>
