@@ -45,7 +45,16 @@
   }
 
   &__modal-icon {
-    color: $color__black--300;
+    display: inline-block;
+    border-radius: 2em;
+    color: #fff;
+    background: #F64137;
+    border-width: 0;
+    position: relative;
+    z-index: 6;
+    text-align: center;
+    width: 48px;
+    height: 48px;
   }
 
   &__modal-blurb {

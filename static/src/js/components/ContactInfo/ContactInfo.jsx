@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { ArrowChevronRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { ArrowLineDiagonal } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { isEmpty } from 'lodash-es'
 
@@ -121,7 +121,7 @@ class ContactInfo extends Component {
             href={`${edlHost}/profile/edit`}
             label="Edit Profile in Earthdata Login"
             target="_blank"
-            icon={ArrowChevronRight}
+            icon={ArrowLineDiagonal}
             iconPosition="right"
           >
             Edit Profile in Earthdata Login
