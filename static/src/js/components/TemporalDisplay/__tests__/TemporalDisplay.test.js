@@ -106,3 +106,68 @@ describe('TemporalDisplay component', () => {
     expect(onRemoveTimelineFilter).toBeCalledTimes(1)
   })
 })
+
+describe('when this memoized component is being re-rendered', () => {
+  test('with the same props should not rerender to ensure ', () => {
+    const props = {
+      onRemoveTimelineFilter: jest.fn(),
+      temporalSearch: {
+        endDate: '2019-05-30T00:00:00.000Z',
+        startDate: '2019-03-30T00:00:00.000Z',
+        isRecurring: false
+      }
+    }
+
+    const { rerender } = render(
+      <TemporalDisplay {...props} />
+    )
+    expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
+    expect(screen.getByTitle('Temporal')).toBeInTheDocument()
+    expect(screen.getByText(/start:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-03-30 00:00:00/i)).toBeInTheDocument()
+    expect(screen.getByText(/stop:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-05-30 00:00:00/i)).toBeInTheDocument()
+
+    rerender(<TemporalDisplay {...props} />)
+
+    expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
+    expect(screen.getByTitle('Temporal')).toBeInTheDocument()
+    expect(screen.getByText(/start:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-03-30 00:00:00/i)).toBeInTheDocument()
+    expect(screen.getByText(/stop:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-05-30 00:00:00/i)).toBeInTheDocument()
+  })
+
+  test('with new props should rerender', () => {
+    const props = {
+      onRemoveTimelineFilter: jest.fn(),
+      temporalSearch: {
+        endDate: '2019-05-30T00:00:00.000Z',
+        startDate: '2019-03-30T00:00:00.000Z',
+        isRecurring: false
+      }
+    }
+
+    const { rerender } = render(
+      <TemporalDisplay {...props} />
+    )
+
+    const newProps = {
+      onRemoveTimelineFilter: jest.fn(),
+      temporalSearch: {
+        isRecurring: false,
+        endDate: '2019-05-29T00:00:00.000Z',
+        startDate: '2019-03-29T00:00:00.000Z'
+      }
+    }
+
+    rerender(<TemporalDisplay {...newProps} />)
+
+    expect(screen.getByRole('heading', { name: 'Temporal' })).toBeInTheDocument()
+    expect(screen.getByTitle('Temporal')).toBeInTheDocument()
+    expect(screen.getByText(/start:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-03-29 00:00:00/i)).toBeInTheDocument()
+    expect(screen.getByText(/stop:/i)).toBeInTheDocument()
+    expect(screen.getByText(/2019-05-29 00:00:00/i)).toBeInTheDocument()
+  })
+})
