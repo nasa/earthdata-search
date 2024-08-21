@@ -11,7 +11,7 @@ import * as ScrollArea from '@radix-ui/react-scroll-area'
 
 import {
   FileGeneric,
-  ArrowChevronRight,
+  ArrowLineDiagonal,
   ArrowChevronDown
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
