@@ -3,13 +3,11 @@ import Enzyme, { mount, shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import { Provider } from 'react-redux'
 import { StaticRouter } from 'react-router'
-import {
-  FaBell,
-  FaInfoCircle,
-  FaList,
-  FaMap,
-  FaTable
-} from 'react-icons/fa'
+
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+import { List, Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { FaMap, FaTable } from 'react-icons/fa'
+
 import Helmet from 'react-helmet'
 
 import configureStore from '../../../store/configureStore'
@@ -148,7 +146,7 @@ describe('SearchPanels component', () => {
 
       expect(collectionResultsPanelProps.activeView).toBe('list')
       expect(collectionResultsPanelProps.viewsArray[0].label).toBe('List')
-      expect(collectionResultsPanelProps.viewsArray[0].icon).toBe(FaList)
+      expect(collectionResultsPanelProps.viewsArray[0].icon).toBe(List)
       expect(collectionResultsPanelProps.viewsArray[0].isActive).toBe(true)
       expect(collectionResultsPanelProps.viewsArray[1].label).toBe('Table')
       expect(collectionResultsPanelProps.viewsArray[1].icon).toBe(FaTable)
@@ -333,7 +331,7 @@ describe('SearchPanels component', () => {
 
       expect(granuleResultsPanelProps.moreActionsDropdownItems).toStrictEqual([
         {
-          icon: FaInfoCircle,
+          icon: AlertInformation,
           link: {
             pathname: '/search/granules/collection-details',
             search: ''
@@ -354,7 +352,7 @@ describe('SearchPanels component', () => {
 
         expect(granuleResultsPanelProps.moreActionsDropdownItems).toStrictEqual([
           {
-            icon: FaInfoCircle,
+            icon: AlertInformation,
             link: {
               pathname: '/search/granules/collection-details',
               search: ''
@@ -362,7 +360,7 @@ describe('SearchPanels component', () => {
             title: 'Collection Details'
           },
           {
-            icon: FaBell,
+            icon: Subscribe,
             link: {
               pathname: '/search/granules/subscriptions',
               search: ''
@@ -400,7 +398,7 @@ describe('SearchPanels component', () => {
 
       expect(granuleResultsPanelProps.activeView).toBe('list')
       expect(granuleResultsPanelProps.viewsArray[0].label).toBe('List')
-      expect(granuleResultsPanelProps.viewsArray[0].icon).toBe(FaList)
+      expect(granuleResultsPanelProps.viewsArray[0].icon).toBe(List)
       expect(granuleResultsPanelProps.viewsArray[0].isActive).toBe(true)
       expect(granuleResultsPanelProps.viewsArray[1].label).toBe('Table')
       expect(granuleResultsPanelProps.viewsArray[1].icon).toBe(FaTable)
@@ -852,7 +850,7 @@ describe('SearchPanels component', () => {
           title: 'Granules'
         },
         {
-          icon: FaInfoCircle,
+          icon: AlertInformation,
           link: {
             pathname: '/search/granules/collection-details',
             search: ''
@@ -984,7 +982,7 @@ describe('SearchPanels component', () => {
             title: 'Granules'
           },
           {
-            icon: FaBell,
+            icon: Subscribe,
             link: {
               pathname: '/search/granules/subscriptions',
               search: ''
@@ -1075,7 +1073,7 @@ describe('SearchPanels component', () => {
           title: 'Granules'
         },
         {
-          icon: FaInfoCircle,
+          icon: AlertInformation,
           link: {
             pathname: '/search/granules/collection-details',
             search: ''
