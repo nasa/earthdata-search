@@ -25,10 +25,8 @@ describe('Bannner component', () => {
   test('should render self', () => {
     setup()
 
-    expect(screen.getByRole('heading', { name: 'Banner Title' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Banner Title' })).toHaveTextContent('title')
 
-    expect(screen.getByRole('paragraph', { name: 'Banner Message' })).toBeInTheDocument()
     expect(screen.getByRole('paragraph', { name: 'Banner Message' })).toHaveTextContent('message')
 
     expect(screen.getByRole('img', { name: 'High Alert Icon' })).toBeInTheDocument()
