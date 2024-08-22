@@ -129,7 +129,7 @@ export const GranuleDownloadButton = (props) => {
       }
       type="button"
       badge={badge}
-      bootstrapVariant="success"
+      bootstrapVariant="primary"
       dataTestId="granule-results-actions__download-all-button"
       disabled={granuleCount === 0 || initialLoading || (disableDatabaseComponents === 'true')}
       icon={FaDownload}

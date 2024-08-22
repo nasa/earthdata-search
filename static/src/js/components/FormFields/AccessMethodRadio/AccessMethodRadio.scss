@@ -13,8 +13,8 @@
 
   &--is-selected {
     box-shadow: 0 0.125rem 0.25rem 0.125rem rgba($color__carbon-black, 0.1);
-    border: 1px solid darken($color__carbon--20, 10);
-    background-color: $color__carbon--10;
+    border: 1px solid darken($color__carbon--5, 10);
+    background-color: $color__carbon--5;
     color: $color__carbon--80;
   }
 

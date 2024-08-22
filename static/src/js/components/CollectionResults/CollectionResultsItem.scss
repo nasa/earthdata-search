@@ -12,7 +12,7 @@
     &:active,
     &--active {
       cursor: pointer;
-      background-color: $color__carbon--10;
+      background-color: $color__carbon--5;
     }
   }
 
@@ -33,7 +33,6 @@
     line-height: 1;
     font-size: 0.725rem;
     font-weight: 500;
-    color: $color__carbon--50;
     letter-spacing: 0.01rem;
 
     & > {
@@ -183,7 +182,6 @@
     overflow: hidden;
     margin-bottom: $spacer * 0.25;
     font-size: 0.825rem;
-    color: $color__carbon--60;
 
     .panels--sm & {
       -webkit-line-clamp: 2;

@@ -89,7 +89,7 @@ export const TextWindowActions = ({
             <Button
               className="text-window-actions__action text-window-actions__action--edd"
               bootstrapSize="sm"
-              bootstrapVariant="success"
+              bootstrapVariant="primary"
               icon={FaDownload}
               onClick={handleEddModalOpen}
               tooltipId={`text-window-actions__tooltip--${id}`}

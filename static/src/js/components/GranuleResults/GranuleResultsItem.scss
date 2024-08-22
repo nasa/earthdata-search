@@ -57,7 +57,7 @@
       left: -2px;
       height: calc(100% + 4px);
       width: calc(100% + 4px);
-      border: 4px solid $color__active-green; // not sure
+      border: 4px solid $color__active-green;
       border-radius: 0.325rem;
     }
   }
@@ -192,10 +192,25 @@
     }
 
     &--start {
-      background-color: rgba(39, 174, 96, 0.1);
+      background-color: rgba($color__active-green, 0.05);
+
+      h5 {
+        color: $color__active-green;
+      }
+    }
+
+    &--end {
+      background: rgba($color__nasa-red--shade, 0.05);
+
+      h5 {
+        color: $color__nasa-red--shade;
+      }
+    }
+    &--start {
+      background-color: rgba($color__active-green, 0.05);
 
       .granule-results-item--deemphisized & {
-        background-color: rgba(39, 174, 96, 0.085);
+        background-color: rgba($color__active-green, 0.025);
       }
 
       h5 {
@@ -203,24 +218,22 @@
 
         .granule-results-item--deemphisized & {
           color: $color__active-green;
-          color: rgba($color__active-green, 0.6);
         }
       }
     }
 
     &--end {
-      background: rgba(192, 57, 43, 0.1);
+      background: rgba($color__nasa-red--shade, 0.05);
 
       .granule-results-item--deemphisized & {
-        background-color: rgba(192, 57, 43, 0.085);
+        background-color: rgba($color__nasa-red--shade, 0.025);
       }
 
       h5 {
-        color: $color__nasa-red;
+        color: $color__nasa-red--shade;
 
         .granule-results-item--deemphisized & {
-          color: $color__nasa-red;
-          color: rgba($color__nasa-red, 0.6);
+          color: $color__nasa-red--shade;
         }
       }
     }
