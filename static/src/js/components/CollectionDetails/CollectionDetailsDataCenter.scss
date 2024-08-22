@@ -6,6 +6,10 @@
   border: 1px solid $color__carbon--20;
   background-color: $color__carbon--10;
 
+  .card-body {
+    background-color: $color__carbon--10;
+  }
+
   .panels--sm & {
     flex: 0 0 calc(50% - .5rem);
   }

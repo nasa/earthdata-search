@@ -1,7 +1,7 @@
 .sidebar-section {
   margin: 0.75rem;
   min-height: 0;
-  color: $color__carbon--90;
+  color: $color__carbon-black;
   background-color: $color__spacesuit-white;
   border-radius: 0.25rem;
   border: 1px solid darken($color__carbon--20, 5);
@@ -14,8 +14,8 @@
   &__header {
     display: flex;
     align-items: center;
-    background-color: $color__carbon--60;
-    color: $color__carbon--10;
+    background-color: $color__carbon--70;
+    color: $color__spacesuit-white;
     border-bottom: 1px solid $color__carbon--20;
   }
 

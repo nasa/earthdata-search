@@ -51,7 +51,7 @@
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      background: $color__carbon--10;
+      background: $color__carbon--5;
     }
 
     &:focus {
@@ -77,13 +77,13 @@
   &__header {
     display: flex;
     padding: 0.2rem 0.5rem 0.325rem 0.7rem;
-    background-color: $color__carbon--10;
+    background-color: $color__spacesuit-white;
     color:$color__spacesuit-white;
   }
 
   &__meta {
     font-size: 0.8rem;
-    color: $color__carbon--60;
+    color: $color__carbon--80;
     font-weight: 500;
   }
 
@@ -92,13 +92,13 @@
     padding: 0;
     font-size: 0.8rem;
     font-weight: 500;
-    color: $color__nasa-blue;
+    color: $color__carbon-black;
     background: none;
     outline: none;
     border: 0;
 
     &:hover {
-      color: $color__nasa-blue--shade;
+      color: $color__carbon-black;
     }
 
     &:focus {

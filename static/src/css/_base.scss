@@ -64,7 +64,7 @@ button {
   &:focus-visible {
     border-color: $color__nasa-blue--shade;
     text-decoration: none;
-    outline: 1px dashed $color__nasa-blue;
+    outline: 1px dashed $color__nasa-blue--shade;
     outline-offset: 0.125rem;
   }
 }

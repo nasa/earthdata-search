@@ -5,7 +5,7 @@
   flex-shrink: 0;
   font-size: 0.825rem;
   font-weight: 500;
-  color: $color__carbon--70;
+  color: $color__carbon--80;
   letter-spacing: 0.01em;
 
   &__accessMethod {
@@ -27,13 +27,13 @@
     margin-left: 0.25rem;
     padding: 0.075rem 0.5rem;
     border-radius: 1rem;
-    background-color: $color__carbon--20;
-    color: $color__carbon--60;
+    background-color: $color__carbon--10;
+    color: $color__carbon--80;
     font-size: 0.625rem;
     font-weight: 700;
 
     .meta-icon:hover & {
-      background-color: $color__carbon--30;
+      background-color: $color__carbon--20;
       color: $color__carbon--90;
     }
   }

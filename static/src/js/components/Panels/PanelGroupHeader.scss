@@ -78,7 +78,7 @@
     align-items: stretch;
     justify-content: space-between;
     width: 100%;
-    background-color: darken($color__carbon--10, 7);
+    background-color: $color__carbon--10;
     font-size: 0.725rem;
 
     .panels--md & {
@@ -91,7 +91,7 @@
     align-items: center;
     height: auto;
     padding: 0.325rem calc($spacer / 2) 0.325rem $spacer;
-    color: $color__carbon--60;
+    color: $color__carbon--80;
   }
 
   &__heading-meta-secondary {

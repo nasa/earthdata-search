@@ -2,15 +2,15 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  background-color: $color__carbon--10;
+  background-color: $color__carbon--5;
   box-shadow:
-    inset 0px 10px 15px -20px rgba($color__carbon--10, 10),
-    inset 0px -10px 15px -20px rgba($color__carbon--10, 10);
+    inset 0px 10px 15px -20px $color__carbon--5,
+    inset 0px -10px 15px -20px $color__carbon--5;
 
   &--light {
     .facets-item__label {
       &:hover {
-        background-color: lighten($color__carbon--20, 5);
+        background-color: $color__carbon--5;
       }
     }
   }

@@ -15,7 +15,7 @@
     line-height: 1.4rem;
     word-wrap: none;
     text-transform: uppercase;
-    background-color: $color__carbon--60;
+    background-color: $color__carbon--70;
     vertical-align: bottom;
 
     &:before {
@@ -37,13 +37,13 @@
       width: 0.7rem;
       padding: 0 0.75rem 0 0.75rem;
       border: 0.7rem solid transparent;
-      border-left-color: $color__carbon--60;
+      border-left-color: $color__carbon--70;
       z-index: 1;
     }
 
     &:first-child {
       padding-left: 0.5rem;
-      background-color: $color__carbon--70;
+      background-color: $color__carbon--90;
       border-bottom-left-radius: $border-radius;
       border-top-left-radius: $border-radius;
 
@@ -52,12 +52,12 @@
       }
 
       &:after {
-        border-left-color: $color__carbon--70;
+        border-left-color: $color__carbon--90;
       }
     }
 
     &:last-child {
-      background-color: $color__carbon--40;
+      background-color: $color__carbon--60;
       border-bottom-right-radius: $border-radius;
       border-top-right-radius: $border-radius;
 
