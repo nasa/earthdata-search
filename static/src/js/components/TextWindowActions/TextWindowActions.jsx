@@ -16,10 +16,11 @@ import { constructDownloadableFile } from '../../util/files/constructDownloadabl
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
-import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
-import Spinner from '../Spinner/Spinner'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
+import ExternalLink from '../ExternalLink/ExternalLink'
+import Spinner from '../Spinner/Spinner'
 
 import './TextWindowActions.scss'
 
@@ -275,9 +276,9 @@ export const TextWindowActions = ({
                 <br />
                 Go To the
                 {' '}
-                <a className="link--external" href="https://nasa.github.io/earthdata-download/" target="_blank" rel="nofollow noreferrer">
+                <ExternalLink href="https://nasa.github.io/earthdata-download/">
                   Downloads Page
-                </a>
+                </ExternalLink>
               </Alert>
             </div>
           )
