@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: $spacer;
+  padding: $spacer * .825 2rem;
   overflow: hidden;
   transition: top 0.2s ease-in-out;
   z-index: 1;
@@ -13,40 +13,54 @@
   }
 
   &--error {
-    background-color: #c0392b;
-    color: #fff;
+    background-color: $color__red;
 
     .banner__title {
-      font-weight: 700;
+      font-weight: 500;
+      display: inline-flex;
     }
 
     .banner__message {
-      color: #fff;
+      display: flex
     }
 
     .banner__close {
-      color: #fff;
-      color: rgba(255,255,255,0.7);
+      color: $color__white;
       transition: color 0.15s ease-in-out;
+      display: flex;
 
       &:hover {
-        color: #fff;
-        color: rgba(255,255,255,1);
+        color: $color__white;
       }
     }
   }
 
+  &__content {
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    display: inherit;
+    margin-right: 0.5rem;
+  }
+
   &__title {
-    display: inline;
+    color: $color__white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0;
     margin-right: calc($spacer / 2);
     padding: 0;
-    font-size: 1rem;
+    font-size: 0.925rem;
     line-height: 1rem;
   }
 
   &__message {
-    display: inline;
+    color: $color__white;
+    font-size: 0.925rem;
+    font-weight: 200;
     margin: 0;
     padding: 0;
     line-height: 1rem;
@@ -56,7 +70,7 @@
     position: absolute;
     top: 50%;
     top: calc(50% + 1px);
-    right: 0.5rem;
+    right: 0.75rem;
     color: $color__black--700;
     transform: translateY(-50%);
 
