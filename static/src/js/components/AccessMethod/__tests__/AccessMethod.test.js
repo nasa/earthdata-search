@@ -1462,9 +1462,10 @@ describe('AccessMethod component', () => {
       })
 
       describe('when the service type is `Harmony` and concatenation is available', () => {
-        test('the `Combine Data` option is avaialable when concatenation service is true', () => {
+        test('the `Combine Data` option is available when concatenation service is true', () => {
           const collectionId = 'collectionId'
           const serviceName = 'harmony-service-name'
+          const concatCheckboxName = 'Enable Concatenation Data will be concatenated along a newly created dimension'
           setup({
             accessMethods: {
               harmony0: {
@@ -1483,7 +1484,7 @@ describe('AccessMethod component', () => {
           })
 
           expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
-          expect(screen.getByRole('checkbox').checked).toEqual(true)
+          expect(screen.getByRole('checkbox', { name: concatCheckboxName }).checked).toEqual(true)
         })
 
         test('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {

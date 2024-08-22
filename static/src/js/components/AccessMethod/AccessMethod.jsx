@@ -109,7 +109,10 @@ const AccessMethod = ({
 
   let granulesToDisplay = []
 
-  // TODO should this be in the useEffect?
+  // If a Harmony selection is made with concatenation service update to be enabled on form mount
+  useEffect(() => {
+    setEnableConcatenateDownload(defaultConcatenation)
+  }, [defaultConcatenation])
 
   useEffect(() => {
     if (addedGranuleIds.length > 0) {
@@ -543,8 +546,8 @@ const AccessMethod = ({
     ...accessMethodsByType.OPeNDAP,
     ...accessMethodsByType.ESI,
     ...accessMethodsByType['ECHO ORDERS'],
-    ...accessMethodsByType.download,
-    ...accessMethodsByType.SWODLR
+    ...accessMethodsByType.SWODLR,
+    ...accessMethodsByType.download
   ]
 
   const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
