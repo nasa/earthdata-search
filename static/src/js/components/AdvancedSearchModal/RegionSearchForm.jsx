@@ -10,6 +10,7 @@ import { FaQuestionCircle } from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import EDSCAlert from '../EDSCAlert/EDSCAlert'
+import ExternalLink from '../ExternalLink/ExternalLink'
 
 export class RegionSearchForm extends Component {
   constructor(props) {
@@ -203,14 +204,9 @@ export class RegionSearchForm extends Component {
                       >
                         Find more information about Hydrological Units at
                         {' '}
-                        <a
-                          className="link--external"
-                          target="_blank"
-                          rel="noreferrer noopener"
-                          href="https://water.usgs.gov/GIS/huc.html"
-                        >
+                        <ExternalLink href="https://water.usgs.gov/GIS/huc.html">
                           https://water.usgs.gov/GIS/huc.html
-                        </a>
+                        </ExternalLink>
                       </EDSCAlert>
                     )
                   }
@@ -223,14 +219,9 @@ export class RegionSearchForm extends Component {
                       >
                         Find River Reach IDs in the SWOT River Database (SWORD):
                         {' '}
-                        <a
-                          className="link--external"
-                          target="_blank"
-                          rel="noreferrer noopener"
-                          href="https://www.swordexplorer.com/"
-                        >
-                          https://www.swordexplorer.com/
-                        </a>
+                        <ExternalLink href="https://www.swordexplorer.com/">
+                          https://www.swordexplorer.com
+                        </ExternalLink>
                       </EDSCAlert>
                     )
                   }

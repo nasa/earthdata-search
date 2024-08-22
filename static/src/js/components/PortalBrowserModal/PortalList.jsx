@@ -112,18 +112,6 @@ export const PortalList = ({
                           <span className="portal-list__item-title-secondary">
                             <span className="visually-hidden"> (</span>
                             {secondaryTitle}
-                            <ExternalLink
-                              href={moreInfoUrl}
-                              onClick={
-                                (event) => {
-                                  event.stopPropagation()
-                                }
-                              }
-                              title={`Find more information about ${displayTitle}`}
-                            >
-                              Vulnurability
-                            </ExternalLink>
-                            {secondaryTitle}
                             <span className="visually-hidden">)</span>
                           </span>
                         )
