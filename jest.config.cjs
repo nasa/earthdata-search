@@ -26,10 +26,17 @@ module.exports = {
   setupFilesAfterEnv: [
     '<rootDir>/test-env.js'
   ],
+  // Skips files from running tests
   testPathIgnorePatterns: [
     'mocks.js',
     'node_modules',
     '/tests'
+  ],
+  // Skips modules from being visible to jest
+  modulePathIgnorePatterns: [
+    '/tests/e2e',
+    'package.json',
+    'package-lock.json'
   ],
   transform: {
     // Use the fileTransformer for all the logo.pngs that exist in the portals directory
