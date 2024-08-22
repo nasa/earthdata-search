@@ -21,11 +21,17 @@ $font-family-monospace: "DM Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Lib
 $body-bg: $color__carbon-black;
 $body-color: $color__carbon--80;
 
+/* Model Content */
+$modal-content-bg: $color__spacesuit-white;
+$modal-content-color: $color__carbon--60;
+
 /* Theme Colors */
 $theme-colors: (
   "primary": $color__nasa-blue,
-  "light": $color__carbon--10,
+  "light": $color__carbon--30,
   "success": $color__active-green,
+  "danger": $color__nasa-red--shade,
+  "red": $color__nasa-red--shade,
   "yellow": $color__international-orange
 );
 

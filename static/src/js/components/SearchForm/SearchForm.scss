@@ -57,7 +57,7 @@
     border-radius: 0;
     background-color: $color__spacesuit-white;
     vertical-align: middle;
-    color: $color__carbon--50;
+    color: $color__carbon--60;
     border-right: 1px solid $color__carbon--20;
     z-index: 1;
 
@@ -121,10 +121,10 @@
 
   &__query-hint {
     padding: 0.25rem 0.5rem;
-    color: $color__carbon--50;
+    color: $color__carbon--60;
     text-align: center;
     font-size: 0.75rem;
-    background-color: $color__carbon--20;
+    background-color: $color__spacesuit-white;
 
     strong {
       font-weight: 700;

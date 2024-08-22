@@ -36,10 +36,10 @@
     justify-content: space-between;
     font-size: 0.75rem;
     color: $color__carbon--70;
-    background-color: rgba($color__active-green, 0.2);
+    background-color: rgba($color__active-green, 0.05);
 
     &--start {
-      background-color: rgba(39, 174, 96, 0.1);
+      background-color: rgba($color__active-green, 0.05);
 
       h5 {
         color: $color__active-green;
@@ -47,10 +47,10 @@
     }
 
     &--end {
-      background: rgba(192, 57, 43, 0.1);
+      background: rgba($color__nasa-red--shade, 0.05);
 
       h5 {
-        color: $color__nasa-red;
+        color: $color__nasa-red--shade;
       }
     }
   }

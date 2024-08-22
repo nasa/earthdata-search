@@ -33,17 +33,17 @@
 
     &::placeholder,
     &::placeholder-shown {
-      color: $color__carbon--40;
+      color: $color__carbon--60;
     }
 
     &:focus {
       color: $color__spacesuit-white;
       background-color: $color__carbon--60;
-      border: 1px solid $color__carbon--70;
+      border: 1px solid $color__carbon--90;
 
       &::placeholder,
       &::placeholder-shown {
-        color: $color__carbon--30;
+        color: $color__carbon--60;
       }
     }
   }

@@ -77,7 +77,7 @@ $item-height: 3rem;
   &__meta-heading {
     margin-bottom: 0.125*$spacer;
     font-size: 0.875rem;
-    color: $color__carbon--40;
+    color: $color__carbon--70;
   }
 
   &__meta-body {
@@ -139,7 +139,7 @@ $item-height: 3rem;
 
     .order-status-item--failed & {
       .progress-ring__progress {
-        stroke: $color__nasa-red;
+        stroke: $color__nasa-red--shade;
       }
     }
   }
@@ -171,7 +171,7 @@ $item-height: 3rem;
     font-weight: 300;
     font-size: 0.725rem;
     line-height: 1rem;
-    color: $color__carbon--50;
+    color: $color__carbon--60;
   }
 
   &__orders-processed {
@@ -179,7 +179,7 @@ $item-height: 3rem;
     font-size: 0.725rem;
     line-height: 1rem;
     font-weight: 300;
-    color: $color__carbon--50;
+    color: $color__carbon--60;
   }
 
   &__additional-info {
@@ -207,7 +207,7 @@ $item-height: 3rem;
     }
 
     &--csda {
-      color: $color__purple;
+      color: $color__international-orange;
     }
   }
 
@@ -247,7 +247,7 @@ $item-height: 3rem;
 
   &__tabs {
     border-top: 1px solid $color__carbon--30;
-    background-color: $color__carbon--20;
+    background-color: $color__carbon--10;
 
     .tab-content {
       display: flex;
@@ -278,7 +278,7 @@ $item-height: 3rem;
 
     .order-status-item__tab-status & {
       font-size: 1.125rem;
-      color: $color__carbon--50;
+      color: $color__carbon--60;
       max-width: 30rem;
       text-align: center;
     }
@@ -287,7 +287,7 @@ $item-height: 3rem;
   &__status-text {
     font-style: italic;
     font-size: 0.825rem;
-    color: $color__carbon--50;
+    color: $color__carbon--60;
     display: block;
     margin-bottom: 0.5rem;
   }

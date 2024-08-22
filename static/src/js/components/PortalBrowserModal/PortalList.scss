@@ -69,10 +69,10 @@
     flex-grow: 1;
     padding: 1rem;
     padding-bottom: 0.825rem;
-    background-color: $color__carbon--10;
+    background-color: $color__carbon--5;
 
     .portal-list__item:hover & {
-      background-color: darken($color__carbon--10, 2);
+      background-color: $color__carbon--10;
     }
   }
 
@@ -86,7 +86,7 @@
     display: block;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    color: $color__carbon--50;
+    color: $color__carbon--60;
   }
 
   &__item-description {
@@ -106,15 +106,15 @@
     margin-top: 0.25rem;
     font-size: 0.825rem;
     font-weight: 500;
-    color: $color__carbon--50;
+    color: $color__carbon--60;
 
     .link--external:after {
-      color: $color__carbon--40;
+      color: $color__carbon--50;
     }
 
     &:hover {
       .link--external:after {
-        color: $color__carbon--50;
+        color: $color__carbon--70;
       }
     }
   }
