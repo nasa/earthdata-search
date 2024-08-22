@@ -1,17 +1,21 @@
 .link, a {
   color: $color__blue--dark;
-  text-underline-offset: 0.25rem;
-  text-decoration: underline dashed;
-  text-decoration-thickness: 1px;
-  text-decoration-color: inherit;
+  // text-underline-offset: 0.25rem;
+  // text-decoration: underline dashed;
+  // text-decoration-thickness: 1px;
+  // text-decoration-color: inherit;
 
+  border-bottom: 1px dashed currentColor;
+  line-height: 1.125em;
+  text-decoration: none;
   &:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
   }
 
   &:focus {
     text-decoration: none;
-    outline: 1px dashed $color__blue;
+    outline: 1px dashed currentColor;
     outline-offset: 0.125rem;
   }
 
@@ -32,16 +36,26 @@
       display: none;
     }
   }
-
+  // TODO fix all the external link icons?
   &--external {
-    &:after {
-      display: inline-block;
-      padding-left: 0.3rem;
-      content: "\f111";
-      font-size: 0.6rem;
-      font-family: "EUI-Icon-Library";
-      color: $color__black--300;
-    }
+    // &:after {
+    //   // text-underline-offset: 0.25rem;
+    //   // text-decoration: underline dashed;
+    //   // text-decoration-thickness: 1px;
+    //   // text-decoration-color: inherit;
+    //   display: inline-block;
+    //   // align-items: center;
+    //   text-decoration: inherit;
+    //   // color: inherit;
+    //   display: inline-block;
+    //   // width: 24px;
+    //   // height: 24px;
+    //   // transform: translateY(20%); /* Adjust for centering */
+    //   content: url('~Images/svgDiagonalExternalLinks.svg');
+    //   background-size: 16px 16px;
+    //   // border-bottom: 1px dashed;
+    //   background-repeat: no-repeat; /* Prevent repeating */
+    // }
 
     &:hover {
       &:after {
