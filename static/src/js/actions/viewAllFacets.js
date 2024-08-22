@@ -64,6 +64,7 @@ export const updateViewAllFacet = (newParams) => ({
  */
 export const getViewAllFacets = (category = '') => (dispatch, getState) => {
   const state = getState()
+  console.log('WWW viewAllFacets state at start of getViewAllFacets:', state)
 
   const { authToken } = state
 
@@ -76,6 +77,7 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
   // `onViewAllFacetsLoading` changes the state, use getState() again here to ensure the
   // collection request has the updated state
   const collectionParams = prepareCollectionParams(getState())
+  console.log('WWW viewAllFacets state after prepareCollectionParams:', getState())
 
   const requestObject = new CollectionRequest(authToken, earthdataEnvironment)
 

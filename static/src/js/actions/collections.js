@@ -213,11 +213,13 @@ export const getCollections = () => (dispatch, getState) => {
 
       const { searchResults } = getState()
 
+      console.log('ZZZ: all state in collections.js', getState())
       dispatch(metricsFinishedCollectionsRendering({
         duration: Date.now() - searchResults.collections.timerStart
       }))
     })
     .catch((error) => {
+      console.log('XXX: ', error)
       if (isCancel(error)) return
 
       dispatch(finishCollectionsTimer())

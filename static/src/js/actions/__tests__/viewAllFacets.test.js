@@ -75,7 +75,7 @@ describe('onViewAllFacetsErrored', () => {
   })
 })
 
-describe('applyViewAllFacets', () => {
+describe.only('applyViewAllFacets', () => {
   test('should create an action to update CMR facets', () => {
     nock(/cmr/)
       .post(/collections/)
@@ -102,35 +102,39 @@ describe('applyViewAllFacets', () => {
         collection: {}
       },
       searchResults: {
+        ponies: 'many',
         viewAllFacets: {}
       }
     })
 
-    store.dispatch(applyViewAllFacets())
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: TOGGLE_VIEW_ALL_FACETS_MODAL,
-      payload: false
+    return store.dispatch(applyViewAllFacets()).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: TOGGLE_VIEW_ALL_FACETS_MODAL,
+        payload: false
+      })
+
+      expect(storeActions[1]).toEqual({
+        type: UPDATE_COLLECTION_QUERY,
+        payload: {
+          pageNum: 1
+        }
+      })
+
+      expect(storeActions[2]).toEqual({
+        type: UPDATE_SELECTED_CMR_FACET,
+        payload: {
+          data_center_h: undefined,
+          instrument_h: ['1 Test facet', 'Test facet 2'],
+          platform_h: undefined,
+          processing_level_id_h: undefined,
+          project_h: undefined,
+          science_keywords_h: undefined
+        }
+      })
     })
 
-    expect(storeActions[1]).toEqual({
-      type: UPDATE_COLLECTION_QUERY,
-      payload: {
-        pageNum: 1
-      }
-    })
-
-    expect(storeActions[2]).toEqual({
-      type: UPDATE_SELECTED_CMR_FACET,
-      payload: {
-        data_center_h: undefined,
-        instrument_h: ['1 Test facet', 'Test facet 2'],
-        platform_h: undefined,
-        processing_level_id_h: undefined,
-        project_h: undefined,
-        science_keywords_h: undefined
-      }
-    })
+    console.log('>>> getActions: ', store.getActions())
   })
 })
 
@@ -163,7 +167,7 @@ describe('copyCMRFacets', () => {
   })
 })
 
-describe('getViewAllFacets', () => {
+describe.only('getViewAllFacets', () => {
   const stubResponse = {
     feed: {
       updated: '2019-03-27T20:21:14.705Z',
@@ -239,6 +243,7 @@ describe('getViewAllFacets', () => {
   }
 
   test('calls the API to get the View All Facets', async () => {
+    console.log('🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓 ')
     nock(/cmr/)
       .post(/collections/)
       .reply(200, stubResponse, { 'cmr-hits': 1 })
@@ -247,7 +252,7 @@ describe('getViewAllFacets', () => {
     const store = mockStore({
       authToken: '',
       searchResults: {
-        collections: {},
+        collections: { timerStart: 0 },
         facets: {},
         granules: {},
         viewAllFacets: {}
@@ -308,7 +313,7 @@ describe('getViewAllFacets', () => {
     const store = mockStore({
       authToken: 'token',
       searchResults: {
-        collections: {},
+        collections: { timerStart: 1 },
         facets: {},
         granules: {},
         viewAllFacets: {}
@@ -372,7 +377,7 @@ describe('getViewAllFacets', () => {
     const store = mockStore({
       authToken: '',
       searchResults: {
-        collections: {},
+        collections: { timerStart: 2 },
         facets: {},
         granules: {},
         viewAllFacets: {}
