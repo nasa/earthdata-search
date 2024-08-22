@@ -191,8 +191,9 @@ custom:
     # https://github.com/dherault/serverless-offline#run-modes
     # useInProcess: true
 
-  # Don't minify the build in development
+  # Don't minify the build in development or when invoking lambdas locally
   minifyBuild:
+    invokeLocal: false
     dev: false
     sit: true
     uat: true

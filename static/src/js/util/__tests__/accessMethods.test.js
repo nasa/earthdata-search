@@ -327,4 +327,100 @@ describe('isAccessMethodValid', () => {
       })
     })
   })
+
+  describe('when there are specific rules for an access method', () => {
+    describe('when selected access method is Swodlr and granule count is > 10', () => {
+      test('returns false', () => {
+        const projectCollection = {
+          accessMethods: {
+            accessMethods: {
+              swodlr: {
+                isValid: true
+              }
+            }
+          },
+          granules: {
+            hits: 150
+          },
+          selectedAccessMethod: 'swodlr'
+        }
+
+        expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+          ...validAccessMethod,
+          valid: false
+        })
+      })
+    })
+
+    describe('when selected access method is Swodlr and granule count is <= 10', () => {
+      test('returns true', () => {
+        const projectCollection = {
+          accessMethods: {
+            swodlr: {
+              isValid: true
+            }
+          },
+          granules: {
+            hits: 5
+          },
+          selectedAccessMethod: 'swodlr'
+        }
+
+        expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+          ...validAccessMethod,
+          valid: true
+        })
+      })
+    })
+
+    describe('when selected access method is esi and project has not changed', () => {
+      test('returns false', () => {
+        const projectCollection = {
+          accessMethods: {
+            esi0: {
+              type: 'ESI',
+              url: 'https://esi/test',
+              isValid: false,
+              hasChanged: false
+            }
+          },
+          granules: {
+            hits: 5
+          },
+          selectedAccessMethod: 'esi0'
+        }
+
+        expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+          ...validAccessMethod,
+          valid: false,
+          needsCustomization: true
+        })
+      })
+    })
+
+    describe('when selected access method is esi and project has changed', () => {
+      test('returns true', () => {
+        const projectCollection = {
+          accessMethods: {
+            esi0: {
+              type: 'ESI',
+              url: 'https://esi/test',
+              isValid: true,
+              hasChanged: true
+            }
+          },
+          granules: {
+            hits: 5
+          },
+          selectedAccessMethod: 'esi0'
+        }
+
+        expect(isAccessMethodValid(projectCollection, collection)).toEqual({
+          ...validAccessMethod,
+          valid: true,
+          needsCustomization: false
+        })
+      })
+    })
+  })
 })

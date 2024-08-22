@@ -1,10 +1,9 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import Bannner from '../Banner'
-import Button from '../../Button/Button'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import '@testing-library/jest-dom'
 
-Enzyme.configure({ adapter: new Adapter() })
+import Bannner from '../Banner'
 
 function setup(overrideProps = {}) {
   const props = {
@@ -15,43 +14,45 @@ function setup(overrideProps = {}) {
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<Bannner {...props} />)
+  render(<Bannner {...props} />)
 
   return {
-    enzymeWrapper,
     props
   }
 }
 
 describe('Bannner component', () => {
   test('should render self', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('h2.banner__title').text()).toEqual('title')
-    expect(enzymeWrapper.find('p.banner__message').text()).toEqual('message')
+    expect(screen.getByRole('heading', { name: 'Banner Title' })).toHaveTextContent('title')
+
+    expect(screen.getByRole('paragraph', { name: 'Banner Message' })).toHaveTextContent('message')
+
+    expect(screen.getByRole('img', { name: 'High Alert Icon' })).toBeInTheDocument()
   })
 
-  test('clicking the close button calls onClose', () => {
-    const { enzymeWrapper, props } = setup()
+  test('clicking the close button calls onClose', async () => {
+    const user = userEvent.setup()
+    const { props } = setup()
 
-    const button = enzymeWrapper.find(Button)
-    button.simulate('click')
+    const closeBtn = screen.getByRole('button', { name: 'close' })
+    await user.click(closeBtn)
 
     expect(props.onClose).toBeCalledTimes(1)
-    expect(props.onClose).toBeCalledWith()
   })
 
   test('error banner should render correctly', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.hasClass('banner--error')).toEqual(true)
+    expect(screen.getByRole('banner', { name: 'Banner' })).toHaveClass('banner--error')
   })
 
-  test('does not render a message when no message was provided', () => {
-    const { enzymeWrapper } = setup({
+  test('does not render a message when no message was provided', async () => {
+    setup({
       message: undefined
     })
 
-    expect(enzymeWrapper.find('.banner__message').exists()).toBeFalsy()
+    expect(await screen.queryByText('message')).not.toBeInTheDocument()
   })
 })
