@@ -63,7 +63,7 @@ describe('TemporalSelectionDropdown component', () => {
     expect(startLabel).toBeInTheDocument()
   })
 
-  test.only('sets the start date correctly when an valid date is passed', async () => {
+  test('sets the start date correctly when an valid date is passed', async () => {
     const user = userEvent.setup()
 
     setup()
