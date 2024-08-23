@@ -14,7 +14,7 @@
   &:hover {
     text-decoration: none;
     // border-bottom: 1px solid currentColor;
-    text-decoration: underline;
+    // text-decoration: underline;
   }
 
   &:focus {
@@ -48,8 +48,9 @@
     text-decoration: none;
 
     &:hover {
+      border-bottom: 1px solid currentColor;
+
       &:after {
-        text-decoration: none;
         border-bottom: 1px solid currentColor;
         color: $color__black--400;
       }
