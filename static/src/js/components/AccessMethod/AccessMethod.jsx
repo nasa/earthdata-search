@@ -9,23 +9,15 @@ import { Alert, Form } from 'react-bootstrap'
 import * as Select from '@radix-ui/react-select'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
 
-import {
-  FileGeneric,
-  ArrowLineDiagonal,
-  ArrowChevronDown
-} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-
-import { FaQuestionCircle } from 'react-icons/fa'
-
 import { pluralize } from '../../util/pluralize'
 import { createSpatialDisplay } from '../../util/createSpatialDisplay'
 import { createTemporalDisplay } from '../../util/createTemporalDisplay'
 import { ousFormatMapping, harmonyFormatMapping } from '../../../../../sharedUtils/outputFormatMaps'
 
-import Button from '../Button/Button'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
-import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import AccessMethodRadio from '../FormFields/AccessMethodRadio/AccessMethodRadio'
+import Button from '../Button/Button'
+import ExternalLink from '../ExternalLink/ExternalLink'
+import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 import RadioList from '../FormFields/RadioList/RadioList'
 import Spinner from '../Spinner/Spinner'
 import SwodlrForm from './SwodlrForm'
@@ -692,17 +684,9 @@ const AccessMethod = ({
                   <div className="access-method__harmony-method-info">
                     <h3 className="project-panel-section__heading">{selectedHarmonyMethodName}</h3>
                     <p>{accessMethods[selectedAccessMethod].description}</p>
-                    <p>
-                      <a
-                        href="https://harmony.earthdata.nasa.gov/docs#service-capabilities"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <EDSCIcon icon={FaFileAlt} className="access-method__documentation-icon" />
-                        Documentation
-                        <EDSCIcon icon={FaExternalLinkAlt} size="12" className="access-method__external-link-icon" />
-                      </a>
-                    </p>
+                    <ExternalLink href="https://harmony.earthdata.nasa.gov/docs#service-capabilities">
+                      Documentation
+                    </ExternalLink>
                   </div>
                 )
               }
