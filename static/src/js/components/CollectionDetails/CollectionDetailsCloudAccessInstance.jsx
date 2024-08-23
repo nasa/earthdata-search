@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import ExternalLink from '../ExternalLink/ExternalLink'
+
 import './CollectionDetailsCloudAccessInstance.scss'
 
 export const CollectionDetailsCloudAccessInstance = ({
@@ -115,22 +117,12 @@ export const CollectionDetailsCloudAccessInstance = ({
         }
         <dt>AWS S3 Credentials</dt>
         <dd className="direct-distribution-information__links--horizontal">
-          <a
-            className="link--external collection-details-cloud-access-direct-distribution-information__link"
-            href={s3CredentialsApiEndpoint}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <ExternalLink href={s3CredentialsApiEndpoint} className="collection-details-cloud-access-direct-distribution-information__link">
             Get AWS S3 Credentials
-          </a>
-          <a
-            className="link--separated link--external collection-details-cloud-access-direct-distribution-information__link"
-            href={s3CredentialsApiDocumentationUrl}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          </ExternalLink>
+          <ExternalLink href={s3CredentialsApiDocumentationUrl} className="link--separated collection-details-cloud-access-direct-distribution-information__link">
             Documentation
-          </a>
+          </ExternalLink>
         </dd>
       </dl>
     </div>

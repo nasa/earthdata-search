@@ -2,12 +2,12 @@ import React, { useRef } from 'react'
 import ReactDOM from 'react-dom'
 import { Dropdown, Tab } from 'react-bootstrap'
 import { PropTypes } from 'prop-types'
-// TODO How do I get here
 import { Download, CloudFill } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Button from '../Button/Button'
 import CopyableText from '../CopyableText/CopyableText'
 import EDSCTabs from '../EDSCTabs/EDSCTabs'
+import ExternalLink from '../ExternalLink/ExternalLink'
 
 import { addToast } from '../../util/addToast'
 import { getFilenameFromPath } from '../../util/getFilenameFromPath'
@@ -152,22 +152,13 @@ export const GranuleResultsDataLinksButton = ({
                     {'AWS S3 Credentials: '}
                   </span>
                   <span className="granule-results-data-links-button__menu-panel-value">
-                    <a
-                      className="link--external"
-                      href={s3CredentialsApiEndpoint}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
+                    <ExternalLink href={s3CredentialsApiEndpoint}>
                       Get AWS S3 Credentials
-                    </a>
-                    <a
-                      className="link--separated link--external"
-                      href={s3CredentialsApiDocumentationUrl}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
+                    </ExternalLink>
+                    &nbsp;
+                    <ExternalLink href={s3CredentialsApiDocumentationUrl}>
                       View Documentation
-                    </a>
+                    </ExternalLink>
                   </span>
                 </div>
               </header>

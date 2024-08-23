@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FaRegFilePdf, FaRegFileWord } from 'react-icons/fa'
-import { ArrowLineDiagonal } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import ExternalLink from '../ExternalLink/ExternalLink'
 
 export class AboutCwicModal extends Component {
   constructor(props) {
@@ -64,11 +64,11 @@ export class AboutCwicModal extends Component {
               </a>
             </li>
             <li>
-              <a href="https://wiki.earthdata.nasa.gov/display/CWIC/CWIC+Open+Search+Architecture" target="_blank" rel="noopener noreferrer">
+              {/* TODO needs external links */}
+              {' '}
+              <ExternalLink href="CWIC OpenSearch Architecture">
                 CWIC OpenSearch Architecture
-                {' '}
-                <EDSCIcon icon={ArrowLineDiagonal} />
-              </a>
+              </ExternalLink>
             </li>
           </ul>
         </div>
