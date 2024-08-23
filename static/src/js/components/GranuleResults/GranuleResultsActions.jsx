@@ -23,6 +23,7 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import ExternalLink from '../ExternalLink/ExternalLink'
 
 import './GranuleResultsActions.scss'
 
@@ -192,14 +193,13 @@ const GranuleResultsActions = ({
                   <Dropdown.Header>Open search in:</Dropdown.Header>
                   {
                     handoffLinks.map((link) => (
-                      <Dropdown.Item
+                      <ExternalLink
                         key={link.title}
-                        className="link--external more-actions-dropdown__item more-actions-dropdown__vis analytics__smart-handoff-link"
+                        className="more-actions-dropdown__item more-actions-dropdown__smart-handoff-link"
                         href={link.href}
-                        target="_blank"
                       >
                         {link.title}
-                      </Dropdown.Item>
+                      </ExternalLink>
                     ))
                   }
                 </Dropdown.Menu>

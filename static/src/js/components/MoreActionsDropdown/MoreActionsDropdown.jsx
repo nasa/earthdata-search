@@ -5,6 +5,8 @@ import { Dropdown } from 'react-bootstrap'
 import classNames from 'classnames'
 import MoreActionsToggle from '../CustomToggle/MoreActionsToggle'
 
+import ExternalLink from '../ExternalLink/ExternalLink'
+
 import './MoreActionsDropdown.scss'
 
 /**
@@ -23,6 +25,7 @@ export const MoreActionsDropdown = ({
   dark,
   handoffLinks
 }) => {
+  console.log('🚀 ~ file: MoreActionsDropdown.jsx:26 ~ handoffLinks:', handoffLinks)
   // Don't render the dropdown if there are no elements to render
   if (children == null && handoffLinks.length === 0) return null
 
@@ -66,14 +69,13 @@ export const MoreActionsDropdown = ({
                     <Dropdown.Header>Open collection in:</Dropdown.Header>
                     {
                       handoffLinks.map((link) => (
-                        <Dropdown.Item
+                        <ExternalLink
                           key={link.title}
-                          className="link--external more-actions-dropdown__item more-actions-dropdown__vis analytics__smart-handoff-link"
+                          className="more-actions-dropdown__item more-actions-dropdown__smart-handoff-link"
                           href={link.href}
-                          target="_blank"
                         >
                           {link.title}
-                        </Dropdown.Item>
+                        </ExternalLink>
                       ))
                     }
                   </>
