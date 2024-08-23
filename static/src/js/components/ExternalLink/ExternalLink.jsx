@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -11,10 +10,8 @@ export const ExternalLink = ({
   children,
   ...rest
 }) => (
-  // TODO "noopener noreferrer
-  // TODO put any props on the A tag onto the link component
   // eslint-disable-next-line react/jsx-props-no-spreading
-  <a className="external-link link--external" target="_blank" rel="noreferrer" {...rest}>
+  <a className="external-link link--external" target="_blank" rel="noopener noreferrer" {...rest}>
     {children}
     <EDSCIcon
       className="external-link__icon"
@@ -29,7 +26,7 @@ ExternalLink.defaultProps = {
 }
 
 ExternalLink.propTypes = {
-  children: PropTypes.object
+  children: PropTypes.node
 }
 
 export default ExternalLink
