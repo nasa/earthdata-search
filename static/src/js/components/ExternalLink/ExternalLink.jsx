@@ -11,6 +11,7 @@ export const ExternalLink = ({
   children,
   ...rest
 }) => (
+  // TODO "noopener noreferrer
   // TODO put any props on the A tag onto the link component
   // eslint-disable-next-line react/jsx-props-no-spreading
   <a className="external-link link--external" target="_blank" rel="noreferrer" {...rest}>

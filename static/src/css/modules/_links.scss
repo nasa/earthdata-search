@@ -31,6 +31,7 @@
     &:before {
       display: inline-block;
       margin-left: calc($spacer / 2);
+      padding-left: calc($spacer / 2);
       content: '|';
       color: transparent;
       border-left: 1px solid $color__black--300;
