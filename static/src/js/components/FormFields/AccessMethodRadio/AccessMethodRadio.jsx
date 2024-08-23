@@ -21,17 +21,22 @@ export const AccessMethodRadio = ({
   title,
   subtitle,
   customizationOptions,
-  isHarmony
+  isHarmony,
+  disabled,
+  errorMessage
 }) => {
   const labelClasses = [
     'access-method-radio',
     {
       'access-method-radio--is-selected': checked
+    },
+    {
+      'access-method-radio--is-harmony': isHarmony
+    },
+    {
+      'access-method-radio--disable-button': disabled
     }
   ]
-  if (isHarmony) {
-    labelClasses.push('access-method-radio--is-harmony')
-  }
 
   const labelClassName = classNames(labelClasses)
 
@@ -59,6 +64,7 @@ export const AccessMethodRadio = ({
         checked={checked ? 'checked' : ''}
         onChange={onChange}
         onClick={onClick}
+        disabled={disabled}
       />
       {
         customizationOptions && (
@@ -92,6 +98,13 @@ export const AccessMethodRadio = ({
             <span className="access-method-radio__description">
               {description}
             </span>
+            {
+              errorMessage && (
+                <div className="access-method-radio__error">
+                  {errorMessage}
+                </div>
+              )
+            }
           </div>
         </header>
         {
@@ -123,7 +136,9 @@ AccessMethodRadio.defaultProps = {
   onClick: null,
   subtitle: null,
   customizationOptions: null,
-  isHarmony: false
+  isHarmony: false,
+  disabled: false,
+  errorMessage: null
 }
 
 AccessMethodRadio.propTypes = {
@@ -151,7 +166,9 @@ AccessMethodRadio.propTypes = {
     hasFormats: PropTypes.bool,
     hasTransform: PropTypes.bool
   }),
-  isHarmony: PropTypes.bool
+  isHarmony: PropTypes.bool,
+  disabled: PropTypes.bool,
+  errorMessage: PropTypes.string
 }
 
 export default AccessMethodRadio

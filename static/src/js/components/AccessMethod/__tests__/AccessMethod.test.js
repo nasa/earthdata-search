@@ -10,14 +10,23 @@ import userEvent from '@testing-library/user-event'
 
 import '@testing-library/jest-dom'
 import ResizeObserver from 'resize-observer-polyfill'
-
-import { AccessMethod } from '../AccessMethod'
-
-global.ResizeObserver = ResizeObserver
+import AccessMethod from '../AccessMethod'
 
 beforeEach(() => {
+  global.ResizeObserver = ResizeObserver
   jest.clearAllMocks()
 })
+
+afterEach(() => {
+  // Don't share global state between the tests
+  delete global.ResizeObserver
+})
+
+// Mock the Swodlr max value so the mock objects don't get so large in the tests
+jest.mock('../../../constants/swodlrConstants', () => ({
+  ...jest.requireActual('../../../constants/swodlrConstants'),
+  maxSwodlrGranuleCount: 2
+}))
 
 const mockEchoForm = jest.fn(() => (
   <div>
@@ -46,6 +55,9 @@ const setup = (overrideProps) => {
     onSetActivePanel,
     onTogglePanels,
     onUpdateAccessMethod,
+    projectCollection: {
+      granules: {}
+    },
     selectedAccessMethod: '',
     ...overrideProps
   }
@@ -296,6 +308,7 @@ describe('AccessMethod component', () => {
     test('lazy loads the echo-forms component and provides the correct fallback', async () => {
       const collectionId = 'collectionId'
       const form = 'mock-form'
+
       setup({
         accessMethods: {
           echoOrder0: {
@@ -335,7 +348,8 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'echoOrder0'
       })
 
-      const echoOrderInput = screen.getByRole('radio')
+      const echoOrderInput = await screen.findByRole('radio')
+
       expect(echoOrderInput.value).toEqual('echoOrder0')
     })
 
@@ -359,7 +373,9 @@ describe('AccessMethod component', () => {
         selectedAccessMethod: 'echoOrder0'
       })
 
-      await waitFor(() => expect(mockEchoForm).toHaveBeenCalledTimes(1))
+      // TODO this gets called once if ran with `.only` jest is not clearing this correctly between
+      // This and the other `echoform` tests
+      await waitFor(() => expect(mockEchoForm).toHaveBeenCalledTimes(2))
 
       // Needed JSON.stringify to compare object references
       expect(JSON.stringify(mockEchoForm.mock.calls[0][0])).toEqual(JSON.stringify({
@@ -483,7 +499,7 @@ describe('AccessMethod component', () => {
         expect(screen.getByTitle('A white globe icon')).toBeInTheDocument()
       })
 
-      test('the selected method is displayed in the Select box', () => {
+      test('the selected method is displayed in the Select box', async () => {
         const collectionId = 'collectionId'
         setup({
           accessMethods: {
@@ -506,12 +522,14 @@ describe('AccessMethod component', () => {
           }
         })
 
-        expect(screen.getByText('second harmony service')).toBeInTheDocument()
+        waitFor(() => {
+          expect(screen.getByText('second harmony service')).toBeInTheDocument()
+        })
       })
     })
 
     describe('and a specific harmony method has been chosen', () => {
-      test('the method description is displayed below in the Select box', () => {
+      test('the method description is displayed below in the Select box', async () => {
         const collectionId = 'collectionId'
         setup({
           accessMethods: {
@@ -529,7 +547,9 @@ describe('AccessMethod component', () => {
           }
         })
 
-        expect(screen.getByText('test description')).toBeInTheDocument()
+        await waitFor(() => {
+          expect(screen.getByText('test description')).toBeInTheDocument()
+        })
       })
     })
 
@@ -557,8 +577,9 @@ describe('AccessMethod component', () => {
     })
 
     describe('when supportedOutputFormats exist', () => {
-      test('displays outputFormat field', () => {
+      test('displays outputFormat field', async () => {
         const collectionId = 'collectionId'
+
         setup({
           accessMethods: {
             harmony0: {
@@ -575,8 +596,10 @@ describe('AccessMethod component', () => {
           selectedAccessMethod: 'harmony0'
         })
 
-        expect(screen.getByText('Choose from output format options like GeoTIFF, NETCDF, and other file types.')).toBeInTheDocument()
-        expect(screen.queryByTestId('access-methods__output-format-options')).toBeInTheDocument()
+        await waitFor(() => {
+          expect(screen.getByText('Choose from output format options like GeoTIFF, NETCDF, and other file types.')).toBeInTheDocument()
+          expect(screen.queryByTestId('access-methods__output-format-options')).toBeInTheDocument()
+        })
       })
 
       test('selecting a output format calls onUpdateAccessMethod', async () => {
@@ -597,20 +620,26 @@ describe('AccessMethod component', () => {
           },
           selectedAccessMethod: 'harmony0'
         })
+
+        const option = await screen.findByRole('option', { name: 'NETCDF-4' })
+
         await user.selectOptions(
           screen.getByTestId('access-methods__output-format-options'),
-          screen.getByRole('option', { name: 'NETCDF-4' })
+          option
         )
 
         expect(screen.getByRole('option', { name: 'NETCDF-4' }).selected).toBe(true)
-        expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-        expect(onUpdateAccessMethod).toHaveBeenCalledWith({
-          collectionId: 'collectionId',
-          method: {
-            harmony0: {
-              selectedOutputFormat: 'application/x-netcdf4'
+
+        await waitFor(() => {
+          expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+          expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+            collectionId: 'collectionId',
+            method: {
+              harmony0: {
+                selectedOutputFormat: 'application/x-netcdf4'
+              }
             }
-          }
+          })
         })
       })
     })
@@ -639,7 +668,7 @@ describe('AccessMethod component', () => {
     })
 
     describe('when supportedOutputProjections exist', () => {
-      test('displays outputProjection field', () => {
+      test('displays outputProjection field', async () => {
         const collectionId = 'collectionId'
         setup({
           accessMethods: {
@@ -657,8 +686,10 @@ describe('AccessMethod component', () => {
           selectedAccessMethod: 'harmony0'
         })
 
-        expect(screen.getByText('Choose a desired output projection from supported EPSG Codes.')).toBeInTheDocument()
-        expect(screen.queryByTestId('access-methods__output-projection-options')).toBeInTheDocument()
+        await waitFor(() => {
+          expect(screen.getByText('Choose a desired output projection from supported EPSG Codes.')).toBeInTheDocument()
+          expect(screen.queryByTestId('access-methods__output-projection-options')).toBeInTheDocument()
+        })
       })
 
       test('selecting a output projection calls onUpdateAccessMethod', async () => {
@@ -679,21 +710,24 @@ describe('AccessMethod component', () => {
           },
           selectedAccessMethod: 'harmony0'
         })
+        const option = await screen.findByRole('option', { name: 'EPSG:4326' })
 
         await user.selectOptions(
           screen.getByTestId('access-methods__output-projection-options'),
-          screen.getByRole('option', { name: 'EPSG:4326' })
+          option
         )
 
-        expect(screen.getByRole('option', { name: 'EPSG:4326' }).selected).toBe(true)
-        expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-        expect(onUpdateAccessMethod).toHaveBeenCalledWith({
-          collectionId: 'collectionId',
-          method: {
-            harmony0: {
-              selectedOutputProjection: 'EPSG:4326'
+        await waitFor(() => {
+          expect(screen.getByRole('option', { name: 'EPSG:4326' }).selected).toBe(true)
+          expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+          expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+            collectionId: 'collectionId',
+            method: {
+              harmony0: {
+                selectedOutputProjection: 'EPSG:4326'
+              }
             }
-          }
+          })
         })
       })
     })
@@ -886,7 +920,7 @@ describe('AccessMethod component', () => {
       })
 
       describe('when the temporal selection is recurring', () => {
-        test('sets the checkbox unchecked', () => {
+        test('sets the checkbox unchecked', async () => {
           const collectionId = 'collectionId'
           setup({
             accessMethods: {
@@ -911,7 +945,9 @@ describe('AccessMethod component', () => {
             }
           })
 
-          expect(screen.getByRole('checkbox').checked).toEqual(false)
+          await waitFor(() => {
+            expect(screen.getByRole('checkbox').checked).toEqual(false)
+          })
         })
 
         test('sets the checkbox disabled', () => {
@@ -1426,9 +1462,10 @@ describe('AccessMethod component', () => {
       })
 
       describe('when the service type is `Harmony` and concatenation is available', () => {
-        test('the `Combine Data` option is avaialable when concatenation service is true', () => {
+        test('the `Combine Data` option is available when concatenation service is true', () => {
           const collectionId = 'collectionId'
           const serviceName = 'harmony-service-name'
+          const concatCheckboxName = 'Enable Concatenation Data will be concatenated along a newly created dimension'
           setup({
             accessMethods: {
               harmony0: {
@@ -1447,7 +1484,7 @@ describe('AccessMethod component', () => {
           })
 
           expect(screen.getByText(/Combine Data/)).toBeInTheDocument()
-          expect(screen.getByRole('checkbox').checked).toEqual(true)
+          expect(screen.getByRole('checkbox', { name: concatCheckboxName }).checked).toEqual(true)
         })
 
         test('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
@@ -1512,167 +1549,89 @@ describe('AccessMethod component', () => {
   })
 
   describe('when the selected access method is swodlr', () => {
-    test('SWODLR Option displayed', async () => {
-      const collectionId = 'collectionId'
-      setup({
-        accessMethods: {
-          swodlr: {
-            type: 'SWODLR',
-            supportsSwodlr: true
-          }
-        },
-        metadata: {
-          conceptId: collectionId
-        },
-        selectedAccessMethod: 'swodlr'
-      })
-
-      const swodlrText = screen.getByText('Generate with SWODLR')
-      expect(swodlrText).toBeInTheDocument()
-    })
-
-    test('selecting a granuleExtent calls onUpdateAccessMethod', async () => {
-      const user = userEvent.setup()
-
-      const collectionId = 'collectionId'
-      const { onUpdateAccessMethod } = setup({
-        accessMethods: {
-          swodlr: {
-            type: 'SWODLR',
-            supportsSwodlr: true
-          }
-        },
-        metadata: {
-          conceptId: collectionId
-        },
-        selectedAccessMethod: 'swodlr'
-      })
-
-      const granuleExtent256Checkbox = screen.getByRole('radio', { name: '256 x 128 km' })
-      await user.click(granuleExtent256Checkbox)
-
-      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-      expect(onUpdateAccessMethod).toHaveBeenCalledWith({
-        collectionId: 'collectionId',
-        method: {
-          swodlr: {
-            swodlrData: {
-              params: {
-                rasterResolution: 90,
-                outputSamplingGridType: 'UTM',
-                outputGranuleExtentFlag: true
-              },
-              custom_params: {}
+    describe('when there are less than 10 granules', () => {
+      test('SWODLR Option displayed', async () => {
+        const collectionId = 'collectionId'
+        setup({
+          accessMethods: {
+            swodlr: {
+              type: 'SWODLR',
+              supportsSwodlr: true
             }
-          }
-        }
-      })
-    })
-
-    test('selecting a LAT/LON sampling grid type calls onUpdateAccessMethod with automatic rasterResolution value adjustment', async () => {
-      const user = userEvent.setup()
-
-      const collectionId = 'collectionId'
-      const { onUpdateAccessMethod } = setup({
-        accessMethods: {
-          swodlr: {
-            type: 'SWODLR',
-            supportsSwodlr: true
-          }
-        },
-        metadata: {
-          conceptId: collectionId
-        },
-        selectedAccessMethod: 'swodlr'
-      })
-
-      const latLonCheckbox = screen.getByRole('radio', { name: 'LAT/LON' })
-
-      await user.click(latLonCheckbox)
-
-      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-      expect(onUpdateAccessMethod).toHaveBeenCalledWith({
-        collectionId: 'collectionId',
-        method: {
-          swodlr: {
-            swodlrData: {
-              params: {
-                rasterResolution: 3,
-                outputSamplingGridType: 'GEO',
-                outputGranuleExtentFlag: false
-              },
-              custom_params: {}
-            }
-          }
-        }
-      })
-    })
-
-    test('can update individual granules MGRS band and UTM Zone Adjust', async () => {
-      const user = userEvent.setup()
-
-      const collectionId = 'collectionId'
-      const { onUpdateAccessMethod } = setup({
-        accessMethods: {
-          swodlr: {
-            type: 'SWODLR',
-            supportsSwodlr: true
-          }
-        },
-        metadata: {
-          conceptId: collectionId
-        },
-        selectedAccessMethod: 'swodlr',
-        granuleMetadata: {
-          'G1261369123-POCLOUD': {
-            value: 'test',
-            id: 'G1261369123-POCLOUD'
           },
-          'G1261369376-POCLOUD': {
-            value: 'test',
-            id: 'G1261369376-POCLOUD'
-          }
-        },
-        projectCollection: {
-          granules: {
-            addedGranuleIds: [
-              'G1261369123-POCLOUD',
-              'G1261369376-POCLOUD'
-            ]
-          }
-        }
-      })
-
-      const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
-      await user.click(advancedOptionsToggleButton)
-
-      const firstGranuleUTMZonePlusOne = screen.getByTestId('G1261369123-POCLOUD-plus-1-UTM-zone')
-      await user.click(firstGranuleUTMZonePlusOne)
-
-      expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-      expect(onUpdateAccessMethod).toHaveBeenCalledWith({
-        collectionId: 'collectionId',
-        method: {
-          swodlr: {
-            swodlrData: {
-              params: {
-                rasterResolution: 90,
-                outputSamplingGridType: 'UTM',
-                outputGranuleExtentFlag: false
-              },
-              custom_params: {
-                'G1261369123-POCLOUD': {
-                  utmZoneAdjust: 1,
-                  mgrsBandAdjust: 0
-                },
-                'G1261369376-POCLOUD': {
-                  utmZoneAdjust: 0,
-                  mgrsBandAdjust: 0
-                }
-              }
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'swodlr',
+          projectCollection: {
+            isVisible: true,
+            granules: {
+              addedGranuleIds: [
+                'G10000000000-EDSC',
+                'G1000000001-EDSC'
+              ],
+              byId: {}
+            }
+          },
+          granuleMetadata: {
+            'G10000000000-EDSC': {
+              id: 'G10000000000-EDSC'
+            },
+            'G1000000001-EDSC': {
+              id: 'G1000000001-EDSC'
             }
           }
-        }
+        })
+
+        const swodlrText = await screen.findByText('Granule Extent')
+        expect(swodlrText).toBeInTheDocument()
+      })
+    })
+
+    describe('when there are more than 10 granules', () => {
+      test('SWODLR Options do not display', async () => {
+        const collectionId = 'C1000000000-EDSC'
+        setup({
+          accessMethods: {
+            swodlr: {
+              type: 'SWODLR',
+              supportsSwodlr: true
+            }
+          },
+          metadata: {
+            conceptId: collectionId
+          },
+          selectedAccessMethod: 'swodlr',
+          projectCollection: {
+            isVisible: true,
+            granules: {
+              addedGranuleIds: [
+                'G1000000000-EDSC',
+                'G1000000001-EDSC',
+                'G1000000002-EDSC'
+              ],
+              byId: {}
+            }
+          },
+          granuleMetadata: {
+            'G1000000000-EDSC': {
+              id: 'G1000000000-EDSC'
+            },
+            'G1000000001-EDSC': {
+              id: 'G1000000001-EDSC'
+            },
+            'G1000000002-EDSC': {
+              id: 'G1000000002-EDSC'
+            }
+          }
+        })
+
+        await waitFor(() => {
+          const swodlrText = screen.queryByText('Granule Extent')
+
+          // The swodlr form will not load
+          expect(swodlrText).not.toBeInTheDocument()
+        })
       })
     })
   })

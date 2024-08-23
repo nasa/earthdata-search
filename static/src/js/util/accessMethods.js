@@ -66,13 +66,19 @@ export const isAccessMethodValid = (projectCollection, collectionMetadata) => {
   } = selectedMethod
 
   let esiNeedsCustomization = false
+  let swoldrTooManyGranules = false
+
   if (selectedAccessMethod.startsWith('esi') && !hasChanged) {
     esiNeedsCustomization = true
   }
 
+  if (selectedAccessMethod.startsWith('swodlr') && granuleCount > 10) {
+    swoldrTooManyGranules = true
+  }
+
   return {
     ...validAccessMethod,
-    valid: isValid && !esiNeedsCustomization,
+    valid: isValid && !esiNeedsCustomization && !swoldrTooManyGranules,
     needsCustomization: esiNeedsCustomization
   }
 }
