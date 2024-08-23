@@ -13,6 +13,10 @@
     box-shadow: $box-shadow;
   }
 
+  &__smart-handoff-link {
+    padding-left:0.825rem;
+  }
+
   &__dropdown {
     display: flex;
     align-items: center;

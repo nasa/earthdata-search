@@ -13,7 +13,8 @@
 
   &:hover {
     text-decoration: none;
-    border-bottom: 1px solid currentColor;
+    // border-bottom: 1px solid currentColor;
+    text-decoration: underline;
   }
 
   &:focus {

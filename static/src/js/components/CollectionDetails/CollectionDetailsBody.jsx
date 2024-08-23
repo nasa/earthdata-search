@@ -22,6 +22,7 @@ import Skeleton from '../Skeleton/Skeleton'
 import SplitBadge from '../SplitBadge/SplitBadge'
 
 import { collectionDetailsSkeleton } from './skeleton'
+import ExternalLink from '../ExternalLink/ExternalLink'
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { pluralize } from '../../util/pluralize'
 
@@ -318,14 +319,12 @@ export const CollectionDetailsBody = ({
                       </>
                     )
                   }
-                  <a
-                    className="link--separated link--external collection-details-body__link"
+                  <ExternalLink
+                    className="link--separated collection-details-body__link"
                     href={urls.html.href}
-                    rel="noopener noreferrer"
-                    target="_blank"
                   >
                     View More Info
-                  </a>
+                  </ExternalLink>
                 </dd>
               </dl>
               {
