@@ -5,7 +5,7 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
-// TODO In mockup they were using react-icons and they don't have GIS icons
+
 import {
   FaCrop,
   FaMapMarker,

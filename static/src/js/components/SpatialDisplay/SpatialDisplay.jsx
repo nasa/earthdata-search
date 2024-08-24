@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 
 import PropTypes from 'prop-types'
 import { isEqual } from 'lodash-es'
-// TODO In mockup they were using react-icons and they don't have GIS icons
 
 import { FaCrop } from 'react-icons/fa'
 

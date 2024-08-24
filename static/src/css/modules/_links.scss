@@ -1,20 +1,12 @@
 .link, a {
   color: $color__blue--dark;
-  // THIS IS AFTER
-  // border-bottom: 1px dashed currentColor;
-  // line-height: 1.125em;
-  // text-decoration: none;
-
-  // THIS IS BEFORE
   text-underline-offset: 0.25rem;
   text-decoration: underline dashed;
   text-decoration-thickness: 1px;
   text-decoration-color: inherit;
 
   &:hover {
-    text-decoration: none;
-    // border-bottom: 1px solid currentColor;
-    // text-decoration: underline;
+  text-decoration: none;
   }
 
   &:focus {
@@ -41,7 +33,7 @@
       display: none;
     }
   }
-  // TODO fix all the external link icons?
+
   &--external {
     border-bottom: 1px dashed currentColor;
     line-height: 1.125em;

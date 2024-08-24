@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-// TODO nothing to use for trash
 import { FaTrash } from 'react-icons/fa'
 
 import Button from '../Button/Button'

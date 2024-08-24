@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
-// TODO they have nothing like this do we want to swap to a different one I don't think we should this is fine
 import { FaDoorOpen } from 'react-icons/fa'
 import classNames from 'classnames'
 

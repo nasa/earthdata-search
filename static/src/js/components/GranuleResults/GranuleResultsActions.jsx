@@ -6,7 +6,6 @@ import {
   FaFolderPlus,
   FaFolderMinus
 } from 'react-icons/fa'
-// TODO keep smarthandoff the same they don't have anything like this
 import { IoShare } from 'react-icons/io5'
 
 import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
