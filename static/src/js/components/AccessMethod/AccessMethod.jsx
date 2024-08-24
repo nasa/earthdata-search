@@ -488,7 +488,6 @@ const AccessMethod = ({
           ? supportedOutputFormats.length > 0
           : false
 
-        // TODO should this not be length > 0 its > 1 on main
         hasProjections = supportedOutputProjections
           ? supportedOutputProjections.length > 1
           : false

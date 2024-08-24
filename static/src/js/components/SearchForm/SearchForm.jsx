@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty, isEqual } from 'lodash-es'
 import Autosuggest from 'react-autosuggest'
-// TODO they have a filters icon but, on the mock up it looks like they are using what we had before
 import { FaEraser } from 'react-icons/fa'
 import { Filter } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 

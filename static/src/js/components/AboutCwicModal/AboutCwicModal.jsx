@@ -64,7 +64,6 @@ export class AboutCwicModal extends Component {
               </a>
             </li>
             <li>
-              {/* TODO needs external links */}
               {' '}
               <ExternalLink href="CWIC OpenSearch Architecture">
                 CWIC OpenSearch Architecture

@@ -6,7 +6,6 @@ import React, {
 import PropTypes from 'prop-types'
 import EDSCTimeline from '@edsc/timeline'
 import classNames from 'classnames'
-// TODO nothing in HDS
 import { FaAngleDoubleDown, FaAngleDoubleUp } from 'react-icons/fa'
 
 import Button from '../Button/Button'
