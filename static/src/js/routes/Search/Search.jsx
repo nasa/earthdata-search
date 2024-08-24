@@ -16,7 +16,6 @@ import {
   Tooltip
 } from 'react-bootstrap'
 
-// TODO I'm confused alot of the edsc-react-icons don't look good
 import {
   FaSitemap,
   FaQuestionCircle,
