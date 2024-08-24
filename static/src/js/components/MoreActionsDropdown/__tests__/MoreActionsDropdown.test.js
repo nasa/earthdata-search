@@ -61,7 +61,12 @@ describe('MoreActionsDropdown component', () => {
 
     expect(screen.getByRole('button', { name: 'More actions' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Open collection in:' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Giovanni' })).toBeInTheDocument()
+
+    const snartHandoffLink = screen.getByRole('link', { name: 'Giovanni' })
+    expect(snartHandoffLink).toBeInTheDocument()
+
+    // Ensure that links can be selected with keys for coverage
+    await user.type(snartHandoffLink, '{enter}')
   })
 
   test('renders correctly when children are provided', async () => {
