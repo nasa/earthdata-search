@@ -25,7 +25,6 @@ export const MoreActionsDropdown = ({
   dark,
   handoffLinks
 }) => {
-  console.log('🚀 ~ file: MoreActionsDropdown.jsx:26 ~ handoffLinks:', handoffLinks)
   // Don't render the dropdown if there are no elements to render
   if (children == null && handoffLinks.length === 0) return null
 
