@@ -1,85 +1,77 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import {
+  render,
+  screen,
+  within
+} from '@testing-library/react'
+import '@testing-library/jest-dom'
 
 import DeprecatedParameterModal from '../DeprecatedParameterModal'
-import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
+const errorMessage = 'Oops! It looks like you\'ve used an old web address...'
 
-function setup(overrideProps) {
+const setup = (overrideProps) => {
+  const onToggleDeprecatedParameterModal = jest.fn()
   const props = {
     deprecatedUrlParams: ['test'],
-    isOpen: false,
-    onToggleDeprecatedParameterModal: jest.fn(),
+    isOpen: true,
+    onToggleDeprecatedParameterModal,
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<DeprecatedParameterModal {...props} />)
+  render(<DeprecatedParameterModal {...props} />)
 
   return {
-    enzymeWrapper,
-    props
+    onToggleDeprecatedParameterModal
   }
 }
 
 describe('DeprecatedParameterModal component', () => {
-  test('should render a Modal', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find(EDSCModalContainer).length).toEqual(1)
+  describe('when isOpen is false', () => {
+    test('should not render a Modal', () => {
+      setup({ isOpen: false })
+      expect(screen.queryByText(errorMessage)).not.toBeInTheDocument()
+    })
   })
 
-  test('should render a title', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find(EDSCModalContainer).prop('title')).toEqual('Oops! It looks like you\'ve used an old web address...')
-  })
-
-  test('should render information', () => {
-    const { enzymeWrapper } = setup()
-
-    const intro = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[0].props.children
-    const message = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[2].props.children
-
-    expect(intro).toContain('Occasionally, we need to make changes to our supported URL parameters.')
-
-    expect(message[0]).toEqual('Please visit the ')
-    expect(shallow(message[1]).props().children).toEqual('Earthdata Search URL Parameters')
-    expect(shallow(message[1]).props().href).toEqual('https://wiki.earthdata.nasa.gov/display/EDSC/Earthdata+Search+URL+Parameters')
-    expect(message[2]).toEqual(' wiki page for more information on the supported URL parameters.')
-  })
-
-  describe('displays the deprecated parameters section', () => {
-    test('when only one param is provided', () => {
-      const { enzymeWrapper } = setup()
-
-      let deprecatedParamSection = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1]
-      deprecatedParamSection = shallow(deprecatedParamSection)
-
-      expect(deprecatedParamSection.text()).toEqual('The following URL parameter has been deprecated: test')
+  describe('when isOpen is true', () => {
+    test('should render a title', () => {
+      setup()
+      expect(screen.getByText(errorMessage)).toBeInTheDocument()
     })
 
-    test('when two params is provided', () => {
-      const { enzymeWrapper } = setup({
-        deprecatedUrlParams: ['test', 'another test']
-      })
-
-      let deprecatedParamSection = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1]
-      deprecatedParamSection = shallow(deprecatedParamSection)
-
-      expect(deprecatedParamSection.text()).toEqual('The following URL parameters have been deprecated: test and another test')
+    test('should render information', () => {
+      setup()
+      const warning1 = 'Occasionally, we need to make changes to our supported URL parameters.'
+      const warning2 = 'wiki page for more information on the supported URL parameters.'
+      expect(screen.getByText(warning1, { exact: false })).toBeInTheDocument()
+      expect(screen.getByText(warning2, { exact: false })).toBeInTheDocument()
     })
 
-    test('when three or more params are provided', () => {
-      const { enzymeWrapper } = setup({
-        deprecatedUrlParams: ['test', 'another test', 'another another test']
+    describe('displays the deprecated parameters section', () => {
+      test('when only one param is provided', () => {
+        setup()
+        const deprecatedParamErrorWrapper = screen.getByText('The following URL parameter has been deprecated:')
+        expect(within(deprecatedParamErrorWrapper).getByText('test')).toBeInTheDocument()
       })
 
-      let deprecatedParamSection = enzymeWrapper.find(EDSCModalContainer).prop('body').props.children[1]
-      deprecatedParamSection = shallow(deprecatedParamSection)
+      test('when two params is provided', () => {
+        setup({
+          deprecatedUrlParams: ['test', 'another test']
+        })
 
-      expect(deprecatedParamSection.text()).toEqual('The following URL parameters have been deprecated: test, another test and another another test')
+        const deprecatedParamErrorWrapper = screen.getByText('The following URL parameters have been deprecated:')
+        expect(within(deprecatedParamErrorWrapper).getByText('test and another test')).toBeInTheDocument()
+      })
+
+      test('when three or more params are provided', () => {
+        setup({
+          deprecatedUrlParams: ['test', 'another test', 'another another test']
+        })
+
+        const deprecatedParamErrorWrapper = screen.getByText('The following URL parameters have been deprecated:')
+        expect(within(deprecatedParamErrorWrapper).getByText('test, another test and another another test')).toBeInTheDocument()
+      })
     })
   })
 })
