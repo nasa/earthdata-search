@@ -6,7 +6,6 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
-import { FaInfoCircle } from 'react-icons/fa'
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import { Check } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
