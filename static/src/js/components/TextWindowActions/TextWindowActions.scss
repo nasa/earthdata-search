@@ -43,18 +43,18 @@
       padding-top: $spacer*1.5;
     }
   }
-  // TODO I think some of these can be cleared out theyre copies of Access
-  &__modal-icon {
-    display: inline-block;
-    border-radius: 2em;
-    color: #fff;
+
+  &__modal-container {
     background: #F64137;
-    border-width: 0;
-    position: relative;
-    z-index: 6;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 4em;
     text-align: center;
-    width: 48px;
-    height: 48px;
+  }
+
+  &__modal-icon {
+    color: #fff;
+    margin-top: .85rem;
   }
 
   &__modal-blurb {
