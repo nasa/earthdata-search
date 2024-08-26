@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import PropTypes from 'prop-types'
 import { isEqual } from 'lodash-es'
+
 import { FaCrop } from 'react-icons/fa'
 
 import {

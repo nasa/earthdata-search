@@ -116,10 +116,11 @@
     align-items: flex-start;
 
     .more-actions-dropdown__toggle {
-      padding: 0 0.325rem;
+      padding: 0 0;
       height: 1.5rem;
       display: flex;
       align-items: center;
+      padding-left: 1rem;
     }
 
     i {

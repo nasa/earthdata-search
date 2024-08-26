@@ -13,6 +13,16 @@ import moment from 'moment'
 
 import TemporalSelectionDropdown from '../TemporalSelectionDropdown'
 
+beforeAll(() => {
+  ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+  window.console.warn = jest.fn()
+})
+
+afterEach(() => {
+  ReactDOM.createPortal.mockClear()
+  window.console.warn.mockClear()
+})
+
 const setup = (overrideProps) => {
   const props = {
     temporalSearch: {
@@ -30,16 +40,6 @@ const setup = (overrideProps) => {
 }
 
 describe('TemporalSelectionDropdown component', () => {
-  beforeAll(() => {
-    ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
-    window.console.warn = jest.fn()
-  })
-
-  afterEach(() => {
-    ReactDOM.createPortal.mockClear()
-    window.console.warn.mockClear()
-  })
-
   test('on load should be closed on inital render', () => {
     setup()
 

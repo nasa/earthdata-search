@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { FaExclamationTriangle } from 'react-icons/fa'
+import {
+  AlertHighPriorityOutline
+} from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -23,7 +25,7 @@ export const EmptyListItem = ({
     `${className}`
   )
 
-  let Icon = FaExclamationTriangle
+  let Icon = AlertHighPriorityOutline
 
   if (icon) {
     Icon = icon

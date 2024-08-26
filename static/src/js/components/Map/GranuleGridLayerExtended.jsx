@@ -8,7 +8,8 @@ import {
   capitalize,
   isEqual
 } from 'lodash-es'
-import { FaTimes } from 'react-icons/fa'
+import { Close } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
 import { dividePolygon } from '@edsc/geo-utils'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -43,7 +44,7 @@ const config = {
 
 const MAX_RETRIES = 1 // Maximum number of times to attempt to reload an image
 
-const timesIconSvg = renderToString(<EDSCIcon className="granule-grid-layer-extended__exclude-icon" icon={FaTimes} />)
+const timesIconSvg = renderToString(<EDSCIcon className="granule-grid-layer-extended__exclude-icon" icon={Close} />)
 
 export class GranuleGridLayerExtended extends L.GridLayer {
   initialize(props) {

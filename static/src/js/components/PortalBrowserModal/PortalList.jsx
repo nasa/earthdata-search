@@ -6,6 +6,7 @@ import { Row, Col } from 'react-bootstrap'
 import { locationPropType } from '../../util/propTypes/location'
 import { usePortalLogo } from '../../hooks/usePortalLogo'
 
+import ExternalLink from '../ExternalLink/ExternalLink'
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../../portals/availablePortals.json'
 
@@ -122,11 +123,8 @@ export const PortalList = ({
                     >
                       {
                         moreInfoUrl && (
-                          <a
-                            className="link--external"
+                          <ExternalLink
                             href={moreInfoUrl}
-                            target="_blank"
-                            rel="noreferrer"
                             onClick={
                               (event) => {
                                 event.stopPropagation()
@@ -135,7 +133,7 @@ export const PortalList = ({
                             title={`Find more information about ${displayTitle}`}
                           >
                             More Info
-                          </a>
+                          </ExternalLink>
                         )
                       }
                     </div>

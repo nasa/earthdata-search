@@ -1,0 +1,9 @@
+.external-link {
+  // text-decoration: inherit;
+  white-space: nowrap;
+  &__icon {
+    margin-left: 0.125em;
+    vertical-align: baseline;
+  }
+
+}

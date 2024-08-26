@@ -43,9 +43,18 @@
       padding-top: $spacer*1.5;
     }
   }
-
+  // TODO I think some of these can be cleared out theyre copies of Access
   &__modal-icon {
-    color: $color__carbon--30;
+    display: inline-block;
+    border-radius: 2em;
+    color: color__spacesuit-white;
+    background: $color__nasa-red;
+    border-width: 0;
+    position: relative;
+    z-index: 6;
+    text-align: center;
+    width: 48px;
+    height: 48px;
   }
 
   &__modal-blurb {

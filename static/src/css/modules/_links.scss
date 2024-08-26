@@ -6,12 +6,13 @@
   text-decoration-color: inherit;
 
   &:hover {
-    text-decoration: underline;
+  text-decoration: none;
   }
 
   &:focus {
     text-decoration: none;
     outline: 1px dashed $color__carbon-black;
+    outline: 1px dashed currentColor;
     outline-offset: 0.125rem;
   }
 
@@ -23,6 +24,7 @@
     &:before {
       display: inline-block;
       margin-left: calc($spacer / 2);
+      padding-left: calc($spacer / 2);
       content: '|';
       color: transparent;
       border-left: 1px solid $color__carbon--30;
@@ -34,18 +36,15 @@
   }
 
   &--external {
-    &:after {
-      display: inline-block;
-      padding-left: 0.3rem;
-      content: "\f111";
-      font-size: 0.6rem;
-      font-family: "EUI-Icon-Library";
-      color: $color__carbon--30;
-    }
+    border-bottom: 1px dashed currentColor;
+    line-height: 1.125em;
+    text-decoration: none;
 
     &:hover {
+      border-bottom: 1px solid currentColor;
+
       &:after {
-        color: $color__carbon--40;
+        color: $color__carbon--30;
       }
     }
   }

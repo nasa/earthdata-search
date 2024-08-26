@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
 
-import { FaChevronCircleRight } from 'react-icons/fa'
+import { ArrowCircleRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import OrderStatusList from './OrderStatusList'
@@ -333,7 +333,7 @@ export const OrderStatus = ({
             <Well.Heading>Next Steps</Well.Heading>
             <ul className="order-status__footer-link-list">
               <li className="order-status__footer-link-item">
-                <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
+                <EDSCIcon icon={ArrowCircleRight} className="order-status__footer-link-icon" />
                 <PortalLinkContainer
                   className="order-status__footer-link"
                   to={
@@ -348,7 +348,7 @@ export const OrderStatus = ({
                 </PortalLinkContainer>
               </li>
               <li className="order-status__footer-link-item">
-                <EDSCIcon icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
+                <EDSCIcon icon={ArrowCircleRight} className="order-status__footer-link-icon" />
                 <PortalLinkContainer
                   className="order-status__footer-link"
                   to={
@@ -363,7 +363,7 @@ export const OrderStatus = ({
                 </PortalLinkContainer>
               </li>
               <li className="order-status__footer-link-item">
-                <EDSCIcon library="fa" icon={FaChevronCircleRight} className="order-status__footer-link-icon" />
+                <EDSCIcon library="fa" icon={ArrowCircleRight} className="order-status__footer-link-icon" />
                 <PortalLinkContainer
                   className="order-status__footer-link"
                   to={

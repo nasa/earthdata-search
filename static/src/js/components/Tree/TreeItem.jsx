@@ -5,11 +5,9 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { difference } from 'lodash-es'
-import {
-  FaInfoCircle,
-  FaFolder,
-  FaFolderOpen
-} from 'react-icons/fa'
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+
+import { FaFolder, FaFolderOpen } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -35,7 +33,6 @@ export const TreeItem = ({
     value,
     variable = {}
   } = item
-
   const {
     longName
   } = variable
@@ -194,7 +191,7 @@ export const TreeItem = ({
                   onClick={() => onViewDetails(item.variable, index)}
                 >
                   <EDSCIcon
-                    icon={FaInfoCircle}
+                    icon={AlertInformation}
                     context={
                       {
                         style: {
