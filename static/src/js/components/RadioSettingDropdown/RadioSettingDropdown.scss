@@ -14,7 +14,7 @@
 
   &__actions {
     display: flex;
-    border-bottom: 1px solid $color__black--200;
+    border-bottom: 1px solid $color__carbon--20;
   }
 
   &__action {
@@ -23,19 +23,19 @@
     justify-content: center;
     flex-grow: 1;
     padding: 0.25rem;
-    border-right: 1px solid $color__black--200;
+    border-right: 1px solid $color__carbon--20;
     font-size: 0.75rem;
     border-radius: 0;
-    background-color: $color__white;
-    color: $color__black--500;
+    background-color: $color__spacesuit-white;
+    color: $color__carbon--50;
 
     &:last-child {
       border-right: 0;
     }
 
     &--is-active {
-      color: $color__black--800;
-      background-color: $color__black--200;
+      color: $color__carbon--80;
+      background-color: $color__carbon--20;
     }
   }
 }

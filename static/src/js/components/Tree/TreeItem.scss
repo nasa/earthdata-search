@@ -81,12 +81,12 @@
     padding: 0;
 
     svg {
-      fill: #fff981;
+      fill: #fff981; // not sure
     }
 
     path {
       stroke-width: 35;
-      stroke: #ebd604;
+      stroke: #ebd604; // not sure
     }
   }
 
@@ -97,12 +97,12 @@
     padding: 0;
 
     svg {
-      fill: $color__black--300;
+      fill: $color__carbon--30;
     }
 
     &:hover {
       svg {
-        fill: $color__black--400;
+        fill: $color__carbon--40;
       }
     }
   }
@@ -148,7 +148,7 @@
 
   &__label-long-name  {
     margin-top: 0.125rem;
-    color: $color__black--400;
+    color: $color__carbon--40;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

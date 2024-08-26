@@ -1,11 +1,11 @@
 .geojson-svg {
   stroke-width: 1;
-  stroke: #f80;
+  stroke: $color__international-orange;
   fill-opacity: 0;
 
   &:hover {
-    fill: #00C322;
-    stroke: #00C322;
+    fill: $color__active-green;
+    stroke: $color__active-green;
     fill-opacity: .5;
   }
 }

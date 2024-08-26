@@ -4,7 +4,7 @@
   }
 
   &__hint {
-    color: $color__black--400;
+    color: $color__carbon--60;
     font-size: 0.825rem;
   }
 
@@ -35,13 +35,13 @@
       bottom: 0;
       right: 0;
       margin: calc($spacer / 4);
-      border: 2px dashed $color__black--300;
+      border: 2px dashed $color__carbon--30;
       border-radius: $border-radius-sm;
       z-index: 0;
       transition: all 0.2s ease-in-out;
 
       .is-dragging & {
-        border: 2px dashed $color__black--400;
+        border: 2px dashed $color__carbon--40;
       }
     }
   }

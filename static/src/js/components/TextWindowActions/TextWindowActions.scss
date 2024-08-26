@@ -1,7 +1,7 @@
 .text-window-actions {
   position: relative;
-  background-color: $color__black--100;
-  border: 1px solid $color__black--200;
+  background-color: $color__carbon--5;
+  border: 1px solid $color__carbon--10;
   padding: $spacer;
   padding-top: 3*$spacer;
   overflow: hidden;
@@ -14,8 +14,8 @@
     right: 0;
     width: 100%;
     padding: calc($spacer / 2);
-    border-bottom: 1px solid $color__black--200;
-    background-color: $color__black--100;
+    border-bottom: 1px solid $color__carbon--20;
+    background-color: $color__carbon--10;
     z-index: 1;
   }
 
@@ -45,7 +45,7 @@
   }
 
   &__modal-icon {
-    color: $color__black--300;
+    color: $color__carbon--30;
   }
 
   &__modal-blurb {

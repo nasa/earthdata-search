@@ -4,7 +4,7 @@
   align-items: center;
   flex-wrap: wrap;
   padding: $spacer*0.75 $spacer*0.78 $spacer*0.925 $spacer*0.925;
-  border-bottom: 1px solid $color__black--200;
+  border-bottom: 1px solid $color__carbon--20;
 
   &--naked {
     padding: 0.5rem;
@@ -27,7 +27,7 @@
     align-items: center;
     flex-shrink: 0;
     flex-grow: 1;
-    color: $color__black--500;
+    color: $color__carbon--50;
   }
 
   &__header-secondary {
@@ -35,7 +35,7 @@
     align-items: center;
     justify-content: center;
     margin-left: calc($spacer / 2);
-    color: $color__black--300;
+    color: $color__carbon--30;
   }
 
   &__icon {
@@ -53,15 +53,15 @@
     margin-bottom: 0;
     margin-left: 0.25rem;
     font-size: 0.875rem;
-    color: $color__black--700;
+    color: $color__carbon--70;
   }
 
   &__secondary-title {
     margin-left: 0.5rem;
     padding: 0.0125rem .5rem;
     border-radius: 1rem;
-    background-color: $color__blue;
-    color: $color__white;
+    background-color: $color__nasa-blue;
+    color: $color__spacesuit-white;
     font-size: 0.75rem;
   }
 
@@ -90,10 +90,10 @@
   &__action-button {
     display: flex;
     align-items: center;
-    color: $color__red;
+    color: $color__nasa-red;
 
     &:hover {
-      color: darken($color__red, 10);
+      color: darken($color__nasa-red, 10);
     }
   }
 
@@ -101,13 +101,13 @@
     margin-top: calc($spacer / 4);
     margin-left: calc($spacer / 4);
     font-size: 0.8rem;
-    color: $color__black--400;
+    color: $color__carbon--40;
   }
 
   &__error {
     margin-top: calc($spacer / 2);
     font-size: 0.8rem;
-    color: $color__red;
+    color: $color__nasa-red;
     font-weight: bold;
   }
 }

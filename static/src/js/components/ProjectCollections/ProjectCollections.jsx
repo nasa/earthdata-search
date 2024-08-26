@@ -169,7 +169,7 @@ export class ProjectCollections extends Component {
           <Button
             type="submit"
             variant="full"
-            bootstrapVariant="success"
+            bootstrapVariant="primary"
             icon={FaDownload}
             label="Download project data"
             disabled={!isValid}

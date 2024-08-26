@@ -26,10 +26,10 @@
     font-weight: 400;
 
     &--error {
-      color: $color__red;
+      color: $color__nasa-red;
 
       .region-search-results__status-link {
-        color: $color__red--dark;
+        color: $color__nasa-red--shade;
       }
     }
   }
@@ -46,24 +46,24 @@
   &__selected-region-name {
     margin-right: calc($spacer / 2);
     font-style: italic;
-    color: $color__black--400;
+    color: $color__carbon--40;
     font-size: 0.875rem;
   }
 
   &__back-button {
     margin-bottom: 1rem;
     font-size: 0.925rem;
-    color: $color__black--500;
+    color: $color__carbon--50;
   }
 
   &__list-meta {
-    color: $color__black--800;
+    color: $color__carbon--80;
     font-size: 0.925rem;
     font-weight: 700;
   }
 
   &__list-intro {
-    color: $color__black--500;
+    color: $color__carbon--50;
     font-size: 0.925rem;
   }
 
@@ -82,12 +82,12 @@
     text-align: left;
 
     &:nth-of-type(odd) {
-      background-color: $color__black--100;
+      background-color: $color__carbon--10;
     }
 
     &:hover {
       cursor: pointer;
-      background-color: $color__black--200;
+      background-color: $color__carbon--20;
     }
   }
 }
