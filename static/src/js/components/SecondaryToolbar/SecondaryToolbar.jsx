@@ -323,7 +323,7 @@ class SecondaryToolbar extends Component {
         alignRight
       >
         <Dropdown.Toggle
-          className="secondary-toolbar__project-name-dropdown-toggle"
+          className="secondary-toolbar__begin-tour-button"
           as={Button}
           onClick={onStartTour}
           icon={FaWalking}
