@@ -249,6 +249,10 @@
         color: darken($color__green, 20);
       }
 
+      .edsc-icon {
+        height: 1rem;
+        width: 1rem;
+      }
     }
 
     &--remove {
@@ -261,6 +265,11 @@
 
       &:hover {
         color: darken($color__red, 20);
+      }
+
+      .edsc-icon {
+        height: 1rem;
+        width: 1rem;
       }
     }
   }
