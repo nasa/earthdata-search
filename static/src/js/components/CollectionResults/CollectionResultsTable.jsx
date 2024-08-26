@@ -6,8 +6,9 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
-
-import { FaCheck, FaInfoCircle } from 'react-icons/fa'
+import { FaInfoCircle } from 'react-icons/fa'
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+import { Check } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { commafy } from '../../util/commafy'
 
@@ -134,13 +135,13 @@ export const CollectionResultsTable = ({
         >
           <span>
             <span className="mr-1">Earthdata Cloud</span>
-            <EDSCIcon icon={FaInfoCircle} size="0.625rem" />
+            <EDSCIcon icon={AlertInformation} size="0.8rem" />
           </span>
         </OverlayTrigger>
       ),
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
-          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+          {value ? <EDSCIcon className="text-success" icon={Check} /> : '-'}
         </div>
       ),
       accessor: 'cloudHosted',
@@ -164,13 +165,13 @@ export const CollectionResultsTable = ({
         >
           <span>
             <span className="mr-1">Map Imagery</span>
-            <EDSCIcon icon={FaInfoCircle} size="0.625rem" />
+            <EDSCIcon icon={AlertInformation} size="0.8rem" />
           </span>
         </OverlayTrigger>
       ),
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
-          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+          {value ? <EDSCIcon className="text-success" icon={Check} /> : '-'}
         </div>
       ),
       accessor: 'hasMapImagery',
@@ -196,7 +197,7 @@ export const CollectionResultsTable = ({
         >
           <span>
             <span className="mr-1">Near Real Time</span>
-            <EDSCIcon icon={FaInfoCircle} size="0.625rem" />
+            <EDSCIcon icon={AlertInformation} size="0.8rem" />
           </span>
         </OverlayTrigger>
       ),
@@ -227,7 +228,7 @@ export const CollectionResultsTable = ({
       Header: 'Spatial Subsetting',
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
-          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+          {value ? <EDSCIcon className="text-success" icon={Check} /> : '-'}
         </div>
       ),
       accessor: 'hasSpatialSubsetting',
@@ -240,7 +241,7 @@ export const CollectionResultsTable = ({
       Header: 'Temporal Subsetting',
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
-          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+          {value ? <EDSCIcon className="text-success" icon={Check} /> : '-'}
         </div>
       ),
       accessor: 'hasTemporalSubsetting',
@@ -253,7 +254,7 @@ export const CollectionResultsTable = ({
       Header: 'Variable Subsetting',
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
-          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+          {value ? <EDSCIcon className="text-success" icon={Check} /> : '-'}
         </div>
       ),
       accessor: 'hasVariables',
@@ -266,7 +267,7 @@ export const CollectionResultsTable = ({
       Header: 'Transformation',
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
-          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+          {value ? <EDSCIcon className="text-success" icon={Check} /> : '-'}
         </div>
       ),
       accessor: 'hasTransforms',
@@ -279,7 +280,7 @@ export const CollectionResultsTable = ({
       Header: 'Reformatting',
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
-          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+          {value ? <EDSCIcon className="text-success" icon={Check} /> : '-'}
         </div>
       ),
       accessor: 'hasFormats',
@@ -292,7 +293,7 @@ export const CollectionResultsTable = ({
       Header: 'Combine',
       Cell: ({ value }) => (
         <div className="edsc-table-cell">
-          {value ? <EDSCIcon className="text-success" icon={FaCheck} /> : '-'}
+          {value ? <EDSCIcon className="text-success" icon={Check} /> : '-'}
         </div>
       ),
       accessor: 'hasCombine',
