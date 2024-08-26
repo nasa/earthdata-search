@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-// TODO don't have map
 import { FaMap } from 'react-icons/fa'
 
 import { commafy } from '../../util/commafy'
