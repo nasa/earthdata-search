@@ -7,7 +7,10 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
-import { FaQuestionCircle, FaArrowRight } from 'react-icons/fa'
+
+import { ArrowLineRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { FaQuestionCircle } from 'react-icons/fa'
+
 import SimpleBar from 'simplebar-react'
 
 import ArrowTags from '../ArrowTags/ArrowTags'
@@ -405,7 +408,7 @@ export const CollectionDetailsBody = ({
                             >
                               <dt className="collection-details-body__reformatting-item-heading">
                                 {supportedInputFormat}
-                                <EDSCIcon icon={FaArrowRight} className="collection-details-body__reformatting-item-icon" />
+                                <EDSCIcon icon={ArrowLineRight} className="collection-details-body__reformatting-item-icon" />
                               </dt>
                               <dd className="collection-details-body__reformatting-item-body">
                                 {supportedOutputFormats.join(', ')}
