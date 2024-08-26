@@ -479,7 +479,6 @@ describe('GranuleResultsFocusedMeta component', () => {
         })
       })
 
-      // TODO add metric checks here
       describe('when clicking the expand button', () => {
         test('should render modal navigation', async () => {
           const user = userEvent.setup()
