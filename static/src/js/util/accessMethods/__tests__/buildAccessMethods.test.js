@@ -22,6 +22,7 @@ afterEach(() => {
 describe('when buildAccessMethods is called', () => {
   test('calls buildDownload access method', () => {
     const buildDownloadMock = jest.spyOn(buildDownload, 'buildDownload')
+
     buildDownloadMock.mockImplementationOnce(() => jest.fn())
 
     const collectionMetadata = {
@@ -42,6 +43,7 @@ describe('when buildAccessMethods is called', () => {
 
   test('calls buildEsiEcho access method with type ECHO ORDERS', () => {
     const buildEsiEchoMock = jest.spyOn(buildEsiEcho, 'buildEsiEcho')
+
     buildEsiEchoMock.mockImplementationOnce(() => jest.fn())
 
     const collectionMetadata = {
@@ -100,6 +102,7 @@ describe('when buildAccessMethods is called', () => {
 
   test('calls buildEsiEcho access method with type ESI', () => {
     const buildEsiEchoMock = jest.spyOn(buildEsiEcho, 'buildEsiEcho')
+
     buildEsiEchoMock.mockImplementationOnce(() => jest.fn())
 
     const collectionMetadata = {
@@ -158,6 +161,7 @@ describe('when buildAccessMethods is called', () => {
 
   test('calls buildHarmony access method', () => {
     const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
+
     buildHarmonyMock.mockImplementationOnce(() => jest.fn())
 
     const collectionMetadata = {
@@ -409,6 +413,7 @@ describe('when buildAccessMethods is called', () => {
 
   test('calls buildOpendap access method', () => {
     const buildOpendapMock = jest.spyOn(buildOpendap, 'buildOpendap')
+
     buildOpendapMock.mockImplementationOnce(() => jest.fn())
 
     const collectionMetadata = {
@@ -813,6 +818,7 @@ describe('when buildAccessMethods is called', () => {
 
   test('calls buildSwodlr access method', () => {
     const buildSwodlrMock = jest.spyOn(buildSwodlr, 'buildSwodlr')
+
     buildSwodlrMock.mockImplementationOnce(() => jest.fn())
 
     const collectionMetadata = {

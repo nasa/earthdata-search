@@ -4,31 +4,65 @@ describe('buildHarmony', () => {
   test('returns a harmony access method', () => {
     const collectionMetadata = {
       services: {
-        items: [{
-          description: 'abc123',
-          conceptId: 'S100000-EDSC',
-          longName: 'Mock Service Name',
-          name: 'mock-name',
-          type: 'Harmony',
-          url: {
-            description: 'Mock URL',
-            urlValue: 'https://example.com'
-          },
-          serviceOptions: {
-            subset: {
-              spatialSubset: {
-                boundingBox: {
-                  allowMultipleValues: false
+        items: [
+          {
+            description: 'abc123',
+            conceptId: 'S100000-EDSC',
+            longName: 'Mock Service Name',
+            name: 'mock-name',
+            type: 'Harmony',
+            url: {
+              description: 'Mock URL',
+              urlValue: 'https://example.com'
+            },
+            serviceOptions: {
+              subset: {
+                spatialSubset: {
+                  boundingBox: {
+                    allowMultipleValues: false
+                  }
+                },
+                variableSubset: {
+                  allowMultipleValues: true
                 }
               },
-              variableSubset: {
-                allowMultipleValues: true
-              }
-            },
-            aggregation: {
-              concatenate: {
-                concatenateDefault: true
-              }
+              aggregation: {
+                concatenate: {
+                  concatenateDefault: true
+                }
+              },
+              supportedOutputProjections: [
+                {
+                  projectionName: 'Polar Stereographic'
+                },
+                {
+                  projectionName: 'Geographic'
+                }
+              ],
+              interpolationTypes: [
+                'Bilinear Interpolation',
+                'Nearest Neighbor'
+              ],
+              supportedReformattings: [
+                {
+                  supportedInputFormat: 'NETCDF-4',
+                  supportedOutputFormats: [
+                    'GEOTIFF',
+                    'PNG',
+                    'TIFF',
+                    'NETCDF-4'
+                  ]
+                },
+                {
+                  supportedInputFormat: 'GEOTIFF',
+                  supportedOutputFormats: [
+                    'GEOTIFF',
+                    'PNG',
+                    'TIFF',
+                    'NETCDF-4'
+                  ]
+                }
+              ]
             },
             supportedOutputProjections: [
               {
@@ -37,10 +71,6 @@ describe('buildHarmony', () => {
               {
                 projectionName: 'Geographic'
               }
-            ],
-            interpolationTypes: [
-              'Bilinear Interpolation',
-              'Nearest Neighbor'
             ],
             supportedReformattings: [
               {
@@ -61,41 +91,13 @@ describe('buildHarmony', () => {
                   'NETCDF-4'
                 ]
               }
-            ]
-          },
-          supportedOutputProjections: [
-            {
-              projectionName: 'Polar Stereographic'
-            },
-            {
-              projectionName: 'Geographic'
+            ],
+            variables: {
+              count: 0,
+              items: null
             }
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }
-          ],
-          variables: {
-            count: 0,
-            items: null
           }
-        }]
+        ]
       },
       variables: {
         count: 4,
