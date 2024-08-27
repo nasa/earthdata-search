@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -5,10 +6,10 @@ import { Link, withRouter } from 'react-router-dom'
 import { parse, stringify } from 'qs'
 import { isObject } from 'lodash-es'
 
+import { getEnvironmentConfig, getApplicationConfig } from '../../../../../sharedUtils/config'
 import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../../components/Button/Button'
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import actions from '../../actions'
 import { isDefaultPortal } from '../../util/portals'
 
@@ -33,8 +34,21 @@ export const PortalLinkContainer = (props) => {
     type,
     target,
     updatePath,
-    onChangePath
+    onChangePath,
+    forceLogin = false
   } = props
+
+  let buttonHref = ''
+
+  const { apiHost } = getEnvironmentConfig()
+
+  if (forceLogin) {
+    const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
+    const earthdataEnvironment = 'prod'
+    const logUrl = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`
+
+    buttonHref = logUrl
+  }
 
   // Get the portalId that needs to be used in the link
   const getPortalId = () => {
@@ -111,8 +125,10 @@ export const PortalLinkContainer = (props) => {
       ...rest
     } = props
 
+    // TODO we could add an href here
     return (
       <Button
+        href={buttonHref}
         type="button"
         {...rest}
         onClick={

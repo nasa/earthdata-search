@@ -44,6 +44,7 @@ export const updateStore = ({
   shapefile,
   timeline
 }, newPathname) => async (dispatch, getState) => {
+  console.log('🚀 ~ file: urlQuery.js:47 ~ focusedGranule:', focusedGranule)
   const state = getState()
   const { router } = state
   const { location } = router

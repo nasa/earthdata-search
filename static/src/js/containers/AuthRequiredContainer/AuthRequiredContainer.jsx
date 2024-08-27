@@ -32,6 +32,7 @@ export const AuthRequiredContainer = ({
       setIsLoggedIn(false)
       if (!noRedirect) {
         let location = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`
+
         if (disableDatabaseComponents === 'true') {
           location = '/search'
         }

@@ -5,7 +5,7 @@ import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/
 import { parse } from 'qs'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import { commafy } from '../../util/commafy'
 import { stringify } from '../../util/url/url'
@@ -28,8 +28,11 @@ export const GranuleDownloadButton = (props) => {
     onChangePath,
     tooManyGranules
   } = props
+  console.log('🚀 ~ file: GranuleDownloadButton.jsx:31 ~ GranuleDownloadButton ~ location:', location)
+  console.log('🚀 ~ file: GranuleDownloadButton.jsx:31 ~ GranuleDownloadButton ~ granuleCount:', granuleCount)
 
   const { disableDatabaseComponents } = getApplicationConfig()
+  console.log('🚀 ~ file: GranuleDownloadButton.jsx:33 ~ GranuleDownloadButton ~ disableDatabaseComponents:', disableDatabaseComponents)
 
   if (tooManyGranules) {
     return (
@@ -104,6 +107,19 @@ export const GranuleDownloadButton = (props) => {
     }
   }
 
+  // TODO this is the button in question
+  console.log('🚀 ~ file: GranuleDownloadButton.jsx:139 ~ GranuleDownloadButton ~ encodeURIComponent(location):', encodeURIComponent(location))
+
+  const projectPath = {
+    pathname: '/projects',
+    search: stringify({
+      ...params,
+      p,
+      pg
+    })
+  }
+  console.log('🚀 ~ file: GranuleDownloadButton.jsx:122 ~ GranuleDownloadButton ~ projectPath:', projectPath)
+
   return (
     <PortalLinkContainer
       className="granule-results-actions__download-all"
@@ -117,16 +133,7 @@ export const GranuleDownloadButton = (props) => {
           })}`)
         }
       }
-      to={
-        {
-          pathname: '/projects',
-          search: stringify({
-            ...params,
-            p,
-            pg
-          })
-        }
-      }
+      to={projectPath}
       type="button"
       badge={badge}
       bootstrapVariant="success"
@@ -135,6 +142,7 @@ export const GranuleDownloadButton = (props) => {
       icon={Download}
       label={buttonText}
       variant="full"
+      forceLogin
     >
       {buttonText}
     </PortalLinkContainer>

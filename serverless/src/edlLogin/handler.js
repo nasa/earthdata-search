@@ -10,9 +10,11 @@ import { getEdlConfig } from '../util/getEdlConfig'
  */
 const edlLogin = async (event) => {
   const { queryStringParameters } = event
+  console.log('🚀 ~ file: handler.js:13 ~ edlLogin ~ queryStringParameters:', queryStringParameters)
 
   const { ee: earthdataEnvironment, eddRedirect } = queryStringParameters
   let { state } = queryStringParameters
+  console.log('🚀 ~ file: handler.js:16 ~ edlLogin ~ state:', state)
 
   // In order to make EDD more reusable, it is going to pass a `eddRedirect` parameter which is what we send to EDL as `state`
   if (!state) state = eddRedirect

@@ -31,6 +31,7 @@ const edlCallback = async (event, context) => {
   }
 
   const { code, state } = event.queryStringParameters
+  console.log('🚀 ~ file: handler.js:34 ~ edlCallback ~ event.queryStringParameters:', event.queryStringParameters)
 
   const [, queryString] = state.split('?')
 
@@ -120,6 +121,8 @@ const edlCallback = async (event, context) => {
       ee: earthdataEnvironment,
       state
     }
+    console.log('🚀 ~ file: handler.js:123 ~ edlCallback ~ queryParams:', queryParams)
+    console.log('🚀 ~ file: handler.js:123 ~ edlCallback ~ queryParams.state:', queryParams.state)
 
     const location = `${apiHost}/login?${stringify(queryParams)}`
 
@@ -145,6 +148,8 @@ const edlCallback = async (event, context) => {
   }
 
   const location = `${edscHost}/auth_callback?${stringify(queryParams)}`
+
+  console.log('🚀 ~ file: handler.js:152 ~ edlCallback ~ location:', location)
 
   return {
     statusCode: 307,
