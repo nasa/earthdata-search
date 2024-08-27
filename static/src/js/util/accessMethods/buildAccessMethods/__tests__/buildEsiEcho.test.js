@@ -66,39 +66,45 @@ describe('buildEsiEcho', () => {
   test('returns an echo orders access method and indexes are incremented correctly', () => {
     const collectionMetadata = {
       services: {
-        items: [{
-          type: 'ECHO ORDERS',
-          url: {
-            urlValue: 'https://example.com'
-          },
-          maxItemsPerOrder: 2000,
-          orderOptions: {
-            items: [{
-              conceptId: 'OO10000-EDSC',
-              name: 'mock form',
-              form: 'mock form'
+        items: [
+          {
+            type: 'ECHO ORDERS',
+            url: {
+              urlValue: 'https://example.com'
             },
-            {
-              conceptId: 'OO30000-EDSC',
-              name: 'mock form',
-              form: 'mock form'
-            }]
-          }
-        },
-        {
-          type: 'ESI',
-          url: {
-            urlValue: 'https://example.com'
+            maxItemsPerOrder: 2000,
+            orderOptions: {
+              items: [
+                {
+                  conceptId: 'OO10000-EDSC',
+                  name: 'mock form',
+                  form: 'mock form'
+                },
+                {
+                  conceptId: 'OO30000-EDSC',
+                  name: 'mock form',
+                  form: 'mock form'
+                }
+              ]
+            }
           },
-          maxItemsPerOrder: 2000,
-          orderOptions: {
-            items: [{
-              conceptId: 'OO20000-EDSC',
-              name: 'mock form',
-              form: 'mock form'
-            }]
+          {
+            type: 'ESI',
+            url: {
+              urlValue: 'https://example.com'
+            },
+            maxItemsPerOrder: 2000,
+            orderOptions: {
+              items: [
+                {
+                  conceptId: 'OO20000-EDSC',
+                  name: 'mock form',
+                  form: 'mock form'
+                }
+              ]
+            }
           }
-        }]
+        ]
       }
     }
 
@@ -184,11 +190,13 @@ describe('buildEsiEcho', () => {
             },
             maxItemsPerOrder: 2000,
             orderOptions: {
-              items: [{
-                conceptId: 'OO10000-EDSC',
-                name: 'mock form',
-                form: 'mock form'
-              }]
+              items: [
+                {
+                  conceptId: 'OO10000-EDSC',
+                  name: 'mock form',
+                  form: 'mock form'
+                }
+              ]
             }
           }]
         }

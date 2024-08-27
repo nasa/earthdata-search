@@ -17,12 +17,14 @@ describe('buildDownload', () => {
 
     const method = buildDownload(granules, isOpenSearch)
 
-    expect(method).toEqual({
-      download: {
-        isValid: true,
-        type: 'download'
+    expect(method).toEqual(
+      {
+        download: {
+          isValid: true,
+          type: 'download'
+        }
       }
-    })
+    )
   })
 
   test('returns a download access method for open search', () => {
@@ -35,11 +37,13 @@ describe('buildDownload', () => {
 
     const method = buildDownload(granules, isOpenSearch)
 
-    expect(method).toEqual({
-      download: {
-        isValid: true,
-        type: 'download'
+    expect(method).toEqual(
+      {
+        download: {
+          isValid: true,
+          type: 'download'
+        }
       }
-    })
+    )
   })
 })
