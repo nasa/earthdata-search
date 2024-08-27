@@ -35,7 +35,7 @@ describe('AppLogo component', () => {
       edscEnv: 'prod'
     })
 
-    expect(enzymeWrapper.find('.app-logo__site-name-ent--e').text()).toEqual('Earth')
-    expect(enzymeWrapper.find('.app-logo__site-name-ent--s').text()).toEqual('data Search')
+    expect(enzymeWrapper.find('.app-logo__site-name span').first().text()).toEqual('Earth')
+    expect(enzymeWrapper.find('.app-logo__site-name-emphasis').text()).toEqual('data Search')
   })
 })
