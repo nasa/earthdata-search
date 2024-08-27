@@ -5,7 +5,7 @@ import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/
 import { parse } from 'qs'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 
-import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import { commafy } from '../../util/commafy'
 import { stringify } from '../../util/url/url'
