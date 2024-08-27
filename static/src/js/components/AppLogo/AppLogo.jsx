@@ -33,8 +33,8 @@ const AppLogo = () => (
         }
         updatePath
       >
-        <span className="app-logo__site-name-ent app-logo__site-name-ent--e">Earth</span>
-        <span className="app-logo__site-name-ent app-logo__site-name-ent--s">data Search</span>
+        <span className="app-logo__site-name">Earth</span>
+        <span className="app-logo__site-name-emphasis">data Search</span>
       </PortalLinkContainer>
     </span>
     <Switch>
