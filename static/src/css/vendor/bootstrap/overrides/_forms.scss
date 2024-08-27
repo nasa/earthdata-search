@@ -27,9 +27,9 @@
 .dropdown-dark,
 .dropdown-menu-dark {
   .form-control {
-    background-color: darken($color__carbon--60, 10);
+    background-color: $color__carbon--60;
     color: $color__spacesuit-white;
-    border: 1px solid darken($color__carbon--60, 10);
+    border: 1px solid $color__carbon--60;
 
     &::placeholder,
     &::placeholder-shown {
