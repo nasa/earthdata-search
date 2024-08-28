@@ -185,7 +185,6 @@ $item-height: 3rem;
   &__additional-info {
     max-height: 7rem;
     overflow-y: scroll;
-    background-color: $color__carbon--20;
   }
 
   &__order-info {
@@ -213,14 +212,14 @@ $item-height: 3rem;
 
   &__message {
     padding: 0.875rem $spacer;
-    background-color: $color__pale-yellow;
-    border: 1px solid $color__pale-yellow--dark;
+    background-color: rgba($color__international-orange, 0.25);
+    border: 1px solid rgba($color__international-orange, 0.25);
     border-left: 0;
     border-right: 0;
 
     &--is-error {
-      background-color: $color__nasa-red--tint;
-      border-color: $color__nasa-red--tint;
+      background-color: rgba($color__nasa-red--shade, 0.25);
+      border-color: rgba($color__nasa-red--shade, 0.25);
     }
   }
 
