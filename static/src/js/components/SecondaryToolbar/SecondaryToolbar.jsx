@@ -246,7 +246,7 @@ class SecondaryToolbar extends Component {
               </span>
             )
           }
-          <EDSCIcon size="1rem" icon={FaUser} />
+          <EDSCIcon size="0.825rem" icon={FaUser} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer
