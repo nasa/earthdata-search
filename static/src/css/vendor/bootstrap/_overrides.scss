@@ -28,7 +28,7 @@ $modal-content-color: $color__carbon--60;
 /* Theme Colors */
 $theme-colors: (
   "primary": $color__nasa-blue,
-  "light": $color__carbon--10,
+  "light": $color__carbon--5,
   "success": $color__active-green,
   "danger": $color__nasa-red--shade,
   "red": $color__nasa-red--shade,
@@ -52,6 +52,10 @@ $badge-padding-y: 0.3125rem;
 $badge-padding-x: 0.5rem;
 $badge-font-size: 0.6875rem;
 $badge-border-radius: 0.125rem;
+
+/* Cards */
+$card-bg: $color__carbon--5;
+$card-border-color: $color__carbon--10;
 
 /* Custom Breakpoints */
 

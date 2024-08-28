@@ -76,25 +76,4 @@
       display: none;
     }
   }
-
-  &__user-dropdown {
-    .dropdown-item {
-      background-color: $color__spacesuit-white;
-      background-color: $color__spacesuit-white;
-
-      &:hover {
-        background-color: $color__carbon--20;
-      }
-    }
-
-    .dropdown-item.active,
-    .dropdown-item:active {
-      color: $color__carbon--80;
-      background-color: $color__spacesuit-white;
-
-      &:hover {
-        background-color: $color__carbon--20;
-      }
-    }
-  }
 }
