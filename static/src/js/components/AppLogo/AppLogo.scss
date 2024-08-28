@@ -80,12 +80,8 @@
     }
   }
 
-  &__site-name-ent--e {
-    margin-right: 0.125rem;
-    color: rgba($color__spacesuit-white, 0.8);
-  }
-
-  &__site-name-ent--s {
+  &__site-name-emphasis {
+    margin-left: 0.0625rem;
     font-weight: 500;
     letter-spacing: 0.06rem;
   }
@@ -93,7 +89,7 @@
   &__site-env {
     position: absolute;
     right: 0;
-    color: white;
+    color: $color__spacesuit-white;
     padding: 0.2rem 0.3rem;
     font-size: 0.625rem;
     background: $color__nasa-blue;
