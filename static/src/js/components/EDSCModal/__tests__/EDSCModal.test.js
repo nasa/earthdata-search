@@ -120,10 +120,11 @@ describe('EDSCModal component', () => {
   })
 
   describe('primary action', () => {
-    test('should not render a primary action by default', () => {
+    test('should not render a primary action by default except for close button', () => {
       const { enzymeWrapper } = setup()
 
-      expect(enzymeWrapper.find(Button).length).toEqual(0)
+      expect(enzymeWrapper.find(Button).length).toEqual(1)
+      expect(enzymeWrapper.find(Button).at(0).props().title).toEqual('Close EDSCModal')
     })
 
     test('should render a primary action when passed', () => {
@@ -133,7 +134,7 @@ describe('EDSCModal component', () => {
         onPrimaryAction: onPrimaryActionMock
       })
 
-      expect(enzymeWrapper.find(Button).at(0).props().className).toContain('edsc-modal__action--primary')
+      expect(enzymeWrapper.find(Button).at(1).props().className).toContain('edsc-modal__action--primary')
     })
 
     test('should call onPrimaryAction when clicked', () => {
@@ -142,10 +143,9 @@ describe('EDSCModal component', () => {
         primaryAction: 'Test',
         onPrimaryAction: onPrimaryActionMock
       })
+      enzymeWrapper.find(Button).at(1).simulate('click')
 
-      enzymeWrapper.find(Button).simulate('click')
-
-      expect(enzymeWrapper.find(Button).at(0).props().className).toContain('edsc-modal__action--primary')
+      expect(enzymeWrapper.find(Button).at(1).props().className).toContain('edsc-modal__action--primary')
       expect(onPrimaryActionMock).toHaveBeenCalledTimes(1)
     })
   })
@@ -154,7 +154,8 @@ describe('EDSCModal component', () => {
     test('should not render a secondary action by default', () => {
       const { enzymeWrapper } = setup()
 
-      expect(enzymeWrapper.find(Button).length).toEqual(0)
+      expect(enzymeWrapper.find(Button).length).toEqual(1)
+      expect(enzymeWrapper.find(Button).at(0).props().title).toEqual('Close EDSCModal')
     })
 
     test('should not render a secondary action without a primary action', () => {
@@ -164,7 +165,8 @@ describe('EDSCModal component', () => {
         onSecondaryAction: onSecondaryActionMock
       })
 
-      expect(enzymeWrapper.find(Button).length).toEqual(0)
+      expect(enzymeWrapper.find(Button).length).toEqual(1)
+      expect(enzymeWrapper.find(Button).at(0).props().title).toEqual('Close EDSCModal')
     })
 
     test('should render a primary action when passed', () => {
@@ -178,7 +180,7 @@ describe('EDSCModal component', () => {
         onSecondaryAction: onSecondaryActionMock
       })
 
-      expect(enzymeWrapper.find(Button).at(0).props().className).toContain('edsc-modal__action--secondary')
+      expect(enzymeWrapper.find(Button).at(1).props().className).toContain('edsc-modal__action--secondary')
     })
 
     test('should call onSecondaryAction when clicked', () => {
@@ -192,9 +194,9 @@ describe('EDSCModal component', () => {
         onSecondaryAction: onSecondaryActionMock
       })
 
-      enzymeWrapper.find(Button).at(0).simulate('click')
+      enzymeWrapper.find(Button).at(1).simulate('click')
 
-      expect(enzymeWrapper.find(Button).at(0).props().className).toContain('edsc-modal__action--secondary')
+      expect(enzymeWrapper.find(Button).at(1).props().className).toContain('edsc-modal__action--secondary')
       expect(onSecondaryActionMock).toHaveBeenCalledTimes(1)
     })
   })
