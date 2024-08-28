@@ -3,10 +3,10 @@
   display: flex;
   justify-content: space-between;
   height: 2.4rem;
-  background: $color__carbon-black;
+  background: $color__carbon--90;
   z-index: 1;
   border-top: 1px solid $color__carbon--90;
-  border-bottom: 1px solid $color__carbon--70;
+  border-bottom: 1px solid $color__carbon--80;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
   z-index: 4;
 
@@ -19,7 +19,7 @@
     padding: 0 1rem;
     border: 0;
     outline: 0;
-    border-left: 1px solid $color__carbon--70;
+    border-left: 1px solid $color__carbon--80;
     border-right: 1px solid transparent;
     background: transparent;
     color: $color__carbon--30;

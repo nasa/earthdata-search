@@ -107,7 +107,7 @@
     transition: 0.2s ease-in-out;
 
     &:hover {
-      background-color: darken($color__carbon--20, 5);
+      background-color: $color__carbon--10;
 
       .custom-toggle__icon {
         color: $color__carbon--50;
