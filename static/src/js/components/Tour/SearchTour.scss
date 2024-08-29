@@ -1,0 +1,115 @@
+:root {
+    --color-blue: #2367e3;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-heading: #0063A6;
+}
+  
+.button-tour-start ,
+.button-tour-skip {
+    width: 9rem;
+    height: 3rem;
+    font-size: 1.2rem;
+    border-radius: 4px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+}
+
+.button-tour-next,
+.button-tour-previous {
+    width: 9rem;
+    height: 2.4rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+}
+
+.button-tour-start,
+.button-tour-next {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+}
+
+.button-tour-skip,
+.button-tour-previous {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border: 1px solid var(--color-black);
+}
+
+.tour-heading {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: var(--color-blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tour-subheading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.tour-content {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.tour-note {
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+.tour-intro-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 19rem;
+}
+.tour-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 9rem;
+}
+
+.tour-info-box {
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.tour-info-box a {
+    color: var(--color-black);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.tour-tooltip {
+    width: 600px; 
+    padding: 20px;
+    background-color: var(--color-white);
+    border-radius: 10px;
+    font-size: 16px;
+    text-align: center;
+    position: relative;
+    min-height: 200px;
+}
