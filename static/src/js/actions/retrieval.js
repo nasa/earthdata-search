@@ -25,6 +25,7 @@ export const updateRetrieval = (retrievalData) => ({
 /**
  * Submit data representing a Retrieval to be stored in the database
  */
+// TODO this guy does not have full swodlr data
 export const submitRetrieval = () => (dispatch, getState) => {
   const state = getState()
 

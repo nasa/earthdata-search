@@ -18,6 +18,7 @@ const getSavedAccessConfigs = async (event, context) => {
   const { defaultResponseHeaders } = getApplicationConfig()
 
   try {
+    // TODO if this lambda fails we might be losing the context
     const { body, headers } = event
 
     const { params = {} } = JSON.parse(body)
@@ -25,12 +26,14 @@ const getSavedAccessConfigs = async (event, context) => {
     const {
       collectionIds
     } = params
+    console.log('🚀 ~ file: handler.js:29 ~ getSavedAccessConfigs ~ params:', params)
 
     const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
     const jwtToken = getJwtToken(event)
 
     const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
+    console.log('🚀 ~ file: handler.js:36 ~ getSavedAccessConfigs ~ userId:', userId)
 
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()

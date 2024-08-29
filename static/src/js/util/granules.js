@@ -165,7 +165,7 @@ export const extractProjectCollectionGranuleParams = (state, collectionId) => {
  * @returns {Object} Parameters used in Granules request
  */
 export const prepareGranuleParams = (collectionMetadata, granuleParams) => {
-  // Default added and removed granuld ids because they will only be provided for project granule requests
+  // Default added and removed granule ids because they will only be provided for project granule requests
   const {
     addedGranuleIds = [],
     boundingBox,

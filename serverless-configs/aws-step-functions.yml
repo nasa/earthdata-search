@@ -72,6 +72,7 @@ stateMachines:
           Type: Wait
           Seconds: 60
           Next: DetermineOrderType
+          # MaxAttempts: 20
         OrderComplete:
           Type: Succeed
         OrderFailed:

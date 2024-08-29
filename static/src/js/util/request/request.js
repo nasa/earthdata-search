@@ -69,8 +69,10 @@ export default class Request {
    * @return {Object} A modified object.
    */
   transformRequest(data, headers) {
+    console.log('🚀 ~ file: request.js:72 ~ Request ~ transformRequest ~ data:', data)
     // Filter out an unwanted data
     const filteredData = this.filterData(data)
+    console.log('🚀 ~ file: request.js:75 ~ Request ~ transformRequest ~ filteredData:', filteredData)
 
     if (
       this.earthdataEnvironment
@@ -86,6 +88,7 @@ export default class Request {
     }
 
     if (data) {
+      console.log('🚀 ~ file: request.js:91 ~ Request ~ transformRequest ~ data:', data)
       // POST requests to Lambda use a JSON string
       if (this.authenticated || this.lambda) {
         return JSON.stringify({
@@ -113,6 +116,9 @@ export default class Request {
       timing
     }))
 
+    console.log('🚀 ~ file: request.js:132 ~ Request ~ transformResponse ~ timing:', timing)
+
+    console.log('🚀 ~ file: request.js:119 ~ Request ~ transformResponse ~ data:', data)
     this.handleUnauthorized(data)
 
     return data
@@ -125,6 +131,7 @@ export default class Request {
    * @return {Promise} A Promise object representing the request that was made
    */
   post(url, data) {
+    console.log('🚀 ~ file: request.js:131 ~ Request ~ post ~ data:', data)
     this.startTimer()
     this.setFullUrl(url)
 
@@ -137,6 +144,7 @@ export default class Request {
         (requestData, headers) => this.transformRequest(requestData, headers),
         ...axios.defaults.transformRequest
       ],
+      // TODO this is it
       transformResponse: axios.defaults.transformResponse.concat(
         (responseData, headers) => this.transformResponse(responseData, headers)
       ),
@@ -189,6 +197,8 @@ export default class Request {
       }
     }
 
+    console.log('🚀 ~ file: request.js:184 ~ Request ~ get ~ requestOptions:', requestOptions)
+
     return axios(requestOptions)
   }
 
@@ -240,6 +250,9 @@ export default class Request {
    * Makes a POST request to this.searchPath
    */
   search(params) {
+    console.log('🚀 ~ file: request.js:248 ~ Request ~ search ~ params:', params)
+    console.log('🚀 ~ file: request.js:253 ~ Request ~ search ~ this.searchPath:', this.searchPath)
+
     // We pass the ext here as a param so we can intercept and send to lambda.
     // Unauthenticated requests will ignore this key.
     return this.post(this.searchPath, params)
@@ -250,9 +263,13 @@ export default class Request {
    */
   handleUnauthorized(data) {
     if (data.statusCode === 401 || data.message === 'Unauthorized') {
+      console.log('🚀 ~ file: request.js:265 ~ Request ~ handleUnauthorized ~ data.message:', data.message)
+      // TODO we are pulling out of window.location which is sometimes not carrying in the granule information
       const { href, pathname } = window.location
+      console.log('🚀 ~ file: request.js:258 ~ Request ~ handleUnauthorized ~ pathname:', pathname)
       // Determine the path to redirect to for logging in
       const returnPath = href
+      console.log('🚀 ~ file: request.js:261 ~ Request ~ handleUnauthorized ~ href:', href)
 
       if (pathname.startsWith('/admin')) {
         window.location.href = getEnvironmentConfig().edscHost
@@ -260,6 +277,8 @@ export default class Request {
         return
       }
 
+      // TODO so in the end its really actually going to redirectPath regardless
+      // const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
       const redirectPath = `${getEnvironmentConfig().apiHost}/login?ee=${this.earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`
 
       window.location.href = redirectPath

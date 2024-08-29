@@ -87,11 +87,13 @@ export const updateStore = ({
 
 export const changePath = (path = '') => async (dispatch, getState) => {
   const state = getState()
+  console.log('🚀 ~ file: urlQuery.js:90 ~ changePath ~ state:', JSON.stringify(state))
 
   // Retrieve data from Redux using selectors
   const earthdataEnvironment = getEarthdataEnvironment(state)
 
   const [pathname, queryString] = path.split('?')
+  console.log('🚀 ~ file: urlQuery.js:96 ~ changePath ~ queryString:', queryString)
 
   let decodedParams
 
@@ -142,7 +144,8 @@ export const changePath = (path = '') => async (dispatch, getState) => {
     }
   } else {
     decodedParams = decodeUrlParams(queryString)
-
+    console.log('🚀 ~ file: urlQuery.js:145 ~ changePath ~ decodedParams:', decodedParams)
+    console.log('decoded decodedParams', JSON.stringify(decodedParams))
     await dispatch(actions.updateStore(decodedParams, pathname))
   }
 
@@ -195,10 +198,16 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   // Fetch collections in the project
   const { project = {} } = decodedParams || {}
   const { collections: projectCollections = {} } = project
+  console.log('🚀 ~ file: urlQuery.js:198 ~ changePath ~ project:', project)
+  console.log('🚀 ~ file: urlQuery.js:198 ~ changePath ~ decodedParams:', decodedParams)
   const { allIds = [] } = projectCollections
 
+  // TODO this may be part of the issue
+
   if (allIds.length > 0) {
+    console.log('allIds was bigger than 0')
     // Project collection metadata needs to exist before calling retrieving access methods
+    // TODO this is the connection to the saved_access_config call
     await dispatch(actions.getProjectCollections())
 
     await dispatch(actions.getProjectGranules())

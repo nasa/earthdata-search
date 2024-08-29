@@ -185,6 +185,8 @@ class SecondaryToolbar extends Component {
       if (!isLoggedIn) {
         const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
 
+        console.log('🚀 ~ file: SecondaryToolbar.jsx:188 ~ SecondaryToolbar ~ buildProjectLink ~ projectPath:', projectPath)
+
         // TODO this is the function doing it
         return (
           <Button

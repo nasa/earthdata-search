@@ -6,6 +6,7 @@ export const getJwtToken = (event) => {
   const { requestContext = {} } = event
   const { authorizer = {} } = requestContext
   const { jwtToken } = authorizer
+  console.log('🚀 ~ file: getJwtToken.js:9 ~ getJwtToken ~ jwtToken:', jwtToken)
 
   return jwtToken
 }

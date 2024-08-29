@@ -197,7 +197,7 @@ export const decodeUrlParams = (paramString) => {
     parseArrays: false
   })
 
-  // Create an array of any deprectated parameters that appear in the params
+  // Create an array of any deprecated parameters that appear in the params
   const deprecatedUrlParams = Object.entries(params)
     .filter(([key]) => deprecatedURLParameters.includes(key))
     .map(([key]) => key)
@@ -208,6 +208,7 @@ export const decodeUrlParams = (paramString) => {
     project = {},
     query = {}
   } = decodeCollections(params)
+  console.log('🚀 ~ file: url.js:209 ~ decodeUrlParams ~ project:', project)
 
   // Build the param object based on the structure in the redux store
   // e.g. map is store separately from query
@@ -260,7 +261,6 @@ export const decodeUrlParams = (paramString) => {
   }
 
   const timeline = decodeTimeline(params)
-
   const featureFacets = decodeHelp(params, 'featureFacets')
   const granuleDataFormats = decodeHelp(params, 'granuleDataFormatFacets')
   const instruments = decodeHelp(params, 'instrumentFacets')
@@ -375,7 +375,7 @@ export const urlPathsWithoutUrlParams = [
   /^\/downloads/,
   /^\/subscriptions/
 ]
-
+// TODO investigate this a tiny bit too
 /**
  * Is the given location the Saved Projects page
  * @param {Object} location Redux store location

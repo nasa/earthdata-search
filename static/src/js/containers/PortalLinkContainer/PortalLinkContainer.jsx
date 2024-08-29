@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from 'react'
 import { connect } from 'react-redux'
@@ -34,21 +35,11 @@ export const PortalLinkContainer = (props) => {
     type,
     target,
     updatePath,
-    onChangePath,
-    forceLogin = false
+    onChangePath
   } = props
-
-  let buttonHref = ''
+  console.log('🚀 ~ file: PortalLinkContainer.jsx:41 ~ PortalLinkContainer ~ to:', to)
 
   const { apiHost } = getEnvironmentConfig()
-
-  if (forceLogin) {
-    const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
-    const earthdataEnvironment = 'prod'
-    const logUrl = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`
-
-    buttonHref = logUrl
-  }
 
   // Get the portalId that needs to be used in the link
   const getPortalId = () => {
@@ -125,10 +116,8 @@ export const PortalLinkContainer = (props) => {
       ...rest
     } = props
 
-    // TODO we could add an href here
     return (
       <Button
-        href={buttonHref}
         type="button"
         {...rest}
         onClick={

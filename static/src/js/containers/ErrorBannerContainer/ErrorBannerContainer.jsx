@@ -25,6 +25,8 @@ export const ErrorBannerContainer = ({ errors, onRemoveError }) => {
     message,
     title
   } = error
+  console.log('🚀 ~ file: ErrorBannerContainer.jsx:28 ~ ErrorBannerContainer ~ title:', title)
+  console.log('🚀 ~ file: ErrorBannerContainer.jsx:28 ~ ErrorBannerContainer ~ message:', message)
 
   const { disableDatabaseComponents } = getApplicationConfig()
 

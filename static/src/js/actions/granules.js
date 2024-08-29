@@ -436,6 +436,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
       collectionMetadata,
       extractedGranuleParams
     )
+    console.log('🚀 ~ file: granules.js:439 ~ returnPromise.all ~ granuleParams:', granuleParams)
 
     // If cancel token is set, cancel the previous request(s)
     if (projectGranuleCancelTokens[collectionId]) {
@@ -455,6 +456,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
     dispatch(actions.toggleSpatialPolygonWarning(false))
 
     const searchParams = buildGranuleSearchParams(granuleParams)
+    console.log('🚀 ~ file: granules.js:459 ~ returnPromise.all ~ searchParams:', searchParams)
 
     let requestObject = null
 

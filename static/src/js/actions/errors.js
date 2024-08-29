@@ -45,6 +45,7 @@ export const handleError = ({
 }) => (dispatch, getState) => {
   const { router = {} } = getState()
   const { location } = router
+  console.log('🚀 ~ file: errors.js:48 ~ location:', location)
 
   let requestId = uuidv4()
   if (requestObject) {

@@ -143,7 +143,8 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     authToken,
     project
   } = state
-
+  console.log('🚀 ~ file: project.js:146 ~ getProjectCollections ~ project:', project)
+  console.log('🚀 the JSON obj for the project', JSON.stringify(project))
   // Retrieve data from Redux using selectors
   const collectionsMetadata = getCollectionsMetadata(state)
   const earthdataEnvironment = getEarthdataEnvironment(state)
@@ -179,8 +180,13 @@ export const getProjectCollections = () => async (dispatch, getState) => {
   if (filteredIds.length === 0) {
     return buildPromise(null)
   }
-
   // Fetch the saved access configurations for the project collections
+
+  // TODO the error is around here if I comment out error is not there
+  const { href, pathname } = window.location
+  console.log('🚀 ~ file: project.js:187 ~ getProjectCollections ~ pathname:', pathname)
+  console.log('🚀 ~ file: project.js:187 ~ getProjectCollections ~ href:', href)
+
   let savedAccessConfigs = {}
   try {
     const savedAccessConfigsRequestObject = new SavedAccessConfigsRequest(
@@ -193,6 +199,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     )
 
     const { data } = savedAccessConfigsResponse
+    console.log('🚀 ~ file: project.js:198 ~ getProjectCollections ~ data:', data)
     savedAccessConfigs = data
   } catch (error) {
     dispatch(actions.handleError({
@@ -202,9 +209,12 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     }))
   }
 
+  console.log('🚀 ~ file: project.js:200 ~ getProjectCollections ~ savedAccessConfigs:', savedAccessConfigs)
   const collectionParams = prepareCollectionParams(state)
+  console.log('🚀 ~ file: project.js:209 ~ getProjectCollections ~ collectionParams:', collectionParams)
 
   const searchParams = buildCollectionSearchParams(collectionParams)
+  console.log('🚀 ~ file: project.js:212 ~ getProjectCollections ~ searchParams:', searchParams)
 
   const {
     includeHasGranules
