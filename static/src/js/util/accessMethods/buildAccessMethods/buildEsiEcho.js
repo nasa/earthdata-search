@@ -11,7 +11,6 @@ import { generateFormDigest } from '../generateFormDigest'
  * @returns {object} Access method for ESI or Echo Orders
  */
 export const buildEsiEcho = (serviceItem, params) => {
-  console.log('calling buildEsiEcho')
   const accessMethods = {}
   // Only process orderOptions if the service type uses orderOptions
   // Do not include access if orders are disabled
@@ -37,8 +36,8 @@ export const buildEsiEcho = (serviceItem, params) => {
     const { urlValue } = url
 
     const { items: orderOptionsItems } = orderOptions
+
     if (orderOptionsItems === null) return {}
-    console.log('about to go through orderOptions')
 
     orderOptionsItems.forEach((orderOptionItem) => {
       const {
@@ -61,17 +60,12 @@ export const buildEsiEcho = (serviceItem, params) => {
 
       let methodKey = camelCase(serviceType)
 
-      console.log(`methodKey: ${methodKey}`)
-
       // `echoOrders` needs to be singular to match existing savedAccessConfigurations
       if (methodKey === 'echoOrders') {
-        console.log('in EchoOrders')
         methodKey = 'echoOrder'
         accessMethods[`${methodKey}${echoIndex}`] = method
         echoIndex += 1
-        console.log(`new echoIndex: ${echoIndex}`)
       } else {
-        console.log('in esi')
         accessMethods[`${methodKey}${esiIndex}`] = method
         esiIndex += 1
       }

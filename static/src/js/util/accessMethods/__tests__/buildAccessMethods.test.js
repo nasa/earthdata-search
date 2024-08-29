@@ -3844,97 +3844,6 @@ describe('when buildAccessMethods is called', () => {
         }
       )
 
-      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
-        2,
-        {
-          conceptId: 'S100001-EDSC',
-          longName: 'Mock Service Name 2',
-          name: 'mock-name 2',
-          serviceOptions: {
-            interpolationTypes: [
-              'Bilinear Interpolation',
-              'Nearest Neighbor'
-            ],
-            subset: {
-              spatialSubset: { boundingBox: { allowMultipleValues: false } },
-              variableSubset: { allowMultipleValues: true }
-            },
-            supportedOutputProjections: [
-              {
-                projectionName: 'Polar Stereographic'
-              },
-              {
-                projectionName: 'Geographic'
-              }
-            ],
-            supportedReformattings: [
-              {
-                supportedInputFormat: 'NETCDF-4',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              },
-              {
-                supportedInputFormat: 'GEOTIFF',
-                supportedOutputFormats: [
-                  'GEOTIFF',
-                  'PNG',
-                  'TIFF',
-                  'NETCDF-4'
-                ]
-              }
-            ]
-          },
-          supportedOutputProjections: [
-            {
-              projectionName:
-                'Polar Stereographic'
-            },
-            {
-              projectionName: 'Geographic'
-            }
-          ],
-          supportedReformattings: [
-            {
-              supportedInputFormat: 'NETCDF-4',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            },
-            {
-              supportedInputFormat: 'GEOTIFF',
-              supportedOutputFormats: [
-                'GEOTIFF',
-                'PNG',
-                'TIFF',
-                'NETCDF-4'
-              ]
-            }
-          ],
-          type: 'Harmony',
-          url: {
-            description: 'Mock URL',
-            urlValue: 'https://example2.com'
-          },
-          variables: {
-            count: 0,
-            items: []
-          }
-        },
-        {
-          associatedVariables: defaultAssociatedVariables,
-          echoIndex: 2,
-          esiIndex: 1,
-          harmonyIndex: 1
-        }
-      )
-
       expect(buildOpendapMock).toHaveBeenNthCalledWith(
         1,
         {
@@ -4161,9 +4070,100 @@ describe('when buildAccessMethods is called', () => {
               }
             ]
           },
-          echoIndex,
-          esiIndex,
-          harmonyIndex
+          echoIndex: 2,
+          esiIndex: 1,
+          harmonyIndex: 1
+        }
+      )
+
+      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+        2,
+        {
+          conceptId: 'S100001-EDSC',
+          longName: 'Mock Service Name 2',
+          name: 'mock-name 2',
+          serviceOptions: {
+            interpolationTypes: [
+              'Bilinear Interpolation',
+              'Nearest Neighbor'
+            ],
+            subset: {
+              spatialSubset: { boundingBox: { allowMultipleValues: false } },
+              variableSubset: { allowMultipleValues: true }
+            },
+            supportedOutputProjections: [
+              {
+                projectionName: 'Polar Stereographic'
+              },
+              {
+                projectionName: 'Geographic'
+              }
+            ],
+            supportedReformattings: [
+              {
+                supportedInputFormat: 'NETCDF-4',
+                supportedOutputFormats: [
+                  'GEOTIFF',
+                  'PNG',
+                  'TIFF',
+                  'NETCDF-4'
+                ]
+              },
+              {
+                supportedInputFormat: 'GEOTIFF',
+                supportedOutputFormats: [
+                  'GEOTIFF',
+                  'PNG',
+                  'TIFF',
+                  'NETCDF-4'
+                ]
+              }
+            ]
+          },
+          supportedOutputProjections: [
+            {
+              projectionName:
+                'Polar Stereographic'
+            },
+            {
+              projectionName: 'Geographic'
+            }
+          ],
+          supportedReformattings: [
+            {
+              supportedInputFormat: 'NETCDF-4',
+              supportedOutputFormats: [
+                'GEOTIFF',
+                'PNG',
+                'TIFF',
+                'NETCDF-4'
+              ]
+            },
+            {
+              supportedInputFormat: 'GEOTIFF',
+              supportedOutputFormats: [
+                'GEOTIFF',
+                'PNG',
+                'TIFF',
+                'NETCDF-4'
+              ]
+            }
+          ],
+          type: 'Harmony',
+          url: {
+            description: 'Mock URL',
+            urlValue: 'https://example2.com'
+          },
+          variables: {
+            count: 0,
+            items: []
+          }
+        },
+        {
+          associatedVariables: defaultAssociatedVariables,
+          echoIndex: 2,
+          esiIndex: 1,
+          harmonyIndex: 1
         }
       )
 
