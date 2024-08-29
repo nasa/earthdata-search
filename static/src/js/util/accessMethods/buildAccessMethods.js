@@ -1,16 +1,8 @@
-import { camelCase, uniq } from 'lodash-es'
-
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
-
-import { isDownloadable } from '../../../../../sharedUtils/isDownloadable'
-import { generateFormDigest } from './generateFormDigest'
-import { getVariables } from './getVariables'
-import { supportsBoundingBoxSubsetting } from './supportsBoundingBoxSubsetting'
-import { supportsConcatenation } from './supportsConcatenation'
-import { defaultConcatenation } from './defaultConcatenation'
-import { supportsShapefileSubsetting } from './supportsShapefileSubsetting'
-import { supportsTemporalSubsetting } from './supportsTemporalSubsetting'
-import { supportsVariableSubsetting } from './supportsVariableSubsetting'
+import { buildEsiEcho } from './buildAccessMethods/buildEsiEcho'
+import { buildOpendap } from './buildAccessMethods/buildOpendap'
+import { buildHarmony } from './buildAccessMethods/buildHarmony'
+import { buildSwodlr } from './buildAccessMethods/buildSwodlr'
+import { buildDownload } from './buildAccessMethods/buildDownload'
 
 /**
  * Builds the different access methods available for the provided collection
@@ -25,25 +17,27 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     variables: collectionAssociatedVariables = {}
   } = collectionMetadata
 
-  const accessMethods = {}
   let harmonyIndex = 0
+  let echoIndex = 0
+  let esiIndex = 0
+
   const { items: serviceItems = null } = services
 
-  const { disableOrdering, disableSwodlr } = getApplicationConfig()
+  const buildMethods = {
+    esi: (serviceItem, params) => buildEsiEcho(serviceItem, params),
+    'echo orders': (serviceItem, params) => buildEsiEcho(serviceItem, params),
+    opendap: (serviceItem, params) => buildOpendap(serviceItem, params),
+    harmony: (serviceItem, params) => buildHarmony(serviceItem, params),
+    swodlr: (serviceItem) => buildSwodlr(serviceItem),
+    downloads: () => buildDownload(granules, isOpenSearch)
+  }
 
-  if (serviceItems !== null) {
-    serviceItems.forEach((serviceItem) => {
+  const nonDownloadMethods = serviceItems === null
+    ? {}
+    : serviceItems.reduce((methods, serviceItem) => {
       let associatedVariables = collectionAssociatedVariables
       const {
-        conceptId: serviceConceptId,
-        description,
-        orderOptions,
         type: serviceType,
-        url,
-        longName,
-        maxItemsPerOrder,
-        name,
-        supportedReformattings,
         variables: serviceAssociatedVariables = {}
       } = serviceItem
 
@@ -52,175 +46,45 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         associatedVariables = serviceAssociatedVariables
       }
 
+      const lowerServiceType = serviceType.toLowerCase()
+
       // Only process service types that EDSC supports
       const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony', 'swodlr']
-      if (!supportedServiceTypes.includes(serviceType.toLowerCase())) return
+      if (!supportedServiceTypes.includes(lowerServiceType)) return {}
 
-      const { urlValue } = url
-
-      const supportsOrderOptions = ['esi', 'echo orders']
-
-      // Only process orderOptions if the service type uses orderOptions
-      // Do not include access if orders are disabled
-      if (supportsOrderOptions.includes(serviceType.toLowerCase()) && (disableOrdering !== 'true')) {
-        const { items: orderOptionsItems } = orderOptions
-        if (orderOptionsItems === null) return
-
-        orderOptionsItems.forEach((orderOptionItem, orderOptionIndex) => {
-          const {
-            conceptId: orderOptionConceptId,
-            form,
-            name: orderOptionName
-          } = orderOptionItem
-
-          const method = {
-            type: serviceType,
-            maxItemsPerOrder,
-            url: urlValue,
-            optionDefinition: {
-              conceptId: orderOptionConceptId,
-              name: orderOptionName
-            },
-            form,
-            formDigest: generateFormDigest(form)
-          }
-
-          let methodKey = camelCase(serviceType)
-
-          // `echoOrders` needs to be singular to match existing savedAccessConfigurations
-          if (methodKey === 'echoOrders') {
-            methodKey = 'echoOrder'
-          }
-
-          accessMethods[`${methodKey}${orderOptionIndex}`] = method
-        })
+      const params = {
+        harmonyIndex,
+        echoIndex,
+        esiIndex,
+        associatedVariables
       }
 
-      if (serviceType.toLowerCase() === 'opendap') {
-        const {
-          hierarchyMappings,
-          keywordMappings,
-          variables
-        } = getVariables(associatedVariables)
+      const builtMethod = buildMethods[lowerServiceType](serviceItem, params)
 
-        const outputFormats = []
+      const {
+        accessMethods: newAccessMethods,
+        esiIndex: newEsiIndex,
+        echoIndex: newEchoIndex
+      } = builtMethod
 
-        if (supportedReformattings) {
-          supportedReformattings.forEach((reformatting) => {
-            const { supportedOutputFormats } = reformatting
+      esiIndex = newEsiIndex || esiIndex
+      echoIndex = newEchoIndex || echoIndex
 
-            // Collect all supported output formats from each mapping
-            outputFormats.push(...supportedOutputFormats)
-          })
-        }
-
-        accessMethods.opendap = {
-          hierarchyMappings,
-          id: serviceConceptId,
-          isValid: true,
-          keywordMappings,
-          longName,
-          name,
-          supportedOutputFormats: uniq(outputFormats),
-          supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
-          type: serviceType,
-          variables
-        }
+      const updatedMethods = {
+        ...methods,
+        ...newAccessMethods
       }
 
-      if (serviceType.toLowerCase() === 'harmony') {
-        const {
-          hierarchyMappings,
-          keywordMappings,
-          variables
-        } = getVariables(associatedVariables)
-        const {
-          supportedOutputProjections
-        } = serviceItem
-
-        const outputFormats = []
-
-        if (supportedReformattings) {
-          supportedReformattings.forEach((reformatting) => {
-            const { supportedOutputFormats } = reformatting
-
-            // Collect all supported output formats from each mapping
-            outputFormats.push(...supportedOutputFormats)
-          })
-        }
-
-        let outputProjections = []
-        if (supportedOutputProjections) {
-          outputProjections = supportedOutputProjections.filter((projection) => {
-            const { projectionAuthority } = projection
-
-            return projectionAuthority != null
-          }).map((projection) => {
-            const { projectionAuthority } = projection
-
-            return projectionAuthority
-          })
-        }
-
-        accessMethods[`harmony${harmonyIndex}`] = {
-          description,
-          enableTemporalSubsetting: true,
-          enableSpatialSubsetting: true,
-          hierarchyMappings,
-          id: serviceConceptId,
-          isValid: true,
-          keywordMappings,
-          longName,
-          name,
-          supportedOutputFormats: uniq(outputFormats),
-          supportedOutputProjections: outputProjections,
-          supportsBoundingBoxSubsetting: supportsBoundingBoxSubsetting(serviceItem),
-          supportsShapefileSubsetting: supportsShapefileSubsetting(serviceItem),
-          supportsTemporalSubsetting: supportsTemporalSubsetting(serviceItem),
-          supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
-          supportsConcatenation: supportsConcatenation(serviceItem),
-          defaultConcatenation: defaultConcatenation(serviceItem),
-          enableConcatenateDownload: defaultConcatenation(serviceItem),
-          type: serviceType,
-          url: urlValue,
-          variables
-        }
-
+      if (lowerServiceType === 'harmony') {
         harmonyIndex += 1
       }
 
-      if (serviceType.toLowerCase() === 'swodlr' && (disableSwodlr !== 'true')) {
-        accessMethods.swodlr = {
-          id: serviceConceptId,
-          isValid: true,
-          longName,
-          name,
-          type: serviceType,
-          supportsSwodlr: true,
-          url: urlValue
-        }
-      }
-    })
-  }
+      return updatedMethods
+    }, {})
 
-  // Determine if the collection should have the downloadable accessMethod
-  let onlineAccessFlag = false
-
-  if (granules) {
-    // If the collection has granules, check their online access flags to
-    // determine if this collection is downloadable
-    const { items: granuleItems } = granules
-
-    if (granuleItems) {
-      onlineAccessFlag = isDownloadable(granuleItems)
-    }
-
-    if (onlineAccessFlag || isOpenSearch) {
-      accessMethods.download = {
-        isValid: true,
-        type: 'download'
-      }
-    }
+  const accessMethods = {
+    ...nonDownloadMethods,
+    ...buildMethods.downloads()
   }
 
   return accessMethods
