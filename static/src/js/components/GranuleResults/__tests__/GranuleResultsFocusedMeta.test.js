@@ -581,7 +581,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             })
 
             const modal = await screen.findByTestId('granule-results-focused-meta-modal')
-            const modalCloseButton = within(modal).queryByText('Close')
+            const modalCloseButton = within(modal).getByRole('button', { name: 'Close EDSCModal' })
 
             await act(async () => {
               await user.click(modalCloseButton)
