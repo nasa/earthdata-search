@@ -42,6 +42,9 @@ const edlLogin = async (event) => {
     paramsObj.ee = earthdataEnvironment
   }
 
+  console.log('🚀 ~ file: handler.js:50 ~ edlLogin ~ redirectUri:', redirectUri)
+  console.log('THis si the weird encoded URL val', encodeURIComponent(`${path}?${stringify(paramsObj)}`))
+
   return {
     statusCode: 307,
     headers: {

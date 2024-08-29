@@ -19,6 +19,7 @@ const getSavedAccessConfigs = async (event, context) => {
 
   try {
     const { body, headers } = event
+    console.log('🚀 ~ file: handler.js:22 ~ getSavedAccessConfigs ~ event:', event)
 
     const { params = {} } = JSON.parse(body)
 
@@ -28,6 +29,7 @@ const getSavedAccessConfigs = async (event, context) => {
 
     const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
+    console.log('🚀 ~ file: handler.js:32 ~ getSavedAccessConfigs ~ event:', event)
     const jwtToken = getJwtToken(event)
 
     const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
@@ -68,6 +70,9 @@ const getSavedAccessConfigs = async (event, context) => {
       body: JSON.stringify(configs)
     }
   } catch (error) {
+    console.log('🚀 ~ file: handler.js:71 ~ getSavedAccessConfigs ~ error:', error)
+    console.log('🚀 ~ file: handler.js:79 ~ getSavedAccessConfigs ~ defaultResponseHeaders:', defaultResponseHeaders)
+
     return {
       isBase64Encoded: false,
       headers: defaultResponseHeaders,

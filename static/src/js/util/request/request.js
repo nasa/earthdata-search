@@ -60,6 +60,8 @@ export default class Request {
    * @param {Object} data - An object representing an HTTP request payload
    */
   transformData(data) {
+    console.log('🚀 ~ file: request.js:63 ~ Request ~ transformData ~ data:', data)
+
     return data
   }
 
@@ -76,11 +78,14 @@ export default class Request {
       this.earthdataEnvironment
       && (this.authenticated || this.optionallyAuthenticated || this.lambda)
     ) {
+      console.log('🚀 ~ file: request.js:104 ~ Request ~ transformRequest ~ this.lambda:', this.lambda)
+
       // eslint-disable-next-line no-param-reassign
       headers['Earthdata-ENV'] = this.earthdataEnvironment
     }
 
     if (this.authenticated || this.optionallyAuthenticated) {
+      console.log(' second if sattement')
       // eslint-disable-next-line no-param-reassign
       headers.Authorization = `Bearer ${this.getAuthToken()}`
     }
@@ -93,6 +98,8 @@ export default class Request {
           requestId: this.requestId
         })
       }
+
+      console.log(' third if sattement')
 
       // Transform the provided data before we send it to it's endpoint
       return this.transformData(filteredData)
@@ -107,13 +114,17 @@ export default class Request {
    * @return {Object} The transformed response.
    */
   transformResponse(data) {
-    const timing = Date.now() - this.startTime
-    store.dispatch(metricsTiming({
-      url: this.fullUrl,
-      timing
-    }))
+    // Const timing = Date.now() - this.startTime
+    // store.dispatch(metricsTiming({
+    //   url: this.fullUrl,
+    //   timing
+    // }))
 
-    this.handleUnauthorized(data)
+    const { href, pathname } = window.location
+    console.log('🚀 ~ file: request.js:124 ~ Request ~ transformResponse ~ pathname:', pathname)
+    console.log('🚀 ~ file: request.js:123 ~ Request ~ transformResponse ~ href:', href)
+
+    this.handleUnauthorized(data, href)
 
     return data
   }
@@ -127,6 +138,8 @@ export default class Request {
   post(url, data) {
     this.startTimer()
     this.setFullUrl(url)
+    console.log('🚀 ~ file: request.js:145 ~ Request ~ post ~ this.baseUrl:', this.baseUrl)
+    console.log('🚀 ~ file: request.js:146 ~ Request ~ post ~ url:', url)
 
     return axios({
       method: 'post',
@@ -248,11 +261,13 @@ export default class Request {
   /**
    * Handle an unauthorized response
    */
-  handleUnauthorized(data) {
+  handleUnauthorized(data, hrefRight) {
+    console.log('🚀 ~ file: request.js:265 ~ Request ~ handleUnauthorized ~ hrefRight:', hrefRight)
     if (data.statusCode === 401 || data.message === 'Unauthorized') {
-      const { href, pathname } = window.location
+      const { pathname } = window.location
+      console.log('🚀 ~ file: request.js:267 ~ Request ~ handleUnauthorized ~ pathname:', pathname)
       // Determine the path to redirect to for logging in
-      const returnPath = href
+      const returnPath = hrefRight
 
       if (pathname.startsWith('/admin')) {
         window.location.href = getEnvironmentConfig().edscHost

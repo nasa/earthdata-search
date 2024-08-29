@@ -195,6 +195,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     const { data } = savedAccessConfigsResponse
     savedAccessConfigs = data
   } catch (error) {
+    console.log('🚀 ~ file: project.js:198 ~ getProjectCollections ~ error:', error)
     dispatch(actions.handleError({
       error,
       action: 'getProjectCollections',

@@ -47,6 +47,7 @@ export const handleError = ({
   const { location } = router
 
   let requestId = uuidv4()
+  console.log('🚀 ~ file: errors.js:51 ~ requestObject:', requestObject)
   if (requestObject) {
     const { requestId: existingRequestId } = requestObject
 

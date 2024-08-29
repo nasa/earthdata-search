@@ -14,6 +14,7 @@ const edlAuthorizer = async (event) => {
     methodArn,
     queryStringParameters = {}
   } = event
+  console.log('🚀 ~ file: handler.js:17 ~ edlAuthorizer ~ event:', event)
 
   let { ee: earthdataEnvironment } = queryStringParameters || {}
   if (!earthdataEnvironment) earthdataEnvironment = determineEarthdataEnvironment(headers)
@@ -27,10 +28,12 @@ const edlAuthorizer = async (event) => {
   const username = await validateToken(jwtToken, earthdataEnvironment)
 
   if (username) {
+    console.log('🚀 ~ file: handler.js:30 ~ edlAuthorizer ~ username:', username)
+
     return generatePolicy(username, jwtToken, 'Allow', methodArn)
   }
 
-  throw new Error('Unauthorized')
+  throw new Error('Unauthorized I AM HERE')
 }
 
 export default edlAuthorizer

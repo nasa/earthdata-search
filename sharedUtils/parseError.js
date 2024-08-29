@@ -31,6 +31,7 @@ export const parseError = (errorObj, {
       status,
       statusText
     } = response
+    console.log('🚀 ~ file: parseError.js:34 ~ status:', status)
 
     code = status
 
