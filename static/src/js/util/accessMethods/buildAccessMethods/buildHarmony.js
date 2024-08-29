@@ -38,6 +38,7 @@ export const buildHarmony = (serviceItem, params) => {
     keywordMappings,
     variables
   } = getVariables(associatedVariables)
+
   const {
     supportedOutputProjections
   } = serviceItem

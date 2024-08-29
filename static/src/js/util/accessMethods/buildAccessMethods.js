@@ -67,8 +67,13 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
         echoIndex: newEchoIndex
       } = builtMethod
 
-      esiIndex = newEsiIndex
-      echoIndex = newEchoIndex
+      esiIndex = newEsiIndex || esiIndex
+      echoIndex = newEchoIndex || echoIndex
+
+      console.log(lowerServiceType)
+
+      console.log(`esiIndex: ${esiIndex}\t newEsiIndex: ${newEsiIndex}`)
+      console.log(`echoIndex: ${echoIndex}\t newEchoIndex: ${newEchoIndex}`)
 
       const updatedMethods = {
         ...methods,
