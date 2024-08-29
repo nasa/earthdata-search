@@ -183,9 +183,11 @@ export const getProjectCollections = () => async (dispatch, getState) => {
   // Fetch the saved access configurations for the project collections
   let savedAccessConfigs = {}
   try {
+    const { href } = window.location
     const savedAccessConfigsRequestObject = new SavedAccessConfigsRequest(
       authToken,
-      earthdataEnvironment
+      earthdataEnvironment,
+      href
     )
 
     const savedAccessConfigsResponse = await savedAccessConfigsRequestObject.search(
