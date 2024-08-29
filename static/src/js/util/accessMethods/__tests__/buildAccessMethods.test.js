@@ -44,8 +44,6 @@ describe('when buildAccessMethods is called', () => {
   test('calls buildEsiEcho access method with type ECHO ORDERS', () => {
     const buildEsiEchoMock = jest.spyOn(buildEsiEcho, 'buildEsiEcho')
 
-    buildEsiEchoMock.mockImplementationOnce(() => jest.fn())
-
     const collectionMetadata = {
       services: {
         items: [
@@ -64,6 +62,22 @@ describe('when buildAccessMethods is called', () => {
                 }
               ]
             }
+          },
+          {
+            type: 'ECHO ORDERS',
+            url: {
+              urlValue: 'https://example.com'
+            },
+            maxItemsPerOrder: 2000,
+            orderOptions: {
+              items: [
+                {
+                  conceptId: 'OO10001-EDSC',
+                  name: 'mock form',
+                  form: 'mock form'
+                }
+              ]
+            }
           }
         ]
       }
@@ -72,9 +86,10 @@ describe('when buildAccessMethods is called', () => {
 
     buildAccessMethods(collectionMetadata, isOpenSearch)
 
-    expect(buildEsiEchoMock).toBeCalledTimes(1)
+    expect(buildEsiEchoMock).toBeCalledTimes(2)
 
-    expect(buildEsiEchoMock).toHaveBeenCalledWith(
+    expect(buildEsiEchoMock).toHaveBeenNthCalledWith(
+      1,
       {
         maxItemsPerOrder: 2000,
         orderOptions: {
@@ -94,6 +109,32 @@ describe('when buildAccessMethods is called', () => {
       {
         associatedVariables: {},
         echoIndex: 0,
+        esiIndex: 0,
+        harmonyIndex: 0
+      }
+    )
+
+    expect(buildEsiEchoMock).toHaveBeenNthCalledWith(
+      2,
+      {
+        maxItemsPerOrder: 2000,
+        orderOptions: {
+          items: [
+            {
+              conceptId: 'OO10001-EDSC',
+              form: 'mock form',
+              name: 'mock form'
+            }
+          ]
+        },
+        type: 'ECHO ORDERS',
+        url: {
+          urlValue: 'https://example.com'
+        }
+      },
+      {
+        associatedVariables: {},
+        echoIndex: 1,
         esiIndex: 0,
         harmonyIndex: 0
       }
@@ -894,14 +935,25 @@ describe('when buildAccessMethods is called', () => {
 
     expect(buildSwodlrMock).toBeCalledTimes(1)
 
-    expect(buildSwodlrMock).toHaveBeenCalledWith({
-      conceptId: 'S100000-EDSC',
-      longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
-      name: 'Mock PODAAC_SWODLR',
-      orderOptions: {
-        items: []
-      },
-      serviceOptions: {
+    expect(buildSwodlrMock).toHaveBeenCalledWith(
+      {
+        conceptId: 'S100000-EDSC',
+        longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
+        name: 'Mock PODAAC_SWODLR',
+        orderOptions: {
+          items: []
+        },
+        serviceOptions: {
+          supportedOutputProjections: [
+            {
+              projectionName: 'Universal Transverse Mercator'
+            },
+            {
+              projectionName: 'WGS84 - World Geodetic System 1984'
+            }
+          ]
+        },
+        supportedInputProjections: null,
         supportedOutputProjections: [
           {
             projectionName: 'Universal Transverse Mercator'
@@ -909,27 +961,18 @@ describe('when buildAccessMethods is called', () => {
           {
             projectionName: 'WGS84 - World Geodetic System 1984'
           }
-        ]
-      },
-      supportedInputProjections: null,
-      supportedOutputProjections: [
-        {
-          projectionName: 'Universal Transverse Mercator'
+        ],
+        supportedReformattings: null,
+        type: 'SWODLR',
+        url: {
+          description: 'Service top-level URL',
+          urlValue: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
         },
-        {
-          projectionName: 'WGS84 - World Geodetic System 1984'
+        variables: {
+          items: []
         }
-      ],
-      supportedReformattings: null,
-      type: 'SWODLR',
-      url: {
-        description: 'Service top-level URL',
-        urlValue: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
-      },
-      variables: {
-        items: []
       }
-    })
+    )
   })
 
   describe('when the collection contains both variables associated to its services and variables directly associated to the collection and 3 service records', () => {
@@ -1607,8 +1650,8 @@ describe('when buildAccessMethods is called', () => {
               }
             ]
           },
-          echoIndex: undefined,
-          esiIndex: undefined,
+          echoIndex: 0,
+          esiIndex: 0,
           harmonyIndex: 1
         }
       )
@@ -1721,8 +1764,8 @@ describe('when buildAccessMethods is called', () => {
               }
             ]
           },
-          echoIndex: undefined,
-          esiIndex: undefined,
+          echoIndex: 0,
+          esiIndex: 0,
           harmonyIndex: 2
         }
       )
@@ -2272,8 +2315,8 @@ describe('when buildAccessMethods is called', () => {
               }
             ]
           },
-          echoIndex: undefined,
-          esiIndex: undefined,
+          echoIndex: 0,
+          esiIndex: 0,
           harmonyIndex: 1
         }
       )
@@ -2386,8 +2429,8 @@ describe('when buildAccessMethods is called', () => {
               }
             ]
           },
-          echoIndex: undefined,
-          esiIndex: undefined,
+          echoIndex: 0,
+          esiIndex: 0,
           harmonyIndex: 2
         }
       )
@@ -2768,8 +2811,12 @@ describe('when buildAccessMethods is called', () => {
             ]
           },
           supportedOutputProjections: [
-            { projectionName: 'Polar Stereographic' },
-            { projectionName: 'Geographic' }
+            {
+              projectionName: 'Polar Stereographic'
+            },
+            {
+              projectionName: 'Geographic'
+            }
           ],
           supportedReformattings: [
             {
@@ -2986,8 +3033,8 @@ describe('when buildAccessMethods is called', () => {
               }
             ]
           },
-          echoIndex: undefined,
-          esiIndex: undefined,
+          echoIndex: 0,
+          esiIndex: 0,
           harmonyIndex: 1
         }
       )
@@ -3100,8 +3147,8 @@ describe('when buildAccessMethods is called', () => {
               }
             ]
           },
-          echoIndex: undefined,
-          esiIndex: undefined,
+          echoIndex: 0,
+          esiIndex: 0,
           harmonyIndex: 2
         }
       )
@@ -3109,16 +3156,11 @@ describe('when buildAccessMethods is called', () => {
   })
 
   describe('calls complex compilation of mutliple different access methods', () => {
-    test.only('calls all access methods correctly', () => {
+    test('calls all access methods correctly', () => {
       const buildEsiEchoMock = jest.spyOn(buildEsiEcho, 'buildEsiEcho')
       const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
       const buildOpendapMock = jest.spyOn(buildOpendap, 'buildOpendap')
       const buildSwodlrMock = jest.spyOn(buildSwodlr, 'buildSwodlr')
-
-      buildEsiEchoMock.mockImplementationOnce(() => jest.fn())
-      buildHarmonyMock.mockImplementationOnce(() => jest.fn())
-      buildOpendapMock.mockImplementationOnce(() => jest.fn())
-      buildSwodlrMock.mockImplementationOnce(() => jest.fn())
 
       const echoOrderItem1 = {
         type: 'ECHO ORDERS',
@@ -3172,11 +3214,6 @@ describe('when buildAccessMethods is called', () => {
             },
             variableSubset: {
               allowMultipleValues: true
-            }
-          },
-          aggregation: {
-            concatenate: {
-              concatenateDefault: true
             }
           },
           supportedOutputProjections: [
@@ -3542,7 +3579,7 @@ describe('when buildAccessMethods is called', () => {
           }
         ],
         variables: {
-          count: 4,
+          count: 0,
           items: []
         }
       }
@@ -3550,11 +3587,11 @@ describe('when buildAccessMethods is called', () => {
       const collectionMetadata = {
         services: {
           items: [
-            opendapItem,
             echoOrderItem1,
             esiItem,
             echoOrderItem2,
             harmonyItem1,
+            opendapItem,
             swodlrItem,
             harmonyItem2
           ]
@@ -3598,11 +3635,6 @@ describe('when buildAccessMethods is called', () => {
       expect(buildHarmonyMock).toHaveBeenCalledTimes(2)
       expect(buildOpendapMock).toHaveBeenCalledTimes(1)
       expect(buildSwodlrMock).toHaveBeenCalledTimes(1)
-
-      // Index counters for echo/esi orders & harmony
-      let echoIndex = 0
-      let esiIndex = 0
-      let harmonyIndex = 0 // Will be indexed later
 
       const defaultAssociatedVariables = {
         count: 3,
@@ -3691,50 +3723,489 @@ describe('when buildAccessMethods is called', () => {
         echoCall1,
         {
           associatedVariables: defaultAssociatedVariables,
-          echoIndex,
-          esiIndex,
-          harmonyIndex
+          echoIndex: 0,
+          esiIndex: 0,
+          harmonyIndex: 0
         }
       )
 
       // Increment echoIndex after expecting the esiEchoMethod to have been called for echo orders
-      echoIndex += 1
-
       expect(buildEsiEchoMock).toHaveBeenNthCalledWith(
         2,
         esiCall,
         {
           associatedVariables: defaultAssociatedVariables,
-          echoIndex,
-          esiIndex,
-          harmonyIndex
+          echoIndex: 1,
+          esiIndex: 0,
+          harmonyIndex: 0
         }
       )
 
       // Increment esiIndex after expecting the esiEchoMethod to have been called for an ESI Order
-      esiIndex += 1
-
       expect(buildEsiEchoMock).toHaveBeenNthCalledWith(
         3,
         echoCall2,
         {
           associatedVariables: defaultAssociatedVariables,
+          echoIndex: 1,
+          esiIndex: 1,
+          harmonyIndex: 0
+        }
+      )
+
+      // Increment echoIndex after expecting the esiEchoMethod to have been called for echo orders
+      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+        1,
+        {
+          conceptId: 'S100000-EDSC',
+          longName: 'Mock Service Name',
+          name: 'mock-name',
+          serviceOptions: {
+            interpolationTypes: [
+              'Bilinear Interpolation',
+              'Nearest Neighbor'
+            ],
+            subset: {
+              spatialSubset: { boundingBox: { allowMultipleValues: false } },
+              variableSubset: { allowMultipleValues: true }
+            },
+            supportedOutputProjections: [
+              {
+                projectionName: 'Polar Stereographic'
+              },
+              {
+                projectionName: 'Geographic'
+              }
+            ],
+            supportedReformattings: [
+              {
+                supportedInputFormat: 'NETCDF-4',
+                supportedOutputFormats: [
+                  'GEOTIFF',
+                  'PNG',
+                  'TIFF',
+                  'NETCDF-4'
+                ]
+              },
+              {
+                supportedInputFormat: 'GEOTIFF',
+                supportedOutputFormats: [
+                  'GEOTIFF',
+                  'PNG',
+                  'TIFF',
+                  'NETCDF-4'
+                ]
+              }
+            ]
+          },
+          supportedOutputProjections: [
+            {
+              projectionName: 'Polar Stereographic'
+            },
+            {
+              projectionName: 'Geographic'
+            }
+          ],
+          supportedReformattings: [
+            {
+              supportedInputFormat: 'NETCDF-4',
+              supportedOutputFormats: [
+                'GEOTIFF',
+                'PNG',
+                'TIFF',
+                'NETCDF-4'
+              ]
+            },
+            {
+              supportedInputFormat: 'GEOTIFF',
+              supportedOutputFormats: [
+                'GEOTIFF',
+                'PNG',
+                'TIFF',
+                'NETCDF-4'
+              ]
+            }
+          ],
+          type: 'Harmony',
+          url: {
+            description: 'Mock URL',
+            urlValue: 'https://example.com'
+          },
+          variables: {
+            count: 0,
+            items: null
+          }
+        },
+        {
+          associatedVariables: defaultAssociatedVariables,
+          echoIndex: 2,
+          esiIndex: 1,
+          harmonyIndex: 0
+        }
+      )
+
+      expect(buildHarmonyMock).toHaveBeenNthCalledWith(
+        2,
+        {
+          conceptId: 'S100001-EDSC',
+          longName: 'Mock Service Name 2',
+          name: 'mock-name 2',
+          serviceOptions: {
+            interpolationTypes: [
+              'Bilinear Interpolation',
+              'Nearest Neighbor'
+            ],
+            subset: {
+              spatialSubset: { boundingBox: { allowMultipleValues: false } },
+              variableSubset: { allowMultipleValues: true }
+            },
+            supportedOutputProjections: [
+              {
+                projectionName: 'Polar Stereographic'
+              },
+              {
+                projectionName: 'Geographic'
+              }
+            ],
+            supportedReformattings: [
+              {
+                supportedInputFormat: 'NETCDF-4',
+                supportedOutputFormats: [
+                  'GEOTIFF',
+                  'PNG',
+                  'TIFF',
+                  'NETCDF-4'
+                ]
+              },
+              {
+                supportedInputFormat: 'GEOTIFF',
+                supportedOutputFormats: [
+                  'GEOTIFF',
+                  'PNG',
+                  'TIFF',
+                  'NETCDF-4'
+                ]
+              }
+            ]
+          },
+          supportedOutputProjections: [
+            {
+              projectionName:
+                'Polar Stereographic'
+            },
+            {
+              projectionName: 'Geographic'
+            }
+          ],
+          supportedReformattings: [
+            {
+              supportedInputFormat: 'NETCDF-4',
+              supportedOutputFormats: [
+                'GEOTIFF',
+                'PNG',
+                'TIFF',
+                'NETCDF-4'
+              ]
+            },
+            {
+              supportedInputFormat: 'GEOTIFF',
+              supportedOutputFormats: [
+                'GEOTIFF',
+                'PNG',
+                'TIFF',
+                'NETCDF-4'
+              ]
+            }
+          ],
+          type: 'Harmony',
+          url: {
+            description: 'Mock URL',
+            urlValue: 'https://example2.com'
+          },
+          variables: {
+            count: 0,
+            items: []
+          }
+        },
+        {
+          associatedVariables: defaultAssociatedVariables,
+          echoIndex: 2,
+          esiIndex: 1,
+          harmonyIndex: 1
+        }
+      )
+
+      expect(buildOpendapMock).toHaveBeenNthCalledWith(
+        1,
+        {
+          conceptId: 'S100003-EDSC',
+          longName: 'Mock Service Name',
+          name: 'mock-name',
+          orderOptions: {
+            count: 0,
+            items: null
+          },
+          serviceOptions: {
+            subset: {
+              spatialSubset: {
+                boundingBox: {
+                  allowMultipleValues: false
+                }
+              },
+              variableSubset: {
+                allowMultipleValues: true
+              }
+            },
+            supportedInputProjections: [
+              {
+                projectionName: 'Geographic'
+              }
+            ],
+            supportedOutputProjections: [
+              {
+                projectionName: 'Geographic'
+              }
+            ],
+            supportedReformattings: [
+              {
+                supportedInputFormat: 'ASCII',
+                supportedOutputFormats: [
+                  'ASCII',
+                  'BINARY',
+                  'NETCDF-4'
+                ]
+              },
+              {
+                supportedInputFormat: 'BINARY',
+                supportedOutputFormats: [
+                  'ASCII',
+                  'BINARY',
+                  'NETCDF-4'
+                ]
+              },
+              {
+                supportedInputFormat: 'NETCDF-4',
+                supportedOutputFormats: [
+                  'ASCII',
+                  'BINARY',
+                  'NETCDF-4'
+                ]
+              }
+            ]
+          },
+          supportedOutputProjections: [
+            {
+              projectionName: 'Geographic'
+            }
+          ],
+          supportedReformattings: [
+            {
+              supportedInputFormat: 'ASCII',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            },
+            {
+              supportedInputFormat: 'BINARY',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            },
+            {
+              supportedInputFormat: 'NETCDF-4',
+              supportedOutputFormats: [
+                'ASCII',
+                'BINARY',
+                'NETCDF-4'
+              ]
+            }
+          ],
+          type: 'OPeNDAP',
+          url: {
+            description: 'Mock URL',
+            urlValue: 'https://example.com'
+          },
+          variables: {
+            count: 4,
+            items: [
+              {
+                conceptId: 'V100000-EDSC',
+                definition: 'analysed_sst in units of kelvin',
+                longName: 'analysed_sst',
+                name: 'analysed_sst',
+                nativeId: 'e2eTestVarHiRes1',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              {
+                conceptId: 'V100001-EDSC',
+                definition: 'analysis_error in units of kelvin',
+                longName: 'analysis_error',
+                name: 'analysis_error',
+                nativeId: 'e2eTestVarHiRes2',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              {
+                conceptId: 'V100002-EDSC',
+                definition: 'mask in units of seconds since 1981-0',
+                longName: 'mask',
+                name: 'mask',
+                nativeId: 'e2eTestVarHiRes4',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              {
+                conceptId: 'V100003-EDSC',
+                definition: 'sea_ice_fraction in units of fraction (between 0 ',
+                longName: 'sea_ice_fraction',
+                name: 'sea_ice_fraction',
+                nativeId: 'e2eTestVarHiRes3',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          associatedVariables: {
+            count: 4,
+            items: [
+              {
+                conceptId: 'V100000-EDSC',
+                definition: 'analysed_sst in units of kelvin',
+                longName: 'analysed_sst',
+                name: 'analysed_sst',
+                nativeId: 'e2eTestVarHiRes1',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              {
+                conceptId: 'V100001-EDSC',
+                definition: 'analysis_error in units of kelvin',
+                longName: 'analysis_error',
+                name: 'analysis_error',
+                nativeId: 'e2eTestVarHiRes2',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              {
+                conceptId: 'V100002-EDSC',
+                definition: 'mask in units of seconds since 1981-0',
+                longName: 'mask',
+                name: 'mask',
+                nativeId: 'e2eTestVarHiRes4',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              {
+                conceptId: 'V100003-EDSC',
+                definition: 'sea_ice_fraction in units of fraction (between 0 ',
+                longName: 'sea_ice_fraction',
+                name: 'sea_ice_fraction',
+                nativeId: 'e2eTestVarHiRes3',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    term: 'Ocean Temperature',
+                    topic: 'Oceans',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              }
+            ]
+          },
           echoIndex,
           esiIndex,
           harmonyIndex
         }
       )
 
-      // Increment echoIndex after expecting the esiEchoMethod to have been called for echo orders
-      echoIndex += 1
-
-      // NOT READY FOR THIS YET
-      // expect(buildHarmonyMock).toHaveBeenNthCalledWith(1, {})
-      // expect(buildHarmonyMock).toHaveBeenNthCalledWith(2, {})
-
-      // expect(buildOpendapMock).toHaveBeenNthCalledWith(1, {})
-
-      // expect(buildSwodlrMock).toHaveBeenNthCalledWith(1, {})
+      expect(buildSwodlrMock).toHaveBeenNthCalledWith(
+        1,
+        {
+          conceptId: 'S100004-EDSC',
+          longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
+          name: 'Mock PODAAC_SWODLR',
+          orderOptions: {
+            items: []
+          },
+          serviceOptions: {
+            supportedOutputProjections: [
+              {
+                projectionName: 'Universal Transverse Mercator'
+              },
+              {
+                projectionName: 'WGS84 - World Geodetic System 1984'
+              }
+            ]
+          },
+          supportedInputProjections: null,
+          supportedOutputProjections: [
+            {
+              projectionName: 'Universal Transverse Mercator'
+            },
+            {
+              projectionName: 'WGS84 - World Geodetic System 1984'
+            }
+          ],
+          supportedReformattings: null,
+          type: 'SWODLR',
+          url: {
+            description: 'Service top-level URL',
+            urlValue: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
+          },
+          variables: {
+            items: []
+          }
+        }
+      )
     })
   })
 })
