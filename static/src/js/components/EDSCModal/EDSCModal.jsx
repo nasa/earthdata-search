@@ -90,6 +90,7 @@ export const EDSCModal = ({
           {title}
         </Modal.Title>
         <Button
+          className="edsc-modal__close-btn"
           title="Close EDSCModal"
           icon={Close}
           iconSize="0.80rem"
