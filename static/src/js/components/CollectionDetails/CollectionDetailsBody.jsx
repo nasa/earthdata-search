@@ -185,7 +185,9 @@ export const CollectionDetailsBody = ({
 
     if (items) {
       // TODO swodlr?
-      const supportedServiceTypes = ['esi', 'opendap', 'echo orders', 'harmony']
+      // TODO wait what...
+      // TODO Make this a constant
+      const supportedServiceTypes = ['esi', 'opendap', 'echo orders', 'harmony', 'swodlr']
       items.forEach((service) => {
         const {
           supportedReformattings: supportedReformattingsList,

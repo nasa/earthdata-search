@@ -228,6 +228,7 @@ const submitRetrieval = async (event, context) => {
       body: JSON.stringify(response)
     }
   } catch (error) {
+    console.log('🚀 ~ file: handler.js:231 ~ submitRetrieval ~ error:', error)
     // On error rollback our transaction
     retrievalDbTransaction.rollback()
 

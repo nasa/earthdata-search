@@ -7,6 +7,7 @@ import { getDbConnection } from '../util/database/getDbConnection'
 import { parseError } from '../../../sharedUtils/parseError'
 import { getStateFromOrderStatus } from '../../../sharedUtils/orderStatus'
 import { startOrderStatusUpdateWorkflow } from '../util/startOrderStatusUpdateWorkflow'
+import { maxSwodlrGranuleCount } from '../../../static/src/js/constants/swodlrConstants'
 
 const graphQlQuery = `
 mutation GenerateNewL2RasterProduct ($cycle: Int!, $pass: Int!, $scene: Int!, $outputGranuleExtentFlag: Boolean!, $outputSamplingGridType: GridType!, $rasterResolution: Int!, $utmZoneAdjust: Int, $mgrsBandAdjust: Int) { 
@@ -94,8 +95,8 @@ const submitSwodlrOrder = async (event, context) => {
 
       const { orderItems } = granuleInfo
 
-      if (orderItems.length > 10) {
-        throw new Error('Too many granules')
+      if (orderItems.length > maxSwodlrGranuleCount) {
+        throw new Error('Too many granules cannot submit to swodlr api')
       }
 
       await orderItems.forEachAsync(async (granule) => {

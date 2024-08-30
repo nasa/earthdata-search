@@ -49,7 +49,7 @@ const requeueOrder = async (event, context) => {
     token: accessToken,
     type
   } = retrievalOrder
-
+  // TODO should swodlr be in here?
   if (['ESI', 'ECHO ORDERS', 'Harmony'].includes(type)) {
     let queueUrl
 

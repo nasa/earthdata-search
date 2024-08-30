@@ -275,6 +275,7 @@ const decodedSpatialSubsetting = (pgParam) => {
  * @param {String} focusedCollection Focused Collection ID
  * @return {String} An object with encoded Collections
  */
+// TODO this does all the encoding for collection stuff
 export const encodeCollections = (props) => {
   const {
     collectionsMetadata = {},

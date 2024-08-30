@@ -39,7 +39,7 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
       subscriptionsQueryTemp.tagKey = castArray(subscriptionsQueryTemp.tagKey).filter((tagKey) => tagKey !== 'edsc.extra.serverless.gibs')
     }
 
-    // TODO swodlr
+    // TODO swodlr?
     // If only displaying customizable collections, add a key of "Customizable"
     if (subscriptionsQuery.serviceType && ['esi', 'opendap', 'harmony'].every((type) => subscriptionsQuery.serviceType.includes(type))) {
       values.push({
@@ -54,7 +54,7 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
   const keysToFilter = [
     // `hasGranulesOrCwic` is the default, so it should not be displayed
     'hasGranulesOrCwic',
-    // `options` are derrived from a users query and should not be displayed
+    // `options` are derived from a users query and should not be displayed
     'options',
     'consortium'
   ]

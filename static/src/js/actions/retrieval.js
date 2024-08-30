@@ -41,6 +41,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
     byId: projectCollectionsById
   } = projectCollections
 
+  // Aggregate metrics for retrievals by service
   const metricsCollections = projectCollectionsIds.map((id) => {
     const { [id]: projectCollection } = projectCollectionsById
     const { accessMethods, selectedAccessMethod = '' } = projectCollection
@@ -49,6 +50,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
 
     let selectedService
     let selectedType
+    console.log('🚀 ~ file: retrieval.js:69 ~ metricsCollections ~ type:', type)
 
     if (type === 'download') {
       selectedService = 'Download'
@@ -71,6 +73,9 @@ export const submitRetrieval = () => (dispatch, getState) => {
     } else if (type === 'Harmony') {
       selectedService = name
       selectedType = 'harmony'
+    } else if (type === 'SWODLR') {
+      selectedService = 'SWODLR'
+      selectedType = 'swodlr'
     }
 
     return {

@@ -2,6 +2,7 @@ import 'array-foreach-async'
 
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getGranuleLimit } from '../../../static/src/js/util/collectionMetadata/granuleLimit'
+import { maxSwodlrGranuleCount } from '../../../static/src/js/constants/swodlrConstants'
 import { hasTag } from '../../../sharedUtils/tags'
 import { limitedCollectionSize } from '../../../sharedUtils/limitedCollectionSize'
 
@@ -29,7 +30,7 @@ const maxGranulesPerOrder = (collectionMetadata, accessMethod) => {
   }
 
   if (maxItemsPerOrder || isLimitedCollection(collectionMetadata)) {
-    // Return the mininum between the default order size and the collection granuleLimit
+    // Return the minimum between the default order size and the collection granuleLimit
     return Math.min(maxItemsPerOrder, defaultGranulesPerOrder, getGranuleLimit(collectionMetadata))
   }
 
@@ -80,8 +81,14 @@ export async function generateRetrievalPayloads(retrievalCollection, accessMetho
     const { concept_id: conceptId } = granuleParams
 
     let conceptIds = conceptId
-
+    // TODO I want ot pu one additional guard here to prevent > 10 orders from getting written into the database
     if (accessMethod.type === 'SWODLR') {
+      if (pageNum > maxSwodlrGranuleCount) {
+        console.log('🚀 ~ file: generateRetrievalPayloads.js:83 ~ Array.from ~ conceptIds:', conceptIds)
+        console.log('🚀 ~ file: generateRetrievalPayloads.js:89 ~ Array.from ~ pageNum:', pageNum)
+        throw new Error('Swodlr too many granules at retrieval')
+      }
+
       conceptIds = [conceptId[pageNum]]
     }
 
