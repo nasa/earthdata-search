@@ -1,7 +1,10 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
+import {
+  ArrowChevronUp,
+  ArrowChevronDown
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { CollapsePanel } from '../CollapsePanel'
 
@@ -44,10 +47,10 @@ describe('CollapsePanel component', () => {
     const { enzymeWrapper } = setup()
     const button = enzymeWrapper.find('button')
     expect(enzymeWrapper.state('open')).toEqual(false)
-    expect(enzymeWrapper.find('EDSCIcon').prop('icon')).toEqual(FaChevronDown)
+    expect(enzymeWrapper.find('EDSCIcon').prop('icon')).toEqual(ArrowChevronDown)
     button.simulate('click')
     expect(enzymeWrapper.state('open')).toEqual(true)
-    expect(enzymeWrapper.find('EDSCIcon').prop('icon')).toEqual(FaChevronUp)
+    expect(enzymeWrapper.find('EDSCIcon').prop('icon')).toEqual(ArrowChevronUp)
   })
 
   test('renders it children correctly', () => {

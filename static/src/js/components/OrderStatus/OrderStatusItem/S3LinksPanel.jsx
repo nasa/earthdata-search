@@ -5,8 +5,9 @@ import { getFilenameFromPath } from '../../../util/getFilenameFromPath'
 import { pluralize } from '../../../util/pluralize'
 import { commafy } from '../../../util/commafy'
 
-import TextWindowActions from '../../TextWindowActions/TextWindowActions'
 import CopyableText from '../../CopyableText/CopyableText'
+import ExternalLink from '../../ExternalLink/ExternalLink'
+import TextWindowActions from '../../TextWindowActions/TextWindowActions'
 
 import './DownloadFilesPanel.scss'
 
@@ -77,22 +78,18 @@ export const S3LinksPanel = ({
                 <div className="order-status-item__direct-distribution-item">
                   AWS S3 Credentials
                   <span className="order-status-item__direct-distribution-item-value">
-                    <a
-                      className="link--external"
+                    <ExternalLink
+                      className="link--separated"
                       href={s3CredentialsApiEndpoint}
-                      rel="noopener noreferrer"
-                      target="_blank"
                     >
                       Get AWS S3 Credentials
-                    </a>
-                    <a
-                      className="link--separated link--external"
+                    </ExternalLink>
+                    <ExternalLink
+                      className="link--separated"
                       href={s3CredentialsApiDocumentationUrl}
-                      rel="noopener noreferrer"
-                      target="_blank"
                     >
                       View Documentation
-                    </a>
+                    </ExternalLink>
                   </span>
                 </div>
               </div>

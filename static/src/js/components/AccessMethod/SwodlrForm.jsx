@@ -12,7 +12,8 @@ import {
   Col
 } from 'react-bootstrap'
 
-import { FaQuestionCircle, FaChevronDown } from 'react-icons/fa'
+import { FaQuestionCircle } from 'react-icons/fa'
+import { ArrowChevronDown } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import {
   swodlrToolTips,
@@ -280,7 +281,7 @@ const SwodlrForm = ({
                     <div className="swodlr-advanced-options-item">
                       Advanced options
                     </div>
-                    <EDSCIcon icon={FaChevronDown} className="swodlr-advanced-options-icon" />
+                    <EDSCIcon icon={ArrowChevronDown} className="swodlr-advanced-options-icon" />
                   </div>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">

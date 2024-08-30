@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { FaCalendarAlt } from 'react-icons/fa'
+import { Calendar } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -13,7 +13,7 @@ const TemporalSelectionDropdownToggle = ({ onToggleClick }) => (
     className="search-form__button search-form__button--dark"
     onClick={onToggleClick}
   >
-    <EDSCIcon className="button__icon" icon={FaCalendarAlt} size="0.825rem" />
+    <EDSCIcon className="button__icon" icon={Calendar} size="0.825rem" />
   </Dropdown.Toggle>
 )
 

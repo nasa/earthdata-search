@@ -174,7 +174,7 @@ describe('CollectionResultsList component', () => {
       }
     })
 
-    const image = screen.getByRole('img')
+    const image = screen.getByRole('img', { name: 'Thumbnail for Test Collection' })
     await waitFor(() => {
       expect(image.src).toEqual('http://testing-page/default-image')
       expect(image.alt).toEqual('Thumbnail for Test Collection')

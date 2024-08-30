@@ -3,11 +3,8 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { createControlComponent } from '@react-leaflet/core'
 import { Control } from 'leaflet'
-import {
-  FaPlus,
-  FaMinus,
-  FaHome
-} from 'react-icons/fa'
+import { FaHome } from 'react-icons/fa'
+import { Plus, Minus } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import projections from '../../util/map/projections'
@@ -41,9 +38,9 @@ class ZoomExtended extends Control.Zoom {
 
   options = {
     position: 'bottomright',
-    zoomInText: renderToString(<EDSCIcon size="0.75rem" icon={FaPlus} />),
+    zoomInText: renderToString(<EDSCIcon size="0.75rem" icon={Plus} />),
     zoomInTitle: 'Zoom in',
-    zoomOutText: renderToString(<EDSCIcon size="0.75rem" icon={FaMinus} />),
+    zoomOutText: renderToString(<EDSCIcon size="0.75rem" icon={Minus} />),
     zoomOutTitle: 'Zoom out',
     zoomHomeText: renderToString(<EDSCIcon size="0.75rem" icon={FaHome} />),
     zoomHomeTitle: 'Zoom home'

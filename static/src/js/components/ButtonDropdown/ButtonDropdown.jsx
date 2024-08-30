@@ -6,7 +6,11 @@ import React, {
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { FaChevronUp, FaChevronDown } from 'react-icons/fa'
+import {
+  ArrowChevronUp,
+  ArrowChevronDown
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
 import ButtonToggle from '../CustomToggle/ButtonToggle'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
@@ -15,6 +19,7 @@ import './ButtonDropdown.scss'
 /**
  * A button that toggles a custom react-bootstrap dropdown
  */
+// TODO this component is not being used
 export const ButtonDropdown = memo(({
   buttonLabel,
   buttonContent,
@@ -55,8 +60,8 @@ export const ButtonDropdown = memo(({
         &nbsp;
         {
           isOpen
-            ? <EDSCIcon icon={FaChevronUp} data-testid="dropdown-open" />
-            : <EDSCIcon icon={FaChevronDown} data-testid="dropdown-closed" />
+            ? <EDSCIcon icon={ArrowChevronUp} data-testid="dropdown-open" />
+            : <EDSCIcon icon={ArrowChevronDown} data-testid="dropdown-closed" />
         }
       </Dropdown.Toggle>
       <Dropdown.Menu className="button-dropdown__menu">

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
+import ExternalLink from '../ExternalLink/ExternalLink'
 
 export class AboutCSDAModal extends Component {
   constructor(props) {
@@ -33,19 +34,19 @@ export class AboutCSDAModal extends Component {
           </p>
           <ul>
             <li>
-              <a className="link--external" href="https://earthdata.nasa.gov/esds/csdap/" target="_blank" rel="noopener noreferrer">
+              <ExternalLink href="https://earthdata.nasa.gov/esds/csdap/">
                 Commercial Smallsat Data Acquisition (CSDA) Program
-              </a>
+              </ExternalLink>
             </li>
             <li>
-              <a className="link--external" href="https://earthdata.nasa.gov/esds/csdap/faq-commercial-data/" target="_blank" rel="noopener noreferrer">
+              <ExternalLink href="https://earthdata.nasa.gov/esds/csdap/faq-commercial-data/">
                 Accessing and Requesting Commercial Smallsat Data FAQ
-              </a>
+              </ExternalLink>
             </li>
             <li>
-              <a className="link--external" href="https://csdap.earthdata.nasa.gov/signup/" target="_blank" rel="noopener noreferrer">
+              <ExternalLink href="https://csdap.earthdata.nasa.gov/signup/">
                 CSDA Program Authorization Request Form
-              </a>
+              </ExternalLink>
             </li>
           </ul>
         </div>
@@ -58,7 +59,9 @@ export class AboutCSDAModal extends Component {
             { /* eslint-disable-next-line max-len */}
             Users that meet the requirements set forth by NASA for access to Commercial Smallsat Data Acquisition (CSDA) Program data can request access to the program
             {' '}
-            <a className="link--external" href="https://csdap.earthdata.nasa.gov/signup/" target="_blank" rel="noopener noreferrer">here</a>
+            <ExternalLink href="https://csdap.earthdata.nasa.gov/signup/">
+              here
+            </ExternalLink>
             { /* eslint-disable-next-line max-len */}
             . Once access has been approved and an account has been created, users can use their account credentials when downloading data from Earthdata Search.
           </p>

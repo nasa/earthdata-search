@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FaExternalLinkAlt } from 'react-icons/fa'
+
+import { ArrowLineDiagonal } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
 import { isEmpty } from 'lodash-es'
 
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
@@ -16,7 +18,6 @@ import './ContactInfo.scss'
 class ContactInfo extends Component {
   constructor(props) {
     super(props)
-
     const { contactInfo } = props
     const { cmrPreferences = {} } = contactInfo
     const {
@@ -120,7 +121,7 @@ class ContactInfo extends Component {
             href={`${edlHost}/profile/edit`}
             label="Edit Profile in Earthdata Login"
             target="_blank"
-            icon={FaExternalLinkAlt}
+            icon={ArrowLineDiagonal}
             iconPosition="right"
           >
             Edit Profile in Earthdata Login

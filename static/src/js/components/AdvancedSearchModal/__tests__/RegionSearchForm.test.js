@@ -109,7 +109,7 @@ describe('RegionSearchForm component', () => {
 
       expect(alertChildren.at(0).text()).toEqual('Find more information about Hydrological Units at')
       expect(alertChildren.at(2).prop('href')).toEqual('https://water.usgs.gov/GIS/huc.html')
-      expect(alertChildren.at(2).text()).toEqual('https://water.usgs.gov/GIS/huc.html')
+      expect(alertChildren.at(2).children().text()).toEqual('https://water.usgs.gov/GIS/huc.html')
     })
 
     test('when the rivers/reach endpoint is selected', () => {
@@ -134,7 +134,7 @@ describe('RegionSearchForm component', () => {
 
       expect(alertChildren.at(0).text()).toEqual('Find River Reach IDs in the SWOT River Database (SWORD):')
       expect(alertChildren.at(2).prop('href')).toEqual('https://www.swordexplorer.com/')
-      expect(alertChildren.at(2).text()).toEqual('https://www.swordexplorer.com/')
+      expect(alertChildren.at(2).children().text()).toEqual('https://www.swordexplorer.com')
     })
   })
 

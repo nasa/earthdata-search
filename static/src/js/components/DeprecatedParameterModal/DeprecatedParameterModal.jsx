@@ -6,6 +6,8 @@ import { Alert } from 'react-bootstrap'
 import pluralize from '../../util/pluralize'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 
+import ExternalLink from '../ExternalLink/ExternalLink'
+
 import './DeprecatedParameterModal.scss'
 
 export class DeprecatedParameterModal extends Component {
@@ -49,14 +51,9 @@ export class DeprecatedParameterModal extends Component {
         }
         <p className="mb-0">
           {'Please visit the '}
-          <a
-            className="link--external"
-            target="_blank"
-            rel="noreferrer"
-            href="https://wiki.earthdata.nasa.gov/display/EDSC/Earthdata+Search+URL+Parameters"
-          >
+          <ExternalLink href="https://wiki.earthdata.nasa.gov/display/EDSC/Earthdata+Search+URL+Parameters">
             Earthdata Search URL Parameters
-          </a>
+          </ExternalLink>
           {' wiki page for more information on the supported URL parameters.'}
         </p>
       </>

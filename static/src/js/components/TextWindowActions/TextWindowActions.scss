@@ -44,8 +44,17 @@
     }
   }
 
+  &__modal-container {
+    background: #F64137;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 4em;
+    text-align: center;
+  }
+
   &__modal-icon {
-    color: $color__black--300;
+    color: #fff;
+    margin-top: .85rem;
   }
 
   &__modal-blurb {
