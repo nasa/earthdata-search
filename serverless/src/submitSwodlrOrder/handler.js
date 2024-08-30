@@ -57,7 +57,7 @@ const submitSwodlrOrder = async (event, context) => {
     const {
       accessToken,
       id
-    } = JSON.parse(body)
+    } = body
 
     try {
       // Fetch the retrieval id that the order belongs to so that we can provide a link to the status page
@@ -166,6 +166,7 @@ const submitSwodlrOrder = async (event, context) => {
 
         const { data } = responseData
         const { generateL2RasterProduct } = data
+        console.log('🚀 ~ file: handler.js:169 ~ awaitorderItems.forEachAsync ~ generateL2RasterProduct:', generateL2RasterProduct)
 
         // ID Information
         // product Id is the Id of the product that's being generated

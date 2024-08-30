@@ -326,6 +326,7 @@ export const decodeUrlParams = (paramString) => {
  * @return {String} URL encoded parameter string
  */
 export const encodeUrlQuery = (props) => {
+  // TODO this this something that needs tio be encoded
   const query = {}
 
   Object.keys(urlDefs).forEach((longKey) => {

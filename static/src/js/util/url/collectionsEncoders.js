@@ -80,6 +80,26 @@ const encodeConcatenateDownload = (projectCollection) => {
   return enableConcatenateDownload ? 't' : 'f'
 }
 
+// TODO
+const encodeSwodlrDownload = (projectCollection) => {
+  if (!projectCollection) return null
+
+  const {
+    accessMethods,
+    selectedAccessMethod
+  } = projectCollection
+
+  if (!accessMethods || !selectedAccessMethod) return null
+
+  const selectedMethod = accessMethods[selectedAccessMethod]
+  const {
+    swodlrData
+  } = selectedMethod
+  console.log('🚀 ~ file: collectionsEncoders.js:98 ~ encodeSwodlrDownload ~ swodlrData:', swodlrData)
+
+  return swodlrData
+}
+
 const encodeSelectedVariables = (projectCollection) => {
   if (!projectCollection) return null
 
@@ -199,6 +219,16 @@ const decodedSelectedVariables = (pgParam) => {
   if (!variableIds) return undefined
 
   return variableIds.split('!')
+}
+
+const decodedSwodlrDownload = (pgParam) => {
+  const { swod: swodlrData } = pgParam
+
+  if (!swodlrData) return undefined
+
+  console.log('🚀 ~ file: collectionsEncoders.js:231 ~ decodedSwodlrDownload ~ swodlrData:', swodlrData)
+
+  return swodlrData
 }
 
 const decodedSelectedAccessMethod = (pgParam) => {
@@ -360,6 +390,10 @@ export const encodeCollections = (props) => {
     // Encode selected variables
     pg.uv = encodeSelectedVariables(projectCollection)
 
+    // Encode swodlr form variables
+    pg.swod = encodeSwodlrDownload(projectCollection)
+    console.log('🚀 ~ file: collectionsEncoders.js:385 ~ ids.forEach ~ pg.swod:', pg.swod)
+
     // Encode concatenation selection
     pg.cd = encodeConcatenateDownload(projectCollection)
 
@@ -436,6 +470,7 @@ export const decodeCollections = (params) => {
     let removedGranuleIds = []
     let removedIsOpenSearch
     let selectedAccessMethod
+    let swodlrData
     let selectedOutputFormat
     let selectedOutputProjection
     let variableIds
@@ -498,6 +533,7 @@ export const decodeCollections = (params) => {
 
       // Decode selected access method
       selectedAccessMethod = decodedSelectedAccessMethod(pCollection)
+      console.log('🚀 ~ file: collectionsEncoders.js:535 ~ ids.forEach ~ selectedAccessMethod:', selectedAccessMethod)
 
       // Decode output format
       selectedOutputFormat = decodedOutputFormat(pCollection)
@@ -513,6 +549,13 @@ export const decodeCollections = (params) => {
         enableSpatialSubsetting = decodedSpatialSubsetting(pCollection)
         // Decode concatenate download
         enableConcatenateDownload = decodedConcatenateDownload(pCollection)
+      }
+
+      // Decode swodlr subsettings on collections
+      if (selectedAccessMethod && selectedAccessMethod.startsWith('swodlr')) {
+        // TODO some url valuse here have to be encoded
+        swodlrData = decodedSwodlrDownload(pCollection)
+        console.log('🚀 ~ file: collectionsEncoders.js:558 ~ ids.forEach ~ swodlrData:', swodlrData)
       }
 
       // Determine if the collection is a CWIC collection
@@ -554,6 +597,15 @@ export const decodeCollections = (params) => {
               selectedOutputFormat,
               selectedOutputProjection,
               selectedVariables: variableIds
+            }
+          }
+        }
+
+        if (swodlrData) {
+          console.log('🚀 ~ file: collectionsEncoders.js:605 ~ ids.forEach ~ swodlrData:', swodlrData)
+          projectById[collectionId].accessMethods = {
+            [selectedAccessMethod]: {
+              swodlrData
             }
           }
         }
