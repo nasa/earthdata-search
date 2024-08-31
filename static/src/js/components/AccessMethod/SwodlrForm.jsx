@@ -323,7 +323,7 @@ const SwodlrForm = ({
                           granuleList && granuleList.map((granule, i) => (
                             <tr key={granule.id}>
                               {/* TODO this one needs class */}
-                              <td>{granule.id}</td>
+                              <td className="swodlr-form__table-td-granule-id">{granule.id}</td>
                               <td className="swodlr-form__table-td">
                                 <Form.Check
                                   inline

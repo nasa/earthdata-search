@@ -46,6 +46,11 @@
     padding: 0 .625rem !important;
   }
 
+  &__table-td-granule-id {
+    font-size: 0.825rem;
+    padding: 0 .625rem !important;
+  }
+
   &__tooltip {
     width: 20rem;
   }
@@ -57,6 +62,7 @@
 
   &__card-body { 
     padding: 0.5rem;
+    padding-top: 1rem;
   }
   
   &__granule-extent {
