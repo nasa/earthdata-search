@@ -548,6 +548,8 @@ const AccessMethod = ({
     ...accessMethodsByType.download
   ]
 
+  const granuleListUndefined = granuleList[0] === undefined
+
   const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
 
   // Harmony access methods are postfixed with an index given that there can be more than one
@@ -920,7 +922,9 @@ const AccessMethod = ({
           )
         }
         {
-          (supportsSwodlr && granuleList.length <= maxSwodlrGranuleCount) && (
+          (supportsSwodlr
+            && granuleList.length <= maxSwodlrGranuleCount
+            && !granuleListUndefined) && (
             <SwodlrForm
               granuleList={granuleList}
               collectionId={collectionId}

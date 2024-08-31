@@ -1,23 +1,69 @@
-.nowrap {
-    text-wrap: nowrap;
-  }
-  
-  .mb-3 {
-    white-space: nowrap;
-  }
+.swodlr-form {
+  // .mb-3 {
+  //   white-space: nowrap;
+  // }
 
-.swodlr-advanced-options-container {
+&__advanced-options-container {
     display: flex;
   }
   
-  .swodlr-advanced-options-item {
-    flex: 1;
+  &__advanced-options-item {
+    flex-grow: 0;
+    flex-shrink: 0;
+    z-index: 1;
+    position: relative;
+
+    .collapse-panel__button {
+      width: 100%;
+      padding: $spacer;
+      border: 0;
+      border-top: 1px solid $color__black--200;
+      background: none;
+      outline: none;
+      color: $color__black--500;
+      text-align: left;
+      padding: 0.825rem;
+
+
+      &:hover {
+        color: $color__black--600;
+      }
+    }
+
+    .collapse-panel__panel {
+      border-top: 1px solid $color__black--200;
+    }
   }
 
-  .table td, .table th {
-    padding: .625rem;
+  &__table-td {
+    white-space: nowrap;
+    padding: 0.25rem 0.625rem !important;
   }
 
-  .swodlr-tooltip {
+  &__table-th {
+    border: 0 !important;
+    white-space: nowrap;
+    padding: 0 .625rem !important;
+  }
+
+  &__tooltip {
     width: 20rem;
   }
+
+  &__info-icon {
+    vertical-align: baseline;
+    padding-left: 0 !important;
+  }
+
+  &__card-body { 
+    padding: 0.5rem;
+  }
+  
+  &__granule-extent {
+    white-space: nowrap;
+  }
+
+  &__sample-grid {
+    white-space: nowrap;
+  }
+}

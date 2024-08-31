@@ -13,7 +13,6 @@ import {
 } from 'react-bootstrap'
 
 import { FaQuestionCircle } from 'react-icons/fa'
-import { ArrowChevronDown } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import {
   swodlrToolTips,
@@ -22,6 +21,7 @@ import {
 } from '../../constants/swodlrConstants'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import CollapsePanel from '../CollapsePanel/CollapsePanel'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
 
 import './SwodlrForm.scss'
@@ -138,18 +138,18 @@ const SwodlrForm = ({
               placement="top"
               overlay={
                 (
-                  <Tooltip className="swodlr-tooltip">
+                  <Tooltip className="swodlr-form__tooltip">
                     {swodlrToolTips.GranuleExtent}
                   </Tooltip>
                 )
               }
             >
-              <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+              <EDSCIcon icon={FaQuestionCircle} size="1rem" variant="details-span" />
             </OverlayTrigger>
           </Col>
           <Col>
             <Form.Group>
-              <div className="mb-3">
+              <div className="swodlr-form__granule-extent">
                 <Form.Check
                   inline
                   label="128 x 128 km"
@@ -188,7 +188,7 @@ const SwodlrForm = ({
               placement="top"
               overlay={
                 (
-                  <Tooltip className="swodlr-tooltip">
+                  <Tooltip className="swodlr-form__tooltip">
                     {swodlrToolTips.SamplingGridResolution}
                   </Tooltip>
                 )
@@ -199,7 +199,7 @@ const SwodlrForm = ({
           </Col>
           <Col>
             <Form.Group>
-              <div className="mb-3">
+              <div className="swodlr-form__sample-grid">
                 <Form.Check
                   inline
                   label="UTM"
@@ -237,7 +237,7 @@ const SwodlrForm = ({
               placement="top"
               overlay={
                 (
-                  <Tooltip className="swodlr-tooltip">
+                  <Tooltip className="swodlr-form__tooltip">
                     {swodlrToolTips.RasterResolution}
                   </Tooltip>
                 )
@@ -276,48 +276,43 @@ const SwodlrForm = ({
           <Col>
             <Accordion>
               <Card>
-                <Accordion.Toggle as={Card.Header} eventKey="0">
-                  <div data-testid="advancedOptionsToggle" className="swodlr-advanced-options-container">
-                    <div className="swodlr-advanced-options-item">
-                      Advanced options
-                    </div>
-                    <EDSCIcon icon={ArrowChevronDown} className="swodlr-advanced-options-icon" />
-                  </div>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="0">
-                  <Card.Body>
+                <CollapsePanel
+                  header="Advanced Options"
+                  className="swodlr-form__advanced-options-item"
+                >
+                  <Card.Body className="swodlr-form__card-body">
                     <Table striped bordered size="sm" responsive>
                       <thead>
                         <tr>
-                          <th>Granule</th>
-                          <th>
+                          <th className="swodlr-form__table-th">Granule</th>
+                          <th className="swodlr-form__table-th">
                             UTM Zone Adjust
                             <OverlayTrigger
                               placement="top"
                               overlay={
                                 (
-                                  <Tooltip className="swodlr-tooltip">
+                                  <Tooltip className="swodlr-form__tooltip">
                                     {swodlrToolTips.UTM}
                                   </Tooltip>
                                 )
                               }
                             >
-                              <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+                              <EDSCIcon icon={FaQuestionCircle} className="swodlr-form__info-icon" size="0.825rem" variant="details-span" />
                             </OverlayTrigger>
                           </th>
-                          <th>
+                          <th className="swodlr-form__table-th">
                             MGRS Band Adjust
                             <OverlayTrigger
                               placement="top"
                               overlay={
                                 (
-                                  <Tooltip className="swodlr-tooltip">
+                                  <Tooltip className="swodlr-form__tooltip">
                                     {swodlrToolTips.MGRS}
                                   </Tooltip>
                                 )
                               }
                             >
-                              <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+                              <EDSCIcon icon={FaQuestionCircle} className="swodlr-form__info-icon" size="0.825rem" variant="details-span" />
                             </OverlayTrigger>
                           </th>
                         </tr>
@@ -327,8 +322,9 @@ const SwodlrForm = ({
                           // UTM Zone Adjust and MGRS Band Adjust Form
                           granuleList && granuleList.map((granule, i) => (
                             <tr key={granule.id}>
+                              {/* TODO this one needs class */}
                               <td>{granule.id}</td>
-                              <td className="nowrap">
+                              <td className="swodlr-form__table-td">
                                 <Form.Check
                                   inline
                                   label="+1"
@@ -370,7 +366,7 @@ const SwodlrForm = ({
                                   }
                                 />
                               </td>
-                              <td className="nowrap">
+                              <td className="swodlr-form__table-td">
                                 <Form.Check
                                   inline
                                   label="+1"
@@ -418,7 +414,7 @@ const SwodlrForm = ({
                       </tbody>
                     </Table>
                   </Card.Body>
-                </Accordion.Collapse>
+                </CollapsePanel>
               </Card>
             </Accordion>
           </Col>
