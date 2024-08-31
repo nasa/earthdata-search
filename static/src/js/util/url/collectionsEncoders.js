@@ -116,7 +116,10 @@ const encodeSelectedVariables = (projectCollection) => {
 
   if (selectedVariables.length === 0) return null
 
-  return selectedVariables.join('!')
+  const watCars = selectedVariables.join('!')
+  console.log('🚀 ~ file: collectionsEncoders.js:120 ~ encodeSelectedVariables ~ watCars:', watCars)
+
+  return watCars
 }
 
 const encodeTemporalSubsetting = (projectCollection) => {
@@ -171,6 +174,7 @@ const encodeOutputFormat = (projectCollection) => {
   } = selectedMethod
 
   if (!selectedOutputFormat) return null
+  console.log('🚀 ~ file: collectionsEncoders.js:180 ~ encodeOutputFormat ~ selectedOutputFormat:', selectedOutputFormat)
 
   return selectedOutputFormat
 }
@@ -213,6 +217,7 @@ const encodeRemovedGranules = (isOpenSearch, removedGranuleIds) => {
   return encodeGranules(isOpenSearch, removedGranuleIds)
 }
 
+// Decoders
 const decodedSelectedVariables = (pgParam) => {
   const { uv: variableIds } = pgParam
 

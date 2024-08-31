@@ -68,10 +68,12 @@ export async function generateRetrievalPayloads(retrievalCollection, accessMetho
 
   // Determine the size of each chunked order adjusting for provider limitations
   const pageSize = maxGranulesPerOrder(collectionMetadata, accessMethod)
+  console.log('🚀 ~ file: generateRetrievalPayloads.js:71 ~ generateRetrievalPayloads ~ pageSize:', pageSize)
 
   // Determine how many orders we'll need to create given how many
   // granules the user requested
   const totalPages = Math.ceil(orderGranuleCount / pageSize)
+  console.log('🚀 ~ file: generateRetrievalPayloads.js:75 ~ generateRetrievalPayloads ~ totalPages:', totalPages)
 
   const orderPayloads = []
 
@@ -83,7 +85,9 @@ export async function generateRetrievalPayloads(retrievalCollection, accessMetho
     let conceptIds = conceptId
     // TODO I want ot pu one additional guard here to prevent > 10 orders from getting written into the database
     if (accessMethod.type === 'SWODLR') {
-      if (pageNum > maxSwodlrGranuleCount) {
+      console.log('🚀 ~ file: generateRetrievalPayloads.js:87 ~ Array.from ~ pageNum:', pageNum)
+      // TODO: adjustedPageNumber vs pageNum????
+      if (adjustedPageNumber > maxSwodlrGranuleCount) {
         console.log('🚀 ~ file: generateRetrievalPayloads.js:83 ~ Array.from ~ conceptIds:', conceptIds)
         console.log('🚀 ~ file: generateRetrievalPayloads.js:89 ~ Array.from ~ pageNum:', pageNum)
         throw new Error('Swodlr too many granules at retrieval')
