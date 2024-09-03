@@ -1,10 +1,11 @@
 import { buildAccessMethods } from '../buildAccessMethods'
 
 import * as buildDownload from '../buildAccessMethods/buildDownload'
-import * as buildSwodlr from '../buildAccessMethods/buildSwodlr'
+import * as buildEcho from '../buildAccessMethods/buildEcho'
+import * as buildEsi from '../buildAccessMethods/buildEsi'
 import * as buildHarmony from '../buildAccessMethods/buildHarmony'
 import * as buildOpendap from '../buildAccessMethods/buildOpendap'
-import * as buildEsiEcho from '../buildAccessMethods/buildEsiEcho'
+import * as buildSwodlr from '../buildAccessMethods/buildSwodlr'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
@@ -23,8 +24,6 @@ describe('when buildAccessMethods is called', () => {
   test('calls buildDownload access method', () => {
     const buildDownloadMock = jest.spyOn(buildDownload, 'buildDownload')
 
-    buildDownloadMock.mockImplementationOnce(() => jest.fn())
-
     const collectionMetadata = {
       granules: {
         items: [{
@@ -41,8 +40,8 @@ describe('when buildAccessMethods is called', () => {
     expect(buildDownloadMock).toBeCalledWith({ items: [{ online_access_flag: true }] }, false)
   })
 
-  test('calls buildEsiEcho access method with type ECHO ORDERS', () => {
-    const buildEsiEchoMock = jest.spyOn(buildEsiEcho, 'buildEsiEcho')
+  test('calls buildEcho access method', () => {
+    const buildEchoMock = jest.spyOn(buildEcho, 'buildEcho')
 
     const collectionMetadata = {
       services: {
@@ -86,9 +85,9 @@ describe('when buildAccessMethods is called', () => {
 
     buildAccessMethods(collectionMetadata, isOpenSearch)
 
-    expect(buildEsiEchoMock).toBeCalledTimes(2)
+    expect(buildEchoMock).toBeCalledTimes(2)
 
-    expect(buildEsiEchoMock).toHaveBeenNthCalledWith(
+    expect(buildEchoMock).toHaveBeenNthCalledWith(
       1,
       {
         maxItemsPerOrder: 2000,
@@ -105,16 +104,10 @@ describe('when buildAccessMethods is called', () => {
         url: {
           urlValue: 'https://example.com'
         }
-      },
-      {
-        associatedVariables: {},
-        echoIndex: 0,
-        esiIndex: 0,
-        harmonyIndex: 0
       }
     )
 
-    expect(buildEsiEchoMock).toHaveBeenNthCalledWith(
+    expect(buildEchoMock).toHaveBeenNthCalledWith(
       2,
       {
         maxItemsPerOrder: 2000,
@@ -131,20 +124,12 @@ describe('when buildAccessMethods is called', () => {
         url: {
           urlValue: 'https://example.com'
         }
-      },
-      {
-        associatedVariables: {},
-        echoIndex: 1,
-        esiIndex: 0,
-        harmonyIndex: 0
       }
     )
   })
 
-  test('calls buildEsiEcho access method with type ESI', () => {
-    const buildEsiEchoMock = jest.spyOn(buildEsiEcho, 'buildEsiEcho')
-
-    buildEsiEchoMock.mockImplementationOnce(() => jest.fn())
+  test('calls buildEsi access method', () => {
+    const buildEsiMock = jest.spyOn(buildEsi, 'buildEsi')
 
     const collectionMetadata = {
       services: {
@@ -172,9 +157,9 @@ describe('when buildAccessMethods is called', () => {
 
     buildAccessMethods(collectionMetadata, isOpenSearch)
 
-    expect(buildEsiEchoMock).toBeCalledTimes(1)
+    expect(buildEsiMock).toBeCalledTimes(1)
 
-    expect(buildEsiEchoMock).toHaveBeenCalledWith(
+    expect(buildEsiMock).toHaveBeenCalledWith(
       {
         maxItemsPerOrder: 2000,
         orderOptions: {
@@ -190,20 +175,12 @@ describe('when buildAccessMethods is called', () => {
         url: {
           urlValue: 'https://example.com'
         }
-      },
-      {
-        associatedVariables: {},
-        echoIndex: 0,
-        esiIndex: 0,
-        harmonyIndex: 0
       }
     )
   })
 
   test('calls buildHarmony access method', () => {
     const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
-
-    buildHarmonyMock.mockImplementationOnce(() => jest.fn())
 
     const collectionMetadata = {
       services: {
@@ -467,18 +444,13 @@ describe('when buildAccessMethods is called', () => {
               scienceKeywords: null
             }
           ]
-        },
-        echoIndex: 0,
-        esiIndex: 0,
-        harmonyIndex: 0
+        }
       }
     )
   })
 
   test('calls buildOpendap access method', () => {
     const buildOpendapMock = jest.spyOn(buildOpendap, 'buildOpendap')
-
-    buildOpendapMock.mockImplementationOnce(() => jest.fn())
 
     const collectionMetadata = {
       services: {
@@ -874,18 +846,13 @@ describe('when buildAccessMethods is called', () => {
               ]
             }
           ]
-        },
-        echoIndex: 0,
-        esiIndex: 0,
-        harmonyIndex: 0
+        }
       }
     )
   })
 
   test('calls buildSwodlr access method', () => {
     const buildSwodlrMock = jest.spyOn(buildSwodlr, 'buildSwodlr')
-
-    buildSwodlrMock.mockImplementationOnce(() => jest.fn())
 
     const collectionMetadata = {
       services: {
@@ -978,7 +945,6 @@ describe('when buildAccessMethods is called', () => {
   describe('when the collection contains both variables associated to its services and variables directly associated to the collection and 3 service records', () => {
     test('variables on the service are returned instead of variables directly associated to the collection and buildHarmony is called 3 times', () => {
       const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
-      buildHarmonyMock.mockImplementationOnce(() => jest.fn())
 
       const collectionMetadata = {
         services: {
@@ -1489,10 +1455,7 @@ describe('when buildAccessMethods is called', () => {
                 scienceKeywords: null
               }
             ]
-          },
-          echoIndex: 0,
-          esiIndex: 0,
-          harmonyIndex: 0
+          }
         }
       )
 
@@ -1649,10 +1612,7 @@ describe('when buildAccessMethods is called', () => {
                 scienceKeywords: null
               }
             ]
-          },
-          echoIndex: 0,
-          esiIndex: 0,
-          harmonyIndex: 1
+          }
         }
       )
 
@@ -1763,10 +1723,7 @@ describe('when buildAccessMethods is called', () => {
                 scienceKeywords: null
               }
             ]
-          },
-          echoIndex: 0,
-          esiIndex: 0,
-          harmonyIndex: 2
+          }
         }
       )
     })
@@ -1775,7 +1732,6 @@ describe('when buildAccessMethods is called', () => {
   describe('when the collection contains variables directly associated to the collection and no variables associated to it services (empty) and 3 service records', () => {
     test('variables on the collection are returned instead of variables associated to the service and buildHarmony is called 3 times', () => {
       const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
-      buildHarmonyMock.mockImplementationOnce(() => jest.fn())
 
       const collectionMetadata = {
         services: {
@@ -2192,10 +2148,7 @@ describe('when buildAccessMethods is called', () => {
                 scienceKeywords: null
               }
             ]
-          },
-          echoIndex: 0,
-          esiIndex: 0,
-          harmonyIndex: 0
+          }
         }
       )
 
@@ -2314,10 +2267,7 @@ describe('when buildAccessMethods is called', () => {
                 scienceKeywords: null
               }
             ]
-          },
-          echoIndex: 0,
-          esiIndex: 0,
-          harmonyIndex: 1
+          }
         }
       )
 
@@ -2428,10 +2378,7 @@ describe('when buildAccessMethods is called', () => {
                 scienceKeywords: null
               }
             ]
-          },
-          echoIndex: 0,
-          esiIndex: 0,
-          harmonyIndex: 2
+          }
         }
       )
     })
@@ -2440,7 +2387,6 @@ describe('when buildAccessMethods is called', () => {
   describe('when the collection contains variables directly associated to the collection and some variables associated to some services and 3 service records', () => {
     test('variables on the collection are returned for services without variables but, variables associated to the service are returned for services that have them and buildHarmony is called 3 times', () => {
       const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
-      buildHarmonyMock.mockImplementationOnce(() => jest.fn())
 
       const collectionMetadata = {
         services: {
@@ -2918,10 +2864,7 @@ describe('when buildAccessMethods is called', () => {
                 scienceKeywords: null
               }
             ]
-          },
-          echoIndex: 0,
-          esiIndex: 0,
-          harmonyIndex: 0
+          }
         }
       )
 
@@ -3032,10 +2975,7 @@ describe('when buildAccessMethods is called', () => {
                 scienceKeywords: null
               }
             ]
-          },
-          echoIndex: 0,
-          esiIndex: 0,
-          harmonyIndex: 1
+          }
         }
       )
 
@@ -3146,10 +3086,7 @@ describe('when buildAccessMethods is called', () => {
                 scienceKeywords: null
               }
             ]
-          },
-          echoIndex: 0,
-          esiIndex: 0,
-          harmonyIndex: 2
+          }
         }
       )
     })
@@ -3157,7 +3094,8 @@ describe('when buildAccessMethods is called', () => {
 
   describe('calls complex compilation of mutliple different access methods', () => {
     test('calls all access methods correctly', () => {
-      const buildEsiEchoMock = jest.spyOn(buildEsiEcho, 'buildEsiEcho')
+      const buildEchoMock = jest.spyOn(buildEcho, 'buildEcho')
+      const buildEsiMock = jest.spyOn(buildEsi, 'buildEsi')
       const buildHarmonyMock = jest.spyOn(buildHarmony, 'buildHarmony')
       const buildOpendapMock = jest.spyOn(buildOpendap, 'buildOpendap')
       const buildSwodlrMock = jest.spyOn(buildSwodlr, 'buildSwodlr')
@@ -3629,9 +3567,10 @@ describe('when buildAccessMethods is called', () => {
 
       const isOpenSearch = false
 
-      buildAccessMethods(collectionMetadata, isOpenSearch)
+      const accessMethods = buildAccessMethods(collectionMetadata, isOpenSearch)
 
-      expect(buildEsiEchoMock).toHaveBeenCalledTimes(3) // Apparently the buildEsiEchoMock gets called 3 times but the first call isn't actually going through the code
+      expect(buildEchoMock).toHaveBeenCalledTimes(2) // Apparently the buildEsiEchoMock gets called 3 times but the first call isn't actually going through the code
+      expect(buildEsiMock).toHaveBeenCalledTimes(1) // Apparently the buildEsiEchoMock gets called 3 times but the first call isn't actually going through the code
       expect(buildHarmonyMock).toHaveBeenCalledTimes(2)
       expect(buildOpendapMock).toHaveBeenCalledTimes(1)
       expect(buildSwodlrMock).toHaveBeenCalledTimes(1)
@@ -3718,42 +3657,21 @@ describe('when buildAccessMethods is called', () => {
         }
       }
 
-      expect(buildEsiEchoMock).toHaveBeenNthCalledWith(
+      expect(buildEchoMock).toHaveBeenNthCalledWith(
         1,
-        echoCall1,
-        {
-          associatedVariables: defaultAssociatedVariables,
-          echoIndex: 0,
-          esiIndex: 0,
-          harmonyIndex: 0
-        }
+        echoCall1
       )
 
-      // Increment echoIndex after expecting the esiEchoMethod to have been called for echo orders
-      expect(buildEsiEchoMock).toHaveBeenNthCalledWith(
+      expect(buildEsiMock).toHaveBeenNthCalledWith(
+        1,
+        esiCall
+      )
+
+      expect(buildEchoMock).toHaveBeenNthCalledWith(
         2,
-        esiCall,
-        {
-          associatedVariables: defaultAssociatedVariables,
-          echoIndex: 1,
-          esiIndex: 0,
-          harmonyIndex: 0
-        }
+        echoCall2
       )
 
-      // Increment esiIndex after expecting the esiEchoMethod to have been called for an ESI Order
-      expect(buildEsiEchoMock).toHaveBeenNthCalledWith(
-        3,
-        echoCall2,
-        {
-          associatedVariables: defaultAssociatedVariables,
-          echoIndex: 1,
-          esiIndex: 1,
-          harmonyIndex: 0
-        }
-      )
-
-      // Increment echoIndex after expecting the esiEchoMethod to have been called for echo orders
       expect(buildHarmonyMock).toHaveBeenNthCalledWith(
         1,
         {
@@ -3837,10 +3755,7 @@ describe('when buildAccessMethods is called', () => {
           }
         },
         {
-          associatedVariables: defaultAssociatedVariables,
-          echoIndex: 2,
-          esiIndex: 1,
-          harmonyIndex: 0
+          associatedVariables: defaultAssociatedVariables
         }
       )
 
@@ -4069,10 +3984,7 @@ describe('when buildAccessMethods is called', () => {
                 ]
               }
             ]
-          },
-          echoIndex: 2,
-          esiIndex: 1,
-          harmonyIndex: 1
+          }
         }
       )
 
@@ -4160,10 +4072,7 @@ describe('when buildAccessMethods is called', () => {
           }
         },
         {
-          associatedVariables: defaultAssociatedVariables,
-          echoIndex: 2,
-          esiIndex: 1,
-          harmonyIndex: 1
+          associatedVariables: defaultAssociatedVariables
         }
       )
 
@@ -4206,6 +4115,284 @@ describe('when buildAccessMethods is called', () => {
           }
         }
       )
+
+      expect(accessMethods).toEqual(
+        {
+          echoOrders0: {
+            form: 'mock form',
+            formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
+            maxItemsPerOrder: 2000,
+            optionDefinition: {
+              conceptId: 'OO10000-EDSC',
+              name: 'mock form'
+            },
+            type: 'ECHO ORDERS',
+            url: 'https://example.com'
+          },
+          echoOrders1: {
+            form: 'mock form',
+            formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
+            maxItemsPerOrder: 2000,
+            optionDefinition: {
+              conceptId: 'OO10002-EDSC',
+              name: 'mock form'
+            },
+            type: 'ECHO ORDERS',
+            url: 'https://example.com'
+          },
+          esi0: {
+            form: 'mock form',
+            formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
+            maxItemsPerOrder: 2000,
+            optionDefinition: {
+              conceptId: 'OO10001-EDSC',
+              name: 'mock form'
+            },
+            type: 'ESI',
+            url: 'https://example.com'
+          },
+          harmony0: {
+            defaultConcatenation: false,
+            enableConcatenateDownload: false,
+            enableTemporalSubsetting: true,
+            enableSpatialSubsetting: true,
+            hierarchyMappings: [
+              {
+                id: 'V100000-EDSC'
+              },
+              {
+                id: 'V100001-EDSC'
+              },
+              {
+                id: 'V100002-EDSC'
+              }
+            ],
+            id: 'S100000-EDSC',
+            isValid: true,
+            keywordMappings: [],
+            longName: 'Mock Service Name',
+            name: 'mock-name',
+            supportedOutputFormats: [
+              'GEOTIFF',
+              'PNG',
+              'TIFF',
+              'NETCDF-4'
+            ],
+            supportedOutputProjections: [],
+            supportsBoundingBoxSubsetting: true,
+            supportsConcatenation: false,
+            supportsShapefileSubsetting: false,
+            supportsTemporalSubsetting: false,
+            supportsVariableSubsetting: true,
+            type: 'Harmony',
+            url: 'https://example.com',
+            variables: {
+              'V100000-EDSC': {
+                conceptId: 'V100000-EDSC',
+                definition: 'Alpha channel value',
+                longName: 'Alpha channel ',
+                name: 'alpha_var',
+                nativeId: 'mmt_variable_3972',
+                scienceKeywords: null
+              },
+              'V100001-EDSC': {
+                conceptId: 'V100001-EDSC',
+                definition: 'Blue channel value',
+                longName: 'Blue channel',
+                name: 'blue_var',
+                nativeId: 'mmt_variable_3971',
+                scienceKeywords: null
+              },
+              'V100002-EDSC': {
+                conceptId: 'V100002-EDSC',
+                definition: 'Green channel value',
+                longName: 'Green channel',
+                name: 'green_var',
+                nativeId: 'mmt_variable_3970',
+                scienceKeywords: null
+              }
+            }
+          },
+          harmony1: {
+            defaultConcatenation: false,
+            enableConcatenateDownload: false,
+            enableTemporalSubsetting: true,
+            enableSpatialSubsetting: true,
+            hierarchyMappings: [
+              {
+                id: 'V100000-EDSC'
+              },
+              {
+                id: 'V100001-EDSC'
+              },
+              {
+                id: 'V100002-EDSC'
+              }
+            ],
+            id: 'S100001-EDSC',
+            isValid: true,
+            keywordMappings: [],
+            longName: 'Mock Service Name 2',
+            name: 'mock-name 2',
+            supportedOutputFormats: [
+              'GEOTIFF',
+              'PNG',
+              'TIFF',
+              'NETCDF-4'
+            ],
+            supportedOutputProjections: [],
+            supportsBoundingBoxSubsetting: true,
+            supportsConcatenation: false,
+            supportsShapefileSubsetting: false,
+            supportsTemporalSubsetting: false,
+            supportsVariableSubsetting: true,
+            type: 'Harmony',
+            url: 'https://example2.com',
+            variables: {
+              'V100000-EDSC': {
+                conceptId: 'V100000-EDSC',
+                definition: 'Alpha channel value',
+                longName: 'Alpha channel ',
+                name: 'alpha_var',
+                nativeId: 'mmt_variable_3972',
+                scienceKeywords: null
+              },
+              'V100001-EDSC': {
+                conceptId: 'V100001-EDSC',
+                definition: 'Blue channel value',
+                longName: 'Blue channel',
+                name: 'blue_var',
+                nativeId: 'mmt_variable_3971',
+                scienceKeywords: null
+              },
+              'V100002-EDSC': {
+                conceptId: 'V100002-EDSC',
+                definition: 'Green channel value',
+                longName: 'Green channel',
+                name: 'green_var',
+                nativeId: 'mmt_variable_3970',
+                scienceKeywords: null
+              }
+            }
+          },
+          opendap: {
+            hierarchyMappings: [
+              {
+                id: 'V100000-EDSC'
+              },
+              {
+                id: 'V100001-EDSC'
+              },
+              {
+                id: 'V100002-EDSC'
+              },
+              {
+                id: 'V100003-EDSC'
+              }
+            ],
+            id: 'S100003-EDSC',
+            isValid: true,
+            keywordMappings: [
+              {
+                children: [
+                  {
+                    id: 'V100000-EDSC'
+                  },
+                  {
+                    id: 'V100001-EDSC'
+                  },
+                  {
+                    id: 'V100002-EDSC'
+                  },
+                  {
+                    id: 'V100003-EDSC'
+                  }
+                ],
+                label: 'Sea Surface Temperature'
+              }
+            ],
+            longName: 'Mock Service Name',
+            name: 'mock-name',
+            supportedOutputFormats: [
+              'ASCII',
+              'BINARY',
+              'NETCDF-4'
+            ],
+            supportsVariableSubsetting: true,
+            type: 'OPeNDAP',
+            variables: {
+              'V100000-EDSC': {
+                conceptId: 'V100000-EDSC',
+                definition: 'analysed_sst in units of kelvin',
+                longName: 'analysed_sst',
+                name: 'analysed_sst',
+                nativeId: 'e2eTestVarHiRes1',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    topic: 'Oceans',
+                    term: 'Ocean Temperature',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              'V100001-EDSC': {
+                conceptId: 'V100001-EDSC',
+                definition: 'analysis_error in units of kelvin',
+                longName: 'analysis_error',
+                name: 'analysis_error',
+                nativeId: 'e2eTestVarHiRes2',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    topic: 'Oceans',
+                    term: 'Ocean Temperature',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              'V100002-EDSC': {
+                conceptId: 'V100002-EDSC',
+                definition: 'mask in units of seconds since 1981-0',
+                longName: 'mask',
+                name: 'mask',
+                nativeId: 'e2eTestVarHiRes4',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    topic: 'Oceans',
+                    term: 'Ocean Temperature',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              },
+              'V100003-EDSC': {
+                conceptId: 'V100003-EDSC',
+                definition: 'sea_ice_fraction in units of fraction (between 0 ',
+                longName: 'sea_ice_fraction',
+                name: 'sea_ice_fraction',
+                nativeId: 'e2eTestVarHiRes3',
+                scienceKeywords: [
+                  {
+                    category: 'Earth Science',
+                    topic: 'Oceans',
+                    term: 'Ocean Temperature',
+                    variableLevel1: 'Sea Surface Temperature'
+                  }
+                ]
+              }
+            }
+          },
+          swodlr: {
+            id: 'S100004-EDSC',
+            isValid: true,
+            longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
+            name: 'Mock PODAAC_SWODLR',
+            supportsSwodlr: true,
+            type: 'SWODLR',
+            url: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
+          }
+        })
     })
   })
 })
