@@ -4392,7 +4392,8 @@ describe('when buildAccessMethods is called', () => {
             type: 'SWODLR',
             url: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
           }
-        })
+        }
+      )
     })
   })
 })
