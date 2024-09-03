@@ -783,5 +783,65 @@ describe('enable concatenate download flag', () => {
       }
       expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=swodlr&pg[1][swod][params][rasterResolution]=90&pg[1][swod][params][outputSamplingGridType]=UTM&pg[1][swod][params][outputGranuleExtentFlag]=false&pg[1][swod][custom_params][G3225437730-POCLOUD][utmZoneAdjust]=1&pg[1][swod][custom_params][G3225437730-POCLOUD][mgrsBandAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][utmZoneAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][mgrsBandAdjust]=-1&pg[1][cd]=f&pg[2][v]=f')
     })
+
+    // TODO we need to test that this is decoding correctly
+    test('correctly decodes swodlr access method', () => {
+      const expectedResult = {
+        ...emptyDecodedResult,
+        focusedCollection: '',
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {},
+                isVisible: false,
+                accessMethods: {
+                  swodlr: {
+                    swodlrData: {
+                      params: {
+                        rasterResolution: '90',
+                        outputSamplingGridType: 'UTM',
+                        outputGranuleExtentFlag: 'false'
+                      },
+                      custom_params: {
+                        'G3225437730-POCLOUD': {
+                          utmZoneAdjust: '1',
+                          mgrsBandAdjust: '0'
+                        },
+                        'G3225437639-POCLOUD': {
+                          utmZoneAdjust: '0',
+                          mgrsBandAdjust: '-1'
+                        }
+                      }
+                    }
+                  }
+                },
+                selectedAccessMethod: 'swodlr'
+              },
+              collectionId2: {
+                granules: {},
+                isVisible: false,
+                selectedAccessMethod: undefined
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            ...emptyDecodedResult.query.collection,
+            byId: {
+              collectionId1: {
+                granules: {}
+              },
+              collectionId2: {
+                granules: {}
+              }
+            }
+          }
+        }
+      }
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=swodlr&pg[1][swod][params][rasterResolution]=90&pg[1][swod][params][outputSamplingGridType]=UTM&pg[1][swod][params][outputGranuleExtentFlag]=false&pg[1][swod][custom_params][G3225437730-POCLOUD][utmZoneAdjust]=1&pg[1][swod][custom_params][G3225437730-POCLOUD][mgrsBandAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][utmZoneAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][mgrsBandAdjust]=-1&pg[1][cd]=f&pg[2][v]=f')).toEqual(expectedResult)
+    })
   })
 })
