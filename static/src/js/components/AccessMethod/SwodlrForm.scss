@@ -1,7 +1,4 @@
 .swodlr-form {
-  // .mb-3 {
-  //   white-space: nowrap;
-  // }
 
 &__advanced-options-container {
     display: flex;
@@ -59,10 +56,14 @@
     vertical-align: baseline;
     padding-left: 0 !important;
   }
+  // TODO update this name
+  &__form-group {
+    padding-right: 3rem;
+  }
 
   &__card-body { 
     padding: 0.5rem;
-    padding-top: 1rem;
+    padding-top: 1.5rem;
   }
   
   &__granule-extent {

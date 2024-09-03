@@ -197,7 +197,7 @@ const SwodlrForm = ({
               <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
             </OverlayTrigger>
           </Col>
-          <Col>
+          <Col className="swodlr-form__form-group">
             <Form.Group>
               <div className="swodlr-form__sample-grid">
                 <Form.Check
@@ -246,7 +246,7 @@ const SwodlrForm = ({
               <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
             </OverlayTrigger>
           </Col>
-          <Col>
+          <Col className="swodlr-form__form-group">
             <Form.Group>
               <Form.Control
                 as="select"
