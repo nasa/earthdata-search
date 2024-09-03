@@ -22,7 +22,7 @@ import RadioList from '../FormFields/RadioList/RadioList'
 import Spinner from '../Spinner/Spinner'
 import SwodlrForm from './SwodlrForm'
 
-import { maxSwodlrGranuleCount } from '../../constants/swodlrConstants'
+import { maxSwodlrGranuleCount, swoldrMoreInfoPage } from '../../constants/swodlrConstants'
 
 import './AccessMethod.scss'
 
@@ -271,7 +271,8 @@ const AccessMethod = ({
       description,
       details,
       disabled,
-      errorMessage
+      errorMessage,
+      externalLink
     } = radioItem
 
     return (
@@ -287,6 +288,7 @@ const AccessMethod = ({
         checked={selected === methodKey}
         disabled={disabled}
         errorMessage={errorMessage}
+        externalLink={externalLink}
       />
     )
   }
@@ -430,6 +432,7 @@ const AccessMethod = ({
     let title = null
     let subtitle = null
     let description = null
+    let externalLink = null
     let details = null
     let hasFormats = null
     let hasProjections = null
@@ -512,9 +515,14 @@ const AccessMethod = ({
         title = 'Generate with SWODLR'
         description = 'Set options and generate new standard products'
         details = 'Select options and generate customized products using the SWODLR service. Data will be avaliable for access once any necessary processing is complete.'
-        disabled = granuleList && granuleList.length > maxSwodlrGranuleCount
         // Update the error message if more than 10 granules are selected
+        disabled = granuleList && granuleList.length > maxSwodlrGranuleCount
         errorMessage = granuleList && granuleList.length > maxSwodlrGranuleCount ? 'SWODLR customization is only available with a maximum of 10 granules. Reduce your granule selection to enable this option.' : ''
+        externalLink = {
+          link: swoldrMoreInfoPage,
+          message: 'What is SWODLR?'
+        }
+
         break
       }
 
@@ -534,7 +542,8 @@ const AccessMethod = ({
           details,
           customizationOptions,
           disabled,
-          errorMessage
+          errorMessage,
+          externalLink
         }
       )
     }

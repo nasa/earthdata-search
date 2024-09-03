@@ -1,9 +1,9 @@
 import React from 'react'
 
 import {
+  act,
   render,
-  screen,
-  waitFor
+  screen
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -26,6 +26,7 @@ const setup = (overrideProps) => {
     subtitle: 'test subtitle',
     error: '',
     disabled: false,
+    externalLink: null,
     ...overrideProps
   }
 
@@ -81,17 +82,44 @@ describe('AccessMethodRadio component', () => {
     expect(screen.getByText('Something went wrong')).toBeInTheDocument()
   })
 
-  test('displays the details as a tooltip', async () => {
-    setup()
-    const user = userEvent.setup()
-    const icon = screen.getByTestId('edsc-icon-details')
-    await waitFor(async () => {
+  describe('tool-tip on the access method radio', () => {
+    test('displays the details as a tooltip on hover', async () => {
+      setup()
+      const user = userEvent.setup()
+      const icon = screen.getByTestId('edsc-icon-details')
+
       await user.hover(icon)
+
+      const tooltip = await screen.findByRole('tooltip')
+
+      expect(tooltip).toBeInTheDocument()
+      expect(screen.getByText('test details')).toBeInTheDocument()
     })
 
-    const tooltip = screen.getByRole('tooltip')
-    expect(tooltip).toBeInTheDocument()
-    expect(screen.getByText('test details')).toBeInTheDocument()
+    test('displays the details as a tooltip on click including external links', async () => {
+      setup({
+        externalLink: {
+          link: 'http://example.com',
+          message: 'example message'
+        }
+      })
+
+      const user = userEvent.setup()
+      const icon = screen.getByTestId('edsc-icon-details')
+
+      await act(async () => {
+        await user.click(icon)
+      })
+
+      const tooltip = await screen.findByRole('tooltip')
+
+      expect(tooltip).toBeInTheDocument()
+      expect(screen.getByText('test details')).toBeInTheDocument()
+
+      const externalLink = screen.getByRole('link', { name: 'example message' })
+      expect(externalLink.href).toEqual('http://example.com/')
+      screen.debug()
+    })
   })
 
   test('does not display the service name', () => {

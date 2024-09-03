@@ -93,3 +93,5 @@ export const geoRasterOptions = [
 ]
 
 export const maxSwodlrGranuleCount = 10
+
+export const swoldrMoreInfoPage = 'https://swodlr.podaac.earthdatacloud.nasa.gov/about'

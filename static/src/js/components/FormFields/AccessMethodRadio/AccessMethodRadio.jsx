@@ -7,6 +7,7 @@ import { Check } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
+import ExternalLink from '../../ExternalLink/ExternalLink'
 import CustomizableIcons from '../../CustomizableIcons/CustomizableIcons'
 
 import './AccessMethodRadio.scss'
@@ -24,8 +25,10 @@ export const AccessMethodRadio = ({
   customizationOptions,
   isHarmony,
   disabled,
-  errorMessage
+  errorMessage,
+  externalLink
 }) => {
+  console.log('🚀 ~ file: AccessMethodRadio.jsx:31 ~ externalLink:', externalLink)
   const labelClasses = [
     'access-method-radio',
     {
@@ -38,8 +41,20 @@ export const AccessMethodRadio = ({
       'access-method-radio--disable-button': disabled
     }
   ]
+  const overlayTriggerTriggers = ['hover', 'click']
 
   const labelClassName = classNames(labelClasses)
+
+  /** Renders an external link for the access method.
+    * @param {Object} externalLink - The external link optionally passed for the access method type
+    * @param {Object} externalLink.link - The href and destination for the link
+    * @param {Object} externalLink.message - The text of the link the user sees
+  */
+  const generateExternalLink = ({ link, message }) => (
+    <ExternalLink href={link}>
+      {message}
+    </ExternalLink>
+  )
 
   const {
     hasSpatialSubsetting = false,
@@ -113,13 +128,17 @@ export const AccessMethodRadio = ({
 
             <OverlayTrigger
               placement="top"
+              delay={1000}
               overlay={
                 (
-                  <Tooltip style={{ width: '20rem' }}>
+                  <Tooltip>
                     {details}
+                    <br />
+                    {externalLink && generateExternalLink(externalLink)}
                   </Tooltip>
                 )
               }
+              trigger={overlayTriggerTriggers}
             >
               <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details" />
             </OverlayTrigger>
@@ -139,7 +158,8 @@ AccessMethodRadio.defaultProps = {
   customizationOptions: null,
   isHarmony: false,
   disabled: false,
-  errorMessage: null
+  errorMessage: null,
+  externalLink: null
 }
 
 AccessMethodRadio.propTypes = {
@@ -169,7 +189,11 @@ AccessMethodRadio.propTypes = {
   }),
   isHarmony: PropTypes.bool,
   disabled: PropTypes.bool,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  externalLink: PropTypes.shape({
+    link: PropTypes.string,
+    message: PropTypes.string
+  })
 }
 
 export default AccessMethodRadio

@@ -144,6 +144,8 @@ describe('SwodlrForm component', () => {
           }
         }
       })
+
+      expect(screen.getByText('arc-seconds')).toBeInTheDocument()
     })
 
     test('updating raster resolution calls onUpdateAccessMethod', async () => {
@@ -228,6 +230,8 @@ describe('SwodlrForm component', () => {
           }
         }
       })
+
+      expect(screen.getByText('meters')).toBeInTheDocument()
     })
 
     describe('when updating individual granules UTM Zone Adjust', () => {
