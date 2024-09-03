@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FaTimes } from 'react-icons/fa'
+import { Close } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { facetCategoryAbbreviationsMap } from '../../util/facetCategoryAbbreviationsMap'
 import { buildHierarchicalAutocompleteTitle } from '../../util/autocompleteResults'
@@ -40,7 +40,7 @@ const AutocompleteDisplay = ({ selected, onRemoveAutocompleteValue }) => {
               <Button
                 className="autocomplete-display__button"
                 label={`Remove ${value}`}
-                icon={FaTimes}
+                icon={Close}
                 onClick={() => { onRemoveAutocompleteValue(item) }}
               />
             </span>

@@ -48,8 +48,8 @@ describe('PortalBrowserModal component', () => {
       />
     )
 
-    const closeButton = screen.getByTestId('portal-browser-modal').querySelector('button.close')
-    await user.click(closeButton)
+    const closeModalButton = screen.getByRole('button', { name: 'Close EDSCModal' })
+    await user.click(closeModalButton)
 
     expect(onTogglePortalBrowserModal).toHaveBeenCalledTimes(1)
     expect(onTogglePortalBrowserModal).toHaveBeenCalledWith(false)

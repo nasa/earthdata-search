@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { isFunction } from 'lodash-es'
 
-import { FaRegCopy } from 'react-icons/fa'
-
+import { Copy } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import Button from '../Button/Button'
 import { addToast } from '../../util/addToast'
 
@@ -111,7 +110,7 @@ export const CopyableText = ({
         }
       }
       label={label}
-      icon={FaRegCopy}
+      icon={Copy}
       iconPosition="right"
     >
       {text}

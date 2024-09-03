@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, {
   memo,
   useEffect,
@@ -9,11 +8,9 @@ import { PropTypes } from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import abbreviate from 'number-abbreviate'
 import classNames from 'classnames'
-import {
-  FaInfoCircle,
-  FaCheck,
-  FaEdit
-} from 'react-icons/fa'
+import { FaEdit } from 'react-icons/fa'
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+import { Check } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { commafy } from '../../util/commafy'
 import { convertSizeToMB, convertSize } from '../../util/project'
@@ -189,7 +186,7 @@ export const ProjectHeader = memo(({
               data-testid="submit_button"
               onClick={handleNameSubmit}
             >
-              <EDSCIcon icon={FaCheck} />
+              <EDSCIcon icon={Check} />
             </button>
           )
         }
@@ -249,7 +246,7 @@ export const ProjectHeader = memo(({
                   )
                 }
               >
-                <EDSCIcon icon={FaInfoCircle} className="project-header__stats-icon" />
+                <EDSCIcon icon={AlertInformation} className="project-header__stats-icon" />
               </OverlayTrigger>
             </li>
           </ul>

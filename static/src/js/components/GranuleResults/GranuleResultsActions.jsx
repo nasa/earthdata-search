@@ -2,12 +2,14 @@ import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import {
-  FaBell,
   FaFolder,
   FaFolderPlus,
   FaFolderMinus
 } from 'react-icons/fa'
 import { IoShare } from 'react-icons/io5'
+
+import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
 import { Dropdown } from 'react-bootstrap'
 
 import { commafy } from '../../util/commafy'
@@ -20,6 +22,7 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import ExternalLink from '../ExternalLink/ExternalLink'
 
 import './GranuleResultsActions.scss'
 
@@ -147,7 +150,7 @@ const GranuleResultsActions = ({
             <AuthRequiredContainer noRedirect>
               <PortalLinkContainer
                 type="button"
-                icon={FaBell}
+                icon={Subscribe}
                 className={subscriptionButtonClassnames}
                 dataTestId="granule-results-actions__subscriptions-button"
                 label={subscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
@@ -189,14 +192,13 @@ const GranuleResultsActions = ({
                   <Dropdown.Header>Open search in:</Dropdown.Header>
                   {
                     handoffLinks.map((link) => (
-                      <Dropdown.Item
+                      <ExternalLink
                         key={link.title}
-                        className="link--external more-actions-dropdown__item more-actions-dropdown__vis analytics__smart-handoff-link"
+                        className="more-actions-dropdown__item more-actions-dropdown__smart-handoff-link"
                         href={link.href}
-                        target="_blank"
                       >
                         {link.title}
-                      </Dropdown.Item>
+                      </ExternalLink>
                     ))
                   }
                 </Dropdown.Menu>

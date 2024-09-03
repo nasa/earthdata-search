@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { LinkContainer } from 'react-router-bootstrap'
 import {
-  FaPlus,
-  FaMinus,
-  FaInfoCircle,
-  FaTimesCircle
-} from 'react-icons/fa'
+  Plus,
+  Minus,
+  XCircled
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
 import murmurhash3 from '../../util/murmurhash3'
 
@@ -73,7 +74,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                   type="button"
                   label="Add granule"
                   title="Add granule"
-                  icon={FaPlus}
+                  icon={Plus}
                   iconSize="0.75rem"
                   onClick={
                     (event) => {
@@ -94,7 +95,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                   type="button"
                   label="Remove granule"
                   title="Remove granule"
-                  icon={FaMinus}
+                  icon={Minus}
                   iconSize="0.75rem"
                   onClick={
                     (event) => {
@@ -141,12 +142,12 @@ const GranuleResultsTableHeaderCell = (props) => {
           >
             <MoreActionsDropdownItem
               title="View details"
-              icon={FaInfoCircle}
+              icon={AlertInformation}
             />
           </LinkContainer>
           <MoreActionsDropdownItem
             title="Filter granule"
-            icon={FaTimesCircle}
+            icon={XCircled}
             onClick={
               (event) => {
                 handleFilterClick(id)

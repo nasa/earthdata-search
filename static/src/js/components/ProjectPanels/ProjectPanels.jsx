@@ -2,13 +2,10 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { isEmpty, uniq } from 'lodash-es'
-import {
-  FaCheckCircle,
-  FaCog,
-  FaExclamationCircle,
-  FaMap,
-  FaQuestionCircle
-} from 'react-icons/fa'
+import { Settings, CheckCircled } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+import { FaMap, FaQuestionCircle } from 'react-icons/fa'
+
 import { Col } from 'react-bootstrap'
 
 import Button from '../Button/Button'
@@ -446,14 +443,14 @@ class ProjectPanels extends PureComponent {
           {
             !isValid && (
               <span className="project-panels__collection-status project-panels__collection-status--invalid">
-                <EDSCIcon icon={FaExclamationCircle} />
+                <EDSCIcon icon={AlertInformation} />
               </span>
             )
           }
           {
             isValid && (
               <span className="project-panels__collection-status project-panels__collection-status--valid">
-                <EDSCIcon icon={FaCheckCircle} />
+                <EDSCIcon icon={CheckCircled} />
               </span>
             )
           }
@@ -633,7 +630,7 @@ class ProjectPanels extends PureComponent {
             [
               {
                 title: 'Edit Project Options',
-                icon: FaCog,
+                icon: Settings,
                 onClick: () => this.onChangePanel(`0.${index}.0`)
               }
             ]

@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types'
 import React, { useRef, useState } from 'react'
+
 import {
-  FaCopy,
-  FaSave,
-  FaExpand,
-  FaDownload,
-  FaExternalLinkAlt
-} from 'react-icons/fa'
+  ArrowLineDiagonal,
+  Copy,
+  Download,
+  Expand
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
+import { FaSave } from 'react-icons/fa'
 
 import { Alert } from 'react-bootstrap'
 
@@ -14,11 +16,11 @@ import { constructDownloadableFile } from '../../util/files/constructDownloadabl
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
-import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
-import Spinner from '../Spinner/Spinner'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
-
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
+import ExternalLink from '../ExternalLink/ExternalLink'
+import Spinner from '../Spinner/Spinner'
 
 import './TextWindowActions.scss'
 
@@ -90,7 +92,7 @@ export const TextWindowActions = ({
               className="text-window-actions__action text-window-actions__action--edd"
               bootstrapSize="sm"
               bootstrapVariant="success"
-              icon={FaDownload}
+              icon={Download}
               onClick={handleEddModalOpen}
               tooltipId={`text-window-actions__tooltip--${id}`}
               tooltip={(
@@ -106,7 +108,7 @@ export const TextWindowActions = ({
             <Button
               className="text-window-actions__action text-window-actions__action--copy"
               bootstrapSize="sm"
-              icon={FaCopy}
+              icon={Copy}
               onClick={copyToClipboard}
               label="Copy"
             >
@@ -137,7 +139,7 @@ export const TextWindowActions = ({
           bootstrapSize="sm"
           onClick={handleLinksModalOpen}
           label="Expand"
-          icon={FaExpand}
+          icon={Expand}
         >
           Expand
         </Button>
@@ -191,7 +193,7 @@ export const TextWindowActions = ({
                         <Button
                           className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--copy"
                           bootstrapSize="sm"
-                          icon={FaCopy}
+                          icon={Copy}
                           onClick={copyToClipboard}
                           label="Copy"
                         >
@@ -237,11 +239,13 @@ export const TextWindowActions = ({
           (
             <div className="d-flex flex-column align-items-center">
               <h3 className="font-weight-bolder h5 mt-3 text-center w-75">Opening Earthdata Download to download your files...</h3>
-              <EDSCIcon
-                className="mt-4 text-window-actions__modal-icon"
-                icon={FaExternalLinkAlt}
-                size="4rem"
-              />
+              <div className="text-window-actions__modal-container">
+                <EDSCIcon
+                  className="text-window-actions__modal-icon"
+                  icon={ArrowLineDiagonal}
+                  size="2.25rem"
+                />
+              </div>
               <Spinner
                 className="mt-4"
                 type="dots"
@@ -262,7 +266,8 @@ export const TextWindowActions = ({
                 className="text-window-actions__action text-window-actions__modal action text-window-actions__modal-action--open-edd mt-3"
                 bootstrapSize="sm"
                 label="Open Earthdata Download"
-                icon={FaExternalLinkAlt}
+                icon={ArrowLineDiagonal}
+                iconPosition="right"
                 href={eddLink}
                 bootstrapVariant="primary"
               >
@@ -273,7 +278,9 @@ export const TextWindowActions = ({
                 <br />
                 Go To the
                 {' '}
-                <a className="link--external" href="https://nasa.github.io/earthdata-download/" target="_blank" rel="nofollow noreferrer">Downloads Page</a>
+                <ExternalLink href="https://nasa.github.io/earthdata-download/">
+                  Downloads Page
+                </ExternalLink>
               </Alert>
             </div>
           )

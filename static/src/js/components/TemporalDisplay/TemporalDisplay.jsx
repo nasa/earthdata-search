@@ -5,7 +5,7 @@ import React, {
 } from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import { FaCalendarAlt } from 'react-icons/fa'
+import { Calendar } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import TemporalDisplayEntry from './TemporalDisplayEntry'
 import FilterStackItem from '../FilterStack/FilterStackItem'
@@ -63,7 +63,7 @@ export const TemporalDisplay = memo(({
 
   return (
     <FilterStackItem
-      icon={FaCalendarAlt}
+      icon={Calendar}
       title="Temporal"
       onRemove={onTimelineRemove}
     >

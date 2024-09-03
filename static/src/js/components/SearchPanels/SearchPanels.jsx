@@ -3,15 +3,16 @@ import PropTypes from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
 import { isEqual } from 'lodash-es'
 import { Badge, Col } from 'react-bootstrap'
+
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+import { List, Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import {
-  FaBell,
-  FaInfoCircle,
-  FaList,
   FaMap,
   FaQuestionCircle,
   FaTable,
   FaLock
 } from 'react-icons/fa'
+
 import classNames from 'classnames'
 import Helmet from 'react-helmet'
 
@@ -268,7 +269,7 @@ class SearchPanels extends PureComponent {
     const granulesViewsArray = [
       {
         label: 'List',
-        icon: FaList,
+        icon: List,
         isActive: granulePanelView === 'list',
         onClick: () => setGranulesActiveView('list')
       },
@@ -324,7 +325,7 @@ class SearchPanels extends PureComponent {
     const collectionsViewsArray = [
       {
         label: 'List',
-        icon: FaList,
+        icon: List,
         isActive: collectionPanelView === 'list',
         onClick: () => setCollectionsActiveView('list')
       },
@@ -368,7 +369,7 @@ class SearchPanels extends PureComponent {
             <AuthRequiredContainer noRedirect>
               <PortalLinkContainer
                 type="button"
-                icon={FaBell}
+                icon={Subscribe}
                 className={subscriptionButtonClassnames}
                 dataTestId="search-panels-actions__subscriptions-button"
                 label={collectionSubscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
@@ -396,7 +397,7 @@ class SearchPanels extends PureComponent {
       subscriptionsMoreActionsItem = [
         {
           title: 'Subscriptions',
-          icon: FaBell,
+          icon: Subscribe,
           link: {
             pathname: '/search/granules/subscriptions',
             search: location.search
@@ -525,7 +526,7 @@ class SearchPanels extends PureComponent {
           [
             {
               title: 'Collection Details',
-              icon: FaInfoCircle,
+              icon: AlertInformation,
               link: {
                 pathname: '/search/granules/collection-details',
                 search: location.search
@@ -622,7 +623,7 @@ class SearchPanels extends PureComponent {
             },
             {
               title: 'Collection Details',
-              icon: FaInfoCircle,
+              icon: AlertInformation,
               link: {
                 pathname: '/search/granules/collection-details',
                 search: location.search
@@ -676,7 +677,7 @@ class SearchPanels extends PureComponent {
             },
             {
               title: 'Collection Details',
-              icon: FaInfoCircle,
+              icon: AlertInformation,
               link: {
                 pathname: '/search/granules/collection-details',
                 search: location.search

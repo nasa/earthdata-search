@@ -2,14 +2,15 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
 import abbreviate from 'number-abbreviate'
+import { Settings, XCircled } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import {
-  FaCog,
+  AlertInformation,
+  AlertMediumPriority
+} from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+import {
   FaEye,
   FaEyeSlash,
-  FaExclamationCircle,
-  FaInfoCircle,
-  FaMap,
-  FaTimesCircle
+  FaMap
 } from 'react-icons/fa'
 
 import { projectCollectionItemHeader, projectCollectionItemFooter } from './skeleton'
@@ -136,7 +137,7 @@ const ProjectCollectionItem = ({
               <MoreActionsDropdown handoffLinks={handoffLinks} alignRight>
                 <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-remove"
-                  icon={FaTimesCircle}
+                  icon={XCircled}
                   title="Remove"
                   onClick={
                     () => {
@@ -159,7 +160,7 @@ const ProjectCollectionItem = ({
                 />
                 <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-collection-details"
-                  icon={FaInfoCircle}
+                  icon={AlertInformation}
                   title="Collection Details"
                   onClick={() => onViewCollectionDetails(collectionId)}
                 />
@@ -202,14 +203,14 @@ const ProjectCollectionItem = ({
             <div className="project-collections-item__footer">
               {
                 !isValid && (
-                  <EDSCIcon className="project-collections-item__status project-collections-item__status--invalid" icon={FaExclamationCircle} />
+                  <EDSCIcon className="project-collections-item__status project-collections-item__status--invalid" icon={AlertMediumPriority} />
                 )
               }
               <Button
                 className="project-collections-item__more-options-button"
                 variant="link"
                 bootstrapVariant="link"
-                icon={FaCog}
+                icon={Settings}
                 label="Edit options"
                 onClick={
                   () => {

@@ -5,14 +5,18 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+import {
+  Plus,
+  Minus,
+  CloudFill
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
 import {
   FaClock,
-  FaCloud,
-  FaInfoCircle,
   FaLock,
-  FaMap,
-  FaMinus,
-  FaPlus
+  FaMap
 } from 'react-icons/fa'
 
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
@@ -135,7 +139,7 @@ export const CollectionResultsItem = forwardRef(({
       variant="light"
       bootstrapVariant="light"
       bootstrapSize="sm"
-      icon={FaPlus}
+      icon={Plus}
       label="Add collection to the current project"
       title="Add collection to the current project"
     />
@@ -153,7 +157,7 @@ export const CollectionResultsItem = forwardRef(({
       variant="light"
       bootstrapVariant="light"
       bootstrapSize="sm"
-      icon={FaMinus}
+      icon={Minus}
       label="Remove collection from the current project"
       title="Remove collection from the current project"
     />
@@ -234,7 +238,7 @@ export const CollectionResultsItem = forwardRef(({
                   cloudHosted && (
                     <MetaIcon
                       id="feature-icon-list-view__earthdata-cloud"
-                      icon={FaCloud}
+                      icon={CloudFill}
                       iconProps={{ size: '1rem' }}
                       label="Earthdata Cloud"
                       metadata="Earthdata Cloud"
@@ -387,7 +391,7 @@ export const CollectionResultsItem = forwardRef(({
                   title="View collection details"
                   bootstrapSize="sm"
                   bootstrapVariant="light"
-                  icon={FaInfoCircle}
+                  icon={AlertInformation}
                 />
                 <PortalFeatureContainer authentication>
                   <>

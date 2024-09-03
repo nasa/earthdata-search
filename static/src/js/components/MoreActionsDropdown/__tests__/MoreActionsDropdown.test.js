@@ -1,10 +1,15 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import {
+  act,
+  render,
+  screen
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
+import '@testing-library/jest-dom'
+
 import { Dropdown } from 'react-bootstrap'
 import { MoreActionsDropdown } from '../MoreActionsDropdown'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 beforeEach(() => {
   const rootNode = document.createElement('div')
@@ -17,7 +22,8 @@ afterEach(() => {
   document.body.removeChild(rootNode)
 })
 
-function setup(overrideProps) {
+const setup = (overrideProps) => {
+  const user = userEvent.setup()
   const props = {
     children: null,
     className: null,
@@ -25,45 +31,58 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<MoreActionsDropdown {...props} />)
+  render(
+    <MoreActionsDropdown {...props} />
+  )
 
   return {
-    enzymeWrapper,
-    props
+    props,
+    user
   }
 }
 
 describe('MoreActionsDropdown component', () => {
   test('renders nothing when no data is provided', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.type()).toBeNull()
-    expect(enzymeWrapper.type()).toBeNull()
+    setup()
+    expect(screen.queryByRole('button', { name: 'More actions' })).not.toBeInTheDocument()
   })
 
-  test('renders correctly when handoff links are provided', () => {
-    const { enzymeWrapper } = setup({
+  test('renders correctly when handoff links are provided', async () => {
+    const { user } = setup({
       handoffLinks: [{
         title: 'Giovanni',
         href: 'https://giovanni.gsfc.nasa.gov/giovanni/#service=TmAvMp'
       }]
     })
 
-    expect(enzymeWrapper.find(Dropdown).length).toEqual(1)
-    expect(enzymeWrapper.find(Dropdown.Item).length).toEqual(1)
+    await act(async () => {
+      await user.click(screen.getByRole('button', { name: 'More actions' }))
+    })
+
+    expect(screen.getByRole('button', { name: 'More actions' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Open collection in:' })).toBeInTheDocument()
+
+    const snartHandoffLink = screen.getByRole('link', { name: 'Giovanni' })
+    expect(snartHandoffLink).toBeInTheDocument()
+
+    // Ensure that links can be selected with keys for coverage
+    await user.type(snartHandoffLink, '{enter}')
   })
 
-  test('renders correctly when children are provided', () => {
-    const { enzymeWrapper } = setup({
+  test('renders correctly when children are provided', async () => {
+    const { user } = setup({
       children: <Dropdown.Item>Toggle Visibility</Dropdown.Item>
     })
 
-    expect(enzymeWrapper.find(Dropdown).length).toEqual(1)
-    expect(enzymeWrapper.find(Dropdown.Item).length).toEqual(1)
+    await act(async () => {
+      await user.click(screen.getByRole('button', { name: 'More actions' }))
+    })
+
+    expect(screen.getByRole('button', { name: 'Toggle Visibility' })).toBeInTheDocument()
   })
 
-  test('renders correctly when children and handoff links are provided', () => {
-    const { enzymeWrapper } = setup({
+  test('renders correctly when children and handoff links are provided', async () => {
+    const { user } = setup({
       children: <Dropdown.Item>Toggle Visibility</Dropdown.Item>,
       handoffLinks: [{
         title: 'Giovanni',
@@ -71,7 +90,11 @@ describe('MoreActionsDropdown component', () => {
       }]
     })
 
-    expect(enzymeWrapper.find(Dropdown).length).toEqual(1)
-    expect(enzymeWrapper.find(Dropdown.Item).length).toEqual(2)
+    await act(async () => {
+      await user.click(screen.getByRole('button', { name: 'More actions' }))
+    })
+
+    expect(screen.getByRole('button', { name: 'Toggle Visibility' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Giovanni' })).toBeInTheDocument()
   })
 })

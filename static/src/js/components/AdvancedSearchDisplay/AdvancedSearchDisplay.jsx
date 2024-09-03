@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty, isObject } from 'lodash-es'
-import { FaSlidersH } from 'react-icons/fa'
+import { Filter } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import AdvancedSearchDisplayEntry from './AdvancedSearchDisplayEntry'
 import FilterStackItem from '../FilterStack/FilterStackItem'
@@ -31,7 +31,7 @@ class AdvancedSearchDisplay extends PureComponent {
 
     return (
       <FilterStackItem
-        icon={FaSlidersH}
+        icon={Filter}
         title="Advanced Search"
         onRemove={
           () => {

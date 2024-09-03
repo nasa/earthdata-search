@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { isEqual } from 'lodash-es'
-import { FaDownload } from 'react-icons/fa'
+import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { isProjectValid } from '../../util/isProjectValid'
 
@@ -170,7 +170,7 @@ export class ProjectCollections extends Component {
             type="submit"
             variant="full"
             bootstrapVariant="success"
-            icon={FaDownload}
+            icon={Download}
             label="Download project data"
             disabled={!isValid}
             spinner={isSubmitting}

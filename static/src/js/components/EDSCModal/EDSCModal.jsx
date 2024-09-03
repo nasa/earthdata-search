@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Close } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { Modal } from 'react-bootstrap'
+
 import classNames from 'classnames'
 
 import Button from '../Button/Button'
@@ -80,7 +82,6 @@ export const EDSCModal = ({
     >
       <Modal.Header
         className={headerClassNames}
-        closeButton
       >
         <Modal.Title
           className="edsc-modal__title"
@@ -88,6 +89,13 @@ export const EDSCModal = ({
         >
           {title}
         </Modal.Title>
+        <Button
+          className="edsc-modal__close-btn"
+          title="Close EDSCModal"
+          icon={Close}
+          iconSize="0.80rem"
+          onClick={onModalHide}
+        />
       </Modal.Header>
       <Modal.Body className="edsc-modal__body">
         {

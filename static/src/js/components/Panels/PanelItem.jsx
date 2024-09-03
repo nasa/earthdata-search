@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { isEmpty } from 'lodash-es'
-import { FaChevronLeft } from 'react-icons/fa'
+import { ArrowChevronLeft } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import SimpleBar from 'simplebar-react'
 
@@ -20,7 +20,7 @@ import './PanelItem.scss'
  * @param {Node} props.meta - The header meta children components.
  * @param {Node} props.footer - The element to be used as the footer.
  * @param {Boolean} props.hideFooter - Hides the PanelGroup footer if one is defined.
- * @param {Boolean} props.isActive -  A flag to desingate the PanelItem as active.
+ * @param {Boolean} props.isActive -  A flag to designate the PanelItem as active.
  * @param {Function} props.onChangePanel -  A callback to change the active panel.
  * @param {Object} props.backButtonOptions - The config for the back button. Location is the panel id to switch to. Also accepts custom text for the button.
  */
@@ -93,7 +93,7 @@ export class PanelItem extends Component {
       backButton = (
         <Button
           className="panel-item__back-button"
-          icon={FaChevronLeft}
+          icon={ArrowChevronLeft}
           label={backButtonText}
           onClick={
             () => {
