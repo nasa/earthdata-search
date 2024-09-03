@@ -56,14 +56,25 @@
     vertical-align: baseline;
     padding-left: 0 !important;
   }
-  // TODO update this name
-  &__form-group {
+
+  &__col {
     padding-right: 3rem;
+  }
+
+  &__form-group {
+    display: flex;
+    align-items: baseline;
+    gap: 0.825rem;
+    white-space: nowrap;
   }
 
   &__card-body { 
     padding: 0.5rem;
     padding-top: 1.5rem;
+  }
+
+  &__raster-resolution-drp-down{
+    width: 60%;
   }
   
   &__granule-extent {

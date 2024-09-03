@@ -8,86 +8,86 @@ export const swodlrToolTips = {
 
 export const utmRasterOptions = [
   {
-    title: '90 Meters',
+    title: '90',
     value: 90
   },
   {
-    title: '120 Meters',
+    title: '120',
     value: 120
   },
   {
-    title: '125 Meters',
+    title: '125',
     value: 125
   },
   {
-    title: '200 Meters',
+    title: '200',
     value: 200
   },
   {
-    title: '250 Meters',
+    title: '250',
     value: 250
   },
   {
-    title: '500 Meters',
+    title: '500',
     value: 500
   },
   {
-    title: '1000 Meters',
+    title: '1000',
     value: 1000
   },
   {
-    title: '2500 Meters',
+    title: '2500',
     value: 2500
   },
   {
-    title: '5000 Meters',
+    title: '5000',
     value: 5000
   },
   {
-    title: '10000 Meters',
+    title: '10000',
     value: 10000
   }
 ]
 
 export const geoRasterOptions = [
   {
-    title: '3 arc-seconds',
+    title: '3',
     value: 3
   },
   {
-    title: '4 arc-seconds',
+    title: '4',
     value: 4
   },
   {
-    title: '5 arc-seconds',
+    title: '5',
     value: 5
   },
   {
-    title: '6 arc-seconds',
+    title: '6',
     value: 6
   },
   {
-    title: '8 arc-seconds',
+    title: '8',
     value: 8
   },
   {
-    title: '15 arc-seconds',
+    title: '15',
     value: 15
   },
   {
-    title: '30 arc-seconds',
+    title: '30',
     value: 30
   },
   {
-    title: '60 arc-seconds',
+    title: '60',
     value: 60
   },
   {
-    title: '180 arc-seconds',
+    title: '180',
     value: 180
   },
   {
-    title: '300 arc-seconds',
+    title: '300',
     value: 300
   }
 ]

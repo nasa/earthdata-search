@@ -45,6 +45,7 @@ const SwodlrForm = ({
   const [granuleExtent, setGranuleExtent] = useState(false)
   const [sampleGrid, setSampleGrid] = useState('UTM')
   const [rasterResolution, setRasterResolution] = useState(90)
+  const [rasterResolutionUnit, setRasterResolutionUnit] = useState('meters')
 
   // When any key Swodlr parameters are changed, update the accessMethod data
   const handleSwoldrOptions = () => {
@@ -108,7 +109,10 @@ const SwodlrForm = ({
     let defaultRasterValue
     if (type === 'GEO') {
       defaultRasterValue = 3
+      // Update the units in accordance with the sample grid type
+      setRasterResolutionUnit('arc-seconds')
     } else {
+      setRasterResolutionUnit('meters')
       defaultRasterValue = 90
     }
 
@@ -197,7 +201,7 @@ const SwodlrForm = ({
               <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
             </OverlayTrigger>
           </Col>
-          <Col className="swodlr-form__form-group">
+          <Col className="swodlr-form__col">
             <Form.Group>
               <div className="swodlr-form__sample-grid">
                 <Form.Check
@@ -246,9 +250,10 @@ const SwodlrForm = ({
               <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
             </OverlayTrigger>
           </Col>
-          <Col className="swodlr-form__form-group">
-            <Form.Group>
+          <Col className="swodlr-form__col">
+            <Form.Group className="swodlr-form__form-group">
               <Form.Control
+                className="swodlr-form__raster-resolution-drp-down"
                 as="select"
                 onChange={handleRasterResolutionUpdate}
                 aria-label="rasterResolutionSelection"
@@ -269,6 +274,7 @@ const SwodlrForm = ({
                     ))
                 }
               </Form.Control>
+              {rasterResolutionUnit}
             </Form.Group>
           </Col>
         </Row>
