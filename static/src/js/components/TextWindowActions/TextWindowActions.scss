@@ -45,7 +45,7 @@
   }
 
   &__modal-container {
-    background: #F64137;
+    background: $color__nasa-red;
     height: 4rem;
     width: 4rem;
     border-radius: 4em;
@@ -54,7 +54,7 @@
 
   &__modal-icon {
     margin-top: .85rem;
-    color: $color__carbon--30;
+    color: $color__spacesuit-white;
   }
 
   &__modal-blurb {

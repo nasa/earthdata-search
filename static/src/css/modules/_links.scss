@@ -1,12 +1,11 @@
 .link, a {
-  color: $color__carbon-black;
   text-underline-offset: 0.25rem;
   text-decoration: underline dashed;
   text-decoration-thickness: 1px;
   text-decoration-color: inherit;
 
   &:hover {
-  text-decoration: none;
+    text-decoration: underline;
   }
 
   &:focus {
@@ -37,7 +36,7 @@
   &--external {
     border-bottom: 1px dashed currentColor;
     line-height: 1.125em;
-    text-decoration: none;
+    text-decoration: none !important;
 
     &:hover {
       border-bottom: 1px solid currentColor;
