@@ -326,10 +326,8 @@ export const decodeUrlParams = (paramString) => {
  * @return {String} URL encoded parameter string
  */
 export const encodeUrlQuery = (props) => {
-  // TODO this this something that needs tio be encoded
   const query = {}
 
-  console.log('🚀 ~ file: url.js:333 ~ Object.keys ~ urlDefs:', urlDefs)
   Object.keys(urlDefs).forEach((longKey) => {
     const { shortKey } = urlDefs[longKey]
     const value = urlDefs[longKey].encode(props[longKey])
@@ -340,7 +338,6 @@ export const encodeUrlQuery = (props) => {
   const mapParams = encodeMap(props.map, props.mapPreferences)
   const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
   const platformQuery = encodePlatforms(props.platformFacets)
-  // TODO this gets swodlr
   const collectionsQuery = encodeCollections(props)
   const timelineQuery = encodeTimeline(props.timelineQuery, props.pathname)
   const advancedQuery = encodeAdvancedSearch(props.advancedSearch)

@@ -41,7 +41,7 @@ export const AccessMethodRadio = ({
       'access-method-radio--disable-button': disabled
     }
   ]
-  const overlayTriggerTriggers = ['hover', 'click']
+  const overlayTriggers = ['hover', 'click']
 
   const labelClassName = classNames(labelClasses)
 
@@ -132,13 +132,15 @@ export const AccessMethodRadio = ({
               overlay={
                 (
                   <Tooltip>
-                    {details}
-                    <br />
-                    {externalLink && generateExternalLink(externalLink)}
+                    <div className="access-method-radio__tool-tip">
+                      {details}
+                      <br />
+                      {externalLink && generateExternalLink(externalLink)}
+                    </div>
                   </Tooltip>
                 )
               }
-              trigger={overlayTriggerTriggers}
+              trigger={overlayTriggers}
             >
               <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details" />
             </OverlayTrigger>

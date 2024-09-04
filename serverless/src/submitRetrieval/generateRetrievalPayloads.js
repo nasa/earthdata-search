@@ -83,9 +83,8 @@ export async function generateRetrievalPayloads(retrievalCollection, accessMetho
     const { concept_id: conceptId } = granuleParams
 
     let conceptIds = conceptId
-    // TODO I want ot pu one additional guard here to prevent > 10 orders from getting written into the database
+
     if (accessMethod.type === 'SWODLR') {
-      console.log('🚀 ~ file: generateRetrievalPayloads.js:87 ~ Array.from ~ pageNum:', pageNum)
       // TODO: adjustedPageNumber vs pageNum????
       if (adjustedPageNumber > maxSwodlrGranuleCount) {
         console.log('🚀 ~ file: generateRetrievalPayloads.js:83 ~ Array.from ~ conceptIds:', conceptIds)

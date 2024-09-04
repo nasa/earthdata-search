@@ -184,10 +184,7 @@ export const CollectionDetailsBody = ({
     const { items } = services
 
     if (items) {
-      // TODO swodlr?
-      // TODO wait what...
-      // TODO Make this a constant
-      const supportedServiceTypes = ['esi', 'opendap', 'echo orders', 'harmony', 'swodlr']
+      const supportedServiceTypes = ['esi', 'opendap', 'echo orders', 'harmony']
       items.forEach((service) => {
         const {
           supportedReformattings: supportedReformattingsList,
@@ -197,7 +194,6 @@ export const CollectionDetailsBody = ({
         // If the service type is not one that we support, don't display the reformatting options
         if (!supportedServiceTypes.includes(type.toLowerCase())) return
 
-        console.log('🚀 ~ file: CollectionDetailsBody.jsx:201 ~ items.forEach ~ supportedReformattingsList:', supportedReformattingsList)
         if (supportedReformattingsList) {
           supportedReformattingsList.forEach((supportedReformatting) => {
             const {

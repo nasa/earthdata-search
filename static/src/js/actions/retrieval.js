@@ -50,7 +50,6 @@ export const submitRetrieval = () => (dispatch, getState) => {
 
     let selectedService
     let selectedType
-    console.log('🚀 ~ file: retrieval.js:69 ~ metricsCollections ~ type:', type)
 
     if (type === 'download') {
       selectedService = 'Download'
@@ -64,7 +63,6 @@ export const submitRetrieval = () => (dispatch, getState) => {
     } else if (type === 'ESI') {
       const { optionDefinition } = selectedMethod
       const { name: serviceName } = optionDefinition
-      // TODO does swodlr need to be here?
       selectedService = serviceName
       selectedType = 'esi'
     } else if (type === 'OPeNDAP') {

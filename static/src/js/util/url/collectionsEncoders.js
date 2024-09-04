@@ -95,7 +95,6 @@ const encodeSwodlrDownload = (projectCollection) => {
   const {
     swodlrData
   } = selectedMethod
-  console.log('🚀 ~ file: collectionsEncoders.js:98 ~ encodeSwodlrDownload ~ swodlrData:', swodlrData)
 
   return swodlrData
 }
@@ -116,10 +115,7 @@ const encodeSelectedVariables = (projectCollection) => {
 
   if (selectedVariables.length === 0) return null
 
-  const watCars = selectedVariables.join('!')
-  console.log('🚀 ~ file: collectionsEncoders.js:120 ~ encodeSelectedVariables ~ watCars:', watCars)
-
-  return watCars
+  return selectedVariables.join('!')
 }
 
 const encodeTemporalSubsetting = (projectCollection) => {
@@ -174,7 +170,6 @@ const encodeOutputFormat = (projectCollection) => {
   } = selectedMethod
 
   if (!selectedOutputFormat) return null
-  console.log('🚀 ~ file: collectionsEncoders.js:180 ~ encodeOutputFormat ~ selectedOutputFormat:', selectedOutputFormat)
 
   return selectedOutputFormat
 }
@@ -231,8 +226,6 @@ const decodedSwodlrDownload = (pgParam) => {
 
   if (!swodlrData) return undefined
 
-  console.log('🚀 ~ file: collectionsEncoders.js:231 ~ decodedSwodlrDownload ~ swodlrData:', swodlrData)
-
   return swodlrData
 }
 
@@ -280,7 +273,6 @@ const decodedSpatialSubsetting = (pgParam) => {
  * @param {String} focusedCollection Focused Collection ID
  * @return {String} An object with encoded Collections
  */
-// TODO this does all the encoding for collection stuff
 export const encodeCollections = (props) => {
   const {
     collectionsMetadata = {},
@@ -398,8 +390,6 @@ export const encodeCollections = (props) => {
 
     // Encode swodlr form variables
     pg.swod = encodeSwodlrDownload(projectCollection)
-    console.log('🚀 ~ file: collectionsEncoders.js:385 ~ ids.forEach ~ pg.swod:', pg.swod)
-
     // Encode concatenation selection
     pg.cd = encodeConcatenateDownload(projectCollection)
 
@@ -500,7 +490,7 @@ export const decodeCollections = (params) => {
         granuleIds: removedGranuleIds = []
       } = decodedGranules('r', pCollection));
 
-      // Granules removed by way of terciary filter
+      // Granules removed by way of tertiary filter
       ({
         isOpenSearch: excludedIsOpenSearch,
         granuleIds: excludedGranuleIds = []
@@ -539,8 +529,6 @@ export const decodeCollections = (params) => {
 
       // Decode selected access method
       selectedAccessMethod = decodedSelectedAccessMethod(pCollection)
-      console.log('🚀 ~ file: collectionsEncoders.js:535 ~ ids.forEach ~ selectedAccessMethod:', selectedAccessMethod)
-
       // Decode output format
       selectedOutputFormat = decodedOutputFormat(pCollection)
 
@@ -561,7 +549,6 @@ export const decodeCollections = (params) => {
       if (selectedAccessMethod && selectedAccessMethod.startsWith('swodlr')) {
         // TODO some url valuse here have to be encoded
         swodlrData = decodedSwodlrDownload(pCollection)
-        console.log('🚀 ~ file: collectionsEncoders.js:558 ~ ids.forEach ~ swodlrData:', swodlrData)
       }
 
       // Determine if the collection is a CWIC collection
@@ -608,7 +595,6 @@ export const decodeCollections = (params) => {
         }
 
         if (swodlrData) {
-          console.log('🚀 ~ file: collectionsEncoders.js:605 ~ ids.forEach ~ swodlrData:', swodlrData)
           projectById[collectionId].accessMethods = {
             [selectedAccessMethod]: {
               swodlrData
