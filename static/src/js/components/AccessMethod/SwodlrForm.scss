@@ -1,9 +1,5 @@
 .swodlr-form {
 
-  &__advanced-options-container {
-      display: flex;
-    }
-  
   &__advanced-options-item {
     flex-grow: 0;
     flex-shrink: 0;
@@ -52,11 +48,6 @@
     width: 20rem;
   }
 
-  &__info-icon {
-    vertical-align: baseline;
-    padding-left: 0 !important;
-  }
-
   &__col {
     padding-right: 3rem;
   }
@@ -73,7 +64,7 @@
     padding-top: 1.5rem;
   }
 
-  &__raster-resolution-drp-down{
+  &__raster-resolution-drp-down {
     width: 60%;
   }
   

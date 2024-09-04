@@ -168,6 +168,9 @@ const submitSwodlrOrder = async (event, context) => {
         const { data } = responseData
         const { generateL2RasterProduct } = data
 
+        // Log out swodlr product response
+        console.log('generateL2RasterProduct response from swodlr: ', generateL2RasterProduct)
+
         // ID Information
         // product Id is the Id of the product that's being generated
         // jobId is the Id of the job that is being run to generate the product
