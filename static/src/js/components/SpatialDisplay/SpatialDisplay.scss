@@ -32,7 +32,7 @@
     padding: 0 calc($spacer / 4);
     font-weight: 700;
     font-size: 0.75rem;
-    color: $color__black--500;
+    color: $color__carbon--50;
   }
 
   &__text-primary {
@@ -45,13 +45,13 @@
 
   &__text-secondary {
     margin-left: calc($spacer / 2);
-    color: $color__black--400;
+    color: $color__carbon--40;
     font-size: 0.75rem;
   }
 
   &__loading {
     margin-left: 0.75*$spacer;
-    color: $color__black--400;
+    color: $color__carbon--40;
     font-size: 0.75rem;
   }
 

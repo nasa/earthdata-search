@@ -12,11 +12,11 @@ $headerHeight: 2rem;
   align-items: center;
   justify-content: center;
   flex-basis: auto;
-  background: #FEFEFE;
-  color: #DDD;
+  background: $color__spacesuit-white;
+  color: $color__carbon--20;
   font-weight: bold;
   z-index: 0;
-  background: #000;
+  background: $color__carbon-black;
 
   .is-panels-dragging & {
     pointer-events: none;

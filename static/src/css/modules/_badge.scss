@@ -1,6 +1,10 @@
 .badge {
   &--purple {
-    color: $color__white;
-    background-color: $color__purple;
+    color: $color__spacesuit-white;
+    background-color: $color__international-orange;
   }
+}
+
+.badge-info {
+  background-color: $color__nasa-blue;
 }

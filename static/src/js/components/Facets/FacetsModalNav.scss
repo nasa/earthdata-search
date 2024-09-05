@@ -3,11 +3,11 @@
   flex-grow: 0;
   flex-shrink: 0;
   padding: $spacer;
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid $color__carbon--10;
 
   &__heading {
     margin-right: calc($spacer / 2);
-    color: $color__black--400;
+    color: $color__carbon--40;
   }
 
   &__list {
@@ -22,11 +22,11 @@
     font-weight: 700;
 
     &:active {
-      color: #14669c;
+      color: $color__nasa-blue--tint;
     }
 
     &--inactive {
-      color: $color__black--400;
+      color: $color__carbon--40;
     }
   }
 }

@@ -1,5 +1,5 @@
 .app-logo {
-  color: $color__white;
+  color: $color__spacesuit-white;
   display: flex;
   align-items: center;
 
@@ -59,8 +59,8 @@
 
   &__site-name {
     display: inline-block;
-    color: $color__white;
     font-size: 1rem;
+    color: $color__spacesuit-white;
     text-transform: uppercase;
     font-weight: 300;
     font-family: $headings-font-family;
@@ -68,14 +68,14 @@
 
     &:hover {
       text-decoration: none;
-      color: $color__white;
+      color: $color__spacesuit-white;
     }
 
     .route-wrapper--light & {
-      color: $color__black--800;
+      color: $color__carbon--80;
 
       &:hover {
-        color: $color__black--800;
+        color: $color__carbon--80;
       }
     }
   }
@@ -89,10 +89,10 @@
   &__site-env {
     position: absolute;
     right: 0;
-    color: white;
+    color: $color__spacesuit-white;
     padding: 0.2rem 0.3rem;
     font-size: 0.625rem;
-    background: $color__blue;
+    background: $color__nasa-blue;
     border-radius: 0 0 0 0.125rem;
   }
 
@@ -126,6 +126,6 @@
     margin: 0;
     font-weight: 500;
     font-size: 1.125rem;
-    color: $color__blue;
+    color: $color__nasa-blue;
   }
 }

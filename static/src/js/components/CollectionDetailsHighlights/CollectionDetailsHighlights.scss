@@ -2,7 +2,7 @@
   &__body {
     padding-top: 0.5rem;
     padding-bottom: 0.25rem;
-    border-bottom: 1px solid $color__black--200;
+    border-bottom: 1px solid $color__carbon--20;
   }
 
   &__item-header {
@@ -14,7 +14,7 @@
     font-size: 0.825rem;
     font-weight: 700;
     letter-spacing: 0.005rem;
-    color: $color__black--500;
+    color: $color__carbon--50;
     word-break: break-all;
   }
 
@@ -30,7 +30,7 @@
     align-items: center;
     justify-content: space-between;
     font-size: 0.825rem;
-    color: $color__black--700;
+    color: $color__carbon--70;
 
     &--desc {
       display: -webkit-box;

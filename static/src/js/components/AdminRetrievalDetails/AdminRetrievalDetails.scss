@@ -1,7 +1,7 @@
 .admin-retrieval-details {
   &__collection {
     margin-top: 2rem;
-    border: 1px solid $color__black--200;
+    border: 1px solid $color__carbon--20;
     border-radius: 0.25rem;
     overflow: hidden;
   }
@@ -10,14 +10,14 @@
     display: flex;
     flex-direction: column;
     padding: $spacer;
-    border-bottom: 1px solid $color__black--200;
+    border-bottom: 1px solid $color__carbon--20;
   }
 
   &__collection-heading {
     font-weight: 700;
     font-size: 1.125em;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid $color__black--200;
+    border-bottom: 1px solid $color__carbon--20;
   }
 
   &__collection-heading-details {
@@ -65,12 +65,12 @@
     display: block;
     font-size: 0.75rem;
     font-style: italic;
-    color: $color__black--500;
+    color: $color__carbon--50;
   }
 
   &__metadata-display-content {
     font-size: 1rem;
-    color: $color__black--700;
+    color: $color__carbon--70;
     word-break: break-all;
   }
 }
