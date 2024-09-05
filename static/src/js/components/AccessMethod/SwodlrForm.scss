@@ -10,21 +10,21 @@
       width: 100%;
       padding: $spacer;
       border: 0;
-      border-top: 1px solid $color__black--200;
+      border-top: 1px solid $color__carbon--20;
       background: none;
       outline: none;
-      color: $color__black--500;
+      color: $color__carbon--50;
       text-align: left;
       padding: 0.825rem;
 
 
       &:hover {
-        color: $color__black--600;
+        color: $color__carbon--50;
       }
     }
 
     .collapse-panel__panel {
-      border-top: 1px solid $color__black--200;
+      border-top: 1px solid $color__carbon--20;
     }
   }
 
@@ -36,7 +36,7 @@
   &__table-th {
     border: 0 !important;
     white-space: nowrap;
-    padding: 0 .625rem !important;
+    padding: 0.25rem 0.625rem 0.625rem !important;
   }
 
   &__table-td-granule-id {
@@ -60,8 +60,7 @@
   }
 
   &__card-body { 
-    padding: 0.5rem;
-    padding-top: 1.5rem;
+    padding: 0.1rem 1rem;
   }
 
   &__raster-resolution-drp-down {
