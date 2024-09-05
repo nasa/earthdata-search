@@ -147,6 +147,14 @@
     text-align: left;
   }
 
+  &__external-link {
+    color: $color__spacesuit-white;
+
+    &:hover {
+      color: $color__nasa-blue;
+    }
+  }
+
   &__service-name {
     display: block;
     font-size: 0.825rem;

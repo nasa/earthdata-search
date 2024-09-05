@@ -51,7 +51,7 @@ export const AccessMethodRadio = ({
     * @param {Object} externalLink.message - The text of the link the user sees
   */
   const generateExternalLink = ({ link, message }) => (
-    <ExternalLink href={link}>
+    <ExternalLink href={link} className="access-method-radio__external-link">
       {message}
     </ExternalLink>
   )
