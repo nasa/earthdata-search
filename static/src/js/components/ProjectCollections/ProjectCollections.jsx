@@ -169,8 +169,8 @@ export class ProjectCollections extends Component {
           <Button
             type="submit"
             variant="full"
-            bootstrapVariant="success"
             icon={Download}
+            bootstrapVariant="primary"
             label="Download project data"
             disabled={!isValid}
             spinner={isSubmitting}

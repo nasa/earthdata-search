@@ -4,10 +4,10 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  background-color: $color__white;
-  border-top: 1px solid $color__black--200;
-  border-bottom: 1px solid $color__black--200;
-  color: $color__black--900;
+  background-color: $color__spacesuit-white;
+  border-top: 1px solid $color__carbon--20;
+  border-bottom: 1px solid $color__carbon--20;
+  color: $color__carbon--90;
   visibility: hidden;
 
   &--is-open {

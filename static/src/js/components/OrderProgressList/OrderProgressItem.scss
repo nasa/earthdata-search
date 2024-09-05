@@ -24,29 +24,29 @@
   &__title {
     margin-bottom: 0;
     font-size: 0.825rem;
-    color: $color__black--500;
+    color: $color__carbon--50;
   }
 
   &__bar {
     margin-top: calc($spacer / 2);
 
     .progress-bar {
-      background-color: $color__indigo;
-      border: 1px solid darken($color__indigo, 20)
+      background-color: $color__nasa-blue;
+      border: 1px solid darken($color__nasa-blue, 20)
     }
   }
 
   &__badge {
     margin-left: calc($spacer / 2);
-    color: $color__white;
-    background-color: $color__indigo;
+    color: $color__spacesuit-white;
+    background-color: $color__nasa-blue;
 
     &--complete {
-      background-color: $color__green;
+      background-color: $color__active-green;
     }
 
     &--failed {
-      background-color: $color__red;
+      background-color: $color__nasa-red--shade;
     }
   }
 }

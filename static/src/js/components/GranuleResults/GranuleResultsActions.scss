@@ -12,7 +12,7 @@
     font-size: 0.575rem;
     padding: 0.25rem 0.35rem;
     font-weight: 400;
-    text-shadow: 0 0 3px rgba($color__black, 0.4);
+    text-shadow: 0 0 3px rgba($color__carbon-black, 0.4);
 
     .btn & {
       position: relative;
@@ -52,7 +52,7 @@
     margin-right: 0.5rem;
     line-height: 2;
     font-weight: 700;
-    color: $color__black--700;
+    color: $color__carbon--70;
   }
 
   &__primary-actions {
@@ -74,21 +74,21 @@
   &__action {
     display: flex;
     align-items: center;
-    color: $color__black--500;
+    color: $color__carbon--50;
     margin-right: 1rem;
     padding: 0;
 
     &:hover,
     &:active {
-      color: $color__black--600;
+      color: $color__carbon--60;
     }
 
     .granule-results-actions__explore-button {
-      color: $color__black--500;
+      color: $color__carbon--50;
 
       &:hover,
       &:active {
-        color: $color__black--600;
+        color: $color__carbon--60;
       }
 
       &.dropdown-toggle:after {
@@ -122,7 +122,7 @@
 
     &--subscriptions {
       .badge {
-        background-color: $color__yellow;
+        background-color: $color__international-orange;
       }
     }
 
@@ -133,11 +133,11 @@
     }
 
     &--remove {
-      color: $color__red;
+      color: $color__nasa-red;
 
       &:hover,
       &:active {
-        color: $color__red--dark;
+        color: $color__nasa-red--shade;
       }
     }
   }

@@ -1,8 +1,8 @@
 .form-control {
-  border: 1px solid $color__black--300;
+  border: 1px solid $color__carbon--30;
 
   &:focus {
-    border: 1px solid $color__black--400;
+    border: 1px solid $color__carbon--40;
   }
 }
 
@@ -27,23 +27,23 @@
 .dropdown-dark,
 .dropdown-menu-dark {
   .form-control {
-    background-color: darken($color__black--600, 10);
-    color: $color__white;
-    border: 1px solid darken($color__black--600, 10);
+    background-color: $color__carbon--60;
+    color: $color__spacesuit-white;
+    border: 1px solid $color__carbon--60;
 
     &::placeholder,
     &::placeholder-shown {
-      color: $color__black--400;
+      color: $color__carbon--60;
     }
 
     &:focus {
-      color: $color__white;
-      background-color: $color__black--600;
-      border: 1px solid $color__black--700;
+      color: $color__spacesuit-white;
+      background-color: $color__carbon--60;
+      border: 1px solid $color__carbon--90;
 
       &::placeholder,
       &::placeholder-shown {
-        color: $color__black--300;
+        color: $color__carbon--60;
       }
     }
   }

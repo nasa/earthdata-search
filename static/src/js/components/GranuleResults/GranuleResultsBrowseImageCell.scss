@@ -8,11 +8,11 @@
   width: 60px;
   overflow: hidden;
   font-size: 0.5rem;
-  border-bottom: 1px solid $color__black--200;
+  border-bottom: 1px solid $color__carbon--20;
 
   &--image {
-    background-color: #1a1a1a;
-    border-bottom: 1px solid $color__black--700;
+    background-color: $color__carbon--90;
+    border-bottom: 1px solid $color__carbon--70;
   }
 
   &__thumb {

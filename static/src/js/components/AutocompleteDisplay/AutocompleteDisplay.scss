@@ -30,7 +30,7 @@
     font-size: 0.625rem;
     line-height: 1.25rem;
     font-weight: 700;
-    background-color: $color__blue;
+    background-color: $color__nasa-blue;
   }
 
   &__button {
@@ -46,19 +46,19 @@
     margin-left: auto;
     padding: 0;
     font-size: 0.725rem;
-    background-color: $color__blue;
+    background-color: $color__nasa-blue;
     border-radius: 0;
-    color: rgba($color__white, 0.7);
+    color: rgba($color__spacesuit-white, 0.7);
 
     &:hover {
-      background-color: darken($color__blue--dark, 1);
-      color: rgba($color__white, 0.7);
+      background-color: darken($color__nasa-blue--shade, 1);
+      color: rgba($color__spacesuit-white, 0.7);
     }
   }
 
   &__type {
     text-transform: uppercase;
-    color: rgba($color__white, 0.8);
+    color: rgba($color__spacesuit-white, 0.8);
     font-weight: 600;
     letter-spacing: -0.025rem;
   }
@@ -70,6 +70,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: $color__white;
+    color: $color__spacesuit-white;
   }
 }

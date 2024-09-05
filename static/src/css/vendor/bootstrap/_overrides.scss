@@ -18,25 +18,32 @@ $headings-font-family: "Inter", $font-family-sans-serif;
 $font-family-monospace: "DM Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
 /* Body */
-$body-bg: #000;
-$body-color: #333;
+$body-bg: $color__carbon-black;
+$body-color: $color__carbon--80;
+
+/* Model Content */
+$modal-content-bg: $color__spacesuit-white;
+$modal-content-color: $color__carbon--60;
 
 /* Theme Colors */
 $theme-colors: (
-  "primary": $color__theme--blue,
-  "light": $color__theme--light,
-  "success": $color__theme--green,
-  "yellow": $color__theme--yellow
+  "primary": $color__nasa-blue,
+  "light": $color__carbon--5,
+  "success": $color__active-green,
+  "danger": $color__nasa-red--shade,
+  "red": $color__nasa-red--shade,
+  "yellow": $color__international-orange
 );
 
-$border-color: $color__black--200;
+$border-color: $color__carbon--20;
 
 /* Buttons */
 $btn-border-radius: 0.125rem;
 
 /* Links */
-$color__link: $color__blue;
-$link-hover-color: $color__blue--dark;
+$link-color: $color__carbon-black;
+$color__link: $color__carbon-black;
+$link-hover-color: $color__carbon-black;
 $link-decoration: underline dashed;
 $link-hover-decoration: underline;
 
@@ -45,6 +52,10 @@ $badge-padding-y: 0.3125rem;
 $badge-padding-x: 0.5rem;
 $badge-font-size: 0.6875rem;
 $badge-border-radius: 0.125rem;
+
+/* Cards */
+$card-bg: $color__carbon--5;
+$card-border-color: $color__carbon--10;
 
 /* Custom Breakpoints */
 

@@ -13,7 +13,8 @@
   }
 
   &--error {
-    background-color: $color__red;
+    background-color: $color__nasa-red--shade;
+    color: $color__spacesuit-white;
 
     .banner__title {
       font-weight: 500;
@@ -25,12 +26,12 @@
     }
 
     .banner__close {
-      color: $color__white;
+      color: $color__spacesuit-white;
       transition: color 0.15s ease-in-out;
       display: flex;
 
       &:hover {
-        color: $color__white;
+        color: $color__spacesuit-white;
       }
     }
   }
@@ -46,7 +47,7 @@
   }
 
   &__title {
-    color: $color__white;
+    color: $color__spacesuit-white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,7 +60,7 @@
   }
 
   &__message {
-    color: $color__white;
+    color: $color__spacesuit-white;
     font-size: 0.925rem;
     font-weight: 200;
     margin: 0;
@@ -72,11 +73,11 @@
     top: 50%;
     top: calc(50% + 1px);
     right: 0.75rem;
-    color: $color__black--700;
+    color: $color__carbon--70;
     transform: translateY(-50%);
 
     &:hover {
-     color: $color__black--600;
+     color: $color__carbon--60;
     }
 
     &:focus {

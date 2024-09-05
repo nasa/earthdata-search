@@ -1,0 +1,9 @@
+.not-found {
+  &__link {
+    color: $color__spacesuit-white;
+
+    &:hover {
+      color: $color__spacesuit-white;
+    }
+  }
+}
