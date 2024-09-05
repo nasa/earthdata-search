@@ -14,7 +14,7 @@
     display: block;
     height: 15px;
     width: 15px;
-    background: #fff;
+    background: $color__spacesuit-white;
     border: 1px solid $border-color;
     box-shadow: 0 0 10px 3px rgba(0,0,0,0.04);
     color: black;
@@ -38,11 +38,11 @@
     flex-grow: 1;
     display: block;
     text-align: left;
-    color: $color__black--900;
+    color: $color__carbon-black;
 
     &:hover,
     &:active {
-      color: $color__black--400;
+      color: $color__carbon-black;
     }
   }
 
@@ -68,7 +68,7 @@
 
   &__stats-item {
     margin-right: calc($spacer / 2);
-    color: $color__black--500;
+    color: $color__carbon--60;
     font-size: 0.85rem;
 
     &:last-child {
@@ -84,7 +84,7 @@
 
   &__more-actions-toggle {
     font-size: 1.125rem;
-    color: $color__black--400;
+    color: $color__carbon--40;
   }
 
   &__footer {
@@ -104,7 +104,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: $color__red;
+      color: $color__nasa-red;
     }
   }
 
@@ -114,11 +114,11 @@
     justify-content: center;
     padding: 0;
     font-size: 0.85rem;
-    color: $color__black--500;
+    color: $color__carbon--60;
 
     &:hover,
     &:active {
-      color: $color__black--600;
+      color: $color__carbon--70;
     }
   }
 }

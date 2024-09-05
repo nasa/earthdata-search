@@ -22,7 +22,7 @@
 
 .dropdown-header {
   font-weight: 700;
-  color: $color__black--500;
+  color: $color__carbon--50;
 
   .dropdown-menu--condensed & {
     padding: .25rem .75rem;
@@ -32,12 +32,12 @@
 }
 
 .dropdown-item {
-  color: $color__black--800;
+  color: $color__carbon--80;
   font-size: 0.875rem;
 
   &:hover {
-    background-color: lighten($color__black--200, 5%);
-    color: $color__black--700;
+    background-color: $color__carbon--10;
+    color: $color__carbon--70;
   }
 
   .dropdown-menu--condensed & {

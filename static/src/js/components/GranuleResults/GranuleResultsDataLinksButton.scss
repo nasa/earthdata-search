@@ -1,6 +1,6 @@
 .granule-results-data-links-button {
   &__dropdown-item {
-    color: $color__black--800;
+    color: $color__carbon--80;
     font-size: 0.875rem;
     padding: 0.25rem 1rem;
     user-select: text;
@@ -9,12 +9,11 @@
     cursor: pointer;
 
     .button__icon {
-      color: rgba($color__white, 0.7);
+      color: rgba($color__spacesuit-white, 0.7);
     }
 
     &:hover {
-      background-color: $color__blue--dark;
-      color: $color__black--100;
+      color: $color__carbon-black;
     }
   }
 
@@ -39,9 +38,9 @@
     top: 0;
     left: 0;
     padding: 0.325rem 1rem;
-    background: $color__black--100;
-    border-bottom: 1px solid $color__black--200;
-    color: $color__black--600;
+    background: $color__carbon--10;
+    border-bottom: 1px solid $color__carbon--20;
+    color: $color__carbon--60;
     font-size: 0.825rem;
     line-height: 1.5rem;
     white-space: nowrap;
@@ -60,7 +59,7 @@
 
   &__icon {
     margin-left: 0.5rem;
-    color: rgba($color__white, 0.8);
+    color: rgba($color__spacesuit-white, 0.8);
     opacity: 0;
     transition: all 0.2s ease;
 
@@ -80,7 +79,7 @@
     display: flex;
     align-items: center;
     margin-left: 0.25rem;
-    color: $color__black--700;
+    color: $color__carbon--70;
     font-weight: 700;
     align-items: center;
     user-select: text;
@@ -94,7 +93,7 @@
       position: relative;
       margin-left: 0.25rem;
       font-size: 0.825rem;
-      color: $color__black--500;
+      color: $color__carbon--50;
       opacity: 0;
       transition: opacity 0.1s ease-in-out;
 
@@ -118,12 +117,12 @@
   }
 
   &__tab-icon {
-    color: $color__black--300;
+    color: $color__carbon--30;
     margin-right: 0.325rem;
     transition: color 0.1s ease-in-out;
 
     .nav-item.active & {
-      color: $color__black--500;
+      color: $color__carbon--50;
     }
   }
 }

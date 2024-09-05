@@ -5,6 +5,8 @@ import { eventEmitter } from '../../events/events'
 import LoggerRequest from '../../util/request/loggerRequest'
 import { locationPropType } from '../../util/propTypes/location'
 
+import './NotFound.scss'
+
 export const NotFound = ({
   location
 }) => {
@@ -49,11 +51,11 @@ export const NotFound = ({
         {' '}
         when contacting
         {' '}
-        <a href="mailto:support@earthdata.nasa.gov">Earthdata Operations</a>
+        <a href="mailto:support@earthdata.nasa.gov" className="not-found__link">Earthdata Operations</a>
         .
       </p>
       <p>
-        <a href="/">Click here</a>
+        <a href="/" className="not-found__link">Click here</a>
         {' '}
         to return to the home page.
       </p>

@@ -6,7 +6,7 @@
   &__progress {
     z-index: 1;
     position: relative;
-    stroke: $color__green;
+    stroke: $color__active-green;
     transition: stroke-dashoffset 0.35s;
     transform: rotate(-90deg);
     transform-origin: 50% 50%,
@@ -15,6 +15,6 @@
   &__circle-back {
     z-index: 0;
     position: relative;
-    stroke: $color__black--200;
+    stroke: $color__carbon--20;
   }
 }
