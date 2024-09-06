@@ -97,7 +97,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     downloads: () => buildDownload(granules, isOpenSearch)
   }
 
-  const nonDownloadMethodItems = serviceItems.flatMap((serviceItem) => {
+  const nonDownloadMethodItems = serviceItems ? serviceItems.flatMap((serviceItem) => {
     let associatedVariables = collectionAssociatedVariables
     const {
       type: serviceType,
@@ -123,7 +123,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     console.log(items)
 
     return items
-  }, {})
+  }, {}) : []
 
   const nonDownloadMethods = reduceAccessMethods(nonDownloadMethodItems)
 
