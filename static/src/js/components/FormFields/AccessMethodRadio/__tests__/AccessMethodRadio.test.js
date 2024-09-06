@@ -72,6 +72,11 @@ describe('AccessMethodRadio component', () => {
     expect(screen.getByText('test subtitle')).toBeInTheDocument()
   })
 
+  test('displays the more information icon', () => {
+    setup()
+    expect(screen.getByTestId('edsc-icon')).toBeInTheDocument()
+  })
+
   test('displays the description', () => {
     setup()
     expect(screen.getByText('test description')).toBeInTheDocument()
@@ -86,9 +91,11 @@ describe('AccessMethodRadio component', () => {
     test('displays the details as a tooltip on hover', async () => {
       setup()
       const user = userEvent.setup()
-      const icon = screen.getByTestId('edsc-icon-details')
+      const icon = screen.getByTestId('edsc-icon')
 
-      await user.hover(icon)
+      await act(async () => {
+        await user.hover(icon)
+      })
 
       const tooltip = await screen.findByRole('tooltip')
 
@@ -105,7 +112,7 @@ describe('AccessMethodRadio component', () => {
       })
 
       const user = userEvent.setup()
-      const icon = screen.getByTestId('edsc-icon-details')
+      const icon = screen.getByTestId('edsc-icon')
 
       await act(async () => {
         await user.click(icon)
@@ -166,7 +173,7 @@ describe('AccessMethodRadio component', () => {
 
   describe('fake input element', () => {
     test('does not display an icon', () => {
-      setup()
+      setup({ details: null })
       expect(screen.queryByTestId('edsc-icon')).toBeNull()
     })
   })
@@ -183,7 +190,6 @@ describe('AccessMethodRadio component', () => {
         setup({ checked: true })
         const radioButton = screen.getByRole('radio', { value: 'test value' })
         expect(radioButton.checked).toEqual(true)
-        expect(screen.getByTestId('edsc-icon')).toBeInTheDocument()
       })
     })
   })
