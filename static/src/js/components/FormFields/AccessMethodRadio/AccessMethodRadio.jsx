@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
@@ -41,20 +41,10 @@ export const AccessMethodRadio = ({
       'access-method-radio--disable-button': disabled
     }
   ]
-  const overlayTriggers = ['hover', 'click']
+
+  const [showTooltip, setShowTooltip] = useState(false)
 
   const labelClassName = classNames(labelClasses)
-
-  /** Renders an external link for the access method.
-    * @param {Object} externalLink - The external link optionally passed for the access method type
-    * @param {Object} externalLink.link - The href and destination for the link
-    * @param {Object} externalLink.message - The text of the link the user sees
-  */
-  const generateExternalLink = ({ link, message }) => (
-    <ExternalLink href={link} className="access-method-radio__external-link">
-      {message}
-    </ExternalLink>
-  )
 
   const {
     hasSpatialSubsetting = false,
@@ -125,24 +115,38 @@ export const AccessMethodRadio = ({
         </header>
         {
           details && (
-
             <OverlayTrigger
+              show={showTooltip}
               placement="top"
-              delay={1000}
+              onToggle={
+                (state) => {
+                  setShowTooltip(state)
+                }
+              }
               overlay={
                 (
-                  <Tooltip>
+                  <Tooltip
+                    className="tooltip--ta-left tooltip--wide"
+                    onMouseEnter={() => externalLink && setShowTooltip(true)}
+                    onMouseLeave={() => externalLink && setShowTooltip(false)}
+                  >
                     <div className="access-method-radio__tool-tip">
-                      {details}
-                      <br />
-                      {externalLink && generateExternalLink(externalLink)}
+                      <p className="mb-0">
+                        {details}
+                      </p>
+                      {
+                        externalLink && (
+                          <ExternalLink href={externalLink.link} className="d-inline-block mt-3" variant="light">
+                            {externalLink.message}
+                          </ExternalLink>
+                        )
+                      }
                     </div>
                   </Tooltip>
                 )
               }
-              trigger={overlayTriggers}
             >
-              <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details" />
+              <EDSCIcon icon={FaQuestionCircle} size="16px" variant="more-info" />
             </OverlayTrigger>
           )
         }

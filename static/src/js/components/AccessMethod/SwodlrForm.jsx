@@ -134,148 +134,137 @@ const SwodlrForm = ({
       customHeadingTag="h4"
       nested
     >
-      <Container fluid>
-        <Row>
-          <Col>
+      <Container className="p-0" fluid>
+        <Row as={Form.Group}>
+          <Form.Label className="d-flex align-items-center" column sm="5">
             Granule Extent
             <OverlayTrigger
               placement="top"
               overlay={
                 (
-                  <Tooltip className="swodlr-form__tooltip">
+                  <Tooltip className="tooltip--ta-left tooltip--wide">
                     {swodlrToolTips.GranuleExtent}
                   </Tooltip>
                 )
               }
             >
-              <EDSCIcon icon={FaQuestionCircle} size="1rem" variant="details-span" />
+              <EDSCIcon icon={FaQuestionCircle} size="12px" variant="more-info" />
             </OverlayTrigger>
-          </Col>
-          <Col>
-            <Form.Group>
-              <div className="swodlr-form__granule-extent">
-                <Form.Check
-                  inline
-                  label="128 x 128 km"
-                  name="granuleExtent"
-                  type="radio"
-                  id="granule-extent-128-by-128"
-                  checked={!granuleExtent}
-                  onChange={
-                    () => {
-                      handleGranuleExtent(false)
-                    }
-
-                  }
-                />
-                <Form.Check
-                  inline
-                  label="256 x 128 km"
-                  name="granuleExtent"
-                  type="radio"
-                  id="granule-extent-256-by-128"
-                  checked={granuleExtent}
-                  onChange={
-                    () => {
-                      handleGranuleExtent(true)
-                    }
-                  }
-                />
-              </div>
-            </Form.Group>
+          </Form.Label>
+          <Col className="d-flex align-items-center" sm="7">
+            <Form.Check
+              inline
+              label="128 x 128 km"
+              name="granuleExtent"
+              type="radio"
+              id="granule-extent-128-by-128"
+              checked={!granuleExtent}
+              onChange={
+                () => {
+                  handleGranuleExtent(false)
+                }
+              }
+            />
+            <Form.Check
+              inline
+              label="256 x 128 km"
+              name="granuleExtent"
+              type="radio"
+              id="granule-extent-256-by-128"
+              checked={granuleExtent}
+              onChange={
+                () => {
+                  handleGranuleExtent(true)
+                }
+              }
+            />
           </Col>
         </Row>
-        <Row>
-          <Col>
+        <Row as={Form.Group}>
+          <Form.Label className="d-flex align-items-center" column sm="5">
             Sampling Grid Type
             <OverlayTrigger
               placement="top"
               overlay={
                 (
-                  <Tooltip className="swodlr-form__tooltip">
+                  <Tooltip className="tooltip--ta-left tooltip--wide">
                     {swodlrToolTips.SamplingGridResolution}
                   </Tooltip>
                 )
               }
             >
-              <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+              <EDSCIcon icon={FaQuestionCircle} size="12px" variant="more-info" />
             </OverlayTrigger>
-          </Col>
-          <Col className="swodlr-form__col">
-            <Form.Group>
-              <div className="swodlr-form__sample-grid">
-                <Form.Check
-                  inline
-                  label="UTM"
-                  name="sample-grid"
-                  type="radio"
-                  id="sample-grid-utm"
-                  checked={sampleGrid === 'UTM'}
-                  onChange={
-                    () => {
-                      handleSampleGrid('UTM')
-                    }
-                  }
-                />
-                <Form.Check
-                  inline
-                  label="LAT/LON"
-                  name="sample-grid"
-                  type="radio"
-                  id="sample-grid-lat-lon"
-                  checked={sampleGrid === 'GEO'}
-                  onChange={
-                    () => {
-                      handleSampleGrid('GEO')
-                    }
-                  }
-                />
-              </div>
-            </Form.Group>
+          </Form.Label>
+          <Col className="d-flex align-items-center" sm="7">
+            <Form.Check
+              inline
+              label="UTM"
+              name="sample-grid"
+              type="radio"
+              id="sample-grid-utm"
+              checked={sampleGrid === 'UTM'}
+              onChange={
+                () => {
+                  handleSampleGrid('UTM')
+                }
+              }
+            />
+            <Form.Check
+              inline
+              label="LAT/LON"
+              name="sample-grid"
+              type="radio"
+              id="sample-grid-lat-lon"
+              checked={sampleGrid === 'GEO'}
+              onChange={
+                () => {
+                  handleSampleGrid('GEO')
+                }
+              }
+            />
           </Col>
         </Row>
-        <Row>
-          <Col>
+        <Row as={Form.Group}>
+          <Form.Label className="d-flex align-items-center" column sm="5">
             Raster Resolution
             <OverlayTrigger
               placement="top"
               overlay={
                 (
-                  <Tooltip className="swodlr-form__tooltip">
+                  <Tooltip className="tooltip--ta-left tooltip--wide">
                     {swodlrToolTips.RasterResolution}
                   </Tooltip>
                 )
               }
             >
-              <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details-span" />
+              <EDSCIcon icon={FaQuestionCircle} size="12px" variant="more-info" />
             </OverlayTrigger>
-          </Col>
-          <Col className="swodlr-form__col">
-            <Form.Group className="swodlr-form__form-group">
-              <Form.Control
-                className="swodlr-form__raster-resolution-drp-down"
-                as="select"
-                onChange={handleRasterResolutionUpdate}
-                aria-label="rasterResolutionSelection"
-                value={rasterResolution}
-              >
-                {
-                  // Raster Resolution Dropdown
-                  sampleGrid === 'GEO'
-                    ? geoRasterOptions.map((option) => (
-                      <option value={option.value} key={option.value} aria-label={`geo-raster-selection-${option.value}`}>
-                        {option.title}
-                      </option>
-                    ))
-                    : utmRasterOptions.map((option) => (
-                      <option value={option.value} key={option.value} aria-label={`utm-raster-selection-${option.value}`}>
-                        {option.title}
-                      </option>
-                    ))
-                }
-              </Form.Control>
-              {rasterResolutionUnit}
-            </Form.Group>
+          </Form.Label>
+          <Col className="d-flex align-items-center" sm="7">
+            <Form.Control
+              className="col col-5 mr-2"
+              as="select"
+              onChange={handleRasterResolutionUpdate}
+              aria-label="rasterResolutionSelection"
+              value={rasterResolution}
+            >
+              {
+                // Raster Resolution Dropdown
+                sampleGrid === 'GEO'
+                  ? geoRasterOptions.map((option) => (
+                    <option value={option.value} key={option.value} aria-label={`geo-raster-selection-${option.value}`}>
+                      {option.title}
+                    </option>
+                  ))
+                  : utmRasterOptions.map((option) => (
+                    <option value={option.value} key={option.value} aria-label={`utm-raster-selection-${option.value}`}>
+                      {option.title}
+                    </option>
+                  ))
+              }
+            </Form.Control>
+            {rasterResolutionUnit}
           </Col>
         </Row>
         <Row hidden={sampleGrid !== 'UTM'}>
@@ -287,23 +276,25 @@ const SwodlrForm = ({
                   className="swodlr-form__advanced-options-item"
                 >
                   <Card.Body className="swodlr-form__card-body">
-                    <Table striped bordered size="sm" responsive>
+                    <Table className="table--small mt-3" striped bordered size="sm">
                       <thead>
                         <tr>
-                          <th className="swodlr-form__table-th">Granule</th>
+                          <th className="swodlr-form__table-th">
+                            Granule
+                          </th>
                           <th className="swodlr-form__table-th">
                             UTM Zone Adjust
                             <OverlayTrigger
                               placement="top"
                               overlay={
                                 (
-                                  <Tooltip className="swodlr-form__tooltip">
+                                  <Tooltip className="tooltip--ta-left tooltip--wide">
                                     {swodlrToolTips.UTM}
                                   </Tooltip>
                                 )
                               }
                             >
-                              <EDSCIcon icon={FaQuestionCircle} className="swodlr-form__info-icon" size="0.825rem" variant="details-span" />
+                              <EDSCIcon icon={FaQuestionCircle} className="swodlr-form__info-icon" size="12px" variant="more-info" />
                             </OverlayTrigger>
                           </th>
                           <th className="swodlr-form__table-th">
@@ -312,13 +303,13 @@ const SwodlrForm = ({
                               placement="top"
                               overlay={
                                 (
-                                  <Tooltip className="swodlr-form__tooltip">
+                                  <Tooltip className="tooltip--ta-left tooltip--wide">
                                     {swodlrToolTips.MGRS}
                                   </Tooltip>
                                 )
                               }
                             >
-                              <EDSCIcon icon={FaQuestionCircle} className="swodlr-form__info-icon" size="0.825rem" variant="details-span" />
+                              <EDSCIcon icon={FaQuestionCircle} className="swodlr-form__info-icon" size="12px" variant="more-info" />
                             </OverlayTrigger>
                           </th>
                         </tr>
@@ -326,59 +317,65 @@ const SwodlrForm = ({
                       <tbody>
                         {
                           // UTM Zone Adjust and MGRS Band Adjust Form
-                          granuleList && granuleList.map((granule, i) => (
-                            <tr key={granule.id}>
+                          granuleList && granuleList.map(({ id, title }, i) => (
+                            <tr key={id}>
                               {/* TODO this one needs class */}
-                              <td className="swodlr-form__table-td-granule-id">{granule.id}</td>
+                              <td className="swodlr-form__table-td-granule-id">{title}</td>
                               <td className="swodlr-form__table-td">
-                                <Form.Check
-                                  inline
-                                  label="+1"
-                                  name={`${granule.id}-UTM-zone`}
-                                  type="radio"
-                                  aria-label={`${granule.id}-plus-1-UTM-zone`}
-                                  value={1}
-                                  onChange={
-                                    (e) => {
-                                      handleCollectionGranuleListUpdate(i, 'utm', e)
+                                <div>
+                                  <Form.Check
+                                    inline
+                                    className="text-align-right"
+                                    label="+1"
+                                    name={`${id}-UTM-zone`}
+                                    type="radio"
+                                    aria-label={`${id}-plus-1-UTM-zone`}
+                                    value={1}
+                                    onChange={
+                                      (e) => {
+                                        handleCollectionGranuleListUpdate(i, 'utm', e)
+                                      }
                                     }
-                                  }
-                                />
-                                <Form.Check
-                                  inline
-                                  label="0"
-                                  name={`${granule.id}-UTM-zone`}
-                                  type="radio"
-                                  aria-label={`${granule.id}-0-UTM-zone`}
-                                  value={0}
-                                  defaultChecked
-                                  onChange={
-                                    (e) => {
-                                      handleCollectionGranuleListUpdate(i, 'utm', e)
+                                  />
+                                  <Form.Check
+                                    inline
+                                    className="text-align-right"
+                                    label="0"
+                                    name={`${id}-UTM-zone`}
+                                    type="radio"
+                                    aria-label={`${id}-0-UTM-zone`}
+                                    value={0}
+                                    defaultChecked
+                                    onChange={
+                                      (e) => {
+                                        handleCollectionGranuleListUpdate(i, 'utm', e)
+                                      }
                                     }
-                                  }
-                                />
-                                <Form.Check
-                                  inline
-                                  label="-1"
-                                  name={`${granule.id}-UTM-zone`}
-                                  type="radio"
-                                  aria-label={`${granule.id}-minus-1-UTM-zone`}
-                                  value={-1}
-                                  onChange={
-                                    (e) => {
-                                      handleCollectionGranuleListUpdate(i, 'utm', e)
+                                  />
+                                  <Form.Check
+                                    inline
+                                    className="text-align-right"
+                                    label="-1"
+                                    name={`${id}-UTM-zone`}
+                                    type="radio"
+                                    aria-label={`${id}-minus-1-UTM-zone`}
+                                    value={-1}
+                                    onChange={
+                                      (e) => {
+                                        handleCollectionGranuleListUpdate(i, 'utm', e)
+                                      }
                                     }
-                                  }
-                                />
+                                  />
+                                </div>
                               </td>
                               <td className="swodlr-form__table-td">
                                 <Form.Check
                                   inline
+
                                   label="+1"
-                                  name={`${granule.id}-MGRS-band`}
+                                  name={`${id}-MGRS-band`}
                                   type="radio"
-                                  aria-label={`${granule.id}-plus-1-MGRS-band`}
+                                  aria-label={`${id}-plus-1-MGRS-band`}
                                   value={1}
                                   onChange={
                                     (e) => {
@@ -388,10 +385,11 @@ const SwodlrForm = ({
                                 />
                                 <Form.Check
                                   inline
+
                                   label="0"
-                                  name={`${granule.id}-MGRS-band`}
+                                  name={`${id}-MGRS-band`}
                                   type="radio"
-                                  aria-label={`${granule.id}-0-MGRS-band`}
+                                  aria-label={`${id}-0-MGRS-band`}
                                   value={0}
                                   defaultChecked
                                   onChange={
@@ -402,10 +400,11 @@ const SwodlrForm = ({
                                 />
                                 <Form.Check
                                   inline
+
                                   label="-1"
-                                  name={`${granule.id}-MGRS-band`}
+                                  name={`${id}-MGRS-band`}
                                   type="radio"
-                                  aria-label={`${granule.id}-minus-1-MGRS-band`}
+                                  aria-label={`${id}-minus-1-MGRS-band`}
                                   value={-1}
                                   onChange={
                                     (e) => {

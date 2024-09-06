@@ -28,20 +28,9 @@
     }
   }
 
-  &__table-td {
-    white-space: nowrap;
-    padding: 0.25rem 0.625rem !important;
-  }
-
-  &__table-th {
-    border: 0 !important;
-    white-space: nowrap;
-    padding: 0.25rem 0.625rem 0.625rem !important;
-  }
-
   &__table-td-granule-id {
-    font-size: 0.825rem;
-    padding: 0 .625rem !important;
+    white-space: normal;
+    line-break: anywhere;
   }
 
   &__tooltip {
@@ -59,14 +48,14 @@
     white-space: nowrap;
   }
 
-  &__card-body { 
+  &__card-body {
     padding: 0.1rem 1rem;
   }
 
   &__raster-resolution-drp-down {
     width: 60%;
   }
-  
+
   &__granule-extent {
     white-space: nowrap;
   }
