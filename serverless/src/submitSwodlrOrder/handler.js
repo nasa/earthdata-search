@@ -96,7 +96,7 @@ const submitSwodlrOrder = async (event, context) => {
       const { orderItems } = granuleInfo
 
       if (orderItems.length > maxSwodlrGranuleCount) {
-        throw new Error('Too many granules cannot submit to swodlr api')
+        throw new Error('Too many granules cannot submit to Swodlr api')
       }
 
       await orderItems.forEachAsync(async (granule) => {
