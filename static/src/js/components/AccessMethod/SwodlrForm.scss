@@ -13,10 +13,8 @@
       border-top: 1px solid $color__carbon--20;
       background: none;
       outline: none;
-      color: $color__carbon--50;
       text-align: left;
       padding: 0.825rem;
-
 
       &:hover {
         color: $color__carbon--50;
@@ -33,10 +31,6 @@
     line-break: anywhere;
   }
 
-  &__tooltip {
-    width: 20rem;
-  }
-
   &__col {
     padding-right: 3rem;
   }
@@ -50,17 +44,5 @@
 
   &__card-body {
     padding: 0.1rem 1rem;
-  }
-
-  &__raster-resolution-drp-down {
-    width: 60%;
-  }
-
-  &__granule-extent {
-    white-space: nowrap;
-  }
-
-  &__sample-grid {
-    white-space: nowrap;
   }
 }

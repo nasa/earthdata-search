@@ -319,7 +319,6 @@ const SwodlrForm = ({
                           // UTM Zone Adjust and MGRS Band Adjust Form
                           granuleList && granuleList.map(({ id, title }, i) => (
                             <tr key={id}>
-                              {/* TODO this one needs class */}
                               <td className="swodlr-form__table-td-granule-id">{title}</td>
                               <td className="swodlr-form__table-td">
                                 <div>
@@ -371,7 +370,6 @@ const SwodlrForm = ({
                               <td className="swodlr-form__table-td">
                                 <Form.Check
                                   inline
-
                                   label="+1"
                                   name={`${id}-MGRS-band`}
                                   type="radio"
@@ -385,7 +383,6 @@ const SwodlrForm = ({
                                 />
                                 <Form.Check
                                   inline
-
                                   label="0"
                                   name={`${id}-MGRS-band`}
                                   type="radio"
@@ -400,7 +397,6 @@ const SwodlrForm = ({
                                 />
                                 <Form.Check
                                   inline
-
                                   label="-1"
                                   name={`${id}-MGRS-band`}
                                   type="radio"
