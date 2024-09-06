@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
@@ -28,7 +28,6 @@ export const AccessMethodRadio = ({
   errorMessage,
   externalLink
 }) => {
-  console.log('🚀 ~ file: AccessMethodRadio.jsx:31 ~ externalLink:', externalLink)
   const labelClasses = [
     'access-method-radio',
     {
