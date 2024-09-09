@@ -246,6 +246,7 @@ export const decodeUrlParams = (paramString) => {
     const { byId = {} } = collectionQuery
     const { [focusedCollection]: focusedCollectionQuery = {} } = byId
     const { granules: focusedCollectionGranuleQuery = {} } = focusedCollectionQuery
+    console.log('🚀 ~ file: url.js:249 ~ focusedCollectionGranuleQuery:', focusedCollectionGranuleQuery)
 
     collectionQuery.byId = {
       ...collectionQuery.byId,
@@ -270,6 +271,7 @@ export const decodeUrlParams = (paramString) => {
   const twoDCoordinateSystemName = decodeHelp(params, 'twoDCoordinateSystemNameFacets')
   const horizontalDataResolutionRange = decodeHelp(params, 'horizontalDataResolutionRangeFacets')
   const scienceKeywords = decodeScienceKeywords(params)
+  console.log('🚀 ~ file: url.js:274 ~ scienceKeywords:', scienceKeywords)
   const platforms = decodePlatforms(params)
   const latency = decodeHelp(params, 'latency')
 
@@ -297,6 +299,7 @@ export const decodeUrlParams = (paramString) => {
 
   const earthdataEnvironment = decodeHelp(params, 'earthdataEnvironment')
   const portalId = decodePortal(params)
+  console.log('🚀 ~ file: url.js:320 ~ collectionQuery:', collectionQuery)
 
   return {
     advancedSearch,
