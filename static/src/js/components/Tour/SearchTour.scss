@@ -1,5 +1,4 @@
 :root {
-    --color-blue: #2367e3;
     --color-white: #ffffff;
     --color-black: #000000;
     --color-heading: #0063A6;
@@ -9,12 +8,36 @@
     min-width: 90px;
   }
 
+.step-counter-text {
+    font-family: "DM Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 12px;
+    margin-bottom: 15px;
+    color: #9a989a;
+    text-align: left;
+}
+
+
+.text-icon {
+    display: inline-block;
+    vertical-align: center;
+    margin-top: -2px;
+    height: 0.85rem;
+    width: 0.85rem;
+}
+
 .tour-heading {
     font-size: 14px;
     margin-bottom: 10px;
     color: var(--color-black);
     text-transform: uppercase;
     letter-spacing: 1px;
+}
+
+kbd {
+    display: inline-block;
+    vertical-align: center;
+    font-size: 0.75em;
+    padding: 2px 3px;
 }
 
 .tour-subheading {

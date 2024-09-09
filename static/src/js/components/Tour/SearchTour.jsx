@@ -46,17 +46,17 @@ const SearchTour = ({ runTour, setRunTour }) => {
   }
 
   const StepCounter = ({ currentStep, totalSteps }) => (
-    <p style={{ fontSize: '12px', marginBottom: '15px', textAlign: 'left', color: '#9a989a' }}>
-      {currentStep} &nbsp;OF&nbsp; {totalSteps}
+    <p className="step-counter-text">
+      {currentStep} OF {totalSteps}
     </p>
   )
+
 
   const steps = [
     {
       target: '.search',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
           <h2 className="tour-heading">Welcome to Earthdata Search!</h2>
           <p className="tour-subheading">Let’s start with a quick tour...</p>
           <p className="tour-content">
@@ -99,7 +99,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.sidebar__inner',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
           <p className="tour-content">
             This area contains the filters used when searching for collections (datasets produced by an organization) and their granules (sets of files containing data).
           </p>
@@ -146,7 +146,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.search-form__primary',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
           <p className="tour-content">
             Search for collections by topic (e.g., "Land Surface Temperature"), by collection name, or by CMR Concept ID.
           </p>
@@ -198,7 +198,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.temporal-selection-dropdown',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
           <p className="tour-content">
             Use the temporal filters to limit search results to a specific date and time range.
           </p>
@@ -242,7 +242,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.spatial-selection-dropdown',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
           <p className="tour-content">
             Use the spatial filters to limit search results to the specified area of interest.
           </p>
@@ -289,7 +289,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.search-form__button--advanced-search',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
           <p className="tour-content">
             Use Advanced Search parameters to filter results using features like Hydrologic Unit Code (HUC) or SWORD River Reach.
           </p>
@@ -329,7 +329,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.sidebar-browse-portals',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
           <p className="tour-content">
             Choose a portal to refine search results to a particular area of study, project, or organization.
           </p>
@@ -369,7 +369,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.sidebar-section-body',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
           <p className="tour-content">
             Refine your search further using categories like Features, Keywords, Platforms, Organizations, etc.
           </p>
@@ -409,14 +409,14 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.panel-section',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
           <p className="tour-content">
             A high-level description is displayed for each search result to help you find the right data, including a summary, temporal range, and information about capabilities. 
-            To view more information about a collection, click the <EDSCIcon icon={FaInfoCircle} /> icon.
+            To view more information about a collection, click the <EDSCIcon className="text-icon" icon={FaInfoCircle} /> icon.
           </p>
           <p className="tour-content">
             Add granules to a project and customize options before accessing the data. 
-            To add a collection to your project, click the <EDSCIcon icon={FaPlus} /> icon.
+            To add a collection to your project, click the <EDSCIcon className="text-icon" icon={FaPlus} /> icon.
             To add individual granules to a project, click on a search result to view and add its granules.
           </p>
           <div className="tour-buttons">
@@ -458,7 +458,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.panels__handle',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
           <p className="tour-content">
             To make more room to view the map, the search results can be resized by clicking or dragging the bar above. The panel can be hidden or shown by clicking the handle or using the <kbd>]</kbd> key.
           </p>
@@ -499,10 +499,10 @@ const SearchTour = ({ runTour, setRunTour }) => {
       },
     },
     {
-      target: 'body',
+      target: '.right-overlay',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
           <p style={{ fontSize: '16px', textAlign: 'left' }}>
             Pan the map by clicking and dragging, and zoom by using the scroll wheel or map tools.
           </p>
@@ -533,8 +533,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
           </div>
         </div>
       ),
-      disableBeacon: true,
-      placement: 'center',
+      placement: 'left',
       styles: {
         tooltip: {
           width: '400px',
@@ -546,7 +545,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.leaflet-bottom.leaflet-right',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
           <p className="tour-content">
             Use the map tools to switch map projections, draw, edit, or remove spatial bounds, zoom the map, or select the base map.
           </p>
@@ -590,7 +589,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.secondary-toolbar__user-dropdown-toggle',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
           <p className="tour-content">
             When logged in, use this menu to set preferences, saved projects, subscriptions, download status and history, or log out.
           </p>
@@ -625,7 +624,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.secondary-toolbar__begin-tour-button',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex + 1} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
           <p className="tour-content">
             You can replay this tour anytime by clicking <strong>Show Tour</strong>.
           </p>
@@ -704,8 +703,9 @@ const SearchTour = ({ runTour, setRunTour }) => {
                 Discover and Access Earth Science Data Using Earthdata Search
               </div>
               <p style={{ fontSize: '16px', fontWeight: 'bold', textDecoration: 'underline', marginTop: '10px', marginLeft: '10px' }}>
-                Watch the webinar
+                Watch the webinar <EDSCIcon icon={FaExternalLinkAlt} />
               </p>
+              
             </div>
           </a>
           <p style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '5px' }}>
