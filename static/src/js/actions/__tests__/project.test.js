@@ -287,24 +287,24 @@ describe('getProjectCollections', () => {
                 }]
               },
               services: {
-                items: null
+                items: []
               },
               dataQualitySummaries:
               {
-                items: null
+                items: []
               }
             },
             {
               conceptId: 'collectionId2',
               tools: {
-                items: null
+                items: []
               },
               services: {
-                items: null
+                items: []
               },
               dataQualitySummaries:
               {
-                items: null
+                items: []
               }
             }]
           }
@@ -609,24 +609,24 @@ describe('getProjectCollections', () => {
                 }]
               },
               services: {
-                items: null
+                items: []
               },
               dataQualitySummaries:
               {
-                items: null
+                items: []
               }
             },
             {
               conceptId: 'collectionId2',
               tools: {
-                items: null
+                items: []
               },
               services: {
-                items: null
+                items: []
               },
               dataQualitySummaries:
               {
-                items: null
+                items: []
               }
             }]
           }
@@ -750,26 +750,26 @@ describe('getProjectCollections', () => {
                 ],
                 dataQualitySummaries:
                 {
-                  items: null
+                  items: []
                 },
                 tools: {
-                  items: null
+                  items: []
                 },
                 services: {
-                  items: null
+                  items: []
                 }
               },
               {
                 conceptId: 'collectionId2',
                 tools: {
-                  items: null
+                  items: []
                 },
                 dataQualitySummaries:
                 {
-                  items: null
+                  items: []
                 },
                 services: {
-                  items: null
+                  items: []
                 }
               }]
             }

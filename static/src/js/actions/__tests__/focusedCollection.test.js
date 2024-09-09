@@ -206,7 +206,7 @@ describe('getFocusedCollection', () => {
                     'org.ceos.wgiss.cwic.granules.prod': {}
                   },
                   tools: {
-                    items: null
+                    items: []
                   }
                 }
               }
@@ -286,7 +286,7 @@ describe('getFocusedCollection', () => {
                     'org.ceos.wgiss.cwic.granules.prod': {}
                   },
                   tools: {
-                    items: null
+                    items: []
                   }
                 }
               }
@@ -370,7 +370,7 @@ describe('getFocusedCollection', () => {
                   }
                 },
                 tools: {
-                  items: null
+                  items: []
                 }
               }
             }
@@ -524,7 +524,7 @@ describe('getFocusedCollection', () => {
                 }
               ],
               tools: {
-                items: null
+                items: []
               }
             }
           }

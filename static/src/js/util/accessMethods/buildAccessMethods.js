@@ -41,33 +41,31 @@ export const reduceAccessMethods = (items = []) => {
         updatedAccessMethods[`${methodKey}${esiIndex}`] = item
 
         esiIndex += 1
-
-        return updatedAccessMethods
+        break
       case (accessMethodTypes.ECHO_ORDERS):
         updatedAccessMethods[`${methodKey}${echoIndex}`] = item
 
         echoIndex += 1
-
-        return updatedAccessMethods
+        break
       case (accessMethodTypes.HARMONY):
         updatedAccessMethods[`${methodKey}${harmonyIndex}`] = item
 
         harmonyIndex += 1
-
-        return updatedAccessMethods
+        break
       // No need to create a "accessMethodKey" since you can only have one openDap or SWODLR
       case (accessMethodTypes.OPENDAP):
         updatedAccessMethods[methodKey] = item
 
-        return updatedAccessMethods
+        break
       case (accessMethodTypes.SWODLR):
         updatedAccessMethods[methodKey] = item
 
-        return updatedAccessMethods
+        break
       default:
-
-        return updatedAccessMethods
+        break
     }
+
+    return updatedAccessMethods
   }, {})
 
   return accessMethods
@@ -97,7 +95,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     downloads: () => buildDownload(granules, isOpenSearch)
   }
 
-  const nonDownloadMethodItems = serviceItems ? serviceItems.flatMap((serviceItem) => {
+  const nonDownloadMethodItems = serviceItems.flatMap((serviceItem) => {
     let associatedVariables = collectionAssociatedVariables
     const {
       type: serviceType,
@@ -123,7 +121,7 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     console.log(items)
 
     return items
-  }, {}) : []
+  }, [])
 
   const nonDownloadMethods = reduceAccessMethods(nonDownloadMethodItems)
 
