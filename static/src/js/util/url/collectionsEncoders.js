@@ -428,19 +428,6 @@ export const encodeCollections = (props) => {
   return encoded
 }
 
-// Function convertIntObj(obj) {
-//   const res = {}
-//   for (const key in obj) {
-//     res[key] = {}
-//     for (const prop in obj[key]) {
-//       const parsed = parseInt(obj[key][prop], 10)
-//       res[key][prop] = isNaN(parsed) ? obj[key][prop] : parsed
-//     }
-//   }
-
-//   return res
-// }
-
 /**
  * Decodes a parameter object into a Collections object
  * @param {Object} params URL parameter object from parsing the URL parameter string

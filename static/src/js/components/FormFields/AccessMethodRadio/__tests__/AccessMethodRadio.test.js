@@ -125,7 +125,6 @@ describe('AccessMethodRadio component', () => {
 
       const externalLink = screen.getByRole('link', { name: 'example message' })
       expect(externalLink.href).toEqual('http://example.com/')
-      screen.debug()
     })
   })
 

@@ -489,7 +489,6 @@ describe('SwodlrForm component', () => {
       test('updates MGRS to `0 `calls onUpdateAccessMethod correctly', async () => {
         const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
-        // Const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
         const advancedOptionsToggleButton = screen.getByRole('button', { name: 'collapse-text' })
 
         await user.click(advancedOptionsToggleButton)
