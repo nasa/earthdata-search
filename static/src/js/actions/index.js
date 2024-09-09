@@ -9,6 +9,8 @@ import {
   updateAdminRetrievalsPageNum
 } from './admin/retrievals'
 
+import { fetchAdminMetricsPreferences } from './admin/preferencesMetrics'
+
 import {
   fetchAdminMetricsRetrievals,
   updateAdminMetricsRetrievalsStartDate,
@@ -325,6 +327,7 @@ const actions = {
   updateAccessMethod,
   updateAdminRetrievalsPageNum,
   updateAdminRetrievalsSortKey,
+  fetchAdminMetricsPreferences,
   fetchAdminMetricsRetrievals,
   updateAdminMetricsRetrievalsStartDate,
   updateAdminMetricsRetrievalsEndDate,
