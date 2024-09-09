@@ -13,8 +13,6 @@ export const retrieveCMRGranules = async ({
   granuleParams
 }) => {
   const { concept_id: granuleIds } = granuleParams
-  console.log('🚀 ~ file: retrieveCMRGranules.js:16 ~ granuleIds:', granuleIds)
-
   const granuleResponse = await axios({
     url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/granules.json`,
     params: { concept_id: granuleIds },

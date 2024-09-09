@@ -59,8 +59,6 @@ const decodedGranules = (key, granules) => {
     }
   }
 
-  console.log('🚀 ~ file: collectionsEncoders.js:64 ~ result:', result)
-
   return result
 }
 
@@ -89,18 +87,14 @@ const encodeSwodlrDownload = (projectCollection) => {
     accessMethods,
     selectedAccessMethod
   } = projectCollection
-  console.log('🚀 ~ file: collectionsEncoders.js:91 ~ projectCollection:', projectCollection)
-
   if (!accessMethods || !selectedAccessMethod) {
     return null
   }
 
   const selectedMethod = accessMethods[selectedAccessMethod]
-  console.log('🚀 ~ file: collectionsEncoders.js:95 ~ selectedMethod:', selectedMethod)
   const {
     swodlrData
   } = selectedMethod
-  console.log('🚀 ~ file: collectionsEncoders.js:98 ~ swodlrData:', swodlrData)
 
   return swodlrData
 }
@@ -229,11 +223,7 @@ const decodedSelectedVariables = (pgParam) => {
 
 const decodedSwodlrDownload = (pgParam) => {
   const { swod: swodlrData } = pgParam
-  console.log('🚀 ~ file: collectionsEncoders.js:228 ~ swodlrData:', swodlrData)
-
   if (!swodlrData) {
-    console.log('🚀 decoder didnt have swodlr data')
-
     return undefined
   }
 
@@ -401,7 +391,6 @@ export const encodeCollections = (props) => {
 
     // Encode swodlr form variables
     pg.swod = encodeSwodlrDownload(projectCollection)
-    console.log('🚀 ~ file: collectionsEncoders.js:393 ~ pg.swod:', pg.swod)
     // Encode concatenation selection
     pg.cd = encodeConcatenateDownload(projectCollection)
 
@@ -561,7 +550,6 @@ export const decodeCollections = (params) => {
       if (selectedAccessMethod && selectedAccessMethod.startsWith('swodlr')) {
         // TODO some url valuse here have to be encoded
         swodlrData = decodedSwodlrDownload(pCollection)
-        console.log('🚀 ~ file: collectionsEncoders.js:562 ~ swodlrData:', swodlrData)
       }
 
       // Determine if the collection is a CWIC collection
@@ -608,12 +596,8 @@ export const decodeCollections = (params) => {
         }
 
         if (swodlrData) {
-          console.log('🚀 ~ file: collectionsEncoders.js:624 ~ swodlrData:', swodlrData)
           // TODO convert these to numbers
-
-          console.log('🚀 ~ file: collectionsEncoders.js:611 ~ selectedAccessMethod:', selectedAccessMethod)
           // Const convertedSwodlrData = convertIntObj(swodlrData)
-          // console.log('🚀 ~ file: collectionsEncoders.js:630 ~ convertedSwodlrData:', convertedSwodlrData)
           projectById[collectionId].accessMethods = {
             [selectedAccessMethod]: {
               swodlrData
