@@ -118,8 +118,6 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
 
     const items = buildMethods[formattedServiceType](serviceItem, params)
 
-    console.log(items)
-
     return items
   }, [])
 
