@@ -40,6 +40,37 @@ describe('when buildAccessMethods is called', () => {
     expect(buildDownloadMock).toBeCalledWith({ items: [{ online_access_flag: true }] }, false)
   })
 
+  test('no access method is added if a non-existent service item is in the collection metadata', () => {
+    const collectionMetadata = {
+      services: {
+        items: [
+          {
+            type: 'unknown',
+            url: {
+              urlValue: 'https://example.com'
+            },
+            maxItemsPerOrder: 2000,
+            orderOptions: {
+              items: [
+                {
+                  conceptId: 'OO10000-EDSC',
+                  name: 'mock form',
+                  form: 'mock form'
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+
+    const isOpenSearch = false
+
+    const accessMethods = buildAccessMethods(collectionMetadata, isOpenSearch)
+
+    expect(accessMethods).toEqual({})
+  })
+
   test('calls buildEcho access method', () => {
     const buildEchoMock = jest.spyOn(buildEcho, 'buildEcho')
 
