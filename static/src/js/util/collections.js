@@ -68,7 +68,6 @@ export const prepareCollectionParams = (state) => {
 
   const tagKey = []
   if (selectedTag) tagKey.push(selectedTag)
-  // TODO swodlr
   const serviceType = []
   if (featureFacets.customizable) {
     serviceType.push('esi')
