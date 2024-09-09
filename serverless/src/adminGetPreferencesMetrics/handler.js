@@ -45,17 +45,17 @@ const adminGetPreferencesMetrics = async (event, context) => {
 
       if (Object.keys(sitePreferences).length === 0) {
         return {
-          panelState: 'not set',
-          collectionListView: 'not set',
-          collectionSort: 'not set',
-          granuleSort: 'not set',
-          granuleListView: 'not set',
-          zoom: 'not set',
-          latitude: 'not set',
-          longitude: 'not set',
-          projection: 'not set',
-          overlayLayers: ['not set'],
-          baseLayer: 'not set'
+          panelState: 'not set (open)',
+          collectionListView: 'not set (default)',
+          collectionSort: 'not set (-score)',
+          granuleSort: 'not set (-start_date)',
+          granuleListView: 'not set (default)',
+          zoom: 'not set (2)',
+          latitude: 'not set (0)',
+          longitude: 'not set (0)',
+          projection: 'not set (epsg4326)',
+          overlayLayers: ['not set (referenceFeatures & referenceLabels)'],
+          baseLayer: 'not set (blueMarble)'
         }
       }
 
