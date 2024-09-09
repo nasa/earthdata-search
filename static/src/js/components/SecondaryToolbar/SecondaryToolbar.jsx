@@ -322,14 +322,16 @@ class SecondaryToolbar extends Component {
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
-        <Dropdown.Toggle
-          className="secondary-toolbar__begin-tour-button"
-          as={Button}
-          onClick={onStartTour}
-          icon={FaWalking}
-          iconSize="0.825rem"
-          label="Want to learn more? Click here to take a tour of our site."
-        />
+        {location.pathname === '/search' && (
+          <Dropdown.Toggle
+            className="secondary-toolbar__begin-tour-button"
+            as={Button}
+            onClick={onStartTour}
+            label="Want to learn more? Click here to take a tour of our site."
+          >
+            Start Tour
+          </Dropdown.Toggle>
+        )}
         <Dropdown.Toggle
           className="secondary-toolbar__project-name-dropdown-toggle"
           as={Button}
