@@ -103,6 +103,60 @@ describe('AccessMethodRadio component', () => {
       expect(screen.getByText('test details')).toBeInTheDocument()
     })
 
+    test('tool-tip remains when hovered on', async () => {
+      setup({
+        externalLink: {
+          link: 'http://example.com',
+          message: 'example message'
+        }
+      })
+
+      const user = userEvent.setup()
+      const icon = screen.getByTestId('edsc-icon')
+
+      await act(async () => {
+        await user.hover(icon)
+      })
+
+      const tooltip = await screen.findByRole('tooltip')
+
+      await act(async () => {
+        await user.hover(tooltip)
+      })
+
+      expect(tooltip).toBeInTheDocument()
+      expect(screen.getByText('test details')).toBeInTheDocument()
+    })
+
+    test('tool-tip is no longer on the screen when hovered away', async () => {
+      setup({
+        externalLink: {
+          link: 'http://example.com',
+          message: 'example message'
+        }
+      })
+
+      const user = userEvent.setup()
+      const icon = screen.getByTestId('edsc-icon')
+
+      await act(async () => {
+        await user.hover(icon)
+      })
+
+      const tooltip = await screen.findByRole('tooltip')
+
+      await act(async () => {
+        await user.hover(tooltip)
+      })
+
+      // Hover away from the tool-tip
+      await act(async () => {
+        await user.hover(screen.getByText('test title'))
+      })
+
+      expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+    })
+
     test('displays the details as a tooltip on click including external links', async () => {
       setup({
         externalLink: {
