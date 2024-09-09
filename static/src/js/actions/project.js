@@ -477,7 +477,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
 
       if (dataQualitySummaries) {
         const { items: dqsItems = [] } = dataQualitySummaries
-        if (dqsItems) {
+        if (dqsItems && dqsItems.length > 0) {
           dispatch(actions.setDataQualitySummaries({
             catalogItemId: conceptId,
             dataQualitySummaries: dqsItems
