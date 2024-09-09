@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { FaEllipsisV } from 'react-icons/fa'
+import { ThreeDotsVertical } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import CustomToggle from './CustomToggle'
 
@@ -22,7 +22,7 @@ export const MoreActionsToggle = React.forwardRef(({
       onClick={onClick}
       ref={ref}
       title="More actions"
-      icon={FaEllipsisV}
+      icon={ThreeDotsVertical}
     />
   )
 })

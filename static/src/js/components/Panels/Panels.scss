@@ -7,7 +7,7 @@
   z-index: -1;
   transform: translateX(-100%);
   transition: all 0.2s ease-in-out;
-  box-shadow: 0 0 10px rgba($color__black, 0.3);
+  box-shadow: 0 0 10px rgba($color__carbon-black, 0.3);
   will-change: width;
 
   &--is-draggable {
@@ -29,14 +29,14 @@
     left: 100%;
     width: 1.25rem;
     height: 4rem;
-    background-color: $color__white;
-    border-left: 1px solid $color__black--200;
-    box-shadow: 0 0 10px rgba($color__black, 0.3);
+    background-color: $color__spacesuit-white;
+    border-left: 1px solid $color__carbon--20;
+    box-shadow: 0 0 10px rgba($color__carbon-black, 0.3);
     transition: all 0.1s ease-out;
 
     &:hover,
     .is-panels-dragging & {
-      background-color: $color__black--200;
+      background-color: $color__carbon--20;
       cursor: e-resize;
 
       .panels--is-open & {
@@ -52,7 +52,7 @@
       left: 50%;
       height: 2rem;
       width: 0.325rem;
-      border: 1px solid $color__black--400;
+      border: 1px solid $color__carbon--40;
       border-top: none;
       border-bottom: none;
       transform: translate(-50%, -50%);

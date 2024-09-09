@@ -2,19 +2,19 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: $color__black--100;
+  background-color: $color__carbon--10;
 
   .nav-tabs {
     font-size: 0.925rem;
-    background-color: $color__black--100;
+    background-color: $color__carbon--10;
 
     .nav-link:not(.active):hover {
       border: 1px solid transparent;
     }
 
     .nav-link.active {
-      color: $color__black--700;
-      background-color: $color__white;
+      color: $color__carbon--70;
+      background-color: $color__spacesuit-white;
       border-bottom-color: transparent;
     }
   }
@@ -23,7 +23,7 @@
     box-sizing: border-box;
     display: flex;
     flex-grow: 1;
-    background-color: $color__white;
+    background-color: $color__spacesuit-white;
     overflow-y: scroll;
     overflow-x: scroll;
   }

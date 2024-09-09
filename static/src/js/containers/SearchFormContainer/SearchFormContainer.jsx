@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { isPlainObject, isEmpty } from 'lodash-es'
 
 import actions from '../../actions/index'
 
@@ -46,15 +45,7 @@ export const SearchFormContainer = (props) => {
   const {
     advancedSearch,
     autocomplete,
-    boundingBoxSearch,
-    circleSearch,
-    drawingNewLayer,
-    lineSearch,
-    pointSearch,
     keywordSearch,
-    polygonSearch,
-    shapefile,
-    temporalSearch,
     onCancelAutocomplete,
     onChangeQuery,
     onClearFilters,
@@ -64,44 +55,6 @@ export const SearchFormContainer = (props) => {
     onFetchAutocomplete,
     onSelectAutocompleteSuggestion
   } = props
-
-  const {
-    endDate: temporalEnd,
-    startDate: temporalStart
-  } = temporalSearch
-
-  const {
-    shapefileError,
-    shapefileLoading,
-    shapefileLoaded,
-    shapefileId
-  } = shapefile
-
-  const { regionSearch } = advancedSearch
-
-  let showFilterStackToggle = [
-    regionSearch,
-    boundingBoxSearch,
-    circleSearch,
-    drawingNewLayer,
-    lineSearch,
-    pointSearch,
-    polygonSearch,
-    shapefileError,
-    shapefileLoading,
-    shapefileLoaded,
-    shapefileId,
-    temporalEnd,
-    temporalStart
-  ].some((filter) => {
-    if (isPlainObject(filter)) {
-      return !isEmpty(filter)
-    }
-
-    return !!filter
-  })
-
-  showFilterStackToggle = false
 
   return (
     <SearchForm
@@ -116,7 +69,6 @@ export const SearchFormContainer = (props) => {
       advancedSearch={advancedSearch}
       keywordSearch={keywordSearch}
       autocomplete={autocomplete}
-      showFilterStackToggle={showFilterStackToggle}
     />
   )
 }
@@ -124,11 +76,6 @@ export const SearchFormContainer = (props) => {
 SearchFormContainer.defaultProps = {
   advancedSearch: {},
   keywordSearch: '',
-  boundingBoxSearch: [],
-  circleSearch: [],
-  lineSearch: [],
-  pointSearch: [],
-  polygonSearch: [],
   shapefile: {},
   temporalSearch: {}
 }
@@ -138,13 +85,6 @@ SearchFormContainer.propTypes = {
     regionSearch: PropTypes.shape({})
   }),
   autocomplete: PropTypes.shape({}).isRequired,
-  boundingBoxSearch: PropTypes.arrayOf(PropTypes.string),
-  circleSearch: PropTypes.arrayOf(PropTypes.string),
-  drawingNewLayer: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool
-  ]).isRequired,
-  lineSearch: PropTypes.arrayOf(PropTypes.string),
   keywordSearch: PropTypes.string,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
@@ -154,8 +94,6 @@ SearchFormContainer.propTypes = {
   onClearAutocompleteSuggestions: PropTypes.func.isRequired,
   onFetchAutocomplete: PropTypes.func.isRequired,
   onSelectAutocompleteSuggestion: PropTypes.func.isRequired,
-  pointSearch: PropTypes.arrayOf(PropTypes.string),
-  polygonSearch: PropTypes.arrayOf(PropTypes.string),
   shapefile: PropTypes.shape({
     shapefileError: PropTypes.string,
     shapefileId: PropTypes.string,

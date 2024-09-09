@@ -2,12 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import {
+  Settings,
+  FileGeneric,
+  Filter
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
+import {
   FaClock,
-  FaCogs,
   FaCubes,
-  FaFileAlt,
   FaGlobe,
-  FaSlidersH,
   FaTags
 } from 'react-icons/fa'
 
@@ -51,7 +54,7 @@ export const CustomizableIcons = ({
       <MetaIcon
         className={metaIconClasses}
         id="feature-icon-list-view__customize"
-        icon={FaCogs}
+        icon={Settings}
         label="Customize"
         tooltipClassName="collection-results-item__tooltip text-align-left"
         metadata={
@@ -92,7 +95,7 @@ export const CustomizableIcons = ({
                   <EDSCIcon
                     className="collection-results-item__icon svg fa-sliders-svg"
                     title="A white horizontal sliders icon"
-                    icon={FaSlidersH}
+                    icon={Filter}
                     size="0.675rem"
                   />
                 )
@@ -102,7 +105,7 @@ export const CustomizableIcons = ({
                   <EDSCIcon
                     className="collection-results-item__icon svg fa-file-svg"
                     title="A white file icon"
-                    icon={FaFileAlt}
+                    icon={FileGeneric}
                     size="0.675rem"
                   />
                 )
@@ -173,7 +176,7 @@ export const CustomizableIcons = ({
                         className="collection-results-item__tooltip-feature-icon"
                         title="A white horizontal sliders icon"
                         size="0.725rem"
-                        icon={FaSlidersH}
+                        icon={Filter}
                       />
                       Transform
                     </li>
@@ -186,7 +189,7 @@ export const CustomizableIcons = ({
                         className="collection-results-item__tooltip-feature-icon"
                         title="A white file icon"
                         size="0.725rem"
-                        icon={FaFileAlt}
+                        icon={FileGeneric}
                       />
                       Reformat
                     </li>

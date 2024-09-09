@@ -4,7 +4,7 @@
   flex-direction: column;
   width: auto;
   z-index: 2;
-  background-color: $color__white;
+  background-color: $color__spacesuit-white;
   box-shadow: 0 0 0.75rem 0 rgba(0, 0, 0, 0.1);
 
   &__loading-suggestions {
@@ -14,9 +14,9 @@
     padding: 0.55rem 0.5rem;
     width: 100%;
     background: white;
-    color: $color__black--400;
+    color: $color__carbon--40;
     font-size: 0.75rem;
-    border-top: 1px solid $color__black--200;
+    border-top: 1px solid $color__carbon--20;
     z-index: 1;
   }
 
@@ -24,7 +24,7 @@
     display: flex;
     align-items: stretch;
     width: 100%;
-    border-bottom: 1px solid $color__black--200;
+    border-bottom: 1px solid $color__carbon--20;
   }
 
   &__secondary {
@@ -39,7 +39,7 @@
   }
 
   &__back-to-collections {
-    color: $color__white;
+    color: $color__spacesuit-white;
     font-size: 0.875rem;
   }
 
@@ -48,22 +48,22 @@
     display: inline;
     margin-block-end: 0;
     vertical-align: middle;
-    background-color: $color__white;
+    background-color: $color__spacesuit-white;
   }
 
   &__button {
     position: relative;
     border: 0;
     border-radius: 0;
-    background-color: $color__white;
+    background-color: $color__spacesuit-white;
     vertical-align: middle;
-    color: $color__black--500;
-    border-right: 1px solid $color__black--200;
+    color: $color__carbon--60;
+    border-right: 1px solid $color__carbon--20;
     z-index: 1;
 
     &:hover,
     &:focus {
-      background-color: $color__black--100;
+      background-color: $color__carbon--10;
     }
 
     &:focus {
@@ -75,7 +75,7 @@
     }
 
     &--clear {
-      border-left: 1px solid $color__black--200;
+      border-left: 1px solid $color__carbon--20;
       border-right: 0;
     }
 
@@ -121,10 +121,10 @@
 
   &__query-hint {
     padding: 0.25rem 0.5rem;
-    color: $color__black--500;
+    color: $color__carbon--60;
     text-align: center;
     font-size: 0.75rem;
-    background-color: $color__black--200;
+    background-color: $color__spacesuit-white;
 
     strong {
       font-weight: 700;
@@ -147,16 +147,16 @@
   &__suggestions-container {
     position: relative;
     z-index: 2;
-    background: white;
+    background: $color__spacesuit-white;
     font-size: 0.75rem;
     position: absolute;
     width: 100%;
-    border-left: 1px solid $color__black--200;
-    border-right: 1px solid $color__black--200;
-    box-shadow: 0rem 0.5rem 0.75rem -0.125rem rgba($color__black, 0.5);
+    border-left: 1px solid $color__carbon--20;
+    border-right: 1px solid $color__carbon--20;
+    box-shadow: 0rem 0.5rem 0.75rem -0.125rem rgba($color__carbon-black, 0.5);
 
     .react-autosuggest__suggestions-list {
-      border-top: 1px solid $color__black--200;
+      border-top: 1px solid $color__carbon--20;
       list-style: none;
       padding: 0;
       margin-bottom: 0;
@@ -164,17 +164,17 @@
 
     .react-autosuggest__suggestion {
       padding: 0.325rem 0.75rem;
-      border-bottom: 1px solid $color__black--200;
+      border-bottom: 1px solid $color__carbon--20;
       overflow-wrap: break-word;
       transition: all 0.1s ease-in-out;
       cursor: pointer;
 
       &--highlighted,
       &:hover {
-        background-color: darken($color__black--100, 1);
+        background-color: darken($color__carbon--10, 1);
 
         .autocomplete-suggestion__suggestions-hierarchy {
-          background-color: darken($color__black--100, 1);
+          background-color: darken($color__carbon--10, 1);
         }
       }
     }

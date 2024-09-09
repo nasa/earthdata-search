@@ -5,7 +5,7 @@
 
   &__button {
     margin: 0 calc($spacer / 2);
-    color: $color__black--300;
+    color: $color__carbon--30;
 
     &--share {
       i {
@@ -15,21 +15,12 @@
     }
 
     &:hover {
-      color: $color__black--600;
+      color: $color__carbon--60;
     }
   }
 }
 
 .download-history-table {
-  a {
-    color: $color__blue;
-
-    &:hover,
-    &:active {
-      color: $color__blue--dark;
-    }
-  }
-
   &__ago {
     white-space: nowrap;
   }

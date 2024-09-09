@@ -3,13 +3,20 @@
   "env": {
     "browser": true,
     "node": true,
-    "jest": true,
+    "jest": true
   },
   "rules": {
-    // Allowing cyclic dependancies
-    "import/no-cycle": "off"
+    // Allowing cyclic dependencies
+    "import/no-cycle": "off",
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": [
+          "^@edsc/earthdata-react-icons/.+"
+        ]
+      }
+    ]
   },
-
   "overrides": [
     {
       "files": [
@@ -28,12 +35,10 @@
       }
     }
   ],
-
   // Use AirBnb settings as a base
   "extends": [
     "@edsc"
   ],
-
   // Define version settings
   "settings": {
     "react": {

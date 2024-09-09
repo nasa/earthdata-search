@@ -1,24 +1,24 @@
 .edsc-tabs {
   &__tabs {
-    border-bottom: 1px solid $color__black--300;
+    border-bottom: 1px solid $color__carbon--30;
 
     .nav-link {
       border-radius: 0;
       background-color: transparent;
       border: 0;
       border-bottom: 4px solid transparent;
-      color: $color__black--500;
+      color: $color__carbon--60;
 
       &:hover {
-        border-bottom: 4px solid $color__black--300;
+        border-bottom: 4px solid $color__carbon--60;
       }
     }
 
     > .nav-link.active {
       border: 0;
-      border-bottom: 4px solid $color__blue--dark;
+      border-bottom: 4px solid $color__nasa-blue--shade;
       background-color: transparent;
-      color: $color__black--700;
+      color: $color__carbon--70;
     }
   }
 

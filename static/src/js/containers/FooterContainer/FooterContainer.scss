@@ -5,9 +5,9 @@
   align-items: center;
   flex-basis: auto;
   padding: 0 1rem;
-  background: $color__blue;
+  background: $color__nasa-blue--shade;
   z-index: 1;
-  color: $color__white;
+  color: $color__spacesuit-white;
   font-size: 0.7rem;
   line-height: 1.25rem;
 
@@ -41,14 +41,14 @@
     display: inline-block;
     padding: 0 0.5rem;
     height: 1.125rem;
-    background: $color__blue--dark;
+    background: $color__nasa-blue;
     border-radius: 0.124rem;
     vertical-align: middle;
   }
 
   &__info-bit {
     margin-left: 0.55rem;
-    color: $color__blue--light;
+    color: $color__nasa-blue--tint;
     vertical-align: middle;
 
     &:before {
@@ -56,18 +56,18 @@
       transform: translate(-0.275rem,-.165rem) scale(0.5);
       content: '\f111';
       font-family: 'FontAwesome';
-      color: $color__white;
+      color: $color__spacesuit-white;
       font-size: 3px;
     }
   }
 
   &__info-bit--emph {
-    color: $color__white;
+    color: $color__spacesuit-white;
   }
 
   &__env {
     margin-right: 0.25rem;
     padding-right: 0.25rem;
-    border-right: 1px solid #5d9cc3;
+    border-right: 1px solid $color__nasa-blue;
   }
 }

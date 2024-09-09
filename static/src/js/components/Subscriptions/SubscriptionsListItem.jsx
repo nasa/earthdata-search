@@ -1,11 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
-import {
-  FaTrash,
-  FaInfoCircle,
-  FaEdit
-} from 'react-icons/fa'
+
+import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+import { FaTrash, FaEdit } from 'react-icons/fa'
 import camelcaseKeys from 'camelcase-keys'
 import moment from 'moment'
 
@@ -65,7 +63,7 @@ export const SubscriptionsListItem = ({
       <div className="subscriptions-list-item__actions">
         <Button
           className="subscriptions-list-item__action"
-          icon={FaInfoCircle}
+          icon={AlertInformation}
           bootstrapVariant="light"
           bootstrapSize="sm"
           label="Details"

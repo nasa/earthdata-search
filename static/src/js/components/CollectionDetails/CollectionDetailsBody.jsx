@@ -7,7 +7,10 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
-import { FaQuestionCircle, FaArrowRight } from 'react-icons/fa'
+
+import { ArrowLineRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { FaQuestionCircle } from 'react-icons/fa'
+
 import SimpleBar from 'simplebar-react'
 
 import ArrowTags from '../ArrowTags/ArrowTags'
@@ -22,6 +25,7 @@ import Skeleton from '../Skeleton/Skeleton'
 import SplitBadge from '../SplitBadge/SplitBadge'
 
 import { collectionDetailsSkeleton } from './skeleton'
+import ExternalLink from '../ExternalLink/ExternalLink'
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { pluralize } from '../../util/pluralize'
 
@@ -318,14 +322,12 @@ export const CollectionDetailsBody = ({
                       </>
                     )
                   }
-                  <a
-                    className="link--separated link--external collection-details-body__link"
+                  <ExternalLink
+                    className="link--separated collection-details-body__link"
                     href={urls.html.href}
-                    rel="noopener noreferrer"
-                    target="_blank"
                   >
                     View More Info
-                  </a>
+                  </ExternalLink>
                 </dd>
               </dl>
               {
@@ -406,7 +408,7 @@ export const CollectionDetailsBody = ({
                             >
                               <dt className="collection-details-body__reformatting-item-heading">
                                 {supportedInputFormat}
-                                <EDSCIcon icon={FaArrowRight} className="collection-details-body__reformatting-item-icon" />
+                                <EDSCIcon icon={ArrowLineRight} className="collection-details-body__reformatting-item-icon" />
                               </dt>
                               <dd className="collection-details-body__reformatting-item-body">
                                 {supportedOutputFormats.join(', ')}

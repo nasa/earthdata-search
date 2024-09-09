@@ -1,14 +1,19 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
+import {
+  act,
+  render,
+  screen
+} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import TemporalDisplay from '../TemporalDisplay'
 import '@testing-library/jest-dom'
 
 const setup = (overrideProps) => {
+  const user = userEvent.setup()
+  const onRemoveTimelineFilter = jest.fn()
   const props = {
-    onRemoveTimelineFilter: jest.fn(),
+    onRemoveTimelineFilter,
     temporalSearch: {
       endDate: '',
       startDate: '',
@@ -16,11 +21,14 @@ const setup = (overrideProps) => {
     },
     ...overrideProps
   }
-  act(() => {
-    render(
-      <TemporalDisplay {...props} />
-    )
-  })
+  render(
+    <TemporalDisplay {...props} />
+  )
+
+  return {
+    onRemoveTimelineFilter,
+    user
+  }
 }
 
 describe('TemporalDisplay component', () => {
@@ -31,53 +39,48 @@ describe('TemporalDisplay component', () => {
   })
 
   test('with only a start date should render the start date', () => {
-    const overrideProps = {
+    setup({
       temporalSearch: {
         endDate: '',
         startDate: '2019-03-30T00:00:00.000Z',
         isRecurring: false
       }
-    }
-    setup(overrideProps)
+    })
 
-    expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
-    expect(screen.getByTitle('Temporal')).toHaveTextContent('Temporal')
+    expect(screen.getByTitle('Temporal')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Temporal' })).toBeInTheDocument()
     expect(screen.getByText(/start:/i)).toBeInTheDocument()
     expect(screen.getByText(/2019-03-30 00:00:00/i)).toBeInTheDocument()
     expect(screen.queryByText(/stop:/i)).not.toBeInTheDocument()
   })
 
   test('with only a end date should render the end date', () => {
-    const overrideProps = {
-      onRemoveTimelineFilter: jest.fn(),
+    setup({
       temporalSearch: {
         endDate: '2019-05-30T00:00:00.000Z',
         startDate: '',
         isRecurring: false
       }
-    }
-    setup(overrideProps)
+    })
 
-    expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
-    expect(screen.getByTitle('Temporal')).toHaveTextContent('Temporal')
+    expect(screen.getByRole('heading', { name: 'Temporal' })).toBeInTheDocument()
+    expect(screen.getByTitle('Temporal')).toBeInTheDocument()
     expect(screen.getByText(/stop:/i)).toBeInTheDocument()
     expect(screen.getByText(/2019-05-30 00:00:00/i)).toBeInTheDocument()
     expect(screen.queryByText(/start:/i)).not.toBeInTheDocument()
   })
 
-  test('with start date, end date, and isRecurring should render all', () => {
-    const overrideProps = {
-      onRemoveTimelineFilter: jest.fn(),
+  test('with start date, end date, and isRecurring should render all', async () => {
+    setup({
       temporalSearch: {
         endDate: '2019-05-30T00:00:00.000Z',
         startDate: '2019-03-30T00:00:00.000Z',
         isRecurring: true
       }
-    }
-    setup(overrideProps)
+    })
 
-    expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
-    expect(screen.getByTitle('Temporal')).toHaveTextContent('Temporal')
+    expect(screen.getByRole('heading', { name: 'Temporal' })).toBeInTheDocument()
+    expect(screen.getByTitle('Temporal')).toBeInTheDocument()
     expect(screen.getByText(/start:/i)).toBeInTheDocument()
     expect(screen.getByText(/03-30 00:00:00/i)).toBeInTheDocument()
     expect(screen.getByText(/stop:/i)).toBeInTheDocument()
@@ -86,7 +89,26 @@ describe('TemporalDisplay component', () => {
     expect(screen.getByText(/2019 - 2019/i)).toBeInTheDocument()
   })
 
-  test('with the same props should not rerender', () => {
+  test('clicking remove calls onTimelineRemove', async () => {
+    const { onRemoveTimelineFilter, user } = setup({
+      temporalSearch: {
+        endDate: '2019-05-30T00:00:00.000Z',
+        startDate: '2019-03-30T00:00:00.000Z',
+        isRecurring: false
+      }
+    })
+    const remove = screen.getByRole('button', { name: /remove temporal filter/i })
+
+    await act(async () => {
+      await user.click(remove)
+    })
+
+    expect(onRemoveTimelineFilter).toBeCalledTimes(1)
+  })
+})
+
+describe('when this memoized component is being re-rendered', () => {
+  test('with the same props should not rerender to ensure ', () => {
     const props = {
       onRemoveTimelineFilter: jest.fn(),
       temporalSearch: {
@@ -99,9 +121,8 @@ describe('TemporalDisplay component', () => {
     const { rerender } = render(
       <TemporalDisplay {...props} />
     )
-
     expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
-    expect(screen.getByTitle('Temporal')).toHaveTextContent('Temporal')
+    expect(screen.getByTitle('Temporal')).toBeInTheDocument()
     expect(screen.getByText(/start:/i)).toBeInTheDocument()
     expect(screen.getByText(/2019-03-30 00:00:00/i)).toBeInTheDocument()
     expect(screen.getByText(/stop:/i)).toBeInTheDocument()
@@ -110,7 +131,7 @@ describe('TemporalDisplay component', () => {
     rerender(<TemporalDisplay {...props} />)
 
     expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
-    expect(screen.getByTitle('Temporal')).toHaveTextContent('Temporal')
+    expect(screen.getByTitle('Temporal')).toBeInTheDocument()
     expect(screen.getByText(/start:/i)).toBeInTheDocument()
     expect(screen.getByText(/2019-03-30 00:00:00/i)).toBeInTheDocument()
     expect(screen.getByText(/stop:/i)).toBeInTheDocument()
@@ -142,28 +163,11 @@ describe('TemporalDisplay component', () => {
 
     rerender(<TemporalDisplay {...newProps} />)
 
-    expect(screen.getByRole('heading', { name: /temporal/i })).toBeInTheDocument()
-    expect(screen.getByTitle('Temporal')).toHaveTextContent('Temporal')
+    expect(screen.getByRole('heading', { name: 'Temporal' })).toBeInTheDocument()
+    expect(screen.getByTitle('Temporal')).toBeInTheDocument()
     expect(screen.getByText(/start:/i)).toBeInTheDocument()
     expect(screen.getByText(/2019-03-29 00:00:00/i)).toBeInTheDocument()
     expect(screen.getByText(/stop:/i)).toBeInTheDocument()
     expect(screen.getByText(/2019-05-29 00:00:00/i)).toBeInTheDocument()
-  })
-
-  test('clicking remove calls onTimelineRemove', async () => {
-    const overrideProps = {
-      onRemoveTimelineFilter: jest.fn(),
-      temporalSearch: {
-        endDate: '2019-05-30T00:00:00.000Z',
-        startDate: '2019-03-30T00:00:00.000Z',
-        isRecurring: false
-      }
-    }
-    setup(overrideProps)
-    const user = userEvent.setup()
-    const remove = screen.getByRole('button', { name: /remove temporal filter/i })
-    await user.click(remove)
-
-    expect(overrideProps.onRemoveTimelineFilter).toBeCalledTimes(1)
   })
 })

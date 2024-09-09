@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { FaCheck, FaQuestionCircle } from 'react-icons/fa'
+import { Check } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import CustomizableIcons from '../../CustomizableIcons/CustomizableIcons'
@@ -21,17 +22,22 @@ export const AccessMethodRadio = ({
   title,
   subtitle,
   customizationOptions,
-  isHarmony
+  isHarmony,
+  disabled,
+  errorMessage
 }) => {
   const labelClasses = [
     'access-method-radio',
     {
       'access-method-radio--is-selected': checked
+    },
+    {
+      'access-method-radio--is-harmony': isHarmony
+    },
+    {
+      'access-method-radio--disable-button': disabled
     }
   ]
-  if (isHarmony) {
-    labelClasses.push('access-method-radio--is-harmony')
-  }
 
   const labelClassName = classNames(labelClasses)
 
@@ -59,6 +65,7 @@ export const AccessMethodRadio = ({
         checked={checked ? 'checked' : ''}
         onChange={onChange}
         onClick={onClick}
+        disabled={disabled}
       />
       {
         customizationOptions && (
@@ -74,7 +81,7 @@ export const AccessMethodRadio = ({
         )
       }
       <div className="access-method-radio__radio">
-        { checked && <EDSCIcon icon={FaCheck} className="access-method-radio__radio-icon" /> }
+        { checked && <EDSCIcon icon={Check} className="access-method-radio__radio-icon" /> }
       </div>
       <div className="access-method-radio__content">
         <header className="access-method-radio__header">
@@ -92,6 +99,13 @@ export const AccessMethodRadio = ({
             <span className="access-method-radio__description">
               {description}
             </span>
+            {
+              errorMessage && (
+                <div className="access-method-radio__error">
+                  {errorMessage}
+                </div>
+              )
+            }
           </div>
         </header>
         {
@@ -123,7 +137,9 @@ AccessMethodRadio.defaultProps = {
   onClick: null,
   subtitle: null,
   customizationOptions: null,
-  isHarmony: false
+  isHarmony: false,
+  disabled: false,
+  errorMessage: null
 }
 
 AccessMethodRadio.propTypes = {
@@ -151,7 +167,9 @@ AccessMethodRadio.propTypes = {
     hasFormats: PropTypes.bool,
     hasTransform: PropTypes.bool
   }),
-  isHarmony: PropTypes.bool
+  isHarmony: PropTypes.bool,
+  disabled: PropTypes.bool,
+  errorMessage: PropTypes.string
 }
 
 export default AccessMethodRadio

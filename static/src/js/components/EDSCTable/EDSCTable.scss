@@ -5,10 +5,10 @@
   position: relative;
 
   &--portal-escape {
-    color: #424242;
+    color: $color__carbon--70;
     margin: 0;
     padding: 15px 20px;
-    border-top: 1px solid #e3e3e3;
+    border-top: 1px solid $color__carbon--10;
     width: inherit;
   }
 
@@ -18,11 +18,11 @@
 
   &__tr {
     height: 60px;
-    background-color: $color__white;
-    border-bottom: 1px solid $color__black--200;
+    background-color: $color__spacesuit-white;
+    border-bottom: 1px solid $color__carbon--20;
 
     .edsc-table__td {
-      background-color: $color__white;
+      background-color: $color__spacesuit-white;
     }
 
     :last-child {
@@ -32,17 +32,17 @@
     }
 
     .edsc-table__table--striped & {
-      background-color: $color__white;
+      background-color: $color__spacesuit-white;
 
       &--odd {
-        background-color: darken($color__black--100, 1);
+        background-color: darken($color__carbon--10, 1);
 
         .edsc-table__td {
-          background-color: darken($color__black--100, 1);
+          background-color: darken($color__carbon--10, 1);
         }
 
         .badge-light {
-          background-color: $color__black--200;
+          background-color: $color__carbon--20;
         }
       }
     }
@@ -54,7 +54,7 @@
     overflow: hidden;
 
     &--skeleton {
-      border-bottom: 1px solid $color__black--200;
+      border-bottom: 1px solid $color__carbon--20;
     }
   }
 
@@ -72,8 +72,8 @@
     padding: 0.125rem 0.5rem;
     font-size: 0.725rem;
     font-weight: 500;
-    color: $color__black--500;
-    background-color: $color__white;
+    color: $color__carbon--50;
+    background-color: $color__spacesuit-white;
   }
 
   &__table {
@@ -114,7 +114,7 @@
           height: 100%;
           height: calc(100% + 1px);
           background-color: transparent;
-          background-image: linear-gradient(to left, rgba($color__black--900, 0) 0%, rgba($color__black--900, 0.1) 100%);
+          background-image: linear-gradient(to left, rgba($color__carbon--90, 0) 0%, rgba($color__carbon--90, 0.1) 100%);
           display: block;
           position: absolute;
           top: -1px;

@@ -39,7 +39,7 @@
       margin-bottom: 55px;
 
       .leaflet-disabled {
-        color: $color__black--300;
+        color: $color__carbon--30;
 
         &:hover {
           cursor: not-allowed;
@@ -144,7 +144,7 @@
       padding: 10px;
       padding-top: 0px;
       font-size: 10px;
-      color: $color__black--400;
+      color: $color__carbon--40;
       text-align: right;
     }
 
@@ -154,14 +154,14 @@
     .leaflet-touch .leaflet-bar a,
     .leaflet-touch .leaflet-bar button {
       border: 0;
-      background-color: #fff;
+      background-color: $color__spacesuit-white;
       width: 30px;
       height: 30px;
       line-height: 30px;
       display: block;
       text-align: center;
       text-decoration: none;
-      color: #000;
+      color: $color__carbon-black;
 
       &:hover,
       &:last-child {
@@ -224,8 +224,8 @@
     }
 
     .leaflet-draw-actions a {
-      background-color: $color__black--400;
-      color: $color__white;
+      background-color: $color__carbon--40;
+      color: $color__spacesuit-white;
     }
 
     .leaflet-draw-toolbar .leaflet-draw-edit-remove,
@@ -252,7 +252,7 @@
     .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-edit.leaflet-disabled {
       position: relative;
       cursor: not-allowed;
-      background-color: #e6e6e6;
+      background-color: $color__carbon--10;
       overflow: hidden;
 
       /* A little trickery to make the background image look faded to match the other disabled styles */

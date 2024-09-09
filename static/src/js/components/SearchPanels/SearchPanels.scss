@@ -2,7 +2,7 @@
   &__note {
     display: block;
     margin-bottom: calc($spacer / 2);
-    color: $color__black--500;
+    color: $color__carbon--50;
     font-size: 0.875rem;
   }
 
@@ -10,11 +10,11 @@
     font-weight: 500;
 
     &--opensearch {
-      color: $color__yellow;
+      color: $color__international-orange;
     }
 
     &--csda {
-      color: $color__purple;
+      color: $color__international-orange;
     }
   }
 
@@ -25,25 +25,25 @@
   &__action {
     display: flex;
     align-items: center;
-    color: $color__black--500;
+    color: $color__carbon--50;
     padding-left: 0;
     padding-right: 0;
 
     &:hover,
     &:active {
-      color: $color__black--600;
+      color: $color__carbon--60;
     }
 
     &--subscriptions {
       .badge {
-        background-color: $color__yellow;
+        background-color: $color__international-orange;
       }
     }
   }
 
   &__focused-meta {
     margin: 0.5rem;
-    background: $color__white;
+    background: $color__spacesuit-white;
     border-radius: 0.125rem;
     overflow: hidden;
   }

@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {
-  FaRegFilePdf,
-  FaRegFileWord,
-  FaExternalLinkAlt
-} from 'react-icons/fa'
+import { FaRegFilePdf, FaRegFileWord } from 'react-icons/fa'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import ExternalLink from '../ExternalLink/ExternalLink'
 
 export class AboutCwicModal extends Component {
   constructor(props) {
@@ -67,11 +64,10 @@ export class AboutCwicModal extends Component {
               </a>
             </li>
             <li>
-              <a href="https://wiki.earthdata.nasa.gov/display/CWIC/CWIC+Open+Search+Architecture" target="_blank" rel="noopener noreferrer">
+              {' '}
+              <ExternalLink href="CWIC OpenSearch Architecture">
                 CWIC OpenSearch Architecture
-                {' '}
-                <EDSCIcon icon={FaExternalLinkAlt} />
-              </a>
+              </ExternalLink>
             </li>
           </ul>
         </div>

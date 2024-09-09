@@ -5,6 +5,7 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
+
 import {
   FaCrop,
   FaMapMarker,

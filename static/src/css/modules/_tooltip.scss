@@ -2,8 +2,8 @@
   font-size: 0.75rem;
 
   .tooltip-inner {
-    background-color: $color__black;
-    border: 1px solid $color__black--600;
+    background-color: $color__carbon-black;
+    border: 1px solid $color__carbon--60;
   }
 
   &--large {
@@ -42,12 +42,12 @@
     text-align: left;
     margin-bottom: 0.325rem;
     padding-bottom: 0.325rem;
-    border-bottom: 1px solid rgba($color__white, 0.15);
+    border-bottom: 1px solid rgba($color__spacesuit-white, 0.15);
   }
 
   &__secondary-text {
     font-size: 0.675rem;
-    color: $color__black--300;
+    color: $color__carbon--30;
     display: block;
   }
 }

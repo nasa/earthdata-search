@@ -9,12 +9,12 @@
 
   &--is-active {
     &.dropdown-item {
-      background-color: $color__blue;
-      color: $color__white;
+      background-color: $color__nasa-blue;
+      color: $color__spacesuit-white;
 
       .radio-setting-dropdown-item:hover & {
-        background-color: $color__blue;
-        color: $color__white;
+        background-color: $color__nasa-blue;
+        color: $color__spacesuit-white;
       }
     }
   }
@@ -25,18 +25,18 @@
     width: 1rem;
     margin-right: calc($spacer / 4);
     text-align: center;
-    color: $color__black--300;
+    color: $color__carbon--30;
 
     .radio-setting-dropdown-item:hover & {
-      color: $color__black--400;
+      color: $color__carbon--40;
     }
 
     .radio-setting-dropdown-item--is-active & {
-      color: $color__white;
+      color: $color__spacesuit-white;
     }
 
     .radio-setting-dropdown-item--is-active:hover & {
-      color: $color__white;
+      color: $color__spacesuit-white;
     }
   }
 

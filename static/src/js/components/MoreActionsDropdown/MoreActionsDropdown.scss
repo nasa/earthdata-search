@@ -5,12 +5,16 @@
   &__toggle {
     &:hover,
     &:focus {
-      color: $color__black--500;
+      color: $color__carbon--50;
     }
   }
 
   &__menu {
     box-shadow: $box-shadow;
+  }
+
+  &__smart-handoff-link {
+    padding-left:0.825rem;
   }
 
   &__dropdown {

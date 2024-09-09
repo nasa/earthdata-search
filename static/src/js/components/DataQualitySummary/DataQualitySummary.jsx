@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FaExclamationCircle } from 'react-icons/fa'
+import { AlertMediumPriority } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
 import SanitizedHTML from 'react-sanitized-html'
 
@@ -20,7 +20,7 @@ export const DataQualitySummary = ({
         header={
           (
             <>
-              <EDSCIcon icon={FaExclamationCircle} className="data-quality-summary__icon" />
+              <EDSCIcon icon={AlertMediumPriority} className="data-quality-summary__icon" />
               {` ${dataQualityHeader}`}
             </>
           )

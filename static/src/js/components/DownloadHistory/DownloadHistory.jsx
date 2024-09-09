@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
-import { FaTimesCircle } from 'react-icons/fa'
+import { XCircled } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { Helmet } from 'react-helmet'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
@@ -136,7 +136,7 @@ export class DownloadHistory extends Component {
                               className="download-history__button download-history__button--remove"
                               onClick={() => this.onHandleRemove(id)}
                               variant="naked"
-                              icon={FaTimesCircle}
+                              icon={XCircled}
                               label="Delete Download"
                             />
                           </td>

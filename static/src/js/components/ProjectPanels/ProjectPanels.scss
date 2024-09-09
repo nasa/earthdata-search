@@ -19,18 +19,18 @@
     vertical-align: middle;
 
     &--valid {
-      color: $color__green;
+      color: $color__active-green;
     }
 
     &--invalid {
-      color: $color__red;
+      color: $color__nasa-red;
     }
   }
 
   &__collection-count {
     display: inline-block;
     margin-right: calc($spacer / 2);
-    color: $color__black--400;
+    color: $color__carbon--40;
     vertical-align: middle;
   }
 }
