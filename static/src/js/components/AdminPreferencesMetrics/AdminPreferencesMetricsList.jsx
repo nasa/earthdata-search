@@ -34,9 +34,11 @@ const createPreferencesTable = (preferences) => {
     return (
       <div key={key}>
         <h3 className="admin-preferences-metrics-list__table-title">
-          Top 5
+          Top
           {' '}
-          {startCase(key)}
+          <b>{startCase(key)}</b>
+          {' '}
+          Values
         </h3>
         <Table striped bordered>
           {header}

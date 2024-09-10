@@ -137,7 +137,7 @@ const adminGetPreferencesMetrics = async (event, context) => {
       top5PreferencesValues[key] = {}
 
       top5Preferences.forEach(([value, count]) => {
-        top5PreferencesValues[key][value] = `${100 * (count / totalResponses)}%`
+        top5PreferencesValues[key][value] = `${100 * (count / totalResponses)}% (${count})`
       })
     })
 
