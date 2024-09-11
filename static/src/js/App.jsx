@@ -74,7 +74,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      runTour: localStorage.getItem('dontShowTour') !== 'true',
+      runTour: false,
     }
     this.store = configureStore()
     const { edscHost } = getEnvironmentConfig()
@@ -83,6 +83,13 @@ class App extends Component {
     this.env = env
     this.startTour = this.startTour.bind(this)
     this.setRunTour = this.setRunTour.bind(this)
+  }
+
+  componentDidMount() {
+    const dontShowTour = localStorage.getItem('dontShowTour') !== 'true';
+    this.setState({
+      runTour: dontShowTour
+    });
   }
 
   startTour() {
