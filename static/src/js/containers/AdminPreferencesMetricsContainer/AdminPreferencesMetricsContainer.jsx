@@ -8,8 +8,8 @@ import AdminPreferencesMetrics from '../../components/AdminPreferencesMetrics/Ad
 
 export const mapStateToProps = (state) => ({
   metricsPreferences: state.admin.metricsPreferences,
-  PreferencesLoading: state.admin.metricsPreferences.isLoading,
-  PreferencesLoaded: state.admin.metricsPreferences.isLoaded
+  preferencesLoading: state.admin.metricsPreferences.isLoading,
+  preferencesLoaded: state.admin.metricsPreferences.isLoaded
 })
 
 export const mapDispatchToProps = (dispatch) => ({
