@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Joyride, { STATUS, ACTIONS } from 'react-joyride'
-import { FaExternalLinkAlt, FaInfoCircle, FaPlus } from 'react-icons/fa'
+import { FaInfoCircle, FaPlus } from 'react-icons/fa'
 import Button from '../Button/Button'
 import TourThumbnail from '../../../assets/images/tour-video-thumbnail.png'
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
+import ExternalLink from '../ExternalLink/ExternalLink'
 import './SearchTour.scss'
 
 const SearchTour = ({ runTour, setRunTour }) => {
   const [stepIndex, setStepIndex] = useState(0)
-  const [dontShowAgain, setDontShowAgain] = useState(false)
 
   const MAX_STEPS = 12
 
@@ -18,7 +18,6 @@ const SearchTour = ({ runTour, setRunTour }) => {
     if (dontShowTour === 'true') {
       setRunTour(false)
     }
-    setDontShowAgain(dontShowTour === 'true')
   }, [setRunTour])
 
   useEffect(() => {
@@ -39,9 +38,11 @@ const SearchTour = ({ runTour, setRunTour }) => {
 
   useEffect(() => {
     if (runTour) {
+      localStorage.setItem('dontShowTour', 'false')
       console.log('Tour started')
       setStepIndex(0)
     } else {
+      localStorage.setItem('dontShowTour', 'true')
       console.log('Tour stopped')
     }
   }, [runTour])
@@ -54,12 +55,6 @@ const SearchTour = ({ runTour, setRunTour }) => {
       }
     }
   }, [stepIndex])
-
-  const handleDontShowAgainChange = (e) => {
-    const checked = e.target.checked
-    setDontShowAgain(checked)
-    localStorage.setItem('dontShowTour', checked.toString())
-  }
 
   const StepCounter = ({ currentStep, totalSteps }) => (
     <p className="step-counter-text">
@@ -169,8 +164,10 @@ const SearchTour = ({ runTour, setRunTour }) => {
             As you type, suggestions for matching topics and keywords will be displayed. When selected, they will be applied as additional search filters.
           </p>
           <div className="tour-info-box">
-            <p>Find more information about the&nbsp;
-              <a href="https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html" target="_blank" rel="noopener noreferrer">Common Metadata Repository (CMR) <EDSCIcon icon={FaExternalLinkAlt} /></a> 
+            <p>Find more information about the {' '}
+              <ExternalLink href="https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html">
+                Common Metadata Repository (CMR)
+              </ExternalLink>
             </p>
           </div>
           <div className="tour-buttons">
@@ -649,12 +646,8 @@ const SearchTour = ({ runTour, setRunTour }) => {
           <p style={{ marginBottom: '20px', fontSize: '16px' }}>
             Check out our latest webinar where you will see a hands-on example of how to search for data in Earthdata Search.
           </p>
-          <a
-            href="https://www.youtube.com/watch?v=QtfMlkd7kII"
-            target="_blank"
-            rel="noopener noreferrer"
+          <div
             style={{
-              display: 'block',
               backgroundColor: '#f5f5f5',
               padding: '10px',
               marginBottom: '20px',
@@ -662,36 +655,33 @@ const SearchTour = ({ runTour, setRunTour }) => {
               textDecoration: 'none',
               color: '#000',
               display: 'flex',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
             <div style={{ flex: '0 0 220px', marginRight: '15px' }}>
-              <img 
+              <img
                 src={TourThumbnail}
                 alt="Webinar Thumbnail"
                 style={{ width: '100%', height: 'auto' }}
               />
             </div>
             <div>
-              <div style={{
-                padding: '10px',
-                fontSize: '16px',
-                fontWeight: '500',
-              }}>
+              <div style={{ padding: '10px', fontSize: '16px', fontWeight: '500' }}>
                 Discover and Access Earth Science Data Using Earthdata Search
               </div>
-              <p style={{ fontSize: '16px', fontWeight: 'bold', textDecoration: 'underline', marginTop: '10px', marginLeft: '10px' }}>
-                Watch the webinar <EDSCIcon icon={FaExternalLinkAlt} />
+              <p style={{ fontSize: '16px', fontWeight: 'bold', marginTop: '10px', marginLeft: '10px' }}>
+                <ExternalLink href="https://www.youtube.com/watch?v=QtfMlkd7kII">
+                  Watch the webinar
+                </ExternalLink>
               </p>
-              
             </div>
-          </a>
+          </div>
           <p style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '5px' }}>
             Find more information here:
           </p>
           <p>
             <a
-              href="https://wiki.earthdata.nasa.gov/display/EDSC/EDSC+Search+Wiki"
+              href="https://www.earthdata.nasa.gov/learn/earthdata-search"
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: '#5a585a', textDecoration: 'underline', marginBottom: '5px', display: 'block' }}
