@@ -10,9 +10,8 @@ import './SearchTour.scss'
 const SearchTour = ({ runTour, setRunTour }) => {
   const [stepIndex, setStepIndex] = useState(0)
   const [dontShowAgain, setDontShowAgain] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  const MAX_STEPS = isLoggedIn ? 14 : 12;
+  const MAX_STEPS = 12
 
   useEffect(() => {
     const dontShowTour = localStorage.getItem('dontShowTour')
@@ -67,211 +66,6 @@ const SearchTour = ({ runTour, setRunTour }) => {
       {currentStep} OF {totalSteps}
     </p>
   )
-
-  const loggedInSteps = [
-    {
-      target: '.secondary-toolbar__user-dropdown-toggle',
-      content: (
-        <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
-          <p className="tour-content">
-            When logged in, use this menu to set preferences, saved projects, subscriptions, download status and history, or log out.
-          </p>
-          <div className="tour-buttons">
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => setStepIndex(stepIndex - 1)}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => setStepIndex(stepIndex + 1)}
-            >
-              Next
-            </Button>
-          </div>
-        </div>
-      ),
-      placement: 'right',
-      styles: {
-        tooltip: {
-          width: '400px',
-        },
-      },
-    },
-    {
-      target: '.secondary-toolbar__project-name-dropdown-toggle',
-      content: (
-        <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
-          <p>
-            Click <strong>Save Project</strong> to create a project using your current search criteria. Once a project is created, any added collections and granules can be viewed by clicking <strong>My Project</strong>.
-          </p>
-          <div className="tour-buttons">
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex - 1)
-              }}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex + 1)
-              }}
-            >
-              Next
-            </Button>
-          </div>
-        </div>
-      ),
-      placement: 'right',
-      styles: {
-        tooltip: {
-          width: '400px',
-        },
-      },
-    },
-  ]
-
-  const finalSteps = [
-    {
-      target: '.secondary-toolbar__begin-tour-button',
-      content: (
-        <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
-          <p className="tour-content">
-            You can replay this tour anytime by clicking <strong>Show Tour</strong>.
-          </p>
-          <div className="tour-buttons">
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex - 1)
-              }}
-            >
-              Previous
-            </Button>
-            <Button
-              className="button-tour-finish"
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex + 1)
-              }}
-            >
-              Finish Tour
-            </Button>
-
-          </div>
-        </div>
-      ),
-      placement: 'right',
-      styles: {
-        tooltip: {
-          width: '400px',
-        },
-      },
-    },
-    {
-      target: '.search',
-      content: (
-        <div style={{ textAlign: 'left' }}>
-          <h2 className="tour-heading" style={{ fontSize: '22px', fontWeight: 'bold', marginBottom: '15px' }}>
-            Want to learn more?
-          </h2>
-          <p style={{ marginBottom: '20px', fontSize: '16px' }}>
-            Check out our latest webinar where you will see a hands-on example of how to search for data in Earthdata Search.
-          </p>
-          <a
-            href="https://www.youtube.com/watch?v=QtfMlkd7kII"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'block',
-              backgroundColor: '#f5f5f5',
-              padding: '10px',
-              marginBottom: '20px',
-              borderRadius: '6px',
-              textDecoration: 'none',
-              color: '#000',
-              display: 'flex',
-              alignItems: 'center'
-            }}
-          >
-            <div style={{ flex: '0 0 220px', marginRight: '15px' }}>
-              <img 
-                src={TourThumbnail}
-                alt="Webinar Thumbnail"
-                style={{ width: '100%', height: 'auto' }}
-              />
-            </div>
-            <div>
-              <div style={{
-                padding: '10px',
-                fontSize: '16px',
-                fontWeight: '500',
-              }}>
-                Discover and Access Earth Science Data Using Earthdata Search
-              </div>
-              <p style={{ fontSize: '16px', fontWeight: 'bold', textDecoration: 'underline', marginTop: '10px', marginLeft: '10px' }}>
-                Watch the webinar <EDSCIcon icon={FaExternalLinkAlt} />
-              </p>
-              
-            </div>
-          </a>
-          <p style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '5px' }}>
-            Find more information here:
-          </p>
-          <p>
-            <a
-              href="https://wiki.earthdata.nasa.gov/display/EDSC/EDSC+Search+Wiki"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: '#5a585a', textDecoration: 'underline', marginBottom: '5px', display: 'block' }}
-            >
-              Earthdata Search wiki
-            </a>
-          </p>
-          <p>
-            <a
-              href="https://www.earthdata.nasa.gov/faq/earthdata-search-faq"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: '#5a585a', textDecoration: 'underline', display: 'block' }}
-            >
-              Earthdata Search FAQs
-            </a>
-          </p>
-        </div>
-      ),
-      disableBeacon: true,
-      placement: 'center',
-      styles: {
-        tooltip: {
-          width: '600px',
-          padding: '20px',
-        },
-        tooltipContent: {
-          fontSize: '16px',
-        },
-      },
-    },
-  ]
 
   const steps = [
     {
@@ -804,7 +598,131 @@ const SearchTour = ({ runTour, setRunTour }) => {
         },
       },
     },
-    ...(isLoggedIn ? [...loggedInSteps, ...finalSteps] : finalSteps),
+    {
+      target: '.secondary-toolbar__begin-tour-button',
+      content: (
+        <div>
+          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
+          <p className="tour-content">
+            You can replay this tour anytime by clicking <strong>Show Tour</strong>.
+          </p>
+          <div className="tour-buttons">
+            <Button
+              type="button"
+              bootstrapVariant="secondary"
+              bootstrapSize="sm"
+              onClick={() => {
+                setStepIndex(stepIndex - 1)
+              }}
+            >
+              Previous
+            </Button>
+            <Button
+              className="button-tour-finish"
+              type="button"
+              bootstrapVariant="primary"
+              bootstrapSize="sm"
+              onClick={() => {
+                setStepIndex(stepIndex + 1)
+              }}
+            >
+              Finish Tour
+            </Button>
+
+          </div>
+        </div>
+      ),
+      placement: 'right',
+      styles: {
+        tooltip: {
+          width: '400px',
+        },
+      },
+    },
+    {
+      target: '.search',
+      content: (
+        <div style={{ textAlign: 'left' }}>
+          <h2 className="tour-heading" style={{ fontSize: '22px', fontWeight: 'bold', marginBottom: '15px' }}>
+            Want to learn more?
+          </h2>
+          <p style={{ marginBottom: '20px', fontSize: '16px' }}>
+            Check out our latest webinar where you will see a hands-on example of how to search for data in Earthdata Search.
+          </p>
+          <a
+            href="https://www.youtube.com/watch?v=QtfMlkd7kII"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'block',
+              backgroundColor: '#f5f5f5',
+              padding: '10px',
+              marginBottom: '20px',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              color: '#000',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
+            <div style={{ flex: '0 0 220px', marginRight: '15px' }}>
+              <img 
+                src={TourThumbnail}
+                alt="Webinar Thumbnail"
+                style={{ width: '100%', height: 'auto' }}
+              />
+            </div>
+            <div>
+              <div style={{
+                padding: '10px',
+                fontSize: '16px',
+                fontWeight: '500',
+              }}>
+                Discover and Access Earth Science Data Using Earthdata Search
+              </div>
+              <p style={{ fontSize: '16px', fontWeight: 'bold', textDecoration: 'underline', marginTop: '10px', marginLeft: '10px' }}>
+                Watch the webinar <EDSCIcon icon={FaExternalLinkAlt} />
+              </p>
+              
+            </div>
+          </a>
+          <p style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '5px' }}>
+            Find more information here:
+          </p>
+          <p>
+            <a
+              href="https://wiki.earthdata.nasa.gov/display/EDSC/EDSC+Search+Wiki"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#5a585a', textDecoration: 'underline', marginBottom: '5px', display: 'block' }}
+            >
+              Earthdata Search wiki
+            </a>
+          </p>
+          <p>
+            <a
+              href="https://www.earthdata.nasa.gov/faq/earthdata-search-faq"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#5a585a', textDecoration: 'underline', display: 'block' }}
+            >
+              Earthdata Search FAQs
+            </a>
+          </p>
+        </div>
+      ),
+      disableBeacon: true,
+      placement: 'center',
+      styles: {
+        tooltip: {
+          width: '600px',
+          padding: '20px',
+        },
+        tooltipContent: {
+          fontSize: '16px',
+        },
+      },
+    },
   ]
 
   const handleJoyrideCallback = (data) => {
