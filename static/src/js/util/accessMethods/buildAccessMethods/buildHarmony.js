@@ -17,9 +17,7 @@ import { supportsVariableSubsetting } from '../supportsVariableSubsetting'
  * @returns {object} Access method for Harmony
  */
 export const buildHarmony = (serviceItem, params) => {
-  const accessMethods = {}
-
-  const { associatedVariables, harmonyIndex: index } = params
+  const { associatedVariables } = params
 
   const {
     description,
@@ -67,31 +65,29 @@ export const buildHarmony = (serviceItem, params) => {
     })
   }
 
-  accessMethods[`harmony${index}`] = {
-    description,
-    enableTemporalSubsetting: true,
-    enableSpatialSubsetting: true,
-    hierarchyMappings,
-    id: serviceConceptId,
-    isValid: true,
-    keywordMappings,
-    longName,
-    name,
-    supportedOutputFormats: uniq(outputFormats),
-    supportedOutputProjections: outputProjections,
-    supportsBoundingBoxSubsetting: supportsBoundingBoxSubsetting(serviceItem),
-    supportsShapefileSubsetting: supportsShapefileSubsetting(serviceItem),
-    supportsTemporalSubsetting: supportsTemporalSubsetting(serviceItem),
-    supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
-    supportsConcatenation: supportsConcatenation(serviceItem),
-    defaultConcatenation: defaultConcatenation(serviceItem),
-    enableConcatenateDownload: defaultConcatenation(serviceItem),
-    type: serviceType,
-    url: urlValue,
-    variables
-  }
-
-  return {
-    accessMethods
-  }
+  return [
+    {
+      description,
+      enableTemporalSubsetting: true,
+      enableSpatialSubsetting: true,
+      hierarchyMappings,
+      id: serviceConceptId,
+      isValid: true,
+      keywordMappings,
+      longName,
+      name,
+      supportedOutputFormats: uniq(outputFormats),
+      supportedOutputProjections: outputProjections,
+      supportsBoundingBoxSubsetting: supportsBoundingBoxSubsetting(serviceItem),
+      supportsShapefileSubsetting: supportsShapefileSubsetting(serviceItem),
+      supportsTemporalSubsetting: supportsTemporalSubsetting(serviceItem),
+      supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
+      supportsConcatenation: supportsConcatenation(serviceItem),
+      defaultConcatenation: defaultConcatenation(serviceItem),
+      enableConcatenateDownload: defaultConcatenation(serviceItem),
+      type: serviceType,
+      url: urlValue,
+      variables
+    }
+  ]
 }

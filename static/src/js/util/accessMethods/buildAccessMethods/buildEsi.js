@@ -1,28 +1,18 @@
-import { camelCase } from 'lodash-es'
-
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 
 import { generateFormDigest } from '../generateFormDigest'
 
 /**
- * Builds the ESI or Echo Ordering access method
+ * Builds the ESI access method
  * @param {object} serviceItem serviceItem in the Collection Metadata
  * @param {boolean} disabledOrdering true if ordering is disabled
- * @returns {object} Access method for ESI or Echo Orders
+ * @returns {object} Access method for ESI
  */
-export const buildEsiEcho = (serviceItem, params) => {
-  const accessMethods = {}
+export const buildEsi = (serviceItem) => {
+  const accessMethodItems = []
   // Only process orderOptions if the service type uses orderOptions
   // Do not include access if orders are disabled
   const { disableOrdering } = getApplicationConfig()
-
-  const {
-    esiIndex: initEsiIndex,
-    echoIndex: initEchoIndex
-  } = params
-
-  let esiIndex = initEsiIndex
-  let echoIndex = initEchoIndex
 
   if (disableOrdering !== 'true') {
     // Pull out the esi and echo indices and increment them to have an accurate count
@@ -58,23 +48,9 @@ export const buildEsiEcho = (serviceItem, params) => {
         formDigest: generateFormDigest(form)
       }
 
-      let methodKey = camelCase(serviceType)
-
-      // `echoOrders` needs to be singular to match existing savedAccessConfigurations
-      if (methodKey === 'echoOrders') {
-        methodKey = 'echoOrder'
-        accessMethods[`${methodKey}${echoIndex}`] = method
-        echoIndex += 1
-      } else {
-        accessMethods[`${methodKey}${esiIndex}`] = method
-        esiIndex += 1
-      }
+      accessMethodItems.push(method)
     })
   }
 
-  return {
-    accessMethods,
-    echoIndex,
-    esiIndex
-  }
+  return accessMethodItems
 }

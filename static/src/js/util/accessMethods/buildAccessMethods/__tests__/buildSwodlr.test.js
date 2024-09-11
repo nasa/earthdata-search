@@ -56,10 +56,11 @@ describe('buildSwodlr', () => {
     const { services } = collectionMetadata
     const serviceItem = services.items[0]
 
-    const { accessMethods } = buildSwodlr(serviceItem)
+    const accessMethodsList = buildSwodlr(serviceItem)
 
-    expect(accessMethods).toEqual({
-      swodlr: {
+    expect(accessMethodsList.length).toEqual(1)
+    expect(accessMethodsList).toEqual([
+      {
         id: 'S100000-EDSC',
         isValid: true,
         longName: 'Mock PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
@@ -68,7 +69,7 @@ describe('buildSwodlr', () => {
         type: 'SWODLR',
         url: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
       }
-    })
+    ])
   })
 
   describe('when swodlr is disabled', () => {
@@ -125,9 +126,10 @@ describe('buildSwodlr', () => {
       const { services } = collectionMetadata
       const serviceItem = services.items[0]
 
-      const { accessMethods } = buildSwodlr(serviceItem)
+      const accessMethodsList = buildSwodlr(serviceItem)
 
-      expect(accessMethods).toEqual({})
+      expect(accessMethodsList.length).toEqual(0)
+      expect(accessMethodsList).toEqual([])
     })
   })
 })
