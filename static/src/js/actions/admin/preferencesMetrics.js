@@ -50,8 +50,8 @@ export const fetchAdminMetricsPreferences = () => async (dispatch, getState) => 
     .catch((error) => {
       dispatch(actions.handleError({
         error,
-        action: 'fetchAdminMetricsRetrievals',
-        resource: 'admin metrics retrievals',
+        action: 'fetchAdminMetricsPreferences',
+        resource: 'admin metrics preferences',
         requestObject
       }))
     })

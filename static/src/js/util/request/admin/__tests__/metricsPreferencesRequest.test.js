@@ -6,7 +6,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-describe('metricsRetrievalsRequest#constructor', () => {
+describe('metricsPreferencesRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
     const token = '123'
     const request = new MetricsPreferencesRequest(token)
@@ -17,7 +17,7 @@ describe('metricsRetrievalsRequest#constructor', () => {
   })
 })
 
-describe('metricsRetrievalsRequest#transformResponse', () => {
+describe('metricsPreferencesRequest#transformResponse', () => {
   beforeEach(() => {
     jest.spyOn(MetricsPreferencesRequest.prototype, 'handleUnauthorized').mockImplementation()
   })
@@ -35,7 +35,7 @@ describe('metricsRetrievalsRequest#transformResponse', () => {
   })
 })
 
-describe('metricsRetrievalsRequest#all', () => {
+describe('metricsPreferencesRequest#all', () => {
   test('calls Request#get', () => {
     const token = '123'
     const request = new MetricsPreferencesRequest(token)
