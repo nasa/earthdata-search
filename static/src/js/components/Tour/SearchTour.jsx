@@ -4,7 +4,7 @@ import Joyride, { STATUS, ACTIONS } from 'react-joyride'
 import { FaInfoCircle, FaPlus } from 'react-icons/fa'
 import Button from '../Button/Button'
 import TourThumbnail from '../../../assets/images/tour-video-thumbnail.png'
-import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ExternalLink from '../ExternalLink/ExternalLink'
 import './SearchTour.scss'
 
@@ -41,11 +41,11 @@ const SearchTour = ({ runTour, setRunTour }) => {
       setStepIndex(0)
     }
 
-    localStorage.setItem('dontShowTour', runTour ? 'false' : 'true');
+    localStorage.setItem('dontShowTour', runTour ? 'false' : 'true')
   }, [runTour])
 
   useEffect(() => {
-    if (stepIndex === 6) {  // Scrolling to the top to ensure "Browse Portals" is visible.
+    if (stepIndex === 6) { // Scrolling to the top to ensure "Browse Portals" is visible.
       const element = document.querySelector('.sidebar__content .simplebar-content-wrapper')
       if (element) {
         element.scrollTop = 0
@@ -55,7 +55,10 @@ const SearchTour = ({ runTour, setRunTour }) => {
 
   const StepCounter = ({ currentStep }) => (
     <p className="step-counter-text">
-      {currentStep} OF {MAX_STEPS}
+      {currentStep}
+      {' '}
+      OF
+      {MAX_STEPS}
     </p>
   )
 
@@ -65,9 +68,11 @@ const SearchTour = ({ runTour, setRunTour }) => {
         type="button"
         bootstrapVariant="secondary"
         bootstrapSize="sm"
-        onClick={() => {
-          setStepIndex(stepIndex - 1)
-        }}
+        onClick={
+          () => {
+            setStepIndex(stepIndex - 1)
+          }
+        }
       >
         Previous
       </Button>
@@ -75,9 +80,11 @@ const SearchTour = ({ runTour, setRunTour }) => {
         type="button"
         bootstrapVariant="primary"
         bootstrapSize="sm"
-        onClick={() => {
-          setStepIndex(stepIndex + 1)
-        }}
+        onClick={
+          () => {
+            setStepIndex(stepIndex + 1)
+          }
+        }
       >
         Next
       </Button>
@@ -95,7 +102,11 @@ const SearchTour = ({ runTour, setRunTour }) => {
             Get acquainted with Earthdata Search by taking our guided tour, where you’ll learn how to search for data, use the map, create your first project, and manage your preferences.
           </p>
           <p className="tour-note">
-            If you want to skip the tour for now, it is always available by clicking <strong>Show Tour</strong> at the top of the page.
+            If you want to skip the tour for now, it is always available by clicking
+            {' '}
+            <strong>Show Tour</strong>
+            {' '}
+            at the top of the page.
           </p>
           <div className="tour-intro-buttons">
             <Button
@@ -103,9 +114,11 @@ const SearchTour = ({ runTour, setRunTour }) => {
               type="button"
               bootstrapVariant="primary"
               bootstrapSize="lg"
-              onClick={() => {
-                setStepIndex(stepIndex + 1)
-              }}
+              onClick={
+                () => {
+                  setStepIndex(stepIndex + 1)
+                }
+              }
             >
               Take the tour
             </Button>
@@ -114,10 +127,12 @@ const SearchTour = ({ runTour, setRunTour }) => {
               type="button"
               bootstrapVariant="secondary"
               bootstrapSize="sm"
-              onClick={() => {
-                setRunTour(false)
-                setStepIndex(0)
-              }}
+              onClick={
+                () => {
+                  setRunTour(false)
+                  setStepIndex(0)
+                }
+              }
             >
               Skip for now
             </Button>
@@ -125,7 +140,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
         </div>
       ),
       disableBeacon: true,
-      placement: 'center',
+      placement: 'center'
     },
     {
       target: '.sidebar__inner',
@@ -144,13 +159,13 @@ const SearchTour = ({ runTour, setRunTour }) => {
       placement: 'right',
       styles: {
         tooltip: {
-          width: '400px',
+          width: '400px'
         },
         tooltipContent: {
           fontSize: '14px',
           textAlign: 'left',
-          lineHeight: '1.5',
-        },
+          lineHeight: '1.5'
+        }
       }
     },
     {
@@ -165,7 +180,9 @@ const SearchTour = ({ runTour, setRunTour }) => {
             As you type, suggestions for matching topics and keywords will be displayed. When selected, they will be applied as additional search filters.
           </p>
           <div className="tour-info-box">
-            <p>Find more information about the {' '}
+            <p>
+              Find more information about the
+              {' '}
               <ExternalLink href="https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html">
                 Common Metadata Repository (CMR)
               </ExternalLink>
@@ -177,13 +194,13 @@ const SearchTour = ({ runTour, setRunTour }) => {
       placement: 'right',
       styles: {
         tooltip: {
-          width: '400px',
+          width: '400px'
         },
         tooltipContent: {
           fontSize: '14px',
           textAlign: 'left',
-          lineHeight: '1.5',
-        },
+          lineHeight: '1.5'
+        }
       }
     },
     {
@@ -203,13 +220,13 @@ const SearchTour = ({ runTour, setRunTour }) => {
       placement: 'right',
       styles: {
         tooltip: {
-          width: '400px',
+          width: '400px'
         },
         tooltipContent: {
           fontSize: '14px',
           textAlign: 'left',
-          lineHeight: '1.5',
-        },
+          lineHeight: '1.5'
+        }
       }
     },
     {
@@ -232,13 +249,13 @@ const SearchTour = ({ runTour, setRunTour }) => {
       placement: 'right',
       styles: {
         tooltip: {
-          width: '400px',
+          width: '400px'
         },
         tooltipContent: {
           fontSize: '14px',
           textAlign: 'left',
-          lineHeight: '1.5',
-        },
+          lineHeight: '1.5'
+        }
       }
     },
     {
@@ -255,13 +272,13 @@ const SearchTour = ({ runTour, setRunTour }) => {
       placement: 'right',
       styles: {
         tooltip: {
-          width: '400px',
+          width: '400px'
         },
         tooltipContent: {
           fontSize: '14px',
           textAlign: 'left',
-          lineHeight: '1.5',
-        },
+          lineHeight: '1.5'
+        }
       }
     },
     {
@@ -279,9 +296,9 @@ const SearchTour = ({ runTour, setRunTour }) => {
       disableScrolling: true,
       styles: {
         tooltip: {
-          width: '400px',
-        },
-      },
+          width: '400px'
+        }
+      }
     },
     {
       target: '.sidebar-section-body',
@@ -298,9 +315,9 @@ const SearchTour = ({ runTour, setRunTour }) => {
       disableScrolling: true,
       styles: {
         tooltip: {
-          width: '400px',
-        },
-      },
+          width: '400px'
+        }
+      }
     },
     {
       target: '.panel-section',
@@ -308,12 +325,20 @@ const SearchTour = ({ runTour, setRunTour }) => {
         <div>
           <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
-            A high-level description is displayed for each search result to help you find the right data, including a summary, temporal range, and information about capabilities. 
-            To view more information about a collection, click the <EDSCIcon className="text-icon" icon={FaInfoCircle} /> icon.
+            A high-level description is displayed for each search result to help you find the right data, including a summary, temporal range, and information about capabilities.
+            To view more information about a collection, click the
+            {' '}
+            <EDSCIcon className="text-icon" icon={FaInfoCircle} />
+            {' '}
+            icon.
           </p>
           <p className="tour-content">
-            Add granules to a project and customize options before accessing the data. 
-            To add a collection to your project, click the <EDSCIcon className="text-icon" icon={FaPlus} /> icon.
+            Add granules to a project and customize options before accessing the data.
+            To add a collection to your project, click the
+            {' '}
+            <EDSCIcon className="text-icon" icon={FaPlus} />
+            {' '}
+            icon.
             To add individual granules to a project, click on a search result to view and add its granules.
           </p>
           <TourButtons />
@@ -322,13 +347,13 @@ const SearchTour = ({ runTour, setRunTour }) => {
       placement: 'right',
       styles: {
         tooltip: {
-          width: '400px',
-        },
+          width: '400px'
+        }
       },
       floaterProps: {
         disableFlip: true,
-        offset: 10,
-      },
+        offset: 10
+      }
     },
     {
       target: '.panels__handle',
@@ -336,11 +361,19 @@ const SearchTour = ({ runTour, setRunTour }) => {
         <div>
           <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
-            To make more room to view the map, the search results can be resized by clicking or dragging the bar above. The panel can be hidden or shown by clicking the handle or using the <kbd>]</kbd> key.
+            To make more room to view the map, the search results can be resized by clicking or dragging the bar above. The panel can be hidden or shown by clicking the handle or using the
+            {' '}
+            <kbd>]</kbd>
+            {' '}
+            key.
           </p>
           <div className="tour-info-box">
             <p>
-              All keyboard shortcuts can be displayed by pressing the <kbd>?</kbd> key at any time.
+              All keyboard shortcuts can be displayed by pressing the
+              {' '}
+              <kbd>?</kbd>
+              {' '}
+              key at any time.
             </p>
           </div>
           <TourButtons />
@@ -349,19 +382,31 @@ const SearchTour = ({ runTour, setRunTour }) => {
       placement: 'right',
       styles: {
         tooltip: {
-          width: '400px',
-        },
-      },
+          width: '400px'
+        }
+      }
     },
     {
       target: '.right-overlay',
       content: (
         <div>
           <StepCounter currentStep={stepIndex} />
-          <p style={{ fontSize: '16px', textAlign: 'left' }}>
+          <p style={
+            {
+              fontSize: '16px',
+              textAlign: 'left'
+            }
+          }
+          >
             Pan the map by clicking and dragging, and zoom by using the scroll wheel or map tools.
           </p>
-          <p style={{ fontSize: '16px', textAlign: 'left' }}>
+          <p style={
+            {
+              fontSize: '16px',
+              textAlign: 'left'
+            }
+          }
+          >
             When a collection is selected, the granules will be displayed on the map, along with any available GIBS imagery. When a granule is focused on the map, any additional thumbnails will be displayed.
           </p>
           <TourButtons />
@@ -371,9 +416,9 @@ const SearchTour = ({ runTour, setRunTour }) => {
       styles: {
         tooltip: {
           width: '400px',
-          textAlign: 'left',
-        },
-      },
+          textAlign: 'left'
+        }
+      }
     },
     {
       target: '.leaflet-bottom.leaflet-right',
@@ -389,14 +434,14 @@ const SearchTour = ({ runTour, setRunTour }) => {
       placement: 'left',
       styles: {
         tooltip: {
-          width: '400px',
+          width: '400px'
         },
         tooltipContent: {
           fontSize: '14px',
           textAlign: 'left',
-          lineHeight: '1.5',
-        },
-      },
+          lineHeight: '1.5'
+        }
+      }
     },
     {
       target: '.secondary-toolbar__begin-tour-button',
@@ -404,16 +449,21 @@ const SearchTour = ({ runTour, setRunTour }) => {
         <div>
           <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
-            You can replay this tour anytime by clicking <strong>Show Tour</strong>.
+            You can replay this tour anytime by clicking
+            {' '}
+            <strong>Show Tour</strong>
+            .
           </p>
           <div className="tour-buttons">
             <Button
               type="button"
               bootstrapVariant="secondary"
               bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex - 1)
-              }}
+              onClick={
+                () => {
+                  setStepIndex(stepIndex - 1)
+                }
+              }
             >
               Previous
             </Button>
@@ -422,9 +472,11 @@ const SearchTour = ({ runTour, setRunTour }) => {
               type="button"
               bootstrapVariant="primary"
               bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex + 1)
-              }}
+              onClick={
+                () => {
+                  setStepIndex(stepIndex + 1)
+                }
+              }
             >
               Finish Tour
             </Button>
@@ -434,51 +486,101 @@ const SearchTour = ({ runTour, setRunTour }) => {
       placement: 'right',
       styles: {
         tooltip: {
-          width: '400px',
-        },
-      },
+          width: '400px'
+        }
+      }
     },
     {
       target: '.search',
       content: (
         <div style={{ textAlign: 'left' }}>
-          <h2 className="tour-heading" style={{ fontSize: '22px', fontWeight: 'bold', marginBottom: '15px' }}>
+          <h2
+            className="tour-heading"
+            style={
+              {
+                fontSize: '22px',
+                fontWeight: 'bold',
+                marginBottom: '15px'
+              }
+            }
+          >
             Want to learn more?
           </h2>
-          <p style={{ marginBottom: '20px', fontSize: '16px' }}>
+          <p style={
+            {
+              marginBottom: '20px',
+              fontSize: '16px'
+            }
+          }
+          >
             Check out our latest webinar where you will see a hands-on example of how to search for data in Earthdata Search.
           </p>
           <div
-            style={{
-              backgroundColor: '#f5f5f5',
-              padding: '10px',
-              marginBottom: '20px',
-              borderRadius: '6px',
-              textDecoration: 'none',
-              color: '#000',
-              display: 'flex',
-              alignItems: 'center',
-            }}
+            style={
+              {
+                backgroundColor: '#f5f5f5',
+                padding: '10px',
+                marginBottom: '20px',
+                borderRadius: '6px',
+                textDecoration: 'none',
+                color: '#000',
+                display: 'flex',
+                alignItems: 'center'
+              }
+            }
           >
-            <div style={{ flex: '0 0 220px', marginRight: '15px' }}>
+            <div style={
+              {
+                flex: '0 0 220px',
+                marginRight: '15px'
+              }
+            }
+            >
               <img
                 src={TourThumbnail}
                 alt="Webinar Thumbnail"
-                style={{ width: '100%', height: 'auto' }}
+                style={
+                  {
+                    width: '100%',
+                    height: 'auto'
+                  }
+                }
               />
             </div>
             <div>
-              <div style={{ padding: '10px', fontSize: '16px', fontWeight: '500' }}>
+              <div style={
+                {
+                  padding: '10px',
+                  fontSize: '16px',
+                  fontWeight: '500'
+                }
+              }
+              >
                 Discover and Access Earth Science Data Using Earthdata Search
               </div>
-              <p style={{ fontSize: '16px', fontWeight: 'bold', marginTop: '10px', marginLeft: '10px' }}>
+              <p style={
+                {
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  marginTop: '10px',
+                  marginLeft: '10px'
+                }
+              }
+              >
                 <ExternalLink href="https://www.youtube.com/watch?v=QtfMlkd7kII">
                   Watch the webinar
                 </ExternalLink>
               </p>
             </div>
           </div>
-          <p style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '5px' }}>
+          <p style={
+            {
+              fontSize: '16px',
+              fontWeight: 'bold',
+              marginBottom: '5px'
+            }
+          }
+          >
             Find more information here:
           </p>
           <p>
@@ -486,7 +588,14 @@ const SearchTour = ({ runTour, setRunTour }) => {
               href="https://www.earthdata.nasa.gov/learn/earthdata-search"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: '#5a585a', textDecoration: 'underline', marginBottom: '5px', display: 'block' }}
+              style={
+                {
+                  color: '#5a585a',
+                  textDecoration: 'underline',
+                  marginBottom: '5px',
+                  display: 'block'
+                }
+              }
             >
               Earthdata Search wiki
             </a>
@@ -496,7 +605,13 @@ const SearchTour = ({ runTour, setRunTour }) => {
               href="https://www.earthdata.nasa.gov/faq/earthdata-search-faq"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: '#5a585a', textDecoration: 'underline', display: 'block' }}
+              style={
+                {
+                  color: '#5a585a',
+                  textDecoration: 'underline',
+                  display: 'block'
+                }
+              }
             >
               Earthdata Search FAQs
             </a>
@@ -508,25 +623,27 @@ const SearchTour = ({ runTour, setRunTour }) => {
       styles: {
         tooltip: {
           width: '600px',
-          padding: '20px',
+          padding: '20px'
         },
         tooltipContent: {
-          fontSize: '16px',
-        },
-      },
-    },
+          fontSize: '16px'
+        }
+      }
+    }
   ]
 
   const handleJoyrideCallback = (data) => {
-    const { action, index, status, type } = data
-  
+    const {
+      action, index, status, type
+    } = data
+
     if ([STATUS.FINISHED, STATUS.SKIPPED, STATUS.PAUSED].includes(status) || action === ACTIONS.CLOSE) {
       setRunTour(false)
       setStepIndex(0)
     } else if (type === 'step:after') {
       setStepIndex(action === ACTIONS.NEXT ? index + 1 : index - 1)
     }
-  
+
     if (type === 'step:before') {
       const element = document.querySelector('.sidebar-section-body')
       if (element) element.scrollTop = 0
@@ -540,45 +657,49 @@ const SearchTour = ({ runTour, setRunTour }) => {
       stepIndex={stepIndex}
       continuous
       callback={handleJoyrideCallback}
-      hideBackButton={true}
-      styles={{
-        options: {
-          primaryColor: '#007bff',
-          zIndex: 10000,
-          textAlign: 'left',
-          width: '600px',
-        },
-        tooltip: {
-          fontSize: '16px',
-          padding: '20px',
-          paddingTop: '0px',
-          textAlign: 'left',
-        },
-        tooltipContent: {
-          textAlign: 'left',
-        },
-        buttonNext: {
-          // Hide the next button since we use custom buttons
-          display: 'none'
-        },
-      }}
-      floaterProps={{
-        disableAnimation: true,
-        styles: {
-          button: {
-            borderRadius: '4px',
-            padding: '8px 16px',
-            fontSize: '14px',
+      hideBackButton
+      styles={
+        {
+          options: {
+            primaryColor: '#007bff',
+            zIndex: 10000,
+            textAlign: 'left',
+            width: '600px'
           },
-        },
-      }}
+          tooltip: {
+            fontSize: '16px',
+            padding: '20px',
+            paddingTop: '0px',
+            textAlign: 'left'
+          },
+          tooltipContent: {
+            textAlign: 'left'
+          },
+          buttonNext: {
+          // Hide the next button since we use custom buttons
+            display: 'none'
+          }
+        }
+      }
+      floaterProps={
+        {
+          disableAnimation: true,
+          styles: {
+            button: {
+              borderRadius: '4px',
+              padding: '8px 16px',
+              fontSize: '14px'
+            }
+          }
+        }
+      }
     />
   )
 }
 
 SearchTour.propTypes = {
   runTour: PropTypes.bool.isRequired,
-  setRunTour: PropTypes.func.isRequired,
+  setRunTour: PropTypes.func.isRequired
 }
 
 export default SearchTour

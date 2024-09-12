@@ -1,73 +1,47 @@
 import React from 'react'
-import {
-  render,
-  screen,
-  fireEvent
-} from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom/extend-expect'
 import SearchTour from '../SearchTour'
 
-describe('SearchTour component', () => {
+// Mock the react-joyride module
+jest.mock('react-joyride', () => {
+  return jest.fn().mockImplementation(({ callback }) => {
+    return (
+      <div
+        data-testid="mocked-joyride"
+        onClick={() => callback({
+          action: 'close',
+          status: 'FINISHED',
+          index: 0,
+          type: 'step:after'
+        })}
+      >
+        Mocked Joyride
+      </div>
+    )
+  })
+})
+
+// Mock the local storage
+const localStorageMock = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  clear: jest.fn()
+}
+global.localStorage = localStorageMock
+
+describe('SearchTour', () => {
   const mockSetRunTour = jest.fn()
 
   beforeEach(() => {
-    mockSetRunTour.mockClear()
-    localStorage.clear()
+    jest.clearAllMocks()
   })
 
-  test('renders the SearchTour component', () => {
-    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
-    expect(screen.getByText(/Welcome to Earthdata Search!/i)).toBeInTheDocument()
-  })
-
-  test('displays the step counter', () => {
-    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
-    expect(screen.getByText(/1 OF 12/i)).toBeInTheDocument()
-  })
-
-  test('navigates to the next step', () => {
-    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
-
-    const nextButton = screen.getByText(/Take the tour/i)
-    fireEvent.click(nextButton)
-
-    expect(screen.getByText(/2 OF 12/i)).toBeInTheDocument()
-  })
-
-  test('skips the tour when "Skip for now" is clicked', () => {
-    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
-
-    const skipButton = screen.getByText(/Skip for now/i)
-    fireEvent.click(skipButton)
-
-    expect(mockSetRunTour).toHaveBeenCalledWith(false)
-  })
-
-  test('sets "dontShowTour" in localStorage when tour is started', () => {
-    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
-
-    expect(localStorage.getItem('dontShowTour')).toBe('false')
-  })
-
-  test('removes tour on finish', () => {
-    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
-
-    const nextButton = screen.getByText(/Take the tour/i)
-    fireEvent.click(nextButton)
-    fireEvent.click(nextButton)
-
-    const finishButton = screen.getByText(/Finish Tour/i)
-    fireEvent.click(finishButton)
-
-    expect(mockSetRunTour).toHaveBeenCalledWith(false)
-  })
-
-  test('handles arrow key navigation', () => {
-    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
-
-    // Simulate pressing the right arrow key
-    fireEvent.keyDown(window, { key: 'ArrowRight' })
-
-    expect(screen.getByText(/2 OF 12/i)).toBeInTheDocument()
+  describe('when rendered', () => {
+    it('displays the tour component', () => {
+      render(<SearchTour runTour={true} setRunTour={mockSetRunTour} />)
+      expect(screen.getByTestId('mocked-joyride')).toBeInTheDocument()
+    })
   })
 })

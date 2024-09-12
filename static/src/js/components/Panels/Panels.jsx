@@ -652,7 +652,7 @@ export class Panels extends PureComponent {
         <div className="panels__focused-meta">
           {focusedMeta}
         </div>
-        <div className="right-overlay"/>
+        <div className="right-overlay" />
       </section>
     )
   }

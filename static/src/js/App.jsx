@@ -74,8 +74,9 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      runTour: false,
+      runTour: false
     }
+
     this.store = configureStore()
     const { edscHost } = getEnvironmentConfig()
     const { env } = getApplicationConfig()
@@ -86,18 +87,18 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const dontShowTour = localStorage.getItem('dontShowTour') !== 'true';
+    const dontShowTour = localStorage.getItem('dontShowTour') !== 'true'
     this.setState({
       runTour: dontShowTour
-    });
-  }
-
-  startTour() {
-    this.setState({ runTour: true })
+    })
   }
 
   setRunTour(value) {
     this.setState({ runTour: value })
+  }
+
+  startTour() {
+    this.setState({ runTour: true })
   }
 
   // Portal paths have been removed, but this needs to stay in order to redirect users using

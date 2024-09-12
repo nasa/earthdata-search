@@ -13,10 +13,9 @@ import { parse } from 'qs'
 import {
   FaArrowCircleLeft,
   FaFolder,
-  FaWalking,
   FaLock,
   FaSave,
-  FaUser,
+  FaUser
 } from 'react-icons/fa'
 
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
@@ -323,16 +322,18 @@ class SecondaryToolbar extends Component {
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
-        {location.pathname === '/search' && (
-          <Dropdown.Toggle
-            className="secondary-toolbar__begin-tour-button"
-            as={Button}
-            onClick={onStartTour}
-            label="Want to learn more? Click here to take a tour of our site."
-          >
-            Start Tour
-          </Dropdown.Toggle>
-        )}
+        {
+          location.pathname === '/search' && (
+            <Dropdown.Toggle
+              className="secondary-toolbar__begin-tour-button"
+              as={Button}
+              onClick={onStartTour}
+              label="Want to learn more? Click here to take a tour of our site."
+            >
+              Start Tour
+            </Dropdown.Toggle>
+          )
+        }
         <Dropdown.Toggle
           className="secondary-toolbar__project-name-dropdown-toggle"
           as={Button}
@@ -401,6 +402,7 @@ SecondaryToolbar.propTypes = {
   earthdataEnvironment: PropTypes.string.isRequired,
   location: locationPropType.isRequired,
   onLogout: PropTypes.func.isRequired,
+  onStartTour: PropTypes.bool.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   retrieval: PropTypes.shape({}).isRequired,
