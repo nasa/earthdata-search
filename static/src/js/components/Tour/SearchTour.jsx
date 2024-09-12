@@ -8,9 +8,48 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ExternalLink from '../ExternalLink/ExternalLink'
 import './SearchTour.scss'
 
+const StepCounter = ({ currentStep, maxSteps }) => (
+  <p className="step-counter-text">
+    {currentStep}
+    {' '}
+    OF
+    {maxSteps}
+  </p>
+)
+
+StepCounter.propTypes = {
+  currentStep: PropTypes.number.isRequired,
+  maxSteps: PropTypes.number.isRequired
+}
+
+const TourButtons = ({ stepIndex, setStepIndex }) => (
+  <div className="tour-buttons">
+    <Button
+      type="button"
+      bootstrapVariant="secondary"
+      bootstrapSize="sm"
+      onClick={() => setStepIndex(stepIndex - 1)}
+    >
+      Previous
+    </Button>
+    <Button
+      type="button"
+      bootstrapVariant="primary"
+      bootstrapSize="sm"
+      onClick={() => setStepIndex(stepIndex + 1)}
+    >
+      Next
+    </Button>
+  </div>
+)
+
+TourButtons.propTypes = {
+  stepIndex: PropTypes.number.isRequired,
+  setStepIndex: PropTypes.func.isRequired
+}
+
 const SearchTour = ({ runTour, setRunTour }) => {
   const [stepIndex, setStepIndex] = useState(0)
-
   const MAX_STEPS = 12
 
   useEffect(() => {
@@ -53,44 +92,6 @@ const SearchTour = ({ runTour, setRunTour }) => {
     }
   }, [stepIndex])
 
-  const StepCounter = ({ currentStep }) => (
-    <p className="step-counter-text">
-      {currentStep}
-      {' '}
-      OF
-      {MAX_STEPS}
-    </p>
-  )
-
-  const TourButtons = () => (
-    <div className="tour-buttons">
-      <Button
-        type="button"
-        bootstrapVariant="secondary"
-        bootstrapSize="sm"
-        onClick={
-          () => {
-            setStepIndex(stepIndex - 1)
-          }
-        }
-      >
-        Previous
-      </Button>
-      <Button
-        type="button"
-        bootstrapVariant="primary"
-        bootstrapSize="sm"
-        onClick={
-          () => {
-            setStepIndex(stepIndex + 1)
-          }
-        }
-      >
-        Next
-      </Button>
-    </div>
-  )
-
   const steps = [
     {
       target: '.search',
@@ -99,7 +100,9 @@ const SearchTour = ({ runTour, setRunTour }) => {
           <h2 className="tour-heading">Welcome to Earthdata Search!</h2>
           <p className="tour-subheading">Let’s start with a quick tour...</p>
           <p className="tour-content">
-            Get acquainted with Earthdata Search by taking our guided tour, where you’ll learn how to search for data, use the map, create your first project, and manage your preferences.
+            Get acquainted with Earthdata Search by taking our guided tour, where you’ll learn
+            how to search for data, use the map, create your first project, and manage your
+            preferences.
           </p>
           <p className="tour-note">
             If you want to skip the tour for now, it is always available by clicking
@@ -148,10 +151,13 @@ const SearchTour = ({ runTour, setRunTour }) => {
         <div>
           <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
-            This area contains the filters used when searching for collections (datasets produced by an organization) and their granules (sets of files containing data).
+            This area contains the filters used when searching for collections
+            (datasets produced by an organization)
+            and their granules (sets of files containing data).
           </p>
           <p className="tour-content">
-            Available filters include keyword search, spatial and temporal bounds, and advanced search options.
+            Available filters include keyword search, spatial and temporal bounds,
+            and advanced search options.
           </p>
           <TourButtons />
         </div>
@@ -174,10 +180,12 @@ const SearchTour = ({ runTour, setRunTour }) => {
         <div>
           <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
-            Search for collections by topic (e.g., "Land Surface Temperature"), by collection name, or by CMR Concept ID.
+            Search for collections by topic (e.g., &quot;Land Surface Temperature&quot;),
+            by collection name, or by CMR Concept ID.
           </p>
           <p className="tour-content">
-            As you type, suggestions for matching topics and keywords will be displayed. When selected, they will be applied as additional search filters.
+            As you type, suggestions for matching topics and keywords will be
+            displayed. When selected, they will be applied as additional search filters.
           </p>
           <div className="tour-info-box">
             <p>
@@ -209,10 +217,12 @@ const SearchTour = ({ runTour, setRunTour }) => {
         <div>
           <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
-            Use the temporal filters to limit search results to a specific date and time range.
+            Use the temporal filters to limit search results to a specific date
+            and time range.
           </p>
           <p className="tour-content">
-            A recurring filter can be applied to search a repeating range between specified years.
+            A recurring filter can be applied to search a repeating range between
+            specified years.
           </p>
           <TourButtons />
         </div>
@@ -235,13 +245,17 @@ const SearchTour = ({ runTour, setRunTour }) => {
         <div>
           <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
-            Use the spatial filters to limit search results to the specified area of interest.
+            Use the spatial filters to limit search results to the specified
+            area of interest.
           </p>
           <p className="tour-content">
-            To set the spatial area using a polygon, rectangle, point and radius, or circle, select an option from the menu and then draw on the map or manually enter coordinates.
+            To set the spatial area using a polygon, rectangle, point and radius,
+            or circle, select an option from the menu and then draw on the map
+            or manually enter coordinates.
           </p>
           <p className="tour-content">
-            Upload a shapefile (KML, KMZ, ESRI, etc.) to set the spatial area with a file.
+            Upload a shapefile (KML, KMZ, ESRI, etc.) to set the spatial area with
+            a file.
           </p>
           <TourButtons />
         </div>
@@ -264,7 +278,8 @@ const SearchTour = ({ runTour, setRunTour }) => {
         <div>
           <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
-            Use Advanced Search parameters to filter results using features like Hydrologic Unit Code (HUC) or SWORD River Reach.
+            Use Advanced Search parameters to filter results using features like
+            Hydrologic Unit Code (HUC) or SWORD River Reach.
           </p>
           <TourButtons />
         </div>
@@ -287,7 +302,8 @@ const SearchTour = ({ runTour, setRunTour }) => {
         <div>
           <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
-            Choose a portal to refine search results to a particular area of study, project, or organization.
+            Choose a portal to refine search results to a particular area of study,
+            project, or organization.
           </p>
           <TourButtons />
         </div>
@@ -306,7 +322,8 @@ const SearchTour = ({ runTour, setRunTour }) => {
         <div>
           <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
-            Refine your search further using categories like Features, Keywords, Platforms, Organizations, etc.
+            Refine your search further using categories like Features, Keywords,
+            Platforms, Organizations, etc.
           </p>
           <TourButtons />
         </div>
@@ -325,8 +342,9 @@ const SearchTour = ({ runTour, setRunTour }) => {
         <div>
           <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
-            A high-level description is displayed for each search result to help you find the right data, including a summary, temporal range, and information about capabilities.
-            To view more information about a collection, click the
+            A high-level description is displayed for each search result to help you find
+            the right data, including a summary, temporal range, and information about
+            capabilities. To view more information about a collection, click the
             {' '}
             <EDSCIcon className="text-icon" icon={FaInfoCircle} />
             {' '}
@@ -339,7 +357,8 @@ const SearchTour = ({ runTour, setRunTour }) => {
             <EDSCIcon className="text-icon" icon={FaPlus} />
             {' '}
             icon.
-            To add individual granules to a project, click on a search result to view and add its granules.
+            To add individual granules to a project, click on a search result to view and
+            add its granules.
           </p>
           <TourButtons />
         </div>
@@ -361,7 +380,9 @@ const SearchTour = ({ runTour, setRunTour }) => {
         <div>
           <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
-            To make more room to view the map, the search results can be resized by clicking or dragging the bar above. The panel can be hidden or shown by clicking the handle or using the
+            To make more room to view the map, the search results can be resized by clicking
+            or dragging the bar above. The panel can be hidden or shown by clicking the
+            handle or using the
             {' '}
             <kbd>]</kbd>
             {' '}
@@ -398,7 +419,8 @@ const SearchTour = ({ runTour, setRunTour }) => {
             }
           }
           >
-            Pan the map by clicking and dragging, and zoom by using the scroll wheel or map tools.
+            Pan the map by clicking and dragging, and zoom by using the scroll wheel or
+            map tools.
           </p>
           <p style={
             {
@@ -407,7 +429,9 @@ const SearchTour = ({ runTour, setRunTour }) => {
             }
           }
           >
-            When a collection is selected, the granules will be displayed on the map, along with any available GIBS imagery. When a granule is focused on the map, any additional thumbnails will be displayed.
+            When a collection is selected, the granules will be displayed on the map,
+            along with any available GIBS imagery. When a granule is focused on the
+            map, any additional thumbnails will be displayed.
           </p>
           <TourButtons />
         </div>
@@ -426,7 +450,8 @@ const SearchTour = ({ runTour, setRunTour }) => {
         <div>
           <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
-            Use the map tools to switch map projections, draw, edit, or remove spatial bounds, zoom the map, or select the base map.
+            Use the map tools to switch map projections, draw, edit, or remove spatial
+            bounds, zoom the map, or select the base map.
           </p>
           <TourButtons />
         </div>
@@ -513,7 +538,8 @@ const SearchTour = ({ runTour, setRunTour }) => {
             }
           }
           >
-            Check out our latest webinar where you will see a hands-on example of how to search for data in Earthdata Search.
+            Check out our latest webinar where you will see a hands-on example of
+            how to search for data in Earthdata Search.
           </p>
           <div
             style={
@@ -637,7 +663,8 @@ const SearchTour = ({ runTour, setRunTour }) => {
       action, index, status, type
     } = data
 
-    if ([STATUS.FINISHED, STATUS.SKIPPED, STATUS.PAUSED].includes(status) || action === ACTIONS.CLOSE) {
+    if ([STATUS.FINISHED, STATUS.SKIPPED, STATUS.PAUSED].includes(status)
+          || action === ACTIONS.CLOSE) {
       setRunTour(false)
       setStepIndex(0)
     } else if (type === 'step:after') {
