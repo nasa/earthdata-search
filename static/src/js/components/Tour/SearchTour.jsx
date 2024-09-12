@@ -34,17 +34,14 @@ const SearchTour = ({ runTour, setRunTour }) => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [MAX_STEPS])
+  }, [])
 
   useEffect(() => {
     if (runTour) {
-      localStorage.setItem('dontShowTour', 'false')
-      console.log('Tour started')
       setStepIndex(0)
-    } else {
-      localStorage.setItem('dontShowTour', 'true')
-      console.log('Tour stopped')
     }
+
+    localStorage.setItem('dontShowTour', runTour ? 'false' : 'true');
   }, [runTour])
 
   useEffect(() => {
@@ -56,10 +53,35 @@ const SearchTour = ({ runTour, setRunTour }) => {
     }
   }, [stepIndex])
 
-  const StepCounter = ({ currentStep, totalSteps }) => (
+  const StepCounter = ({ currentStep }) => (
     <p className="step-counter-text">
-      {currentStep} OF {totalSteps}
+      {currentStep} OF {MAX_STEPS}
     </p>
+  )
+
+  const TourButtons = () => (
+    <div className="tour-buttons">
+      <Button
+        type="button"
+        bootstrapVariant="secondary"
+        bootstrapSize="sm"
+        onClick={() => {
+          setStepIndex(stepIndex - 1)
+        }}
+      >
+        Previous
+      </Button>
+      <Button
+        type="button"
+        bootstrapVariant="primary"
+        bootstrapSize="sm"
+        onClick={() => {
+          setStepIndex(stepIndex + 1)
+        }}
+      >
+        Next
+      </Button>
+    </div>
   )
 
   const steps = [
@@ -109,35 +131,14 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.sidebar__inner',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
             This area contains the filters used when searching for collections (datasets produced by an organization) and their granules (sets of files containing data).
           </p>
           <p className="tour-content">
             Available filters include keyword search, spatial and temporal bounds, and advanced search options.
           </p>
-          <div className="tour-buttons">
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex - 1)
-              }}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex + 1)
-              }}
-            >
-              Next
-            </Button>
-          </div>
+          <TourButtons />
         </div>
       ),
       placement: 'right',
@@ -156,7 +157,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.search-form__primary',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
             Search for collections by topic (e.g., "Land Surface Temperature"), by collection name, or by CMR Concept ID.
           </p>
@@ -170,28 +171,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
               </ExternalLink>
             </p>
           </div>
-          <div className="tour-buttons">
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex - 1)
-              }}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex + 1)
-              }}
-            >
-              Next
-            </Button>
-          </div>
+          <TourButtons />
         </div>
       ),
       placement: 'right',
@@ -210,31 +190,14 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.temporal-selection-dropdown',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
             Use the temporal filters to limit search results to a specific date and time range.
           </p>
           <p className="tour-content">
             A recurring filter can be applied to search a repeating range between specified years.
           </p>
-          <div className="tour-buttons">
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => setStepIndex(stepIndex - 1)}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => setStepIndex(stepIndex + 1)}
-            >
-              Next
-            </Button>
-          </div>
+          <TourButtons />
         </div>
       ),
       placement: 'right',
@@ -253,7 +216,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.spatial-selection-dropdown',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
             Use the spatial filters to limit search results to the specified area of interest.
           </p>
@@ -263,24 +226,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
           <p className="tour-content">
             Upload a shapefile (KML, KMZ, ESRI, etc.) to set the spatial area with a file.
           </p>
-          <div className="tour-buttons">
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => setStepIndex(stepIndex - 1)}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => setStepIndex(stepIndex + 1)}
-            >
-              Next
-            </Button>
-          </div>
+          <TourButtons />
         </div>
       ),
       placement: 'right',
@@ -299,28 +245,11 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.search-form__button--advanced-search',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
             Use Advanced Search parameters to filter results using features like Hydrologic Unit Code (HUC) or SWORD River Reach.
           </p>
-          <div className="tour-buttons">
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => setStepIndex(stepIndex - 1)}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => setStepIndex(stepIndex + 1)}
-            >
-              Next
-            </Button>
-          </div>
+          <TourButtons />
         </div>
       ),
       placement: 'right',
@@ -339,32 +268,11 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.sidebar-browse-portals',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
             Choose a portal to refine search results to a particular area of study, project, or organization.
           </p>
-          <div className="tour-buttons">
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex - 1)
-              }}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex + 1)
-              }}
-            >
-              Next
-            </Button>
-          </div>
+          <TourButtons />
         </div>
       ),
       placement: 'right',
@@ -379,32 +287,11 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.sidebar-section-body',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
             Refine your search further using categories like Features, Keywords, Platforms, Organizations, etc.
           </p>
-          <div className="tour-buttons">
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex - 1);
-              }}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex + 1);
-              }}
-            >
-              Next
-            </Button>
-          </div>
+          <TourButtons />
         </div>
       ),
       placement: 'right-start',
@@ -419,7 +306,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.panel-section',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
             A high-level description is displayed for each search result to help you find the right data, including a summary, temporal range, and information about capabilities. 
             To view more information about a collection, click the <EDSCIcon className="text-icon" icon={FaInfoCircle} /> icon.
@@ -429,28 +316,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
             To add a collection to your project, click the <EDSCIcon className="text-icon" icon={FaPlus} /> icon.
             To add individual granules to a project, click on a search result to view and add its granules.
           </p>
-          <div className="tour-buttons">
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex - 1);
-              }}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex + 1);
-              }}
-            >
-              Next
-            </Button>
-          </div>
+          <TourButtons />
         </div>
       ),
       placement: 'right',
@@ -468,7 +334,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.panels__handle',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
             To make more room to view the map, the search results can be resized by clicking or dragging the bar above. The panel can be hidden or shown by clicking the handle or using the <kbd>]</kbd> key.
           </p>
@@ -477,28 +343,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
               All keyboard shortcuts can be displayed by pressing the <kbd>?</kbd> key at any time.
             </p>
           </div>
-          <div className="tour-buttons">
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex - 1)
-              }}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex + 1)
-              }}
-            >
-              Next
-            </Button>
-          </div>
+          <TourButtons />
         </div>
       ),
       placement: 'right',
@@ -512,35 +357,14 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.right-overlay',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} />
           <p style={{ fontSize: '16px', textAlign: 'left' }}>
             Pan the map by clicking and dragging, and zoom by using the scroll wheel or map tools.
           </p>
           <p style={{ fontSize: '16px', textAlign: 'left' }}>
             When a collection is selected, the granules will be displayed on the map, along with any available GIBS imagery. When a granule is focused on the map, any additional thumbnails will be displayed.
           </p>
-          <div className="tour-buttons" style={{ textAlign: 'center', marginTop: '20px' }}>
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex - 1)
-              }}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex + 1)
-              }}
-            >
-              Next
-            </Button>
-          </div>
+          <TourButtons />
         </div>
       ),
       placement: 'left',
@@ -555,32 +379,11 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.leaflet-bottom.leaflet-right',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
             Use the map tools to switch map projections, draw, edit, or remove spatial bounds, zoom the map, or select the base map.
           </p>
-          <div className="tour-buttons">
-            <Button
-              type="button"
-              bootstrapVariant="secondary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex - 1)
-              }}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              bootstrapSize="sm"
-              onClick={() => {
-                setStepIndex(stepIndex + 1)
-              }}
-            >
-              Next
-            </Button>
-          </div>
+          <TourButtons />
         </div>
       ),
       placement: 'left',
@@ -599,7 +402,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
       target: '.secondary-toolbar__begin-tour-button',
       content: (
         <div>
-          <StepCounter currentStep={stepIndex} totalSteps={MAX_STEPS} />
+          <StepCounter currentStep={stepIndex} />
           <p className="tour-content">
             You can replay this tour anytime by clicking <strong>Show Tour</strong>.
           </p>
@@ -625,7 +428,6 @@ const SearchTour = ({ runTour, setRunTour }) => {
             >
               Finish Tour
             </Button>
-
           </div>
         </div>
       ),
@@ -718,23 +520,16 @@ const SearchTour = ({ runTour, setRunTour }) => {
   const handleJoyrideCallback = (data) => {
     const { action, index, status, type } = data
   
-    // Reset tour state when the tour is finished, skipped, paused, or closed
     if ([STATUS.FINISHED, STATUS.SKIPPED, STATUS.PAUSED].includes(status) || action === ACTIONS.CLOSE) {
       setRunTour(false)
-      setStepIndex(0);
-      console.log
-    } else if (type === 'step:after' && action === ACTIONS.NEXT) {
-      setStepIndex(index + 1)
-    } else if (type === 'step:after' && action === ACTIONS.PREV) {
-      setStepIndex(index - 1)
+      setStepIndex(0)
+    } else if (type === 'step:after') {
+      setStepIndex(action === ACTIONS.NEXT ? index + 1 : index - 1)
     }
   
-    // Prevent auto-scrolling within the sidebar component when highlighting
     if (type === 'step:before') {
       const element = document.querySelector('.sidebar-section-body')
-      if (element) {
-        element.scrollTop = 0
-      }
+      if (element) element.scrollTop = 0
     }
   }
 
