@@ -812,7 +812,7 @@ export const updateProps = {
     isOpenSearch: false,
     services: {
       count: 0,
-      items: null
+      items: []
     },
     shortName: 'MOD13Q1',
     tags: {
@@ -983,7 +983,7 @@ export const updateProps = {
     title: 'MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V006',
     variables: {
       count: 0,
-      items: null
+      items: []
     },
     versionId: '006',
     gibsLayers: 'Geographic',
