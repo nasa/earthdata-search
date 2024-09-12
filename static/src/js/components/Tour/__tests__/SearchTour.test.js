@@ -1,7 +1,11 @@
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import {
+  render,
+  screen,
+  fireEvent
+} from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
-import SearchTour from './SearchTour'
+import SearchTour from '../SearchTour'
 
 describe('SearchTour component', () => {
   const mockSetRunTour = jest.fn()
@@ -12,17 +16,17 @@ describe('SearchTour component', () => {
   })
 
   test('renders the SearchTour component', () => {
-    render(<SearchTour runTour={true} setRunTour={mockSetRunTour} />)
+    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
     expect(screen.getByText(/Welcome to Earthdata Search!/i)).toBeInTheDocument()
   })
 
   test('displays the step counter', () => {
-    render(<SearchTour runTour={true} setRunTour={mockSetRunTour} />)
+    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
     expect(screen.getByText(/1 OF 12/i)).toBeInTheDocument()
   })
 
   test('navigates to the next step', () => {
-    render(<SearchTour runTour={true} setRunTour={mockSetRunTour} />)
+    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
 
     const nextButton = screen.getByText(/Take the tour/i)
     fireEvent.click(nextButton)
@@ -31,7 +35,7 @@ describe('SearchTour component', () => {
   })
 
   test('skips the tour when "Skip for now" is clicked', () => {
-    render(<SearchTour runTour={true} setRunTour={mockSetRunTour} />)
+    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
 
     const skipButton = screen.getByText(/Skip for now/i)
     fireEvent.click(skipButton)
@@ -40,13 +44,13 @@ describe('SearchTour component', () => {
   })
 
   test('sets "dontShowTour" in localStorage when tour is started', () => {
-    render(<SearchTour runTour={true} setRunTour={mockSetRunTour} />)
+    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
 
     expect(localStorage.getItem('dontShowTour')).toBe('false')
   })
 
   test('removes tour on finish', () => {
-    render(<SearchTour runTour={true} setRunTour={mockSetRunTour} />)
+    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
 
     const nextButton = screen.getByText(/Take the tour/i)
     fireEvent.click(nextButton)
@@ -59,7 +63,7 @@ describe('SearchTour component', () => {
   })
 
   test('handles arrow key navigation', () => {
-    render(<SearchTour runTour={true} setRunTour={mockSetRunTour} />)
+    render(<SearchTour runTour setRunTour={mockSetRunTour} />)
 
     // Simulate pressing the right arrow key
     fireEvent.keyDown(window, { key: 'ArrowRight' })
