@@ -68,6 +68,7 @@ export const prepareCollectionParams = (state) => {
 
   const tagKey = []
   if (selectedTag) tagKey.push(selectedTag)
+
   const serviceType = []
   if (featureFacets.customizable) {
     serviceType.push('esi')

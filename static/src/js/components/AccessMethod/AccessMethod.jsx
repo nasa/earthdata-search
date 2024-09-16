@@ -558,7 +558,6 @@ const AccessMethod = ({
   ]
 
   const granuleListUndefined = granuleList[0] === undefined
-
   const isOpendap = (selectedAccessMethod && selectedAccessMethod === 'opendap')
 
   // Harmony access methods are postfixed with an index given that there can be more than one

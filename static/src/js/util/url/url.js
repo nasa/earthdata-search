@@ -246,6 +246,7 @@ export const decodeUrlParams = (paramString) => {
     const { byId = {} } = collectionQuery
     const { [focusedCollection]: focusedCollectionQuery = {} } = byId
     const { granules: focusedCollectionGranuleQuery = {} } = focusedCollectionQuery
+
     collectionQuery.byId = {
       ...collectionQuery.byId,
       [focusedCollection]: {
