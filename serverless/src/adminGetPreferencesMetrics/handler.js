@@ -43,22 +43,6 @@ const adminGetPreferencesMetrics = async (event, context) => {
     const formattedPreferences = preferencesResponse.map((entry) => {
       const { site_preferences: sitePreferences } = entry
 
-      if (Object.keys(sitePreferences).length === 0) {
-        return {
-          panelState: 'not set (open)',
-          collectionListView: 'not set (default)',
-          collectionSort: 'not set (-score)',
-          granuleSort: 'not set (-start_date)',
-          granuleListView: 'not set (default)',
-          zoom: 'not set (2)',
-          latitude: 'not set (0)',
-          longitude: 'not set (0)',
-          projection: 'not set (epsg4326)',
-          overlayLayers: ['not set (referenceFeatures & referenceLabels)'],
-          baseLayer: 'not set (blueMarble)'
-        }
-      }
-
       const {
         mapView = {},
         panelState = 'not set (open)',
