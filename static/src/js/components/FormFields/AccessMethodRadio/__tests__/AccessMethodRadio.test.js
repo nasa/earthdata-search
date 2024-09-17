@@ -30,11 +30,13 @@ const setup = (overrideProps) => {
     ...overrideProps
   }
 
+  const user = userEvent.setup()
   render(<AccessMethodRadio {...props} />)
 
   return {
     onChange,
-    onClick
+    onClick,
+    user
   }
 }
 
@@ -89,8 +91,7 @@ describe('AccessMethodRadio component', () => {
 
   describe('tool-tip on the access method radio', () => {
     test('displays the details as a tooltip on hover', async () => {
-      setup()
-      const user = userEvent.setup()
+      const { user } = setup()
       const icon = screen.getByTestId('edsc-icon')
 
       await act(async () => {
@@ -104,14 +105,13 @@ describe('AccessMethodRadio component', () => {
     })
 
     test('tool-tip remains when hovered on', async () => {
-      setup({
+      const { user } = setup({
         externalLink: {
           link: 'http://example.com',
           message: 'example message'
         }
       })
 
-      const user = userEvent.setup()
       const icon = screen.getByTestId('edsc-icon')
 
       await act(async () => {
@@ -129,14 +129,13 @@ describe('AccessMethodRadio component', () => {
     })
 
     test('tool-tip is no longer on the screen when hovered away', async () => {
-      setup({
+      const { user } = setup({
         externalLink: {
           link: 'http://example.com',
           message: 'example message'
         }
       })
 
-      const user = userEvent.setup()
       const icon = screen.getByTestId('edsc-icon')
 
       await act(async () => {
@@ -158,14 +157,13 @@ describe('AccessMethodRadio component', () => {
     })
 
     test('displays the details as a tooltip on click including external links', async () => {
-      setup({
+      const { user } = setup({
         externalLink: {
           link: 'http://example.com',
           message: 'example message'
         }
       })
 
-      const user = userEvent.setup()
       const icon = screen.getByTestId('edsc-icon')
 
       await act(async () => {
@@ -201,16 +199,14 @@ describe('AccessMethodRadio component', () => {
     })
 
     test('fires the onChange callback', async () => {
-      const { onChange } = setup()
-      const user = userEvent.setup()
+      const { onChange, user } = setup()
       const radioButton = screen.getByRole('radio', { value: 'test value' })
       await user.click(radioButton)
       expect(onChange).toHaveBeenCalledTimes(1)
     })
 
     test('fires the onClick callback', async () => {
-      const { onClick } = setup()
-      const user = userEvent.setup()
+      const { onClick, user } = setup()
       const radioButton = screen.getByRole('radio', { value: 'test value' })
       await user.click(radioButton)
       expect(onClick).toHaveBeenCalledTimes(1)
