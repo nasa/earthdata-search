@@ -287,24 +287,24 @@ describe('getProjectCollections', () => {
                 }]
               },
               services: {
-                items: null
+                items: []
               },
               dataQualitySummaries:
               {
-                items: null
+                items: []
               }
             },
             {
               conceptId: 'collectionId2',
               tools: {
-                items: null
+                items: []
               },
               services: {
-                items: null
+                items: []
               },
               dataQualitySummaries:
               {
-                items: null
+                items: []
               }
             }]
           }
@@ -350,7 +350,8 @@ describe('getProjectCollections', () => {
 
     const storeActions = store.getActions()
 
-    expect(storeActions.length).toEqual(4)
+    expect(storeActions.length).toEqual(6)
+
     expect(storeActions[0]).toEqual({
       type: ADD_ACCESS_METHODS,
       payload: {
@@ -360,6 +361,14 @@ describe('getProjectCollections', () => {
     })
 
     expect(storeActions[1]).toEqual({
+      type: SET_DATA_QUALITY_SUMMARIES,
+      payload: {
+        catalogItemId: 'collectionId1',
+        dataQualitySummaries: []
+      }
+    })
+
+    expect(storeActions[2]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
         expect.objectContaining({
@@ -371,7 +380,7 @@ describe('getProjectCollections', () => {
       ]
     })
 
-    expect(storeActions[2]).toEqual({
+    expect(storeActions[3]).toEqual({
       type: ADD_ACCESS_METHODS,
       payload: {
         collectionId: 'collectionId2',
@@ -379,7 +388,15 @@ describe('getProjectCollections', () => {
       }
     })
 
-    expect(storeActions[3]).toEqual({
+    expect(storeActions[4]).toEqual({
+      type: SET_DATA_QUALITY_SUMMARIES,
+      payload: {
+        catalogItemId: 'collectionId2',
+        dataQualitySummaries: []
+      }
+    })
+
+    expect(storeActions[5]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
         expect.objectContaining({
@@ -609,24 +626,24 @@ describe('getProjectCollections', () => {
                 }]
               },
               services: {
-                items: null
+                items: []
               },
               dataQualitySummaries:
               {
-                items: null
+                items: []
               }
             },
             {
               conceptId: 'collectionId2',
               tools: {
-                items: null
+                items: []
               },
               services: {
-                items: null
+                items: []
               },
               dataQualitySummaries:
               {
-                items: null
+                items: []
               }
             }]
           }
@@ -674,7 +691,8 @@ describe('getProjectCollections', () => {
 
     const storeActions = store.getActions()
 
-    expect(storeActions.length).toEqual(5)
+    expect(storeActions.length).toEqual(7)
+
     expect(storeActions[0]).toEqual({
       type: ADD_ERROR,
       payload: expect.objectContaining({
@@ -693,6 +711,14 @@ describe('getProjectCollections', () => {
     })
 
     expect(storeActions[2]).toEqual({
+      type: SET_DATA_QUALITY_SUMMARIES,
+      payload: {
+        catalogItemId: 'collectionId1',
+        dataQualitySummaries: []
+      }
+    })
+
+    expect(storeActions[3]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
         expect.objectContaining({
@@ -704,7 +730,7 @@ describe('getProjectCollections', () => {
       ]
     })
 
-    expect(storeActions[3]).toEqual({
+    expect(storeActions[4]).toEqual({
       type: ADD_ACCESS_METHODS,
       payload: {
         collectionId: 'collectionId2',
@@ -712,7 +738,15 @@ describe('getProjectCollections', () => {
       }
     })
 
-    expect(storeActions[4]).toEqual({
+    expect(storeActions[5]).toEqual({
+      type: SET_DATA_QUALITY_SUMMARIES,
+      payload: {
+        catalogItemId: 'collectionId2',
+        dataQualitySummaries: []
+      }
+    })
+
+    expect(storeActions[6]).toEqual({
       type: UPDATE_COLLECTION_METADATA,
       payload: [
         expect.objectContaining({
@@ -750,26 +784,26 @@ describe('getProjectCollections', () => {
                 ],
                 dataQualitySummaries:
                 {
-                  items: null
+                  items: []
                 },
                 tools: {
-                  items: null
+                  items: []
                 },
                 services: {
-                  items: null
+                  items: []
                 }
               },
               {
                 conceptId: 'collectionId2',
                 tools: {
-                  items: null
+                  items: []
                 },
                 dataQualitySummaries:
                 {
-                  items: null
+                  items: []
                 },
                 services: {
-                  items: null
+                  items: []
                 }
               }]
             }
@@ -815,7 +849,7 @@ describe('getProjectCollections', () => {
 
       const storeActions = store.getActions()
 
-      expect(storeActions.length).toEqual(4)
+      expect(storeActions.length).toEqual(6)
 
       expect(storeActions[0]).toEqual({
         type: ADD_ACCESS_METHODS,
@@ -826,6 +860,14 @@ describe('getProjectCollections', () => {
       })
 
       expect(storeActions[1]).toEqual({
+        type: SET_DATA_QUALITY_SUMMARIES,
+        payload: {
+          catalogItemId: 'collectionId1',
+          dataQualitySummaries: []
+        }
+      })
+
+      expect(storeActions[2]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [
           expect.objectContaining({
@@ -837,7 +879,7 @@ describe('getProjectCollections', () => {
         ]
       })
 
-      expect(storeActions[2]).toEqual({
+      expect(storeActions[3]).toEqual({
         type: ADD_ACCESS_METHODS,
         payload: {
           collectionId: 'collectionId2',
@@ -845,7 +887,15 @@ describe('getProjectCollections', () => {
         }
       })
 
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[4]).toEqual({
+        type: 'SET_DATA_QUALITY_SUMMARIES',
+        payload: {
+          catalogItemId: 'collectionId2',
+          dataQualitySummaries: []
+        }
+      })
+
+      expect(storeActions[5]).toEqual({
         type: UPDATE_COLLECTION_METADATA,
         payload: [
           expect.objectContaining({

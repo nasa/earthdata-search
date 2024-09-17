@@ -9,8 +9,8 @@ import { supportsVariableSubsetting } from '../supportsVariableSubsetting'
  * @param {object} associatedVariables variables that are either in the serviceItem or collectionMetadata (prioritizes the serviceItem variables)
  * @returns {object} Access method for oPeNDAP
  */
-export const buildOpendap = (serviceItem, associatedVariables) => {
-  const accessMethods = {}
+export const buildOpendap = (serviceItem, params) => {
+  const { associatedVariables } = params
 
   const {
     conceptId: serviceConceptId,
@@ -37,20 +37,18 @@ export const buildOpendap = (serviceItem, associatedVariables) => {
     })
   }
 
-  accessMethods.opendap = {
-    hierarchyMappings,
-    id: serviceConceptId,
-    isValid: true,
-    keywordMappings,
-    longName,
-    name,
-    supportedOutputFormats: uniq(outputFormats),
-    supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
-    type: serviceType,
-    variables
-  }
-
-  return {
-    accessMethods
-  }
+  return [
+    {
+      hierarchyMappings,
+      id: serviceConceptId,
+      isValid: true,
+      keywordMappings,
+      longName,
+      name,
+      supportedOutputFormats: uniq(outputFormats),
+      supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
+      type: serviceType,
+      variables
+    }
+  ]
 }

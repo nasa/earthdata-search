@@ -7,8 +7,6 @@ import { getApplicationConfig } from '../../../../../../sharedUtils/config'
  * @returns {object} Access method for SWODLR
  */
 export const buildSwodlr = (serviceItem) => {
-  const accessMethods = {}
-
   const { disableSwodlr } = getApplicationConfig()
 
   if (disableSwodlr !== 'true') {
@@ -22,18 +20,18 @@ export const buildSwodlr = (serviceItem) => {
 
     const { urlValue } = url
 
-    accessMethods.swodlr = {
-      id: serviceConceptId,
-      isValid: true,
-      longName,
-      name,
-      type: serviceType,
-      supportsSwodlr: true,
-      url: urlValue
-    }
+    return [
+      {
+        id: serviceConceptId,
+        isValid: true,
+        longName,
+        name,
+        type: serviceType,
+        supportsSwodlr: true,
+        url: urlValue
+      }
+    ]
   }
 
-  return {
-    accessMethods
-  }
+  return []
 }
