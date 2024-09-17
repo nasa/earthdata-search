@@ -11,7 +11,6 @@ import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import SpatialSelectionDropdown from '../SpatialSelectionDropdown'
 import * as EventEmitter from '../../../events/events'
 
-
 const onMetricsSpatialSelection = jest.fn()
 const onToggleShapefileUploadModal = jest.fn()
 

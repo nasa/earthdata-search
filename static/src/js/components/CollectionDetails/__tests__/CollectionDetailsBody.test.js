@@ -8,7 +8,6 @@ import {
 
 import userEvent from '@testing-library/user-event'
 
-
 import CollectionDetailsBody from '../CollectionDetailsBody'
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
 

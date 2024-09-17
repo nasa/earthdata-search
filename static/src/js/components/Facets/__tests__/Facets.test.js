@@ -10,7 +10,6 @@ import {
 
 import userEvent from '@testing-library/user-event'
 
-
 import { kebabCase } from 'lodash-es'
 
 import Facets from '../Facets'

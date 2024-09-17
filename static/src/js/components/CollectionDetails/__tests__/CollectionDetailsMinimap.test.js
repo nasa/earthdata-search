@@ -4,7 +4,6 @@ import { act, render } from '@testing-library/react'
 
 import { MapContainer } from 'react-leaflet'
 
-
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
 
 // Mock react-leaflet because it causes errors

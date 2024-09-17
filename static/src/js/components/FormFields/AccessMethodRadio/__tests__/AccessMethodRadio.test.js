@@ -7,7 +7,6 @@ import {
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-
 import AccessMethodRadio from '../AccessMethodRadio'
 
 const setup = (overrideProps) => {

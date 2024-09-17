@@ -8,7 +8,6 @@ import {
 
 import userEvent from '@testing-library/user-event'
 
-
 import Datepicker from '../Datepicker'
 
 const setup = (overrideProps) => {
