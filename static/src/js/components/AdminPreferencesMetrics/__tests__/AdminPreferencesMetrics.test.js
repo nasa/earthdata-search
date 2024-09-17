@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 
 import '@testing-library/jest-dom'
 
-import { BrowserRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 
 import { AdminPreferencesMetrics } from '../AdminPreferencesMetrics'
 
@@ -31,7 +31,7 @@ const setup = () => {
   }
 
   // https://testing-library.com/docs/example-react-router/
-  render(<AdminPreferencesMetrics {...props} />, { wrapper: BrowserRouter })
+  render(<AdminPreferencesMetrics {...props} />, { wrapper: MemoryRouter })
 
   return {
     metricsPreferences
