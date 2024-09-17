@@ -10,6 +10,6 @@ export default class MetricsRetrievalsRequest extends Request {
   }
 
   all(params) {
-    return this.get('admin/retrievalsMetrics', params)
+    return this.get('admin/retrievals_metrics', params)
   }
 }

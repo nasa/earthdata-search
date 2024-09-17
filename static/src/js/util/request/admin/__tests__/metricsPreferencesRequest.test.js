@@ -45,6 +45,6 @@ describe('metricsPreferencesRequest#all', () => {
     request.all()
 
     expect(getMock).toBeCalledTimes(1)
-    expect(getMock).toBeCalledWith('admin/preferencesMetrics')
+    expect(getMock).toBeCalledWith('admin/preferences_metrics')
   })
 })

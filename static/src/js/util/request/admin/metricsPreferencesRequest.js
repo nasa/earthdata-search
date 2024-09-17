@@ -10,6 +10,6 @@ export default class MetricsPreferencesRequest extends Request {
   }
 
   all() {
-    return this.get('admin/preferencesMetrics')
+    return this.get('admin/preferences_metrics')
   }
 }

@@ -132,7 +132,7 @@ describe('fetchAdminMetricsRetrievals', () => {
     }
 
     nock(/localhost/)
-      .get(/admin\/retrievalsMetrics/)
+      .get(/admin\/retrievals_metrics/)
       .reply(200, data)
 
     const store = mockStore({
@@ -166,7 +166,7 @@ describe('fetchAdminMetricsRetrievals', () => {
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     nock(/localhost/)
-      .get(/admin\/retrievalsMetrics/)
+      .get(/admin\/retrievals_metrics/)
       .reply(500)
 
     nock(/localhost/)

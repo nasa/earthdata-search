@@ -45,6 +45,6 @@ describe('metricsRetrievalsRequest#all', () => {
     request.all({ mock: 'params' })
 
     expect(getMock).toBeCalledTimes(1)
-    expect(getMock).toBeCalledWith('admin/retrievalsMetrics', { mock: 'params' })
+    expect(getMock).toBeCalledWith('admin/retrievals_metrics', { mock: 'params' })
   })
 })

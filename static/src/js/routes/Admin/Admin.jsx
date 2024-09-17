@@ -60,14 +60,14 @@ export class Admin extends Component {
                   |
                   {' '}
                   <PortalLinkContainer
-                    to="/admin/retrievalsMetrics"
+                    to="/admin/retrievals-metrics"
                   >
                     View Retrieval Metrics
                   </PortalLinkContainer>
                   |
                   {' '}
                   <PortalLinkContainer
-                    to="/admin/preferencesMetrics"
+                    to="/admin/preference-metrics"
                   >
                     View Preferences Metrics
                   </PortalLinkContainer>
@@ -76,8 +76,8 @@ export class Admin extends Component {
                 <Route exact path={`${path}/retrievals/:id`} component={AdminRetrievalContainer} />
                 <Route exact path={`${path}/projects`} component={AdminProjectsContainer} />
                 <Route exact path={`${path}/projects/:id`} component={AdminProjectContainer} />
-                <Route exact path={`${path}/retrievalsMetrics`} component={AdminRetrievalsMetricsContainer} />
-                <Route exact path={`${path}/preferencesMetrics`} component={AdminPreferencesMetricsContainer} />
+                <Route exact path={`${path}/retrievals-metrics`} component={AdminRetrievalsMetricsContainer} />
+                <Route exact path={`${path}/preferences-metrics`} component={AdminPreferencesMetricsContainer} />
               </Switch>
             </div>
           </div>
