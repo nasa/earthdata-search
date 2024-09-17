@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { startCase } from 'lodash-es'
@@ -31,7 +30,6 @@ const createPreferencesTable = (preferences) => {
     const prefEntries = Object.entries(preferences[key])
     // Sorts the entries by the counts/percentages not by fields
     prefEntries.sort((a, b) => (Number(getCountValue(b[1])) - Number(getCountValue(a[1]))))
-    console.log(prefEntries)
 
     const header = (
       <thead key={`${key}_header`}>
@@ -85,16 +83,22 @@ const createPreferencesTable = (preferences) => {
 
 export const AdminPreferencesMetricsList = ({
   metricsPreferences
-}) => (
-  <div>{createPreferencesTable(metricsPreferences.preferences)}</div>
-)
+}) => {
+  const { preferences } = metricsPreferences
+
+  return (
+    <div>{createPreferencesTable(preferences)}</div>
+  )
+}
 
 AdminPreferencesMetricsList.defaultProps = {
   metricsPreferences: {}
 }
 
 AdminPreferencesMetricsList.propTypes = {
-  metricsPreferences: PropTypes.shape({})
+  metricsPreferences: PropTypes.shape({
+    preferences: PropTypes.shape({})
+  })
 }
 
 export default AdminPreferencesMetricsList
