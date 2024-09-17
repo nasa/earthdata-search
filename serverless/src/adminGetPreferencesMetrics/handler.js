@@ -60,21 +60,21 @@ const adminGetPreferencesMetrics = async (event, context) => {
       }
 
       const {
-        mapView,
-        panelState,
-        collectionListView,
-        collectionSort,
-        granuleSort,
-        granuleListView
+        mapView = {},
+        panelState = 'not set (open)',
+        collectionListView = 'not set (default)',
+        collectionSort = 'not set (-score)',
+        granuleSort = 'not set (-start_date)',
+        granuleListView = 'not set (default)'
       } = sitePreferences
 
       const {
-        zoom,
-        latitude,
-        longitude,
-        projection,
-        overlayLayers,
-        baseLayer
+        zoom = 'not set (2)',
+        latitude = 'not set (0)',
+        longitude = 'not set (0)',
+        projection = 'not set (epsg4326)',
+        overlayLayers = ['not set (referenceFeatures & referenceLabels)'],
+        baseLayer = 'not set (blueMarble)'
       } = mapView
 
       return {
