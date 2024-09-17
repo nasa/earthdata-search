@@ -10,17 +10,17 @@ const initialState = {
   isLoaded: false,
   isLoading: false,
   preferences: {
-    panelState: {},
-    granuleSort: {},
-    granuleListView: {},
-    collectionSort: {},
-    collectionListView: {},
-    zoom: {},
-    latitude: {},
-    longitude: {},
-    projection: {},
-    overlayLayers: {},
-    baseLayer: {}
+    zoom: [],
+    latitude: [],
+    longitude: [],
+    projection: [],
+    overlayLayers: [],
+    baseLayer: [],
+    panelState: [],
+    granuleSort: [],
+    collectionSort: [],
+    granuleListView: [],
+    collectionListView: []
   }
 }
 
@@ -68,42 +68,42 @@ describe('SET_ADMIN_METRICS_PREFERENCES', () => {
   test('returns the correct state', () => {
     const payload = {
       preferences: {
-        panelState: {
-          open: '100% (2)'
-        },
-        granuleSort: {
-          start_date: '50% (1)',
-          '-start_date': '50% (1)'
-        },
-        granuleListView: {
-          default: '100% (2)'
-        },
-        collectionSort: {
-          '-score': '100% (2)'
-        },
-        collectionListView: {
-          list: '50% (1)',
-          default: '50% (1)'
-        },
-        zoom: {
-          2: '100% (2)'
-        },
-        latitude: {
-          0: '100% (2)'
-        },
-        longitude: {
-          0: '100% (2)'
-        },
-        projection: {
-          epsg4326: '100% (2)'
-        },
-        overlayLayers: {
-          referenceFeatures: '100% (2)',
-          referenceLabels: '100% (2)'
-        },
-        baseLayer: {
-          blueMarble: '100% (2)'
-        }
+        panelState: [
+          ['open', '100% (2)']
+        ],
+        granuleSort: [
+          ['start_date', '50% (1)'],
+          ['-start_date', '50% (1)']
+        ],
+        granuleListView: [
+          ['default', '100% (2)']
+        ],
+        collectionSort: [
+          ['-score', '100% (2)']
+        ],
+        collectionListView: [
+          ['list', '50% (1)'],
+          ['default', '50% (1)']
+        ],
+        zoom: [
+          [2, '100% (2)']
+        ],
+        latitude: [
+          [0, '100% (2)']
+        ],
+        longitude: [
+          [0, '100% (2)']
+        ],
+        projection: [
+          ['epsg4326', '100% (2)']
+        ],
+        overlayLayers: [
+          ['referenceFeatures', '100% (2)'],
+          ['referenceLabels', '100% (2)']
+        ],
+        baseLayer: [
+          ['blueMarble', '100% (2)']
+        ]
       }
     }
     const action = {
@@ -114,42 +114,42 @@ describe('SET_ADMIN_METRICS_PREFERENCES', () => {
     const expectedState = {
       ...initialState,
       preferences: {
-        panelState: {
-          open: '100% (2)'
-        },
-        granuleSort: {
-          start_date: '50% (1)',
-          '-start_date': '50% (1)'
-        },
-        granuleListView: {
-          default: '100% (2)'
-        },
-        collectionSort: {
-          '-score': '100% (2)'
-        },
-        collectionListView: {
-          list: '50% (1)',
-          default: '50% (1)'
-        },
-        zoom: {
-          2: '100% (2)'
-        },
-        latitude: {
-          0: '100% (2)'
-        },
-        longitude: {
-          0: '100% (2)'
-        },
-        projection: {
-          epsg4326: '100% (2)'
-        },
-        overlayLayers: {
-          referenceFeatures: '100% (2)',
-          referenceLabels: '100% (2)'
-        },
-        baseLayer: {
-          blueMarble: '100% (2)'
-        }
+        panelState: [
+          ['open', '100% (2)']
+        ],
+        granuleSort: [
+          ['start_date', '50% (1)'],
+          ['-start_date', '50% (1)']
+        ],
+        granuleListView: [
+          ['default', '100% (2)']
+        ],
+        collectionSort: [
+          ['-score', '100% (2)']
+        ],
+        collectionListView: [
+          ['list', '50% (1)'],
+          ['default', '50% (1)']
+        ],
+        zoom: [
+          [2, '100% (2)']
+        ],
+        latitude: [
+          [0, '100% (2)']
+        ],
+        longitude: [
+          [0, '100% (2)']
+        ],
+        projection: [
+          ['epsg4326', '100% (2)']
+        ],
+        overlayLayers: [
+          ['referenceFeatures', '100% (2)'],
+          ['referenceLabels', '100% (2)']
+        ],
+        baseLayer: [
+          ['blueMarble', '100% (2)']
+        ]
       }
     }
 

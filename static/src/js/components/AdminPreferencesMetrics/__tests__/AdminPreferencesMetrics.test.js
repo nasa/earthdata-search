@@ -1,8 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import '@testing-library/jest-dom'
-
 import { MemoryRouter } from 'react-router-dom'
 
 import { AdminPreferencesMetrics } from '../AdminPreferencesMetrics'
@@ -12,17 +10,17 @@ const setup = () => {
     isLoaded: true,
     isLoading: false,
     preferences: {
-      panelState: {},
-      granuleSort: {},
-      granuleListView: {},
-      collectionSort: {},
-      collectionListView: {},
-      zoom: {},
-      latitude: {},
-      longitude: {},
-      projection: {},
-      overlayLayers: {},
-      baseLayer: {}
+      panelState: [],
+      granuleSort: [],
+      granuleListView: [],
+      collectionSort: [],
+      collectionListView: [],
+      zoom: [],
+      latitude: [],
+      longitude: [],
+      projection: [],
+      overlayLayers: [],
+      baseLayer: []
     }
   }
 

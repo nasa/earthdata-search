@@ -115,10 +115,14 @@ const adminGetPreferencesMetrics = async (event, context) => {
     Object.keys(valueDict).forEach((key) => {
       const top5Preferences = retrieveTop5Values(valueDict[key])
 
-      top5PreferencesValues[key] = {}
+      top5PreferencesValues[key] = []
 
       top5Preferences.forEach(([value, count]) => {
-        top5PreferencesValues[key][value] = `${Number(100 * (count / totalResponses)).toPrecision(3)}% (${count})`
+        const miniObj = []
+        miniObj.push(value)
+        miniObj.push(`${Number(100 * (count / totalResponses)).toPrecision(3)}% (${count})`)
+
+        top5PreferencesValues[key].push(miniObj)
       })
     })
 

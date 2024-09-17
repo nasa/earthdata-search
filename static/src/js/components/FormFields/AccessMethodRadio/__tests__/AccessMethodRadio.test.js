@@ -7,7 +7,6 @@ import {
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import '@testing-library/jest-dom'
 
 import AccessMethodRadio from '../AccessMethodRadio'
 

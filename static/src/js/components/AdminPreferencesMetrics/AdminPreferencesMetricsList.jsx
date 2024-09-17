@@ -6,38 +6,19 @@ import { Table } from 'react-bootstrap'
 import './AdminPreferencesMetricsList.scss'
 
 /**
- * Retrieve the count from the passed value
- * @param {String} value String of percentage% (count)
- * @return {Integer} count
- */
-const getCountValue = (value) => {
-  const countRegex = /\((\d+)\)/g
-  const count = countRegex.exec(value)
-
-  // Pull out the count from the results of the regex query
-  return count[1]
-}
-
-/**
  * Creates the tables for all the preferences counts
  * @param {Object} preferences Object with the preferences with an array of the field value pairs
  * @returns preference tables
  */
 const createPreferencesTable = (preferences) => {
-  const prefKeys = Object.keys(preferences)
-
-  const tables = prefKeys.map((key) => {
-    const prefEntries = Object.entries(preferences[key])
-    // Sorts the entries by the counts/percentages not by fields
-    prefEntries.sort((a, b) => (Number(getCountValue(b[1])) - Number(getCountValue(a[1]))))
-
+  const tables = Object.keys(preferences).map((key) => {
     const header = (
       <thead key={`${key}_header`}>
         <tr className="admin-preferences-metrics-list__table-row" key={`${preferences[key]}_header`}>
           {
             // Pulling out the values (not the count)
-            prefEntries.map((value) => (
-              <th key={`${value[0]}}`}>{value[0]}</th>
+            Object.values(preferences[key]).map((fieldCountArray) => (
+              <th key={`${fieldCountArray[0]}}`}>{fieldCountArray[0]}</th>
             ))
           }
         </tr>
@@ -49,7 +30,7 @@ const createPreferencesTable = (preferences) => {
           {
             // Pulling out the counts/percentages of each value
             // value[0] is the field and value[1] is the count
-            prefEntries.map(([field, count]) => (
+            Object.values(preferences[key]).map(([field, count]) => (
               <td key={`${field}_${count}`}>{count}</td>
             ))
           }

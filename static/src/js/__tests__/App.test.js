@@ -6,7 +6,6 @@ import {
   waitFor,
   screen
 } from '@testing-library/react'
-import '@testing-library/jest-dom'
 
 import * as AppConfig from '../../../../sharedUtils/config'
 import App from '../App'

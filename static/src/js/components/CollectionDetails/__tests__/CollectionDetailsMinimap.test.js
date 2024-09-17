@@ -4,7 +4,6 @@ import { act, render } from '@testing-library/react'
 
 import { MapContainer } from 'react-leaflet'
 
-import '@testing-library/jest-dom'
 
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
 

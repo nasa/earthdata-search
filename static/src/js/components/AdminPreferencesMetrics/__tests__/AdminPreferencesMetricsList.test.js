@@ -1,8 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import '@testing-library/jest-dom'
-
 import { AdminPreferencesMetricsList } from '../AdminPreferencesMetricsList'
 
 const setup = (overrideProps) => {
@@ -11,17 +9,17 @@ const setup = (overrideProps) => {
       isLoaded: true,
       isLoading: false,
       preferences: {
-        panelState: {},
-        granuleSort: {},
-        granuleListView: {},
-        collectionSort: {},
-        collectionListView: {},
-        zoom: {},
-        latitude: {},
-        longitude: {},
-        projection: {},
-        overlayLayers: {},
-        baseLayer: {}
+        panelState: [],
+        granuleSort: [],
+        granuleListView: [],
+        collectionSort: [],
+        collectionListView: [],
+        zoom: [],
+        latitude: [],
+        longitude: [],
+        projection: [],
+        overlayLayers: [],
+        baseLayer: []
       }
     },
     ...overrideProps
@@ -77,42 +75,42 @@ describe('AdminPreferencesMetricsList component', () => {
         isLoaded: true,
         isLoading: false,
         preferences: {
-          panelState: {
-            open: '100% (4)'
-          },
-          granuleSort: {
-            start_date: '100% (4)'
-          },
-          granuleListView: {
-            default: '100% (4)'
-          },
-          collectionSort: {
-            '-score': '100% (4)'
-          },
-          collectionListView: {
-            list: '100% (4)'
-          },
-          zoom: {
-            3: '100% (4)'
-          },
-          latitude: {
-            0: '75% (3)',
-            1: '25% (1)'
-          },
-          longitude: {
-            '-1': '25% (1)',
-            2: '75% (3)'
-          },
-          projection: {
-            epsg4326: '100% (4)'
-          },
-          overlayLayers: {
-            referenceFeatures: '100% (4)',
-            referenceLabels: '100% (4)'
-          },
-          baseLayer: {
-            blueMarble: '100% (4)'
-          }
+          panelState: [
+            ['open', '100% (4)']
+          ],
+          granuleSort: [
+            ['start_date', '100% (4)']
+          ],
+          granuleListView: [
+            ['default', '100% (4)']
+          ],
+          collectionSort: [
+            ['-score', '100% (4)']
+          ],
+          collectionListView: [
+            ['list', '100% (4)']
+          ],
+          zoom: [
+            [3, '100% (4)']
+          ],
+          latitude: [
+            [0, '75% (3)'],
+            [1, '25% (1)']
+          ],
+          longitude: [
+            ['-1', '25% (1)'],
+            [2, '75% (3)']
+          ],
+          projection: [
+            ['epsg4326', '100% (4)']
+          ],
+          overlayLayers: [
+            ['referenceFeatures', '100% (4)'],
+            ['referenceLabels', '100% (4)']
+          ],
+          baseLayer: [
+            ['blueMarble', '100% (4)']
+          ]
         }
       }
     })

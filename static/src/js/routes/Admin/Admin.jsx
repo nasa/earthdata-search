@@ -67,7 +67,7 @@ export class Admin extends Component {
                   |
                   {' '}
                   <PortalLinkContainer
-                    to="/admin/preference-metrics"
+                    to="/admin/preferences-metrics"
                   >
                     View Preferences Metrics
                   </PortalLinkContainer>

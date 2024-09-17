@@ -6,17 +6,17 @@ import {
 
 const initialState = {
   preferences: {
-    zoom: {},
-    latitude: {},
-    longitude: {},
-    projection: {},
-    overlayLayers: {},
-    baseLayer: {},
-    panelState: {},
-    granuleSort: {},
-    collectionSort: {},
-    granuleListView: {},
-    collectionListView: {}
+    zoom: [],
+    latitude: [],
+    longitude: [],
+    projection: [],
+    overlayLayers: [],
+    baseLayer: [],
+    panelState: [],
+    granuleSort: [],
+    collectionSort: [],
+    granuleListView: [],
+    collectionListView: []
   },
   isLoading: false,
   isLoaded: false

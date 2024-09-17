@@ -90,42 +90,42 @@ describe('adminGetPreferencesMetrics', () => {
     const responseObj = {
       results: {
         preferences: {
-          panelState: {
-            open: '100% (2)'
-          },
-          granuleSort: {
-            start_date: '50.0% (1)',
-            '-start_date': '50.0% (1)'
-          },
-          granuleListView: {
-            default: '100% (2)'
-          },
-          collectionSort: {
-            '-score': '100% (2)'
-          },
-          collectionListView: {
-            list: '50.0% (1)',
-            default: '50.0% (1)'
-          },
-          zoom: {
-            2: '100% (2)'
-          },
-          latitude: {
-            0: '100% (2)'
-          },
-          longitude: {
-            0: '100% (2)'
-          },
-          projection: {
-            epsg4326: '100% (2)'
-          },
-          overlayLayers: {
-            referenceFeatures: '100% (2)',
-            referenceLabels: '100% (2)'
-          },
-          baseLayer: {
-            blueMarble: '100% (2)'
-          }
+          panelState: [
+            ['open', '100% (2)']
+          ],
+          granuleSort: [
+            ['start_date', '50.0% (1)'],
+            ['-start_date', '50.0% (1)']
+          ],
+          granuleListView: [
+            ['default', '100% (2)']
+          ],
+          collectionSort: [
+            ['-score', '100% (2)']
+          ],
+          collectionListView: [
+            ['list', '50.0% (1)'],
+            ['default', '50.0% (1)']
+          ],
+          zoom: [
+            ['2', '100% (2)']
+          ],
+          latitude: [
+            ['0', '100% (2)']
+          ],
+          longitude: [
+            ['0', '100% (2)']
+          ],
+          projection: [
+            ['epsg4326', '100% (2)']
+          ],
+          overlayLayers: [
+            ['referenceFeatures', '100% (2)'],
+            ['referenceLabels', '100% (2)']
+          ],
+          baseLayer: [
+            ['blueMarble', '100% (2)']
+          ]
         }
       }
     }
@@ -198,53 +198,53 @@ describe('adminGetPreferencesMetrics', () => {
     const responseObj = {
       results: {
         preferences: {
-          panelState: {
-            open: '50.0% (2)',
-            'not set (open)': '50.0% (2)'
-          },
-          granuleSort: {
-            'not set (-start_date)': '50.0% (2)',
-            start_date: '25.0% (1)',
-            '-start_date': '25.0% (1)'
-          },
-          granuleListView: {
-            default: '50.0% (2)',
-            'not set (default)': '50.0% (2)'
-          },
-          collectionSort: {
-            '-score': '50.0% (2)',
-            'not set (-score)': '50.0% (2)'
-          },
-          collectionListView: {
-            'not set (default)': '50.0% (2)',
-            list: '25.0% (1)',
-            default: '25.0% (1)'
-          },
-          zoom: {
-            2: '50.0% (2)',
-            'not set (2)': '50.0% (2)'
-          },
-          latitude: {
-            0: '50.0% (2)',
-            'not set (0)': '50.0% (2)'
-          },
-          longitude: {
-            0: '50.0% (2)',
-            'not set (0)': '50.0% (2)'
-          },
-          projection: {
-            epsg4326: '50.0% (2)',
-            'not set (epsg4326)': '50.0% (2)'
-          },
-          overlayLayers: {
-            referenceFeatures: '50.0% (2)',
-            referenceLabels: '50.0% (2)',
-            'not set (referenceFeatures & referenceLabels)': '50.0% (2)'
-          },
-          baseLayer: {
-            blueMarble: '50.0% (2)',
-            'not set (blueMarble)': '50.0% (2)'
-          }
+          panelState: [
+            ['open', '50.0% (2)'],
+            ['not set (open)', '50.0% (2)']
+          ],
+          granuleSort: [
+            ['not set (-start_date)', '50.0% (2)'],
+            ['start_date', '25.0% (1)'],
+            ['-start_date', '25.0% (1)']
+          ],
+          granuleListView: [
+            ['default', '50.0% (2)'],
+            ['not set (default)', '50.0% (2)']
+          ],
+          collectionSort: [
+            ['-score', '50.0% (2)'],
+            ['not set (-score)', '50.0% (2)']
+          ],
+          collectionListView: [
+            ['not set (default)', '50.0% (2)'],
+            ['list', '25.0% (1)'],
+            ['default', '25.0% (1)']
+          ],
+          zoom: [
+            ['2', '50.0% (2)'],
+            ['not set (2)', '50.0% (2)']
+          ],
+          latitude: [
+            ['0', '50.0% (2)'],
+            ['not set (0)', '50.0% (2)']
+          ],
+          longitude: [
+            ['0', '50.0% (2)'],
+            ['not set (0)', '50.0% (2)']
+          ],
+          projection: [
+            ['epsg4326', '50.0% (2)'],
+            ['not set (epsg4326)', '50.0% (2)']
+          ],
+          overlayLayers: [
+            ['referenceFeatures', '50.0% (2)'],
+            ['referenceLabels', '50.0% (2)'],
+            ['not set (referenceFeatures & referenceLabels)', '50.0% (2)']
+          ],
+          baseLayer: [
+            ['blueMarble', '50.0% (2)'],
+            ['not set (blueMarble)', '50.0% (2)']
+          ]
         }
       }
     }
@@ -385,57 +385,57 @@ describe('adminGetPreferencesMetrics', () => {
     const responseObj = {
       results: {
         preferences: {
-          panelState: {
-            open: '75.0% (6)',
-            'not set (open)': '25.0% (2)'
-          },
-          granuleSort: {
-            '-start_date': '62.5% (5)',
-            'not set (-start_date)': '25.0% (2)',
-            start_date: '12.5% (1)'
-          },
-          granuleListView: {
-            default: '75.0% (6)',
-            'not set (default)': '25.0% (2)'
-          },
-          collectionSort: {
-            '-score': '75.0% (6)',
-            'not set (-score)': '25.0% (2)'
-          },
-          collectionListView: {
-            default: '62.5% (5)',
-            'not set (default)': '25.0% (2)',
-            list: '12.5% (1)'
-          },
-          zoom: {
-            2: '75.0% (6)',
-            'not set (2)': '25.0% (2)'
-          },
-          latitude: {
-            0: '12.5% (1)',
-            1: '12.5% (1)',
-            2: '12.5% (1)',
-            3: '12.5% (1)',
-            4: '12.5% (1)',
-            'not set (0)': '25.0% (2)'
-          },
-          longitude: {
-            0: '75.0% (6)',
-            'not set (0)': '25.0% (2)'
-          },
-          projection: {
-            epsg4326: '75.0% (6)',
-            'not set (epsg4326)': '25.0% (2)'
-          },
-          overlayLayers: {
-            referenceFeatures: '75.0% (6)',
-            referenceLabels: '75.0% (6)',
-            'not set (referenceFeatures & referenceLabels)': '25.0% (2)'
-          },
-          baseLayer: {
-            blueMarble: '75.0% (6)',
-            'not set (blueMarble)': '25.0% (2)'
-          }
+          panelState: [
+            ['open', '75.0% (6)'],
+            ['not set (open)', '25.0% (2)']
+          ],
+          granuleSort: [
+            ['-start_date', '62.5% (5)'],
+            ['not set (-start_date)', '25.0% (2)'],
+            ['start_date', '12.5% (1)']
+          ],
+          granuleListView: [
+            ['default', '75.0% (6)'],
+            ['not set (default)', '25.0% (2)']
+          ],
+          collectionSort: [
+            ['-score', '75.0% (6)'],
+            ['not set (-score)', '25.0% (2)']
+          ],
+          collectionListView: [
+            ['default', '62.5% (5)'],
+            ['not set (default)', '25.0% (2)'],
+            ['list', '12.5% (1)']
+          ],
+          zoom: [
+            ['2', '75.0% (6)'],
+            ['not set (2)', '25.0% (2)']
+          ],
+          latitude: [
+            ['not set (0)', '25.0% (2)'],
+            ['0', '12.5% (1)'],
+            ['1', '12.5% (1)'],
+            ['2', '12.5% (1)'],
+            ['3', '12.5% (1)'],
+            ['4', '12.5% (1)']
+          ],
+          longitude: [
+            ['0', '75.0% (6)'],
+            ['not set (0)', '25.0% (2)']
+          ],
+          projection: [
+            ['epsg4326', '75.0% (6)'],
+            ['not set (epsg4326)', '25.0% (2)']
+          ],
+          overlayLayers: [
+            ['referenceFeatures', '75.0% (6)'],
+            ['referenceLabels', '75.0% (6)'],
+            ['not set (referenceFeatures & referenceLabels)', '25.0% (2)']
+          ],
+          baseLayer: [
+            ['blueMarble', '75.0% (6)'],
+            ['not set (blueMarble)', '25.0% (2)']
+          ]
         }
       }
     }
