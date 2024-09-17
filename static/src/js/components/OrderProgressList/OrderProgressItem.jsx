@@ -22,7 +22,7 @@ export const OrderProgressItem = ({
   let numGranulesProccessed
   let totalGranulesInOrder
   let totalPercentProcessed
-  // TODO swodlr?
+
   if (type === 'Harmony') {
     const { progress = 0 } = orderInformation
     totalPercentProcessed = progress

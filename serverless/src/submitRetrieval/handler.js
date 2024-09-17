@@ -69,6 +69,7 @@ const submitRetrieval = async (event, context) => {
         granule_link_count: granuleLinkCount = 0,
         granule_params: granuleParams
       } = collection
+
       // Snake case the granule params for sending to CMR
       const snakeGranuleParams = snakecaseKeys(granuleParams)
 
