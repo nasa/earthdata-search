@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
@@ -20,12 +20,17 @@ export const mapDispatchToProps = (dispatch) => ({
 export const AdminPreferencesMetricsContainer = ({
   onFetchAdminMetricsPreferences,
   metricsPreferences
-}) => (
-  <AdminPreferencesMetrics
-    onFetchAdminMetricsPreferences={onFetchAdminMetricsPreferences}
-    metricsPreferences={metricsPreferences}
-  />
-)
+}) => {
+  useEffect(async () => {
+    await onFetchAdminMetricsPreferences()
+  }, [])
+
+  return (
+    <AdminPreferencesMetrics
+      metricsPreferences={metricsPreferences}
+    />
+  )
+}
 
 AdminPreferencesMetricsContainer.defaultProps = {
   metricsPreferences: {}

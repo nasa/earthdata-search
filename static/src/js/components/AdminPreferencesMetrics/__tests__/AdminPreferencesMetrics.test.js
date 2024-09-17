@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { render, screen } from '@testing-library/react'
 
 import '@testing-library/jest-dom'
@@ -26,10 +25,8 @@ const setup = () => {
       baseLayer: {}
     }
   }
-  const onFetchAdminMetricsPreferences = jest.fn()
 
   const props = {
-    onFetchAdminMetricsPreferences,
     metricsPreferences
   }
 
@@ -37,7 +34,6 @@ const setup = () => {
   render(<AdminPreferencesMetrics {...props} />, { wrapper: BrowserRouter })
 
   return {
-    onFetchAdminMetricsPreferences,
     metricsPreferences
   }
 }
@@ -46,23 +42,5 @@ describe('AdminPreferencesMetrics component', () => {
   test('renders itself correctly', () => {
     setup()
     expect(screen.getByRole('heading', { name: 'Preferences Metrics' })).toBeInTheDocument()
-  })
-
-  describe('when filtering temporally', () => {
-    beforeAll(() => {
-      ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
-    })
-
-    afterEach(() => {
-      ReactDOM.createPortal.mockClear()
-    })
-
-    test('clicking on the temporal filter modal opens it', async () => {
-      const {
-        onFetchAdminMetricsPreferences
-      } = setup()
-
-      expect(onFetchAdminMetricsPreferences).toHaveBeenCalledTimes(1)
-    })
   })
 })

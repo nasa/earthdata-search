@@ -31,9 +31,6 @@ const adminGetPreferencesMetrics = async (event, context) => {
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
 
-    // `jsonExtract` parses fields in `jsonb` columns
-    // https://knexjs.org/guide/query-builder.html#jsonextract
-    // Fetch metrics on `retrieval_collections`
     const preferencesResponse = await dbConnection('users')
       .select('users.site_preferences')
       .where({ 'users.environment': env })
@@ -121,7 +118,7 @@ const adminGetPreferencesMetrics = async (event, context) => {
       top5PreferencesValues[key] = {}
 
       top5Preferences.forEach(([value, count]) => {
-        top5PreferencesValues[key][value] = `${100 * (count / totalResponses)}% (${count})`
+        top5PreferencesValues[key][value] = `${Number(100 * (count / totalResponses)).toPrecision(3)}% (${count})`
       })
     })
 

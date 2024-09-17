@@ -100,8 +100,8 @@ describe('AdminPreferencesMetricsList component', () => {
             1: '25% (1)'
           },
           longitude: {
-            2: '75% (3)',
-            '-1': '25% (1)'
+            '-1': '25% (1)',
+            2: '75% (3)'
           },
           projection: {
             epsg4326: '100% (4)'
