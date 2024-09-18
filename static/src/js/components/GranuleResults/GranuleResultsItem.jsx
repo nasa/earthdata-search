@@ -48,15 +48,23 @@ const getSearchWords = (location) => {
     return []
   }
 
-  const splitStars = substring.split('*')
-
   const searchTerms = []
 
-  splitStars.forEach((splitStarsVal) => {
-    if (splitStarsVal !== '') {
-      const regexTerm = RegExp(`(${splitStarsVal.replaceAll('?', '.')})`)
-      searchTerms.push(regexTerm)
+  substring.split(',').forEach((initialSearchTerm) => {
+    let splitStars = initialSearchTerm.split('*')
+
+    // Remove the first and last stars if they are there
+    if (splitStars[0] === '') {
+      splitStars = splitStars.slice(1)
     }
+
+    if (splitStars[splitStars.length - 1] === '') {
+      splitStars = splitStars.slice(0, splitStars.length - 1)
+    }
+
+    const searchTerm = splitStars.join('.+')
+
+    searchTerms.push(RegExp(`(${searchTerm.replaceAll('?', '.')})`))
   })
 
   console.log(searchTerms)
