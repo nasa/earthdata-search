@@ -5,6 +5,8 @@ import classNames from 'classnames'
 
 import { LinkContainer } from 'react-router-bootstrap'
 
+import Highlighter from 'react-highlight-words'
+
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import {
   Minus,
@@ -30,10 +32,7 @@ import './GranuleResultsItem.scss'
 /**
  * Highlight substring if it's in being searched for in Granule Id(s) Filter
  */
-const highlightSubstring = (
-  location,
-  title
-) => {
+const getSearchWords = (location) => {
   const { search } = location
   const params = parse(search, {
     ignoreQueryPrefix: true,
@@ -46,43 +45,23 @@ const highlightSubstring = (
   const { id: substring } = pgParams
 
   if (!substring) {
-    return title
+    return []
   }
 
-  const splitStars = substring.split(/[*]+/)
+  const splitStars = substring.split('*')
 
-  const rebuiltTitle = []
-
-  let trimmedTitle = title
+  const searchTerms = []
 
   splitStars.forEach((splitStarsVal) => {
     if (splitStarsVal !== '') {
-      const regexTerm = `(${splitStarsVal.replace('?', '.')})`
-      const regexResults = trimmedTitle.match(regexTerm)
-
-      // Slices the found regex expression off
-      // adds that match result to the list of strings to be bolded
-      if (regexResults) {
-        const slicedOffNormalText = trimmedTitle.slice(0, regexResults.index)
-        rebuiltTitle.push(slicedOffNormalText)
-
-        trimmedTitle = trimmedTitle.slice(
-          regexResults[0].length + regexResults.index,
-          trimmedTitle.length
-        )
-
-        rebuiltTitle.push(<span className="granule-results-item__highlighted-title">{regexResults[0]}</span>)
-      }
+      const regexTerm = RegExp(`(${splitStarsVal.replaceAll('?', '.')})`)
+      searchTerms.push(regexTerm)
     }
   })
 
-  if (trimmedTitle.length !== 0) {
-    rebuiltTitle.push(trimmedTitle)
-  }
+  console.log(searchTerms)
 
-  console.log(rebuiltTitle)
-
-  return rebuiltTitle
+  return searchTerms
 }
 
 /**
@@ -253,8 +232,11 @@ const GranuleResultsItem = forwardRef(({
           <h3
             className="granule-results-item__title"
           >
-            {highlightSubstring(location, title)}
-            {/* {title} */}
+            <Highlighter
+              highlightClassName="granule-results-item__highlighted-title"
+              searchWords={getSearchWords(location)}
+              textToHighlight={title}
+            />
           </h3>
         </div>
         <MoreActionsDropdown
