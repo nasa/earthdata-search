@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react'
 import { PropTypes } from 'prop-types'
+import { parse } from 'qs'
 import classNames from 'classnames'
 
 import { LinkContainer } from 'react-router-bootstrap'
@@ -25,6 +26,64 @@ import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownI
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './GranuleResultsItem.scss'
+
+/**
+ * Highlight substring if it's in being searched for in Granule Id(s) Filter
+ */
+const highlightSubstring = (
+  location,
+  title
+) => {
+  const { search } = location
+  const params = parse(search, {
+    ignoreQueryPrefix: true,
+    parseArrays: false
+  })
+  const { pg = {} } = params
+
+  const pgParams = pg[0]
+
+  const { id: substring } = pgParams
+
+  if (!substring) {
+    return title
+  }
+
+  const splitStars = substring.split(/[*]+/)
+
+  const rebuiltTitle = []
+
+  let trimmedTitle = title
+
+  splitStars.forEach((splitStarsVal) => {
+    if (splitStarsVal !== '') {
+      const regexTerm = `(${splitStarsVal.replace('?', '.')})`
+      const regexResults = trimmedTitle.match(regexTerm)
+
+      // Slices the found regex expression off
+      // adds that match result to the list of strings to be bolded
+      if (regexResults) {
+        const slicedOffNormalText = trimmedTitle.slice(0, regexResults.index)
+        rebuiltTitle.push(slicedOffNormalText)
+
+        trimmedTitle = trimmedTitle.slice(
+          regexResults[0].length + regexResults.index,
+          trimmedTitle.length
+        )
+
+        rebuiltTitle.push(<span className="granule-results-item__highlighted-title">{regexResults[0]}</span>)
+      }
+    }
+  })
+
+  if (trimmedTitle.length !== 0) {
+    rebuiltTitle.push(trimmedTitle)
+  }
+
+  console.log(rebuiltTitle)
+
+  return rebuiltTitle
+}
 
 /**
  * Renders GranuleResultsItem.
@@ -194,7 +253,8 @@ const GranuleResultsItem = forwardRef(({
           <h3
             className="granule-results-item__title"
           >
-            {title}
+            {highlightSubstring(location, title)}
+            {/* {title} */}
           </h3>
         </div>
         <MoreActionsDropdown

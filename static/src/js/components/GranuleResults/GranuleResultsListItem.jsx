@@ -59,7 +59,7 @@ export const GranuleResultsListItem = memo(({
     setRowHeight(rowIndex, columnIndex, currentHeight)
   }, [windowWidth, element.current])
 
-  // Tweak the position of the elements to simultate the correct margins
+  // Tweak the position of the elements to simulate the correct margins
   const customStyle = {
     ...style,
     left: style.left + remInPixels,
