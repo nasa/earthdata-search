@@ -1,16 +1,13 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import {
-  ArrowChevronUp,
-  ArrowChevronDown
-} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
+import '@testing-library/jest-dom'
 import { CollapsePanel } from '../CollapsePanel'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
+const setup = () => {
+  const user = userEvent.setup()
   const props = {
     buttonClassName: 'test-button-class',
     className: 'test-wrap-class',
@@ -19,42 +16,48 @@ function setup() {
     panelClassName: 'test-panel-class'
   }
 
-  const enzymeWrapper = shallow(<CollapsePanel {...props} />)
+  const { container } = render(<CollapsePanel {...props} />)
 
   return {
-    enzymeWrapper,
-    props
+    container,
+    props,
+    user
+
   }
 }
 
 describe('CollapsePanel component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.type()).toBe('div')
-    expect(enzymeWrapper.prop('className')).toBe('collapse-panel test-wrap-class')
-  })
-
-  test('renders its button correctly', () => {
-    const { enzymeWrapper } = setup()
-    enzymeWrapper.instance().onToggleClick = jest.fn()
-    const button = enzymeWrapper.find('button')
-    expect(button.length).toEqual(1)
-    expect(button.text()).toEqual('test-header-text<EDSCIcon />')
-  })
-
-  test('toggles when clicked', () => {
-    const { enzymeWrapper } = setup()
-    const button = enzymeWrapper.find('button')
-    expect(enzymeWrapper.state('open')).toEqual(false)
-    expect(enzymeWrapper.find('EDSCIcon').prop('icon')).toEqual(ArrowChevronDown)
-    button.simulate('click')
-    expect(enzymeWrapper.state('open')).toEqual(true)
-    expect(enzymeWrapper.find('EDSCIcon').prop('icon')).toEqual(ArrowChevronUp)
+    const { container } = setup()
+    expect(container.firstChild).toHaveClass('collapse-panel test-wrap-class')
   })
 
   test('renders it children correctly', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find('#collapse-text').text()).toBe('Im a child!')
+    setup()
+    expect(screen.getByText('Im a child!')).toBeInTheDocument()
+  })
+
+  test('renders its button correctly', async () => {
+    const { user } = setup()
+    const openPanelButton = screen.getByRole('button', { name: 'Open Panel' })
+
+    await user.click(openPanelButton)
+
+    expect(screen.getByText('test-header-text')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Close Panel' })).toBeInTheDocument()
+  })
+
+  test('toggles when clicked', async () => {
+    const { user } = setup()
+    const openPanelButton = screen.getByRole('button', { name: 'Open Panel' })
+    expect(screen.getByTitle('ArrowChevronDown')).toBeInTheDocument()
+
+    await user.click(openPanelButton)
+    expect(screen.getByTitle('ArrowChevronUp')).toBeInTheDocument()
+  })
+
+  test('renders it children correctly', () => {
+    setup()
+    expect(screen.getByText('Im a child!')).toBeInTheDocument()
   })
 })

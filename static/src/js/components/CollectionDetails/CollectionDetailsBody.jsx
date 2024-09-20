@@ -184,7 +184,6 @@ export const CollectionDetailsBody = ({
     const { items } = services
 
     if (items) {
-      // TODO make this a const someplace
       const supportedServiceTypes = ['esi', 'opendap', 'echo orders', 'harmony', 'swodlr']
       items.forEach((service) => {
         const {
