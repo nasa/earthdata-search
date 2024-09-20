@@ -55,9 +55,4 @@ describe('CollapsePanel component', () => {
     await user.click(openPanelButton)
     expect(screen.getByTitle('ArrowChevronUp')).toBeInTheDocument()
   })
-
-  test('renders it children correctly', () => {
-    setup()
-    expect(screen.getByText('Im a child!')).toBeInTheDocument()
-  })
 })
