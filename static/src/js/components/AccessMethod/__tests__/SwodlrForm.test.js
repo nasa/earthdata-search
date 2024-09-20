@@ -144,6 +144,8 @@ describe('SwodlrForm component', () => {
           }
         }
       })
+
+      expect(screen.getByText('arc-seconds')).toBeInTheDocument()
     })
 
     test('updating raster resolution calls onUpdateAccessMethod', async () => {
@@ -228,16 +230,19 @@ describe('SwodlrForm component', () => {
           }
         }
       })
+
+      expect(screen.getByText('meters')).toBeInTheDocument()
     })
 
     describe('when updating individual granules UTM Zone Adjust', () => {
       test('updates utmZoneAdjust to `1 `calls onUpdateAccessMethod correctly', async () => {
         const { user, setGranuleList, onUpdateAccessMethod } = setup()
+        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'Open Panel' })
 
-        const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
         await user.click(advancedOptionsToggleButton)
 
         const firstGranuleUTMZonePlusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-plus-1-UTM-zone' })
+
         await user.click(firstGranuleUTMZonePlusOne)
 
         expect(setGranuleList).toHaveBeenCalledTimes(1)
@@ -280,11 +285,12 @@ describe('SwodlrForm component', () => {
 
       test('updates utmZoneAdjust to `-1` calls onUpdateAccessMethod correctly', async () => {
         const { user, setGranuleList, onUpdateAccessMethod } = setup()
+        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'Open Panel' })
 
-        const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
         await user.click(advancedOptionsToggleButton)
 
         const firstGranuleUTMZoneMinusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-minus-1-UTM-zone' })
+
         await user.click(firstGranuleUTMZoneMinusOne)
 
         expect(setGranuleList).toHaveBeenCalledTimes(1)
@@ -328,14 +334,17 @@ describe('SwodlrForm component', () => {
       test('updates utmZoneAdjust to `0` calls onUpdateAccessMethod correctly', async () => {
         const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
-        const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
+        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'Open Panel' })
+
         await user.click(advancedOptionsToggleButton)
 
         // Set to negative 1 first since 0 is the default
         const firstGranuleUTMZoneMinusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-minus-1-UTM-zone' })
+
         await user.click(firstGranuleUTMZoneMinusOne)
 
         const firstGranuleUTMZoneZero = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-0-UTM-zone' })
+
         await user.click(firstGranuleUTMZoneZero)
 
         expect(setGranuleList).toBeCalledTimes(2)
@@ -382,10 +391,12 @@ describe('SwodlrForm component', () => {
       test('updates MGRS to `1 `calls onUpdateAccessMethod correctly', async () => {
         const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
-        const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
+        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'Open Panel' })
+
         await user.click(advancedOptionsToggleButton)
 
         const firstGranuleMGRSPlusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-plus-1-MGRS-band' })
+
         await user.click(firstGranuleMGRSPlusOne)
 
         expect(setGranuleList).toHaveBeenCalledTimes(1)
@@ -429,10 +440,12 @@ describe('SwodlrForm component', () => {
       test('updates MGRS to `-1 `calls onUpdateAccessMethod correctly', async () => {
         const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
-        const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
+        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'Open Panel' })
+
         await user.click(advancedOptionsToggleButton)
 
         const firstGranuleMGRSMinusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-minus-1-MGRS-band' })
+
         await user.click(firstGranuleMGRSMinusOne)
 
         expect(setGranuleList).toHaveBeenCalledTimes(1)
@@ -476,17 +489,19 @@ describe('SwodlrForm component', () => {
       test('updates MGRS to `0 `calls onUpdateAccessMethod correctly', async () => {
         const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
-        const advancedOptionsToggleButton = screen.getByTestId('advancedOptionsToggle')
+        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'Open Panel' })
+
         await user.click(advancedOptionsToggleButton)
 
         const firstGranuleMGRSMinusOne = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-minus-1-MGRS-band' })
+
         await user.click(firstGranuleMGRSMinusOne)
 
         const firstGranuleMGRSZero = screen.getByRole('radio', { name: 'G3161846518-POCLOUD-0-MGRS-band' })
+
         await user.click(firstGranuleMGRSZero)
 
         expect(setGranuleList).toBeCalledTimes(2)
-
         expect(setGranuleList).toHaveBeenCalledWith([
           {
             boxes: [

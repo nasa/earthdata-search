@@ -62,7 +62,9 @@
   }
 
   &__content {
-    display: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     flex-wrap: nowrap;
     flex-grow: 1;
     flex-shrink: 1;
@@ -71,6 +73,10 @@
     margin-right: $spacer;
     margin-left: $spacer;
     overflow: hidden;
+  }
+
+  &__header {
+    margin-right: 0.5rem;
   }
 
   &__header-primary {
@@ -100,8 +106,7 @@
   }
 
   &__header-content {
-    margin-bottom: 0.325rem;
-    max-width: 440px;
+    max-width: 27.5rem;
   }
 
   &__header-tertiary {
@@ -141,6 +146,18 @@
     margin: 0;
     padding: 0;
     font-size: 0.825rem;
+  }
+
+  &__tooltip {
+    text-align: left;
+  }
+
+  &__external-link {
+    color: $color__spacesuit-white;
+
+    &:hover {
+      color: $color__nasa-blue;
+    }
   }
 
   &__service-name {

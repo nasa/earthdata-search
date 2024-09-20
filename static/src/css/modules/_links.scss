@@ -19,6 +19,14 @@
     color: $color__nasa-blue--tint;
   }
 
+  &--light {
+    color: $color__spacesuit-white;
+
+    &:hover {
+      color: $color__spacesuit-white;
+    }
+  }
+
   &--separated {
     &:before {
       display: inline-block;
