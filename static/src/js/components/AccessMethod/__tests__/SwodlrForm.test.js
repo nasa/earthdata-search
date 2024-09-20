@@ -237,7 +237,7 @@ describe('SwodlrForm component', () => {
     describe('when updating individual granules UTM Zone Adjust', () => {
       test('updates utmZoneAdjust to `1 `calls onUpdateAccessMethod correctly', async () => {
         const { user, setGranuleList, onUpdateAccessMethod } = setup()
-        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'collapse-text' })
+        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'collapse-panel' })
 
         await user.click(advancedOptionsToggleButton)
 
@@ -285,7 +285,7 @@ describe('SwodlrForm component', () => {
 
       test('updates utmZoneAdjust to `-1` calls onUpdateAccessMethod correctly', async () => {
         const { user, setGranuleList, onUpdateAccessMethod } = setup()
-        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'collapse-text' })
+        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'collapse-panel' })
 
         await user.click(advancedOptionsToggleButton)
 
@@ -334,7 +334,7 @@ describe('SwodlrForm component', () => {
       test('updates utmZoneAdjust to `0` calls onUpdateAccessMethod correctly', async () => {
         const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
-        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'collapse-text' })
+        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'collapse-panel' })
 
         await user.click(advancedOptionsToggleButton)
 
@@ -391,7 +391,7 @@ describe('SwodlrForm component', () => {
       test('updates MGRS to `1 `calls onUpdateAccessMethod correctly', async () => {
         const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
-        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'collapse-text' })
+        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'collapse-panel' })
 
         await user.click(advancedOptionsToggleButton)
 
@@ -440,7 +440,7 @@ describe('SwodlrForm component', () => {
       test('updates MGRS to `-1 `calls onUpdateAccessMethod correctly', async () => {
         const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
-        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'collapse-text' })
+        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'collapse-panel' })
 
         await user.click(advancedOptionsToggleButton)
 
@@ -489,7 +489,7 @@ describe('SwodlrForm component', () => {
       test('updates MGRS to `0 `calls onUpdateAccessMethod correctly', async () => {
         const { user, setGranuleList, onUpdateAccessMethod } = setup()
 
-        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'collapse-text' })
+        const advancedOptionsToggleButton = screen.getByRole('button', { name: 'collapse-panel' })
 
         await user.click(advancedOptionsToggleButton)
 

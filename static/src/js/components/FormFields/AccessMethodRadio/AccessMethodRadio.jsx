@@ -129,7 +129,7 @@ export const AccessMethodRadio = ({
                     onMouseEnter={() => externalLink && setShowTooltip(true)}
                     onMouseLeave={() => externalLink && setShowTooltip(false)}
                   >
-                    <div className="access-method-radio__tool-tip">
+                    <div className="access-method-radio__tooltip">
                       <p className="mb-0">
                         {details}
                       </p>

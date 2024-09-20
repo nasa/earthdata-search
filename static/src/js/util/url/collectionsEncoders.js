@@ -212,7 +212,6 @@ const encodeRemovedGranules = (isOpenSearch, removedGranuleIds) => {
   return encodeGranules(isOpenSearch, removedGranuleIds)
 }
 
-// Decoders
 const decodedSelectedVariables = (pgParam) => {
   const { uv: variableIds } = pgParam
 
@@ -223,9 +222,7 @@ const decodedSelectedVariables = (pgParam) => {
 
 const decodedSwodlrDownload = (pgParam) => {
   const { swod: swodlrData } = pgParam
-  if (!swodlrData) {
-    return undefined
-  }
+  if (!swodlrData) return undefined
 
   return swodlrData
 }
@@ -548,7 +545,6 @@ export const decodeCollections = (params) => {
 
       // Decode swodlr subsettings on collections
       if (selectedAccessMethod && selectedAccessMethod.startsWith('swodlr')) {
-        // TODO some url valuse here have to be encoded
         swodlrData = decodedSwodlrDownload(pCollection)
       }
 
@@ -596,8 +592,6 @@ export const decodeCollections = (params) => {
         }
 
         if (swodlrData) {
-          // TODO convert these to numbers
-          // Const convertedSwodlrData = convertIntObj(swodlrData)
           projectById[collectionId].accessMethods = {
             [selectedAccessMethod]: {
               swodlrData
