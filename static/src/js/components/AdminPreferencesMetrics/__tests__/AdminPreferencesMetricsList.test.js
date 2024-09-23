@@ -76,62 +76,88 @@ describe('AdminPreferencesMetricsList component', () => {
         isLoading: false,
         preferences: {
           panelState: [
-            ['open', '100% (4)']
+            ['open', '100% (4)'] // Column Header 1
           ],
           granuleSort: [
-            ['start_date', '100% (4)']
+            ['start_date', '100% (4)'] // Column Header 2
           ],
           granuleListView: [
-            ['default', '100% (4)']
+            ['default', '100% (4)'] // Column Header 3
           ],
           collectionSort: [
-            ['-score', '100% (4)']
+            ['-score', '100% (4)'] // Column Header 4
           ],
           collectionListView: [
-            ['list', '100% (4)']
+            ['list', '100% (4)'] // Column Header 5
           ],
           zoom: [
-            [3, '100% (4)']
+            [3, '100% (4)'] // Column Header 6
           ],
           latitude: [
-            [0, '75% (3)'],
-            [1, '25% (1)']
+            [0, '75% (3)'], // Column Header 7
+            [1, '25% (1)'] // Column Header 8
           ],
           longitude: [
-            ['-1', '25% (1)'],
-            [2, '75% (3)']
+            ['-1', '25% (1)'], // Column Header 9
+            [2, '75% (3)'] // Column Header 10
           ],
           projection: [
-            ['epsg4326', '100% (4)']
+            ['epsg4326', '100% (4)'] // // Column Header 11
           ],
           overlayLayers: [
-            ['referenceFeatures', '100% (4)'],
-            ['referenceLabels', '100% (4)']
+            ['referenceFeatures', '100% (4)'], // Column Header 12
+            ['referenceLabels', '100% (4)'] // Column Header 13
           ],
           baseLayer: [
-            ['blueMarble', '100% (4)']
+            ['blueMarble', '100% (4)'] // Column Header 14
           ]
         }
       }
     })
 
     // Values render on the table
-    expect(screen.getByRole('columnheader', { name: 'open' })).toBeInTheDocument()
-    expect(screen.getByRole('columnheader', { name: 'start_date' })).toBeInTheDocument()
-    expect(screen.getByRole('columnheader', { name: 'default' })).toBeInTheDocument()
-    expect(screen.getByRole('columnheader', { name: '-score' })).toBeInTheDocument()
-    expect(screen.getByRole('columnheader', { name: 'list' })).toBeInTheDocument()
-    expect(screen.getByRole('columnheader', { name: '0' })).toBeInTheDocument()
-    expect(screen.getByRole('columnheader', { name: '1' })).toBeInTheDocument()
-    expect(screen.getByRole('columnheader', { name: '2' })).toBeInTheDocument()
-    expect(screen.getByRole('columnheader', { name: '-1' })).toBeInTheDocument()
-    expect(screen.getByRole('columnheader', { name: 'epsg4326' })).toBeInTheDocument()
-    expect(screen.getByRole('columnheader', { name: 'referenceFeatures' })).toBeInTheDocument()
-    expect(screen.getByRole('columnheader', { name: 'referenceLabels' })).toBeInTheDocument()
-    expect(screen.getByRole('columnheader', { name: 'blueMarble' })).toBeInTheDocument()
+    // make sure there are 14 column headers
+    expect(screen.getAllByRole('columnheader').length).toEqual(14)
+    expect(screen.getByLabelText('open 100% (4) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('open 100% (4) Body')).toBeInTheDocument()
 
-    expect(screen.getAllByRole('cell', { name: '100% (4)' }).length).toBe(10)
-    expect(screen.getAllByRole('cell', { name: '25% (1)' }).length).toBe(2)
-    expect(screen.getAllByRole('cell', { name: '75% (3)' }).length).toBe(2)
+    expect(screen.getByLabelText('start_date 100% (4) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('start_date 100% (4) Body')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('default 100% (4) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('default 100% (4) Body')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('-score 100% (4) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('-score 100% (4) Body')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('list 100% (4) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('list 100% (4) Body')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('3 100% (4) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('3 100% (4) Body')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('0 75% (3) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('0 75% (3) Body')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('1 25% (1) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('1 25% (1) Body')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('-1 25% (1) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('-1 25% (1) Body')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('2 75% (3) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('2 75% (3) Body')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('epsg4326 100% (4) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('epsg4326 100% (4) Body')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('referenceFeatures 100% (4) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('referenceFeatures 100% (4) Body')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('referenceLabels 100% (4) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('referenceLabels 100% (4) Body')).toBeInTheDocument()
+
+    expect(screen.getByLabelText('blueMarble 100% (4) Header')).toBeInTheDocument()
+    expect(screen.getByLabelText('blueMarble 100% (4) Body')).toBeInTheDocument()
   })
 })

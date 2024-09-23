@@ -17,8 +17,8 @@ const createPreferencesTable = (preferences) => {
         <tr className="admin-preferences-metrics-list__table-row" key={`${preferences[key]}_header`}>
           {
             // Pulling out the values (not the count)
-            Object.values(preferences[key]).map((fieldCountArray) => (
-              <th key={`${fieldCountArray[0]}}`}>{fieldCountArray[0]}</th>
+            Object.values(preferences[key]).map(([field, count]) => (
+              <th aria-label={`${field} ${count} Header`} key={`${field}}`}>{field}</th>
             ))
           }
         </tr>
@@ -31,7 +31,7 @@ const createPreferencesTable = (preferences) => {
             // Pulling out the counts/percentages of each value
             // value[0] is the field and value[1] is the count
             Object.values(preferences[key]).map(([field, count]) => (
-              <td key={`${field}_${count}`}>{count}</td>
+              <td aria-label={`${field} ${count} Body`} key={`${field}_${count}`}>{count}</td>
             ))
           }
         </tr>
