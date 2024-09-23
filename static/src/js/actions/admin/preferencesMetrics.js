@@ -1,26 +1,26 @@
-import MetricsPereferencesRequest from '../../util/request/admin/metricsPreferencesRequest'
+import PreferencesMetricsRequest from '../../util/request/admin/preferencesMetricsRequest'
 
 import {
-  SET_ADMIN_METRICS_PREFERENCES,
-  SET_ADMIN_METRICS_PREFERENCES_LOADING,
-  SET_ADMIN_METRICS_PREFERENCES_LOADED
+  SET_ADMIN_PREFERENCES_METRICS,
+  SET_ADMIN_PREFERENCES_METRICS_LOADING,
+  SET_ADMIN_PREFERENCES_METRICS_LOADED
 } from '../../constants/actionTypes'
 
 import actions from '../index'
 
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
-export const setAdminMetricPreferences = (metricsPreferences) => ({
-  type: SET_ADMIN_METRICS_PREFERENCES,
-  payload: metricsPreferences
+export const setAdminPreferencesMetrics = (preferencesMetrics) => ({
+  type: SET_ADMIN_PREFERENCES_METRICS,
+  payload: preferencesMetrics
 })
 
-export const setAdminMetricPreferencesLoading = () => ({
-  type: SET_ADMIN_METRICS_PREFERENCES_LOADING
+export const setAdminPreferencesMetricsLoading = () => ({
+  type: SET_ADMIN_PREFERENCES_METRICS_LOADING
 })
 
-export const setAdminMetricPreferencesLoaded = () => ({
-  type: SET_ADMIN_METRICS_PREFERENCES_LOADED
+export const setAdminPreferencesMetricsLoaded = () => ({
+  type: SET_ADMIN_PREFERENCES_METRICS_LOADED
 })
 
 /**
@@ -34,9 +34,9 @@ export const fetchAdminMetricsPreferences = () => async (dispatch, getState) => 
 
   const { authToken } = state
 
-  dispatch(setAdminMetricPreferencesLoading())
+  dispatch(setAdminPreferencesMetricsLoading())
 
-  const requestObject = new MetricsPereferencesRequest(authToken, earthdataEnvironment)
+  const requestObject = new PreferencesMetricsRequest(authToken, earthdataEnvironment)
 
   const response = await requestObject.all()
     .then((responseObject) => {
@@ -44,14 +44,14 @@ export const fetchAdminMetricsPreferences = () => async (dispatch, getState) => 
       const {
         results
       } = data
-      dispatch(setAdminMetricPreferencesLoaded())
-      dispatch(setAdminMetricPreferences(results))
+      dispatch(setAdminPreferencesMetricsLoaded())
+      dispatch(setAdminPreferencesMetrics(results))
     })
     .catch((error) => {
       dispatch(actions.handleError({
         error,
-        action: 'fetchAdminMetricsPreferences',
-        resource: 'admin metrics preferences',
+        action: 'fetchAdminPreferencesMetrics',
+        resource: 'admin preferences metrics',
         requestObject
       }))
     })

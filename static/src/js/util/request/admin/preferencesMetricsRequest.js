@@ -1,7 +1,7 @@
 import Request from '../request'
 import { getEnvironmentConfig } from '../../../../../../sharedUtils/config'
 
-export default class MetricsPreferencesRequest extends Request {
+export default class preferencesMetricsRequest extends Request {
   constructor(authToken, earthdataEnvironment) {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 

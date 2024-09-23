@@ -1,4 +1,4 @@
-import MetricsRetrievalsRequest from '../../util/request/admin/metricsRetrievalsRequest'
+import RetrievalsMetricsRequest from '../../util/request/admin/retrievalsMetricsRequest'
 
 import {
   SET_ADMIN_METRICS_RETRIEVALS,
@@ -41,7 +41,7 @@ export const fetchAdminMetricsRetrievals = () => (dispatch, getState) => {
 
   dispatch(setAdminMetricRetrievalsLoading())
 
-  const requestObject = new MetricsRetrievalsRequest(authToken, earthdataEnvironment)
+  const requestObject = new RetrievalsMetricsRequest(authToken, earthdataEnvironment)
 
   const requestOpts = {
     start_date: startDate,
@@ -60,8 +60,8 @@ export const fetchAdminMetricsRetrievals = () => (dispatch, getState) => {
     .catch((error) => {
       dispatch(actions.handleError({
         error,
-        action: 'fetchAdminMetricsRetrievals',
-        resource: 'admin metrics retrievals',
+        action: 'fetchAdminRetrievalsMetrics',
+        resource: 'admin retrievals metrics',
         requestObject
       }))
     })
