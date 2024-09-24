@@ -192,7 +192,7 @@ describe('fetchAdminRetrievalsMetrics', () => {
     expect(handleErrorMock).toHaveBeenCalledTimes(1)
     expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
       action: 'fetchAdminRetrievalsMetrics',
-      resource: 'admin metrics retrievals'
+      resource: 'admin retrievals metrics'
     }))
 
     expect(consoleMock).toHaveBeenCalledTimes(1)
