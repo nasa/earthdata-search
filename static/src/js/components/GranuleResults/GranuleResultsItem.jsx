@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react'
 import { PropTypes } from 'prop-types'
-import { parse } from 'qs'
 import classNames from 'classnames'
 
 import { LinkContainer } from 'react-router-bootstrap'
@@ -32,25 +31,10 @@ import './GranuleResultsItem.scss'
 /**
  * Highlight substring if it's in being searched for in Granule Id(s) Filter
  */
-const getSearchWords = (location) => {
-  const { search } = location
-  const params = parse(search, {
-    ignoreQueryPrefix: true,
-    parseArrays: false
-  })
-  const { pg = {} } = params
-
-  const pgParams = pg[0]
-
-  const { id: substring } = pgParams
-
-  if (!substring) {
-    return []
-  }
-
+const getSearchWords = (readableGranuleName) => {
   const searchTerms = []
 
-  substring.split(',').forEach((initialSearchTerm) => {
+  readableGranuleName.forEach((initialSearchTerm) => {
     let splitStars = initialSearchTerm.split('*')
 
     // Remove the first and last stars if they are there
@@ -66,8 +50,6 @@ const getSearchWords = (location) => {
 
     searchTerms.push(RegExp(`(${searchTerm.replaceAll('?', '.')})`))
   })
-
-  console.log(searchTerms)
 
   return searchTerms
 }
@@ -86,6 +68,7 @@ const getSearchWords = (location) => {
  * @param {Function} props.onFocusedGranuleChange - Callback to focus a granule.
  * @param {Function} props.onMetricsDataAccess - Callback to capture data access metrics.
  * @param {Function} props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
+ * @param {Array} props.readableGranuleName - Array of Readable Granule Name strings.
  */
 const GranuleResultsItem = forwardRef(({
   collectionId,
@@ -98,7 +81,8 @@ const GranuleResultsItem = forwardRef(({
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess,
-  onRemoveGranuleFromProjectCollection
+  onRemoveGranuleFromProjectCollection,
+  readableGranuleName
 }, ref) => {
   const { thumbnailSize } = getApplicationConfig()
   const {
@@ -242,7 +226,7 @@ const GranuleResultsItem = forwardRef(({
           >
             <Highlighter
               highlightClassName="granule-results-item__highlighted-title"
-              searchWords={getSearchWords(location)}
+              searchWords={getSearchWords(readableGranuleName)}
               textToHighlight={title}
             />
           </h3>
@@ -383,7 +367,8 @@ GranuleResultsItem.propTypes = {
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired
+  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
+  readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 
 export default GranuleResultsItem

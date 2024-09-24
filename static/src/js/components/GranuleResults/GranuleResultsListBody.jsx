@@ -95,6 +95,7 @@ export const GranuleResultsListBody = ({
   onFocusedGranuleChange,
   onMetricsDataAccess,
   onRemoveGranuleFromProjectCollection,
+  readableGranuleName,
   setVisibleMiddleIndex,
   visibleMiddleIndex,
   width
@@ -214,6 +215,7 @@ export const GranuleResultsListBody = ({
                 onFocusedGranuleChange,
                 onMetricsDataAccess,
                 onRemoveGranuleFromProjectCollection,
+                readableGranuleName,
                 setRowHeight,
                 windowHeight: height,
                 windowWidth: width
@@ -271,6 +273,7 @@ GranuleResultsListBody.propTypes = {
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
+  readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number,
   width: PropTypes.number.isRequired

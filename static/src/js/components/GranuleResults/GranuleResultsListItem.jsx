@@ -41,6 +41,7 @@ export const GranuleResultsListItem = memo(({
     onFocusedGranuleChange,
     onMetricsDataAccess,
     onRemoveGranuleFromProjectCollection,
+    readableGranuleName,
     setRowHeight,
     windowWidth
   } = data
@@ -109,6 +110,7 @@ export const GranuleResultsListItem = memo(({
         onFocusedGranuleChange={onFocusedGranuleChange}
         onMetricsDataAccess={onMetricsDataAccess}
         onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
+        readableGranuleName={readableGranuleName}
         ref={element}
       />
     </li>
@@ -133,6 +135,7 @@ GranuleResultsListItem.propTypes = {
     onFocusedGranuleChange: PropTypes.func,
     onMetricsDataAccess: PropTypes.func,
     onRemoveGranuleFromProjectCollection: PropTypes.func,
+    readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,
     setRowHeight: PropTypes.func,
     windowWidth: PropTypes.number
   }).isRequired,
