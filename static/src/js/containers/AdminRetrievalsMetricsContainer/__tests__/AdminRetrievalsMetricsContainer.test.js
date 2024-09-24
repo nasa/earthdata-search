@@ -25,6 +25,8 @@ const setup = () => {
 
   // https://testing-library.com/docs/example-react-router/
   render(<AdminRetrievalsMetricsContainer {...props} />, { wrapper: BrowserRouter })
+
+  return props
 }
 
 describe('mapDispatchToProps', () => {
@@ -84,9 +86,24 @@ describe('mapDispatchToProps', () => {
 
 describe('AdminRetrievalsMetricsContainer component', () => {
   test('render AdminRetrievalsMetrics with the correct props', () => {
-    setup()
+    const {
+      onFetchAdminRetrievalsMetrics,
+      onUpdateAdminRetrievalsMetricsStartDate,
+      onUpdateAdminRetrievalsMetricsEndDate,
+      retrievals
+    } = setup()
 
     expect(AdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
+    expect(AdminRetrievalsMetrics).toHaveBeenCalledWith(
+      {
+        onFetchAdminRetrievalsMetrics,
+        onUpdateAdminRetrievalsMetricsStartDate,
+        onUpdateAdminRetrievalsMetricsEndDate,
+        retrievalsMetrics: retrievals
+      },
+      {}
+    )
+
     expect(screen.getByText('Mock Admin Retrievals Metrics')).toBeInTheDocument()
   })
 })

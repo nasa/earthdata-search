@@ -22,7 +22,7 @@ jest.mock('../../../components/AdminPreferencesMetrics/AdminPreferencesMetrics',
 const setup = () => {
   const props = {
     onFetchAdminPreferencesMetrics: jest.fn(),
-    retrievals: {}
+    preferences: {}
   }
 
   // https://testing-library.com/docs/example-react-router/
@@ -69,6 +69,13 @@ describe('AdminPreferencesMetricsContainer component', () => {
     setup()
 
     expect(AdminPreferencesMetrics).toHaveBeenCalledTimes(1)
+    expect(AdminPreferencesMetrics).toHaveBeenCalledWith(
+      {
+        preferencesMetrics: {}
+      },
+      {}
+    )
+
     expect(screen.getByText('Mock Admin Preferences Metrics')).toBeInTheDocument()
   })
 })
