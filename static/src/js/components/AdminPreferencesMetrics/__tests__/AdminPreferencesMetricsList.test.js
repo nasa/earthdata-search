@@ -5,7 +5,7 @@ import { AdminPreferencesMetricsList } from '../AdminPreferencesMetricsList'
 
 const setup = (overrideProps) => {
   const props = {
-    metricsPreferences: {
+    preferencesMetrics: {
       isLoaded: true,
       isLoading: false,
       preferences: {
@@ -71,7 +71,7 @@ describe('AdminPreferencesMetricsList component', () => {
 
   test('renders the collections table when collections are provided', () => {
     setup({
-      metricsPreferences: {
+      preferencesMetrics: {
         isLoaded: true,
         isLoading: false,
         preferences: {

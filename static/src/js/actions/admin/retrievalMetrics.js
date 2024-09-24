@@ -1,9 +1,9 @@
 import RetrievalsMetricsRequest from '../../util/request/admin/retrievalsMetricsRequest'
 
 import {
-  SET_ADMIN_METRICS_RETRIEVALS,
-  SET_ADMIN_METRICS_RETRIEVALS_LOADING,
-  SET_ADMIN_METRICS_RETRIEVALS_LOADED,
+  SET_ADMIN_RETRIEVALS_METRICS,
+  SET_ADMIN_RETRIEVALS_METRICS_LOADING,
+  SET_ADMIN_RETRIEVALS_METRICS_LOADED,
   UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE,
   UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE
 } from '../../constants/actionTypes'
@@ -12,23 +12,23 @@ import actions from '../index'
 
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
-export const setAdminMetricRetrievals = (metricsRetrievals) => ({
-  type: SET_ADMIN_METRICS_RETRIEVALS,
-  payload: metricsRetrievals
+export const setAdminRetrievalsMetrics = (retrievalsMetrics) => ({
+  type: SET_ADMIN_RETRIEVALS_METRICS,
+  payload: retrievalsMetrics
 })
 
-export const setAdminMetricRetrievalsLoading = () => ({
-  type: SET_ADMIN_METRICS_RETRIEVALS_LOADING
+export const setAdminRetrievalsMetricsLoading = () => ({
+  type: SET_ADMIN_RETRIEVALS_METRICS_LOADING
 })
 
-export const setAdminMetricRetrievalsLoaded = () => ({
-  type: SET_ADMIN_METRICS_RETRIEVALS_LOADED
+export const setAdminRetrievalsMetricsLoaded = () => ({
+  type: SET_ADMIN_RETRIEVALS_METRICS_LOADED
 })
 
 /**
  * Fetch the metrics from the database
  */
-export const fetchAdminMetricsRetrievals = () => (dispatch, getState) => {
+export const fetchAdminRetrievalsMetrics = () => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -36,10 +36,10 @@ export const fetchAdminMetricsRetrievals = () => (dispatch, getState) => {
 
   const { admin, authToken } = state
 
-  const { metricsRetrievals } = admin
-  const { startDate, endDate } = metricsRetrievals
+  const { retrievalsMetrics } = admin
+  const { startDate, endDate } = retrievalsMetrics
 
-  dispatch(setAdminMetricRetrievalsLoading())
+  dispatch(setAdminRetrievalsMetricsLoading())
 
   const requestObject = new RetrievalsMetricsRequest(authToken, earthdataEnvironment)
 
@@ -54,8 +54,8 @@ export const fetchAdminMetricsRetrievals = () => (dispatch, getState) => {
       const {
         results
       } = data
-      dispatch(setAdminMetricRetrievalsLoaded())
-      dispatch(setAdminMetricRetrievals(results))
+      dispatch(setAdminRetrievalsMetricsLoaded())
+      dispatch(setAdminRetrievalsMetrics(results))
     })
     .catch((error) => {
       dispatch(actions.handleError({
@@ -69,14 +69,14 @@ export const fetchAdminMetricsRetrievals = () => (dispatch, getState) => {
   return response
 }
 
-export const updateAdminMetricsRetrievalsStartDate = (startDate) => (dispatch) => {
+export const updateAdminRetrievalsMetricsStartDate = (startDate) => (dispatch) => {
   dispatch({
     type: UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE,
     payload: startDate
   })
 }
 
-export const updateAdminMetricsRetrievalsEndDate = (endDate) => (dispatch) => {
+export const updateAdminRetrievalsMetricsEndDate = (endDate) => (dispatch) => {
   dispatch({
     type: UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE,
     payload: endDate

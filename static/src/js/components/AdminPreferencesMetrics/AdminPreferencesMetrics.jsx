@@ -6,7 +6,7 @@ import { AdminPage } from '../AdminPage/AdminPage'
 import { AdminPreferencesMetricsList } from './AdminPreferencesMetricsList'
 
 export const AdminPreferencesMetrics = ({
-  metricsPreferences
+  preferencesMetrics
 }) => (
   <AdminPage
     pageTitle="Preferences Metrics"
@@ -26,7 +26,7 @@ export const AdminPreferencesMetrics = ({
     <Row>
       <Col>
         <AdminPreferencesMetricsList
-          metricsPreferences={metricsPreferences}
+          preferencesMetrics={preferencesMetrics}
         />
       </Col>
     </Row>
@@ -34,11 +34,11 @@ export const AdminPreferencesMetrics = ({
 )
 
 AdminPreferencesMetrics.defaultProps = {
-  metricsPreferences: {}
+  preferencesMetrics: {}
 }
 
 AdminPreferencesMetrics.propTypes = {
-  metricsPreferences: PropTypes.shape({})
+  preferencesMetrics: PropTypes.shape({})
 }
 
 export default AdminPreferencesMetrics

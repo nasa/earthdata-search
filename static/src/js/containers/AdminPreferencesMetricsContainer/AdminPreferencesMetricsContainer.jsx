@@ -7,38 +7,38 @@ import actions from '../../actions'
 import AdminPreferencesMetrics from '../../components/AdminPreferencesMetrics/AdminPreferencesMetrics'
 
 export const mapStateToProps = (state) => ({
-  metricsPreferences: state.admin.metricsPreferences,
-  preferencesLoading: state.admin.metricsPreferences.isLoading,
-  preferencesLoaded: state.admin.metricsPreferences.isLoaded
+  preferencesMetrics: state.admin.preferencesMetrics,
+  preferencesLoading: state.admin.preferencesMetrics.isLoading,
+  preferencesLoaded: state.admin.preferencesMetrics.isLoaded
 })
 
 export const mapDispatchToProps = (dispatch) => ({
-  onFetchAdminMetricsPreferences:
-    () => dispatch(actions.fetchAdminMetricsPreferences())
+  onFetchAdminPreferencesMetrics:
+    () => dispatch(actions.fetchAdminPreferencesMetrics())
 })
 
 export const AdminPreferencesMetricsContainer = ({
-  onFetchAdminMetricsPreferences,
-  metricsPreferences
+  onFetchAdminPreferencesMetrics,
+  preferencesMetrics
 }) => {
   useEffect(async () => {
-    await onFetchAdminMetricsPreferences()
+    await onFetchAdminPreferencesMetrics()
   }, [])
 
   return (
     <AdminPreferencesMetrics
-      metricsPreferences={metricsPreferences}
+      preferencesMetrics={preferencesMetrics}
     />
   )
 }
 
 AdminPreferencesMetricsContainer.defaultProps = {
-  metricsPreferences: {}
+  preferencesMetrics: {}
 }
 
 AdminPreferencesMetricsContainer.propTypes = {
-  onFetchAdminMetricsPreferences: PropTypes.func.isRequired,
-  metricsPreferences: PropTypes.shape({})
+  onFetchAdminPreferencesMetrics: PropTypes.func.isRequired,
+  preferencesMetrics: PropTypes.shape({})
 }
 
 export default withRouter(

@@ -4,15 +4,15 @@ import nock from 'nock'
 
 import actions from '../../index'
 import {
-  fetchAdminMetricsPreferences,
-  setAdminMetricPreferences,
-  setAdminMetricPreferencesLoaded,
-  setAdminMetricPreferencesLoading
+  fetchAdminPreferencesMetrics,
+  setAdminPreferencesMetrics,
+  setAdminPreferencesMetricsLoaded,
+  setAdminPreferencesMetricsLoading
 } from '../preferencesMetrics'
 import {
-  SET_ADMIN_METRICS_PREFERENCES,
-  SET_ADMIN_METRICS_PREFERENCES_LOADING,
-  SET_ADMIN_METRICS_PREFERENCES_LOADED
+  SET_ADMIN_PREFERENCES_METRICS,
+  SET_ADMIN_PREFERENCES_METRICS_LOADING,
+  SET_ADMIN_PREFERENCES_METRICS_LOADED
 } from '../../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -22,22 +22,22 @@ beforeEach(() => {
   jest.restoreAllMocks()
 })
 
-describe('setAdminMetricPreferences', () => {
+describe('setAdminPreferencesMetrics', () => {
   test('should create an action to set the admin preferences metrics data', () => {
     const payload = {
       mock: 'data'
     }
 
     const expectedAction = {
-      type: SET_ADMIN_METRICS_PREFERENCES,
+      type: SET_ADMIN_PREFERENCES_METRICS,
       payload
     }
 
-    expect(setAdminMetricPreferences(payload)).toEqual(expectedAction)
+    expect(setAdminPreferencesMetrics(payload)).toEqual(expectedAction)
   })
 })
 
-describe('setAdminMetricPreferences', () => {
+describe('setAdminPreferencesMetrics', () => {
   test('should create an action to update the admin preferences metrics list', () => {
     const payload = [
       {
@@ -49,36 +49,36 @@ describe('setAdminMetricPreferences', () => {
     ]
 
     const expectedAction = {
-      type: SET_ADMIN_METRICS_PREFERENCES,
+      type: SET_ADMIN_PREFERENCES_METRICS,
       payload
     }
 
-    expect(setAdminMetricPreferences(payload)).toEqual(expectedAction)
+    expect(setAdminPreferencesMetrics(payload)).toEqual(expectedAction)
   })
 })
 
-describe('setAdminMetricPreferencesLoading', () => {
+describe('setAdminPreferencesMetricsLoading', () => {
   test('should create an action to update the admin metric preferences loading state', () => {
     const expectedAction = {
-      type: SET_ADMIN_METRICS_PREFERENCES_LOADING
+      type: SET_ADMIN_PREFERENCES_METRICS_LOADING
     }
 
-    expect(setAdminMetricPreferencesLoading()).toEqual(expectedAction)
+    expect(setAdminPreferencesMetricsLoading()).toEqual(expectedAction)
   })
 })
 
-describe('setAdminMetricPreferencesLoaded', () => {
+describe('setAdminPreferencesMetricsLoaded', () => {
   test('should create an action to update the admin preferences loaded state', () => {
     const expectedAction = {
-      type: SET_ADMIN_METRICS_PREFERENCES_LOADED
+      type: SET_ADMIN_PREFERENCES_METRICS_LOADED
     }
 
-    expect(setAdminMetricPreferencesLoaded()).toEqual(expectedAction)
+    expect(setAdminPreferencesMetricsLoaded()).toEqual(expectedAction)
   })
 })
 
-describe('fetchAdminMetricsPreferences', () => {
-  test('fetches the list of admin metrics preferences', async () => {
+describe('setAdminPreferencesMetrics', () => {
+  test('fetches the list of admin preferences metrics', async () => {
     const data = {
       results: [{ mock: 'data' }]
     }
@@ -91,23 +91,23 @@ describe('fetchAdminMetricsPreferences', () => {
       authToken: 'mockToken',
       admin: {
         isAuthorized: true,
-        metricsRetrievals: {
+        retrievalsMetrics: {
         }
       }
     })
 
-    await store.dispatch(fetchAdminMetricsPreferences()).then(() => {
+    await store.dispatch(fetchAdminPreferencesMetrics()).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
-        type: SET_ADMIN_METRICS_PREFERENCES_LOADING
+        type: SET_ADMIN_PREFERENCES_METRICS_LOADING
       })
 
       expect(storeActions[1]).toEqual({
-        type: SET_ADMIN_METRICS_PREFERENCES_LOADED
+        type: SET_ADMIN_PREFERENCES_METRICS_LOADED
       })
 
       expect(storeActions[2]).toEqual({
-        type: SET_ADMIN_METRICS_PREFERENCES,
+        type: SET_ADMIN_PREFERENCES_METRICS,
         payload: data.results
       })
     })
@@ -129,22 +129,22 @@ describe('fetchAdminMetricsPreferences', () => {
       authToken: 'mockToken',
       admin: {
         isAuthorized: true,
-        metricsPreferences: {
+        preferencesMetrics: {
         }
       }
     })
 
-    await store.dispatch(fetchAdminMetricsPreferences())
+    await store.dispatch(fetchAdminPreferencesMetrics())
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: SET_ADMIN_METRICS_PREFERENCES_LOADING
+      type: SET_ADMIN_PREFERENCES_METRICS_LOADING
     })
 
     expect(handleErrorMock).toHaveBeenCalledTimes(1)
     expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
-      action: 'fetchAdminMetricsPreferences',
-      resource: 'admin metrics preferences'
+      action: 'fetchAdminPreferencesMetrics',
+      resource: 'admin preferences metrics'
     }))
 
     expect(consoleMock).toHaveBeenCalledTimes(1)

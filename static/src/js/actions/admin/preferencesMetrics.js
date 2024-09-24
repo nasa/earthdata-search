@@ -26,7 +26,7 @@ export const setAdminPreferencesMetricsLoaded = () => ({
 /**
  * Fetch the metrics from the database
  */
-export const fetchAdminMetricsPreferences = () => async (dispatch, getState) => {
+export const fetchAdminPreferencesMetrics = () => async (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors

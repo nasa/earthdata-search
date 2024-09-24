@@ -1,7 +1,7 @@
 import {
-  SET_ADMIN_METRICS_PREFERENCES,
-  SET_ADMIN_METRICS_PREFERENCES_LOADING,
-  SET_ADMIN_METRICS_PREFERENCES_LOADED
+  SET_ADMIN_PREFERENCES_METRICS,
+  SET_ADMIN_PREFERENCES_METRICS_LOADING,
+  SET_ADMIN_PREFERENCES_METRICS_LOADED
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -22,9 +22,9 @@ const initialState = {
   isLoaded: false
 }
 
-const adminMetricsPreferencesReducer = (state = initialState, action = {}) => {
+const adminPreferencesMetricsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case SET_ADMIN_METRICS_PREFERENCES_LOADED: {
+    case SET_ADMIN_PREFERENCES_METRICS_LOADED: {
       return {
         ...state,
         isLoaded: true,
@@ -32,7 +32,7 @@ const adminMetricsPreferencesReducer = (state = initialState, action = {}) => {
       }
     }
 
-    case SET_ADMIN_METRICS_PREFERENCES_LOADING: {
+    case SET_ADMIN_PREFERENCES_METRICS_LOADING: {
       return {
         ...state,
         isLoaded: false,
@@ -40,7 +40,7 @@ const adminMetricsPreferencesReducer = (state = initialState, action = {}) => {
       }
     }
 
-    case SET_ADMIN_METRICS_PREFERENCES: {
+    case SET_ADMIN_PREFERENCES_METRICS: {
       const { preferences } = action.payload
 
       return {
@@ -54,4 +54,4 @@ const adminMetricsPreferencesReducer = (state = initialState, action = {}) => {
   }
 }
 
-export default adminMetricsPreferencesReducer
+export default adminPreferencesMetricsReducer

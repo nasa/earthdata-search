@@ -8,21 +8,21 @@ import TemporalSelectionDropdown from '../TemporalDisplay/TemporalSelectionDropd
 import setTemporalFilters from './setTemporalFilters'
 
 export const AdminRetrievalsMetrics = ({
-  onFetchAdminMetricsRetrievals,
-  onUpdateAdminMetricsRetrievalsStartDate,
-  onUpdateAdminMetricsRetrievalsEndDate,
-  metricsRetrievals
+  onFetchAdminRetrievalsMetrics,
+  onUpdateAdminRetrievalsMetricsStartDate,
+  onUpdateAdminRetrievalsMetricsEndDate,
+  retrievalsMetrics
 }) => {
   const [temporalFilterEndDate, setTemporalFilterEndDate] = useState('')
   const [temporalFilterStartDate, setTemporalFilterStartDate] = useState('')
 
   const onChangeQuery = (event) => {
     setTemporalFilters(event, {
-      onUpdateAdminMetricsRetrievalsStartDate,
-      onUpdateAdminMetricsRetrievalsEndDate,
+      onUpdateAdminRetrievalsMetricsStartDate,
+      onUpdateAdminRetrievalsMetricsEndDate,
       setTemporalFilterStartDate,
       setTemporalFilterEndDate,
-      onFetchAdminMetricsRetrievals
+      onFetchAdminRetrievalsMetrics
     })
   }
 
@@ -82,7 +82,7 @@ export const AdminRetrievalsMetrics = ({
       <Row>
         <Col>
           <AdminRetrievalsMetricsList
-            metricsRetrievals={metricsRetrievals}
+            retrievalsMetrics={retrievalsMetrics}
           />
         </Col>
       </Row>
@@ -91,14 +91,14 @@ export const AdminRetrievalsMetrics = ({
 }
 
 AdminRetrievalsMetrics.defaultProps = {
-  metricsRetrievals: {}
+  retrievalsMetrics: {}
 }
 
 AdminRetrievalsMetrics.propTypes = {
-  onFetchAdminMetricsRetrievals: PropTypes.func.isRequired,
-  onUpdateAdminMetricsRetrievalsStartDate: PropTypes.func.isRequired,
-  onUpdateAdminMetricsRetrievalsEndDate: PropTypes.func.isRequired,
-  metricsRetrievals: PropTypes.shape({})
+  onFetchAdminRetrievalsMetrics: PropTypes.func.isRequired,
+  onUpdateAdminRetrievalsMetricsStartDate: PropTypes.func.isRequired,
+  onUpdateAdminRetrievalsMetricsEndDate: PropTypes.func.isRequired,
+  retrievalsMetrics: PropTypes.shape({})
 }
 
 export default AdminRetrievalsMetrics

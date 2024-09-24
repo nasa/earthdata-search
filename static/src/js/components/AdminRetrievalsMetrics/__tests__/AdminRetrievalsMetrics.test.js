@@ -13,7 +13,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { AdminRetrievalsMetrics } from '../AdminRetrievalsMetrics'
 
 const setup = () => {
-  const metricsRetrievals = {
+  const retrievalsMetrics = {
     isLoaded: true,
     isLoading: false,
     accessMethodType: {},
@@ -24,24 +24,24 @@ const setup = () => {
     startDate: '',
     endDate: ''
   }
-  const onFetchAdminMetricsRetrievals = jest.fn()
-  const onUpdateAdminMetricsRetrievalsStartDate = jest.fn()
-  const onUpdateAdminMetricsRetrievalsEndDate = jest.fn()
+  const onFetchAdminRetrievalsMetrics = jest.fn()
+  const onUpdateAdminRetrievalsMetricsStartDate = jest.fn()
+  const onUpdateAdminRetrievalsMetricsEndDate = jest.fn()
 
   const props = {
-    onFetchAdminMetricsRetrievals,
-    onUpdateAdminMetricsRetrievalsStartDate,
-    onUpdateAdminMetricsRetrievalsEndDate,
-    metricsRetrievals
+    onFetchAdminRetrievalsMetrics,
+    onUpdateAdminRetrievalsMetricsStartDate,
+    onUpdateAdminRetrievalsMetricsEndDate,
+    retrievalsMetrics
   }
 
   // https://testing-library.com/docs/example-react-router/
   render(<AdminRetrievalsMetrics {...props} />, { wrapper: BrowserRouter })
 
   return {
-    onFetchAdminMetricsRetrievals,
-    onUpdateAdminMetricsRetrievalsStartDate,
-    onUpdateAdminMetricsRetrievalsEndDate
+    onFetchAdminRetrievalsMetrics,
+    onUpdateAdminRetrievalsMetricsStartDate,
+    onUpdateAdminRetrievalsMetricsEndDate
   }
 }
 
@@ -63,9 +63,9 @@ describe('AdminRetrievals component', () => {
     test('clicking on the temporal filter modal opens it', async () => {
       const user = userEvent.setup()
       const {
-        onFetchAdminMetricsRetrievals,
-        onUpdateAdminMetricsRetrievalsStartDate,
-        onUpdateAdminMetricsRetrievalsEndDate
+        onFetchAdminRetrievalsMetrics,
+        onUpdateAdminRetrievalsMetricsStartDate,
+        onUpdateAdminRetrievalsMetricsEndDate
       } = setup()
 
       const temporalFilterButton = screen.getByRole('button')
@@ -94,13 +94,13 @@ describe('AdminRetrievals component', () => {
         await user.click(applyBtn)
       })
 
-      expect(onUpdateAdminMetricsRetrievalsStartDate).toHaveBeenCalledTimes(1)
-      expect(onUpdateAdminMetricsRetrievalsStartDate).toHaveBeenCalledWith(validStartDate)
+      expect(onUpdateAdminRetrievalsMetricsStartDate).toHaveBeenCalledTimes(1)
+      expect(onUpdateAdminRetrievalsMetricsStartDate).toHaveBeenCalledWith(validStartDate)
 
-      expect(onUpdateAdminMetricsRetrievalsEndDate).toHaveBeenCalledTimes(1)
-      expect(onUpdateAdminMetricsRetrievalsEndDate).toHaveBeenCalledWith(updatedEndDate)
+      expect(onUpdateAdminRetrievalsMetricsEndDate).toHaveBeenCalledTimes(1)
+      expect(onUpdateAdminRetrievalsMetricsEndDate).toHaveBeenCalledWith(updatedEndDate)
 
-      expect(onFetchAdminMetricsRetrievals).toHaveBeenCalledTimes(1)
+      expect(onFetchAdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
 
       const startDateHeader = screen.getAllByRole('heading', { level: 5 })[0]
       const endDateHeader = screen.getAllByRole('heading', { level: 5 })[1]

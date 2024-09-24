@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { AdminPreferencesMetrics } from '../AdminPreferencesMetrics'
 
 const setup = () => {
-  const metricsPreferences = {
+  const preferencesMetrics = {
     isLoaded: true,
     isLoading: false,
     preferences: {
@@ -25,14 +25,14 @@ const setup = () => {
   }
 
   const props = {
-    metricsPreferences
+    preferencesMetrics
   }
 
   // https://testing-library.com/docs/example-react-router/
   render(<AdminPreferencesMetrics {...props} />, { wrapper: MemoryRouter })
 
   return {
-    metricsPreferences
+    preferencesMetrics
   }
 }
 

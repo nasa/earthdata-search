@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import { startCase } from 'lodash-es'
 
 import { Table } from 'react-bootstrap'
+
+import Spinner from '../Spinner/Spinner'
+
 import './AdminPreferencesMetricsList.scss'
 
 /**
@@ -63,22 +66,41 @@ const createPreferencesTable = (preferences) => {
 }
 
 export const AdminPreferencesMetricsList = ({
-  metricsPreferences
+  preferencesMetrics
 }) => {
-  const { preferences } = metricsPreferences
+  const { preferences, isLoading, isLoaded } = preferencesMetrics
+
+  console.log(isLoading)
+  console.log(isLoaded)
 
   return (
-    <div>{createPreferencesTable(preferences)}</div>
+    <div>
+      {
+        isLoading && (
+          <div>
+            abc
+            <Spinner className="admin-preferences-metrics-list__spinner" type="dots" />
+          </div>
+        )
+      }
+      {isLoaded && createPreferencesTable(preferences)}
+    </div>
   )
 }
 
 AdminPreferencesMetricsList.defaultProps = {
-  metricsPreferences: {}
+  preferencesMetrics: {
+    preferences: {},
+    isLoaded: false,
+    isLoading: false
+  }
 }
 
 AdminPreferencesMetricsList.propTypes = {
-  metricsPreferences: PropTypes.shape({
-    preferences: PropTypes.shape({})
+  preferencesMetrics: PropTypes.shape({
+    preferences: PropTypes.shape({}),
+    isLoaded: PropTypes.bool,
+    isLoading: PropTypes.bool
   })
 }
 

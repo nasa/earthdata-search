@@ -1,10 +1,10 @@
 import {
-  SET_ADMIN_METRICS_PREFERENCES,
-  SET_ADMIN_METRICS_PREFERENCES_LOADING,
-  SET_ADMIN_METRICS_PREFERENCES_LOADED
+  SET_ADMIN_PREFERENCES_METRICS,
+  SET_ADMIN_PREFERENCES_METRICS_LOADING,
+  SET_ADMIN_PREFERENCES_METRICS_LOADED
 } from '../../../constants/actionTypes'
 
-import adminMetricsPreferencesReducer from '../preferencesMetrics'
+import adminPreferencesMetricsReducer from '../preferencesMetrics'
 
 const initialState = {
   isLoaded: false,
@@ -28,14 +28,14 @@ describe('INITIAL_STATE', () => {
   test('is correct', () => {
     const action = { type: 'dummy_action' }
 
-    expect(adminMetricsPreferencesReducer(undefined, action)).toEqual(initialState)
+    expect(adminPreferencesMetricsReducer(undefined, action)).toEqual(initialState)
   })
 })
 
-describe('SET_ADMIN_METRICS_PREFERENCES_LOADED', () => {
+describe('SET_ADMIN_PREFERENCES_METRICS_LOADED', () => {
   test('returns the correct state', () => {
     const action = {
-      type: SET_ADMIN_METRICS_PREFERENCES_LOADED
+      type: SET_ADMIN_PREFERENCES_METRICS_LOADED
     }
 
     const expectedState = {
@@ -44,14 +44,14 @@ describe('SET_ADMIN_METRICS_PREFERENCES_LOADED', () => {
       isLoading: false
     }
 
-    expect(adminMetricsPreferencesReducer(undefined, action)).toEqual(expectedState)
+    expect(adminPreferencesMetricsReducer(undefined, action)).toEqual(expectedState)
   })
 })
 
-describe('SET_ADMIN_METRICS_PREFERENCES_LOADING', () => {
+describe('SET_ADMIN_PREFERENCES_METRICS_LOADING', () => {
   test('returns the correct state', () => {
     const action = {
-      type: SET_ADMIN_METRICS_PREFERENCES_LOADING
+      type: SET_ADMIN_PREFERENCES_METRICS_LOADING
     }
 
     const expectedState = {
@@ -60,11 +60,11 @@ describe('SET_ADMIN_METRICS_PREFERENCES_LOADING', () => {
       isLoading: true
     }
 
-    expect(adminMetricsPreferencesReducer(undefined, action)).toEqual(expectedState)
+    expect(adminPreferencesMetricsReducer(undefined, action)).toEqual(expectedState)
   })
 })
 
-describe('SET_ADMIN_METRICS_PREFERENCES', () => {
+describe('SET_ADMIN_PREFERENCES_METRICS', () => {
   test('returns the correct state', () => {
     const payload = {
       preferences: {
@@ -107,7 +107,7 @@ describe('SET_ADMIN_METRICS_PREFERENCES', () => {
       }
     }
     const action = {
-      type: SET_ADMIN_METRICS_PREFERENCES,
+      type: SET_ADMIN_PREFERENCES_METRICS,
       payload
     }
 
@@ -153,6 +153,6 @@ describe('SET_ADMIN_METRICS_PREFERENCES', () => {
       }
     }
 
-    expect(adminMetricsPreferencesReducer(undefined, action)).toEqual(expectedState)
+    expect(adminPreferencesMetricsReducer(undefined, action)).toEqual(expectedState)
   })
 })

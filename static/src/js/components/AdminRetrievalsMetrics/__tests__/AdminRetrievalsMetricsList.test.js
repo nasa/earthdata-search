@@ -5,7 +5,7 @@ import { AdminRetrievalsMetricsList } from '../AdminRetrievalsMetricsList'
 
 const setup = (overrideProps) => {
   const props = {
-    metricsRetrievals: {
+    retrievalsMetrics: {
       isLoaded: true,
       isLoading: false,
       accessMethodType: {},
@@ -58,7 +58,7 @@ describe('AdminRetrievalsList component', () => {
 
   test('renders the collections table when collections are provided', () => {
     setup({
-      metricsRetrievals: {
+      retrievalsMetrics: {
         allAccessMethodTypes: [
           'ESI',
           'Harmony',

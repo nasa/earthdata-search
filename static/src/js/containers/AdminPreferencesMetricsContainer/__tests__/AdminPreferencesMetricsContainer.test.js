@@ -21,7 +21,7 @@ jest.mock('../../../components/AdminPreferencesMetrics/AdminPreferencesMetrics',
 
 const setup = () => {
   const props = {
-    onFetchAdminMetricsPreferences: jest.fn(),
+    onFetchAdminPreferencesMetrics: jest.fn(),
     retrievals: {}
   }
 
@@ -30,11 +30,11 @@ const setup = () => {
 }
 
 describe('mapDispatchToProps', () => {
-  test('onFetchAdminMetricsPreferences calls actions.onFetchAdminMetricsPreferences', () => {
+  test('onFetchAdminPreferencesMetrics calls actions.onFetchAdminPreferencesMetrics', () => {
     const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'fetchAdminMetricsPreferences')
+    const spy = jest.spyOn(actions, 'fetchAdminPreferencesMetrics')
 
-    mapDispatchToProps(dispatch).onFetchAdminMetricsPreferences()
+    mapDispatchToProps(dispatch).onFetchAdminPreferencesMetrics()
 
     expect(spy).toBeCalledTimes(1)
   })
@@ -43,7 +43,7 @@ describe('mapDispatchToProps', () => {
     test('returns the correct state', () => {
       const store = {
         admin: {
-          metricsPreferences: {
+          preferencesMetrics: {
             isLoading: false,
             isLoaded: false
           }
@@ -51,7 +51,7 @@ describe('mapDispatchToProps', () => {
       }
 
       const expectedState = {
-        metricsPreferences: {
+        preferencesMetrics: {
           isLoading: false,
           isLoaded: false
         },

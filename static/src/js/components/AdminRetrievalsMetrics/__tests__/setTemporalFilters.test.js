@@ -1,18 +1,18 @@
 import setTemporalFilters from '../setTemporalFilters'
 
 // Input functions
-const onUpdateAdminMetricsRetrievalsStartDate = jest.fn()
-const onUpdateAdminMetricsRetrievalsEndDate = jest.fn()
+const onUpdateAdminRetrievalsMetricsStartDate = jest.fn()
+const onUpdateAdminRetrievalsMetricsEndDate = jest.fn()
 const setTemporalFilterStartDate = jest.fn()
 const setTemporalFilterEndDate = jest.fn()
-const onFetchAdminMetricsRetrievals = jest.fn()
+const onFetchAdminRetrievalsMetrics = jest.fn()
 
 const eventHandlers = {
-  onUpdateAdminMetricsRetrievalsStartDate,
-  onUpdateAdminMetricsRetrievalsEndDate,
+  onUpdateAdminRetrievalsMetricsStartDate,
+  onUpdateAdminRetrievalsMetricsEndDate,
   setTemporalFilterStartDate,
   setTemporalFilterEndDate,
-  onFetchAdminMetricsRetrievals
+  onFetchAdminRetrievalsMetrics
 }
 
 beforeEach(() => {
@@ -34,11 +34,11 @@ describe('setTemporalFilters', () => {
 
     setTemporalFilters(mockEvent, eventHandlers)
     // Test redux store functions are called
-    expect(onUpdateAdminMetricsRetrievalsStartDate).toHaveBeenCalledTimes(1)
-    expect(onUpdateAdminMetricsRetrievalsStartDate).toHaveBeenCalledWith(mockStartDate)
+    expect(onUpdateAdminRetrievalsMetricsStartDate).toHaveBeenCalledTimes(1)
+    expect(onUpdateAdminRetrievalsMetricsStartDate).toHaveBeenCalledWith(mockStartDate)
 
-    expect(onUpdateAdminMetricsRetrievalsEndDate).toHaveBeenCalledTimes(1)
-    expect(onUpdateAdminMetricsRetrievalsEndDate).toHaveBeenCalledWith(mockEndDate)
+    expect(onUpdateAdminRetrievalsMetricsEndDate).toHaveBeenCalledTimes(1)
+    expect(onUpdateAdminRetrievalsMetricsEndDate).toHaveBeenCalledWith(mockEndDate)
 
     // Test that state update functions are called
     expect(setTemporalFilterStartDate).toHaveBeenCalledTimes(1)
@@ -48,7 +48,7 @@ describe('setTemporalFilters', () => {
     expect(setTemporalFilterEndDate).toHaveBeenCalledWith(mockEndDate)
 
     // Test that a call to the database is made
-    expect(onFetchAdminMetricsRetrievals).toHaveBeenCalledTimes(1)
+    expect(onFetchAdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
   })
 
   test('if `startDate` is not provided', () => {
@@ -71,7 +71,7 @@ describe('setTemporalFilters', () => {
     expect(setTemporalFilterEndDate).toHaveBeenCalledWith(mockEndDate)
 
     // Test that a call to the database is made
-    expect(onFetchAdminMetricsRetrievals).toHaveBeenCalledTimes(1)
+    expect(onFetchAdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
   })
 
   test('if `endDate` is not provided', () => {
@@ -94,7 +94,7 @@ describe('setTemporalFilters', () => {
     expect(setTemporalFilterEndDate).toHaveBeenCalledWith(null)
 
     // Test that a call to the database is made
-    expect(onFetchAdminMetricsRetrievals).toHaveBeenCalledTimes(1)
+    expect(onFetchAdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
   })
 
   test('when neither the `startDate` or the `endDate` are passed', () => {
@@ -112,6 +112,6 @@ describe('setTemporalFilters', () => {
     expect(setTemporalFilterStartDate).toHaveBeenCalledTimes(0)
     expect(setTemporalFilterEndDate).toHaveBeenCalledTimes(0)
 
-    expect(onFetchAdminMetricsRetrievals).toHaveBeenCalledTimes(0)
+    expect(onFetchAdminRetrievalsMetrics).toHaveBeenCalledTimes(0)
   })
 })
