@@ -9,6 +9,7 @@ import { Form, FormControl } from 'react-bootstrap'
 import GranuleFiltersForm from '../GranuleFiltersForm'
 import SidebarFiltersItem from '../../Sidebar/SidebarFiltersItem'
 import TemporalSelection from '../../TemporalSelection/TemporalSelection'
+import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -50,6 +51,16 @@ describe('GranuleFiltersForm component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.type()).toBe(FormikForm)
+  })
+
+  // TODO finnish test
+  test.only('displays granule name tool-tip', () => {
+    const { enzymeWrapper } = setup()
+
+    const item = enzymeWrapper.find(EDSCIcon)
+    console.log('🚀 ~ file: GranuleFiltersForm.test.js:60 ~ item:', item)
+
+    item.simulate('mouseenter')
   })
 
   describe('Filtered Granules', () => {

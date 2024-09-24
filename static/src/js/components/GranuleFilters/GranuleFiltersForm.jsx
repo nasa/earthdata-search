@@ -8,8 +8,9 @@ import {
   Tooltip,
   Row
 } from 'react-bootstrap'
-
+import { FaQuestionCircle } from 'react-icons/fa'
 import moment from 'moment'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import { findGridByName } from '../../util/grid'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
@@ -275,14 +276,15 @@ export const GranuleFiltersForm = (props) => {
                   <Form.Label className="mb-1" sm="auto">
                     Granule ID(s)
                   </Form.Label>
+
                   <OverlayTrigger
-                    placement="bottom"
+                    placement="top"
                     overlay={
                       (
-                        <Tooltip
-                          id="tooltip__granule-search"
-                          className="tooltip--large tooltip--ta-left tooltip--wide"
-                        >
+                        <Tooltip id="granule-filters-form-id-filter-tooltip" className="tooltip--ta-left tooltip--wide">
+                          Filter granules by name
+                          example: UA_bonan*
+                          <br />
                           <strong>Wildcards:</strong>
                           {' '}
                           <ul className="m-0">
@@ -301,18 +303,19 @@ export const GranuleFiltersForm = (props) => {
                       )
                     }
                   >
-                    <Form.Control
-                      name="readableGranuleName"
-                      data-testid="granule-filters__readable-granule-name"
-                      size="sm"
-                      type="text"
-                      placeholder="Search Single or Multiple Granule IDs..."
-                      value={readableGranuleName}
-                      onChange={handleChange}
-                      onBlur={submitOnBlur}
-                      onKeyPress={submitOnKeypress}
-                    />
+                    <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
                   </OverlayTrigger>
+                  <Form.Control
+                    name="readableGranuleName"
+                    data-testid="granule-filters__readable-granule-name"
+                    size="sm"
+                    type="text"
+                    placeholder="Search Single or Multiple Granule IDs..."
+                    value={readableGranuleName}
+                    onChange={handleChange}
+                    onBlur={submitOnBlur}
+                    onKeyPress={submitOnKeypress}
+                  />
                   {
                     readableGranuleNameTouched && (
                       <Form.Control.Feedback type="invalid">
