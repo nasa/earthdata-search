@@ -177,7 +177,7 @@ export const buildCollectionSearchParams = (params) => {
   let facetsToSend = { ...cmrFacets }
 
   // If viewAllFacets has any keys, we know that the view all facets modal is active and we want to
-  // detirmine the next results based on those facets.
+  // determine the next results based on those facets.
   if (Object.keys(viewAllFacets).length) {
     facetsToSend = { ...viewAllFacets }
   }

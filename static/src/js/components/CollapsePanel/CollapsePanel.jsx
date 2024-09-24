@@ -41,14 +41,17 @@ export class CollapsePanel extends Component {
     const panelClassNames = `collapse-panel__panel ${panelClassName}`
 
     const icon = open
-      ? <EDSCIcon className="collapse-panel__button-secondary-icon" icon={ArrowChevronUp} />
-      : <EDSCIcon className="collapse-panel__button-secondary-icon" icon={ArrowChevronDown} />
+      ? <EDSCIcon title="ArrowChevronUp" className="collapse-panel__button-secondary-icon" icon={ArrowChevronUp} />
+      : <EDSCIcon title="ArrowChevronDown" className="collapse-panel__button-secondary-icon" icon={ArrowChevronDown} />
+
+    const openCloseLabel = open ? 'Close Panel' : 'Open Panel'
 
     return (
       <div className={classNames}>
         <button
           className={buttonClassNames}
           type="button"
+          aria-label={openCloseLabel}
           onClick={(event) => this.onToggleClick(event)}
           aria-controls="collapse-text"
           aria-expanded={open}

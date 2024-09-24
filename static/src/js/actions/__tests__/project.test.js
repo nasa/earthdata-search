@@ -264,6 +264,55 @@ describe('getProjectCollections', () => {
     jest.clearAllMocks()
   })
 
+  describe('when the user is unauthorized', () => {
+    test('don\'t fetch collections', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+        cmrHost: 'https://cmr.earthdata.nasa.gov'
+      }))
+
+      const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+      nock(/localhost/)
+        .post(/saved_access_configs/)
+        .reply(401, {
+          message: 'Request failed with status code 401',
+          name: 'AxiosError',
+          code: 'ERR_BAD_REQUEST'
+        })
+
+      nock(/localhost/)
+        .post(/error_logger/)
+        .reply(200)
+
+      const store = mockStore({
+        authToken: 'token',
+        metadata: {
+          collections: {},
+          granules: {}
+        },
+        project: {
+          collections: {
+            allIds: ['C10000000000-EDSC'],
+            byId: {}
+          }
+        }
+      })
+
+      await store.dispatch(actions.getProjectCollections())
+
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: ADD_ERROR,
+        payload: expect.objectContaining({
+          title: 'Error retrieving saved access configurations'
+        })
+      })
+
+      expect(consoleMock).toBeCalledTimes(1)
+      expect(consoleMock).toBeCalledWith('Action [getProjectCollections] failed: Request failed with status code 401')
+    })
+  })
+
   test('calls lambda to get authenticated collections', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov',

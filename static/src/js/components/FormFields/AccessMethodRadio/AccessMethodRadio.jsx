@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
@@ -7,6 +7,7 @@ import { Check } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
+import ExternalLink from '../../ExternalLink/ExternalLink'
 import CustomizableIcons from '../../CustomizableIcons/CustomizableIcons'
 
 import './AccessMethodRadio.scss'
@@ -24,7 +25,8 @@ export const AccessMethodRadio = ({
   customizationOptions,
   isHarmony,
   disabled,
-  errorMessage
+  errorMessage,
+  externalLink
 }) => {
   const labelClasses = [
     'access-method-radio',
@@ -38,6 +40,8 @@ export const AccessMethodRadio = ({
       'access-method-radio--disable-button': disabled
     }
   ]
+
+  const [showTooltip, setShowTooltip] = useState(false)
 
   const labelClassName = classNames(labelClasses)
 
@@ -110,18 +114,38 @@ export const AccessMethodRadio = ({
         </header>
         {
           details && (
-
             <OverlayTrigger
+              show={showTooltip}
               placement="top"
+              onToggle={
+                (state) => {
+                  setShowTooltip(state)
+                }
+              }
               overlay={
                 (
-                  <Tooltip style={{ width: '20rem' }}>
-                    {details}
+                  <Tooltip
+                    className="tooltip--ta-left tooltip--wide"
+                    onMouseEnter={() => externalLink && setShowTooltip(true)}
+                    onMouseLeave={() => externalLink && setShowTooltip(false)}
+                  >
+                    <div className="access-method-radio__tooltip">
+                      <p className="mb-0">
+                        {details}
+                      </p>
+                      {
+                        externalLink && (
+                          <ExternalLink href={externalLink.link} className="d-inline-block mt-3" variant="light">
+                            {externalLink.message}
+                          </ExternalLink>
+                        )
+                      }
+                    </div>
                   </Tooltip>
                 )
               }
             >
-              <EDSCIcon icon={FaQuestionCircle} size="16px" variant="details" />
+              <EDSCIcon icon={FaQuestionCircle} size="16px" variant="more-info" />
             </OverlayTrigger>
           )
         }
@@ -139,7 +163,8 @@ AccessMethodRadio.defaultProps = {
   customizationOptions: null,
   isHarmony: false,
   disabled: false,
-  errorMessage: null
+  errorMessage: null,
+  externalLink: null
 }
 
 AccessMethodRadio.propTypes = {
@@ -169,7 +194,11 @@ AccessMethodRadio.propTypes = {
   }),
   isHarmony: PropTypes.bool,
   disabled: PropTypes.bool,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  externalLink: PropTypes.shape({
+    link: PropTypes.string,
+    message: PropTypes.string
+  })
 }
 
 export default AccessMethodRadio

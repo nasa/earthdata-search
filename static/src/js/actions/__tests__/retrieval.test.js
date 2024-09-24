@@ -656,6 +656,85 @@ describe('submitRetrieval', () => {
         })
       })
     })
+
+    test('saves metrics for swodlr retrievals', () => {
+      nock(/localhost/)
+        .post(/retrievals/)
+        .reply(200, {
+          id: 7
+        })
+
+      // MockStore with initialState
+      const store = mockStore({
+        authToken: 'mockToken',
+        earthdataEnvironment: 'prod',
+        metadata: {
+          collections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {},
+                metadata: {}
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            pageNum: 1,
+            keyword: 'search keyword'
+          },
+          granule: {
+            pageNum: 1
+          }
+        },
+        portal: {
+          portalId: 'edsc'
+        },
+        project: {
+          collections: {
+            byId: {
+              collectionId: {
+                accessMethods: {
+                  swodlr: {
+                    type: 'SWODLR',
+                    name: 'podaac-swodlr-service'
+                  }
+                },
+                selectedAccessMethod: 'swodlr',
+                granules: {
+                  hits: 2
+                }
+              }
+            },
+            allIds: ['collectionId']
+          }
+        },
+        router: {
+          location: {
+            search: '?some=testparams'
+          }
+        },
+        shapefile: {}
+      })
+
+      // Call the dispatch
+      store.dispatch(submitRetrieval()).then(() => {
+        expect(store.getActions().length).toEqual(4)
+
+        expect(store.getActions()[0]).toEqual({
+          payload: {
+            type: 'data_access_completion',
+            collections: [{
+              collectionId: 'collectionId',
+              service: 'SWODLR',
+              type: 'swodlr'
+            }]
+          },
+          type: 'METRICS_DATA_ACCESS'
+        })
+      })
+    })
   })
 })
 

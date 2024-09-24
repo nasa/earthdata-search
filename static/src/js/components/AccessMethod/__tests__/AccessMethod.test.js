@@ -1585,6 +1585,45 @@ describe('AccessMethod component', () => {
         const swodlrText = await screen.findByText('Granule Extent')
         expect(swodlrText).toBeInTheDocument()
       })
+
+      describe('when the granule list contains undefined values', () => {
+        test('does not load the SWODLR form', async () => {
+          const collectionId = 'C1000000000-EDSC'
+          setup({
+            accessMethods: {
+              swodlr: {
+                type: 'SWODLR',
+                supportsSwodlr: true
+              }
+            },
+            metadata: {
+              conceptId: collectionId
+            },
+            selectedAccessMethod: 'swodlr',
+            projectCollection: {
+              isVisible: true,
+              granules: {
+                addedGranuleIds: [
+                  'G1000000000-EDSC',
+                  'G1000000001-EDSC',
+                  'G1000000002-EDSC'
+                ],
+                byId: {}
+              }
+            },
+            granuleMetadata: {
+              undefined
+            }
+          })
+
+          await waitFor(() => {
+            const swodlrText = screen.queryByText('Granule Extent')
+
+            // The swodlr form will not load
+            expect(swodlrText).not.toBeInTheDocument()
+          })
+        })
+      })
     })
 
     describe('when there are more than 10 granules', () => {
