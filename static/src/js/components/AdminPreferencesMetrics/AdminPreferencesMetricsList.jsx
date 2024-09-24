@@ -70,15 +70,11 @@ export const AdminPreferencesMetricsList = ({
 }) => {
   const { preferences, isLoading, isLoaded } = preferencesMetrics
 
-  console.log(isLoading)
-  console.log(isLoaded)
-
   return (
     <div>
       {
         isLoading && (
-          <div>
-            abc
+          <div aria-label="Preferences Metrics Spinner">
             <Spinner className="admin-preferences-metrics-list__spinner" type="dots" />
           </div>
         )

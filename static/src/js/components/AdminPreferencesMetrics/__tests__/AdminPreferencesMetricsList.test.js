@@ -159,5 +159,19 @@ describe('AdminPreferencesMetricsList component', () => {
 
     expect(screen.getByLabelText('blueMarble 100% (4) Header')).toBeInTheDocument()
     expect(screen.getByLabelText('blueMarble 100% (4) Body')).toBeInTheDocument()
+
+    expect(screen.queryAllByLabelText('Preferences Metrics Spinner').length).toEqual(0)
+  })
+
+  test('renders spinner when isLoading is true', () => {
+    setup({
+      preferencesMetrics: {
+        isLoaded: false,
+        isLoading: true,
+        preferences: {}
+      }
+    })
+
+    expect(screen.getByLabelText('Preferences Metrics Spinner')).toBeInTheDocument()
   })
 })
