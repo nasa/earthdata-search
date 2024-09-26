@@ -2,7 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { startCase } from 'lodash-es'
 
-import { Table } from 'react-bootstrap'
+import {
+  Col,
+  Container,
+  Row,
+  Table
+} from 'react-bootstrap'
 
 import Spinner from '../Spinner/Spinner'
 
@@ -14,34 +19,33 @@ import './AdminPreferencesMetricsList.scss'
  * @returns preference tables
  */
 const createPreferencesTable = (preferences) => {
-  const tables = Object.keys(preferences).map((key) => {
-    const header = (
-      <thead key={`${key}_header`}>
-        <tr className="admin-preferences-metrics-list__table-row" key={`${preferences[key]}_header`}>
-          {
-            // Pulling out the values (not the count)
-            Object.values(preferences[key]).map(([field]) => (
-              <th key={`${field}}`}>{field}</th>
-            ))
-          }
-        </tr>
-      </thead>
-    )
-    const body = (
-      <tbody>
-        <tr className="admin-preferences-metrics-list__table-body" key={`${preferences[key]}_body`}>
-          {
-            // Pulling out the counts/percentages of each value
-            // value[0] is the field and value[1] is the count
-            Object.values(preferences[key]).map(([field, count]) => (
-              <td key={`${field}_${count}`}>{count}</td>
-            ))
-          }
-        </tr>
-      </tbody>
+  const wrapper = (children) => {
+    const result = (
+      <Container>
+        <Row>
+          {children.map((child) => (<Col key={child}>{child}</Col>))}
+        </Row>
+      </Container>
     )
 
-    return (
+    console.log(result)
+
+    return result
+  }
+
+  const devideTables = (tables) => {
+    const tableRows = [
+      tables.slice(0, 3),
+      tables.slice(3, 6),
+      tables.slice(6, 9),
+      tables.slice(9)
+    ]
+
+    return tableRows
+  }
+
+  const tables = Object.keys(preferences).map((key) => {
+    const table = (
       <div key={key}>
         <h3 className="admin-preferences-metrics-list__table-title">
           Top
@@ -51,16 +55,40 @@ const createPreferencesTable = (preferences) => {
           Values
         </h3>
         <Table striped bordered>
-          {header}
-          {body}
+          <thead key={`${key}_header`}>
+            <tr className="admin-preferences-metrics-list__table-row" key={`${preferences[key]}_header`}>
+              <th>Field</th>
+              <th>Percent (Count)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              // Pulling out the counts/percentages of each value
+              // value[0] is the field and value[1] is the count
+              Object.values(preferences[key]).map(([field, count]) => (
+                <tr className="admin-preferences-metrics-list__table-body" key={`${preferences[key]}_body`}>
+                  <td key={`${field}`}>{field}</td>
+                  <td key={`${count}`}>{count}</td>
+                </tr>
+              ))
+            }
+          </tbody>
         </Table>
       </div>
     )
+
+    return table
   })
+
+  const devidedTables = devideTables(tables)
+
+  const results = devidedTables.map((tablesList) => (wrapper(tablesList)))
+
+  console.log(results)
 
   return (
     <div>
-      {tables}
+      {results}
     </div>
   )
 }
