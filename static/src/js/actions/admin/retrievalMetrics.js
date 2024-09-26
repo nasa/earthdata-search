@@ -4,8 +4,8 @@ import {
   SET_ADMIN_RETRIEVALS_METRICS,
   SET_ADMIN_RETRIEVALS_METRICS_LOADING,
   SET_ADMIN_RETRIEVALS_METRICS_LOADED,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE
+  UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE,
+  UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE
 } from '../../constants/actionTypes'
 
 import actions from '../index'
@@ -71,14 +71,14 @@ export const fetchAdminRetrievalsMetrics = () => (dispatch, getState) => {
 
 export const updateAdminRetrievalsMetricsStartDate = (startDate) => (dispatch) => {
   dispatch({
-    type: UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE,
+    type: UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE,
     payload: startDate
   })
 }
 
 export const updateAdminRetrievalsMetricsEndDate = (endDate) => (dispatch) => {
   dispatch({
-    type: UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE,
+    type: UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE,
     payload: endDate
   })
 }

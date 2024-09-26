@@ -15,8 +15,8 @@ import {
   SET_ADMIN_RETRIEVALS_METRICS_LOADED,
   SET_ADMIN_RETRIEVALS_METRICS_LOADING,
   SET_ADMIN_RETRIEVALS_METRICS,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE
+  UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE,
+  UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE
 } from '../../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -97,7 +97,7 @@ describe('updateAdminRetrievalsMetricsStartDate', () => {
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE,
+      type: UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE,
       payload: startDate
     })
   })
@@ -119,7 +119,7 @@ describe('updateAdminRetrievalsMetricsEndDate', () => {
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE,
+      type: UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE,
       payload: endDate
     })
   })

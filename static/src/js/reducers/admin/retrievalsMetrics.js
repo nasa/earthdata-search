@@ -2,8 +2,8 @@ import {
   SET_ADMIN_RETRIEVALS_METRICS,
   SET_ADMIN_RETRIEVALS_METRICS_LOADING,
   SET_ADMIN_RETRIEVALS_METRICS_LOADED,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE
+  UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE,
+  UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -68,14 +68,14 @@ const adminRetrievalsMetricsReducer = (state = initialState, action = {}) => {
       }
     }
 
-    case UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE: {
+    case UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE: {
       return {
         ...state,
         startDate: action.payload
       }
     }
 
-    case UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE: {
+    case UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE: {
       return {
         ...state,
         endDate: action.payload
