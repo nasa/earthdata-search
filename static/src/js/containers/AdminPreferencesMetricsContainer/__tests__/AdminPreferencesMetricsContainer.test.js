@@ -27,6 +27,10 @@ const setup = () => {
 
   // https://testing-library.com/docs/example-react-router/
   render(<AdminPreferencesMetricsContainer {...props} />, { wrapper: BrowserRouter })
+
+  return {
+    props
+  }
 }
 
 describe('mapDispatchToProps', () => {
@@ -66,7 +70,10 @@ describe('mapDispatchToProps', () => {
 
 describe('AdminPreferencesMetricsContainer component', () => {
   test('render AdminPreferencesMetrics with the correct props', () => {
-    setup()
+    const { props } = setup()
+
+    expect(props.onFetchAdminPreferencesMetrics).toHaveBeenCalledTimes(1)
+    expect(props.onFetchAdminPreferencesMetrics).toHaveBeenCalledWith()
 
     expect(AdminPreferencesMetrics).toHaveBeenCalledTimes(1)
     expect(AdminPreferencesMetrics).toHaveBeenCalledWith(

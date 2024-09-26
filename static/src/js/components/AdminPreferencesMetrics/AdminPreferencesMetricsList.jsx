@@ -20,8 +20,8 @@ const createPreferencesTable = (preferences) => {
         <tr className="admin-preferences-metrics-list__table-row" key={`${preferences[key]}_header`}>
           {
             // Pulling out the values (not the count)
-            Object.values(preferences[key]).map(([field, count]) => (
-              <th aria-label={`${field} ${count} Header`} key={`${field}}`}>{field}</th>
+            Object.values(preferences[key]).map(([field]) => (
+              <th key={`${field}}`}>{field}</th>
             ))
           }
         </tr>
@@ -34,7 +34,7 @@ const createPreferencesTable = (preferences) => {
             // Pulling out the counts/percentages of each value
             // value[0] is the field and value[1] is the count
             Object.values(preferences[key]).map(([field, count]) => (
-              <td aria-label={`${field} ${count} Body`} key={`${field}_${count}`}>{count}</td>
+              <td key={`${field}_${count}`}>{count}</td>
             ))
           }
         </tr>
@@ -74,9 +74,7 @@ export const AdminPreferencesMetricsList = ({
     <div>
       {
         isLoading && (
-          <div aria-label="Preferences Metrics Spinner">
-            <Spinner className="admin-preferences-metrics-list__spinner" type="dots" />
-          </div>
+          <Spinner dataTestId="admin-preferences-metric-list-spinner" className="admin-preferences-metrics-list__spinner" type="dots" />
         )
       }
       {isLoaded && createPreferencesTable(preferences)}

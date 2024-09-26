@@ -44,6 +44,7 @@ export const fetchAdminPreferencesMetrics = () => async (dispatch, getState) => 
       const {
         results
       } = data
+
       dispatch(setAdminPreferencesMetricsLoaded())
       dispatch(setAdminPreferencesMetrics(results))
     })

@@ -1,5 +1,9 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import {
+  render,
+  screen,
+  within
+} from '@testing-library/react'
 
 import { AdminPreferencesMetricsList } from '../AdminPreferencesMetricsList'
 
@@ -118,47 +122,50 @@ describe('AdminPreferencesMetricsList component', () => {
     // Values render on the table
     // make sure there are 14 column headers
     expect(screen.getAllByRole('columnheader').length).toEqual(14)
-    expect(screen.getByLabelText('open 100% (4) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('open 100% (4) Body')).toBeInTheDocument()
 
-    expect(screen.getByLabelText('start_date 100% (4) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('start_date 100% (4) Body')).toBeInTheDocument()
+    const tables = screen.getAllByRole('table')
 
-    expect(screen.getByLabelText('default 100% (4) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('default 100% (4) Body')).toBeInTheDocument()
+    expect(within(tables[0]).getByRole('columnheader', { name: 'open' })).toBeInTheDocument()
+    expect(within(tables[0]).getByRole('cell', { name: '100% (4)' })).toBeInTheDocument()
 
-    expect(screen.getByLabelText('-score 100% (4) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('-score 100% (4) Body')).toBeInTheDocument()
+    expect(within(tables[1]).getByRole('columnheader', { name: 'start_date' })).toBeInTheDocument()
+    expect(within(tables[1]).getByRole('cell', { name: '100% (4)' })).toBeInTheDocument()
 
-    expect(screen.getByLabelText('list 100% (4) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('list 100% (4) Body')).toBeInTheDocument()
+    expect(within(tables[2]).getByRole('columnheader', { name: 'default' })).toBeInTheDocument()
+    expect(within(tables[2]).getByRole('cell', { name: '100% (4)' })).toBeInTheDocument()
 
-    expect(screen.getByLabelText('3 100% (4) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('3 100% (4) Body')).toBeInTheDocument()
+    expect(within(tables[3]).getByRole('columnheader', { name: '-score' })).toBeInTheDocument()
+    expect(within(tables[3]).getByRole('cell', { name: '100% (4)' })).toBeInTheDocument()
 
-    expect(screen.getByLabelText('0 75% (3) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('0 75% (3) Body')).toBeInTheDocument()
+    expect(within(tables[4]).getByRole('columnheader', { name: 'list' })).toBeInTheDocument()
+    expect(within(tables[4]).getByRole('cell', { name: '100% (4)' })).toBeInTheDocument()
 
-    expect(screen.getByLabelText('1 25% (1) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('1 25% (1) Body')).toBeInTheDocument()
+    expect(within(tables[5]).getByRole('columnheader', { name: '3' })).toBeInTheDocument()
+    expect(within(tables[5]).getByRole('cell', { name: '100% (4)' })).toBeInTheDocument()
 
-    expect(screen.getByLabelText('-1 25% (1) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('-1 25% (1) Body')).toBeInTheDocument()
+    expect(within(tables[6]).getByRole('columnheader', { name: '0' })).toBeInTheDocument()
+    expect(within(tables[6]).getByRole('cell', { name: '75% (3)' })).toBeInTheDocument()
 
-    expect(screen.getByLabelText('2 75% (3) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('2 75% (3) Body')).toBeInTheDocument()
+    expect(within(tables[6]).getByRole('columnheader', { name: '1' })).toBeInTheDocument()
+    expect(within(tables[6]).getByRole('cell', { name: '25% (1)' })).toBeInTheDocument()
 
-    expect(screen.getByLabelText('epsg4326 100% (4) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('epsg4326 100% (4) Body')).toBeInTheDocument()
+    expect(within(tables[7]).getByRole('columnheader', { name: '-1' })).toBeInTheDocument()
+    expect(within(tables[7]).getByRole('cell', { name: '25% (1)' })).toBeInTheDocument()
 
-    expect(screen.getByLabelText('referenceFeatures 100% (4) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('referenceFeatures 100% (4) Body')).toBeInTheDocument()
+    expect(within(tables[7]).getByRole('columnheader', { name: '2' })).toBeInTheDocument()
+    expect(within(tables[7]).getByRole('cell', { name: '75% (3)' })).toBeInTheDocument()
 
-    expect(screen.getByLabelText('referenceLabels 100% (4) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('referenceLabels 100% (4) Body')).toBeInTheDocument()
+    expect(within(tables[8]).getByRole('columnheader', { name: 'epsg4326' })).toBeInTheDocument()
+    expect(within(tables[8]).getByRole('cell', { name: '100% (4)' })).toBeInTheDocument()
 
-    expect(screen.getByLabelText('blueMarble 100% (4) Header')).toBeInTheDocument()
-    expect(screen.getByLabelText('blueMarble 100% (4) Body')).toBeInTheDocument()
+    expect(within(tables[9]).getByRole('columnheader', { name: 'referenceFeatures' })).toBeInTheDocument()
+    expect(within(tables[9]).queryAllByRole('cell', { name: '100% (4)' })[0]).toBeInTheDocument()
+
+    expect(within(tables[9]).getByRole('columnheader', { name: 'referenceLabels' })).toBeInTheDocument()
+    expect(within(tables[9]).queryAllByRole('cell', { name: '100% (4)' })[1]).toBeInTheDocument()
+
+    expect(within(tables[10]).getByRole('columnheader', { name: 'blueMarble' })).toBeInTheDocument()
+    expect(within(tables[10]).getByRole('cell', { name: '100% (4)' })).toBeInTheDocument()
 
     expect(screen.queryAllByLabelText('Preferences Metrics Spinner').length).toEqual(0)
   })
@@ -172,6 +179,6 @@ describe('AdminPreferencesMetricsList component', () => {
       }
     })
 
-    expect(screen.getByLabelText('Preferences Metrics Spinner')).toBeInTheDocument()
+    expect(screen.getByTestId('admin-preferences-metric-list-spinner')).toBeInTheDocument()
   })
 })
