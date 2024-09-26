@@ -17,7 +17,7 @@ const createPreferencesTable = (preferences) => {
   const tables = Object.keys(preferences).map((key) => {
     const header = (
       <thead key={`${key}_header`}>
-        <tr className="admin-preferences-metrics-list__table-row" key={`${preferences[key]}_header`}>
+        <tr key={`${preferences[key]}_header`}>
           {
             // Pulling out the values (not the count)
             Object.values(preferences[key]).map(([field]) => (
@@ -29,7 +29,7 @@ const createPreferencesTable = (preferences) => {
     )
     const body = (
       <tbody>
-        <tr className="admin-preferences-metrics-list__table-body" key={`${preferences[key]}_body`}>
+        <tr key={`${preferences[key]}_body`}>
           {
             // Pulling out the counts/percentages of each value
             // value[0] is the field and value[1] is the count
@@ -43,7 +43,7 @@ const createPreferencesTable = (preferences) => {
 
     return (
       <div key={key}>
-        <h3 className="admin-preferences-metrics-list__table-title">
+        <h3>
           Top
           {' '}
           <b>{startCase(key)}</b>
@@ -74,7 +74,11 @@ export const AdminPreferencesMetricsList = ({
     <div>
       {
         isLoading && (
-          <Spinner dataTestId="admin-preferences-metric-list-spinner" className="admin-preferences-metrics-list__spinner" type="dots" />
+          <Spinner
+            dataTestId="admin-preferences-metric-list-spinner"
+            className="position-absolute admin-preferences-metrics-list__spinner"
+            type="dots"
+          />
         )
       }
       {isLoaded && createPreferencesTable(preferences)}

@@ -1,28 +1,8 @@
 .admin-preferences-metrics-list {
-  &__table-body {
-    overflow-y: auto;
-  }
-
-  &__table-title {
-    color: $color__carbon-black !important;
-  }
-
-  &__table-row {
-    cursor: default;
-    overflow-y: auto;
-
-    &:hover {
-      background-color: $color__carbon--20 !important;
-    }
-
-  }
-
   &__spinner {
-    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1;
     color: $color__carbon--90;
   }
 }
