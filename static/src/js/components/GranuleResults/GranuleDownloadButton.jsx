@@ -108,40 +108,35 @@ export const GranuleDownloadButton = (props) => {
     }
   }
 
+  const stringifiedProjectParams = stringify({
+    ...params,
+    p,
+    pg
+  })
+
+  const downloadButtonProps = {
+    badge,
+    bootstrapVariant: 'primary',
+    className: 'granule-results-actions__download-all',
+    dataTestId: 'granule-results-actions__download-all-button',
+    disabled: granuleCount === 0 || initialLoading || disableDatabaseComponents === 'true',
+    icon: Download,
+    label: buttonText,
+    type: 'button',
+    variant: 'full'
+  }
+
   if (!isLoggedIn) {
-    const projectPath = `${window.location.protocol}//${window.location.host}/projects${stringify({
-      ...params,
-      p,
-      pg
-    })}`
+    const projectPath = `${window.location.protocol}//${window.location.host}/projects${stringifiedProjectParams}`
 
     return (
       <PortalLinkContainer
-        className="granule-results-actions__download-all"
+        {...downloadButtonProps}
         onClick={
           () => {
-            onAddProjectCollection(focusedCollectionId)
-            onChangePath(`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`)
+            window.location.href = `${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`
           }
         }
-        to={
-          {
-            pathname: '/projects',
-            search: stringify({
-              ...params,
-              p,
-              pg
-            })
-          }
-        }
-        type="button"
-        badge={badge}
-        bootstrapVariant="primary"
-        dataTestId="granule-results-actions__download-all-button"
-        disabled={granuleCount === 0 || initialLoading || (disableDatabaseComponents === 'true')}
-        icon={Download}
-        label={buttonText}
-        variant="full"
       >
         {buttonText}
       </PortalLinkContainer>
@@ -150,35 +145,19 @@ export const GranuleDownloadButton = (props) => {
 
   return (
     <PortalLinkContainer
-      className="granule-results-actions__download-all"
+      {...downloadButtonProps}
       onClick={
         () => {
           onAddProjectCollection(focusedCollectionId)
-          onChangePath(`/projects${stringify({
-            ...params,
-            p,
-            pg
-          })}`)
+          onChangePath(`/projects${stringifiedProjectParams}`)
         }
       }
       to={
         {
           pathname: '/projects',
-          search: stringify({
-            ...params,
-            p,
-            pg
-          })
+          search: stringifiedProjectParams
         }
       }
-      type="button"
-      badge={badge}
-      bootstrapVariant="primary"
-      dataTestId="granule-results-actions__download-all-button"
-      disabled={granuleCount === 0 || initialLoading || (disableDatabaseComponents === 'true')}
-      icon={Download}
-      label={buttonText}
-      variant="full"
     >
       {buttonText}
     </PortalLinkContainer>
