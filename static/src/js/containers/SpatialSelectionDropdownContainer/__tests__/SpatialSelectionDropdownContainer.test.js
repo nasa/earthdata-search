@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
 
 import actions from '../../../actions'
 import * as metricsSpatialSelection from '../../../middleware/metrics/actions'

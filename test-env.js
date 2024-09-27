@@ -5,6 +5,8 @@
 import nock from 'nock'
 import enableHooks from 'jest-react-hooks-shallow'
 
+import '@testing-library/jest-dom'
+
 // Google Tag Manager dataLayer
 global.dataLayer = {
   push: jest.fn()

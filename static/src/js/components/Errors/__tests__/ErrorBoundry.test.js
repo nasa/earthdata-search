@@ -4,7 +4,6 @@ import { act } from 'react-dom/test-utils'
 import nock from 'nock'
 import { v4 as uuidv4 } from 'uuid'
 import LoggerRequest from '../../../util/request/loggerRequest'
-import '@testing-library/jest-dom'
 
 import ErrorBoundary from '../ErrorBoundary'
 

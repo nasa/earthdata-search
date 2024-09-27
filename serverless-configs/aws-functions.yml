@@ -667,7 +667,7 @@
       - http:
           method: get
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
-          path: admin/retrievalsMetrics
+          path: admin/retrievals_metrics
           authorizer:
             name: edlAdminAuthorizer
             type: request
@@ -685,6 +685,21 @@
             name: edlAdminAuthorizer
             type: request
             resultTtlInSeconds: 0
+
+
+  adminGetPreferencesMetrics:
+    handler: serverless/src/adminGetPreferencesMetrics/handler.default
+    timeout: ${env:LAMBDA_TIMEOUT, '30'}
+    events:
+      - http:
+          method: get
+          cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
+          path: admin/preferences_metrics
+          authorizer:
+            name: edlAdminAuthorizer
+            type: request
+            resultTtlInSeconds: 0
+
 
   adminGetProjects:
     handler: serverless/src/adminGetProjects/handler.default

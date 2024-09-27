@@ -1,5 +1,4 @@
 import { eventEmitter } from '../events'
-import '@testing-library/jest-dom'
 
 describe('events', () => {
   describe('when an error is triggered without the error flag', () => {

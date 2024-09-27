@@ -1,0 +1,8 @@
+.admin-preferences-metrics-list {
+  &__spinner {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $color__carbon--90;
+  }
+}

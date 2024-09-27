@@ -5,13 +5,13 @@ import { Table } from 'react-bootstrap'
 import './AdminRetrievalsMetricsList.scss'
 
 export const AdminRetrievalsMetricsList = ({
-  metricsRetrievals
+  retrievalsMetrics
 }) => {
   const {
     allAccessMethodTypes,
     byAccessMethodType,
     multCollectionResponse
-  } = metricsRetrievals
+  } = retrievalsMetrics
 
   return (
     <>
@@ -123,11 +123,11 @@ export const AdminRetrievalsMetricsList = ({
 }
 
 AdminRetrievalsMetricsList.defaultProps = {
-  metricsRetrievals: {}
+  retrievalsMetrics: {}
 }
 
 AdminRetrievalsMetricsList.propTypes = {
-  metricsRetrievals: PropTypes.shape({
+  retrievalsMetrics: PropTypes.shape({
     allAccessMethodTypes: PropTypes.arrayOf(PropTypes.string),
     byAccessMethodType: PropTypes.shape({}),
     multCollectionResponse: PropTypes.arrayOf(PropTypes.shape({}))

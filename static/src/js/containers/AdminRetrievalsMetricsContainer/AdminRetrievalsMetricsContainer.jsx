@@ -7,47 +7,47 @@ import actions from '../../actions'
 import AdminRetrievalsMetrics from '../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics'
 
 export const mapStateToProps = (state) => ({
-  metricsRetrievals: state.admin.metricsRetrievals,
-  retrievalsLoading: state.admin.metricsRetrievals.isLoading,
-  retrievalsLoaded: state.admin.metricsRetrievals.isLoaded
+  retrievalsMetrics: state.admin.retrievalsMetrics,
+  retrievalsLoading: state.admin.retrievalsMetrics.isLoading,
+  retrievalsLoaded: state.admin.retrievalsMetrics.isLoaded
 })
 
 export const mapDispatchToProps = (dispatch) => ({
-  onFetchAdminMetricsRetrievals:
-    () => dispatch(actions.fetchAdminMetricsRetrievals()),
-  onUpdateAdminMetricsRetrievalsStartDate:
+  onFetchAdminRetrievalsMetrics:
+    () => dispatch(actions.fetchAdminRetrievalsMetrics()),
+  onUpdateAdminRetrievalsMetricsStartDate:
     (startDate) => dispatch(
-      actions.updateAdminMetricsRetrievalsStartDate(startDate)
+      actions.updateAdminRetrievalsMetricsStartDate(startDate)
     ),
-  onUpdateAdminMetricsRetrievalsEndDate:
+  onUpdateAdminRetrievalsMetricsEndDate:
     (endDate) => dispatch(
-      actions.updateAdminMetricsRetrievalsEndDate(endDate)
+      actions.updateAdminRetrievalsMetricsEndDate(endDate)
     )
 })
 
 export const AdminRetrievalsMetricsContainer = ({
-  onFetchAdminMetricsRetrievals,
-  onUpdateAdminMetricsRetrievalsStartDate,
-  onUpdateAdminMetricsRetrievalsEndDate,
-  metricsRetrievals
+  onFetchAdminRetrievalsMetrics,
+  onUpdateAdminRetrievalsMetricsStartDate,
+  onUpdateAdminRetrievalsMetricsEndDate,
+  retrievalsMetrics
 }) => (
   <AdminRetrievalsMetrics
-    onFetchAdminMetricsRetrievals={onFetchAdminMetricsRetrievals}
-    onUpdateAdminMetricsRetrievalsStartDate={onUpdateAdminMetricsRetrievalsStartDate}
-    onUpdateAdminMetricsRetrievalsEndDate={onUpdateAdminMetricsRetrievalsEndDate}
-    metricsRetrievals={metricsRetrievals}
+    onFetchAdminRetrievalsMetrics={onFetchAdminRetrievalsMetrics}
+    onUpdateAdminRetrievalsMetricsStartDate={onUpdateAdminRetrievalsMetricsStartDate}
+    onUpdateAdminRetrievalsMetricsEndDate={onUpdateAdminRetrievalsMetricsEndDate}
+    retrievalsMetrics={retrievalsMetrics}
   />
 )
 
 AdminRetrievalsMetricsContainer.defaultProps = {
-  metricsRetrievals: {}
+  retrievalsMetrics: {}
 }
 
 AdminRetrievalsMetricsContainer.propTypes = {
-  onFetchAdminMetricsRetrievals: PropTypes.func.isRequired,
-  onUpdateAdminMetricsRetrievalsEndDate: PropTypes.func.isRequired,
-  onUpdateAdminMetricsRetrievalsStartDate: PropTypes.func.isRequired,
-  metricsRetrievals: PropTypes.shape({})
+  onFetchAdminRetrievalsMetrics: PropTypes.func.isRequired,
+  onUpdateAdminRetrievalsMetricsEndDate: PropTypes.func.isRequired,
+  onUpdateAdminRetrievalsMetricsStartDate: PropTypes.func.isRequired,
+  retrievalsMetrics: PropTypes.shape({})
 }
 
 export default withRouter(
