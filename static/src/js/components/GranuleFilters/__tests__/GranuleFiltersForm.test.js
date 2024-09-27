@@ -364,7 +364,7 @@ describe('GranuleFiltersForm component', () => {
         expect(screen.getByRole('combobox', { name: 'day-night-flag' })).toHaveValue('NIGHT')
       })
 
-      test.skip('calls handleChange on change', async () => {
+      test('calls handleChange on change', async () => {
         const { user, handleChange } = setup({
           collectionMetadata: {
             isOpenSearch: false,
@@ -379,20 +379,12 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        let newDayNightSelection = screen.getByRole('option', { name: 'Day' })
+        const dayNightSelection = screen.getByRole('combobox', { name: 'day-night-flag' })
 
-        await user.click(newDayNightSelection)
-        // Const dayNightSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
-        expect(handleChange).toHaveBeenCalledTimes(1)
-        expect(handleChange).toHaveBeenCalledWith(
-          expect.objectContaining({
-            _reactName: 'onChange'
-          })
-        )
+        await user.selectOptions(dayNightSelection, 'Day')
+        await user.selectOptions(dayNightSelection, 'Both')
 
-        newDayNightSelection = screen.getByRole('option', { name: 'Both' })
-        await user.click(newDayNightSelection)
-        expect(handleChange).toHaveBeenCalledTimes(1)
+        expect(handleChange).toHaveBeenCalledTimes(2)
         expect(handleChange).toHaveBeenCalledWith(
           expect.objectContaining({
             _reactName: 'onChange'
@@ -977,7 +969,7 @@ describe('GranuleFiltersForm component', () => {
       // expect(gridCoordsSection.find(Form.Control).at(0).prop('value')).toEqual('')
     })
 
-    test.skip('calls handleChange on change', async () => {
+    test('calls handleChange on change', async () => {
       const { handleChange, user } = setup({
         collectionMetadata: {
           tilingIdentificationSystems: [
@@ -997,10 +989,8 @@ describe('GranuleFiltersForm component', () => {
       })
 
       const tileOptions = screen.getByRole('combobox', 'tilingSystem')
-      await user.click(tileOptions)
+      await user.selectOptions(tileOptions, 'MISR')
 
-      const misrTileOption = screen.getByRole('option', { name: 'MISR' })
-      await user.click(misrTileOption)
       expect(handleChange).toHaveBeenCalledTimes(1)
       // Const gridCoordsSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
       // gridCoordsSection.find(Form.Control).prop('onChange')({ target: { value: 'MISR' } })
