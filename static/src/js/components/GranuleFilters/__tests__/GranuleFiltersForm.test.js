@@ -1,21 +1,13 @@
 import React from 'react'
-import moment from 'moment'
-
 import {
-  act,
   render,
-  waitFor,
   screen,
   within
 } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 
-import { Form, FormControl } from 'react-bootstrap'
-
 import GranuleFiltersForm from '../GranuleFiltersForm'
-import SidebarFiltersItem from '../../Sidebar/SidebarFiltersItem'
-import TemporalSelection from '../../TemporalSelection/TemporalSelection'
 
 jest.mock('formik', () => ({
   Form: jest.fn(({ children }) => (
@@ -169,7 +161,6 @@ describe('GranuleFiltersForm component', () => {
       expect(screen.getByRole('heading', { name: 'Data Access' })).toBeInTheDocument()
     })
 
-    // TODO fix  console.warn on the date
     describe('Temporal section', () => {
       describe('displays temporal', () => {
         test('displays correctly when only start date is set', () => {

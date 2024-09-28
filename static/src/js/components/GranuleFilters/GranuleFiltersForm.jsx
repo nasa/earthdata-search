@@ -283,7 +283,6 @@ export const GranuleFiltersForm = (props) => {
                       (
                         <Tooltip id="granule-filters-form-id-filter-tooltip" className="tooltip--ta-left tooltip--wide">
                           Filter granules by name
-                          example: UA_bonan*
                           <br />
                           <strong>Wildcards:</strong>
                           {' '}
@@ -303,7 +302,7 @@ export const GranuleFiltersForm = (props) => {
                       )
                     }
                   >
-                    <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
+                    <EDSCIcon title="granule-name-filter-more-info" icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
                   </OverlayTrigger>
                   <Form.Control
                     name="readableGranuleName"

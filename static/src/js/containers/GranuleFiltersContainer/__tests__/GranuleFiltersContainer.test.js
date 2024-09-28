@@ -25,6 +25,8 @@ import {
 import validationSchema from '../validationSchema'
 import handleFormSubmit from '../handleFormSubmit'
 
+jest.mock('../handleFormSubmit')
+
 beforeEach(() => {
   jest.clearAllMocks()
 })
@@ -87,20 +89,12 @@ const setup = (overrideProps) => {
     handleSubmit: handleFormSubmit
   })(GranuleFiltersContainer)
 
-  // `formikBag` is the internal state of formik which we are manually going to override to match our passed props
-  let formikBag
-  // TODO update with the new way `formik` wants us to render these inline without `render` prop
+  // Rendering formik wrapper https://formik.org/docs/migrating-v2#all-render-props-have-been-deprecated-with-a-console-warning
   render(
     <Provider store={store}>
       <Router history={history}>
         <EnhancedGranuleFiltersContainer
-          render={
-            () => {
-              formikBag = props
-
-              return <GranuleFiltersContainer {...props} />
-            }
-          }
+          render={() => (<GranuleFiltersContainer {...props} />)}
         />
       </Router>
     </Provider>
@@ -111,8 +105,7 @@ const setup = (overrideProps) => {
     handleSubmit,
     handleReset,
     setGranuleFiltersNeedReset,
-    user,
-    formikBag
+    user
   }
 }
 
@@ -241,6 +234,30 @@ describe('GranuleFiltersContainer component', () => {
         await waitFor(() => {
           expect(handleSubmit).toHaveBeenCalledTimes(1)
         })
+      })
+    })
+
+    describe('when hovering over the readable granule name field', () => {
+      test('displays tool-tip information', async () => {
+        setup({
+          values: {
+            test: 'test'
+          }
+        })
+
+        const tooltipText = /Filter granules by name/i
+
+        expect(screen.queryByText(tooltipText)).not.toBeInTheDocument()
+
+        const user = userEvent.setup()
+        const readableGranuleNameTMoreInfo = screen.getByTitle('granule-name-filter-more-info')
+
+        // Only show tool-tip on hover
+        await act(async () => {
+          await user.hover(readableGranuleNameTMoreInfo)
+        })
+
+        expect(screen.getByText(tooltipText)).toBeVisible()
       })
     })
   })
