@@ -217,13 +217,12 @@ describe('GranuleFiltersContainer component', () => {
 
     describe('when the form is submitted', () => {
       test('handle submit is called', async () => {
-        const { handleSubmit } = setup({
+        const { handleSubmit, user } = setup({
           values: {
             test: 'test'
           }
         })
 
-        const user = userEvent.setup()
         const readableGranuleNameTextField = screen.getByRole('textbox', { name: 'Granule ID(s)' })
 
         await act(async () => {
@@ -239,7 +238,7 @@ describe('GranuleFiltersContainer component', () => {
 
     describe('when hovering over the readable granule name field', () => {
       test('displays tool-tip information', async () => {
-        setup({
+        const { user } = setup({
           values: {
             test: 'test'
           }
@@ -249,7 +248,6 @@ describe('GranuleFiltersContainer component', () => {
 
         expect(screen.queryByText(tooltipText)).not.toBeInTheDocument()
 
-        const user = userEvent.setup()
         const readableGranuleNameTMoreInfo = screen.getByTitle('granule-name-filter-more-info')
 
         // Only show tool-tip on hover

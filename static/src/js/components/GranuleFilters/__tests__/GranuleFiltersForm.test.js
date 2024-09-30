@@ -162,6 +162,34 @@ describe('GranuleFiltersForm component', () => {
       expect(screen.getByRole('heading', { name: 'Data Access' })).toBeInTheDocument()
     })
 
+    describe('when `Enter` is pressed in the text field', () => {
+      test('calls onSubmit', async () => {
+        const { onMetricsGranuleFilter, handleSubmit, user } = setup({
+          values: {
+            readableGranuleName: ''
+          }
+        })
+
+        expect(screen.getByRole('heading', { name: 'Granule Search' })).toBeInTheDocument()
+        const readableGranuleNameTextField = screen.getByRole('textbox', { name: 'Granule ID(s)' })
+        await user.type(readableGranuleNameTextField, '{testGranuleName}')
+        await user.type(readableGranuleNameTextField, '{Enter}')
+
+        expect(handleSubmit).toHaveBeenCalledTimes(1)
+        expect(handleSubmit).toHaveBeenCalledWith(
+          expect.objectContaining({
+            _reactName: 'onKeyPress'
+          })
+        )
+
+        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          type: 'readableGranuleName',
+          value: ''
+        })
+      })
+    })
+
     describe('Temporal section', () => {
       describe('displays temporal', () => {
         test('displays correctly when only start date is set', () => {
@@ -216,7 +244,9 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls the correct callbacks on startDate submit', async () => {
-          const { setFieldTouched, setFieldValue, user } = setup({
+          const {
+            onMetricsGranuleFilter, setFieldTouched, setFieldValue, user
+          } = setup({
             values: {
               temporal: {
                 startDate: '2019-08-13 00:00:00',
@@ -234,10 +264,18 @@ describe('GranuleFiltersForm component', () => {
 
           expect(setFieldValue).toHaveBeenCalledTimes(1)
           expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '2019-08-13T00:00:00.000Z')
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+            type: 'Set Start Date',
+            value: '2019-08-13T00:00:00.000Z'
+          })
         })
 
         test('calls the correct callbacks on endDate submit', async () => {
-          const { setFieldTouched, setFieldValue, user } = setup({
+          const {
+            onMetricsGranuleFilter, setFieldTouched, setFieldValue, user
+          } = setup({
             values: {
               temporal: {
                 startDate: '2019-08-13 00:00:00',
@@ -255,14 +293,22 @@ describe('GranuleFiltersForm component', () => {
 
           expect(setFieldValue).toHaveBeenCalledTimes(1)
           expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2019-08-14T23:59:59.999Z')
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+            type: 'Set End Date',
+            value: '2019-08-14T23:59:59.999Z'
+          })
         })
 
         test('calls the correct callbacks on onRecurringToggle', async () => {
-          const { user, setFieldTouched, setFieldValue } = setup({
+          const {
+            onMetricsGranuleFilter, user, setFieldTouched, setFieldValue
+          } = setup({
             values: {
               temporal: {
-                startDate: '2019-08-13 00:00:00',
-                endDate: '2019-08-14 23:59:59'
+                startDate: '2019-08-13T00:00:00.000Z',
+                endDate: '2019-08-14T23:59:59.999Z'
               }
             }
           })
@@ -279,10 +325,14 @@ describe('GranuleFiltersForm component', () => {
           expect(setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
           expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 225)
           expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 226)
-          // TODO remote is getting `226`
-          // expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 227)
 
           expect(isRecurringCheckbox.checked).toBe(true)
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+            type: 'Set Recurring',
+            value: true
+          })
         })
 
         test('calls the correct callbacks on onRecurringToggle when a leap day is involved', async () => {
@@ -326,8 +376,7 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const anytimeOption = screen.getByRole('option', { name: 'Anytime' })
-        expect(anytimeOption).toHaveValue('')
+        expect(screen.getByRole('combobox', { name: 'day-night-flag' })).toHaveValue('')
       })
 
       test('displays selected item', async () => {
@@ -399,7 +448,7 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls handleChange on change', async () => {
-          const { handleChange, user } = setup()
+          const { onMetricsGranuleFilter, handleChange, user } = setup()
           const browseOnlyToggle = screen.getByRole('checkbox', { name: 'Find only granules that have browse images' })
 
           await user.click(browseOnlyToggle)
@@ -410,6 +459,12 @@ describe('GranuleFiltersForm component', () => {
               _reactName: 'onChange'
             })
           )
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+            type: 'browseOnly',
+            value: true
+          })
         })
       })
 
@@ -433,7 +488,7 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls handleChange on change', async () => {
-          const { handleChange, user } = setup()
+          const { onMetricsGranuleFilter, handleChange, user } = setup()
           const onlineOnlyToggle = screen.getByRole('checkbox', { name: 'Find only granules that are available online' })
           await user.click(onlineOnlyToggle)
 
@@ -443,6 +498,12 @@ describe('GranuleFiltersForm component', () => {
               _reactName: 'onChange'
             })
           )
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+            type: 'onlineOnly',
+            value: true
+          })
         })
       })
     })
@@ -462,6 +523,8 @@ describe('GranuleFiltersForm component', () => {
           })
 
           expect(screen.getByRole('heading', { name: 'Cloud Cover' })).toBeInTheDocument()
+          expect(screen.getByRole('textbox', { name: 'Minimum' })).toBeInTheDocument()
+
           const minCloudCover = screen.getByRole('textbox', { name: 'Minimum' })
 
           expect(minCloudCover).toHaveValue('')
@@ -512,7 +575,7 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls handleChange on change', async () => {
           const {
-            handleChange, handleSubmit, handleBlur, user
+            handleChange, user
           } = setup({
             collectionMetadata: {
               isOpenSearch: false,
@@ -534,24 +597,6 @@ describe('GranuleFiltersForm component', () => {
               _reactName: 'onChange'
             })
           )
-
-          // Submit the form call
-          await user.tab(maxCloudCover)
-
-          expect(handleSubmit).toHaveBeenCalledTimes(1)
-
-          expect(handleSubmit).toHaveBeenCalledWith(
-            expect.objectContaining({
-              _reactName: 'onBlur'
-            })
-          )
-
-          expect(handleBlur).toHaveBeenCalledTimes(1)
-          expect(handleBlur).toHaveBeenCalledWith(
-            expect.objectContaining({
-              _reactName: 'onBlur'
-            })
-          )
         })
       })
     })
@@ -570,7 +615,6 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          // TODO make sure its the right one
           const minOrbitNumber = screen.getByRole('textbox', { name: 'orbit-number-minimum' })
           expect(minOrbitNumber).toHaveValue('')
         })
@@ -596,6 +640,49 @@ describe('GranuleFiltersForm component', () => {
               _reactName: 'onChange'
             })
           )
+        })
+
+        test('calls onBlur when the filter is submitted ', async () => {
+          const {
+            handleBlur, handleSubmit, onMetricsGranuleFilter, user
+          } = setup({
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
+              }
+            }
+          })
+
+          const minOrbitNumber = screen.getByRole('textbox', { name: 'orbit-number-minimum' })
+
+          await user.type(minOrbitNumber, '9')
+
+          // Submit the form call
+          await user.tab(minOrbitNumber)
+
+          expect(handleSubmit).toHaveBeenCalledTimes(1)
+
+          expect(handleSubmit).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(handleBlur).toHaveBeenCalledTimes(1)
+          expect(handleBlur).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+            type: 'orbitNumber.min',
+            value: ''
+          })
         })
       })
 
@@ -637,6 +724,49 @@ describe('GranuleFiltersForm component', () => {
               _reactName: 'onChange'
             })
           )
+        })
+
+        test('calls onBlur when the filter is submitted ', async () => {
+          const {
+            handleBlur, handleSubmit, onMetricsGranuleFilter, user
+          } = setup({
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
+              }
+            }
+          })
+
+          const maxOrbitNumber = screen.getByRole('textbox', { name: 'orbit-number-maximum' })
+
+          await user.type(maxOrbitNumber, '9')
+
+          // Submit the form call
+          await user.tab(maxOrbitNumber)
+
+          expect(handleSubmit).toHaveBeenCalledTimes(1)
+
+          expect(handleSubmit).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(handleBlur).toHaveBeenCalledTimes(1)
+          expect(handleBlur).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+            type: 'orbitNumber.max',
+            value: ''
+          })
         })
       })
     })
@@ -683,6 +813,41 @@ describe('GranuleFiltersForm component', () => {
             })
           )
         })
+
+        test('calls onBlur when the filter is submitted ', async () => {
+          const { handleBlur, handleSubmit, user } = setup({
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
+              }
+            }
+          })
+
+          const minEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'equator-crossing-longitude-minimum' })
+
+          await user.type(minEquatorCrossingLongitude, '1')
+
+          // Submit the form call
+          await user.tab(minEquatorCrossingLongitude)
+
+          expect(handleSubmit).toHaveBeenCalledTimes(1)
+
+          expect(handleSubmit).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(handleBlur).toHaveBeenCalledTimes(1)
+          expect(handleBlur).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+        })
       })
 
       describe('Max', () => {
@@ -725,6 +890,41 @@ describe('GranuleFiltersForm component', () => {
           expect(handleChange).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onChange'
+            })
+          )
+        })
+
+        test('calls onBlur when the filter is submitted ', async () => {
+          const { handleBlur, handleSubmit, user } = setup({
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
+              }
+            }
+          })
+
+          const maxEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'equator-crossing-longitude-maximum' })
+
+          await user.type(maxEquatorCrossingLongitude, '1')
+
+          // Submit the form call
+          await user.tab(maxEquatorCrossingLongitude)
+
+          expect(handleSubmit).toHaveBeenCalledTimes(1)
+
+          expect(handleSubmit).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(handleBlur).toHaveBeenCalledTimes(1)
+          expect(handleBlur).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
             })
           )
         })
@@ -905,11 +1105,8 @@ describe('GranuleFiltersForm component', () => {
       })
 
       expect(screen.getByLabelText('Tiling System')).toBeInTheDocument()
-      // TODO update this test slightly
       const tileOptions = screen.getByRole('combobox', 'tilingSystem')
       expect(tileOptions).toHaveValue('')
-      // Const gridCoordsSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
-      // expect(gridCoordsSection.find(Form.Control).at(0).prop('value')).toEqual('')
     })
 
     test('calls handleChange on change', async () => {
