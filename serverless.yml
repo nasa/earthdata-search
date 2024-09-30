@@ -206,7 +206,6 @@ custom:
     external: ['knex', 'pg', 'sharp']
     bundle: true
     minify: ${self:custom.minifyBuild.${self:provider.stage}}
-    # exclude: ['./node_modules/*', '*.test.js']
     watch:
       ignore: ['.esbuild', 'dist', 'node_modules', '.build', 'static', "*.test.js"]
 
