@@ -8,6 +8,7 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import { commafy } from '../../util/commafy'
+import { isLoggedIn } from '../../util/isLoggedIn'
 import { stringify } from '../../util/url/url'
 import { locationPropType } from '../../util/propTypes/location'
 
@@ -33,7 +34,6 @@ export const GranuleDownloadButton = (props) => {
 
   const { disableDatabaseComponents } = getApplicationConfig()
   const { apiHost } = getEnvironmentConfig()
-  const isLoggedIn = authToken !== ''
 
   if (tooManyGranules) {
     return (
@@ -126,7 +126,7 @@ export const GranuleDownloadButton = (props) => {
     variant: 'full'
   }
 
-  if (!isLoggedIn) {
+  if (!isLoggedIn(authToken)) {
     const projectPath = `${window.location.protocol}//${window.location.host}/projects${stringifiedProjectParams}`
 
     return (
