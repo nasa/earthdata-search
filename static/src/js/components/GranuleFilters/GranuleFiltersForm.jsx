@@ -574,7 +574,7 @@ export const GranuleFiltersForm = (props) => {
                       <Col>
                         <Form.Group controlId="granule-filters__day-night-flag">
                           <Form.Control
-                            aria-label="day-night-flag"
+                            aria-label="Select day/night flag"
                             name="dayNightFlag"
                             data-testid="granule-filters__day-night-flag"
                             as="select"
@@ -701,7 +701,7 @@ export const GranuleFiltersForm = (props) => {
                         </Form.Label>
                         <Col sm={7}>
                           <Form.Control
-                            aria-label="orbit-number-minimum"
+                            aria-label="Set minimum orbit number"
                             name="orbitNumber.min"
                             data-testid="granule-filters__orbit-number-min"
                             type="text"
@@ -733,7 +733,7 @@ export const GranuleFiltersForm = (props) => {
                         </Form.Label>
                         <Col sm={7}>
                           <Form.Control
-                            aria-label="orbit-number-maximum"
+                            aria-label="Set maximum orbit number"
                             name="orbitNumber.max"
                             data-testid="granule-filters__orbit-number-max"
                             type="text"
@@ -771,7 +771,7 @@ export const GranuleFiltersForm = (props) => {
                         <Col sm={7}>
                           <Form.Control
                             name="equatorCrossingLongitude.min"
-                            aria-label="equator-crossing-longitude-minimum"
+                            aria-label="Set minimum equator crossing longitude"
                             data-testid="granule-filters__equatorial-crossing-longitude-min"
                             type="text"
                             size="sm"
@@ -805,7 +805,7 @@ export const GranuleFiltersForm = (props) => {
                         <Col sm={7}>
                           <Form.Control
                             name="equatorCrossingLongitude.max"
-                            aria-label="equator-crossing-longitude-maximum"
+                            aria-label="Set maximum equator crossing longitude"
                             data-testid="granule-filters__equatorial-crossing-longitude-max"
                             type="text"
                             size="sm"
@@ -833,7 +833,7 @@ export const GranuleFiltersForm = (props) => {
                     <SidebarFiltersItem
                       heading="Equatorial Crossing Date"
                     >
-                      <Form.Group aria-label="granule-filters-equatorial-crossing-date" controlId="granule-filters__equatorial-crossing-date">
+                      <Form.Group aria-label="Set granule equatorial crossing date" controlId="granule-filters__equatorial-crossing-date">
                         <Form.Control
                           as="div"
                           className="form-control-basic"

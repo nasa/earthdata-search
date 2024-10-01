@@ -376,7 +376,7 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        expect(screen.getByRole('combobox', { name: 'day-night-flag' })).toHaveValue('')
+        expect(screen.getByRole('combobox', { name: 'Select day/night flag' })).toHaveValue('')
       })
 
       test('displays selected item', async () => {
@@ -394,7 +394,7 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        expect(screen.getByRole('combobox', { name: 'day-night-flag' })).toHaveValue('NIGHT')
+        expect(screen.getByRole('combobox', { name: 'Select day/night flag' })).toHaveValue('NIGHT')
       })
 
       test('calls handleChange on change', async () => {
@@ -412,7 +412,7 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const dayNightSelection = screen.getByRole('combobox', { name: 'day-night-flag' })
+        const dayNightSelection = screen.getByRole('combobox', { name: 'Select day/night flag' })
 
         await user.selectOptions(dayNightSelection, 'Day')
         await user.selectOptions(dayNightSelection, 'Both')
@@ -615,7 +615,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const minOrbitNumber = screen.getByRole('textbox', { name: 'orbit-number-minimum' })
+          const minOrbitNumber = screen.getByRole('textbox', { name: 'Set minimum orbit number' })
           expect(minOrbitNumber).toHaveValue('')
         })
 
@@ -630,7 +630,7 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const minOrbitNumber = screen.getByRole('textbox', { name: 'orbit-number-minimum' })
+          const minOrbitNumber = screen.getByRole('textbox', { name: 'Set minimum orbit number' })
 
           await user.type(minOrbitNumber, '9')
 
@@ -656,7 +656,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const minOrbitNumber = screen.getByRole('textbox', { name: 'orbit-number-minimum' })
+          const minOrbitNumber = screen.getByRole('textbox', { name: 'Set minimum orbit number' })
 
           await user.type(minOrbitNumber, '9')
 
@@ -699,7 +699,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberMaximum = screen.getByRole('textbox', { name: 'orbit-number-maximum' })
+          const orbitNumberMaximum = screen.getByRole('textbox', { name: 'Set maximum orbit number' })
           expect(orbitNumberMaximum).toHaveValue('')
         })
 
@@ -715,7 +715,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const maxOrbitNumber = screen.getByRole('textbox', { name: 'orbit-number-maximum' })
+          const maxOrbitNumber = screen.getByRole('textbox', { name: 'Set maximum orbit number' })
           await user.type(maxOrbitNumber, '9')
 
           expect(handleChange).toHaveBeenCalledTimes(1)
@@ -740,7 +740,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const maxOrbitNumber = screen.getByRole('textbox', { name: 'orbit-number-maximum' })
+          const maxOrbitNumber = screen.getByRole('textbox', { name: 'Set maximum orbit number' })
 
           await user.type(maxOrbitNumber, '9')
 
@@ -784,7 +784,7 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const minEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'equator-crossing-longitude-minimum' })
+          const minEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'Set minimum equator crossing longitude' })
 
           expect(minEquatorCrossingLongitude).toHaveValue('')
           expect(handleChange).toHaveBeenCalledTimes(0)
@@ -802,7 +802,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const minEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'equator-crossing-longitude-minimum' })
+          const minEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'Set minimum equator crossing longitude' })
           await user.type(minEquatorCrossingLongitude, '1')
           await user.tab(minEquatorCrossingLongitude)
 
@@ -826,7 +826,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const minEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'equator-crossing-longitude-minimum' })
+          const minEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'Set minimum equator crossing longitude' })
 
           await user.type(minEquatorCrossingLongitude, '1')
 
@@ -863,7 +863,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const maxEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'equator-crossing-longitude-maximum' })
+          const maxEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'Set maximum equator crossing longitude' })
 
           expect(maxEquatorCrossingLongitude).toHaveValue('')
           expect(handleChange).toHaveBeenCalledTimes(0)
@@ -880,7 +880,7 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const maxEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'equator-crossing-longitude-maximum' })
+          const maxEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'Set maximum equator crossing longitude' })
 
           await user.type(maxEquatorCrossingLongitude, '1')
           await user.tab(maxEquatorCrossingLongitude)
@@ -906,7 +906,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const maxEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'equator-crossing-longitude-maximum' })
+          const maxEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'Set maximum equator crossing longitude' })
 
           await user.type(maxEquatorCrossingLongitude, '1')
 
@@ -951,7 +951,7 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const equatorCrossingDateSection = screen.getByLabelText('granule-filters-equatorial-crossing-date')
+        const equatorCrossingDateSection = screen.getByLabelText('Set granule equatorial crossing date')
         const equatorCrossingStartDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'Start Date' })
         const equatorCrossingEndDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'End Date' })
 
@@ -976,7 +976,7 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const equatorCrossingDateSection = screen.getByLabelText('granule-filters-equatorial-crossing-date')
+        const equatorCrossingDateSection = screen.getByLabelText('Set granule equatorial crossing date')
         const equatorCrossingStartDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'Start Date' })
         const equatorCrossingEndDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'End Date' })
 
@@ -1002,7 +1002,7 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const equatorCrossingDateSection = screen.getByLabelText('granule-filters-equatorial-crossing-date')
+        const equatorCrossingDateSection = screen.getByLabelText('Set granule equatorial crossing date')
         const equatorCrossingStartDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'Start Date' })
         const equatorCrossingEndDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'End Date' })
 
@@ -1027,7 +1027,7 @@ describe('GranuleFiltersForm component', () => {
             }
           }
         })
-        const equatorCrossingDateSection = screen.getByLabelText('granule-filters-equatorial-crossing-date')
+        const equatorCrossingDateSection = screen.getByLabelText('Set granule equatorial crossing date')
         const equatorCrossingStartDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'Start Date' })
 
         await user.click(equatorCrossingStartDateTextField)
@@ -1060,7 +1060,7 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const equatorCrossingDateSection = screen.getByLabelText('granule-filters-equatorial-crossing-date')
+        const equatorCrossingDateSection = screen.getByLabelText('Set granule equatorial crossing date')
         const equatorCrossingEndDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'End Date' })
 
         await user.click(equatorCrossingEndDateTextField)
