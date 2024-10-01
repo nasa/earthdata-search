@@ -1,5 +1,6 @@
 /**
- * Returns true if the authToken is not empty
+ * Returns true if the authToken is not empty.
+ * @param {String} authToken - The authToken for the logged in user.
  * @return {boolean}
  */
 
