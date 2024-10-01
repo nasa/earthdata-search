@@ -283,7 +283,7 @@ export const GranuleFiltersForm = (props) => {
                     overlay={
                       (
                         <Tooltip id="granule-filters-form-id-filter-tooltip" className="tooltip--ta-left tooltip--wide">
-                          <p>
+                          <p className="font-weight-lighter">
                             Filter granules by using a granule ID.
                             Enter an ID to find an exact match or use a wildcard
                             and/or delimiter to search using a more complex query.
@@ -291,12 +291,20 @@ export const GranuleFiltersForm = (props) => {
                           <strong className="granule-filters-form__readable-granule-name-tooltip-title">
                             Search granules using wildcard characters
                           </strong>
-                          <ul className="m-0 granule-filters-form__readable-granule-name-tooltip-list">
-                            <li>
-                              Question marks (?) match a single character in that location
+                          <ul className="m-0 font-size granule-filters-form__readable-granule-name-tooltip-list">
+                            <li className="font-weight-lighter">
+                              Question marks
+                              {' ('}
+                              <strong className="font-weight-bold">?</strong>
+                              {') '}
+                              match a single character in that location
                             </li>
-                            <li>
-                              Asterisks (*) match any number of characters in that location
+                            <li className="font-weight-lighter">
+                              Asterisks
+                              {' ('}
+                              <strong className="font-weight-bold">*</strong>
+                              {') '}
+                              match any number of characters in that location
                             </li>
                           </ul>
                           <br />
@@ -304,8 +312,12 @@ export const GranuleFiltersForm = (props) => {
                             Search granules using multiple IDs
                           </strong>
                           <ul className="m-0 granule-filters-form__readable-granule-name-tooltip-list">
-                            <li>
-                              Commas (,) are used separate multiple searches
+                            <li className="font-weight-lighter">
+                              Commas
+                              {' ('}
+                              <strong className="font-weight-bold">,</strong>
+                              {') '}
+                              are used to separate multiple searches
                             </li>
                           </ul>
                         </Tooltip>
