@@ -244,7 +244,7 @@ describe('GranuleFiltersContainer component', () => {
           }
         })
 
-        const tooltipText = /Filter granules by name/i
+        const tooltipText = /Filter granules by using a granule ID/i
 
         expect(screen.queryByText(tooltipText)).not.toBeInTheDocument()
 
@@ -255,7 +255,10 @@ describe('GranuleFiltersContainer component', () => {
           await user.hover(readableGranuleNameTMoreInfo)
         })
 
-        expect(screen.getByText(tooltipText)).toBeVisible()
+        // Ensure Tooltip sections are rendering
+        expect(screen.getByText(/Asterisks/i)).toBeVisible()
+        expect(screen.getByText(/Question marks/i)).toBeVisible()
+        expect(screen.getByText(/Commas/i)).toBeVisible()
       })
     })
   })

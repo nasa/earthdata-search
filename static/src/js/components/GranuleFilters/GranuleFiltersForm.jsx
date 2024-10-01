@@ -279,7 +279,6 @@ export const GranuleFiltersForm = (props) => {
 
                   <OverlayTrigger
                     placement="top"
-                    show
                     overlay={
                       (
                         <Tooltip id="granule-filters-form-id-filter-tooltip" className="tooltip--ta-left tooltip--wide">
