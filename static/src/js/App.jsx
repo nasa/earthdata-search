@@ -229,15 +229,20 @@ class App extends Component {
                     <Route
                       path={this.portalPaths('/search')}
                       render={
-                        () => (
-                          <>
-                            <SearchTour runTour={this.state.runTour} setRunTour={this.setRunTour} />
-                            <Search />
-                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
-                              <EdscMapContainer />
-                            </Suspense>
-                          </>
-                        )
+                        () => {
+                          const { runTour } = this.state
+                          const { setRunTour } = this
+
+                          return (
+                            <>
+                              <SearchTour runTour={runTour} setRunTour={setRunTour} />
+                              <Search />
+                              <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
+                                <EdscMapContainer />
+                              </Suspense>
+                            </>
+                          )
+                        }
                       }
                     />
                     <Route
