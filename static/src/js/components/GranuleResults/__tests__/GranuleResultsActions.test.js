@@ -10,6 +10,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
+    authToken: 'token',
     addedGranuleIds: [],
     focusedProjectCollection: {
       granules: {
@@ -19,6 +20,7 @@ function setup(overrideProps) {
     },
     removedGranuleIds: [],
     allGranulesInProject: false,
+    earthdataEnvironment: 'prod',
     focusedCollectionId: 'collectionId',
     granuleLimit: 10000000,
     searchGranuleCount: 5000,

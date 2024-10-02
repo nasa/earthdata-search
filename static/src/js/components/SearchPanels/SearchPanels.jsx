@@ -18,6 +18,7 @@ import Helmet from 'react-helmet'
 
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
+import { isLoggedIn } from '../../util/isLoggedIn'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
@@ -170,7 +171,7 @@ class SearchPanels extends PureComponent {
       preferences
     } = this.props
 
-    const isLoggedIn = !(authToken === null || authToken === '')
+    const loggedIn = isLoggedIn(authToken)
 
     const {
       pageNum: granulesPageNum = 1,
@@ -363,7 +364,7 @@ class SearchPanels extends PureComponent {
         }
       ])
 
-      return isLoggedIn && (
+      return loggedIn && (
         <div className="search-panels__actions">
           <PortalFeatureContainer authentication>
             <AuthRequiredContainer noRedirect>
@@ -393,7 +394,7 @@ class SearchPanels extends PureComponent {
 
     let subscriptionsMoreActionsItem = []
 
-    if (isLoggedIn) {
+    if (loggedIn) {
       subscriptionsMoreActionsItem = [
         {
           title: 'Subscriptions',

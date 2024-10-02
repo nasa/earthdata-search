@@ -39,7 +39,9 @@ import './GranuleResultsActions.scss'
  * @param {Function} onRemoveCollectionFromProject - Callback to remove the collection from the project.
  */
 const GranuleResultsActions = ({
+  authToken,
   addedGranuleIds,
+  earthdataEnvironment,
   focusedCollectionId,
   focusedProjectCollection,
   granuleLimit,
@@ -119,8 +121,10 @@ const GranuleResultsActions = ({
 
   const downloadButton = (
     <GranuleDownloadButton
+      authToken={authToken}
       badge={badge}
       buttonText={buttonText}
+      earthdataEnvironment={earthdataEnvironment}
       focusedCollectionId={focusedCollectionId}
       granuleCount={granuleCount}
       granuleLimit={granuleLimit}
@@ -230,7 +234,9 @@ GranuleResultsActions.defaultProps = {
 }
 
 GranuleResultsActions.propTypes = {
+  authToken: PropTypes.string.isRequired,
   addedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  earthdataEnvironment: PropTypes.string.isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedProjectCollection: PropTypes.shape({}).isRequired,
   granuleLimit: PropTypes.number,

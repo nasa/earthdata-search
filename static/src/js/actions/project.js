@@ -202,7 +202,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
     }))
 
     // If we know that the user is unauthorized and we need to redirect to EDL, stop here.
-    if (error.message?.includes('401')) {
+    if (error.response.status === 401) {
       return null
     }
   }
