@@ -8,8 +8,6 @@ import {
 
 import userEvent from '@testing-library/user-event'
 
-import '@testing-library/jest-dom'
-
 import Datepicker from '../Datepicker'
 
 const setup = (overrideProps) => {

@@ -4,19 +4,19 @@ import nock from 'nock'
 
 import actions from '../../index'
 import {
-  fetchAdminMetricsRetrievals,
-  setAdminMetricRetrievals,
-  setAdminMetricRetrievalsLoaded,
-  setAdminMetricRetrievalsLoading,
-  updateAdminMetricsRetrievalsEndDate,
-  updateAdminMetricsRetrievalsStartDate
+  fetchAdminRetrievalsMetrics,
+  setAdminRetrievalsMetrics,
+  setAdminRetrievalsMetricsLoaded,
+  setAdminRetrievalsMetricsLoading,
+  updateAdminRetrievalsMetricsEndDate,
+  updateAdminRetrievalsMetricsStartDate
 } from '../retrievalMetrics'
 import {
-  SET_ADMIN_METRICS_RETRIEVALS_LOADED,
-  SET_ADMIN_METRICS_RETRIEVALS_LOADING,
-  SET_ADMIN_METRICS_RETRIEVALS,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE
+  SET_ADMIN_RETRIEVALS_METRICS_LOADED,
+  SET_ADMIN_RETRIEVALS_METRICS_LOADING,
+  SET_ADMIN_RETRIEVALS_METRICS,
+  UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE,
+  UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE
 } from '../../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -26,22 +26,22 @@ beforeEach(() => {
   jest.restoreAllMocks()
 })
 
-describe('setAdminMetricsRetrievals', () => {
+describe('setAdminRetrievalsMetrics', () => {
   test('should create an action to set the admin retrievals metrics data', () => {
     const payload = {
       mock: 'data'
     }
 
     const expectedAction = {
-      type: SET_ADMIN_METRICS_RETRIEVALS,
+      type: SET_ADMIN_RETRIEVALS_METRICS,
       payload
     }
 
-    expect(setAdminMetricRetrievals(payload)).toEqual(expectedAction)
+    expect(setAdminRetrievalsMetrics(payload)).toEqual(expectedAction)
   })
 })
 
-describe('setAdminMetricsRetrievals', () => {
+describe('setAdminRetrievalsMetrics', () => {
   test('should create an action to update the admin retrievals metrics list', () => {
     const payload = [
       {
@@ -53,31 +53,31 @@ describe('setAdminMetricsRetrievals', () => {
     ]
 
     const expectedAction = {
-      type: SET_ADMIN_METRICS_RETRIEVALS,
+      type: SET_ADMIN_RETRIEVALS_METRICS,
       payload
     }
 
-    expect(setAdminMetricRetrievals(payload)).toEqual(expectedAction)
+    expect(setAdminRetrievalsMetrics(payload)).toEqual(expectedAction)
   })
 })
 
-describe('setAdminMetricsRetrievalsLoading', () => {
+describe('setAdminRetrievalsMetricsLoading', () => {
   test('should create an action to update the admin metric retrievals loading state', () => {
     const expectedAction = {
-      type: SET_ADMIN_METRICS_RETRIEVALS_LOADING
+      type: SET_ADMIN_RETRIEVALS_METRICS_LOADING
     }
 
-    expect(setAdminMetricRetrievalsLoading()).toEqual(expectedAction)
+    expect(setAdminRetrievalsMetricsLoading()).toEqual(expectedAction)
   })
 })
 
-describe('setAdminMetricsRetrievalsLoaded', () => {
+describe('setAdminRetrievalsMetricsLoaded', () => {
   test('should create an action to update the admin retrievals loaded state', () => {
     const expectedAction = {
-      type: SET_ADMIN_METRICS_RETRIEVALS_LOADED
+      type: SET_ADMIN_RETRIEVALS_METRICS_LOADED
     }
 
-    expect(setAdminMetricRetrievalsLoaded()).toEqual(expectedAction)
+    expect(setAdminRetrievalsMetricsLoaded()).toEqual(expectedAction)
   })
 })
 
@@ -93,11 +93,11 @@ describe('updateAdminRetrievalsMetricsStartDate', () => {
     })
 
     // Call the dispatch
-    store.dispatch(updateAdminMetricsRetrievalsStartDate(startDate))
+    store.dispatch(updateAdminRetrievalsMetricsStartDate(startDate))
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE,
+      type: UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE,
       payload: startDate
     })
   })
@@ -115,47 +115,47 @@ describe('updateAdminRetrievalsMetricsEndDate', () => {
     })
 
     // Call the dispatch
-    store.dispatch(updateAdminMetricsRetrievalsEndDate(endDate))
+    store.dispatch(updateAdminRetrievalsMetricsEndDate(endDate))
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE,
+      type: UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE,
       payload: endDate
     })
   })
 })
 
-describe('fetchAdminMetricsRetrievals', () => {
+describe('fetchAdminRetrievalsMetrics', () => {
   test('fetches the list of admin metrics retrievals', async () => {
     const data = {
       results: [{ mock: 'data' }]
     }
 
     nock(/localhost/)
-      .get(/admin\/retrievalsMetrics/)
+      .get(/admin\/retrievals_metrics/)
       .reply(200, data)
 
     const store = mockStore({
       authToken: 'mockToken',
       admin: {
         isAuthorized: true,
-        metricsRetrievals: {
+        retrievalsMetrics: {
         }
       }
     })
 
-    await store.dispatch(fetchAdminMetricsRetrievals()).then(() => {
+    await store.dispatch(fetchAdminRetrievalsMetrics()).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
-        type: SET_ADMIN_METRICS_RETRIEVALS_LOADING
+        type: SET_ADMIN_RETRIEVALS_METRICS_LOADING
       })
 
       expect(storeActions[1]).toEqual({
-        type: SET_ADMIN_METRICS_RETRIEVALS_LOADED
+        type: SET_ADMIN_RETRIEVALS_METRICS_LOADED
       })
 
       expect(storeActions[2]).toEqual({
-        type: SET_ADMIN_METRICS_RETRIEVALS,
+        type: SET_ADMIN_RETRIEVALS_METRICS,
         payload: data.results
       })
     })
@@ -166,7 +166,7 @@ describe('fetchAdminMetricsRetrievals', () => {
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     nock(/localhost/)
-      .get(/admin\/retrievalsMetrics/)
+      .get(/admin\/retrievals_metrics/)
       .reply(500)
 
     nock(/localhost/)
@@ -177,22 +177,22 @@ describe('fetchAdminMetricsRetrievals', () => {
       authToken: 'mockToken',
       admin: {
         isAuthorized: true,
-        metricsRetrievals: {
+        retrievalsMetrics: {
         }
       }
     })
 
-    await store.dispatch(fetchAdminMetricsRetrievals())
+    await store.dispatch(fetchAdminRetrievalsMetrics())
 
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual({
-      type: SET_ADMIN_METRICS_RETRIEVALS_LOADING
+      type: SET_ADMIN_RETRIEVALS_METRICS_LOADING
     })
 
     expect(handleErrorMock).toHaveBeenCalledTimes(1)
     expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
-      action: 'fetchAdminMetricsRetrievals',
-      resource: 'admin metrics retrievals'
+      action: 'fetchAdminRetrievalsMetrics',
+      resource: 'admin retrievals metrics'
     }))
 
     expect(consoleMock).toHaveBeenCalledTimes(1)

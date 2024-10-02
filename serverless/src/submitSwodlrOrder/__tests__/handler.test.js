@@ -449,13 +449,13 @@ describe('submitSwodlrOrder', () => {
     })
 
     const context = {}
-    await expect(submitSwodlrOrder(mockSwodlrOrder, context)).rejects.toEqual(new Error('Error: Too many granules'))
+    await expect(submitSwodlrOrder(mockSwodlrOrder, context)).rejects.toEqual(new Error('Error: Too many granules cannot submit to Swodlr api'))
 
     const { queries } = dbTracker.queries
 
     expect(queries[0].method).toEqual('first')
     expect(queries[1].method).toEqual('update')
-    expect(queries[1].bindings).toEqual(['create_failed', 'Error: Too many granules', 12])
+    expect(queries[1].bindings).toEqual(['create_failed', 'Error: Too many granules cannot submit to Swodlr api', 12])
   })
 
   test('saves an error message if the create fails in swodlr order', async () => {

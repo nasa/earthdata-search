@@ -7,7 +7,6 @@ import {
 import userEvent from '@testing-library/user-event'
 import { collectionListItemProps } from './mocks'
 import { retrieveThumbnail } from '../../../util/retrieveThumbnail'
-import '@testing-library/jest-dom'
 
 import { CollectionResultsItem } from '../CollectionResultsItem'
 

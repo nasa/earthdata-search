@@ -53,7 +53,7 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
   const keysToFilter = [
     // `hasGranulesOrCwic` is the default, so it should not be displayed
     'hasGranulesOrCwic',
-    // `options` are derrived from a users query and should not be displayed
+    // `options` are derived from a users query and should not be displayed
     'options',
     'consortium'
   ]
@@ -65,7 +65,7 @@ export const queryToHumanizedList = (subscriptionsQuery, subscriptionQueryType) 
     .filter((key) => subscriptionsQueryTemp[key].length !== 0)
     .forEach((key) => {
       // Set each item in the array to be an array where the first index is the key
-      // and the index is the humanzed value
+      // and the index is the humanized value
       values.push(
         {
           key,

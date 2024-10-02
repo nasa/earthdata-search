@@ -1,8 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import '@testing-library/jest-dom'
-
 import { BrowserRouter } from 'react-router-dom'
 
 import actions from '../../../actions'
@@ -19,41 +17,43 @@ jest.mock('../../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics', (
 
 const setup = () => {
   const props = {
-    onFetchAdminMetricsRetrievals: jest.fn(),
-    onUpdateAdminMetricsRetrievalsStartDate: jest.fn(),
-    onUpdateAdminMetricsRetrievalsEndDate: jest.fn(),
+    onFetchAdminRetrievalsMetrics: jest.fn(),
+    onUpdateAdminRetrievalsMetricsStartDate: jest.fn(),
+    onUpdateAdminRetrievalsMetricsEndDate: jest.fn(),
     retrievals: {}
   }
 
   // https://testing-library.com/docs/example-react-router/
   render(<AdminRetrievalsMetricsContainer {...props} />, { wrapper: BrowserRouter })
+
+  return props
 }
 
 describe('mapDispatchToProps', () => {
-  test('onFetchAdminMetricsRetrievals calls actions.onFetchAdminMetricsRetrievals', () => {
+  test('onFetchAdminRetrievalsMetrics calls actions.onFetchAdminRetrievalsMetrics', () => {
     const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'fetchAdminMetricsRetrievals')
+    const spy = jest.spyOn(actions, 'fetchAdminRetrievalsMetrics')
 
-    mapDispatchToProps(dispatch).onFetchAdminMetricsRetrievals()
+    mapDispatchToProps(dispatch).onFetchAdminRetrievalsMetrics()
 
     expect(spy).toBeCalledTimes(1)
   })
 
-  test('onUpdateAdminMetricsRetrievalsStartDate calls actions.updateAdminMetricsRetrievalsStartDate', () => {
+  test('onUpdateAdminRetrievalsMetricsStartDate calls actions.updateAdminRetrievalsMetricsStartDate', () => {
     const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'updateAdminMetricsRetrievalsStartDate')
+    const spy = jest.spyOn(actions, 'updateAdminRetrievalsMetricsStartDate')
 
-    mapDispatchToProps(dispatch).onUpdateAdminMetricsRetrievalsStartDate('start-date')
+    mapDispatchToProps(dispatch).onUpdateAdminRetrievalsMetricsStartDate('start-date')
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('start-date')
   })
 
-  test('onUpdateAdminRetrievalsEndDate calls actions.updateAdminMetricsRetrievalsEndDate', () => {
+  test('onUpdateAdminRetrievalsEndDate calls actions.updateAdminRetrievalsMetricsEndDate', () => {
     const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'updateAdminMetricsRetrievalsEndDate')
+    const spy = jest.spyOn(actions, 'updateAdminRetrievalsMetricsEndDate')
 
-    mapDispatchToProps(dispatch).onUpdateAdminMetricsRetrievalsEndDate('end-date')
+    mapDispatchToProps(dispatch).onUpdateAdminRetrievalsMetricsEndDate('end-date')
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('end-date')
@@ -63,7 +63,7 @@ describe('mapDispatchToProps', () => {
     test('returns the correct state', () => {
       const store = {
         admin: {
-          metricsRetrievals: {
+          retrievalsMetrics: {
             isLoading: false,
             isLoaded: false
           }
@@ -71,7 +71,7 @@ describe('mapDispatchToProps', () => {
       }
 
       const expectedState = {
-        metricsRetrievals: {
+        retrievalsMetrics: {
           isLoading: false,
           isLoaded: false
         },
@@ -86,9 +86,24 @@ describe('mapDispatchToProps', () => {
 
 describe('AdminRetrievalsMetricsContainer component', () => {
   test('render AdminRetrievalsMetrics with the correct props', () => {
-    setup()
+    const {
+      onFetchAdminRetrievalsMetrics,
+      onUpdateAdminRetrievalsMetricsStartDate,
+      onUpdateAdminRetrievalsMetricsEndDate,
+      retrievals
+    } = setup()
 
     expect(AdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
+    expect(AdminRetrievalsMetrics).toHaveBeenCalledWith(
+      {
+        onFetchAdminRetrievalsMetrics,
+        onUpdateAdminRetrievalsMetricsStartDate,
+        onUpdateAdminRetrievalsMetricsEndDate,
+        retrievalsMetrics: retrievals
+      },
+      {}
+    )
+
     expect(screen.getByText('Mock Admin Retrievals Metrics')).toBeInTheDocument()
   })
 })

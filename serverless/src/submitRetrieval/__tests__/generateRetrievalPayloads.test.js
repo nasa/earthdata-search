@@ -4,6 +4,12 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
+// Mock the Swodlr max value so the mock objects don't get so large in the tests
+jest.mock('../../../../static/src/js/constants/swodlrConstants', () => ({
+  ...jest.requireActual('../../../../static/src/js/constants/swodlrConstants'),
+  maxSwodlrGranuleCount: 4
+}))
+
 describe('generateRetrievalPayloads', () => {
   describe('when maxItemsPerOrder is set', () => {
     test('returns the correct payload for a single page', async () => {
@@ -125,6 +131,24 @@ describe('generateRetrievalPayloads', () => {
           page_size: 1
         }
       ])
+    })
+
+    test('any orders greater where the page is greater than the max swodlr granule count fails', async () => {
+      const swodlrOrderPayload = {
+        id: 19,
+        access_method: {
+          type: 'SWODLR',
+          id: 'S10000001-EDSC',
+          url: 'https://swodlr.podaac.earthdatacloud.nasa.gov'
+        },
+        collection_metadata: {},
+        granule_count: 5,
+        granule_params: {
+          concept_id: ['G10000000-EDSC', 'G10000001-EDSC', 'G10000002-EDSC', 'G10000003-EDSC', 'G10000004-EDSC'],
+          echo_collection_id: 'C10000005-EDSC'
+        }
+      }
+      await expect(generateRetrievalPayloads(swodlrOrderPayload, { type: 'SWODLR' })).rejects.toEqual(new Error('Swodlr too many granules at retrieval'))
     })
   })
 

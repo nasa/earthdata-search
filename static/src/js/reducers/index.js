@@ -2,8 +2,9 @@ import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 
 import adminIsAuthorizedReducer from './admin/isAuthorized'
+import adminPreferencesMetricsReducer from './admin/preferencesMetrics'
 import adminProjectsReducer from './admin/projects'
-import adminMetricsRetrievalsReducer from './admin/retrievalsMetrics'
+import adminRetrievalsMetricsReducer from './admin/retrievalsMetrics'
 import adminRetrievalsReducer from './admin/retrievals'
 import advancedSearchReducer from './advancedSearch'
 import authTokenReducer from './authToken'
@@ -48,9 +49,10 @@ import viewAllFacetsRequestReducer from './viewAllFacets'
 export default (history) => combineReducers({
   admin: combineReducers({
     isAuthorized: adminIsAuthorizedReducer,
+    preferencesMetrics: adminPreferencesMetricsReducer,
     projects: adminProjectsReducer,
     retrievals: adminRetrievalsReducer,
-    metricsRetrievals: adminMetricsRetrievalsReducer
+    retrievalsMetrics: adminRetrievalsMetricsReducer
   }),
   advancedSearch: advancedSearchReducer,
   authToken: authTokenReducer,

@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
+import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
@@ -34,8 +35,10 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const mapStateToProps = (state) => ({
+  authToken: state.authToken,
   collectionMetadata: getFocusedCollectionMetadata(state),
   collectionQuery: state.query.collection,
+  earthdataEnvironment: getEarthdataEnvironment(state),
   focusedCollectionId: getFocusedCollectionId(state),
   focusedProjectCollection: getFocusedProjectCollection(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
@@ -47,8 +50,10 @@ export const mapStateToProps = (state) => ({
 
 export const GranuleResultsActionsContainer = (props) => {
   const {
+    authToken,
     collectionMetadata,
     collectionQuery,
+    earthdataEnvironment,
     focusedCollectionId,
     focusedProjectCollection,
     granuleQuery,
@@ -103,7 +108,9 @@ export const GranuleResultsActionsContainer = (props) => {
 
   return (
     <GranuleResultsActions
+      authToken={authToken}
       addedGranuleIds={addedGranuleIds}
+      earthdataEnvironment={earthdataEnvironment}
       focusedCollectionId={focusedCollectionId}
       focusedProjectCollection={focusedProjectCollection}
       granuleLimit={granuleLimit}
@@ -125,8 +132,10 @@ export const GranuleResultsActionsContainer = (props) => {
 }
 
 GranuleResultsActionsContainer.propTypes = {
+  authToken: PropTypes.string.isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
+  earthdataEnvironment: PropTypes.string.isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedProjectCollection: PropTypes.shape({
     granules: PropTypes.shape({})

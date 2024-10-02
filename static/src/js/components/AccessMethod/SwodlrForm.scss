@@ -1,23 +1,48 @@
-.nowrap {
-    text-wrap: nowrap;
+.swodlr-form {
+
+  &__advanced-options-item {
+    flex-grow: 0;
+    flex-shrink: 0;
+    z-index: 1;
+    position: relative;
+
+    .collapse-panel__button {
+      width: 100%;
+      padding: $spacer;
+      border: 0;
+      border-top: 1px solid $color__carbon--20;
+      background: none;
+      outline: none;
+      text-align: left;
+      padding: 0.825rem;
+
+      &:hover {
+        color: $color__carbon--50;
+      }
+    }
+
+    .collapse-panel__panel {
+      border-top: 1px solid $color__carbon--20;
+    }
   }
-  
-  .mb-3 {
+
+  &__table-td-granule-id {
+    white-space: normal;
+    line-break: anywhere;
+  }
+
+  &__col {
+    padding-right: 3rem;
+  }
+
+  &__form-group {
+    display: flex;
+    align-items: baseline;
+    gap: 0.825rem;
     white-space: nowrap;
   }
 
-.swodlr-advanced-options-container {
-    display: flex;
+  &__card-body {
+    padding: 0.1rem 1rem;
   }
-  
-  .swodlr-advanced-options-item {
-    flex: 1;
-  }
-
-  .table td, .table th {
-    padding: .625rem;
-  }
-
-  .swodlr-tooltip {
-    width: 20rem;
-  }
+}

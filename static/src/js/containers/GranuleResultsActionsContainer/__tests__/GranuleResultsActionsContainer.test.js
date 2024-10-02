@@ -14,6 +14,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    authToken: 'token',
     location: {
       search: 'value'
     },
@@ -21,6 +22,7 @@ function setup() {
       mock: 'data'
     },
     collectionQuery: {},
+    earthdataEnvironment: 'prod',
     focusedCollectionId: 'focusedCollection',
     focusedProjectCollection: {
       accessMethods: {},
@@ -142,6 +144,7 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
+      authToken: 'token',
       metadata: {
         collections: {
           collectionId: {
@@ -149,6 +152,7 @@ describe('mapStateToProps', () => {
           }
         }
       },
+      earthdataEnvironment: 'prod',
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleId',
       query: {
@@ -162,10 +166,12 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
+      authToken: 'token',
       collectionMetadata: {
         subscriptions: []
       },
       collectionQuery: {},
+      earthdataEnvironment: 'prod',
       focusedCollectionId: 'collectionId',
       focusedProjectCollection: {},
       granuleQuery: {},

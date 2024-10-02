@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
 import ProjectHeader from '../ProjectHeader'
-import '@testing-library/jest-dom'
 
 const setup = (overrideProps) => {
   const props = {

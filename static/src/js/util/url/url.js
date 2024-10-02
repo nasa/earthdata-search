@@ -197,7 +197,7 @@ export const decodeUrlParams = (paramString) => {
     parseArrays: false
   })
 
-  // Create an array of any deprectated parameters that appear in the params
+  // Create an array of any deprecated parameters that appear in the params
   const deprecatedUrlParams = Object.entries(params)
     .filter(([key]) => deprecatedURLParameters.includes(key))
     .map(([key]) => key)
