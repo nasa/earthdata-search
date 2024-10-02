@@ -8,18 +8,20 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ExternalLink from '../ExternalLink/ExternalLink'
 import './SearchTour.scss'
 
-const StepCounter = ({ currentStep, maxSteps }) => (
+const TOTAL_STEPS = 12
+
+const StepCounter = ({ currentStep }) => (
   <p className="step-counter-text">
     {currentStep}
     {' '}
     OF
-    {maxSteps}
+    {' '}
+    {TOTAL_STEPS}
   </p>
 )
 
 StepCounter.propTypes = {
-  currentStep: PropTypes.number.isRequired,
-  maxSteps: PropTypes.number.isRequired
+  currentStep: PropTypes.number.isRequired
 }
 
 const TourButtons = ({ stepIndex, setStepIndex }) => (
@@ -28,6 +30,7 @@ const TourButtons = ({ stepIndex, setStepIndex }) => (
       type="button"
       bootstrapVariant="secondary"
       bootstrapSize="sm"
+      data-testid="tour-previous-button"
       onClick={() => setStepIndex(stepIndex - 1)}
     >
       Previous
@@ -36,6 +39,7 @@ const TourButtons = ({ stepIndex, setStepIndex }) => (
       type="button"
       bootstrapVariant="primary"
       bootstrapSize="sm"
+      data-testid="tour-next-button"
       onClick={() => setStepIndex(stepIndex + 1)}
     >
       Next
@@ -159,7 +163,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
             Available filters include keyword search, spatial and temporal bounds,
             and advanced search options.
           </p>
-          <TourButtons />
+          <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
         </div>
       ),
       placement: 'right',
@@ -196,7 +200,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
               </ExternalLink>
             </p>
           </div>
-          <TourButtons />
+          <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
         </div>
       ),
       placement: 'right',
@@ -224,7 +228,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
             A recurring filter can be applied to search a repeating range between
             specified years.
           </p>
-          <TourButtons />
+          <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
         </div>
       ),
       placement: 'right',
@@ -257,7 +261,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
             Upload a shapefile (KML, KMZ, ESRI, etc.) to set the spatial area with
             a file.
           </p>
-          <TourButtons />
+          <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
         </div>
       ),
       placement: 'right',
@@ -281,7 +285,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
             Use Advanced Search parameters to filter results using features like
             Hydrologic Unit Code (HUC) or SWORD River Reach.
           </p>
-          <TourButtons />
+          <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
         </div>
       ),
       placement: 'right',
@@ -305,7 +309,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
             Choose a portal to refine search results to a particular area of study,
             project, or organization.
           </p>
-          <TourButtons />
+          <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
         </div>
       ),
       placement: 'right',
@@ -325,7 +329,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
             Refine your search further using categories like Features, Keywords,
             Platforms, Organizations, etc.
           </p>
-          <TourButtons />
+          <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
         </div>
       ),
       placement: 'right-start',
@@ -360,7 +364,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
             To add individual granules to a project, click on a search result to view and
             add its granules.
           </p>
-          <TourButtons />
+          <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
         </div>
       ),
       placement: 'right',
@@ -397,7 +401,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
               key at any time.
             </p>
           </div>
-          <TourButtons />
+          <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
         </div>
       ),
       placement: 'right',
@@ -433,7 +437,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
             along with any available GIBS imagery. When a granule is focused on the
             map, any additional thumbnails will be displayed.
           </p>
-          <TourButtons />
+          <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
         </div>
       ),
       placement: 'left',
@@ -453,7 +457,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
             Use the map tools to switch map projections, draw, edit, or remove spatial
             bounds, zoom the map, or select the base map.
           </p>
-          <TourButtons />
+          <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
         </div>
       ),
       placement: 'left',

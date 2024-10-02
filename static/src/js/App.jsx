@@ -87,9 +87,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const dontShowTour = localStorage.getItem('dontShowTour') !== 'true'
+    const shouldShowTour = localStorage.getItem('dontShowTour') !== 'true' && window.location.hostname !== 'localhost'
     this.setState({
-      runTour: dontShowTour
+      runTour: shouldShowTour
     })
   }
 
