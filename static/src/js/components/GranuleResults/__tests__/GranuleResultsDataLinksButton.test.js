@@ -78,7 +78,13 @@ describe('GranuleResultsDataLinksButton component', () => {
     test('calls callback with the correct data on click', () => {
       const { enzymeWrapper, props } = setup()
 
-      enzymeWrapper.simulate('click')
+      const preventDefaultMock = jest.fn()
+      const stopPropagationMock = jest.fn()
+
+      enzymeWrapper.simulate('click', {
+        preventDefault: preventDefaultMock,
+        stopPropagation: stopPropagationMock
+      })
 
       expect(props.onMetricsDataAccess).toHaveBeenCalledTimes(1)
       expect(props.onMetricsDataAccess).toHaveBeenCalledWith({
@@ -87,6 +93,9 @@ describe('GranuleResultsDataLinksButton component', () => {
         ],
         type: 'single_granule_download'
       })
+
+      expect(preventDefaultMock).toHaveBeenCalledTimes(1)
+      expect(stopPropagationMock).toHaveBeenCalledTimes(1)
     })
 
     test('renders the correct element', () => {
@@ -187,7 +196,7 @@ describe('GranuleResultsDataLinksButton component', () => {
 
         const dataLinks = enzymeWrapper.find('.granule-results-data-links-button__dropdown-item')
 
-        dataLinks.at(0).simulate('click', { stopPropagation: () => {} })
+        dataLinks.at(0).simulate('click', { stopPropagation: () => { } })
         expect(props.onMetricsDataAccess).toHaveBeenCalledTimes(1)
         expect(props.onMetricsDataAccess).toHaveBeenCalledWith({
           collections: [{
@@ -218,7 +227,7 @@ describe('GranuleResultsDataLinksButton component', () => {
 
         const dataLinks = enzymeWrapper.find('.granule-results-data-links-button__dropdown-item')
 
-        dataLinks.at(0).simulate('click', { stopPropagation: () => {} })
+        dataLinks.at(0).simulate('click', { stopPropagation: () => { } })
 
         expect(addToastMock.mock.calls.length).toBe(1)
         expect(addToastMock.mock.calls[0][0]).toEqual('Initiated download of file: linkhref')
