@@ -276,7 +276,6 @@ export const GranuleFiltersForm = (props) => {
                   <Form.Label className="mb-1" sm="auto">
                     Granule ID(s)
                   </Form.Label>
-
                   <OverlayTrigger
                     placement="top"
                     overlay={
@@ -323,14 +322,14 @@ export const GranuleFiltersForm = (props) => {
                       )
                     }
                   >
-                    <EDSCIcon title="granule-name-filter-more-info" icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
+                    <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" aria-label="View more info on granule id filter" role="img" />
                   </OverlayTrigger>
                   <Form.Control
                     name="readableGranuleName"
                     data-testid="granule-filters__readable-granule-name"
                     size="sm"
                     type="text"
-                    placeholder="Example: *_20240101_*,*_20240101_*"
+                    placeholder="Example: *_20240101_*,*_20240102_*"
                     value={readableGranuleName}
                     onChange={handleChange}
                     onBlur={submitOnBlur}
