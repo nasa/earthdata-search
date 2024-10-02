@@ -14,6 +14,7 @@ import {
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { getSearchWords } from '../../util/getSearchWords'
 
 import murmurhash3 from '../../util/murmurhash3'
 import { locationPropType } from '../../util/propTypes/location'
@@ -27,32 +28,6 @@ import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownI
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './GranuleResultsItem.scss'
-
-/**
- * Highlight substring if it's in being searched for in Granule Id(s) Filter
- */
-const getSearchWords = (readableGranuleName) => {
-  const searchTerms = []
-
-  readableGranuleName.forEach((initialSearchTerm) => {
-    let splitStars = initialSearchTerm.split('*')
-
-    // Remove the first and last stars if they are there
-    if (splitStars[0] === '') {
-      splitStars = splitStars.slice(1)
-    }
-
-    if (splitStars[splitStars.length - 1] === '') {
-      splitStars = splitStars.slice(0, splitStars.length - 1)
-    }
-
-    const searchTerm = splitStars.join('.+')
-
-    searchTerms.push(RegExp(`(${searchTerm.replaceAll('?', '.')})`))
-  })
-
-  return searchTerms
-}
 
 /**
  * Renders GranuleResultsItem.
@@ -132,6 +107,7 @@ const GranuleResultsItem = forwardRef(({
       element = (
         <EDSCImage
           className="granule-results-item__thumb-image"
+          data-test-id="granule-results-item__thumb-image"
           src={granuleThumbnail}
           height={thumbnailHeight}
           width={thumbnailWidth}
@@ -148,6 +124,7 @@ const GranuleResultsItem = forwardRef(({
             href={browseUrl}
             title="View image"
             target="_blank"
+            aria-label="Link to granule"
             rel="noopener noreferrer"
           >
             {element}
@@ -217,6 +194,7 @@ const GranuleResultsItem = forwardRef(({
     >
       <header
         className="granule-results-item__header"
+        data-testid="granule-results-item-title"
       >
         <div
           className="granule-results-item__title-wrapper"
@@ -275,6 +253,7 @@ const GranuleResultsItem = forwardRef(({
                       <Button
                         className="button granule-results-item__button granule-results-item__button--add"
                         label="Add granule"
+                        aria-label="Add granule"
                         title="Add granule"
                         disabled={isOpenSearch}
                         onClick={

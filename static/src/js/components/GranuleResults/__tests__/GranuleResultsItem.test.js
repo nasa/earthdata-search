@@ -1,17 +1,45 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { LinkContainer } from 'react-router-bootstrap'
+import ReactDOM from 'react-dom'
 
-import Button from '../../Button/Button'
+import {
+  act,
+  render,
+  screen,
+  waitFor
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
+import '@testing-library/jest-dom'
+
+import { MemoryRouter } from 'react-router-dom'
+
+import Highlighter from 'react-highlight-words'
 import GranuleResultsItem from '../GranuleResultsItem'
-import GranuleResultsDataLinksButton from '../GranuleResultsDataLinksButton'
-import MoreActionsDropdownItem from '../../MoreActionsDropdown/MoreActionsDropdownItem'
-import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import * as getSearchWords from '../../../util/getSearchWords'
 
-Enzyme.configure({ adapter: new Adapter() })
+import EDSCImage from '../../EDSCImage/EDSCImage'
 
-function setup(type, overrideProps) {
+jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
+  const mockPortalFeatureContainer = jest.fn(({ children }) => (
+    <mock-mockPortalFeatureContainer data-testid="mockPortalFeatureContainer">
+      {children}
+    </mock-mockPortalFeatureContainer>
+  ))
+
+  return mockPortalFeatureContainer
+})
+
+jest.mock('react-highlight-words', () => jest.fn(
+  ({ textToHighlight }) => <span><span>{textToHighlight}</span></span>
+))
+
+jest.mock('../../EDSCImage/EDSCImage', () => jest.fn(
+  ({ className }) => <div className={className} alt="Browse Image for " data-testid="mock-edsc-image">EDSC Image</div>
+))
+
+const setup = (type, overrideProps) => {
+  const user = userEvent.setup()
+
   const defaultProps = {
     browseUrl: undefined,
     collectionId: 'collectionId',
@@ -28,6 +56,7 @@ function setup(type, overrideProps) {
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
+    readableGranuleName: [''],
     portal: {
       features: {
         authentication: true
@@ -67,7 +96,9 @@ function setup(type, overrideProps) {
     props = {
       ...defaultProps,
       directDistributionInformation: {
-        region: 's3-region'
+        region: 's3-region',
+        s3CredentialsApiEndpoint: 'http://example.com/creds',
+        s3CredentialsApiDocumentationUrl: 'http://example.com/docs'
       },
       granule: {
         id: 'granuleId',
@@ -307,8 +338,7 @@ function setup(type, overrideProps) {
           }
         ],
         s3Links: []
-      },
-      ...overrideProps
+      }
     }
   }
 
@@ -335,316 +365,417 @@ function setup(type, overrideProps) {
           }
         ],
         s3Links: []
-      },
-      ...overrideProps
+      }
     }
   }
 
-  const enzymeWrapper = shallow(<GranuleResultsItem {...props} />)
+  props = {
+    ...props,
+    ...overrideProps
+  }
+
+  render(
+    <GranuleResultsItem {...props} />,
+    { wrapper: MemoryRouter }
+  )
 
   return {
-    enzymeWrapper,
+    user,
     props
   }
 }
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
 })
 
 describe('GranuleResultsItem component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup('cmr')
+    setup('cmr')
 
-    expect(enzymeWrapper.exists()).toEqual(true)
-    expect(enzymeWrapper.type()).toBe('div')
+    expect(screen.getByTestId('granule-results-item')).toBeInTheDocument()
   })
 
-  test('renders the add button under PortalFeatureContainer', () => {
-    const { enzymeWrapper } = setup('cmr')
+  test('renders the add button under PortalFeatureContainer', async () => {
+    setup('cmr')
 
-    const button = enzymeWrapper
-      .find(PortalFeatureContainer)
-      .find('.granule-results-item__button--add')
-    const portalFeatureContainer = button.parents(PortalFeatureContainer)
-
-    expect(button.exists()).toBeTruthy()
-    expect(portalFeatureContainer.props().authentication).toBeTruthy()
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Add granule' })).toBeInTheDocument()
+    })
   })
 
   describe('when passed a focused granule', () => {
     test('adds the correct classname', () => {
-      const {
-        enzymeWrapper
-      } = setup('focused-granule')
+      setup('focused-granule')
 
-      expect(enzymeWrapper.props().className).toContain('granule-results-item--active')
+      expect(screen.getByTestId('granule-results-item')).toHaveClass('granule-results-item--active')
+    })
+  })
+
+  describe('when passed a granule id filter', () => {
+    test('calls Highlighter', () => {
+      const spiedSearchWords = jest.spyOn(getSearchWords, 'getSearchWords')
+
+      setup('cmr', { readableGranuleName: ['title'] })
+
+      expect(Highlighter).toHaveBeenCalledTimes(1)
+      expect(Highlighter).toHaveBeenCalledWith(
+        {
+          highlightClassName: 'granule-results-item__highlighted-title',
+          searchWords: [/(title)/],
+          textToHighlight: 'Granule title'
+        },
+        {}
+      )
+
+      expect(spiedSearchWords).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('when passed a CMR granule', () => {
     test('renders the title', () => {
-      const { enzymeWrapper } = setup('cmr')
+      const { props } = setup('cmr')
+      const { granule } = props
 
-      expect(enzymeWrapper.find('.granule-results-item__title').text()).toEqual('Granule title')
+      const { title } = granule
+
+      expect(screen.getByText(title)).toBeInTheDocument()
     })
 
+    // Need to check the image src
     test('renders the image', () => {
-      const { enzymeWrapper } = setup('cmr')
+      const { props } = setup('cmr')
+      const { granule } = props
 
-      expect(enzymeWrapper.find('.granule-results-item__thumb-image').prop('src')).toEqual('/fake/path/image.jpg')
+      const { title, granuleThumbnail } = granule
+
+      expect(EDSCImage).toHaveBeenCalledTimes(1)
+      expect(EDSCImage).toHaveBeenCalledWith(
+        expect.objectContaining(
+          {
+            alt: `Browse Image for ${title}`,
+            className: 'granule-results-item__thumb-image',
+            height: 85,
+            isBase64Image: true,
+            src: granuleThumbnail,
+            width: 85,
+            useSpinner: false
+          }
+        ),
+        {}
+      )
     })
 
     test('renders the start and end date', () => {
-      const { enzymeWrapper } = setup('cmr')
+      setup('cmr')
 
-      expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('h5').text()).toEqual('Start')
-      expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('p').text()).toEqual('2019-04-28 00:00:00')
-      expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('h5').text()).toEqual('End')
-      expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('p').text()).toEqual('2019-04-29 23:59:59')
+      expect(screen.getByRole('heading', { name: 'Start' })).toBeInTheDocument()
+      expect(screen.getByText('2019-04-28 00:00:00')).toBeInTheDocument()
+      expect(screen.getByRole('heading', { name: 'End' })).toBeInTheDocument()
+      expect(screen.getByText('2019-04-29 23:59:59')).toBeInTheDocument()
     })
   })
 
   describe('when passed s3 links', () => {
-    test('passes the direct distribution information to the data links button', () => {
-      const { enzymeWrapper } = setup('cmr-s3')
-      const dataLinksButtonProps = enzymeWrapper.find(GranuleResultsDataLinksButton).props()
+    test('displaying correct s3 data', async () => {
+      const { user } = setup('cmr-s3')
 
-      expect(dataLinksButtonProps.directDistributionInformation).toEqual({
-        region: 's3-region'
+      await act(async () => {
+        await user.click(screen.getByRole('button', { name: 'Download single granule data' }))
       })
-    })
 
-    test('passes the s3 links to the data links button', () => {
-      const { enzymeWrapper } = setup('cmr-s3')
-      const dataLinksButtonProps = enzymeWrapper.find(GranuleResultsDataLinksButton).props()
+      await act(async () => {
+        await user.click(screen.getByRole('tab', { name: 'AWS S3 Access' }))
+      })
 
-      expect(dataLinksButtonProps.s3Links).toEqual([
-        {
-          rel: 'http://linkrel/s3#',
-          title: 'linktitle',
-          href: 's3://linkhref'
-        }
-      ])
+      expect(screen.getByRole('button', { name: 'Copy to clipboard' }).textContent).toEqual('s3-region')
+      expect(screen.getByRole('link', { name: 'Get AWS S3 Credentials' })).toHaveProperty('href', 'http://example.com/creds')
+      expect(screen.getByRole('link', { name: 'View Documentation' })).toHaveProperty('href', 'http://example.com/docs')
+      expect(screen.getByRole('button', { name: 'Copy AWS S3 path to clipboard' }).textContent).toEqual('linkhref')
     })
   })
 
   describe('when passed an OpenSearch granule', () => {
     test('renders the title', () => {
-      const { enzymeWrapper } = setup('opensearch')
+      setup('opensearch')
 
-      expect(enzymeWrapper.find('.granule-results-item__title').text()).toEqual('Granule title')
+      expect(screen.getByRole('heading', { name: 'Granule title' })).toBeInTheDocument()
     })
 
     test('renders the image', () => {
-      const { enzymeWrapper } = setup('opensearch')
+      const { props } = setup('opensearch')
+      const { granule } = props
 
-      expect(enzymeWrapper.find('.granule-results-item__thumb-image').prop('src')).toEqual('/fake/path/image.jpg')
+      const { title, granuleThumbnail } = granule
+
+      expect(EDSCImage).toHaveBeenCalledTimes(1)
+      expect(EDSCImage).toHaveBeenCalledWith(
+        expect.objectContaining(
+          {
+            alt: `Browse Image for ${title}`,
+            className: 'granule-results-item__thumb-image',
+            height: 85,
+            isBase64Image: true,
+            src: granuleThumbnail,
+            width: 85,
+            useSpinner: false
+          }
+        ),
+        {}
+      )
     })
 
     test('renders the start and end date', () => {
-      const { enzymeWrapper } = setup('opensearch')
+      setup('opensearch')
 
-      expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('h5').text()).toEqual('Start')
-      expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('p').text()).toEqual('2019-04-28 00:00:00')
-      expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('h5').text()).toEqual('End')
-      expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('p').text()).toEqual('2019-04-29 23:59:59')
+      expect(screen.getByRole('heading', { name: 'Start' })).toBeInTheDocument()
+      expect(screen.getByText('2019-04-28 00:00:00')).toBeInTheDocument()
+      expect(screen.getByRole('heading', { name: 'End' })).toBeInTheDocument()
+      expect(screen.getByText('2019-04-29 23:59:59')).toBeInTheDocument()
     })
 
-    test('disables the Add granule button', () => {
-      const { enzymeWrapper } = setup('opensearch')
+    test('Add granule button is disabled', () => {
+      setup('opensearch')
 
-      expect(enzymeWrapper.find('.granule-results-item__button--add').props().disabled).toBeTruthy()
+      expect(screen.getByRole('button', { name: 'Add granule' })).toBeDisabled()
     })
   })
 
-  describe('when clicking the remove button', () => {
+  describe('when clicking the Filter Granule button', () => {
     describe('with CMR granules', () => {
-      test('it removes the granule from results', () => {
-        const { enzymeWrapper, props } = setup('cmr')
-        const removeButton = enzymeWrapper.find(MoreActionsDropdownItem).at(1)
+      test('it removes the granule from results', async () => {
+        const { props, user } = setup('cmr')
 
-        removeButton.simulate('click')
+        await act(async () => {
+          const moreActions = screen.getByRole('button', { name: 'More actions' })
+          await user.click(moreActions)
+        })
+
+        await act(async () => {
+          await userEvent.click(screen.getByRole('button', { name: 'Filter granule' }), { pointerEventsCheck: 0 })
+        })
+
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
         expect(props.onExcludeGranule.mock.calls[0]).toEqual([{
           collectionId: 'collectionId',
           granuleId: 'granuleId'
         }])
-
-        expect(removeButton.props().title).toEqual('Filter granule')
       })
     })
 
     describe('with OpenSearch granules', () => {
-      test('it excludes the granule from results with a hashed granule id', () => {
-        const { enzymeWrapper, props } = setup('opensearch')
-        const removeButton = enzymeWrapper.find(MoreActionsDropdownItem).at(1)
+      test('it excludes the granule from results with a hashed granule id', async () => {
+        const { props, user } = setup('opensearch')
 
-        removeButton.simulate('click')
+        await act(async () => {
+          const moreActions = screen.getByRole('button', { name: 'More actions' })
+          await user.click(moreActions)
+        })
+
+        await act(async () => {
+          await userEvent.click(screen.getByRole('button', { name: 'Filter granule' }), { pointerEventsCheck: 0 })
+        })
+
         expect(props.onExcludeGranule.mock.calls.length).toBe(1)
         expect(props.onExcludeGranule.mock.calls[0]).toEqual([{
           collectionId: 'collectionId',
           granuleId: '170417722'
         }])
-
-        expect(removeButton.props().title).toEqual('Filter granule')
       })
     })
   })
 
   describe('when no granules are in the project', () => {
     test('does not have an emphisized or deepmphisized class', () => {
-      const { enzymeWrapper } = setup('cmr')
-      expect(enzymeWrapper.props().className).not.toContain('granule-results-item--emphisized')
-      expect(enzymeWrapper.props().className).not.toContain('granule-results-item--deemphisized')
+      setup('cmr')
+
+      const granuleResultsItem = screen.getByTestId('granule-results-item')
+      expect(granuleResultsItem.className).not.toContain('granule-results-item--emphisized')
+      expect(granuleResultsItem.className).not.toContain('granule-results-item--deemphisized')
     })
 
     test('displays the add button', () => {
-      const { enzymeWrapper } = setup('cmr')
-      const addButton = enzymeWrapper.find(Button)
-
-      expect(addButton.props().title).toContain('Add granule')
+      setup('cmr')
+      expect(screen.getByLabelText('Add granule')).toBeInTheDocument()
     })
   })
 
   describe('when displaying granules in the project', () => {
     describe('when displaying granule in the project', () => {
       test('displays the remove button', () => {
-        const { enzymeWrapper } = setup('override', {
+        setup('override', {
           isGranuleInProject: jest.fn(() => true),
           isCollectionInProject: true
         })
-        const addButton = enzymeWrapper.find(Button)
 
-        expect(addButton.props().title).toContain('Remove granule')
-        expect(enzymeWrapper.props().className).toContain('granule-results-item--emphisized')
+        expect(screen.getByLabelText('Remove granule')).toBeInTheDocument()
+
+        const granuleResultsItem = screen.getByTestId('granule-results-item')
+        expect(granuleResultsItem.className).toContain('granule-results-item--emphisized')
       })
     })
 
     describe('when displaying granule not in the project', () => {
       test('displays the add button', () => {
-        const { enzymeWrapper } = setup('override', {
+        setup('override', {
           isGranuleInProject: jest.fn(() => false),
           isCollectionInProject: true
         })
-        const addButton = enzymeWrapper.find(Button)
 
-        expect(addButton.props().title).toContain('Add granule')
-        expect(enzymeWrapper.props().className).toContain('granule-results-item--deemphisized')
+        expect(screen.getByLabelText('Add granule')).toBeInTheDocument()
+
+        const granuleResultsItem = screen.getByTestId('granule-results-item')
+        expect(granuleResultsItem.className).toContain('granule-results-item--deemphisized')
       })
     })
   })
 
   describe('when clicking the add button', () => {
-    test('it adds the granule to the project', () => {
-      const { enzymeWrapper, props } = setup('cmr')
-      const addButton = enzymeWrapper.find(Button)
+    test('it adds the granule to the project', async () => {
+      const { props, user } = setup('cmr')
 
-      expect(addButton.props().title).toContain('Add granule')
+      expect(screen.getByLabelText('Add granule')).toBeInTheDocument()
 
-      const mockEvent = {
-        stopPropagation: jest.fn()
-      }
+      await user.click(screen.getByLabelText('Add granule'))
 
-      addButton.simulate('click', mockEvent)
       expect(props.onAddGranuleToProjectCollection.mock.calls.length).toBe(1)
       expect(props.onAddGranuleToProjectCollection.mock.calls[0]).toEqual([{
         collectionId: 'collectionId',
         granuleId: 'granuleId'
       }])
-
-      expect(mockEvent.stopPropagation.mock.calls.length).toBe(1)
-      expect(mockEvent.stopPropagation.mock.calls[0]).toEqual([])
     })
   })
 
   describe('when clicking the remove button', () => {
-    test('it removes the granule to the project', () => {
-      const { enzymeWrapper, props } = setup('override', {
+    test('it removes the granule to the project', async () => {
+      const { props, user } = setup('override', {
         isGranuleInProject: jest.fn(() => true)
       })
 
-      const removeButton = enzymeWrapper.find(Button)
+      expect(screen.getByLabelText('Remove granule')).toBeInTheDocument()
 
-      expect(removeButton.props().title).toContain('Remove granule')
-
-      const mockEvent = {
-        stopPropagation: jest.fn()
-      }
-
-      removeButton.simulate('click', mockEvent)
+      await user.click(screen.getByLabelText('Remove granule'))
       expect(props.onRemoveGranuleFromProjectCollection.mock.calls.length).toBe(1)
       expect(props.onRemoveGranuleFromProjectCollection.mock.calls[0]).toEqual([{
         collectionId: 'collectionId',
         granuleId: 'granuleId'
       }])
-
-      expect(mockEvent.stopPropagation.mock.calls.length).toBe(1)
-      expect(mockEvent.stopPropagation.mock.calls[0]).toEqual([])
     })
   })
 
   describe('download button', () => {
-    test('is passed the metrics callback', () => {
-      const { enzymeWrapper, props } = setup('cmr')
-      const dataLinksButton = enzymeWrapper.find(GranuleResultsDataLinksButton)
+    test('is passed the metrics callback', async () => {
+      const { props, user } = setup('cmr')
 
-      expect(dataLinksButton.props().onMetricsDataAccess).toEqual(props.onMetricsDataAccess)
+      const { granule, onMetricsDataAccess, collectionId } = props
+
+      const { dataLinks } = granule
+
+      const dataLink = dataLinks[0]
+
+      const { href } = dataLink
+
+      const dataLinksButton = await screen.findByRole('button', { name: 'Download single granule data' })
+
+      expect(dataLinksButton.href).toContain(href)
+
+      await act(async () => {
+        await user.click(dataLinksButton)
+      })
+
+      expect(onMetricsDataAccess).toHaveBeenCalledTimes(1)
+      expect(onMetricsDataAccess).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'single_granule_download',
+          collections: [{
+            collectionId
+          }]
+        })
+      )
     })
   })
 
   describe('download button with no link', () => {
     test('disables the button', () => {
-      const { enzymeWrapper } = setup('cmr-no-download')
+      setup('cmr-no-download')
 
-      const downloadButton = enzymeWrapper.find(GranuleResultsDataLinksButton)
-
-      expect(downloadButton.length).toEqual(0)
+      expect(screen.queryAllByLabelText('Download single granule data').length).toEqual(0)
     })
   })
 
   describe('without an granuleThumbnail', () => {
     test('does not render an granuleThumbnail', () => {
-      const { enzymeWrapper } = setup('no-thumb')
+      setup('no-thumb')
 
-      expect(enzymeWrapper.find('.granule-results-item__thumb').length).toEqual(0)
+      expect(screen.queryByLabelText('Link to granule')).not.toBeInTheDocument()
+      expect(screen.queryByLabelText('Granule thumbnail image')).not.toBeInTheDocument()
     })
 
     test('does not add the modifier class name', () => {
-      const { enzymeWrapper } = setup('no-thumb')
+      setup('no-thumb')
 
-      expect(enzymeWrapper.props().className).not.toContain('granule-results-item--has-thumbnail')
+      expect(screen.getByTestId('granule-results-item').className).not.toContain('granule-results-item--has-thumbnail')
     })
   })
 
   describe('with a granuleThumbnail', () => {
     test('without a full size browse', () => {
-      const { enzymeWrapper } = setup('cmr')
+      const { props } = setup('cmr')
 
-      expect(enzymeWrapper.find('.granule-results-item__thumb').length).toEqual(1)
-      expect(enzymeWrapper.find('.granule-results-item__thumb').type()).toEqual('div')
+      const { granule } = props
+
+      const { title, granuleThumbnail } = granule
+
+      expect(EDSCImage).toHaveBeenCalledTimes(1)
+      expect(EDSCImage).toHaveBeenCalledWith(
+        expect.objectContaining(
+          {
+            alt: `Browse Image for ${title}`,
+            className: 'granule-results-item__thumb-image',
+            height: 85,
+            isBase64Image: true,
+            src: granuleThumbnail,
+            width: 85,
+            useSpinner: false
+          }
+        ),
+        {}
+      )
+
+      expect(screen.queryByLabelText('Link to granule')).not.toBeInTheDocument()
     })
 
     test('with a full size browse', () => {
-      const { enzymeWrapper } = setup('with-browse')
-      expect(enzymeWrapper.find('.granule-results-item__thumb').length).toEqual(1)
-      expect(enzymeWrapper.find('.granule-results-item__thumb').type()).toEqual('a')
+      const { props } = setup('with-browse')
+      const { granule } = props
+
+      const { browseUrl } = granule
+
+      expect(screen.getByLabelText('Link to granule')).toBeInTheDocument()
+      expect(screen.getByLabelText('Link to granule').href).toEqual(browseUrl)
     })
 
     test('adds the modifier class name', () => {
-      const { enzymeWrapper } = setup('with-browse')
+      setup('with-browse')
 
-      expect(enzymeWrapper.props().className).toContain('granule-results-item--has-thumbnail')
+      expect(screen.getByTestId('granule-results-item').className).toContain('granule-results-item--has-thumbnail')
     })
   })
 
   describe('granule info button', () => {
-    test('calls handleClickGranuleDetails on click', () => {
-      const { enzymeWrapper, props } = setup('cmr')
+    test('calls handleClickGranuleDetails on click', async () => {
+      const { props, user } = setup('cmr')
 
-      const infoButton = enzymeWrapper.find(LinkContainer).at(0)
+      await act(async () => {
+        const moreActions = screen.getByRole('button', { name: 'More actions' })
+        await user.click(moreActions)
+      })
 
-      infoButton.simulate('click')
+      await act(async () => {
+        await userEvent.click(screen.getByRole('button', { name: 'View details' }), { pointerEventsCheck: 0 })
+      })
 
       expect(props.onFocusedGranuleChange).toHaveBeenCalledTimes(1)
       expect(props.onFocusedGranuleChange).toHaveBeenCalledWith('granuleId')
@@ -653,12 +784,12 @@ describe('GranuleResultsItem component', () => {
 
   describe('static coverage granules', () => {
     test('renders not provided for dates', () => {
-      const { enzymeWrapper } = setup('static-coverage')
+      setup('static-coverage')
 
-      expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('h5').text()).toEqual('Start')
-      expect(enzymeWrapper.find('.granule-results-item__temporal--start').find('p').text()).toEqual('Not Provided')
-      expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('h5').text()).toEqual('End')
-      expect(enzymeWrapper.find('.granule-results-item__temporal--end').find('p').text()).toEqual('Not Provided')
+      expect(screen.getByRole('heading', { name: 'Start' })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { name: 'Start' }).nextSibling.textContent).toEqual('Not Provided')
+      expect(screen.getByRole('heading', { name: 'End' })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { name: 'End' }).nextSibling.textContent).toEqual('Not Provided')
     })
   })
 })

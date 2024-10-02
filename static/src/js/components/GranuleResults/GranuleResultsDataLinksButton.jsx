@@ -285,12 +285,17 @@ export const GranuleResultsDataLinksButton = ({
         variant={buttonVariant}
         href={dataLinks[0].href}
         onClick={
-          () => onMetricsDataAccess({
-            type: 'single_granule_download',
-            collections: [{
-              collectionId
-            }]
-          })
+          (event) => {
+            onMetricsDataAccess({
+              type: 'single_granule_download',
+              collections: [{
+                collectionId
+              }]
+            })
+
+            event.preventDefault()
+            event.stopPropagation()
+          }
         }
         rel="noopener noreferrer"
         label="Download single granule data"
