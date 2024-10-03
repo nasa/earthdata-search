@@ -273,7 +273,7 @@ export const GranuleFiltersForm = (props) => {
                 <Form.Group
                   controlId="granule-filters_granule-search"
                 >
-                  <Form.Label className="mb-1" sm="auto" aria-describedby="View more info on granule id filter">
+                  <Form.Label className="mb-1" sm="auto">
                     Granule ID(s)
                   </Form.Label>
                   <OverlayTrigger
@@ -751,6 +751,7 @@ export const GranuleFiltersForm = (props) => {
                         </Col>
                       </Form.Group>
                     </SidebarFiltersItem>
+
                     <SidebarFiltersItem
                       heading="Equatorial Crossing Longitude"
                     >
@@ -826,7 +827,7 @@ export const GranuleFiltersForm = (props) => {
                     <SidebarFiltersItem
                       heading="Equatorial Crossing Date"
                     >
-                      <Form.Group aria-label="Set granule equatorial crossing date" controlId="granule-filters__equatorial-crossing-date">
+                      <Form.Group controlId="granule-filters__equatorial-crossing-date">
                         <Form.Control
                           as="div"
                           className="form-control-basic"
