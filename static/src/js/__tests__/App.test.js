@@ -312,7 +312,7 @@ describe('App component', () => {
   test('renders loaded lazy components', async () => {
     setup()
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByTestId('mocked-map-container')).toBeInTheDocument()
     })
   })
