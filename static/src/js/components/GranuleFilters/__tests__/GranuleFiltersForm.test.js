@@ -625,10 +625,7 @@ describe('GranuleFiltersForm component', () => {
           })
 
           const orbitNumberSectionHeader = screen.getByText('Orbit Number').parentElement.parentElement
-          console.log('🚀 ~ file: GranuleFiltersForm.test.js:628 ~ orbitNumberSectionHeader:', orbitNumberSectionHeader)
-
           const minOrbitNumber = within(orbitNumberSectionHeader).getByRole('textbox', { name: 'Minimum' })
-          // Const minOrbitNumber = screen.getAllByRole('textbox', { name: 'Minimum' })[0]
 
           expect(minOrbitNumber).toHaveValue('')
         })
