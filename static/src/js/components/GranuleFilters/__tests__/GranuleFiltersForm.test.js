@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  render,
-  screen,
-  within
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 
@@ -193,18 +189,16 @@ describe('GranuleFiltersForm component', () => {
     describe('Temporal section', () => {
       describe('displays temporal', () => {
         test('displays correctly when only start date is set', () => {
-          // TODO 2024-06-12 00:00:00 this format is now the corrected one
-          // this was the previous time format 2019-08-14T00:00:00:000Z
           setup({
             values: {
               temporal: {
-                startDate: '2019-08-14 00:00:00'
+                startDate: '2019-08-14T00:00:00:000Z'
               }
             }
           })
 
           const startDateTextField = screen.getByRole('textbox', { name: 'Start Date' })
-          expect(startDateTextField).toHaveValue('2019-08-14 00:00:00')
+          expect(startDateTextField).toHaveValue('2019-08-14T00:00:00:000Z')
 
           const endDateTextField = screen.getByRole('textbox', { name: 'End Date' })
           expect(endDateTextField).toHaveValue('')
@@ -214,33 +208,33 @@ describe('GranuleFiltersForm component', () => {
           setup({
             values: {
               temporal: {
-                endDate: '2019-08-14 00:00:00'
+                endDate: '2019-08-14T00:00:00:000Z'
               }
             }
           })
 
           const startDateTextField = screen.getByRole('textbox', { name: 'Start Date' })
-          expect(startDateTextField).toHaveValue('')
-
           const endDateTextField = screen.getByRole('textbox', { name: 'End Date' })
-          expect(endDateTextField).toHaveValue('2019-08-14 00:00:00')
+
+          expect(startDateTextField).toHaveValue('')
+          expect(endDateTextField).toHaveValue('2019-08-14T00:00:00:000Z')
         })
 
         test('displays correctly when both dates are set', () => {
           setup({
             values: {
               temporal: {
-                startDate: '2019-08-13 00:00:00',
-                endDate: '2019-08-14 00:00:00'
+                startDate: '2019-08-13T00:00:00:000Z',
+                endDate: '2019-08-14T23:59:59:999Z'
               }
             }
           })
 
           const startDateTextField = screen.getByRole('textbox', { name: 'Start Date' })
-          expect(startDateTextField).toHaveValue('2019-08-13 00:00:00')
-
           const endDateTextField = screen.getByRole('textbox', { name: 'End Date' })
-          expect(endDateTextField).toHaveValue('2019-08-14 00:00:00')
+
+          expect(startDateTextField).toHaveValue('2019-08-13T00:00:00:000Z')
+          expect(endDateTextField).toHaveValue('2019-08-14T23:59:59:999Z')
         })
 
         test('calls the correct callbacks on startDate submit', async () => {
@@ -249,26 +243,30 @@ describe('GranuleFiltersForm component', () => {
           } = setup({
             values: {
               temporal: {
-                startDate: '2019-08-13 00:00:00',
-                endDate: '2019-08-14 23:59:59'
+                startDate: '',
+                endDate: '2019-08-14T23:59:59:999Z'
               }
             }
           })
 
           const startDateTextField = screen.getByRole('textbox', { name: 'Start Date' })
-          await user.click(startDateTextField)
-          await user.tab(startDateTextField)
 
-          expect(setFieldTouched).toHaveBeenCalledTimes(1)
+          await user.click(startDateTextField)
+          await user.type(startDateTextField, '2019-08-13')
+
+          await user.tab(startDateTextField)
+          expect(setFieldTouched).toHaveBeenCalledTimes(10)
           expect(setFieldTouched).toHaveBeenCalledWith('temporal.startDate')
 
-          expect(setFieldValue).toHaveBeenCalledTimes(1)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '2019-08-13T00:00:00.000Z')
+          expect(setFieldValue).toHaveBeenCalledTimes(10)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '2')
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '0')
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '1')
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(10)
           expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set Start Date',
-            value: '2019-08-13T00:00:00.000Z'
+            value: '2'
           })
         })
 
@@ -278,26 +276,29 @@ describe('GranuleFiltersForm component', () => {
           } = setup({
             values: {
               temporal: {
-                startDate: '2019-08-13 00:00:00',
-                endDate: '2019-08-14 23:59:59'
+                startDate: '2019-08-13T00:00:00:000Z',
+                endDate: ''
               }
             }
           })
           const endDateTextField = screen.getByRole('textbox', { name: 'End Date' })
 
           await user.click(endDateTextField)
+          await user.type(endDateTextField, '2019-08-14')
           await user.tab(endDateTextField)
 
-          expect(setFieldTouched).toHaveBeenCalledTimes(1)
+          expect(setFieldTouched).toHaveBeenCalledTimes(10)
           expect(setFieldTouched).toHaveBeenCalledWith('temporal.endDate')
 
-          expect(setFieldValue).toHaveBeenCalledTimes(1)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2019-08-14T23:59:59.999Z')
+          expect(setFieldValue).toHaveBeenCalledTimes(10)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2')
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '0')
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '1')
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(10)
           expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set End Date',
-            value: '2019-08-14T23:59:59.999Z'
+            value: '2'
           })
         })
 
@@ -615,7 +616,8 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const minOrbitNumber = screen.getByRole('textbox', { name: 'Set minimum orbit number' })
+          const minOrbitNumber = screen.getAllByRole('textbox', { name: 'Minimum' })[0]
+
           expect(minOrbitNumber).toHaveValue('')
         })
 
@@ -630,7 +632,7 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const minOrbitNumber = screen.getByRole('textbox', { name: 'Set minimum orbit number' })
+          const minOrbitNumber = screen.getAllByRole('textbox', { name: 'Minimum' })[0]
 
           await user.type(minOrbitNumber, '9')
 
@@ -656,7 +658,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const minOrbitNumber = screen.getByRole('textbox', { name: 'Set minimum orbit number' })
+          const minOrbitNumber = screen.getAllByRole('textbox', { name: 'Minimum' })[0]
 
           await user.type(minOrbitNumber, '9')
 
@@ -699,7 +701,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberMaximum = screen.getByRole('textbox', { name: 'Set maximum orbit number' })
+          const orbitNumberMaximum = screen.getAllByRole('textbox', { name: 'Maximum' })[0]
           expect(orbitNumberMaximum).toHaveValue('')
         })
 
@@ -715,7 +717,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const maxOrbitNumber = screen.getByRole('textbox', { name: 'Set maximum orbit number' })
+          const maxOrbitNumber = screen.getAllByRole('textbox', { name: 'Maximum' })[0]
           await user.type(maxOrbitNumber, '9')
 
           expect(handleChange).toHaveBeenCalledTimes(1)
@@ -740,7 +742,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const maxOrbitNumber = screen.getByRole('textbox', { name: 'Set maximum orbit number' })
+          const maxOrbitNumber = screen.getAllByRole('textbox', { name: 'Maximum' })[0]
 
           await user.type(maxOrbitNumber, '9')
 
@@ -784,7 +786,7 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const minEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'Set minimum equator crossing longitude' })
+          const minEquatorCrossingLongitude = screen.getAllByRole('textbox', { name: 'Minimum' })[1]
 
           expect(minEquatorCrossingLongitude).toHaveValue('')
           expect(handleChange).toHaveBeenCalledTimes(0)
@@ -801,8 +803,8 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
+          const minEquatorCrossingLongitude = screen.getAllByRole('textbox', { name: 'Minimum' })[1]
 
-          const minEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'Set minimum equator crossing longitude' })
           await user.type(minEquatorCrossingLongitude, '1')
           await user.tab(minEquatorCrossingLongitude)
 
@@ -825,8 +827,7 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-
-          const minEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'Set minimum equator crossing longitude' })
+          const minEquatorCrossingLongitude = screen.getAllByRole('textbox', { name: 'Minimum' })[1]
 
           await user.type(minEquatorCrossingLongitude, '1')
 
@@ -862,8 +863,7 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-
-          const maxEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'Set maximum equator crossing longitude' })
+          const maxEquatorCrossingLongitude = screen.getAllByRole('textbox', { name: 'Maximum' })[1]
 
           expect(maxEquatorCrossingLongitude).toHaveValue('')
           expect(handleChange).toHaveBeenCalledTimes(0)
@@ -880,11 +880,11 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const maxEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'Set maximum equator crossing longitude' })
+          const maxEquatorCrossingLongitude = screen.getAllByRole('textbox', { name: 'Maximum' })[1]
 
           await user.type(maxEquatorCrossingLongitude, '1')
           await user.tab(maxEquatorCrossingLongitude)
-          // TODO why aren't these values updating?
+
           expect(maxEquatorCrossingLongitude).toHaveValue('')
           expect(handleChange).toHaveBeenCalledTimes(1)
           expect(handleChange).toHaveBeenCalledWith(
@@ -905,8 +905,7 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-
-          const maxEquatorCrossingLongitude = screen.getByRole('textbox', { name: 'Set maximum equator crossing longitude' })
+          const maxEquatorCrossingLongitude = screen.getAllByRole('textbox', { name: 'Maximum' })[1]
 
           await user.type(maxEquatorCrossingLongitude, '1')
 
@@ -946,16 +945,15 @@ describe('GranuleFiltersForm component', () => {
           },
           values: {
             equatorCrossingDate: {
-              startDate: '2019-06-01 00:00:00'
+              startDate: '2019-08-14T00:00:00:000Z'
             }
           }
         })
 
-        const equatorCrossingDateSection = screen.getByLabelText('Set granule equatorial crossing date')
-        const equatorCrossingStartDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'Start Date' })
-        const equatorCrossingEndDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'End Date' })
+        const equatorCrossingStartDateTextField = screen.getAllByRole('textbox', { name: 'Start Date' })[1]
+        const equatorCrossingEndDateTextField = screen.getAllByRole('textbox', { name: 'End Date' })[1]
 
-        expect(equatorCrossingStartDateTextField).toHaveValue('2019-06-01 00:00:00')
+        expect(equatorCrossingStartDateTextField).toHaveValue('2019-08-14T00:00:00:000Z')
         expect(equatorCrossingEndDateTextField).toHaveValue('')
       })
 
@@ -971,17 +969,16 @@ describe('GranuleFiltersForm component', () => {
           },
           values: {
             equatorCrossingDate: {
-              endDate: '2019-08-14 00:00:00'
+              endDate: '2019-08-14T00:00:00:000Z'
             }
           }
         })
 
-        const equatorCrossingDateSection = screen.getByLabelText('Set granule equatorial crossing date')
-        const equatorCrossingStartDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'Start Date' })
-        const equatorCrossingEndDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'End Date' })
+        const equatorCrossingStartDateTextField = screen.getAllByRole('textbox', { name: 'Start Date' })[1]
+        const equatorCrossingEndDateTextField = screen.getAllByRole('textbox', { name: 'End Date' })[1]
 
         expect(equatorCrossingStartDateTextField).toHaveValue('')
-        expect(equatorCrossingEndDateTextField).toHaveValue('2019-08-14 00:00:00')
+        expect(equatorCrossingEndDateTextField).toHaveValue('2019-08-14T00:00:00:000Z')
       })
 
       test('displays correctly when both dates are set', () => {
@@ -996,18 +993,17 @@ describe('GranuleFiltersForm component', () => {
           },
           values: {
             equatorCrossingDate: {
-              startDate: '2019-08-13 00:00:00',
-              endDate: '2019-08-14 59:59:999'
+              startDate: '2019-08-13T00:00:00:000Z',
+              endDate: '2019-08-14T23:59:59:999Z'
             }
           }
         })
 
-        const equatorCrossingDateSection = screen.getByLabelText('Set granule equatorial crossing date')
-        const equatorCrossingStartDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'Start Date' })
-        const equatorCrossingEndDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'End Date' })
+        const equatorCrossingStartDateTextField = screen.getAllByRole('textbox', { name: 'Start Date' })[1]
+        const equatorCrossingEndDateTextField = screen.getAllByRole('textbox', { name: 'End Date' })[1]
 
-        expect(equatorCrossingStartDateTextField).toHaveValue('2019-08-13 00:00:00')
-        expect(equatorCrossingEndDateTextField).toHaveValue('2019-08-14 59:59:999')
+        expect(equatorCrossingStartDateTextField).toHaveValue('2019-08-13T00:00:00:000Z')
+        expect(equatorCrossingEndDateTextField).toHaveValue('2019-08-14T23:59:59:999Z')
       })
 
       test('calls the correct callbacks on startDate submit', async () => {
@@ -1023,12 +1019,11 @@ describe('GranuleFiltersForm component', () => {
           values: {
             equatorCrossingDate: {
               startDate: '',
-              endDate: '2019-08-14 59:59:999'
+              endDate: '2019-08-14T23:59:59:999Z'
             }
           }
         })
-        const equatorCrossingDateSection = screen.getByLabelText('Set granule equatorial crossing date')
-        const equatorCrossingStartDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'Start Date' })
+        const equatorCrossingStartDateTextField = screen.getAllByRole('textbox', { name: 'Start Date' })[1]
 
         await user.click(equatorCrossingStartDateTextField)
         await user.type(equatorCrossingStartDateTextField, '2019-08-13')
@@ -1054,14 +1049,13 @@ describe('GranuleFiltersForm component', () => {
           },
           values: {
             equatorCrossingDate: {
-              startDate: '2019-08-13 00:00:00',
+              startDate: '2019-08-13T00:00:00:000Z',
               endDate: ''
             }
           }
         })
 
-        const equatorCrossingDateSection = screen.getByLabelText('Set granule equatorial crossing date')
-        const equatorCrossingEndDateTextField = within(equatorCrossingDateSection).getByRole('textbox', { name: 'End Date' })
+        const equatorCrossingEndDateTextField = screen.getAllByRole('textbox', { name: 'End Date' })[1]
 
         await user.click(equatorCrossingEndDateTextField)
         await user.type(equatorCrossingEndDateTextField, '2019-08-14')

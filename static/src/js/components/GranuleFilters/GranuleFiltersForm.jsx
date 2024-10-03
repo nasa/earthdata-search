@@ -273,7 +273,7 @@ export const GranuleFiltersForm = (props) => {
                 <Form.Group
                   controlId="granule-filters_granule-search"
                 >
-                  <Form.Label className="mb-1" sm="auto">
+                  <Form.Label className="mb-1" sm="auto" aria-describedby="View more info on granule id filter">
                     Granule ID(s)
                   </Form.Label>
                   <OverlayTrigger
@@ -322,7 +322,7 @@ export const GranuleFiltersForm = (props) => {
                       )
                     }
                   >
-                    <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" aria-label="View more info on granule id filter" role="img" />
+                    <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" aria-label="A question mark in a circle" role="img" />
                   </OverlayTrigger>
                   <Form.Control
                     name="readableGranuleName"
@@ -700,7 +700,6 @@ export const GranuleFiltersForm = (props) => {
                         </Form.Label>
                         <Col sm={7}>
                           <Form.Control
-                            aria-label="Set minimum orbit number"
                             name="orbitNumber.min"
                             data-testid="granule-filters__orbit-number-min"
                             type="text"
@@ -732,7 +731,6 @@ export const GranuleFiltersForm = (props) => {
                         </Form.Label>
                         <Col sm={7}>
                           <Form.Control
-                            aria-label="Set maximum orbit number"
                             name="orbitNumber.max"
                             data-testid="granule-filters__orbit-number-max"
                             type="text"
@@ -754,7 +752,6 @@ export const GranuleFiltersForm = (props) => {
                         </Col>
                       </Form.Group>
                     </SidebarFiltersItem>
-
                     <SidebarFiltersItem
                       heading="Equatorial Crossing Longitude"
                     >
@@ -770,7 +767,6 @@ export const GranuleFiltersForm = (props) => {
                         <Col sm={7}>
                           <Form.Control
                             name="equatorCrossingLongitude.min"
-                            aria-label="Set minimum equator crossing longitude"
                             data-testid="granule-filters__equatorial-crossing-longitude-min"
                             type="text"
                             size="sm"
@@ -804,7 +800,6 @@ export const GranuleFiltersForm = (props) => {
                         <Col sm={7}>
                           <Form.Control
                             name="equatorCrossingLongitude.max"
-                            aria-label="Set maximum equator crossing longitude"
                             data-testid="granule-filters__equatorial-crossing-longitude-max"
                             type="text"
                             size="sm"

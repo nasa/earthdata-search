@@ -247,7 +247,7 @@ describe('GranuleFiltersContainer component', () => {
         const tooltipText = /Filter granules by using a granule ID/i
 
         expect(screen.queryByText(tooltipText)).not.toBeInTheDocument()
-        const readableGranuleNameTMoreInfo = screen.getByRole('img', { name: 'View more info on granule id filter' })
+        const readableGranuleNameTMoreInfo = screen.getByRole('img', { name: 'A question mark in a circle' })
 
         // Only show tool-tip on hover
         await act(async () => {
