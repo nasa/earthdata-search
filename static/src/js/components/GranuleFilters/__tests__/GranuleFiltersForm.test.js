@@ -714,7 +714,6 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          // Const orbitNumberMaximum = screen.getAllByRole('textbox', { name: 'Maximum' })[0]
           const orbitNumberSectionHeader = screen.getByText('Orbit Number').parentElement.parentElement
           const orbitNumberMaximum = within(orbitNumberSectionHeader).getByRole('textbox', { name: 'Maximum' })
 
@@ -808,8 +807,6 @@ describe('GranuleFiltersForm component', () => {
           const equatorialCrossingLatitudeSectionHeader = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
           const minEquatorCrossingLongitude = within(equatorialCrossingLatitudeSectionHeader).getByRole('textbox', { name: 'Minimum' })
 
-          // Const minEquatorCrossingLongitude = screen.getAllByRole('textbox', { name: 'Minimum' })[1]
-
           expect(minEquatorCrossingLongitude).toHaveValue('')
           expect(handleChange).toHaveBeenCalledTimes(0)
         })
@@ -827,8 +824,6 @@ describe('GranuleFiltersForm component', () => {
           })
           const equatorialCrossingLatitudeSectionHeader = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
           const minEquatorCrossingLongitude = within(equatorialCrossingLatitudeSectionHeader).getByRole('textbox', { name: 'Minimum' })
-
-          // Const minEquatorCrossingLongitude = screen.getAllByRole('textbox', { name: 'Minimum' })[1]
 
           await user.type(minEquatorCrossingLongitude, '1')
           await user.tab(minEquatorCrossingLongitude)
@@ -856,11 +851,7 @@ describe('GranuleFiltersForm component', () => {
           const equatorialCrossingLatitudeSectionHeader = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
           const minEquatorCrossingLongitude = within(equatorialCrossingLatitudeSectionHeader).getByRole('textbox', { name: 'Minimum' })
 
-          // Const minEquatorCrossingLongitude = screen.getAllByRole('textbox', { name: 'Minimum' })[1]
-
           await user.type(minEquatorCrossingLongitude, '1')
-
-          // Submit the form call
           await user.tab(minEquatorCrossingLongitude)
 
           expect(handleSubmit).toHaveBeenCalledTimes(1)
@@ -895,8 +886,6 @@ describe('GranuleFiltersForm component', () => {
           const equatorialCrossingLatitudeSectionHeader = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
           const maxEquatorCrossingLongitude = within(equatorialCrossingLatitudeSectionHeader).getByRole('textbox', { name: 'Maximum' })
 
-          // Const maxEquatorCrossingLongitude = screen.getAllByRole('textbox', { name: 'Maximum' })[1]
-
           expect(maxEquatorCrossingLongitude).toHaveValue('')
           expect(handleChange).toHaveBeenCalledTimes(0)
         })
@@ -914,8 +903,6 @@ describe('GranuleFiltersForm component', () => {
           })
           const equatorialCrossingLatitudeSectionHeader = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
           const maxEquatorCrossingLongitude = within(equatorialCrossingLatitudeSectionHeader).getByRole('textbox', { name: 'Maximum' })
-
-          // Const maxEquatorCrossingLongitude = screen.getAllByRole('textbox', { name: 'Maximum' })[1]
 
           await user.type(maxEquatorCrossingLongitude, '1')
           await user.tab(maxEquatorCrossingLongitude)
@@ -943,11 +930,7 @@ describe('GranuleFiltersForm component', () => {
           const equatorialCrossingLatitudeSectionHeader = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
           const maxEquatorCrossingLongitude = within(equatorialCrossingLatitudeSectionHeader).getByRole('textbox', { name: 'Maximum' })
 
-          // Const maxEquatorCrossingLongitude = screen.getAllByRole('textbox', { name: 'Maximum' })[1]
-
           await user.type(maxEquatorCrossingLongitude, '1')
-
-          // Submit the form call
           await user.tab(maxEquatorCrossingLongitude)
 
           expect(handleSubmit).toHaveBeenCalledTimes(1)
