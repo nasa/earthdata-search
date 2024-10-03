@@ -10,7 +10,6 @@ import {
 } from 'react-bootstrap'
 import { FaQuestionCircle } from 'react-icons/fa'
 import moment from 'moment'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import { findGridByName } from '../../util/grid'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
@@ -21,6 +20,7 @@ import SidebarFiltersItem from '../Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../Sidebar/SidebarFiltersList'
 import TemporalSelection from '../TemporalSelection/TemporalSelection'
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './GranuleFiltersForm.scss'
 
@@ -281,7 +281,7 @@ export const GranuleFiltersForm = (props) => {
                     overlay={
                       (
                         <Tooltip id="granule-filters-form-id-filter-tooltip" className="tooltip--ta-left tooltip--wide">
-                          <p className="font-weight-lighter">
+                          <p>
                             Filter granules by using a granule ID.
                             Enter an ID to find an exact match or use a wildcard
                             and/or delimiter to search using a more complex query.
@@ -290,14 +290,14 @@ export const GranuleFiltersForm = (props) => {
                             Search granules using wildcard characters
                           </strong>
                           <ul className="m-0 font-size granule-filters-form__readable-granule-name-tooltip-list">
-                            <li className="font-weight-lighter">
+                            <li>
                               Question marks
                               {' ('}
                               <strong className="font-weight-bold">?</strong>
                               {') '}
                               match a single character in that location
                             </li>
-                            <li className="font-weight-lighter">
+                            <li>
                               Asterisks
                               {' ('}
                               <strong className="font-weight-bold">*</strong>
@@ -310,7 +310,7 @@ export const GranuleFiltersForm = (props) => {
                             Search granules using multiple IDs
                           </strong>
                           <ul className="m-0 granule-filters-form__readable-granule-name-tooltip-list">
-                            <li className="font-weight-lighter">
+                            <li>
                               Commas
                               {' ('}
                               <strong className="font-weight-bold">,</strong>
