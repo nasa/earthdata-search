@@ -402,7 +402,7 @@ SecondaryToolbar.propTypes = {
   earthdataEnvironment: PropTypes.string.isRequired,
   location: locationPropType.isRequired,
   onLogout: PropTypes.func.isRequired,
-  onStartTour: PropTypes.bool.isRequired,
+  onStartTour: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   retrieval: PropTypes.shape({}).isRequired,

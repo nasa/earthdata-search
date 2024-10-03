@@ -29,6 +29,7 @@ function setup(state, overrideProps) {
       first_name: 'First'
     },
     secondaryToolbarEnabled: true,
+    onStartTour: jest.fn(),
     ...overrideProps
   }
 
