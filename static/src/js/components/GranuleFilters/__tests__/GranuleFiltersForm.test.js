@@ -1,5 +1,9 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import {
+  render,
+  screen,
+  within
+} from '@testing-library/react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 
@@ -377,7 +381,9 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        expect(screen.getByRole('combobox', { name: 'Select day/night flag' })).toHaveValue('')
+        const dayNightSideBarItem = screen.getByText('Day/Night').parentElement.parentElement
+
+        expect(within(dayNightSideBarItem).getByRole('combobox')).toHaveValue('')
       })
 
       test('displays selected item', async () => {
@@ -395,7 +401,9 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        expect(screen.getByRole('combobox', { name: 'Select day/night flag' })).toHaveValue('NIGHT')
+        const dayNightSideBarItem = screen.getByText('Day/Night').parentElement.parentElement
+
+        expect(within(dayNightSideBarItem).getByRole('combobox')).toHaveValue('NIGHT')
       })
 
       test('calls handleChange on change', async () => {
@@ -412,8 +420,8 @@ describe('GranuleFiltersForm component', () => {
             dayNightFlag: 'NIGHT'
           }
         })
-
-        const dayNightSelection = screen.getByRole('combobox', { name: 'Select day/night flag' })
+        const dayNightSideBarItem = screen.getByText('Day/Night').parentElement.parentElement
+        const dayNightSelection = within(dayNightSideBarItem).getByRole('combobox')
 
         await user.selectOptions(dayNightSelection, 'Day')
         await user.selectOptions(dayNightSelection, 'Both')

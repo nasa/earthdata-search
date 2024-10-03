@@ -573,7 +573,6 @@ export const GranuleFiltersForm = (props) => {
                       <Col>
                         <Form.Group controlId="granule-filters__day-night-flag">
                           <Form.Control
-                            aria-label="Select day/night flag"
                             name="dayNightFlag"
                             data-testid="granule-filters__day-night-flag"
                             as="select"
