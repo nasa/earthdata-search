@@ -89,7 +89,6 @@ const setup = (overrideProps) => {
     handleSubmit: handleFormSubmit
   })(GranuleFiltersContainer)
 
-  // Rendering formik wrapper https://formik.org/docs/migrating-v2#all-render-props-have-been-deprecated-with-a-console-warning
   render(
     <Provider store={store}>
       <Router history={history}>
