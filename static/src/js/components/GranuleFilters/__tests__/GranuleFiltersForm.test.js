@@ -624,7 +624,11 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const minOrbitNumber = screen.getAllByRole('textbox', { name: 'Minimum' })[0]
+          const orbitNumberSectionHeader = screen.getByText('Orbit Number').parentElement.parentElement
+          console.log('🚀 ~ file: GranuleFiltersForm.test.js:628 ~ orbitNumberSectionHeader:', orbitNumberSectionHeader)
+
+          const minOrbitNumber = within(orbitNumberSectionHeader).getByRole('textbox', { name: 'Minimum' })
+          // Const minOrbitNumber = screen.getAllByRole('textbox', { name: 'Minimum' })[0]
 
           expect(minOrbitNumber).toHaveValue('')
         })
@@ -640,7 +644,9 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const minOrbitNumber = screen.getAllByRole('textbox', { name: 'Minimum' })[0]
+
+          const orbitNumberSectionHeader = screen.getByText('Orbit Number').parentElement.parentElement
+          const minOrbitNumber = within(orbitNumberSectionHeader).getByRole('textbox', { name: 'Maximum' })
 
           await user.type(minOrbitNumber, '9')
 
@@ -666,11 +672,10 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const minOrbitNumber = screen.getAllByRole('textbox', { name: 'Minimum' })[0]
+          const orbitNumberSectionHeader = screen.getByText('Orbit Number').parentElement.parentElement
+          const minOrbitNumber = within(orbitNumberSectionHeader).getByRole('textbox', { name: 'Minimum' })
 
           await user.type(minOrbitNumber, '9')
-
-          // Submit the form call
           await user.tab(minOrbitNumber)
 
           expect(handleSubmit).toHaveBeenCalledTimes(1)
@@ -709,7 +714,10 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberMaximum = screen.getAllByRole('textbox', { name: 'Maximum' })[0]
+          // Const orbitNumberMaximum = screen.getAllByRole('textbox', { name: 'Maximum' })[0]
+          const orbitNumberSectionHeader = screen.getByText('Orbit Number').parentElement.parentElement
+          const orbitNumberMaximum = within(orbitNumberSectionHeader).getByRole('textbox', { name: 'Maximum' })
+
           expect(orbitNumberMaximum).toHaveValue('')
         })
 
@@ -725,7 +733,9 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const maxOrbitNumber = screen.getAllByRole('textbox', { name: 'Maximum' })[0]
+          const orbitNumberSectionHeader = screen.getByText('Orbit Number').parentElement.parentElement
+          const maxOrbitNumber = within(orbitNumberSectionHeader).getByRole('textbox', { name: 'Maximum' })
+
           await user.type(maxOrbitNumber, '9')
 
           expect(handleChange).toHaveBeenCalledTimes(1)
@@ -750,7 +760,8 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const maxOrbitNumber = screen.getAllByRole('textbox', { name: 'Maximum' })[0]
+          const orbitNumberSectionHeader = screen.getByText('Orbit Number').parentElement.parentElement
+          const maxOrbitNumber = within(orbitNumberSectionHeader).getByRole('textbox', { name: 'Maximum' })
 
           await user.type(maxOrbitNumber, '9')
 
