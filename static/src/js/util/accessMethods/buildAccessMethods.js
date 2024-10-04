@@ -1,8 +1,75 @@
-import { buildEsiEcho } from './buildAccessMethods/buildEsiEcho'
+import { camelCase } from 'lodash-es'
+
+import * as accessMethodTypes from '../../constants/accessMethodTypes'
+import { buildEcho } from './buildAccessMethods/buildEcho'
+import { buildEsi } from './buildAccessMethods/buildEsi'
 import { buildOpendap } from './buildAccessMethods/buildOpendap'
 import { buildHarmony } from './buildAccessMethods/buildHarmony'
 import { buildSwodlr } from './buildAccessMethods/buildSwodlr'
 import { buildDownload } from './buildAccessMethods/buildDownload'
+
+/**
+ * Formats a service type into a lower case and camelCase version
+ * @param {string} serviceType serviceType
+ * @returns {string} formatted service typpe
+ */
+export const formatServiceType = (serviceType) => {
+  const lowerServiceType = serviceType.toLowerCase()
+
+  return camelCase(lowerServiceType)
+}
+
+/**
+ * Reduces a list of all the accessMethods into a single object with correctly incremented/listed values
+ * @param {Array} items list of accessMethod items
+ * @returns {Object} single object of all the accessMethod items
+ */
+export const reduceAccessMethods = (items = []) => {
+  let esiIndex = 0
+  let echoIndex = 0
+  let harmonyIndex = 0
+
+  const accessMethods = items.reduce((methods, item) => {
+    const { type: serviceType } = item
+
+    const methodKey = serviceType ? formatServiceType(serviceType) : ''
+
+    const updatedAccessMethods = { ...methods }
+
+    switch (methodKey) {
+      case (accessMethodTypes.ESI):
+        updatedAccessMethods[`${methodKey}${esiIndex}`] = item
+
+        esiIndex += 1
+        break
+      case (accessMethodTypes.ECHO_ORDERS):
+        updatedAccessMethods[`${methodKey}${echoIndex}`] = item
+
+        echoIndex += 1
+        break
+      case (accessMethodTypes.HARMONY):
+        updatedAccessMethods[`${methodKey}${harmonyIndex}`] = item
+
+        harmonyIndex += 1
+        break
+      // No need to create a "accessMethodKey" since you can only have one openDap or SWODLR
+      case (accessMethodTypes.OPENDAP):
+        updatedAccessMethods[methodKey] = item
+
+        break
+      case (accessMethodTypes.SWODLR):
+        updatedAccessMethods[methodKey] = item
+
+        break
+      default:
+        break
+    }
+
+    return updatedAccessMethods
+  }, {})
+
+  return accessMethods
+}
 
 /**
  * Builds the different access methods available for the provided collection
@@ -17,70 +84,44 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     variables: collectionAssociatedVariables = {}
   } = collectionMetadata
 
-  let harmonyIndex = 0
-  let echoIndex = 0
-  let esiIndex = 0
-
-  const { items: serviceItems = null } = services
+  const { items: serviceItems = [] } = services
 
   const buildMethods = {
-    esi: (serviceItem, params) => buildEsiEcho(serviceItem, params),
-    'echo orders': (serviceItem, params) => buildEsiEcho(serviceItem, params),
+    echoOrders: (serviceItem) => buildEcho(serviceItem),
+    esi: (serviceItem) => buildEsi(serviceItem),
     opendap: (serviceItem, params) => buildOpendap(serviceItem, params),
     harmony: (serviceItem, params) => buildHarmony(serviceItem, params),
     swodlr: (serviceItem) => buildSwodlr(serviceItem),
     downloads: () => buildDownload(granules, isOpenSearch)
   }
 
-  const nonDownloadMethods = serviceItems === null
-    ? {}
-    : serviceItems.reduce((methods, serviceItem) => {
-      let associatedVariables = collectionAssociatedVariables
-      const {
-        type: serviceType,
-        variables: serviceAssociatedVariables = {}
-      } = serviceItem
+  const nonDownloadMethodItems = serviceItems.flatMap((serviceItem) => {
+    let associatedVariables = collectionAssociatedVariables
+    const {
+      type: serviceType,
+      variables: serviceAssociatedVariables = {}
+    } = serviceItem
 
-      // Overwrite variables if there are variables associated to the service record
-      if (serviceAssociatedVariables.items && serviceAssociatedVariables.items.length > 0) {
-        associatedVariables = serviceAssociatedVariables
-      }
+    // Overwrite variables if there are variables associated to the service record
+    if (serviceAssociatedVariables.items && serviceAssociatedVariables.items.length > 0) {
+      associatedVariables = serviceAssociatedVariables
+    }
 
-      const lowerServiceType = serviceType.toLowerCase()
+    const formattedServiceType = formatServiceType(serviceType)
 
-      // Only process service types that EDSC supports
-      const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony', 'swodlr']
-      if (!supportedServiceTypes.includes(lowerServiceType)) return {}
+    // Only process service types that EDSC supports
+    if (!Object.values(accessMethodTypes).includes(formattedServiceType)) return {}
 
-      const params = {
-        harmonyIndex,
-        echoIndex,
-        esiIndex,
-        associatedVariables
-      }
+    const params = {
+      associatedVariables
+    }
 
-      const builtMethod = buildMethods[lowerServiceType](serviceItem, params)
+    const items = buildMethods[formattedServiceType](serviceItem, params)
 
-      const {
-        accessMethods: newAccessMethods,
-        esiIndex: newEsiIndex,
-        echoIndex: newEchoIndex
-      } = builtMethod
+    return items
+  }, [])
 
-      esiIndex = newEsiIndex || esiIndex
-      echoIndex = newEchoIndex || echoIndex
-
-      const updatedMethods = {
-        ...methods,
-        ...newAccessMethods
-      }
-
-      if (lowerServiceType === 'harmony') {
-        harmonyIndex += 1
-      }
-
-      return updatedMethods
-    }, {})
+  const nonDownloadMethods = reduceAccessMethods(nonDownloadMethodItems)
 
   const accessMethods = {
     ...nonDownloadMethods,

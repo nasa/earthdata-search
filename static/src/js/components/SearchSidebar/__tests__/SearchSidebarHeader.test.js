@@ -5,7 +5,6 @@ import {
   screen,
   waitFor
 } from '@testing-library/react'
-import '@testing-library/jest-dom'
 
 jest.mock('../../../containers/SearchFormContainer/SearchFormContainer', () => jest.fn(({ children }) => (
   <mock-SearchFormContainer data-testid="SearchFormContainer">

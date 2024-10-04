@@ -200,6 +200,11 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       action: 'getProjectCollections',
       resource: 'saved access configurations'
     }))
+
+    // If we know that the user is unauthorized and we need to redirect to EDL, stop here.
+    if (error.response.status === 401) {
+      return null
+    }
   }
 
   const collectionParams = prepareCollectionParams(state)

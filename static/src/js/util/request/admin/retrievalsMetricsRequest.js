@@ -1,7 +1,7 @@
 import Request from '../request'
 import { getEnvironmentConfig } from '../../../../../../sharedUtils/config'
 
-export default class MetricsRetrievalsRequest extends Request {
+export default class retrievalsMetricsRequest extends Request {
   constructor(authToken, earthdataEnvironment) {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
@@ -10,6 +10,6 @@ export default class MetricsRetrievalsRequest extends Request {
   }
 
   all(params) {
-    return this.get('admin/retrievalsMetrics', params)
+    return this.get('admin/retrievals_metrics', params)
   }
 }

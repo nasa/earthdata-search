@@ -7,7 +7,6 @@ import {
 import userEvent from '@testing-library/user-event'
 
 import TemporalDisplay from '../TemporalDisplay'
-import '@testing-library/jest-dom'
 
 const setup = (overrideProps) => {
   const user = userEvent.setup()

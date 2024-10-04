@@ -184,7 +184,7 @@ export const CollectionDetailsBody = ({
     const { items } = services
 
     if (items) {
-      const supportedServiceTypes = ['esi', 'opendap', 'echo orders', 'harmony']
+      const supportedServiceTypes = ['esi', 'opendap', 'echo orders', 'harmony', 'swodlr']
       items.forEach((service) => {
         const {
           supportedReformattings: supportedReformattingsList,

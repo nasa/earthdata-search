@@ -12,6 +12,7 @@ import AdminProjectsContainer from '../../containers/AdminProjectsContainer/Admi
 import AdminRetrievalContainer from '../../containers/AdminRetrievalContainer/AdminRetrievalContainer'
 import AdminRetrievalsContainer from '../../containers/AdminRetrievalsContainer/AdminRetrievalsContainer'
 import AdminRetrievalsMetricsContainer from '../../containers/AdminRetrievalsMetricsContainer/AdminRetrievalsMetricsContainer'
+import AdminPreferencesMetricsContainer from '../../containers/AdminPreferencesMetricsContainer/AdminPreferencesMetricsContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import actions from '../../actions'
 
@@ -59,16 +60,24 @@ export class Admin extends Component {
                   |
                   {' '}
                   <PortalLinkContainer
-                    to="/admin/retrievalsMetrics"
+                    to="/admin/retrievals-metrics"
                   >
                     View Retrieval Metrics
+                  </PortalLinkContainer>
+                  |
+                  {' '}
+                  <PortalLinkContainer
+                    to="/admin/preferences-metrics"
+                  >
+                    View Preferences Metrics
                   </PortalLinkContainer>
                 </Route>
                 <Route exact path={`${path}/retrievals`} component={AdminRetrievalsContainer} />
                 <Route exact path={`${path}/retrievals/:id`} component={AdminRetrievalContainer} />
                 <Route exact path={`${path}/projects`} component={AdminProjectsContainer} />
                 <Route exact path={`${path}/projects/:id`} component={AdminProjectContainer} />
-                <Route exact path={`${path}/retrievalsMetrics`} component={AdminRetrievalsMetricsContainer} />
+                <Route exact path={`${path}/retrievals-metrics`} component={AdminRetrievalsMetricsContainer} />
+                <Route exact path={`${path}/preferences-metrics`} component={AdminPreferencesMetricsContainer} />
               </Switch>
             </div>
           </div>

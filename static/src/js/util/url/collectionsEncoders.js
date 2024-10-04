@@ -80,6 +80,25 @@ const encodeConcatenateDownload = (projectCollection) => {
   return enableConcatenateDownload ? 't' : 'f'
 }
 
+const encodeSwodlrDownload = (projectCollection) => {
+  if (!projectCollection) return null
+
+  const {
+    accessMethods,
+    selectedAccessMethod
+  } = projectCollection
+  if (!accessMethods || !selectedAccessMethod) {
+    return null
+  }
+
+  const selectedMethod = accessMethods[selectedAccessMethod]
+  const {
+    swodlrData
+  } = selectedMethod
+
+  return swodlrData
+}
+
 const encodeSelectedVariables = (projectCollection) => {
   if (!projectCollection) return null
 
@@ -199,6 +218,13 @@ const decodedSelectedVariables = (pgParam) => {
   if (!variableIds) return undefined
 
   return variableIds.split('!')
+}
+
+const decodedSwodlrDownload = (pgParam) => {
+  const { swod: swodlrData } = pgParam
+  if (!swodlrData) return undefined
+
+  return swodlrData
 }
 
 const decodedSelectedAccessMethod = (pgParam) => {
@@ -360,6 +386,8 @@ export const encodeCollections = (props) => {
     // Encode selected variables
     pg.uv = encodeSelectedVariables(projectCollection)
 
+    // Encode swodlr form variables
+    pg.swod = encodeSwodlrDownload(projectCollection)
     // Encode concatenation selection
     pg.cd = encodeConcatenateDownload(projectCollection)
 
@@ -436,6 +464,7 @@ export const decodeCollections = (params) => {
     let removedGranuleIds = []
     let removedIsOpenSearch
     let selectedAccessMethod
+    let swodlrData
     let selectedOutputFormat
     let selectedOutputProjection
     let variableIds
@@ -459,7 +488,7 @@ export const decodeCollections = (params) => {
         granuleIds: removedGranuleIds = []
       } = decodedGranules('r', pCollection));
 
-      // Granules removed by way of terciary filter
+      // Granules removed by way of tertiary filter
       ({
         isOpenSearch: excludedIsOpenSearch,
         granuleIds: excludedGranuleIds = []
@@ -498,7 +527,6 @@ export const decodeCollections = (params) => {
 
       // Decode selected access method
       selectedAccessMethod = decodedSelectedAccessMethod(pCollection)
-
       // Decode output format
       selectedOutputFormat = decodedOutputFormat(pCollection)
 
@@ -513,6 +541,11 @@ export const decodeCollections = (params) => {
         enableSpatialSubsetting = decodedSpatialSubsetting(pCollection)
         // Decode concatenate download
         enableConcatenateDownload = decodedConcatenateDownload(pCollection)
+      }
+
+      // Decode swodlr subsettings on collections
+      if (selectedAccessMethod && selectedAccessMethod.startsWith('swodlr')) {
+        swodlrData = decodedSwodlrDownload(pCollection)
       }
 
       // Determine if the collection is a CWIC collection
@@ -554,6 +587,14 @@ export const decodeCollections = (params) => {
               selectedOutputFormat,
               selectedOutputProjection,
               selectedVariables: variableIds
+            }
+          }
+        }
+
+        if (swodlrData) {
+          projectById[collectionId].accessMethods = {
+            [selectedAccessMethod]: {
+              swodlrData
             }
           }
         }

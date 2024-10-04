@@ -13,7 +13,6 @@ import {
 import { BrowserRouter as Router } from 'react-router-dom'
 import * as AppConfig from '../../../../../../sharedUtils/config'
 import actions from '../../../actions'
-import '@testing-library/jest-dom'
 import { Project } from '../Project'
 
 // Mock react-leaflet because it causes errors

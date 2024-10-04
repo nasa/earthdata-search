@@ -121,7 +121,7 @@ describe('getHandoffLinks', () => {
     const collectionMetadata = {
       tags: {},
       tools: {
-        items: null
+        items: []
       }
     }
 

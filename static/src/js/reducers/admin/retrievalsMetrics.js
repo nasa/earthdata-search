@@ -1,9 +1,9 @@
 import {
-  SET_ADMIN_METRICS_RETRIEVALS,
-  SET_ADMIN_METRICS_RETRIEVALS_LOADING,
-  SET_ADMIN_METRICS_RETRIEVALS_LOADED,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE
+  SET_ADMIN_RETRIEVALS_METRICS,
+  SET_ADMIN_RETRIEVALS_METRICS_LOADING,
+  SET_ADMIN_RETRIEVALS_METRICS_LOADED,
+  UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE,
+  UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE
 } from '../../constants/actionTypes'
 
 const initialState = {
@@ -35,9 +35,9 @@ const processResults = (results) => {
   }
 }
 
-const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
+const adminRetrievalsMetricsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case SET_ADMIN_METRICS_RETRIEVALS_LOADED: {
+    case SET_ADMIN_RETRIEVALS_METRICS_LOADED: {
       return {
         ...state,
         isLoaded: true,
@@ -45,7 +45,7 @@ const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
       }
     }
 
-    case SET_ADMIN_METRICS_RETRIEVALS_LOADING: {
+    case SET_ADMIN_RETRIEVALS_METRICS_LOADING: {
       return {
         ...state,
         isLoaded: false,
@@ -53,7 +53,7 @@ const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
       }
     }
 
-    case SET_ADMIN_METRICS_RETRIEVALS: {
+    case SET_ADMIN_RETRIEVALS_METRICS: {
       const {
         byAccessMethodType,
         allAccessMethodTypes,
@@ -68,14 +68,14 @@ const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
       }
     }
 
-    case UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE: {
+    case UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE: {
       return {
         ...state,
         startDate: action.payload
       }
     }
 
-    case UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE: {
+    case UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE: {
       return {
         ...state,
         endDate: action.payload
@@ -87,4 +87,4 @@ const adminMetricsRetrievalsReducer = (state = initialState, action = {}) => {
   }
 }
 
-export default adminMetricsRetrievalsReducer
+export default adminRetrievalsMetricsReducer

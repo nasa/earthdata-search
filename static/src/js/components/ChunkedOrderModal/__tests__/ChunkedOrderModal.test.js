@@ -5,7 +5,6 @@ import {
   waitFor
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import '@testing-library/jest-dom'
 import { Router } from 'react-router'
 import { Provider } from 'react-redux'
 import { createMemoryHistory } from 'history'

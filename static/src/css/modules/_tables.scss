@@ -16,4 +16,18 @@
   th {
     padding: .625rem 1rem;
   }
+
+  &--small {
+    thead {
+      th {
+        font-size:  0.75rem;
+        padding: 0.5rem;
+      }
+    }
+
+    td {
+      padding: 0.5rem;
+      font-size: 0.75rem;
+    }
+  }
 }

@@ -41,6 +41,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
     byId: projectCollectionsById
   } = projectCollections
 
+  // Aggregate metrics for retrievals by service
   const metricsCollections = projectCollectionsIds.map((id) => {
     const { [id]: projectCollection } = projectCollectionsById
     const { accessMethods, selectedAccessMethod = '' } = projectCollection
@@ -62,7 +63,6 @@ export const submitRetrieval = () => (dispatch, getState) => {
     } else if (type === 'ESI') {
       const { optionDefinition } = selectedMethod
       const { name: serviceName } = optionDefinition
-
       selectedService = serviceName
       selectedType = 'esi'
     } else if (type === 'OPeNDAP') {
@@ -71,6 +71,9 @@ export const submitRetrieval = () => (dispatch, getState) => {
     } else if (type === 'Harmony') {
       selectedService = name
       selectedType = 'harmony'
+    } else if (type === 'SWODLR') {
+      selectedService = 'SWODLR'
+      selectedType = 'swodlr'
     }
 
     return {

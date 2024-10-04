@@ -22,7 +22,7 @@ import './OrderStatus.scss'
 /**
  * Renders a RelatedCollection.
  * @param {Object} props - The props passed into the component.
- * @param {String} props.authToken - The accessMethods of the current collection.
+ * @param {String} props.authToken - The authToken for the logged in user.
  * @param {String} props.earthdataEnvironment - The accessMethods of the current collection.
  * @param {Object} props.granuleDownload - Data pertaining to the status of the granule download for a retrieval collection.
  * @param {Object} props.location - Location passed from react router.
