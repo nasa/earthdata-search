@@ -293,7 +293,6 @@ export const GranuleResultsDataLinksButton = ({
               }]
             })
 
-            event.preventDefault()
             event.stopPropagation()
           }
         }

@@ -3,7 +3,6 @@ import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
 
 import { LinkContainer } from 'react-router-bootstrap'
-
 import Highlighter from 'react-highlight-words'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
@@ -107,7 +106,6 @@ const GranuleResultsItem = forwardRef(({
       element = (
         <EDSCImage
           className="granule-results-item__thumb-image"
-          data-test-id="granule-results-item__thumb-image"
           src={granuleThumbnail}
           height={thumbnailHeight}
           width={thumbnailWidth}
@@ -189,12 +187,12 @@ const GranuleResultsItem = forwardRef(({
       ref={ref}
       role="button"
       tabIndex={0}
+      aria-label={itemTitle.title}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...itemTitle}
     >
       <header
         className="granule-results-item__header"
-        data-testid="granule-results-item-title"
       >
         <div
           className="granule-results-item__title-wrapper"

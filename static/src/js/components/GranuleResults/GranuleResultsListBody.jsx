@@ -73,6 +73,7 @@ innerElementType.propTypes = {
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
  * @param { Function } props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
+ * @param { Array } props.readableGranuleName - The readableGranuleName filter value.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the visible middle index.
  * @param {Number} props.visibleMiddleIndex - The current visible middle index.
  * @param {Number} props.width - The width of the container provided by AutoSizer.

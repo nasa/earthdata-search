@@ -78,11 +78,9 @@ describe('GranuleResultsDataLinksButton component', () => {
     test('calls callback with the correct data on click', () => {
       const { enzymeWrapper, props } = setup()
 
-      const preventDefaultMock = jest.fn()
       const stopPropagationMock = jest.fn()
 
       enzymeWrapper.simulate('click', {
-        preventDefault: preventDefaultMock,
         stopPropagation: stopPropagationMock
       })
 
@@ -94,7 +92,6 @@ describe('GranuleResultsDataLinksButton component', () => {
         type: 'single_granule_download'
       })
 
-      expect(preventDefaultMock).toHaveBeenCalledTimes(1)
       expect(stopPropagationMock).toHaveBeenCalledTimes(1)
     })
 
@@ -207,6 +204,7 @@ describe('GranuleResultsDataLinksButton component', () => {
       })
 
       test('displays a success toast', () => {
+        const stopPropagationMock = jest.fn()
         // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
         ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
         const addToastMock = jest.spyOn(addToast, 'addToast')
@@ -227,7 +225,9 @@ describe('GranuleResultsDataLinksButton component', () => {
 
         const dataLinks = enzymeWrapper.find('.granule-results-data-links-button__dropdown-item')
 
-        dataLinks.at(0).simulate('click', { stopPropagation: () => { } })
+        dataLinks.at(0).simulate('click', { stopPropagation: stopPropagationMock })
+
+        expect(stopPropagationMock).toHaveBeenCalledTimes(1)
 
         expect(addToastMock.mock.calls.length).toBe(1)
         expect(addToastMock.mock.calls[0][0]).toEqual('Initiated download of file: linkhref')

@@ -393,7 +393,7 @@ describe('GranuleResultsItem component', () => {
   test('renders itself correctly', () => {
     setup('cmr')
 
-    expect(screen.getByTestId('granule-results-item')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Focus granule on map' })).toBeInTheDocument()
   })
 
   test('renders the add button under PortalFeatureContainer', async () => {
@@ -408,7 +408,7 @@ describe('GranuleResultsItem component', () => {
     test('adds the correct classname', () => {
       setup('focused-granule')
 
-      expect(screen.getByTestId('granule-results-item')).toHaveClass('granule-results-item--active')
+      expect(screen.getByRole('button', { name: 'Focus granule on map' })).toHaveClass('granule-results-item--active')
     })
   })
 
@@ -589,7 +589,7 @@ describe('GranuleResultsItem component', () => {
     test('does not have an emphisized or deepmphisized class', () => {
       setup('cmr')
 
-      const granuleResultsItem = screen.getByTestId('granule-results-item')
+      const granuleResultsItem = screen.getByRole('button', { name: 'Focus granule on map' })
       expect(granuleResultsItem.className).not.toContain('granule-results-item--emphisized')
       expect(granuleResultsItem.className).not.toContain('granule-results-item--deemphisized')
     })
@@ -610,7 +610,7 @@ describe('GranuleResultsItem component', () => {
 
         expect(screen.getByLabelText('Remove granule')).toBeInTheDocument()
 
-        const granuleResultsItem = screen.getByTestId('granule-results-item')
+        const granuleResultsItem = screen.getByRole('button', { name: 'Focus granule on map' })
         expect(granuleResultsItem.className).toContain('granule-results-item--emphisized')
       })
     })
@@ -624,7 +624,7 @@ describe('GranuleResultsItem component', () => {
 
         expect(screen.getByLabelText('Add granule')).toBeInTheDocument()
 
-        const granuleResultsItem = screen.getByTestId('granule-results-item')
+        const granuleResultsItem = screen.getByRole('button', { name: 'Focus granule on map' })
         expect(granuleResultsItem.className).toContain('granule-results-item--deemphisized')
       })
     })
@@ -714,7 +714,7 @@ describe('GranuleResultsItem component', () => {
     test('does not add the modifier class name', () => {
       setup('no-thumb')
 
-      expect(screen.getByTestId('granule-results-item').className).not.toContain('granule-results-item--has-thumbnail')
+      expect(screen.getByRole('button', { name: 'Focus granule on map' }).className).not.toContain('granule-results-item--has-thumbnail')
     })
   })
 
@@ -758,7 +758,7 @@ describe('GranuleResultsItem component', () => {
     test('adds the modifier class name', () => {
       setup('with-browse')
 
-      expect(screen.getByTestId('granule-results-item').className).toContain('granule-results-item--has-thumbnail')
+      expect(screen.getByRole('button', { name: 'Focus granule on map' }).className).toContain('granule-results-item--has-thumbnail')
     })
   })
 
