@@ -162,7 +162,7 @@ describe('GranuleFiltersForm component', () => {
       expect(screen.getByRole('heading', { name: 'Data Access' })).toBeInTheDocument()
     })
 
-    describe('when `Enter` is pressed in the text field', () => {
+    describe('when `Enter` is pressed in the Granule ID(s) text field', () => {
       test('calls onSubmit', async () => {
         const { onMetricsGranuleFilter, handleSubmit, user } = setup({
           values: {
@@ -655,7 +655,7 @@ describe('GranuleFiltersForm component', () => {
           )
         })
 
-        test('calls onBlur when the filter is submitted ', async () => {
+        test('calls onBlur when the filter is submitted', async () => {
           const {
             handleBlur, handleSubmit, onMetricsGranuleFilter, user
           } = setup({
@@ -742,7 +742,7 @@ describe('GranuleFiltersForm component', () => {
           )
         })
 
-        test('calls onBlur when the filter is submitted ', async () => {
+        test('calls onBlur when the filter is submitted', async () => {
           const {
             handleBlur, handleSubmit, onMetricsGranuleFilter, user
           } = setup({
@@ -834,7 +834,9 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls onBlur when the filter is submitted ', async () => {
-          const { handleBlur, handleSubmit, user } = setup({
+          const {
+            onMetricsGranuleFilter, handleBlur, handleSubmit, user
+          } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -865,6 +867,12 @@ describe('GranuleFiltersForm component', () => {
               _reactName: 'onBlur'
             })
           )
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+            type: 'equatorCrossingLongitude.min',
+            value: ''
+          })
         })
       })
 
@@ -914,7 +922,9 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls onBlur when the filter is submitted ', async () => {
-          const { handleBlur, handleSubmit, user } = setup({
+          const {
+            onMetricsGranuleFilter, handleBlur, handleSubmit, user
+          } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -944,6 +954,12 @@ describe('GranuleFiltersForm component', () => {
               _reactName: 'onBlur'
             })
           )
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+            type: 'equatorCrossingLongitude.max',
+            value: ''
+          })
         })
       })
     })
@@ -1122,7 +1138,7 @@ describe('GranuleFiltersForm component', () => {
     })
 
     test('calls handleChange on change', async () => {
-      const { handleChange, user } = setup({
+      const { onMetricsGranuleFilter, handleChange, user } = setup({
         collectionMetadata: {
           tilingIdentificationSystems: [
             {
@@ -1149,6 +1165,14 @@ describe('GranuleFiltersForm component', () => {
         expect.objectContaining({
           _reactName: 'onChange'
         })
+      )
+
+      expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+      expect(onMetricsGranuleFilter).toHaveBeenCalledWith(
+        {
+          type: 'tilingSystem',
+          value: 'MISR'
+        }
       )
     })
 
