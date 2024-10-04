@@ -9,7 +9,6 @@ import {
 } from '../Search'
 import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import AdvancedSearchModalContainer from '../../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
-
 import actions from '../../../actions'
 
 // Mock react-leaflet because it causes errors
@@ -104,11 +103,20 @@ describe('Search component', () => {
     expect(portalFeatureContainer.props().advancedSearch).toBeTruthy()
   })
 
+  test('calls onTogglePortalBrowserModal(true) when "Browse Portals" button is clicked', () => {
+    const { enzymeWrapper, props } = setup()
+
+    const browsePortalsButton = enzymeWrapper.find('Button').filterWhere((button) => button.text().includes('Browse Portals'))
+
+    browsePortalsButton.simulate('click')
+
+    expect(props.onTogglePortalBrowserModal).toHaveBeenCalledWith(true)
+  })
+
   test('renders the Additional Filters under PortalFeatureContainer', () => {
     const { enzymeWrapper } = setup()
 
-    const filters = enzymeWrapper
-      .find('#input__only-granules')
+    const filters = enzymeWrapper.find('#input__only-granules')
     const portalFeatureContainer = filters
       .parents(PortalFeatureContainer) // #input__only-granules PortalFeatureContainer
       .first()
@@ -121,8 +129,7 @@ describe('Search component', () => {
   test('renders the "Include collections without granules" checkbox under PortalFeatureContainer', () => {
     const { enzymeWrapper } = setup()
 
-    const filters = enzymeWrapper
-      .find('#input__only-granules')
+    const filters = enzymeWrapper.find('#input__only-granules')
     const portalFeatureContainer = filters.parents(PortalFeatureContainer).first()
 
     expect(portalFeatureContainer.props().onlyGranulesCheckbox).toBeTruthy()
@@ -131,8 +138,7 @@ describe('Search component', () => {
   test('renders the "Include only EOSDIS collections" checkbox under PortalFeatureContainer', () => {
     const { enzymeWrapper } = setup()
 
-    const filters = enzymeWrapper
-      .find('#input__non-eosdis')
+    const filters = enzymeWrapper.find('#input__non-eosdis')
     const portalFeatureContainer = filters.parents(PortalFeatureContainer).first()
 
     expect(portalFeatureContainer.props().nonEosdisCheckbox).toBeTruthy()
