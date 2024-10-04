@@ -8,7 +8,7 @@ import {
   Tooltip,
   Row
 } from 'react-bootstrap'
-
+import { FaQuestionCircle } from 'react-icons/fa'
 import moment from 'moment'
 
 import { findGridByName } from '../../util/grid'
@@ -20,6 +20,7 @@ import SidebarFiltersItem from '../Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../Sidebar/SidebarFiltersList'
 import TemporalSelection from '../TemporalSelection/TemporalSelection'
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './GranuleFiltersForm.scss'
 
@@ -276,43 +277,64 @@ export const GranuleFiltersForm = (props) => {
                     Granule ID(s)
                   </Form.Label>
                   <OverlayTrigger
-                    placement="bottom"
+                    placement="top"
                     overlay={
                       (
-                        <Tooltip
-                          id="tooltip__granule-search"
-                          className="tooltip--large tooltip--ta-left tooltip--wide"
-                        >
-                          <strong>Wildcards:</strong>
-                          {' '}
-                          <ul className="m-0">
+                        <Tooltip id="granule-filters-form-id-filter-tooltip" className="tooltip--ta-left tooltip--wide">
+                          <p>
+                            Filter granules by using a granule ID.
+                            Enter an ID to find an exact match or use a wildcard
+                            and/or delimiter to search using a more complex query.
+                          </p>
+                          <strong className="granule-filters-form__readable-granule-name-tooltip-title">
+                            Search granules using wildcard characters
+                          </strong>
+                          <ul className="m-0 font-size granule-filters-form__readable-granule-name-tooltip-list">
                             <li>
-                              * (asterisk) matches any number of characters
+                              Question marks
+                              {' ('}
+                              <strong className="font-weight-bold">?</strong>
+                              {') '}
+                              match a single character in that location
                             </li>
                             <li>
-                              ? (question mark) matches exactly one character.
+                              Asterisks
+                              {' ('}
+                              <strong className="font-weight-bold">*</strong>
+                              {') '}
+                              match any number of characters in that location
                             </li>
                           </ul>
                           <br />
-                          <strong>Delimiters:</strong>
-                          {' '}
-                          Separate multiple granule IDs by commas.
+                          <strong className="granule-filters-form__readable-granule-name-tooltip-title">
+                            Search granules using multiple IDs
+                          </strong>
+                          <ul className="m-0 granule-filters-form__readable-granule-name-tooltip-list">
+                            <li>
+                              Commas
+                              {' ('}
+                              <strong className="font-weight-bold">,</strong>
+                              {') '}
+                              are used to separate multiple searches
+                            </li>
+                          </ul>
                         </Tooltip>
                       )
                     }
                   >
-                    <Form.Control
-                      name="readableGranuleName"
-                      data-testid="granule-filters__readable-granule-name"
-                      size="sm"
-                      type="text"
-                      placeholder="Search Single or Multiple Granule IDs..."
-                      value={readableGranuleName}
-                      onChange={handleChange}
-                      onBlur={submitOnBlur}
-                      onKeyPress={submitOnKeypress}
-                    />
+                    <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" aria-label="A question mark in a circle" role="img" />
                   </OverlayTrigger>
+                  <Form.Control
+                    name="readableGranuleName"
+                    data-testid="granule-filters__readable-granule-name"
+                    size="sm"
+                    type="text"
+                    placeholder="Example: *_20240101_*,*_20240102_*"
+                    value={readableGranuleName}
+                    onChange={handleChange}
+                    onBlur={submitOnBlur}
+                    onKeyPress={submitOnKeypress}
+                  />
                   {
                     readableGranuleNameTouched && (
                       <Form.Control.Feedback type="invalid">
