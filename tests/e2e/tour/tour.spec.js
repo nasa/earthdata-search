@@ -63,6 +63,10 @@ test.describe('Joyride Tour Navigation', () => {
       await page.locator('.tour-buttons button:has-text("Next")').click()
     }
 
+    // Testing the unique Previous button for the semi-final step
+    await page.locator('.tour-buttons button:has-text("Previous")').click()
+    await page.locator('.tour-buttons button:has-text("Next")').click()
+
     await page.locator('.tour-buttons button:has-text("Finish Tour")').click()
 
     await expect(page.locator('.tour-heading')).toContainText('Want to learn more?')
