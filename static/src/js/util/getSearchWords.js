@@ -1,12 +1,10 @@
 /**
  * @param {Array} readableGranuleName Array of strings to filter on the granule id.
  * @returns {Array} Array of regex equivalent to the strings in readableGranuleName
- * Highlight substring if it's in being searched for in Granule Id(s) Filter
+ * Convert our search terms into their Regex equivalent
  */
-export const getSearchWords = (readableGranuleName) => {
-  const searchTerms = []
-
-  readableGranuleName.forEach((initialSearchTerm) => {
+export const getSearchWords = (readableGranuleName) => readableGranuleName.map(
+  (initialSearchTerm) => {
     let splitStars = initialSearchTerm.split('*')
 
     // Remove the first and last stars if they are there
@@ -20,8 +18,7 @@ export const getSearchWords = (readableGranuleName) => {
 
     const searchTerm = splitStars.join('.+')
 
-    searchTerms.push(RegExp(`(${searchTerm.replaceAll('?', '.')})`))
-  })
-
-  return searchTerms
-}
+    // Replacing all the ? (single letter placeholders) with the equivalent regex
+    return (RegExp(`(${searchTerm.replaceAll('?', '.')})`))
+  }
+)

@@ -174,6 +174,7 @@ describe('GranuleResultsDataLinksButton component', () => {
       })
 
       test('calls the metrics event', () => {
+        const stopPropagationMock = jest.fn()
         // Mocks createPortal method of ReactDOM (https://stackoverflow.com/a/60953708/8116576)
         ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
 
@@ -193,7 +194,11 @@ describe('GranuleResultsDataLinksButton component', () => {
 
         const dataLinks = enzymeWrapper.find('.granule-results-data-links-button__dropdown-item')
 
-        dataLinks.at(0).simulate('click', { stopPropagation: () => { } })
+        dataLinks.at(0).simulate('click', {
+          stopPropagation: stopPropagationMock
+        })
+
+        expect(stopPropagationMock).toHaveBeenCalledTimes(1)
         expect(props.onMetricsDataAccess).toHaveBeenCalledTimes(1)
         expect(props.onMetricsDataAccess).toHaveBeenCalledWith({
           collections: [{
