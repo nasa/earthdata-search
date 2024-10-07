@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
 
 import { LinkContainer } from 'react-router-bootstrap'
+
 import Highlighter from 'react-highlight-words'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
@@ -186,7 +187,6 @@ const GranuleResultsItem = forwardRef(({
       ref={ref}
       role="button"
       tabIndex={0}
-      aria-label={itemTitle.title}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...itemTitle}
     >
@@ -250,7 +250,6 @@ const GranuleResultsItem = forwardRef(({
                       <Button
                         className="button granule-results-item__button granule-results-item__button--add"
                         label="Add granule"
-                        aria-label="Add granule"
                         title="Add granule"
                         disabled={isOpenSearch}
                         onClick={
