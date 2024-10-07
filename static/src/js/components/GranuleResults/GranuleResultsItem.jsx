@@ -122,7 +122,6 @@ const GranuleResultsItem = forwardRef(({
             href={browseUrl}
             title="View image"
             target="_blank"
-            aria-label="Link to granule"
             rel="noopener noreferrer"
           >
             {element}

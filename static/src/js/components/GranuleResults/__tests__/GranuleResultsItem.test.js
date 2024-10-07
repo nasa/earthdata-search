@@ -408,7 +408,7 @@ describe('GranuleResultsItem component', () => {
     test('adds the correct classname', () => {
       setup('focused-granule')
 
-      expect(screen.getByRole('button', { name: 'Focus granule on map' })).toHaveClass('granule-results-item--active')
+      expect(screen.getByRole('button', { name: 'Unfocus granule on map' })).toHaveClass('granule-results-item--active')
     })
   })
 
@@ -707,7 +707,7 @@ describe('GranuleResultsItem component', () => {
     test('does not render an granuleThumbnail', () => {
       setup('no-thumb')
 
-      expect(screen.queryByLabelText('Link to granule')).not.toBeInTheDocument()
+      expect(screen.queryByRole('link', { name: 'View image' })).not.toBeInTheDocument()
       expect(screen.queryByLabelText('Granule thumbnail image')).not.toBeInTheDocument()
     })
 
@@ -751,8 +751,8 @@ describe('GranuleResultsItem component', () => {
 
       const { browseUrl } = granule
 
-      expect(screen.getByLabelText('Link to granule')).toBeInTheDocument()
-      expect(screen.getByLabelText('Link to granule').href).toEqual(browseUrl)
+      expect(screen.getByRole('link', { name: 'View image' })).toBeInTheDocument()
+      expect(screen.getByRole('link', { name: 'View image' })).toHaveAttribute('href', browseUrl)
     })
 
     test('adds the modifier class name', () => {
