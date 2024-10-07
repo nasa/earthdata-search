@@ -206,6 +206,8 @@ custom:
     external: ['knex', 'pg', 'sharp']
     bundle: true
     minify: ${self:custom.minifyBuild.${self:provider.stage}}
+    watch:
+      ignore: ['.esbuild', 'dist', 'node_modules', '.build', 'static', '*.test.js']
 
   # Manage resource count (Maximum of 200) by splitting up the cloudformation templates
   splitStacks:
