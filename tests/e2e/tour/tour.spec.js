@@ -39,7 +39,22 @@ test.describe('Joyride Tour Navigation', () => {
     // Ensure the content is back to the previous step
     await expect(page.locator('.tour-content').first()).toContainText('This area contains the filters used when searching for collections')
 
-    // Proceed to the next steps as before
+    // Move forward to the next step again using the "Next" button
+    await page.locator('.tour-buttons button:has-text("Next")').click()
+
+    await page.waitForTimeout(500)
+
+    // Ensure we're back on the step with "Search for collections by topic"
+    await expect(page.locator('.tour-content').first()).toContainText('Search for collections by topic (e.g., "Land Surface Temperature")')
+
+    // Now go back one step using the "Previous" button
+    await page.locator('.tour-buttons button:has-text("Previous")').click()
+
+    await page.waitForTimeout(500)
+
+    // Ensure the content is back to the previous step again
+    await expect(page.locator('.tour-content').first()).toContainText('This area contains the filters used when searching for collections')
+
     await page.locator('.tour-buttons button:has-text("Next")').click()
 
     // Continue through the remaining intermediary steps
@@ -50,31 +65,20 @@ test.describe('Joyride Tour Navigation', () => {
 
     await page.locator('.tour-buttons button:has-text("Finish Tour")').click()
 
-    // Expect the final step to show the "Want to learn more?" heading
     await expect(page.locator('.tour-heading')).toContainText('Want to learn more?')
   })
 
-  test('should close the tour when clicking outside the tour window', async ({ page }) => {
+  test('should close the tour when clicking "Skip for now"', async ({ page }) => {
     // Start the tour by clicking the "Start Tour" button
     await page.click('button:has-text("Start Tour")')
 
     // Expect the first step to show the "Take the tour" button
     await expect(page.locator('.tour-heading')).toHaveText('Welcome to Earthdata Search!')
 
-    // Click the "Take the tour" button to proceed
-    await page.click('button:has-text("Take the tour")')
+    // Click the "Skip for now" button to close the tour
+    await page.click('button:has-text("Skip for now")')
 
-    await page.waitForTimeout(500)
-
-    // Ensure we're on the second step
-    await expect(page.locator('.tour-content').first()).toContainText('This area contains the filters used when searching for collections')
-
-    // Simulate a click outside the tour window by clicking an area outside the overlay
-    await page.mouse.click(10, 10) // Adjust this based on your layout, clicking near the top-left of the screen
-
-    await page.waitForTimeout(500)
-
-    // Ensure the tour is closed by checking the absence of the tour container
+    // Ensure the tour is closed by checking that the tour container is no longer visible
     await expect(page.locator('.tour-container')).toBeHidden()
   })
 })
