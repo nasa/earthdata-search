@@ -25,4 +25,14 @@
     font-size: 0.775rem;
     margin-bottom: 0;
   }
+  
+  &__readable-granule-name-tooltip-title {
+    color: $color__carbon--30;
+    font-size: 0.825rem;
+  }
+
+  &__readable-granule-name-tooltip-list {
+    list-style-position: inside;
+    padding-left: 0.5rem;
+  }
 }

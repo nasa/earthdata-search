@@ -1,43 +1,66 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { Form as FormikForm } from 'formik'
-import moment from 'moment'
-
-import { Form, FormControl } from 'react-bootstrap'
+import {
+  render,
+  screen,
+  within
+} from '@testing-library/react'
+import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event'
 
 import GranuleFiltersForm from '../GranuleFiltersForm'
-import SidebarFiltersItem from '../../Sidebar/SidebarFiltersItem'
-import TemporalSelection from '../../TemporalSelection/TemporalSelection'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('formik', () => ({
+  Form: jest.fn(({ children }) => (
+    <mock-formik data-testid="formik-mock">
+      {children}
+    </mock-formik>
+  ))
+}))
 
 // TODO: Figure out how to test validation @low
 
-function setup(overrideProps) {
+const setup = (overrideProps) => {
+  const handleBlur = jest.fn()
+  const handleChange = jest.fn()
+  const handleSubmit = jest.fn()
+  const onUndoExcludeGranule = jest.fn()
+  const onMetricsGranuleFilter = jest.fn()
+  const setFieldValue = jest.fn()
+  const setFieldTouched = jest.fn()
+
   const props = {
     cmrFacetParams: {},
     collectionMetadata: {},
     collectionQuery: {},
     errors: {},
     excludedGranuleIds: [],
-    handleBlur: jest.fn(),
-    handleChange: jest.fn(),
-    handleSubmit: jest.fn(),
-    onMetricsGranuleFilter: jest.fn(),
-    onUndoExcludeGranule: jest.fn(),
-    setFieldValue: jest.fn(),
-    setFieldTouched: jest.fn(),
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    onUndoExcludeGranule,
+    onMetricsGranuleFilter,
+    setFieldValue,
+    setFieldTouched,
     touched: {},
     values: {},
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<GranuleFiltersForm {...props} />)
+  render(
+    <GranuleFiltersForm {...props} />
+  )
+
+  const user = userEvent.setup()
 
   return {
-    enzymeWrapper,
-    props
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    onUndoExcludeGranule,
+    onMetricsGranuleFilter,
+    setFieldValue,
+    setFieldTouched,
+    user
   }
 }
 
@@ -47,167 +70,122 @@ beforeEach(() => {
 
 describe('GranuleFiltersForm component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.type()).toBe(FormikForm)
+    expect(screen.getByTestId('formik-mock')).toBeInTheDocument()
   })
 
   describe('Filtered Granules', () => {
     describe('when no granules are filtered', () => {
       test('does not display the filtered granules section', () => {
-        const { enzymeWrapper } = setup()
-
-        expect(enzymeWrapper.find(SidebarFiltersItem).at(0).prop('heading')).not.toEqual('Filtered Granules')
+        setup()
+        expect(screen.queryByText('Filtered Granules')).not.toBeInTheDocument()
       })
     })
 
     describe('when a granule is filtered', () => {
       test('displays the filtered granules section', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           excludedGranuleIds: ['GRAN_ID_1']
         })
 
-        expect(enzymeWrapper.find(SidebarFiltersItem).at(0).prop('heading')).toEqual('Filtered Granules')
+        expect(screen.getByText('Filtered Granules')).toBeInTheDocument()
+        expect(screen.getByText('1 Granule Filtered')).toBeInTheDocument()
       })
 
       test('displays the undo button', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           excludedGranuleIds: ['GRAN_ID_1']
         })
 
-        const sidebarItem = enzymeWrapper.find(SidebarFiltersItem).at(0)
-
-        const button = sidebarItem.find('.granule-filters-form__item-button')
-
-        expect(button.text()).toEqual('Undo')
-        expect(button.props().label).toEqual('Undo last filtered granule')
+        expect(screen.getByRole('button', { name: 'Undo last filtered granule' })).toBeInTheDocument()
+        expect(screen.getByText('Undo')).toBeInTheDocument()
       })
 
       describe('when a single granule is filtered', () => {
         test('displays the correct status text', () => {
-          const { enzymeWrapper } = setup({
+          setup({
             excludedGranuleIds: ['GRAN_ID_1']
           })
 
-          const sidebarItem = enzymeWrapper.find(SidebarFiltersItem).at(0)
-
-          const item = sidebarItem.find('.granule-filters-form__item-meta')
-
-          expect(item.text()).toEqual('1 Granule Filtered')
+          expect(screen.getByText('Filtered Granules')).toBeInTheDocument()
+          expect(screen.getByText('1 Granule Filtered')).toBeInTheDocument()
         })
       })
 
       describe('when multiple granules are filtered', () => {
         test('displays the correct status text', () => {
-          const { enzymeWrapper } = setup({
+          setup({
             excludedGranuleIds: ['GRAN_ID_1', 'GRAN_ID_2']
           })
 
-          const sidebarItem = enzymeWrapper.find(SidebarFiltersItem).at(0)
-
-          const item = sidebarItem.find('.granule-filters-form__item-meta')
-
-          expect(item.text()).toEqual('2 Granules Filtered')
+          expect(screen.getByText('Filtered Granules')).toBeInTheDocument()
+          expect(screen.getByText('2 Granules Filtered')).toBeInTheDocument()
         })
       })
 
       describe('when clicking the undo button', () => {
-        test('displays the undo button', () => {
-          const { enzymeWrapper, props } = setup({
+        test('displays the undo button', async () => {
+          const { user, onUndoExcludeGranule } = setup({
             excludedGranuleIds: ['GRAN_ID_1'],
             collectionMetadata: {
               id: 'COLL_ID'
             }
           })
 
-          const sidebarItem = enzymeWrapper.find(SidebarFiltersItem).at(0)
+          const undoButton = screen.getByRole('button', { name: 'Undo last filtered granule' })
+          await user.click(undoButton)
 
-          const button = sidebarItem.find('.granule-filters-form__item-button')
-
-          button.simulate('click')
-
-          expect(props.onUndoExcludeGranule).toHaveBeenCalledTimes(1)
-          expect(props.onUndoExcludeGranule).toHaveBeenCalledWith('COLL_ID')
+          expect(onUndoExcludeGranule).toHaveBeenCalledTimes(1)
+          expect(onUndoExcludeGranule).toHaveBeenCalledWith('COLL_ID')
         })
       })
     })
   })
 
   describe('Form', () => {
-    test('shows temporal by default', () => {
-      const { enzymeWrapper } = setup()
+    test('shows granule search by default', () => {
+      setup()
 
-      expect(enzymeWrapper.find(SidebarFiltersItem).at(1).prop('heading')).toEqual('Temporal')
+      expect(screen.getByRole('heading', { name: 'Granule Search' })).toBeInTheDocument()
+    })
+
+    test('shows temporal by default', () => {
+      setup()
+
+      expect(screen.getByRole('heading', { name: 'Temporal' })).toBeInTheDocument()
     })
 
     test('shows data access by default', () => {
-      const { enzymeWrapper } = setup()
+      setup()
 
-      expect(enzymeWrapper.find(SidebarFiltersItem).at(2).prop('heading')).toEqual('Data Access')
+      expect(screen.getByRole('heading', { name: 'Data Access' })).toBeInTheDocument()
     })
 
-    describe('Granule ID(s) text field', () => {
-      test('defaults to an empty value', () => {
-        const { enzymeWrapper } = setup({
+    describe('when `Enter` is pressed in the Granule ID(s) text field', () => {
+      test('calls onSubmit', async () => {
+        const { onMetricsGranuleFilter, handleSubmit, user } = setup({
           values: {
             readableGranuleName: ''
           }
         })
-        expect(enzymeWrapper.find(SidebarFiltersItem).at(0).prop('heading')).toEqual('Granule Search')
 
-        const granuleIdTextField = enzymeWrapper.find(SidebarFiltersItem).at(0)
+        expect(screen.getByRole('heading', { name: 'Granule Search' })).toBeInTheDocument()
+        const readableGranuleNameTextField = screen.getByRole('textbox', { name: 'Granule ID(s)' })
+        await user.type(readableGranuleNameTextField, '{testGranuleName}')
+        await user.type(readableGranuleNameTextField, '{Enter}')
 
-        expect(granuleIdTextField.find(FormControl).prop('value')).toEqual('')
-      })
-
-      test('displays text field value', () => {
-        const { enzymeWrapper } = setup({
-          values: {
-            readableGranuleName: 'test granule name'
-          }
-        })
-        expect(enzymeWrapper.find(SidebarFiltersItem).at(0).prop('heading')).toEqual('Granule Search')
-
-        const granuleIdTextSection = enzymeWrapper.find(SidebarFiltersItem).at(0)
-
-        expect(granuleIdTextSection.find(FormControl).prop('value')).toEqual('test granule name')
-      })
-
-      describe('when `Enter` is pressed in the text field', () => {
-        test('calls onSubmit', () => {
-          const { enzymeWrapper, props } = setup({
-            values: {
-              readableGranuleName: ''
-            }
+        expect(handleSubmit).toHaveBeenCalledTimes(1)
+        expect(handleSubmit).toHaveBeenCalledWith(
+          expect.objectContaining({
+            _reactName: 'onKeyPress'
           })
-          expect(enzymeWrapper.find(SidebarFiltersItem).at(0).prop('heading')).toEqual('Granule Search')
+        )
 
-          const granuleIdTextSection = enzymeWrapper.find(SidebarFiltersItem).at(0)
-
-          const granuleIdTextField = granuleIdTextSection.find(FormControl)
-
-          granuleIdTextField.prop('onKeyPress')({
-            key: 'Enter',
-            target: {
-              name: 'test name',
-              value: 'test value'
-            }
-          })
-
-          expect(props.handleSubmit).toHaveBeenCalledTimes(1)
-          expect(props.handleSubmit).toHaveBeenCalledWith({
-            key: 'Enter',
-            target: {
-              name: 'test name',
-              value: 'test value'
-            }
-          })
-
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
-            type: 'test name',
-            value: 'test value'
-          })
+        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          type: 'readableGranuleName',
+          value: ''
         })
       })
     })
@@ -215,7 +193,7 @@ describe('GranuleFiltersForm component', () => {
     describe('Temporal section', () => {
       describe('displays temporal', () => {
         test('displays correctly when only start date is set', () => {
-          const { enzymeWrapper } = setup({
+          setup({
             values: {
               temporal: {
                 startDate: '2019-08-14T00:00:00:000Z'
@@ -223,13 +201,15 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const temporalSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
-          expect(temporalSection.find(TemporalSelection).prop('temporal').startDate).toEqual('2019-08-14T00:00:00:000Z')
-          expect(temporalSection.find(TemporalSelection).prop('temporal').endDate).toEqual(undefined)
+          const startDateTextField = screen.getByRole('textbox', { name: 'Start Date' })
+          expect(startDateTextField).toHaveValue('2019-08-14T00:00:00:000Z')
+
+          const endDateTextField = screen.getByRole('textbox', { name: 'End Date' })
+          expect(endDateTextField).toHaveValue('')
         })
 
         test('displays correctly when only end date is set', () => {
-          const { enzymeWrapper } = setup({
+          setup({
             values: {
               temporal: {
                 endDate: '2019-08-14T00:00:00:000Z'
@@ -237,13 +217,15 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const temporalSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
-          expect(temporalSection.find(TemporalSelection).prop('temporal').endDate).toEqual('2019-08-14T00:00:00:000Z')
-          expect(temporalSection.find(TemporalSelection).prop('temporal').startDate).toEqual(undefined)
+          const startDateTextField = screen.getByRole('textbox', { name: 'Start Date' })
+          const endDateTextField = screen.getByRole('textbox', { name: 'End Date' })
+
+          expect(startDateTextField).toHaveValue('')
+          expect(endDateTextField).toHaveValue('2019-08-14T00:00:00:000Z')
         })
 
         test('displays correctly when both dates are set', () => {
-          const { enzymeWrapper } = setup({
+          setup({
             values: {
               temporal: {
                 startDate: '2019-08-13T00:00:00:000Z',
@@ -252,61 +234,82 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const temporalSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
-          expect(temporalSection.find(TemporalSelection).prop('temporal').endDate).toEqual('2019-08-14T23:59:59:999Z')
-          expect(temporalSection.find(TemporalSelection).prop('temporal').startDate).toEqual('2019-08-13T00:00:00:000Z')
+          const startDateTextField = screen.getByRole('textbox', { name: 'Start Date' })
+          const endDateTextField = screen.getByRole('textbox', { name: 'End Date' })
+
+          expect(startDateTextField).toHaveValue('2019-08-13T00:00:00:000Z')
+          expect(endDateTextField).toHaveValue('2019-08-14T23:59:59:999Z')
         })
 
-        test('calls the correct callbacks on startDate submit', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls the correct callbacks on startDate submit', async () => {
+          const {
+            onMetricsGranuleFilter, setFieldTouched, setFieldValue, user
+          } = setup({
             values: {
               temporal: {
-                startDate: '2019-08-13T00:00:00:000Z',
+                startDate: '',
                 endDate: '2019-08-14T23:59:59:999Z'
               }
             }
           })
-          const temporalSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
-          temporalSection.find(TemporalSelection).prop('onSubmitStart')(moment('2019-08-13T00:00:00:000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
 
-          expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
-          expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.startDate')
-          expect(props.setFieldValue).toHaveBeenCalledTimes(1)
-          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.startDate', '2019-08-13T00:00:00:000Z')
+          const startDateTextField = screen.getByRole('textbox', { name: 'Start Date' })
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          await user.click(startDateTextField)
+          await user.type(startDateTextField, '2019-08-13')
+
+          await user.tab(startDateTextField)
+          expect(setFieldTouched).toHaveBeenCalledTimes(10)
+          expect(setFieldTouched).toHaveBeenCalledWith('temporal.startDate')
+
+          expect(setFieldValue).toHaveBeenCalledTimes(10)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '2')
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '0')
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '1')
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(10)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set Start Date',
-            value: '2019-08-13T00:00:00:000Z'
+            value: '2'
           })
         })
 
-        test('calls the correct callbacks on endDate submit', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls the correct callbacks on endDate submit', async () => {
+          const {
+            onMetricsGranuleFilter, setFieldTouched, setFieldValue, user
+          } = setup({
             values: {
               temporal: {
                 startDate: '2019-08-13T00:00:00:000Z',
-                endDate: '2019-08-14T23:59:59:999Z'
+                endDate: ''
               }
             }
           })
-          const temporalSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
-          temporalSection.find(TemporalSelection).prop('onSubmitEnd')(moment('2019-08-14T23:59:59:999Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
+          const endDateTextField = screen.getByRole('textbox', { name: 'End Date' })
 
-          expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
-          expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.endDate')
-          expect(props.setFieldValue).toHaveBeenCalledTimes(1)
-          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2019-08-14T23:59:59:999Z')
+          await user.click(endDateTextField)
+          await user.type(endDateTextField, '2019-08-14')
+          await user.tab(endDateTextField)
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(setFieldTouched).toHaveBeenCalledTimes(10)
+          expect(setFieldTouched).toHaveBeenCalledWith('temporal.endDate')
+
+          expect(setFieldValue).toHaveBeenCalledTimes(10)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2')
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '0')
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '1')
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(10)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set End Date',
-            value: '2019-08-14T23:59:59:999Z'
+            value: '2'
           })
         })
 
-        test('calls the correct callbacks on onRecurringToggle', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls the correct callbacks on onRecurringToggle', async () => {
+          const {
+            onMetricsGranuleFilter, user, setFieldTouched, setFieldValue
+          } = setup({
             values: {
               temporal: {
                 startDate: '2019-08-13T00:00:00.000Z',
@@ -314,26 +317,31 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const temporalSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
-          temporalSection.find(TemporalSelection).prop('onRecurringToggle')({ target: { checked: true } })
 
-          expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
-          expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.isRecurring', true)
+          const isRecurringCheckbox = screen.getByRole('checkbox', { name: 'Recurring?' })
+          expect(isRecurringCheckbox.checked).toBe(false)
 
-          expect(props.setFieldValue).toHaveBeenCalledTimes(3)
-          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
-          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 225)
-          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 226)
+          await user.click(isRecurringCheckbox)
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(setFieldTouched).toHaveBeenCalledTimes(1)
+          expect(setFieldTouched).toHaveBeenCalledWith('temporal.isRecurring', true)
+
+          expect(setFieldValue).toHaveBeenCalledTimes(3)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 225)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 226)
+
+          expect(isRecurringCheckbox.checked).toBe(true)
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set Recurring',
             value: true
           })
         })
 
-        test('calls the correct callbacks on onRecurringToggle when a leap day is involved', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls the correct callbacks on onRecurringToggle when a leap day is involved', async () => {
+          const { user, setFieldTouched, setFieldValue } = setup({
             values: {
               temporal: {
                 startDate: '2019-06-01T00:00:00.000Z',
@@ -341,22 +349,28 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const temporalSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
-          temporalSection.find(TemporalSelection).prop('onRecurringToggle')({ target: { checked: true } })
 
-          expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
-          expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.isRecurring', true)
-          expect(props.setFieldValue).toHaveBeenCalledTimes(3)
-          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
-          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 152)
-          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 152)
+          const isRecurringCheckbox = screen.getByRole('checkbox', { name: 'Recurring?' })
+          expect(isRecurringCheckbox.checked).toBe(false)
+
+          await user.click(isRecurringCheckbox)
+
+          expect(setFieldTouched).toHaveBeenCalledTimes(1)
+          expect(setFieldTouched).toHaveBeenCalledWith('temporal.isRecurring', true)
+
+          expect(setFieldValue).toHaveBeenCalledTimes(3)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 152)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 152)
+
+          expect(isRecurringCheckbox.checked).toBe(true)
         })
       })
     })
 
     describe('Day/Night section', () => {
       test('defaults to an empty value', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           collectionMetadata: {
             isOpenSearch: false,
             tags: {
@@ -367,12 +381,13 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const dayNightSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
-        expect(dayNightSection.find(FormControl).prop('value')).toEqual('')
+        const dayNightSideBarItem = screen.getByText('Day/Night').parentElement.parentElement
+
+        expect(within(dayNightSideBarItem).getByRole('combobox')).toHaveValue('')
       })
 
-      test('displays selected item', () => {
-        const { enzymeWrapper } = setup({
+      test('displays selected item', async () => {
+        setup({
           collectionMetadata: {
             isOpenSearch: false,
             tags: {
@@ -386,12 +401,13 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const dayNightSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
-        expect(dayNightSection.find(FormControl).prop('value')).toEqual('NIGHT')
+        const dayNightSideBarItem = screen.getByText('Day/Night').parentElement.parentElement
+
+        expect(within(dayNightSideBarItem).getByRole('combobox')).toHaveValue('NIGHT')
       })
 
-      test('calls handleChange on change', () => {
-        const { enzymeWrapper, props } = setup({
+      test('calls handleChange on change', async () => {
+        const { user, handleChange } = setup({
           collectionMetadata: {
             isOpenSearch: false,
             tags: {
@@ -404,76 +420,57 @@ describe('GranuleFiltersForm component', () => {
             dayNightFlag: 'NIGHT'
           }
         })
+        const dayNightSideBarItem = screen.getByText('Day/Night').parentElement.parentElement
+        const dayNightSelection = within(dayNightSideBarItem).getByRole('combobox')
 
-        const dayNightSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
-        const dayNightInput = dayNightSection.find(FormControl)
+        await user.selectOptions(dayNightSelection, 'Day')
+        await user.selectOptions(dayNightSelection, 'Both')
 
-        dayNightInput.prop('onChange')({
-          target: {
-            name: 'test name',
-            value: 'test value'
-          }
-        })
-
-        expect(props.handleChange).toHaveBeenCalledTimes(1)
-        expect(props.handleChange).toHaveBeenCalledWith({
-          target: {
-            name: 'test name',
-            value: 'test value'
-          }
-        })
-
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-        expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
-          type: 'test name',
-          value: 'test value'
-        })
+        expect(handleChange).toHaveBeenCalledTimes(2)
+        expect(handleChange).toHaveBeenCalledWith(
+          expect.objectContaining({
+            _reactName: 'onChange'
+          })
+        )
       })
     })
 
     describe('Data Access section', () => {
       describe('Browse only toggle', () => {
         test('defaults to an empty value', () => {
-          const { enzymeWrapper } = setup()
+          setup()
 
-          const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
-          expect(dataAccessSection.find(Form.Check).at(0).prop('value')).toEqual(false)
+          const browseOnlyToggle = screen.getByRole('checkbox', { name: 'Find only granules that have browse images' })
+          expect(browseOnlyToggle.checked).toBe(false)
         })
 
         test('displays selected item', () => {
-          const { enzymeWrapper } = setup({
+          setup({
             values: {
               browseOnly: true
             }
           })
 
-          const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
-          expect(dataAccessSection.find(Form.Check).at(0).prop('value')).toEqual(true)
+          const browseOnlyToggle = screen.getByRole('checkbox', { name: 'Find only granules that have browse images' })
+
+          expect(browseOnlyToggle.checked).toBe(true)
         })
 
-        test('calls handleChange on change', () => {
-          const { enzymeWrapper, props } = setup()
+        test('calls handleChange on change', async () => {
+          const { onMetricsGranuleFilter, handleChange, user } = setup()
+          const browseOnlyToggle = screen.getByRole('checkbox', { name: 'Find only granules that have browse images' })
 
-          const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
-          dataAccessSection.find(Form.Check).at(0).prop('onChange')({
-            target: {
-              name: 'browseOnly',
-              value: 'true',
-              checked: true
-            }
-          })
+          await user.click(browseOnlyToggle)
 
-          expect(props.handleChange).toHaveBeenCalledTimes(1)
-          expect(props.handleChange).toHaveBeenCalledWith({
-            target: {
-              name: 'browseOnly',
-              value: 'true',
-              checked: true
-            }
-          })
+          expect(handleChange).toHaveBeenCalledTimes(1)
+          expect(handleChange).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onChange'
+            })
+          )
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'browseOnly',
             value: true
           })
@@ -482,47 +479,37 @@ describe('GranuleFiltersForm component', () => {
 
       describe('Online only toggle', () => {
         test('defaults to an empty value', () => {
-          const { enzymeWrapper } = setup()
+          setup()
+          const onlineOnlyToggle = screen.getByRole('checkbox', { name: 'Find only granules that are available online' })
 
-          const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
-          expect(dataAccessSection.find(Form.Check).at(1).prop('value')).toEqual(false)
+          expect(onlineOnlyToggle.checked).toBe(false)
         })
 
         test('displays selected item', () => {
-          const { enzymeWrapper } = setup({
+          setup({
             values: {
               onlineOnly: true
             }
           })
 
-          const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
-          expect(dataAccessSection.find(Form.Check).at(1).prop('value')).toEqual(true)
+          const onlineOnlyToggle = screen.getByRole('checkbox', { name: 'Find only granules that are available online' })
+          expect(onlineOnlyToggle.checked).toBe(true)
         })
 
-        test('calls handleChange on change', () => {
-          const { enzymeWrapper, props } = setup()
+        test('calls handleChange on change', async () => {
+          const { onMetricsGranuleFilter, handleChange, user } = setup()
+          const onlineOnlyToggle = screen.getByRole('checkbox', { name: 'Find only granules that are available online' })
+          await user.click(onlineOnlyToggle)
 
-          const dataAccessSection = enzymeWrapper.find(SidebarFiltersItem).at(2)
-          dataAccessSection.find(Form.Check).at(1).prop('onChange')({
-            target: {
-              name: 'onlineOnly',
-              value: 'true',
-              checked: true
-            }
-          })
+          expect(handleChange).toHaveBeenCalledTimes(1)
+          expect(handleChange).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onChange'
+            })
+          )
 
-          expect(props.handleChange).toHaveBeenCalledTimes(1)
-          expect(props.handleChange).toHaveBeenCalledWith({
-            target: {
-              name: 'onlineOnly',
-              value: 'true',
-              checked: true
-
-            }
-          })
-
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'onlineOnly',
             value: true
           })
@@ -533,7 +520,7 @@ describe('GranuleFiltersForm component', () => {
     describe('Cloud cover section', () => {
       describe('Min', () => {
         test('defaults to an empty value', () => {
-          const { enzymeWrapper } = setup({
+          setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -544,12 +531,16 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const cloudCoverSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
-          expect(cloudCoverSection.find(Form.Control).at(0).prop('value')).toEqual('')
+          expect(screen.getByRole('heading', { name: 'Cloud Cover' })).toBeInTheDocument()
+          expect(screen.getByRole('textbox', { name: 'Minimum' })).toBeInTheDocument()
+
+          const minCloudCover = screen.getByRole('textbox', { name: 'Minimum' })
+
+          expect(minCloudCover).toHaveValue('')
         })
 
-        test('calls handleChange on change', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls handleChange on change', async () => {
+          const { handleChange, user } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -559,17 +550,22 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
+          const minCloudCover = screen.getByRole('textbox', { name: 'Minimum' })
+          await user.type(minCloudCover, '1')
+          await user.tab(minCloudCover)
 
-          const cloudCoverSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
-          cloudCoverSection.find(Form.Control).at(0).prop('onChange')({ event: 'test' })
-          expect(props.handleChange).toHaveBeenCalledTimes(1)
-          expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
+          expect(handleChange).toHaveBeenCalledTimes(1)
+          expect(handleChange).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onChange'
+            })
+          )
         })
       })
 
       describe('Max', () => {
-        test('defaults to an empty value', () => {
-          const { enzymeWrapper } = setup({
+        test('defaults to an empty value', async () => {
+          const { handleChange } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -580,12 +576,16 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const cloudCoverSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
-          expect(cloudCoverSection.find(Form.Control).at(1).prop('value')).toEqual('')
+          const maxCloudCover = screen.getByRole('textbox', { name: 'Maximum' })
+
+          expect(maxCloudCover).toHaveValue('')
+          expect(handleChange).toHaveBeenCalledTimes(0)
         })
 
-        test('calls handleChange on change', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls handleChange on change', async () => {
+          const {
+            handleChange, user
+          } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -596,10 +596,16 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const cloudCoverSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
-          cloudCoverSection.find(Form.Control).at(1).prop('onChange')({ event: 'test' })
-          expect(props.handleChange).toHaveBeenCalledTimes(1)
-          expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
+          const maxCloudCover = screen.getByRole('textbox', { name: 'Maximum' })
+
+          await user.type(maxCloudCover, '9')
+
+          expect(handleChange).toHaveBeenCalledTimes(1)
+          expect(handleChange).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onChange'
+            })
+          )
         })
       })
     })
@@ -607,7 +613,7 @@ describe('GranuleFiltersForm component', () => {
     describe('Orbit number section', () => {
       describe('Min', () => {
         test('defaults to an empty value', () => {
-          const { enzymeWrapper } = setup({
+          setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -618,12 +624,14 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
-          expect(orbitNumberSection.find(Form.Control).at(0).prop('value')).toEqual('')
+          const orbitNumberSection = screen.getByText('Orbit Number').parentElement.parentElement
+          const minOrbitNumber = within(orbitNumberSection).getByRole('textbox', { name: 'Minimum' })
+
+          expect(minOrbitNumber).toHaveValue('')
         })
 
-        test('calls handleChange on change', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls handleChange on change', async () => {
+          const { handleChange, user } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -634,14 +642,23 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
-          orbitNumberSection.find(Form.Control).at(0).prop('onChange')({ event: 'test' })
-          expect(props.handleChange).toHaveBeenCalledTimes(1)
-          expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
+          const orbitNumberSection = screen.getByText('Orbit Number').parentElement.parentElement
+          const minOrbitNumber = within(orbitNumberSection).getByRole('textbox', { name: 'Maximum' })
+
+          await user.type(minOrbitNumber, '9')
+
+          expect(handleChange).toHaveBeenCalledTimes(1)
+          expect(handleChange).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onChange'
+            })
+          )
         })
 
-        test('calls onBlur when the filter is submitted ', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls onBlur when the filter is submitted', async () => {
+          const {
+            handleBlur, handleSubmit, onMetricsGranuleFilter, user
+          } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -652,33 +669,38 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
-          orbitNumberSection.find(Form.Control).at(0).prop('onBlur')({
-            target: {
-              name: 'orbitNumber.min',
-              value: 'test value'
-            }
-          })
+          const orbitNumberSection = screen.getByText('Orbit Number').parentElement.parentElement
+          const minOrbitNumber = within(orbitNumberSection).getByRole('textbox', { name: 'Minimum' })
 
-          expect(props.handleBlur).toHaveBeenCalledTimes(1)
-          expect(props.handleBlur).toHaveBeenCalledWith({
-            target: {
-              name: 'orbitNumber.min',
-              value: 'test value'
-            }
-          })
+          await user.type(minOrbitNumber, '9')
+          await user.tab(minOrbitNumber)
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(handleSubmit).toHaveBeenCalledTimes(1)
+
+          expect(handleSubmit).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(handleBlur).toHaveBeenCalledTimes(1)
+          expect(handleBlur).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'orbitNumber.min',
-            value: 'test value'
+            value: ''
           })
         })
       })
 
       describe('Max', () => {
         test('defaults to an empty value', () => {
-          const { enzymeWrapper } = setup({
+          setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -689,12 +711,14 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
-          expect(orbitNumberSection.find(Form.Control).at(1).prop('value')).toEqual('')
+          const orbitNumberSection = screen.getByText('Orbit Number').parentElement.parentElement
+          const orbitNumberMaximum = within(orbitNumberSection).getByRole('textbox', { name: 'Maximum' })
+
+          expect(orbitNumberMaximum).toHaveValue('')
         })
 
-        test('calls handleChange on change', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls handleChange on change', async () => {
+          const { handleChange, user } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -705,14 +729,23 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
-          orbitNumberSection.find(Form.Control).at(1).prop('onChange')({ event: 'test' })
-          expect(props.handleChange).toHaveBeenCalledTimes(1)
-          expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
+          const orbitNumberSection = screen.getByText('Orbit Number').parentElement.parentElement
+          const maxOrbitNumber = within(orbitNumberSection).getByRole('textbox', { name: 'Maximum' })
+
+          await user.type(maxOrbitNumber, '9')
+
+          expect(handleChange).toHaveBeenCalledTimes(1)
+          expect(handleChange).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onChange'
+            })
+          )
         })
 
-        test('calls onBlur when the filter is submitted ', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls onBlur when the filter is submitted', async () => {
+          const {
+            handleBlur, handleSubmit, onMetricsGranuleFilter, user
+          } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -723,26 +756,33 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = enzymeWrapper.find(SidebarFiltersItem).at(3)
-          orbitNumberSection.find(Form.Control).at(1).prop('onBlur')({
-            target: {
-              name: 'orbitNumber.max',
-              value: 'test value'
-            }
-          })
+          const orbitNumberSection = screen.getByText('Orbit Number').parentElement.parentElement
+          const maxOrbitNumber = within(orbitNumberSection).getByRole('textbox', { name: 'Maximum' })
 
-          expect(props.handleBlur).toHaveBeenCalledTimes(1)
-          expect(props.handleBlur).toHaveBeenCalledWith({
-            target: {
-              name: 'orbitNumber.max',
-              value: 'test value'
-            }
-          })
+          await user.type(maxOrbitNumber, '9')
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          // Submit the form call
+          await user.tab(maxOrbitNumber)
+
+          expect(handleSubmit).toHaveBeenCalledTimes(1)
+
+          expect(handleSubmit).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(handleBlur).toHaveBeenCalledTimes(1)
+          expect(handleBlur).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'orbitNumber.max',
-            value: 'test value'
+            value: ''
           })
         })
       })
@@ -751,7 +791,7 @@ describe('GranuleFiltersForm component', () => {
     describe('Equator Crossing Longitude section', () => {
       describe('Min', () => {
         test('defaults to an empty value', () => {
-          const { enzymeWrapper } = setup({
+          const { handleChange } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -761,13 +801,15 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
+          const equatorialCrossingLatitudeSection = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
+          const minEquatorCrossingLongitude = within(equatorialCrossingLatitudeSection).getByRole('textbox', { name: 'Minimum' })
 
-          const equatorCrossingLongitudeSection = enzymeWrapper.find(SidebarFiltersItem).at(4)
-          expect(equatorCrossingLongitudeSection.find(Form.Control).at(0).prop('value')).toEqual('')
+          expect(minEquatorCrossingLongitude).toHaveValue('')
+          expect(handleChange).toHaveBeenCalledTimes(0)
         })
 
-        test('calls handleChange on change', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls handleChange on change', async () => {
+          const { handleChange, user } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -777,15 +819,24 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
+          const equatorialCrossingLatitudeSection = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
+          const minEquatorCrossingLongitude = within(equatorialCrossingLatitudeSection).getByRole('textbox', { name: 'Minimum' })
 
-          const equatorCrossingLongitudeSection = enzymeWrapper.find(SidebarFiltersItem).at(4)
-          equatorCrossingLongitudeSection.find(Form.Control).at(0).prop('onChange')({ event: 'test' })
-          expect(props.handleChange).toHaveBeenCalledTimes(1)
-          expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
+          await user.type(minEquatorCrossingLongitude, '1')
+          await user.tab(minEquatorCrossingLongitude)
+
+          expect(handleChange).toHaveBeenCalledTimes(1)
+          expect(handleChange).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onChange'
+            })
+          )
         })
 
-        test('calls onBlur when the filter is submitted', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls onBlur when the filter is submitted ', async () => {
+          const {
+            onMetricsGranuleFilter, handleBlur, handleSubmit, user
+          } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -796,33 +847,38 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const equatorCrossingLongitudeSection = enzymeWrapper.find(SidebarFiltersItem).at(4)
-          equatorCrossingLongitudeSection.find(Form.Control).at(0).prop('onBlur')({
-            target: {
-              name: 'equatorCrossingLongitude.min',
-              value: 'test value'
-            }
-          })
+          const equatorialCrossingLatitudeSection = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
+          const minEquatorCrossingLongitude = within(equatorialCrossingLatitudeSection).getByRole('textbox', { name: 'Minimum' })
 
-          expect(props.handleBlur).toHaveBeenCalledTimes(1)
-          expect(props.handleBlur).toHaveBeenCalledWith({
-            target: {
-              name: 'equatorCrossingLongitude.min',
-              value: 'test value'
-            }
-          })
+          await user.type(minEquatorCrossingLongitude, '1')
+          await user.tab(minEquatorCrossingLongitude)
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(handleSubmit).toHaveBeenCalledTimes(1)
+
+          expect(handleSubmit).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(handleBlur).toHaveBeenCalledTimes(1)
+          expect(handleBlur).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'equatorCrossingLongitude.min',
-            value: 'test value'
+            value: ''
           })
         })
       })
 
       describe('Max', () => {
         test('defaults to an empty value', () => {
-          const { enzymeWrapper } = setup({
+          const { handleChange } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -832,13 +888,15 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
+          const equatorialCrossingLatitudeSection = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
+          const maxEquatorCrossingLongitude = within(equatorialCrossingLatitudeSection).getByRole('textbox', { name: 'Maximum' })
 
-          const equatorCrossingLongitudeSection = enzymeWrapper.find(SidebarFiltersItem).at(4)
-          expect(equatorCrossingLongitudeSection.find(Form.Control).at(1).prop('value')).toEqual('')
+          expect(maxEquatorCrossingLongitude).toHaveValue('')
+          expect(handleChange).toHaveBeenCalledTimes(0)
         })
 
-        test('calls handleChange on change', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls handleChange on change', async () => {
+          const { user, handleChange } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -848,15 +906,25 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
+          const equatorialCrossingLatitudeSection = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
+          const maxEquatorCrossingLongitude = within(equatorialCrossingLatitudeSection).getByRole('textbox', { name: 'Maximum' })
 
-          const equatorCrossingLongitudeSection = enzymeWrapper.find(SidebarFiltersItem).at(4)
-          equatorCrossingLongitudeSection.find(Form.Control).at(1).prop('onChange')({ event: 'test' })
-          expect(props.handleChange).toHaveBeenCalledTimes(1)
-          expect(props.handleChange).toHaveBeenCalledWith({ event: 'test' })
+          await user.type(maxEquatorCrossingLongitude, '1')
+          await user.tab(maxEquatorCrossingLongitude)
+
+          expect(maxEquatorCrossingLongitude).toHaveValue('')
+          expect(handleChange).toHaveBeenCalledTimes(1)
+          expect(handleChange).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onChange'
+            })
+          )
         })
 
-        test('calls onBlur when the filter is submitted', () => {
-          const { enzymeWrapper, props } = setup({
+        test('calls onBlur when the filter is submitted ', async () => {
+          const {
+            onMetricsGranuleFilter, handleBlur, handleSubmit, user
+          } = setup({
             collectionMetadata: {
               isOpenSearch: false,
               tags: {
@@ -866,27 +934,31 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
+          const equatorialCrossingLatitudeSection = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
+          const maxEquatorCrossingLongitude = within(equatorialCrossingLatitudeSection).getByRole('textbox', { name: 'Maximum' })
 
-          const equatorCrossingLongitudeSection = enzymeWrapper.find(SidebarFiltersItem).at(4)
-          equatorCrossingLongitudeSection.find(Form.Control).at(1).prop('onBlur')({
-            target: {
-              name: 'equatorCrossingLongitude.max',
-              value: 'test value'
-            }
-          })
+          await user.type(maxEquatorCrossingLongitude, '1')
+          await user.tab(maxEquatorCrossingLongitude)
 
-          expect(props.handleBlur).toHaveBeenCalledTimes(1)
-          expect(props.handleBlur).toHaveBeenCalledWith({
-            target: {
-              name: 'equatorCrossingLongitude.max',
-              value: 'test value'
-            }
-          })
+          expect(handleSubmit).toHaveBeenCalledTimes(1)
 
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(handleSubmit).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(handleBlur).toHaveBeenCalledTimes(1)
+          expect(handleBlur).toHaveBeenCalledWith(
+            expect.objectContaining({
+              _reactName: 'onBlur'
+            })
+          )
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'equatorCrossingLongitude.max',
-            value: 'test value'
+            value: ''
           })
         })
       })
@@ -896,7 +968,7 @@ describe('GranuleFiltersForm component', () => {
   describe('Equator Crossing Date section', () => {
     describe('displays equator crossing date', () => {
       test('displays correctly when only start date is set', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           collectionMetadata: {
             isOpenSearch: false,
             tags: {
@@ -911,13 +983,16 @@ describe('GranuleFiltersForm component', () => {
             }
           }
         })
-        const equatorCrossingDateSection = enzymeWrapper.find(SidebarFiltersItem).at(5)
-        expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').startDate).toEqual('2019-08-14T00:00:00:000Z')
-        expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').endDate).toEqual(undefined)
+
+        const equatorCrossingStartDateTextField = screen.getAllByRole('textbox', { name: 'Start Date' })[1]
+        const equatorCrossingEndDateTextField = screen.getAllByRole('textbox', { name: 'End Date' })[1]
+
+        expect(equatorCrossingStartDateTextField).toHaveValue('2019-08-14T00:00:00:000Z')
+        expect(equatorCrossingEndDateTextField).toHaveValue('')
       })
 
       test('displays correctly when only end date is set', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           collectionMetadata: {
             isOpenSearch: false,
             tags: {
@@ -933,13 +1008,15 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const equatorCrossingDateSection = enzymeWrapper.find(SidebarFiltersItem).at(5)
-        expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').endDate).toEqual('2019-08-14T00:00:00:000Z')
-        expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').startDate).toEqual(undefined)
+        const equatorCrossingStartDateTextField = screen.getAllByRole('textbox', { name: 'Start Date' })[1]
+        const equatorCrossingEndDateTextField = screen.getAllByRole('textbox', { name: 'End Date' })[1]
+
+        expect(equatorCrossingStartDateTextField).toHaveValue('')
+        expect(equatorCrossingEndDateTextField).toHaveValue('2019-08-14T00:00:00:000Z')
       })
 
       test('displays correctly when both dates are set', () => {
-        const { enzymeWrapper } = setup({
+        setup({
           collectionMetadata: {
             isOpenSearch: false,
             tags: {
@@ -956,13 +1033,15 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const equatorCrossingDateSection = enzymeWrapper.find(SidebarFiltersItem).at(5)
-        expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').endDate).toEqual('2019-08-14T23:59:59:999Z')
-        expect(equatorCrossingDateSection.find(TemporalSelection).prop('temporal').startDate).toEqual('2019-08-13T00:00:00:000Z')
+        const equatorCrossingStartDateTextField = screen.getAllByRole('textbox', { name: 'Start Date' })[1]
+        const equatorCrossingEndDateTextField = screen.getAllByRole('textbox', { name: 'End Date' })[1]
+
+        expect(equatorCrossingStartDateTextField).toHaveValue('2019-08-13T00:00:00:000Z')
+        expect(equatorCrossingEndDateTextField).toHaveValue('2019-08-14T23:59:59:999Z')
       })
 
-      test('calls the correct callbacks on startDate submit', () => {
-        const { enzymeWrapper, props } = setup({
+      test('calls the correct callbacks on startDate submit', async () => {
+        const { setFieldTouched, setFieldValue, user } = setup({
           collectionMetadata: {
             isOpenSearch: false,
             tags: {
@@ -973,22 +1052,27 @@ describe('GranuleFiltersForm component', () => {
           },
           values: {
             equatorCrossingDate: {
-              startDate: '2019-08-13T00:00:00:000Z',
+              startDate: '',
               endDate: '2019-08-14T23:59:59:999Z'
             }
           }
         })
-        const equatorCrossingDateSection = enzymeWrapper.find(SidebarFiltersItem).at(5)
-        equatorCrossingDateSection.find(TemporalSelection).prop('onSubmitStart')(moment('2019-08-13T00:00:00:000Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
+        const equatorCrossingStartDateTextField = screen.getAllByRole('textbox', { name: 'Start Date' })[1]
 
-        expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
-        expect(props.setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.startDate')
-        expect(props.setFieldValue).toHaveBeenCalledTimes(1)
-        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '2019-08-13T00:00:00:000Z')
+        await user.click(equatorCrossingStartDateTextField)
+        await user.type(equatorCrossingStartDateTextField, '2019-08-13')
+        await user.tab(equatorCrossingStartDateTextField)
+
+        expect(setFieldTouched).toHaveBeenCalledTimes(10)
+        expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.startDate')
+        expect(setFieldValue).toHaveBeenCalledTimes(10)
+        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '2')
+        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '0')
+        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '1')
       })
 
-      test('calls the correct callbacks on endDate submit', () => {
-        const { enzymeWrapper, props } = setup({
+      test('calls the correct callbacks on endDate submit', async () => {
+        const { setFieldTouched, setFieldValue, user } = setup({
           collectionMetadata: {
             isOpenSearch: false,
             tags: {
@@ -1000,31 +1084,37 @@ describe('GranuleFiltersForm component', () => {
           values: {
             equatorCrossingDate: {
               startDate: '2019-08-13T00:00:00:000Z',
-              endDate: '2019-08-14T23:59:59:999Z'
+              endDate: ''
             }
           }
         })
-        const equatorCrossingDateSection = enzymeWrapper.find(SidebarFiltersItem).at(5)
-        equatorCrossingDateSection.find(TemporalSelection).prop('onSubmitEnd')(moment('2019-08-14T23:59:59:999Z', 'YYYY-MM-DDTHH:m:s.SSSZ', true))
 
-        expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
-        expect(props.setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.endDate')
-        expect(props.setFieldValue).toHaveBeenCalledTimes(1)
-        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2019-08-14T23:59:59:999Z')
+        const equatorCrossingEndDateTextField = screen.getAllByRole('textbox', { name: 'End Date' })[1]
+
+        await user.click(equatorCrossingEndDateTextField)
+        await user.type(equatorCrossingEndDateTextField, '2019-08-14')
+        await user.tab(equatorCrossingEndDateTextField)
+
+        expect(setFieldTouched).toHaveBeenCalledTimes(10)
+        expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.endDate')
+        expect(setFieldValue).toHaveBeenCalledTimes(10)
+        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2')
+        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '0')
+        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '1')
       })
     })
   })
 
   describe('Grid Coordinates section', () => {
     test('does not render if no gridName is applied', () => {
-      const { enzymeWrapper } = setup()
+      setup()
 
-      const firstSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
-      expect(firstSection.props().heading).not.toEqual('Grid Coordinates')
+      expect(screen.queryByText('Tiling System')).not.toBeInTheDocument()
+      expect(screen.queryByRole('combobox', 'tilingSystem')).not.toBeInTheDocument()
     })
 
     test('defaults to an empty value', () => {
-      const { enzymeWrapper } = setup({
+      setup({
         collectionMetadata: {
           tilingIdentificationSystems: [
             {
@@ -1042,12 +1132,13 @@ describe('GranuleFiltersForm component', () => {
         }
       })
 
-      const gridCoordsSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
-      expect(gridCoordsSection.find(Form.Control).at(0).prop('value')).toEqual('')
+      expect(screen.getByLabelText('Tiling System')).toBeInTheDocument()
+      const tileOptions = screen.getByRole('combobox', 'tilingSystem')
+      expect(tileOptions).toHaveValue('')
     })
 
-    test('calls handleChange on change', () => {
-      const { enzymeWrapper, props } = setup({
+    test('calls handleChange on change', async () => {
+      const { onMetricsGranuleFilter, handleChange, user } = setup({
         collectionMetadata: {
           tilingIdentificationSystems: [
             {
@@ -1065,24 +1156,19 @@ describe('GranuleFiltersForm component', () => {
         }
       })
 
-      const gridCoordsSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
-      gridCoordsSection.find(Form.Control).prop('onChange')({
-        target: {
-          name: 'tilingSystem',
-          value: 'MISR'
-        }
-      })
+      const tileOptions = screen.getByRole('combobox', 'tilingSystem')
 
-      expect(props.handleChange).toHaveBeenCalledTimes(1)
-      expect(props.handleChange).toHaveBeenCalledWith({
-        target: {
-          name: 'tilingSystem',
-          value: 'MISR'
-        }
-      })
+      await user.selectOptions(tileOptions, 'MISR')
 
-      expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-      expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith(
+      expect(handleChange).toHaveBeenCalledTimes(1)
+      expect(handleChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          _reactName: 'onChange'
+        })
+      )
+
+      expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+      expect(onMetricsGranuleFilter).toHaveBeenCalledWith(
         {
           type: 'tilingSystem',
           value: 'MISR'
@@ -1090,8 +1176,8 @@ describe('GranuleFiltersForm component', () => {
       )
     })
 
-    test('tiling system onchange displays grid coordinates', () => {
-      const { enzymeWrapper } = setup({
+    test('tiling system onchange displays grid coordinates', async () => {
+      const { user } = setup({
         collectionMetadata: {
           tilingIdentificationSystems: [
             {
@@ -1112,9 +1198,14 @@ describe('GranuleFiltersForm component', () => {
         }
       })
 
-      const gridCoordsSection = enzymeWrapper.find(SidebarFiltersItem).at(1)
-      expect(gridCoordsSection.find(Form.Control).length).toBe(2)
-      expect(gridCoordsSection.find(Form.Text).at(0).text()).toEqual('Enter path (min: 1, max: 233) and block (min: 1, max: 183) coordinates separated by spaces, e.g. "2,3 5,7"')
+      const gridCoordinatesMessage = 'Enter path (min: 1, max: 233) and block (min: 1, max: 183) coordinates separated by spaces, e.g. "2,3 5,7"'
+      const tileOptions = screen.getByRole('combobox', 'tilingSystem')
+      await user.click(tileOptions)
+
+      const misrTileOption = screen.getByRole('option', { name: 'MISR' })
+      await user.click(misrTileOption)
+
+      expect(screen.getByText(gridCoordinatesMessage)).toBeVisible()
     })
   })
 })

@@ -25,6 +25,8 @@ import {
 import validationSchema from '../validationSchema'
 import handleFormSubmit from '../handleFormSubmit'
 
+jest.mock('../handleFormSubmit')
+
 beforeEach(() => {
   jest.clearAllMocks()
 })
@@ -87,20 +89,11 @@ const setup = (overrideProps) => {
     handleSubmit: handleFormSubmit
   })(GranuleFiltersContainer)
 
-  // `formikBag` is the internal state of formik which we are manually going to override to match our passed props
-  let formikBag
-  // TODO update with the new way `formik` wants us to render these inline without `render` prop
   render(
     <Provider store={store}>
       <Router history={history}>
         <EnhancedGranuleFiltersContainer
-          render={
-            () => {
-              formikBag = props
-
-              return <GranuleFiltersContainer {...props} />
-            }
-          }
+          render={() => (<GranuleFiltersContainer {...props} />)}
         />
       </Router>
     </Provider>
@@ -111,8 +104,7 @@ const setup = (overrideProps) => {
     handleSubmit,
     handleReset,
     setGranuleFiltersNeedReset,
-    user,
-    formikBag
+    user
   }
 }
 
@@ -224,13 +216,12 @@ describe('GranuleFiltersContainer component', () => {
 
     describe('when the form is submitted', () => {
       test('handle submit is called', async () => {
-        const { handleSubmit } = setup({
+        const { handleSubmit, user } = setup({
           values: {
             test: 'test'
           }
         })
 
-        const user = userEvent.setup()
         const readableGranuleNameTextField = screen.getByRole('textbox', { name: 'Granule ID(s)' })
 
         await act(async () => {
@@ -241,6 +232,31 @@ describe('GranuleFiltersContainer component', () => {
         await waitFor(() => {
           expect(handleSubmit).toHaveBeenCalledTimes(1)
         })
+      })
+    })
+
+    describe('when hovering over the readable granule name field', () => {
+      test('displays tool-tip information', async () => {
+        const { user } = setup({
+          values: {
+            test: 'test'
+          }
+        })
+
+        const tooltipText = /Filter granules by using a granule ID/i
+
+        expect(screen.queryByText(tooltipText)).not.toBeInTheDocument()
+        const readableGranuleNameTMoreInfo = screen.getByRole('img', { name: 'A question mark in a circle' })
+
+        // Only show tool-tip on hover
+        await act(async () => {
+          await user.hover(readableGranuleNameTMoreInfo)
+        })
+
+        // Ensure Tooltip sections are rendering
+        expect(screen.getByText(/Asterisks/i)).toBeVisible()
+        expect(screen.getByText(/Question marks/i)).toBeVisible()
+        expect(screen.getByText(/Commas/i)).toBeVisible()
       })
     })
   })
