@@ -1,44 +1,47 @@
-// Import { render, fireEvent } from '@testing-library/react'
-// import TourSteps from '../TourSteps'
+import { render, fireEvent } from '@testing-library/react'
+import TourSteps from '../TourSteps'
 import '@testing-library/jest-dom/extend-expect'
 
 describe('TourSteps Navigation', () => {
-  test('calls setStepIndex(stepIndex - 1) when Previous button is clicked', () => {
-    //     Const setStepIndex = jest.fn()
-    //     const setRunTour = jest.fn()
-    //     const stepIndex = 2
+  test('should navigate to the previous step when the "Previous" button is clicked', () => {
+    const setStepIndex = jest.fn()
+    const stepIndex = 2
+    const steps = TourSteps(stepIndex, setStepIndex, jest.fn())
 
-    //     // Get the tour steps array
-    //     const steps = TourSteps(stepIndex, setStepIndex, setRunTour)
+    const { content } = steps[stepIndex]
 
-    //     // Render the second step (index [1])
-    //     const { getByText } = render(steps[1].content)
+    const { getByText } = render(content)
 
-    //     // Simulate clicking the Previous button
-    //     const previousButton = getByText('Previous')
-    //     fireEvent.click(previousButton)
+    fireEvent.click(getByText('Previous'))
 
-    //     // Assert that setStepIndex was called with stepIndex - 1
-    //     expect(setStepIndex).toHaveBeenCalledWith(stepIndex - 1)
-    //   })
+    expect(setStepIndex).toHaveBeenCalledWith(stepIndex - 1)
+  })
 
-    //   test('calls setRunTour(false) and setStepIndex(0) when "Skip for now" button is clicked', () => {
-    //     const setStepIndex = jest.fn()
-    //     const setRunTour = jest.fn()
-    //     const stepIndex = 0
+  test('should navigate to the next step when the "Next" button is clicked', () => {
+    const setStepIndex = jest.fn()
+    const stepIndex = 2
+    const steps = TourSteps(stepIndex, setStepIndex, jest.fn())
 
-    //     // Get the tour steps array
-    //     const steps = TourSteps(stepIndex, setStepIndex, setRunTour)
+    const { content } = steps[stepIndex]
+    const { getByText } = render(content)
 
-    //     // Render the first step (index [0])
-    //     const { getByText } = render(steps[0].content)
+    fireEvent.click(getByText('Next'))
 
-    //     // Simulate clicking the "Skip for now" button
-    //     const skipButton = getByText('Skip for now')
-    //     fireEvent.click(skipButton)
+    expect(setStepIndex).toHaveBeenCalledWith(stepIndex + 1)
+  })
 
-    //     // Assert that setRunTour was called with false and setStepIndex was called with 0
-    //     expect(setRunTour).toHaveBeenCalledWith(false)
-    //     expect(setStepIndex).toHaveBeenCalledWith(0)
+  test('should skip the tour and reset step index when the "Skip for now" button is clicked', () => {
+    const setStepIndex = jest.fn()
+    const setRunTour = jest.fn()
+    const stepIndex = 0
+    const steps = TourSteps(stepIndex, setStepIndex, setRunTour)
+
+    const { content } = steps[stepIndex]
+    const { getByText } = render(content)
+
+    fireEvent.click(getByText('Skip for now'))
+
+    expect(setRunTour).toHaveBeenCalledWith(false)
+    expect(setStepIndex).toHaveBeenCalledWith(0)
   })
 })

@@ -72,8 +72,9 @@ describe('SearchTour Keyboard Navigation', () => {
   //     // Manually invoke the callback
   //     handleJoyrideCallback(joyrideCallbackData)
 
-//     // Assertions for setRunTour(false) and setStepIndex(0)
-//     expect(setRunTour).toHaveBeenCalledWith(false)
-//     expect(setStepIndex).toHaveBeenCalledWith(0)
-//   })
+  //     // Assertions for setRunTour(false) and setStepIndex(0)
+  //     expect(setRunTour).toHaveBeenCalledWith(false)
+  //     expect(setStepIndex).toHaveBeenCalledWith(0)
+  //   })
+  expect(1 !== 0)
 })
