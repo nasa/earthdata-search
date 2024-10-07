@@ -50,6 +50,15 @@ StepCounter.propTypes = {
   currentStep: PropTypes.number.isRequired
 }
 
+const commonStyles = {
+  tooltip: { width: '400px' },
+  tooltipContent: {
+    fontSize: '14px',
+    textAlign: 'left',
+    lineHeight: '1.5'
+  }
+}
+
 const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
   {
     target: '.search',
@@ -121,16 +130,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
       </div>
     ),
     placement: 'right',
-    styles: {
-      tooltip: {
-        width: '400px'
-      },
-      tooltipContent: {
-        fontSize: '14px',
-        textAlign: 'left',
-        lineHeight: '1.5'
-      }
-    }
+    styles: commonStyles
   },
   {
     target: '.search-form__primary',
@@ -158,16 +158,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
       </div>
     ),
     placement: 'right',
-    styles: {
-      tooltip: {
-        width: '400px'
-      },
-      tooltipContent: {
-        fontSize: '14px',
-        textAlign: 'left',
-        lineHeight: '1.5'
-      }
-    }
+    styles: commonStyles
   },
   {
     target: '.temporal-selection-dropdown',
@@ -186,16 +177,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
       </div>
     ),
     placement: 'right',
-    styles: {
-      tooltip: {
-        width: '400px'
-      },
-      tooltipContent: {
-        fontSize: '14px',
-        textAlign: 'left',
-        lineHeight: '1.5'
-      }
-    }
+    styles: commonStyles
   },
   {
     target: '.spatial-selection-dropdown',
@@ -219,16 +201,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
       </div>
     ),
     placement: 'right',
-    styles: {
-      tooltip: {
-        width: '400px'
-      },
-      tooltipContent: {
-        fontSize: '14px',
-        textAlign: 'left',
-        lineHeight: '1.5'
-      }
-    }
+    styles: commonStyles
   },
   {
     target: '.search-form__button--advanced-search',
@@ -243,16 +216,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
       </div>
     ),
     placement: 'right',
-    styles: {
-      tooltip: {
-        width: '400px'
-      },
-      tooltipContent: {
-        fontSize: '14px',
-        textAlign: 'left',
-        lineHeight: '1.5'
-      }
-    }
+    styles: commonStyles
   },
   {
     target: '.sidebar-browse-portals',
@@ -268,11 +232,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
     ),
     placement: 'right',
     disableScrolling: true,
-    styles: {
-      tooltip: {
-        width: '400px'
-      }
-    }
+    styles: commonStyles
   },
   {
     target: '.sidebar-section-body',
@@ -288,11 +248,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
     ),
     placement: 'right-start',
     disableScrolling: true,
-    styles: {
-      tooltip: {
-        width: '400px'
-      }
-    }
+    styles: commonStyles
   },
   {
     target: '.panel-section',
@@ -322,11 +278,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
       </div>
     ),
     placement: 'right',
-    styles: {
-      tooltip: {
-        width: '400px'
-      }
-    },
+    styles: commonStyles,
     floaterProps: {
       disableFlip: true,
       offset: 10
@@ -359,11 +311,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
       </div>
     ),
     placement: 'right',
-    styles: {
-      tooltip: {
-        width: '400px'
-      }
-    }
+    styles: commonStyles
   },
   {
     target: '.right-overlay',
@@ -395,12 +343,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
       </div>
     ),
     placement: 'left',
-    styles: {
-      tooltip: {
-        width: '400px',
-        textAlign: 'left'
-      }
-    }
+    styles: commonStyles
   },
   {
     target: '.leaflet-bottom.leaflet-right',
@@ -415,16 +358,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
       </div>
     ),
     placement: 'left',
-    styles: {
-      tooltip: {
-        width: '400px'
-      },
-      tooltipContent: {
-        fontSize: '14px',
-        textAlign: 'left',
-        lineHeight: '1.5'
-      }
-    }
+    styles: commonStyles
   },
   {
     target: '.secondary-toolbar__begin-tour-button',
@@ -467,11 +401,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
       </div>
     ),
     placement: 'right',
-    styles: {
-      tooltip: {
-        width: '400px'
-      }
-    }
+    styles: commonStyles
   },
   {
     target: '.search',
