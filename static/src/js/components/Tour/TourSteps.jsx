@@ -14,7 +14,6 @@ const TourButtons = ({ stepIndex, setStepIndex }) => (
       type="button"
       bootstrapVariant="secondary"
       bootstrapSize="sm"
-      data-testid="tour-previous-button"
       onClick={() => setStepIndex(stepIndex - 1)}
     >
       Previous
@@ -23,7 +22,6 @@ const TourButtons = ({ stepIndex, setStepIndex }) => (
       type="button"
       bootstrapVariant="primary"
       bootstrapSize="sm"
-      data-testid="tour-next-button"
       onClick={() => setStepIndex(stepIndex + 1)}
     >
       Next
