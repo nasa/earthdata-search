@@ -14,7 +14,7 @@ import './EDSCImage.scss'
  * @param {String} props.dataTestId - An optional test id.
  * @param {String} props.className - An optional css class attribute.
  * @param {Integer} props.height - The height of the image.
- * @param {Boolean} props.isBase64Image - If this image needs to be retrieved asynchronously because a header must be passed
+ * @param {Boolean} props.resizeImage - If this image needs to be retrieved asynchronously because a header must be passed
  * @param {String} props.src - The src to be used as the src attribute on the image..
  * @param {Boolean} props.srcSet - The srcSet to be used as the srcSet attribute on the image.
  * @param {Boolean} props.useSpinner - If the spinner should be used for this Image while it is loading
@@ -26,7 +26,7 @@ export const EDSCImage = (props) => {
     className,
     dataTestId,
     height,
-    isBase64Image,
+    resizeImage,
     src,
     srcSet,
     useSpinner,
@@ -61,7 +61,7 @@ export const EDSCImage = (props) => {
 
   useEffect(() => {
     let isMounted = true
-    if (isBase64Image && isMounted) {
+    if (resizeImage && isMounted) {
       parseScaleImageResponse()
     }
 
@@ -88,7 +88,7 @@ export const EDSCImage = (props) => {
       }
       {
         // If src is a standard image endpoint
-        !isErrored && !isBase64Image && (
+        !isErrored && !resizeImage && (
           <img
             className="edsc-image__image"
             alt={alt}
@@ -102,7 +102,7 @@ export const EDSCImage = (props) => {
         )
       }
       {
-        !isErrored && isLoaded && isBase64Image && (
+        !isErrored && isLoaded && resizeImage && (
           <img
             className="edsc-image__image"
             alt={alt}
@@ -121,7 +121,7 @@ export const EDSCImage = (props) => {
 EDSCImage.defaultProps = {
   className: undefined,
   dataTestId: undefined,
-  isBase64Image: false,
+  resizeImage: false,
   srcSet: undefined,
   useSpinner: true
 }
@@ -131,7 +131,7 @@ EDSCImage.propTypes = {
   className: PropTypes.string,
   dataTestId: PropTypes.string,
   height: PropTypes.number.isRequired,
-  isBase64Image: PropTypes.bool,
+  resizeImage: PropTypes.bool,
   src: PropTypes.string.isRequired,
   srcSet: PropTypes.string,
   useSpinner: PropTypes.bool,
