@@ -393,6 +393,7 @@ describe('GranuleResultsItem component', () => {
       const { enzymeWrapper } = setup('cmr')
 
       expect(enzymeWrapper.find('.granule-results-item__thumb-image').prop('src')).toEqual('/fake/path/image.jpg')
+      expect(enzymeWrapper.find('.granule-results-item__thumb-image').prop('resizeImage')).toEqual(true)
     })
 
     test('renders the start and end date', () => {
@@ -440,6 +441,7 @@ describe('GranuleResultsItem component', () => {
       const { enzymeWrapper } = setup('opensearch')
 
       expect(enzymeWrapper.find('.granule-results-item__thumb-image').prop('src')).toEqual('/fake/path/image.jpg')
+      expect(enzymeWrapper.find('.granule-results-item__thumb-image').prop('resizeImage')).toEqual(false)
     })
 
     test('renders the start and end date', () => {
