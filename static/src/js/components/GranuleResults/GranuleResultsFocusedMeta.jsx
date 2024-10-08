@@ -349,7 +349,7 @@ const GranuleResultsFocusedMeta = ({
                             alt={description || `Browse image for ${title}`}
                             width={175}
                             height={175}
-                            isBase64Image
+                            resizeImage
                           />
                         )
                       )
@@ -397,7 +397,7 @@ const GranuleResultsFocusedMeta = ({
                           alt={description || `Browse image for ${title}`}
                           width={538}
                           height={538}
-                          isBase64Image
+                          resizeImage
                         />
                       )
                     )
