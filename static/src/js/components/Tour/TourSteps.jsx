@@ -5,6 +5,7 @@ import ExternalLink from '../ExternalLink/ExternalLink'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Button from '../Button/Button'
 import TourThumbnail from '../../../assets/images/tour-video-thumbnail.png'
+import './SearchTour.scss'
 
 export const TOTAL_STEPS = 12
 
@@ -72,7 +73,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
         <p className="tour-note">
           If you want to skip the tour for now, it is always available by clicking
           {' '}
-          <strong>Show Tour</strong>
+          <strong>Start Tour</strong>
           {' '}
           at the top of the page.
         </p>
@@ -94,7 +95,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
             className="button-tour-skip"
             type="button"
             bootstrapVariant="secondary"
-            bootstrapSize="sm"
+            bootstrapSize="lg"
             onClick={
               () => {
                 setRunTour(false)
@@ -505,7 +506,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
                 color: '#5a585a',
                 textDecoration: 'underline',
                 marginBottom: '5px',
-                display: 'block'
+                display: 'inline'
               }
             }
           >
@@ -521,7 +522,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
               {
                 color: '#5a585a',
                 textDecoration: 'underline',
-                display: 'block'
+                display: 'inline'
               }
             }
           >

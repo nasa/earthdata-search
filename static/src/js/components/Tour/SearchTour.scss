@@ -16,6 +16,10 @@
     text-align: left;
 }
 
+.tour-heading {
+    font-family: "DM Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    color: var(--color-heading) !important;
+}
 
 .text-icon {
     display: inline-block;
@@ -78,7 +82,7 @@ kbd {
 
 .tour-info-box {
     background-color: #f8f9fa;
-    padding: 1rem;
+    padding: 1rem 1rem 0.1rem 1rem;
     margin-bottom: 15px;
     border-radius: 4px;
     font-size: 14px;
