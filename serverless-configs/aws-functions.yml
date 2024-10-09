@@ -175,6 +175,7 @@
   generateGibsTags:
     handler: serverless/src/generateGibsTags/handler.default
     description: Tag CMR collections with GIBS product information
+    memorySize: 512
     timeout: 300
     events:
       - schedule:
