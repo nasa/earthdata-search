@@ -246,59 +246,25 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     // * too large. This tag data will be replaced with the efforts associated with EDSC-2972.
     // ***
 
-    if (!this.gibsTag) return null
+    // If there are no UMM-Vis records, return
+    if (!this.visualization) return null
 
-    const date = granule.timeStart != null ? granule.timeStart.substring(0, 10) : undefined
+    const visRecords = this.visualization
 
-    let matched = false
+    // Find the first layer associated with the current map projection
+    const layer = visRecords.find((record) => {
+      const { What: what } = record
+      const { ResourceURL: resourceUrl } = what
+      const { template } = resourceUrl
 
-    // Select only the first layer until we are able to toggle between gibs layers.
-    const layers = [this.gibsTag[0]]
-
-    layers.forEach((optionSet) => {
-      const newOptionSet = optionSet
-
-      if (this.matches(granule, newOptionSet.match)) {
-        let newResolution
-        // Code for using tileMatrixLimits to stop leaflet from requesting unused tiles
-        // let tileMatrixLimits
-
-        const oldResolution = newOptionSet.resolution
-
-        // Set resolution to {projection}_resolution if it exists and if the layer exists within newOptionSet
-        if ((this.projection === projections.geographic) && newOptionSet.geographic) {
-          matched = true
-          newResolution = newOptionSet.geographic_resolution
-          // Code for using tileMatrixLimits to stop leaflet from requesting unused tiles
-          // tileMatrixLimits = newOptionSet.geographic_tile_matrix_limits
-        } else if ((this.projection === projections.arctic) && newOptionSet.arctic) {
-          matched = true
-          newResolution = newOptionSet.arctic_resolution
-          // Code for using tileMatrixLimits to stop leaflet from requesting unused tiles
-          // tileMatrixLimits = newOptionSet.arctic_tile_matrix_limits
-        } else if ((this.projection === projections.antarctic) && newOptionSet.antarctic) {
-          matched = true
-          newResolution = newOptionSet.antarctic_resolution
-          // Code for using tileMatrixLimits to stop leaflet from requesting unused tiles
-          // tileMatrixLimits = newOptionSet.antarctic_tile_matrix_limits
-        }
-
-        // Use default resolution unless newResolution exists
-        if (newResolution == null) { newResolution = oldResolution }
-
-        newOptionSet.resolution = newResolution
-        // Code for using tileMatrixLimits to stop leaflet from requesting unused tiles
-        // newOptionSet.tileMatrixLimits = tileMatrixLimits
-
-        this.options = L.extend({}, this.originalOptions, newOptionSet)
-      }
+      return template.includes(this.projection)
     })
 
-    // Code for using tileMatrixLimits to stop leaflet from requesting unused tiles
+    // // Code for using tileMatrixLimits to stop leaflet from requesting unused tiles
     // const { resolution, tileMatrixLimits = {} } = this.options
     // const { [resolution]: tileMatrixLimitsByResolution = {} } = tileMatrixLimits
 
-    // If the z point is not included in the tile matrix limits, return null
+    // // If the z point is not included in the tile matrix limits, return null
     // if (!Object.keys(tileMatrixLimitsByResolution).includes(tilePoint.z.toString())) {
     //   return null
     // }
@@ -308,8 +274,8 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     //   matrixWidth
     // } = tileMatrixLimitsByResolution[tilePoint.z]
 
-    // If the x or y points are less than 0 or greater than the width - 1 or height - 1 return null
-    // Subtract 1 because the tilePoints start at 0 instead of 1
+    // // If the x or y points are less than 0 or greater than the width - 1 or height - 1 return null
+    // // Subtract 1 because the tilePoints start at 0 instead of 1
     // if (
     //   tilePoint.x < 0 || tilePoint.x > matrixWidth - 1
     //   || tilePoint.y < 0 || tilePoint.y > matrixHeight - 1
@@ -317,35 +283,44 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     //   return null
     // }
 
-    if (!matched) { return null }
+    // TODO determine if the visualization data exists for this granule.
+    // The old way this worked was this.matches(), comparing the tag's match.time_start or other fields to the granule metadata
+    // ?? Should the new way use the values in What.Dimension.Values? and What.daynight? Any other checks?
+    // If the granule does not match the constraints, return null
 
-    this.options.time = date
-    if (this.options.granule) {
-      this._originalUrl = this._originalUrl || this._url
-      this._url = config.gibsGranuleUrl || this._originalUrl
-      this.options.time = granule.timeStart.replace(/\.\d{3}Z$/, 'Z')
-    } else {
-      this._url = this._originalUrl || this._url || config.gibsUrl
+    // Pull the URL template out of the UMM-Vis record
+    const { What: what } = layer
+    const {
+      ResourceURL: resourceUrl,
+      TileMatrixSetLink: tileMatrixSetLink
+    } = what
+    const { template } = resourceUrl
+    this._url = template
+
+    // TileMatrixSet is the resolution of the imagery ('2km', etc.)
+    const { TileMatrixSet: tileMatrixSet } = tileMatrixSetLink
+
+    // Populate the data needed for the URL template
+    const visData = {
+      TileCol: tilePoint.x,
+      TileMatrix: tilePoint.z,
+      TileMatrixSet: tileMatrixSet,
+      TileRow: tilePoint.y,
+      Time: granule.timeStart
     }
 
-    const data = {
-      lprojection: this.projection, // Use current map projection
-      x: tilePoint.x,
-      y: tilePoint.y,
-      z: tilePoint.z,
-      time: this.options.time
-    }
+    // TODO is this necessary? We don't display an infiniate map
+    // if (this._map && !this._map.options.crs.infinite) {
+    //   const invertedY = this._globalTileRange.max.y - (tilePoint.y)
+    //   if (this.options.tms) {
+    //     // ? data.y has changed to visData.TileRow, but there is no data['-y'] in the URL template, what was this doing?
+    //     data.y = invertedY
+    //   }
 
-    if (this._map && !this._map.options.crs.infinite) {
-      const invertedY = this._globalTileRange.max.y - (tilePoint.y)
-      if (this.options.tms) {
-        data.y = invertedY
-      }
+    //   data['-y'] = invertedY
+    // }
 
-      data['-y'] = invertedY
-    }
-
-    return L.Util.template(this._url, L.Util.extend(data, this.options))
+    return L.Util.template(this._url, L.Util.extend(visData, this.options))
   }
 
   // Draw the granule tile
@@ -889,8 +864,14 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     if (lightColor) this.lightColor = lightColor
 
     if (metadata) {
+      console.log('🚀 ~ file: GranuleGridLayerExtended.jsx:892 ~ GranuleGridLayerExtended ~ setResults ~ metadata:', metadata)
+      // TODO look in visualizations for imagery information
       // Set multiOptions (gibs data)
-      const { tags } = metadata
+      const { tags, visualization } = metadata
+
+      if (visualization) {
+        this.visualization = visualization
+      }
 
       if (tags) {
         this.gibsTag = getValueForTag('gibs', tags)

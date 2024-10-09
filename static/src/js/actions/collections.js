@@ -23,6 +23,7 @@ import {
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { pruneFilters } from '../util/pruneFilters'
+import VisualizationRequest from '../util/request/visualizationRequest'
 
 export const addMoreCollectionResults = (payload) => ({
   type: ADD_MORE_COLLECTION_RESULTS,
@@ -171,7 +172,7 @@ export const getCollections = () => (dispatch, getState) => {
   cancelToken = requestObject.getCancelToken()
 
   const response = requestObject.search(buildCollectionSearchParams(collectionParams))
-    .then((responseObject) => {
+    .then(async (responseObject) => {
       const { data, headers } = responseObject
 
       const cmrHits = parseInt(headers['cmr-hits'], 10)
@@ -182,6 +183,37 @@ export const getCollections = () => (dispatch, getState) => {
         facets = {}
       } = feed
       const { children = [] } = facets
+
+      // Get collection concept-ids out of entry and fetch visualizations
+      // TODO I don't like that this is doing another async request inside of the .then
+      const collectionConceptIds = entry.map((collection) => collection.id)
+      const visRequest = new VisualizationRequest('uat')
+      const visResponse = await visRequest.search({
+        conceptIds: collectionConceptIds,
+        visualizationType: 'tiles'
+      })
+
+      console.log('🚀 ~ file: collections.js:200 ~ .then ~ visResponse:', visResponse)
+      const { data: visData } = visResponse
+      const { items } = visData
+
+      // For each item in visData.items, add the umm object to the correct collection in entry
+      items.forEach((visItem) => {
+        const { umm } = visItem
+        const { ConceptIds: visCollectionConceptIds } = umm
+
+        visCollectionConceptIds.forEach((collectionConceptIdObj) => {
+          const { value } = collectionConceptIdObj
+          const collection = entry.find((c) => c.id === value)
+
+          if (collection) {
+            // `visualization` can hold multiple layers, so it needs to always be an array
+            collection.visualization = Array.isArray(collection.visualization)
+              ? [...collection.visualization, umm]
+              : [umm]
+          }
+        })
+      })
 
       const payload = {
         facets: children,

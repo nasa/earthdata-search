@@ -81,6 +81,8 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
+  // TODO add visualizations to this query
+
   const graphQuery = `
     query GetCollection(
       $params: CollectionInput, $subcriptionParams: SubscriptionsInput, $variableParams: VariablesInput
