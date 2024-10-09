@@ -104,6 +104,8 @@ const GranuleResultsItem = forwardRef(({
   const buildThumbnail = () => {
     let element = null
     if (granuleThumbnail) {
+      // Only resize image if it is not an opensearch granule
+      const shouldResizeImage = !isOpenSearch
       element = (
         <EDSCImage
           className="granule-results-item__thumb-image"
@@ -112,7 +114,7 @@ const GranuleResultsItem = forwardRef(({
           width={thumbnailWidth}
           alt={`Browse Image for ${title}`}
           useSpinner={false}
-          isBase64Image
+          resizeImage={shouldResizeImage}
         />
       )
 
