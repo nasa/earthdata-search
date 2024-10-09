@@ -39,7 +39,11 @@ const SearchTour = ({ runTour, setRunTour }) => {
   }, [runTour])
 
   useEffect(() => {
-    if (stepIndex === 6) { // Scrolling to the top to ensure "Browse Portals" is visible.
+    // Scrolling to the top to ensure "Browse Portals" is visible.
+    // If users are scrolled to the bottom of the Filters panel, the "Browse Portals"
+    // box will be out of view, but the tour will still highlight it even through the
+    // user cannot see it.
+    if (stepIndex === 6) {
       const element = document.querySelector('.sidebar__content .simplebar-content-wrapper')
       if (element) {
         element.scrollTop = 0
@@ -49,7 +53,10 @@ const SearchTour = ({ runTour, setRunTour }) => {
 
   const handleJoyrideCallback = (data) => {
     const {
-      action, index, status, type
+      action,
+      index,
+      status,
+      type
     } = data
 
     if ([STATUS.FINISHED, STATUS.SKIPPED, STATUS.PAUSED].includes(status)
@@ -80,12 +87,12 @@ const SearchTour = ({ runTour, setRunTour }) => {
             primaryColor: '#007bff',
             zIndex: 10000,
             textAlign: 'left',
-            width: '600px'
+            width: '37.5rem'
           },
           tooltip: {
-            fontSize: '16px',
-            padding: '20px',
-            paddingTop: '0px',
+            fontSize: '1rem',
+            padding: '1.25rem',
+            paddingTop: '0rem',
             textAlign: 'left'
           },
           tooltipContent: {
@@ -102,9 +109,9 @@ const SearchTour = ({ runTour, setRunTour }) => {
           disableAnimation: true,
           styles: {
             button: {
-              borderRadius: '4px',
-              padding: '8px 16px',
-              fontSize: '14px'
+              borderRadius: '0.25rem',
+              padding: '0.5rem 1rem',
+              fontSize: '0.875rem'
             }
           }
         }

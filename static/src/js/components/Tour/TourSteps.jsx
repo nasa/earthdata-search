@@ -50,9 +50,11 @@ StepCounter.propTypes = {
 }
 
 const commonStyles = {
-  tooltip: { width: '400px' },
+  tooltip: {
+    width: '25rem'
+  },
   tooltipContent: {
-    fontSize: '14px',
+    fontSize: '0.875rem',
     textAlign: 'left',
     lineHeight: '1.5'
   }
@@ -280,7 +282,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
     styles: commonStyles,
     floaterProps: {
       disableFlip: true,
-      offset: 10
+      offset: '0.625rem'
     }
   },
   {
@@ -319,7 +321,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
         <StepCounter currentStep={stepIndex} />
         <p style={
           {
-            fontSize: '16px',
+            fontSize: '1rem',
             textAlign: 'left'
           }
         }
@@ -329,7 +331,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
         </p>
         <p style={
           {
-            fontSize: '16px',
+            fontSize: '1rem',
             textAlign: 'left'
           }
         }
@@ -360,7 +362,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
     styles: commonStyles
   },
   {
-    target: '.secondary-toolbar__begin-tour-button',
+    target: '.secondary-toolbar__start-tour-button',
     content: (
       <div>
         <StepCounter currentStep={stepIndex} />
@@ -410,9 +412,9 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           className="tour-heading"
           style={
             {
-              fontSize: '22px',
+              fontSize: '1.375rem',
               fontWeight: 'bold',
-              marginBottom: '15px'
+              marginBottom: '0.9375rem'
             }
           }
         >
@@ -420,8 +422,8 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
         </h2>
         <p style={
           {
-            marginBottom: '20px',
-            fontSize: '16px'
+            marginBottom: '1.25rem',
+            fontSize: '1rem'
           }
         }
         >
@@ -432,9 +434,9 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           style={
             {
               backgroundColor: '#f5f5f5',
-              padding: '10px',
-              marginBottom: '20px',
-              borderRadius: '6px',
+              padding: '0.625rem',
+              marginBottom: '1.25rem',
+              borderRadius: '0.375rem',
               textDecoration: 'none',
               color: '#000',
               display: 'flex',
@@ -444,8 +446,8 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
         >
           <div style={
             {
-              flex: '0 0 220px',
-              marginRight: '15px'
+              flex: '0 0 13.75rem',
+              marginRight: '0.9375rem'
             }
           }
           >
@@ -463,8 +465,8 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           <div>
             <div style={
               {
-                padding: '10px',
-                fontSize: '16px',
+                padding: '0.625rem',
+                fontSize: '1rem',
                 fontWeight: '500'
               }
             }
@@ -473,10 +475,10 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
             </div>
             <p style={
               {
-                fontSize: '16px',
+                fontSize: '1rem',
                 fontWeight: 'bold',
-                marginTop: '10px',
-                marginLeft: '10px'
+                marginTop: '0.625rem',
+                marginLeft: '0.625rem'
               }
             }
             >
@@ -488,9 +490,9 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
         </div>
         <p style={
           {
-            fontSize: '16px',
+            fontSize: '1rem',
             fontWeight: 'bold',
-            marginBottom: '5px'
+            marginBottom: '0.3125rem'
           }
         }
         >
@@ -505,7 +507,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
               {
                 color: '#5a585a',
                 textDecoration: 'underline',
-                marginBottom: '5px',
+                marginBottom: '0.3125rem',
                 display: 'inline'
               }
             }
@@ -535,11 +537,11 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
     placement: 'center',
     styles: {
       tooltip: {
-        width: '600px',
-        padding: '20px'
+        width: '37.5rem',
+        padding: '1.25rem'
       },
       tooltipContent: {
-        fontSize: '16px'
+        fontSize: '1rem'
       }
     }
   }

@@ -325,7 +325,7 @@ class SecondaryToolbar extends Component {
         {
           location.pathname === '/search' && (
             <Dropdown.Toggle
-              className="secondary-toolbar__begin-tour-button"
+              className="secondary-toolbar__start-tour-button"
               as={Button}
               onClick={onStartTour}
               label="Want to learn more? Click here to take a tour of our site."

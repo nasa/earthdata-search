@@ -26,7 +26,7 @@
     }
   }
 
-  &__begin-tour-button,
+  &__start-tour-button,
   &__project-name-dropdown-toggle {
     &:after {
       display: none;
@@ -44,7 +44,7 @@
   &__project,
   &__login,
   &__project-name-dropdown-toggle,
-  &__begin-tour-button,
+  &__start-tour-button,
   &__user-dropdown-toggle {
     position: relative;
     padding: 0 1rem;
@@ -65,7 +65,7 @@
 
   &__project-name-form {
     .input-group {
-      width: 200px;
+      width: 12.5rem;
     }
   }
 
@@ -73,7 +73,7 @@
     margin-right: 0.5rem;
   }
 
-  &__begin-tour-button,
+  &__start-tour-button,
   &__project-name-dropdown-toggle {
     &:after {
       display: none;
