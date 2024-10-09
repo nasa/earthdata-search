@@ -456,7 +456,7 @@ describe('GranuleResultsItem component', () => {
             alt: `Browse Image for ${title}`,
             className: 'granule-results-item__thumb-image',
             height: 85,
-            isBase64Image: true,
+            resizeImage: true,
             src: granuleThumbnail,
             width: 85,
             useSpinner: false
@@ -515,7 +515,7 @@ describe('GranuleResultsItem component', () => {
             alt: `Browse Image for ${title}`,
             className: 'granule-results-item__thumb-image',
             height: 85,
-            isBase64Image: true,
+            resizeImage: false,
             src: granuleThumbnail,
             width: 85,
             useSpinner: false
@@ -733,7 +733,7 @@ describe('GranuleResultsItem component', () => {
             alt: `Browse Image for ${title}`,
             className: 'granule-results-item__thumb-image',
             height: 85,
-            isBase64Image: true,
+            resizeImage: true,
             src: granuleThumbnail,
             width: 85,
             useSpinner: false
