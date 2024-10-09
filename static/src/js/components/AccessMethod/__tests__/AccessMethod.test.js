@@ -10,11 +10,16 @@ import userEvent from '@testing-library/user-event'
 
 import ResizeObserver from 'resize-observer-polyfill'
 import AccessMethod from '../AccessMethod'
+import AccessMethodRadio from '../../FormFields/AccessMethodRadio/AccessMethodRadio'
 
 beforeEach(() => {
   global.ResizeObserver = ResizeObserver
   jest.clearAllMocks()
 })
+
+jest.mock('../../FormFields/AccessMethodRadio/AccessMethodRadio', () => jest.fn(() => (
+  <mock-AccessMethodRadio />
+)))
 
 afterEach(() => {
   // Don't share global state between the tests
@@ -153,6 +158,8 @@ describe('AccessMethod component', () => {
   })
 
   describe('radio button display', () => {
+    AccessMethodRadio.mockImplementation(jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio)
+
     test('renders a radio button for download', () => {
       setup({
         accessMethods: {
@@ -168,6 +175,8 @@ describe('AccessMethod component', () => {
     })
 
     test('renders a radio button for echo orders', () => {
+      AccessMethodRadio.mockImplementation(jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio)
+
       setup({
         accessMethods: {
           echoOrder0: {
@@ -182,6 +191,8 @@ describe('AccessMethod component', () => {
     })
 
     test('renders a radio button for esi', () => {
+      AccessMethodRadio.mockImplementation(jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio)
+
       setup({
         accessMethods: {
           esi: {
@@ -218,6 +229,21 @@ describe('AccessMethod component', () => {
           }
         }
       })
+
+      // Called twice due to rerender from useEffect()
+      expect(AccessMethodRadio).toHaveBeenCalledTimes(2)
+      expect(AccessMethodRadio).toHaveBeenCalledWith(
+        expect.objectContaining({
+          externalLink: {
+            link: 'https://harmony.earthdata.nasa.gov/',
+            message: 'What is Harmony?'
+          },
+          title: 'Customize with Harmony',
+          details: 'Select options like variables, transformations, and output formats by applying a Harmony service. Data will be staged in the cloud for download and analysis.',
+          value: 'HarmonyMethodType'
+        }),
+        expect.anything()
+      )
 
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
       // Multiple `Harmony` services are possible for a collection
@@ -330,6 +356,7 @@ describe('AccessMethod component', () => {
     })
 
     test('renders an echoform', async () => {
+      AccessMethodRadio.mockImplementation(jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio)
       const collectionId = 'collectionId'
       const form = 'echo form here'
 
@@ -433,6 +460,7 @@ describe('AccessMethod component', () => {
 
   describe('when the selected access method type is harmony', () => {
     test('sets the checkbox checked in Step 1 for "Customize with Harmony"', () => {
+      AccessMethodRadio.mockImplementation(jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio)
       const collectionId = 'collectionId'
       setup({
         accessMethods: {
