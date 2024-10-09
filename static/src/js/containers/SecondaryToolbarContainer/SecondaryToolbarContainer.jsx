@@ -44,8 +44,7 @@ export const SecondaryToolbarContainer = (props) => {
     savedProject,
     retrieval,
     ursProfile,
-    onFetchContactInfo,
-    onStartTour
+    onFetchContactInfo
   } = props
 
   useEffect(() => {
@@ -67,7 +66,6 @@ export const SecondaryToolbarContainer = (props) => {
       retrieval={retrieval}
       secondaryToolbarEnabled={secondaryToolbarEnabled}
       ursProfile={ursProfile}
-      onStartTour={onStartTour}
     />
   )
 }
