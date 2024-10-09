@@ -4,6 +4,8 @@ import classNames from 'classnames'
 
 import { LinkContainer } from 'react-router-bootstrap'
 
+import Highlighter from 'react-highlight-words'
+
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import {
   Minus,
@@ -12,6 +14,7 @@ import {
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { getSearchWords } from '../../util/getSearchWords'
 
 import murmurhash3 from '../../util/murmurhash3'
 import { locationPropType } from '../../util/propTypes/location'
@@ -40,6 +43,7 @@ import './GranuleResultsItem.scss'
  * @param {Function} props.onFocusedGranuleChange - Callback to focus a granule.
  * @param {Function} props.onMetricsDataAccess - Callback to capture data access metrics.
  * @param {Function} props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
+ * @param {Array} props.readableGranuleName - Array of Readable Granule Name strings.
  */
 const GranuleResultsItem = forwardRef(({
   collectionId,
@@ -52,7 +56,8 @@ const GranuleResultsItem = forwardRef(({
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess,
-  onRemoveGranuleFromProjectCollection
+  onRemoveGranuleFromProjectCollection,
+  readableGranuleName
 }, ref) => {
   const { thumbnailSize } = getApplicationConfig()
   const {
@@ -196,7 +201,11 @@ const GranuleResultsItem = forwardRef(({
           <h3
             className="granule-results-item__title"
           >
-            {title}
+            <Highlighter
+              highlightClassName="granule-results-item__highlighted-title"
+              searchWords={getSearchWords(readableGranuleName)}
+              textToHighlight={title}
+            />
           </h3>
         </div>
         <MoreActionsDropdown
@@ -335,7 +344,8 @@ GranuleResultsItem.propTypes = {
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired
+  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
+  readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 
 export default GranuleResultsItem

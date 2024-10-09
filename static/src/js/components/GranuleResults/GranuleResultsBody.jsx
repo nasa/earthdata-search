@@ -71,7 +71,8 @@ const GranuleResultsBody = ({
   } = granuleSearchResults
 
   const {
-    excludedGranuleIds = []
+    excludedGranuleIds = [],
+    readableGranuleName = ['']
   } = granuleQuery
 
   const granuleIds = getGranuleIds({
@@ -183,6 +184,7 @@ const GranuleResultsBody = ({
       >
         <GranuleResultsList
           collectionId={collectionId}
+          readableGranuleName={readableGranuleName}
           directDistributionInformation={directDistributionInformation}
           excludedGranuleIds={excludedGranuleIds}
           granules={granulesList}
@@ -264,7 +266,8 @@ GranuleResultsBody.propTypes = {
   directDistributionInformation: PropTypes.shape({}).isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({
-    excludedGranuleIds: PropTypes.arrayOf(PropTypes.string)
+    excludedGranuleIds: PropTypes.arrayOf(PropTypes.string),
+    readableGranuleName: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   granuleSearchResults: PropTypes.shape({
     allIds: PropTypes.arrayOf(PropTypes.string),

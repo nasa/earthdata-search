@@ -64,6 +64,7 @@ function setup(type) {
       itemCount: 2,
       isItemLoaded: jest.fn(),
       loadMoreItems: jest.fn(),
+      readableGranuleName: [''],
       setVisibleMiddleIndex: jest.fn(),
       visibleMiddleIndex: 1
     }
