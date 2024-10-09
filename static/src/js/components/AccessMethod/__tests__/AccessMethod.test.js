@@ -17,9 +17,9 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-jest.mock('../../FormFields/AccessMethodRadio/AccessMethodRadio', () => jest.fn(() => (
-  <mock-AccessMethodRadio />
-)))
+jest.mock('../../FormFields/AccessMethodRadio/AccessMethodRadio', () => jest.fn().mockImplementation(
+  jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio
+))
 
 afterEach(() => {
   // Don't share global state between the tests
@@ -158,8 +158,6 @@ describe('AccessMethod component', () => {
   })
 
   describe('radio button display', () => {
-    AccessMethodRadio.mockImplementation(jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio)
-
     test('renders a radio button for download', () => {
       setup({
         accessMethods: {
@@ -175,7 +173,6 @@ describe('AccessMethod component', () => {
     })
 
     test('renders a radio button for echo orders', () => {
-      AccessMethodRadio.mockImplementation(jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio)
 
       setup({
         accessMethods: {
@@ -191,8 +188,6 @@ describe('AccessMethod component', () => {
     })
 
     test('renders a radio button for esi', () => {
-      AccessMethodRadio.mockImplementation(jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio)
-
       setup({
         accessMethods: {
           esi: {
@@ -356,7 +351,6 @@ describe('AccessMethod component', () => {
     })
 
     test('renders an echoform', async () => {
-      AccessMethodRadio.mockImplementation(jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio)
       const collectionId = 'collectionId'
       const form = 'echo form here'
 
@@ -460,7 +454,6 @@ describe('AccessMethod component', () => {
 
   describe('when the selected access method type is harmony', () => {
     test('sets the checkbox checked in Step 1 for "Customize with Harmony"', () => {
-      AccessMethodRadio.mockImplementation(jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio)
       const collectionId = 'collectionId'
       setup({
         accessMethods: {
