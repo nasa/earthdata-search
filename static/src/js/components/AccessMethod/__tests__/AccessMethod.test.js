@@ -173,7 +173,6 @@ describe('AccessMethod component', () => {
     })
 
     test('renders a radio button for echo orders', () => {
-
       setup({
         accessMethods: {
           echoOrder0: {
