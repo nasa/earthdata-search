@@ -296,7 +296,6 @@ const AccessMethod = ({
   const getAccessMethodTypes = (hasHarmony, radioList, collectionId) => {
     if (hasHarmony) {
       const id = `${collectionId}_access-method__harmony_type`
-      console.log('🚀 ~ getAccessMethodTypes ~ hasHarmony:', hasHarmony)
 
       return (
         <>
