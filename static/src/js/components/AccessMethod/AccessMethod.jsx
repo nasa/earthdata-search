@@ -296,10 +296,17 @@ const AccessMethod = ({
   const getAccessMethodTypes = (hasHarmony, radioList, collectionId) => {
     if (hasHarmony) {
       const id = `${collectionId}_access-method__harmony_type`
+      console.log('🚀 ~ getAccessMethodTypes ~ hasHarmony:', hasHarmony)
 
       return (
         <>
           <AccessMethodRadio
+            externalLink={
+              {
+                link: 'https://harmony.earthdata.nasa.gov/',
+                message: 'What is Harmony?'
+              }
+            }
             key={id}
             id={id}
             value="HarmonyMethodType"
