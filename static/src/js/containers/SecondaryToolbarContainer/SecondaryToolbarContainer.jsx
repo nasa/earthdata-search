@@ -84,8 +84,7 @@ SecondaryToolbarContainer.propTypes = {
   savedProject: PropTypes.shape({}).isRequired,
   ursProfile: PropTypes.shape({
     first_name: PropTypes.string
-  }).isRequired,
-  onStartTour: PropTypes.func.isRequired
+  }).isRequired
 }
 
 export default withRouter(

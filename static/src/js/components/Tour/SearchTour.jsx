@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
+import React, {
+  useState,
+  useEffect,
+  useContext
+} from 'react'
 import Joyride, { STATUS, ACTIONS } from 'react-joyride'
 import TourSteps, { TOTAL_STEPS } from './TourSteps'
 import './SearchTour.scss'
+import TourContext from '../../contexts/TourContext'
 
-const SearchTour = ({ runTour, setRunTour }) => {
+const SearchTour = () => {
+  const { runTour, setRunTour } = useContext(TourContext)
+
   const [stepIndex, setStepIndex] = useState(0)
-
-  useEffect(() => {
-    const dontShowTour = localStorage.getItem('dontShowTour')
-    if (dontShowTour === 'true') {
-      setRunTour(false)
-    }
-  }, [setRunTour])
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -33,9 +32,8 @@ const SearchTour = ({ runTour, setRunTour }) => {
   useEffect(() => {
     if (runTour) {
       setStepIndex(0)
+      localStorage.setItem('dontShowTour', 'false')
     }
-
-    localStorage.setItem('dontShowTour', runTour ? 'false' : 'true')
   }, [runTour])
 
   useEffect(() => {
@@ -63,6 +61,7 @@ const SearchTour = ({ runTour, setRunTour }) => {
           || action === ACTIONS.CLOSE) {
       setRunTour(false)
       setStepIndex(0)
+      localStorage.setItem('dontShowTour', 'true')
     } else if (type === 'step:after') {
       setStepIndex(action === ACTIONS.NEXT ? index + 1 : index - 1)
     }
@@ -118,11 +117,6 @@ const SearchTour = ({ runTour, setRunTour }) => {
       }
     />
   )
-}
-
-SearchTour.propTypes = {
-  runTour: PropTypes.bool.isRequired,
-  setRunTour: PropTypes.func.isRequired
 }
 
 export default SearchTour

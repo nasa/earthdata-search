@@ -17,6 +17,7 @@ import ogImage from '../assets/images/earthdata-search-og-image.jpg'
 import configureStore from './store/configureStore'
 import history from './util/history'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
+import WithProviders from './providers/WithProviders/WithProviders'
 
 // Routes
 import Project from './routes/Project/Project'
@@ -73,37 +74,12 @@ const Subscriptions = lazy(() => import('./routes/Subscriptions/Subscriptions'))
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      runTour: false
-    }
 
     this.store = configureStore()
     const { edscHost } = getEnvironmentConfig()
     const { env } = getApplicationConfig()
     this.edscHost = edscHost
     this.env = env
-    this.startTour = this.startTour.bind(this)
-    this.setRunTour = this.setRunTour.bind(this)
-  }
-
-  componentDidMount() {
-    const { disableSiteTour } = getApplicationConfig()
-    const isSiteTourEnabled = disableSiteTour === 'false'
-    const hasUserDisabledTour = localStorage.getItem('dontShowTour') === 'true'
-    const isLocalhost = window.location.hostname === 'localhost'
-    const shouldShowTour = isSiteTourEnabled && !hasUserDisabledTour && !isLocalhost
-
-    this.setState({
-      runTour: shouldShowTour
-    })
-  }
-
-  setRunTour(value) {
-    this.setState({ runTour: value })
-  }
-
-  startTour() {
-    this.setState({ runTour: true })
   }
 
   // Portal paths have been removed, but this needs to stay in order to redirect users using
@@ -145,7 +121,7 @@ class App extends Component {
               <ErrorBannerContainer />
               <AuthTokenContainer>
                 <UrlQueryContainer>
-                  <AppHeader onStartTour={this.startTour} />
+                  <AppHeader />
                   <Switch>
                     <Route
                       path="/admin"
@@ -234,20 +210,15 @@ class App extends Component {
                     <Route
                       path={this.portalPaths('/search')}
                       render={
-                        () => {
-                          const { runTour } = this.state
-                          const { setRunTour } = this
-
-                          return (
-                            <>
-                              <SearchTour runTour={runTour} setRunTour={setRunTour} />
-                              <Search />
-                              <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
-                                <EdscMapContainer />
-                              </Suspense>
-                            </>
-                          )
-                        }
+                        () => (
+                          <>
+                            <SearchTour />
+                            <Search />
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
+                              <EdscMapContainer />
+                            </Suspense>
+                          </>
+                        )
                       }
                     />
                     <Route
@@ -291,4 +262,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default WithProviders(App)
