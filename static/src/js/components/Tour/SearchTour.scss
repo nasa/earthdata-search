@@ -1,107 +1,157 @@
 :root {
-    --color-white: #ffffff;
-    --color-black: #000000;
-    --color-heading: #0063A6;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-heading: #0063A6;
+  --color-gray: #9a989a;
+  --color-light-gray: #f5f5f5;
+  --font-mono: "DM Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-.button-tour-finish {
-    min-width: 90px;
+.tour {
+  &-heading {
+    font-family: var(--font-mono);
+    color: var(--color-heading);
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.9375rem;
+    text-transform: uppercase;
+    letter-spacing: 0.0625rem;
   }
 
-.step-counter-text {
-    font-family: "DM Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 12px;
-    margin-bottom: 15px;
-    color: #9a989a;
+  &-subheading {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.25rem;
+  }
+
+  &-content, &-webinar-description {
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
     text-align: left;
+  }
+
+  &-note {
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+    text-align: left;
+  }
+
+  &-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.9375rem;
+    position: absolute;
+    bottom: 1.25rem;
+    right: 1.25rem;
+
+    &.intro {
+      width: 19rem;
+    }
+
+    &:not(.intro) {
+      width: 9rem;
+    }
+  }
+
+  &-info-box {
+    background-color: #f8f9fa;
+    padding: 1rem 1rem 0.0625rem;
+    margin-bottom: 0.9375rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    text-align: left;
+
+    a {
+      color: var(--color-black);
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  }
+
+  &-webinar {
+    &-box {
+      background-color: var(--color-light-gray);
+      padding: 0.625rem;
+      margin-bottom: 1.25rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+      color: var(--color-black);
+      display: flex;
+      align-items: center;
+    }
+
+    &-text {
+      flex: 0 0 13.75rem;
+      margin-right: 0.9375rem;
+    }
+
+    &-thumbnail {
+      width: 100%;
+      height: auto;
+    }
+
+    &-link {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-top: 0.625rem;
+      margin-left: 0.625rem;
+    }
+  }
+
+  &-discover-more {
+    padding: 0.625rem;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  &-more-info {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.3125rem;
+  }
+
+  &-earthdata-link {
+    color: #5a585a;
+    text-decoration: underline;
+    margin-bottom: 0.3125rem;
+    display: inline;
+  }
+
+  &-tooltip {
+    width: 25rem;
+    padding: 1.25rem;
+    background-color: var(--color-white);
+    border-radius: 0.625rem;
+    font-size: 1rem;
+    text-align: center;
+    position: relative;
+    min-height: 12.5rem;
+  }
 }
 
-.tour-heading {
-    font-family: "DM Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    color: var(--color-heading) !important;
+.step-counter-text {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  margin-bottom: 0.9375rem;
+  color: var(--color-gray);
+  text-align: left;
 }
 
 .text-icon {
-    display: inline-block;
-    vertical-align: center;
-    margin-top: -2px;
-    height: 0.85rem;
-    width: 0.85rem;
-}
-
-.tour-heading {
-    font-size: 14px;
-    margin-bottom: 10px;
-    color: var(--color-black);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  display: inline-block;
+  vertical-align: center;
+  margin-top: -0.125rem;
+  height: 0.85rem;
+  width: 0.85rem;
 }
 
 kbd {
-    display: inline-block;
-    vertical-align: center;
-    font-size: 0.75em;
-    padding: 2px 3px;
+  display: inline-block;
+  vertical-align: center;
+  font-size: 0.75em;
+  padding: 0.125rem 0.1875rem;
 }
 
-.tour-subheading {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.tour-content {
-    font-size: 16px;
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.tour-note {
-    font-size: 14px;
-    margin-bottom: 20px;
-    text-align: left;
-}
-.tour-intro-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 19rem;
-}
-.tour-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 9rem;
-}
-
-.tour-info-box {
-    background-color: #f8f9fa;
-    padding: 1rem 1rem 0.1rem 1rem;
-    margin-bottom: 15px;
-    border-radius: 4px;
-    font-size: 14px;
-    text-align: left;
-}
-
-.tour-info-box a {
-    color: var(--color-black);
-    text-decoration: underline;
-    font-weight: bold;
-}
-
-.tour-tooltip {
-    width: 600px; 
-    padding: 20px;
-    background-color: var(--color-white);
-    border-radius: 10px;
-    font-size: 16px;
-    text-align: center;
-    position: relative;
-    min-height: 200px;
+.button-tour-finish {
+  min-width: 5.625rem;
 }

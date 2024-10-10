@@ -5,7 +5,6 @@ import React, {
 } from 'react'
 import Joyride, { STATUS, ACTIONS } from 'react-joyride'
 import TourSteps, { TOTAL_STEPS } from './TourSteps'
-import './SearchTour.scss'
 import TourContext from '../../contexts/TourContext'
 
 const SearchTour = () => {
@@ -100,18 +99,6 @@ const SearchTour = () => {
           buttonNext: {
           // Hide the next button since we use custom buttons
             display: 'none'
-          }
-        }
-      }
-      floaterProps={
-        {
-          disableAnimation: true,
-          styles: {
-            button: {
-              borderRadius: '0.25rem',
-              padding: '0.5rem 1rem',
-              fontSize: '0.875rem'
-            }
           }
         }
       }

@@ -79,7 +79,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           {' '}
           at the top of the page.
         </p>
-        <div className="tour-intro-buttons">
+        <div className="tour-buttons intro">
           <Button
             className="button-tour-start"
             type="button"
@@ -319,23 +319,11 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
     content: (
       <div>
         <StepCounter currentStep={stepIndex} />
-        <p style={
-          {
-            fontSize: '1rem',
-            textAlign: 'left'
-          }
-        }
-        >
+        <p>
           Pan the map by clicking and dragging, and zoom by using the scroll wheel or
           map tools.
         </p>
-        <p style={
-          {
-            fontSize: '1rem',
-            textAlign: 'left'
-          }
-        }
-        >
+        <p>
           When a collection is selected, the granules will be displayed on the map,
           along with any available GIBS imagery. When a granule is focused on the
           map, any additional thumbnails will be displayed.
@@ -407,95 +395,34 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
   {
     target: '.search',
     content: (
-      <div style={{ textAlign: 'left' }}>
-        <h2
-          className="tour-heading"
-          style={
-            {
-              fontSize: '1.375rem',
-              fontWeight: 'bold',
-              marginBottom: '0.9375rem'
-            }
-          }
-        >
+      <div>
+        <h2 className="tour-heading">
           Want to learn more?
         </h2>
-        <p style={
-          {
-            marginBottom: '1.25rem',
-            fontSize: '1rem'
-          }
-        }
-        >
+        <p className="tour-webinar-description">
           Check out our latest webinar where you will see a hands-on example of
           how to search for data in Earthdata Search.
         </p>
-        <div
-          style={
-            {
-              backgroundColor: '#f5f5f5',
-              padding: '0.625rem',
-              marginBottom: '1.25rem',
-              borderRadius: '0.375rem',
-              textDecoration: 'none',
-              color: '#000',
-              display: 'flex',
-              alignItems: 'center'
-            }
-          }
-        >
-          <div style={
-            {
-              flex: '0 0 13.75rem',
-              marginRight: '0.9375rem'
-            }
-          }
-          >
+        <div className="tour-webinar-box">
+          <div className="tour-webinar-text">
             <img
               src={TourThumbnail}
               alt="Webinar Thumbnail"
-              style={
-                {
-                  width: '100%',
-                  height: 'auto'
-                }
-              }
+              className="tour-webinar-thumbnail"
             />
           </div>
           <div>
-            <div style={
-              {
-                padding: '0.625rem',
-                fontSize: '1rem',
-                fontWeight: '500'
-              }
-            }
-            >
+            <div className="tour-discover-more">
               Discover and Access Earth Science Data Using Earthdata Search
             </div>
-            <p style={
-              {
-                fontSize: '1rem',
-                fontWeight: 'bold',
-                marginTop: '0.625rem',
-                marginLeft: '0.625rem'
-              }
-            }
-            >
+            <p className="tour-webinar-link">
               <ExternalLink href="https://www.youtube.com/watch?v=QtfMlkd7kII">
                 Watch the webinar
               </ExternalLink>
             </p>
           </div>
         </div>
-        <p style={
-          {
-            fontSize: '1rem',
-            fontWeight: 'bold',
-            marginBottom: '0.3125rem'
-          }
-        }
-        >
+        <p className="tour-more-info">
           Find more information here:
         </p>
         <p>
@@ -503,14 +430,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
             href="https://www.earthdata.nasa.gov/learn/earthdata-search"
             target="_blank"
             rel="noopener noreferrer"
-            style={
-              {
-                color: '#5a585a',
-                textDecoration: 'underline',
-                marginBottom: '0.3125rem',
-                display: 'inline'
-              }
-            }
+            className="tour-earthdata-link"
           >
             Earthdata Search wiki
           </a>
@@ -520,13 +440,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
             href="https://www.earthdata.nasa.gov/faq/earthdata-search-faq"
             target="_blank"
             rel="noopener noreferrer"
-            style={
-              {
-                color: '#5a585a',
-                textDecoration: 'underline',
-                display: 'inline'
-              }
-            }
+            className="tour-earthdata-link"
           >
             Earthdata Search FAQs
           </a>
