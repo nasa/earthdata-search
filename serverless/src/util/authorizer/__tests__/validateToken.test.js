@@ -64,12 +64,12 @@ describe('validateToken', () => {
 
       dbTracker.on('query', (query, step) => {
         if (step === 1) {
-          query.response([{
+          query.response({
             id: 1,
             access_token: 'accessToken',
             refresh_token: 'refreshToken',
             expires_at: '2020-10-010 16:54:35.710382'
-          }])
+          })
         } else {
           query.response([])
         }
@@ -104,12 +104,12 @@ describe('validateToken', () => {
 
       dbTracker.on('query', (query, step) => {
         if (step === 1) {
-          query.response([{
+          query.response({
             id: 1,
             access_token: 'accessToken',
             refresh_token: 'refreshToken',
             expires_at: '2020-10-010 16:54:35.710382'
-          }])
+          })
         } else {
           query.response([])
         }
@@ -153,12 +153,12 @@ describe('validateToken', () => {
 
       dbTracker.on('query', (query, step) => {
         if (step === 1) {
-          query.response([{
+          query.response({
             id: 1,
             access_token: 'accessToken',
             refresh_token: 'refreshToken',
             expires_at: '2020-10-010 16:54:35.710382'
-          }])
+          })
         } else {
           query.response([])
         }
@@ -170,7 +170,7 @@ describe('validateToken', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].method).toEqual('select')
+      expect(queries[0].method).toEqual('first')
       expect(queries[1].method).toEqual('del')
       expect(queries[2].method).toEqual('insert')
       expect(queries[2].bindings).toEqual([
@@ -182,6 +182,44 @@ describe('validateToken', () => {
       ])
 
       expect(response).toEqual('testuser')
+    })
+  })
+
+  describe('when the provided token has no user_token', () => {
+    test('returns false', async () => {
+      jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({ secret: 'JWT_SIGNING_SECRET_KEY' }))
+
+      AuthorizationCode.mockImplementationOnce(() => ({
+        createToken: jest.fn().mockImplementation(() => ({
+          token: {
+            access_token: 'accessToken',
+            token_type: 'Bearer',
+            expires_in: 3600,
+            refresh_token: 'refreshToken',
+            endpoint: '/api/users/edsc',
+            expires_at: '2019-09-10T20:00:23.313Z'
+          },
+          expired: jest.fn(() => false)
+        }))
+      }))
+
+      const consoleMock = jest.spyOn(console, 'log')
+
+      dbTracker.on('query', (query, step) => {
+        if (step === 1) {
+          query.response(undefined)
+        } else {
+          query.response([])
+        }
+      })
+
+      const { jwtToken } = getEarthdataConfig.getEnvironmentConfig('test')
+
+      const response = await validateToken(jwtToken, 'test')
+
+      expect(response).toEqual(false)
+
+      expect(consoleMock).toBeCalledTimes(0)
     })
   })
 })
