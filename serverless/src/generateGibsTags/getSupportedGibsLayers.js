@@ -36,7 +36,9 @@ export const getSupportedGibsLayers = async () => {
     const { conceptIds, projections, type } = currentLayer
 
     // Ignore non Web Map Tile Service layers
-    if (type !== 'wmts') {
+    // `granule` type layers are WMTS layers with special properties for Worldview. We need to
+    // process them the same way we do WMTS layers
+    if (type !== 'wmts' && type !== 'granule') {
       return
     }
 
