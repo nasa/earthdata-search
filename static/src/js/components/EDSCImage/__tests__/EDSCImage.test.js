@@ -113,7 +113,7 @@ describe('EDSCImage component', () => {
             src="http://test.com/test.jpg"
             srcSet="http://test.com/test-2x.jpg 2x, http://test.com/test.jpg 1x"
             width={500}
-            isBase64Image
+            resizeImage
           />
         )
 
@@ -142,7 +142,7 @@ describe('EDSCImage component', () => {
             src="http://test.com/test.jpg"
             srcSet="http://test.com/test-2x.jpg 2x, http://test.com/test.jpg 1x"
             width={500}
-            isBase64Image
+            resizeImage
           />
         )
 

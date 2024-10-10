@@ -41,6 +41,7 @@ export const GranuleResultsListItem = memo(({
     onFocusedGranuleChange,
     onMetricsDataAccess,
     onRemoveGranuleFromProjectCollection,
+    readableGranuleName,
     setRowHeight,
     windowWidth
   } = data
@@ -59,7 +60,7 @@ export const GranuleResultsListItem = memo(({
     setRowHeight(rowIndex, columnIndex, currentHeight)
   }, [windowWidth, element.current])
 
-  // Tweak the position of the elements to simultate the correct margins
+  // Tweak the position of the elements to simulate the correct margins
   const customStyle = {
     ...style,
     left: style.left + remInPixels,
@@ -109,6 +110,7 @@ export const GranuleResultsListItem = memo(({
         onFocusedGranuleChange={onFocusedGranuleChange}
         onMetricsDataAccess={onMetricsDataAccess}
         onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
+        readableGranuleName={readableGranuleName}
         ref={element}
       />
     </li>
@@ -133,6 +135,7 @@ GranuleResultsListItem.propTypes = {
     onFocusedGranuleChange: PropTypes.func,
     onMetricsDataAccess: PropTypes.func,
     onRemoveGranuleFromProjectCollection: PropTypes.func,
+    readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,
     setRowHeight: PropTypes.func,
     windowWidth: PropTypes.number
   }).isRequired,

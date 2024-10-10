@@ -73,6 +73,7 @@ innerElementType.propTypes = {
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
  * @param { Function } props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
+ * @param { Array } props.readableGranuleName - The readableGranuleName filter value.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the visible middle index.
  * @param {Number} props.visibleMiddleIndex - The current visible middle index.
  * @param {Number} props.width - The width of the container provided by AutoSizer.
@@ -95,6 +96,7 @@ export const GranuleResultsListBody = ({
   onFocusedGranuleChange,
   onMetricsDataAccess,
   onRemoveGranuleFromProjectCollection,
+  readableGranuleName,
   setVisibleMiddleIndex,
   visibleMiddleIndex,
   width
@@ -214,6 +216,7 @@ export const GranuleResultsListBody = ({
                 onFocusedGranuleChange,
                 onMetricsDataAccess,
                 onRemoveGranuleFromProjectCollection,
+                readableGranuleName,
                 setRowHeight,
                 windowHeight: height,
                 windowWidth: width
@@ -271,6 +274,7 @@ GranuleResultsListBody.propTypes = {
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
+  readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number,
   width: PropTypes.number.isRequired

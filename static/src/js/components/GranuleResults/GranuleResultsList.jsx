@@ -27,6 +27,7 @@ import './GranuleResultsList.scss'
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
  * @param {Function} props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
+ * @param {Array} props.readableGranuleName - The readableGranuleName filter value
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the visible middle index.
  * @param {Number} props.visibleMiddleIndex - The current visible middle index.
  */
@@ -47,6 +48,7 @@ export const GranuleResultsList = ({
   onFocusedGranuleChange,
   onMetricsDataAccess,
   onRemoveGranuleFromProjectCollection,
+  readableGranuleName,
   setVisibleMiddleIndex,
   visibleMiddleIndex
 }) => (
@@ -79,6 +81,7 @@ export const GranuleResultsList = ({
             onFocusedGranuleChange={onFocusedGranuleChange}
             onMetricsDataAccess={onMetricsDataAccess}
             onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
+            readableGranuleName={readableGranuleName}
             setVisibleMiddleIndex={setVisibleMiddleIndex}
             visibleMiddleIndex={visibleMiddleIndex}
             width={width}
@@ -111,6 +114,7 @@ GranuleResultsList.propTypes = {
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
+  readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number
 }
