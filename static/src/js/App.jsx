@@ -17,6 +17,7 @@ import ogImage from '../assets/images/earthdata-search-og-image.jpg'
 import configureStore from './store/configureStore'
 import history from './util/history'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
+import WithProviders from './providers/WithProviders/WithProviders'
 
 // Routes
 import Project from './routes/Project/Project'
@@ -40,6 +41,7 @@ import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModal
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
 import NotFound from './components/Errors/NotFound'
 import PortalContainer from './containers/PortalContainer/PortalContainer'
+import SearchTour from './components/Tour/SearchTour'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 import Spinner from './components/Spinner/Spinner'
@@ -72,7 +74,7 @@ const Subscriptions = lazy(() => import('./routes/Subscriptions/Subscriptions'))
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+
     this.store = configureStore()
     const { edscHost } = getEnvironmentConfig()
     const { env } = getApplicationConfig()
@@ -210,6 +212,7 @@ class App extends Component {
                       render={
                         () => (
                           <>
+                            <SearchTour />
                             <Search />
                             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
                               <EdscMapContainer />
@@ -259,4 +262,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default WithProviders(App)

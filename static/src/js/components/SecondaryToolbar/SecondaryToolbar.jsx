@@ -9,7 +9,6 @@ import {
 } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { parse } from 'qs'
-
 import {
   FaArrowCircleLeft,
   FaFolder,
@@ -17,9 +16,10 @@ import {
   FaSave,
   FaUser
 } from 'react-icons/fa'
+import TourContext from '../../contexts/TourContext'
+import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
-import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { isDownloadPathWithId } from '../../util/isDownloadPathWithId'
 import { isPath } from '../../util/isPath'
 import { locationPropType } from '../../util/propTypes/location'
@@ -34,6 +34,9 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import './SecondaryToolbar.scss'
 
 class SecondaryToolbar extends Component {
+  // eslint-disable-next-line react/static-property-placement
+  static contextType = TourContext
+
   constructor(props) {
     super(props)
 
@@ -120,6 +123,8 @@ class SecondaryToolbar extends Component {
       secondaryToolbarEnabled,
       ursProfile
     } = this.props
+
+    const { disableSiteTour } = getApplicationConfig()
 
     const { first_name: firstName = '' } = ursProfile
 
@@ -321,6 +326,24 @@ class SecondaryToolbar extends Component {
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
+        {
+          location.pathname === '/search' && (disableSiteTour !== 'true') && (
+            <TourContext.Consumer>
+              {
+                ({ setRunTour }) => (
+                  <Dropdown.Toggle
+                    className="secondary-toolbar__start-tour-button"
+                    as={Button}
+                    onClick={setRunTour}
+                    label="Want to learn more? Click here to take a tour of our site."
+                  >
+                    Start Tour
+                  </Dropdown.Toggle>
+                )
+              }
+            </TourContext.Consumer>
+          )
+        }
         <Dropdown.Toggle
           className="secondary-toolbar__project-name-dropdown-toggle"
           as={Button}
