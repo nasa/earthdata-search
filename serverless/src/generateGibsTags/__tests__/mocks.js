@@ -132,6 +132,79 @@ export const gibsResponse = {
       daynight: [
         'day'
       ]
+    },
+    TEMPO_L2_Ozone_Cloud_Fraction_Granule: {
+      title: 'Ozone (L2, Cloud Fraction, Subdaily) (BETA)',
+      subtitle: 'TEMPO',
+      ongoing: true,
+      daynight: [
+        'unspecified'
+      ],
+      conceptIds: [
+        {
+          type: 'STD',
+          value: 'C1000000004-EDSC',
+          shortName: 'TEMPO_O3TOT_L2',
+          title: 'TEMPO ozone total column V03 (BETA)',
+          version: 'V03',
+          dataCenter: 'LARC_CLOUD'
+        }
+      ],
+      layerPeriod: 'Daily',
+      id: 'TEMPO_L2_Ozone_Cloud_Fraction_Granule',
+      description: 'tempo/TEMPO_L2_Ozone_Cloud_Fraction_Granule',
+      tags: '',
+      group: 'overlays',
+      layergroup: 'Ozone',
+      type: 'granule',
+      period: 'subdaily',
+      count: 1,
+      cmrAvailability: true,
+      startDate: '2024-05-13T10:41:03Z',
+      disableSnapshot: true,
+      format: 'image/png',
+      dateRanges: [
+        {
+          startDate: '2024-05-13T10:41:03Z',
+          endDate: '2024-05-13T10:41:03Z',
+          dateInterval: '6'
+        },
+        {
+          startDate: '2024-05-13T10:47:43Z',
+          endDate: '2024-05-13T10:47:43Z',
+          dateInterval: '6'
+        },
+        {
+          startDate: '2024-05-13T10:54:20Z',
+          endDate: '2024-05-13T10:54:20Z',
+          dateInterval: '6'
+        }
+      ],
+      projections: {
+        geographic: {
+          source: 'GIBS:geographic',
+          matrixSet: '1km'
+        }
+      },
+      palette: {
+        id: 'TEMPO_Ozone_Cloud_Fraction'
+      }
+    },
+    breakPointLayer: {
+      id: 'VIIRS_NOAA20_Thermal_Anomalies_375m_All',
+      type: 'wms',
+      format: 'image/png',
+      breakPointType: 'max',
+      projections: {
+        geographic: {
+          resolutionBreakPoint: 0.017578125,
+          source: 'GIBS:wms'
+        },
+        arctic: {
+          source: 'GIBS:wms:arctic',
+          resolutionBreakPoint: 2048
+        }
+      }
     }
   }
 }
