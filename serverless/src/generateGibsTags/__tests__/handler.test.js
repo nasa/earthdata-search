@@ -55,7 +55,7 @@ describe('generateGibsTags', () => {
 
     await generateGibsTags({}, {})
 
-    expect(mocksqsSendMessage.mock.calls.length).toEqual(4)
+    expect(mocksqsSendMessage.mock.calls.length).toEqual(5)
 
     expect(mocksqsSendMessage.mock.calls[0]).toEqual([{
       QueueUrl: 'http://example.com/tagQueue',
@@ -158,6 +158,36 @@ describe('generateGibsTags', () => {
       QueueUrl: 'http://example.com/tagQueue',
       MessageBody: JSON.stringify({
         tagName: 'edsc.extra.serverless.gibs',
+        action: 'ADD',
+        requireGranules: false,
+        tagData: {
+          'concept-id': 'C1000000004-EDSC',
+          data: [{
+            match: {
+              time_start: '>=2024-05-13T10:41:03Z',
+              day_night_flag: 'unspecified'
+            },
+            product: 'TEMPO_L2_Ozone_Cloud_Fraction_Granule',
+            group: 'overlays',
+            title: 'Ozone (L2, Cloud Fraction, Subdaily) (BETA)',
+            source: 'TEMPO',
+            format: 'png',
+            updated_at: '1988-09-03T10:00:00.000Z',
+            antarctic: false,
+            antarctic_resolution: null,
+            arctic: false,
+            arctic_resolution: null,
+            geographic: true,
+            geographic_resolution: '1km'
+          }]
+        }
+      })
+    }])
+
+    expect(mocksqsSendMessage.mock.calls[4]).toEqual([{
+      QueueUrl: 'http://example.com/tagQueue',
+      MessageBody: JSON.stringify({
+        tagName: 'edsc.extra.serverless.gibs',
         action: 'REMOVE',
         searchCriteria: {
           condition: {
@@ -173,6 +203,8 @@ describe('generateGibsTags', () => {
                   concept_id: 'C1000000002-EDSC'
                 }, {
                   concept_id: 'C1000000003-EDSC'
+                }, {
+                  concept_id: 'C1000000004-EDSC'
                 }]
               }
             }]
