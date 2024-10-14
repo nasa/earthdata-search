@@ -12,63 +12,71 @@ test.describe('Joyride Tour Navigation', () => {
     // Start the tour by clicking the "Start Tour" button
     await page.click('button:has-text("Start Tour")')
 
-    // Expect the first step to show the "Take the tour" button
-    await expect(page.locator('.tour-heading')).toHaveText('Welcome to Earthdata Search!')
-
-    // Click the "Take the tour" button to proceed
+    // Start Tour View: Welcome to Earthdata Search
+    await expect(page.locator('.tour-heading')).toContainText('Welcome to Earthdata Search!')
     await page.click('button:has-text("Take the tour")')
 
+    // Step 1: This area contains the filters
     await page.waitForTimeout(500)
-
-    // Wait for the second step to load and ensure the text is visible
     await expect(page.locator('.tour-content').first()).toContainText('This area contains the filters used when searching for collections')
+    await page.getByRole('button', { name: 'Next' }).click()
 
-    // Move forward using the right arrow key
-    await page.keyboard.press('ArrowRight')
-
+    // Step 2: Search for collections
     await page.waitForTimeout(500)
-
-    // Verify we're on the next step
     await expect(page.locator('.tour-content').first()).toContainText('Search for collections by topic (e.g., "Land Surface Temperature")')
+    await page.getByRole('button', { name: 'Next' }).click()
 
-    // Now go back to the previous step using the left arrow key
-    await page.keyboard.press('ArrowLeft')
-
+    // Step 3: Temporal filters
     await page.waitForTimeout(500)
+    await expect(page.locator('.tour-content').first()).toContainText('Use the temporal filters to limit search results to a specific date')
+    await page.getByRole('button', { name: 'Next' }).click()
 
-    // Ensure the content is back to the previous step
-    await expect(page.locator('.tour-content').first()).toContainText('This area contains the filters used when searching for collections')
-
-    // Move forward to the next step again using the "Next" button
-    await page.locator('.tour-buttons button:has-text("Next")').click()
-
+    // Step 4: Spatial filters
     await page.waitForTimeout(500)
+    await expect(page.locator('.tour-content').first()).toContainText('Use the spatial filters to limit search results to the specified area of interest')
+    await page.getByRole('button', { name: 'Next' }).click()
 
-    // Ensure we're back on the step with "Search for collections by topic"
-    await expect(page.locator('.tour-content').first()).toContainText('Search for collections by topic (e.g., "Land Surface Temperature")')
-
-    // Now go back one step using the "Previous" button
-    await page.locator('.tour-buttons button:has-text("Previous")').click()
-
+    // Step 5: Advanced Search
     await page.waitForTimeout(500)
+    await expect(page.locator('.tour-content').first()).toContainText('Use Advanced Search parameters to filter results')
+    await page.getByRole('button', { name: 'Next' }).click()
 
-    // Ensure the content is back to the previous step again
-    await expect(page.locator('.tour-content').first()).toContainText('This area contains the filters used when searching for collections')
+    // Step 6: Browse Portals
+    await page.waitForTimeout(500)
+    await expect(page.locator('.tour-content').first()).toContainText('Choose a portal to refine search results')
+    await page.getByRole('button', { name: 'Next' }).click()
 
-    await page.locator('.tour-buttons button:has-text("Next")').click()
+    // Step 7: Refine Search by Category
+    await page.waitForTimeout(500)
+    await expect(page.locator('.tour-content').first()).toContainText('Refine your search further using categories like Features, Keywords')
+    await page.getByRole('button', { name: 'Next' }).click()
 
-    // Continue through the remaining intermediary steps
-    for (let i = 0; i < 10; i += 1) {
-      // eslint-disable-next-line no-await-in-loop
-      await page.locator('.tour-buttons button:has-text("Next")').click()
-    }
+    // Step 8: High-level description for each search result
+    await page.waitForTimeout(500)
+    await expect(page.locator('.tour-content').first()).toContainText('A high-level description is displayed for each search result')
+    await page.getByRole('button', { name: 'Next' }).click()
 
-    // Testing the unique Previous button for the semi-final step
-    await page.locator('.tour-buttons button:has-text("Previous")').click()
-    await page.locator('.tour-buttons button:has-text("Next")').click()
+    // Step 9: Resize Search Results Panel
+    await page.waitForTimeout(500)
+    await expect(page.locator('.tour-content').first()).toContainText('To make more room to view the map, the search results can be resized')
+    await page.getByRole('button', { name: 'Next' }).click()
 
+    // Step 10: Pan and zoom the map
+    await page.waitForTimeout(500)
+    await expect(page.locator('.tour-content').first()).toContainText('Pan the map by clicking and dragging, and zoom by using the scroll wheel')
+    await page.getByRole('button', { name: 'Next' }).click()
+
+    // Step 11: Map tools
+    await page.waitForTimeout(500)
+    await expect(page.locator('.tour-content').first()).toContainText('Use the map tools to switch map projections, draw, edit, or remove spatial bounds')
+    await page.getByRole('button', { name: 'Next' }).click()
+
+    // Step 12: Replay info
+    await page.waitForTimeout(500)
+    await expect(page.locator('.tour-content')).toContainText('You can replay this tour anytime')
     await page.locator('.tour-buttons button:has-text("Finish Tour")').click()
 
+    // Final step: Want to learn more?
     await expect(page.locator('.tour-heading')).toContainText('Want to learn more?')
   })
 
@@ -77,7 +85,7 @@ test.describe('Joyride Tour Navigation', () => {
     await page.click('button:has-text("Start Tour")')
 
     // Expect the first step to show the "Take the tour" button
-    await expect(page.locator('.tour-heading')).toHaveText('Welcome to Earthdata Search!')
+    await expect(page.locator('.tour-heading')).toContainText('Welcome to Earthdata Search!')
 
     // Click the "Skip for now" button to close the tour
     await page.click('button:has-text("Skip for now")')

@@ -319,11 +319,11 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
     content: (
       <div>
         <StepCounter currentStep={stepIndex} />
-        <p>
+        <p className="tour-content">
           Pan the map by clicking and dragging, and zoom by using the scroll wheel or
           map tools.
         </p>
-        <p>
+        <p className="tour-content">
           When a collection is selected, the granules will be displayed on the map,
           along with any available GIBS imagery. When a granule is focused on the
           map, any additional thumbnails will be displayed.
