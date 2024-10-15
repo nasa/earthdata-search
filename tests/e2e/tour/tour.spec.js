@@ -34,7 +34,7 @@ test.describe('Joyride Tour Navigation', () => {
 
     // Testing "Previous" button
     await page.getByRole('button', { name: 'Previous' }).click()
-    await expect(page.locator('.tour-content').first()).toContainText('This area contains the filters used when searching for collections")')
+    await expect(page.locator('.tour-content').first()).toContainText('This area contains the filters used when searching for collections')
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 2: Search for collections
@@ -89,7 +89,7 @@ test.describe('Joyride Tour Navigation', () => {
 
     // Testing "Previous" button on Step 12
     await page.getByRole('button', { name: 'Previous' }).click()
-    await expect(page.locator('.tour-content').first()).toContainText('Use the map tools to switch map projections, draw, edit, or remove spatial bounds")')
+    await expect(page.locator('.tour-content').first()).toContainText('Use the map tools to switch map projections, draw, edit, or remove spatial bounds')
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 12: Replay info
