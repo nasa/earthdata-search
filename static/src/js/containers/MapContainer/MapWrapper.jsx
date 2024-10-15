@@ -6,7 +6,6 @@ import {
   LayersControl,
   ScaleControl
 } from 'react-leaflet'
-
 import { isEmpty } from 'lodash-es'
 
 import crsProjections from '../../util/map/crs'

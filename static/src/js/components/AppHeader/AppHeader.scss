@@ -3,11 +3,11 @@
   display: flex;
   justify-content: space-between;
   height: 2.4rem;
-  background: $color__carbon--90;
+  // background: $color__carbon--90;
   z-index: 1;
   border-top: 1px solid $color__carbon--90;
   border-bottom: 1px solid $color__carbon--80;
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
+  // box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
   z-index: 4;
 
   &__actions {

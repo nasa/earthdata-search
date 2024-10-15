@@ -13,7 +13,6 @@ import { parse } from 'qs'
 import {
   FaArrowCircleLeft,
   FaFolder,
-  FaLock,
   FaSave,
   FaUser
 } from 'react-icons/fa'
@@ -166,7 +165,7 @@ class SecondaryToolbar extends Component {
       <PortalLinkContainer
         type="button"
         className="secondary-toolbar__back"
-        bootstrapVariant="naked"
+        bootstrapVariant="light"
         icon={FaArrowCircleLeft}
         label="Back to Project"
         to={
@@ -222,12 +221,12 @@ class SecondaryToolbar extends Component {
     const loginLink = (
       <Button
         className="secondary-toolbar__login"
-        bootstrapVariant="naked"
+        bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
-        icon={FaLock}
+        icon={FaUser}
         label="Login"
       >
-        Earthdata Login
+        Login
       </Button>
     )
 
@@ -236,7 +235,7 @@ class SecondaryToolbar extends Component {
         <Dropdown.Toggle
           label="User menu"
           className="secondary-toolbar__user-dropdown-toggle"
-          variant="light"
+          bootstrapVariant="light"
           as={Button}
         >
           {
@@ -327,8 +326,11 @@ class SecondaryToolbar extends Component {
           onClick={this.onToggleProjectDropdown}
           icon={FaSave}
           iconSize="0.825rem"
+          bootstrapVariant="light"
           label="Create a project with your current search"
-        />
+        >
+          Save Project
+        </Dropdown.Toggle>
         <Dropdown.Menu>
           <Form inline className="flex-nowrap secondary-toolbar__project-name-form">
             <Form.Row>

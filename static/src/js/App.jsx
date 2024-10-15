@@ -23,9 +23,9 @@ import Project from './routes/Project/Project'
 import Search from './routes/Search/Search'
 
 // Components and Containers
+import SecondaryToolbarContainer from './containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 import AboutCSDAModalContainer from './containers/AboutCSDAModalContainer/AboutCSDAModalContainer'
 import AboutCwicModalContainer from './containers/AboutCwicModalContainer/AboutCwicModalContainer'
-import AppHeader from './components/AppHeader/AppHeader'
 import AuthCallbackContainer from './containers/AuthCallbackContainer/AuthCallbackContainer'
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
 import AuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
@@ -119,7 +119,7 @@ class App extends Component {
               <ErrorBannerContainer />
               <AuthTokenContainer>
                 <UrlQueryContainer>
-                  <AppHeader />
+                  <SecondaryToolbarContainer />
                   <Switch>
                     <Route
                       path="/admin"
