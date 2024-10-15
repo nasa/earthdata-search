@@ -114,4 +114,27 @@ test.describe('Joyride Tour Navigation', () => {
     // Ensure the tour is closed by checking that the tour container is no longer visible
     await expect(page.locator('.tour-container')).toBeHidden()
   })
+
+  test('should automatically start the Joyride tour', async ({ page, context }) => {
+    // Login first
+    await login(context)
+
+    // Override the TourContextProvider to force show the tour
+    await context.addInitScript(() => {
+      window.overrideLocalhost = true
+    })
+
+    // Navigate to the search page
+    await page.goto('/search')
+
+    // Wait for the tour to appear automatically
+    await page.waitForSelector('.tour-heading', {
+      state: 'visible',
+      timeout: 5000
+    })
+
+    // Verify that the tour has started automatically
+    await expect(page.locator('.tour-heading')).toContainText('Welcome to Earthdata Search!')
+    await expect(page.locator('.tour-content').first()).toContainText('Get acquainted with Earthdata Search by taking our guided tour')
+  })
 })
