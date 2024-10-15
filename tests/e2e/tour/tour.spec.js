@@ -34,7 +34,7 @@ test.describe('Joyride Tour Navigation', () => {
 
     // Testing "Previous" button
     await page.getByRole('button', { name: 'Previous' }).click()
-    await expect(page.locator('.tour-content').first()).toContainText('Search for collections by topic (e.g., "Land Surface Temperature")')
+    await expect(page.locator('.tour-content').first()).toContainText('This area contains the filters used when searching for collections")')
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 2: Search for collections
