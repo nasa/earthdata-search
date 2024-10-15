@@ -19,6 +19,18 @@ test.describe('Joyride Tour Navigation', () => {
     // Step 1: This area contains the filters
     await page.waitForTimeout(500)
     await expect(page.locator('.tour-content').first()).toContainText('This area contains the filters used when searching for collections')
+
+    // Testing arrow key navigation
+    await page.keyboard.press('ArrowRight')
+
+    await page.waitForTimeout(500)
+
+    // Verify we're on the next step
+    await expect(page.locator('.tour-content').first()).toContainText('Search for collections by topic (e.g., "Land Surface Temperature")')
+
+    // Now go back to the previous step using the left arrow key
+    await page.keyboard.press('ArrowLeft')
+
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 2: Search for collections
