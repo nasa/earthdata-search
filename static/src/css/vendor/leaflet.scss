@@ -70,6 +70,7 @@
     /* Positions the layers list and scale elements outside of the default container
     to allow the layers list to not affect position of the rest of the controls while
     its in its expanded state */
+    // TODO update this
     .leaflet-control-layers {
       bottom: 0;
       right: 0px;
@@ -96,7 +97,7 @@
       border-radius: 2px;
 
       label {
-        margin-bottom: 5px;
+        margin-bottom: 15px;
 
         &:last-child {
           margin-bottom: 0;

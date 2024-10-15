@@ -8,6 +8,8 @@ import { isEmpty } from 'lodash-es'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
+import SecondaryToolbarContainer from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
+
 import Spinner from '../Spinner/Spinner'
 
 import './ContactInfo.scss'
@@ -78,6 +80,7 @@ class ContactInfo extends Component {
 
     return (
       <fieldset className="contact-info-form">
+        <SecondaryToolbarContainer />
         <legend>
           <h2 className="route-wrapper__page-heading">Contact Information</h2>
         </legend>
