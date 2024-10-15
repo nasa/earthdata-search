@@ -30,7 +30,11 @@ test.describe('Joyride Tour Navigation', () => {
 
     // Now go back to the previous step using the left arrow key
     await page.keyboard.press('ArrowLeft')
+    await page.getByRole('button', { name: 'Next' }).click()
 
+    // Testing "Previous" button
+    await page.getByRole('button', { name: 'Previous' }).click()
+    await expect(page.locator('.tour-content').first()).toContainText('Search for collections by topic (e.g., "Land Surface Temperature")')
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 2: Search for collections
@@ -81,6 +85,11 @@ test.describe('Joyride Tour Navigation', () => {
     // Step 11: Map tools
     await page.waitForTimeout(500)
     await expect(page.locator('.tour-content').first()).toContainText('Use the map tools to switch map projections, draw, edit, or remove spatial bounds')
+    await page.getByRole('button', { name: 'Next' }).click()
+
+    // Testing "Previous" button on Step 12
+    await page.getByRole('button', { name: 'Previous' }).click()
+    await expect(page.locator('.tour-content').first()).toContainText('Use the map tools to switch map projections, draw, edit, or remove spatial bounds")')
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Step 12: Replay info
