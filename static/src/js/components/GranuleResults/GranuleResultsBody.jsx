@@ -166,7 +166,7 @@ const GranuleResultsBody = ({
   const hasNextPage = moreGranulesToLoad || loadingFirstGranules
 
   // If a next page is available, add an empty item to the lists for the loading indicator.
-  const itemCount = hasNextPage ? granulesList.length + 1 : granulesList.length
+  const itemCount = granuleHits
 
   // If granules are currently loading, pass an empty function, otherwise load more granules.
   const loadMoreItems = isLoading || loadingFirstGranules ? () => {} : loadNextPage
@@ -187,6 +187,7 @@ const GranuleResultsBody = ({
           readableGranuleName={readableGranuleName}
           directDistributionInformation={directDistributionInformation}
           excludedGranuleIds={excludedGranuleIds}
+          focusedGranuleId={focusedGranuleId}
           granules={granulesList}
           isCollectionInProject={isCollectionInProject}
           isOpenSearch={isOpenSearch}

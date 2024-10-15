@@ -69,6 +69,9 @@ const innerElementType = forwardRef(({ children, ...rest }, ref) => {
                       width: actualWidth
                     }
 
+                    console.log(trStyle)
+                    console.log(headerGroupStyle)
+
                     return (
                       <div
                         key={key}
@@ -134,6 +137,7 @@ innerElementType.displayName = 'EDSCTableInnerElement'
  * @param {Object} props - The props passed into the component.
  * @param {Array} props.columns - The column settings.
  * @param {Array} props.data - The collection data.
+ * @param {Array} props.focusedItem - The item in focus (granule).
  * @param {String} props.id - A unique id to pass the table.
  * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
  * @param {Object} props.initialTableState - The initial state to be passed to react-table.
@@ -154,6 +158,7 @@ innerElementType.displayName = 'EDSCTableInnerElement'
 const EDSCTable = ({
   columns,
   data,
+  focusedItem,
   id,
   isItemLoaded,
   itemCount,
@@ -199,9 +204,30 @@ const EDSCTable = ({
   useEffect(() => {
   }, [visibleMiddleIndex])
 
+  useEffect(() => {
+    const itemIndex = data.findIndex((item) => item.id === focusedItem)
+    if (itemIndex && listRef && listRef.current) {
+      listRef.current.scrollToItem(itemIndex, 'center')
+    }
+  }, [focusedItem])
+
   const options = {}
 
   if (initialRowStateAccessor) options.initialRowStateAccessor = initialRowStateAccessor
+  console.log(`initialRowStateAccessor: ${initialRowStateAccessor}`)
+  const {
+    isFocusedGranule,
+    isHoveredGranule,
+    isInProject,
+    isCollectionInProject
+  } = initialRowStateAccessor
+  console.log(
+    isFocusedGranule,
+    isHoveredGranule,
+    isInProject,
+    isCollectionInProject
+  )
+
   if (!isEmpty(initialTableState)) options.initialState = initialTableState
 
   const {
@@ -309,10 +335,13 @@ const EDSCTable = ({
         title: undefined
       }
 
+      console.log(row.state)
       if (rowClassNamesFromRowState) rowClassesFromState = rowClassNamesFromRowState(row.state)
       if (rowTitleFromRowState) rowTitleFromState.title = rowTitleFromRowState(row.state)
 
       const { style: rowStyle, ...rowRest } = rowProps
+
+      console.log(rowStyle)
 
       const rowClasses = classNames([
         'edsc-table__tr',
@@ -360,6 +389,8 @@ const EDSCTable = ({
           tabIndex: 0,
           onKeyPress: (event) => onRowClick(event, row)
         } : {}
+
+      console.log(rowClasses)
 
       return (
         <React.Fragment key={key}>
@@ -492,6 +523,7 @@ const EDSCTable = ({
 }
 
 EDSCTable.defaultProps = {
+  focusedItem: '',
   initialRowStateAccessor: null,
   initialTableState: {},
   isItemLoaded: null,
@@ -515,6 +547,7 @@ EDSCTable.defaultProps = {
 EDSCTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  focusedItem: PropTypes.string,
   id: PropTypes.string.isRequired,
   initialRowStateAccessor: PropTypes.func,
   initialTableState: PropTypes.shape({}),
