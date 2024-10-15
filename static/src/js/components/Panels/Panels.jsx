@@ -498,7 +498,8 @@ export class Panels extends PureComponent {
 
       // Set the maxWidth to the available space minus the width of the
       // map tools.
-      return routeWrapperWidth - 55
+      /// TODO Get the width of the buttons then calculate how far to allow the panel to go
+      return routeWrapperWidth - 155
     }
 
     // If for some reason the elements are not available in the DOM, set
