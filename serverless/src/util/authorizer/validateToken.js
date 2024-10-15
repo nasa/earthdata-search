@@ -48,8 +48,8 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
       } = verifiedJwtToken
 
       // Retrieve the authenticated users' access tokens from the database
-      const existingUserTokens = await dbConnection('user_tokens')
-        .select([
+      const mostRecentToken = await dbConnection('user_tokens')
+        .first([
           'id',
           'access_token',
           'refresh_token',
@@ -61,12 +61,8 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
         })
         .orderBy('created_at', 'DESC')
 
-      if (existingUserTokens.length === 0) {
-        return false
-      }
-
-      // In the off chance there are more than one, return the most recent token
-      const [mostRecentToken] = existingUserTokens
+      // If no token was found, return false
+      if (!mostRecentToken) return false
 
       const {
         access_token: accessToken,

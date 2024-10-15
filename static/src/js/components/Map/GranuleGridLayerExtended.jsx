@@ -248,8 +248,6 @@ export class GranuleGridLayerExtended extends L.GridLayer {
 
     if (!this.gibsTag) return null
 
-    const date = granule.timeStart != null ? granule.timeStart.substring(0, 10) : undefined
-
     let matched = false
 
     // Select only the first layer until we are able to toggle between gibs layers.
@@ -319,11 +317,9 @@ export class GranuleGridLayerExtended extends L.GridLayer {
 
     if (!matched) { return null }
 
-    this.options.time = date
     if (this.options.granule) {
       this._originalUrl = this._originalUrl || this._url
       this._url = config.gibsGranuleUrl || this._originalUrl
-      this.options.time = granule.timeStart.replace(/\.\d{3}Z$/, 'Z')
     } else {
       this._url = this._originalUrl || this._url || config.gibsUrl
     }
@@ -333,7 +329,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       x: tilePoint.x,
       y: tilePoint.y,
       z: tilePoint.z,
-      time: this.options.time
+      time: granule.timeStart
     }
 
     if (this._map && !this._map.options.crs.infinite) {
