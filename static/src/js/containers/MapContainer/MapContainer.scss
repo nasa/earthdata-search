@@ -17,4 +17,14 @@
   .is-panels-dragging & {
     pointer-events: none;
   }
+
+  &__color-map {
+    margin-top: 3rem;
+    background-color: red;
+  }
+
+  &__scale-control {
+    margin-top: 8rem !important;
+    background-color: red;
+  }
 }

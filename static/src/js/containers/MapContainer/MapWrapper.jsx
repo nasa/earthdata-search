@@ -207,7 +207,9 @@ const MapWrapper = ({
           )
         }
       </Control>
-      <ScaleControl position="topright" />
+      <ScaleControl
+        position="topright"
+      />
       <ConnectedSpatialSelectionContainer mapProps={mapProps} />
       <GranuleGridLayer
         collectionsMetadata={collectionsMetadata}
