@@ -40,7 +40,6 @@ export const AccessMethodRadio = ({
       'access-method-radio--disable-button': disabled
     }
   ]
-
   const [showTooltip, setShowTooltip] = useState(false)
 
   const labelClassName = classNames(labelClasses)
@@ -125,7 +124,7 @@ export const AccessMethodRadio = ({
               overlay={
                 (
                   <Tooltip
-                    className="tooltip--ta-left tooltip--wide"
+                    className="tooltip--ta-left"
                     onMouseEnter={() => externalLink && setShowTooltip(true)}
                     onMouseLeave={() => externalLink && setShowTooltip(false)}
                   >
@@ -135,7 +134,7 @@ export const AccessMethodRadio = ({
                       </p>
                       {
                         externalLink && (
-                          <ExternalLink href={externalLink.link} className="d-inline-block mt-3" variant="light">
+                          <ExternalLink href={externalLink.link} className="d-inline-block mt-3 mb-1" variant="light">
                             {externalLink.message}
                           </ExternalLink>
                         )
