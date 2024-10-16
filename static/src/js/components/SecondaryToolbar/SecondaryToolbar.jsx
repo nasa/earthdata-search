@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import {
   Col,
   Dropdown,
@@ -12,6 +13,7 @@ import { parse } from 'qs'
 import {
   FaArrowCircleLeft,
   FaFolder,
+  FaLock,
   FaSave,
   FaUser
 } from 'react-icons/fa'
@@ -106,12 +108,32 @@ class SecondaryToolbar extends Component {
     })
   }
 
+  addBorders() {
+    if (document.querySelector('.leaflet-container')) {
+      console.log('🚀 ~ file: SecondaryToolbar.jsx:110 ~ SecondaryToolbar ~ document.querySelector():', document.querySelector('.leaflet-container'))
+
+      return true
+    }
+
+    return false
+  }
+
   render() {
     const {
       projectDropdownOpen,
       projectName,
       newProjectName
     } = this.state
+
+    const borders = this.addBorders()
+    console.log('🚀 ~ file: SecondaryToolbar.jsx:124 ~ SecondaryToolbar ~ borders:', borders)
+
+    const dropDownClasses = classNames([
+      'secondary-toolbar__user-dropdown',
+      {
+        'secondary-toolbar__dropdown-with-border': borders
+      }
+    ])
 
     const {
       authToken,
@@ -228,7 +250,7 @@ class SecondaryToolbar extends Component {
         className="secondary-toolbar__login"
         bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
-        icon={FaUser}
+        icon={FaLock}
         label="Login"
       >
         Login
@@ -236,7 +258,7 @@ class SecondaryToolbar extends Component {
     )
 
     const loggedInDropdown = (
-      <Dropdown className="secondary-toolbar__user-dropdown">
+      <Dropdown className={dropDownClasses}>
         <Dropdown.Toggle
           label="User menu"
           className="secondary-toolbar__user-dropdown-toggle"
