@@ -326,24 +326,6 @@ class SecondaryToolbar extends Component {
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
-        {
-          location.pathname === '/search' && (disableSiteTour !== 'true') && (
-            <TourContext.Consumer>
-              {
-                ({ setRunTour }) => (
-                  <Dropdown.Toggle
-                    className="secondary-toolbar__start-tour-button"
-                    as={Button}
-                    onClick={setRunTour}
-                    label="Want to learn more? Click here to take a tour of our site."
-                  >
-                    Start Tour
-                  </Dropdown.Toggle>
-                )
-              }
-            </TourContext.Consumer>
-          )
-        }
         <Dropdown.Toggle
           className="secondary-toolbar__project-name-dropdown-toggle"
           as={Button}
@@ -383,8 +365,33 @@ class SecondaryToolbar extends Component {
       </Dropdown>
     )
 
+    const startTourButton = (
+      <Dropdown
+        show={projectDropdownOpen}
+        className="secondary-toolbar__project-name-dropdown"
+        onToggle={this.onToggleProjectDropdown}
+        alignRight
+      >
+        <TourContext.Consumer>
+          {
+            ({ setRunTour }) => (
+              <Dropdown.Toggle
+                className="secondary-toolbar__start-tour-button"
+                as={Button}
+                onClick={setRunTour}
+                label="Want to learn more? Click here to take a tour of our site."
+              >
+                Start Tour
+              </Dropdown.Toggle>
+            )
+          }
+        </TourContext.Consumer>
+      </Dropdown>
+    )
+
     const showSaveProjectDropdown = pathStartsWith(location.pathname, ['/search']) && loggedIn
     const showViewProjectLink = (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
+    const showStartTourButton = location.pathname === '/search' && (disableSiteTour !== 'true')
 
     return (
       secondaryToolbarEnabled
@@ -394,6 +401,7 @@ class SecondaryToolbar extends Component {
           {isDownloadPathWithId(location.pathname) && backToProjectLink}
           <PortalFeatureContainer authentication>
             <>
+              {showStartTourButton && startTourButton}
               {showViewProjectLink && projectLink}
               {showSaveProjectDropdown && saveProjectDropdown}
               {!loggedIn ? loginLink : loggedInDropdown}

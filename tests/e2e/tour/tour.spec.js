@@ -2,6 +2,17 @@ import { test, expect } from 'playwright-test-coverage'
 
 import { login } from '../../support/login'
 
+async function getSpotlightPositionAndSize(el) {
+  const rect = await el.boundingBox()
+
+  return {
+    left: rect.x,
+    top: rect.y,
+    width: rect.width,
+    height: rect.height
+  }
+}
+
 test.describe('Joyride Tour Navigation', () => {
   test.beforeEach(async ({ page, context }) => {
     await login(context)
@@ -19,6 +30,20 @@ test.describe('Joyride Tour Navigation', () => {
     // Step 1: This area contains the filters
     await page.waitForTimeout(500)
     await expect(page.locator('.tour-content').first()).toContainText('This area contains the filters used when searching for collections')
+
+    // Check for the presence of the highlighted section
+    let spotlight = page.locator('.react-joyride__spotlight[data-test-id="spotlight"]')
+    await expect(spotlight).toBeVisible()
+
+    // Get and verify the position and size of the highlighted section
+    let spotlightRect = await getSpotlightPositionAndSize(spotlight)
+
+    expect(spotlightRect).toEqual({
+      left: -10,
+      top: 58,
+      width: 330,
+      height: 812
+    })
 
     // Testing arrow key navigation
     await page.keyboard.press('ArrowRight')
@@ -42,50 +67,160 @@ test.describe('Joyride Tour Navigation', () => {
     await expect(page.locator('.tour-content').first()).toContainText('Search for collections by topic (e.g., "Land Surface Temperature")')
     await page.getByRole('button', { name: 'Next' }).click()
 
+    spotlight = page.locator('.react-joyride__spotlight[data-test-id="spotlight"]')
+    await expect(spotlight).toBeVisible()
+
+    spotlightRect = await getSpotlightPositionAndSize(spotlight)
+    expect(spotlightRect).toEqual({
+      left: -10,
+      top: 108,
+      width: 60,
+      height: 69
+    })
+
     // Step 3: Temporal filters
     await page.waitForTimeout(500)
     await expect(page.locator('.tour-content').first()).toContainText('Use the temporal filters to limit search results to a specific date')
     await page.getByRole('button', { name: 'Next' }).click()
+
+    spotlight = page.locator('.react-joyride__spotlight[data-test-id="spotlight"]')
+    await expect(spotlight).toBeVisible()
+
+    spotlightRect = await getSpotlightPositionAndSize(spotlight)
+    expect(spotlightRect).toEqual({
+      left: 30,
+      top: 108,
+      width: 60,
+      height: 69
+    })
 
     // Step 4: Spatial filters
     await page.waitForTimeout(500)
     await expect(page.locator('.tour-content').first()).toContainText('Use the spatial filters to limit search results to the specified area of interest')
     await page.getByRole('button', { name: 'Next' }).click()
 
+    spotlight = page.locator('.react-joyride__spotlight[data-test-id="spotlight"]')
+    await expect(spotlight).toBeVisible()
+
+    spotlightRect = await getSpotlightPositionAndSize(spotlight)
+    expect(spotlightRect).toEqual({
+      left: 69,
+      top: 108,
+      width: 60,
+      height: 69
+    })
+
     // Step 5: Advanced Search
     await page.waitForTimeout(500)
     await expect(page.locator('.tour-content').first()).toContainText('Use Advanced Search parameters to filter results')
     await page.getByRole('button', { name: 'Next' }).click()
+
+    spotlight = page.locator('.react-joyride__spotlight[data-test-id="spotlight"]')
+    await expect(spotlight).toBeVisible()
+
+    spotlightRect = await getSpotlightPositionAndSize(spotlight)
+    expect(spotlightRect).toEqual({
+      left: 3,
+      top: 172,
+      width: 303,
+      height: 56
+    })
 
     // Step 6: Browse Portals
     await page.waitForTimeout(500)
     await expect(page.locator('.tour-content').first()).toContainText('Choose a portal to refine search results')
     await page.getByRole('button', { name: 'Next' }).click()
 
+    spotlight = page.locator('.react-joyride__spotlight[data-test-id="spotlight"]')
+    await expect(spotlight).toBeVisible()
+
+    spotlightRect = await getSpotlightPositionAndSize(spotlight)
+    expect(spotlightRect).toEqual({
+      left: -10,
+      top: 221,
+      width: 329,
+      height: 697
+    })
+
     // Step 7: Refine Search by Category
     await page.waitForTimeout(500)
     await expect(page.locator('.tour-content').first()).toContainText('Refine your search further using categories like Features, Keywords')
     await page.getByRole('button', { name: 'Next' }).click()
+
+    spotlight = page.locator('.react-joyride__spotlight[data-test-id="spotlight"]')
+    await expect(spotlight).toBeVisible()
+
+    spotlightRect = await getSpotlightPositionAndSize(spotlight)
+    expect(spotlightRect).toEqual({
+      left: 300,
+      top: 58,
+      width: 620,
+      height: 812
+    })
 
     // Step 8: High-level description for each search result
     await page.waitForTimeout(500)
     await expect(page.locator('.tour-content').first()).toContainText('A high-level description is displayed for each search result')
     await page.getByRole('button', { name: 'Next' }).click()
 
+    spotlight = page.locator('.react-joyride__spotlight[data-test-id="spotlight"]')
+    await expect(spotlight).toBeVisible()
+
+    spotlightRect = await getSpotlightPositionAndSize(spotlight)
+    expect(spotlightRect).toEqual({
+      left: 900,
+      top: 75,
+      width: 40,
+      height: 85
+    })
+
     // Step 9: Resize Search Results Panel
     await page.waitForTimeout(500)
     await expect(page.locator('.tour-content').first()).toContainText('To make more room to view the map, the search results can be resized')
     await page.getByRole('button', { name: 'Next' }).click()
+
+    spotlight = page.locator('.react-joyride__spotlight[data-test-id="spotlight"]')
+    await expect(spotlight).toBeVisible()
+
+    spotlightRect = await getSpotlightPositionAndSize(spotlight)
+    expect(spotlightRect).toEqual({
+      left: 900,
+      top: 58,
+      width: 4020,
+      height: 812
+    })
 
     // Step 10: Pan and zoom the map
     await page.waitForTimeout(500)
     await expect(page.locator('.tour-content').first()).toContainText('Pan the map by clicking and dragging, and zoom by using the scroll wheel')
     await page.getByRole('button', { name: 'Next' }).click()
 
+    spotlight = page.locator('.react-joyride__spotlight[data-test-id="spotlight"]')
+    await expect(spotlight).toBeVisible()
+
+    spotlightRect = await getSpotlightPositionAndSize(spotlight)
+    expect(spotlightRect).toEqual({
+      left: 1346,
+      top: 384,
+      width: 64,
+      height: 483
+    })
+
     // Step 11: Map tools
     await page.waitForTimeout(500)
     await expect(page.locator('.tour-content').first()).toContainText('Use the map tools to switch map projections, draw, edit, or remove spatial bounds')
     await page.getByRole('button', { name: 'Next' }).click()
+
+    spotlight = page.locator('.react-joyride__spotlight[data-test-id="spotlight"]')
+    await expect(spotlight).toBeVisible()
+
+    spotlightRect = await getSpotlightPositionAndSize(spotlight)
+    expect(spotlightRect).toEqual({
+      left: 1146,
+      top: 23,
+      width: 121,
+      height: 54
+    })
 
     // Testing "Previous" button on Step 12
     await page.getByRole('button', { name: 'Previous' }).click()
