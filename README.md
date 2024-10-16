@@ -73,7 +73,7 @@ Start the PostgreSQL server:
 
     # If you have never used brew services before:
     brew tap homebrew/services
-    
+
     # Start the server:
     brew services start postgresql
 
@@ -122,6 +122,12 @@ To run the migrations locally:
 Optionally, we can run the migration locally and not within a deployed Lambda. When deployed our database migrations run within Lambda due to the fact that in non-development environments our resources are not publicly accessible. To run the migrations you'll need to invoke the Lambda:
 
     serverless invoke local --function migrateDatabase
+
+###### Creating a new database migration
+
+To create a new database migration use this command to ensure the migration follow the same timestamp name scheme.
+
+    npm run migrate create name-of-migration
 
 ### Building the Application
 
