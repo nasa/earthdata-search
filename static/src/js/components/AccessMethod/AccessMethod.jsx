@@ -300,6 +300,12 @@ const AccessMethod = ({
       return (
         <>
           <AccessMethodRadio
+            externalLink={
+              {
+                link: 'https://harmony.earthdata.nasa.gov/',
+                message: 'What is Harmony?'
+              }
+            }
             key={id}
             id={id}
             value="HarmonyMethodType"

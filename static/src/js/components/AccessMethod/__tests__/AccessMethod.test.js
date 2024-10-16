@@ -10,11 +10,16 @@ import userEvent from '@testing-library/user-event'
 
 import ResizeObserver from 'resize-observer-polyfill'
 import AccessMethod from '../AccessMethod'
+import AccessMethodRadio from '../../FormFields/AccessMethodRadio/AccessMethodRadio'
 
 beforeEach(() => {
   global.ResizeObserver = ResizeObserver
   jest.clearAllMocks()
 })
+
+jest.mock('../../FormFields/AccessMethodRadio/AccessMethodRadio', () => jest.fn().mockImplementation(
+  jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio
+))
 
 afterEach(() => {
   // Don't share global state between the tests
@@ -218,6 +223,21 @@ describe('AccessMethod component', () => {
           }
         }
       })
+
+      // Called twice due to rerender from useEffect()
+      expect(AccessMethodRadio).toHaveBeenCalledTimes(2)
+      expect(AccessMethodRadio).toHaveBeenCalledWith(
+        expect.objectContaining({
+          externalLink: {
+            link: 'https://harmony.earthdata.nasa.gov/',
+            message: 'What is Harmony?'
+          },
+          title: 'Customize with Harmony',
+          details: 'Select options like variables, transformations, and output formats by applying a Harmony service. Data will be staged in the cloud for download and analysis.',
+          value: 'HarmonyMethodType'
+        }),
+        expect.anything()
+      )
 
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
       // Multiple `Harmony` services are possible for a collection
