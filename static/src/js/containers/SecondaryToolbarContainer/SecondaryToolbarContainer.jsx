@@ -44,8 +44,7 @@ export const SecondaryToolbarContainer = (props) => {
     savedProject,
     retrieval,
     ursProfile,
-    onFetchContactInfo,
-    isMapPage
+    onFetchContactInfo
   } = props
 
   useEffect(() => {
@@ -60,7 +59,6 @@ export const SecondaryToolbarContainer = (props) => {
       authToken={authToken}
       earthdataEnvironment={earthdataEnvironment}
       location={location}
-      isMapPage={isMapPage}
       onLogout={onLogout}
       onUpdateProjectName={onUpdateProjectName}
       projectCollectionIds={projectCollectionIds}
@@ -79,7 +77,6 @@ SecondaryToolbarContainer.propTypes = {
   onFetchContactInfo: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
-  isMapPage: PropTypes.func.isRequired, 
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   retrieval: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,

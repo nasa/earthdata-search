@@ -83,12 +83,6 @@ jest.mock('../containers/AboutCwicModalContainer/AboutCwicModalContainer', () =>
   return MockedAboutCwicModalContainer
 })
 
-jest.mock('../components/AppHeader/AppHeader', () => {
-  const MockedAppHeader = () => <div data-testid="mocked-app-header" />
-
-  return MockedAppHeader
-})
-
 jest.mock('../containers/AuthCallbackContainer/AuthCallbackContainer', () => {
   const MockedAuthCallbackContainer = () => <div data-testid="mocked-auth-callback-container" />
 
