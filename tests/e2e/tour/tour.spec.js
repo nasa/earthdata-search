@@ -20,8 +20,6 @@ test.describe('Joyride Tour Navigation', () => {
   })
 
   test('should navigate through the Joyride tour', async ({ page }) => {
-    test.setTimeout(60000)
-
     // Start the tour by clicking the "Start Tour" button
     await page.click('button:has-text("Start Tour")')
 
