@@ -38,7 +38,6 @@ export const Banner = ({
         }
       </div>
       <Button
-        className="banner__close"
         label="close"
         onClick={onClose}
         icon={Close}
