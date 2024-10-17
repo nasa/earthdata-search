@@ -210,7 +210,6 @@ class SecondaryToolbar extends Component {
     )
 
     const buildProjectLink = (isLoggedIn) => {
-      // TODO when user is not logged in
       if (!isLoggedIn) {
         console.log('🚀 ~ file: SecondaryToolbar.jsx:209 ~ SecondaryToolbar ~ isLoggedIn:', isLoggedIn)
         const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
@@ -353,6 +352,7 @@ class SecondaryToolbar extends Component {
         alignRight
       >
         <Dropdown.Toggle
+          className="secondary-toolbar__user-dropdown-toggle"
           as={Button}
           onClick={this.onToggleProjectDropdown}
           icon={FaSave}
