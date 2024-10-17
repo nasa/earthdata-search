@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import {
   Col,
   Dropdown,
@@ -128,12 +127,15 @@ class SecondaryToolbar extends Component {
     const borders = this.addBorders()
     console.log('🚀 ~ file: SecondaryToolbar.jsx:124 ~ SecondaryToolbar ~ borders:', borders)
 
-    const dropDownClasses = classNames([
-      'secondary-toolbar__user-dropdown',
-      {
-        'secondary-toolbar__dropdown-with-border': borders
-      }
-    ])
+    // Const dropDownClasses = classNames([
+    //   'secondary-toolbar__user-dropdown',
+    //   {
+    //     'secondary-toolbar__dropdown-with-border': borders
+    //   }
+    // ])
+
+    const userLoginClassName = borders ? 'secondary-toolbar__map-border' : 'secondary-toolbar__user-dropdown'
+    console.log('🚀 ~ file: SecondaryToolbar.jsx:135 ~ SecondaryToolbar ~ userLoginClassName:', userLoginClassName)
 
     const {
       authToken,
@@ -208,15 +210,18 @@ class SecondaryToolbar extends Component {
     )
 
     const buildProjectLink = (isLoggedIn) => {
+      // TODO when user is not logged in
       if (!isLoggedIn) {
+        console.log('🚀 ~ file: SecondaryToolbar.jsx:209 ~ SecondaryToolbar ~ isLoggedIn:', isLoggedIn)
         const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
 
         return (
           <Button
-            className="secondary-toolbar__project"
+            className="secondary-toolbar__project secondary-toolbar__map-border"
             bootstrapVariant="light"
             href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`}
             label="View Project"
+            icon={FaFolder}
           >
             My Project
           </Button>
@@ -232,10 +237,11 @@ class SecondaryToolbar extends Component {
               search: location.search
             }
           }
-          className="secondary-toolbar__project"
+          className="secondary-toolbar__project secondary-toolbar__map-border"
           bootstrapVariant="light"
           label="View Project"
           icon={FaFolder}
+          iconPosition="left"
           updatePath
         >
           My Project
@@ -247,7 +253,7 @@ class SecondaryToolbar extends Component {
 
     const loginLink = (
       <Button
-        className="secondary-toolbar__login"
+        className="secondary-toolbar__login secondary-toolbar__map-border"
         bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
         icon={FaLock}
@@ -256,15 +262,15 @@ class SecondaryToolbar extends Component {
         Login
       </Button>
     )
-
     const loggedInDropdown = (
-      <Dropdown className={dropDownClasses}>
+      <Dropdown className={userLoginClassName}>
         <Dropdown.Toggle
           label="User menu"
           className="secondary-toolbar__user-dropdown-toggle"
           bootstrapVariant="light"
           as={Button}
         >
+          <EDSCIcon size="0.825rem" icon={FaUser} />
           {
             firstName && (
               <span className="secondary-toolbar__username">
@@ -272,7 +278,6 @@ class SecondaryToolbar extends Component {
               </span>
             )
           }
-          <EDSCIcon size="0.825rem" icon={FaUser} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer
@@ -343,12 +348,11 @@ class SecondaryToolbar extends Component {
     const saveProjectDropdown = (
       <Dropdown
         show={projectDropdownOpen}
-        className="secondary-toolbar__project-name-dropdown"
+        className="secondary-toolbar__project-name-dropdown secondary-toolbar__map-border"
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
         <Dropdown.Toggle
-          className="secondary-toolbar__project-name-dropdown-toggle"
           as={Button}
           onClick={this.onToggleProjectDropdown}
           icon={FaSave}
