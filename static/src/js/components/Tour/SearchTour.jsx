@@ -85,20 +85,17 @@ const SearchTour = () => {
             primaryColor: '#007bff',
             zIndex: 10000,
             textAlign: 'left',
-            width: '37.5rem'
+            width: '37.5rem',
+            padding: '0 1.25rem'
           },
           tooltip: {
             fontSize: '1rem',
-            padding: '1.25rem',
             paddingTop: '0rem',
+            paddingBottom: '0rem',
             textAlign: 'left'
           },
           tooltipContent: {
             textAlign: 'left'
-          },
-          buttonNext: {
-          // Hide the next button since we use custom buttons
-            display: 'none'
           }
         }
       }

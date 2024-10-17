@@ -1,34 +1,24 @@
-:root {
-  --color-white: #ffffff;
-  --color-black: #000000;
-  --color-welcome: #0063A6;
-  --color-gray: #9a989a;
-  --color-dark-gray: #5a585a;
-  --color-light-gray: #f5f5f5;
-  --color-faded-gray: #f8f9fa;
-  --font-mono: "DM Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
-.tour {
+.search-tour {
   &-heading {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: 0.9375rem;
-    letter-spacing: 0.0625rem;
+    margin-bottom: 1.8125rem;
+    letter-spacing: -1%;
   }
 
   &-welcome {
-    color: var(--color-welcome);
+    color: $color__nasa-blue;
     font-size: 0.75rem;
-    margin-bottom: 0.9375rem;
+    margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.25rem;
   }
 
   &-subheading {
-    font-size: 1.5rem;
+    font-size: 1.5625rem;
     font-weight: bold;
     margin-bottom: 1.25rem;
+    letter-spacing: -1%;
   }
 
   &-content, 
@@ -45,6 +35,7 @@
   }
 
   &-buttons {
+    margin-top: 5rem;
     display: flex;
     justify-content: flex-end;
     gap: 0.9375rem;
@@ -57,7 +48,6 @@
       justify-content: center;
       position: static;
       margin-top: 1.25rem;
-      margin-bottom: -1.75rem;
     }
 
     &:not(.intro) {
@@ -66,7 +56,7 @@
   }
 
   &-info-box {
-    background-color: var(--color-faded-gray);
+    background-color: $color__carbon--5;
     padding: 1rem 1rem 0.0625rem;
     margin-bottom: 0.9375rem;
     border-radius: 0.25rem;
@@ -74,7 +64,7 @@
     text-align: left;
 
     &-link {
-      color: var(--color-black);
+      color: $color__carbon-black;
       text-decoration: underline;
       font-weight: bold;
     }
@@ -82,12 +72,12 @@
 
   &-webinar {
     &-box {
-      background-color: var(--color-light-gray);
+      background-color: $color__carbon--5;
       padding: 0.625rem;
       margin-bottom: 1.25rem;
       border-radius: 0.375rem;
       text-decoration: none;
-      color: var(--color-black);
+      color: $color__carbon-black;
       display: flex;
       align-items: center;
     }
@@ -123,29 +113,30 @@
   }
 
   &-earthdata-link {
-    color: var(--color-dark-gray);
+    color: $color__carbon--60;
     text-decoration: underline;
-    margin-bottom: 0.3125rem;
     display: inline;
   }
 
   &-tooltip {
     width: 25rem;
-    padding: 1.25rem;
-    background-color: var(--color-white);
+    background-color: $color__spacesuit-white;
     border-radius: 0.625rem;
     font-size: 1rem;
     text-align: center;
     position: relative;
     min-height: 12.5rem;
   }
+  &-content-wrapper {
+    padding-bottom: 1.25rem;
+  }
 }
 
 .step-counter-text {
-  font-family: var(--font-mono);
+  font-family: $font-family-monospace;
   font-size: 0.75rem;
   margin-bottom: 0.9375rem;
-  color: var(--color-gray);
+  color: $color__carbon--40;
   text-align: left;
 }
 
