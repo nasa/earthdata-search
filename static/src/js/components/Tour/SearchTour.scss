@@ -1,12 +1,12 @@
 .search-tour {
-  &-heading {
+  &__heading {
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 1.8125rem;
     letter-spacing: -1%;
   }
 
-  &-welcome {
+  &__welcome {
     color: $color__nasa-blue;
     font-size: 0.75rem;
     margin-bottom: 0.5rem;
@@ -14,27 +14,38 @@
     letter-spacing: 0.25rem;
   }
 
-  &-subheading {
+  &__subheading {
     font-size: 1.5625rem;
     font-weight: bold;
     margin-bottom: 1.25rem;
     letter-spacing: -1%;
   }
 
-  &-content, 
-  &-webinar-description {
+  &__content, 
+  &__webinar-description {
     font-size: 1rem;
     margin-bottom: 1.25rem;
     text-align: left;
   }
 
-  &-note {
+  &__earthdata-list {
+    list-style: none;
+    color: $color__carbon-black;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__note {
     font-size: 0.875rem;
     margin-bottom: 1.25rem;
     text-align: left;
   }
 
-  &-buttons {
+  &__buttons {
     margin-top: 5rem;
     display: flex;
     justify-content: flex-end;
@@ -55,7 +66,7 @@
     }
   }
 
-  &-info-box {
+  &__info-box {
     background-color: $color__carbon--5;
     padding: 1rem 1rem 0.0625rem;
     margin-bottom: 0.9375rem;
@@ -63,15 +74,15 @@
     font-size: 0.875rem;
     text-align: left;
 
-    &-link {
+    &__link {
       color: $color__carbon-black;
       text-decoration: underline;
       font-weight: bold;
     }
   }
 
-  &-webinar {
-    &-box {
+  &__webinar {
+    &__box {
       background-color: $color__carbon--5;
       padding: 0.625rem;
       margin-bottom: 1.25rem;
@@ -82,17 +93,17 @@
       align-items: center;
     }
 
-    &-text {
+    &__text {
       flex: 0 0 13.75rem;
       margin-right: 0.9375rem;
     }
 
-    &-thumbnail {
+    &__thumbnail {
       width: 100%;
       height: auto;
     }
 
-    &-link {
+    &__link {
       font-size: 1rem;
       font-weight: bold;
       margin-top: 0.625rem;
@@ -100,25 +111,32 @@
     }
   }
 
-  &-discover-more {
+  &__discover-more {
     padding: 0.625rem;
     font-size: 1rem;
     font-weight: 500;
   }
 
-  &-more-info {
+  &__more-info {
     font-size: 1rem;
     font-weight: bold;
     margin-bottom: 0.3125rem;
   }
 
-  &-earthdata-link {
-    color: $color__carbon--60;
-    text-decoration: underline;
+  &__earthdata-link {
     display: inline;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    .external-link-icon {
+      margin-left: 0.25rem;
+      font-size: 0.75rem;
+    }
   }
 
-  &-tooltip {
+  &__tooltip {
     width: 25rem;
     background-color: $color__spacesuit-white;
     border-radius: 0.625rem;
@@ -127,7 +145,7 @@
     position: relative;
     min-height: 12.5rem;
   }
-  &-content-wrapper {
+  &__content-wrapper {
     padding-bottom: 1.25rem;
   }
 }
