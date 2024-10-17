@@ -5,6 +5,7 @@ import ExternalLink from '../ExternalLink/ExternalLink'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Button from '../Button/Button'
 import TourThumbnail from '../../../assets/images/tour-video-thumbnail.png'
+
 import './SearchTour.scss'
 
 export const TOTAL_STEPS = 12
@@ -65,7 +66,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
     target: '.search',
     content: (
       <div>
-        <h2 className="tour-heading">Welcome to Earthdata Search!</h2>
+        <h2 className="tour-welcome">Welcome to Earthdata Search!</h2>
         <p className="tour-subheading">Let’s start with a quick tour...</p>
         <p className="tour-content">
           Get acquainted with Earthdata Search by taking our guided tour, where you’ll learn

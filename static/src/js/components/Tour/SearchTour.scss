@@ -1,21 +1,28 @@
 :root {
   --color-white: #ffffff;
   --color-black: #000000;
-  --color-heading: #0063A6;
+  --color-welcome: #0063A6;
   --color-gray: #9a989a;
+  --color-dark-gray: #5a585a;
   --color-light-gray: #f5f5f5;
+  --color-faded-gray: #f8f9fa;
   --font-mono: "DM Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 .tour {
   &-heading {
-    font-family: var(--font-mono);
-    color: var(--color-heading);
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 0.9375rem;
-    text-transform: uppercase;
     letter-spacing: 0.0625rem;
+  }
+
+  &-welcome {
+    color: var(--color-welcome);
+    font-size: 0.75rem;
+    margin-bottom: 0.9375rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25rem;
   }
 
   &-subheading {
@@ -24,7 +31,8 @@
     margin-bottom: 1.25rem;
   }
 
-  &-content, &-webinar-description {
+  &-content, 
+  &-webinar-description {
     font-size: 1rem;
     margin-bottom: 1.25rem;
     text-align: left;
@@ -45,7 +53,11 @@
     right: 1.25rem;
 
     &.intro {
-      width: 19rem;
+      width: 100%;
+      justify-content: center;
+      position: static;
+      margin-top: 1.25rem;
+      margin-bottom: -1.75rem;
     }
 
     &:not(.intro) {
@@ -54,14 +66,14 @@
   }
 
   &-info-box {
-    background-color: #f8f9fa;
+    background-color: var(--color-faded-gray);
     padding: 1rem 1rem 0.0625rem;
     margin-bottom: 0.9375rem;
     border-radius: 0.25rem;
     font-size: 0.875rem;
     text-align: left;
 
-    a {
+    &-link {
       color: var(--color-black);
       text-decoration: underline;
       font-weight: bold;
@@ -111,7 +123,7 @@
   }
 
   &-earthdata-link {
-    color: #5a585a;
+    color: var(--color-dark-gray);
     text-decoration: underline;
     margin-bottom: 0.3125rem;
     display: inline;
