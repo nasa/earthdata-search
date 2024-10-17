@@ -198,7 +198,7 @@ const MapWrapper = ({
           />
         )
       }
-      <Control prepend position="topright">
+      <Control prepend position="bottomright">
         {
           (isFocusedCollectionPage && !isEmpty(colorMap)) && (
             <Legend
@@ -207,9 +207,6 @@ const MapWrapper = ({
           )
         }
       </Control>
-      <ScaleControl
-        position="topright"
-      />
       <ConnectedSpatialSelectionContainer mapProps={mapProps} />
       <GranuleGridLayer
         collectionsMetadata={collectionsMetadata}
@@ -244,6 +241,9 @@ const MapWrapper = ({
         mapProps={mapProps}
         onChangeMap={onChangeMap}
         onMetricsMap={onMetricsMap}
+      />
+      <ScaleControl
+        position="bottomright"
       />
     </LeafletMapContainer>
   )
