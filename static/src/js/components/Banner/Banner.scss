@@ -67,4 +67,22 @@
     padding: 0;
     line-height: 1rem;
   }
+
+  &__close {
+    position: absolute;
+    top: 50%;
+    top: calc(50% + 1px);
+    right: 0.75rem;
+    color: $color__carbon--70;
+    transform: translateY(-50%);
+
+    &:hover {
+     color: $color__carbon--60;
+    }
+
+    &:focus {
+      border: 0;
+      outline: 0;
+    }
+  }
 }

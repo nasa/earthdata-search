@@ -18,6 +18,7 @@ import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import Spinner from '../../components/Spinner/Spinner'
+import SecondaryToolbarContainer from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 
@@ -70,6 +71,7 @@ export const Project = (props) => {
         <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
           <div className="route-wrapper__content">
             <div className="route-wrapper__content-inner">
+            <SecondaryToolbarContainer />
               <SavedProjectsContainer />
             </div>
           </div>
