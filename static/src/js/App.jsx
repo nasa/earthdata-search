@@ -119,7 +119,6 @@ class App extends Component {
               <ErrorBannerContainer />
               <AuthTokenContainer>
                 <UrlQueryContainer>
-                  <SecondaryToolbarContainer />
                   <Switch>
                     <Route
                       path="/admin"

@@ -131,7 +131,7 @@ class SecondaryToolbar extends Component {
     //   }
     // ])
 
-    const userLoginClassName = borders ? 'secondary-toolbar__map-border' : 'secondary-toolbar__user-dropdown'
+    const userLoginClassName = borders ? '' : 'secondary-toolbar__user-dropdown'
     console.log('🚀 ~ file: SecondaryToolbar.jsx:135 ~ SecondaryToolbar ~ userLoginClassName:', userLoginClassName)
 
     const {
@@ -143,9 +143,11 @@ class SecondaryToolbar extends Component {
       secondaryToolbarEnabled,
       ursProfile
     } = this.props
-
-    const firstName = 'Eudoro'
-    // Const { first_name: firstName = '' } = ursProfile
+    console.log('🚀 ~ file: SecondaryToolbar.jsx:146 ~ SecondaryToolbar ~ location:', location)
+    // TODO this is a stub make sure we remove this
+    // const firstName = 'Eudoro'
+    console.log('🚀 ~ file: SecondaryToolbar.jsx:149 ~ SecondaryToolbar ~ ursProfile:', ursProfile)
+    const { first_name: firstName = '' } = ursProfile
 
     const loggedIn = authToken !== ''
     const returnPath = window.location.href
@@ -212,7 +214,7 @@ class SecondaryToolbar extends Component {
 
         return (
           <Button
-            className="secondary-toolbar__project secondary-toolbar__map-border"
+            className="secondary-toolbar__project "
             bootstrapVariant="light"
             href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`}
             label="View Project"
@@ -232,7 +234,7 @@ class SecondaryToolbar extends Component {
               search: location.search
             }
           }
-          className="secondary-toolbar__project secondary-toolbar__map-border"
+          className="secondary-toolbar__project "
           bootstrapVariant="light"
           label="View Project"
           icon={FaFolder}
@@ -248,7 +250,7 @@ class SecondaryToolbar extends Component {
 
     const loginLink = (
       <Button
-        className="secondary-toolbar__login secondary-toolbar__map-border"
+        className="secondary-toolbar__login "
         bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
         icon={FaLock}
@@ -343,7 +345,7 @@ class SecondaryToolbar extends Component {
     const saveProjectDropdown = (
       <Dropdown
         show={projectDropdownOpen}
-        className="secondary-toolbar__project-name-dropdown secondary-toolbar__map-border"
+        className="secondary-toolbar__project-name-dropdown "
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
