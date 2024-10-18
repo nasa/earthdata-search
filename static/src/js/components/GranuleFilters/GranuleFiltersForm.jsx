@@ -502,10 +502,9 @@ export const GranuleFiltersForm = (props) => {
                 }
                 onSubmitStart={
                   (startDate, shouldSubmit) => {
-                    const {
-                      input
-                    } = startDate.creationData()
+                    const { input } = startDate.creationData()
                     const value = startDate.isValid() ? startDate.toISOString() : input
+
                     setFieldValue('temporal.startDate', value)
                     setFieldTouched('temporal.startDate')
 
@@ -515,7 +514,7 @@ export const GranuleFiltersForm = (props) => {
                     }
 
                     // Only call handleSubmit if `onSubmitStart` was called
-                    if (shouldSubmit && startDate.isValid()) {
+                    if (shouldSubmit && (startDate.isValid() || !input)) {
                       handleSubmit()
 
                       // Submit usage metric for setting Start Date granule filter
@@ -528,10 +527,9 @@ export const GranuleFiltersForm = (props) => {
                 }
                 onSubmitEnd={
                   (endDate, shouldSubmit) => {
-                    const {
-                      input
-                    } = endDate.creationData()
+                    const { input } = endDate.creationData()
                     const value = endDate.isValid() ? endDate.toISOString() : input
+
                     setFieldValue('temporal.endDate', value)
                     setFieldTouched('temporal.endDate')
 
@@ -540,7 +538,7 @@ export const GranuleFiltersForm = (props) => {
                       setFieldValue('temporal.recurringDayEnd', endDate.dayOfYear())
                     }
 
-                    if (shouldSubmit && endDate.isValid()) {
+                    if (shouldSubmit && (endDate.isValid() || !input)) {
                       handleSubmit()
 
                       // Submit usage metric for setting End Date granule filter
@@ -856,15 +854,13 @@ export const GranuleFiltersForm = (props) => {
                             validate={false}
                             onSubmitStart={
                               (startDate, shouldSubmit) => {
-                                const {
-                                  input
-                                } = startDate.creationData()
+                                const { input } = startDate.creationData()
                                 const value = startDate.isValid() ? startDate.toISOString() : input
 
                                 setFieldValue('equatorCrossingDate.startDate', value)
                                 setFieldTouched('equatorCrossingDate.startDate')
 
-                                if (shouldSubmit && startDate.isValid()) {
+                                if (shouldSubmit && (startDate.isValid() || !input)) {
                                   handleSubmit()
                                   onMetricsGranuleFilter({
                                     type: 'Equatorial Crossing Set Start Date',
@@ -875,15 +871,13 @@ export const GranuleFiltersForm = (props) => {
                             }
                             onSubmitEnd={
                               (endDate, shouldSubmit) => {
-                                const {
-                                  input
-                                } = endDate.creationData()
+                                const { input } = endDate.creationData()
                                 const value = endDate.isValid() ? endDate.toISOString() : input
 
                                 setFieldValue('equatorCrossingDate.endDate', value)
                                 setFieldTouched('equatorCrossingDate.endDate')
 
-                                if (shouldSubmit && endDate.isValid()) {
+                                if (shouldSubmit && (endDate.isValid() || !input)) {
                                   handleSubmit()
                                   onMetricsGranuleFilter({
                                     type: 'Equatorial Crossing Set End Date',

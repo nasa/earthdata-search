@@ -99,6 +99,9 @@ const DatepickerContainer = ({
     // Reset the time to a default value to override any previous custom time entry
     onChange(moment().utc().startOf('day').format(format), false)
     onChange('', true)
+
+    // eslint-disable-next-line no-underscore-dangle
+    if (pickerRef.current?._closeCalendar) pickerRef.current._closeCalendar()
   }
 
   /**
@@ -115,6 +118,9 @@ const DatepickerContainer = ({
     }
 
     onChange(valueToSet ? valueToSet.format(format) : valueToSet, true)
+
+    // eslint-disable-next-line no-underscore-dangle
+    if (pickerRef.current?._closeCalendar) pickerRef.current._closeCalendar()
   }
 
   /**

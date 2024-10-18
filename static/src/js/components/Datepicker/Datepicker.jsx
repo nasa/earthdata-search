@@ -101,13 +101,19 @@ class Datepicker extends PureComponent {
       conditionalInputProps.value = ''
     }
 
+    const onKeyDown = (event) => {
+      // If the user presses `Enter`, the field should behave the same as bluring the input
+      if (event.key === 'Enter') onInputBlur(event)
+    }
+
     return (
       <Datetime
         className="datetime"
+        closeOnClickOutside
         closeOnSelect
         closeOnTab
-        closeOnClickOutside
         dateFormat={format}
+        initialViewMode={viewMode}
         inputProps={
           {
             id,
@@ -115,25 +121,25 @@ class Datepicker extends PureComponent {
             autoComplete: 'off',
             className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`,
             'aria-label': label,
-            onChange: (e) => {
-              this.onInputChange(e)
+            onChange: (event) => {
+              this.onInputChange(event)
 
               // eslint-disable-next-line no-underscore-dangle
               picker.current._closeCalendar()
             },
             onBlur: onInputBlur,
+            onKeyDown,
             ...conditionalInputProps
           }
         }
         isValidDate={isValidDate}
         onChange={onChange}
         ref={picker}
+        strictParsing
         timeFormat={false}
         utc
         value={value}
-        strictParsing
         viewMode={viewMode}
-        initialViewMode={viewMode}
       />
     )
   }
