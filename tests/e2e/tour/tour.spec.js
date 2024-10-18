@@ -25,8 +25,14 @@ test.describe('Joyride Tour Navigation', () => {
     await expect(spotlight).toBeVisible()
 
     // Get and verify the position and size of the highlighted section
-    // eslint-disable-next-line no-unused-vars
     const rect = await spotlight.boundingBox()
+    // eslint-disable-next-line no-unused-vars
+    const spotlightRect = {
+      left: rect.x,
+      top: rect.y,
+      width: rect.width,
+      height: rect.height
+    }
 
     // Testing arrow key navigation
     await page.keyboard.press('ArrowRight')
