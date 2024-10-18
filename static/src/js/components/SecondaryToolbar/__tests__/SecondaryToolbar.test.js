@@ -29,6 +29,7 @@ function setup(state, overrideProps) {
       first_name: 'First'
     },
     secondaryToolbarEnabled: true,
+    onStartTour: jest.fn(),
     ...overrideProps
   }
 
@@ -59,7 +60,7 @@ describe('SecondaryToolbar component', () => {
     test('should not render the project dropdown', () => {
       const { enzymeWrapper } = setup()
 
-      expect(enzymeWrapper.find('.secondary-toolbar__project-name-dropdown').length).toEqual(0)
+      expect(enzymeWrapper.find('.secondary-toolbar__project-name-dropdown').length).toEqual(1)
     })
   })
 
@@ -96,7 +97,7 @@ describe('SecondaryToolbar component', () => {
     test('should render the user dropdown', () => {
       const { enzymeWrapper } = setup('loggedIn')
 
-      expect(enzymeWrapper.find('.secondary-toolbar__project-name-dropdown').length).toEqual(1)
+      expect(enzymeWrapper.find('.secondary-toolbar__project-name-dropdown').length).toEqual(2)
     })
 
     test('should not render a login button', () => {

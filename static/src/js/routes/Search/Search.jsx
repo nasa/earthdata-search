@@ -171,69 +171,73 @@ export const Search = ({
           </Route>
           <Route path={path}>
             <SidebarSection>
-              <Button
-                variant="full"
-                bootstrapVariant="light"
-                icon={FaSitemap}
-                onClick={() => onTogglePortalBrowserModal(true)}
-              >
-                Browse Portals
-                <OverlayTrigger
-                  placement="top"
-                  overlay={
-                    (
-                      <Tooltip style={{ width: '20rem' }}>
-                        {/* eslint-disable-next-line max-len */}
-                        Enable a portal in order to refine the data available within Earthdata Search
-                      </Tooltip>
-                    )
-                  }
+              <div className="sidebar-browse-portals">
+                <Button
+                  variant="full"
+                  bootstrapVariant="light"
+                  icon={FaSitemap}
+                  onClick={() => onTogglePortalBrowserModal(true)}
                 >
-                  <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
-                </OverlayTrigger>
-              </Button>
-            </SidebarSection>
-            <SidebarSection
-              sectionTitle="Filter Collections"
-              titleIcon={FaFilter}
-            >
-              <SidebarFiltersList>
-                <SidebarFiltersItem
-                  hasPadding={false}
-                >
-                  <FacetsContainer />
-                </SidebarFiltersItem>
-                <PortalFeatureContainer
-                  onlyGranulesCheckbox
-                  nonEosdisCheckbox
-                >
-                  <SidebarFiltersItem
-                    heading="Additional Filters"
+                  Browse Portals
+                  <OverlayTrigger
+                    placement="top"
+                    overlay={
+                      (
+                        <Tooltip style={{ width: '20rem' }}>
+                          {/* eslint-disable-next-line max-len */}
+                          Enable a portal in order to refine the data available within Earthdata Search
+                        </Tooltip>
+                      )
+                    }
                   >
-                    <Form.Group controlId="collection-filters__has-no-granules">
-                      <PortalFeatureContainer onlyGranulesCheckbox>
-                        <Form.Check
-                          checked={isHasNoGranulesChecked}
-                          id="input__only-granules"
-                          data-testid="input_only-granules"
-                          label="Include collections without granules"
-                          onChange={(event) => handleCheckboxCheck(event)}
-                        />
-                      </PortalFeatureContainer>
-                      <PortalFeatureContainer nonEosdisCheckbox>
-                        <Form.Check
-                          checked={isEosdisChecked}
-                          id="input__non-eosdis"
-                          data-testid="input_non-eosdis"
-                          label="Include only EOSDIS collections"
-                          onChange={(event) => handleCheckboxCheck(event)}
-                        />
-                      </PortalFeatureContainer>
-                    </Form.Group>
-                  </SidebarFiltersItem>
-                </PortalFeatureContainer>
-              </SidebarFiltersList>
+                    <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
+                  </OverlayTrigger>
+                </Button>
+              </div>
             </SidebarSection>
+            <div className="sidebar-section-body">
+              <SidebarSection
+                sectionTitle="Filter Collections"
+                titleIcon={FaFilter}
+              >
+                <SidebarFiltersList>
+                  <SidebarFiltersItem
+                    hasPadding={false}
+                  >
+                    <FacetsContainer />
+                  </SidebarFiltersItem>
+                  <PortalFeatureContainer
+                    onlyGranulesCheckbox
+                    nonEosdisCheckbox
+                  >
+                    <SidebarFiltersItem
+                      heading="Additional Filters"
+                    >
+                      <Form.Group controlId="collection-filters__has-no-granules">
+                        <PortalFeatureContainer onlyGranulesCheckbox>
+                          <Form.Check
+                            checked={isHasNoGranulesChecked}
+                            id="input__only-granules"
+                            data-testid="input_only-granules"
+                            label="Include collections without granules"
+                            onChange={(event) => handleCheckboxCheck(event)}
+                          />
+                        </PortalFeatureContainer>
+                        <PortalFeatureContainer nonEosdisCheckbox>
+                          <Form.Check
+                            checked={isEosdisChecked}
+                            id="input__non-eosdis"
+                            data-testid="input_non-eosdis"
+                            label="Include only EOSDIS collections"
+                            onChange={(event) => handleCheckboxCheck(event)}
+                          />
+                        </PortalFeatureContainer>
+                      </Form.Group>
+                    </SidebarFiltersItem>
+                  </PortalFeatureContainer>
+                </SidebarFiltersList>
+              </SidebarSection>
+            </div>
           </Route>
         </Switch>
       </SidebarContainer>
