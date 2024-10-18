@@ -11,6 +11,8 @@ import userEvent from '@testing-library/user-event'
 import Datepicker from '../Datepicker'
 
 const setup = (overrideProps) => {
+  const user = userEvent.setup()
+
   const onInputBlur = jest.fn()
   const onChange = jest.fn()
   const onClearClick = jest.fn()
@@ -42,10 +44,7 @@ const setup = (overrideProps) => {
   return {
     props,
     rerender,
-    onInputBlur,
-    onChange,
-    onClearClick,
-    onTodayClick
+    user
   }
 }
 
@@ -98,9 +97,7 @@ describe('Datepicker component', () => {
 
   describe('when the input value changes', () => {
     test('onInputChange gets triggered', async () => {
-      const user = userEvent.setup()
-
-      const { onChange, props } = setup()
+      const { props, user } = setup()
       const { picker } = props
 
       const requestAnimationFrameSpy = jest.spyOn(window, 'requestAnimationFrame')
@@ -109,76 +106,88 @@ describe('Datepicker component', () => {
       const datePickerInput = screen.getByRole('textbox', { name: 'Date Time' })
 
       expect(datePickerInput).toHaveValue('')
+
       await act(async () => {
-        await user.click(datePickerInput)
-        await user.type(datePickerInput, '1967')
+        await user.type(datePickerInput, '1')
       })
 
-      expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(4)
-      expect(closeCalendarSpy).toHaveBeenCalledTimes(4)
-      expect(onChange).toHaveBeenCalledTimes(4)
+      expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(1)
+      expect(requestAnimationFrameSpy).toHaveBeenCalledWith(expect.any(Function))
+
+      expect(closeCalendarSpy).toHaveBeenCalledTimes(1)
+      expect(closeCalendarSpy).toHaveBeenCalledWith()
+
+      expect(props.onChange).toHaveBeenCalledTimes(1)
+      expect(props.onChange).toHaveBeenCalledWith('1')
     })
   })
 
   describe('when Today button gets clicked', () => {
     test('onTodayClick gets triggered', async () => {
-      const user = userEvent.setup()
+      const { props, user } = setup()
 
-      const { onTodayClick } = setup()
+      const buttonToday = screen.getByRole('button', { name: 'Today' })
 
-      const buttonToday = screen.getByText('Today')
+      await user.click(buttonToday)
 
-      await act(async () => {
-        await user.click(buttonToday)
-      })
-
-      expect(onTodayClick).toHaveBeenCalledTimes(1)
+      expect(props.onTodayClick).toHaveBeenCalledTimes(1)
+      expect(props.onTodayClick).toHaveBeenCalledWith(expect.any(Object))
     })
   })
 
   describe('when Clear button gets clicked', () => {
     test('onClearClick gets triggered', async () => {
-      const user = userEvent.setup()
+      const { props, user } = setup()
 
-      const { onClearClick } = setup()
-
-      const buttonClear = screen.getByText('Clear')
+      const buttonClear = screen.getByRole('button', { name: 'Clear' })
 
       await act(async () => {
         await user.click(buttonClear)
       })
 
-      expect(onClearClick).toHaveBeenCalledTimes(1)
+      expect(props.onClearClick).toHaveBeenCalledTimes(1)
+      expect(props.onClearClick).toHaveBeenCalledWith(expect.any(Object))
     })
   })
 
   describe('when loosing focus of input', () => {
     test('onInputBlur gets triggered', async () => {
-      const user = userEvent.setup()
-
-      const {
-        onInputBlur,
-        onChange
-      } = setup()
+      const { props, user } = setup()
 
       const datePickerInput = screen.getByRole('textbox', { name: 'Date Time' })
 
-      await user.click(datePickerInput)
-      await user.type(datePickerInput, 'abc123')
+      await user.type(datePickerInput, 'a')
+      await datePickerInput.blur()
 
-      await user.click(screen.getByRole('textbox', { name: 'basic-input' }))
+      expect(props.onChange).toHaveBeenCalledTimes(1)
+      expect(props.onChange).toHaveBeenCalledWith('a')
 
-      expect(onChange).toHaveBeenCalledTimes(6)
-      expect(onInputBlur).toHaveBeenCalledTimes(1)
+      expect(props.onInputBlur).toHaveBeenCalledTimes(1)
+      expect(props.onInputBlur).toHaveBeenCalledWith(expect.objectContaining({
+        _reactName: 'onBlur'
+      }))
+    })
+  })
+
+  describe('when pressing enter in the input', () => {
+    test('calls onInputBlur', async () => {
+      const { props, user } = setup()
+
+      const input = screen.getByRole('textbox', { name: 'Date Time' })
+
+      await user.type(input, '{Enter}')
+
+      expect(props.onInputBlur).toHaveBeenCalledTimes(1)
+      expect(props.onInputBlur).toHaveBeenCalledWith(expect.objectContaining({
+        _reactName: 'onKeyDown',
+        key: 'Enter'
+      }))
     })
   })
 
   describe('when rerendering the input', () => {
     test('picker navigates as expected', async () => {
-      const {
-        rerender,
-        props
-      } = setup()
+      const { props, rerender } = setup()
 
       const { picker } = props
 
@@ -191,7 +200,7 @@ describe('Datepicker component', () => {
         </div>
       )
 
-      expect(navigateSpy).not.toHaveBeenCalled()
+      expect(navigateSpy).toHaveBeenCalledTimes(0)
 
       props.viewMode = 'month'
 
@@ -202,7 +211,8 @@ describe('Datepicker component', () => {
         </div>
       )
 
-      expect(navigateSpy).toHaveBeenCalled()
+      expect(navigateSpy).toHaveBeenCalledTimes(1)
+      expect(navigateSpy).toHaveBeenCalledWith('month')
     })
   })
 })
