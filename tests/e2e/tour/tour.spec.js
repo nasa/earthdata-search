@@ -43,9 +43,9 @@ test.describe('Joyride Tour Navigation', () => {
 
     expectWithinMargin(spotlightRect, {
       left: -10,
-      top: 103,
+      top: 58,
       width: 330,
-      height: 767
+      height: 812
     }, 9)
 
     // Testing arrow key navigation
@@ -81,7 +81,7 @@ test.describe('Joyride Tour Navigation', () => {
 
     expectWithinMargin(spotlightRect, {
       left: -10,
-      top: 152,
+      top: 108,
       width: 60,
       height: 69
     }, 9)
@@ -102,7 +102,7 @@ test.describe('Joyride Tour Navigation', () => {
 
     expectWithinMargin(spotlightRect, {
       left: 30,
-      top: 152,
+      top: 108,
       width: 60,
       height: 69
     }, 9)
@@ -123,7 +123,7 @@ test.describe('Joyride Tour Navigation', () => {
 
     expectWithinMargin(spotlightRect, {
       left: 69,
-      top: 152,
+      top: 108,
       width: 60,
       height: 69
     }, 9)
@@ -144,7 +144,7 @@ test.describe('Joyride Tour Navigation', () => {
 
     expectWithinMargin(spotlightRect, {
       left: 3,
-      top: 216,
+      top: 172,
       width: 303,
       height: 56
     }, 9)
@@ -165,9 +165,9 @@ test.describe('Joyride Tour Navigation', () => {
 
     expectWithinMargin(spotlightRect, {
       left: -10,
-      top: 265,
+      top: 221,
       width: 329,
-      height: 689
+      height: 697
     }, 9)
 
     // Step 7: Refine Search by Category
@@ -186,9 +186,9 @@ test.describe('Joyride Tour Navigation', () => {
 
     expectWithinMargin(spotlightRect, {
       left: 300,
-      top: 103,
+      top: 58,
       width: 620,
-      height: 767
+      height: 812
     }, 9)
 
     // Step 8: High-level description for each search result
@@ -207,7 +207,7 @@ test.describe('Joyride Tour Navigation', () => {
 
     expectWithinMargin(spotlightRect, {
       left: 900,
-      top: 119,
+      top: 75,
       width: 40,
       height: 85
     }, 9)
@@ -228,9 +228,9 @@ test.describe('Joyride Tour Navigation', () => {
 
     expectWithinMargin(spotlightRect, {
       left: 900,
-      top: 103,
+      top: 58,
       width: 510,
-      height: 767
+      height: 812
     }, 9)
 
     // Step 10: Pan and zoom the map
@@ -249,7 +249,7 @@ test.describe('Joyride Tour Navigation', () => {
 
     expectWithinMargin(spotlightRect, {
       left: 1346,
-      top: 339,
+      top: 384,
       width: 64,
       height: 483
     }, 9)
@@ -269,8 +269,8 @@ test.describe('Joyride Tour Navigation', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 1144,
-      top: 70,
+      left: 1129,
+      top: 23,
       width: 121,
       height: 53
     }, 9)
