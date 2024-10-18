@@ -2,6 +2,17 @@ import { test, expect } from 'playwright-test-coverage'
 
 import { login } from '../../support/login'
 
+async function getSpotlightPositionAndSize(el) {
+  const rect = await el.boundingBox()
+
+  return {
+    left: rect.x,
+    top: rect.y,
+    width: rect.width,
+    height: rect.height
+  }
+}
+
 test.describe('Joyride Tour Navigation', () => {
   test.beforeEach(async ({ page, context }) => {
     await login(context)
@@ -19,6 +30,20 @@ test.describe('Joyride Tour Navigation', () => {
     // Step 1: This area contains the filters
     await page.waitForTimeout(500)
     await expect(page.locator('.search-tour__content').first()).toContainText('This area contains the filters used when searching for collections')
+
+    // Check for the presence of the highlighted section
+    const spotlight = page.locator('.react-joyride__spotlight[data-test-id="spotlight"]')
+    await expect(spotlight).toBeVisible()
+
+    // Get and verify the position and size of the highlighted section
+    const spotlightRect = await getSpotlightPositionAndSize(spotlight)
+
+    expect(spotlightRect).toEqual({
+      left: -10,
+      top: 58,
+      width: 330,
+      height: 812
+    })
 
     // Testing arrow key navigation
     await page.keyboard.press('ArrowRight')
