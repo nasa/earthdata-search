@@ -501,9 +501,11 @@ export const GranuleFiltersForm = (props) => {
                   }
                 }
                 onSubmitStart={
-                  (startDate) => {
-                  // eslint-disable-next-line no-underscore-dangle
-                    const value = startDate.isValid() ? startDate.toISOString() : startDate._i
+                  (startDate, shouldSubmit) => {
+                    const {
+                      input
+                    } = startDate.creationData()
+                    const value = startDate.isValid() ? startDate.toISOString() : input
                     setFieldValue('temporal.startDate', value)
                     setFieldTouched('temporal.startDate')
 
@@ -512,19 +514,24 @@ export const GranuleFiltersForm = (props) => {
                       setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
                     }
 
-                    handleSubmit()
+                    // Only call handleSubmit if `onSubmitStart` was called
+                    if (shouldSubmit && startDate.isValid()) {
+                      handleSubmit()
 
-                    // Submit usage metric for setting Start Date granule filter
-                    onMetricsGranuleFilter({
-                      type: 'Set Start Date',
-                      value
-                    })
+                      // Submit usage metric for setting Start Date granule filter
+                      onMetricsGranuleFilter({
+                        type: 'Set Start Date',
+                        value
+                      })
+                    }
                   }
                 }
                 onSubmitEnd={
-                  (endDate) => {
-                  // eslint-disable-next-line no-underscore-dangle
-                    const value = endDate.isValid() ? endDate.toISOString() : endDate._i
+                  (endDate, shouldSubmit) => {
+                    const {
+                      input
+                    } = endDate.creationData()
+                    const value = endDate.isValid() ? endDate.toISOString() : input
                     setFieldValue('temporal.endDate', value)
                     setFieldTouched('temporal.endDate')
 
@@ -533,13 +540,15 @@ export const GranuleFiltersForm = (props) => {
                       setFieldValue('temporal.recurringDayEnd', endDate.dayOfYear())
                     }
 
-                    handleSubmit()
+                    if (shouldSubmit && endDate.isValid()) {
+                      handleSubmit()
 
-                    // Submit usage metric for setting End Date granule filter
-                    onMetricsGranuleFilter({
-                      type: 'Set End Date',
-                      value
-                    })
+                      // Submit usage metric for setting End Date granule filter
+                      onMetricsGranuleFilter({
+                        type: 'Set End Date',
+                        value
+                      })
+                    }
                   }
                 }
               />
@@ -846,33 +855,41 @@ export const GranuleFiltersForm = (props) => {
                             temporal={equatorCrossingDate}
                             validate={false}
                             onSubmitStart={
-                              (startDate) => {
-                                const value = startDate.isValid()
-                                // eslint-disable-next-line no-underscore-dangle
-                                  ? startDate.toISOString() : startDate._i
+                              (startDate, shouldSubmit) => {
+                                const {
+                                  input
+                                } = startDate.creationData()
+                                const value = startDate.isValid() ? startDate.toISOString() : input
+
                                 setFieldValue('equatorCrossingDate.startDate', value)
                                 setFieldTouched('equatorCrossingDate.startDate')
 
-                                handleSubmit()
-                                onMetricsGranuleFilter({
-                                  type: 'Equatorial Crossing Set Start Date',
-                                  value
-                                })
+                                if (shouldSubmit && startDate.isValid()) {
+                                  handleSubmit()
+                                  onMetricsGranuleFilter({
+                                    type: 'Equatorial Crossing Set Start Date',
+                                    value
+                                  })
+                                }
                               }
                             }
                             onSubmitEnd={
-                              (endDate) => {
-                                const value = endDate.isValid()
-                                // eslint-disable-next-line no-underscore-dangle
-                                  ? endDate.toISOString() : endDate._i
+                              (endDate, shouldSubmit) => {
+                                const {
+                                  input
+                                } = endDate.creationData()
+                                const value = endDate.isValid() ? endDate.toISOString() : input
+
                                 setFieldValue('equatorCrossingDate.endDate', value)
                                 setFieldTouched('equatorCrossingDate.endDate')
 
-                                handleSubmit()
-                                onMetricsGranuleFilter({
-                                  type: 'Equatorial Crossing Set End Date',
-                                  value
-                                })
+                                if (shouldSubmit && endDate.isValid()) {
+                                  handleSubmit()
+                                  onMetricsGranuleFilter({
+                                    type: 'Equatorial Crossing Set End Date',
+                                    value
+                                  })
+                                }
                               }
                             }
                           />
