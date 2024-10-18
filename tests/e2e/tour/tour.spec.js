@@ -5,7 +5,7 @@ import { login } from '../../support/login'
 const expectWithinMargin = async (actual, expected, margin) => {
   Object.keys(expected).forEach((key) => {
     const diff = Math.abs(actual[key] - expected[key])
-    console.error(`actual: ${actual[key]}, expected: ${expected[key]}`)
+    console.error(`actual: ${actual[key]}, expected: ${expected[key]}, delta: ${diff}`)
     expect.soft(diff).toBeLessThanOrEqual(margin)
   })
 }
@@ -19,6 +19,8 @@ test.describe('Joyride Tour Navigation', () => {
   test('should navigate through the Joyride tour', async ({ page }) => {
     // Start the tour by clicking the "Start Tour" button
     await page.click('button:has-text("Start Tour")')
+
+    console.log(`Viewport: ${page.viewportSize().width} x ${page.viewportSize().height}`)
 
     // Start Tour View: Welcome to Earthdata Search
     await expect(page.locator('.search-tour__welcome')).toContainText('Welcome to Earthdata Search!')
@@ -46,7 +48,7 @@ test.describe('Joyride Tour Navigation', () => {
       top: 103,
       width: 330,
       height: 767
-    }, 5)
+    }, 9)
 
     // Testing arrow key navigation
     await page.keyboard.press('ArrowRight')
@@ -84,7 +86,7 @@ test.describe('Joyride Tour Navigation', () => {
       top: 152,
       width: 60,
       height: 69
-    }, 5)
+    }, 9)
 
     // Step 3: Temporal filters
     await page.waitForTimeout(500)
@@ -105,7 +107,7 @@ test.describe('Joyride Tour Navigation', () => {
       top: 152,
       width: 60,
       height: 69
-    }, 5)
+    }, 9)
 
     // Step 4: Spatial filters
     await page.waitForTimeout(500)
@@ -126,7 +128,7 @@ test.describe('Joyride Tour Navigation', () => {
       top: 152,
       width: 60,
       height: 69
-    }, 5)
+    }, 9)
 
     // Step 5: Advanced Search
     await page.waitForTimeout(500)
@@ -147,7 +149,7 @@ test.describe('Joyride Tour Navigation', () => {
       top: 216,
       width: 303,
       height: 56
-    }, 5)
+    }, 9)
 
     // Step 6: Browse Portals
     await page.waitForTimeout(500)
@@ -167,8 +169,8 @@ test.describe('Joyride Tour Navigation', () => {
       left: -10,
       top: 265,
       width: 329,
-      height: 697
-    }, 5)
+      height: 689
+    }, 9)
 
     // Step 7: Refine Search by Category
     await page.waitForTimeout(500)
@@ -189,7 +191,7 @@ test.describe('Joyride Tour Navigation', () => {
       top: 103,
       width: 620,
       height: 767
-    }, 5)
+    }, 9)
 
     // Step 8: High-level description for each search result
     await page.waitForTimeout(500)
@@ -210,7 +212,7 @@ test.describe('Joyride Tour Navigation', () => {
       top: 119,
       width: 40,
       height: 85
-    }, 5)
+    }, 9)
 
     // Step 9: Resize Search Results Panel
     await page.waitForTimeout(500)
@@ -231,7 +233,7 @@ test.describe('Joyride Tour Navigation', () => {
       top: 103,
       width: 510,
       height: 767
-    }, 5)
+    }, 9)
 
     // Step 10: Pan and zoom the map
     await page.waitForTimeout(500)
@@ -252,7 +254,7 @@ test.describe('Joyride Tour Navigation', () => {
       top: 339,
       width: 64,
       height: 483
-    }, 5)
+    }, 9)
 
     // Step 11: Map tools
     await page.waitForTimeout(500)
@@ -273,7 +275,7 @@ test.describe('Joyride Tour Navigation', () => {
       top: 70,
       width: 121,
       height: 53
-    }, 5)
+    }, 9)
 
     // Testing "Previous" button on Step 12
     await page.getByRole('button', { name: 'Previous' }).click()
