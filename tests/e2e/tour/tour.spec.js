@@ -1,7 +1,5 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { login } from '../../support/login'
-
 const expectWithinMargin = async (actual, expected, margin) => {
   Object.keys(expected).forEach((key) => {
     const diff = Math.abs(actual[key] - expected[key])
@@ -11,8 +9,8 @@ const expectWithinMargin = async (actual, expected, margin) => {
 }
 
 test.describe('Joyride Tour Navigation', () => {
-  test.beforeEach(async ({ page, context }) => {
-    await login(context)
+  test.beforeEach(async ({ page }) => {
+    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
     await page.goto('/search')
   })
 
@@ -306,9 +304,6 @@ test.describe('Joyride Tour Navigation', () => {
   })
 
   test('should automatically start the Joyride tour', async ({ page, context }) => {
-    // Login first
-    await login(context)
-
     // Override the TourContextProvider to force show the tour
     await context.addInitScript(() => {
       window.overrideLocalhost = true
