@@ -46,6 +46,33 @@ const SearchTour = () => {
         element.scrollTop = 0
       }
     }
+
+    let overlayDiv
+    if (stepIndex === 10) {
+      const sidebarEl = document.querySelector('.sidebar')
+      const panelEl = document.querySelector('.panels')
+      const mapEl = document.querySelector('.map')
+
+      const sidebarWidth = sidebarEl.getBoundingClientRect().width
+      const panelWidth = panelEl.getBoundingClientRect().width
+      const mapWidth = mapEl.getBoundingClientRect().width
+
+      const widthDelta = mapWidth - (panelWidth + sidebarWidth)
+
+      overlayDiv = document.createElement('div')
+      overlayDiv.style.width = `${widthDelta}px`
+      overlayDiv.classList.add('target-overlay')
+
+      if (panelEl) {
+        panelEl.appendChild(overlayDiv)
+      }
+    }
+
+    return () => {
+      if (overlayDiv) {
+        overlayDiv.remove()
+      }
+    }
   }, [stepIndex])
 
   const handleJoyrideCallback = (data) => {
@@ -63,11 +90,6 @@ const SearchTour = () => {
       localStorage.setItem('dontShowTour', 'true')
     } else if (type === 'step:after') {
       setStepIndex(action === ACTIONS.NEXT ? index + 1 : index - 1)
-    }
-
-    if (type === 'step:before') {
-      const element = document.querySelector('.sidebar-section-body')
-      if (element) element.scrollTop = 0
     }
   }
 

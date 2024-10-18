@@ -176,3 +176,15 @@ kbd {
 .button-tour-finish {
   min-width: 5.625rem;
 }
+
+.target-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 9999;
+  left: calc(100%);
+  pointer-events: none;
+}
