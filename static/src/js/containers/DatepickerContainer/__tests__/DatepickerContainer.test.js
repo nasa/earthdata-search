@@ -1,410 +1,283 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import MockDate from 'mockdate'
 import moment from 'moment'
+
 import DatepickerContainer from '../DatepickerContainer'
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
+const setup = (overrideProps) => {
+  const user = userEvent.setup()
   const { minimumTemporalDateString, temporalDateFormatFull } = getApplicationConfig()
 
   const props = {
+    format: 'YYYY-MM-DD HH:mm:ss',
     id: 'test-id',
+    label: 'Test Datepicker',
     minDate: minimumTemporalDateString,
     maxDate: moment.utc().format(temporalDateFormatFull),
     onSubmit: jest.fn(),
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<DatepickerContainer {...props} />)
+  render(<DatepickerContainer {...props} />)
 
   return {
-    enzymeWrapper,
-    props
+    props,
+    user
   }
 }
 
 describe('DatepickerContainer component', () => {
+  beforeEach(() => {
+    MockDate.set('2020-05-15T12:00:00.000Z')
+  })
+
+  afterEach(() => {
+    MockDate.reset()
+  })
+
   describe('when input is of type YYYY-MM-DDTHH:mm:ss.SSSZ', () => {
-    test('validate  date is parsed correctly', () => {
-      const { enzymeWrapper } = setup(
+    test('validate date is parsed correctly', () => {
+      setup(
         {
           type: 'start',
           value: '2006-04-01T13:01:00.000Z'
         }
       )
 
-      // Because this is a shallow render the Datepicker component doesn't render so we have
-      // to manually create a 'current' instance of the component
-      enzymeWrapper.instance().picker.current = {}
-      enzymeWrapper.instance().picker.current.setState = jest.fn()
+      const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-      expect(enzymeWrapper.instance().props.value).toEqual('2006-04-01T13:01:00.000Z')
+      expect(input.value).toEqual('2006-04-01 13:01:00')
     })
   })
 
-  describe('onInputBlur', () => {
-    test('sets the picker state', () => {
-      const { enzymeWrapper } = setup()
-
-      // Because this is a shallow render the Datepicker component doesn't render so we have
-      // to manually create a 'current' instance of the component
-      enzymeWrapper.instance().picker.current = {}
-      enzymeWrapper.instance().picker.current.setState = jest.fn()
-
-      enzymeWrapper.instance().onInputBlur({ target: { value: moment.utc('1988-09-03') } })
-
-      expect(enzymeWrapper.instance().picker.current.setState).toHaveBeenCalledTimes(0)
-    })
-
+  describe('when typing in the text field', () => {
     describe('when type is start', () => {
-      test('returns date as entered', () => {
-        const { enzymeWrapper, props } = setup({ type: 'start' })
-        const { onSubmit, format } = props
+      test('calls onSubmit as entered', async () => {
+        const { props } = setup(
+          {
+            type: 'start',
+            value: '2006-04-01T00:00:00.000Z'
+          }
+        )
 
-        // Because this is a shallow render the Datepicker component doesn't render so we have
-        // to manually create a 'current' instance of the component
-        enzymeWrapper.instance().picker.current = {}
-        enzymeWrapper.instance().picker.current.setState = jest.fn()
+        const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-        enzymeWrapper.instance().onInputBlur({ target: { value: moment.utc('1990-09-03 00:00:00') } })
+        await input.focus()
+        await input.blur()
 
-        expect(onSubmit).toHaveBeenCalledTimes(1)
-        expect(onSubmit).toHaveBeenCalledWith(moment.utc('1990-09-03 00:00:00', format))
+        expect(props.onSubmit).toHaveBeenCalledTimes(1)
+        expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:00:00', props.format), true)
       })
-    })
 
-    test('returns unchanged datetime when date is not a \'startOf\' day', () => {
-      const { enzymeWrapper, props } = setup({ type: 'start' })
-      const { onSubmit, format } = props
+      test('returns unchanged datetime when date is not a \'startOf\' day', async () => {
+        const { props } = setup(
+          {
+            type: 'start',
+            value: '2006-04-01T00:40:00.000Z'
+          }
+        )
 
-      // Because this is a shallow render the Datepicker component doesn't render so we have
-      // to manually create a 'current' instance of the component
-      enzymeWrapper.instance().picker.current = {}
-      enzymeWrapper.instance().picker.current.setState = jest.fn()
+        const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-      enzymeWrapper.instance().onInputBlur({ target: { value: moment.utc('1990-09-03 00:40:00') } })
+        await input.focus()
+        await input.blur()
 
-      expect(onSubmit).toHaveBeenCalledTimes(1)
-      expect(onSubmit).toHaveBeenCalledWith(moment.utc('1990-09-03 00:40:00', format))
+        expect(props.onSubmit).toHaveBeenCalledTimes(1)
+        expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:40:00', props.format), true)
+      })
     })
   })
 
   describe('when type is end', () => {
-    test('returns date as entered', () => {
-      const { enzymeWrapper, props } = setup({ type: 'end' })
-      const { onSubmit, format } = props
+    test('returns the `endOf` the day when the date entered is a `startOf` day', async () => {
+      const { props } = setup(
+        {
+          type: 'end',
+          value: '2006-04-01T00:00:00.000Z'
+        }
+      )
 
-      // Because this is a shallow render the Datepicker component doesn't render so we have
-      // to manually create a 'current' instance of the component
-      enzymeWrapper.instance().onInputBlur({ target: { value: moment.utc('1990-09-03 00:00:00') } })
+      const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-      expect(onSubmit).toHaveBeenCalledTimes(1)
-      expect(onSubmit).toHaveBeenCalledWith(moment.utc('1990-09-03 00:00:00', format).endOf('day'))
+      await input.focus()
+      await input.blur()
+
+      expect(props.onSubmit).toHaveBeenCalledTimes(1)
+      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:00:00', props.format).endOf('day'), true)
     })
 
-    test('returns autocompleted YYYY', () => {
-      const { enzymeWrapper, props } = setup({ type: 'end' })
-      const { onSubmit, format } = props
+    test('returns unchanged datetime when date is not a `startOf` day', async () => {
+      const { props } = setup(
+        {
+          type: 'end',
+          value: '2006-04-01T00:40:00.000Z'
+        }
+      )
 
-      const onChangeSpy = jest.spyOn(enzymeWrapper.instance(), 'onChange')
+      const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-      enzymeWrapper.instance().onInputBlur({ target: { value: '1990' } })
+      await input.focus()
+      await input.blur()
 
-      expect(onChangeSpy).toHaveBeenCalledTimes(1)
-      expect(onSubmit).toHaveBeenCalledTimes(1)
-      // Had trouble matching the actual input that was being passed to the function
-      expect(onSubmit.mock.calls[0][0].format(format)).toEqual('1990-12-31T23:59:59Z')
+      expect(props.onSubmit).toHaveBeenCalledTimes(1)
+      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:40:00', props.format), true)
     })
 
-    test('returns autocompleted YYYY-MM', () => {
-      const { enzymeWrapper, props } = setup({ type: 'end' })
-      const { onSubmit, format } = props
+    test('returns autocompleted YYYY', async () => {
+      const { props } = setup(
+        {
+          type: 'end',
+          value: '2020'
+        }
+      )
 
-      const { onInputBlur } = enzymeWrapper.instance()
+      const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-      // Because this is a shallow render the Datepicker component doesn't render so we have
-      // to manually create a 'current' instance of the component
-      enzymeWrapper.instance().picker.current = {}
-      enzymeWrapper.instance().picker.current.setState = jest.fn()
+      await input.focus()
+      await input.blur()
 
-      const onChangeSpy = jest.spyOn(enzymeWrapper.instance(), 'onChange')
-
-      onInputBlur({ target: { value: '1990-06' } })
-
-      expect(onChangeSpy).toHaveBeenCalledTimes(1)
-      expect(onSubmit).toHaveBeenCalledTimes(1)
-      // Had trouble matching the actual input that was being passed to the function
-      expect(onSubmit.mock.calls[0][0].format(format)).toEqual('1990-06-30T23:59:59Z')
+      expect(props.onSubmit).toHaveBeenCalledTimes(1)
+      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2020', props.format).endOf('year'), true)
     })
 
-    test('returns date as entered', () => {
-      const { enzymeWrapper, props } = setup({ type: 'end' })
-      const { onSubmit, format } = props
+    test('returns autocompleted YYYY-MM', async () => {
+      const { props } = setup(
+        {
+          type: 'end',
+          value: '2020-06'
+        }
+      )
 
-      // Because this is a shallow render the Datepicker component doesn't render so we have
-      // to manually create a 'current' instance of the component
-      enzymeWrapper.instance().picker.current = {}
-      enzymeWrapper.instance().picker.current.setState = jest.fn()
+      const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-      enzymeWrapper.instance().onInputBlur({ target: { value: moment.utc('1990-09-03 00:00:00') } })
+      await input.focus()
+      await input.blur()
 
-      expect(onSubmit).toHaveBeenCalledTimes(1)
-      expect(onSubmit).toHaveBeenCalledWith(moment.utc('1990-09-03 00:00:00', format).endOf('day'))
+      expect(props.onSubmit).toHaveBeenCalledTimes(1)
+      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2020-06', props.format).endOf('month'), true)
     })
 
-    test('returns unchanged datetime when date is not a \'startOf\' day', () => {
-      const { enzymeWrapper, props } = setup({ type: 'start' })
-      const { onSubmit, format } = props
+    test('returns autocompleted YYYY-MM-DD', async () => {
+      const { props } = setup(
+        {
+          type: 'end',
+          value: '2020-06-15'
+        }
+      )
 
-      // Because this is a shallow render the Datepicker component doesn't render so we have
-      // to manually create a 'current' instance of the component
-      enzymeWrapper.instance().picker.current = {}
-      enzymeWrapper.instance().picker.current.setState = jest.fn()
+      const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-      enzymeWrapper.instance().onInputBlur({ target: { value: moment.utc('1990-09-03 00:40:00') } })
+      await input.focus()
+      await input.blur()
 
-      expect(onSubmit).toHaveBeenCalledTimes(1)
-      expect(onSubmit).toHaveBeenCalledWith(moment.utc('1990-09-03 00:40:00', format))
+      expect(props.onSubmit).toHaveBeenCalledTimes(1)
+      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2020-06-15', props.format).endOf('day'), true)
     })
   })
 
   describe('onTodayClick', () => {
-    test('without "start" or "end", returns null', () => {
-      const { enzymeWrapper } = setup()
+    describe('when the type is null', () => {
+      test('calls onSubmit with null', async () => {
+        const { props, user } = setup()
 
-      enzymeWrapper.instance().picker.current = {}
-      enzymeWrapper.instance().picker.current.setState = jest.fn()
+        const button = screen.getByRole('button', { name: 'Today' })
+        await user.click(button)
 
-      enzymeWrapper.instance().onInputBlur = jest.fn()
-      enzymeWrapper.instance().onChange = jest.fn()
-      enzymeWrapper.instance().onInputChange = jest.fn()
-      const {
-        onInputBlur,
-        onChange
-      } = enzymeWrapper.instance()
+        expect(props.onSubmit).toHaveBeenCalledTimes(1)
 
-      enzymeWrapper.setProps({ type: null })
+        expect(props.onSubmit.mock.calls[0][0].format(props.format))
+          .toEqual(moment.utc(null).format(props.format))
 
-      // MockDate is used here to overwrite the js Date object. This allows us to
-      // mock changes needed to test the moment functions
-      MockDate.set('09/03/1988')
-
-      enzymeWrapper.instance().onTodayClick()
-
-      expect(onInputBlur).toHaveBeenCalledTimes(0)
-      expect(onChange).toHaveBeenCalledTimes(1)
-
-      expect(onChange).toHaveBeenCalledWith(null)
-
-      MockDate.reset()
+        expect(props.onSubmit.mock.calls[0][1]).toEqual(true)
+      })
     })
 
-    test('from "start" input, selects the beginning of the today', () => {
-      const { enzymeWrapper } = setup()
+    describe('when the type is `start`', () => {
+      test('call onSubmit with the the beginning of today', async () => {
+        const { props, user } = setup(
+          {
+            type: 'start'
+          }
+        )
 
-      enzymeWrapper.instance().picker.current = {}
-      enzymeWrapper.instance().picker.current.setState = jest.fn()
+        const button = screen.getByRole('button', { name: 'Today' })
+        await user.click(button)
 
-      enzymeWrapper.instance().onInputBlur = jest.fn()
-      enzymeWrapper.instance().onChange = jest.fn()
-
-      const {
-        onInputBlur,
-        onChange
-      } = enzymeWrapper.instance()
-
-      enzymeWrapper.setProps({ type: 'start' })
-
-      // MockDate is used here to overwrite the js Date object. This allows us to
-      // mock changes needed to test the moment functions
-      MockDate.set('09/03/1988')
-
-      enzymeWrapper.instance().onTodayClick()
-
-      expect(onInputBlur).toHaveBeenCalledTimes(0)
-      expect(onChange).toHaveBeenCalledTimes(1)
-
-      expect(onChange).toHaveBeenCalledWith('1988-09-03 00:00:00')
-
-      MockDate.reset()
+        expect(props.onSubmit).toHaveBeenCalledTimes(1)
+        expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2020-05-15 00:00:00', props.format, true), true)
+      })
     })
 
-    test('from "end" input, selects the beginning of the today', () => {
-      const { enzymeWrapper } = setup()
+    describe('when the type is `end`', () => {
+      test('call onSubmit with the the end of today', async () => {
+        const { props, user } = setup(
+          {
+            type: 'end'
+          }
+        )
 
-      enzymeWrapper.instance().picker.current = {}
-      enzymeWrapper.instance().picker.current.setState = jest.fn()
+        const button = screen.getByRole('button', { name: 'Today' })
+        await user.click(button)
 
-      enzymeWrapper.instance().onInputBlur = jest.fn()
-      enzymeWrapper.instance().onChange = jest.fn()
-      const { onChange, onTodayClick } = enzymeWrapper.instance()
+        expect(props.onSubmit.mock.calls[0][0].format(props.format))
+          .toEqual(moment.utc('2020-05-15 00:00:00').endOf('day').format(props.format))
 
-      enzymeWrapper.setProps({ type: 'end' })
-
-      MockDate.set('09/03/1988')
-
-      onTodayClick()
-
-      expect(onChange).toHaveBeenCalledTimes(1)
-
-      // This is because the date will become endOf('day') on Blur
-      expect(onChange).toHaveBeenCalledWith('1988-09-03 23:59:59')
-
-      MockDate.reset()
+        expect(props.onSubmit.mock.calls[0][1]).toEqual(true)
+      })
     })
   })
 
   describe('onClearClick', () => {
-    test('triggers the onChange function with an empty string', () => {
-      const { enzymeWrapper } = setup()
+    test('calls onSubmit with no value', async () => {
+      const { props, user } = setup(
+        {
+          type: 'start',
+          value: '2006-04-01T00:40:00.000Z'
+        }
+      )
 
-      enzymeWrapper.instance().picker.current = {}
-      enzymeWrapper.instance().picker.current.setState = jest.fn()
+      const button = screen.getByRole('button', { name: 'Clear' })
+      await user.click(button)
 
-      enzymeWrapper.instance().onChange = jest.fn()
-      const { onClearClick, onChange } = enzymeWrapper.instance()
+      expect(props.onSubmit).toHaveBeenCalledTimes(2)
 
-      onClearClick()
+      expect(props.onSubmit.mock.calls[0][0].format(props.format))
+        .toEqual(moment.utc('2020-05-15').startOf('day').format(props.format))
 
-      expect(onChange).toHaveBeenCalledTimes(2)
-      expect(onChange).toHaveBeenCalledWith('')
+      expect(props.onSubmit.mock.calls[0][1]).toEqual(false)
+      expect(props.onSubmit.mock.calls[1][0].format(props.format)).toEqual(moment.utc('').format(props.format))
+      expect(props.onSubmit.mock.calls[1][1]).toEqual(true)
     })
   })
 
-  describe('onChange', () => {
-    test('when given an empty string, passes an invalid moment object', () => {
-      const { enzymeWrapper, props } = setup()
-      const { onChange } = enzymeWrapper.instance()
-      const { onSubmit } = props
-
-      onChange('')
-
-      expect(onSubmit).toHaveBeenCalledTimes(1)
-      expect(moment.isMoment(onSubmit.mock.calls[0][0]))
-        .toEqual(true)
-
-      expect(onSubmit.mock.calls[0][0].isValid())
-        .toEqual(false)
-    })
-
-    test('when given an invalid date, passes an invalid moment object', () => {
-      const { enzymeWrapper, props } = setup()
-      const { onChange } = enzymeWrapper.instance()
-      const { onSubmit } = props
-
-      onChange('1988-09-0e 09:00:00')
-
-      expect(onSubmit).toHaveBeenCalledTimes(1)
-      expect(moment.isMoment(onSubmit.mock.calls[0][0]))
-        .toEqual(true)
-
-      expect(onSubmit.mock.calls[0][0].isValid())
-        .toEqual(false)
-    })
-
-    test('when given an custom time, passes a valid moment object with that time', () => {
-      const { enzymeWrapper, props } = setup()
-      const { onChange } = enzymeWrapper.instance()
-      const { onSubmit } = props
-
-      onChange('1988-09-03 09:00:00')
-
-      expect(onSubmit).toHaveBeenCalledTimes(1)
-      expect(moment.isMoment(onSubmit.mock.calls[0][0]))
-        .toEqual(true)
-
-      expect(onSubmit.mock.calls[0][0].toISOString())
-        .toEqual('1988-09-03T09:00:00.000Z')
-    })
-
-    describe('when not given an custom time', () => {
-      test('the "start" input passes the correct object', () => {
-        const { enzymeWrapper, props } = setup()
-        const { onChange } = enzymeWrapper.instance()
-
-        const { onSubmit } = props
-        enzymeWrapper.setProps({ type: 'start' })
-
-        onChange(moment.utc('1988-09-03'))
-
-        expect(onSubmit).toHaveBeenCalledTimes(1)
-        expect(moment.isMoment(onSubmit.mock.calls[0][0]))
-          .toEqual(true)
-
-        expect(onSubmit.mock.calls[0][0].toISOString())
-          .toEqual('1988-09-03T00:00:00.000Z')
-      })
-
-      test('the "end" input passes the correct object', () => {
-        const { enzymeWrapper, props } = setup()
-        const { onChange } = enzymeWrapper.instance()
-
-        const { onSubmit } = props
-        enzymeWrapper.setProps({ type: 'end' })
-
-        onChange(moment.utc('1988-09-03'))
-
-        expect(onSubmit).toHaveBeenCalledTimes(1)
-        expect(moment.isMoment(onSubmit.mock.calls[0][0]))
-          .toEqual(true)
-
-        expect(onSubmit.mock.calls[0][0].toISOString())
-          .toEqual('1988-09-03T23:59:59.999Z')
-      })
-
-      test('without when "start" and "end" defined, null is passed', () => {
-        const { enzymeWrapper, props } = setup()
-        const { onChange } = enzymeWrapper.instance()
-        const { onSubmit } = props
-        enzymeWrapper.setProps({ type: null })
-
-        onChange(moment.utc('1988-09-03'))
-
-        expect(onSubmit).toHaveBeenCalledTimes(1)
-        expect(onSubmit.mock.calls[0][0])
-          .toEqual(null)
-      })
-    })
-  })
-
-  describe('isValidDate', () => {
+  describe('when viewing dates earlier than the minDate', () => {
     beforeEach(() => {
-      MockDate.set('07/02/1984')
+      MockDate.set('1965')
     })
 
-    afterEach(() => {
-      MockDate.reset()
+    test('does not allow dates before minDate to be selected', async () => {
+      setup({
+        type: 'start'
+      })
+
+      const button = screen.getByRole('cell', { name: '1959' })
+
+      expect(button).toHaveClass('rdtDisabled')
     })
+  })
 
-    test('when passed a date thats too early, returns false', () => {
-      const { enzymeWrapper } = setup()
-      const { isValidDate } = enzymeWrapper.instance()
+  describe('when viewing dates later than the maxDate', () => {
+    test('does not allow dates before minDate to be selected', async () => {
+      setup({
+        type: 'start'
+      })
 
-      const value = isValidDate(moment.utc('1959-12-30'))
+      const button = screen.getByRole('cell', { name: '2025' })
 
-      expect(value).toEqual(false)
-    })
-
-    test('when passed a date in the future, returns false', () => {
-      const { enzymeWrapper } = setup()
-      const { isValidDate } = enzymeWrapper.instance()
-
-      const value = isValidDate(moment.utc(moment.utc().add(1, 'day')))
-
-      expect(value).toEqual(false)
-    })
-
-    test('when passed a date one day in the past, returns true', () => {
-      const { enzymeWrapper } = setup()
-      const { isValidDate } = enzymeWrapper.instance()
-
-      const value = isValidDate(moment.utc(moment.utc().add(-1, 'day')))
-
-      expect(value).toEqual(true)
+      expect(button).toHaveClass('rdtDisabled')
     })
   })
 })

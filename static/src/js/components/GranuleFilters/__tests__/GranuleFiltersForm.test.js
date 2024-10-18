@@ -6,6 +6,7 @@ import {
 } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
+import MockDate from 'mockdate'
 
 import GranuleFiltersForm from '../GranuleFiltersForm'
 
@@ -20,6 +21,8 @@ jest.mock('formik', () => ({
 // TODO: Figure out how to test validation @low
 
 const setup = (overrideProps) => {
+  const user = userEvent.setup()
+
   const handleBlur = jest.fn()
   const handleChange = jest.fn()
   const handleSubmit = jest.fn()
@@ -49,8 +52,6 @@ const setup = (overrideProps) => {
   render(
     <GranuleFiltersForm {...props} />
   )
-
-  const user = userEvent.setup()
 
   return {
     handleBlur,
@@ -242,8 +243,91 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls the correct callbacks on startDate submit', async () => {
+          MockDate.set('2019-08-13')
+
           const {
-            onMetricsGranuleFilter, setFieldTouched, setFieldValue, user
+            handleSubmit,
+            onMetricsGranuleFilter,
+            setFieldTouched,
+            setFieldValue,
+            user
+          } = setup({
+            values: {
+              temporal: {
+                startDate: '',
+                endDate: '2019-08-14T23:59:59:999Z'
+              }
+            }
+          })
+
+          const button = screen.getAllByRole('button', { name: 'Today' })[0]
+          await user.click(button)
+
+          expect(setFieldTouched).toHaveBeenCalledTimes(1)
+          expect(setFieldTouched).toHaveBeenCalledWith('temporal.startDate')
+
+          expect(setFieldValue).toHaveBeenCalledTimes(1)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '2019-08-13T00:00:00.000Z')
+
+          expect(handleSubmit).toHaveBeenCalledTimes(1)
+          expect(handleSubmit).toHaveBeenCalledWith()
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+            type: 'Set Start Date',
+            value: '2019-08-13T00:00:00.000Z'
+          })
+
+          MockDate.reset()
+        })
+
+        test('calls the correct callbacks on startDate submit with an empty value', async () => {
+          MockDate.set('2019-08-13')
+
+          const {
+            handleSubmit,
+            onMetricsGranuleFilter,
+            setFieldTouched,
+            setFieldValue,
+            user
+          } = setup({
+            values: {
+              temporal: {
+                startDate: '',
+                endDate: '2019-08-14T23:59:59:999Z'
+              }
+            }
+          })
+
+          const button = screen.getAllByRole('button', { name: 'Clear' })[0]
+          await user.click(button)
+
+          // `onClearClick` calls `onChange` twice
+          expect(setFieldTouched).toHaveBeenCalledTimes(2)
+          expect(setFieldTouched).toHaveBeenCalledWith('temporal.startDate')
+
+          expect(setFieldValue).toHaveBeenCalledTimes(2)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '')
+
+          expect(handleSubmit).toHaveBeenCalledTimes(1)
+          expect(handleSubmit).toHaveBeenCalledWith()
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+            type: 'Set Start Date',
+            value: ''
+          })
+
+          MockDate.reset()
+        })
+
+        test('does not call handleSubmit if shouldSubmit is false on startDate submit', async () => {
+          const {
+            handleSubmit,
+            onMetricsGranuleFilter,
+            setFieldTouched,
+            setFieldValue,
+            user
           } = setup({
             values: {
               temporal: {
@@ -254,29 +338,30 @@ describe('GranuleFiltersForm component', () => {
           })
 
           const startDateTextField = screen.getByRole('textbox', { name: 'Start Date' })
+          await user.type(startDateTextField, '2019')
 
-          await user.click(startDateTextField)
-          await user.type(startDateTextField, '2019-08-13')
-
-          await user.tab(startDateTextField)
-          expect(setFieldTouched).toHaveBeenCalledTimes(10)
+          expect(setFieldTouched).toHaveBeenCalledTimes(4)
           expect(setFieldTouched).toHaveBeenCalledWith('temporal.startDate')
 
-          expect(setFieldValue).toHaveBeenCalledTimes(10)
+          expect(setFieldValue).toHaveBeenCalledTimes(4)
           expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '2')
           expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '0')
           expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '1')
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '9')
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(10)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
-            type: 'Set Start Date',
-            value: '2'
-          })
+          expect(handleSubmit).toHaveBeenCalledTimes(0)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
         })
 
         test('calls the correct callbacks on endDate submit', async () => {
+          MockDate.set('2019-08-14')
+
           const {
-            onMetricsGranuleFilter, setFieldTouched, setFieldValue, user
+            handleSubmit,
+            onMetricsGranuleFilter,
+            setFieldTouched,
+            setFieldValue,
+            user
           } = setup({
             values: {
               temporal: {
@@ -285,30 +370,106 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const endDateTextField = screen.getByRole('textbox', { name: 'End Date' })
 
-          await user.click(endDateTextField)
-          await user.type(endDateTextField, '2019-08-14')
-          await user.tab(endDateTextField)
+          const button = screen.getAllByRole('button', { name: 'Today' })[1]
+          await user.click(button)
 
-          expect(setFieldTouched).toHaveBeenCalledTimes(10)
+          expect(setFieldTouched).toHaveBeenCalledTimes(1)
           expect(setFieldTouched).toHaveBeenCalledWith('temporal.endDate')
 
-          expect(setFieldValue).toHaveBeenCalledTimes(10)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2')
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '0')
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '1')
+          expect(setFieldValue).toHaveBeenCalledTimes(1)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2019-08-14T23:59:59.000Z')
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(10)
+          expect(handleSubmit).toHaveBeenCalledTimes(1)
+          expect(handleSubmit).toHaveBeenCalledWith()
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
           expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set End Date',
-            value: '2'
+            value: '2019-08-14T23:59:59.000Z'
           })
+
+          MockDate.reset()
+        })
+
+        test('calls the correct callbacks on endDate submit with an empty value', async () => {
+          MockDate.set('2019-08-14')
+
+          const {
+            handleSubmit,
+            onMetricsGranuleFilter,
+            setFieldTouched,
+            setFieldValue,
+            user
+          } = setup({
+            values: {
+              temporal: {
+                startDate: '2019-08-13T00:00:00:000Z',
+                endDate: ''
+              }
+            }
+          })
+
+          const button = screen.getAllByRole('button', { name: 'Clear' })[1]
+          await user.click(button)
+
+          // `onClearClick` calls `onChange` twice
+          expect(setFieldTouched).toHaveBeenCalledTimes(2)
+          expect(setFieldTouched).toHaveBeenCalledWith('temporal.endDate')
+
+          expect(setFieldValue).toHaveBeenCalledTimes(2)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '')
+
+          expect(handleSubmit).toHaveBeenCalledTimes(1)
+          expect(handleSubmit).toHaveBeenCalledWith()
+
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+            type: 'Set End Date',
+            value: ''
+          })
+
+          MockDate.reset()
+        })
+
+        test('does not call handleSubmit if shouldSubmit is false on endDate submit', async () => {
+          const {
+            handleSubmit,
+            onMetricsGranuleFilter,
+            setFieldTouched,
+            setFieldValue,
+            user
+          } = setup({
+            values: {
+              temporal: {
+                startDate: '2019-08-13T00:00:00:000Z',
+                endDate: ''
+              }
+            }
+          })
+
+          const endDateTextField = screen.getByRole('textbox', { name: 'End Date' })
+          await user.type(endDateTextField, '2020')
+
+          expect(setFieldTouched).toHaveBeenCalledTimes(4)
+          expect(setFieldTouched).toHaveBeenCalledWith('temporal.endDate')
+
+          expect(setFieldValue).toHaveBeenCalledTimes(4)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2')
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '0')
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2')
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '0')
+
+          expect(handleSubmit).toHaveBeenCalledTimes(0)
+          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
         })
 
         test('calls the correct callbacks on onRecurringToggle', async () => {
           const {
-            onMetricsGranuleFilter, user, setFieldTouched, setFieldValue
+            onMetricsGranuleFilter,
+            setFieldTouched,
+            setFieldValue,
+            user
           } = setup({
             values: {
               temporal: {
@@ -341,7 +502,11 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls the correct callbacks on onRecurringToggle when a leap day is involved', async () => {
-          const { user, setFieldTouched, setFieldValue } = setup({
+          const {
+            setFieldTouched,
+            setFieldValue,
+            user
+          } = setup({
             values: {
               temporal: {
                 startDate: '2019-06-01T00:00:00.000Z',
@@ -1041,7 +1206,15 @@ describe('GranuleFiltersForm component', () => {
       })
 
       test('calls the correct callbacks on startDate submit', async () => {
-        const { setFieldTouched, setFieldValue, user } = setup({
+        MockDate.set('2019-08-13')
+
+        const {
+          handleSubmit,
+          onMetricsGranuleFilter,
+          setFieldTouched,
+          setFieldValue,
+          user
+        } = setup({
           collectionMetadata: {
             isOpenSearch: false,
             tags: {
@@ -1057,22 +1230,122 @@ describe('GranuleFiltersForm component', () => {
             }
           }
         })
-        const equatorCrossingStartDateTextField = screen.getAllByRole('textbox', { name: 'Start Date' })[1]
 
-        await user.click(equatorCrossingStartDateTextField)
-        await user.type(equatorCrossingStartDateTextField, '2019-08-13')
-        await user.tab(equatorCrossingStartDateTextField)
+        const button = screen.getAllByRole('button', { name: 'Today' })[2]
+        await user.click(button)
 
-        expect(setFieldTouched).toHaveBeenCalledTimes(10)
+        expect(setFieldTouched).toHaveBeenCalledTimes(1)
         expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.startDate')
-        expect(setFieldValue).toHaveBeenCalledTimes(10)
+
+        expect(setFieldValue).toHaveBeenCalledTimes(1)
+        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '2019-08-13T00:00:00.000Z')
+
+        expect(handleSubmit).toHaveBeenCalledTimes(1)
+        expect(handleSubmit).toHaveBeenCalledWith()
+
+        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          type: 'Equatorial Crossing Set Start Date',
+          value: '2019-08-13T00:00:00.000Z'
+        })
+
+        MockDate.reset()
+      })
+
+      test('calls the correct callbacks on startDate submit with an empty value', async () => {
+        const {
+          handleSubmit,
+          onMetricsGranuleFilter,
+          setFieldTouched,
+          setFieldValue,
+          user
+        } = setup({
+          collectionMetadata: {
+            isOpenSearch: false,
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: { orbit_calculated_spatial_domains: true }
+              }
+            }
+          },
+          values: {
+            equatorCrossingDate: {
+              startDate: '',
+              endDate: '2019-08-14T23:59:59:999Z'
+            }
+          }
+        })
+
+        const button = screen.getAllByRole('button', { name: 'Clear' })[2]
+        await user.click(button)
+
+        // `onClearClick` calls `onChange` twice
+        expect(setFieldTouched).toHaveBeenCalledTimes(2)
+        expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.startDate')
+
+        expect(setFieldValue).toHaveBeenCalledTimes(2)
+        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '')
+
+        expect(handleSubmit).toHaveBeenCalledTimes(1)
+        expect(handleSubmit).toHaveBeenCalledWith()
+
+        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          type: 'Equatorial Crossing Set Start Date',
+          value: ''
+        })
+      })
+
+      test('does not call handleSubmit if shouldSubmit is false on startDate submit', async () => {
+        const {
+          handleSubmit,
+          onMetricsGranuleFilter,
+          setFieldTouched,
+          setFieldValue,
+          user
+        } = setup({
+          collectionMetadata: {
+            isOpenSearch: false,
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: { orbit_calculated_spatial_domains: true }
+              }
+            }
+          },
+          values: {
+            equatorCrossingDate: {
+              startDate: '',
+              endDate: '2019-08-14T23:59:59:999Z'
+            }
+          }
+        })
+
+        const endDateTextField = screen.getAllByRole('textbox', { name: 'Start Date' })[1]
+        await user.type(endDateTextField, '2019')
+
+        expect(setFieldTouched).toHaveBeenCalledTimes(4)
+        expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.startDate')
+
+        expect(setFieldValue).toHaveBeenCalledTimes(4)
         expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '2')
         expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '0')
         expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '1')
+        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '9')
+
+        expect(handleSubmit).toHaveBeenCalledTimes(0)
+        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
       })
 
       test('calls the correct callbacks on endDate submit', async () => {
-        const { setFieldTouched, setFieldValue, user } = setup({
+        MockDate.set('2019-08-14')
+
+        const {
+          handleSubmit,
+          onMetricsGranuleFilter,
+          setFieldTouched,
+          setFieldValue,
+          user
+        } = setup({
           collectionMetadata: {
             isOpenSearch: false,
             tags: {
@@ -1089,18 +1362,113 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const equatorCrossingEndDateTextField = screen.getAllByRole('textbox', { name: 'End Date' })[1]
+        const button = screen.getAllByRole('button', { name: 'Today' })[3]
+        await user.click(button)
 
-        await user.click(equatorCrossingEndDateTextField)
-        await user.type(equatorCrossingEndDateTextField, '2019-08-14')
-        await user.tab(equatorCrossingEndDateTextField)
-
-        expect(setFieldTouched).toHaveBeenCalledTimes(10)
+        expect(setFieldTouched).toHaveBeenCalledTimes(1)
         expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.endDate')
-        expect(setFieldValue).toHaveBeenCalledTimes(10)
+
+        expect(setFieldValue).toHaveBeenCalledTimes(1)
+        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2019-08-14T23:59:59.000Z')
+
+        expect(handleSubmit).toHaveBeenCalledTimes(1)
+        expect(handleSubmit).toHaveBeenCalledWith()
+
+        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          type: 'Equatorial Crossing Set End Date',
+          value: '2019-08-14T23:59:59.000Z'
+        })
+
+        MockDate.reset()
+      })
+
+      test('calls the correct callbacks on endDate submit with an empty value', async () => {
+        MockDate.set('2019-08-14')
+
+        const {
+          handleSubmit,
+          onMetricsGranuleFilter,
+          setFieldTouched,
+          setFieldValue,
+          user
+        } = setup({
+          collectionMetadata: {
+            isOpenSearch: false,
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: { orbit_calculated_spatial_domains: true }
+              }
+            }
+          },
+          values: {
+            equatorCrossingDate: {
+              startDate: '2019-08-13T00:00:00:000Z',
+              endDate: ''
+            }
+          }
+        })
+
+        const button = screen.getAllByRole('button', { name: 'Clear' })[3]
+        await user.click(button)
+
+        // `onClearClick` calls `onChange` twice
+        expect(setFieldTouched).toHaveBeenCalledTimes(2)
+        expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.endDate')
+
+        expect(setFieldValue).toHaveBeenCalledTimes(2)
+        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '')
+
+        expect(handleSubmit).toHaveBeenCalledTimes(1)
+        expect(handleSubmit).toHaveBeenCalledWith()
+
+        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          type: 'Equatorial Crossing Set End Date',
+          value: ''
+        })
+
+        MockDate.reset()
+      })
+
+      test('does not call handleSubmit if shouldSubmit is false on endDate submit', async () => {
+        const {
+          handleSubmit,
+          onMetricsGranuleFilter,
+          setFieldTouched,
+          setFieldValue,
+          user
+        } = setup({
+          collectionMetadata: {
+            isOpenSearch: false,
+            tags: {
+              'edsc.extra.serverless.collection_capabilities': {
+                data: { orbit_calculated_spatial_domains: true }
+              }
+            }
+          },
+          values: {
+            equatorCrossingDate: {
+              startDate: '2019-08-13T00:00:00:000Z',
+              endDate: ''
+            }
+          }
+        })
+
+        const endDateTextField = screen.getAllByRole('textbox', { name: 'End Date' })[1]
+        await user.type(endDateTextField, '2020')
+
+        expect(setFieldTouched).toHaveBeenCalledTimes(4)
+        expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.endDate')
+
+        expect(setFieldValue).toHaveBeenCalledTimes(4)
         expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2')
         expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '0')
-        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '1')
+        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2')
+        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '0')
+
+        expect(handleSubmit).toHaveBeenCalledTimes(0)
+        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
       })
     })
   })
