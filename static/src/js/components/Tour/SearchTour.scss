@@ -21,7 +21,7 @@
     letter-spacing: -1%;
   }
 
-  &__content, 
+  &__content,
   &__webinar-description {
     font-size: 1rem;
     margin-bottom: 1.25rem;
@@ -176,3 +176,16 @@ kbd {
 .button-tour-finish {
   min-width: 5.625rem;
 }
+
+.temp-right-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0);
+  width: 4000px;
+  left: calc(100%);
+  pointer-events: none;
+}
+

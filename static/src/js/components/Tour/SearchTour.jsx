@@ -56,6 +56,21 @@ const SearchTour = () => {
       type
     } = data
 
+    // Create a temporary div for the map overlay when the tour is opened
+    if (action === 'start') {
+      const tempDiv = document.createElement('div')
+      tempDiv.classList.add('temp-right-overlay')
+
+      const [panelEl] = document.getElementsByClassName('panels')
+      panelEl.appendChild(tempDiv)
+    }
+
+    // Remove the temporary div when the tour is closed
+    if (action === 'close') {
+      const [tempDiv] = document.getElementsByClassName('temp-right-overlay')
+      tempDiv.remove()
+    }
+
     if ([STATUS.FINISHED, STATUS.SKIPPED, STATUS.PAUSED].includes(status)
           || action === ACTIONS.CLOSE) {
       setRunTour(false)

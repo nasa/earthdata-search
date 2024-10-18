@@ -326,7 +326,7 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
     styles: commonStyles
   },
   {
-    target: '.right-overlay',
+    target: '.temp-right-overlay',
     content: (
       <div className="search-tour__content-wrapper">
         <StepCounter currentStep={stepIndex} />
