@@ -3,7 +3,6 @@ import { test, expect } from 'playwright-test-coverage'
 const expectWithinMargin = async (actual, expected, margin) => {
   Object.keys(expected).forEach((key) => {
     const diff = Math.abs(actual[key] - expected[key])
-    console.error(`actual: ${actual[key]}, expected: ${expected[key]}, delta: ${diff}`)
     expect.soft(diff).toBeLessThanOrEqual(margin)
   })
 }
@@ -17,8 +16,6 @@ test.describe('Joyride Tour Navigation', () => {
   test('should navigate through the Joyride tour', async ({ page }) => {
     // Start the tour by clicking the "Start Tour" button
     await page.click('button:has-text("Start Tour")')
-
-    console.log(`Viewport: ${page.viewportSize().width} x ${page.viewportSize().height}`)
 
     // Start Tour View: Welcome to Earthdata Search
     await expect(page.locator('.search-tour__welcome')).toContainText('Welcome to Earthdata Search!')
