@@ -12,11 +12,6 @@ const expectWithinMargin = async (actual, expected, margin) => {
 
 test.describe('Joyride Tour Navigation', () => {
   test.beforeEach(async ({ page, context }) => {
-    await page.setViewportSize({
-      width: 1280,
-      height: 720
-    })
-
     await login(context)
     await page.goto('/search')
   })
