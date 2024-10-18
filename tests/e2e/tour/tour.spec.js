@@ -1,5 +1,7 @@
 import { test, expect } from 'playwright-test-coverage'
 
+import singleCollection from './__mocks__/single_collection.json'
+
 const expectWithinMargin = async (actual, expected, margin) => {
   Object.keys(expected).forEach((key) => {
     const diff = Math.abs(actual[key] - expected[key])
@@ -10,6 +12,13 @@ const expectWithinMargin = async (actual, expected, margin) => {
 test.describe('Joyride Tour Navigation', () => {
   test.beforeEach(async ({ page }) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+    await page.route(/collections.json/, async (route) => {
+      await route.fulfill({
+        json: singleCollection.body,
+        headers: singleCollection.headers
+      })
+    })
+
     await page.goto('/search')
   })
 
