@@ -47,6 +47,9 @@ const SearchTour = () => {
       }
     }
 
+    // On the step where we highlight the map, we are creating an element
+    // to overlay the visible portion of the map and highlighting that
+    // element with the tour spotlight
     let overlayDiv
     if (stepIndex === 10) {
       const sidebarEl = document.querySelector('.sidebar')
