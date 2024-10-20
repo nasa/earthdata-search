@@ -32,6 +32,7 @@ function setup(overrideProps) {
     onUpdateProjectName: jest.fn(),
     onFetchContactInfo: jest.fn(),
     ursProfile: {},
+    onStartTour: jest.fn(),
     ...overrideProps
   }
 
