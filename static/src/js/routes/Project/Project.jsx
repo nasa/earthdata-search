@@ -18,7 +18,6 @@ import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import Spinner from '../../components/Spinner/Spinner'
-import SecondaryToolbarContainer from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 

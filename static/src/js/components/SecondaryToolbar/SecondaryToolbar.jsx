@@ -14,7 +14,8 @@ import {
   FaFolder,
   FaLock,
   FaSave,
-  FaUser
+  FaUser,
+  FaLightbulb
 } from 'react-icons/fa'
 import TourContext from '../../contexts/TourContext'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
@@ -125,7 +126,7 @@ class SecondaryToolbar extends Component {
     } = this.props
 
     const { disableSiteTour } = getApplicationConfig()
-
+    console.log('🚀 ~ file: SecondaryToolbar.jsx:129 ~ SecondaryToolbar ~ disableSiteTour:', disableSiteTour)
     const { first_name: firstName = '' } = ursProfile
 
     const loggedIn = authToken !== ''
@@ -392,7 +393,10 @@ class SecondaryToolbar extends Component {
               <Dropdown.Toggle
                 className="secondary-toolbar__start-tour-button"
                 as={Button}
+                icon={FaLightbulb}
+                iconSize="0.825rem"
                 onClick={setRunTour}
+                bootstrapVariant="light"
                 label="Want to learn more? Click here to take a tour of our site."
               >
                 Start Tour

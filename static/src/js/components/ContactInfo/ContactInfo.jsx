@@ -8,7 +8,6 @@ import { isEmpty } from 'lodash-es'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
-
 import Spinner from '../Spinner/Spinner'
 
 import './ContactInfo.scss'

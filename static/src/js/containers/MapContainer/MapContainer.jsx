@@ -268,9 +268,7 @@ export const MapContainer = (props) => {
       projection={projection}
       shapefile={shapefile}
       zoom={zoom}
-    >
-      asd
-    </MapWrapper>
+    />
   )
 }
 

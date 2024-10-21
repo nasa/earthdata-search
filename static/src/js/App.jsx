@@ -213,6 +213,7 @@ class App extends Component {
                         render={
                           () => (
                             <>
+                              <SearchTour />
                               <Search />
                               <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
                                 <EdscMapContainer />
