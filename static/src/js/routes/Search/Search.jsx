@@ -38,7 +38,6 @@ import SearchPanelsContainer from '../../containers/SearchPanelsContainer/Search
 import SearchSidebarHeaderContainer
   from '../../containers/SearchSidebarHeaderContainer/SearchSidebarHeaderContainer'
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
-import SecondaryToolbarContainer from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'

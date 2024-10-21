@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import SubscriptionsListContainer from '../../containers/SubscriptionsListContainer/SubscriptionsListContainer'
-import SecondaryToolbarContainer from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 
 export const Subscriptions = () => {
   const { edscHost } = getEnvironmentConfig()
