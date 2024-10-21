@@ -334,7 +334,7 @@ class SecondaryToolbar extends Component {
     const saveProjectDropdown = (
       <Dropdown
         show={projectDropdownOpen}
-        className="secondary-toolbar__project-name-dropdown "
+        className="secondary-toolbar__project-name-dropdown"
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
@@ -408,7 +408,9 @@ class SecondaryToolbar extends Component {
     )
 
     const showSaveProjectDropdown = pathStartsWith(location.pathname, ['/search']) && loggedIn
+    console.log('🚀 ~ file: SecondaryToolbar.jsx:412 ~ SecondaryToolbar ~ projectCollectionIds:', projectCollectionIds)
     const showViewProjectLink = (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
+    console.log('🚀 ~ file: SecondaryToolbar.jsx:412 ~ SecondaryToolbar ~ showViewProjectLink:', showViewProjectLink)
     const showStartTourButton = location.pathname === '/search' && (disableSiteTour !== 'true')
 
     return (
