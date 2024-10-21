@@ -50,12 +50,9 @@ export const SecondaryToolbarContainer = (props) => {
   useEffect(() => {
     // If we have a authToken, but no ursProfile, request the contact info
     if (authToken && !(ursProfile && ursProfile.first_name)) {
-      console.log('🚀 ~ file: SecondaryToolbarContainer.jsx:53 ~ ursProfile:', ursProfile)
       onFetchContactInfo()
     }
   }, [authToken])
-
-  console.log('🚀 ~ file: SecondaryToolbarContainer.jsx:57 ~ authToken:', authToken)
 
   return (
     <SecondaryToolbar

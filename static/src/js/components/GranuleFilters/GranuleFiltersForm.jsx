@@ -72,6 +72,7 @@ export const GranuleFiltersForm = (props) => {
     tilingSystem = '',
     temporal = {}
   } = values
+  console.log('🚀 ~ file: GranuleFiltersForm.jsx:68 ~ equatorCrossingLongitude:', equatorCrossingLongitude)
 
   const { isRecurring } = temporal
 

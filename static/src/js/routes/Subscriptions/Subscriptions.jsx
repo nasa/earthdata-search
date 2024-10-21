@@ -20,7 +20,6 @@ export const Subscriptions = () => {
       <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
         <div className="route-wrapper__content">
           <div className="route-wrapper__content-inner">
-            <SecondaryToolbarContainer />
             <SubscriptionsListContainer />
           </div>
         </div>

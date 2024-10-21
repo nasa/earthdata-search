@@ -137,7 +137,6 @@ export const Search = ({
 
   return (
     <div className="route-wrapper route-wrapper--search search">
-      <SecondaryToolbarContainer />
       <SidebarContainer
         headerChildren={(
           <SearchSidebarHeaderContainer />

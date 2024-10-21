@@ -18,10 +18,15 @@
     white-space: nowrap;
   }
 
-  // &__map-border {
+  // &__user-dropdown {
   //   border: 2px solid rgba(0, 0, 0, 0.2);
   //   background-clip: padding-box;
   // }
+
+  &__map-page {
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    background-clip: padding-box;
+  }
 
   .button {
     align-items: center;
@@ -109,11 +114,6 @@
   &__project {
     margin-right: 0.5rem;
   }
-
-  // &__user-dropdown {
-  //   border: 2px solid rgba(0, 0, 0, 0.2);
-  //   background-clip: padding-box;
-  // }
 
   &__project-name-form {
     .input-group {

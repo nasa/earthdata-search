@@ -50,6 +50,11 @@ body.is-panels-will-minimize {
   html {
     font-size: 100%;
   }
+} 
+
+.wrapping-container {
+  position: relative;
+  height: 95%;
 }
 
 @include media-breakpoint-up(xl) {
