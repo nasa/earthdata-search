@@ -107,35 +107,12 @@ class SecondaryToolbar extends Component {
     })
   }
 
-  addBorders() {
-    if (document.querySelector('.leaflet-container')) {
-      console.log('🚀 ~ file: SecondaryToolbar.jsx:110 ~ SecondaryToolbar ~ document.querySelector():', document.querySelector('.leaflet-container'))
-
-      return true
-    }
-
-    return false
-  }
-
   render() {
     const {
       projectDropdownOpen,
       projectName,
       newProjectName
     } = this.state
-
-    const borders = this.addBorders()
-    console.log('🚀 ~ file: SecondaryToolbar.jsx:124 ~ SecondaryToolbar ~ borders:', borders)
-
-    // Const dropDownClasses = classNames([
-    //   'secondary-toolbar__user-dropdown',
-    //   {
-    //     'secondary-toolbar__dropdown-with-border': borders
-    //   }
-    // ])
-
-    const userLoginClassName = borders ? '' : 'secondary-toolbar__user-dropdown'
-    console.log('🚀 ~ file: SecondaryToolbar.jsx:135 ~ SecondaryToolbar ~ userLoginClassName:', userLoginClassName)
 
     const {
       authToken,
@@ -153,11 +130,22 @@ class SecondaryToolbar extends Component {
 
     const loggedIn = authToken !== ''
     const returnPath = window.location.href
+    const { pathname, search } = location
+    let addBorders = false
+
+    console.log('🚀 ~ file: SecondaryToolbar.jsx:131 ~ SecondaryToolbar ~ pathname:', pathname)
+    if (pathStartsWith(pathname, ['/search'])) {
+      addBorders = true
+    }
+
+    // TODO we need to apply this classanme logic to multiple
+    // secondary-toolbar__user-dropdown use this
+    const secondaryToolbarClass = addBorders ? 'secondary-toolbar secondary-toolbar__map-page' : 'secondary-toolbar'
 
     const { apiHost } = getEnvironmentConfig()
 
     // Remove focused collection from back button params
-    const params = parse(location.search, {
+    const params = parse(search, {
       parseArrays: false,
       ignoreQueryPrefix: true
     })
@@ -211,7 +199,6 @@ class SecondaryToolbar extends Component {
 
     const buildProjectLink = (isLoggedIn) => {
       if (!isLoggedIn) {
-        console.log('🚀 ~ file: SecondaryToolbar.jsx:209 ~ SecondaryToolbar ~ isLoggedIn:', isLoggedIn)
         const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
 
         return (
@@ -252,7 +239,6 @@ class SecondaryToolbar extends Component {
 
     const loginLink = (
       <Button
-        className="secondary-toolbar__login "
         bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
         icon={FaLock}
@@ -262,7 +248,7 @@ class SecondaryToolbar extends Component {
       </Button>
     )
     const loggedInDropdown = (
-      <Dropdown className={userLoginClassName}>
+      <Dropdown>
         <Dropdown.Toggle
           label="User menu"
           className="secondary-toolbar__user-dropdown-toggle"
@@ -424,7 +410,7 @@ class SecondaryToolbar extends Component {
     return (
       secondaryToolbarEnabled
       && (
-        <nav className="secondary-toolbar">
+        <nav className={secondaryToolbarClass}>
           {isPath(location.pathname, ['/projects']) && backToSearchLink}
           {isDownloadPathWithId(location.pathname) && backToProjectLink}
           <PortalFeatureContainer authentication>

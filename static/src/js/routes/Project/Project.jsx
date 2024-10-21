@@ -71,7 +71,6 @@ export const Project = (props) => {
         <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
           <div className="route-wrapper__content">
             <div className="route-wrapper__content-inner">
-            <SecondaryToolbarContainer />
               <SavedProjectsContainer />
             </div>
           </div>

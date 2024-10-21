@@ -8,7 +8,6 @@ import {
 
 import OrderStatusContainer from '../../containers/OrderStatusContainer/OrderStatusContainer'
 import DownloadHistoryContainer from '../../containers/DownloadHistoryContainer/DownloadHistoryContainer'
-import SecondaryToolbarContainer from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 
 export const Downloads = ({
   match
@@ -21,7 +20,6 @@ export const Downloads = ({
         <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
           <div className="route-wrapper__content">
             <div className="route-wrapper__content-inner">
-              <SecondaryToolbarContainer />
               <Switch>
                 <Route exact path={`${path}`} component={DownloadHistoryContainer} />
                 <Route exact path={`${path}/:id`} component={OrderStatusContainer} />

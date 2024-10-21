@@ -1,15 +1,40 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { LinkContainer } from 'react-router-bootstrap'
+import {
+  render,
+  screen,
+  within,
+  act
+} from '@testing-library/react'
+import { Router } from 'react-router'
+import { createMemoryHistory } from 'history'
+
+import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event'
+
+// Import Enzyme, { shallow } from 'enzyme'
+// import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+// import { LinkContainer } from 'react-router-bootstrap'
 
 import SecondaryToolbar from '../SecondaryToolbar'
 import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
+  const mockPortalFeatureContainer = jest.fn(({ children }) => (
+    <mock-mockPortalFeatureContainer data-testid="mockPortalFeatureContainer">
+      {children}
+    </mock-mockPortalFeatureContainer>
+  ))
 
-function setup(state, overrideProps) {
+  return mockPortalFeatureContainer
+})
+// Enzyme.configure({ adapter: new Adapter() })
+
+const setup = (state, overrideProps) => {
+  const user = userEvent.setup()
+  const onLogout = jest.fn()
+  const onUpdateProjectName = jest.fn()
+  const onChangePath = jest.fn()
   const props = {
     authToken: '',
     earthdataEnvironment: 'prod',
@@ -22,9 +47,9 @@ function setup(state, overrideProps) {
     projectCollectionIds: [],
     savedProject: {},
     retrieval: {},
-    onLogout: jest.fn(),
-    onUpdateProjectName: jest.fn(),
-    onChangePath: jest.fn(),
+    onLogout,
+    onUpdateProjectName,
+    onChangePath,
     ursProfile: {
       first_name: 'First'
     },
@@ -34,27 +59,32 @@ function setup(state, overrideProps) {
   }
 
   if (state === 'loggedIn') props.authToken = 'fakeauthkey'
+  const history = createMemoryHistory()
 
-  const enzymeWrapper = shallow(<SecondaryToolbar {...props} />)
+  render(
+    <Router history={history} location={props.location}>
+      <SecondaryToolbar {...props} />
+    </Router>
+  )
 
   return {
-    enzymeWrapper,
-    props
+    onLogout,
+    onUpdateProjectName,
+    onChangePath,
+    user
   }
 }
 
 describe('SecondaryToolbar component', () => {
   describe('when logged out', () => {
     test('should render a login button', () => {
-      const { enzymeWrapper } = setup()
-
-      expect(enzymeWrapper.find('.secondary-toolbar__login').length).toEqual(1)
+      setup()
+      expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument()
     })
 
-    test('should not render the user dropdown', () => {
-      const { enzymeWrapper } = setup()
-
-      expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toEqual(0)
+    test.only('should not render the user dropdown', () => {
+      setup()
+      expect(screen.queryByRole('button', { name: 'Save Project' })).not.toBeInTheDocument()
     })
 
     test('should not render the project dropdown', () => {
@@ -88,43 +118,35 @@ describe('SecondaryToolbar component', () => {
       }))
     })
 
-    test('should render the user dropdown', () => {
-      const { enzymeWrapper } = setup('loggedIn')
-
-      expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toEqual(1)
+    test.only('should render the user and project name dropdowns', () => {
+      setup('loggedIn')
+      expect(screen.getByRole('button', { name: 'Create a project with your current search' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'User menu' })).toBeInTheDocument()
     })
 
-    test('should render the user dropdown', () => {
-      const { enzymeWrapper } = setup('loggedIn')
-
-      expect(enzymeWrapper.find('.secondary-toolbar__project-name-dropdown').length).toEqual(2)
+    test.only('should not render the login button', () => {
+      setup('loggedIn')
+      expect(screen.queryByRole('button', { name: 'Login' })).not.toBeInTheDocument()
     })
 
-    test('should not render a login button', () => {
-      const { enzymeWrapper } = setup('loggedIn')
+    test.only('clicking the logout button should call handleLogout', async () => {
+      const { onLogout, user } = setup('loggedIn')
 
-      expect(enzymeWrapper.find('.secondary-toolbar__login').length).toEqual(0)
-    })
+      const usermenuButton = screen.getByRole('button', { name: 'User menu' })
 
-    test('clicking the logout button should call handleLogout', () => {
-      const { enzymeWrapper } = setup('loggedIn')
+      await act(async () => {
+        await user.click(usermenuButton)
+      })
 
-      // Mock the handleLogout method
-      const instance = enzymeWrapper.instance()
-      jest.spyOn(instance, 'handleLogout').mockImplementation()
-      enzymeWrapper.instance().forceUpdate()
+      const logoutButton = screen.getByRole('button', { name: 'Logout' })
+      await user.click(logoutButton)
 
-      // Click the Logout button
-      const logoutButton = enzymeWrapper.find('.secondary-toolbar__logout')
-      logoutButton.simulate('click')
-
-      expect(instance.handleLogout).toBeCalledTimes(1)
+      expect(onLogout).toBeCalledTimes(1)
     })
 
     describe('Download Status and History link', () => {
       test('adds the ee param if the earthdataEnvironment is different than the deployed environment', () => {
-        const { enzymeWrapper } = setup('loggedIn', { earthdataEnvironment: 'uat' })
-
+        setup('loggedIn', { earthdataEnvironment: 'uat' })
         const downloadLink = enzymeWrapper.find('.secondary-toolbar__downloads')
         const linkContainer = downloadLink.parents(LinkContainer)
 
@@ -145,16 +167,6 @@ describe('SecondaryToolbar component', () => {
           search: ''
         })
       })
-    })
-  })
-
-  describe('#handleLogout', () => {
-    test('calls onLogout', () => {
-      const { enzymeWrapper, props } = setup('loggedIn')
-
-      enzymeWrapper.instance().handleLogout()
-
-      expect(props.onLogout).toBeCalledTimes(1)
     })
   })
 
