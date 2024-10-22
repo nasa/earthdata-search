@@ -6,7 +6,9 @@ import AppHeader from '../AppHeader'
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
-  const props = {}
+  const props = {
+    onStartTour: jest.fn()
+  }
   const enzymeWrapper = shallow(<AppHeader {...props} />)
 
   return {
