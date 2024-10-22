@@ -204,10 +204,13 @@ const EDSCTable = ({
   useEffect(() => {
   }, [visibleMiddleIndex])
 
+  // When a user clicks on a granule on the map, it will scroll to that granule in the GranuleResultsTable
   useEffect(() => {
-    const itemIndex = data.findIndex((item) => item.id === focusedItem)
-    if (itemIndex && listRef && listRef.current) {
-      listRef.current.scrollToItem(itemIndex, 'center')
+    if (focusedItem) {
+      const itemIndex = data.findIndex((item) => item.id === focusedItem)
+      if (itemIndex && listRef && listRef.current) {
+        listRef.current.scrollToItem(itemIndex, 'center')
+      }
     }
   }, [focusedItem])
 

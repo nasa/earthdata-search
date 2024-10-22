@@ -157,26 +157,29 @@ export const GranuleResultsListBody = ({
     })
 
     console.log(granuleIndex)
-    
+
     if (granuleIndex >= 0) {
 
       const {
         rowIndex,
         columnIndex
-        } = itemToRowColumnIndicies(granuleIndex, numColumns)
-        
-        console.log(`rowIndex: ${rowIndex}, columnIndex: ${columnIndex}`)
-        console.log(`itemCount: ${itemCount}`)
+      } = itemToRowColumnIndicies(granuleIndex, numColumns)
 
-      infiniteLoaderRef.current._listRef.scrollToItem({
-        rowIndex,
-        columnIndex
-      }, 'start')
+      console.log(`rowIndex: ${rowIndex}, columnIndex: ${columnIndex}`)
+      console.log(`itemCount: ${itemCount}`)
+
+      listRef.current.scrollToItem({
+        rowIndex: rowIndex === 0 ? 0 : rowIndex + 1,
+        columnIndex: columnIndex,
+        align: 'center'
+      })
     }
   }
 
   useEffect(() => {
-    scrollToFocusedGranule(focusedGranuleId)
+    if (focusedGranuleId) {
+      scrollToFocusedGranule(focusedGranuleId)
+    }
   }, [focusedGranuleId])
 
   // `setRowHeight` sets the size in the sizeMap to the height passed from the item.
@@ -223,6 +226,7 @@ export const GranuleResultsListBody = ({
                 listRef.current = list
               }
             }
+            overscanRowCount={3}
             columnCount={numColumns}
             columnWidth={() => (width / numColumns) - (remInPixels / numColumns)}
             height={height}
