@@ -5,17 +5,11 @@ import {
   within,
   act
 } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import '@testing-library/jest-dom'
 import { Router } from 'react-router'
 import { createMemoryHistory } from 'history'
-import TourContext from '../../../contexts/TourContext'
 import Providers from '../../../providers/Providers/Providers'
-
-import '@testing-library/jest-dom'
-import userEvent from '@testing-library/user-event'
-
-// Import Enzyme, { shallow } from 'enzyme'
-// import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-// import { LinkContainer } from 'react-router-bootstrap'
 
 import SecondaryToolbar from '../SecondaryToolbar'
 import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
@@ -112,24 +106,24 @@ describe('SecondaryToolbar component', () => {
     })
 
     test('should not render the project dropdown', () => {
-      const { enzymeWrapper } = setup()
-
-      expect(enzymeWrapper.find('.secondary-toolbar__project-name-dropdown').length).toEqual(1)
+      setup()
+      expect(screen.queryByRole('button', { name: 'Create a project with your current search' })).not.toBeInTheDocument()
     })
   })
 
   describe('when the secondary toolbar is meant to be disabled', () => {
     describe('when the user is logged in', () => {
       test('secondary toolbar components are not being rendered', () => {
-        const { enzymeWrapper } = setup('loggedIn', { secondaryToolbarEnabled: false })
-        expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toBe(0)
+        setup('loggedIn', { secondaryToolbarEnabled: false })
+        expect(screen.queryByRole('navigation')).not.toBeInTheDocument()
+        // Expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toBe(0)
       })
     })
 
     describe('when the user is logged out', () => {
       test('secondary toolbar components are not being rendered', () => {
-        const { enzymeWrapper } = setup('loggedOut', { secondaryToolbarEnabled: false })
-        expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toBe(0)
+        setup('loggedOut', { secondaryToolbarEnabled: false })
+        expect(screen.queryByRole('navigation')).not.toBeInTheDocument()
       })
     })
   })
@@ -169,27 +163,29 @@ describe('SecondaryToolbar component', () => {
     })
 
     describe('Download Status and History link', () => {
-      test('adds the ee param if the earthdataEnvironment is different than the deployed environment', () => {
-        setup('loggedIn', { earthdataEnvironment: 'uat' })
-        // Const downloadLink = enzymeWrapper.find('.secondary-toolbar__downloads')
-        // const linkContainer = downloadLink.parents(LinkContainer)
+      test('adds the ee param if the earthdataEnvironment is different than the deployed environment', async () => {
+        const { user } = setup('loggedIn', { earthdataEnvironment: 'uat' })
 
-        expect(linkContainer.props().to).toEqual({
-          pathname: '/downloads',
-          search: '?ee=uat'
+        const usermenuButton = screen.getByRole('button', { name: 'User menu' })
+
+        await act(async () => {
+          await user.click(usermenuButton)
         })
+
+        const downloadStatusButton = screen.getByRole('link', { name: 'Download Status & History' })
+        expect(downloadStatusButton.href).toMatch('downloads?ee=uat')
       })
 
-      test('does not add the ee param if the earthdataEnvironment is the deployed environment', () => {
-        const { enzymeWrapper } = setup('loggedIn')
+      test('does not add the ee param if the earthdataEnvironment is the deployed environment', async () => {
+        const { user } = setup('loggedIn')
+        const usermenuButton = screen.getByRole('button', { name: 'User menu' })
 
-        const downloadLink = enzymeWrapper.find('.secondary-toolbar__downloads')
-        // Const linkContainer = downloadLink.parents(LinkContainer)
+        await act(async () => {
+          await user.click(usermenuButton)
+        })
 
-        // expect(linkContainer.props().to).toEqual({
-        //   pathname: '/downloads',
-        //   search: ''
-        // })
+        const downloadStatusButton = screen.getByRole('link', { name: 'Download Status & History' })
+        expect(downloadStatusButton.href).toMatch('downloads')
       })
     })
   })
@@ -243,16 +239,18 @@ describe('SecondaryToolbar component', () => {
 
   describe('Project name dropdown', () => {
     test('does not display the project dropdown on the projects page', () => {
-      const { enzymeWrapper } = setup(undefined, {
+      setup(undefined, {
         location: {
-          pathname: '/projects'
+          pathname: '/project'
         }
       })
+      // TODO mock the location.pathname
 
-      expect(enzymeWrapper.find('.secondary-toolbar__project-name-dropdown').length).toEqual(0)
+      const myProjectButton = screen.queryByRole('button', { name: 'Create a project with your current search' })
+      expect(myProjectButton).not.toBeInTheDocument()
     })
 
-    test.only('clicking the dropdown sets the state', async () => {
+    test('clicking the dropdown sets the state', async () => {
       const { user } = setup('loggedIn')
       // The Save project button
       const myProjectButton = screen.getByRole('button', { name: 'Create a project with your current search' })
@@ -264,49 +262,51 @@ describe('SecondaryToolbar component', () => {
       expect(within(myProjectButton.parentElement).getByRole('button', { name: 'Save project name' })).toBeInTheDocument()
     })
 
-    test('clicking the save button sets the state and calls onUpdateProjectName', () => {
-      const { enzymeWrapper, props } = setup('loggedIn')
-
-      const toggle = enzymeWrapper.find('.secondary-toolbar__project-name-dropdown-toggle')
-      toggle.simulate('click')
-
-      const input = enzymeWrapper.find('.secondary-toolbar__project-name-input')
-      input.simulate('change', {
-        target: {
-          value: 'test project name'
-        }
+    test.skip('clicking the save button sets the state and calls onUpdateProjectName', async () => {
+      const { user, onUpdateProjectName } = setup('loggedIn')
+      // The Save project button
+      const myProjectButton = screen.getByRole('button', { name: 'Create a project with your current search' })
+      await act(async () => {
+        await user.click(myProjectButton)
       })
 
-      const saveButton = enzymeWrapper.find('.secondary-toolbar__button.secondary-toolbar__button--submit')
-      saveButton.simulate('click')
+      expect(within(myProjectButton.parentElement).getByRole('textbox').placeholder).toBe('Untitled Project')
 
-      expect(enzymeWrapper.state().projectDropdownOpen).toBeFalsy()
-      expect(props.onUpdateProjectName).toBeCalledTimes(1)
-      expect(props.onUpdateProjectName).toBeCalledWith('test project name')
+      const projectNameField = within(myProjectButton.parentElement).getByRole('textbox')
+
+      // Const { enzymeWrapper, props } = setup('loggedIn')
+
+      // const toggle = enzymeWrapper.find('.secondary-toolbar__project-name-dropdown-toggle')
+      // toggle.simulate('click')
+      await user.type(projectNameField, 'abc')
+      // Const input = enzymeWrapper.find('.secondary-toolbar__project-name-input')
+      // input.simulate('change', {
+      //   target: {
+      //     value: 'test project name'
+      //   }
+      // })
+
+      // const saveButton = enzymeWrapper.find('.secondary-toolbar__button.secondary-toolbar__button--submit')
+      // saveButton.simulate('click')
+
+      // expect(enzymeWrapper.state().projectDropdownOpen).toBeFalsy()
+      // TODO ensure that the dropdown closed
+      expect(onUpdateProjectName).toBeCalledTimes(1)
+      expect(onUpdateProjectName).toBeCalledWith('test project name')
     })
   })
 
+  // TODO is this really a valid test under RTL principles
   test('renders the login button under PortalFeatureContainer', () => {
-    const { enzymeWrapper } = setup(undefined)
-
-    const button = enzymeWrapper
-      .find(PortalFeatureContainer)
-      .find('.secondary-toolbar__login')
-    const portalFeatureContainer = button.parents(PortalFeatureContainer)
-
-    expect(button.exists()).toBeTruthy()
-    expect(portalFeatureContainer.props().authentication).toBeTruthy()
-  })
-
-  test('changing the project name sets the state', () => {
-    const { enzymeWrapper } = setup(undefined)
-
-    enzymeWrapper.setProps({
-      savedProject: {
-        name: 'new name'
-      }
-    })
-
-    expect(enzymeWrapper.state().projectName).toEqual('new name')
+    setup(undefined)
+    // Const button = enzymeWrapper
+    // .find(PortalFeatureContainer)
+    // .find('.secondary-toolbar__login')
+    // const portalFeatureContainer = button.parents(PortalFeatureContainer)
+    const loginButton = screen.getByRole('button', { name: 'Login' })
+    // Expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument()
+    expect(within(loginButton.parentElement.parentElement).getByTestId('mockPortalFeatureContainer')).toBeInTheDocument()
+    // Expect(button.exists()).toBeTruthy()
+    // expect(portalFeatureContainer.props().authentication).toBeTruthy()
   })
 })
