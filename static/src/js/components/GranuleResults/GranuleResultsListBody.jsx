@@ -152,8 +152,6 @@ export const GranuleResultsListBody = ({
       return false
     })
 
-    console.log(granuleIndex)
-
     if (granuleIndex >= 0) {
       const {
         rowIndex,

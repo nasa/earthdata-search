@@ -215,19 +215,6 @@ const EDSCTable = ({
 
   if (initialRowStateAccessor) options.initialRowStateAccessor = initialRowStateAccessor
 
-  const {
-    isFocusedGranule,
-    isHoveredGranule,
-    isInProject,
-    isCollectionInProject
-  } = initialRowStateAccessor
-  console.log(
-    isFocusedGranule,
-    isHoveredGranule,
-    isInProject,
-    isCollectionInProject
-  )
-
   if (!isEmpty(initialTableState)) options.initialState = initialTableState
 
   const {
@@ -386,8 +373,6 @@ const EDSCTable = ({
           tabIndex: 0,
           onKeyPress: (event) => onRowClick(event, row)
         } : {}
-
-      console.log(rowClasses)
 
       return (
         <React.Fragment key={key}>
