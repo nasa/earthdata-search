@@ -12,7 +12,6 @@ import { createMemoryHistory } from 'history'
 import Providers from '../../../providers/Providers/Providers'
 
 import SecondaryToolbar from '../SecondaryToolbar'
-import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
@@ -262,6 +261,7 @@ describe('SecondaryToolbar component', () => {
       expect(within(myProjectButton.parentElement).getByRole('button', { name: 'Save project name' })).toBeInTheDocument()
     })
 
+    // TODO having some weird issue with store mocking
     test.skip('clicking the save button sets the state and calls onUpdateProjectName', async () => {
       const { user, onUpdateProjectName } = setup('loggedIn')
       // The Save project button
@@ -278,7 +278,13 @@ describe('SecondaryToolbar component', () => {
 
       // const toggle = enzymeWrapper.find('.secondary-toolbar__project-name-dropdown-toggle')
       // toggle.simulate('click')
-      await user.type(projectNameField, 'abc')
+      // TODO why do you need the brackets around the abc?
+      await user.type(projectNameField, '{abc}')
+      const saveProjectButton = screen.getByRole('button', { name: 'Save project name' })
+      await act(async () => {
+        await user.click(saveProjectButton)
+      })
+
       // Const input = enzymeWrapper.find('.secondary-toolbar__project-name-input')
       // input.simulate('change', {
       //   target: {
