@@ -147,11 +147,7 @@ export const GranuleResultsListBody = ({
   const scrollToFocusedGranule = (granuleId) => {
     const granuleIndex = granules.findIndex((granule) => {
       const { id } = granule
-      if (granuleId === id) {
-        console.log(id)
-        console.log(granuleId)
-        return true
-      }
+      if (granuleId === id) return true
 
       return false
     })
@@ -159,18 +155,14 @@ export const GranuleResultsListBody = ({
     console.log(granuleIndex)
 
     if (granuleIndex >= 0) {
-
       const {
         rowIndex,
         columnIndex
       } = itemToRowColumnIndicies(granuleIndex, numColumns)
 
-      console.log(`rowIndex: ${rowIndex}, columnIndex: ${columnIndex}`)
-      console.log(`itemCount: ${itemCount}`)
-
       listRef.current.scrollToItem({
         rowIndex: rowIndex === 0 ? 0 : rowIndex + 1,
-        columnIndex: columnIndex,
+        columnIndex,
         align: 'center'
       })
     }

@@ -69,9 +69,6 @@ const innerElementType = forwardRef(({ children, ...rest }, ref) => {
                       width: actualWidth
                     }
 
-                    console.log(trStyle)
-                    console.log(headerGroupStyle)
-
                     return (
                       <div
                         key={key}
@@ -217,7 +214,7 @@ const EDSCTable = ({
   const options = {}
 
   if (initialRowStateAccessor) options.initialRowStateAccessor = initialRowStateAccessor
-  console.log(`initialRowStateAccessor: ${initialRowStateAccessor}`)
+
   const {
     isFocusedGranule,
     isHoveredGranule,
@@ -338,13 +335,10 @@ const EDSCTable = ({
         title: undefined
       }
 
-      console.log(row.state)
       if (rowClassNamesFromRowState) rowClassesFromState = rowClassNamesFromRowState(row.state)
       if (rowTitleFromRowState) rowTitleFromState.title = rowTitleFromRowState(row.state)
 
       const { style: rowStyle, ...rowRest } = rowProps
-
-      console.log(rowStyle)
 
       const rowClasses = classNames([
         'edsc-table__tr',
