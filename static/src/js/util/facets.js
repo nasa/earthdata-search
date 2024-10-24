@@ -32,13 +32,9 @@ export const countSelectedFacets = (groupToCheck, startingValue = 0) => {
  * @return {array} An array of the starting letters.
  */
 export const getStartingLetters = (facets) => {
-  console.log('🚀 ~ file: facets.js:35 ~ facets:', facets)
   const firstLetters = []
   facets.forEach((facet) => {
-    console.log('🚀 ~ file: facets.js:38 ~ firstLetter:', facet.title[0])
-    let firstLetter = facet.title[0]
-    if (!firstLetter) firstLetter = 'a'
-    firstLetter = firstLetter.toUpperCase()
+    let firstLetter = facet.title[0].toUpperCase()
     if (isNumber(firstLetter)) firstLetter = '#'
     if (!firstLetters.includes(firstLetter)) firstLetters.push(firstLetter)
   })

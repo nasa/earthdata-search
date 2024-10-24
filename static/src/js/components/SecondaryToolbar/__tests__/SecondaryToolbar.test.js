@@ -115,7 +115,6 @@ describe('SecondaryToolbar component', () => {
       test('secondary toolbar components are not being rendered', () => {
         setup('loggedIn', { secondaryToolbarEnabled: false })
         expect(screen.queryByRole('navigation')).not.toBeInTheDocument()
-        // Expect(enzymeWrapper.find('.secondary-toolbar__user-dropdown').length).toBe(0)
       })
     })
 
