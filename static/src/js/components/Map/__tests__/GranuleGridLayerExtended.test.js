@@ -246,7 +246,7 @@ describe('GranuleGridLayerExtended class', () => {
       expect(drawClippedImageryMock).toBeCalledWith(
         canvases.imagery,
         boundary,
-        pathsResult,
+        [...pathsResult].reverse(),
         nwPoint,
         tilePoint
       )
