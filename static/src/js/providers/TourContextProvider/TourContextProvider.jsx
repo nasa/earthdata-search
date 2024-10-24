@@ -11,7 +11,6 @@ const { disableSiteTour } = getApplicationConfig()
 const isSiteTourEnabled = disableSiteTour === 'false'
 
 const TourContextProvider = ({ children }) => {
-  console.log('🚀 ~ file: TourContextProvider.jsx:14 ~ children:', children)
   const [runTour, setRunTour] = useState(false)
   useEffect(() => {
     const isLocalhost = window.location.hostname === 'localhost'
