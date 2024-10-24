@@ -87,6 +87,7 @@ class SecondaryToolbar extends Component {
     onUpdateProjectName(newProjectName)
   }
 
+  // Needed for Save Project so page does not change
   handleKeypress(event) {
     if (event.key === 'Enter') {
       this.handleNameSubmit()

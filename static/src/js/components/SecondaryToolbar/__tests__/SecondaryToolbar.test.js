@@ -200,18 +200,44 @@ describe('SecondaryToolbar component', () => {
 
   // TODO for the save Project button
   describe('#handleKeypress', () => {
-    test.skip('calls stopPropagation and preventDefault on \'Enter\' press', () => {
-      const { enzymeWrapper } = setup('loggedIn')
+    test.skip('calls stopPropagation and preventDefault on \'Enter\' press', async () => {
+      const { user } = setup('loggedIn')
+      const myProjectButton = screen.getByRole('button', { name: 'Create a project with your current search' })
+
+      await act(async () => {
+        await user.click(myProjectButton)
+      })
+
+      expect(within(myProjectButton.parentElement).getByRole('textbox').placeholder).toBe('Untitled Project')
+
+      const projectNameField = within(myProjectButton.parentElement).getByRole('textbox')
+
+      await user.type(projectNameField, 'test project name')
+
+      // Use the enter key ensure that event is not propogated
+      await user.type(projectNameField, '{Enter}')
+
+      // Const event = {
+      //   preventDefault: jest.fn(),
+      //   stopPropagation: jest.fn()
+      // }
 
       const event = {
-        key: 'Enter',
-        stopPropagation: jest.fn(),
         preventDefault: jest.fn()
       }
-      enzymeWrapper.instance().handleKeypress(event)
+      expect(event.preventDefault).toHaveBeenCalledTimes(1)
+      // TODO ensure that the dropdown closed?
+      // Expect(event.preventDefault).toBeCalledTimes(0)
 
-      expect(event.stopPropagation).toBeCalledTimes(1)
-      expect(event.preventDefault).toBeCalledTimes(1)
+      // Const event = {
+      //   key: 'Enter',
+      //   stopPropagation: jest.fn(),
+      //   preventDefault: jest.fn()
+      // }
+      // enzymeWrapper.instance().handleKeypress(event)
+
+      // expect(event.stopPropagation).toBeCalledTimes(1)
+      // expect(event.preventDefault).toBeCalledTimes(1)
     })
 
     test.skip('does not call stopPropagation and preventDefault on a non-\'Enter\' press', () => {
@@ -292,21 +318,10 @@ describe('SecondaryToolbar component', () => {
         await user.click(saveProjectButton)
       })
 
-      // Const input = enzymeWrapper.find('.secondary-toolbar__project-name-input')
-      // input.simulate('change', {
-      //   target: {
-      //     value: 'test project name'
-      //   }
-      // })
-
-      // const saveButton = enzymeWrapper.find('.secondary-toolbar__button.secondary-toolbar__button--submit')
-      // saveButton.simulate('click')
-
-      // expect(enzymeWrapper.state().projectDropdownOpen).toBeFalsy()
       expect(onUpdateProjectName).toBeCalledTimes(1)
       expect(onUpdateProjectName).toBeCalledWith('test project name')
       // TODO ensure that the dropdown closed?
-      // expect(enzymeWrapper.state().projectDropdownOpen).toBeFalsy()
+      // Expect(enzymeWrapper.state().projectDropdownOpen).toBeFalsy()
     })
   })
 
