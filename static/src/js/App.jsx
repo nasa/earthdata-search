@@ -233,7 +233,6 @@ class App extends Component {
                       />
                       <Route component={NotFound} />
                     </Switch>
-                    <FooterContainer />
                     <Switch>
                       <Route path={this.portalPaths('/')}>
                         <AboutCSDAModalContainer />
@@ -254,6 +253,7 @@ class App extends Component {
                       </Route>
                     </Switch>
                   </div>
+                  <FooterContainer />
                 </UrlQueryContainer>
               </AuthTokenContainer>
             </ConnectedRouter>
