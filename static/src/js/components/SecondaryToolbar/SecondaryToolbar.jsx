@@ -30,7 +30,6 @@ import { stringify } from '../../util/url/url'
 import Button from '../Button/Button'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './SecondaryToolbar.scss'
 
@@ -204,7 +203,7 @@ class SecondaryToolbar extends Component {
 
         return (
           <Button
-            className="secondary-toolbar__project "
+            className="secondary-toolbar__project"
             bootstrapVariant="light"
             href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`}
             label="View Project"
@@ -224,7 +223,7 @@ class SecondaryToolbar extends Component {
               search: location.search
             }
           }
-          className="secondary-toolbar__project "
+          className="secondary-toolbar__project"
           bootstrapVariant="light"
           label="View Project"
           icon={FaFolder}
@@ -255,8 +254,8 @@ class SecondaryToolbar extends Component {
           className="secondary-toolbar__user-dropdown-toggle"
           bootstrapVariant="light"
           as={Button}
+          icon={FaUser}
         >
-          <EDSCIcon size="0.825rem" icon={FaUser} />
           {
             firstName && (
               <span className="secondary-toolbar__username">
@@ -339,7 +338,7 @@ class SecondaryToolbar extends Component {
         alignRight
       >
         <Dropdown.Toggle
-          className="secondary-toolbar__user-dropdown-toggle"
+          className="secondary-toolbar__project-dropdown-toggle"
           as={Button}
           onClick={this.onToggleProjectDropdown}
           icon={FaSave}
@@ -347,7 +346,9 @@ class SecondaryToolbar extends Component {
           bootstrapVariant="light"
           label="Create a project with your current search"
         >
-          Save Project
+          <span className="secondary-toolbar__username">
+            Save Project
+          </span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Form inline className="flex-nowrap secondary-toolbar__project-name-form">
