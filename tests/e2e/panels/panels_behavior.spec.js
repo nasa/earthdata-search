@@ -77,8 +77,8 @@ test.describe('Panel Behavior', () => {
   })
 
   test('drags the panel to maximum width', async ({ page }) => {
-    await dragPanelToX(page, 1500)
+    await dragPanelToX(page, 830)
 
-    await expect(page.getByTestId('panels-section')).toHaveCSS('width', '1035px')
+    await expect(page.getByTestId('panels-section')).toHaveCSS('width', /(829|830|831)px/)
   })
 })

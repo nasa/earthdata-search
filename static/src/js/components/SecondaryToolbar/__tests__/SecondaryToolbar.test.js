@@ -198,9 +198,8 @@ describe('SecondaryToolbar component', () => {
     })
   })
 
-  // TODO for the save Project button
   describe('#handleKeypress', () => {
-    test.skip('calls stopPropagation and preventDefault on \'Enter\' press', async () => {
+    test('calls stopPropagation and preventDefault on \'Enter\' press', async () => {
       const { user } = setup('loggedIn')
       const myProjectButton = screen.getByRole('button', { name: 'Create a project with your current search' })
 
@@ -215,43 +214,38 @@ describe('SecondaryToolbar component', () => {
       await user.type(projectNameField, 'test project name')
 
       // Use the enter key ensure that event is not propogated
+      const preventDefaultSpy = jest.spyOn(Event.prototype, 'preventDefault')
+      const stopPropagationSpy = jest.spyOn(Event.prototype, 'stopPropagation')
       await user.type(projectNameField, '{Enter}')
 
-      // Const event = {
-      //   preventDefault: jest.fn(),
-      //   stopPropagation: jest.fn()
-      // }
-
-      const event = {
-        preventDefault: jest.fn()
-      }
-      expect(event.preventDefault).toHaveBeenCalledTimes(1)
-      // TODO ensure that the dropdown closed?
-      // Expect(event.preventDefault).toBeCalledTimes(0)
-
-      // Const event = {
-      //   key: 'Enter',
-      //   stopPropagation: jest.fn(),
-      //   preventDefault: jest.fn()
-      // }
-      // enzymeWrapper.instance().handleKeypress(event)
-
-      // expect(event.stopPropagation).toBeCalledTimes(1)
-      // expect(event.preventDefault).toBeCalledTimes(1)
+      expect(preventDefaultSpy).toHaveBeenCalledTimes(1)
+      expect(stopPropagationSpy).toHaveBeenCalledTimes(1)
+      preventDefaultSpy.mockRestore()
+      stopPropagationSpy.mockRestore()
     })
 
-    test.skip('does not call stopPropagation and preventDefault on a non-\'Enter\' press', () => {
-      const { enzymeWrapper } = setup('loggedIn')
+    test('does not call stopPropagation and preventDefault on a non-\'Enter\' press', async () => {
+      const { user } = setup('loggedIn')
+      const myProjectButton = screen.getByRole('button', { name: 'Create a project with your current search' })
 
-      const event = {
-        key: 'Space',
-        stopPropagation: jest.fn(),
-        preventDefault: jest.fn()
-      }
-      enzymeWrapper.instance().handleKeypress(event)
+      await act(async () => {
+        await user.click(myProjectButton)
+      })
 
-      expect(event.stopPropagation).toBeCalledTimes(0)
-      expect(event.preventDefault).toBeCalledTimes(0)
+      expect(within(myProjectButton.parentElement).getByRole('textbox').placeholder).toBe('Untitled Project')
+
+      const projectNameField = within(myProjectButton.parentElement).getByRole('textbox')
+
+      await user.type(projectNameField, 'test project name')
+
+      const preventDefaultSpy = jest.spyOn(Event.prototype, 'preventDefault')
+      const stopPropagationSpy = jest.spyOn(Event.prototype, 'stopPropagation')
+      await user.type(projectNameField, '{space}')
+
+      expect(preventDefaultSpy).toHaveBeenCalledTimes(0)
+      expect(stopPropagationSpy).toHaveBeenCalledTimes(0)
+      preventDefaultSpy.mockRestore()
+      stopPropagationSpy.mockRestore()
     })
   })
 

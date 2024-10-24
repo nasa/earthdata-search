@@ -46,7 +46,12 @@ body.is-panels-will-minimize {
   html {
     font-size: 100%;
   }
-} 
+}
+
+// Prevent tophat from resizing on page load
+body .th-wrapper {
+  font-size: 1rem;
+}
 
 .wrapping-container {
   position: relative;
