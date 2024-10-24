@@ -12,10 +12,10 @@ import { parse } from 'qs'
 import {
   FaArrowCircleLeft,
   FaFolder,
+  FaLightbulb,
   FaLock,
   FaSave,
-  FaUser,
-  FaLightbulb
+  FaUser
 } from 'react-icons/fa'
 import TourContext from '../../contexts/TourContext'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
@@ -125,7 +125,6 @@ class SecondaryToolbar extends Component {
     } = this.props
 
     const { disableSiteTour } = getApplicationConfig()
-    console.log('🚀 ~ file: SecondaryToolbar.jsx:129 ~ SecondaryToolbar ~ disableSiteTour:', disableSiteTour)
     const { first_name: firstName = '' } = ursProfile
 
     const loggedIn = authToken !== ''
@@ -133,14 +132,15 @@ class SecondaryToolbar extends Component {
     const { pathname, search } = location
     let addBorders = false
 
-    console.log('🚀 ~ file: SecondaryToolbar.jsx:131 ~ SecondaryToolbar ~ pathname:', pathname)
+    // Line up secondary toolbar buttons with leaflet controls
     if (pathStartsWith(pathname, ['/search'])) {
       addBorders = true
     }
 
     // TODO we need to apply this classanme logic to multiple
     // secondary-toolbar__user-dropdown use this
-    const secondaryToolbarClass = addBorders ? 'secondary-toolbar secondary-toolbar__map-page' : 'secondary-toolbar'
+    const mapButtonClass = addBorders ? 'secondary-toolbar__map-page' : ''
+    console.log('🚀 ~ file: SecondaryToolbar.jsx:142 ~ SecondaryToolbar ~ mapButtonClass:', mapButtonClass)
 
     const { apiHost } = getEnvironmentConfig()
 
@@ -203,7 +203,7 @@ class SecondaryToolbar extends Component {
 
         return (
           <Button
-            className="secondary-toolbar__project"
+            className={`secondary-toolbar__project ${mapButtonClass}`}
             bootstrapVariant="light"
             href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`}
             label="View Project"
@@ -223,7 +223,7 @@ class SecondaryToolbar extends Component {
               search: location.search
             }
           }
-          className="secondary-toolbar__project"
+          className={`secondary-toolbar__project ${mapButtonClass}`}
           bootstrapVariant="light"
           label="View Project"
           icon={FaFolder}
@@ -239,10 +239,11 @@ class SecondaryToolbar extends Component {
 
     const loginLink = (
       <Button
+        className={`${mapButtonClass}`}
         bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
-        icon={FaLock}
         label="Login"
+        icon={FaLock}
       >
         Login
       </Button>
@@ -251,14 +252,14 @@ class SecondaryToolbar extends Component {
       <Dropdown>
         <Dropdown.Toggle
           label="User menu"
-          className="secondary-toolbar__user-dropdown-toggle"
+          className={`secondary-toolbar__user-dropdown-toggle ${mapButtonClass}`}
           bootstrapVariant="light"
           as={Button}
           icon={FaUser}
         >
           {
             firstName && (
-              <span className="secondary-toolbar__username">
+              <span className="secondary-toolbar__dropdown-text">
                 {firstName}
               </span>
             )
@@ -333,7 +334,7 @@ class SecondaryToolbar extends Component {
     const saveProjectDropdown = (
       <Dropdown
         show={projectDropdownOpen}
-        className="secondary-toolbar__project-name-dropdown"
+        className={`secondary-toolbar__project-name-dropdown ${mapButtonClass}`}
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
@@ -346,7 +347,7 @@ class SecondaryToolbar extends Component {
           bootstrapVariant="light"
           label="Create a project with your current search"
         >
-          <span className="secondary-toolbar__username">
+          <span className="secondary-toolbar__dropdown-text">
             Save Project
           </span>
         </Dropdown.Toggle>
@@ -358,7 +359,7 @@ class SecondaryToolbar extends Component {
                   <FormControl
                     className="secondary-toolbar__project-name-input"
                     name="projectName"
-                    value={newProjectName}
+                    value={newProjectName || ''}
                     placeholder="Untitled Project"
                     onChange={this.onInputChange}
                     onKeyPress={this.handleKeypress}
@@ -384,7 +385,7 @@ class SecondaryToolbar extends Component {
     const startTourButton = (
       <Dropdown
         show={projectDropdownOpen}
-        className="secondary-toolbar__project-name-dropdown"
+        className={`secondary-toolbar__project-name-dropdown ${mapButtonClass}`}
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
@@ -409,15 +410,13 @@ class SecondaryToolbar extends Component {
     )
 
     const showSaveProjectDropdown = pathStartsWith(location.pathname, ['/search']) && loggedIn
-    console.log('🚀 ~ file: SecondaryToolbar.jsx:412 ~ SecondaryToolbar ~ projectCollectionIds:', projectCollectionIds)
     const showViewProjectLink = (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
-    console.log('🚀 ~ file: SecondaryToolbar.jsx:412 ~ SecondaryToolbar ~ showViewProjectLink:', showViewProjectLink)
     const showStartTourButton = location.pathname === '/search' && (disableSiteTour !== 'true')
 
     return (
       secondaryToolbarEnabled
       && (
-        <nav className={secondaryToolbarClass}>
+        <nav className="secondary-toolbar">
           {isPath(location.pathname, ['/projects']) && backToSearchLink}
           {isDownloadPathWithId(location.pathname) && backToProjectLink}
           <PortalFeatureContainer authentication>
