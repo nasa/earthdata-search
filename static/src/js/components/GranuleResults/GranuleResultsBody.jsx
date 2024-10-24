@@ -187,6 +187,7 @@ const GranuleResultsBody = ({
           readableGranuleName={readableGranuleName}
           directDistributionInformation={directDistributionInformation}
           excludedGranuleIds={excludedGranuleIds}
+          focusedGranuleId={focusedGranuleId}
           granules={granulesList}
           isCollectionInProject={isCollectionInProject}
           isOpenSearch={isOpenSearch}

@@ -97,22 +97,24 @@ export const GranuleResultsListItem = memo(({
   if (!granule) return null
 
   return (
-    <li className="granule-results-list-item" style={customStyle}>
-      <GranuleResultsItem
-        collectionId={collectionId}
-        directDistributionInformation={directDistributionInformation}
-        granule={granules[index]}
-        isCollectionInProject={isCollectionInProject}
-        isGranuleInProject={isGranuleInProject}
-        location={location}
-        onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
-        onExcludeGranule={onExcludeGranule}
-        onFocusedGranuleChange={onFocusedGranuleChange}
-        onMetricsDataAccess={onMetricsDataAccess}
-        onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
-        readableGranuleName={readableGranuleName}
-        ref={element}
-      />
+    <li className="granule-results-list-item" style={style}>
+      <div style={{ padding: '0.825rem' }}>
+        <GranuleResultsItem
+          collectionId={collectionId}
+          directDistributionInformation={directDistributionInformation}
+          granule={granules[index]}
+          isCollectionInProject={isCollectionInProject}
+          isGranuleInProject={isGranuleInProject}
+          location={location}
+          onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
+          onExcludeGranule={onExcludeGranule}
+          onFocusedGranuleChange={onFocusedGranuleChange}
+          onMetricsDataAccess={onMetricsDataAccess}
+          onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
+          readableGranuleName={readableGranuleName}
+          ref={element}
+        />
+      </div>
     </li>
   )
 })

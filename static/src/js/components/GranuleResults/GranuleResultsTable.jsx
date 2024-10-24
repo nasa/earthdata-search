@@ -107,19 +107,24 @@ export const GranuleResultsTable = ({
     }
   ])
 
-  const initialRowStateAccessor = useMemo(() => ({
-    isFocusedGranule,
-    isHoveredGranule,
-    isInProject,
-    isCollectionInProject
-  }) => ({
-    isFocusedGranule,
-    isHoveredGranule,
-    isInProject,
-    isCollectionInProject
-  }), [focusedGranuleId])
+  const initialRowStateAccessor = useCallback((row) => {
+    const { original = {} } = row
+    const {
+      isFocusedGranule,
+      isHoveredGranule,
+      isInProject,
+      isCollectionInProject
+    } = original
 
-  const rowClassNamesFromRowState = useMemo(() => ({
+    return {
+      isFocusedGranule,
+      isHoveredGranule,
+      isInProject,
+      isCollectionInProject
+    }
+  }, [focusedGranuleId])
+
+  const rowClassNamesFromRowState = useCallback(({
     isFocusedGranule,
     isHoveredGranule,
     isCollectionInProject,
@@ -133,7 +138,7 @@ export const GranuleResultsTable = ({
     return classNames
   })
 
-  const rowTitleFromRowState = useMemo(() => ({ isFocusedGranule }) => {
+  const rowTitleFromRowState = useCallback(({ isFocusedGranule }) => {
     let rowTitle = 'Focus granule on map'
 
     if (isFocusedGranule) rowTitle = 'Unfocus granule on map'
@@ -182,6 +187,7 @@ export const GranuleResultsTable = ({
         columns={columns}
         initialTableState={initialTableState}
         data={granules}
+        focusedItem={focusedGranuleId}
         itemCount={itemCount}
         loadMoreItems={loadMoreItems}
         isItemLoaded={isItemLoaded}

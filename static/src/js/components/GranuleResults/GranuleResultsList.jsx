@@ -14,6 +14,7 @@ import './GranuleResultsList.scss'
  * @param {String} props.collectionId - The collection ID.
  * @param {Object} props.directDistributionInformation - The direct distribution information.
  * @param {Array} props.excludedGranuleIds - List of excluded granule IDs.
+ * @param {String} props.focusedGranuleId - The currently focused granule ID.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Boolean} props.isOpenSearch - Flag designating CWIC collections.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
@@ -35,6 +36,7 @@ export const GranuleResultsList = ({
   collectionId,
   directDistributionInformation,
   excludedGranuleIds,
+  focusedGranuleId,
   granules,
   isCollectionInProject,
   isOpenSearch,
@@ -67,6 +69,7 @@ export const GranuleResultsList = ({
             collectionId={collectionId}
             directDistributionInformation={directDistributionInformation}
             excludedGranuleIds={excludedGranuleIds}
+            focusedGranuleId={focusedGranuleId}
             granules={granules}
             height={height}
             isCollectionInProject={isCollectionInProject}
@@ -101,6 +104,7 @@ GranuleResultsList.propTypes = {
   collectionId: PropTypes.string.isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  focusedGranuleId: PropTypes.string.isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   isOpenSearch: PropTypes.bool.isRequired,

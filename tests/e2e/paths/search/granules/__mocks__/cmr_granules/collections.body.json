@@ -1,0 +1,243 @@
+{
+  "feed": {
+      "updated": "2024-10-21T15:45:06.138Z",
+      "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=C1214470488-ASF*&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score",
+      "title": "ECHO dataset metadata",
+      "entry": [
+          {
+              "cloud_hosted": true,
+              "tags": {
+                  "edsc.extra.serverless.collection_capabilities": {
+                      "data": {
+                          "cloud_cover": false,
+                          "day_night_flag": false,
+                          "granule_online_access_flag": true,
+                          "orbit_calculated_spatial_domains": true,
+                          "updated_at": "2024-07-02T19:01:38.828Z"
+                      }
+                  }
+              },
+              "boxes": [
+                  "-90 -180 90 180"
+              ],
+              "has_combine": false,
+              "time_start": "2014-04-03T00:00:00.000Z",
+              "version_id": "1",
+              "updated": "2022-11-17T22:58:01.000Z",
+              "dataset_id": "SENTINEL-1A_SLC",
+              "has_spatial_subsetting": false,
+              "has_transforms": false,
+              "has_variables": false,
+              "data_center": "ASF",
+              "short_name": "SENTINEL-1A_SLC",
+              "organizations": [
+                  "ASF",
+                  "ESA/CS1CGS"
+              ],
+              "title": "SENTINEL-1A_SLC",
+              "coordinate_system": "CARTESIAN",
+              "summary": "Sentinel-1A slant-range product",
+              "has_granules": true,
+              "service_features": {
+                  "opendap": {
+                      "has_formats": false,
+                      "has_variables": false,
+                      "has_transforms": false,
+                      "has_combine": false,
+                      "has_spatial_subsetting": false,
+                      "has_temporal_subsetting": false
+                  },
+                  "esi": {
+                      "has_formats": false,
+                      "has_variables": false,
+                      "has_transforms": false,
+                      "has_combine": false,
+                      "has_spatial_subsetting": false,
+                      "has_temporal_subsetting": false
+                  },
+                  "harmony": {
+                      "has_formats": false,
+                      "has_variables": false,
+                      "has_transforms": false,
+                      "has_combine": false,
+                      "has_spatial_subsetting": false,
+                      "has_temporal_subsetting": false
+                  }
+              },
+              "orbit_parameters": {},
+              "id": "C1214470488-ASF",
+              "has_formats": false,
+              "score": 0.5,
+              "consortiums": [
+                  "GEOSS",
+                  "EOSDIS"
+              ],
+              "original_format": "ECHO10",
+              "granule_count": 1776604,
+              "archive_center": "ASF",
+              "has_temporal_subsetting": false,
+              "browse_flag": false,
+              "platforms": [
+                  "Sentinel-1A"
+              ],
+              "online_access_flag": true,
+              "links": [
+                  {
+                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                      "hreflang": "en-US",
+                      "href": "https://vertex.daac.asf.alaska.edu/"
+                  }
+              ]
+          }
+      ],
+      "facets": {
+          "title": "Browse Collections",
+          "type": "group",
+          "has_children": true,
+          "children": [
+              {
+                  "title": "Keywords",
+                  "type": "group",
+                  "applied": false,
+                  "has_children": true,
+                  "children": [
+                      {
+                          "title": "Agriculture",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Agriculture"
+                          },
+                          "has_children": true
+                      },
+                      {
+                          "title": "Biosphere",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Biosphere"
+                          },
+                          "has_children": true
+                      },
+                      {
+                          "title": "Cryosphere",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Cryosphere"
+                          },
+                          "has_children": true
+                      },
+                      {
+                          "title": "Land Surface",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Land+Surface"
+                          },
+                          "has_children": true
+                      },
+                      {
+                          "title": "Oceans",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Oceans"
+                          },
+                          "has_children": true
+                      },
+                      {
+                          "title": "Solid Earth",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Solid+Earth"
+                          },
+                          "has_children": true
+                      },
+                      {
+                          "title": "Terrestrial Hydrosphere",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Terrestrial+Hydrosphere"
+                          },
+                          "has_children": true
+                      }
+                  ]
+              },
+              {
+                  "title": "Platforms",
+                  "type": "group",
+                  "applied": false,
+                  "has_children": true,
+                  "children": [
+                      {
+                          "title": "Space-based Platforms",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platforms_h%5B0%5D%5Bbasis%5D=Space-based+Platforms"
+                          },
+                          "has_children": true
+                      }
+                  ]
+              },
+              {
+                  "title": "Instruments",
+                  "type": "group",
+                  "applied": false,
+                  "has_children": true,
+                  "children": [
+                      {
+                          "title": "C-SAR",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&instrument_h%5B%5D=C-SAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      }
+                  ]
+              },
+              {
+                  "title": "Organizations",
+                  "type": "group",
+                  "applied": false,
+                  "has_children": true,
+                  "children": [
+                      {
+                          "title": "Alaska Satellite Facility",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=Alaska+Satellite+Facility&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      },
+                      {
+                          "title": "ESA/CS1CGS",
+                          "type": "filter",
+                          "applied": false,
+                          "count": 1,
+                          "links": {
+                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=ESA%2FCS1CGS&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+                          },
+                          "has_children": false
+                      }
+                  ]
+              }
+          ]
+      }
+  }
+}

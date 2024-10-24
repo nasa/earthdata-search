@@ -213,9 +213,11 @@ describe('GranuleResultsTable component', () => {
         const table = enzymeWrapper.find(EDSCTable)
 
         const result = table.props().initialRowStateAccessor({
-          isFocusedGranule: true,
-          isCollectionInProject: true,
-          isInProject: false
+          original: {
+            isFocusedGranule: true,
+            isCollectionInProject: true,
+            isInProject: false
+          }
         })
 
         expect(result).toEqual({
