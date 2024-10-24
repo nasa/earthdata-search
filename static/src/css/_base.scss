@@ -33,10 +33,6 @@ body {
   background: $color__carbon-black;
 }
 
-body .th-wrapper {
-  font-size: 1rem;
-}
-
 body.is-panels-dragging {
   cursor: col-resize;
   user-select: none;

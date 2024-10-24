@@ -24,6 +24,16 @@ jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', (
   return mockPortalFeatureContainer
 })
 
+jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
+  const mockPortalLinkContainer = jest.fn(({ children }) => (
+    <mock-mockPortalLinkContainer data-testid="mockPortalLinkContainer">
+      {children}
+    </mock-mockPortalLinkContainer>
+  ))
+
+  return mockPortalLinkContainer
+})
+
 // TODO mock the tour context is the best way?
 // jest.mock('../../../contexts/TourContext', () => {
 //   const mockTourContext = jest.fn(({ children }) => (
@@ -188,6 +198,7 @@ describe('SecondaryToolbar component', () => {
     })
   })
 
+  // TODO for the save Project button
   describe('#handleKeypress', () => {
     test.skip('calls stopPropagation and preventDefault on \'Enter\' press', () => {
       const { enzymeWrapper } = setup('loggedIn')
@@ -261,10 +272,10 @@ describe('SecondaryToolbar component', () => {
     })
 
     // TODO having some weird issue with store mocking
-    test.skip('clicking the save button sets the state and calls onUpdateProjectName', async () => {
+    test('clicking the save button sets the state and calls onUpdateProjectName', async () => {
       const { user, onUpdateProjectName } = setup('loggedIn')
-      // The Save project button
       const myProjectButton = screen.getByRole('button', { name: 'Create a project with your current search' })
+
       await act(async () => {
         await user.click(myProjectButton)
       })
@@ -273,13 +284,10 @@ describe('SecondaryToolbar component', () => {
 
       const projectNameField = within(myProjectButton.parentElement).getByRole('textbox')
 
-      // Const { enzymeWrapper, props } = setup('loggedIn')
+      await user.type(projectNameField, 'test project name')
 
-      // const toggle = enzymeWrapper.find('.secondary-toolbar__project-name-dropdown-toggle')
-      // toggle.simulate('click')
-      // TODO why do you need the brackets around the abc?
-      await user.type(projectNameField, '{abc}')
       const saveProjectButton = screen.getByRole('button', { name: 'Save project name' })
+
       await act(async () => {
         await user.click(saveProjectButton)
       })
@@ -295,9 +303,10 @@ describe('SecondaryToolbar component', () => {
       // saveButton.simulate('click')
 
       // expect(enzymeWrapper.state().projectDropdownOpen).toBeFalsy()
-      // TODO ensure that the dropdown closed
       expect(onUpdateProjectName).toBeCalledTimes(1)
       expect(onUpdateProjectName).toBeCalledWith('test project name')
+      // TODO ensure that the dropdown closed?
+      // expect(enzymeWrapper.state().projectDropdownOpen).toBeFalsy()
     })
   })
 
@@ -313,5 +322,17 @@ describe('SecondaryToolbar component', () => {
     expect(within(loginButton.parentElement.parentElement).getByTestId('mockPortalFeatureContainer')).toBeInTheDocument()
     // Expect(button.exists()).toBeTruthy()
     // expect(portalFeatureContainer.props().authentication).toBeTruthy()
+  })
+
+  describe('adding classame for map view', () => {
+    test('when not in map view page', () => {
+      setup('loggedIn', {
+        location: {
+          pathname: '/project'
+        }
+      })
+
+      screen.debug()
+    })
   })
 })

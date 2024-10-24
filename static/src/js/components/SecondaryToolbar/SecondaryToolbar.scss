@@ -18,12 +18,8 @@
     white-space: nowrap;
   }
 
-  // &__user-dropdown {
-  //   border: 2px solid rgba(0, 0, 0, 0.2);
-  //   background-clip: padding-box;
-  // }
-
   &__map-page {
+    // tODO use color class
     border: 2px solid rgba(0, 0, 0, 0.2);
     background-clip: padding-box;
   }
@@ -45,11 +41,6 @@
       display: none;
     }
   }
-  // &__project-name-dropdown-toggle {
-  //   &:after {
-  //     display: none;
-  //   }
-  // }
 
   &__back,
   &__login,
@@ -57,60 +48,8 @@
     align-items: center;
     justify-content: center;
   }
-
-  // &__back,
-  // &__project,
-  // &__login,
-  // &__project-name-dropdown-toggle,
-  // &__start-tour-button,
-  // &__user-dropdown-toggle {
-  //   position: relative;
-  //   padding: 0 1rem;
-  //   border: 0;
-  //   border-radius: 0;
-  //   outline: 0;
-  //   border-left: 1px solid $color__carbon--70 !important;
-  //   border-right: 1px solid transparent !important;
-  //   background: transparent;
-  //   color: $color__carbon--30;
-  // &__user-dropdown-toggle {
-  //   padding: 0.425rem 1rem;
-  //   border: 0;
-  //   border-radius: 0;
-  //   outline: 0;
-  //   border-left: 1px solid $color__carbon--70 !important;
-  //   border-right: 1px solid transparent !important;
-  //   // TODO ensure contrast is HDS
-  //   background: $color__carbon--10;
-  //   color: $color__carbon--90;
-  //   // .show > &,
-  //   // &:hover {
-  //   //   background-color: rgba($color__carbon-black, 0.2) !important;
-  //   //   color: $color__carbon--10 !important;
-  //   // }
-  // }
-  // &__project-name-dropdown-toggle {
-  //   margin-right: 0.825rem;
-  // &__secondary-toolbar__user-dropdown {
-  //   padding: 0.325rem 0.825rem;
-  // }
- // TODO leave whiter version
+  
   &__back,
-  &__project,
-  &__login,
-  &__project-name-dropdown-toggle,
-  &__project-name-dropdown,
-  &__user-dropdown-toggle {
-    // padding: 0.325rem 0.825rem;
-    // border: 0;
-    // border-radius: 0;
-    // outline: 0;
-    // border-left: 1px solid $color__carbon--70 !important;
-    // border-right: 1px solid transparent !important;
-    // background: $color__carbon--10;
-    // color: $color__carbon--90;
-  }
-
   &__project {
     margin-right: 0.5rem;
   }
@@ -121,20 +60,14 @@
     }
   }
   
-  &__user-dropdown-toggle,
-  &__username {
+  &__dropdown-text {
     margin-right: 0.25rem;
   }
 
-  &__start-tour-button,
   &__project-name-dropdown-toggle {
     &:after {
       display: none;
     }
     margin-left: 0.5rem;
-  }
-
-  &__back {
-    margin-right: 0.5rem;
   }
 }
