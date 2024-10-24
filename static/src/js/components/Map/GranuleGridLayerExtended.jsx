@@ -475,7 +475,13 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     // Draw the granule imagery.
     setTimeout(
       (
-        () => this.drawClippedImagery(imageryCanvas, boundary, paths, nwPoint, tilePoint)
+        () => this.drawClippedImagery(
+          imageryCanvas,
+          boundary,
+          [...paths].reverse(),
+          nwPoint,
+          tilePoint
+        )
       ), 0
     )
 
