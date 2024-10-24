@@ -24,9 +24,9 @@ import Project from './routes/Project/Project'
 import Search from './routes/Search/Search'
 
 // Components and Containers
+import SecondaryToolbarContainer from './containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 import AboutCSDAModalContainer from './containers/AboutCSDAModalContainer/AboutCSDAModalContainer'
 import AboutCwicModalContainer from './containers/AboutCwicModalContainer/AboutCwicModalContainer'
-import AppHeader from './components/AppHeader/AppHeader'
 import AuthCallbackContainer from './containers/AuthCallbackContainer/AuthCallbackContainer'
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
 import AuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
@@ -121,137 +121,139 @@ class App extends Component {
               <ErrorBannerContainer />
               <AuthTokenContainer>
                 <UrlQueryContainer>
-                  <AppHeader />
-                  <Switch>
-                    <Route
-                      path="/admin"
-                      render={
-                        () => (
-                          <AuthRequiredContainer>
+                  <div className="wrapping-container">
+                    <SecondaryToolbarContainer />
+                    <Switch>
+                      <Route
+                        path="/admin"
+                        render={
+                          () => (
+                            <AuthRequiredContainer>
+                              <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                                <Admin />
+                              </Suspense>
+                            </AuthRequiredContainer>
+                          )
+                        }
+                      />
+                      <Route
+                        path={this.portalPaths('/contact-info')}
+                        render={
+                          () => (
+                            <AuthRequiredContainer>
+                              <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                                <ContactInfo />
+                              </Suspense>
+                            </AuthRequiredContainer>
+                          )
+                        }
+                      />
+                      <Route
+                        path={this.portalPaths('/preferences')}
+                        render={
+                          () => (
+                            <AuthRequiredContainer>
+                              <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                                <Preferences />
+                              </Suspense>
+                            </AuthRequiredContainer>
+                          )
+                        }
+                      />
+                      <Route
+                        path={this.portalPaths('/earthdata-download-callback')}
+                        render={
+                          () => (
                             <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-                              <Admin />
+                              <EarthdataDownloadRedirect />
                             </Suspense>
-                          </AuthRequiredContainer>
-                        )
-                      }
-                    />
-                    <Route
-                      path={this.portalPaths('/contact-info')}
-                      render={
-                        () => (
-                          <AuthRequiredContainer>
-                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-                              <ContactInfo />
-                            </Suspense>
-                          </AuthRequiredContainer>
-                        )
-                      }
-                    />
-                    <Route
-                      path={this.portalPaths('/preferences')}
-                      render={
-                        () => (
-                          <AuthRequiredContainer>
-                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-                              <Preferences />
-                            </Suspense>
-                          </AuthRequiredContainer>
-                        )
-                      }
-                    />
-                    <Route
-                      path={this.portalPaths('/earthdata-download-callback')}
-                      render={
-                        () => (
-                          <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-                            <EarthdataDownloadRedirect />
-                          </Suspense>
-                        )
-                      }
-                    />
-                    <Route
-                      path={this.portalPaths('/subscriptions')}
-                      render={
-                        () => (
-                          <AuthRequiredContainer>
-                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-                              <Subscriptions />
-                            </Suspense>
-                          </AuthRequiredContainer>
-                        )
-                      }
-                    />
-                    <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
-                    <Redirect exact from="/data/status" to="/downloads" />
-                    <Route
-                      path={this.portalPaths('/downloads')}
-                      render={
-                        () => (
-                          <AuthRequiredContainer>
-                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-                              <Downloads />
-                            </Suspense>
-                          </AuthRequiredContainer>
-                        )
-                      }
-                    />
-                    <Route
-                      path={this.portalPaths('/projects')}
-                      render={
-                        () => (
-                          <AuthRequiredContainer>
-                            <Project />
-                          </AuthRequiredContainer>
-                        )
-                      }
-                    />
-                    <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
-                    <Redirect exact from="/" to="/search" />
-                    <Route
-                      path={this.portalPaths('/search')}
-                      render={
-                        () => (
-                          <>
-                            <SearchTour />
-                            <Search />
-                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
-                              <EdscMapContainer />
-                            </Suspense>
-                          </>
-                        )
-                      }
-                    />
-                    <Route
-                      exact
-                      path="/auth_callback"
-                      render={
-                        () => (
-                          <AuthCallbackContainer />
-                        )
-                      }
-                    />
-                    <Route component={NotFound} />
-                  </Switch>
+                          )
+                        }
+                      />
+                      <Route
+                        path={this.portalPaths('/subscriptions')}
+                        render={
+                          () => (
+                            <AuthRequiredContainer>
+                              <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                                <Subscriptions />
+                              </Suspense>
+                            </AuthRequiredContainer>
+                          )
+                        }
+                      />
+                      <Redirect exact from="/data/retrieve/:retrieval_id" to="/downloads/:retrieval_id" />
+                      <Redirect exact from="/data/status" to="/downloads" />
+                      <Route
+                        path={this.portalPaths('/downloads')}
+                        render={
+                          () => (
+                            <AuthRequiredContainer>
+                              <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                                <Downloads />
+                              </Suspense>
+                            </AuthRequiredContainer>
+                          )
+                        }
+                      />
+                      <Route
+                        path={this.portalPaths('/projects')}
+                        render={
+                          () => (
+                            <AuthRequiredContainer>
+                              <Project />
+                            </AuthRequiredContainer>
+                          )
+                        }
+                      />
+                      <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
+                      <Redirect exact from="/" to="/search" />
+                      <Route
+                        path={this.portalPaths('/search')}
+                        render={
+                          () => (
+                            <>
+                              <SearchTour />
+                              <Search />
+                              <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
+                                <EdscMapContainer />
+                              </Suspense>
+                            </>
+                          )
+                        }
+                      />
+                      <Route
+                        exact
+                        path="/auth_callback"
+                        render={
+                          () => (
+                            <AuthCallbackContainer />
+                          )
+                        }
+                      />
+                      <Route component={NotFound} />
+                    </Switch>
+                    <Switch>
+                      <Route path={this.portalPaths('/')}>
+                        <AboutCSDAModalContainer />
+                        <AboutCwicModalContainer />
+                        <EditSubscriptionModalContainer />
+                        <ChunkedOrderModalContainer />
+                        <DeprecatedParameterModalContainer />
+                        <KeyboardShortcutsModalContainer />
+                        <ShapefileDropzoneContainer />
+                        <ShapefileUploadModalContainer />
+                        <TooManyPointsModalContainer />
+                      </Route>
+                      <Route path={this.portalPaths('/projects')}>
+                        <AboutCSDAModalContainer />
+                      </Route>
+                      <Route path={this.portalPaths('/downloads')}>
+                        <AboutCSDAModalContainer />
+                      </Route>
+                    </Switch>
+                  </div>
                   <FooterContainer />
-                  <Switch>
-                    <Route path={this.portalPaths('/')}>
-                      <AboutCSDAModalContainer />
-                      <AboutCwicModalContainer />
-                      <EditSubscriptionModalContainer />
-                      <ChunkedOrderModalContainer />
-                      <DeprecatedParameterModalContainer />
-                      <KeyboardShortcutsModalContainer />
-                      <ShapefileDropzoneContainer />
-                      <ShapefileUploadModalContainer />
-                      <TooManyPointsModalContainer />
-                    </Route>
-                    <Route path={this.portalPaths('/projects')}>
-                      <AboutCSDAModalContainer />
-                    </Route>
-                    <Route path={this.portalPaths('/downloads')}>
-                      <AboutCSDAModalContainer />
-                    </Route>
-                  </Switch>
                 </UrlQueryContainer>
               </AuthTokenContainer>
             </ConnectedRouter>

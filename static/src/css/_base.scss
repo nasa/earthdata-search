@@ -48,6 +48,16 @@ body.is-panels-will-minimize {
   }
 }
 
+// Prevent tophat from resizing on page load
+body .th-wrapper {
+  font-size: 1rem;
+}
+
+.wrapping-container {
+  position: relative;
+  height: 95%;
+}
+
 @include media-breakpoint-up(xl) {
   html {
     font-size: 102%;

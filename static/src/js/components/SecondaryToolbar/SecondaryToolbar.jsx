@@ -12,6 +12,7 @@ import { parse } from 'qs'
 import {
   FaArrowCircleLeft,
   FaFolder,
+  FaLightbulb,
   FaLock,
   FaSave,
   FaUser
@@ -29,7 +30,6 @@ import { stringify } from '../../util/url/url'
 import Button from '../Button/Button'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './SecondaryToolbar.scss'
 
@@ -87,6 +87,7 @@ class SecondaryToolbar extends Component {
     onUpdateProjectName(newProjectName)
   }
 
+  // Needed for Save Project so page does not change
   handleKeypress(event) {
     if (event.key === 'Enter') {
       this.handleNameSubmit()
@@ -125,16 +126,27 @@ class SecondaryToolbar extends Component {
     } = this.props
 
     const { disableSiteTour } = getApplicationConfig()
-
     const { first_name: firstName = '' } = ursProfile
 
     const loggedIn = authToken !== ''
     const returnPath = window.location.href
+    const { pathname, search } = location
+    let addBorders = false
+
+    // Line up secondary toolbar buttons with leaflet controls
+    if (pathStartsWith(pathname, ['/search'])) {
+      addBorders = true
+    }
+
+    // TODO we need to apply this classanme logic to multiple
+    // secondary-toolbar__user-dropdown use this
+    const mapButtonClass = addBorders ? 'secondary-toolbar__map-page' : ''
+    console.log('🚀 ~ file: SecondaryToolbar.jsx:142 ~ SecondaryToolbar ~ mapButtonClass:', mapButtonClass)
 
     const { apiHost } = getEnvironmentConfig()
 
     // Remove focused collection from back button params
-    const params = parse(location.search, {
+    const params = parse(search, {
       parseArrays: false,
       ignoreQueryPrefix: true
     })
@@ -171,7 +183,7 @@ class SecondaryToolbar extends Component {
       <PortalLinkContainer
         type="button"
         className="secondary-toolbar__back"
-        bootstrapVariant="naked"
+        bootstrapVariant="light"
         icon={FaArrowCircleLeft}
         label="Back to Project"
         to={
@@ -192,10 +204,11 @@ class SecondaryToolbar extends Component {
 
         return (
           <Button
-            className="secondary-toolbar__project"
+            className={`secondary-toolbar__project ${mapButtonClass}`}
             bootstrapVariant="light"
             href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`}
             label="View Project"
+            icon={FaFolder}
           >
             My Project
           </Button>
@@ -211,10 +224,11 @@ class SecondaryToolbar extends Component {
               search: location.search
             }
           }
-          className="secondary-toolbar__project"
+          className={`secondary-toolbar__project ${mapButtonClass}`}
           bootstrapVariant="light"
           label="View Project"
           icon={FaFolder}
+          iconPosition="left"
           updatePath
         >
           My Project
@@ -226,32 +240,31 @@ class SecondaryToolbar extends Component {
 
     const loginLink = (
       <Button
-        className="secondary-toolbar__login"
-        bootstrapVariant="naked"
+        className={`${mapButtonClass}`}
+        bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
-        icon={FaLock}
         label="Login"
+        icon={FaLock}
       >
-        Earthdata Login
+        Login
       </Button>
     )
-
     const loggedInDropdown = (
-      <Dropdown className="secondary-toolbar__user-dropdown">
+      <Dropdown>
         <Dropdown.Toggle
           label="User menu"
-          className="secondary-toolbar__user-dropdown-toggle"
-          variant="light"
+          className={`secondary-toolbar__user-dropdown-toggle ${mapButtonClass}`}
+          bootstrapVariant="light"
           as={Button}
+          icon={FaUser}
         >
           {
             firstName && (
-              <span className="secondary-toolbar__username">
+              <span className="secondary-toolbar__dropdown-text">
                 {firstName}
               </span>
             )
           }
-          <EDSCIcon size="0.825rem" icon={FaUser} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer
@@ -322,18 +335,23 @@ class SecondaryToolbar extends Component {
     const saveProjectDropdown = (
       <Dropdown
         show={projectDropdownOpen}
-        className="secondary-toolbar__project-name-dropdown"
+        className={`secondary-toolbar__project-name-dropdown ${mapButtonClass}`}
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
         <Dropdown.Toggle
-          className="secondary-toolbar__project-name-dropdown-toggle"
+          className="secondary-toolbar__project-dropdown-toggle"
           as={Button}
           onClick={this.onToggleProjectDropdown}
           icon={FaSave}
           iconSize="0.825rem"
+          bootstrapVariant="light"
           label="Create a project with your current search"
-        />
+        >
+          <span className="secondary-toolbar__dropdown-text">
+            Save Project
+          </span>
+        </Dropdown.Toggle>
         <Dropdown.Menu>
           <Form inline className="flex-nowrap secondary-toolbar__project-name-form">
             <Form.Row>
@@ -342,7 +360,7 @@ class SecondaryToolbar extends Component {
                   <FormControl
                     className="secondary-toolbar__project-name-input"
                     name="projectName"
-                    value={newProjectName}
+                    value={newProjectName || ''}
                     placeholder="Untitled Project"
                     onChange={this.onInputChange}
                     onKeyPress={this.handleKeypress}
@@ -368,7 +386,7 @@ class SecondaryToolbar extends Component {
     const startTourButton = (
       <Dropdown
         show={projectDropdownOpen}
-        className="secondary-toolbar__project-name-dropdown"
+        className={`secondary-toolbar__project-name-dropdown ${mapButtonClass}`}
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
@@ -378,7 +396,10 @@ class SecondaryToolbar extends Component {
               <Dropdown.Toggle
                 className="secondary-toolbar__start-tour-button"
                 as={Button}
+                icon={FaLightbulb}
+                iconSize="0.825rem"
                 onClick={setRunTour}
+                bootstrapVariant="light"
                 label="Want to learn more? Click here to take a tour of our site."
               >
                 Start Tour

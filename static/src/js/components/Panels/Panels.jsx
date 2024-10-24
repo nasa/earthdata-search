@@ -496,9 +496,10 @@ export class Panels extends PureComponent {
     if (routeWrapper) {
       const routeWrapperWidth = routeWrapper.offsetWidth
 
-      // Set the maxWidth to the available space minus the width of the
-      // map tools.
-      return routeWrapperWidth - 55
+      // Set the maxWidth to the available space minus the width of the secondary toolbar with some buffer.
+      const secondaryToolbarWidth = document.querySelector('.secondary-toolbar').offsetWidth
+
+      return routeWrapperWidth - (secondaryToolbarWidth + 50)
     }
 
     // If for some reason the elements are not available in the DOM, set

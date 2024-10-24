@@ -1,8 +1,10 @@
 .secondary-toolbar {
   display: flex;
   align-items: stretch;
-  position: relative;
   z-index: 2;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 
   @include media-breakpoint-up(md) {
     margin-left: auto;
@@ -16,11 +18,18 @@
     white-space: nowrap;
   }
 
+  &__map-page {
+    // tODO use color class
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    background-clip: padding-box;
+  }
+
   .button {
     align-items: center;
   }
 
   &__project-name-dropdown {
+    margin-right: 0.5rem;
     .dropdown-menu {
       padding: calc($spacer / 2);
     }
@@ -39,28 +48,10 @@
     align-items: center;
     justify-content: center;
   }
-
+  
   &__back,
-  &__project,
-  &__login,
-  &__project-name-dropdown-toggle,
-  &__start-tour-button,
-  &__user-dropdown-toggle {
-    position: relative;
-    padding: 0 1rem;
-    border: 0;
-    border-radius: 0;
-    outline: 0;
-    border-left: 1px solid $color__carbon--70 !important;
-    border-right: 1px solid transparent !important;
-    background: transparent;
-    color: $color__carbon--30;
-
-    .show > &,
-    &:hover {
-      background-color: rgba($color__carbon-black, 0.2) !important;
-      color: $color__carbon--10 !important;
-    }
+  &__project {
+    margin-right: 0.5rem;
   }
 
   &__project-name-form {
@@ -68,15 +59,15 @@
       width: 12.5rem;
     }
   }
-
-  &__username {
-    margin-right: 0.5rem;
+  
+  &__dropdown-text {
+    margin-right: 0.25rem;
   }
 
-  &__start-tour-button,
   &__project-name-dropdown-toggle {
     &:after {
       display: none;
     }
+    margin-left: 0.5rem;
   }
 }
