@@ -19,8 +19,7 @@
   }
 
   &__map-page {
-    // tODO use color class
-    border: 2px solid rgba(0, 0, 0, 0.2);
+    border: 2px solid $color__carbon--80;
     background-clip: padding-box;
   }
 
@@ -48,7 +47,7 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   &__back,
   &__project {
     margin-right: 0.5rem;

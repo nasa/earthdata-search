@@ -138,10 +138,7 @@ class SecondaryToolbar extends Component {
       addBorders = true
     }
 
-    // TODO we need to apply this classanme logic to multiple
-    // secondary-toolbar__user-dropdown use this
     const mapButtonClass = addBorders ? 'secondary-toolbar__map-page' : ''
-    console.log('🚀 ~ file: SecondaryToolbar.jsx:142 ~ SecondaryToolbar ~ mapButtonClass:', mapButtonClass)
 
     const { apiHost } = getEnvironmentConfig()
 
