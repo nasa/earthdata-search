@@ -1,4 +1,4 @@
-// import { test, expect } from 'playwright-test-coverage'
+// Import { test, expect } from 'playwright-test-coverage'
 
 // import { graphQlGetCollection } from '../../support/graphQlGetCollection'
 // import {
