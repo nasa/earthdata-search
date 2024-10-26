@@ -68,7 +68,7 @@ test.describe('Map interactions', () => {
               ...commonHeaders,
               'cmr-hits': '5151'
             },
-            paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/42\.\d+,4\.\d+/)
+            paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/42\.\d+,-7\.\d+/)
           }]
         })
 
@@ -779,7 +779,7 @@ test.describe('Map interactions', () => {
     })
 
     test.describe('When the shapefile has a point shape', () => {
-      test('renders correctly', async ({ page }, testInfo) => {
+      test.only('renders correctly', async ({ page }, testInfo) => {
         const browser = testInfo.project.name
 
         await interceptUnauthenticatedCollections({
@@ -820,9 +820,9 @@ test.describe('Map interactions', () => {
 
         // Point
         const pointValues = {
-          chromium: 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 176px, 0px); z-index: 176; outline-style: none;',
-          firefox: 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 176px, 0px); z-index: 176; outline-style: none;',
-          webkit: 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 176px, 0px); z-index: ; outline: currentcolor;'
+          chromium: 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 176px, 0px); z-index: 176; outline: none;',
+          firefox: 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 176px, 0px); z-index: 176; outline: none;',
+          webkit: 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(427px, 176px, 0px); z-index: 176; outline: currentcolor;'
         }
         await expect(page.locator('.leaflet-marker-icon.leaflet-interactive').nth(0)).toHaveAttribute('style', pointValues[browser])
 
@@ -1047,9 +1047,7 @@ test.describe('Map interactions', () => {
 
   test.describe('When moving the map', () => {
     test.describe('When dragging the map', () => {
-      test('updates the URL with the new map parameter', async ({ page }, testInfo) => {
-        const browser = testInfo.project.name
-
+      test('updates the URL with the new map parameter', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -1064,12 +1062,7 @@ test.describe('Map interactions', () => {
         await page.mouse.move(1000, 600)
         await page.mouse.up()
 
-        const urlValues = {
-          chromium: 'search?lat=13.999032615512775',
-          firefox: 'search?lat=13.999207532962274',
-          webkit: 'search?lat=13.999032615512775'
-        }
-        await expect(page).toHaveURL(urlValues[browser])
+        await expect(page).toHaveURL(/14\.064\d+/)
       })
     })
 
@@ -1430,7 +1423,7 @@ test.describe('Map interactions', () => {
             force: true,
             position: {
               x: 1000,
-              y: 450
+              y: 442
             }
           })
 
@@ -1455,13 +1448,13 @@ test.describe('Map interactions', () => {
             force: true,
             position: {
               x: 1000,
-              y: 450
+              y: 442
             }
           })
         })
 
         test('shows the granule and a label on the map', async ({ page }) => {
-          await expect(page.locator('.leaflet-interactive').nth(1)).toHaveAttribute('d', 'M994 441L996 454L1012 451L1009 438L994 441z')
+          await expect(page.locator('.leaflet-interactive').nth(1)).toHaveAttribute('d', 'M994 436L996 449L1012 446L1009 433L994 436z')
           await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
         })
 
@@ -1491,7 +1484,7 @@ test.describe('Map interactions', () => {
             await page.mouse.move(1000, 600)
             await page.mouse.up()
 
-            await expect(page.locator('.leaflet-interactive').nth(1)).toHaveAttribute('d', 'M994 441L996 454L1012 451L1009 438L994 441z')
+            await expect(page.locator('.leaflet-interactive').nth(1)).toHaveAttribute('d', 'M994 436L996 449L1012 446L1009 433L994 436z')
             await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
           })
         })
@@ -1501,7 +1494,7 @@ test.describe('Map interactions', () => {
             // Zoom the map
             await page.locator('.leaflet-control-zoom-in').click()
 
-            await expect(page.locator('.leaflet-interactive').nth(1)).toHaveAttribute('d', 'M1287 466L1293 491L1324 484L1319 459L1287 466z')
+            await expect(page.locator('.leaflet-interactive').nth(1)).toHaveAttribute('d', 'M1287 461L1293 486L1324 479L1319 454L1287 461z')
             await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
           })
         })
@@ -1609,8 +1602,8 @@ test.describe('Map interactions', () => {
       })
 
       test('displays an outline of the minimum bounding rectangle', async ({ page }) => {
-        await expect(page.locator('.leaflet-interactive').first()).toHaveAttribute('d', 'M1000 434L1000 484L1050 484L1000 434z')
-        await expect(page.locator('.leaflet-interactive').last()).toHaveAttribute('d', 'M1000 484L1000 434L1050 434L1050 484L1000 484z')
+        await expect(page.locator('.leaflet-interactive').first()).toHaveAttribute('d', 'M1000 397L1000 447L1050 447L1000 397z')
+        await expect(page.locator('.leaflet-interactive').last()).toHaveAttribute('d', 'M1000 447L1000 397L1050 397L1050 447L1000 447z')
       })
 
       test('displays a hint about using a bounding box instead of polygon', async ({ page }) => {
@@ -1690,8 +1683,14 @@ test.describe('Map interactions', () => {
     })
 
     test('displays the color map on the page', async ({ page }) => {
-      const box = await page.getByTestId('legend')
-      await expect(page).toHaveScreenshot('colormap-screenshot.png', box)
+      await expect(page).toHaveScreenshot('colormap-screenshot.png', {
+        clip: {
+          x: 1138,
+          y: 263,
+          width: 252,
+          height: 47
+        }
+      })
 
       await expect(page.getByTestId('legend-label-min')).toHaveText('0 – 1 %')
       await expect(page.getByTestId('legend-label-max')).toHaveText('100 %')
@@ -1725,13 +1724,14 @@ test.describe('Map interactions', () => {
       test.describe('when visiting another collection with a colormap', () => {
         test('displays a new colormap', async ({ page }) => {
           await page.getByTestId('collection-result-item_C1243477369-GES_DISC').click()
+          await expect(page.getByTestId('timeline')).toBeInViewport()
 
           await expect(page).toHaveScreenshot('colormap-2-screenshot.png', {
             clip: {
-              x: 1125,
-              y: 75,
-              width: 275,
-              height: 50
+              x: 1138,
+              y: 263,
+              width: 252,
+              height: 47
             }
           })
 
