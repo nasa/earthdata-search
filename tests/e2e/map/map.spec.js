@@ -779,7 +779,7 @@ test.describe('Map interactions', () => {
     })
 
     test.describe('When the shapefile has a point shape', () => {
-      test.only('renders correctly', async ({ page }, testInfo) => {
+      test('renders correctly', async ({ page }, testInfo) => {
         const browser = testInfo.project.name
 
         await interceptUnauthenticatedCollections({
