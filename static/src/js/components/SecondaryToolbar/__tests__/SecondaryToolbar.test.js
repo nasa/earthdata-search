@@ -325,7 +325,7 @@ describe('SecondaryToolbar component', () => {
 
       expect(userMenuButton.className).toContain(secondaryToolbarMapClassName)
       // The Dropdown parent containers of the buttons have the classname update
-      expect(tourButton.parentElement.className).toContain(secondaryToolbarMapClassName)
+      expect(tourButton.className).toContain(secondaryToolbarMapClassName)
       expect(myProjectButton.parentElement.className).toContain(secondaryToolbarMapClassName)
     })
   })

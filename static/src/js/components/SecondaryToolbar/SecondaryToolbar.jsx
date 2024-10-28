@@ -383,7 +383,7 @@ class SecondaryToolbar extends Component {
     const startTourButton = (
       <Dropdown
         show={projectDropdownOpen}
-        className={`secondary-toolbar__project-name-dropdown ${mapButtonClass}`}
+        className="secondary-toolbar__project-name-dropdown"
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
@@ -391,7 +391,7 @@ class SecondaryToolbar extends Component {
           {
             ({ setRunTour }) => (
               <Dropdown.Toggle
-                className="secondary-toolbar__start-tour-button"
+                className={`secondary-toolbar__start-tour-button ${mapButtonClass}`}
                 as={Button}
                 icon={FaLightbulb}
                 iconSize="0.825rem"
