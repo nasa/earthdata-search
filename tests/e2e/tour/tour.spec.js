@@ -5,7 +5,6 @@ import singleCollection from './__mocks__/single_collection.json'
 const expectWithinMargin = async (actual, expected, margin) => {
   Object.keys(expected).forEach((key) => {
     const diff = Math.abs(actual[key] - expected[key])
-    console.error(`actual: ${actual[key]}, expected: ${expected[key]}, delta: ${diff}`)
     expect.soft(diff).toBeLessThanOrEqual(margin)
   })
 }
@@ -47,7 +46,7 @@ test.describe('Joyride Tour Navigation', () => {
       width: rect.width,
       height: rect.height
     }
-    // TODO just temporary
+
     expectWithinMargin(spotlightRect, {
       left: -10,
       top: 22,
@@ -86,7 +85,6 @@ test.describe('Joyride Tour Navigation', () => {
       height: rect.height
     }
 
-    // TODO just temporary
     expectWithinMargin(spotlightRect, {
       left: -10,
       top: 72,
@@ -108,7 +106,6 @@ test.describe('Joyride Tour Navigation', () => {
       height: rect.height
     }
 
-    // TODO just temporary
     expectWithinMargin(spotlightRect, {
       left: 30,
       top: 72,

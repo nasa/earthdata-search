@@ -34,27 +34,6 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
   return mockPortalLinkContainer
 })
 
-// TODO mock the tour context is the best way?
-// jest.mock('../../../contexts/TourContext', () => {
-//   const mockTourContext = jest.fn(({ children }) => (
-//     <mock-mockTourContext data-testid="mockTourContext">
-//       {children}
-//     </mock-mockTourContext>
-//   ))
-
-//   return mockTourContext
-// })
-
-// jest.mock('../../../contexts/TourContext', () => {
-//   const mContext = {
-//     createContext: <div />
-//   }
-
-//   return { TourContext: jest.fn(() => mContext) }
-// })
-
-// Enzyme.configure({ adapter: new Adapter() })
-
 const setup = (state, overrideProps) => {
   const user = userEvent.setup()
   const onLogout = jest.fn()
@@ -85,7 +64,6 @@ const setup = (state, overrideProps) => {
 
   if (state === 'loggedIn') props.authToken = 'fakeauthkey'
   const history = createMemoryHistory()
-  // TODO is the actually the best way to do this
   render(
     <Providers>
       <Router history={history} location={props.location}>
@@ -273,7 +251,6 @@ describe('SecondaryToolbar component', () => {
           pathname: '/project'
         }
       })
-      // TODO mock the location.pathname
 
       const myProjectButton = screen.queryByRole('button', { name: 'Create a project with your current search' })
       expect(myProjectButton).not.toBeInTheDocument()
@@ -291,7 +268,6 @@ describe('SecondaryToolbar component', () => {
       expect(within(myProjectButton.parentElement).getByRole('button', { name: 'Save project name' })).toBeInTheDocument()
     })
 
-    // TODO having some weird issue with store mocking
     test('clicking the save button sets the state and calls onUpdateProjectName', async () => {
       const { user, onUpdateProjectName } = setup('loggedIn')
       const myProjectButton = screen.getByRole('button', { name: 'Create a project with your current search' })
@@ -314,23 +290,13 @@ describe('SecondaryToolbar component', () => {
 
       expect(onUpdateProjectName).toBeCalledTimes(1)
       expect(onUpdateProjectName).toBeCalledWith('test project name')
-      // TODO ensure that the dropdown closed?
-      // Expect(enzymeWrapper.state().projectDropdownOpen).toBeFalsy()
     })
   })
 
-  // TODO is this really a valid test under RTL principles
   test('renders the login button under PortalFeatureContainer', () => {
     setup(undefined)
-    // Const button = enzymeWrapper
-    // .find(PortalFeatureContainer)
-    // .find('.secondary-toolbar__login')
-    // const portalFeatureContainer = button.parents(PortalFeatureContainer)
     const loginButton = screen.getByRole('button', { name: 'Login' })
-    // Expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument()
     expect(within(loginButton.parentElement.parentElement).getByTestId('mockPortalFeatureContainer')).toBeInTheDocument()
-    // Expect(button.exists()).toBeTruthy()
-    // expect(portalFeatureContainer.props().authentication).toBeTruthy()
   })
 
   describe('adding classame for map view', () => {
