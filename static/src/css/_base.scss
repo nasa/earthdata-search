@@ -55,7 +55,8 @@ body .th-wrapper {
 
 .wrapping-container {
   position: relative;
-  height: 95%;
+  overflow-y: auto;
+  flex-grow: 1;
 }
 
 @include media-breakpoint-up(xl) {
