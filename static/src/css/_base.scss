@@ -6,6 +6,7 @@
 * > button,
 * > input,
 * > textarea,
+.dropdown-toggle,
 .btn {
   &:focus {
     box-shadow: none;
@@ -15,6 +16,10 @@
     border-color: transparent;
     outline: 1px dashed $color__nasa-blue;
     outline-offset: 0.125rem;
+
+    &.focus-light {
+      outline: 1px dashed $color__spacesuit-white;
+    }
   }
 
   &.disabled,

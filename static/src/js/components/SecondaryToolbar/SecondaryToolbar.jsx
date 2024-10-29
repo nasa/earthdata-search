@@ -186,7 +186,7 @@ class SecondaryToolbar extends Component {
     const backToProjectLink = (
       <PortalLinkContainer
         type="button"
-        className="secondary-toolbar__back"
+        className={classNames(['secondary-toolbar__back', { 'focus-light': isMapOverlay }])}
         bootstrapVariant="light"
         icon={FaArrowCircleLeft}
         label="Back to Project"
@@ -208,7 +208,7 @@ class SecondaryToolbar extends Component {
 
         return (
           <Button
-            className="secondary-toolbar__project "
+            className={classNames(['secondary-toolbar__project', { 'focus-light': isMapOverlay }])}
             bootstrapVariant="light"
             href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`}
             label="View Project"
@@ -228,7 +228,7 @@ class SecondaryToolbar extends Component {
               search: location.search
             }
           }
-          className="secondary-toolbar__project "
+          className={classNames(['secondary-toolbar__project', { 'focus-light': isMapOverlay }])}
           bootstrapVariant="light"
           label="View Project"
           icon={FaFolder}
@@ -244,6 +244,7 @@ class SecondaryToolbar extends Component {
 
     const loginLink = (
       <Button
+        className={classNames({ 'focus-light': isMapOverlay })}
         bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
         label="Login"
@@ -256,7 +257,7 @@ class SecondaryToolbar extends Component {
       <Dropdown>
         <Dropdown.Toggle
           label="User menu"
-          className={`secondary-toolbar__user-dropdown-toggle ${mapButtonClass}`}
+          className={classNames([`secondary-toolbar__user-dropdown-toggle ${mapButtonClass}`, { 'focus-light': isMapOverlay }])}
           bootstrapVariant="light"
           as={Button}
           icon={FaUser}
@@ -338,12 +339,12 @@ class SecondaryToolbar extends Component {
     const saveProjectDropdown = (
       <Dropdown
         show={projectDropdownOpen}
-        className="secondary-toolbar__project-name-dropdown"
+        className={classNames(['secondary-toolbar__project-name-dropdown', { 'focus-light': isMapOverlay }])}
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
         <Dropdown.Toggle
-          className="secondary-toolbar__project-dropdown-toggle"
+          className="secondary-toolbar__project-dropdown-toggle focus-light"
           as={Button}
           onClick={this.onToggleProjectDropdown}
           icon={FaSave}
@@ -389,7 +390,7 @@ class SecondaryToolbar extends Component {
     const startTourButton = (
       <Dropdown
         show={projectDropdownOpen}
-        className="secondary-toolbar__project-name-dropdown"
+        className="secondary-toolbar__project-name-dropdown focus-light"
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
@@ -397,7 +398,7 @@ class SecondaryToolbar extends Component {
           {
             ({ setRunTour }) => (
               <Dropdown.Toggle
-                className="secondary-toolbar__start-tour-button "
+                className={classNames(['secondary-toolbar__start-tour-button', { 'focus-light': isMapOverlay }])}
                 as={Button}
                 icon={FaLightbulb}
                 iconSize="0.825rem"

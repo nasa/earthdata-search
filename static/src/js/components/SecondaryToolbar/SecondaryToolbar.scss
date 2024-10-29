@@ -27,25 +27,40 @@
   }
 
   &--map-overlay {
-    .button {
+    .button,
+    .dropdown-toggle {
+      box-shadow: none;
       border-radius: 0.25rem;
       border: 2px solid rgba($color__carbon--80, 0.3);
       // outline: 2px solid $color__carbon--80;
       background-clip: padding-box;
-      
-      &:hover {
+
+      &:hover,
+      &:focus {
         border: 2px solid rgba($color__carbon--80, 0.3);
       }
     }
+
+    // Bootstrap outline overrides for the dropdown-toggle
+    .show > .btn-light.dropdown-toggle,
+    .btn-light.dropdown-toggle:focus,
+    .btn-light.dropdown-toggle:active,
+    .show > .btn-light.dropdown-toggle:focus,
+    .show > .btn-light.dropdown-toggle:active,
+    .btn-light:not(:disabled):not(.disabled):active:focus {
+      border: 2px solid rgba($color__carbon--80, 0.3);
+    }
   }
 
-  // &__map-page {
-  //   border-radius: 0.25rem;
-  //   border: 2px solid rgba($color__carbon--80, 0.3);
-  //   // outline: 2px solid $color__carbon--80;
-  //   background-clip: padding-box;
-  // }
-
+  // Bootstrap outline overrides for the dropdown-toggle
+  .show > .btn-light.dropdown-toggle,
+  .btn-light.dropdown-toggle:focus,
+  .btn-light.dropdown-toggle:active,
+  .show > .btn-light.dropdown-toggle:focus,
+  .show > .btn-light.dropdown-toggle:active,
+  .btn-light:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
+  }
 
   .button {
     align-items: center;
