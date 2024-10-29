@@ -153,7 +153,7 @@ export const gibsResponse = {
           dataCenter: 'LARC_CLOUD'
         }
       ],
-      layerPeriod: 'Daily',
+      layerPeriod: 'Subdaily',
       id: 'TEMPO_L2_Ozone_Cloud_Fraction_Granule',
       description: 'tempo/TEMPO_L2_Ozone_Cloud_Fraction_Granule',
       tags: '',

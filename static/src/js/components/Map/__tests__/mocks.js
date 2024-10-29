@@ -862,6 +862,7 @@ export const updateProps = {
             arctic: false,
             title: 'Enhanced Vegetation Index (L3, 16-Day)',
             antarctic_resolution: null,
+            layerPeriod: 'Daily',
             period: 'daily',
             product: 'MODIS_Terra_L3_EVI_16Day',
             match: {
@@ -908,6 +909,7 @@ export const updateProps = {
             arctic: false,
             title: 'Vegetation Index (L3, 16-Day)',
             antarctic_resolution: null,
+            layerPeriod: 'Daily',
             period: 'daily',
             product: 'MODIS_Terra_L3_NDVI_16Day',
             match: {
@@ -1341,6 +1343,7 @@ export const updatePropsSubdaily = {
             arctic: false,
             title: 'Enhanced Vegetation Index (L3, 16-Day)',
             antarctic_resolution: null,
+            layerPeriod: 'Subdaily',
             period: 'subdaily',
             product: 'MODIS_Terra_L3_EVI_16Day',
             match: {
@@ -1387,6 +1390,7 @@ export const updatePropsSubdaily = {
             arctic: false,
             title: 'Vegetation Index (L3, 16-Day)',
             antarctic_resolution: null,
+            layerPeriod: 'Subdaily',
             period: 'subdaily',
             product: 'MODIS_Terra_L3_NDVI_16Day',
             match: {

@@ -39,8 +39,7 @@ const config = {
   // eslint-disable-next-line max-len
   gibsUrl: 'https://gibs.earthdata.nasa.gov/wmts/{lprojection}/best/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}',
   // eslint-disable-next-line max-len
-  gibsGranuleUrl: 'http://uat.gibs.earthdata.nasa.gov/wmts/{lprojection}/std/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}',
-  debug: true
+  gibsGranuleUrl: 'http://uat.gibs.earthdata.nasa.gov/wmts/{lprojection}/std/{product}/default/{time}/{resolution}/{z}/{y}/{x}.{format}'
 }
 
 const MAX_RETRIES = 1 // Maximum number of times to attempt to reload an image
@@ -330,8 +329,8 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       x: tilePoint.x,
       y: tilePoint.y,
       z: tilePoint.z,
-      // If the period is `subdaily` use the full datetime, else use only the date
-      time: this.options.period?.toLowerCase() === 'subdaily' ? granule.timeStart : granule.timeStart.substring(0, 10)
+      // If the layerPeriod is `subdaily` use the full datetime, else use only the date
+      time: this.options.layerPeriod?.toLowerCase() === 'subdaily' ? granule.timeStart : granule.timeStart.substring(0, 10)
     }
 
     if (this._map && !this._map.options.crs.infinite) {

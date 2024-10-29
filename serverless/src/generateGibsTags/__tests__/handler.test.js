@@ -69,12 +69,12 @@ describe('generateGibsTags', () => {
             {
               format: 'png',
               group: 'overlays',
+              layerPeriod: 'Daily',
               match: {
                 time_start: '>=2002-06-01T00:00:00Z',
                 time_end: '<=2011-10-04T00:00:00Z',
                 day_night_flag: 'night'
               },
-              period: 'daily',
               product: 'AMSRE_Surface_Rain_Rate_Night',
               source: 'Aqua / AMSR-E',
               title: 'Surface Rain Rate (Night)',
@@ -103,11 +103,11 @@ describe('generateGibsTags', () => {
             {
               format: 'png',
               group: 'overlays',
+              layerPeriod: 'Daily',
               match: {
                 time_start: '>=2002-08-30T00:00:00Z',
                 day_night_flag: 'day'
               },
-              period: 'daily',
               product: 'AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day',
               source: 'Aqua / AIRS',
               title: 'Methane (L2, 400 hPa, Day)',
@@ -136,11 +136,11 @@ describe('generateGibsTags', () => {
             {
               format: 'png',
               group: 'overlays',
+              layerPeriod: 'Daily',
               match: {
                 time_start: '>=2002-08-30T00:00:00Z',
                 day_night_flag: 'day'
               },
-              period: 'daily',
               product: 'AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day',
               source: 'Aqua / AIRS',
               title: 'Methane (L2, 400 hPa, Day)',
@@ -168,11 +168,11 @@ describe('generateGibsTags', () => {
           data: [{
             format: 'png',
             group: 'overlays',
+            layerPeriod: 'Subdaily',
             match: {
               time_start: '>=2024-05-13T10:41:03Z',
               day_night_flag: 'unspecified'
             },
-            period: 'subdaily',
             product: 'TEMPO_L2_Ozone_Cloud_Fraction_Granule',
             source: 'TEMPO',
             title: 'Ozone (L2, Cloud Fraction, Subdaily) (BETA)',

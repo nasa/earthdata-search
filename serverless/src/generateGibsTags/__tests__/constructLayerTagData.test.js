@@ -49,12 +49,12 @@ describe('constructLayerTagData', () => {
           geographic: true,
           geographic_resolution: '2km',
           group: 'overlays',
+          layerPeriod: 'Daily',
           match: {
             day_night_flag: 'night',
             time_end: '<=2011-10-04T00:00:00Z',
             time_start: '>=2002-06-01T00:00:00Z'
           },
-          period: 'daily',
           product: 'AMSRE_Surface_Rain_Rate_Night',
           source: 'Aqua / AMSR-E',
           title: 'Surface Rain Rate (Night)',
@@ -87,11 +87,11 @@ describe('constructLayerTagData', () => {
           geographic: true,
           geographic_resolution: '2km',
           group: 'overlays',
+          layerPeriod: 'Daily',
           match: {
             day_night_flag: 'day',
             time_start: '>=2002-08-30T00:00:00Z'
           },
-          period: 'daily',
           product: 'AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day',
           source: 'Aqua / AIRS',
           title: 'Methane (L2, 400 hPa, Day)',
@@ -112,11 +112,11 @@ describe('constructLayerTagData', () => {
           geographic: true,
           geographic_resolution: '2km',
           group: 'overlays',
+          layerPeriod: 'Daily',
           match: {
             day_night_flag: 'day',
             time_start: '>=2002-08-30T00:00:00Z'
           },
-          period: 'daily',
           product: 'AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day',
           source: 'Aqua / AIRS',
           title: 'Methane (L2, 400 hPa, Day)',
@@ -151,11 +151,11 @@ describe('constructLayerTagData', () => {
           geographic: true,
           geographic_resolution: '2km',
           group: 'overlays',
+          layerPeriod: 'Daily',
           match: {
             day_night_flag: 'night',
             time_start: '>=2002-06-01T00:00:00Z'
           },
-          period: 'daily',
           product: 'AMSRE_Surface_Rain_Rate_Night',
           source: 'Aqua / AMSR-E',
           title: 'Surface Rain Rate (Night)',
@@ -190,11 +190,11 @@ describe('constructLayerTagData', () => {
           geographic: true,
           geographic_resolution: '2km',
           group: 'overlays',
+          layerPeriod: 'Daily',
           match: {
             day_night_flag: 'night',
             time_end: '<=2011-10-04T00:00:00Z'
           },
-          period: 'daily',
           product: 'AMSRE_Surface_Rain_Rate_Night',
           source: 'Aqua / AMSR-E',
           title: 'Surface Rain Rate (Night)',
@@ -229,11 +229,11 @@ describe('constructLayerTagData', () => {
           geographic: true,
           geographic_resolution: '2km',
           group: 'overlays',
+          layerPeriod: 'Daily',
           match: {
             time_end: '<=2011-10-04T00:00:00Z',
             time_start: '>=2002-06-01T00:00:00Z'
           },
-          period: 'daily',
           product: 'AMSRE_Surface_Rain_Rate_Night',
           source: 'Aqua / AMSR-E',
           title: 'Surface Rain Rate (Night)',

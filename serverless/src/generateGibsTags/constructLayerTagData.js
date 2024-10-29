@@ -11,7 +11,7 @@ export const constructLayerTagData = (layer) => {
     format,
     group,
     id,
-    period,
+    layerPeriod,
     projections,
     subtitle,
     title
@@ -37,8 +37,8 @@ export const constructLayerTagData = (layer) => {
   const tagData = {
     format: format.split('/').pop(),
     group,
+    layerPeriod,
     match,
-    period,
     product: id,
     source: subtitle,
     title,
