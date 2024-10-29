@@ -17,6 +17,7 @@ import {
   FaSave,
   FaUser
 } from 'react-icons/fa'
+import classNames from 'classnames'
 import TourContext from '../../contexts/TourContext'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
@@ -132,13 +133,19 @@ class SecondaryToolbar extends Component {
     const returnPath = window.location.href
     const { pathname, search } = location
     let addBorders = false
+    let needsOverlayPaths = ['/search']
+    // TODO add comments
+    if (pathname === '/projects' && search) {
+      needsOverlayPaths = [...needsOverlayPaths, '/projects']
+    }
 
     // Line up secondary toolbar buttons with leaflet controls
-    if (pathStartsWith(pathname, ['/search'])) {
+    if (pathStartsWith(pathname, needsOverlayPaths)) {
       addBorders = true
     }
 
     const mapButtonClass = addBorders ? 'secondary-toolbar__map-page' : ''
+    const secondaryToolbarClassnames = classNames(['secondary-toolbar', { 'secondary-toolbar--map-overlay': addBorders }])
 
     const { apiHost } = getEnvironmentConfig()
 
@@ -201,7 +208,7 @@ class SecondaryToolbar extends Component {
 
         return (
           <Button
-            className={`secondary-toolbar__project ${mapButtonClass}`}
+            className="secondary-toolbar__project "
             bootstrapVariant="light"
             href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`}
             label="View Project"
@@ -221,7 +228,7 @@ class SecondaryToolbar extends Component {
               search: location.search
             }
           }
-          className={`secondary-toolbar__project ${mapButtonClass}`}
+          className="secondary-toolbar__project "
           bootstrapVariant="light"
           label="View Project"
           icon={FaFolder}
@@ -237,7 +244,6 @@ class SecondaryToolbar extends Component {
 
     const loginLink = (
       <Button
-        className={`${mapButtonClass}`}
         bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
         label="Login"
@@ -332,7 +338,7 @@ class SecondaryToolbar extends Component {
     const saveProjectDropdown = (
       <Dropdown
         show={projectDropdownOpen}
-        className={`secondary-toolbar__project-name-dropdown ${mapButtonClass}`}
+        className="secondary-toolbar__project-name-dropdown"
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
@@ -391,7 +397,7 @@ class SecondaryToolbar extends Component {
           {
             ({ setRunTour }) => (
               <Dropdown.Toggle
-                className={`secondary-toolbar__start-tour-button ${mapButtonClass}`}
+                className="secondary-toolbar__start-tour-button "
                 as={Button}
                 icon={FaLightbulb}
                 iconSize="0.825rem"
@@ -414,7 +420,7 @@ class SecondaryToolbar extends Component {
     return (
       secondaryToolbarEnabled
       && (
-        <nav className="secondary-toolbar">
+        <nav className={secondaryToolbarClassnames}>
           {isPath(location.pathname, ['/projects']) && backToSearchLink}
           {isDownloadPathWithId(location.pathname) && backToProjectLink}
           <PortalFeatureContainer authentication>

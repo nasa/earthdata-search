@@ -45,6 +45,7 @@ import SearchTour from './components/Tour/SearchTour'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 import Spinner from './components/Spinner/Spinner'
+import WrappingContainer from './components/WrappingContainer/WrappingContainer'
 import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
 import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 
@@ -121,7 +122,7 @@ class App extends Component {
               <ErrorBannerContainer />
               <AuthTokenContainer>
                 <UrlQueryContainer>
-                  <div className="wrapping-container">
+                  <WrappingContainer>
                     <SecondaryToolbarContainer />
                     <Switch>
                       <Route
@@ -252,7 +253,7 @@ class App extends Component {
                         <AboutCSDAModalContainer />
                       </Route>
                     </Switch>
-                  </div>
+                  </WrappingContainer>
                   <FooterContainer />
                 </UrlQueryContainer>
               </AuthTokenContainer>
