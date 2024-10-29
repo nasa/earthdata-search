@@ -505,6 +505,7 @@ const EDSCTable = ({
 }
 
 EDSCTable.defaultProps = {
+  focusedItem: '',
   initialRowStateAccessor: null,
   initialTableState: {},
   isItemLoaded: null,
@@ -528,7 +529,7 @@ EDSCTable.defaultProps = {
 EDSCTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  focusedItem: PropTypes.string.isRequired,
+  focusedItem: PropTypes.string,
   id: PropTypes.string.isRequired,
   initialRowStateAccessor: PropTypes.func,
   initialTableState: PropTypes.shape({}),
