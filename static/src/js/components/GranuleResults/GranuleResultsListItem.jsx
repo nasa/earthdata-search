@@ -11,6 +11,8 @@ import { granuleListItem } from './skeleton'
 import GranuleResultsItem from './GranuleResultsItem'
 import Skeleton from '../Skeleton/Skeleton'
 
+import './GranuleResultsListItem.scss'
+
 /**
  * Renders GranuleResultsListItem.
  * @param {Object} props - The props passed into the component.
@@ -98,7 +100,7 @@ export const GranuleResultsListItem = memo(({
 
   return (
     <li className="granule-results-list-item" style={style}>
-      <div style={{ padding: '0.825rem' }}>
+      <div className="granule-results-list-item__wrapper">
         <GranuleResultsItem
           collectionId={collectionId}
           directDistributionInformation={directDistributionInformation}
