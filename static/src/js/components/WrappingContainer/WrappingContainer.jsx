@@ -37,7 +37,7 @@ export const WrappingContainer = (props) => {
 
 WrappingContainer.propTypes = {
   location: locationPropType.isRequired,
-  children: PropTypes.node
+  children: PropTypes.node.isRequired
 
 }
 
