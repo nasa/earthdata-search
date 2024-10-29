@@ -132,7 +132,7 @@ class SecondaryToolbar extends Component {
     const loggedIn = authToken !== ''
     const returnPath = window.location.href
     const { pathname, search } = location
-    let addBorders = false
+    let isMapOverlay = false
     let needsOverlayPaths = ['/search']
     // TODO add comments
     if (pathname === '/projects' && search) {
@@ -141,11 +141,11 @@ class SecondaryToolbar extends Component {
 
     // Line up secondary toolbar buttons with leaflet controls
     if (pathStartsWith(pathname, needsOverlayPaths)) {
-      addBorders = true
+      isMapOverlay = true
     }
 
-    const mapButtonClass = addBorders ? 'secondary-toolbar__map-page' : ''
-    const secondaryToolbarClassnames = classNames(['secondary-toolbar', { 'secondary-toolbar--map-overlay': addBorders }])
+    const mapButtonClass = isMapOverlay ? 'secondary-toolbar__map-page' : ''
+    const secondaryToolbarClassnames = classNames(['secondary-toolbar', { 'secondary-toolbar--map-overlay': isMapOverlay }])
 
     const { apiHost } = getEnvironmentConfig()
 

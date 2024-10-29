@@ -307,26 +307,19 @@ describe('SecondaryToolbar component', () => {
         }
       })
 
-      const userMenuButton = screen.getByRole('button', { name: 'User menu' })
-      expect(userMenuButton.className).not.toEqual('secondary-toolbar__map-page')
+      const mockPortalFeatureContainer = screen.getByTestId('mockPortalFeatureContainer')
+      expect(mockPortalFeatureContainer.parentElement.className).toEqual('secondary-toolbar')
     })
 
     test('when in map view page', () => {
-      const secondaryToolbarMapClassName = 'secondary-toolbar__map-page'
       setup('loggedIn', {
         location: {
           pathname: '/search'
         }
       })
 
-      const myProjectButton = screen.getByRole('button', { name: 'Create a project with your current search' })
-      const userMenuButton = screen.getByRole('button', { name: 'User menu' })
-      const tourButton = screen.getByRole('button', { name: 'Want to learn more? Click here to take a tour of our site.' })
-
-      expect(userMenuButton.className).toContain(secondaryToolbarMapClassName)
-      // The Dropdown parent containers of the buttons have the classname update
-      expect(tourButton.className).toContain(secondaryToolbarMapClassName)
-      expect(myProjectButton.parentElement.className).toContain(secondaryToolbarMapClassName)
+      const mockPortalFeatureContainer = screen.getByTestId('mockPortalFeatureContainer')
+      expect(mockPortalFeatureContainer.parentElement.className).toEqual('secondary-toolbar secondary-toolbar--map-overlay')
     })
   })
 })
