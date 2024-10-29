@@ -29,7 +29,7 @@ export const WrappingContainer = (props) => {
   const wrappingContainerClassnames = classNames(['wrapping-container', { 'wrapping-container--map-page': addMapPageStyles }])
 
   return (
-    <div className={wrappingContainerClassnames}>
+    <div id="wrapping-container" className={wrappingContainerClassnames}>
       {children}
     </div>
   )

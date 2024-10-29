@@ -46,7 +46,8 @@ class SecondaryToolbar extends Component {
 
     this.state = {
       projectDropdownOpen: false,
-      projectName: name
+      projectName: name,
+      newProjectName: ''
     }
 
     this.handleLogout = this.handleLogout.bind(this)
@@ -364,7 +365,7 @@ class SecondaryToolbar extends Component {
                   <FormControl
                     className="secondary-toolbar__project-name-input"
                     name="projectName"
-                    value={newProjectName || ''}
+                    value={newProjectName}
                     placeholder="Untitled Project"
                     onChange={this.onInputChange}
                     onKeyPress={this.handleKeypress}

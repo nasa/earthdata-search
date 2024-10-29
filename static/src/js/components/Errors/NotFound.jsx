@@ -22,7 +22,7 @@ export const NotFound = ({
 
   // Modify the background color of root element for the not found page so we can load stars jpg
   const selectElementById = () => {
-    const element = document.getElementById('app')
+    const element = document.getElementById('wrapping-container')
     if (element) {
       element.style.backgroundColor = 'initial'
     }
