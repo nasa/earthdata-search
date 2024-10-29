@@ -346,7 +346,9 @@ export class GranuleGridLayerExtended extends L.GridLayer {
 
   // Draw the granule tile
   drawTile(canvases, back, tilePoint) {
-    const dpr = window.devicePixelRatio || 1
+    // Round the DPR up to the next whole number. This fixes an issue where
+    // outlines are drawn at the wrong location and scale when DPR is a decimal value.
+    const dpr = Math.ceil(window.devicePixelRatio || 1)
     const {
       imagery: imageryCanvas,
       outline: outlineCanvas
@@ -473,7 +475,13 @@ export class GranuleGridLayerExtended extends L.GridLayer {
     // Draw the granule imagery.
     setTimeout(
       (
-        () => this.drawClippedImagery(imageryCanvas, boundary, paths, nwPoint, tilePoint)
+        () => this.drawClippedImagery(
+          imageryCanvas,
+          boundary,
+          [...paths].reverse(),
+          nwPoint,
+          tilePoint
+        )
       ), 0
     )
 
