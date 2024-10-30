@@ -439,7 +439,7 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
 
         // Test leaflet has drawn the shape correctly
-        await expect(page.locator('.leaflet-interactive').first()).toHaveAttribute('d', "M1161 404L1122 480L1257 499L1161 404z")
+        await expect(page.locator('.leaflet-interactive').first()).toHaveAttribute('d', 'M1161 404L1122 480L1257 499L1161 404z')
       })
     })
   })
