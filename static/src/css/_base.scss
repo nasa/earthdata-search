@@ -6,6 +6,7 @@
 * > button,
 * > input,
 * > textarea,
+.dropdown-toggle,
 .btn {
   &:focus {
     box-shadow: none;
@@ -15,6 +16,10 @@
     border-color: transparent;
     outline: 1px dashed $color__nasa-blue;
     outline-offset: 0.125rem;
+
+    &.focus-light {
+      outline: 1px dashed $color__spacesuit-white;
+    }
   }
 
   &.disabled,
@@ -46,6 +51,11 @@ body.is-panels-will-minimize {
   html {
     font-size: 100%;
   }
+}
+
+// Prevent tophat from resizing on page load
+body .th-wrapper {
+  font-size: 1rem;
 }
 
 @include media-breakpoint-up(xl) {

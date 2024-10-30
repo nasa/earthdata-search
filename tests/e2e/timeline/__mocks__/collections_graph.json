@@ -424,8 +424,14 @@
               "items": [
                 {
                   "conceptId": "S1571420629-LAADS",
+                  "orderOptions": {
+                    "items": null
+                  },
                   "type": "ECHO ORDERS",
-                  "supportedOutputFormats": null
+                  "supportedOutputFormats": null,
+                  "url": {
+                    "urlValues": "http://example.com"
+                  }
                 }
               ]
             },
