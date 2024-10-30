@@ -13,10 +13,9 @@ export const WrappingContainer = (props) => {
     children
   } = props
   const { search, pathname } = location
-  console.log('🚀 ~ file: Untitled-1:11 ~ search:', search)
-
   let isMapPage = ['/search']
-  // TODO add comments
+
+  // Currently saved projects and a project page share route1
   if (pathname === '/projects' && search) {
     isMapPage = [...isMapPage, '/projects']
   }
@@ -38,7 +37,6 @@ export const WrappingContainer = (props) => {
 WrappingContainer.propTypes = {
   location: locationPropType.isRequired,
   children: PropTypes.node.isRequired
-
 }
 
 export default withRouter(WrappingContainer)

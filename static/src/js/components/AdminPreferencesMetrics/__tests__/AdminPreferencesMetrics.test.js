@@ -28,8 +28,11 @@ const setup = () => {
     preferencesMetrics
   }
 
-  // https://testing-library.com/docs/example-react-router/
-  render(<AdminPreferencesMetrics {...props} />, { wrapper: MemoryRouter })
+  render(
+    <MemoryRouter>
+      <AdminPreferencesMetrics {...props} />
+    </MemoryRouter>
+  )
 
   return {
     preferencesMetrics

@@ -299,7 +299,7 @@ describe('SecondaryToolbar component', () => {
     expect(within(loginButton.parentElement.parentElement).getByTestId('mockPortalFeatureContainer')).toBeInTheDocument()
   })
 
-  describe('adding classame for map view', () => {
+  describe('adding classname for map view', () => {
     test('when not in map view page', () => {
       setup('loggedIn', {
         location: {

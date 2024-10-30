@@ -45,9 +45,9 @@ import SearchTour from './components/Tour/SearchTour'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 import Spinner from './components/Spinner/Spinner'
-import WrappingContainer from './components/WrappingContainer/WrappingContainer'
 import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
 import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
+import WrappingContainer from './containers/WrappingContainer/WrappingContainer'
 
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
