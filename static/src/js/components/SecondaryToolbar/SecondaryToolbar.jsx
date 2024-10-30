@@ -266,7 +266,7 @@ class SecondaryToolbar extends Component {
         >
           {
             firstName && (
-              <span className="secondary-toolbar__dropdown-text">
+              <span className="secondary-toolbar__username">
                 {firstName}
               </span>
             )
@@ -353,11 +353,7 @@ class SecondaryToolbar extends Component {
           iconSize="0.825rem"
           bootstrapVariant="light"
           label="Create a project with your current search"
-        >
-          <span className="secondary-toolbar__dropdown-text">
-            Save Project
-          </span>
-        </Dropdown.Toggle>
+        />
         <Dropdown.Menu>
           <Form inline className="flex-nowrap secondary-toolbar__project-name-form">
             <Form.Row>
