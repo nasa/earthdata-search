@@ -1,8 +1,16 @@
 .secondary-toolbar {
   display: flex;
-  align-items: stretch;
-  position: relative;
-  z-index: 2;
+  padding: 0.625rem;
+  justify-content: flex-end;
+  border-bottom: 1px solid $color__carbon--20;
+
+  &--map-overlay {
+    z-index: 2;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-bottom: 0;
+  }
 
   @include media-breakpoint-up(md) {
     margin-left: auto;
@@ -12,8 +20,42 @@
   .dropdown {
     display: flex;
     flex-shrink: 1;
-    flex-grow: 1;
     white-space: nowrap;
+  }
+
+  &--map-overlay {
+    .button,
+    .dropdown-toggle {
+      box-shadow: none;
+      border-radius: 0.25rem;
+      border: 2px solid rgba($color__carbon--80, 0.3);
+      background-clip: padding-box;
+
+      &:hover,
+      &:focus {
+        border: 2px solid rgba($color__carbon--80, 0.3);
+      }
+    }
+
+    // Bootstrap outline overrides for the dropdown-toggle
+    .show > .btn-light.dropdown-toggle,
+    .btn-light.dropdown-toggle:focus,
+    .btn-light.dropdown-toggle:active,
+    .show > .btn-light.dropdown-toggle:focus,
+    .show > .btn-light.dropdown-toggle:active,
+    .btn-light:not(:disabled):not(.disabled):active:focus {
+      border: 2px solid rgba($color__carbon--80, 0.3);
+    }
+  }
+
+  // Bootstrap outline overrides for the dropdown-toggle
+  .show > .btn-light.dropdown-toggle,
+  .btn-light.dropdown-toggle:focus,
+  .btn-light.dropdown-toggle:active,
+  .show > .btn-light.dropdown-toggle:focus,
+  .show > .btn-light.dropdown-toggle:active,
+  .btn-light:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
   }
 
   .button {
@@ -21,6 +63,8 @@
   }
 
   &__project-name-dropdown {
+    margin-right: 0.5rem;
+
     .dropdown-menu {
       padding: calc($spacer / 2);
     }
@@ -41,26 +85,8 @@
   }
 
   &__back,
-  &__project,
-  &__login,
-  &__project-name-dropdown-toggle,
-  &__start-tour-button,
-  &__user-dropdown-toggle {
-    position: relative;
-    padding: 0 1rem;
-    border: 0;
-    border-radius: 0;
-    outline: 0;
-    border-left: 1px solid $color__carbon--70 !important;
-    border-right: 1px solid transparent !important;
-    background: transparent;
-    color: $color__carbon--30;
-
-    .show > &,
-    &:hover {
-      background-color: rgba($color__carbon-black, 0.2) !important;
-      color: $color__carbon--10 !important;
-    }
+  &__project {
+    margin-right: 0.5rem;
   }
 
   &__project-name-form {
@@ -70,13 +96,13 @@
   }
 
   &__username {
-    margin-right: 0.5rem;
+    margin-right: 0.25rem;
   }
 
-  &__start-tour-button,
   &__project-name-dropdown-toggle {
     &:after {
       display: none;
     }
+    margin-left: 0.5rem;
   }
 }

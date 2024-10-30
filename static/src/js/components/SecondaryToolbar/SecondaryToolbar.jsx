@@ -9,9 +9,11 @@ import {
 } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { parse } from 'qs'
+import classNames from 'classnames'
 import {
   FaArrowCircleLeft,
   FaFolder,
+  FaLightbulb,
   FaLock,
   FaSave,
   FaUser
@@ -29,7 +31,6 @@ import { stringify } from '../../util/url/url'
 import Button from '../Button/Button'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './SecondaryToolbar.scss'
 
@@ -45,7 +46,8 @@ class SecondaryToolbar extends Component {
 
     this.state = {
       projectDropdownOpen: false,
-      projectName: name
+      projectName: name,
+      newProjectName: ''
     }
 
     this.handleLogout = this.handleLogout.bind(this)
@@ -87,6 +89,7 @@ class SecondaryToolbar extends Component {
     onUpdateProjectName(newProjectName)
   }
 
+  // Needed for Save Project so when the url updates with a project-id we don't refresh the page
   handleKeypress(event) {
     if (event.key === 'Enter') {
       this.handleNameSubmit()
@@ -125,16 +128,32 @@ class SecondaryToolbar extends Component {
     } = this.props
 
     const { disableSiteTour } = getApplicationConfig()
-
     const { first_name: firstName = '' } = ursProfile
 
     const loggedIn = authToken !== ''
     const returnPath = window.location.href
+    const { pathname, search } = location
+    let isMapOverlay = false
+    let needsOverlayPaths = ['/search']
+
+    // Currently saved projects and a project page share a route as such we must determine if we are on the saved projects page
+    // If we are on the project page i.e. a specific project we will have the map included in the DOM and need to adjust the classname
+    if (pathname === '/projects' && search) {
+      needsOverlayPaths = [...needsOverlayPaths, '/projects']
+    }
+
+    // Determine if the current page is a route that displays the map so the correct className can be set
+    if (pathStartsWith(pathname, needsOverlayPaths)) {
+      isMapOverlay = true
+    }
+
+    const mapButtonClass = isMapOverlay ? 'secondary-toolbar__map-page' : ''
+    const secondaryToolbarClassnames = classNames(['secondary-toolbar', { 'secondary-toolbar--map-overlay': isMapOverlay }])
 
     const { apiHost } = getEnvironmentConfig()
 
     // Remove focused collection from back button params
-    const params = parse(location.search, {
+    const params = parse(search, {
       parseArrays: false,
       ignoreQueryPrefix: true
     })
@@ -170,8 +189,8 @@ class SecondaryToolbar extends Component {
     const backToProjectLink = (
       <PortalLinkContainer
         type="button"
-        className="secondary-toolbar__back"
-        bootstrapVariant="naked"
+        className={classNames(['secondary-toolbar__back', { 'focus-light': isMapOverlay }])}
+        bootstrapVariant="light"
         icon={FaArrowCircleLeft}
         label="Back to Project"
         to={
@@ -192,10 +211,11 @@ class SecondaryToolbar extends Component {
 
         return (
           <Button
-            className="secondary-toolbar__project"
+            className={classNames(['secondary-toolbar__project', { 'focus-light': isMapOverlay }])}
             bootstrapVariant="light"
             href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`}
             label="View Project"
+            icon={FaFolder}
           >
             My Project
           </Button>
@@ -211,10 +231,11 @@ class SecondaryToolbar extends Component {
               search: location.search
             }
           }
-          className="secondary-toolbar__project"
+          className={classNames(['secondary-toolbar__project', { 'focus-light': isMapOverlay }])}
           bootstrapVariant="light"
           label="View Project"
           icon={FaFolder}
+          iconPosition="left"
           updatePath
         >
           My Project
@@ -226,23 +247,23 @@ class SecondaryToolbar extends Component {
 
     const loginLink = (
       <Button
-        className="secondary-toolbar__login"
-        bootstrapVariant="naked"
+        className={classNames({ 'focus-light': isMapOverlay })}
+        bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
-        icon={FaLock}
         label="Login"
+        icon={FaLock}
       >
-        Earthdata Login
+        Login
       </Button>
     )
-
     const loggedInDropdown = (
-      <Dropdown className="secondary-toolbar__user-dropdown">
+      <Dropdown>
         <Dropdown.Toggle
           label="User menu"
-          className="secondary-toolbar__user-dropdown-toggle"
-          variant="light"
+          className={classNames([`secondary-toolbar__user-dropdown-toggle ${mapButtonClass}`, { 'focus-light': isMapOverlay }])}
+          bootstrapVariant="light"
           as={Button}
+          icon={FaUser}
         >
           {
             firstName && (
@@ -251,7 +272,6 @@ class SecondaryToolbar extends Component {
               </span>
             )
           }
-          <EDSCIcon size="0.825rem" icon={FaUser} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer
@@ -322,16 +342,17 @@ class SecondaryToolbar extends Component {
     const saveProjectDropdown = (
       <Dropdown
         show={projectDropdownOpen}
-        className="secondary-toolbar__project-name-dropdown"
+        className={classNames(['secondary-toolbar__project-name-dropdown', { 'focus-light': isMapOverlay }])}
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
         <Dropdown.Toggle
-          className="secondary-toolbar__project-name-dropdown-toggle"
+          className="secondary-toolbar__project-dropdown-toggle focus-light"
           as={Button}
           onClick={this.onToggleProjectDropdown}
           icon={FaSave}
           iconSize="0.825rem"
+          bootstrapVariant="light"
           label="Create a project with your current search"
         />
         <Dropdown.Menu>
@@ -368,7 +389,7 @@ class SecondaryToolbar extends Component {
     const startTourButton = (
       <Dropdown
         show={projectDropdownOpen}
-        className="secondary-toolbar__project-name-dropdown"
+        className="secondary-toolbar__project-name-dropdown focus-light"
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
@@ -376,9 +397,12 @@ class SecondaryToolbar extends Component {
           {
             ({ setRunTour }) => (
               <Dropdown.Toggle
-                className="secondary-toolbar__start-tour-button"
+                className={classNames(['secondary-toolbar__start-tour-button', { 'focus-light': isMapOverlay }])}
                 as={Button}
+                icon={FaLightbulb}
+                iconSize="0.825rem"
                 onClick={setRunTour}
+                bootstrapVariant="light"
                 label="Want to learn more? Click here to take a tour of our site."
               >
                 Start Tour
@@ -396,7 +420,7 @@ class SecondaryToolbar extends Component {
     return (
       secondaryToolbarEnabled
       && (
-        <nav className="secondary-toolbar">
+        <nav className={secondaryToolbarClassnames}>
           {isPath(location.pathname, ['/projects']) && backToSearchLink}
           {isDownloadPathWithId(location.pathname) && backToProjectLink}
           <PortalFeatureContainer authentication>

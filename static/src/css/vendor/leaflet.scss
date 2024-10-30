@@ -76,7 +76,7 @@
       position: absolute;
     }
 
-    Reduce the font size on the scale elements
+    // Reduce the font size on the scale elements
     .leaflet-control-scale-line {
       font-weight: 400;
     }
@@ -96,7 +96,7 @@
       border-radius: 2px;
 
       label {
-        margin-bottom: 5px;
+        margin-bottom: 15px;
 
         &:last-child {
           margin-bottom: 0;
@@ -193,7 +193,7 @@
       border-top-right-radius: 4px;
     }
 
-    .leaflet-bottom .leaflet-control-scale {
+    .leaflet-bottom {
       margin-bottom: 10px;
     }
 

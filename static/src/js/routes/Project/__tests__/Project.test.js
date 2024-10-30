@@ -10,7 +10,7 @@ import {
   waitFor
 } from '@testing-library/react'
 
-import { BrowserRouter as Router } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import * as AppConfig from '../../../../../../sharedUtils/config'
 import actions from '../../../actions'
 import { Project } from '../Project'
@@ -89,9 +89,9 @@ const setup = (overrideProps) => {
   }
 
   render(
-    <Router>
+    <MemoryRouter>
       <Project {...props} />
-    </Router>
+    </MemoryRouter>
   )
 
   return {

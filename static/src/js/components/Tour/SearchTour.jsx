@@ -103,6 +103,7 @@ const SearchTour = () => {
       stepIndex={stepIndex}
       continuous
       callback={handleJoyrideCallback}
+      disableScrollParentFix
       hideBackButton
       styles={
         {
