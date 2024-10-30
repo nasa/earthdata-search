@@ -85,10 +85,10 @@ test.describe('Map interactions', () => {
         await expect(page).toHaveURL(/search\?sp\[0\]=42\.\d+%2C-7\.\d+/)
 
         // Draws a point on the map
-        await expect(page.locator('.leaflet-marker-pane img')).toHaveAttribute('style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1000px, 467px, 0px); z-index: 467;')
+        await expect(page.locator('.leaflet-marker-pane img')).toHaveAttribute('style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1000px, 468px, 0px); z-index: 468;')
 
         // Populates the spatial display field
-        await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-7.7\d+,42.18\d+/)
+        await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-7.5\d+,42.18\d+/)
       })
     })
 
@@ -158,7 +158,7 @@ test.describe('Map interactions', () => {
         await expect(page).toHaveURL('search?sp[0]=42.1875%2C4.5297&lat=4.5297&long=42.1875&zoom=7')
 
         // Draws a point on the map
-        await expect(page.locator('.leaflet-marker-pane img')).toHaveAttribute('style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(700px, 412px, 0px); z-index: 412;')
+        await expect(page.locator('.leaflet-marker-pane img')).toHaveAttribute('style', 'margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(700px, 414px, 0px); z-index: 414;')
 
         // Populates the spatial display field
         await expect(page.getByTestId('spatial-display_point')).toHaveValue('4.5297,42.1875')
@@ -356,7 +356,7 @@ test.describe('Map interactions', () => {
         await expect(page).toHaveURL('search?circle[0]=42.1875%2C4.5297%2C156444&lat=4.529699999999991&long=42.187500000000014&zoom=6')
 
         // Draws a circle on the map
-        await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', 'M539,411.6208000000006a161,160 0 1,0 322,0 a161,160 0 1,0 -322,0 ')
+        await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', 'M539,413.6208000000006a161,160 0 1,0 322,0 a161,160 0 1,0 -322,0 ')
 
         // Populates the spatial display field
         await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue('4.5297,42.1875')
@@ -402,9 +402,9 @@ test.describe('Map interactions', () => {
 
         // Draws a bounding box on the map
         const leafletValues = {
-          chromium: 'M1000 567L1000 467L1100 467L1100 567L1000 567z',
-          firefox: 'M1000 567L1000 467L1100 467L1100 567L1000 567z',
-          webkit: 'M1000 567L1000 467L1100 467L1100 567L1000 567z'
+          chromium: 'M1000 568L1000 467L1100 467L1100 568L1000 568z',
+          firefox: 'M1000 568L1000 467L1100 467L1100 568L1000 568z',
+          webkit: 'M1000 568L1000 467L1100 467L1100 568L1000 568z'
         }
         await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', leafletValues[browser])
 
@@ -447,9 +447,9 @@ test.describe('Map interactions', () => {
 
         // Draws a bounding box on the map
         const leafletValues = {
-          chromium: 'M1000 567L1000 467L1100 467L1100 567L1000 567z',
-          firefox: 'M1000 567L1000 467L1100 467L1100 567L1000 567z',
-          webkit: 'M1000 567L1000 467L1100 467L1100 567L1000 567z'
+          chromium: 'M1000 568L1000 467L1100 467L1100 568L1000 568z',
+          firefox: 'M1000 568L1000 467L1100 467L1100 568L1000 568z',
+          webkit: 'M1000 568L1000 467L1100 467L1100 568L1000 568z'
         }
         await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', leafletValues[browser])
 
@@ -493,7 +493,7 @@ test.describe('Map interactions', () => {
         await expect(page).toHaveURL('search?sb[0]=42.1875%2C-9.53964%2C56.25%2C4.5297&lat=-2.50497&long=49.21875&zoom=4')
 
         // Draws a bounding box on the map
-        await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', 'M500 612L500 212L900 212L900 612L500 612z')
+        await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', 'M500 614L500 214L900 214L900 614L500 614z')
 
         // Populates the spatial display field
         await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue('-9.53964,42.1875')
@@ -548,9 +548,9 @@ test.describe('Map interactions', () => {
 
         // Draws a polygon on the map
         const leafletValues = {
-          chromium: 'M1000 467L1048 518L1100 567L1000 567L1000 467z',
-          firefox: 'M1000 467L1048 518L1100 567L1000 567L1000 467z',
-          webkit: 'M1000 467L1048 518L1100 567L1000 567L1000 467z'
+          chromium: 'M1000 467L1048 518L1100 568L1000 568L1000 467z',
+          firefox: 'M1000 467L1048 518L1100 568L1000 568L1000 467z',
+          webkit: 'M1000 467L1048 518L1100 568L1000 568L1000 467z'
         }
         await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', leafletValues[browser])
 
@@ -606,9 +606,9 @@ test.describe('Map interactions', () => {
 
         // Draws a polygon on the map
         const leafletValues = {
-          chromium: 'M1000 467L1048 518L1100 567L1000 567L1000 467z',
-          firefox: 'M1000 467L1048 518L1100 567L1000 567L1000 467z',
-          webkit: 'M1000 467L1048 518L1100 567L1000 567L1000 467z'
+          chromium: 'M1000 467L1048 518L1100 568L1000 568L1000 467z',
+          firefox: 'M1000 467L1048 518L1100 568L1000 568L1000 467z',
+          webkit: 'M1000 467L1048 518L1100 568L1000 568L1000 467z'
         }
         await expect(page.locator('.leaflet-interactive')).toHaveAttribute('d', leafletValues[browser])
 
@@ -658,7 +658,7 @@ test.describe('Map interactions', () => {
         await expect(page).toHaveURL('search?polygon[0]=42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647%2C42.1875%2C-16.46517&sf=1&sfs[0]=0&lat=-9.435819999999993&long=49.21875&zoom=5')
 
         // Draws a polygon on the map
-        await expect(page.locator('.leaflet-interactive').first()).toHaveAttribute('d', 'M300 12L300 812L600 818L900 817L1100 812L996 714L792 516L692 416L300 12z')
+        await expect(page.locator('.leaflet-interactive').first()).toHaveAttribute('d', 'M300 14L300 814L600 820L900 819L1100 814L996 716L792 518L692 418L300 14z')
         await expect(page.locator('.leaflet-interactive').nth(1)).toHaveAttribute('d', 'M300 812L600 818L900 817L1100 812L996 714L792 516L692 416L300 12L300 812z')
 
         // Populates the spatial display field

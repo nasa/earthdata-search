@@ -9,8 +9,8 @@ import './WrappingContainer.scss'
 
 export const WrappingContainer = (props) => {
   const {
-    location,
-    children
+    children,
+    location
   } = props
   const { search, pathname } = location
   let isMapPage = ['/search']
@@ -35,8 +35,8 @@ export const WrappingContainer = (props) => {
 }
 
 WrappingContainer.propTypes = {
-  location: locationPropType.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  location: locationPropType.isRequired
 }
 
 export default withRouter(WrappingContainer)

@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { parse } from 'qs'
+import classNames from 'classnames'
 import {
   FaArrowCircleLeft,
   FaFolder,
@@ -17,7 +18,6 @@ import {
   FaSave,
   FaUser
 } from 'react-icons/fa'
-import classNames from 'classnames'
 import TourContext from '../../contexts/TourContext'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
@@ -135,7 +135,8 @@ class SecondaryToolbar extends Component {
     const { pathname, search } = location
     let isMapOverlay = false
     let needsOverlayPaths = ['/search']
-    // TODO add comments
+
+    // Add map overlay for routes that utilze the map
     if (pathname === '/projects' && search) {
       needsOverlayPaths = [...needsOverlayPaths, '/projects']
     }

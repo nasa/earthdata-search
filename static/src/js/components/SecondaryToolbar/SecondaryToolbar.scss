@@ -1,9 +1,7 @@
 .secondary-toolbar {
   display: flex;
   padding: 0.625rem;
-  // align-items: stretch;
   justify-content: flex-end;
-  // background: $color__spacesuit-white;
   border-bottom: 1px solid $color__carbon--20;
 
   &--map-overlay {
@@ -22,7 +20,6 @@
   .dropdown {
     display: flex;
     flex-shrink: 1;
-    // flex-grow: 1;
     white-space: nowrap;
   }
 
@@ -32,7 +29,6 @@
       box-shadow: none;
       border-radius: 0.25rem;
       border: 2px solid rgba($color__carbon--80, 0.3);
-      // outline: 2px solid $color__carbon--80;
       background-clip: padding-box;
 
       &:hover,

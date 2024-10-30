@@ -6,7 +6,7 @@ import WrappingContainer from '../WrappingContainer'
 const setup = (initialEntries, overrideProps) => {
   const props = {
     location: {
-      pathname: '/search',
+      pathname: '',
       search: ''
     },
     children: <div data-testid="test-child">Im a child!</div>,
