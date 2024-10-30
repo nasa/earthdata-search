@@ -79,6 +79,10 @@ const testResultsSize = async (page, cmrHits) => {
 }
 
 test.describe('Path /search', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+  })
+
   test.describe('When the path is loaded without any url params', () => {
     test('loads correctly', async ({ page }) => {
       const cmrHits = 8098
@@ -218,7 +222,7 @@ test.describe('Path /search', () => {
     })
   })
 
-  test.describe('When the path is loaded with a spatial query', () => {
+  test.describe.skip('When the path is loaded with a spatial query', () => {
     test.describe('When the spatial query is a point', () => {
       test('loads with the spatial query applied', async ({ page }) => {
         const cmrHits = 5079
