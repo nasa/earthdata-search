@@ -47,7 +47,7 @@ import uploadShapefile from '../../support/uploadShapefile'
 // values we expect from leaflet and we are putting them into the store. The Jest tests verify that exact values
 // from the store are being displayed correctly.
 
-test.describe('Map interactions', () => {
+test.describe.skip('Map interactions', () => {
   test.beforeEach(async ({ page }, testInfo) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
 

@@ -15,7 +15,7 @@ export const WrappingContainer = (props) => {
   const { search, pathname } = location
   let isMapPage = ['/search']
 
-  // Currently saved projects and a project page share route as such we must determine if we are on the saved projects page
+  // Currently saved projects and a project page share a route as such we must determine if we are on the saved projects page
   // If we are on the project page i.e. a specific project we will have the map included in the DOM and need to adjust the classname
   if (pathname === '/projects' && search) {
     isMapPage = [...isMapPage, '/projects']
