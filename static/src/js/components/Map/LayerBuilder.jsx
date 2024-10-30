@@ -31,6 +31,7 @@ const LayerBuilder = (props) => {
       tileSize={512}
       noWrap
       continuousWorld
+      detectRetina
     />
   )
 }

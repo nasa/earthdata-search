@@ -816,46 +816,6 @@ export const updateProps = {
     },
     shortName: 'MOD13Q1',
     tags: {
-      'edsc.extra.gibs': {
-        data: [
-          {
-            geo_resolution: '250m',
-            format: 'png',
-            antarctic: false,
-            group: 'overlays',
-            arctic_resolution: null,
-            geo: true,
-            source: 'Terra / MODIS',
-            arctic: false,
-            title: 'Vegetation Index (L3, 16-Day)',
-            resolution: '250m',
-            antarctic_resolution: null,
-            product: 'MODIS_Terra_L3_NDVI_16Day',
-            maxNativeZoom: 5,
-            match: {
-              time_start: '>=2000-03-05T00:00:00Z'
-            }
-          },
-          {
-            geo_resolution: '250m',
-            format: 'png',
-            antarctic: false,
-            group: 'overlays',
-            arctic_resolution: null,
-            geo: true,
-            source: 'Terra / MODIS',
-            arctic: false,
-            title: 'Enhanced Vegetation Index (L3, 16-Day)',
-            resolution: '250m',
-            antarctic_resolution: null,
-            product: 'MODIS_Terra_L3_EVI_16Day',
-            maxNativeZoom: 5,
-            match: {
-              time_start: '>=2000-03-05T00:00:00Z'
-            }
-          }
-        ]
-      },
       'edsc.extra.subset_service.esi': {
         data: [
           'S1568897222-LPDAAC_ECS'
@@ -902,6 +862,8 @@ export const updateProps = {
             arctic: false,
             title: 'Enhanced Vegetation Index (L3, 16-Day)',
             antarctic_resolution: null,
+            layerPeriod: 'Daily',
+            period: 'daily',
             product: 'MODIS_Terra_L3_EVI_16Day',
             match: {
               time_start: '>=2000-03-05T00:00:00Z'
@@ -947,6 +909,8 @@ export const updateProps = {
             arctic: false,
             title: 'Vegetation Index (L3, 16-Day)',
             antarctic_resolution: null,
+            layerPeriod: 'Daily',
+            period: 'daily',
             product: 'MODIS_Terra_L3_NDVI_16Day',
             match: {
               time_start: '>=2000-03-05T00:00:00Z'
@@ -1331,6 +1295,115 @@ export const updateProps = {
   projection: 'epsg4326'
 }
 
+export const updatePropsSubdaily = {
+  ...updateProps,
+  metadata: {
+    ...updateProps.metadata,
+    tags: {
+      ...updateProps.metadata.tags,
+      'edsc.extra.serverless.gibs': {
+        ...updateProps.metadata.tags['edsc.extra.serverless.gibs'],
+        data: [
+          {
+            format: 'png',
+            antarctic: false,
+            geographic: true,
+            group: 'overlays',
+            geographic_resolution: '250m',
+            geographic_tile_matrix_limits: {
+              '250m': {
+                0: {
+                  matrixWidth: 2,
+                  matrixHeight: 2
+                },
+                1: {
+                  matrixWidth: 4,
+                  matrixHeight: 4
+                },
+                2: {
+                  matrixWidth: 8,
+                  matrixHeight: 8
+                },
+                3: {
+                  matrixWidth: 16,
+                  matrixHeight: 16
+                },
+                4: {
+                  matrixWidth: 32,
+                  matrixHeight: 32
+                },
+                5: {
+                  matrixWidth: 64,
+                  matrixHeight: 64
+                }
+              }
+            },
+            arctic_resolution: null,
+            source: 'Terra / MODIS',
+            arctic: false,
+            title: 'Enhanced Vegetation Index (L3, 16-Day)',
+            antarctic_resolution: null,
+            layerPeriod: 'Subdaily',
+            period: 'subdaily',
+            product: 'MODIS_Terra_L3_EVI_16Day',
+            match: {
+              time_start: '>=2000-03-05T00:00:00Z'
+            },
+            resolution: '250m'
+          },
+          {
+            format: 'png',
+            antarctic: false,
+            geographic: true,
+            group: 'overlays',
+            geographic_resolution: '250m',
+            geographic_tile_matrix_limits: {
+              '250m': {
+                0: {
+                  matrixWidth: 2,
+                  matrixHeight: 2
+                },
+                1: {
+                  matrixWidth: 4,
+                  matrixHeight: 4
+                },
+                2: {
+                  matrixWidth: 8,
+                  matrixHeight: 8
+                },
+                3: {
+                  matrixWidth: 16,
+                  matrixHeight: 16
+                },
+                4: {
+                  matrixWidth: 32,
+                  matrixHeight: 32
+                },
+                5: {
+                  matrixWidth: 64,
+                  matrixHeight: 64
+                }
+              }
+            },
+            arctic_resolution: null,
+            source: 'Terra / MODIS',
+            arctic: false,
+            title: 'Vegetation Index (L3, 16-Day)',
+            antarctic_resolution: null,
+            layerPeriod: 'Subdaily',
+            period: 'subdaily',
+            product: 'MODIS_Terra_L3_NDVI_16Day',
+            match: {
+              time_start: '>=2000-03-05T00:00:00Z'
+            },
+            resolution: '250m'
+          }
+        ]
+      }
+    }
+  }
+}
+
 export const pathsWithHolesResult = [[{
   poly: [{
     x: -144,
@@ -1361,7 +1434,7 @@ export const pathsWithHolesResult = [[{
     y: 18
   }],
   index: 0,
-  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29T00:00:00.000Z/250m/0/0/0.png',
+  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
     producerGranuleId: 'MOD13Q1.A2020273.h09v09.006.2020291073948.hdf',
     timeStart: '2020-09-29T00:00:00.000Z',
@@ -1496,7 +1569,7 @@ export const pathsWithHolesResult = [[{
     y: 18
   }],
   index: 1,
-  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29T00:00:00.000Z/250m/0/0/0.png',
+  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
     producerGranuleId: 'MOD13Q1.A2020273.h08v09.006.2020291074020.hdf',
     timeStart: '2020-09-29T00:00:00.000Z',
@@ -1631,7 +1704,7 @@ export const pathsWithHolesResult = [[{
     y: 0
   }],
   index: 2,
-  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29T00:00:00.000Z/250m/0/0/0.png',
+  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
     producerGranuleId: 'MOD13Q1.A2020273.h08v08.006.2020291074011.hdf',
     timeStart: '2020-09-29T00:00:00.000Z',
@@ -1768,7 +1841,7 @@ export const pathsResult = [{
     y: 18
   }],
   index: 0,
-  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29T00:00:00.000Z/250m/0/0/0.png',
+  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
     producerGranuleId: 'MOD13Q1.A2020273.h09v09.006.2020291073948.hdf',
     timeStart: '2020-09-29T00:00:00.000Z',
@@ -1903,7 +1976,7 @@ export const pathsResult = [{
     y: 18
   }],
   index: 1,
-  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29T00:00:00.000Z/250m/0/0/0.png',
+  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
     producerGranuleId: 'MOD13Q1.A2020273.h08v09.006.2020291074020.hdf',
     timeStart: '2020-09-29T00:00:00.000Z',
@@ -2038,7 +2111,7 @@ export const pathsResult = [{
     y: 0
   }],
   index: 2,
-  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29T00:00:00.000Z/250m/0/0/0.png',
+  url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png',
   granule: {
     producerGranuleId: 'MOD13Q1.A2020273.h08v08.006.2020291074011.hdf',
     timeStart: '2020-09-29T00:00:00.000Z',

@@ -4,6 +4,7 @@ export const gibsResponse = {
       id: 'AMSR2_Cloud_Liquid_Water_Day',
       type: 'wmts',
       format: 'image/png',
+      layerPeriod: 'Daily',
       period: 'daily',
       startDate: '2015-06-07T00:00:00Z',
       endDate: '2020-06-10T00:00:00Z',
@@ -42,6 +43,7 @@ export const gibsResponse = {
       id: 'AMSRE_Surface_Rain_Rate_Night',
       type: 'wmts',
       format: 'image/png',
+      layerPeriod: 'Daily',
       period: 'daily',
       startDate: '2002-06-01T00:00:00Z',
       endDate: '2011-10-04T00:00:00Z',
@@ -87,6 +89,7 @@ export const gibsResponse = {
       id: 'AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day',
       type: 'wmts',
       format: 'image/png',
+      layerPeriod: 'Daily',
       period: 'daily',
       startDate: '2002-08-30T00:00:00Z',
       dateRanges: [
@@ -150,7 +153,7 @@ export const gibsResponse = {
           dataCenter: 'LARC_CLOUD'
         }
       ],
-      layerPeriod: 'Daily',
+      layerPeriod: 'Subdaily',
       id: 'TEMPO_L2_Ozone_Cloud_Fraction_Granule',
       description: 'tempo/TEMPO_L2_Ozone_Cloud_Fraction_Granule',
       tags: '',

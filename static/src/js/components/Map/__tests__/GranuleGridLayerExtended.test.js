@@ -10,7 +10,8 @@ import { GranuleGridLayerExtended } from '../GranuleGridLayerExtended'
 import {
   pathsResult,
   pathsWithHolesResult,
-  updateProps
+  updateProps,
+  updatePropsSubdaily
 } from './mocks'
 
 function setup(overrideProps = {}) {
@@ -133,17 +134,34 @@ describe('GranuleGridLayerExtended class', () => {
   })
 
   describe('getTileUrl', () => {
-    test('returns a granule URL', () => {
-      const layer = setup()
-      layer.setResults(updateProps)
-      const tilePoint = {
-        x: 0,
-        y: 0,
-        z: 0
-      }
+    describe('with a gibs layer period of daily', () => {
+      test('returns a granule URL', () => {
+        const layer = setup()
+        layer.setResults(updateProps)
+        const tilePoint = {
+          x: 0,
+          y: 0,
+          z: 0
+        }
 
-      const result = layer.getTileUrl(tilePoint, updateProps.granules[0])
-      expect(result).toEqual('https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29T00:00:00.000Z/250m/0/0/0.png')
+        const result = layer.getTileUrl(tilePoint, updateProps.granules[0])
+        expect(result).toEqual('https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29/250m/0/0/0.png')
+      })
+    })
+
+    describe('with a gibs layer period of subdaily', () => {
+      test('returns a granule URL', () => {
+        const layer = setup()
+        layer.setResults(updatePropsSubdaily)
+        const tilePoint = {
+          x: 0,
+          y: 0,
+          z: 0
+        }
+
+        const result = layer.getTileUrl(tilePoint, updatePropsSubdaily.granules[0])
+        expect(result).toEqual('https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_L3_EVI_16Day/default/2020-09-29T00:00:00.000Z/250m/0/0/0.png')
+      })
     })
   })
 
