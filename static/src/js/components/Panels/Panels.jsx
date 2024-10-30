@@ -496,6 +496,7 @@ export class Panels extends PureComponent {
     if (routeWrapper) {
       const routeWrapperWidth = routeWrapper.offsetWidth
 
+      // Subtracting from the available space to ensure the user menu/login button and map tools remain visible at the maximum panel width
       return routeWrapperWidth - 165
     }
 

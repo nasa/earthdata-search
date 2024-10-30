@@ -89,7 +89,7 @@ class SecondaryToolbar extends Component {
     onUpdateProjectName(newProjectName)
   }
 
-  // Needed for Save Project so page does not change
+  // Needed for Save Project so when the url updates with a project-id we don't refresh the page
   handleKeypress(event) {
     if (event.key === 'Enter') {
       this.handleNameSubmit()
@@ -136,12 +136,13 @@ class SecondaryToolbar extends Component {
     let isMapOverlay = false
     let needsOverlayPaths = ['/search']
 
-    // Add map overlay for routes that utilze the map
+    // Currently saved projects and a project page share route as such we must determine if we are on the saved projects page
+    // If we are on the project page i.e. a specific project we will have the map included in the DOM and need to adjust the classname
     if (pathname === '/projects' && search) {
       needsOverlayPaths = [...needsOverlayPaths, '/projects']
     }
 
-    // Line up secondary toolbar buttons with leaflet controls
+    // Determine if the current page is a route that displays the map so the correct className can be set
     if (pathStartsWith(pathname, needsOverlayPaths)) {
       isMapOverlay = true
     }
