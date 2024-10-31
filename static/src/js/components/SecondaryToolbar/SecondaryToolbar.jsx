@@ -13,10 +13,10 @@ import classNames from 'classnames'
 import {
   FaArrowCircleLeft,
   FaFolder,
-  FaLightbulb,
-  FaLock,
+  FaQuestion,
   FaSave,
-  FaUser
+  FaUser,
+  FaSignInAlt
 } from 'react-icons/fa'
 import TourContext from '../../contexts/TourContext'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
@@ -214,7 +214,9 @@ class SecondaryToolbar extends Component {
             className={classNames(['secondary-toolbar__project', { 'focus-light': isMapOverlay }])}
             bootstrapVariant="light"
             href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`}
-            label="View Project"
+            tooltip="View your project"
+            tooltipId="view-project-tooltip"
+            tooltipPlacement="left"
             icon={FaFolder}
           >
             My Project
@@ -233,9 +235,11 @@ class SecondaryToolbar extends Component {
           }
           className={classNames(['secondary-toolbar__project', { 'focus-light': isMapOverlay }])}
           bootstrapVariant="light"
-          label="View Project"
           icon={FaFolder}
           iconPosition="left"
+          tooltip="View your project"
+          tooltipId="view-project-tooltip"
+          tooltipPlacement="left"
           updatePath
         >
           My Project
@@ -250,16 +254,17 @@ class SecondaryToolbar extends Component {
         className={classNames({ 'focus-light': isMapOverlay })}
         bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
-        label="Login"
-        icon={FaLock}
+        tooltip="Log In with Earthdata Login"
+        tooltipId="login-tooltip"
+        tooltipPlacement="left"
+        icon={FaSignInAlt}
       >
-        Login
+        Log In
       </Button>
     )
     const loggedInDropdown = (
       <Dropdown>
         <Dropdown.Toggle
-          label="User menu"
           className={classNames([`secondary-toolbar__user-dropdown-toggle ${mapButtonClass}`, { 'focus-light': isMapOverlay }])}
           bootstrapVariant="light"
           as={Button}
@@ -352,9 +357,16 @@ class SecondaryToolbar extends Component {
           onClick={this.onToggleProjectDropdown}
           icon={FaSave}
           iconSize="0.825rem"
+          iconOnly
           bootstrapVariant="light"
-          label="Create a project with your current search"
-        />
+          tooltip="Create a project with your current search"
+          tooltipId="create-project-tooltip"
+          tooltipPlacement="left"
+        >
+          <span className="secondary-toolbar__dropdown-text sr-only">
+            Save Project
+          </span>
+        </Dropdown.Toggle>
         <Dropdown.Menu>
           <Form inline className="flex-nowrap secondary-toolbar__project-name-form">
             <Form.Row>
@@ -399,14 +411,15 @@ class SecondaryToolbar extends Component {
               <Dropdown.Toggle
                 className={classNames(['secondary-toolbar__start-tour-button', { 'focus-light': isMapOverlay }])}
                 as={Button}
-                icon={FaLightbulb}
+                icon={FaQuestion}
                 iconSize="0.825rem"
                 onClick={setRunTour}
                 bootstrapVariant="light"
-                label="Want to learn more? Click here to take a tour of our site."
-              >
-                Start Tour
-              </Dropdown.Toggle>
+                tooltip="Take a tour to learn how to use Earthdata Search"
+                tooltipId="start-tour-tooltip"
+                tooltipPlacement="left"
+                aria-label="Start tour"
+              />
             )
           }
         </TourContext.Consumer>
@@ -425,9 +438,9 @@ class SecondaryToolbar extends Component {
           {isDownloadPathWithId(location.pathname) && backToProjectLink}
           <PortalFeatureContainer authentication>
             <>
-              {showStartTourButton && startTourButton}
               {showViewProjectLink && projectLink}
               {showSaveProjectDropdown && saveProjectDropdown}
+              {showStartTourButton && startTourButton}
               {!loggedIn ? loginLink : loggedInDropdown}
             </>
           </PortalFeatureContainer>
