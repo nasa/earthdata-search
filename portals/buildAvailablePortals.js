@@ -1,6 +1,6 @@
 /**
  * This file reads from the list of portals and combines all the configs into a single JSON file (git ignored).
- * This file is set up to run as an NPM script on 'postinstall' and 'prestart'.
+ * This file is set up to run as an npm script on 'postinstall' and 'prestart'.
  * This should ensure that the availablePortals.json file is present in CI
  * environments, and updates to the file will be available in your local
  * environment after restarting the dev server.
