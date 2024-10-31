@@ -1,0 +1,136 @@
+{
+  "data": {
+    "granule": {
+      "granuleUr": "SC:MYD11A2.006:2456476880",
+      "granuleSize": 1.15948,
+      "title": "SC:MYD11A2.006:2456476880",
+      "onlineAccessFlag": true,
+      "dayNightFlag": "BOTH",
+      "timeStart": "2021-05-17T00:00:00.000Z",
+      "timeEnd": "2021-05-24T23:59:59.000Z",
+      "dataCenter": "LPDAAC_ECS",
+      "originalFormat": "ECHO10",
+      "conceptId": "G2058417402-LPDAAC_ECS",
+      "collectionConceptId": "C194001210-LPDAAC_ECS",
+      "spatialExtent": {
+        "horizontalSpatialDomain": {
+          "geometry": {
+            "gPolygons": [
+              {
+                "boundary": {
+                  "points": [
+                    {
+                      "longitude": 179.86487989946,
+                      "latitude": -80.3958333333333
+                    },
+                    {
+                      "longitude": 180,
+                      "latitude": -80.0125
+                    },
+                    {
+                      "longitude": 179.942001902952,
+                      "latitude": -80.0041666666667
+                    },
+                    {
+                      "longitude": 172.881780083852,
+                      "latitude": -80.0041666666667
+                    },
+                    {
+                      "longitude": 179.86487989946,
+                      "latitude": -80.3958333333333
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "temporalExtent": {
+        "rangeDateTime": {
+          "beginningDateTime": "2021-05-17T00:00:00.000Z",
+          "endingDateTime": "2021-05-24T23:59:59.000Z"
+        }
+      },
+      "relatedUrls": [
+        {
+          "mimeType": "application/x-hdfeos",
+          "description": "MYD11A2.A2021137.h21v17.006.2021146041018.hdf. MimeType: application/x-hdfeos",
+          "type": "GET DATA",
+          "url": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h21v17.006.2021146041018.hdf"
+        },
+        {
+          "subtype": "OPENDAP DATA",
+          "mimeType": "text/html",
+          "description": "This file may be accessed using OPeNDAP directly from this link",
+          "type": "USE SERVICE API",
+          "url": "https://opendap.cr.usgs.gov/opendap/hyrax//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h21v17.006.2021146041018.hdf"
+        },
+        {
+          "mimeType": "image/jpeg",
+          "description": "This Browse file may be downloaded directly from this link",
+          "type": "GET RELATED VISUALIZATION",
+          "url": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h21v17.006.2021146001018.1.jpg"
+        },
+        {
+          "mimeType": "image/jpeg",
+          "description": "This Browse file may be downloaded directly from this link",
+          "type": "GET RELATED VISUALIZATION",
+          "url": "https://e4ftl01.cr.usgs.gov//WORKING/BRWS/Browse.001/2021.05.26/BROWSE.MYD11A2.A2021137.h21v17.006.2021146001018.2.jpg"
+        },
+        {
+          "mimeType": "text/xml",
+          "description": "This Metadata file may be downloaded directly from this link",
+          "type": "VIEW RELATED INFORMATION",
+          "url": "https://e4ftl01.cr.usgs.gov//MODV6_Cmp_B/MOLA/MYD11A2.006/2021.05.17/MYD11A2.A2021137.h21v17.006.2021146041018.hdf.xml"
+        }
+      ],
+      "dataGranule": {
+        "dayNightFlag": "Both",
+        "identifiers": [
+          {
+            "identifier": "MYD11A2.A2021137.h21v17.006.2021146041018.hdf",
+            "identifierType": "ProducerGranuleId"
+          }
+        ],
+        "productionDateTime": "2021-05-26T04:10:18.000Z",
+        "archiveAndDistributionInformation": [
+          {
+            "name": "Not provided",
+            "size": 1.15948,
+            "sizeUnit": "MB"
+          }
+        ]
+      },
+      "measuredParameters": [
+        {
+          "parameterName": "MOD 8-DAY 1KM L3 LST",
+          "qaStats": {
+            "qaPercentMissingData": 0,
+            "qaPercentOutOfBoundsData": 0,
+            "qaPercentInterpolatedData": 0,
+            "qaPercentCloudCover": 99
+          },
+          "qaFlags": {
+            "automaticQualityFlag": "Passed",
+            "automaticQualityFlagExplanation": "No automatic quality assessment is performed in the PGE",
+            "operationalQualityFlag": "Passed",
+            "operationalQualityFlagExplanation": "Passed",
+            "scienceQualityFlag": "Not Investigated",
+            "scienceQualityFlagExplanation": "See https://landweb.modaps.eosdis.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=aqua&ver=C6 the product Science Quality status."
+          }
+        }
+      ],
+      "providerDates": [
+        {
+          "date": "2021-05-25T23:19:56.603Z",
+          "type": "Insert"
+        },
+        {
+          "date": "2021-05-25T23:20:42.430Z",
+          "type": "Update"
+        }
+      ]
+    }
+  }
+}

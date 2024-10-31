@@ -11,6 +11,8 @@ import { granuleListItem } from './skeleton'
 import GranuleResultsItem from './GranuleResultsItem'
 import Skeleton from '../Skeleton/Skeleton'
 
+import './GranuleResultsListItem.scss'
+
 /**
  * Renders GranuleResultsListItem.
  * @param {Object} props - The props passed into the component.
@@ -97,22 +99,24 @@ export const GranuleResultsListItem = memo(({
   if (!granule) return null
 
   return (
-    <li className="granule-results-list-item" style={customStyle}>
-      <GranuleResultsItem
-        collectionId={collectionId}
-        directDistributionInformation={directDistributionInformation}
-        granule={granules[index]}
-        isCollectionInProject={isCollectionInProject}
-        isGranuleInProject={isGranuleInProject}
-        location={location}
-        onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
-        onExcludeGranule={onExcludeGranule}
-        onFocusedGranuleChange={onFocusedGranuleChange}
-        onMetricsDataAccess={onMetricsDataAccess}
-        onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
-        readableGranuleName={readableGranuleName}
-        ref={element}
-      />
+    <li className="granule-results-list-item" style={style}>
+      <div className="granule-results-list-item__wrapper">
+        <GranuleResultsItem
+          collectionId={collectionId}
+          directDistributionInformation={directDistributionInformation}
+          granule={granules[index]}
+          isCollectionInProject={isCollectionInProject}
+          isGranuleInProject={isGranuleInProject}
+          location={location}
+          onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
+          onExcludeGranule={onExcludeGranule}
+          onFocusedGranuleChange={onFocusedGranuleChange}
+          onMetricsDataAccess={onMetricsDataAccess}
+          onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
+          readableGranuleName={readableGranuleName}
+          ref={element}
+        />
+      </div>
     </li>
   )
 })

@@ -41,7 +41,7 @@ function setup(type) {
       collectionId: 'collectionId',
       directDistributionInformation: {},
       excludedGranuleIds: [],
-      focusedGranule: '',
+      focusedGranuleId: '',
       granules: [
         {
           title: '123'

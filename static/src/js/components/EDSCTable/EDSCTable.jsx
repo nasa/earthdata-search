@@ -134,6 +134,7 @@ innerElementType.displayName = 'EDSCTableInnerElement'
  * @param {Object} props - The props passed into the component.
  * @param {Array} props.columns - The column settings.
  * @param {Array} props.data - The collection data.
+ * @param {Array} props.focusedItem - The item in focus (granule).
  * @param {String} props.id - A unique id to pass the table.
  * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
  * @param {Object} props.initialTableState - The initial state to be passed to react-table.
@@ -154,6 +155,7 @@ innerElementType.displayName = 'EDSCTableInnerElement'
 const EDSCTable = ({
   columns,
   data,
+  focusedItem,
   id,
   isItemLoaded,
   itemCount,
@@ -199,9 +201,20 @@ const EDSCTable = ({
   useEffect(() => {
   }, [visibleMiddleIndex])
 
+  // When a user clicks on a granule on the map, it will scroll to that granule in the GranuleResultsTable
+  useEffect(() => {
+    if (focusedItem) {
+      const itemIndex = data.findIndex((item) => item.id === focusedItem)
+      if (itemIndex && listRef && listRef.current) {
+        listRef.current.scrollToItem(itemIndex, 'center')
+      }
+    }
+  }, [focusedItem])
+
   const options = {}
 
   if (initialRowStateAccessor) options.initialRowStateAccessor = initialRowStateAccessor
+
   if (!isEmpty(initialTableState)) options.initialState = initialTableState
 
   const {
@@ -492,6 +505,7 @@ const EDSCTable = ({
 }
 
 EDSCTable.defaultProps = {
+  focusedItem: '',
   initialRowStateAccessor: null,
   initialTableState: {},
   isItemLoaded: null,
@@ -515,6 +529,7 @@ EDSCTable.defaultProps = {
 EDSCTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  focusedItem: PropTypes.string,
   id: PropTypes.string.isRequired,
   initialRowStateAccessor: PropTypes.func,
   initialTableState: PropTypes.shape({}),

@@ -82,6 +82,7 @@ export const GranuleResultsListBody = ({
   collectionId,
   directDistributionInformation,
   excludedGranuleIds,
+  focusedGranuleId,
   granules,
   height,
   isCollectionInProject,
@@ -139,9 +140,37 @@ export const GranuleResultsListBody = ({
       listRef.current.scrollToItem({
         rowIndex,
         columnIndex
-      }, 'center')
+      }, 'auto')
     }
   }, [listRef.current])
+
+  const scrollToFocusedGranule = (granuleId) => {
+    const granuleIndex = granules.findIndex((granule) => {
+      const { id } = granule
+      if (granuleId === id) return true
+
+      return false
+    })
+
+    if (granuleIndex >= 0) {
+      const {
+        rowIndex,
+        columnIndex
+      } = itemToRowColumnIndicies(granuleIndex, numColumns)
+
+      listRef.current.scrollToItem({
+        rowIndex: rowIndex === 0 ? 0 : rowIndex + 1,
+        columnIndex,
+        align: 'center'
+      })
+    }
+  }
+
+  useEffect(() => {
+    if (focusedGranuleId) {
+      scrollToFocusedGranule(focusedGranuleId)
+    }
+  }, [focusedGranuleId])
 
   // `setRowHeight` sets the size in the sizeMap to the height passed from the item.
   const setRowHeight = useCallback((rowIndex, columnIndex, size) => {
@@ -167,10 +196,6 @@ export const GranuleResultsListBody = ({
 
     const rowHeight = Math.max(...sizeMap.current[rowIndex])
 
-    if (rowIndex === itemCount - 1) {
-      return rowHeight + (remInPixels * 4)
-    }
-
     return rowHeight + remInPixels
   }, [itemCount])
 
@@ -191,6 +216,7 @@ export const GranuleResultsListBody = ({
                 listRef.current = list
               }
             }
+            overscanRowCount={3}
             columnCount={numColumns}
             columnWidth={() => (width / numColumns) - (remInPixels / numColumns)}
             height={height}
@@ -224,7 +250,7 @@ export const GranuleResultsListBody = ({
             }
             onItemsRendered={
               (gridProps) => {
-              // OnItemsRendered needs to know which items are visible in the list
+                // OnItemsRendered needs to know which items are visible in the list
                 const overscanStartIndex = gridProps.overscanRowStartIndex * numColumns
                 const overscanStopIndex = gridProps.overscanRowStopIndex * numColumns
                 const visibleStartIndex = gridProps.visibleRowStartIndex * numColumns
@@ -260,6 +286,7 @@ GranuleResultsListBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  focusedGranuleId: PropTypes.string.isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   height: PropTypes.number.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
