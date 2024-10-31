@@ -214,6 +214,208 @@ describe('ShapefileDropzoneContainer component', () => {
         })
       })
     })
+
+    describe('when given a upload_shape filetype', () => {
+      test('fires the correct callbacks for .zip files', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'test-file.zip'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          type: 'upload_shape'
+        })
+      })
+
+      test('fires the correct callbacks for .shp files', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'test-file.shp'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          type: 'upload_shape'
+        })
+      })
+
+      test('fires the correct callbacks for .dbf files', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'test-file.dbf'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          type: 'upload_shape'
+        })
+      })
+
+      test('fires the correct callbacks for .shx files', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'test-file.shx'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          type: 'upload_shape'
+        })
+      })
+    })
+
+    describe('when given a upload_keyhole_markup_language file', () => {
+      test('fires the correct callbacks for .kml files', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'test-file.kml'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          type: 'upload_keyhole_markup_language'
+        })
+      })
+
+      test('fires the correct callbacks for .kmz file', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'test-file.kmz'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          type: 'upload_keyhole_markup_language'
+        })
+      })
+    })
+
+    describe('when given a upload_geojson file types', () => {
+      test('fires the correct callbacks for .json file', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'test-file.json'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          type: 'upload_geojson'
+        })
+      })
+
+      test('fires the correct callbacks for .geojson file', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'test-file.geojson'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          type: 'upload_geojson'
+        })
+      })
+    })
+
+    describe('when given a upload_georss file types', () => {
+      test('fires the correct callbacks for .rss file', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'test-file.rss'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          type: 'upload_georss'
+        })
+      })
+
+      test('fires the correct callbacks for .georss file', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'test-file.georss'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          type: 'upload_georss'
+        })
+      })
+
+      test('fires the correct callbacks for .xml file', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'test-file.xml'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          type: 'upload_georss'
+        })
+      })
+    })
+
+    describe('when given a unrecognized file type', () => {
+      test('fires the correct callbacks for any unrecognized filetype', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'test-file.svg'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          type: 'upload_other'
+        })
+      })
+    })
   })
 
   describe('onRemovedFile callback', () => {

@@ -1,4 +1,4 @@
-import React, {} from 'react'
+import React, { } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -58,7 +58,7 @@ export const ShapefileDropzoneContainer = ({
     eventScope="shapefile"
     onSending={
       (file) => {
-      // Remove existing spatial from the store
+        // Remove existing spatial from the store
         onRemoveSpatialFilter()
 
         onShapefileLoading(file)
@@ -86,10 +86,26 @@ export const ShapefileDropzoneContainer = ({
     onError={
       (file) => {
         onToggleShapefileUploadModal(false)
-
-        if (file.name.match('.*shp')) {
+        // TODO: Parse the error message and display an appropriate message.
+        if (file.name.match('.*zip') || file.name.match('.*shp') || file.name.match('.*dbf') || file.name.match('.*shx')) {
           onShapefileErrored({
             type: 'upload_shape'
+          })
+        } else if (file.name.match('.*kml') || file.name.match('.*kmz')) {
+          onShapefileErrored({
+            type: 'upload_keyhole_markup_language'
+          })
+        } else if (file.name.match('.*json') || file.name.match('.*geojson')) {
+          onShapefileErrored({
+            type: 'upload_geojson'
+          })
+        } else if (file.name.match('.*rss') || file.name.match('.*georss') || file.name.match('.*xml')) {
+          onShapefileErrored({
+            type: 'upload_georss'
+          })
+        } else {
+          onShapefileErrored({
+            type: 'upload_other'
           })
         }
       }

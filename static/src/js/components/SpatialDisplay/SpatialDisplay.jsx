@@ -406,8 +406,21 @@ const SpatialDisplay = ({
     if (shapefileError) {
       const { type } = shapefileError
 
-      if (type === 'upload_shape') {
-        spatialError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+      switch (type) {
+        case 'upload_shape':
+          spatialError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+          break
+        case 'upload_keyhole_markup_language':
+          spatialError = 'To use a Keyhole Markup Language file, please upload a valid .kml or .kmz file.'
+          break
+        case 'upload_geojson':
+          spatialError = 'To use a GeoJSON file, please upload a valid .json or .geojson file.'
+          break
+        case 'upload_georss':
+          spatialError = 'To use a GeoRSS file, please upload a valid .rss, .georss, or .xml file.'
+          break
+        default:
+          spatialError = 'Invalid file format.'
       }
     }
 
