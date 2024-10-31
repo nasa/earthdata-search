@@ -373,8 +373,9 @@ const setup = (type, overrideProps) => {
   }
 
   render(
-    <GranuleResultsItem {...props} />,
-    { wrapper: MemoryRouter }
+    <MemoryRouter>
+      <GranuleResultsItem {...props} />
+    </MemoryRouter>
   )
 
   return {

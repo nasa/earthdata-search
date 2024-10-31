@@ -45,7 +45,7 @@
     .route-wrapper--content-page & {
       justify-content: flex-start;
       overflow-x: hidden;
-      overflow-y: scroll;
+      overflow-y: auto;
     }
 
     .route-wrapper--content-page-centered & {

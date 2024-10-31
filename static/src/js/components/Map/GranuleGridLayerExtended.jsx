@@ -329,7 +329,8 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       x: tilePoint.x,
       y: tilePoint.y,
       z: tilePoint.z,
-      time: granule.timeStart
+      // If the layerPeriod is `subdaily` use the full datetime, else use only the date
+      time: this.options.layerPeriod?.toLowerCase() === 'subdaily' ? granule.timeStart : granule.timeStart.substring(0, 10)
     }
 
     if (this._map && !this._map.options.crs.infinite) {
@@ -393,6 +394,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
       const visibleOverlappingGranulePaths = []
       const overlaps = this.granulePathsOverlappingTile(granule, bounds)
 
+      // Only worry about granule paths which exist in the given tile bounds
       if (overlaps.length > 0) {
         const url = this.getTileUrl(tilePoint, granule)
 
@@ -529,6 +531,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
 
       ctx.strokeStyle = this.color
 
+      // New shapes are drawn behind the existing canvas content.
       ctx.globalCompositeOperation = 'destination-over'
 
       if (path.deemphisized !== undefined && !this.isProjectPage) {
@@ -536,6 +539,7 @@ export class GranuleGridLayerExtended extends L.GridLayer {
         ctx.lineWidth = path.deemphisized ? 1 : 1.5
       }
 
+      // Add the path (poly/line) to the context
       addPath(ctx, path)
 
       holes.forEach((hole) => {
@@ -544,15 +548,23 @@ export class GranuleGridLayerExtended extends L.GridLayer {
           ctx.lineWidth = hole.deemphisized ? 1 : 1.5
         }
 
+        // Add the path (poly/line) to the context
         addPath(ctx, { poly: hole.poly.concat().reverse() })
       })
 
+      // Draw the added path(s) on the screen
       ctx.stroke()
+
+      // `boundary` is the leaflet tile's boundary. Without adding these paths to the canvas the `clip()` call inverts
       addPath(ctx, boundary)
+
+      // Uncomment this line to draw tile boundaries on the map.
+      // ctx.stroke()
 
       if (!(path.line != null ? path.line.length : undefined) > 0) ctx.clip()
     })
 
+    // Resets the rendering context to its default state, allowing it to be reused for drawing something else without having to explicitly reset all the properties.
     ctx.restore()
 
     return null

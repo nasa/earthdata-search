@@ -67,16 +67,17 @@ describe('generateGibsTags', () => {
           'concept-id': 'C1000000001-EDSC',
           data: [
             {
+              format: 'png',
+              group: 'overlays',
+              layerPeriod: 'Daily',
               match: {
                 time_start: '>=2002-06-01T00:00:00Z',
                 time_end: '<=2011-10-04T00:00:00Z',
                 day_night_flag: 'night'
               },
               product: 'AMSRE_Surface_Rain_Rate_Night',
-              group: 'overlays',
-              title: 'Surface Rain Rate (Night)',
               source: 'Aqua / AMSR-E',
-              format: 'png',
+              title: 'Surface Rain Rate (Night)',
               updated_at: '1988-09-03T10:00:00.000Z',
               antarctic: false,
               antarctic_resolution: null,
@@ -100,15 +101,16 @@ describe('generateGibsTags', () => {
           'concept-id': 'C1000000002-EDSC',
           data: [
             {
+              format: 'png',
+              group: 'overlays',
+              layerPeriod: 'Daily',
               match: {
                 time_start: '>=2002-08-30T00:00:00Z',
                 day_night_flag: 'day'
               },
               product: 'AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day',
-              group: 'overlays',
-              title: 'Methane (L2, 400 hPa, Day)',
               source: 'Aqua / AIRS',
-              format: 'png',
+              title: 'Methane (L2, 400 hPa, Day)',
               updated_at: '1988-09-03T10:00:00.000Z',
               antarctic: false,
               antarctic_resolution: null,
@@ -132,15 +134,16 @@ describe('generateGibsTags', () => {
           'concept-id': 'C1000000003-EDSC',
           data: [
             {
+              format: 'png',
+              group: 'overlays',
+              layerPeriod: 'Daily',
               match: {
                 time_start: '>=2002-08-30T00:00:00Z',
                 day_night_flag: 'day'
               },
               product: 'AIRS_L2_Methane_400hPa_Volume_Mixing_Ratio_Day',
-              group: 'overlays',
-              title: 'Methane (L2, 400 hPa, Day)',
               source: 'Aqua / AIRS',
-              format: 'png',
+              title: 'Methane (L2, 400 hPa, Day)',
               updated_at: '1988-09-03T10:00:00.000Z',
               antarctic: false,
               antarctic_resolution: null,
@@ -163,15 +166,16 @@ describe('generateGibsTags', () => {
         tagData: {
           'concept-id': 'C1000000004-EDSC',
           data: [{
+            format: 'png',
+            group: 'overlays',
+            layerPeriod: 'Subdaily',
             match: {
               time_start: '>=2024-05-13T10:41:03Z',
               day_night_flag: 'unspecified'
             },
             product: 'TEMPO_L2_Ozone_Cloud_Fraction_Granule',
-            group: 'overlays',
-            title: 'Ozone (L2, Cloud Fraction, Subdaily) (BETA)',
             source: 'TEMPO',
-            format: 'png',
+            title: 'Ozone (L2, Cloud Fraction, Subdaily) (BETA)',
             updated_at: '1988-09-03T10:00:00.000Z',
             antarctic: false,
             antarctic_resolution: null,

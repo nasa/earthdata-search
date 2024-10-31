@@ -1,14 +1,10 @@
-$headerHeight: 2rem;
-
 .map {
   position: absolute;
-  top: $headerHeight;
   left: 0;
   bottom: 0;
+  top: 0;
   right: 0;
-  height: calc(100% - #{$headerHeight});
   width: 100%;
-  display: flex;
   align-items: center;
   justify-content: center;
   flex-basis: auto;

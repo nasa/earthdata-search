@@ -1,0 +1,10 @@
+.wrapping-container {
+  position: relative;
+  overflow-y: hidden;
+  flex-grow: 1;
+  background-color: $color__spacesuit-white;
+
+  &--map-page {
+    background-color: $color__carbon-black;
+  }
+}
