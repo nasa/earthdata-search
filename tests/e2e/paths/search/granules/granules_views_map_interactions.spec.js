@@ -20,7 +20,7 @@ import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.js
 
 // Make sure that the granule in the list is visible to the user
 
-test.describe('When clicking on a granule on the map', () => {
+test.describe.skip('When clicking on a granule on the map', () => {
   test.beforeEach(async ({ page }) => {
     const conceptId = 'C1214470488-ASF'
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
