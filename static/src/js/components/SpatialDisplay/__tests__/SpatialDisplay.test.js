@@ -260,75 +260,17 @@ describe('SpatialDisplay component', () => {
         })
       })
 
-      describe('when the shapefile is the wrong type', () => {
-        describe('when the error is upload_shape', () => {
-          test('should render a upload shapefile error message', () => {
-            setup({
-              shapefile: {
-                isErrored: {
-                  type: 'upload_shape'
-                }
+      describe('when an error message is passed into the shapefile', () => {
+        test('should render the passed error message', () => {
+          setup({
+            shapefile: {
+              isErrored: {
+                message: 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
               }
-            })
-
-            expect(screen.getByText('To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.')).toBeInTheDocument()
+            }
           })
-        })
 
-        describe('when the error is upload_keyhole_markup_language', () => {
-          test('should render a upload keyhole markup language error message', () => {
-            setup({
-              shapefile: {
-                isErrored: {
-                  type: 'upload_keyhole_markup_language'
-                }
-              }
-            })
-
-            expect(screen.getByText('To use a Keyhole Markup Language file, please upload a valid .kml or .kmz file.')).toBeInTheDocument()
-          })
-        })
-
-        describe('when the error is upload_geojson', () => {
-          test('should render a upload GeoJSON error message', () => {
-            setup({
-              shapefile: {
-                isErrored: {
-                  type: 'upload_geojson'
-                }
-              }
-            })
-
-            expect(screen.getByText('To use a GeoJSON file, please upload a valid .json or .geojson file.')).toBeInTheDocument()
-          })
-        })
-
-        describe('when the error is upload_georss', () => {
-          test('should render a upload GeoRSS error message', () => {
-            setup({
-              shapefile: {
-                isErrored: {
-                  type: 'upload_georss'
-                }
-              }
-            })
-
-            expect(screen.getByText('To use a GeoRSS file, please upload a valid .rss, .georss, or .xml file.')).toBeInTheDocument()
-          })
-        })
-
-        describe('when the error is not a valid error type', () => {
-          test('should render a upload error message', () => {
-            setup({
-              shapefile: {
-                isErrored: {
-                  type: 'upload_other'
-                }
-              }
-            })
-
-            expect(screen.getByText('Invalid file format.')).toBeInTheDocument()
-          })
+          expect(screen.getByText('To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.')).toBeInTheDocument()
         })
       })
     })

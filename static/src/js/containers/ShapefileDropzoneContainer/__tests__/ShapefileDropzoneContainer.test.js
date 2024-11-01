@@ -197,25 +197,7 @@ describe('ShapefileDropzoneContainer component', () => {
   })
 
   describe('onError callback', () => {
-    describe('when given a .shp file', () => {
-      test('fires the correct callbacks', () => {
-        const { enzymeWrapper, props } = setup()
-
-        enzymeWrapper.find('WithDropzone').props().onError({
-          name: 'test-file.shp'
-        })
-
-        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
-        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
-
-        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
-        expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_shape'
-        })
-      })
-    })
-
-    describe('when given a upload_shape filetype', () => {
+    describe('when given a shapefile filetype', () => {
       test('fires the correct callbacks for .zip files', () => {
         const { enzymeWrapper, props } = setup()
 
@@ -228,7 +210,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_shape'
+          message: 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
         })
       })
 
@@ -244,7 +226,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_shape'
+          message: 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
         })
       })
 
@@ -260,7 +242,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_shape'
+          message: 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
         })
       })
 
@@ -276,12 +258,12 @@ describe('ShapefileDropzoneContainer component', () => {
 
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_shape'
+          message: 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
         })
       })
     })
 
-    describe('when given a upload_keyhole_markup_language file', () => {
+    describe('when given a Keyhole Markup Language file', () => {
       test('fires the correct callbacks for .kml files', () => {
         const { enzymeWrapper, props } = setup()
 
@@ -294,7 +276,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_keyhole_markup_language'
+          message: 'To use a Keyhole Markup Language file, please upload a valid .kml or .kmz file.'
         })
       })
 
@@ -310,12 +292,12 @@ describe('ShapefileDropzoneContainer component', () => {
 
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_keyhole_markup_language'
+          message: 'To use a Keyhole Markup Language file, please upload a valid .kml or .kmz file.'
         })
       })
     })
 
-    describe('when given a upload_geojson file types', () => {
+    describe('when given a Geojson file types', () => {
       test('fires the correct callbacks for .json file', () => {
         const { enzymeWrapper, props } = setup()
 
@@ -328,7 +310,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_geojson'
+          message: 'To use a GeoJSON file, please upload a valid .json or .geojson file.'
         })
       })
 
@@ -344,12 +326,12 @@ describe('ShapefileDropzoneContainer component', () => {
 
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_geojson'
+          message: 'To use a GeoJSON file, please upload a valid .json or .geojson file.'
         })
       })
     })
 
-    describe('when given a upload_georss file types', () => {
+    describe('when given a GeoRSS file types', () => {
       test('fires the correct callbacks for .rss file', () => {
         const { enzymeWrapper, props } = setup()
 
@@ -362,7 +344,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_georss'
+          message: 'To use a GeoRSS file, please upload a valid .rss, .georss, or .xml file.'
         })
       })
 
@@ -378,7 +360,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_georss'
+          message: 'To use a GeoRSS file, please upload a valid .rss, .georss, or .xml file.'
         })
       })
 
@@ -394,7 +376,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_georss'
+          message: 'To use a GeoRSS file, please upload a valid .rss, .georss, or .xml file.'
         })
       })
     })
@@ -412,7 +394,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
-          type: 'upload_other'
+          message: 'Invalid file format.'
         })
       })
     })

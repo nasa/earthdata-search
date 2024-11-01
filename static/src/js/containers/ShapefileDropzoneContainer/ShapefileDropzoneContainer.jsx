@@ -85,29 +85,24 @@ export const ShapefileDropzoneContainer = ({
     }
     onError={
       (file) => {
+        let shapefileError = ''
+
         onToggleShapefileUploadModal(false)
-        // TODO: Parse the error message and display an appropriate message.
         if (file.name.match('.*zip') || file.name.match('.*shp') || file.name.match('.*dbf') || file.name.match('.*shx')) {
-          onShapefileErrored({
-            type: 'upload_shape'
-          })
+          shapefileError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
         } else if (file.name.match('.*kml') || file.name.match('.*kmz')) {
-          onShapefileErrored({
-            type: 'upload_keyhole_markup_language'
-          })
+          shapefileError = 'To use a Keyhole Markup Language file, please upload a valid .kml or .kmz file.'
         } else if (file.name.match('.*json') || file.name.match('.*geojson')) {
-          onShapefileErrored({
-            type: 'upload_geojson'
-          })
+          shapefileError = 'To use a GeoJSON file, please upload a valid .json or .geojson file.'
         } else if (file.name.match('.*rss') || file.name.match('.*georss') || file.name.match('.*xml')) {
-          onShapefileErrored({
-            type: 'upload_georss'
-          })
+          shapefileError = 'To use a GeoRSS file, please upload a valid .rss, .georss, or .xml file.'
         } else {
-          onShapefileErrored({
-            type: 'upload_other'
-          })
+          shapefileError = 'Invalid file format.'
         }
+
+        onShapefileErrored({
+          message: shapefileError
+        })
       }
     }
     onRemovedFile={
