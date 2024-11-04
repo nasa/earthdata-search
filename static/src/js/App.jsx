@@ -81,6 +81,9 @@ class App extends Component {
     const { env } = getApplicationConfig()
     this.edscHost = edscHost
     this.env = env
+
+    console.log("🚀 ~ Edge caching test 1")
+
   }
 
   // Portal paths have been removed, but this needs to stay in order to redirect users using
