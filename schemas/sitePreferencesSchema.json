@@ -107,18 +107,18 @@
 		"showTourPreference": {
 			"$id": "#/properties/showTourPreference",
 			"type": "string",
-			"title": "Site Tour Behavior",
-			"description": "Select whether you want to start the site tour when the search page is loaded.",
+			"title": "Show Site Tour",
+			"description": "Select whether you would like to see the site tour when visiting Earthdata Search.",
 			"default": "show",
 			"enum": [
 				"default",
-				"show",
-				"dontshowagain"
+				"showtour",
+				"dontshowtour"
 			],
 			"enumNames": [
 				"Default",
-				"Show",
-				"Don't Show Again"
+				"Show The Tour",
+				"Don't Show The Tour"
 			]
     },
     "mapView": {

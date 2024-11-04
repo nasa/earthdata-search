@@ -45,6 +45,27 @@
     text-align: left;
   }
 
+  &__tour-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+
+  &__checkbox {
+    height: 1.1875rem;
+    width: 1.1875rem;
+    vertical-align: middle;
+
+    &__label {
+      position: relative;
+      top: 0.225rem;
+      font-size: 0.75rem;
+      margin-left: 0.5rem;
+      color: $color__carbon-black;
+    }
+  }
+
   &__buttons {
     margin-top: 5rem;
     display: flex;

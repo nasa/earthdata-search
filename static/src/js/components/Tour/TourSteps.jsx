@@ -61,7 +61,14 @@ const commonStyles = {
   }
 }
 
-const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
+const TourSteps = (
+  stepIndex,
+  setStepIndex,
+  setRunTour,
+  isDontShowChecked,
+  setIsDontShowChecked,
+  preferences
+) => [
   {
     target: '.search',
     content: (
@@ -80,6 +87,27 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           {' '}
           at the top of the page.
         </p>
+        <div className="search-tour__tour-toggle">
+          <input
+            type="checkbox"
+            id="dontShowAgain"
+            className="search-tour__checkbox"
+            checked={isDontShowChecked}
+            onChange={
+              (e) => {
+                setIsDontShowChecked(e.target.checked)
+                if (e.target.checked) {
+                  localStorage.setItem('dontShowTour', 'true')
+                } else {
+                  localStorage.setItem('dontShowTour', 'false')
+                }
+              }
+            }
+          />
+          <label htmlFor="dontShowAgain" className="search-tour__checkbox__label">
+            Don&apos;t show the tour next time I visit Earthdata Search
+          </label>
+        </div>
         <div className="search-tour__buttons intro">
           <Button
             className="button-tour-start"
@@ -107,20 +135,6 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
             }
           >
             Skip for now
-          </Button>
-          <Button
-            className="button-tour-dont-show-again"
-            type="button"
-            bootstrapVariant="secondary"
-            bootstrapSize="lg"
-            onClick={
-              () => {
-                setRunTour(false)
-                setStepIndex(0)
-              }
-            }
-          >
-            Don&apos;t show again
           </Button>
         </div>
       </div>

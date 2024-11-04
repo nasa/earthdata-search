@@ -3,13 +3,34 @@ import React, {
   useEffect,
   useContext
 } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import Joyride, { STATUS, ACTIONS } from 'react-joyride'
+
 import TourSteps, { TOTAL_STEPS } from './TourSteps'
 import TourContext from '../../contexts/TourContext'
 
-const SearchTour = () => {
+const mapStateToProps = (state) => ({
+  tourPreference: state.preferences.preferences.showTourPreference
+})
+
+const SearchTour = ({ tourPreference }) => {
+  const getDefaultCheckboxValue = () => {
+    switch (tourPreference) {
+      case 'showtour':
+        return false
+
+      case 'dontshowtour':
+        return true
+
+      default:
+        return localStorage.getItem('dontShowTour') === 'true'
+    }
+  }
+
   const { runTour, setRunTour } = useContext(TourContext)
 
+  const [isDontShowChecked, setIsDontShowChecked] = useState(getDefaultCheckboxValue())
   const [stepIndex, setStepIndex] = useState(0)
 
   useEffect(() => {
@@ -31,7 +52,6 @@ const SearchTour = () => {
   useEffect(() => {
     if (runTour) {
       setStepIndex(0)
-      localStorage.setItem('dontShowTour', 'false')
     }
   }, [runTour])
 
@@ -90,7 +110,6 @@ const SearchTour = () => {
           || action === ACTIONS.CLOSE) {
       setRunTour(false)
       setStepIndex(0)
-      localStorage.setItem('dontShowTour', 'true')
     } else if (type === 'step:after') {
       setStepIndex(action === ACTIONS.NEXT ? index + 1 : index - 1)
     }
@@ -98,7 +117,16 @@ const SearchTour = () => {
 
   return (
     <Joyride
-      steps={TourSteps(stepIndex, setStepIndex, setRunTour)}
+      steps={
+        TourSteps(
+          stepIndex,
+          setStepIndex,
+          setRunTour,
+          isDontShowChecked,
+          setIsDontShowChecked,
+          tourPreference
+        )
+      }
       run={runTour}
       stepIndex={stepIndex}
       continuous
@@ -129,4 +157,8 @@ const SearchTour = () => {
   )
 }
 
-export default SearchTour
+SearchTour.propTypes = {
+  tourPreference: PropTypes.string.isRequired
+}
+
+export default connect(mapStateToProps)(SearchTour)
