@@ -5,6 +5,9 @@
  */
 export const panBoundsToCenter = (map, bounds) => {
   if (bounds.isValid && bounds.isValid()) {
-    map.fitBounds(bounds, { padding: [200, 200] }).flyTo(bounds.getCenter())
+    map.fitBounds(bounds, {
+      padding: [200, 200],
+      animate: false
+    }).flyTo(bounds.getCenter())
   }
 }

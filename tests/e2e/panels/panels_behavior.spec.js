@@ -11,6 +11,9 @@ const dragPanelToX = async (page, x) => {
 
 test.describe('Panel Behavior', () => {
   test.beforeEach(async ({ page }) => {
+    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+    await page.route('**/scale/**', (route) => route.abort())
+
     await page.route('**/search/collections.json', (route) => {
       route.fulfill({
         body: JSON.stringify(singleCollection.body),

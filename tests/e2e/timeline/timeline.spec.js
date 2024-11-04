@@ -13,7 +13,7 @@ import collectionFixture from './__mocks__/authenticated_collections.json'
 test.describe('Timeline spec', () => {
   test.beforeEach(async ({ page }, testInfo) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route(/scale\/collections/, (route) => route.abort())
+    await page.route('**/scale/**', (route) => route.abort())
 
     // eslint-disable-next-line no-param-reassign
     testInfo.snapshotPath = (name) => `${testInfo.file}-snapshots/${name}`

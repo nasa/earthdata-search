@@ -207,10 +207,13 @@ const testCollectionGibsProjections = async (page, projections) => {
 }
 
 test.describe('Path /search/granules/collection-details', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+    await page.route('**/scale/**', (route) => route.abort())
+  })
+
   test.describe('When collection has associated DOIs', () => {
     test('loads correctly', async ({ page, context }) => {
-      await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-
       const conceptId = 'C1240222820-ECHO_REST'
       const cmrHits = 12345
       const granuleHits = 0
@@ -294,7 +297,6 @@ test.describe('Path /search/granules/collection-details', () => {
 
   test.describe('When collection has multiple reformatting options', () => {
     test('loads correctly', async ({ page }) => {
-      await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
       const conceptId = 'C1996546500-GHRC_DAAC'
       const cmrHits = 8180
       const granuleHits = 6338
