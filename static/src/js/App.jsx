@@ -82,7 +82,7 @@ class App extends Component {
     this.edscHost = edscHost
     this.env = env
 
-    console.log("🚀 ~ Edge caching test 1")
+    console.log("🚀 ~ Edge caching test 2 asdfasdfasfasdf")
 
   }
 
