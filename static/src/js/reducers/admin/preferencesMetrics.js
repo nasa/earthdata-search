@@ -16,6 +16,7 @@ const initialState = {
     granuleSort: [],
     collectionSort: [],
     granuleListView: [],
+    showTourPreference: [],
     collectionListView: []
   },
   isLoading: false,

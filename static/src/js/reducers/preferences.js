@@ -6,6 +6,7 @@ const initialState = {
     panelState: 'default',
     collectionListView: 'default',
     granuleListView: 'default',
+    showTourPreference: 'default',
     mapView: {
       zoom: 2,
       latitude: 0,

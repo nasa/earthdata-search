@@ -103,6 +103,23 @@
 				"List",
 				"Table"
 			]
+    	},
+		"showTourPreference": {
+			"$id": "#/properties/showTourPreference",
+			"type": "string",
+			"title": "Site Tour Behavior",
+			"description": "Select whether you want to start the site tour when the search page is loaded.",
+			"default": "show",
+			"enum": [
+				"default",
+				"show",
+				"dontshowagain"
+			],
+			"enumNames": [
+				"Default",
+				"Show",
+				"Don't Show Again"
+			]
     },
     "mapView": {
       "$id": "#/properties/mapView",

@@ -46,7 +46,8 @@ const adminGetPreferencesMetrics = async (event, context) => {
         collectionListView = 'not set (default)',
         collectionSort = 'not set (-score)',
         granuleSort = 'not set (-start_date)',
-        granuleListView = 'not set (default)'
+        granuleListView = 'not set (default)',
+        showTourPreference = 'not set (default)'
       } = sitePreferences
 
       const {
@@ -64,6 +65,7 @@ const adminGetPreferencesMetrics = async (event, context) => {
         collectionSort,
         granuleSort,
         granuleListView,
+        showTourPreference,
         zoom,
         latitude,
         longitude,
@@ -77,6 +79,7 @@ const adminGetPreferencesMetrics = async (event, context) => {
       panelState: {},
       granuleSort: {},
       granuleListView: {},
+      showTourPreference: {},
       collectionSort: {},
       collectionListView: {},
       zoom: {},

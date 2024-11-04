@@ -108,6 +108,20 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           >
             Skip for now
           </Button>
+          <Button
+            className="button-tour-dont-show-again"
+            type="button"
+            bootstrapVariant="secondary"
+            bootstrapSize="lg"
+            onClick={
+              () => {
+                setRunTour(false)
+                setStepIndex(0)
+              }
+            }
+          >
+            Don&apos;t show again
+          </Button>
         </div>
       </div>
     ),
@@ -446,14 +460,6 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
               className="search-tour__earthdata-link"
             >
               Earthdata Search wiki
-            </ExternalLink>
-          </li>
-          <li>
-            <ExternalLink
-              href="https://www.earthdata.nasa.gov/faq/earthdata-search-faq"
-              className="search-tour__earthdata-link"
-            >
-              Earthdata Search FAQs
             </ExternalLink>
           </li>
         </ul>
