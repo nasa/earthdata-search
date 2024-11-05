@@ -169,7 +169,7 @@ custom:
     objectHeaders:
       index.html:
         - name: Cache-Control
-          value: no-store
+          value: no-cache
       '*.css':
         - name: Cache-Control
           value: 'max-age=31536000'
