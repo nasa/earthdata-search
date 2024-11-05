@@ -7,14 +7,22 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Joyride, { STATUS, ACTIONS } from 'react-joyride'
 
+import actions from '../../actions'
 import TourSteps, { TOTAL_STEPS } from './TourSteps'
 import TourContext from '../../contexts/TourContext'
 
 const mapStateToProps = (state) => ({
+  preferences: state.preferences.preferences,
   tourPreference: state.preferences.preferences.showTourPreference
 })
 
-const SearchTour = ({ tourPreference }) => {
+const mapDispatchToProps = (dispatch) => ({
+  onUpdatePreferences: (preferences) => {
+    dispatch(actions.updatePreferences({ formData: preferences }))
+  }
+})
+
+const SearchTour = ({ preferences, tourPreference, onUpdatePreferences }) => {
   const getDefaultCheckboxValue = () => {
     switch (tourPreference) {
       case 'showtour':
@@ -32,6 +40,10 @@ const SearchTour = ({ tourPreference }) => {
 
   const [isDontShowChecked, setIsDontShowChecked] = useState(getDefaultCheckboxValue())
   const [stepIndex, setStepIndex] = useState(0)
+
+  useEffect(() => {
+    setIsDontShowChecked(getDefaultCheckboxValue())
+  }, [tourPreference])
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -124,7 +136,8 @@ const SearchTour = ({ tourPreference }) => {
           setRunTour,
           isDontShowChecked,
           setIsDontShowChecked,
-          tourPreference
+          preferences,
+          onUpdatePreferences
         )
       }
       run={runTour}
@@ -158,7 +171,24 @@ const SearchTour = ({ tourPreference }) => {
 }
 
 SearchTour.propTypes = {
-  tourPreference: PropTypes.string.isRequired
+  onUpdatePreferences: PropTypes.func.isRequired,
+  tourPreference: PropTypes.string.isRequired,
+  preferences: PropTypes.shape({
+    mapView: PropTypes.shape({
+      zoom: PropTypes.number,
+      latitude: PropTypes.number,
+      longitude: PropTypes.number,
+      baseLayer: PropTypes.string,
+      projection: PropTypes.string,
+      overlayLayers: PropTypes.arrayOf(PropTypes.string)
+    }).isRequired,
+    panelState: PropTypes.string,
+    granuleSort: PropTypes.string,
+    collectionSort: PropTypes.string,
+    granuleListView: PropTypes.string,
+    collectionListView: PropTypes.string,
+    showTourPreference: PropTypes.string
+  }).isRequired
 }
 
-export default connect(mapStateToProps)(SearchTour)
+export default connect(mapStateToProps, mapDispatchToProps)(SearchTour)

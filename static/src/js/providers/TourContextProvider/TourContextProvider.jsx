@@ -13,11 +13,9 @@ const isSiteTourEnabled = disableSiteTour === 'false'
 const TourContextProvider = ({ children }) => {
   const [runTour, setRunTour] = useState(false)
   useEffect(() => {
-    const isLocalhost = window.location.hostname === 'localhost'
+    const isLocalhost = window.location.hostname === 'localhostttt'
     const overrideLocalhost = window.overrideLocalhost === true
-    const hasUserDisabledTour = localStorage.getItem('dontShowTour') === 'true'
-    const shouldShowTour = isSiteTourEnabled && !hasUserDisabledTour
-      && (!isLocalhost || overrideLocalhost)
+    const shouldShowTour = isSiteTourEnabled && (!isLocalhost || overrideLocalhost)
     setRunTour(shouldShowTour)
   }, [])
 
