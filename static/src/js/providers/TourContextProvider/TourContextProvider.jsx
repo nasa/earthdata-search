@@ -11,11 +11,11 @@ const { disableSiteTour } = getApplicationConfig()
 const isSiteTourEnabled = disableSiteTour === 'false'
 
 const TourContextProvider = ({ children }) => {
-  const [runTour, setRunTour] = useState(false)
+  const [runTour, setRunTour] = useState(0)
   useEffect(() => {
-    const isLocalhost = window.location.hostname === 'localhostttt'
+    const isLocalhost = window.location.hostname === 'localhost'
     const overrideLocalhost = window.overrideLocalhost === true
-    const shouldShowTour = isSiteTourEnabled && (!isLocalhost || overrideLocalhost)
+    const shouldShowTour = isSiteTourEnabled && (!isLocalhost || overrideLocalhost) ? 1 : 0
     setRunTour(shouldShowTour)
   }, [])
 

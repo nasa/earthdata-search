@@ -127,6 +127,16 @@ const SearchTour = ({ preferences, tourPreference, onUpdatePreferences }) => {
     }
   }
 
+  useEffect(() => {
+    if (runTour === 1) {
+      setRunTour(!getDefaultCheckboxValue())
+    } else if (runTour === 0) {
+      setRunTour(false)
+    }
+  }, [runTour, setRunTour])
+
+  const shouldRunTour = () => runTour
+
   return (
     <Joyride
       steps={
@@ -140,7 +150,7 @@ const SearchTour = ({ preferences, tourPreference, onUpdatePreferences }) => {
           onUpdatePreferences
         )
       }
-      run={runTour}
+      run={shouldRunTour()}
       stepIndex={stepIndex}
       continuous
       callback={handleJoyrideCallback}
