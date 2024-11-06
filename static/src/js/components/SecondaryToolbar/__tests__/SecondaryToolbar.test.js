@@ -377,19 +377,9 @@ describe('SecondaryToolbar component', () => {
       test('clicking the tour works as expected', () => {
         setup()
         const tourButton = screen.getByRole('button', { name: 'Start tour' })
+        // Tour functionality is being tested in tour.spec.js
         expect(tourButton).toBeInTheDocument()
       })
-    })
-
-    test.skip('clicking the tour button calls onStartTour', async () => {
-      const { user, onStartTour } = setup()
-      const tourButton = screen.getByRole('button', { name: 'Start tour' })
-
-      await act(async () => {
-        await user.click(tourButton)
-      })
-
-      expect(onStartTour).toBeCalledTimes(1)
     })
 
     test('hovering over the tour renders a tool-tip', async () => {
