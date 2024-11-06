@@ -261,6 +261,22 @@ describe('ShapefileDropzoneContainer component', () => {
           message: 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
         })
       })
+
+      test('fires the other filtype when zip/shp/dbf/shx is in the filename but not the filepath', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'zip-shp-dbf-shx.java'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          message: 'Invalid file format.'
+        })
+      })
     })
 
     describe('when given a Keyhole Markup Language file', () => {
@@ -295,6 +311,22 @@ describe('ShapefileDropzoneContainer component', () => {
           message: 'To use a Keyhole Markup Language file, please upload a valid .kml or .kmz file.'
         })
       })
+
+      test('fires the other filtype when kml/kmz is in the filename but not the filepath', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'kml-kmz.java'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          message: 'Invalid file format.'
+        })
+      })
     })
 
     describe('when given a Geojson file types', () => {
@@ -327,6 +359,22 @@ describe('ShapefileDropzoneContainer component', () => {
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
           message: 'To use a GeoJSON file, please upload a valid .json or .geojson file.'
+        })
+      })
+
+      test('fires the other filtype when json/geojson is in the filename but not the filepath', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'json-geojson.java'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          message: 'Invalid file format.'
         })
       })
     })
@@ -377,6 +425,22 @@ describe('ShapefileDropzoneContainer component', () => {
         expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
         expect(props.onShapefileErrored).toHaveBeenCalledWith({
           message: 'To use a GeoRSS file, please upload a valid .rss, .georss, or .xml file.'
+        })
+      })
+
+      test('fires the other filtype when rss/georss/xml is in the filename but not the filepath', () => {
+        const { enzymeWrapper, props } = setup()
+
+        enzymeWrapper.find('WithDropzone').props().onError({
+          name: 'rss-georss-xml.java'
+        })
+
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
+        expect(props.onToggleShapefileUploadModal).toHaveBeenCalledWith(false)
+
+        expect(props.onShapefileErrored).toHaveBeenCalledTimes(1)
+        expect(props.onShapefileErrored).toHaveBeenCalledWith({
+          message: 'Invalid file format.'
         })
       })
     })

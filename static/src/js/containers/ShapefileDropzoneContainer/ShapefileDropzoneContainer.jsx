@@ -88,13 +88,13 @@ export const ShapefileDropzoneContainer = ({
         let shapefileError = ''
 
         onToggleShapefileUploadModal(false)
-        if (file.name.match('.*zip|shp|dbf|shx')) {
+        if (file.name.match('.*(zip|shp|dbf|shx)$')) {
           shapefileError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
-        } else if (file.name.match('.*kml|kmz')) {
+        } else if (file.name.match('.*(kml|kmz)$')) {
           shapefileError = 'To use a Keyhole Markup Language file, please upload a valid .kml or .kmz file.'
-        } else if (file.name.match('.*json|geojson')) {
+        } else if (file.name.match('.*(json|geojson)$')) {
           shapefileError = 'To use a GeoJSON file, please upload a valid .json or .geojson file.'
-        } else if (file.name.match('.*rss|georss|xml')) {
+        } else if (file.name.match('.*(rss|georss|xml)$')) {
           shapefileError = 'To use a GeoRSS file, please upload a valid .rss, .georss, or .xml file.'
         } else {
           shapefileError = 'Invalid file format.'
