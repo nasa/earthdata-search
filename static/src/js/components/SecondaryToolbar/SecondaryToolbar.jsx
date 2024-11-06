@@ -357,7 +357,6 @@ class SecondaryToolbar extends Component {
           onClick={this.onToggleProjectDropdown}
           icon={FaSave}
           iconSize="0.825rem"
-          iconOnly
           bootstrapVariant="light"
           tooltip="Create a project with your current search"
           tooltipId="create-project-tooltip"
