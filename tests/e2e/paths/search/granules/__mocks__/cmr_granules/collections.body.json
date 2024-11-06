@@ -1,243 +1,429 @@
 {
-  "feed": {
-      "updated": "2024-10-21T15:45:06.138Z",
-      "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=C1214470488-ASF*&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score",
-      "title": "ECHO dataset metadata",
-      "entry": [
-          {
-              "cloud_hosted": true,
-              "tags": {
-                  "edsc.extra.serverless.collection_capabilities": {
-                      "data": {
-                          "cloud_cover": false,
-                          "day_night_flag": false,
-                          "granule_online_access_flag": true,
-                          "orbit_calculated_spatial_domains": true,
-                          "updated_at": "2024-07-02T19:01:38.828Z"
-                      }
-                  }
-              },
-              "boxes": [
-                  "-90 -180 90 180"
-              ],
-              "has_combine": false,
-              "time_start": "2014-04-03T00:00:00.000Z",
-              "version_id": "1",
-              "updated": "2022-11-17T22:58:01.000Z",
-              "dataset_id": "SENTINEL-1A_SLC",
-              "has_spatial_subsetting": false,
-              "has_transforms": false,
-              "has_variables": false,
-              "data_center": "ASF",
-              "short_name": "SENTINEL-1A_SLC",
-              "organizations": [
-                  "ASF",
-                  "ESA/CS1CGS"
-              ],
-              "title": "SENTINEL-1A_SLC",
-              "coordinate_system": "CARTESIAN",
-              "summary": "Sentinel-1A slant-range product",
-              "has_granules": true,
-              "service_features": {
-                  "opendap": {
-                      "has_formats": false,
-                      "has_variables": false,
-                      "has_transforms": false,
-                      "has_combine": false,
-                      "has_spatial_subsetting": false,
-                      "has_temporal_subsetting": false
-                  },
-                  "esi": {
-                      "has_formats": false,
-                      "has_variables": false,
-                      "has_transforms": false,
-                      "has_combine": false,
-                      "has_spatial_subsetting": false,
-                      "has_temporal_subsetting": false
-                  },
-                  "harmony": {
-                      "has_formats": false,
-                      "has_variables": false,
-                      "has_transforms": false,
-                      "has_combine": false,
-                      "has_spatial_subsetting": false,
-                      "has_temporal_subsetting": false
-                  }
-              },
-              "orbit_parameters": {},
-              "id": "C1214470488-ASF",
-              "has_formats": false,
-              "score": 0.5,
-              "consortiums": [
-                  "GEOSS",
-                  "EOSDIS"
-              ],
-              "original_format": "ECHO10",
-              "granule_count": 1776604,
-              "archive_center": "ASF",
-              "has_temporal_subsetting": false,
-              "browse_flag": false,
-              "platforms": [
-                  "Sentinel-1A"
-              ],
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          }
-      ],
-      "facets": {
-          "title": "Browse Collections",
-          "type": "group",
-          "has_children": true,
-          "children": [
-              {
-                  "title": "Keywords",
-                  "type": "group",
-                  "applied": false,
-                  "has_children": true,
-                  "children": [
-                      {
-                          "title": "Agriculture",
-                          "type": "filter",
-                          "applied": false,
-                          "count": 1,
-                          "links": {
-                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Agriculture"
-                          },
-                          "has_children": true
-                      },
-                      {
-                          "title": "Biosphere",
-                          "type": "filter",
-                          "applied": false,
-                          "count": 1,
-                          "links": {
-                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Biosphere"
-                          },
-                          "has_children": true
-                      },
-                      {
-                          "title": "Cryosphere",
-                          "type": "filter",
-                          "applied": false,
-                          "count": 1,
-                          "links": {
-                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Cryosphere"
-                          },
-                          "has_children": true
-                      },
-                      {
-                          "title": "Land Surface",
-                          "type": "filter",
-                          "applied": false,
-                          "count": 1,
-                          "links": {
-                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Land+Surface"
-                          },
-                          "has_children": true
-                      },
-                      {
-                          "title": "Oceans",
-                          "type": "filter",
-                          "applied": false,
-                          "count": 1,
-                          "links": {
-                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Oceans"
-                          },
-                          "has_children": true
-                      },
-                      {
-                          "title": "Solid Earth",
-                          "type": "filter",
-                          "applied": false,
-                          "count": 1,
-                          "links": {
-                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Solid+Earth"
-                          },
-                          "has_children": true
-                      },
-                      {
-                          "title": "Terrestrial Hydrosphere",
-                          "type": "filter",
-                          "applied": false,
-                          "count": 1,
-                          "links": {
-                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Terrestrial+Hydrosphere"
-                          },
-                          "has_children": true
-                      }
-                  ]
-              },
-              {
-                  "title": "Platforms",
-                  "type": "group",
-                  "applied": false,
-                  "has_children": true,
-                  "children": [
-                      {
-                          "title": "Space-based Platforms",
-                          "type": "filter",
-                          "applied": false,
-                          "count": 1,
-                          "links": {
-                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platforms_h%5B0%5D%5Bbasis%5D=Space-based+Platforms"
-                          },
-                          "has_children": true
-                      }
-                  ]
-              },
-              {
-                  "title": "Instruments",
-                  "type": "group",
-                  "applied": false,
-                  "has_children": true,
-                  "children": [
-                      {
-                          "title": "C-SAR",
-                          "type": "filter",
-                          "applied": false,
-                          "count": 1,
-                          "links": {
-                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&instrument_h%5B%5D=C-SAR&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
-                          },
-                          "has_children": false
-                      }
-                  ]
-              },
-              {
-                  "title": "Organizations",
-                  "type": "group",
-                  "applied": false,
-                  "has_children": true,
-                  "children": [
-                      {
-                          "title": "Alaska Satellite Facility",
-                          "type": "filter",
-                          "applied": false,
-                          "count": 1,
-                          "links": {
-                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=Alaska+Satellite+Facility&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
-                          },
-                          "has_children": false
-                      },
-                      {
-                          "title": "ESA/CS1CGS",
-                          "type": "filter",
-                          "applied": false,
-                          "count": 1,
-                          "links": {
-                              "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=ESA%2FCS1CGS&keyword=C1214470488-ASF*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
-                          },
-                          "has_children": false
-                      }
-                  ]
-              }
-          ]
-      }
-  }
+	"feed": {
+		"updated": "2024-11-01T19:58:33.357Z",
+		"id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=C2208779826-LANCEMODIS*&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score",
+		"title": "ECHO dataset metadata",
+		"entry": [
+			{
+				"processing_level_id": "1B",
+				"cloud_hosted": false,
+				"tags": {
+					"edsc.extra.serverless.gibs": {
+						"data": [
+							{
+								"antarctic": true,
+								"group": "overlays",
+								"product": "VIIRS_NOAA20_Brightness_Temp_BandI5_Day",
+								"antarctic_resolution": "250m",
+								"updated_at": "2024-11-01T12:45:22.593Z",
+								"arctic": true,
+								"title": "Brightness Temperature (Band I5, Day)",
+								"source": "NOAA-20 / VIIRS",
+								"match": {
+									"time_start": ">=2018-01-05T00:00:00Z",
+									"day_night_flag": "day"
+								},
+								"geographic": true,
+								"arctic_resolution": "250m",
+								"format": "png",
+								"geographic_resolution": "250m"
+							},
+							{
+								"antarctic": true,
+								"group": "overlays",
+								"product": "VIIRS_NOAA20_Brightness_Temp_BandI5_Night",
+								"antarctic_resolution": "250m",
+								"updated_at": "2024-11-01T12:45:22.593Z",
+								"arctic": true,
+								"title": "Brightness Temperature (Band I5, Night)",
+								"source": "NOAA-20 / VIIRS",
+								"match": {
+									"time_start": ">=2018-01-05T00:00:00Z",
+									"day_night_flag": "night"
+								},
+								"geographic": true,
+								"arctic_resolution": "250m",
+								"format": "png",
+								"geographic_resolution": "250m"
+							},
+							{
+								"antarctic": true,
+								"group": "baselayers",
+								"product": "VIIRS_NOAA20_CorrectedReflectance_BandsM11-I2-I1",
+								"antarctic_resolution": "250m",
+								"updated_at": "2024-11-01T12:45:22.594Z",
+								"arctic": true,
+								"title": "Corrected Reflectance (Bands M11-I2-I1)",
+								"source": "NOAA-20 / VIIRS",
+								"match": {
+									"time_start": ">=2018-01-05T00:00:00Z",
+									"day_night_flag": "day"
+								},
+								"geographic": true,
+								"arctic_resolution": "250m",
+								"format": "jpeg",
+								"geographic_resolution": "250m"
+							},
+							{
+								"antarctic": true,
+								"group": "baselayers",
+								"product": "VIIRS_NOAA20_CorrectedReflectance_BandsM3-I3-M11",
+								"antarctic_resolution": "250m",
+								"updated_at": "2024-11-01T12:45:22.594Z",
+								"arctic": true,
+								"title": "Corrected Reflectance (Bands M3-I3-M11)",
+								"source": "NOAA-20 / VIIRS",
+								"match": {
+									"time_start": ">=2018-01-05T00:00:00Z",
+									"day_night_flag": "day"
+								},
+								"geographic": true,
+								"arctic_resolution": "250m",
+								"format": "jpeg",
+								"geographic_resolution": "250m"
+							},
+							{
+								"antarctic": true,
+								"group": "overlays",
+								"product": "VIIRS_NOAA20_CorrectedReflectance_BandsM11-I2-I1_Granule",
+								"antarctic_resolution": "250m",
+								"updated_at": "2024-11-01T12:45:22.594Z",
+								"arctic": true,
+								"title": "Granule Corrected Reflectance (Bands M11-I2-I1) *BETA*",
+								"source": "NOAA-20 / VIIRS",
+								"match": {
+									"time_start": ">=2024-09-16T17:18:00Z",
+									"day_night_flag": "day"
+								},
+								"geographic": true,
+								"arctic_resolution": "250m",
+								"format": "png",
+								"geographic_resolution": "250m"
+							},
+							{
+								"antarctic": true,
+								"group": "overlays",
+								"product": "VIIRS_NOAA20_CorrectedReflectance_BandsM3-I3-M11_Granule",
+								"antarctic_resolution": "250m",
+								"updated_at": "2024-11-01T12:45:22.594Z",
+								"arctic": true,
+								"title": "Granule Corrected Reflectance (Bands M3-I3-M11) *BETA*",
+								"source": "NOAA-20 / VIIRS",
+								"match": {
+									"time_start": ">=2024-09-16T17:18:00Z",
+									"day_night_flag": "day"
+								},
+								"geographic": true,
+								"arctic_resolution": "250m",
+								"format": "png",
+								"geographic_resolution": "250m"
+							},
+							{
+								"antarctic": true,
+								"group": "baselayers",
+								"product": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+								"antarctic_resolution": "250m",
+								"updated_at": "2024-11-01T12:45:22.594Z",
+								"arctic": true,
+								"title": "Corrected Reflectance (True Color)",
+								"source": "NOAA-20 / VIIRS",
+								"match": {
+									"time_start": ">=2018-01-05T00:00:00Z",
+									"day_night_flag": "day"
+								},
+								"geographic": true,
+								"arctic_resolution": "250m",
+								"format": "jpeg",
+								"geographic_resolution": "250m"
+							},
+							{
+								"antarctic": true,
+								"group": "overlays",
+								"product": "VIIRS_NOAA20_CorrectedReflectance_TrueColor_Granule",
+								"antarctic_resolution": "250m",
+								"updated_at": "2024-11-01T12:45:22.594Z",
+								"arctic": true,
+								"title": "Granule Corrected Reflectance (True Color) *BETA*",
+								"source": "NOAA-20 / VIIRS",
+								"match": {
+									"time_start": ">=2024-09-16T17:18:00Z",
+									"day_night_flag": "day"
+								},
+								"geographic": true,
+								"arctic_resolution": "250m",
+								"format": "png",
+								"geographic_resolution": "250m"
+							}
+						]
+					},
+					"edsc.extra.serverless.collection_capabilities": {
+						"data": {
+							"cloud_cover": false,
+							"day_night_flag": true,
+							"granule_online_access_flag": true,
+							"orbit_calculated_spatial_domains": false,
+							"updated_at": "2023-12-08T19:02:05.666Z"
+						}
+					}
+				},
+				"boxes": [
+					"-90 -180 90 180"
+				],
+				"has_combine": false,
+				"time_start": "2022-01-01T00:00:00.000Z",
+				"version_id": "2.1",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"entry_id": "VJ102IMG_NRT_2.1",
+				"has_spatial_subsetting": false,
+				"has_transforms": false,
+				"has_variables": false,
+				"data_center": "LANCEMODIS",
+				"short_name": "VJ102IMG_NRT",
+				"organizations": [
+					"NASA/GSFC/EOS/ESDIS/LANCE MODIS",
+					"NASA/GSFC/SED/ESD/BSL/VCST"
+				],
+				"title": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"coordinate_system": "CARTESIAN",
+				"summary": "The VIIRS/JPSS1 Imagery Resolution 6-Min L1B Swath  375m Near REal Time (NRT), short-name VJ102IMG_NRT is among the VIIRS Level 1 and Level 2 swath products that are generated from the processing of 6 minutes of VIIRS data acquired during the JPSS1 satellite overpass. The VIIRS sensor has 5 high-resolution imagery channels (I-bands) that have 32 detectors (32 rows of pixels per scan), with twice the resolution of the M-bands and the DNB, that span the wavelengths from 0.640 micrometer to 11.45 micrometer. The VJ102IMG product is comprised of 5 bands that are sensitive to visible, near-infrared (NIR), and thermal wavelengths. The spatial resolution of the instrument at viewing nadir is approximately 375 m for the Imagery bands, and 750m for the DNB and the Moderate-resolution Bands.\r\n\r\nThe spatial resolution of the instrument at viewing nadir is approximately 750 m for the Moderate-resolution and Day/Night Bands, and 375m for the Imagery bands.",
+				"has_granules": true,
+				"service_features": {
+					"opendap": {
+						"has_formats": false,
+						"has_variables": false,
+						"has_transforms": false,
+						"has_combine": false,
+						"has_spatial_subsetting": false,
+						"has_temporal_subsetting": false
+					},
+					"esi": {
+						"has_formats": false,
+						"has_variables": false,
+						"has_transforms": false,
+						"has_combine": false,
+						"has_spatial_subsetting": false,
+						"has_temporal_subsetting": false
+					},
+					"harmony": {
+						"has_formats": false,
+						"has_variables": false,
+						"has_transforms": false,
+						"has_combine": false,
+						"has_spatial_subsetting": false,
+						"has_temporal_subsetting": false
+					}
+				},
+				"orbit_parameters": {
+
+				},
+				"id": "C2208779826-LANCEMODIS",
+				"has_formats": false,
+				"score": 0.5,
+				"consortiums": [
+					"EOSDIS",
+					"GEOSS"
+				],
+				"original_format": "UMM_JSON",
+				"collection_data_type": "NEAR_REAL_TIME",
+				"granule_count": 1718,
+				"has_temporal_subsetting": false,
+				"browse_flag": false,
+				"platforms": [
+					"NOAA-20"
+				],
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			}
+		],
+		"facets": {
+			"title": "Browse Collections",
+			"type": "group",
+			"has_children": true,
+			"children": [
+				{
+					"title": "Keywords",
+					"type": "group",
+					"applied": false,
+					"has_children": true,
+					"children": [
+						{
+							"title": "Spectral/Engineering",
+							"type": "filter",
+							"applied": false,
+							"count": 1,
+							"links": {
+								"apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C2208779826-LANCEMODIS*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Spectral%2FEngineering"
+							},
+							"has_children": true
+						}
+					]
+				},
+				{
+					"title": "Platforms",
+					"type": "group",
+					"applied": false,
+					"has_children": true,
+					"children": [
+						{
+							"title": "Space-based Platforms",
+							"type": "filter",
+							"applied": false,
+							"count": 1,
+							"links": {
+								"apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C2208779826-LANCEMODIS*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platforms_h%5B0%5D%5Bbasis%5D=Space-based+Platforms"
+							},
+							"has_children": true
+						}
+					]
+				},
+				{
+					"title": "Instruments",
+					"type": "group",
+					"applied": false,
+					"has_children": true,
+					"children": [
+						{
+							"title": "VIIRS",
+							"type": "filter",
+							"applied": false,
+							"count": 1,
+							"links": {
+								"apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&instrument_h%5B%5D=VIIRS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C2208779826-LANCEMODIS*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+							},
+							"has_children": false
+						}
+					]
+				},
+				{
+					"title": "Data Format",
+					"type": "group",
+					"applied": false,
+					"has_children": true,
+					"children": [
+						{
+							"title": "NetCDF",
+							"type": "filter",
+							"applied": false,
+							"count": 1,
+							"links": {
+								"apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=NetCDF&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C2208779826-LANCEMODIS*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+							},
+							"has_children": false
+						}
+					]
+				},
+				{
+					"title": "Organizations",
+					"type": "group",
+					"applied": false,
+					"has_children": true,
+					"children": [
+						{
+							"title": "NASA/GSFC/EOS/ESDIS/LANCE MODIS",
+							"type": "filter",
+							"applied": false,
+							"count": 1,
+							"links": {
+								"apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=NASA%2FGSFC%2FEOS%2FESDIS%2FLANCE+MODIS&keyword=C2208779826-LANCEMODIS*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+							},
+							"has_children": false
+						},
+						{
+							"title": "NASA/GSFC/SED/ESD/BSL/VCST",
+							"type": "filter",
+							"applied": false,
+							"count": 1,
+							"links": {
+								"apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=NASA%2FGSFC%2FSED%2FESD%2FBSL%2FVCST&keyword=C2208779826-LANCEMODIS*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+							},
+							"has_children": false
+						}
+					]
+				},
+				{
+					"title": "Projects",
+					"type": "group",
+					"applied": false,
+					"has_children": true,
+					"children": [
+						{
+							"title": "JPSS",
+							"type": "filter",
+							"applied": false,
+							"count": 1,
+							"links": {
+								"apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C2208779826-LANCEMODIS*&project_h%5B%5D=JPSS&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+							},
+							"has_children": false
+						}
+					]
+				},
+				{
+					"title": "Processing Levels",
+					"type": "group",
+					"applied": false,
+					"has_children": true,
+					"children": [
+						{
+							"title": "1B - Radiance, Sensor Coordinates",
+							"type": "filter",
+							"applied": false,
+							"count": 1,
+							"links": {
+								"apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&processing_level_id_h%5B%5D=1B+-+Radiance%2C+Sensor+Coordinates&keyword=C2208779826-LANCEMODIS*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+							},
+							"has_children": false
+						}
+					]
+				},
+				{
+					"title": "Latency",
+					"type": "group",
+					"applied": false,
+					"has_children": true,
+					"children": [
+						{
+							"title": "1 to 3 hours",
+							"type": "filter",
+							"applied": false,
+							"count": 1,
+							"links": {
+								"apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C2208779826-LANCEMODIS*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+							},
+							"has_children": false
+						}
+					]
+				},
+				{
+					"title": "Horizontal Data Resolution",
+					"type": "group",
+					"applied": false,
+					"has_children": true,
+					"children": [
+						{
+							"title": "250 to 500 meters",
+							"type": "filter",
+							"applied": false,
+							"count": 1,
+							"links": {
+								"apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C2208779826-LANCEMODIS*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=250+to+500+meters&include_facets=v2"
+							},
+							"has_children": false
+						}
+					]
+				}
+			]
+		}
+	}
 }

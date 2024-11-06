@@ -10,6 +10,11 @@ import graphQlHeaders from './__mocks__/graphql.headers.json'
 import formattedGranuleMetadata from './__mocks__/formattedGranuleMetadata.json'
 
 test.describe('Path /search/granules/granule-details', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+    await page.route('**/scale/**', (route) => route.abort())
+  })
+
   test('granule loads correctly', async ({ page }) => {
     const collectionId = 'C1214470488-ASF'
     const granuleId = 'G1287941210-ASF'
