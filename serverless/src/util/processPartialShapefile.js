@@ -60,7 +60,7 @@ export const processPartialShapefile = async (
           file,
           filename: `Limited-${filename}`,
           parent_shapefile_id: deobfuscatedShapefileId,
-          selected_features: selectedFeatures,
+          selected_features: JSON.stringify(selectedFeatures),
           user_id: userId
         })
     }
