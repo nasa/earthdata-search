@@ -40,7 +40,10 @@ describe('#panBoundsToCenter', () => {
     test('should fit the bounds', () => {
       panBoundsToCenter(mockMap, mockValidBounds)
       expect(mockMapFitBounds).toHaveBeenCalled()
-      expect(mockMapFitBounds).toHaveBeenCalledWith(mockValidBounds, { padding: [200, 200] })
+      expect(mockMapFitBounds).toHaveBeenCalledWith(mockValidBounds, {
+        animate: false,
+        padding: [200, 200]
+      })
     })
 
     test('should pan to bounds center', () => {

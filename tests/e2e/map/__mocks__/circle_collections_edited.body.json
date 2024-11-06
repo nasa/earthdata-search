@@ -139,6 +139,74 @@
             "href": "https://vertex.daac.asf.alaska.edu/"
           }
         ]
+      },
+      {
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": true,
+              "updated_at": "2021-06-08T12:14:50.119Z"
+            }
+          }
+        },
+        "boxes": ["-90 -180 90 180"],
+        "time_start": "2014-04-03T00:00:00.000Z",
+        "version_id": "1",
+        "updated": "2021-05-24T19:02:49.000Z",
+        "dataset_id": "SENTINEL-1A_DUAL_POL_GRD_HIGH_RES",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "ASF",
+        "short_name": "SENTINEL-1A_DP_GRD_HIGH",
+        "organizations": ["ASF", "ESA/CS1CGS"],
+        "title": "SENTINEL-1A_DUAL_POL_GRD_HIGH_RES",
+        "coordinate_system": "CARTESIAN",
+        "summary": "Sentinel-1A Dual-pol ground projected high and full resolution images",
+        "has_granules": true,
+        "service_features": {
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {},
+        "id": "C1214470533-ASF",
+        "has_formats": false,
+        "original_format": "ECHO10",
+        "granule_count": 123,
+        "archive_center": "ASF",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": ["Sentinel-1A"],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://vertex.daac.asf.alaska.edu/"
+          }
+        ]
       }
     ],
     "facets": {

@@ -228,6 +228,7 @@ const MapWrapper = ({
       <ShapefileLayer
         authToken={authToken}
         isProjectPage={isProjectPage}
+        projection={projection}
         shapefile={shapefile}
         onChangeProjection={onChangeProjection}
         onFetchShapefile={onFetchShapefile}

@@ -125,6 +125,9 @@ const testResultsSize = async (page, cmrHits) => {
 
 test.describe('Path /search/granules', () => {
   test.beforeEach(async ({ page }) => {
+    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+    await page.route('**/scale/**', (route) => route.abort())
+
     await page.clock.setFixedTime(new Date('2021-06-01'))
   })
 
