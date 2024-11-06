@@ -68,7 +68,6 @@ test.describe('Map: Shapefile interactions', () => {
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
         // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
-        await page.waitForTimeout(100)
         await page.waitForURL(/zoom=5/, { timeout: 3000 })
 
         // The shapefile has 1 svg shapes that is auto selected, so 2 path elements
@@ -176,7 +175,6 @@ test.describe('Map: Shapefile interactions', () => {
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
 
         // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
-        // await page.waitForTimeout(100)
         await page.waitForURL(/zoom=4/, { timeout: 3000 })
 
         // The shapefile has 4 svg shapes, so 4 path elements
@@ -190,6 +188,10 @@ test.describe('Map: Shapefile interactions', () => {
 
         // After clicking a shape the map will have 5 path elements
         await expect(await page.locator('g path').all()).toHaveLength(5)
+
+        // Checking that the right number of results are loaded ensures that the route
+        // was fulfilled correctly with the succesfull paramCheck
+        await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
         // Updates the URL
         await expect(page).toHaveURL('search?circle[0]=35%2C-5%2C50000&sf=1&sfs[0]=3&lat=-8.296765000000008&long=44.625&zoom=4')
