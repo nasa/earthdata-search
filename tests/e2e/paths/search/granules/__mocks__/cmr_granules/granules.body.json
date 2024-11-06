@@ -1,1189 +1,989 @@
 {
-  "feed": {
-      "updated": "2024-10-21T15:45:06.736Z",
-      "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-start_date",
-      "title": "ECHO granule metadata",
-      "entry": [
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SSH_20241021T140515_20241021T140541_056201_06E146_01EE",
-              "time_start": "2024-10-21T14:05:15.380Z",
-              "updated": "2024-10-21T15:22:26.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56201"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SSH_20241021T140515_20241021T140541_056201_06E146_01EE-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T14:05:41.496Z",
-              "id": "G3271269411-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "2046.6927108764648",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "-45.958004 72.232315 -47.488708 72.943703 -46.728909 76.092934 -45.218414 75.29924 -45.958004 72.232315"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SSH_20241021T140515_20241021T140541_056201_06E146_01EE.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SSH_20241021T140515_20241021T140541_056201_06E146_01EE.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SSH_20241021T140450_20241021T140517_056201_06E146_3E61",
-              "time_start": "2024-10-21T14:04:50.562Z",
-              "updated": "2024-10-21T15:22:02.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56201"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SSH_20241021T140450_20241021T140517_056201_06E146_3E61-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T14:05:17.512Z",
-              "id": "G3271269041-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "2099.429796218872",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "-47.363937 72.884209 -48.939152 73.656464 -48.15873 76.889122 -46.605839 76.02652 -47.363937 72.884209"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SSH_20241021T140450_20241021T140517_056201_06E146_3E61.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SSH_20241021T140450_20241021T140517_056201_06E146_3E61.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SSH_20241021T140425_20241021T140452_056201_06E146_BDD1",
-              "time_start": "2024-10-21T14:04:25.737Z",
-              "updated": "2024-10-21T15:22:49.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56201"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SSH_20241021T140425_20241021T140452_056201_06E146_BDD1-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T14:04:52.689Z",
-              "id": "G3271269586-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "2062.849281311035",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "-48.814991 73.593864 -50.38541 74.409149 -49.582844 77.730637 -48.036392 76.819168 -48.814991 73.593864"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SSH_20241021T140425_20241021T140452_056201_06E146_BDD1.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SSH_20241021T140425_20241021T140452_056201_06E146_BDD1.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SSH_20241021T140359_20241021T140427_056201_06E146_5840",
-              "time_start": "2024-10-21T14:03:59.970Z",
-              "updated": "2024-10-21T15:21:36.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56201"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SSH_20241021T140359_20241021T140427_056201_06E146_5840-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T14:04:27.866Z",
-              "id": "G3271268821-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "2138.35013961792",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "-50.261536 74.342918 -51.88121 75.237198 -51.053886 78.656906 -49.46093 77.656563 -50.261536 74.342918"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SSH_20241021T140359_20241021T140427_056201_06E146_5840.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SSH_20241021T140359_20241021T140427_056201_06E146_5840.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SSH_20241021T140332_20241021T140402_056201_06E146_77A1",
-              "time_start": "2024-10-21T14:03:32.383Z",
-              "updated": "2024-10-21T15:21:41.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56201"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SSH_20241021T140332_20241021T140402_056201_06E146_77A1-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T14:04:02.207Z",
-              "id": "G3271268905-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "2266.2450704574585",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "-51.75161 75.1633 -53.476078 76.183067 -52.620018 79.715141 -50.92651 78.574226 -51.75161 75.1633"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SSH_20241021T140332_20241021T140402_056201_06E146_77A1.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SSH_20241021T140332_20241021T140402_056201_06E146_77A1.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SSH_20241021T135911_20241021T135937_056201_06E143_6D55",
-              "time_start": "2024-10-21T13:59:11.305Z",
-              "updated": "2024-10-21T15:44:11.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56201"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SSH_20241021T135911_20241021T135937_056201_06E143_6D55-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T13:59:37.431Z",
-              "id": "G3271287248-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "1979.0576887130737",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "-66.543968 88.633102 -67.914215 90.771088 -66.638321 95.565903 -65.333206 93.274605 -66.543968 88.633102"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SSH_20241021T135911_20241021T135937_056201_06E143_6D55.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SSH_20241021T135911_20241021T135937_056201_06E143_6D55.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_WV_SLC__1SSV_20241021T115117_20241021T121136_056200_06E13A_36A9",
-              "time_start": "2024-10-21T11:51:17.694Z",
-              "updated": "2024-10-21T14:53:35.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_WV_SLC__1SSV_20241021T115117_20241021T121136_056200_06E13A_36A9-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T12:11:36.336Z",
-              "id": "G3271236623-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "6240.47557258606",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "-2.613652 -90.296356 -2.43296 -90.258339 -2.393468 -90.44075 -2.574123 -90.478828 -2.613652 -90.296356"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_WV_SLC__1SSV_20241021T115117_20241021T121136_056200_06E13A_36A9.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_WV_SLC__1SSV_20241021T115117_20241021T121136_056200_06E13A_36A9.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SDV_20241021T115051_20241021T115110_056200_06E139_C602",
-              "time_start": "2024-10-21T11:50:51.939Z",
-              "updated": "2024-10-21T14:53:35.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SDV_20241021T115051_20241021T115110_056200_06E139_C602-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T11:51:10.702Z",
-              "id": "G3271235562-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "2317.9708185195923",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "-1.822411 -91.034843 -0.687687 -90.795517 -0.211 -93.005386 -1.342044 -93.24588 -1.822411 -91.034843"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SDV_20241021T115051_20241021T115110_056200_06E139_C602.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SDV_20241021T115051_20241021T115110_056200_06E139_C602.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SDV_20241021T115024_20241021T115054_056200_06E139_FCDC",
-              "time_start": "2024-10-21T11:50:24.343Z",
-              "updated": "2024-10-21T14:53:36.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SDV_20241021T115024_20241021T115054_056200_06E139_FCDC-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T11:50:54.157Z",
-              "id": "G3271234686-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "3874.261709213257",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "-0.821827 -90.823746 0.981418 -90.445618 1.452836 -92.655464 -0.344709 -93.033707 -0.821827 -90.823746"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SDV_20241021T115024_20241021T115054_056200_06E139_FCDC.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SDV_20241021T115024_20241021T115054_056200_06E139_FCDC.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_WV_SLC__1SSV_20241021T114840_20241021T114956_056200_06E138_77FC",
-              "time_start": "2024-10-21T11:48:40.459Z",
-              "updated": "2024-10-21T14:53:35.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_WV_SLC__1SSV_20241021T114840_20241021T114956_056200_06E138_77FC-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T11:49:56.637Z",
-              "id": "G3271203652-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "432.026593208313",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "6.90156 -88.296425 7.082393 -88.258949 7.120054 -88.440048 6.939246 -88.477463 6.90156 -88.296425"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_WV_SLC__1SSV_20241021T114840_20241021T114956_056200_06E138_77FC.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_WV_SLC__1SSV_20241021T114840_20241021T114956_056200_06E138_77FC.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SDV_20241021T114647_20241021T114710_056200_06E137_7D3F",
-              "time_start": "2024-10-21T11:46:47.385Z",
-              "updated": "2024-10-21T14:53:36.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SDV_20241021T114647_20241021T114710_056200_06E137_7D3F-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T11:47:10.739Z",
-              "id": "G3271244453-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "3554.727117538452",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "12.692168 -88.02565 14.10443 -87.735146 14.541057 -90.023483 13.132268 -90.299828 12.692168 -88.02565"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SDV_20241021T114647_20241021T114710_056200_06E137_7D3F.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SDV_20241021T114647_20241021T114710_056200_06E137_7D3F.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SDV_20241021T114622_20241021T114649_056200_06E137_4C0C",
-              "time_start": "2024-10-21T11:46:22.567Z",
-              "updated": "2024-10-21T14:53:59.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SDV_20241021T114622_20241021T114649_056200_06E137_4C0C-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T11:46:49.503Z",
-              "id": "G3271245465-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "4573.28752040863",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "13.978319 -87.771286 15.606993 -87.435616 16.039171 -89.736694 14.414392 -90.054161 13.978319 -87.771286"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SDV_20241021T114622_20241021T114649_056200_06E137_4C0C.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SDV_20241021T114622_20241021T114649_056200_06E137_4C0C.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SDV_20241021T114557_20241021T114624_056200_06E137_2922",
-              "time_start": "2024-10-21T11:45:57.740Z",
-              "updated": "2024-10-21T14:53:36.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SDV_20241021T114557_20241021T114624_056200_06E137_2922-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T11:46:24.682Z",
-              "id": "G3271245196-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "4252.796617507935",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "15.477599 -87.454201 17.10635 -87.117371 17.535746 -89.440559 15.910766 -89.757042 15.477599 -87.454201"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SDV_20241021T114557_20241021T114624_056200_06E137_2922.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SDV_20241021T114557_20241021T114624_056200_06E137_2922.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SDV_20241021T114532_20241021T114559_056200_06E137_2A03",
-              "time_start": "2024-10-21T11:45:32.913Z",
-              "updated": "2024-10-21T14:53:36.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SDV_20241021T114532_20241021T114559_056200_06E137_2A03-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T11:45:59.853Z",
-              "id": "G3271244634-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "4234.727451324463",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "16.977707 -87.139076 18.605989 -86.80088 19.03245 -89.146935 17.407812 -89.462585 16.977707 -87.139076"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SDV_20241021T114532_20241021T114559_056200_06E137_2A03.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SDV_20241021T114532_20241021T114559_056200_06E137_2A03.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SDV_20241021T114507_20241021T114535_056200_06E137_7DC6",
-              "time_start": "2024-10-21T11:45:07.140Z",
-              "updated": "2024-10-21T14:53:36.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SDV_20241021T114507_20241021T114535_056200_06E137_7DC6-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T11:45:35.024Z",
-              "id": "G3271239538-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "4499.47091293335",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "18.478195 -86.826302 20.16309 -86.474464 20.586296 -88.844887 18.905037 -89.170982 18.478195 -86.826302"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SDV_20241021T114507_20241021T114535_056200_06E137_7DC6.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SDV_20241021T114507_20241021T114535_056200_06E137_7DC6.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_IW_SLC__1SDV_20241021T114439_20241021T114509_056200_06E137_6484",
-              "time_start": "2024-10-21T11:44:39.552Z",
-              "updated": "2024-10-21T14:53:35.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_IW_SLC__1SDV_20241021T114439_20241021T114509_056200_06E137_6484-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T11:45:09.383Z",
-              "id": "G3271241543-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "4699.354423522949",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "20.027403 -86.501808 21.829407 -86.122948 22.24926 -88.521988 20.450987 -88.870491 20.027403 -86.501808"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SDV_20241021T114439_20241021T114509_056200_06E137_6484.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SDV_20241021T114439_20241021T114509_056200_06E137_6484.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_EW_SLC__1SDH_20241021T113529_20241021T113605_056200_06E136_736E",
-              "time_start": "2024-10-21T11:35:29.700Z",
-              "updated": "2024-10-21T14:53:34.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_EW_SLC__1SDH_20241021T113529_20241021T113605_056200_06E136_736E-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T11:36:05.264Z",
-              "id": "G3271210858-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "2459.858539581299",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "52.480007 -76.318405 54.593082 -75.458443 55.30254 -81.856163 53.176674 -82.391624 52.480007 -76.318405"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_EW_SLC__1SDH_20241021T113529_20241021T113605_056200_06E136_736E.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_EW_SLC__1SDH_20241021T113529_20241021T113605_056200_06E136_736E.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_EW_SLC__1SDH_20241021T113429_20241021T113532_056200_06E136_74CC",
-              "time_start": "2024-10-21T11:34:29.503Z",
-              "updated": "2024-10-21T14:53:34.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_EW_SLC__1SDH_20241021T113429_20241021T113532_056200_06E136_74CC-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T11:35:32.479Z",
-              "id": "G3271215014-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "4558.710027694702",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "54.427078 -75.520508 58.156895 -73.822304 58.896805 -80.87825 55.136265 -81.896355 54.427078 -75.520508"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_EW_SLC__1SDH_20241021T113429_20241021T113532_056200_06E136_74CC.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_EW_SLC__1SDH_20241021T113429_20241021T113532_056200_06E136_74CC.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_EW_SLC__1SDH_20241021T113329_20241021T113432_056200_06E136_9D7B",
-              "time_start": "2024-10-21T11:33:29.940Z",
-              "updated": "2024-10-21T14:53:34.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_EW_SLC__1SDH_20241021T113329_20241021T113432_056200_06E136_9D7B-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T11:34:32.329Z",
-              "id": "G3271212836-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "4581.107744216919",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "57.989922 -73.904434 61.666058 -71.928734 62.448288 -79.797722 58.728184 -80.926331 57.989922 -73.904434"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_EW_SLC__1SDH_20241021T113329_20241021T113432_056200_06E136_9D7B.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_EW_SLC__1SDH_20241021T113329_20241021T113432_056200_06E136_9D7B.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          },
-          {
-              "producer_granule_id": "S1A_EW_SLC__1SDH_20241021T113229_20241021T113332_056200_06E136_46F4",
-              "time_start": "2024-10-21T11:32:29.819Z",
-              "updated": "2024-10-21T14:53:37.000Z",
-              "orbit_calculated_spatial_domains": [
-                  {
-                      "orbit_number": "56200"
-                  }
-              ],
-              "dataset_id": "SENTINEL-1A_SLC",
-              "data_center": "ASF",
-              "title": "S1A_EW_SLC__1SDH_20241021T113229_20241021T113332_056200_06E136_46F4-SLC",
-              "coordinate_system": "GEODETIC",
-              "day_night_flag": "UNSPECIFIED",
-              "time_end": "2024-10-21T11:33:32.757Z",
-              "id": "G3271212469-ASF",
-              "original_format": "ECHO10",
-              "granule_size": "4453.3809270858765",
-              "browse_flag": false,
-              "polygons": [
-                  [
-                      "61.500584 -72.026131 65.183105 -69.612663 66.02684 -78.536461 62.280449 -79.852089 61.500584 -72.026131"
-                  ]
-              ],
-              "collection_concept_id": "C1214470488-ASF",
-              "online_access_flag": true,
-              "links": [
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_EW_SLC__1SDH_20241021T113229_20241021T113332_056200_06E136_46F4.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
-                      "title": "This link provides direct download access to the granule.",
-                      "hreflang": "en-US",
-                      "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_EW_SLC__1SDH_20241021T113229_20241021T113332_056200_06E136_46F4.zip"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
-                  },
-                  {
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
-                      "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
-                      "hreflang": "en-US",
-                      "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
-                  },
-                  {
-                      "inherited": true,
-                      "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
-                      "hreflang": "en-US",
-                      "href": "https://vertex.daac.asf.alaska.edu/"
-                  }
-              ]
-          }
-      ]
-  }
+	"feed": {
+		"updated": "2024-11-01T19:58:30.539Z",
+		"id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C2208779826-LANCEMODIS&page_num=1&page_size=20",
+		"title": "ECHO granule metadata",
+		"entry": [
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1348.021.2024299170202.nc",
+				"time_start": "2024-10-25T13:48:00.000Z",
+				"updated": "2024-10-25T17:03:54.070Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422788592",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "BOTH",
+				"time_end": "2024-10-25T13:54:00.000Z",
+				"id": "G3275522892-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "139.872714042664",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"-68.720276 -169.829666 -59.060467 126.691551 -67.156624 81.87207 -84.714867 -94.820885 -68.720276 -169.829666"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1348.021.2024299170202.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1354.021.2024299170119.nc",
+				"time_start": "2024-10-25T13:54:00.000Z",
+				"updated": "2024-10-25T17:03:21.840Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422788526",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "DAY",
+				"time_end": "2024-10-25T14:00:00.000Z",
+				"id": "G3275522650-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "213.665108680725",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"-84.714737 -96.227112 -67.160728 82.203674 -58.920284 37.897778 -68.446381 -25.216185 -84.714737 -96.227112"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1354.021.2024299170119.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1400.021.2024299165825.nc",
+				"time_start": "2024-10-25T14:00:00.000Z",
+				"updated": "2024-10-25T17:00:35.770Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422784966",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "DAY",
+				"time_end": "2024-10-25T14:06:00.000Z",
+				"id": "G3275521247-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "247.779899597168",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"-68.571602 -25.300982 -59.01474 38.065578 -42.096313 17.265457 -48.001724 -21.64237 -68.571602 -25.300982"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1400.021.2024299165825.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1406.021.2024299170015.nc",
+				"time_start": "2024-10-25T14:06:00.000Z",
+				"updated": "2024-10-25T17:02:20.210Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422787329",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "DAY",
+				"time_end": "2024-10-25T14:12:00.000Z",
+				"id": "G3275522183-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "249.026359558105",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"-48.127747 -21.660255 -42.214382 17.326515 -22.844885 6.967796 -27.392239 -23.04097 -48.127747 -21.660255"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1406.021.2024299170015.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1412.021.2024299165758.nc",
+				"time_start": "2024-10-25T14:12:00.000Z",
+				"updated": "2024-10-25T17:00:03.510Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422784231",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "DAY",
+				"time_end": "2024-10-25T14:18:00.000Z",
+				"id": "G3275520977-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "268.35982131958",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"-27.516073 -23.041399 -22.967234 6.993326 -2.567374 0.685264 -6.652229 -26.338661 -27.516073 -23.041399"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1412.021.2024299165758.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1418.021.2024299165834.nc",
+				"time_start": "2024-10-25T14:18:00.000Z",
+				"updated": "2024-10-25T17:00:46.370Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422785308",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "DAY",
+				"time_end": "2024-10-25T14:24:00.000Z",
+				"id": "G3275521263-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "260.805931091309",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"-6.77324 -26.330885 -2.690113 0.695065 18.000195 -3.471887 13.794464 -31.387857 -6.77324 -26.330885"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1418.021.2024299165834.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1424.021.2024299165736.nc",
+				"time_start": "2024-10-25T14:24:00.000Z",
+				"updated": "2024-10-25T16:59:51.830Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422783566",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "DAY",
+				"time_end": "2024-10-25T14:30:00.000Z",
+				"id": "G3275520943-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "253.030406951904",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"13.676723 -31.36746 17.87788 -3.468884 38.787853 -5.974387 33.776264 -39.356815 13.676723 -31.36746"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1424.021.2024299165736.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1430.021.2024299180656.nc",
+				"time_start": "2024-10-25T14:30:00.000Z",
+				"updated": "2024-10-25T18:08:57.110Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422828930",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "DAY",
+				"time_end": "2024-10-25T14:36:00.000Z",
+				"id": "G3275545154-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "255.496247291565",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"33.662502 -39.314003 38.664837 -5.984316 59.385223 -5.700202 52.182014 -53.875919 33.662502 -39.314003"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1430.021.2024299180656.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1436.021.2024299184145.nc",
+				"time_start": "2024-10-25T14:36:00.000Z",
+				"updated": "2024-10-25T18:43:49.420Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422840230",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "DAY",
+				"time_end": "2024-10-25T14:42:00.000Z",
+				"id": "G3275561054-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "226.345463752747",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"52.080017 -53.772354 59.261692 -5.738845 79.344307 10.044608 65.760811 -86.628464 52.080017 -53.772354"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1436.021.2024299184145.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1442.021.2024299184450.nc",
+				"time_start": "2024-10-25T14:42:00.000Z",
+				"updated": "2024-10-25T18:46:19.060Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422840570",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "BOTH",
+				"time_end": "2024-10-25T14:48:00.000Z",
+				"id": "G3275562383-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "101.841925621033",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"65.71003 -86.36232 79.234642 9.711627 77.510277 133.677185 64.871475 -138.679825 65.71003 -86.36232"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1442.021.2024299184450.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1448.021.2024299184114.nc",
+				"time_start": "2024-10-25T14:48:00.000Z",
+				"updated": "2024-10-25T18:42:16.070Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422839764",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "NIGHT",
+				"time_end": "2024-10-25T14:54:00.000Z",
+				"id": "G3275560218-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "82.8862571716309",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"64.928474 -138.432129 77.625404 133.446274 57.356636 145.476135 50.412476 -168.715439 64.928474 -138.432129"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1448.021.2024299184114.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1454.021.2024299183830.nc",
+				"time_start": "2024-10-25T14:54:00.000Z",
+				"updated": "2024-10-25T18:39:46.930Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422838963",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "NIGHT",
+				"time_end": "2024-10-25T15:00:00.000Z",
+				"id": "G3275558918-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "89.2068738937378",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"50.516201 -168.622574 57.479977 145.449158 36.732059 145.312134 31.767313 177.769424 50.516201 -168.622574"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1454.021.2024299183830.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1500.021.2024299183829.nc",
+				"time_start": "2024-10-25T15:00:00.000Z",
+				"updated": "2024-10-25T18:39:35.710Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422838951",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "NIGHT",
+				"time_end": "2024-10-25T15:06:00.000Z",
+				"id": "G3275558853-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "94.8852777481079",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"31.880283 177.813202 36.854839 145.315033 15.935338 142.639145 11.688951 170.198425 31.880283 177.813202"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1500.021.2024299183829.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1506.021.2024299184004.nc",
+				"time_start": "2024-10-25T15:06:00.000Z",
+				"updated": "2024-10-25T18:41:13.550Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422839383",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "NIGHT",
+				"time_end": "2024-10-25T15:12:00.000Z",
+				"id": "G3275559389-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "95.0602226257324",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"11.806748 170.216934 16.056974 142.64621 -4.624504 138.323242 -8.805953 165.360062 11.806748 170.216934"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1506.021.2024299184004.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1512.021.2024299183940.nc",
+				"time_start": "2024-10-25T15:12:00.000Z",
+				"updated": "2024-10-25T18:40:49.900Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422839254",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "NIGHT",
+				"time_end": "2024-10-25T15:18:00.000Z",
+				"id": "G3275559246-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "93.229642868042",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"-8.685763 165.366592 -4.504645 138.34407 -24.859051 131.762589 -29.56835 162.231689 -8.685763 165.366592"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1512.021.2024299183940.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1518.021.2024299184134.nc",
+				"time_start": "2024-10-25T15:18:00.000Z",
+				"updated": "2024-10-25T18:42:47.820Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422840022",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "NIGHT",
+				"time_end": "2024-10-25T15:24:00.000Z",
+				"id": "G3275560623-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "92.3955631256104",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"-29.445225 162.229538 -24.738762 131.792953 -43.96986 120.80378 -50.178997 161.106979 -29.445225 162.229538"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1518.021.2024299184134.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1524.021.2024299183939.nc",
+				"time_start": "2024-10-25T15:24:00.000Z",
+				"updated": "2024-10-25T18:40:49.900Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422839241",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "NIGHT",
+				"time_end": "2024-10-25T15:30:00.000Z",
+				"id": "G3275559239-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "84.8672876358032",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"-50.05265 161.092072 -43.856293 120.879799 -60.332912 98.394485 -70.569397 165.917404 -50.05265 161.092072"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1524.021.2024299183939.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1530.021.2024299190507.nc",
+				"time_start": "2024-10-25T15:30:00.000Z",
+				"updated": "2024-10-25T19:07:37.020Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422852832",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "BOTH",
+				"time_end": "2024-10-25T15:36:00.000Z",
+				"id": "G3275570377-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "147.14935874939",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"-70.443932 165.823044 -60.248909 98.589371 -67.096199 52.093571 -84.374191 -103.099258 -70.443932 165.823044"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1530.021.2024299190507.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1536.021.2024299190405.nc",
+				"time_start": "2024-10-25T15:36:00.000Z",
+				"updated": "2024-10-25T19:05:51.750Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422851307",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "DAY",
+				"time_end": "2024-10-25T15:42:00.000Z",
+				"id": "G3275569605-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "224.175604820251",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"-84.418938 -104.338478 -67.112686 52.420609 -57.669582 10.010492 -66.711258 -49.804344 -84.418938 -104.338478"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1536.021.2024299190405.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			},
+			{
+				"producer_granule_id": "VJ102IMG_NRT.A2024299.1542.021.2024299190136.nc",
+				"time_start": "2024-10-25T15:42:00.000Z",
+				"updated": "2024-10-25T19:03:36.960Z",
+				"dataset_id": "VIIRS/JPSS1 Imagery Resolution 6 Min L1B Swath 375m NRT",
+				"data_center": "LANCEMODIS",
+				"title": "LANCEMODIS:2422849112",
+				"coordinate_system": "GEODETIC",
+				"day_night_flag": "DAY",
+				"time_end": "2024-10-25T15:48:00.000Z",
+				"id": "G3275568255-LANCEMODIS",
+				"original_format": "ECHO10",
+				"granule_size": "248.118481636047",
+				"browse_flag": false,
+				"polygons": [
+					[
+						"-66.837631 -49.868259 -57.76519 10.169362 -40.585327 -9.195205 -46.327393 -47.032196 -66.837631 -49.868259"
+					]
+				],
+				"collection_concept_id": "C2208779826-LANCEMODIS",
+				"online_access_flag": true,
+				"links": [
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"type": "application/x-netcdf",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1542.021.2024299190136.nc"
+					},
+					{
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"type": "text/html",
+						"title": "A link to Data set landing page (Data Set Landing Page)",
+						"hreflang": "en-US",
+						"href": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+						"hreflang": "en-US",
+						"href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/viirs-nrt"
+					},
+					{
+						"inherited": true,
+						"rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+						"hreflang": "en-US",
+						"href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/5200/VJ102IMG_NRT"
+					}
+				]
+			}
+		]
+	}
 }

@@ -28,6 +28,7 @@ const downloadLinks = [
 test.describe('History', () => {
   test.beforeEach(async ({ page, context }) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+    await page.route('**/scale/**', (route) => route.abort())
 
     const granuleHits = 1
 

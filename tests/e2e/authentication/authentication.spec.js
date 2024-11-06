@@ -13,6 +13,7 @@ const expectedCollectionCount = 6
 test.describe('Authentication', () => {
   test.beforeEach(async ({ page }) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+    await page.route('**/scale/**', (route) => route.abort())
     await page.route(/collections$/, async (route) => {
       await route.fulfill({
         json: collectionFixture.body,

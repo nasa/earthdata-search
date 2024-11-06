@@ -3,6 +3,7 @@ import { test, expect } from 'playwright-test-coverage'
 test.describe('Performance Benchmarking', () => {
   test.beforeEach(async ({ page }) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+    await page.route('**/scale/**', (route) => route.abort())
   })
 
   test('Search page load time is less than 2 second', async ({ page, browserName }) => {

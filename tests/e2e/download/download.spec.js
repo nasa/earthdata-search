@@ -12,6 +12,7 @@ import { getAuthHeaders } from '../../support/getAuthHeaders'
 test.describe('Download spec', () => {
   test('get to the download page', async ({ page, context }) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+    await page.route('**/scale/**', (route) => route.abort())
 
     login(context)
 
