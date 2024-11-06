@@ -20,7 +20,8 @@ const initialState = {
     granuleSort: [],
     collectionSort: [],
     granuleListView: [],
-    collectionListView: []
+    collectionListView: [],
+    showTourPreference: []
   }
 }
 

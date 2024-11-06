@@ -64,6 +64,7 @@ describe('PreferencesForm component', () => {
           collectionSort: collectionSortKeys.scoreDescending,
           granuleListView: 'table',
           granuleSort: 'end_date',
+          showTourPreference: 'show',
           mapView: {
             zoom: 4,
             baseLayer: 'blueMarble',
@@ -87,6 +88,7 @@ describe('PreferencesForm component', () => {
       collectionSort: collectionSortKeys.scoreDescending,
       granuleListView: 'table',
       granuleSort: 'end_date',
+      showTourPreference: 'show',
       mapView: {
         zoom: 4,
         baseLayer: 'blueMarble',

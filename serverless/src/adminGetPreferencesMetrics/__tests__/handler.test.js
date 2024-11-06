@@ -47,6 +47,7 @@ describe('adminGetPreferencesMetrics', () => {
               granuleSort: 'start_date',
               collectionSort: '-score',
               granuleListView: 'default',
+              showTourPreference: 'default',
               collectionListView: 'list'
             }
           },
@@ -64,6 +65,7 @@ describe('adminGetPreferencesMetrics', () => {
               granuleSort: '-start_date',
               collectionSort: '-score',
               granuleListView: 'default',
+              showTourPreference: 'default',
               collectionListView: 'default'
             }
           }
@@ -93,6 +95,9 @@ describe('adminGetPreferencesMetrics', () => {
             ['-start_date', '50.0% (1)']
           ],
           granuleListView: [
+            ['default', '100% (2)']
+          ],
+          showTourPreference: [
             ['default', '100% (2)']
           ],
           collectionSort: [
@@ -146,6 +151,7 @@ describe('adminGetPreferencesMetrics', () => {
               granuleSort: 'start_date',
               collectionSort: '-score',
               granuleListView: 'default',
+              showTourPreference: 'default',
               collectionListView: 'list'
             }
           },
@@ -163,6 +169,7 @@ describe('adminGetPreferencesMetrics', () => {
               granuleSort: '-start_date',
               collectionSort: '-score',
               granuleListView: 'default',
+              showTourPreference: 'default',
               collectionListView: 'default'
             }
           },
@@ -203,6 +210,10 @@ describe('adminGetPreferencesMetrics', () => {
             ['-start_date', '25.0% (1)']
           ],
           granuleListView: [
+            ['default', '50.0% (2)'],
+            ['not set (default)', '50.0% (2)']
+          ],
+          showTourPreference: [
             ['default', '50.0% (2)'],
             ['not set (default)', '50.0% (2)']
           ],
@@ -265,6 +276,7 @@ describe('adminGetPreferencesMetrics', () => {
               granuleSort: 'start_date',
               collectionSort: '-score',
               granuleListView: 'default',
+              showTourPreference: 'default',
               collectionListView: 'list'
             }
           },
@@ -282,6 +294,7 @@ describe('adminGetPreferencesMetrics', () => {
               granuleSort: '-start_date',
               collectionSort: '-score',
               granuleListView: 'default',
+              showTourPreference: 'default',
               collectionListView: 'default'
             }
           },
@@ -299,6 +312,7 @@ describe('adminGetPreferencesMetrics', () => {
               granuleSort: '-start_date',
               collectionSort: '-score',
               granuleListView: 'default',
+              showTourPreference: 'default',
               collectionListView: 'default'
             }
           },
@@ -316,6 +330,7 @@ describe('adminGetPreferencesMetrics', () => {
               granuleSort: '-start_date',
               collectionSort: '-score',
               granuleListView: 'default',
+              showTourPreference: 'default',
               collectionListView: 'default'
             }
           },
@@ -333,6 +348,7 @@ describe('adminGetPreferencesMetrics', () => {
               granuleSort: '-start_date',
               collectionSort: '-score',
               granuleListView: 'default',
+              showTourPreference: 'default',
               collectionListView: 'default'
             }
           },
@@ -350,6 +366,7 @@ describe('adminGetPreferencesMetrics', () => {
               granuleSort: '-start_date',
               collectionSort: '-score',
               granuleListView: 'default',
+              showTourPreference: 'default',
               collectionListView: 'default'
             }
           },
@@ -390,6 +407,10 @@ describe('adminGetPreferencesMetrics', () => {
             ['start_date', '12.5% (1)']
           ],
           granuleListView: [
+            ['default', '75.0% (6)'],
+            ['not set (default)', '25.0% (2)']
+          ],
+          showTourPreference: [
             ['default', '75.0% (6)'],
             ['not set (default)', '25.0% (2)']
           ],
