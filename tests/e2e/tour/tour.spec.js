@@ -13,8 +13,6 @@ const expectWithinMargin = async (actual, expected, margin) => {
 test.describe('Joyride Tour Navigation', () => {
   test.beforeEach(async ({ page }) => {
     await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route('**/scale/**', (route) => route.abort())
-
     await page.route(/collections.json/, async (route) => {
       await route.fulfill({
         json: singleCollection.body,
@@ -27,7 +25,7 @@ test.describe('Joyride Tour Navigation', () => {
 
   test('should update preferences with the checkbox on first part of the tour', async ({ page }) => {
     await page.goto(`/auth_callback?jwt=${testJwtToken}&redirect=http://localhost:8080/`)
-    await page.waitForSelector('[data-testid="collection-results-item"]')
+    await expect(page.getByText('Earthdata Login')).not.toBeVisible()
 
     // Start the tour by clicking the "Start Tour" button
     await page.click('button:has-text("Start Tour")')
