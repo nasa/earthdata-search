@@ -24,27 +24,49 @@ test.describe('Joyride Tour Navigation', () => {
   })
 
   test('should update preferences with the checkbox on first part of the tour', async ({ page }) => {
+    // Log in and navigate to the main page
     await page.goto(`/auth_callback?jwt=${testJwtToken}&redirect=http://localhost:8080/`)
     await expect(page.getByText('Earthdata Login')).not.toBeVisible()
 
     // Start the tour by clicking the "Start Tour" button
     await page.click('button:has-text("Start Tour")')
 
-    // Verifying the checkbox works as expected
     // Locate the checkbox and check it
     const checkbox = page.getByRole('checkbox', { name: "Don't show the tour next time I visit Earthdata Search" })
     await checkbox.check()
 
-    // Verify that localStorage is updated to not show the tour again
-    const dontShowTour = await page.evaluate(() => localStorage.getItem('dontShowTour'))
+    // Verify that localStorage is updated to "dontShowTour" as "true"
+    let dontShowTour = await page.evaluate(() => localStorage.getItem('dontShowTour'))
     expect(dontShowTour).toBe('true')
 
-    // Uncheck the checkbox
-    await checkbox.uncheck()
+    // Click "Skip for now" button to close the tour
+    await page.click('button:has-text("Skip for now")')
+    await expect(page.locator('.search-tour__container')).toBeHidden()
 
-    // Verify that localStorage reflects the checkbox change to show the tour again
-    const showTourAgain = await page.evaluate(() => localStorage.getItem('dontShowTour'))
-    expect(showTourAgain).toBe('false')
+    // Re-open the tour
+    await page.click('button:has-text("Start Tour")')
+
+    // Verify that the checkbox remains checked
+    const checkbox2 = page.getByRole('checkbox', { name: "Don't show the tour next time I visit Earthdata Search" })
+    await expect(checkbox2).toBeChecked()
+
+    // Uncheck the checkbox
+    await checkbox2.uncheck()
+
+    // Click "Skip for now" button to close the tour again
+    await page.click('button:has-text("Skip for now")')
+    await expect(page.locator('.search-tour__container')).toBeHidden()
+
+    // Confirm that localStorage updated to show the tour again
+    dontShowTour = await page.evaluate(() => localStorage.getItem('dontShowTour'))
+    expect(dontShowTour).toBe('false')
+
+    // Re-open the tour to verify the checkbox is now unchecked
+    await page.click('button:has-text("Start Tour")')
+
+    // Verify the checkbox is indeed unchecked
+    const checkbox3 = page.getByRole('checkbox', { name: "Don't show the tour next time I visit Earthdata Search" })
+    await expect(checkbox3).not.toBeChecked()
   })
 
   test('should navigate through the Joyride tour', async ({ page }) => {
