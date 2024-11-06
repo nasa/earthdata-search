@@ -68,7 +68,8 @@ const TourSteps = (
   isDontShowChecked,
   setIsDontShowChecked,
   preferences,
-  onUpdatePreferences
+  onUpdatePreferences,
+  loggedIn
 ) => [
   {
     target: '.search',
@@ -102,14 +103,20 @@ const TourSteps = (
                     ...preferences,
                     showTourPreference: 'dontshowtour'
                   }
-                  onUpdatePreferences(updatedPreferences)
+                  if (loggedIn) {
+                    onUpdatePreferences(updatedPreferences)
+                  }
+
                   localStorage.setItem('dontShowTour', 'true')
                 } else {
                   const updatedPreferences = {
                     ...preferences,
                     showTourPreference: 'showtour'
                   }
-                  onUpdatePreferences(updatedPreferences)
+                  if (loggedIn) {
+                    onUpdatePreferences(updatedPreferences)
+                  }
+
                   localStorage.setItem('dontShowTour', 'false')
                 }
               }

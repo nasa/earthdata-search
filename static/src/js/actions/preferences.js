@@ -86,6 +86,7 @@ export const updatePreferences = (data) => (dispatch, getState) => {
       const {
         preferences: newPreferences
       } = dataObject
+
       dispatch(updateAuthTokenFromHeaders(headers))
       dispatch(setPreferences(newPreferences))
       dispatch(setIsSubmitting(false))

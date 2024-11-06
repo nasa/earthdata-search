@@ -1,5 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
+import { testJwtToken } from '../../support/getJwtToken'
 import singleCollection from './__mocks__/single_collection.json'
 
 const expectWithinMargin = async (actual, expected, margin) => {
@@ -22,6 +23,30 @@ test.describe('Joyride Tour Navigation', () => {
     })
 
     await page.goto('/search')
+  })
+
+  test('should update preferences with the checkbox on first part of the tour', async ({ page }) => {
+    await page.goto(`/auth_callback?jwt=${testJwtToken}&redirect=http://localhost:8080/`)
+    await page.waitForSelector('[data-testid="collection-results-item"]')
+
+    // Start the tour by clicking the "Start Tour" button
+    await page.click('button:has-text("Start Tour")')
+
+    // Verifying the checkbox works as expected
+    // Locate the checkbox and check it
+    const checkbox = page.getByRole('checkbox', { name: "Don't show the tour next time I visit Earthdata Search" })
+    await checkbox.check()
+
+    // Verify that localStorage is updated to not show the tour again
+    const dontShowTour = await page.evaluate(() => localStorage.getItem('dontShowTour'))
+    expect(dontShowTour).toBe('true')
+
+    // Uncheck the checkbox
+    await checkbox.uncheck()
+
+    // Verify that localStorage reflects the checkbox change to show the tour again
+    const showTourAgain = await page.evaluate(() => localStorage.getItem('dontShowTour'))
+    expect(showTourAgain).toBe('false')
   })
 
   test('should navigate through the Joyride tour', async ({ page }) => {

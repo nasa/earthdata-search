@@ -23,8 +23,6 @@ const PreferencesForm = (props) => {
     preferences: formDataProps
   } = preferences
 
-  console.log(preferences)
-
   const [formData, setFormData] = useState(formDataProps)
 
   useEffect(() => {

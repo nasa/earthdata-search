@@ -8,12 +8,14 @@ import { connect } from 'react-redux'
 import Joyride, { STATUS, ACTIONS } from 'react-joyride'
 
 import actions from '../../actions'
+import { isLoggedIn } from '../../util/isLoggedIn'
 import TourSteps, { TOTAL_STEPS } from './TourSteps'
 import TourContext from '../../contexts/TourContext'
 
 const mapStateToProps = (state) => ({
   preferences: state.preferences.preferences,
-  tourPreference: state.preferences.preferences.showTourPreference
+  tourPreference: state.preferences.preferences.showTourPreference,
+  authToken: state.authToken
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -22,7 +24,9 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-const SearchTour = ({ preferences, tourPreference, onUpdatePreferences }) => {
+const SearchTour = ({
+  preferences, tourPreference, onUpdatePreferences, authToken
+}) => {
   const getDefaultCheckboxValue = () => {
     switch (tourPreference) {
       case 'showtour':
@@ -37,6 +41,7 @@ const SearchTour = ({ preferences, tourPreference, onUpdatePreferences }) => {
   }
 
   const { runTour, setRunTour } = useContext(TourContext)
+  const loggedIn = isLoggedIn(authToken)
 
   const [isDontShowChecked, setIsDontShowChecked] = useState(getDefaultCheckboxValue())
   const [stepIndex, setStepIndex] = useState(0)
@@ -147,7 +152,8 @@ const SearchTour = ({ preferences, tourPreference, onUpdatePreferences }) => {
           isDontShowChecked,
           setIsDontShowChecked,
           preferences,
-          onUpdatePreferences
+          onUpdatePreferences,
+          loggedIn
         )
       }
       run={shouldRunTour()}
@@ -183,6 +189,7 @@ const SearchTour = ({ preferences, tourPreference, onUpdatePreferences }) => {
 SearchTour.propTypes = {
   onUpdatePreferences: PropTypes.func.isRequired,
   tourPreference: PropTypes.string.isRequired,
+  authToken: PropTypes.string.isRequired,
   preferences: PropTypes.shape({
     mapView: PropTypes.shape({
       zoom: PropTypes.number,
