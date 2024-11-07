@@ -262,7 +262,7 @@ describe('ShapefileDropzoneContainer component', () => {
         })
       })
 
-      test('fires the other filtype when zip/shp/dbf/shx is in the filename but not the filepath', () => {
+      test('fires the other filetype when zip/shp/dbf/shx is in the filename but not the filepath', () => {
         const { enzymeWrapper, props } = setup()
 
         enzymeWrapper.find('WithDropzone').props().onError({
@@ -312,7 +312,7 @@ describe('ShapefileDropzoneContainer component', () => {
         })
       })
 
-      test('fires the other filtype when kml/kmz is in the filename but not the filepath', () => {
+      test('fires the other filetype when kml/kmz is in the filename but not the filepath', () => {
         const { enzymeWrapper, props } = setup()
 
         enzymeWrapper.find('WithDropzone').props().onError({
@@ -362,7 +362,7 @@ describe('ShapefileDropzoneContainer component', () => {
         })
       })
 
-      test('fires the other filtype when json/geojson is in the filename but not the filepath', () => {
+      test('fires the other filetype when json/geojson is in the filename but not the filepath', () => {
         const { enzymeWrapper, props } = setup()
 
         enzymeWrapper.find('WithDropzone').props().onError({
@@ -428,7 +428,7 @@ describe('ShapefileDropzoneContainer component', () => {
         })
       })
 
-      test('fires the other filtype when rss/georss/xml is in the filename but not the filepath', () => {
+      test('fires the other filetype when rss/georss/xml is in the filename but not the filepath', () => {
         const { enzymeWrapper, props } = setup()
 
         enzymeWrapper.find('WithDropzone').props().onError({
