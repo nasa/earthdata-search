@@ -39,8 +39,7 @@ export const Button = React.forwardRef(({
   tooltipPlacement,
   tooltipId,
   type,
-  variant,
-  ...rest
+  variant
 }, ref) => {
   const buttonClasses = classNames(
     'button',
@@ -104,7 +103,6 @@ export const Button = React.forwardRef(({
       style={style}
       data-testid={dataTestId}
       download={download}
-      {...rest}
     >
       {
         (!spinner && icon && iconPosition === 'left') && (
