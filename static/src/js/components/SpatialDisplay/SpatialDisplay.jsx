@@ -404,11 +404,9 @@ const SpatialDisplay = ({
     }
 
     if (shapefileError) {
-      const { type } = shapefileError
+      const { message } = shapefileError
 
-      if (type === 'upload_shape') {
-        spatialError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
-      }
+      spatialError = message
     }
 
     secondaryTitle = 'Shape File'

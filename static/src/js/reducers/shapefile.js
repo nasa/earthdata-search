@@ -51,11 +51,11 @@ const shapefileReducer = (state = initialState, action = {}) => {
 
     case ERRORED_SHAPEFILE: {
       const { payload } = action
-      const { type } = payload
+      const { message } = payload
 
       return {
         isErrored: {
-          type
+          message
         },
         isLoaded: true,
         isLoading: false

@@ -260,14 +260,12 @@ describe('SpatialDisplay component', () => {
         })
       })
 
-      describe('when the shapefile is the wrong type', () => {
-        test('should render an upload hint with number of shapes selected', () => {
+      describe('when an error message is passed into the shapefile', () => {
+        test('should render the passed error message', () => {
           setup({
             shapefile: {
-              shapefileName: 'test file',
-              shapefileSize: '42 KB',
               isErrored: {
-                type: 'upload_shape'
+                message: 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
               }
             }
           })

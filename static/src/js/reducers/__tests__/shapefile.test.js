@@ -126,7 +126,7 @@ describe('LOADING_SHAPEFILE', () => {
 describe('ERRORED_SHAPEFILE', () => {
   test('returns the correct state', () => {
     const payload = {
-      type: 'test-error-type'
+      message: 'Failed'
     }
 
     const action = {
@@ -139,7 +139,7 @@ describe('ERRORED_SHAPEFILE', () => {
       isLoaded: true,
       isLoading: false,
       isErrored: {
-        type: 'test-error-type'
+        message: 'Failed'
       }
     }
 

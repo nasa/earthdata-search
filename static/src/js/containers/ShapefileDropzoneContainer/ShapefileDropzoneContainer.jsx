@@ -58,7 +58,7 @@ export const ShapefileDropzoneContainer = ({
     eventScope="shapefile"
     onSending={
       (file) => {
-      // Remove existing spatial from the store
+        // Remove existing spatial from the store
         onRemoveSpatialFilter()
 
         onShapefileLoading(file)
@@ -85,13 +85,24 @@ export const ShapefileDropzoneContainer = ({
     }
     onError={
       (file) => {
-        onToggleShapefileUploadModal(false)
+        let shapefileError = ''
 
-        if (file.name.match('.*shp')) {
-          onShapefileErrored({
-            type: 'upload_shape'
-          })
+        onToggleShapefileUploadModal(false)
+        if (file.name.match('.*(zip|shp|dbf|shx)$')) {
+          shapefileError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+        } else if (file.name.match('.*(kml|kmz)$')) {
+          shapefileError = 'To use a Keyhole Markup Language file, please upload a valid .kml or .kmz file.'
+        } else if (file.name.match('.*(json|geojson)$')) {
+          shapefileError = 'To use a GeoJSON file, please upload a valid .json or .geojson file.'
+        } else if (file.name.match('.*(rss|georss|xml)$')) {
+          shapefileError = 'To use a GeoRSS file, please upload a valid .rss, .georss, or .xml file.'
+        } else {
+          shapefileError = 'Invalid file format.'
         }
+
+        onShapefileErrored({
+          message: shapefileError
+        })
       }
     }
     onRemovedFile={
