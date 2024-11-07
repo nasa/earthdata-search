@@ -64,7 +64,7 @@ export const setPreferencesFromJwt = (jwtToken) => (dispatch) => {
   }
 }
 
-export const updatePreferences = (data) => (dispatch, getState) => {
+export const updatePreferences = (data, showToast = true) => (dispatch, getState) => {
   const { formData: preferences } = data
 
   const state = getState()
@@ -90,10 +90,12 @@ export const updatePreferences = (data) => (dispatch, getState) => {
       dispatch(updateAuthTokenFromHeaders(headers))
       dispatch(setPreferences(newPreferences))
       dispatch(setIsSubmitting(false))
-      addToast('Preferences saved!', {
-        appearance: 'success',
-        autoDismiss: true
-      })
+      if (showToast) {
+        addToast('Preferences saved!', {
+          appearance: 'success',
+          autoDismiss: true
+        })
+      }
     })
     .catch((error) => {
       dispatch(setIsSubmitting(false))

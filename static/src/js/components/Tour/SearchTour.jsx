@@ -20,7 +20,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onUpdatePreferences: (preferences) => {
-    dispatch(actions.updatePreferences({ formData: preferences }))
+    dispatch(actions.updatePreferences({ formData: preferences }, false))
   }
 })
 
