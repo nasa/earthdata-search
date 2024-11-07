@@ -91,6 +91,7 @@ describe('SecondaryToolbar component', () => {
     test('hovering over the login button should show a tool-tip', async () => {
       const { user } = setup()
       const loginButton = screen.getByRole('button', { name: 'Log In' })
+
       await act(async () => {
         await user.hover(loginButton)
       })
@@ -100,15 +101,13 @@ describe('SecondaryToolbar component', () => {
 
     test('should not render the user dropdown', () => {
       setup()
-      // TODO add the value for the userMenu not found
       expect(screen.queryByRole('button', { name: 'First Name' })).not.toBeInTheDocument()
       expect(screen.queryByRole('button', { name: 'Save Project' })).not.toBeInTheDocument()
     })
 
     test('should not render the project dropdown', () => {
       setup()
-      // TODO double check this isn't invalidated now
-      expect(screen.queryByRole('button', { name: 'Create a project with your current search' })).not.toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: 'Save Project' })).not.toBeInTheDocument()
     })
   })
 
@@ -138,11 +137,8 @@ describe('SecondaryToolbar component', () => {
 
     test('should render the user and project name dropdowns', () => {
       setup('loggedIn')
-      // Const saveButton = screen.getByText('Save Project').parentElement.parentElement
-      // expect(within(saveButton).getByRole('button', { hidden: true })).toBeInTheDocument()
-      // screen.debug()
-
       const saveButton = screen.getByRole('button', { name: 'Save Project' })
+
       expect(saveButton).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'First Name' })).toBeInTheDocument()
     })
@@ -154,7 +150,6 @@ describe('SecondaryToolbar component', () => {
 
     test('clicking the logout button should call handleLogout', async () => {
       const { onLogout, user } = setup('loggedIn')
-
       const usermenuButton = screen.getByRole('button', { name: 'First Name' })
 
       await act(async () => {
@@ -162,15 +157,14 @@ describe('SecondaryToolbar component', () => {
       })
 
       const logoutButton = screen.getByRole('button', { name: 'Logout' })
-      await user.click(logoutButton)
 
+      await user.click(logoutButton)
       expect(onLogout).toBeCalledTimes(1)
     })
 
     describe('Download Status and History link', () => {
       test('adds the ee param if the earthdataEnvironment is different than the deployed environment', async () => {
         const { user } = setup('loggedIn', { earthdataEnvironment: 'uat' })
-
         const usermenuButton = screen.queryByRole('button', { name: 'First Name' })
 
         await act(async () => {
@@ -219,6 +213,7 @@ describe('SecondaryToolbar component', () => {
 
       expect(preventDefaultSpy).toHaveBeenCalledTimes(1)
       expect(stopPropagationSpy).toHaveBeenCalledTimes(1)
+
       preventDefaultSpy.mockRestore()
       stopPropagationSpy.mockRestore()
     })
@@ -263,7 +258,6 @@ describe('SecondaryToolbar component', () => {
       })
     })
 
-    // TODO this should show up if I am also logged in
     test('hovering over My Project renders a tool-tip', async () => {
       const { user } = setup(undefined, { projectCollectionIds: ['123'] })
       await act(async () => {
@@ -286,24 +280,23 @@ describe('SecondaryToolbar component', () => {
       expect(myProjectButton).not.toBeInTheDocument()
     })
 
-    test('clicking the dropdown sets the state', async () => {
+    test('clicking the save project dropdown sets the state', async () => {
       const { user } = setup('loggedIn')
-      // The Save project button
-      const myProjectButton = screen.getByRole('button', { name: 'Save Project' })
+      const saveProjectButton = screen.getByRole('button', { name: 'Save Project' })
+
       await act(async () => {
-        await user.click(myProjectButton)
+        await user.click(saveProjectButton)
       })
 
-      expect(within(myProjectButton.parentElement).getByRole('textbox').placeholder).toBe('Untitled Project')
-      expect(within(myProjectButton.parentElement).getByRole('button', { name: 'Save Project' })).toBeInTheDocument()
+      expect(within(saveProjectButton.parentElement).getByRole('textbox').placeholder).toBe('Untitled Project')
     })
 
     test('hovering over saved project renders the tool-tip', async () => {
       const { user } = setup('loggedIn')
-      // The Save project button
-      const myProjectButton = screen.getByRole('button', { name: 'Save Project' })
+      const saveProjectButton = screen.getByRole('button', { name: 'Save Project' })
+
       await act(async () => {
-        await user.hover(myProjectButton)
+        await user.hover(saveProjectButton)
       })
 
       expect(screen.getByText('Create a project with your current search')).toBeVisible()
@@ -311,22 +304,22 @@ describe('SecondaryToolbar component', () => {
 
     test('clicking the save button sets the state and calls onUpdateProjectName', async () => {
       const { user, onUpdateProjectName } = setup('loggedIn')
-      const myProjectButton = screen.getByRole('button', { name: 'Save Project' })
-
-      await act(async () => {
-        await user.click(myProjectButton)
-      })
-
-      expect(within(myProjectButton.parentElement).getByRole('textbox').placeholder).toBe('Untitled Project')
-
-      const projectNameField = within(myProjectButton.parentElement).getByRole('textbox')
-
-      await user.type(projectNameField, 'test project name')
-
-      const saveProjectButton = screen.getByRole('button', { name: 'Save project name' })
+      const saveProjectButton = screen.getByRole('button', { name: 'Save Project' })
 
       await act(async () => {
         await user.click(saveProjectButton)
+      })
+
+      expect(within(saveProjectButton.parentElement).getByRole('textbox').placeholder).toBe('Untitled Project')
+
+      const projectNameField = within(saveProjectButton.parentElement).getByRole('textbox')
+
+      await user.type(projectNameField, 'test project name')
+
+      const saveProjectNameButton = screen.getByRole('button', { name: 'Save project name' })
+
+      await act(async () => {
+        await user.click(saveProjectNameButton)
       })
 
       expect(onUpdateProjectName).toBeCalledTimes(1)
