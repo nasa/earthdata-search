@@ -34,10 +34,7 @@ test.describe('Joyride Tour Navigation', () => {
     // Locate the checkbox and check it
     const checkbox = page.getByRole('checkbox', { name: "Don't show the tour next time I visit Earthdata Search" })
     await checkbox.check()
-    await page.locator('.react-toast-notifications__container').waitFor({
-      state: 'hidden',
-      timeout: 5000
-    })
+    await page.waitForTimeout(6000)
 
     // Verify that localStorage is updated to "dontShowTour" as "true"
     let dontShowTour = await page.evaluate(() => localStorage.getItem('dontShowTour'))
@@ -56,10 +53,7 @@ test.describe('Joyride Tour Navigation', () => {
 
     // Uncheck the checkbox
     await checkbox2.uncheck()
-    await page.locator('.react-toast-notifications__container').waitFor({
-      state: 'hidden',
-      timeout: 5000
-    })
+    await page.waitForTimeout(6000)
 
     // Click "Skip for now" button to close the tour again
     await page.getByRole('button', { name: 'Skip for now' }).click()
