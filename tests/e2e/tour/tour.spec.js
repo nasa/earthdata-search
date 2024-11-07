@@ -40,7 +40,7 @@ test.describe('Joyride Tour Navigation', () => {
     expect(dontShowTour).toBe('true')
 
     // Click "Skip for now" button to close the tour
-    await page.click('button:has-text("Skip for now")')
+    await page.getByRole('button', { name: 'Skip for now' }).click()
     await expect(page.locator('.search-tour__container')).toBeHidden()
 
     // Re-open the tour
@@ -54,7 +54,7 @@ test.describe('Joyride Tour Navigation', () => {
     await checkbox2.uncheck()
 
     // Click "Skip for now" button to close the tour again
-    await page.click('button:has-text("Skip for now")')
+    await page.getByRole('button', { name: 'Skip for now' }).click()
     await expect(page.locator('.search-tour__container')).toBeHidden()
 
     // Confirm that localStorage updated to show the tour again
