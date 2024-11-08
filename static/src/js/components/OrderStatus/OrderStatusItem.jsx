@@ -141,7 +141,7 @@ export class OrderStatusItem extends PureComponent {
     }
   }
 
-  buildEddLink(linkType) {
+  buildEddLink(linkType, downloadUrls) {
     const {
       authToken,
       collection,
@@ -160,8 +160,12 @@ export class OrderStatusItem extends PureComponent {
       type = ''
     } = firstOrder
 
-    // If the order is Harmony and isn't successful, don't show the EDD link
-    if (type.toLowerCase() === 'harmony' && state !== 'successful') return null
+    // If the order is Harmony and is still running or has no files, don't show the EDD link
+    const isDone = ['successful', 'complete_with_errors'].includes(state)
+    const notDoneOrEmpty = !isDone || downloadUrls.length === 0
+    if (type.toLowerCase() === 'harmony' && notDoneOrEmpty) {
+      return null
+    }
 
     const {
       conceptId,
@@ -685,7 +689,7 @@ export class OrderStatusItem extends PureComponent {
                         <DownloadFilesPanel
                           accessMethodType={accessMethodType}
                           downloadLinks={downloadUrls}
-                          eddLink={this.buildEddLink('data')}
+                          eddLink={this.buildEddLink('data', downloadUrls)}
                           granuleCount={granuleCount}
                           granuleLinksIsLoading={granuleLinksIsLoading}
                           percentDoneDownloadLinks={percentDoneDownloadLinks}

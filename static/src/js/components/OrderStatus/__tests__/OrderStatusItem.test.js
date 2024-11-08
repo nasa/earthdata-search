@@ -1942,7 +1942,9 @@ describe('OrderStatusItem', () => {
         expect(orderStatusTab.props().title).toEqual('Order Status')
         expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
+    })
 
+    describe('when the order is completed_with_errors', () => {
       test('renders an updated progress state', () => {
         const { enzymeWrapper, props } = setup({
           type: 'harmony',
@@ -1963,7 +1965,7 @@ describe('OrderStatusItem', () => {
             granule_count: 100,
             orders: [{
               type: 'Harmony',
-              state: 'successful',
+              state: 'complete_with_errors',
               order_information: {
                 jobID: 'e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
                 links: [
