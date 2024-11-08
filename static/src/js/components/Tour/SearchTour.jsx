@@ -36,13 +36,6 @@ const SearchTour = () => {
   }, [])
 
   useEffect(() => {
-    if (runTour) {
-      setStepIndex(0)
-      localStorage.setItem('dontShowTour', 'false')
-    }
-  }, [runTour])
-
-  useEffect(() => {
     // Scrolling to the top to ensure "Browse Portals" is visible.
     // If users are scrolled to the bottom of the Filters panel, the "Browse Portals"
     // box will be out of view, but the tour will still highlight it even through the
