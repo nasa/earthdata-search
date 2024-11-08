@@ -17,7 +17,6 @@ import { graphQlGetSubscriptionsQuery } from '../../support/graphQlGetSubscripti
 import { graphQlGetCollection } from '../../support/graphQlGetCollection'
 import { graphQlGetProjectCollections } from '../../support/graphQlProjectGetCollections'
 import { login } from '../../support/login'
-import { setupTests } from '../../support/setupTests'
 
 const conceptId = 'C1214470488-ASF'
 
