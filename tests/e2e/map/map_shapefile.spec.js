@@ -12,11 +12,11 @@ import tooManyPointsShapefileBody from './__mocks__/too_many_points_shapefile_co
 import arcticShapefileBody from './__mocks__/arctic_shapefile_collections.body.json'
 import antarcticShapefileBody from './__mocks__/antarctic_shapefile_collections.body.json'
 import uploadShapefile from '../../support/uploadShapefile'
+import { setupTests } from '../../support/setupTests'
 
 test.describe('Map: Shapefile interactions', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route('**/scale/**', (route) => route.abort())
+  test.beforeEach(async ({ page, context }) => {
+    setupTests(page, context)
 
     await page.route('**/search/granules/timeline', (route) => {
       route.fulfill({

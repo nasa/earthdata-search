@@ -1,5 +1,8 @@
 import { test, expect } from 'playwright-test-coverage'
+
 import singleCollection from './__mocks__/single_collection.json'
+
+import { setupTests } from '../../support/setupTests'
 
 const dragPanelToX = async (page, x) => {
   const handle = page.locator('[data-testid="panels__handle"]')
@@ -10,9 +13,8 @@ const dragPanelToX = async (page, x) => {
 }
 
 test.describe('Panel Behavior', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route('**/scale/**', (route) => route.abort())
+  test.beforeEach(async ({ page, context }) => {
+    setupTests(page, context)
 
     await page.route('**/search/collections.json', (route) => {
       route.fulfill({

@@ -4,6 +4,7 @@ import { graphQlGetCollection } from '../../support/graphQlGetCollection'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
+import { setupTests } from '../../support/setupTests'
 
 import cmrGranulesBody from './__mocks__/cmr_granules/granules.body.json'
 import cmrGranulesCollectionBody from './__mocks__/cmr_granules/collections.body.json'
@@ -31,9 +32,8 @@ import opensearchGranulesTimelineBody from './__mocks__/opensearch_granules/time
 import opensearchGranulesTimelineHeaders from './__mocks__/opensearch_granules/timeline.headers.json'
 
 test.describe('Map: Granule interactions', () => {
-  test.beforeEach(async ({ page }, testInfo) => {
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route('**/scale/**', (route) => route.abort())
+  test.beforeEach(async ({ page, context }, testInfo) => {
+    setupTests(page, context)
 
     await page.route('**/search/granules/timeline', (route) => {
       route.fulfill({

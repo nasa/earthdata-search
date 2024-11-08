@@ -1,5 +1,7 @@
 import { test, expect } from 'playwright-test-coverage'
 
+import { setupTests } from '../../support/setupTests'
+
 import singleCollection from './__mocks__/single_collection.json'
 
 const expectWithinMargin = async (actual, expected, margin) => {
@@ -10,9 +12,8 @@ const expectWithinMargin = async (actual, expected, margin) => {
 }
 
 test.describe('Joyride Tour Navigation', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route('**/scale/**', (route) => route.abort())
+  test.beforeEach(async ({ page, context }) => {
+    await setupTests(page, context)
 
     await page.route(/collections.json/, async (route) => {
       await route.fulfill({
@@ -314,7 +315,7 @@ test.describe('Joyride Tour Navigation', () => {
   test('should automatically start the Joyride tour', async ({ page, context }) => {
     // Override the TourContextProvider to force show the tour
     await context.addInitScript(() => {
-      window.overrideLocalhost = true
+      window.localStorage.setItem('dontShowTour', 'false')
     })
 
     // Navigate to the search page

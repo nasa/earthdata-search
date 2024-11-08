@@ -2,6 +2,7 @@ import { test, expect } from 'playwright-test-coverage'
 
 import { login } from '../../support/login'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
+import { setupTests } from '../../support/setupTests'
 
 import collectionsGraphJson from './__mocks__/collections_graph.json'
 import timeline from './__mocks__/timeline.json'
@@ -11,9 +12,8 @@ import accessMethods from './__mocks__/access_methods.json'
 import collectionFixture from './__mocks__/authenticated_collections.json'
 
 test.describe('Timeline spec', () => {
-  test.beforeEach(async ({ page }, testInfo) => {
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route('**/scale/**', (route) => route.abort())
+  test.beforeEach(async ({ page, context }, testInfo) => {
+    setupTests(page, context)
 
     // eslint-disable-next-line no-param-reassign
     testInfo.snapshotPath = (name) => `${testInfo.file}-snapshots/${name}`

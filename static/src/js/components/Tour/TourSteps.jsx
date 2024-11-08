@@ -11,7 +11,10 @@ import './SearchTour.scss'
 export const TOTAL_STEPS = 12
 
 const TourButtons = ({
-  stepIndex, setStepIndex, isChecked, handleCheckboxChange
+  stepIndex,
+  setStepIndex,
+  isChecked,
+  handleCheckboxChange
 }) => (
   <div className="search-tour__footer">
     <div className="search-tour__footer-content">
@@ -81,7 +84,13 @@ const commonStyles = {
   }
 }
 
-const TourSteps = (stepIndex, setStepIndex, setRunTour, handleCheckboxChange, isChecked) => [
+const TourSteps = (
+  stepIndex,
+  setStepIndex,
+  setRunTour,
+  handleCheckboxChange,
+  isChecked
+) => [
   {
     target: '.search',
     content: (

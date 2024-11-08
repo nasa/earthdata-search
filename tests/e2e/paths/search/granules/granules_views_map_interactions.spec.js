@@ -4,6 +4,7 @@ import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
 import {
   interceptUnauthenticatedCollections
 } from '../../../../support/interceptUnauthenticatedCollections'
+import { setupTests } from '../../../../support/setupTests'
 
 import commonBody from './__mocks__/cmr_granules/common_collections.body.json'
 import commonHeaders from './__mocks__/cmr_granules/common_collections.headers.json'
@@ -17,11 +18,10 @@ import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.js
 const granuleName = 'VJ102IMG_NRT.A2024299.1448.021.2024299184114.nc'
 
 test.describe('When clicking on a granule on the map', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, context }) => {
     const conceptId = 'C2208779826-LANCEMODIS'
 
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route('**/scale/**', (route) => route.abort())
+    setupTests(page, context)
 
     await interceptUnauthenticatedCollections({
       page,
