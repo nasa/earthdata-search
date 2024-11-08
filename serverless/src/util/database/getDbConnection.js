@@ -13,9 +13,17 @@ export const getDbConnection = async () => {
   if (dbConnection == null) {
     const dbConnectionConfig = await getDbConnectionConfig()
 
+    const pool = {}
+
+    if (process.env.IS_OFFLINE) {
+      // When running locally set the pool min to 0 to avoid idle connections
+      pool.min = 0
+    }
+
     dbConnection = knex({
       client: 'pg',
-      connection: dbConnectionConfig
+      connection: dbConnectionConfig,
+      pool
     })
   }
 
