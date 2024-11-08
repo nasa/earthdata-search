@@ -417,7 +417,7 @@ class SecondaryToolbar extends Component {
                 tooltip="Take a tour to learn how to use Earthdata Search"
                 tooltipId="start-tour-tooltip"
                 tooltipPlacement="left"
-                aria-label="Start tour"
+                label="Start tour"
               />
             )
           }

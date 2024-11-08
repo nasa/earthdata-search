@@ -358,8 +358,9 @@ describe('SecondaryToolbar component', () => {
   })
 
   describe('when navigating the Search Tour from the secondary toolbar', () => {
+    // Tour functionality is being tested in tour.spec.js
     describe('while the user is logged out', () => {
-      test('clicking the tour works as expected', () => {
+      test('tour button renders', () => {
         setup('loggedOut')
         const tourButton = screen.getByRole('button', { name: 'Start tour' })
         expect(tourButton).toBeInTheDocument()
@@ -367,10 +368,9 @@ describe('SecondaryToolbar component', () => {
     })
 
     describe('while the user is logged in', () => {
-      test('clicking the tour works as expected', () => {
+      test('tour button renders', () => {
         setup()
         const tourButton = screen.getByRole('button', { name: 'Start tour' })
-        // Tour functionality is being tested in tour.spec.js
         expect(tourButton).toBeInTheDocument()
       })
     })
