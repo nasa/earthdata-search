@@ -58,6 +58,7 @@ const submitHarmonyOrder = async (event, context) => {
       collection_id: collectionId,
       environment,
       granule_params: granuleParams,
+      id: retrievalId,
       jsondata,
       user_id: userId
     } = retrievalRecord
@@ -89,10 +90,11 @@ const submitHarmonyOrder = async (event, context) => {
 
       const orderPayload = await constructOrderPayload({
         accessMethod,
-        granuleParams,
         accessToken,
-        shapefile,
-        environment
+        environment,
+        granuleParams,
+        retrievalId,
+        shapefile
       })
 
       console.log('Harmony order payload')

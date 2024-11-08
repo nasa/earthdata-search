@@ -278,7 +278,7 @@ describe('submitHarmonyOrder', () => {
     expect(queries[2].method).toEqual('update')
     expect(queries[2].bindings).toEqual(['create_failed', 'Error: You are not authorized to access the requested resource', 12])
 
-    expect(consoleMock).toBeCalledTimes(8)
+    expect(consoleMock).toBeCalledTimes(9)
     expect(consoleMock.mock.calls[0]).toEqual(['Processing 1 order(s)'])
     expect(consoleMock.mock.calls[1]).toEqual(['Harmony order payload'])
     expect(consoleMock.mock.calls[2]).toEqual(['forceAsync: true'])
@@ -286,6 +286,7 @@ describe('submitHarmonyOrder', () => {
     expect(consoleMock.mock.calls[4]).toEqual(['format: NetCDF-4'])
     expect(consoleMock.mock.calls[5]).toEqual(['variable: test_var,test_var_2'])
     expect(consoleMock.mock.calls[6]).toEqual(['skipPreview: true'])
-    expect(consoleMock.mock.calls[7]).toEqual(['AxiosError (403): Error: You are not authorized to access the requested resource'])
+    expect(consoleMock.mock.calls[7]).toEqual(['label: eed-edsc-test-serverless-background,downloadId=1'])
+    expect(consoleMock.mock.calls[8]).toEqual(['AxiosError (403): Error: You are not authorized to access the requested resource'])
   })
 })
