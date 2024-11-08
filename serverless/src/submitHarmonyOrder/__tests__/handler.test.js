@@ -3,6 +3,7 @@ import mockKnex from 'mock-knex'
 import nock from 'nock'
 
 import * as createLimitedShapefile from '../../util/createLimitedShapefile'
+import * as getClientId from '../../../../sharedUtils/getClientId'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getEdlConfig from '../../util/getEdlConfig'
@@ -16,6 +17,8 @@ let dbTracker
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
 
   jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({
     clientId: 'clientId',
