@@ -16,7 +16,10 @@ import commonHeaders from './__mocks__/common_collections.headers.json'
 
 test.describe('Map: Control interactions', () => {
   test.beforeEach(async ({ page, context }, testInfo) => {
-    setupTests(page, context)
+    setupTests({
+      page,
+      context
+    })
 
     await page.route('**/search/granules/timeline', (route) => {
       route.fulfill({

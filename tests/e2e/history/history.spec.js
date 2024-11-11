@@ -28,7 +28,10 @@ const downloadLinks = [
 
 test.describe('History', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests(page, context)
+    setupTests({
+      page,
+      context
+    })
 
     const granuleHits = 1
 

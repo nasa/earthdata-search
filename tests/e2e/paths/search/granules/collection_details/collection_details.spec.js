@@ -210,7 +210,10 @@ const testCollectionGibsProjections = async (page, projections) => {
 
 test.describe('Path /search/granules/collection-details', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests(page, context)
+    setupTests({
+      page,
+      context
+    })
   })
 
   test.describe('When collection has associated DOIs', () => {

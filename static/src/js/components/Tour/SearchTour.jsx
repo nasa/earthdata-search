@@ -97,7 +97,15 @@ const SearchTour = () => {
 
   return (
     <Joyride
-      steps={TourSteps(stepIndex, setStepIndex, setRunTour, handleCheckboxChange, isChecked)}
+      steps={
+        TourSteps({
+          stepIndex,
+          setStepIndex,
+          setRunTour,
+          handleCheckboxChange,
+          isChecked
+        })
+      }
       run={runTour}
       stepIndex={stepIndex}
       continuous

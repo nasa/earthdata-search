@@ -84,13 +84,13 @@ const commonStyles = {
   }
 }
 
-const TourSteps = (
+const TourSteps = ({
   stepIndex,
   setStepIndex,
   setRunTour,
   handleCheckboxChange,
   isChecked
-) => [
+}) => [
   {
     target: '.search',
     content: (

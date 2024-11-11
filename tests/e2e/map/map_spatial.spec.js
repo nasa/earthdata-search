@@ -18,7 +18,10 @@ import polygonBodyEdited from './__mocks__/polygon_collections_edited.body.json'
 
 test.describe('Map: Spatial interactions', () => {
   test.beforeEach(async ({ page, context }, testInfo) => {
-    setupTests(page, context)
+    setupTests({
+      page,
+      context
+    })
 
     await page.route('**/search/granules/timeline', (route) => {
       route.fulfill({

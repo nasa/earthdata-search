@@ -4,7 +4,10 @@ import { setupTests } from '../../support/setupTests'
 
 test.describe('Performance Benchmarking', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests(page, context)
+    setupTests({
+      page,
+      context
+    })
   })
 
   test('Search page load time is less than 2 second', async ({ page, browserName }) => {

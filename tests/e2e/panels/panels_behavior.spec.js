@@ -14,7 +14,10 @@ const dragPanelToX = async (page, x) => {
 
 test.describe('Panel Behavior', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests(page, context)
+    setupTests({
+      page,
+      context
+    })
 
     await page.route('**/search/collections.json', (route) => {
       route.fulfill({

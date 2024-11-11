@@ -126,7 +126,10 @@ const testResultsSize = async (page, cmrHits) => {
 
 test.describe('Path /search/granules', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests(page, context)
+    setupTests({
+      page,
+      context
+    })
 
     await page.clock.setFixedTime(new Date('2021-06-01'))
   })

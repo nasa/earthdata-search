@@ -6,7 +6,11 @@ import singleCollection from './__mocks__/single_collection.json'
 
 test.describe('Collection List Behavior', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests(page, context)
+    setupTests({
+      page,
+      context
+    })
+
     await page.route(/collections.json/, async (route) => {
       await route.fulfill({
         json: singleCollection.body,

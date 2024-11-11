@@ -33,7 +33,10 @@ import opensearchGranulesTimelineHeaders from './__mocks__/opensearch_granules/t
 
 test.describe('Map: Granule interactions', () => {
   test.beforeEach(async ({ page, context }, testInfo) => {
-    setupTests(page, context)
+    setupTests({
+      page,
+      context
+    })
 
     await page.route('**/search/granules/timeline', (route) => {
       route.fulfill({

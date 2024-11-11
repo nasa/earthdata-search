@@ -82,7 +82,10 @@ const testResultsSize = async (page, cmrHits) => {
 
 test.describe('Path /search', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests(page, context)
+    setupTests({
+      page,
+      context
+    })
   })
 
   test.describe('When the path is loaded without any url params', () => {

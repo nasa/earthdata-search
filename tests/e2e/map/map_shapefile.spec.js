@@ -16,7 +16,10 @@ import { setupTests } from '../../support/setupTests'
 
 test.describe('Map: Shapefile interactions', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests(page, context)
+    setupTests({
+      page,
+      context
+    })
 
     await page.route('**/search/granules/timeline', (route) => {
       route.fulfill({
