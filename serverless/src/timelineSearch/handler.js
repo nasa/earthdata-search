@@ -12,13 +12,17 @@ import { parseError } from '../../../sharedUtils/parseError'
 const timelineSearch = async (event) => {
   // Whitelist parameters supplied by the request
   const permittedCmrKeys = [
+    'bounding_box',
     'concept_id',
     'end_date',
     'interval',
+    'point',
+    'polygon',
     'start_date'
   ]
 
   const nonIndexedKeys = [
+    'bounding_box',
     'concept_id'
   ]
 
