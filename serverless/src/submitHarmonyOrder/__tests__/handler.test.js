@@ -3,10 +3,10 @@ import mockKnex from 'mock-knex'
 import nock from 'nock'
 
 import * as createLimitedShapefile from '../../util/createLimitedShapefile'
-import * as getClientId from '../../../../sharedUtils/getClientId'
 import * as getDbConnection from '../../util/database/getDbConnection'
-import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import * as getConfig from '../../../../sharedUtils/config'
 import * as getEdlConfig from '../../util/getEdlConfig'
+import * as getClientId from '../../../../sharedUtils/getClientId'
 import * as startOrderStatusUpdateWorkflow from '../../util/startOrderStatusUpdateWorkflow'
 
 import { mockHarmonyOrder } from './mocks'
@@ -18,11 +18,17 @@ let dbTracker
 beforeEach(() => {
   jest.clearAllMocks()
 
-  jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ background: 'eed-edsc-test-serverless-background' }))
-
-  jest.spyOn(getEarthdataConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({
+  jest.spyOn(getConfig, 'getSecretEarthdataConfig').mockImplementation(() => ({
     clientId: 'clientId',
     secret: 'jwt-secret'
+  }))
+
+  jest.spyOn(getConfig, 'getApplicationConfig').mockImplementation(() => ({
+    env: 'test'
+  }))
+
+  jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({
+    background: 'mock-background-clientId'
   }))
 
   jest.spyOn(getEdlConfig, 'getEdlConfig').mockImplementation(() => ({
@@ -53,7 +59,7 @@ afterEach(() => {
 
 describe('submitHarmonyOrder', () => {
   test('correctly discovers the correct fields from the provided json', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    jest.spyOn(getConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
@@ -126,7 +132,7 @@ describe('submitHarmonyOrder', () => {
   })
 
   test('creates a limited shapefile if the shapefile was limited by the user', async () => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    jest.spyOn(getConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
@@ -220,7 +226,7 @@ describe('submitHarmonyOrder', () => {
   test('stores returned error message when order creation fails', async () => {
     const consoleMock = jest.spyOn(console, 'log')
 
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    jest.spyOn(getConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov',
       edscHost: 'http://localhost:8080'
     }))
@@ -289,7 +295,7 @@ describe('submitHarmonyOrder', () => {
     expect(consoleMock.mock.calls[4]).toEqual(['format: NetCDF-4'])
     expect(consoleMock.mock.calls[5]).toEqual(['variable: test_var,test_var_2'])
     expect(consoleMock.mock.calls[6]).toEqual(['skipPreview: true'])
-    expect(consoleMock.mock.calls[7]).toEqual(['label: eed-edsc-test-serverless-background,downloadId=1'])
+    expect(consoleMock.mock.calls[7]).toEqual(['label: eed-edsc-test,edsc-id=4517239960'])
     expect(consoleMock.mock.calls[8]).toEqual(['AxiosError (403): Error: You are not authorized to access the requested resource'])
   })
 })

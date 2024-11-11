@@ -1,16 +1,35 @@
 import nock from 'nock'
 import { ReadStream } from 'fs'
 
-import * as getEarthdataConfig from '../../../../sharedUtils/config'
+import * as getConfig from '../../../../sharedUtils/config'
+import * as getClientId from '../../../../sharedUtils/getClientId'
 
 import { constructOrderPayload } from '../constructOrderPayload'
 import { mockCcwShapefile } from './mocks'
 
 describe('constructOrderPayload', () => {
+  const OLD_ENV = process.env
+
   beforeEach(() => {
-    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
+    process.env = { ...OLD_ENV }
+    delete process.env.NODE_ENV
+    process.env.obfuscationSpin = 1234
+
+    jest.spyOn(getConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov'
     }))
+
+    jest.spyOn(getConfig, 'getApplicationConfig').mockImplementation(() => ({
+      env: 'test'
+    }))
+
+    jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({
+      background: 'mock-background-clientId'
+    }))
+  })
+
+  afterEach(() => {
+    process.env = OLD_ENV
   })
 
   describe('skipPreview', () => {
@@ -36,11 +55,44 @@ describe('constructOrderPayload', () => {
 
       const response = await constructOrderPayload({
         accessMethod,
+        accessToken,
         granuleParams,
-        accessToken
+        retrievalId: 1234
       })
 
       expect(response.get('skipPreview')).toEqual('true')
+    })
+  })
+
+  describe('label', () => {
+    test('returns labels', async () => {
+      nock(/cmr/)
+        .matchHeader('Authorization', 'Bearer access-token')
+        .get('/search/granules.json')
+        .reply(200, {
+          feed: {
+            entry: [{
+              id: 'G10000001-EDSC'
+            }, {
+              id: 'G10000005-EDSC'
+            }]
+          }
+        })
+
+      const accessMethod = {
+        selectedOutputFormat: 'image/png'
+      }
+      const granuleParams = {}
+      const accessToken = 'access-token'
+
+      const response = await constructOrderPayload({
+        accessMethod,
+        accessToken,
+        granuleParams,
+        retrievalId: 1234
+      })
+
+      expect(response.get('label')).toEqual('eed-edsc-test,edsc-id=7496392841')
     })
   })
 
@@ -68,8 +120,9 @@ describe('constructOrderPayload', () => {
 
         const response = await constructOrderPayload({
           accessMethod,
+          accessToken,
           granuleParams,
-          accessToken
+          retrievalId: 1234
         })
 
         expect(response.get('format')).toEqual('image/png')
@@ -97,8 +150,9 @@ describe('constructOrderPayload', () => {
 
         const response = await constructOrderPayload({
           accessMethod,
+          accessToken,
           granuleParams,
-          accessToken
+          retrievalId: 1234
         })
 
         expect(response.get('format')).toEqual(null)
@@ -130,8 +184,9 @@ describe('constructOrderPayload', () => {
 
         const response = await constructOrderPayload({
           accessMethod,
+          accessToken,
           granuleParams,
-          accessToken
+          retrievalId: 1234
         })
 
         expect(response.get('outputCrs')).toEqual('EPSG:4326')
@@ -160,8 +215,9 @@ describe('constructOrderPayload', () => {
 
       const response = await constructOrderPayload({
         accessMethod,
+        accessToken,
         granuleParams,
-        accessToken
+        retrievalId: 1234
       })
 
       expect(response.get('granuleId')).toEqual('G10000001-EDSC,G10000005-EDSC')
@@ -195,8 +251,9 @@ describe('constructOrderPayload', () => {
 
           const response = await constructOrderPayload({
             accessMethod,
+            accessToken,
             granuleParams,
-            accessToken
+            retrievalId: 1234
           })
 
           expect(response.getAll('subset')).toEqual(['time("2020-01-01T01:36:52.273Z":"2020-01-01T06:18:19.482Z")'])
@@ -229,8 +286,9 @@ describe('constructOrderPayload', () => {
 
           const response = await constructOrderPayload({
             accessMethod,
+            accessToken,
             granuleParams,
-            accessToken
+            retrievalId: 1234
           })
 
           expect(response.getAll('subset')).toEqual(['time("2020-01-01T01:36:52.273Z":"*")'])
@@ -262,8 +320,9 @@ describe('constructOrderPayload', () => {
 
           const response = await constructOrderPayload({
             accessMethod,
+            accessToken,
             granuleParams,
-            accessToken
+            retrievalId: 1234
           })
 
           expect(response.getAll('subset')).toEqual(['time("*":"2020-01-01T06:18:19.482Z")'])
@@ -297,8 +356,9 @@ describe('constructOrderPayload', () => {
 
           const response = await constructOrderPayload({
             accessMethod,
+            accessToken,
             granuleParams,
-            accessToken
+            retrievalId: 1234
           })
 
           expect(response.getAll('subset')).toEqual([])
@@ -334,8 +394,9 @@ describe('constructOrderPayload', () => {
 
           const response = await constructOrderPayload({
             accessMethod,
-            granuleParams,
             accessToken,
+            granuleParams,
+            retrievalId: 1234,
             shapefile
           })
 
@@ -369,8 +430,9 @@ describe('constructOrderPayload', () => {
 
           const response = await constructOrderPayload({
             accessMethod,
+            accessToken,
             granuleParams,
-            accessToken
+            retrievalId: 1234
           })
 
           expect(response.get('shapefile')).toBeInstanceOf(ReadStream)
@@ -403,8 +465,9 @@ describe('constructOrderPayload', () => {
 
           const response = await constructOrderPayload({
             accessMethod,
+            accessToken,
             granuleParams,
-            accessToken
+            retrievalId: 1234
           })
 
           expect(response.get('shapefile')).toBeInstanceOf(ReadStream)
@@ -437,8 +500,9 @@ describe('constructOrderPayload', () => {
 
           const response = await constructOrderPayload({
             accessMethod,
+            accessToken,
             granuleParams,
-            accessToken
+            retrievalId: 1234
           })
 
           expect(response.get('shapefile')).toBeInstanceOf(ReadStream)
@@ -471,8 +535,9 @@ describe('constructOrderPayload', () => {
 
           const response = await constructOrderPayload({
             accessMethod,
+            accessToken,
             granuleParams,
-            accessToken
+            retrievalId: 1234
           })
 
           expect(response.get('shapefile')).toBeInstanceOf(ReadStream)
@@ -513,8 +578,9 @@ describe('constructOrderPayload', () => {
 
           const response = await constructOrderPayload({
             accessMethod,
+            accessToken,
             granuleParams,
-            accessToken
+            retrievalId: 1234
           })
 
           expect(response.getAll('subset')).toEqual([
@@ -550,8 +616,9 @@ describe('constructOrderPayload', () => {
 
           const response = await constructOrderPayload({
             accessMethod,
+            accessToken,
             granuleParams,
-            accessToken
+            retrievalId: 1234
           })
 
           expect(response.getAll('subset')).toEqual([
@@ -593,8 +660,9 @@ describe('constructOrderPayload', () => {
 
           const response = await constructOrderPayload({
             accessMethod,
+            accessToken,
             granuleParams,
-            accessToken
+            retrievalId: 1234
           })
 
           expect(response.getAll('subset')).toEqual([
@@ -636,8 +704,9 @@ describe('constructOrderPayload', () => {
 
           const response = await constructOrderPayload({
             accessMethod,
+            accessToken,
             granuleParams,
-            accessToken
+            retrievalId: 1234
           })
 
           expect(response.getAll('subset')).toEqual([
@@ -682,8 +751,9 @@ describe('constructOrderPayload', () => {
 
         const response = await constructOrderPayload({
           accessMethod,
+          accessToken,
           granuleParams,
-          accessToken
+          retrievalId: 1234
         })
 
         expect(response.getAll('subset')).not.toEqual([
@@ -722,8 +792,9 @@ describe('constructOrderPayload', () => {
 
       const response = await constructOrderPayload({
         accessMethod,
+        accessToken,
         granuleParams,
-        accessToken
+        retrievalId: 1234
       })
 
       expect(response.getAll('concatenate')).toEqual([
@@ -760,8 +831,9 @@ describe('constructOrderPayload', () => {
 
       const response = await constructOrderPayload({
         accessMethod,
+        accessToken,
         granuleParams,
-        accessToken
+        retrievalId: 1234
       })
 
       expect(response.getAll('concatenate')).toEqual([
@@ -797,8 +869,9 @@ describe('constructOrderPayload', () => {
 
       const response = await constructOrderPayload({
         accessMethod,
+        accessToken,
         granuleParams,
-        accessToken
+        retrievalId: 1234
       })
 
       expect(response.getAll('concatenate')).toEqual([])
@@ -830,8 +903,9 @@ describe('constructOrderPayload', () => {
 
       const response = await constructOrderPayload({
         accessMethod,
+        accessToken,
         granuleParams,
-        accessToken
+        retrievalId: 1234
       })
 
       expect(response.getAll('variable')).toEqual(['test_var,test_var_2'])
