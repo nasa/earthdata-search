@@ -154,14 +154,15 @@ export class OrderStatusItem extends PureComponent {
       retrieval_collection_id: retrievalCollectionId
     } = collection
 
+    const orderStatus = aggregatedOrderStatus(orders)
+
     const [firstOrder = {}] = orders
     const {
-      state,
       type = ''
     } = firstOrder
 
     // If the order is Harmony and is still running or has no files, don't show the EDD link
-    const isDone = ['successful', 'complete_with_errors'].includes(state)
+    const isDone = !['creating', 'in progress'].includes(orderStatus)
     const notDoneOrEmpty = !isDone || downloadUrls.length === 0
     if (type.toLowerCase() === 'harmony' && notDoneOrEmpty) {
       return null
