@@ -97,8 +97,6 @@ test.describe('When loading the page with dontShowTour preference set to true', 
   })
 
   test('should not see the tour when the page loads', async ({ page }) => {
-    await page.reload()
-
     await page.locator('.sidebar-section__header-primary .sidebar-section__title', { hasText: 'Filter Collections' }).waitFor()
 
     await expect(page.getByRole('alertdialog', { value: /Welcome to Earthdata Search/ })).toBeHidden()
