@@ -66,18 +66,10 @@ test.describe('When dontShowTour is set to false', () => {
       // Check the checkbox and verify it is checked
       await checkbox.click()
       await expect(checkbox).toBeChecked()
-
-      const dontShowTour = await page.evaluate(() => localStorage.getItem('dontShowTour'))
-      console.log('🚀')
-      console.log(dontShowTour) // This is showing 'true' as expected
     })
 
-    test.skip('should not see the tour when the page reloads if the checkbox is checked', async ({ page }) => {
+    test('should not see the tour when the page reloads if the checkbox is checked', async ({ page }) => {
       await page.reload()
-
-      const dontShowTour = await page.evaluate(() => localStorage.getItem('dontShowTour'))
-      console.log('🚀🚀🚀')
-      console.log(dontShowTour) // This is showing 'false' which is not correct
 
       await page.locator('.sidebar-section__header-primary .sidebar-section__title', { hasText: 'Filter Collections' }).waitFor()
 
