@@ -3,6 +3,8 @@ import { test, expect } from 'playwright-test-coverage'
 import { commafy } from '../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../static/src/js/util/pluralize'
 
+import { setupTests } from '../../../support/setupTests'
+
 import awsCloudBody from './__mocks__/aws_cloud.body.json'
 import commonBody from './__mocks__/common.body.json'
 import commonHeaders from './__mocks__/common.headers.json'
@@ -79,9 +81,11 @@ const testResultsSize = async (page, cmrHits) => {
 }
 
 test.describe('Path /search', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route('**/scale/**', (route) => route.abort())
+  test.beforeEach(async ({ page, context }) => {
+    setupTests({
+      page,
+      context
+    })
   })
 
   test.describe('When the path is loaded without any url params', () => {

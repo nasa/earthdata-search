@@ -10,30 +10,53 @@ import './SearchTour.scss'
 
 export const TOTAL_STEPS = 12
 
-const TourButtons = ({ stepIndex, setStepIndex }) => (
-  <div className="search-tour__buttons">
-    <Button
-      type="button"
-      bootstrapVariant="secondary"
-      bootstrapSize="sm"
-      onClick={() => setStepIndex(stepIndex - 1)}
-    >
-      Previous
-    </Button>
-    <Button
-      type="button"
-      bootstrapVariant="primary"
-      bootstrapSize="sm"
-      onClick={() => setStepIndex(stepIndex + 1)}
-    >
-      Next
-    </Button>
+const TourButtons = ({
+  stepIndex,
+  setStepIndex,
+  isChecked,
+  handleCheckboxChange
+}) => (
+  <div className="search-tour__footer">
+    <div className="search-tour__footer-content">
+      <div className="search-tour__tour-toggle-footer">
+        <input
+          type="checkbox"
+          id="dontShowAgain"
+          className="search-tour__checkbox"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+        />
+        <label htmlFor="dontShowAgain" className="search-tour__checkbox__label">
+          Don&apos;t show again
+        </label>
+      </div>
+      <div className="search-tour__buttons">
+        <Button
+          type="button"
+          bootstrapVariant="secondary"
+          bootstrapSize="sm"
+          onClick={() => setStepIndex(stepIndex - 1)}
+        >
+          Previous
+        </Button>
+        <Button
+          type="button"
+          bootstrapVariant="primary"
+          bootstrapSize="sm"
+          onClick={() => setStepIndex(stepIndex + 1)}
+        >
+          Next
+        </Button>
+      </div>
+    </div>
   </div>
 )
 
 TourButtons.propTypes = {
   stepIndex: PropTypes.number.isRequired,
-  setStepIndex: PropTypes.func.isRequired
+  setStepIndex: PropTypes.func.isRequired,
+  isChecked: PropTypes.bool.isRequired,
+  handleCheckboxChange: PropTypes.func.isRequired
 }
 
 const StepCounter = ({ currentStep }) => (
@@ -61,7 +84,13 @@ const commonStyles = {
   }
 }
 
-const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
+const TourSteps = ({
+  stepIndex,
+  setStepIndex,
+  setRunTour,
+  handleCheckboxChange,
+  isChecked
+}) => [
   {
     target: '.search',
     content: (
@@ -80,6 +109,18 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           {' '}
           at the top of the page.
         </p>
+        <div className="search-tour__tour-toggle">
+          <input
+            type="checkbox"
+            id="dontShowAgain"
+            className="search-tour__checkbox"
+            checked={isChecked}
+            onChange={handleCheckboxChange}
+          />
+          <label htmlFor="dontShowAgain" className="search-tour__checkbox__label">
+            Don&apos;t show the tour next time I visit Earthdata Search
+          </label>
+        </div>
         <div className="search-tour__buttons intro">
           <Button
             className="button-tour-start"
@@ -129,7 +170,12 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           Available filters include keyword search, spatial and temporal bounds,
           and advanced search options.
         </p>
-        <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
+        <TourButtons
+          stepIndex={stepIndex}
+          setStepIndex={setStepIndex}
+          isChecked={isChecked}
+          handleCheckboxChange={handleCheckboxChange}
+        />
       </div>
     ),
     placement: 'right',
@@ -158,7 +204,12 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
             </ExternalLink>
           </p>
         </div>
-        <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
+        <TourButtons
+          stepIndex={stepIndex}
+          setStepIndex={setStepIndex}
+          isChecked={isChecked}
+          handleCheckboxChange={handleCheckboxChange}
+        />
       </div>
     ),
     placement: 'right',
@@ -178,7 +229,12 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           A recurring filter can be applied to search a repeating range between
           specified years.
         </p>
-        <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
+        <TourButtons
+          stepIndex={stepIndex}
+          setStepIndex={setStepIndex}
+          isChecked={isChecked}
+          handleCheckboxChange={handleCheckboxChange}
+        />
       </div>
     ),
     placement: 'right',
@@ -203,7 +259,12 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           Upload a shapefile (KML, KMZ, ESRI, etc.) to set the spatial area with
           a file.
         </p>
-        <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
+        <TourButtons
+          stepIndex={stepIndex}
+          setStepIndex={setStepIndex}
+          isChecked={isChecked}
+          handleCheckboxChange={handleCheckboxChange}
+        />
       </div>
     ),
     placement: 'right',
@@ -219,7 +280,12 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           Use Advanced Search parameters to filter results using features like
           Hydrologic Unit Code (HUC) or SWORD River Reach.
         </p>
-        <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
+        <TourButtons
+          stepIndex={stepIndex}
+          setStepIndex={setStepIndex}
+          isChecked={isChecked}
+          handleCheckboxChange={handleCheckboxChange}
+        />
       </div>
     ),
     placement: 'right',
@@ -235,7 +301,12 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           Choose a portal to refine search results to a particular area of study,
           project, or organization.
         </p>
-        <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
+        <TourButtons
+          stepIndex={stepIndex}
+          setStepIndex={setStepIndex}
+          isChecked={isChecked}
+          handleCheckboxChange={handleCheckboxChange}
+        />
       </div>
     ),
     placement: 'right',
@@ -252,7 +323,12 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           Refine your search further using categories like Features, Keywords,
           Platforms, Organizations, etc.
         </p>
-        <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
+        <TourButtons
+          stepIndex={stepIndex}
+          setStepIndex={setStepIndex}
+          isChecked={isChecked}
+          handleCheckboxChange={handleCheckboxChange}
+        />
       </div>
     ),
     placement: 'right-start',
@@ -284,7 +360,12 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           To add individual granules to a project, click on a search result to view and
           add its granules.
         </p>
-        <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
+        <TourButtons
+          stepIndex={stepIndex}
+          setStepIndex={setStepIndex}
+          isChecked={isChecked}
+          handleCheckboxChange={handleCheckboxChange}
+        />
       </div>
     ),
     placement: 'right',
@@ -318,7 +399,12 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
             key at any time.
           </p>
         </div>
-        <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
+        <TourButtons
+          stepIndex={stepIndex}
+          setStepIndex={setStepIndex}
+          isChecked={isChecked}
+          handleCheckboxChange={handleCheckboxChange}
+        />
       </div>
     ),
     placement: 'right',
@@ -339,7 +425,12 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           along with any available GIBS imagery. When a granule is focused on the
           map, any additional thumbnails will be displayed.
         </p>
-        <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
+        <TourButtons
+          stepIndex={stepIndex}
+          setStepIndex={setStepIndex}
+          isChecked={isChecked}
+          handleCheckboxChange={handleCheckboxChange}
+        />
       </div>
     ),
     placement: 'left',
@@ -355,7 +446,12 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           Use the map tools to switch map projections, draw, edit, or remove spatial
           bounds, zoom the map, or select the base map.
         </p>
-        <TourButtons stepIndex={stepIndex} setStepIndex={setStepIndex} />
+        <TourButtons
+          stepIndex={stepIndex}
+          setStepIndex={setStepIndex}
+          isChecked={isChecked}
+          handleCheckboxChange={handleCheckboxChange}
+        />
       </div>
     ),
     placement: 'left',
@@ -373,32 +469,44 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
           <strong>Show Tour</strong>
           .
         </p>
-        <div className="search-tour__buttons">
-          <Button
-            type="button"
-            bootstrapVariant="secondary"
-            bootstrapSize="sm"
-            onClick={
-              () => {
-                setStepIndex(stepIndex - 1)
-              }
-            }
-          >
-            Previous
-          </Button>
-          <Button
-            className="button-tour-finish"
-            type="button"
-            bootstrapVariant="primary"
-            bootstrapSize="sm"
-            onClick={
-              () => {
-                setStepIndex(stepIndex + 1)
-              }
-            }
-          >
-            Finish Tour
-          </Button>
+        <div className="search-tour__footer">
+          <div className="search-tour__footer-content">
+            <div className="search-tour__tour-toggle-footer">
+              <input
+                type="checkbox"
+                id="dontShowAgain"
+                className="search-tour__checkbox"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+              />
+              <label htmlFor="dontShowAgain" className="search-tour__checkbox__label">
+                Don&apos;t show again
+              </label>
+            </div>
+            <div className="search-tour__buttons">
+              <Button
+                type="button"
+                bootstrapVariant="secondary"
+                bootstrapSize="sm"
+                onClick={() => setStepIndex(stepIndex - 1)}
+              >
+                Previous
+              </Button>
+              <Button
+                className="button-tour-finish"
+                type="button"
+                bootstrapVariant="primary"
+                bootstrapSize="sm"
+                onClick={
+                  () => {
+                    setStepIndex(stepIndex + 1)
+                  }
+                }
+              >
+                Finish Tour
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     ),
@@ -448,16 +556,19 @@ const TourSteps = (stepIndex, setStepIndex, setRunTour) => [
               Earthdata Search wiki
             </ExternalLink>
           </li>
-          <li>
-            <ExternalLink
-              href="https://www.earthdata.nasa.gov/faq/earthdata-search-faq"
-              className="search-tour__earthdata-link"
-            >
-              Earthdata Search FAQs
-            </ExternalLink>
-          </li>
         </ul>
-
+        <div className="search-tour__tour-toggle">
+          <input
+            type="checkbox"
+            id="dontShowAgain"
+            className="search-tour__checkbox"
+            checked={isChecked}
+            onChange={handleCheckboxChange}
+          />
+          <label htmlFor="dontShowAgain" className="search-tour__checkbox__label">
+            Don&apos;t show the tour next time I visit Earthdata Search
+          </label>
+        </div>
       </div>
     ),
     hideFooter: true,

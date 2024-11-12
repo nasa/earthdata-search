@@ -13,7 +13,9 @@ import commonHeaders from './__mocks__/common/common.headers.json'
 import associatedDoisGranulesBody from './__mocks__/associated_dois/granules.body.json'
 import graphQlHeaders from './__mocks__/common/graphql.headers.json'
 import getSubscriptionsGraphQlBody from './__mocks__/common/getSubscriptions.graphql.body.json'
+
 import { login } from '../../../../../support/login'
+import { setupTests } from '../../../../../support/setupTests'
 
 /**
  * Tests the title displayed in the collection details
@@ -207,9 +209,11 @@ const testCollectionGibsProjections = async (page, projections) => {
 }
 
 test.describe('Path /search/granules/collection-details', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route('**/scale/**', (route) => route.abort())
+  test.beforeEach(async ({ page, context }) => {
+    setupTests({
+      page,
+      context
+    })
   })
 
   test.describe('When collection has associated DOIs', () => {

@@ -45,14 +45,56 @@
     text-align: left;
   }
 
+  &__tour-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+
+  &__footer {
+    position: relative;
+    padding: 0 0 0.5rem 0;
+
+    &-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  &__tour-toggle-footer {
+    display: flex;
+    align-items: center;
+    position: relative;
+    bottom: 0;
+  }
+  
+  &__checkbox {
+    height: 1.1875rem;
+    width: 1.1875rem;
+    vertical-align: middle;
+
+    &__label {
+      position: relative;
+      top: 0.225rem;
+      font-size: 0.75rem;
+      margin-left: 0.5rem;
+      color: $color__carbon-black;
+    }
+  }
+
   &__buttons {
     margin-top: 5rem;
     display: flex;
     justify-content: flex-end;
     gap: 0.9375rem;
     position: absolute;
-    bottom: 1.25rem;
-    right: 1.25rem;
+    right: 0;
 
     &.intro {
       width: 100%;

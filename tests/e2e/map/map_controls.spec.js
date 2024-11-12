@@ -3,6 +3,7 @@ import { test, expect } from 'playwright-test-coverage'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
+import { setupTests } from '../../support/setupTests'
 
 import commonBody from './__mocks__/common_collections.body.json'
 import commonHeaders from './__mocks__/common_collections.headers.json'
@@ -14,9 +15,11 @@ import commonHeaders from './__mocks__/common_collections.headers.json'
 // from the store are being displayed correctly.
 
 test.describe('Map: Control interactions', () => {
-  test.beforeEach(async ({ page }, testInfo) => {
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route('**/scale/**', (route) => route.abort())
+  test.beforeEach(async ({ page, context }, testInfo) => {
+    setupTests({
+      page,
+      context
+    })
 
     await page.route('**/search/granules/timeline', (route) => {
       route.fulfill({

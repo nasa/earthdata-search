@@ -10,7 +10,14 @@ import TourContext from '../../contexts/TourContext'
 const SearchTour = () => {
   const { runTour, setRunTour } = useContext(TourContext)
 
+  const [isChecked, setIsChecked] = useState(localStorage.getItem('dontShowTour') === 'true')
   const [stepIndex, setStepIndex] = useState(0)
+
+  const handleCheckboxChange = (e) => {
+    const newChecked = e.target.checked
+    setIsChecked(newChecked)
+    localStorage.setItem('dontShowTour', newChecked.toString())
+  }
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -27,13 +34,6 @@ const SearchTour = () => {
       window.removeEventListener('keydown', handleKeyDown)
     }
   }, [])
-
-  useEffect(() => {
-    if (runTour) {
-      setStepIndex(0)
-      localStorage.setItem('dontShowTour', 'false')
-    }
-  }, [runTour])
 
   useEffect(() => {
     // Scrolling to the top to ensure "Browse Portals" is visible.
@@ -90,7 +90,6 @@ const SearchTour = () => {
           || action === ACTIONS.CLOSE) {
       setRunTour(false)
       setStepIndex(0)
-      localStorage.setItem('dontShowTour', 'true')
     } else if (type === 'step:after') {
       setStepIndex(action === ACTIONS.NEXT ? index + 1 : index - 1)
     }
@@ -98,7 +97,15 @@ const SearchTour = () => {
 
   return (
     <Joyride
-      steps={TourSteps(stepIndex, setStepIndex, setRunTour)}
+      steps={
+        TourSteps({
+          stepIndex,
+          setStepIndex,
+          setRunTour,
+          handleCheckboxChange,
+          isChecked
+        })
+      }
       run={runTour}
       stepIndex={stepIndex}
       continuous

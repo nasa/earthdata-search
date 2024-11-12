@@ -11,6 +11,7 @@ import retrieval from './__mocks__/retrieval.json'
 import retrievals from './__mocks__/retrievals.json'
 import timeline from './__mocks__/timeline.json'
 
+import { setupTests } from '../../support/setupTests'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
 import { graphQlGetSubscriptionsQuery } from '../../support/graphQlGetSubscriptionsQuery'
 import { graphQlGetCollection } from '../../support/graphQlGetCollection'
@@ -27,8 +28,10 @@ const downloadLinks = [
 
 test.describe('History', () => {
   test.beforeEach(async ({ page, context }) => {
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route('**/scale/**', (route) => route.abort())
+    setupTests({
+      page,
+      context
+    })
 
     const granuleHits = 1
 

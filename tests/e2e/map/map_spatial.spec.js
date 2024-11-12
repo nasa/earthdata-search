@@ -3,6 +3,7 @@ import { test, expect } from 'playwright-test-coverage'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
+import { setupTests } from '../../support/setupTests'
 
 import boundingBoxBody from './__mocks__/bounding_box_collections.body.json'
 import boundingBoxBodyEdited from './__mocks__/bounding_box_collections_edited.body.json'
@@ -16,9 +17,11 @@ import polygonBody from './__mocks__/polygon_collections.body.json'
 import polygonBodyEdited from './__mocks__/polygon_collections_edited.body.json'
 
 test.describe('Map: Spatial interactions', () => {
-  test.beforeEach(async ({ page }, testInfo) => {
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route('**/scale/**', (route) => route.abort())
+  test.beforeEach(async ({ page, context }, testInfo) => {
+    setupTests({
+      page,
+      context
+    })
 
     await page.route('**/search/granules/timeline', (route) => {
       route.fulfill({

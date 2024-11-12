@@ -1,5 +1,7 @@
 import { test, expect } from 'playwright-test-coverage'
 
+import { setupTests } from '../../support/setupTests'
+
 import singleCollection from './__mocks__/single_collection.json'
 
 const expectWithinMargin = async (actual, expected, margin) => {
@@ -9,10 +11,105 @@ const expectWithinMargin = async (actual, expected, margin) => {
   })
 }
 
+test.describe('When dontShowTour is set to false', () => {
+  test.beforeEach(async ({ page, context }) => {
+    await setupTests({
+      page,
+      context,
+      dontShowTour: false
+    })
+
+    await page.route(/collections.json/, async (route) => {
+      await route.fulfill({
+        json: singleCollection.body,
+        headers: singleCollection.headers
+      })
+    })
+
+    await page.goto('/search')
+  })
+
+  test.describe('When clicking the "Skip for now" button', () => {
+    test.beforeEach(async ({ page }) => {
+      // Expect the first step to show the "Take the tour" button
+      await expect(page.locator('.search-tour__welcome')).toContainText('Welcome to Earthdata Search!')
+
+      // Click the "Skip for now" button to close the tour
+      await page.click('button:has-text("Skip for now")')
+    })
+
+    test('should close the tour', async ({ page }) => {
+      // Ensure the tour is closed by checking that the tour container is no longer visible
+      await expect(page.locator('.search-tour__container')).toBeHidden()
+    })
+
+    test.describe('When refreshing the page', () => {
+      test('should show the tour again', async ({ page }) => {
+        // Refresh the page
+        await page.reload()
+
+        // Expect the tour to run on page load
+        await expect(page.locator('.search-tour__welcome')).toContainText('Welcome to Earthdata Search!')
+      })
+    })
+  })
+
+  test.describe('When checking the "Don\'t show again" checkbox', () => {
+    test.beforeEach(async ({ page }) => {
+      // Verify the tour is open
+      await expect(page.locator('.search-tour__welcome')).toContainText('Welcome to Earthdata Search!')
+
+      // Verify the checkbox is unchecked
+      const checkbox = page.getByRole('checkbox', { name: 'Don\'t show the tour next time I visit Earthdata Search' })
+      await expect(checkbox).not.toBeChecked()
+
+      // Check the checkbox and verify it is checked
+      await checkbox.click()
+      await expect(checkbox).toBeChecked()
+    })
+
+    test('should not see the tour when the page reloads if the checkbox is checked', async ({ page }) => {
+      await page.reload()
+
+      await page.locator('.sidebar-section__header-primary .sidebar-section__title', { hasText: 'Filter Collections' }).waitFor()
+
+      await expect(page.getByRole('alertdialog', { value: /Welcome to Earthdata Search/ })).toBeHidden()
+    })
+  })
+})
+
+test.describe('When loading the page with dontShowTour preference set to true', () => {
+  test.beforeEach(async ({ page, context }) => {
+    await setupTests({
+      page,
+      context,
+      dontShowTour: true
+    })
+
+    await page.route(/collections.json/, async (route) => {
+      await route.fulfill({
+        json: singleCollection.body,
+        headers: singleCollection.headers
+      })
+    })
+
+    await page.goto('/search')
+  })
+
+  test('should not see the tour when the page loads', async ({ page }) => {
+    await page.locator('.sidebar-section__header-primary .sidebar-section__title', { hasText: 'Filter Collections' }).waitFor()
+
+    await expect(page.getByRole('alertdialog', { value: /Welcome to Earthdata Search/ })).toBeHidden()
+  })
+})
+
 test.describe('Joyride Tour Navigation', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route('**/scale/**', (route) => route.abort())
+  test.beforeEach(async ({ page, context }) => {
+    await setupTests({
+      page,
+      context,
+      dontShowTour: true
+    })
 
     await page.route(/collections.json/, async (route) => {
       await route.fulfill({
@@ -296,38 +393,4 @@ test.describe('Joyride Tour Navigation', () => {
     // Final step: Want to learn more?
     await expect(page.locator('.search-tour__heading')).toContainText('Want to learn more?')
   })
-
-  test('should close the tour when clicking "Skip for now"', async ({ page }) => {
-    // Start the tour by clicking the "Start Tour" button
-    await page.click('button:has-text("Start Tour")')
-
-    // Expect the first step to show the "Take the tour" button
-    await expect(page.locator('.search-tour__welcome')).toContainText('Welcome to Earthdata Search!')
-
-    // Click the "Skip for now" button to close the tour
-    await page.click('button:has-text("Skip for now")')
-
-    // Ensure the tour is closed by checking that the tour container is no longer visible
-    await expect(page.locator('.search-tour__container')).toBeHidden()
-  })
-
-  test('should automatically start the Joyride tour', async ({ page, context }) => {
-    // Override the TourContextProvider to force show the tour
-    await context.addInitScript(() => {
-      window.overrideLocalhost = true
-    })
-
-    // Navigate to the search page
-    await page.goto('/search')
-
-    // Wait for the tour to appear automatically
-    await page.waitForSelector('.search-tour__welcome', {
-      state: 'visible',
-      timeout: 5000
-    })
-
-    // Verify that the tour has started automatically
-    await expect(page.locator('.search-tour__welcome')).toContainText('Welcome to Earthdata Search!')
-    await expect(page.locator('.search-tour__content').first()).toContainText('Get acquainted with Earthdata Search by taking our guided tour')
-  })
-})
+}, 60000)
