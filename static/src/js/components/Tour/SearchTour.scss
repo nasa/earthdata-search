@@ -12,7 +12,6 @@
     margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.125rem;
-    // letter-spacing: 0.25rem;
     font-family: $font-family-monospace;
   }
 
@@ -94,9 +93,6 @@
     display: flex;
     justify-content: flex-end;
     gap: 0.75rem;
-    // gap: 0.9375rem;
-    // position: absolute;
-    // right: 0;
 
     &.intro {
       width: 100%;

@@ -124,7 +124,6 @@ test.describe('Joyride Tour Navigation', () => {
   test('should navigate through the Joyride tour', async ({ page }) => {
     // Start the tour by clicking the "Start Tour" button
     page.getByRole('button', { name: 'Start tour' }).click()
-    // Await page.click('button:has-text("Start Tour")')
 
     // Start Tour View: Welcome to Earthdata Search
     await expect(page.locator('.search-tour__welcome')).toContainText('Welcome to Earthdata Search!')
