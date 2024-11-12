@@ -12,6 +12,7 @@
     margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.125rem;
+    // letter-spacing: 0.25rem;
     font-family: $font-family-monospace;
   }
 
@@ -244,6 +245,10 @@
     text-align: center;
     position: relative;
     min-height: 12.5rem;
+  }
+
+  &__content-wrapper {
+    padding-bottom: 1.25rem;
   }
 }
 

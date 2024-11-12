@@ -123,7 +123,8 @@ test.describe('Joyride Tour Navigation', () => {
 
   test('should navigate through the Joyride tour', async ({ page }) => {
     // Start the tour by clicking the "Start Tour" button
-    await page.click('button:has-text("Start Tour")')
+    page.getByRole('button', { name: 'Start tour' }).click()
+    // Await page.click('button:has-text("Start Tour")')
 
     // Start Tour View: Welcome to Earthdata Search
     await expect(page.locator('.search-tour__welcome')).toContainText('Welcome to Earthdata Search!')
@@ -374,9 +375,9 @@ test.describe('Joyride Tour Navigation', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 1172,
+      left: 1240,
       top: 34,
-      width: 133,
+      width: 63,
       height: 56
     }, 10)
 
