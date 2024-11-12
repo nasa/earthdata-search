@@ -50,7 +50,9 @@ describe('TimelineRequest#nonIndexedKeys', () => {
 
     expect(request.nonIndexedKeys()).toEqual([
       'bounding_box',
-      'concept_id'
+      'concept_id',
+      'point',
+      'polygon'
     ])
   })
 })

@@ -254,7 +254,7 @@ test.describe('Map: Granule interactions', () => {
         await page.route(/search\/granules\/timeline$/, async (route) => {
           const query = route.request().postData()
 
-          expect(query).toEqual('end_date=2023-12-01T00:00:00.000Z&interval=day&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1972468359-SCIOPS')
+          expect(query).toEqual('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1972468359-SCIOPS&polygon[]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647')
 
           await route.fulfill({
             json: opensearchGranulesTimelineBody,

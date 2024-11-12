@@ -23,7 +23,9 @@ const timelineSearch = async (event) => {
 
   const nonIndexedKeys = [
     'bounding_box',
-    'concept_id'
+    'concept_id',
+    'point',
+    'polygon'
   ]
 
   const { body, headers } = event

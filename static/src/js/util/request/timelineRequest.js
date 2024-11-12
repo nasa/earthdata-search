@@ -35,7 +35,9 @@ export default class TimelineRequest extends CmrRequest {
   nonIndexedKeys() {
     return [
       'bounding_box',
-      'concept_id'
+      'concept_id',
+      'point',
+      'polygon'
     ]
   }
 }
