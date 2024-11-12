@@ -13,24 +13,27 @@ import './DownloadFilesPanel.scss'
  * Renders DownloadFilesPanel.
  * @param {Object} arg0 - The props passed into the component.
  * @param {String} arg0.accessMethodType - The retrieval collection access method.
+ * @param {Boolean} arg0.collectionIsCSDA - A flag set when the collection is CSDA.
+ * @param {Boolean} arg0.disableEddInProgress - Disables EDD button when a job is still in progress (e.g. a Harmony job still in progress).
  * @param {Array} arg0.downloadLinks - The download links.
- * @param {String} arg0.retrievalId - The retrieval id.
+ * @param {String} arg0.eddLink - The EDD link.
  * @param {Number} arg0.granuleCount - The retrieval collection granule count.
  * @param {Boolean} arg0.granuleLinksIsLoading - A flag set when the granule links are loading.
  * @param {Boolean} arg0.percentDoneDownloadLinks - Percentage of the download links that have been fetched.
+ * @param {String} arg0.retrievalId - The retrieval id.
  * @param {Boolean} arg0.showTextWindowActions - A flag set when the text window actions should be set.
- * @param {Boolean} arg0.collectionIsCSDA - A flag set when the collection is CSDA.
 */
 export const DownloadFilesPanel = ({
   accessMethodType,
+  collectionIsCSDA,
+  disableEddInProgress,
   downloadLinks,
+  eddLink,
   granuleCount,
   granuleLinksIsLoading,
   percentDoneDownloadLinks,
   retrievalId,
-  eddLink,
-  showTextWindowActions,
-  collectionIsCSDA
+  showTextWindowActions
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}.txt`
 
@@ -54,15 +57,16 @@ export const DownloadFilesPanel = ({
         }
       </div>
       <TextWindowActions
-        id={`links-${retrievalId}`}
+        clipboardContents={downloadLinks.join('\n')}
+        disableCopy={!showTextWindowActions}
+        disableEddInProgress={disableEddInProgress}
+        disableSave={!showTextWindowActions}
         eddLink={eddLink}
         fileContents={downloadLinks.join('\n')}
         fileName={downloadFileName}
-        clipboardContents={downloadLinks.join('\n')}
+        hideEdd={collectionIsCSDA}
+        id={`links-${retrievalId}`}
         modalTitle="Download Files"
-        disableCopy={!showTextWindowActions}
-        disableSave={!showTextWindowActions}
-        disableEdd={collectionIsCSDA}
       >
         <ul className="download-files-panel__list">
           {
@@ -88,24 +92,24 @@ export const DownloadFilesPanel = ({
 }
 
 DownloadFilesPanel.defaultProps = {
-  percentDoneDownloadLinks: null,
-  showTextWindowActions: true,
   collectionIsCSDA: false,
-  eddLink: null
+  disableEddInProgress: false,
+  eddLink: null,
+  percentDoneDownloadLinks: null,
+  showTextWindowActions: true
 }
 
 DownloadFilesPanel.propTypes = {
   accessMethodType: PropTypes.string.isRequired,
-  downloadLinks: PropTypes.arrayOf(
-    PropTypes.string
-  ).isRequired,
-  retrievalId: PropTypes.string.isRequired,
+  collectionIsCSDA: PropTypes.bool,
+  disableEddInProgress: PropTypes.bool,
+  downloadLinks: PropTypes.arrayOf(PropTypes.string).isRequired,
   eddLink: PropTypes.string,
   granuleCount: PropTypes.number.isRequired,
   granuleLinksIsLoading: PropTypes.bool.isRequired,
   percentDoneDownloadLinks: PropTypes.string,
-  showTextWindowActions: PropTypes.bool,
-  collectionIsCSDA: PropTypes.bool
+  retrievalId: PropTypes.string.isRequired,
+  showTextWindowActions: PropTypes.bool
 }
 
 export default DownloadFilesPanel

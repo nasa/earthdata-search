@@ -689,15 +689,16 @@ export class OrderStatusItem extends PureComponent {
                       >
                         <DownloadFilesPanel
                           accessMethodType={accessMethodType}
+                          collectionIsCSDA={collectionIsCSDA}
+                          disableEddInProgress={accessMethodType.toLowerCase() === 'harmony' && progressPercentage < 100}
                           downloadLinks={downloadUrls}
                           eddLink={this.buildEddLink('data', downloadUrls)}
                           granuleCount={granuleCount}
                           granuleLinksIsLoading={granuleLinksIsLoading}
                           percentDoneDownloadLinks={percentDoneDownloadLinks}
-                          retrievalId={retrievalId}
                           retrievalCollectionId={retrievalCollectionId}
+                          retrievalId={retrievalId}
                           showTextWindowActions={!isEsi}
-                          collectionIsCSDA={collectionIsCSDA}
                         />
                       </Tab>
                     )
