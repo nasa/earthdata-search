@@ -109,7 +109,7 @@ const TourSteps = ({
         <p className="search-tour__note">
           If you want to skip the tour for now, it is always available by clicking
           {' '}
-          <strong>Start Tour</strong>
+          <strong>the ?</strong>
           {' '}
           at the top of the page.
         </p>
