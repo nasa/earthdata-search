@@ -9,20 +9,25 @@ import { setupTests } from '../../support/setupTests'
 import cmrGranulesBody from './__mocks__/cmr_granules/granules.body.json'
 import cmrGranulesCollectionBody from './__mocks__/cmr_granules/collections.body.json'
 import cmrGranulesCollectionGraphQlBody from './__mocks__/cmr_granules/collection_graphql.body.json'
-import colormapOneBody from './__mocks__/colormaps/colormap_1.body.json'
-import colormapTwoBody from './__mocks__/colormaps/colormap_2.body.json'
-import colormapCollectionsBody from './__mocks__/colormaps/collections.body.json'
-import colormapGranulesOneBody from './__mocks__/colormaps/granules_1.body.json'
-import colormapGranulesTwoBody from './__mocks__/colormaps/granules_2.body.json'
-import colormapGranulesHeaders from './__mocks__/colormaps/granules.headers.json'
-import colormapCollectionOneGraphQlBody from './__mocks__/colormaps/collection_graphql_1.body.json'
-import colormapCollectionTwoGraphQlBody from './__mocks__/colormaps/collection_graphql_2.body.json'
-import colormapCollectionGraphQlHeaders from './__mocks__/colormaps/graphql.headers.json'
-import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
 import cmrGranulesCollectionGraphQlHeaders from './__mocks__/cmr_granules/graphql.headers.json'
 import cmrGranulesHeaders from './__mocks__/cmr_granules/granules.headers.json'
+import colormapCollectionGraphQlHeaders from './__mocks__/colormaps/graphql.headers.json'
+import colormapCollectionOneGraphQlBody from './__mocks__/colormaps/collection_graphql_1.body.json'
+import colormapCollectionsBody from './__mocks__/colormaps/collections.body.json'
+import colormapCollectionTwoGraphQlBody from './__mocks__/colormaps/collection_graphql_2.body.json'
+import colormapGranulesHeaders from './__mocks__/colormaps/granules.headers.json'
+import colormapGranulesOneBody from './__mocks__/colormaps/granules_1.body.json'
+import colormapGranulesTwoBody from './__mocks__/colormaps/granules_2.body.json'
+import colormapOneBody from './__mocks__/colormaps/colormap_1.body.json'
+import colormapTwoBody from './__mocks__/colormaps/colormap_2.body.json'
 import commonBody from './__mocks__/common_collections.body.json'
 import commonHeaders from './__mocks__/common_collections.headers.json'
+import granuleCrossingCollectionBody from './__mocks__/cmr_granules/granule_crossing_collections.body.json'
+import granuleCrossingCollectionGraphQlBody from './__mocks__/cmr_granules/granule_crossing_collection_graphql.body.json'
+import granuleCrossingGranuleGraphQlBody from './__mocks__/cmr_granules/granule_crossing_granule_graphql.body.json'
+import granuleCrossingGranulesBody from './__mocks__/cmr_granules/granule_crossing_granules.body.json'
+import granuleCrossingGranulesHeaders from './__mocks__/cmr_granules/granule_crossing_granules.headers.json'
+import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
 import opensearchGranulesBody from './__mocks__/opensearch_granules/granules_body'
 import opensearchGranulesCollectionBody from './__mocks__/opensearch_granules/collections.body.json'
 import opensearchGranulesCollectionGraphQlBody from './__mocks__/opensearch_granules/graphql.body.json'
@@ -438,6 +443,86 @@ test.describe('Map: Granule interactions', () => {
 
         test('displays the colormap', async ({ page }) => {
           await expect(page.getByTestId('legend')).toBeInViewport()
+        })
+      })
+    })
+  })
+
+  test.describe('when viewing a granule that crosses the antimeridian twice', () => {
+    test.beforeEach(async ({ page }) => {
+      const conceptId = 'C1258816710-ASDC_DEV2'
+
+      await interceptUnauthenticatedCollections({
+        page,
+        body: commonBody,
+        headers: commonHeaders,
+        additionalRequests: [{
+          body: granuleCrossingCollectionBody,
+          headers: {
+            ...commonHeaders,
+            'cmr-hits': '1'
+          },
+          paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptId && parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647'
+        }],
+        includeDefault: false
+      })
+
+      await page.route(/search\/granules.json/, async (route) => {
+        const query = route.request().postData()
+
+        expect(query).toEqual('echo_collection_id=C1258816710-ASDC_DEV2&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=PREFIRE_SAT1_2B-ATM_S02_R00_20210101190614_00013.nc&sort_key=-start_date')
+
+        await route.fulfill({
+          json: granuleCrossingGranulesBody,
+          headers: granuleCrossingGranulesHeaders
+        })
+      })
+
+      await page.route(/api$/, async (route) => {
+        const query = route.request().postData()
+
+        if (query === graphQlGetCollection(conceptId)) {
+          await route.fulfill({
+            json: granuleCrossingCollectionGraphQlBody,
+            headers: cmrGranulesCollectionGraphQlHeaders
+          })
+        }
+
+        if (query === `{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"${conceptId}"}}}`) {
+          await route.fulfill({
+            json: granuleCrossingGranuleGraphQlBody,
+            headers: { 'content-type': 'application/json' }
+          })
+        }
+      })
+
+      await page.goto('/search/granules?p=C1258816710-ASDC_DEV2&pg[0][v]=f&pg[0][id]=PREFIRE_SAT1_2B-ATM_S02_R00_20210101190614_00013.nc&pg[0][gsk]=-start_date&ee=uat&g=G1259235357-ASDC_DEV2&q=C1258816710-ASDC_DEV&tl=1731348943!3!!&lat=58.66663295801644&long=169.857421875&zoom=5')
+    })
+
+    test.describe('when hovering over the granule', () => {
+      test.beforeEach(async ({ page }) => {
+        await page.waitForTimeout(500)
+        await page.locator('body').hover({
+          force: true,
+          position: {
+            x: 1100,
+            y: 200
+          }
+        })
+      })
+
+      test('correctly draws the granule outline', async ({ page }) => {
+        // This takes a very narrow screenshot of one portion of the granule where it cross the antimeridian.
+        // Before fixing a bug in the code (EDSC-3903), a horizontal line would be drawn through this
+        // screenshot instead of correctly drawing the granule outline.
+        await expect(page).toHaveScreenshot('granule-crosses-antimeridian.png', {
+          clip: {
+            x: 1000,
+            y: 200,
+            width: 300,
+            height: 50
+          },
+          maxDiffPixelRatio: 0.03
         })
       })
     })
