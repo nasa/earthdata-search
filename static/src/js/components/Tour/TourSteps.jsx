@@ -111,8 +111,7 @@ const TourSteps = ({
           If you want to skip the tour for now, it is always available by clicking the
           {' '}
           <FaQuestion />
-          {' '}
-          at the top of the page.
+          &nbsp;at the top of the page.
         </p>
         <div className="search-tour__tour-toggle">
           <input
