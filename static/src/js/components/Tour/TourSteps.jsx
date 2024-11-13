@@ -2,7 +2,8 @@ import React from 'react'
 import {
   FaInfoCircle,
   FaPlay,
-  FaPlus
+  FaPlus,
+  FaQuestion
 } from 'react-icons/fa'
 import PropTypes from 'prop-types'
 import ExternalLink from '../ExternalLink/ExternalLink'
@@ -109,7 +110,7 @@ const TourSteps = ({
         <p className="search-tour__note">
           If you want to skip the tour for now, it is always available by clicking the
           {' '}
-          <strong>?</strong>
+          <FaQuestion />
           {' '}
           at the top of the page.
         </p>
