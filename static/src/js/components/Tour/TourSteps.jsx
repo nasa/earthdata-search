@@ -107,9 +107,9 @@ const TourSteps = ({
           preferences.
         </p>
         <p className="search-tour__note">
-          If you want to skip the tour for now, it is always available by clicking
+          If you want to skip the tour for now, it is always available by clicking the
           {' '}
-          <strong>the ?</strong>
+          <strong>?</strong>
           {' '}
           at the top of the page.
         </p>
