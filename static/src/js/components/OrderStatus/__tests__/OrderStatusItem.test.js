@@ -346,6 +346,7 @@ describe('OrderStatusItem', () => {
       expect(linksTab.childAt(0).props().percentDoneDownloadLinks).toEqual('50')
       expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
       expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=shortName_versionId&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
+      expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')
@@ -436,6 +437,7 @@ describe('OrderStatusItem', () => {
       expect(linksTab.childAt(0).props().percentDoneDownloadLinks).toEqual('50')
       expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
       expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=shortName_versionId&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
+      expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')
@@ -596,6 +598,7 @@ describe('OrderStatusItem', () => {
       expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
       expect(linksTab.childAt(0).props().downloadLinks).toEqual(['http://example.com'])
       expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=shortName_versionId&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
+      expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
 
       const scriptTab = tabs.childAt(1)
       expect(scriptTab.props().title).toEqual('Download Script')
@@ -1806,6 +1809,7 @@ describe('OrderStatusItem', () => {
         ])
 
         expect(linksTab.childAt(0).props().eddLink).toEqual(null)
+        expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(true)
 
         const stacLinksTab = tabs.childAt(1)
         expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
@@ -1931,6 +1935,7 @@ describe('OrderStatusItem', () => {
         ])
 
         expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=testDataset_1&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
+        expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
 
         const stacLinksTab = tabs.childAt(1)
         expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
@@ -1942,7 +1947,9 @@ describe('OrderStatusItem', () => {
         expect(orderStatusTab.props().title).toEqual('Order Status')
         expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
       })
+    })
 
+    describe('when the order is completed_with_errors', () => {
       test('renders an updated progress state', () => {
         const { enzymeWrapper, props } = setup({
           type: 'harmony',
@@ -1963,7 +1970,7 @@ describe('OrderStatusItem', () => {
             granule_count: 100,
             orders: [{
               type: 'Harmony',
-              state: 'successful',
+              state: 'complete_with_errors',
               order_information: {
                 jobID: 'e116eeb5-f05e-4e5b-bc97-251dd6e1c66e',
                 links: [
@@ -2057,6 +2064,7 @@ describe('OrderStatusItem', () => {
         ])
 
         expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=testDataset_1&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
+        expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
 
         const stacLinksTab = tabs.childAt(1)
         expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
@@ -2479,9 +2487,8 @@ describe('OrderStatusItem', () => {
         expect(linksTab.childAt(0).props().granuleCount).toEqual(10)
         expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
 
-        expect(linksTab.childAt(0).props().eddLink).toEqual(
-          'earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3Dundefined%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=undefined&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback'
-        )
+        expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3Dundefined%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=undefined&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
+        expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
 
         const orderStatusTab = tabs.childAt(1)
         expect(orderStatusTab.props().title).toEqual('Order Status')
@@ -2572,6 +2579,7 @@ describe('OrderStatusItem', () => {
         ])
 
         expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3Dundefined%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=undefined&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
+        expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
 
         const orderStatusTab = tabs.childAt(1)
         expect(orderStatusTab.props().title).toEqual('Order Status')

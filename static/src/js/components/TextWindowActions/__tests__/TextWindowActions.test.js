@@ -357,25 +357,30 @@ describe('TextWindowActions component', () => {
       })
     })
 
-    describe('when disabling the edd button', () => {
+    describe('when hiding the edd button', () => {
       const { enzymeWrapper } = setup({
-        disableEdd: true
+        hideEdd: true
       })
 
       test('hides the edd button', () => {
         expect(enzymeWrapper.find('.text-window-actions__action--edd').length).toEqual(0)
       })
+    })
 
-      describe('when the modal is open', () => {
-        const expandButton = enzymeWrapper.find('.text-window-actions__action--expand').filter(Button)
-        expandButton.simulate('click')
+    describe('when disabling the edd button while a job is in progress', () => {
+      const { enzymeWrapper } = setup({
+        eddLink: null,
+        disableEddInProgress: true
+      })
 
-        const linksModal = enzymeWrapper.find(EDSCModalContainer).at(0)
-        expect(linksModal.props().isOpen).toEqual(true)
+      test('disables the button and displays the correct tooltip message', () => {
+        const button = enzymeWrapper.find('.text-window-actions__action--edd')
+        expect(button.length).toEqual(1)
 
-        test('hides the edd button', () => {
-          expect(enzymeWrapper.find('.text-window-actions__modal-action--edd').length).toEqual(0)
-        })
+        expect(button.props().disabled).toEqual(true)
+        expect(button.props().tooltip).toEqual((
+          <span>Download files with Earthdata Download when the job is complete</span>
+        ))
       })
     })
   })

@@ -1,8 +1,9 @@
 import React from 'react'
 import {
   FaInfoCircle,
+  FaPlay,
   FaPlus,
-  FaSave
+  FaQuestion
 } from 'react-icons/fa'
 import PropTypes from 'prop-types'
 import ExternalLink from '../ExternalLink/ExternalLink'
