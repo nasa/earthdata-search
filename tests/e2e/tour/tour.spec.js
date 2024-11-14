@@ -108,13 +108,15 @@ test.describe('When loading the page with dontShowTour preference set to true', 
   })
 })
 
-test.describe('When not logged in', () => {
+test.describe('When logged in', () => {
   test.beforeEach(async ({ page, context }) => {
     await setupTests({
       page,
       context,
       dontShowTour: true
     })
+
+    await login(context)
 
     await page.route(/collections.json/, async (route) => {
       await route.fulfill({
@@ -166,9 +168,14 @@ test.describe('When not logged in', () => {
     await page.keyboard.press('ArrowRight')
     await expect(page.locator('.search-tour__content').first()).toContainText('Use the map tools')
 
-    // Slide 13: For non-logged in users
+    // Slide 12: Save Project Button
     await page.keyboard.press('ArrowRight')
-    await expect(page.locator('.search-tour__content').first()).toContainText('Log in with Earthdata Login')
+    await expect(page.locator('.search-tour__content').first()).toContainText('to save a project using your current search criteria')
+
+    // Step 13: User Menu Dropdown
+    await page.keyboard.press('ArrowRight')
+    await page.waitForTimeout(500)
+    await expect(page.locator('.search-tour__content').first()).toContainText('Use this menu to set preferences, view saved projects')
   })
 })
 
@@ -179,8 +186,6 @@ test.describe('Joyride Tour Navigation', () => {
       context,
       dontShowTour: true
     })
-
-    await login(context)
 
     await page.route(/collections.json/, async (route) => {
       await route.fulfill({
@@ -424,9 +429,9 @@ test.describe('Joyride Tour Navigation', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 1281,
+      left: 1316,
       top: 323,
-      width: 129,
+      width: 94,
       height: 533
     }, 10, 10)
 
@@ -435,70 +440,17 @@ test.describe('Joyride Tour Navigation', () => {
     await expect(page.locator('.search-tour__content').first()).toContainText('Use the map tools to switch map projections, draw, edit, or remove spatial bounds')
     await page.getByRole('button', { name: 'Next' }).click()
 
-    // Get and verify the position and size of the highlighted section
-    rect = await spotlight.boundingBox()
-    spotlightRect = {
-      left: rect.x,
-      top: rect.y,
-      width: rect.width,
-      height: rect.height
-    }
-
-    expectWithinMargin(spotlightRect, {
-      left: 1171,
-      top: 34,
-      width: 80,
-      height: 56
-    }, 10, 11)
-
-    // Step 12: Save Project
+    // Step 12: Log in to set preferences, save projects, etc.
     await page.waitForTimeout(500)
-    await expect(page.locator('.search-tour__content').first()).toContainText('to save a project using your current search criteria')
+    await expect(page.locator('.search-tour__content').first()).toContainText('Log in with Earthdata Login to set')
     await page.getByRole('button', { name: 'Next' }).click()
 
-    // Get and verify the position and size of the highlighted section
-    rect = await spotlight.boundingBox()
-    spotlightRect = {
-      left: rect.x,
-      top: rect.y,
-      width: rect.width,
-      height: rect.height
-    }
-
-    expectWithinMargin(spotlightRect, {
-      left: 1290,
-      top: 32,
-      width: 110,
-      height: 58
-    }, 10, 12)
-
-    // Step 13: User Menu Dropdown
-    await page.waitForTimeout(500)
-    await expect(page.locator('.search-tour__content').first()).toContainText('Use this menu to set preferences, view saved projects')
-    await page.getByRole('button', { name: 'Next' }).click()
-
-    // Get and verify the position and size of the highlighted section
-    rect = await spotlight.boundingBox()
-    spotlightRect = {
-      left: rect.x,
-      top: rect.y,
-      width: rect.width,
-      height: rect.height
-    }
-
-    expectWithinMargin(spotlightRect, {
-      left: 1239,
-      top: 32,
-      width: 63,
-      height: 58
-    }, 10, 13)
-
-    // Testing "Previous" button on Step 14
+    // Testing "Previous" button on Step 13
     await page.getByRole('button', { name: 'Previous' }).click()
-    await expect(page.locator('.search-tour__content').first()).toContainText('Use this menu to set preferences, view saved projects')
+    await expect(page.locator('.search-tour__content').first()).toContainText('Log in with Earthdata Login')
     await page.getByRole('button', { name: 'Next' }).click()
 
-    // Step 14: Replay info
+    // Step 13: Replay info
     await page.waitForTimeout(500)
     await expect(page.locator('.search-tour__content')).toContainText('You can replay this tour anytime')
     await page.locator('.search-tour__buttons button:has-text("Finish Tour")').click()

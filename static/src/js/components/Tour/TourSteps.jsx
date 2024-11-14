@@ -3,6 +3,7 @@ import {
   FaInfoCircle,
   FaSave,
   FaPlus,
+  FaPlay,
   FaQuestion
 } from 'react-icons/fa'
 import PropTypes from 'prop-types'
@@ -607,25 +608,32 @@ const TourSteps = ({
             Check out our latest webinar where you will see a hands-on example of
             how to search for data in Earthdata Search.
           </p>
-          <div className="search-tour__webinar__box">
-            <div className="search-tour__webinar__text">
-              <img
-                src={TourThumbnail}
-                alt="Webinar Thumbnail"
-                className="search-tour__webinar__thumbnail"
-              />
+          <a className="search-tour__webinar-link" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/watch?v=QtfMlkd7kII">
+            <div className="search-tour__webinar-text">
+              <div className="search-tour__webinar-thumbnail-wrapper">
+                <div className="search-tour__webinar-thumbnail-overlay">
+                  <div className="search-tour__webinar-thumbnail-icon-bg">
+                    <EDSCIcon className="search-tour__webinar-thumbnail-icon" size="18px" icon={FaPlay} />
+                  </div>
+                </div>
+                <img
+                  className="search-tour__webinar-thumbnail"
+                  src={TourThumbnail}
+                  alt="Webinar Thumbnail"
+                />
+              </div>
             </div>
-            <div>
-              <div className="search-tour__discover-more">
+            <div className="search-tour__webinar-content">
+              <div className="search-tour__webinar-discover-more">
                 Discover and Access Earth Science Data Using Earthdata Search
               </div>
-              <p className="search-tour__webinar__link">
-                <ExternalLink href="https://www.youtube.com/watch?v=QtfMlkd7kII">
-                  Watch the webinar
+              <p className="search-tour__webinar-inner-link">
+                <ExternalLink>
+                  Watch the webinar on YouTube
                 </ExternalLink>
               </p>
             </div>
-          </div>
+          </a>
           <p className="search-tour__more-info">
             Find more information here:
           </p>
