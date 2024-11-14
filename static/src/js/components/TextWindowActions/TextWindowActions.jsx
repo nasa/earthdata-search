@@ -28,27 +28,30 @@ import './TextWindowActions.scss'
  * Renders TextWindowActions.
  * @param {Node} children - React children to display in the text window
  * @param {String} clipboardContents - An string that will be copied to the users clipboard.
+ * @param {Boolean} disableCopy - Disables the copy functionality.
+ * @param {Boolean} disableEddInProgress - Disables EDD button when a job is still in progress (e.g. a Harmony job still in progress).
+ * @param {Boolean} disableSave - Disables the save functionality.
+ * @param {String} eddLink - The EDD link.
  * @param {String} fileContents - An optional string to be saved to the users computer.
  * @param {String} fileName - An optional string to to set the name for the file saved to the users computer.
+ * @param {Boolean} hideEdd - A flag to hide the EDD button completely.
  * @param {String} id - The id to use for the bootstrap modal.
  * @param {String} modalTitle - The title for the modal.
- * @param {Boolean} disableCopy - Disables the copy functionality.
- * @param {Boolean} disableSave - Disables the save functionality.
- * @param {Boolean} disableEdd - Disables EDD button.
  */
 export const TextWindowActions = ({
   children,
   clipboardContents,
-  disableEdd,
   disableCopy,
+  disableEddInProgress,
   disableSave,
+  eddLink,
   fileContents,
   fileName,
+  hideEdd,
   id,
-  modalTitle,
-  eddLink
+  modalTitle
 }) => {
-  const { disableEddDownload } = getApplicationConfig()
+  const { disableEddInProgressDownload: hideEddFromSettings } = getApplicationConfig()
 
   const supportsClipboard = document.queryCommandSupported('copy')
   const textareaElRef = useRef(null)
@@ -83,12 +86,19 @@ export const TextWindowActions = ({
     }
   }
 
+  let eddTooltipMessage = 'Download files with Earthdata Download'
+  if (disableEddInProgress) {
+    // If the EDD button is disabled when a job is still in progress, add a note to the tooltip
+    eddTooltipMessage += ' when the job is complete'
+  }
+
   return (
     <div className="text-window-actions">
       <header className="text-window-actions__actions">
         {
-          (!disableEdd && disableEddDownload !== 'true' && eddLink) && (
+          (!hideEdd && hideEddFromSettings !== 'true' && (eddLink || disableEddInProgress)) && (
             <Button
+              disabled={disableEddInProgress}
               className="text-window-actions__action text-window-actions__action--edd"
               bootstrapSize="sm"
               icon={Download}
@@ -96,7 +106,7 @@ export const TextWindowActions = ({
               onClick={handleEddModalOpen}
               tooltipId={`text-window-actions__tooltip--${id}`}
               tooltip={(
-                <span>Download files with Earthdata Download</span>
+                <span>{eddTooltipMessage}</span>
               )}
             >
               Download Files
@@ -292,26 +302,28 @@ export const TextWindowActions = ({
 
 TextWindowActions.defaultProps = {
   children: null,
-  disableEdd: false,
-  disableCopy: false,
-  disableSave: false,
   clipboardContents: '',
+  disableCopy: false,
+  disableEddInProgress: false,
+  disableSave: false,
+  eddLink: null,
   fileContents: null,
   fileName: null,
+  hideEdd: false,
   id: null,
-  modalTitle: null,
-  eddLink: null
+  modalTitle: null
 }
 
 TextWindowActions.propTypes = {
   children: PropTypes.node,
   clipboardContents: PropTypes.string,
-  disableEdd: PropTypes.bool,
   disableCopy: PropTypes.bool,
+  disableEddInProgress: PropTypes.bool,
   disableSave: PropTypes.bool,
+  eddLink: PropTypes.string,
   fileContents: PropTypes.string,
   fileName: PropTypes.string,
-  eddLink: PropTypes.string,
+  hideEdd: PropTypes.bool,
   id: PropTypes.string,
   modalTitle: PropTypes.string
 }

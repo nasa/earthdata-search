@@ -95,7 +95,7 @@ describe('DownloadFilesPanel', () => {
       )
 
       const windowActions = enzymeWrapper.find(TextWindowActions)
-      expect(windowActions.props().disableEdd).toEqual(true)
+      expect(windowActions.props().hideEdd).toEqual(true)
     })
   })
 })
