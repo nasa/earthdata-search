@@ -8,7 +8,10 @@ import singleCollection from './__mocks__/single_collection.json'
 const expectWithinMargin = async (actual, expected, margin) => {
   Object.keys(expected).forEach((key) => {
     const diff = Math.abs(actual[key] - expected[key])
-    console.log(`Expected: ${expected[key]} - Actual: ${actual[key]} - Delta: ${diff}`)
+    if (diff > 1) {
+      console.log(`Expected: ${expected[key]} - Actual: ${actual[key]} - Delta: ${diff}`)
+    }
+
     expect.soft(diff).toBeLessThanOrEqual(margin)
   })
 }
@@ -125,7 +128,7 @@ test.describe('When not logged in', () => {
 
   test('should see the tour slide for non-logged in users', async ({ page }) => {
     // Start the tour by clicking the "Start Tour" button
-    await page.click('button:has-text("Start Tour")')
+    page.getByRole('button', { name: 'Start tour' }).click()
 
     // Start Tour View: Welcome to Earthdata Search
     await expect(page.locator('.search-tour__welcome')).toContainText('Welcome to Earthdata Search!')
@@ -442,9 +445,9 @@ test.describe('Joyride Tour Navigation', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 1240,
+      left: 1171,
       top: 34,
-      width: 63,
+      width: 80,
       height: 56
     }, 10)
 
@@ -484,9 +487,9 @@ test.describe('Joyride Tour Navigation', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 1105,
+      left: 1239,
       top: 32,
-      width: 135,
+      width: 63,
       height: 58
     }, 10)
 

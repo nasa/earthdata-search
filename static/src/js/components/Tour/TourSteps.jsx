@@ -1,7 +1,7 @@
 import React from 'react'
 import {
   FaInfoCircle,
-  FaPlay,
+  FaSave,
   FaPlus,
   FaQuestion
 } from 'react-icons/fa'
@@ -112,7 +112,7 @@ const TourSteps = ({
           <p className="search-tour__note">
             If you want to skip the tour for now, it is always available by clicking
             {' '}
-            <strong>Start Tour</strong>
+            <EDSCIcon className="text-icon" icon={FaQuestion} />
             {' '}
             at the top of the page.
           </p>
@@ -549,8 +549,7 @@ const TourSteps = ({
           <p className="search-tour__content">
             You can replay this tour anytime by clicking
             {' '}
-            <strong>Show Tour</strong>
-            .
+            <EDSCIcon className="text-icon" icon={FaQuestion} />
           </p>
           <div className="search-tour__footer">
             <div className="search-tour__footer-content">
