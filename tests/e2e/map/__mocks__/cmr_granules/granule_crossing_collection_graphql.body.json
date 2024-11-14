@@ -1,0 +1,768 @@
+{
+  "data": {
+    "collection": {
+      "abstract": "The Polar Radiant Energy in the Far InfraRed Experiment (PREFIRE) Satellite 1 Level 2B Atmospheric Properties contains column water vapor, temperature, pressure, and water vapor profiles, surface temperature, and surface pressure as derived from PREFIRE L1B Radiance data via an optimal estimation retrieval.  Radiance data is collected from the PREFIRE Thermal Infrared Spectrometer (TIRS) aboard one of 2 PREFIRE polar orbiting CubeSats.  TIRS is a push broom spectrometer with 63 channels measuring mid- and far-infrared (FIR) radiation from approximately 5 to 53 µm.  The primary goal of PREFIRE is to fill knowledge gaps in the global energy budget by more accurately characterizing polar emissions, the majority of which are in the FIR.  Data retrieval for this collection started on May 1, 2024 and is ongoing.  Geographic coverage is global with the greatest concentration of data in the polar regions.  This data is available in NetCDF4 format.",
+      "archiveAndDistributionInformation": {
+        "fileArchiveInformation": [
+          {
+            "format": "NetCDF-4",
+            "formatType": "Native",
+            "formatDescription": "Files are moderately self-describing via their internal metadata.",
+            "averageFileSize": 48.8,
+            "averageFileSizeUnit": "MB"
+          }
+        ],
+        "fileDistributionInformation": [
+          {
+            "format": "NetCDF-4",
+            "formatType": "Native",
+            "formatDescription": "Files are moderately self-describing via their internal metadata.",
+            "averageFileSize": 48.8,
+            "averageFileSizeUnit": "MB"
+          }
+        ]
+      },
+      "associatedDois": null,
+      "boxes": ["-83 -180 83 180"],
+      "cloudHosted": true,
+      "conceptId": "C1258816710-ASDC_DEV2",
+      "coordinateSystem": "GEODETIC",
+      "dataCenter": "ASDC_DEV2",
+      "dataCenters": [
+        {
+          "roles": ["ARCHIVER"],
+          "shortName": "NASA/LARC/SD/ASDC",
+          "longName": "Atmospheric Science Data Center, Science Directorate, Langley Research Center, NASA",
+          "contactInformation": {
+            "relatedUrls": [
+              {
+                "urlContentType": "DataCenterURL",
+                "type": "HOME PAGE",
+                "url": "https://asdc.larc.nasa.gov/"
+              }
+            ]
+          }
+        }
+      ],
+      "directDistributionInformation": {
+        "region": "us-west-2",
+        "s3CredentialsApiEndpoint": "https://d1rfx6rfrttdsn.cloudfront.net/s3credentials",
+        "s3CredentialsApiDocumentationUrl": "https://d1rfx6rfrttdsn.cloudfront.net/s3credentialsREADME"
+      },
+      "doi": {
+        "missingReason": "Not Applicable"
+      },
+      "duplicateCollections": {
+        "count": 0,
+        "items": []
+      },
+      "hasGranules": true,
+      "lines": null,
+      "nativeDataFormats": ["NetCDF-4"],
+      "points": null,
+      "polygons": null,
+      "relatedUrls": null,
+      "relatedCollections": {
+        "count": 44,
+        "items": [
+          {
+            "id": "C1261129229-LARC_CLOUD",
+            "title": "PREFIRE Auxiliary Meteorology Data for PREFIRE Satellite 1"
+          },
+          {
+            "id": "C1260767866-ASDC_DEV2",
+            "title": "PREFIRE Auxiliary Satellite Data for PREFIRE Satellite 1"
+          },
+          {
+            "id": "C1258817110-ASDC_DEV2",
+            "title": "Polar Radiant Energy in the Far InfraRed Experiment (PREFIRE) Cloud Properties from PREFIRE Satellite 1"
+          }
+        ]
+      },
+      "scienceKeywords": [
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "SPECTRAL/ENGINEERING",
+          "term": "INFRARED WAVELENGTHS",
+          "variableLevel1": "BRIGHTNESS TEMPERATURE"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "ATMOSPHERE",
+          "term": "ATMOSPHERIC TEMPERATURE",
+          "variableLevel1": "SURFACE TEMPERATURE",
+          "variableLevel2": "AIR TEMPERATURE"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "ATMOSPHERE",
+          "term": "ATMOSPHERIC PRESSURE",
+          "variableLevel1": "ATMOSPHERIC PRESSURE MEASUREMENTS"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "ATMOSPHERE",
+          "term": "ATMOSPHERIC WATER VAPOR",
+          "variableLevel1": "WATER VAPOR PROFILES",
+          "variableLevel2": "WATER VAPOR CONCENTRATION PROFILES"
+        }
+      ],
+      "shortName": "PREFIRE_SAT1_2B-ATM",
+      "spatialExtent": {
+        "spatialCoverageType": "HORIZONTAL_VERTICAL",
+        "horizontalSpatialDomain": {
+          "geometry": {
+            "coordinateSystem": "GEODETIC",
+            "boundingRectangles": [
+              {
+                "northBoundingCoordinate": 83,
+                "westBoundingCoordinate": -180,
+                "eastBoundingCoordinate": 180,
+                "southBoundingCoordinate": -83
+              }
+            ]
+          }
+        },
+        "granuleSpatialRepresentation": "GEODETIC"
+      },
+      "tags": {
+        "edsc.extra.serverless.collection_capabilities": {
+          "data": {
+            "cloud_cover": false,
+            "day_night_flag": false,
+            "granule_online_access_flag": true,
+            "orbit_calculated_spatial_domains": false,
+            "updated_at": "2024-11-13T12:43:34.216Z"
+          }
+        }
+      },
+      "temporalExtents": [
+        {
+          "precisionOfSeconds": 3,
+          "endsAtPresentFlag": true,
+          "rangeDateTimes": [
+            {
+              "beginningDateTime": "2020-12-31T00:00:00.000Z"
+            }
+          ]
+        }
+      ],
+      "tilingIdentificationSystems": null,
+      "title": "Polar Radiant Energy in the Far InfraRed Experiment (PREFIRE) Atmospheric Properties from PREFIRE Satellite 1",
+      "versionId": "R00",
+      "services": {
+        "count": 1,
+        "items": [
+          {
+            "conceptId": "S1234899453-POCLOUD",
+            "longName": "PODAAC Level 2 Cloud Subsetter",
+            "name": "PODAAC L2 Cloud Subsetter",
+            "type": "Harmony",
+            "url": {
+              "description": "PROJECT HOME PAGE",
+              "urlValue": "https://harmony.uat.earthdata.nasa.gov"
+            },
+            "serviceOptions": {
+              "supportedReformattings": [
+                {
+                  "supportedInputFormat": "HDF5",
+                  "supportedOutputFormats": ["NETCDF-4"]
+                },
+                {
+                  "supportedInputFormat": "NETCDF-4",
+                  "supportedOutputFormats": ["NETCDF-4"]
+                }
+              ],
+              "subset": {
+                "variableSubset": {
+                  "allowMultipleValues": true
+                },
+                "spatialSubset": {
+                  "boundingBox": {
+                    "allowMultipleValues": false
+                  },
+                  "shapefile": [
+                    {
+                      "format": "ESRI"
+                    },
+                    {
+                      "format": "KML"
+                    },
+                    {
+                      "format": "GeoJSON"
+                    }
+                  ]
+                },
+                "temporalSubset": {
+                  "allowMultipleValues": false
+                }
+              }
+            },
+            "supportedOutputProjections": null,
+            "supportedReformattings": [
+              {
+                "supportedInputFormat": "HDF5",
+                "supportedOutputFormats": ["NETCDF-4"]
+              },
+              {
+                "supportedInputFormat": "NETCDF-4",
+                "supportedOutputFormats": ["NETCDF-4"]
+              }
+            ]
+          }
+        ]
+      },
+      "granules": {
+        "count": 16,
+        "items": [
+          {
+            "conceptId": "G1259235351-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235349-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235350-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235358-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235346-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235356-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235348-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235355-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235352-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235347-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235353-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235345-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235357-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235354-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235365-ASDC_DEV2",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1259235364-ASDC_DEV2",
+            "onlineAccessFlag": true
+          }
+        ]
+      },
+      "subscriptions": {
+        "count": 0,
+        "items": []
+      },
+      "tools": {
+        "count": 0,
+        "items": []
+      },
+      "variables": {
+        "count": 52,
+        "cursor": "eyJ1bW0iOiJbXCJnZW9tZXRyeS92aWV3aW5nX3plbml0aF9hbmdsZVwiLFwiQVNEQ19ERVYyXCIsXCJHZW9tZXRyeS92aWV3aW5nX3plbml0aF9hbmdsZVwiLFwiQVNEQ19ERVYyXCJdIn0=",
+        "items": [
+          {
+            "conceptId": "V1260023967-ASDC_DEV2",
+            "definition": "altitude values on coarse output level grid",
+            "instanceInformation": null,
+            "longName": "Atm/altitude_profile",
+            "name": "Atm/altitude_profile",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_altitude_profile",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023985-ASDC_DEV2",
+            "definition": "quality control bit flags, where each bit specifies an error condition or failed quality check, and the best retrievals will have a value of zero",
+            "instanceInformation": null,
+            "longName": "Atm/atm_qc_bitflags",
+            "name": "Atm/atm_qc_bitflags",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_atm_qc_bitflags",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023983-ASDC_DEV2",
+            "definition": "quality flag for the retrieval",
+            "instanceInformation": null,
+            "longName": "Atm/atm_quality_flag",
+            "name": "Atm/atm_quality_flag",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_atm_quality_flag",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023973-ASDC_DEV2",
+            "definition": "averaging kernel matrix from optimal estimation algorithm",
+            "instanceInformation": null,
+            "longName": "Atm/averaging_kernel_matrix",
+            "name": "Atm/averaging_kernel_matrix",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_averaging_kernel_matrix",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023938-ASDC_DEV2",
+            "definition": "column water vapor computed by integrating the retrieved water vapor profile",
+            "instanceInformation": null,
+            "longName": "Atm/cwv",
+            "name": "Atm/cwv",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_cwv",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023935-ASDC_DEV2",
+            "definition": "column water vapor computed by integrating the prior mean water vapor profile",
+            "instanceInformation": null,
+            "longName": "Atm/cwv_prior",
+            "name": "Atm/cwv_prior",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_cwv_prior",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023940-ASDC_DEV2",
+            "definition": "posterior 1-sigma uncertainty of the retrieval propagated through the column water vapor integral",
+            "instanceInformation": null,
+            "longName": "Atm/cwv_unc",
+            "name": "Atm/cwv_unc",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_cwv_unc",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023981-ASDC_DEV2",
+            "definition": "number of diverging steps (increases in the cost function) made during iteration",
+            "instanceInformation": null,
+            "longName": "Atm/diverging_steps",
+            "name": "Atm/diverging_steps",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_diverging_steps",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023969-ASDC_DEV2",
+            "definition": "spectral emissivity at TIRS channels, used for forward model calculations but not retrieved",
+            "instanceInformation": null,
+            "longName": "Atm/emissivity_prior",
+            "name": "Atm/emissivity_prior",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_emissivity_prior",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023979-ASDC_DEV2",
+            "definition": "number of interations used in optimal estimation algorithm",
+            "instanceInformation": null,
+            "longName": "Atm/iterations",
+            "name": "Atm/iterations",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_iterations",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023927-ASDC_DEV2",
+            "definition": "unique integer identifier for each TIRS look",
+            "instanceInformation": null,
+            "longName": "Atm/obs_ID",
+            "name": "Atm/obs_ID",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_obs_ID",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023971-ASDC_DEV2",
+            "definition": "posterior covariance from optimal estimation algorithm",
+            "instanceInformation": null,
+            "longName": "Atm/posterior_covariance",
+            "name": "Atm/posterior_covariance",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_posterior_covariance",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023965-ASDC_DEV2",
+            "definition": "pressure values on coarse output level grid",
+            "instanceInformation": null,
+            "longName": "Atm/pressure_profile",
+            "name": "Atm/pressure_profile",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_pressure_profile",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023977-ASDC_DEV2",
+            "definition": "reduced chi squared statistic at the retrieved state",
+            "instanceInformation": null,
+            "longName": "Atm/reduced_chi_squared",
+            "name": "Atm/reduced_chi_squared",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_reduced_chi_squared",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023975-ASDC_DEV2",
+            "definition": "reduced chi squared statistic at the prior mean state",
+            "instanceInformation": null,
+            "longName": "Atm/reduced_chi_squared_at_start",
+            "name": "Atm/reduced_chi_squared_at_start",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_reduced_chi_squared_at_start",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023963-ASDC_DEV2",
+            "definition": "surface pressure, which also sets the lowest pressure level in the vertical level grid",
+            "instanceInformation": null,
+            "longName": "Atm/surface_pressure",
+            "name": "Atm/surface_pressure",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_surface_pressure",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023959-ASDC_DEV2",
+            "definition": "retrieved surface temperature from optimal estimation algorithm",
+            "instanceInformation": null,
+            "longName": "Atm/surface_T",
+            "name": "Atm/surface_T",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_surface_T",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023957-ASDC_DEV2",
+            "definition": "prior surface temperature for optimal estimation algorithm",
+            "instanceInformation": null,
+            "longName": "Atm/surface_T_prior",
+            "name": "Atm/surface_T_prior",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_surface_T_prior",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023961-ASDC_DEV2",
+            "definition": "1-sigma uncertainty of surface temperature from optimal estimation algorithm",
+            "instanceInformation": null,
+            "longName": "Atm/surface_T_unc",
+            "name": "Atm/surface_T_unc",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_surface_T_unc",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023945-ASDC_DEV2",
+            "definition": "retrieved temperature profile from optimal estimation algorithm",
+            "instanceInformation": null,
+            "longName": "Atm/T_profile",
+            "name": "Atm/T_profile",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_T_profile",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023942-ASDC_DEV2",
+            "definition": "prior temperature profile for optimal estimation algorithm",
+            "instanceInformation": null,
+            "longName": "Atm/T_profile_prior",
+            "name": "Atm/T_profile_prior",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_T_profile_prior",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023947-ASDC_DEV2",
+            "definition": "1-sigma uncertainty of retrieved temperature profile from optimal estimation posterior covariance",
+            "instanceInformation": null,
+            "longName": "Atm/T_profile_unc",
+            "name": "Atm/T_profile_unc",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_T_profile_unc",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023951-ASDC_DEV2",
+            "definition": "retrieved water wapor specific humidity profile from optimal estimation algorithm",
+            "instanceInformation": null,
+            "longName": "Atm/wv_profile",
+            "name": "Atm/wv_profile",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_wv_profile",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023953-ASDC_DEV2",
+            "definition": "1-sigma uncertainty of logarithm of specific humidity water vapor profile from optimal estimation posterior covariance",
+            "instanceInformation": null,
+            "longName": "Atm/wv_profile_log_unc",
+            "name": "Atm/wv_profile_log_unc",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_wv_profile_log_unc",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023949-ASDC_DEV2",
+            "definition": "prior water vapor specific humidity profile for optimal estimation algorithm",
+            "instanceInformation": null,
+            "longName": "Atm/wv_profile_prior",
+            "name": "Atm/wv_profile_prior",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_wv_profile_prior",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023955-ASDC_DEV2",
+            "definition": "1-sigma uncertainty of specific humidity water vapor profile from optimal estimation posterior covariance",
+            "instanceInformation": null,
+            "longName": "Atm/wv_profile_unc",
+            "name": "Atm/wv_profile_unc",
+            "nativeId": "C1258816710-ASDC_DEV2-Atm_wv_profile_unc",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023855-ASDC_DEV2",
+            "definition": "at the midpoint of each TIRS image integration; similar to TAI, and referenced to the epoch 2000-01-01T00:00:00 UTC",
+            "instanceInformation": null,
+            "longName": "Geometry/ctime",
+            "name": "Geometry/ctime",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_ctime",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023857-ASDC_DEV2",
+            "definition": "leap seconds since the ctime epoch, at the midpoint of each TIRS image integration",
+            "instanceInformation": null,
+            "longName": "Geometry/ctime_minus_UTC",
+            "name": "Geometry/ctime_minus_UTC",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_ctime_minus_UTC",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023875-ASDC_DEV2",
+            "definition": "mean topographic elevation within the FOV",
+            "instanceInformation": null,
+            "longName": "Geometry/elevation",
+            "name": "Geometry/elevation",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_elevation",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023877-ASDC_DEV2",
+            "definition": "standard deviation of topographic elevation within the FOV",
+            "instanceInformation": null,
+            "longName": "Geometry/elevation_stdev",
+            "name": "Geometry/elevation_stdev",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_elevation_stdev",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023865-ASDC_DEV2",
+            "definition": "latitude of the FOV centroid on the geoid",
+            "instanceInformation": null,
+            "longName": "Geometry/geoid_latitude",
+            "name": "Geometry/geoid_latitude",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_geoid_latitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023867-ASDC_DEV2",
+            "definition": "longitude of the FOV centroid on the geoid",
+            "instanceInformation": null,
+            "longName": "Geometry/geoid_longitude",
+            "name": "Geometry/geoid_longitude",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_geoid_longitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023914-ASDC_DEV2",
+            "definition": "Integer composed of bit flags that contain boolean info about the quality of the overall geolocation of each along-track frame of scenes",
+            "instanceInformation": null,
+            "longName": "Geometry/geoloc_quality_bitflags",
+            "name": "Geometry/geoloc_quality_bitflags",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_geoloc_quality_bitflags",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023873-ASDC_DEV2",
+            "definition": "land_area / total_area (remainder is water_area) within the FOV, according to the Digital Elevation Model (DEM)",
+            "instanceInformation": null,
+            "longName": "Geometry/land_fraction",
+            "name": "Geometry/land_fraction",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_land_fraction",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023861-ASDC_DEV2",
+            "definition": "topography-corrected latitude of the FOV centroid",
+            "instanceInformation": null,
+            "longName": "Geometry/latitude",
+            "name": "Geometry/latitude",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_latitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023863-ASDC_DEV2",
+            "definition": "Topography-corrected longitude of the FOV centroid",
+            "instanceInformation": null,
+            "longName": "Geometry/longitude",
+            "name": "Geometry/longitude",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_longitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023853-ASDC_DEV2",
+            "definition": "unique integer identifier for each TIRS look",
+            "instanceInformation": null,
+            "longName": "Geometry/obs_ID",
+            "name": "Geometry/obs_ID",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_obs_ID",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023899-ASDC_DEV2",
+            "definition": "satellite altitude above the geoid at the middle of the xtrack swath",
+            "instanceInformation": null,
+            "longName": "Geometry/sat_altitude",
+            "name": "Geometry/sat_altitude",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_sat_altitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023906-ASDC_DEV2",
+            "definition": "flag specifying whether (and to what general extent) the spacecraft is illuminated by the sun",
+            "instanceInformation": null,
+            "longName": "Geometry/sat_solar_illumination_flag",
+            "name": "Geometry/sat_solar_illumination_flag",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_sat_solar_illumination_flag",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023885-ASDC_DEV2",
+            "definition": "solar azimuth angle at the FOV centroid (zero is north, clockwise-positive looking down from the zenith)",
+            "instanceInformation": null,
+            "longName": "Geometry/solar_azimuth_angle",
+            "name": "Geometry/solar_azimuth_angle",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_solar_azimuth_angle",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023887-ASDC_DEV2",
+            "definition": "distance from FOV centroid to the solar barycenter",
+            "instanceInformation": null,
+            "longName": "Geometry/solar_distance",
+            "name": "Geometry/solar_distance",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_solar_distance",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023889-ASDC_DEV2",
+            "definition": "distance from the solar glint spot to the FOV centroid",
+            "instanceInformation": null,
+            "longName": "Geometry/solar_glint_distance",
+            "name": "Geometry/solar_glint_distance",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_solar_glint_distance",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023891-ASDC_DEV2",
+            "definition": "latitude of the solar glint spot",
+            "instanceInformation": null,
+            "longName": "Geometry/solar_glint_latitude",
+            "name": "Geometry/solar_glint_latitude",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_solar_glint_latitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023893-ASDC_DEV2",
+            "definition": "longitude of the solar glint spot",
+            "instanceInformation": null,
+            "longName": "Geometry/solar_glint_longitude",
+            "name": "Geometry/solar_glint_longitude",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_solar_glint_longitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023883-ASDC_DEV2",
+            "definition": "solar zenith angle at the FOV centroid",
+            "instanceInformation": null,
+            "longName": "Geometry/solar_zenith_angle",
+            "name": "Geometry/solar_zenith_angle",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_solar_zenith_angle",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023895-ASDC_DEV2",
+            "definition": "sub-satellite latitude at the middle of the xtrack swath",
+            "instanceInformation": null,
+            "longName": "Geometry/subsat_latitude",
+            "name": "Geometry/subsat_latitude",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_subsat_latitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023897-ASDC_DEV2",
+            "definition": "sub-satellite longitude at the middle of the xtrack swath",
+            "instanceInformation": null,
+            "longName": "Geometry/subsat_longitude",
+            "name": "Geometry/subsat_longitude",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_subsat_longitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023859-ASDC_DEV2",
+            "definition": "UTC datetime at the midpoint of each TIRS image integration, represented as an integer array",
+            "instanceInformation": null,
+            "longName": "Geometry/time_UTC_values",
+            "name": "Geometry/time_UTC_values",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_time_UTC_values",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023869-ASDC_DEV2",
+            "definition": "topography-corrected latitude for each of the five points defining a polygon that closely approximates the geolocated FOV",
+            "instanceInformation": null,
+            "longName": "Geometry/vertex_latitude",
+            "name": "Geometry/vertex_latitude",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_vertex_latitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023871-ASDC_DEV2",
+            "definition": "topography-corrected latitude for each of the five points defining a polygon that closely approximates the geolocated FOV",
+            "instanceInformation": null,
+            "longName": "Geometry/vertex_longitude",
+            "name": "Geometry/vertex_longitude",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_vertex_longitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023881-ASDC_DEV2",
+            "definition": "viewing azimuth angle at the FOV centroid (zero is north, clockwise-positive looking down from the zenith)",
+            "instanceInformation": null,
+            "longName": "Geometry/viewing_azimuth_angle",
+            "name": "Geometry/viewing_azimuth_angle",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_viewing_azimuth_angle",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V1260023879-ASDC_DEV2",
+            "definition": "viewing zenith angle at the FOV centroid",
+            "instanceInformation": null,
+            "longName": "Geometry/viewing_zenith_angle",
+            "name": "Geometry/viewing_zenith_angle",
+            "nativeId": "C1258816710-ASDC_DEV2-Geometry_viewing_zenith_angle",
+            "scienceKeywords": null
+          }
+        ]
+      }
+    }
+  }
+}

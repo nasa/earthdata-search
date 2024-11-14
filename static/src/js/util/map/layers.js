@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle, new-cap */
 import L from 'leaflet'
+import { dividePolygon } from '@edsc/geo-utils'
 
 import { castArray } from 'lodash-es'
 
@@ -51,8 +52,6 @@ export function getPolygons(metadata = {}) {
   let polygons = []
   if (metadataPolygons && metadataPolygons !== null) {
     polygons = metadataPolygons.map((p) => p.map((s) => parseSpatial(s)))
-
-    return polygons
   }
 
   return polygons
@@ -175,17 +174,19 @@ export const buildLayer = (options, metadata) => {
 
   if (polygons.length) {
     castArray(polygons).forEach((polygon) => {
+      const { interiors } = dividePolygon(polygon)
+
       let polyLayer
       if (cartesian) {
-        polyLayer = new L.polygon(polygon)
+        polyLayer = new L.polygon(interiors)
         polyLayer._interpolationFn = 'cartesian'
       } else {
-        polyLayer = new L.SphericalPolygon(polygon, options)
+        polyLayer = new L.SphericalPolygon(interiors, options)
       }
 
       layer.addLayer(polyLayer)
 
-      const bounds = L.latLngBounds(polygon)
+      const bounds = L.latLngBounds(interiors)
       if (
         bounds.getNorth() - bounds.getSouth() < 0.5
         && bounds.getWest() - bounds.getEast() < 0.5
