@@ -9,7 +9,7 @@ const expectWithinMargin = async (actual, expected, margin, step) => {
   Object.keys(expected).forEach((key) => {
     const diff = Math.abs(actual[key] - expected[key])
     if (diff >= margin) {
-      console.log(`Step: ${} - Expected: ${expected[key]} - Actual: ${actual[key]} - Delta: ${diff}`)
+      console.log(`Step: ${step} - Expected: ${expected[key]} - Actual: ${actual[key]} - Delta: ${diff}`)
     }
 
     expect.soft(diff).toBeLessThanOrEqual(margin)
