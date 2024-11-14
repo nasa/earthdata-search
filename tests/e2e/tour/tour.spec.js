@@ -8,7 +8,7 @@ import singleCollection from './__mocks__/single_collection.json'
 const expectWithinMargin = async (actual, expected, margin) => {
   Object.keys(expected).forEach((key) => {
     const diff = Math.abs(actual[key] - expected[key])
-
+    console.log(`Expected: ${expected[key]} - Actual: ${actual[key]} - Delta: ${diff}`)
     expect.soft(diff).toBeLessThanOrEqual(margin)
   })
 }
