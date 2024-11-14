@@ -8,7 +8,7 @@ import singleCollection from './__mocks__/single_collection.json'
 const expectWithinMargin = async (actual, expected, margin) => {
   Object.keys(expected).forEach((key) => {
     const diff = Math.abs(actual[key] - expected[key])
-    console.log(`actual: ${actual[key]} - expected: ${expected[key]} - delta: ${diff}`)
+
     expect.soft(diff).toBeLessThanOrEqual(margin)
   })
 }
@@ -102,6 +102,70 @@ test.describe('When loading the page with dontShowTour preference set to true', 
     await page.locator('.sidebar-section__header-primary .sidebar-section__title', { hasText: 'Filter Collections' }).waitFor()
 
     await expect(page.getByRole('alertdialog', { value: /Welcome to Earthdata Search/ })).toBeHidden()
+  })
+})
+
+test.describe('When not logged in', () => {
+  test.beforeEach(async ({ page, context }) => {
+    await setupTests({
+      page,
+      context,
+      dontShowTour: true
+    })
+
+    await page.route(/collections.json/, async (route) => {
+      await route.fulfill({
+        json: singleCollection.body,
+        headers: singleCollection.headers
+      })
+    })
+
+    await page.goto('/search')
+  })
+
+  test('should see the tour slide for non-logged in users', async ({ page }) => {
+    // Start the tour by clicking the "Start Tour" button
+    await page.click('button:has-text("Start Tour")')
+
+    // Start Tour View: Welcome to Earthdata Search
+    await expect(page.locator('.search-tour__welcome')).toContainText('Welcome to Earthdata Search!')
+    await page.click('button:has-text("Take the tour")')
+    await expect(page.locator('.search-tour__content').first()).toContainText('This area contains the filters used when searching for collections')
+
+    // Navigating to the slide for non-logged in users
+    await page.keyboard.press('ArrowRight')
+    await expect(page.locator('.search-tour__content').first()).toContainText('Search for collections')
+
+    await page.keyboard.press('ArrowRight')
+    await expect(page.locator('.search-tour__content').first()).toContainText('Use the temporal filters to limit search results to a specific date')
+
+    await page.keyboard.press('ArrowRight')
+    await expect(page.locator('.search-tour__content').first()).toContainText('Use the spatial filters')
+
+    await page.keyboard.press('ArrowRight')
+    await expect(page.locator('.search-tour__content').first()).toContainText('Use Advanced Search parameters')
+
+    await page.keyboard.press('ArrowRight')
+    await expect(page.locator('.search-tour__content').first()).toContainText('Choose a portal to refine search')
+
+    await page.keyboard.press('ArrowRight')
+    await expect(page.locator('.search-tour__content').first()).toContainText('Refine your search further')
+
+    await page.keyboard.press('ArrowRight')
+    await expect(page.locator('.search-tour__content').first()).toContainText('A high-level description')
+
+    await page.keyboard.press('ArrowRight')
+    await expect(page.locator('.search-tour__content').first()).toContainText('To make more room')
+
+    await page.keyboard.press('ArrowRight')
+    await expect(page.locator('.search-tour__content').first()).toContainText('Pan the map by ')
+
+    await page.keyboard.press('ArrowRight')
+    await expect(page.locator('.search-tour__content').first()).toContainText('Use the map tools')
+
+    // Slide 13: For non-logged in users
+    await page.keyboard.press('ArrowRight')
+    await expect(page.locator('.search-tour__content').first()).toContainText('Log in with Earthdata Login')
   })
 })
 
@@ -357,9 +421,9 @@ test.describe('Joyride Tour Navigation', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 1316,
+      left: 1281,
       top: 323,
-      width: 94,
+      width: 129,
       height: 533
     }, 10)
 
@@ -378,10 +442,10 @@ test.describe('Joyride Tour Navigation', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 1172,
-      top: 34,
-      width: 133,
-      height: 56
+      left: 1227,
+      top: 32,
+      width: 74,
+      height: 58
     }, 10)
 
     // Step 12: Save Project
@@ -398,12 +462,12 @@ test.describe('Joyride Tour Navigation', () => {
       height: rect.height
     }
 
-    // ExpectWithinMargin(spotlightRect, {
-    //   left: 1172,
-    //   top: 34,
-    //   width: 133,
-    //   height: 56
-    // }, 10)
+    expectWithinMargin(spotlightRect, {
+      left: 1290,
+      top: 32,
+      width: 110,
+      height: 58
+    }, 10)
 
     // Step 13: User Menu Dropdown
     await page.waitForTimeout(500)
@@ -419,12 +483,12 @@ test.describe('Joyride Tour Navigation', () => {
       height: rect.height
     }
 
-    // ExpectWithinMargin(spotlightRect, {
-    //   left: 1172,
-    //   top: 34,
-    //   width: 133,
-    //   height: 56
-    // }, 10)
+    expectWithinMargin(spotlightRect, {
+      left: 1105,
+      top: 32,
+      width: 135,
+      height: 58
+    }, 10)
 
     // Testing "Previous" button on Step 14
     await page.getByRole('button', { name: 'Previous' }).click()
