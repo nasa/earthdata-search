@@ -1,12 +1,14 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import { setupTests } from '../../support/setupTests'
+import { login } from '../../support/login'
 
 import singleCollection from './__mocks__/single_collection.json'
 
 const expectWithinMargin = async (actual, expected, margin) => {
   Object.keys(expected).forEach((key) => {
     const diff = Math.abs(actual[key] - expected[key])
+    console.log(`actual: ${actual[key]} - expected: ${expected[key]} - delta: ${diff}`)
     expect.soft(diff).toBeLessThanOrEqual(margin)
   })
 }
@@ -110,6 +112,8 @@ test.describe('Joyride Tour Navigation', () => {
       context,
       dontShowTour: true
     })
+
+    await login(context)
 
     await page.route(/collections.json/, async (route) => {
       await route.fulfill({
@@ -380,12 +384,54 @@ test.describe('Joyride Tour Navigation', () => {
       height: 56
     }, 10)
 
-    // Testing "Previous" button on Step 12
-    await page.getByRole('button', { name: 'Previous' }).click()
-    await expect(page.locator('.search-tour__content').first()).toContainText('Use the map tools to switch map projections, draw, edit, or remove spatial bounds')
+    // Step 12: Save Project
+    await page.waitForTimeout(500)
+    await expect(page.locator('.search-tour__content').first()).toContainText('to save a project using your current search criteria')
     await page.getByRole('button', { name: 'Next' }).click()
 
-    // Step 12: Replay info
+    // Get and verify the position and size of the highlighted section
+    rect = await spotlight.boundingBox()
+    spotlightRect = {
+      left: rect.x,
+      top: rect.y,
+      width: rect.width,
+      height: rect.height
+    }
+
+    // ExpectWithinMargin(spotlightRect, {
+    //   left: 1172,
+    //   top: 34,
+    //   width: 133,
+    //   height: 56
+    // }, 10)
+
+    // Step 13: User Menu Dropdown
+    await page.waitForTimeout(500)
+    await expect(page.locator('.search-tour__content').first()).toContainText('Use this menu to set preferences, view saved projects')
+    await page.getByRole('button', { name: 'Next' }).click()
+
+    // Get and verify the position and size of the highlighted section
+    rect = await spotlight.boundingBox()
+    spotlightRect = {
+      left: rect.x,
+      top: rect.y,
+      width: rect.width,
+      height: rect.height
+    }
+
+    // ExpectWithinMargin(spotlightRect, {
+    //   left: 1172,
+    //   top: 34,
+    //   width: 133,
+    //   height: 56
+    // }, 10)
+
+    // Testing "Previous" button on Step 14
+    await page.getByRole('button', { name: 'Previous' }).click()
+    await expect(page.locator('.search-tour__content').first()).toContainText('Use this menu to set preferences, view saved projects')
+    await page.getByRole('button', { name: 'Next' }).click()
+
+    // Step 14: Replay info
     await page.waitForTimeout(500)
     await expect(page.locator('.search-tour__content')).toContainText('You can replay this tour anytime')
     await page.locator('.search-tour__buttons button:has-text("Finish Tour")').click()
