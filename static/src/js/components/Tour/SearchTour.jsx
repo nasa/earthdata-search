@@ -3,12 +3,18 @@ import React, {
   useEffect,
   useContext
 } from 'react'
+import { useSelector } from 'react-redux'
 import Joyride, { STATUS, ACTIONS } from 'react-joyride'
-import TourSteps, { TOTAL_STEPS } from './TourSteps'
+import TourSteps from './TourSteps'
 import TourContext from '../../contexts/TourContext'
+import { isLoggedIn } from '../../util/isLoggedIn'
 
 const SearchTour = () => {
   const { runTour, setRunTour } = useContext(TourContext)
+  const authToken = useSelector((state) => state.authToken)
+  const loggedIn = isLoggedIn(authToken)
+
+  const TOTAL_STEPS = loggedIn ? 14 : 13
 
   const [isChecked, setIsChecked] = useState(localStorage.getItem('dontShowTour') === 'true')
   const [stepIndex, setStepIndex] = useState(0)
@@ -33,7 +39,7 @@ const SearchTour = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [])
+  }, [TOTAL_STEPS, loggedIn])
 
   useEffect(() => {
     // Scrolling to the top to ensure "Browse Portals" is visible.
@@ -103,7 +109,9 @@ const SearchTour = () => {
           setStepIndex,
           setRunTour,
           handleCheckboxChange,
-          isChecked
+          isChecked,
+          loggedIn,
+          TOTAL_STEPS
         })
       }
       run={runTour}
