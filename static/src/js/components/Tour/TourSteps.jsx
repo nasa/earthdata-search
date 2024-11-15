@@ -628,7 +628,7 @@ const TourSteps = ({
                 Discover and Access Earth Science Data Using Earthdata Search
               </div>
               <p className="search-tour__webinar-inner-link">
-                <ExternalLink>
+                <ExternalLink innerLink>
                   Watch the webinar on YouTube
                 </ExternalLink>
               </p>
@@ -641,7 +641,6 @@ const TourSteps = ({
             <li>
               <ExternalLink
                 href="https://www.earthdata.nasa.gov/learn/earthdata-search"
-                className="search-tour__earthdata-link"
               >
                 Earthdata Search wiki
               </ExternalLink>

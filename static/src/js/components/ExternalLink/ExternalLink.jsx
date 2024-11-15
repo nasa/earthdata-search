@@ -11,6 +11,7 @@ export const ExternalLink = ({
   children,
   className,
   variant,
+  innerLink,
   ...rest
 }) => {
   const classes = classNames([
@@ -20,6 +21,21 @@ export const ExternalLink = ({
     },
     className
   ])
+
+  // If the link has a parent link this is needed to avoid DOM warnings while keeping styling
+  if (innerLink) {
+    return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+      <span className={classes} {...rest}>
+        {children}
+        <EDSCIcon
+          className="external-link__icon"
+          icon={ArrowLineDiagonal}
+          size="0.875em"
+        />
+      </span>
+    )
+  }
 
   return (
   // eslint-disable-next-line react/jsx-props-no-spreading
@@ -37,13 +53,15 @@ export const ExternalLink = ({
 ExternalLink.defaultProps = {
   children: null,
   className: null,
-  variant: null
+  variant: null,
+  innerLink: false
 }
 
 ExternalLink.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  variant: PropTypes.string
+  variant: PropTypes.string,
+  innerLink: PropTypes.bool
 }
 
 export default ExternalLink
