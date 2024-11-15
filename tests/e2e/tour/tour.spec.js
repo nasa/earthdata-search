@@ -128,16 +128,17 @@ test.describe('When logged in', () => {
     await page.goto('/search')
   })
 
-  test('should see the tour slide for non-logged in users', async ({ page }) => {
-    // Start the tour by clicking the "Start Tour" button
-    page.getByRole('button', { name: 'Start tour' }).click()
+  test('should see the additional tour steps for logged in users', async ({ page }) => {
+    // Start the tour
+    await page.getByRole('button', { name: 'Start Tour' }).click()
 
-    // Start Tour View: Welcome to Earthdata Search
-    await expect(page.locator('.search-tour__welcome')).toContainText('Welcome to Earthdata Search!')
-    await page.click('button:has-text("Take the tour")')
+    // Welcome screen
+    await expect(page.getByRole('heading', { name: 'Welcome to Earthdata Search!' })).toBeVisible()
+    await page.getByRole('button', { name: 'Take the tour' }).click()
+
+    // Navigating through the tour steps
     await expect(page.locator('.search-tour__content').first()).toContainText('This area contains the filters used when searching for collections')
 
-    // Navigating to the slide for non-logged in users
     await page.keyboard.press('ArrowRight')
     await expect(page.locator('.search-tour__content').first()).toContainText('Search for collections')
 
@@ -163,23 +164,23 @@ test.describe('When logged in', () => {
     await expect(page.locator('.search-tour__content').first()).toContainText('To make more room')
 
     await page.keyboard.press('ArrowRight')
-    await expect(page.locator('.search-tour__content').first()).toContainText('Pan the map by ')
+    await expect(page.locator('.search-tour__content').first()).toContainText('Pan the map by')
 
     await page.keyboard.press('ArrowRight')
     await expect(page.locator('.search-tour__content').first()).toContainText('Use the map tools')
 
-    // Slide 12: Save Project Button
+    // Logged-in specific steps
+    // Step 12: Save Project Button
     await page.keyboard.press('ArrowRight')
     await expect(page.locator('.search-tour__content').first()).toContainText('to save a project using your current search criteria')
 
     // Step 13: User Menu Dropdown
     await page.keyboard.press('ArrowRight')
-    await page.waitForTimeout(500)
     await expect(page.locator('.search-tour__content').first()).toContainText('Use this menu to set preferences, view saved projects')
   })
 })
 
-test.describe('Joyride Tour Navigation', () => {
+test.describe('When not logged in', () => {
   test.beforeEach(async ({ page, context }) => {
     await setupTests({
       page,
@@ -197,7 +198,7 @@ test.describe('Joyride Tour Navigation', () => {
     await page.goto('/search')
   })
 
-  test('should navigate through the Joyride tour', async ({ page }) => {
+  test('should navigate through the Joyride tour highlighting the correct parts of the page', async ({ page }) => {
     // Start the tour by clicking the "Start Tour" button
     page.getByRole('button', { name: 'Start tour' }).click()
 
