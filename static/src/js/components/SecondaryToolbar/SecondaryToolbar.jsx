@@ -400,7 +400,7 @@ class SecondaryToolbar extends Component {
     const startTourButton = (
       <Dropdown
         show={projectDropdownOpen}
-        className="secondary-toolbar__project-name-dropdown focus-light"
+        className="secondary-toolbar__start-tour-name-dropdown focus-light"
         onToggle={this.onToggleProjectDropdown}
         alignRight
       >
